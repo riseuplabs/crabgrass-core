@@ -1,0 +1,8 @@
+
+body {
+  background-color: $background_color;
+}
+
+#container {
+  @include container;
+}
