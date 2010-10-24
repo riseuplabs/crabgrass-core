@@ -1,0 +1,43 @@
+= PATH FINDER
+
+A module to find crabgrass pages.
+
+This module handles all the complicated code that makes page queries work.
+Currently, it handles SQL and sphinx queries. 
+
+== How to use PathFinder ?
+
+Look at the examples for now: EXAMPLES
+
+There is also a list of the filters: FILTERS
+
+== Structure of PathFinder
+
+PathFinder::Builder::       the class that converts between a path and actual
+                            database conditions.
+
+PathFinder::ParsedPath::    a subclass of Array used to represent a query filter path
+                            that has been parsed.
+
+PathFinder::Options::       a module included in all controllers to help build
+                            the options hash needed by the page finders.
+
+PathFinder::FindByPath::    a module that is included by Page to add the 
+                            find_by_path and count_by_path methods. 
+
+Additionally, there are three backends:
+
+* PathFinder::Sql for a generic sql database
+* PathFinder::Mysql for a mysql database will fulltext index on page_terms
+* PathFinder::Sphinx for fulltext searching of page body content.
+
+Each of these backends is defined in x_builder.rb, x_builder_filters.rb, and x_options.rb
+
+Why all this sillyness? 
+
+1. makes it easy to switch back and forth between urls and actual queries
+2. makes it so that we can switch storage backends without changing application logic.
+3. finding pages is way complicated, and it is nice to have all that
+   logic hidden away.
+
+
