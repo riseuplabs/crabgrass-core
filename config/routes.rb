@@ -1,43 +1,113 @@
+FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues static stats stylesheets).freeze
+
 ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+#  ##
+#  ## STATIC FILES AND ASSETS
+#  ##
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+#  map.with_options(:controller => 'assets') do |assets|
+#    assets.connect '/assets/:action/:id', :action => /create|destroy/
+#    assets.connect 'assets/:id/versions/:version/*path', :action => 'show'
+#    assets.connect 'assets/:id/*path', :action => 'show'
+#  end
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+#  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
+#  map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+#  ##
+#  ## ME
+#  ##
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
+    me.resources :notices
+    me.home      '', :controller => 'notices', :action => 'index'
+    me.resource  :page, :only => [:new, :create]
+    me.pages     'pages/*path', :controller => 'pages'
+    me.resources :activities
+    me.resources :messages
+    me.resource  :settings, :only => [:show, :update]
+    me.resources :permissions
+    me.resource  :profile, :controller => 'profile'
+    me.resources :requests
+  end
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
+#  ##
+#  ## PEOPLE
+#  ##
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
+#  map.people_directory 'people/directory/*path', :controller => 'people/directory'
 
-  # See how all your routes lay out with "rake routes"
+#  map.resources :people, :namespace => 'people/' do |people|
+#    people.resource  :page, :only => [:new, :create]
+#    people.pages     'pages/*path', :controller => 'pages'
+#    people.resources :messsages
+#    people.resources :activities
+#    people.resources :pages
+#  end
 
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+#  ##
+#  ## EMAIL
+#  ##
+
+#  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
+#  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
+
+#  ##
+#  ## ACCOUNT
+#  ##
+
+#  map.with_options(:controller => 'account') do |account|
+#    account.reset_password 'account/reset_password/:token', :action => 'reset_password'
+#    account.account_verify 'account/verify_email/:token', :action => 'verify_email'
+#    account.connect 'account/:action/:id'
+#  end
+
+#  map.with_options(:controller => 'session') do |session|
+#    session.login 'session/login', :action => 'login'
+#    account.logout 'session/logout', :action => 'logout'
+#  end
+
+#  ##
+#  ## GROUP
+#  ##
+
+  map.networks_directory 'networks/directory/*path', :controller => 'groups/networks_directory'
+  map.groups_directory 'groups/directory/*path', :controller => 'groups/groups_directory'
+
+#  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+#    groups.resource  :page, :only => [:new, :create]
+#    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
+#    groups.resources :members
+#    groups.resources :requests
+#    groups.resources :invites
+#    groups.resource  :settings, :only => [:show, :update]
+#  end
+
+#  ##
+#  ## DEBUGGING
+#  ##
+
+#  if RAILS_ENV == "development"
+#    ## DEBUG ROUTE
+#    map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
+#  end
+#  map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
+
+  ##
+  ## DEFAULT ROUTE
+  ##
+
+  map.connect '/do/:controller/:action/:id'
+  map.root :controller => 'root'
+
+#  ##
+#  ## PAGES and ENTITY LANDING
+#  ##
+
+#  map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
+#  map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+#  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+#  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
+
 end

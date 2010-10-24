@@ -1,3 +1,7 @@
+##
+## TODO: not sure what defaults we should put here.
+##
+
 # Be sure to restart your server when you modify this file.
 
 # These settings change the behavior of Rails 2 apps and will be defaults

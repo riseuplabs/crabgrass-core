@@ -1,0 +1,25 @@
+# options -------------------------------------------
+# searchd log file:: log/searchd.log
+# query log file::   log/searchd.query.log
+# pid file::         log/searchd.#{environment}.pid
+# searchd files::    db/sphinx/#{environment}/
+# allow star::       false
+
+development:
+  config_file: config/sphinx/development.conf
+  port: 3312
+  address: localhost
+  morphology: stem_en
+  
+test:
+  config_file: config/sphinx/test.conf
+  port: 3313
+  address: localhost
+  morphology: stem_en
+
+production:
+  config_file: config/sphinx/production.conf
+  port: 3312
+  address: localhost
+  morphology: stem_en
+

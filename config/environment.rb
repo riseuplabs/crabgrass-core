@@ -1,41 +1,67 @@
-# Be sure to restart your server when you modify this file
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
+require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
-# Bootstrap the Rails environment, frameworks, and default configuration
+info "LOAD FRAMEWORK"
+RAILS_GEM_VERSION = '~> 2.3.0'  # Use any Rails in the 2.3.x series 
 require File.join(File.dirname(__FILE__), 'boot')
+require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 
-Rails::Initializer.run do |config|
-  # Settings in config/environments/* take precedence over those specified here.
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory are automatically loaded.
+Crabgrass::Initializer.run do |config|
+  info "LOAD CONFIG BLOCK"
 
-  # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths << "#{RAILS_ROOT}/app/permissions"
+  config.load_paths << "#{RAILS_ROOT}/app/sweepers"
+  config.load_paths << "#{RAILS_ROOT}/app/helpers/classes"
 
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
+  # this is required because we have a mysql specific fulltext index.
+  config.active_record.schema_format = :sql
 
-  # Only load the plugins named here, in the order given (default is alphabetical).
-  # :all can be used as a placeholder for all plugins not explicitly named
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+    # Activate observers that should always be running
+  config.active_record.observers = :user_observer, :membership_observer,
+    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
+    :request_to_destroy_our_group_observer
 
-  # Skip frameworks you're not going to use. To use Rails without a database,
-  # you must remove the Active Record framework.
-  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
+  config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
 
-  # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+  # store fragments on disk, we might have a lot of them.
+  config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
 
-  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names.
+  # Make Active Record use UTC-base instead of local time
   config.time_zone = 'UTC'
+  config.active_record.default_timezone = :utc
 
-  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+  # allow plugins in more places
+  ['vendor/crabgrass_plugins', 'extensions/mods', 'extensions/pages'].each do |path|
+    config.plugin_paths << "#{RAILS_ROOT}/#{path}"
+  end
+
+  # Deliveries are disabled by default. Do NOT modify this section.
+  # Define your email configuration in email.yml instead.
+  # It will automatically turn deliveries on
+  config.action_mailer.perform_deliveries = false
+
+  ##
+  ## GEMS
+  ## see environments/test.rb for testing specific gems
+  ##
+
+  # required, included with crabgrass
+  config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
+  config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
+  config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
+
+  # required, but not included with crabgrass:
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.19'
+  config.gem 'will_paginate', :version => '2.3.14'
+  config.gem 'mini_magick', :version => '2.3'
+  config.gem 'compass', :version => '0.10.4'
+  config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
+
+  # required, and need a build environment to install
+  config.gem 'haml'
+  config.gem 'RedCloth'
+
+  # See Rails::Configuration for more options
 end
+

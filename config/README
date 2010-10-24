@@ -1,0 +1,55 @@
+these still need a place:
+===================================
+
+# uncomment this to print out what the hell the processors are doing.
+# Media::Process::Base.log_to_stdout_when = :always
+
+AssetExtension::Storage.make_required_dirs
+
+
+THINGS TO CONFIGURE
+==================================
+
+There are three files that need to be configured for crabgrass:
+
+  * config/crabgrass/secret.txt  (rake make_a_secret)
+  * config/database.yml
+  * config/crabgrass/crabgrass.[production|development|test].yml
+
+There are many levels of possible defaults for configuration options.
+In order of precedence, crabgrass will search:
+
+   (1) the current site
+   (2) the default site (if a site has default == true)
+   (3) options configured in the file config/crabgrass.*.yml
+   (4) last-stop hardcoded defaults in lib/crabgrass/conf.rb
+
+RAILS INITIALIZATION PROCESS
+======================================
+
+  1. framework
+     called from environment.rb
+
+  2. config block
+     in environment.rb
+
+  3. environment
+     in config/environments/*.rb
+
+  4. plugins 
+     alpha order of everything in vendor/plugins, vendor/crabgrass_plugins,
+     extensions/mods, and extensions/pages.
+
+  5. gems
+
+  6. initializers
+     config/initalizers/*.rb
+
+  7. view paths
+
+  8. application classes
+
+run rails with INFO=0 to see when these are loaded.
+
+for much more detail, see http://railsguts.com/initialization.html
+
