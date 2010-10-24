@@ -1,0 +1,145 @@
+CRABGRASS HACKS TO PLUGINS
+===============================
+
+Before upgrading a plugin, check here to see if there are
+special crabgrass hacks have been applied.
+
+acts_as_rateable: allow a rating of nil. Also, the plugin's
+rating.rb is overridden by app/models/rating.rb. 
+
+acts_as_tree: hack to to allow whatever options you pass to
+acts_as_tree to be passed on to the has_many :children
+association that acts_as_tree creates.
+
+minimagic: renamed minimagic to be aa_pseudo_rmagick and
+changed the code to use gm (graphicmagick) instead of
+imagemagic.
+
+
+What do these do?
+========================================
+
+these are undocumented:
+  database_cleaner
+  inheritable_templates
+  optional_haml
+  partioprint
+  pickle
+  rails_indexes
+  ya2yaml
+
+PLUGINS
+==========================================================
+
+Core Plugins
+------------
+
+routing_filter
+  http://github.com/svenfuchs/routing-filter/tree/master
+  allows you to wrap a black box around the rails routing code to modify the
+  behavior as you see fit. fun and powerful!  
+
+ActiveRecord Plugins
+--------------------
+
+acts_as_list:
+  Once part of rails core. Lets you have an ordered list of things.
+  Used by tasks.
+  updated Aug 2010
+
+acts_as_rateable
+  Adds ratings to activerecords. Used to rate comments.
+  
+acts_as_state_machine
+  Makes an active_record into a simple state machine. Used by requests.  
+
+better_acts_as_tree
+  A slightly modified version of standard acts as tree. 
+  This modification allows association callbacks. 
+
+acts_as_versioned
+  used to do wiki versioning.
+
+will_paginate
+  Adds paginate() to activerecord. 
+
+ActionController Plugins
+-------------------------
+
+before_render
+  Adds a new callback filter that can be called after the controller action is
+  run and before the view starts to get generated. Very useful!
+  http://github.com/xtoddx/before_render/tree/master
+
+Media Plugins
+-------------
+
+fleximage
+  used for avatars. We use the plugin and not the gem because the gem has
+  RMagick as a dependency.
+
+ruby-svg
+  not used
+  hooks to draw svg, used for experimental page contribution rendering.
+
+ruby-graphviz
+  not used
+  interface to the graphviz network layout library, used for
+  visualizing organizational networks
+
+UI Plugins
+----------
+
+calendar_date_select
+  javascript calendar widget 
+
+multiple_select
+  widget for habtm checkboxes and selection tree.
+
+mested_layouts
+  lets you enclose one layout in another.
+  TODO: check to see if it is still used
+
+text_editor_helper
+  formatting buttons for textareas.
+
+Development Plugins
+----------------------------------
+
+rails-dev-boost
+  http://github.com/thedarkone/rails-dev-boost
+  amazing plugin that improves the class loading/unloading code for development
+  mode. it makes running dev mode many times faster.
+
+Testing Plugins
+---------------
+
+These are only needed when running tests.
+TODO: figure out which ones are still used.
+
+mocha
+  a library for mocking and stubbing
+
+rspec
+  a behaviour driven development framework
+
+spider_test
+  crawls the views.
+
+webrat
+  write acceptance tests for rails ui
+
+PLUGIN NOTES
+===========================================================
+
+nested_layouts
+--------------
+
+Lets us have layouts that nest inside other layouts. Very useful.
+For example:
+
+<% inside_layout 'application' do -%>
+<div class='custom'>
+  <%= yield %>
+</div>
+<% end -%>

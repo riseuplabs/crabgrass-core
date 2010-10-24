@@ -1,0 +1,12 @@
+
+preliminary installation instructions for crabgrass-core:
+
+sudo apt-get install ruby1.8 rake rubygems libmysql-ruby mysql-server
+sudo gem install rails --version=2.3.8
+cd crabgrass-core
+sudo rake gems:install
+sudo mysqladmin create crabgrass_development
+rake db:schema:load
+rake db:fixtures:load
+script/server
+

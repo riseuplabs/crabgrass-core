@@ -1,0 +1,14 @@
+
+
+directory changes
+  tools -> extensions/page_types
+  mods -> extensions/page_types
+  config/crabgrass.*.yml -> config/crabgrass/crabgrass.*.yml
+  config/secret.txt -> config/crabgrass/secret.txt
+
+configuration changes
+  enabled_tools is now enabled_pages
+  added login_redirect_url
+
+
+
