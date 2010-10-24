@@ -1,0 +1,14 @@
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
+<% render :partial => 'wiki_page/tabs' %>
+
+<section id='wiki-content'>
+  <div class='wiki'>
+    <div id='wiki_html'>
+      <%= render :partial => 'wiki_html' %>
+    </div>
+    <br style='clear:both' />
+  </div><!-- end wiki -->
+</section>
