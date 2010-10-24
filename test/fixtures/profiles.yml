@@ -1,0 +1,157 @@
+profile_for_public_group:
+  id: 1
+  entity_type: "Group"
+  entity_id: 1000
+  may_see: true
+  may_see_members: false
+  may_see_committees: true
+  stranger: true
+  geo_location_id: 2
+
+profile_for_public_committee:
+  id: 101
+  entity_type: "Group"
+  entity_id: 1001
+  may_see: true
+  may_see_members: true
+  may_request_membership: true
+  stranger: true
+
+profile_for_private_committee:
+  id: 102
+  entity_type: "Group"
+  entity_id: 1002
+  may_see: false
+  may_see_members: false
+  stranger: true
+
+profile_for_private_group:
+  id: 2
+  entity_type: "Group"
+  entity_id: 2000
+  may_see: false
+  may_see_members: false
+  may_request_membership: false
+  stranger: true
+
+profile_for_rainbow:
+  id: 3
+  entity_type: "Group"
+  entity_id: 3
+  may_see: true
+  may_see_members: false
+  may_request_membership: false
+  stranger: true
+  summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  wiki_id: 300
+
+private_profile_for_rainbow:
+  id: 31
+  entity_type: "Group"
+  entity_id: 3
+  may_see: true
+  may_see_members: false
+  may_request_membership: false
+  stranger: false 
+  friend: true
+  summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  wiki_id: 310
+
+profile_for_warm:
+  id: 301
+  entity_type: "Group"
+  entity_id: 31
+  stranger: true
+  may_see: false
+  summary: colors that are warm.
+  summary_html: colors that are warm.
+
+profile_for_cold:
+  id: 302
+  entity_type: "Group"
+  entity_id: 32
+  stranger: true
+  may_see: false
+  summary: colors that are cold.
+  summary_html: colors that are cold.
+
+profile_for_animals:
+  id: 4
+  entity_type: "Group"
+  entity_id: 2
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+  summary: all the animals party down!
+  summary_html: all the animals party down!
+
+profile_for_cnt:
+  id: 5
+  entity_type: "Group"
+  entity_id: 3001
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+  video_id: 1
+  summary: |-
+    h1. This is a site.
+    Nullam tortor justo, cursus vestibulum, volutpat sed, interdum vel, orci. Donec euismod ultrices odio. Suspendisse eu odio sit amet odio vulputate tristique. Vestibulum massa. Vestibulum nec orci. Cras tellus pede, tincidunt vitae, adipiscing ut, rutrum ut, urna.
+
+  summary_html: |-
+    <h1>This is a site.</h1>
+    Nullam tortor justo, cursus vestibulum, volutpat sed, interdum vel, orci. Donec euismod ultrices odio. Suspendisse eu odio sit amet odio vulputate tristique. Vestibulum massa. Vestibulum nec orci. Cras tellus pede, tincidunt vitae, adipiscing ut, rutrum ut, urna.
+
+  
+profile_for_fai:
+  id: 6
+  entity_type: "Group"
+  entity_id: 3002
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+
+# this is used by page sharing test as an example of a user
+# that should not be pestered.
+public_profile_for_yellow:
+  id: 8
+  entity_type: "User"
+  entity_id: 7
+  stranger: true
+  may_see: true
+  may_pester: false
+
+#private_profile_for_yellow:
+#  id: 9
+#  entity_type: "User"
+#  entity_id: 7
+#  stranger: false
+#  may_see: false
+#  may_pester: false
+
+profile_for_diggers:
+  id: 10
+  entity_type: "Group"
+  entity_id: 1
+  membership_policy: 1
+  stranger: true
+  summary: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
+  summary_html: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
+
+
+public_profile_for_blue:
+  id: 11
+  entity_type: "User"
+  entity_id: 4
+  stranger: true
+
+public_profile_for_recent_group:
+  id: 303
+  entity_type: "Group"
+  entity_id: 33
+  geo_location_id: 1
+

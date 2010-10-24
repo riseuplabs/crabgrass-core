@@ -1,0 +1,63 @@
+#
+# if you change the ideas of these sites, change the method 'enable_site_testing'
+# in conf.rb.
+#
+# also, you can only set the super_admin_group_id to a group that actually has
+# has site_id set to the same site.
+#
+
+---
+local:
+  id: 1
+  name: "site1"
+  title: "site1"
+  default: true
+  domain: localhost
+  custom_appearance_id: 2
+  network_id: 3001
+  council_id: 1 # true levellers
+  limited: false
+test:
+  id: 2
+  name: "site2"
+  title: "testing site"
+  # the domain for all testing sites must be 'test.host'
+  # this is the request domain that is used by rails when testing.
+  # this site is not used for most tests, but for some it is enabled.
+  domain: "test.host"
+  translation_group: "animals"
+  network_id: 3002
+  # this is normally overwritten at startup by crabgrass. however,
+  # the way we enable sites for only some tests relies on their being
+  # a super_admin_group_id defined for the test site.
+  super_admin_group_id: 4001
+  limited: true
+limited:
+  id: 3
+  name: "limited"
+  domain: "limited"
+  title: "a limited site"
+  limited: true
+# this site is used for admin controller tests
+# It has a council and a network but it is unlimited
+# so it does not depend on the groups and users site_ids
+# to be set to this site.
+unlimited:
+  id: 4
+  name: "unlimited"
+  # the domain for all testing sites must be 'test.host'
+  domain: "test.host"
+  network_id: 3002
+  council_id: 2 # animals - used for the admin controllers tests.
+  title: "an unlimited site"
+  limited: false
+redwood:
+  id: 5
+  name: "redwood"
+  title: "just a random site for redwood trees"
+  limited: true
+nonetworks:
+  id: 6
+  name: "nonetworks"
+  has_networks: false
+  limited: false 

@@ -1,0 +1,51 @@
+<% id = 0 %>
+
+# test a request to blue
+friend_blue:
+  id: <%= id+=1 %>
+  recipient_id: 4
+  recipient_type: User
+  created_by_id: 10
+  state: "pending"
+  type: RequestToFriend
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+# test a request from blue
+blue_asks:
+  id: <%= id+=1 %>
+  recipient_id: 9
+  recipient_type: User
+  created_by_id: 4
+  state: "pending"
+  type: RequestToFriend
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+# test a request to join animals
+join_animals:
+  id: <%= id+=1 %>
+  recipient_id: 2
+  recipient_type: Group
+  created_by_id: 8
+  state: "pending"
+  type: RequestToJoinYou
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+# test an invite from animals
+invite_from_animals:
+  id: <%= id+=1 %>
+  recipient_id: 9
+  created_by_id: 4
+  recipient_type: User
+  requestable_type: Group
+  requestable_id: 2
+  state: "pending"
+  type: RequestToJoinUs
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
