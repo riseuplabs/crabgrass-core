@@ -17,11 +17,6 @@ end
 %w[renderer cache loader options navigation_item navigation_definition].each do |file|
   require File.join(File.dirname(__FILE__), 'theme', file)
 end
-#require 'theme/renderer'
-#require 'theme/cache'
-#require 'theme/loader'
-#require 'theme/options'
-#require 'theme/navigation_definition'
 
 class Crabgrass::Theme
 
@@ -29,9 +24,9 @@ class Crabgrass::Theme
   include Crabgrass::Theme::Cache
   include Crabgrass::Theme::Loader
 
-  THEME_ROOT = RAILS_ROOT + '/app/themes'        # where theme configs live
-  SASS_ROOT  = RAILS_ROOT + '/app/stylesheets'   # where the sass source files live
-  CSS_ROOT   = RAILS_ROOT + '/public/theme'      # where the rendered css files live
+  THEME_ROOT = RAILS_ROOT + '/extensions/themes'  # where theme configs live
+  SASS_ROOT  = RAILS_ROOT + '/app/stylesheets'    # where the sass source files live
+  CSS_ROOT   = RAILS_ROOT + '/public/theme'       # where the rendered css files live
   CORE_CSS_SHEET = 'screen'
 
   attr_reader :directory, :public_directory, :name, :data
