@@ -2,18 +2,18 @@ FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups java
 
 ActionController::Routing::Routes.draw do |map|
 
-#  ##
-#  ## STATIC FILES AND ASSETS
-#  ##
+  ##
+  ## STATIC FILES AND ASSETS
+  ##
 
-#  map.with_options(:controller => 'assets') do |assets|
-#    assets.connect '/assets/:action/:id', :action => /create|destroy/
-#    assets.connect 'assets/:id/versions/:version/*path', :action => 'show'
-#    assets.connect 'assets/:id/*path', :action => 'show'
-#  end
+  map.with_options(:controller => 'assets') do |assets|
+    assets.connect '/assets/:action/:id', :action => /create|destroy/
+    assets.connect 'assets/:id/versions/:version/*path', :action => 'show'
+    assets.connect 'assets/:id/*path', :action => 'show'
+  end
 
-#  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
-#  map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
+  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show' 
+  map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
 #  ##
 #  ## ME
@@ -88,11 +88,11 @@ ActionController::Routing::Routes.draw do |map|
 #  ## DEBUGGING
 #  ##
 
-#  if RAILS_ENV == "development"
-#    ## DEBUG ROUTE
-#    map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
-#  end
-#  map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
+  if RAILS_ENV == "development"
+    ## DEBUG ROUTE
+    map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
+  end
+  map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
   ## DEFAULT ROUTE
