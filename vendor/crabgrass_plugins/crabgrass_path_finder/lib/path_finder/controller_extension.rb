@@ -1,14 +1,46 @@
-# = PathFinder::Options
+# = PathFinder::ControllerExtension
 #
 # This module should be included in the Application class
 # so that all controllers have access to these methods.
 #
 # They are used as options for find_by_path in PathFinder::FindByPath
 #
-# The corresponding callbacks are in PathFinder::Mysql::Options,
-# PathFinder::Sphinx::Options and PathFinder::Sql::Options.
+# Much of the code here just sets symbols for callbacks
+# that should be called by whatever backend we are using.
+#
+# The actual code for the callbacks are in:
+# PathFinder::Mysql::Options
+# PathFinder::Sphinx::Options
+# PathFinder::Sql::Options.
+#
+module PathFinder::ControllerExtension
 
-module PathFinder::Options
+  def self.included(base)
+    base.class_eval do
+      helper_method :parse_filter_path
+      helper_method :options_for_me
+      helper_method :options_for_mentor
+      helper_method :options_for_public
+      helper_method :options_for_inbox
+      helper_method :options_for_group
+      helper_method :options_for_groups
+      helper_method :options_for_user
+    end
+  end
+
+  protected
+
+  # create a filter ParsedPath
+  def parse_filter_path(path)
+    if path.is_a?(PathFinder::ParsedPath)
+      path
+    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+      PathFinder::ParsedPath.new(path[0])
+    else
+      PathFinder::ParsedPath.new(path)
+    end
+  end
+
 
   # access options for pages current_user has access to
   def options_for_me(args={})
