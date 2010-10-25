@@ -71,6 +71,10 @@ before_render
   run and before the view starts to get generated. Very useful!
   http://github.com/xtoddx/before_render/tree/master
 
+http_accept_language
+  does a good job of cleaning up the info the browser sends us regarding
+  what language the user prefers.
+
 Media Plugins
 -------------
 
