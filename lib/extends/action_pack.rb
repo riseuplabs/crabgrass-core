@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'action_pack'
+require 'action_view'
+require 'action_controller'
+
 ###
 ### MULTIPLE SUBMIT BUTTONS
 ###
@@ -8,11 +13,6 @@
 # (http://dev.rubyonrails.org/ticket/3231). This hack is an attempt to get
 # around the limitation. By disabling the other submit buttons we ensure that
 # only the submit button that was pressed contributes to the request params.
-
-require 'rubygems'
-require 'action_pack'
-require 'action_view'
-require 'action_controller'
 
 class ActionView::Base
   alias_method :rails_submit_tag, :submit_tag
@@ -47,50 +47,14 @@ end
 # they will surround every input with .fieldWithErrors divs
 # and will mess up your layout. but there is a way to customize them
 # http://pivotallabs.com/users/frmorio/blog/articles/267-applying-different-error-display-styles
-class ActionView::Base
-  def with_error_proc(error_proc)
-    pre = ActionView::Base.field_error_proc
-    ActionView::Base.field_error_proc = error_proc
-    yield
-    ActionView::Base.field_error_proc = pre
-  end
-end
 
-###
-### PERMISSIONS DEFINITION
-###
-ActionController::Base.class_eval do
-  # defines the permission mixin to be in charge of instances of this controller
-  # and related views.
-  #
-  # for example:
-  #   permissions 'foo_bar', :bar_foo
-  #
-  # will attempt to load the +FooBarPermission+ and +BarFooPermission+ classes
-  # and apply them considering permissions for the current controller and views.
-  def self.permissions(*class_names)
-    for class_name in class_names
-      begin
-        permission_class = "#{class_name}_permission".camelize.constantize
-      rescue NameError # permissions 'groups' => Groups::BasePermission
-        permission_class = "#{class_name}/base_permission".camelize.constantize
-      end
-      include(permission_class)
-      add_template_helper(permission_class)
+#class ActionView::Base
+#  def with_error_proc(error_proc)
+#    pre = ActionView::Base.field_error_proc
+#    ActionView::Base.field_error_proc = error_proc
+#    yield
+#    ActionView::Base.field_error_proc = pre
+#  end
+#end
 
-      #@@permissioner = Object.new
-      #@@permissioner.extend(permission_class)
-    end
-  end
-end
-
-  # returns the permissioner in charge of instances of this controller class
-  #def self.permissioner
-  #  @@permissioner
-  #end
-
-  # returns the permissioner in charge of this controller class
-  #def permissioner
-  #  @@permissioner
-  #end
 
