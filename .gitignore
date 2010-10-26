@@ -22,6 +22,7 @@ db/development_structure.sql
 public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/compiled
+public/theme
 .sass-cache
 .sass-cache/*
 public/assets/*
