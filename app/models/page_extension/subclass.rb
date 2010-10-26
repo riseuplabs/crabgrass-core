@@ -2,7 +2,7 @@
 
 SUPPORT FOR PAGE SUBCLASSING
 
-All page types are handled by 'tools' that are really just plugins that live
+All page types are defined by plugins that live in extensions/pages.
 in the tools directory.
 
 The methods in this module make use of the constant PAGES. This is hash of
@@ -13,23 +13,6 @@ In development mode, rails is very aggressive about unloading and reloading
 classes as needed. Unfortunately, for crabgrass page types, rails always gets
 it wrong. To get around this, we create static proxy representation of the
 classes of each page type and load the actually class only when we have to.
-
-To subclass a page, put something like this in the tool's init.rb:
-
-PageClassRegistrar.add(
-  'MyPage',
-  :controller => 'my_page',
-  :icon => 'package.png',
-  :class_display_name => 'mine',
-  :class_description => 'a page that is all mine',
-  :class_group => 'asset',
-  :order => 20
-)
-
-then, in tools/mytool/models/mypage.rb
-
-  class MyPage < Page
-  end
 
 =end
 
@@ -44,7 +27,7 @@ module PageExtension::Subclass
 
   module InstanceMethods
     def class_definition
-      PAGES[self.class.name] || PageClassProxy.new({})
+      PAGES[self.class.name] || Crabgrass::Page::ClassProxy.new({})
     end
     def icon
       class_definition.icon
@@ -135,7 +118,7 @@ module PageExtension::Subclass
     end
 
     def class_definition
-      PAGES[name] || PageClassProxy.new
+      PAGES[name] || Crabgrass::Page::ClassProxy.new
     end
 
     def icon
