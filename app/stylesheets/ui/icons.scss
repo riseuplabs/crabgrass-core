@@ -127,3 +127,23 @@
 //    }
 //  }
 //}
+
+
+//
+// AVATAR ICONS
+//
+// sizes, as defined in avatar.rb:
+// tiny     16px
+// xsmall   22px
+// small    32px
+// medium   48px
+// large    60px
+// xlarge   96px
+// big      202px
+//
+
+.avatar_height_small {
+  line-height: 32px + 8px;
+}
+
+

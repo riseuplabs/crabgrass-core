@@ -1,0 +1,38 @@
+// 
+// everywhere we need to display lists of things.
+//
+// there are four main types of lists:
+//
+// (1) table
+//     display a list of items in a table with columns and rows.
+//
+// (2) rows
+//     display the items, one per row (without aligned columns)
+//
+// (3) grid
+//     display small squarish representations of each item in a grid
+//
+// (4) expanded
+//     like rows, but with more information and probably taking up
+//     multiple lines.
+//
+// this file includes common helper styles for these display elements.
+//
+
+
+//
+// TABLE
+//
+
+.list_as_table {
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    padding: 4px;
+    border: 1px dotted #ccc;
+    border-width: 1px 0;
+  }
+
+}
+

@@ -24,6 +24,12 @@ module Ui::ImageHelper
   ## users and groups have avatars. these helpers help you display them.
   ##
 
+  def avatar_link(viewable, size='medium')
+    if viewable
+      link_to avatar_for(viewable, size), url_for_entity(viewable)
+    end
+  end
+
   ## creates an img tag based avatar
   def avatar_for(viewable, size='medium', options={})
     return nil if viewable.blank? || viewable.new_record?

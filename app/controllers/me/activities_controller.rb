@@ -1,7 +1,7 @@
 class Me::ActivitiesController < Me::BaseController
 
   def index
-    @activities = Activity.social_activities_for_groups_and_friends(current_user).only_visible_groups.newest.unique.paginate(pagination_params)
+    @activities = Activity.send(current_view, current_user).newest.unique.paginate(pagination_params)
   end
 
   # REST /me/activities/:id
@@ -10,11 +10,15 @@ class Me::ActivitiesController < Me::BaseController
 
   protected
 
-  def view
+  def current_view
     case params[:view]
-      when 'peers' then 'social_activities_for_groups_and_peers';
-      else 'social_activities_for_groups_and_friends';
+      when 'friends' then 'for_my_friends';
+      when 'groups' then 'for_my_groups';
+      when 'my' then 'for_me';
+      else 'for_all';
     end
   end
 
 end
+
+

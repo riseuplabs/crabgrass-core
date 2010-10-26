@@ -1,7 +1,3 @@
-##
-## TODO: not sure what defaults we should put here.
-##
-
 # Be sure to restart your server when you modify this file.
 
 # These settings change the behavior of Rails 2 apps and will be defaults
@@ -12,7 +8,9 @@ if defined?(ActiveRecord)
   ActiveRecord::Base.include_root_in_json = true
 
   # Store the full class name (including module namespace) in STI type column.
-  ActiveRecord::Base.store_full_sti_class = true
+  # For crabgrass, this needs to be false. The new default in rails is true,
+  # but cg needs it set to false.
+  ActiveRecord::Base.store_full_sti_class = false
 end
 
 ActionController::Routing.generate_best_match = false

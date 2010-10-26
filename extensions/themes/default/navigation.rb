@@ -52,6 +52,27 @@ navigation do
       url    { me_activities_path }
       active { controller?('me/activities') }
       icon   :transmit
+      local_section :all do
+        label  "All Activities"
+        url    { me_activities_path }
+        active { controller?('me/activities') and params[:view].empty? }
+      end
+      local_section :my do
+        label  "My Activities"
+        url    { me_activities_path(:view => 'my') }
+        active { controller?('me/activities') and params[:view] == 'my' }
+      end
+      local_section :friends do
+        label  "Friends' Activities"
+        url    { me_activities_path(:view => 'friends') }
+        active { controller?('me/activities') and params[:view] == 'friends' }
+      end
+      local_section :groups do
+        label  "Group Activities"
+        url    { me_activities_path(:view => 'groups') }
+        active { controller?('me/activities') and params[:view] == 'groups' }
+      end
+
     end
 
     context_section :messages do
