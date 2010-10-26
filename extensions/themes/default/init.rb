@@ -82,7 +82,7 @@ options {
                               # responsible for aligning whatever text you put
                               # in the content block.
       height "2.5em"          # required if vertical_align == 'center'
-      padding var(:grid_column_gutter)
+      padding "1g"
       html { content_tag :div, current_site.title, :id => 'masthead_title' }
     }
     nav {
@@ -129,9 +129,11 @@ options {
     content {
       border $border
       background 'white'
+      padding '1g'
     }
     nav {
       style 'tabs'
+      padding '0.5g'
       side 'left'   # only left for now.
       column_count 3
     }

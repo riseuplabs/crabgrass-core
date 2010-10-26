@@ -79,11 +79,13 @@ nav#local_nav {
       }
     }
     li a {
-      padding: gutter($local_nav_column_count) / 2;
+      padding: resolve_width($local_nav_padding, $local_nav_column_count);
       display: block;
       &.active {
         background: $local_content_background;
         @if border_size($local_content_border) > 0px {
+          // shift the tab slightly to the right to make it flush
+          // with the content.
           position: relative;
           left: border_size($local_content_border);
         }
@@ -99,7 +101,7 @@ nav#local_nav {
   }
   nav#local_nav {
     li a {
-      padding: gutter($local_nav_column_count) / 2;
+      padding: resolve_width($local_nav_padding, $local_nav_column_count);
     }
   }
 
@@ -109,6 +111,6 @@ nav#local_nav {
 article#content {
   border: $local_content_border;
   background: $local_content_background;
-  padding: gutter($center_columns);
+  padding: resolve_width($local_content_padding, $center_columns);
 }
 

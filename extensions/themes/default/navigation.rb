@@ -37,7 +37,7 @@ navigation do
       label  "Notices"
       url    { me_home_path }
       active { controller?('me/notices') }
-      icon   :clock
+      icon   :info
     end
 
     context_section :pages do

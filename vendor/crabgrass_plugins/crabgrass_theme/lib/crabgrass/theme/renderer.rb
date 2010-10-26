@@ -84,6 +84,8 @@ module Crabgrass::Theme::Renderer
       false
     elsif value =~ /(px|em|%)$/
       false
+    elsif value =~ /[\(\)]/
+      false
     elsif value =~ /^\dpx (solid|dotted)/
       # looks like a boder definition
       false

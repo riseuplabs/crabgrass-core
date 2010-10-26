@@ -25,6 +25,10 @@ $masthead_nav_dropdown_border_size: 1px;
       $background_color,
       $masthead_border
     );
+    // a minor adjustment: align the first tab with the masthead content.
+    ul#menu {
+      padding-left: resolve_width($masthead_content_padding);
+    }
   }
 } @else {
   #menu li.tab {@include inline-list;}
