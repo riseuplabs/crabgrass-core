@@ -198,4 +198,9 @@ module Ui::EntityDisplayHelper
     content_tag(element, display, :style => options[:style], :class => options[:class], :title => title, :href => href)
   end
 
+  # used when generating html to return for autocomplete popups
+  def entity_autocomplete_line(entity)
+    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+  end
+
 end

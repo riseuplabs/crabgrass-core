@@ -115,6 +115,12 @@ options {
     }
   }
 
+  posts {
+    border "1px solid #ccc"
+    background "#efefef"
+    padding "10px"
+  }
+
   # all the various z-index values are defined here. 
   # these should not ever need to be changed. 
   zindex {
@@ -125,6 +131,11 @@ options {
 
   }
 
+  avatar {
+    Avatar::SIZES.each do |size, pixels|
+      send(size, "#{pixels}px")
+    end
+  }
 }
 
 style %{

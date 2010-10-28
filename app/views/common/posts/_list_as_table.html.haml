@@ -1,0 +1,6 @@
+%table.posts
+  - for post in posts do
+    = render :partial => 'common/posts/table/row', :locals => local_assigns.merge(:post => post)
+  -# if may_create_posts?
+    = render :partial => 'posts/reply'
+

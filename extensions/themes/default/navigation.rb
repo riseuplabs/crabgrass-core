@@ -77,8 +77,8 @@ navigation do
 
     context_section :messages do
       label  "Messages"
-      url    { me_messages_path }
-      active { controller?('me/messages') }
+      url    { me_discussions_path }
+      active { controller?('me/discussions', 'me/posts') }
       icon   :page_message
     end
 

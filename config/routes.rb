@@ -36,6 +36,12 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :requests
   end
 
+  ##
+  ## ENTITIES
+  ##
+
+  map.resources :entities, :only => [:index]
+
 #  ##
 #  ## PEOPLE
 #  ##

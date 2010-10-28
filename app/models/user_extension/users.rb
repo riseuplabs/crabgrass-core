@@ -75,21 +75,9 @@ module UserExtension::Users
         {:conditions => ['users.id NOT IN (?)', user.friend_id_cache + [user.id]]}
       end)
 
-#      has_and_belongs_to_many :contacts,
-#        {:class_name => "User",
-#        :join_table => "contacts",
-#        :association_foreign_key => "contact_id",
-#        :foreign_key => "user_id",
-#        :uniq => true} do
-#          def online
-#            find( :all,
-#              :conditions => ['users.last_seen_at > ?',10.minutes.ago],
-#              :order => 'users.last_seen_at DESC' )
-#          end
-#          def logins_only
-#            find( :all, :select => 'users.login')
-#          end
-#      end
+      named_scope(:friends_or_peers_of, lambda do |user|
+        {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
+      end)
 
     end
   end

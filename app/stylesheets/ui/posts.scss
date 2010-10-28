@@ -1,0 +1,50 @@
+//
+// STYLES FOR DISCUSSION POSTS
+//
+// These are used in many places:
+// * comments on pages
+// * status updates and replies
+// * private messages between two people
+//
+
+//
+// table style
+//
+
+.post_list.table {
+  table.posts {
+    width: 100%;
+    border-top: $posts_border;
+  }
+  .shade_even {
+    background: $local_content_background;
+  }
+  .shade_odd {
+    background: $posts_background;
+  }
+  tr.post td {
+    vertical-align: top;
+  }
+  tr.post_spacer_bottom td {
+    line-height: $posts_padding;
+    border-bottom: $posts_border;
+  }
+  tr.post_spacer_top td {
+    line-height: $posts_padding;
+  }
+  td.post_body {
+    border-left: $posts_border;
+    padding: 0 $posts_padding;
+    width: 100%;
+  }
+  td.post_author {
+    text-align: right;
+    padding: 0 $posts_padding;
+    .author {
+      padding-right: $avatar_small + $posts_padding;
+      background-position: right top;
+      background-repeat:no-repeat;
+    }
+  }
+}
+

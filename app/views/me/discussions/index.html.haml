@@ -1,0 +1,10 @@
+= render :partial => 'me/discussions/say_box'
+
+%div.list_as_table
+  %div.list_header
+    = pagination_links(@discussions)
+  %table
+    = render :partial => 'discussion', :collection => @discussions
+  %div.list_footer
+    = pagination_links(@discussions)
+

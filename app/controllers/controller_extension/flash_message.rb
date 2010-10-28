@@ -1,6 +1,17 @@
 # this requires ActionView::Helpers::TagHelper
 
-module Ui::FlashMessageHelper
+module ControllerExtension::FlashMessage
+
+  def self.included(base)
+    base.class_eval do
+      helper_method :flash_message
+      helper_method :flash_message_now
+      helper_method :display_flash_messages
+      helper_method :raise_error
+      helper_method :raise_not_found
+      helper_method :raise_denied
+    end
+  end
 
   protected
 
@@ -71,14 +82,14 @@ module Ui::FlashMessageHelper
   # For example:
   #   page.replace_html 'flash-message', message_text(:object => @page) unless @page.valid?
   #
-  def message_text(options)
-    add_flash_message(flash, options)
-    display_messages
-  end
+  #def message_text(options)
+  #  add_flash_message(flash, options)
+  #  display_messages
+  #end
 
   # display flash messages with appropriate styling
   # for now, the size is always small.
-  def display_messages(size='small')
+  def display_flash_messages(size='small')
     return "" if flash[:hide]
     @display_message ||= begin
       if flash[:type].empty?
@@ -107,6 +118,8 @@ module Ui::FlashMessageHelper
   def raise_denied(message=nil)
     raise PermissionDenied.new(message)
   end
+
+  private
 
   ##
   ## BUILDING THE MESSAGE
@@ -213,8 +226,6 @@ module Ui::FlashMessageHelper
     end
     message
   end
-
-  private
 
   def build_notice_area(type, title, text)
     icon = case type

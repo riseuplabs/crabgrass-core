@@ -122,17 +122,20 @@ function submitNestedResourceForm(resource_id_field, resource_url_template, dont
   // or the value has changed and isn't blank
   if(dont_submit_default_value == false || (input.value != '' && input.value != input.defaultValue)) {
     var form = input.form;
-
     var resource_id = input.value;
     form.action = resource_url_template.gsub('__ID__', resource_id);
     form.submit();
   }
 }
 
-
+// used to make textareas bigger when they have focus
+// e.g. the 'say' box.
 function setRows(elem, rows) {
   elem.rows = rows;
-  elem.toggleClassName('tall');
+  if(rows < 1)
+    elem.addClassName('tall');
+  else
+    elem.removeClassName('tall');
 }
 
 // starts watching the textarea
@@ -190,22 +193,22 @@ function eventTarget(event) {
 //
 // this should be replaced with element.cumulativeOffset()
 //
-function absolutePosition(obj) {
-  var curleft = 0;
-  var curtop = 0;
-  if (obj.offsetParent) {
-    do {
-      curleft += obj.offsetLeft;
-      curtop += obj.offsetTop;
-    } while (obj = obj.offsetParent);
-  }
-  return [curleft,curtop];
-}
-function absolutePositionParams(obj) {
-  var obj_dims = absolutePosition(obj);
-  var page_dims = document.viewport.getDimensions();
-  return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
-}
+//function absolutePosition(obj) {
+//  var curleft = 0;
+//  var curtop = 0;
+//  if (obj.offsetParent) {
+//    do {
+//      curleft += obj.offsetLeft;
+//      curtop += obj.offsetTop;
+//    } while (obj = obj.offsetParent);
+//  }
+//  return [curleft,curtop];
+//}
+//function absolutePositionParams(obj) {
+//  var obj_dims = absolutePosition(obj);
+//  var page_dims = document.viewport.getDimensions();
+//  return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
+//}
 
 //
 // DYNAMIC TABS

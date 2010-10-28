@@ -17,7 +17,7 @@ module Ui::AutocompleteHelper
   #    the dom id of an element that will be the container for the popup. optional
   #
   def autocomplete_entity_tag(field_id, options={})
-    options[:url] ||= '/autocomplete/entities'
+    options[:url] ||= '/entities'
     options[:onselect] ||= 'null'
     auto_complete_js = %Q[
       new Autocomplete('#{field_id}', {
