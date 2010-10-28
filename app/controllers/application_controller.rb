@@ -2,34 +2,34 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-
   filter_parameter_logging :password
   protect_from_forgery
 
   ##
-  ## CONTROLLER EXTENSIONS
+  ## COMMON CONTROLLER EXTENSIONS
   ## 
 
-  include ControllerExtension::Authentication
-  include ControllerExtension::BeforeFilters
-  include ControllerExtension::ContextParser
-  include ControllerExtension::CurrentSite
-  include ControllerExtension::PaginationOptions
-  include ControllerExtension::Permissions
-  include ControllerExtension::RescueErrors
-  include ControllerExtension::Tracking
-  include ControllerExtension::UrlIdentifiers
-  # include ControllerExtension::WikiPopup
-  include ControllerExtension::WikiRenderer
+  Dir.entries("app/controllers/controller_extension/").each do |file|   
+    include("controller_extension/#{$1}".camelize.constantize) if file =~ /(.*)\.rb$/
+  end
 
   permissions :application
+
+  ##
+  ## COMMON HELPERS
+  ##
+
+  helper :application
+  [:utility, :ui, :page].each do |helper_namespace|
+    Dir.entries("app/helpers/#{helper_namespace}/").each do |file|
+      helper("#{helper_namespace}/#{$1}") if file =~ /(.*)_helper\.rb$/
+    end
+  end
 
   protected
 
   def current_theme
-    #@current_theme ||= Theme[current_site.theme_name]
-    @current_theme ||= Crabgrass::Theme["default"]
+    @current_theme ||= Crabgrass::Theme[current_site.theme]
   end
   helper_method :current_theme
 
