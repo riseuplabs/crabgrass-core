@@ -1,23 +1,12 @@
-%div.list_as_table
+- unless ['friends','groups'].include? params[:view]
+  - link_to_toggle(:set_status_button.t, :onvisible => "$('post_body').focus()") do
+    = render :partial => 'me/activities/status_form'
 
+%div.list_as_table.p
   %div.list_header
     = pagination_links(@activities)
-
   %table
-    - @activities.each do |activity|
-      - avatar = activity.avatar
-      - avatar_size = local_assigns[:avatar_size] || 'small'
-      %tr{:class => "avatar_height_#{avatar_size}"}
-        %td
-          = avatar_link(avatar, avatar_size)
-        %td
-          %span.small_icon{:class => "#{activity.icon}_16"}
-        %td.description
-          = expand_links(activity.try.safe_description(self))
-        - unless local_assigns[:no_date]
-          %td.date
-            = friendly_date(activity.created_at)
-
+    = render :partial => 'activity', :collection => @activities
   %div.list_footer
     = pagination_links(@activities)
 

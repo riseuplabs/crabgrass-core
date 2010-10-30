@@ -1,0 +1,13 @@
+- avatar = activity.avatar
+- avatar_size = local_assigns[:avatar_size] || 'small'
+%tr{:class => "avatar_height_#{avatar_size}"}
+  %td
+    = avatar_link(avatar, avatar_size)
+  %td
+    %span.small_icon{:class => "#{activity.icon}_16"}
+  %td.description
+    = expand_links(activity.try.safe_description(self))
+  - unless local_assigns[:no_date]
+    %td.date
+      = friendly_date(activity.created_at)
+

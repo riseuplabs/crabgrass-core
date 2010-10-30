@@ -58,17 +58,17 @@ navigation do
         active { controller?('me/activities') and params[:view].empty? }
       end
       local_section :my do
-        label  "My Activities"
+        label  "Mine"
         url    { me_activities_path(:view => 'my') }
         active { controller?('me/activities') and params[:view] == 'my' }
       end
       local_section :friends do
-        label  "Friends' Activities"
+        label  "People"
         url    { me_activities_path(:view => 'friends') }
         active { controller?('me/activities') and params[:view] == 'friends' }
       end
       local_section :groups do
-        label  "Group Activities"
+        label  "Groups"
         url    { me_activities_path(:view => 'groups') }
         active { controller?('me/activities') and params[:view] == 'groups' }
       end
