@@ -109,7 +109,7 @@ options {
     }
     nav {
       style 'tabs'
-      padding '0.5g'
+      padding '1g'
       side 'left'   # only left for now.
       column_count 3
     }
