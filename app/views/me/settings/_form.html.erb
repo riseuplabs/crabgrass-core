@@ -42,5 +42,9 @@
     r.input password_field('user', 'password_confirmation')
   end
 
+  f.buttons do |b|
+    b.button submit_tag I18n.t(:save_changes)
+  end
+
 end %>
 
