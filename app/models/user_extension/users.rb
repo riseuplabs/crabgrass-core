@@ -152,12 +152,27 @@ module UserExtension::Users
     end
 
     # ensure a relationship between this and the other user exists
-    # add a new post to the private discussion shared between this and the other_user
-    # +in_reply_to+ is a post the new posts will be replying this
-    # this is not stored, but used to generate a more informative notification on the user's wall.
+    # add a new post to the private discussion shared between this and the other_user.
+    #
+    # +in_reply_to+ is an optional argument for the post that this new post
+    # is replying to.
+    #
+    # currently, this is not stored, but used to generate a more informative
+    # notification on the user's wall.
+    #
     def send_message_to!(other_user, body, in_reply_to = nil)
       relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
       discussion = relationship.get_or_create_discussion
+
+      if in_reply_to
+        if in_reply_to.user_id == self.id
+          # you cannot reply to oneself
+          in_reply_to = nil
+        elsif in_reply_to.user_id != other_user.id
+          # we should never get here normally, this is just a sanity check
+          raise ErrorMessage.new("Ugh. The user and the post you are replying to don't match.")
+        end
+      end
 
       discussion.increment_unread_for!(other_user)
       post = discussion.posts.create do |post|

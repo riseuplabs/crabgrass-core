@@ -1,6 +1,19 @@
+-#
+-# display a list of posts, using a table. 
+-#
+-# the table uses funky spacer rows, but this makes it possible to have a full
+-# height divider border between the user avatar and the body of the post,
+-# regardless of which side is taller.
+-#  
+
+- if posts.any?
+  - last_id = posts.last.id
+- else
+  - last_id = nil
+
 %table.posts
   - for post in posts do
-    = render :partial => 'common/posts/table/row', :locals => local_assigns.merge(:post => post)
-  -# if may_create_posts?
-    = render :partial => 'posts/reply'
+    = render :partial => 'common/posts/table/row', :locals => local_assigns.merge(:post => post, :last => (post.id == last_id))
+  - if may_create_posts?
+    = render :partial => 'common/posts/table/reply', :locals => local_assigns.merge(:last_id => last_id)
 

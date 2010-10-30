@@ -1,0 +1,17 @@
+- color = cycle('shade_odd', 'shade_even')
+- author_style = "background-image: url(#{avatar_url_for(current_user,'small')})"
+
+%tbody{:id=>'post_reply'}
+  %tr{:class=>"post_spacer_top #{color}"}
+    %td{:colspan => 2}
+      %a{:name=>'reply'}= '&nbsp;' 
+
+  %tr{:class => "post #{color}"}
+    %td.post_author
+      %div.author{:style => author_style}
+        %div.username= display_entity(current_user)
+        %div.date &nbsp;
+    %td{:class => 'post_body'}
+      = render :partial => 'common/posts/table/reply_body', :locals => local_assigns
+  %tr{:class => "post_spacer_bottom #{color}"}
+    %td{:colspan => 2}= '&nbsp;'

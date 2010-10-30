@@ -20,7 +20,7 @@ class Me::PostsController < Me::BaseController
     in_reply_to = Post.find_by_id(params[:in_reply_to_id])
     current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
     respond_to do |wants|
-      wants.html { redirect_to me_discussion_posts_path(@recipient.login) }
+      wants.html { redirect_to me_discussion_posts_url(@recipient.login) + '#last'}
       wants.js { render :nothing => true }
     end
   end

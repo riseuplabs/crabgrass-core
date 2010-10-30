@@ -17,31 +17,36 @@ module Me::DiscussionsHelper
   ## Say box
   ##
 
-  def recipient_field(recipient_name)
-    if recipient_name.blank?
-      # input field
-      recipient_name_text_field_tag(nil) + "\n" +
-      # autocomplete js
-      autocomplete_entity_tag('recipient_name', :url => entities_path(:format => 'json'))
-    else
-      # show a label
-      label_tag 'say_text', I18n.t(:message_recipient_name_caption, :user => recipient_name) + "\n" +
-      # add a hidden the preset form field
-      hidden_field_tag('id', recipient_name, :id => 'recipient_name')
-    end
+  def recipient_field_tag(id)
+    text_field_tag(id, '', :onkeypress => eat_enter) + 
+    autocomplete_entity_tag(id, :url => entities_path(:format => 'json'))
   end
 
-  def recipient_name_text_field_tag(recipient_name = nil)
-    default_value = if recipient_name.blank?
-      I18n.t(:message_recipient_name_input_caption)
-    else
-      recipient_name
-    end
-    text_field_tag('id', params[:id], :id => 'recipient_name',
-      :class => 'textinput',     :value => default_value,
-      :onkeypress => eat_enter,  :onfocus => hide_default_value,
-      :onblur => show_default_value)
-  end
+#  def recipient_field(recipient_name)
+#    if recipient_name.blank?
+#      # input field
+#      recipient_name_text_field_tag(nil) + "\n" +
+#      # autocomplete js
+#      autocomplete_entity_tag('recipient_name', :url => entities_path(:format => 'json'))
+#    else
+#      # show a label
+#      label_tag 'say_text', I18n.t(:message_recipient_name_caption, :user => recipient_name) + "\n" +
+#      # add a hidden the preset form field
+#      hidden_field_tag('id', recipient_name, :id => 'recipient_name')
+#    end
+#  end
+
+#  def recipient_name_text_field_tag(recipient_name = nil)
+#    default_value = if recipient_name.blank?
+#      I18n.t(:message_recipient_name_input_caption)
+#    else
+#      recipient_name
+#    end
+#    text_field_tag('id', params[:id], :id => 'recipient_name',
+#      :class => 'textinput',     :value => default_value,
+#      :onkeypress => eat_enter,  :onfocus => hide_default_value,
+#      :onblur => show_default_value)
+#  end
 
   def send_message_function(default_recipient_name = nil)
     submit_url = me_discussion_posts_path("__ID__")
