@@ -62,13 +62,15 @@ function checkboxToggle(checkbox, element) {
 }
 
 // Toggle the visibility of another element using a link with an
-// expanding/contracting arrow.
-function linkToggle(link, element) {
+// expanding/contracting arrow. call optional function when it
+// becomes visible.
+function linkToggle(link, element, functn) {
   if (link) {
     link = Element.extend(link);
     link.toggleClassName('right_16');
     link.toggleClassName('sort_down_16');
     $(element).toggle();
+    if ($(element).visible() && functn) {functn();}
   }
 }
 
@@ -130,13 +132,13 @@ function submitNestedResourceForm(resource_id_field, resource_url_template, dont
 
 // used to make textareas bigger when they have focus
 // e.g. the 'say' box.
-function setRows(elem, rows) {
-  elem.rows = rows;
-  if(rows < 1)
-    elem.addClassName('tall');
-  else
-    elem.removeClassName('tall');
-}
+//function setRows(elem, rows) {
+//  elem.rows = rows;
+//  if(rows < 1)
+//    elem.addClassName('tall');
+//  else
+//    elem.removeClassName('tall');
+//}
 
 // starts watching the textarea
 // when window.onbeforeunload event happens it will ask the user if they want to leave the unsaved form
