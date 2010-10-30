@@ -36,6 +36,9 @@
     border-left: $posts_border;
     padding: 0 $posts_padding;
     width: 100%;
+    textarea {
+      width: 100%;
+    }
   }
   td.post_author {
     text-align: right;
@@ -45,6 +48,16 @@
       background-position: right top;
       background-repeat:no-repeat;
     }
+  }
+
+  // make the 'send message' button appear on the left,
+  // and the 'editing reference' appear on the right.
+  .form_buttons {
+    margin-top: 0.5em;
+  }
+  .reference {
+    float: right;
+    text-align: right;
   }
 }
 

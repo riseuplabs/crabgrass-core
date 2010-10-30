@@ -1,0 +1,78 @@
+//
+// GENERAL FORM STYLING
+//
+
+//
+// make form elements line up better in chrome:
+//
+
+body.webkit {
+  textarea, input[type=submit] {
+    margin: 0;
+  }
+}
+
+//
+// form elements are often really misaligned because in the w3c box
+// model all the border decoration is put outside the content box, but this
+// decoration varies a lot in different form elements and in different
+// operating systems.
+//
+// this is an attempt to make all the form elements have widths based
+// on the entire box, not just the content.
+// 
+// among other things, this allows us to do this and have it actually produce
+// an even 10px padding around the textarea:
+//
+// <div style="padding: 10px">
+//    <textarea style="width:100%"></textarea>
+// </div>
+//
+// without setting box-sizing to be border-box, the textarea appears to have
+// no padding to the right, because the decoration can easily add 8px to the
+// total width.
+//
+// see http://www.quirksmode.org/css/box.html
+//
+
+textarea, input, select {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+//
+// the button row of a form
+//
+
+.form_buttons {
+  // text-align: right; 
+  margin-top: 1em;
+  input {
+    font-size: 1.15em;
+    margin-right: 1em;
+  }
+}
+
+//
+// FORMY STYLE: SIMPLE FORM
+//
+
+.simple_form {
+  // add a gap between each row
+  .row {
+    margin-top: 1em;
+    label {
+      font-weight: bold;
+    }
+  }
+
+  // by setting a max width, and then making the form elements
+  // be 100%, we create a form that is not too wide, but also will scale
+  // nicely when the screen gets smaller. only ie6 doesn't support max-width.
+  max-width: 30em;
+  input[type=text], input[type=password], textarea, select {
+    width: 100%;
+  }
+}
+
