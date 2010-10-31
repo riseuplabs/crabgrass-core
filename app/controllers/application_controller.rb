@@ -33,6 +33,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_theme
 
+  # view() method lets controllers have access to the view helpers.
+  def view
+    self.class.helpers
+  end
+
+  # proxy for view's content_tag
+  def content_tag(*args, &block)
+    view.content_tag(*args,&block)
+  end
+
   #
   # returns a hash of options to be given to the mailers. These can be
   # overridden, but these defaults are pretty good. See models/mailer.rb.
@@ -51,6 +61,10 @@ class ApplicationController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
+
+  ##
+  ## CLASS METHODS
+  ##
 
   # rather than include every stylesheet in every request, some stylesheets are
   # only included "as needed". A controller can set a custom stylesheet
