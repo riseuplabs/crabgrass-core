@@ -5,23 +5,15 @@ en:
 
   #upload_attachment: "Upload Attachment"
   #rename %{upload_images} -> %{upload}
-
   create_committee: "create committee"
-
   # used by page history
   back_to_the_page: "Back to the page"
-
-
   # unsorted for events
-
   all_day_event: "all day event"
   update_event: "Update event"
   starts_at: "starts at"
   ends_at: "ends at"
   place: "place"
-
-
-
 
   ##
   ## UNUSED, BUT KEEP ANYWAY
@@ -170,6 +162,8 @@ en:
   participants: "Participants"
   viewers: "Viewers"
   recipients: "Recipients"
+  recipient: "Recipient"
+  message: Message
 
   destroy_confirmation: "Are you sure you want to delete this %{thing}? This action cannot be undone."
   confirmation: "Are you sure?"
@@ -260,7 +254,6 @@ en:
   at_least_one_recipient_is_required: at least one recipient is required
   message_must_not_be_empty: message must not be empty
   subject: subject
-  message: message
   from: from
   to: To
   date: date
@@ -623,6 +616,8 @@ en:
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
+  send_message_link: "Send Message"
+  messages_with: "Conversation with %{other_user}"
   messages_back_to_all: "Back to Messages"
   messages_from_label: "Only view messages from:"
   messages_mark_as_label: "Mark as:"
@@ -642,6 +637,7 @@ en:
 
   message_you_wrote_caption: "You wrote:"
   message_user_wrote_caption: "%{user} wrote:"
+
   ##
   ## PROFILE
   ##
@@ -715,7 +711,6 @@ en:
   remove_friend_link: "Remove From My Friends"
   user_preferences: "User Preferences"
   edit_profile_link: "Edit Profile"
-  send_message_link: "Send Message"
   profile_saved: "Your profile has been saved."
 
   profile_option_may_see_committees: "Show committees"

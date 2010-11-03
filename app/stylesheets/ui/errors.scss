@@ -1,0 +1,123 @@
+
+#flash_message {
+  @include full;
+}
+.small_notice {
+  padding: gutter();
+  margin: gutter() 0;
+  .text {
+    padding-left: 20px;
+  }
+  p, ul {
+    margin: 0.25em;
+  }
+  ul {
+    padding-left: 1em;
+  }
+  &.error {
+    border: 1px solid red;
+    background: #fcc;
+  }
+  &.success {
+    border: 1px solid green;
+    background: #cfc;
+  }
+  &.info {
+    border: 1px solid blue;
+    background: #cdf;
+  }
+}
+
+.fieldWithErrors {
+  border: 2px solid #c00;
+}
+
+/*
+
+//
+// ERRORS
+//
+
+blockquote.error
+  padding: 0.5em
+  background: #fcc
+  border: 1px solid red
+
+div
+  &.fieldWithErrors
+    border: 2px solid red
+    display: table-cell
+    + div.fieldWithErrors
+      display: none
+
+//
+// this is the alert box that shows up when you use flash_message(:error => 'ouch')
+//
+
+.small_notice
+  padding: 0.5em
+  margin-bottom: 1em
+  .text
+    padding-left: 20px
+  p, ul
+    margin: 0.25em
+  ul
+    padding-left: 1em
+  &.error
+    border: 1px solid red
+    background: #fcc
+  &.success
+    border: 1px solid green
+    background: #cfc
+  &.info
+    border: 1px solid blue
+    background: #cdf
+
+#modal_message .small_notice
+  margin: 1em
+
+
+//
+// flash messages
+//
+#flash_messages
+  +pie-clearfix
+  overflow: visible
+  background= !global_nav_bg
+  line-height: 0
+#flash-message
+  +container
+  clear: both
+  #message-container
+    width: 800px
+#flash-status-message
+  width: 744px
+  margin: 6px 18px
+.small_notice
+  padding: 6px 10px
+  .text
+    padding-left: 20px
+    line-height: 1.6
+  p, ul
+    margin: 0
+    clear: left
+  ul
+    margin-left: 30px
+  li
+    list-style-type: disc
+
+.error
+  border: 1px solid red
+  background: #fcc
+.success
+  border: 1px solid green
+  background: #cfc
+.info
+  padding: 0 0 0 5px
+
+#modal_message
+  #flash-status-message
+    width: 440px
+
+*/
+

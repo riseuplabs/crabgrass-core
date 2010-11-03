@@ -46,21 +46,21 @@ Crabgrass::Initializer.run do |config|
   ## see environments/test.rb for testing specific gems
   ##
 
+  # required, but not included with crabgrass:
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3'
+  config.gem 'will_paginate', :version => '~> 2.3'
+  config.gem 'mini_magick', :version => '~> 2.3'
+  config.gem 'compass', :version => '~> 0.10'
+
+  # required, and compilation is required to install
+  config.gem 'haml', :version => '~> 3.0'
+  config.gem 'RedCloth', :version => '~> 4.2'
+
   # required, included with crabgrass
   config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
-
-  # required, but not included with crabgrass:
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.19'
-  config.gem 'will_paginate', :version => '2.3.14'
-  config.gem 'mini_magick', :version => '2.3'
-  config.gem 'compass', :version => '0.10.4'
   config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
-
-  # required, and need a build environment to install
-  config.gem 'haml'
-  config.gem 'RedCloth'
 
   # See Rails::Configuration for more options
 end

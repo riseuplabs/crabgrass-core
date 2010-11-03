@@ -25,16 +25,35 @@ module Formy
           @label, @label_for = @label
         end
         html = []
-        html << "<p>"
+        html << "<div class=\"row\">"
         html << "<label for=\"#{@label_for}\">#{@label}</label><br/>"
         html << @input
-        html << "</p>"
+        html << "</div>"
         puts html.join
         super
       end
     end
 
+    class Buttons < Element
+
+      def button(button_html)
+        @buttons ||= []
+        @buttons << button_html
+      end
+
+      def open
+        super
+      end
+      def close
+        puts content_tag(:div, @buttons.join("\n"), :class => 'form_buttons')
+        super
+      end
+
+    end
+
+   
     sub_element Row
+    sub_element Buttons
 
   end
 end

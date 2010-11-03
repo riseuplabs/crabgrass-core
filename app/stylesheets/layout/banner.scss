@@ -100,8 +100,9 @@ header#context_banner {
       color: inherit;
     }
     ul#banner_nav_ul {
-      // not sure why this needs 2 extra pixels, probably because of the border.
-      margin-left: 64px + $banner_padding + 2px;
+      // 64px = width of avatar
+      // 6px = width of avatar border
+      margin-left: 64px + 6px + $banner_padding;
     }
     margin-bottom: gutter();
   }

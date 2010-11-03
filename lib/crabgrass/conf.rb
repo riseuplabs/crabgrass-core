@@ -49,6 +49,7 @@ class Conf
   cattr_accessor :signup_mode
   cattr_accessor :dev_email
   cattr_accessor :login_redirect_url
+  cattr_accessor :theme
 
   # are in site, but I think they should be global
   cattr_accessor :translators
@@ -118,6 +119,7 @@ class Conf
     self.signup_mode       = SIGNUP_MODE[:default]
     self.dev_email         = ''
     self.login_redirect_url = '/me'
+    self.theme             = 'default'
 
     # global configuration
     self.enabled_mods  = []
@@ -126,7 +128,6 @@ class Conf
     self.enabled_languages = []
     self.email         = nil
     self.sites         = []
-    self.themes        = {}
     self.secret        = nil
     self.ensure_page_owner = true
     self.default_page_access = :admin

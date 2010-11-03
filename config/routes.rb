@@ -1,4 +1,6 @@
-FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues static stats stylesheets).freeze
+unless defined?(FORBIDDEN_NAMES)
+  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues static stats stylesheets theme).freeze
+end
 
 ActionController::Routing::Routes.draw do |map|
 
@@ -15,9 +17,9 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show' 
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
-#  ##
-#  ## ME
-#  ##
+  ##
+  ## ME
+  ##
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
     me.resources :notices
@@ -25,12 +27,20 @@ ActionController::Routing::Routes.draw do |map|
     me.resource  :page, :only => [:new, :create]
     me.pages     'pages/*path', :controller => 'pages'
     me.resources :activities
-    me.resources :messages
+    me.resources(:discussions, :as => 'messages') do |discussion|
+      discussion.resources :posts
+    end
     me.resource  :settings, :only => [:show, :update]
     me.resources :permissions
     me.resource  :profile, :controller => 'profile'
     me.resources :requests
   end
+
+  ##
+  ## ENTITIES
+  ##
+
+  map.resources :entities, :only => [:index]
 
 #  ##
 #  ## PEOPLE
@@ -57,16 +67,16 @@ ActionController::Routing::Routes.draw do |map|
 #  ## ACCOUNT
 #  ##
 
-#  map.with_options(:controller => 'account') do |account|
-#    account.reset_password 'account/reset_password/:token', :action => 'reset_password'
-#    account.account_verify 'account/verify_email/:token', :action => 'verify_email'
-#    account.connect 'account/:action/:id'
-#  end
+  map.with_options(:controller => 'account') do |account|
+    account.reset_password 'account/reset_password/:token', :action => 'reset_password'
+    account.account_verify 'account/verify_email/:token', :action => 'verify_email'
+    account.connect 'account/:action/:id'
+  end
 
-#  map.with_options(:controller => 'session') do |session|
-#    session.login 'session/login', :action => 'login'
-#    account.logout 'session/logout', :action => 'logout'
-#  end
+  map.with_options(:controller => 'session') do |session|
+    session.login 'session/login', :action => 'login'
+    session.logout 'session/logout', :action => 'logout'
+  end
 
 #  ##
 #  ## GROUP

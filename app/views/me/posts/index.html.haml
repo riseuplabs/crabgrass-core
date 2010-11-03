@@ -1,0 +1,5 @@
+%heading.title
+  %h2
+    = :messages_with.t(:other_user => link_to_user(@other_user))
+
+= render :partial => 'common/posts/list', :locals => {:posts => @posts, :create_url => me_discussion_posts_path(@other_user)}

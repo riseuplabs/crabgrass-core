@@ -29,98 +29,114 @@
 module ControllerExtension::RescueErrors
 
   def self.included(base)
+    base.extend ClassMethods
     base.class_eval do
-      rescue_from ErrorNotFound,    :with => :render_not_found
-      rescue_from PermissionDenied, :with => :render_permission_denied
-      rescue_from ErrorMessage,     :with => :render_error
-      rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
-      helper_method :rescues_path
-      alias_method_chain :rescue_action_locally, :js
+      # order of precedence is bottom to top.
+      rescue_from ActiveRecord::RecordInvalid, :with => :render_error
+      #rescue_from CrabgrassException, :with => :render_error
+      #rescue_from ErrorNotFound,    :with => :render_not_found
+      #rescue_from PermissionDenied, :with => :render_permission_denied
+      #rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
+      #helper_method :rescues_path
+      #alias_method_chain :rescue_action_locally, :js
+    end
+  end
+
+  module ClassMethods
+    #
+    # for automatic rendering of errors, this helps us figure out what
+    # template we should render for a particular action, if it is non-standard.
+    #
+    # standard is:
+    #   update -> edit
+    #   create -> new
+    #   otherwise, render current action
+    #
+    def rescue_render(hsh=nil)
+      if hsh
+        write_inheritable_attribute "rescue_render", HashWithIndifferentAccess.new(hsh)
+      else
+        read_inheritable_attribute "rescue_render"
+      end
     end
   end
 
   protected
 
-  # allows us to set a new path for the rescue templates
-  def rescues_path(template_name)
-    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"
-    if File.exists?(file)
-      return file
-    else
-      return super(template_name)
-    end
-  end
+#  # allows us to set a new path for the rescue templates
+#  def rescues_path(template_name)
+#    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"
+#    if File.exists?(file)
+#      return file
+#    else
+#      return super(template_name)
+#    end
+#  end
 
-  # handles suspected "cross-site request forgery" errors
-  def render_csrf_error(exception=nil)
-    render :template => 'account/csrf_error', :layout => 'default'
-  end
+#  # handles suspected "cross-site request forgery" errors
+#  def render_csrf_error(exception=nil)
+#    render :template => 'account/csrf_error', :layout => 'default'
+#  end
 
-  # shows a generic not found page
-  def render_not_found(exception=nil)
-    @skip_context = true
-    render :template => 'common/not_found', :status => :not_found, :layout => 'default'
-  end
+#  # shows a generic not found page
+#  def render_not_found(exception=nil)
+#    @skip_context = true
+#    render :template => 'common/not_found', :status => :not_found, :layout => 'default'
+#  end
 
-  # show a permission denied page, or prompt for login
-  def render_permission_denied(exception=nil)
-    @skip_context = true
+#  # show a permission denied page, or prompt for login
+#  def render_permission_denied(exception=nil)
+#    @skip_context = true
 
-    respond_to do |format|
-      # rails defaults to first format if params[:format] is not set
-      format.html do
-        if logged_in?
-          render :template => 'common/permission_denied', :layout => 'default'
-        else
-          flash_auth_error(:later)
-          redirect_to :controller => '/account', :action => 'login',
-            :redirect => request.request_uri
-        end
-      end
-      format.js do
-        flash_auth_error(:now)
-        render :update do |page|
-          page.call('showNoticeMessage', display_messages)
-        end
-      end
-      format.xml do
-        headers["Status"]           = "Unauthorized"
-        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-        render :text => "Could not authenticate you", :status => '401 Unauthorized'
-      end
-    end
-  end
+#    respond_to do |format|
+#      # rails defaults to first format if params[:format] is not set
+#      format.html do
+#        if logged_in?
+#          render :template => 'common/permission_denied', :layout => 'default'
+#        else
+#          flash_auth_error(:later)
+#          redirect_to :controller => '/account', :action => 'login',
+#            :redirect => request.request_uri
+#        end
+#      end
+#      format.js do
+#        flash_auth_error(:now)
+#        render :update do |page|
+#          page.call('showNoticeMessage', display_messages)
+#        end
+#      end
+#      format.xml do
+#        headers["Status"]           = "Unauthorized"
+#        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+#        render :text => "Could not authenticate you", :status => '401 Unauthorized'
+#      end
+#    end
+#  end
 
   # renders an error message or messages
   def render_error(exception=nil, options={})
+    #if exception
+    #  options[:template] ||= exception.template
+    #  options[:redirect] ||= exception.redirect
+    #  options[:record] ||= exception.record
+    #  options[:status] ||= exception.status
+    #end
     respond_to do |format|
       format.html do
-        if exception
-          if exception.try(:options).try[:redirect]
-            flash_message :exception => exception
-            redirect_to exception.options[:redirect]
-            return
-          else
-            flash_message_now :exception => exception
-          end
-        end
-        render :template => (options[:template] || 'common/error'), :status => exception.try(:status)
+        render_error_html(exception, options)
       end
       format.js do
-        if exception
-          flash_message_now :exception => exception
-        end
-        render :update do |page|
-          page.call('showNoticeMessage', display_messages)
-        end
+        render_error_js(exception, options)
       end
     end
   end
 
-  protected
-
+  #
   # override the default 'rescue_action_locally' so that we can print an error
   # message when the request is an ajax one.
+  #
+  # How is this different than 'render_error' with format.js?
+  #
   def rescue_action_locally_with_js(exception)
     respond_to do |format|
       format.html do
@@ -128,7 +144,7 @@ module ControllerExtension::RescueErrors
           rescue_action_locally_without_js(exception)
         else
           render :text => exception
-        end
+         end
       end
       format.js do
         add_variables_to_assigns
@@ -141,6 +157,42 @@ module ControllerExtension::RescueErrors
   end
 
   private
+
+  def render_error_html(exception=nil, options={})
+    if options[:redirect]
+      redirect_to options[:redirect]
+    end
+    if exception
+      if @performed_redirect
+        flash_message :exception => exception
+      else
+        flash_message_now :exception => exception
+      end
+    end
+    if !performed? and !@performed_render
+      if options[:template]
+        render :template => options[:template], :status => options[:status]
+      elsif options[:action]
+        render :action => options[:action], :status => options[:status]
+      elsif self.class.rescue_render && self.class.rescue_render[params[:action]]
+        render :action => self.class.rescue_render[params[:action]]
+      elsif params[:action] == 'update'
+        render :action => 'edit'
+      elsif params[:action] == 'create'
+        render :action => 'new'
+      end
+    end
+  end
+
+  def render_error_js(exception=nil, options={})
+    if exception
+      flash_message_now :exception => exception
+    end
+    render :update do |page|
+      page.call('showNoticeMessage', display_messages)
+    end
+  end
+
 
   def flash_auth_error(mode)
     if mode == :now

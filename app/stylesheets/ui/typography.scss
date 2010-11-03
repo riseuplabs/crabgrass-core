@@ -1,0 +1,8 @@
+
+// simulate a <p> using a class. technically, <p>'s are not
+// supposed to contain blocks. Therefore, use this instead.
+
+.p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

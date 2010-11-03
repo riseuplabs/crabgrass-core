@@ -75,21 +75,9 @@ module UserExtension::Users
         {:conditions => ['users.id NOT IN (?)', user.friend_id_cache + [user.id]]}
       end)
 
-#      has_and_belongs_to_many :contacts,
-#        {:class_name => "User",
-#        :join_table => "contacts",
-#        :association_foreign_key => "contact_id",
-#        :foreign_key => "user_id",
-#        :uniq => true} do
-#          def online
-#            find( :all,
-#              :conditions => ['users.last_seen_at > ?',10.minutes.ago],
-#              :order => 'users.last_seen_at DESC' )
-#          end
-#          def logins_only
-#            find( :all, :select => 'users.login')
-#          end
-#      end
+      named_scope(:friends_or_peers_of, lambda do |user|
+        {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
+      end)
 
     end
   end
@@ -164,12 +152,27 @@ module UserExtension::Users
     end
 
     # ensure a relationship between this and the other user exists
-    # add a new post to the private discussion shared between this and the other_user
-    # +in_reply_to+ is a post the new posts will be replying this
-    # this is not stored, but used to generate a more informative notification on the user's wall.
+    # add a new post to the private discussion shared between this and the other_user.
+    #
+    # +in_reply_to+ is an optional argument for the post that this new post
+    # is replying to.
+    #
+    # currently, this is not stored, but used to generate a more informative
+    # notification on the user's wall.
+    #
     def send_message_to!(other_user, body, in_reply_to = nil)
       relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
       discussion = relationship.get_or_create_discussion
+
+      if in_reply_to
+        if in_reply_to.user_id == self.id
+          # you cannot reply to oneself
+          in_reply_to = nil
+        elsif in_reply_to.user_id != other_user.id
+          # we should never get here normally, this is just a sanity check
+          raise ErrorMessage.new("Ugh. The user and the post you are replying to don't match.")
+        end
+      end
 
       discussion.increment_unread_for!(other_user)
       post = discussion.posts.create do |post|

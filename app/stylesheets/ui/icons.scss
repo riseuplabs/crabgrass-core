@@ -51,20 +51,35 @@
 //  padding: 14px 0 14px 54px; }
 
 
-// .page_icon {
-//  height: 16px;
-//  width: 16px;
-//  background-repeat: no-repeat;
-//  background-position: 0 50%; }
+//
+// currently used in the table-list view for pages.
+//
+.page_icon {
+  height: 16px;
+  width: 16px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+}
 
 
 //
-// NAME ICONS
+// AVATARS / NAME ICONS
 //
-// name icons are used to show the icon for a group or user, with some text.
+// the "name_icons" classes are used to an avatar with text.
+//
+// the "avatar" classes are used when just displaying the avatar.
+//
+// sizes, as defined in avatar.rb:
+// tiny     16px
+// xsmall   22px
+// small    32px
+// medium   48px
+// large    60px
+// xlarge   96px
+// big      202px
 //
 // we display the icons as background images, aligned center,
-// and then add padding to make enough room for the icon.
+// and then add padding or line-height to make enough room for the icon.
 //
 // there are other ways we could do this: we could set the height
 // or the min-height. however, then the text does not appear centered
@@ -80,25 +95,33 @@
 .name_icon {
   background-repeat: no-repeat;
   background-position: 1px 50%;
-  .tiny {
+  &.tiny {
     padding: 0px 0 0px 17px;
   }
-  .xsmall {
+  &.xsmall {
     padding: 2px 0 4px 26px;
   }
-  .small {
+  &.small {
     padding: 7px 0 7px 40px;
-    line-height: 14px;
+    line-height: 32px + 8px;
+    //line-height: 14px;
   }
-  .medium {
+  &.medium {
     padding: 15px 0 15px 60px;
-    display: block;
-    font-size: 1.3em;
+    //display: block;
+    //font-size: 1.3em;
   }
-  //.two {
-  //  padding-top: 0;
-  //  padding-bottom: 0; }
 }
+
+//
+// AVATAR ICONS
+// used when you want to make sure an element that contains an avatar
+// has enough room.
+
+.avatar_height_small {
+  line-height: 32px + 8px;
+}
+
 
 //
 // hover icons
@@ -123,3 +146,6 @@
 //    }
 //  }
 //}
+
+
+

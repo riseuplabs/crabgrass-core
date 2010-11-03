@@ -1,0 +1,5 @@
+added in crabgrass-core, not translated:
+
+  recipient: "Recipient"
+  messages_with: "Conversation with %{other_user}"
+

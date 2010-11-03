@@ -1,0 +1,15 @@
+-# TODO: allow permissions in status updates
+
+- url = me_activities_path
+- text = current_user.current_status
+- text_area = text_area_tag('post[body]', text, :rows => '8')
+- send_button = submit_tag(:set_status_button.t)
+
+- form_tag(url) do
+  = formy(:simple_form) do |f|
+    - f.row do |r|
+      - r.label :message.t, 'post_body'
+      - r.input text_area
+    - f.buttons do |b|
+      - b.button send_button
+

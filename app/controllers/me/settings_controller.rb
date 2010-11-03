@@ -1,16 +1,14 @@
 class Me::SettingsController < Me::BaseController
 
+  rescue_render :update => :show
+
   def show
   end
 
   def update
-    if current_user.update_attributes(params[:user])
-      flash_message :success
-      redirect_to me_settings_url
-    else
-      flash_message :object => current_user
-      render :action => "show"
-    end
+    current_user.update_attributes!(params[:user])
+    flash_message :success
+    redirect_to me_settings_url
   end
 
 end

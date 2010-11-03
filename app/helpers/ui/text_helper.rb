@@ -47,6 +47,9 @@ module Ui::TextHelper
     end
   end
 
+  #
+  # used to convert the text produced by activities into actual links
+  #
   def expand_links(description)
     description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
@@ -56,43 +59,43 @@ module Ui::TextHelper
     end
   end
 
-  def linked_activity_description(activity)
-    description = activity.try.safe_description(self)
-    expand_links(description)
-  end
+#  def linked_activity_description(activity)
+#    description = activity.try.safe_description(self)
+#    expand_links(description)
+#  end
 
-  def display_activity(activity)
-    description = activity.try.safe_description(self)
-    return unless description
+#  def display_activity(activity)
+#    description = activity.try.safe_description(self)
+#    return unless description
 
-    description = expand_links(description)
+#    description = expand_links(description)
 
-    created_at = (friendly_date(activity.created_at) if activity.created_at)
+#    created_at = (friendly_date(activity.created_at) if activity.created_at)
 
-    more_link = activity.link
-    if more_link.is_a? Hash
-      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
-    end
-    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
+#    more_link = activity.link
+#    if more_link.is_a? Hash
+#      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
+#    end
+#    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
 
-    css_class = "small_icon #{activity.icon}_16 shy_parent"
-    css_style = activity.style
+#    css_class = "small_icon #{activity.icon}_16 shy_parent"
+#    css_style = activity.style
 
-    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
-  end
+#    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
+#  end
 
 
   # *NEWUI
   #
   # returns the kind of profile open or closed/private
   #
-  def open_or_private(profile)
-    if profile.may_see?
-      t(:open)
-    else
-      t(:private)
-    end
-  end
+#  def open_or_private(profile)
+#    if profile.may_see?
+#      t(:open)
+#    else
+#      t(:private)
+#    end
+#  end
 
 
 end

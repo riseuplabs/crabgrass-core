@@ -104,25 +104,62 @@ class Activity < ActiveRecord::Base
 
   ### I DON'T THINK THIS IS NEEDED
   ### you should be able to resolve this when the activity is created.
-  named_scope :only_visible_groups,
-    {:joins => "LEFT JOIN profiles ON
-      object_type <=> 'Group' AND
-      profiles.entity_type <=> 'Group' AND
-      profiles.entity_id <=> object_id AND
-      profiles.stranger = TRUE",
-    :conditions => "NOT profiles.may_see <=> FALSE",
-    :select => "activities.*",
-  }
+  # TODO: make activity queries work with the new permission system
+  #named_scope :only_visible_groups,
+  #  {:joins => "LEFT JOIN profiles ON
+  #    object_type <=> 'Group' AND
+  #    profiles.entity_type <=> 'Group' AND
+  #    profiles.entity_id <=> object_id AND
+  #    profiles.stranger = TRUE",
+  #  :conditions => "NOT profiles.may_see <=> FALSE",
+  #  :select => "activities.*",
+  #}
 
-  # for user's dashboard
   #
-  named_scope(:social_activities_for_groups_and_friends, lambda do |user|
-    {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
+  # for 'me/activities'
+  #
+
+  named_scope(:for_my_groups, lambda do |me|
+    {:conditions => [
+      "(subject_type = 'Group' AND subject_id IN (?))",
+      me.all_group_id_cache
+    ]}
   end)
 
-  named_scope(:social_activities_for_groups_and_peers, lambda do |user|
-    {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
+  named_scope(:for_me, lambda do |me|
+    {:conditions => [
+      "(subject_type = 'User' AND subject_id = ?)",
+      me.id
+    ]}
   end)
+
+  named_scope(:for_my_friends, lambda do |me|
+    {:conditions => [
+      "(subject_type = 'User' AND subject_id IN (?) AND access != ?)",
+      me.friend_id_cache,
+      Activity::PRIVATE
+    ]}
+  end)
+
+  named_scope(:for_all, lambda do |me|
+    {:conditions => [
+      "(subject_type = 'User'  AND subject_id = ?) OR
+       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+       (subject_type = 'Group' AND subject_id IN (?))",
+       me.id,
+       me.friend_id_cache,
+       Activity::PRIVATE,
+       me.all_group_id_cache
+    ]}
+  end)
+
+  #named_scope(:social_activities_for_groups_and_friends, lambda do |user|
+  #  {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
+  #end)
+
+  #named_scope(:social_activities_for_groups_and_peers, lambda do |user|
+  #  {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
+  #end)
 
   # +other_users_ids_list+ should be an array of user ids whose
   # social activity should be retrieved
@@ -132,15 +169,15 @@ class Activity < ActiveRecord::Base
   # (2) subject belongs to the +other_users_ids_list+ (a list of current_user's friends or peers)
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  def self.social_activities_scope_conditions(user, other_users_ids_list)
-    [ "(subject_type = 'User'  AND subject_id = ?) OR
-       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-       (subject_type = 'Group' AND subject_id IN (?)) ",
-      user.id,
-      other_users_ids_list,
-      Activity::PRIVATE,
-      user.all_group_id_cache]
-  end
+  #def self.social_activities_scope_conditions(user, other_users_ids_list)
+  #  [ "(subject_type = 'User'  AND subject_id = ?) OR
+  #     (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+  #     (subject_type = 'Group' AND subject_id IN (?)) ",
+  #    user.id,
+  #    other_users_ids_list,
+  #    Activity::PRIVATE,
+  #    user.all_group_id_cache]
+  #end
 
   # for user's landing page
   #

@@ -1,25 +1,26 @@
-# the user does not have permission to do that.
-class PermissionDenied < Exception; end
-
-# thrown when an activerecord has made a bad association
-# (for example, duplicate associations to the same object).
-class AssociationError < Exception; end
-
-# just report the error
-class ErrorMessage < Exception
+class CrabgrassException < Exception
+  attr_accessor :options
   def initialize(message, opts={})
-    @options = opts
+    self.options = opts
     super(message)
-  end
-  def options
-    @options
   end
 end
 
+# the user does not have permission to do that.
+class PermissionDenied < CrabgrassException; end
+
+# thrown when an activerecord has made a bad association
+# (for example, duplicate associations to the same object).
+class AssociationError < CrabgrassException; end
+
+# just report the error
+class ErrorMessage < CrabgrassException; end
+
 # report a not found error and return 404
-class ErrorNotFound < ErrorMessage
-  def initialize(thing)
+class ErrorNotFound < CrabgrassException
+  def initialize(thing, options={})
     @thing = thing
+    super("",options)
   end
   def to_s
     I18n.t(:thing_not_found, :thing => @thing).capitalize
@@ -41,9 +42,9 @@ class ErrorMessages < ErrorMessage
   end
 end
 
-class WikiLockError < StandardError; end
+class WikiLockError < CrabgrassException; end
 
-class WikiSectionError < StandardError; end
+class WikiSectionError < CrabgrassException; end
 
 # extend base Exception class to have record() method.
 # this is useful like so:

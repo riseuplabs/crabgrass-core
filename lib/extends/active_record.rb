@@ -115,6 +115,49 @@ ActiveRecord::Base.class_eval do
     self.class.record_timestamps = true
   end
 
+
+
+  #
+  # This is an intervention into how activerecord deals with STI (single table
+  # inheritance). Normally, activerecord throws a SubclassNotFound exception
+  # if it is not able to find a class name that matches the type.
+  #
+  # This makes a lot of sense normally. However, because crabgrass lets you add
+  # and remove page types easily, we want to make it so that unknown page types
+  # don't cause rails to bomb out. Rather, it should just instantiate a generic
+  # page.
+  #
+  # The method 'compute_type(type_name)' is a protected class method called by 
+  # ActiveRecord#instantiate(record) in order to create a ActiveRecord object
+  # from a database record using STI if needed. compute_type() should raise
+  # NameError if the type can't be found.
+  # 
+  # The variable type_name comes from the 'type' column of the record.
+  #
+  # rails notes:
+  # Returns the class type of the record using the current module as a prefix. So descendants of
+  # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
+  #
+  protected
+  def self.compute_type(type_name)
+    modularized_name = type_name_with_module(type_name)
+    silence_warnings do
+      begin
+        class_eval(modularized_name, __FILE__)
+      rescue NameError
+        begin
+          class_eval(type_name, __FILE__)
+        rescue NameError
+          if type_name =~ /Page/
+            class_eval("DiscussionPage", __FILE__)
+          else
+            raise # reraise same exception
+          end
+        end
+      end
+    end
+  end
+
 end
 
 #

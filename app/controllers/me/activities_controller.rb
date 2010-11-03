@@ -1,20 +1,39 @@
 class Me::ActivitiesController < Me::BaseController
 
   def index
-    @activities = Activity.social_activities_for_groups_and_friends(current_user).only_visible_groups.newest.unique.paginate(pagination_params)
+    @activities = Activity.send(current_view, current_user).newest.unique.paginate(pagination_params)
   end
 
-  # REST /me/activities/:id
+  # GET /me/activities/:id
   def show
+  end
+
+  # POST /me/activities
+  def create
+     #
+     # TODO: add permissions to status updates
+     #
+     @post = StatusPost.create! do |post|
+      post.body = params[:post][:body]
+      post.discussion = current_user.wall_discussion
+      post.user = current_user
+      post.recipient = current_user
+      post.body_html = post.lite_html
+    end
+    redirect_to me_activities_url
   end
 
   protected
 
-  def view
+  def current_view
     case params[:view]
-      when 'peers' then 'social_activities_for_groups_and_peers';
-      else 'social_activities_for_groups_and_friends';
+      when 'friends' then 'for_my_friends';
+      when 'groups' then 'for_my_groups';
+      when 'my' then 'for_me';
+      else 'for_all';
     end
   end
 
 end
+
+

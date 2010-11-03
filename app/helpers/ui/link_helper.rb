@@ -7,13 +7,13 @@ module Ui::LinkHelper
   # link to if and only if...
   # like link_to_if, but return nil if the condition is false
   # not widely used. candidate for purging.
-  def link_to_iff(condition, name, options = {}, html_options = {}, &block)
-    if condition
-      link_to(name, options, html_options, &block)
-    else
-      nil
-    end
-  end
+  #def link_to_iff(condition, name, options = {}, html_options = {}, &block)
+  #  if condition
+  #    link_to(name, options, html_options, &block)
+  #  else
+  #    nil
+  #  end
+  #end
 
   ##
   ## FORMS
@@ -133,9 +133,39 @@ label}</a></span>)
     link_to_with_icon(icon, '', url, options)
   end
 
-  def link_to_toggle(label, id)
-    function = "linkToggle(eventTarget(event), '#{id}')"
-    link_to_function_with_icon label, function, :icon => 'right'
+  # 
+  # Creates a link to hide and show an html element.
+  # Requires javascript.
+  #
+  # two forms:
+  #
+  #  link_to_toggle('link label', element_id, options)
+  #
+  #  link_to_toggle('link label', options) do
+  #    ... html ..
+  #  end
+  #
+  def link_to_toggle(label, *args, &block)
+    if block_given?
+      options = args.first || {}
+      #html_options = args[2] # unsupported
+      options[:icon] ||= 'right'
+      id = label.nameize + '-toggle-area'
+      if options[:onvisible]
+        function = "fn = function(){%s}; " % options[:onvisible]
+      else
+        function = "fn = null; "
+      end
+      function += "linkToggle(eventTarget(event), '#{id}', fn)"
+      concat( link_to_function_with_icon(label, function, options) )
+      concat( content_tag(:div, capture(&block), :id => id, :style => 'display:none') )
+    else
+      id = args.first
+      options = args[1] || {}
+      options[:icon] ||= 'right'
+      function = "linkToggle(eventTarget(event), '#{id}')"
+      link_to_function_with_icon label, function, options
+    end
   end
 
 #  # makes an icon button to a remote action. when you click on the icon, it turns

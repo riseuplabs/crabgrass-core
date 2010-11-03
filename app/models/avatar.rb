@@ -16,6 +16,16 @@
 
 class Avatar < ActiveRecord::Base
 
+  SIZES = Hash.new(32).merge(
+    'tiny' => 16,
+    'xsmall' => 22,
+    'small' => 32,
+    'medium' => 48,
+    'large' => 60,
+    'xlarge' => 96,
+    'huge' => 202
+  ).freeze
+
   acts_as_fleximage do
     default_image_path "public/images/default/202.jpg"
     require_image false
@@ -28,16 +38,8 @@ class Avatar < ActiveRecord::Base
   end
 
   def self.pixels(size)
-    case size.to_s
-      when 'tiny';   '16x16'
-      when 'xsmall'; '22x22'
-      when 'small' ; '32x32'
-      when 'medium'; '48x48'
-      when 'large' ; '60x60'
-      when 'xlarge'; '96x96'
-      when 'big' ; '202x202'
-      else; '202x202'
-    end
+    size = SIZES[size.to_s]
+    "#{size}x#{size}"
   end
 
 end

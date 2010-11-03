@@ -1,0 +1,11 @@
+- link_to_toggle(:send_message_link.t, :onvisible => "$('recipient_name').focus()") do
+  = render :partial => 'me/discussions/message_form'
+
+%div.list_as_table.p
+  %div.list_header
+    = pagination_links(@discussions)
+  %table
+    = render :partial => 'discussion', :collection => @discussions
+  %div.list_footer
+    = pagination_links(@discussions)
+

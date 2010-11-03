@@ -3,7 +3,7 @@ module Ui::HelpHelper
   protected
 
   def formatting_reference_link
-   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % I18n.t(:formatting_reference_link)
+   %Q{<a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a>} % :formatting_reference_link.t
   end
 
   # returns the related help string, but only if it is translated.

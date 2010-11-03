@@ -31,30 +31,32 @@ div#local {
   }
 }
 
-nav#local_nav {
-  li {
-    border: border_size($local_content_border) "solid transparent";
-    @if $local_nav_style == 'tabs' {
-      &.active {
-        border: $local_content_border;
-        border-right: 0;
-      }
-    }
-  }
-  li a {
-    padding: gutter($local_nav_column_count) / 2;
-    display: block;
-    @if $local_nav_style == 'tabs' {
-      &.active {
-        background: $local_content_background;
-        @if border_size($local_content_border) > 0px {
-          position: relative;
-          left: border_size($local_content_border);
-        }
-      }
-    }
-  }
-}
+//nav#local_nav {
+//  li {
+//    border: border_size($local_content_border) "solid transparent";
+//    @if $local_nav_style == 'tabs' {
+//      text-align: right;
+//      &.active {
+//        border: $local_content_border;
+//        border-right: 0;
+//      }
+//    }
+//  }
+//  li a {
+//    padding: gutter($local_nav_column_count) / 2;
+//    padding-right: gutter($local_nav_column_count) * 2;
+//    display: block;
+//    @if $local_nav_style == 'tabs' {
+//      &.active {
+//        background: $local_content_background;
+//        @if border_size($local_content_border) > 0px {
+//          position: relative;
+//         left: border_size($local_content_border);
+//       }
+//      }
+//    }
+//  }
+//}
 
 @if $local_nav_style == 'tabs' {
   //
@@ -69,6 +71,7 @@ nav#local_nav {
 
   nav#local_nav {
     li {
+      text-align: right;
       @if border_size($local_content_border) > 0px {
         border: border_size($local_content_border) "solid transparent";
       }
@@ -79,11 +82,15 @@ nav#local_nav {
       }
     }
     li a {
-      padding: gutter($local_nav_column_count) / 2;
+      padding: resolve_width($local_nav_padding, $local_nav_column_count) / 2;
+      padding-right: resolve_width($local_nav_padding, $local_nav_column_count);
       display: block;
+      @include hover-link;
       &.active {
         background: $local_content_background;
         @if border_size($local_content_border) > 0px {
+          // shift the tab slightly to the right to make it flush
+          // with the content.
           position: relative;
           left: border_size($local_content_border);
         }
@@ -99,7 +106,7 @@ nav#local_nav {
   }
   nav#local_nav {
     li a {
-      padding: gutter($local_nav_column_count) / 2;
+      padding: resolve_width($local_nav_padding, $local_nav_column_count);
     }
   }
 
@@ -109,6 +116,17 @@ nav#local_nav {
 article#content {
   border: $local_content_border;
   background: $local_content_background;
-  padding: gutter($center_columns);
+  padding: resolve_width($local_content_padding, $center_columns);
+
+  // i don't know how well supported this is, but it makes everything
+  // look much better in modern browsers.
+  min-height: 10em;
+
+  // this is an optional title for the content area.
+  // ideally, it should be heading.title, but it doesn't have to be.
+  .title {
+    margin-bottom: resolve_width($local_content_padding, $center_columns);
+    display: block;
+  }
 }
 

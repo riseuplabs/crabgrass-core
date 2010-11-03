@@ -1,0 +1,18 @@
+- #
+- # requires: create_url, last_id
+- #
+
+- form_for(:post, :url => create_url) do |f|
+  -# currently, in_reply_to is just used for helping to generate 
+  -# the activity feed.
+  = hidden_field_tag('in_reply_to_id', last_id) if last_id
+
+  -# not sure if these are still used, or how they are used:
+  =# hidden_field_tag('page_id', @page.id) if @page
+  =# hidden_field_tag('paging', @discussion.last_page if @discussion
+
+  = f.text_area :body, :rows => 8
+  .form_buttons
+    = submit_tag :send_message_link.t, :name => 'post_message'
+    .reference= formatting_reference_link
+

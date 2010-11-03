@@ -3,8 +3,8 @@
 ## see doc/DEBUGGING for more info.
 ##
 
-# set envirenment variable SHOW_SQL to log sql commands to stdout.
-if ENV['SHOW_SQL'].any?
+# set envirenment variable SHOWLOGS to log sql commands to stdout.
+if ENV['SHOWLOGS'].any?
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
@@ -48,7 +48,7 @@ if ENV['STOP_ON_SQL'].any?
 end
 
 #
-# Debugging controller callbacks.
+# Debugging activerecord callbacks.
 #
 
 if ENV['DEBUG_CALLBACKS'].any?

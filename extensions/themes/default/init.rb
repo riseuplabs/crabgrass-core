@@ -1,30 +1,6 @@
 
 # http://css3pie.com/
 
-=begin
-
-the theme code does a good job of figuring out if a value, when rendered as css,
-should have quotes around it or not. you can force it to not have quotes by
-creating a symbol, like so...
- 
-  masthead {
-    height :"100px"
-  }
-
-In this case, this is not needed, because values in px units are not quoted by
-default anyway.
-
-you are not allowed to know selectors of css or structure of html. this might change, so don't rely on it.
-
-'html' is a special options. it takes either a string, a hash, or a block. 
- * string: inserts this value directly into the template
- * hash: the template will call render and pass in the hash.
- * block: this will get eval'ed in the context of the view.
-
-'css' is a special option. it will get included in the stylesheet as a sass mixin. 
-this means you can make sass calls (using scss format).
-
-=end
 
 $border = '1px solid #ccc'
 
@@ -82,7 +58,7 @@ options {
                               # responsible for aligning whatever text you put
                               # in the content block.
       height "2.5em"          # required if vertical_align == 'center'
-      padding var(:grid_column_gutter)
+      padding "1g"
       html { content_tag :div, current_site.title, :id => 'masthead_title' }
     }
     nav {
@@ -129,12 +105,20 @@ options {
     content {
       border $border
       background 'white'
+      padding '1g'
     }
     nav {
       style 'tabs'
+      padding '1g'
       side 'left'   # only left for now.
       column_count 3
     }
+  }
+
+  posts {
+    border "1px solid #ccc"
+    background "#efefef"
+    padding "10px"
   }
 
   # all the various z-index values are defined here. 
@@ -147,6 +131,11 @@ options {
 
   }
 
+  avatar {
+    Avatar::SIZES.each do |size, pixels|
+      send(size, "#{pixels}px")
+    end
+  }
 }
 
 style %{

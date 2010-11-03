@@ -1,12 +1,12 @@
 class Symbol
-  def t()
-    I18n.t(self)
+  def t(options={})
+    I18n.t(self,options)
   end
 end
 
 class String
-  def t()
-    I18n.t(self)
+  def t(options={})
+    I18n.t(self,options)
   end
 end
 

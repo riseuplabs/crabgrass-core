@@ -20,14 +20,14 @@ module MePermission
   alias_method :may_close_welcome_box_dashboard?, :may_edit_me?
 
   # Inbox
-  alias_method :may_search_inbox?, :may_edit_me?
-  alias_method :may_index_inbox?, :may_edit_me?
-  alias_method :may_list_inbox?, :may_edit_me?
-  alias_method :may_update_inbox?, :may_edit_me?
-  alias_method :may_remove_inbox?, :may_edit_me?
+  #alias_method :may_search_inbox?, :may_edit_me?
+  #alias_method :may_index_inbox?, :may_edit_me?
+  #alias_method :may_list_inbox?, :may_edit_me?
+  #alias_method :may_update_inbox?, :may_edit_me?
+  #alias_method :may_remove_inbox?, :may_edit_me?
 
   # Infoviz
-  alias_method :may_visualize_infoviz?, :may_edit_me?
+  #alias_method :may_visualize_infoviz?, :may_edit_me?
 
   # Requests
   alias_method :may_from_me_requests?, :may_edit_me?
@@ -45,5 +45,8 @@ module MePermission
   alias_method :may_index_trash?, :may_edit_me?
   alias_method :may_list_trash?, :may_edit_me?
   alias_method :may_update_trash?, :may_edit_me?
+
+  # Messages
+  alias_method :may_create_posts?, :may_edit_me?
 
 end

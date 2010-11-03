@@ -67,7 +67,7 @@
       display:inline;
       a.tab {
         // a slight 0.25px nudge seems to help with rendering in different sizes.
-        padding: $vertical_padding+0.25px $tab_padding;
+        padding: $vertical_padding $tab_padding;
         @include hover-link;
         border: $inactive_border;
         &.active {
