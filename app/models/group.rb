@@ -26,6 +26,8 @@ end
 
 class Group < ActiveRecord::Base
 
+  acts_as_permissive :see, :pester, :burdon, :spy
+
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
   include GroupExtension::Users      # group <--> user behavior
@@ -136,6 +138,11 @@ class Group < ActiveRecord::Base
   def self.find_by_name(name)
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
+  end
+
+  # entity_codes used by permissions and pathfinder
+  def entity_code
+    "%04d" % "8#{id}"
   end
 
   # name stuff

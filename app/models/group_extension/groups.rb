@@ -10,6 +10,9 @@ module GroupExtension::Groups
     base.send :include, InstanceMethods
 
     base.instance_eval do
+
+      add_permissions :see_committees => 6, :see_networks => 7
+
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
       belongs_to :council, :class_name => 'Group'

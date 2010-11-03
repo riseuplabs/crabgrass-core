@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  acts_as_permissive :see, :pester, :burdon, :spy
+
   ##
   ## CORE EXTENSIONS
   ##
@@ -11,6 +13,8 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags
   include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
+
+  acts_as_permissive
 
   ##
   ## VALIDATIONS
@@ -116,6 +120,11 @@ class User < ActiveRecord::Base
 
   def cut_name
     name[0..20]
+  end
+
+  # entity_codes used by permissions and pathfinder
+  def entity_code
+    "%04d" % "1#{id}"
   end
 
   def to_param

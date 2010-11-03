@@ -7,6 +7,8 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
+      add_permissions :see_members => 4, :request_membership => 5
+
       attr :users_before_destroy
       before_destroy :destroy_memberships
 #      before_create :set_created_by
