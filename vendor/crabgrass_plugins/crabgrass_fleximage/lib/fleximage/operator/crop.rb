@@ -8,7 +8,7 @@ module Fleximage
     #
     # Use the following keys in the +options+ hash:
     #
-    # * +gravity+: Select gravity for the crop. Default is :top_left (Magick::NorthWestGravity)
+    # * +gravity+: Select gravity for the crop. Default is :top_left (MiniMagick::NorthWestGravity)
     #   Choose from GRAVITITES constant defined in base.rb.
     # * +from+: coorinates for the upper left corner of resulting image.
     # * +size+: The size of the resulting image, going down and to the right of the :+from+ coordinate.

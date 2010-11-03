@@ -59,7 +59,7 @@ module Fleximage
         options[:offset] = size_to_xy(options[:offset])
 
         # prepare drawing surface
-        text                = Magick::Draw.new
+        text                = MiniMagick::Draw.new
         text.gravity        = symbol_to_gravity(options[:alignment])
         text.fill           = options[:color]
         text.text_antialias = options[:antialias]
@@ -80,7 +80,7 @@ module Fleximage
         end
 
         # draw text on transparent image
-        temp_image = Magick::Image.new(@image.columns, @image.rows) { self.background_color = 'none' }
+        temp_image = MiniMagick::Image.new(@image.columns, @image.rows) { self.background_color = 'none' }
         temp_image = temp_image.annotate(text, 0, 0, options[:offset][0], options[:offset][1], string_to_write)
 
         # add drop shadow to text image

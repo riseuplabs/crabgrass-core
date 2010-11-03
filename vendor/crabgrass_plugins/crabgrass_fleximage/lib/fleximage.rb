@@ -3,16 +3,22 @@ require 'base64'
 require 'digest/sha1'
 #require 'aws/s3'
 
-# Load RMagick
-begin
-  require 'RMagick'
-rescue MissingSourceFile => e
-  puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
-  raise e
+# added for crabgrass:
+module MiniMagick
+  CenterGravity, NorthGravity, NorthEastGravity, EastGravity, SouthEastGravity, SouthGravity, SouthWestGravity, WestGravity, NorthWestGravity = [5, 2, 3, 6, 9, 8, 7, 4, 1]
 end
 
-# Apply a few RMagick patches
-require 'fleximage/rmagick_image_patch'
+# removed for crabgrass:
+#begin
+#  require 'RMagick'
+#rescue MissingSourceFile => e
+#  puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
+#  raise
+#end
+
+## Apply a few RMagick patches
+#require 'fleximage/rmagick_image_patch'
+
 
 # Load dsl_accessor from lib
 require 'dsl_accessor'
