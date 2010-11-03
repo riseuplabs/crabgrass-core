@@ -10,7 +10,7 @@ module Fleximage
     # The Operator::Base class is what all other Operator classes inherit from.
     # To write your own Operator class, simply inherit from this class, and 
     # implement your own operate methods, with your own arguments.  Just 
-    # return a new RMagick image object that represents the new image, and
+    # return a new RMiniMagick image object that represents the new image, and
     # the model will be updated automatically.
     #
     # You have access to a few instance variables in the operate method:
@@ -32,9 +32,9 @@ module Fleximage
         # Get the result of the Operators #operate method
         result = operate(*args)
         
-        # Ensure that the result is an RMagick:Image object
-        unless result.is_a?(Magick::Image)
-          raise BadOperatorResult, "expected #{self.class}#operate to return an instance of Magick::Image. \n"+
+        # Ensure that the result is an RMiniMagick:Image object
+        unless result.is_a?(MiniMagick::Image)
+          raise BadOperatorResult, "expected #{self.class}#operate to return an instance of MiniMagick::Image. \n"+
                                    "Got instance of #{result.class} instead."
         end
         
@@ -67,17 +67,17 @@ module Fleximage
         end
       end
       
-      # This method will return a valid color Magick::Pixel object.  It will also auto adjust
-      # for the bit depth of your ImageMagick configuration.
+      # This method will return a valid color MiniMagick::Pixel object.  It will also auto adjust
+      # for the bit depth of your ImageMiniMagick configuration.
       #
       # Usage:
       #
-      #   color('red')          #=> Magick::Pixel with a red color
-      #   color(0, 255, 0)      #=> Magick::Pixel with a green color
-      #   color(0, 0, 255, 47)  #=> Magick::Pixel with a blue clolor and slightly transparent
+      #   color('red')          #=> MiniMagick::Pixel with a red color
+      #   color(0, 255, 0)      #=> MiniMagick::Pixel with a green color
+      #   color(0, 0, 255, 47)  #=> MiniMagick::Pixel with a blue clolor and slightly transparent
       #
-      #   # on an ImageMagick with a QuantumDepth of 16
-      #   color(0, 255, 0)      #=> Magick::Pixel with rgb of (0, 65535, 0) (auto adjusted to 16bit channels)
+      #   # on an ImageMiniMagick with a QuantumDepth of 16
+      #   color(0, 255, 0)      #=> MiniMagick::Pixel with rgb of (0, 65535, 0) (auto adjusted to 16bit channels)
       #
       def self.color(*args)
         if args.size == 1 && args.first.is_a?(String)
@@ -85,8 +85,8 @@ module Fleximage
         else
           
           # adjust color to proper bit depth
-          if Magick::QuantumDepth != 8
-            max = case Magick::QuantumDepth
+          if MiniMagick::QuantumDepth != 8
+            max = case MiniMagick::QuantumDepth
             when 16
               65_535
             when 32
@@ -99,7 +99,7 @@ module Fleximage
           end
           
           # create the pixel
-          Magick::Pixel.new(*args)
+          MiniMagick::Pixel.new(*args)
         end
       end
       
@@ -146,15 +146,15 @@ module Fleximage
         img.resize!(*size_to_xy(size))
       end
       
-      # Convert a symbol to an RMagick blending mode.
+      # Convert a symbol to an RMiniMagick blending mode.
       # 
       # The blending mode governs how the overlay gets composited onto the image.  You can 
       # get some funky effects with modes like :+copy_cyan+ or :+screen+.  For a full list of blending
-      # modes checkout the RMagick documentation (http://www.simplesystems.org/RMagick/doc/constants.html#CompositeOperator).
+      # modes checkout the RMiniMagick documentation (http://www.simplesystems.org/RMiniMagick/doc/constants.html#CompositeOperator).
       # To use a blend mode remove the +CompositeOp+ form the name and "unserscorize" the rest.  For instance,
       # +MultiplyCompositeOp+ becomes :+multiply+, and +CopyBlackCompositeOp+ becomes :+copy_black+.
       def symbol_to_blending_mode(mode)
-        "Magick::#{mode.to_s.camelize}CompositeOp".constantize
+        "MiniMagick::#{mode.to_s.camelize}CompositeOp".constantize
       rescue NameError
         raise ArgumentError, ":#{mode} is not a valid blending mode."
       end
@@ -172,17 +172,17 @@ module Fleximage
         
     end # Base
     
-    # Conversion table for mapping alignment symbols to their equivalent RMagick gravity constants.
+    # Conversion table for mapping alignment symbols to their equivalent RMiniMagick gravity constants.
     GRAVITIES = {
-      :center       => Magick::CenterGravity,
-      :top          => Magick::NorthGravity,
-      :top_right    => Magick::NorthEastGravity,
-      :right        => Magick::EastGravity,
-      :bottom_right => Magick::SouthEastGravity,
-      :bottom       => Magick::SouthGravity,
-      :bottom_left  => Magick::SouthWestGravity,
-      :left         => Magick::WestGravity,
-      :top_left     => Magick::NorthWestGravity,
+      :center       => MiniMagick::CenterGravity,
+      :top          => MiniMagick::NorthGravity,
+      :top_right    => MiniMagick::NorthEastGravity,
+      :right        => MiniMagick::EastGravity,
+      :bottom_right => MiniMagick::SouthEastGravity,
+      :bottom       => MiniMagick::SouthGravity,
+      :bottom_left  => MiniMagick::SouthWestGravity,
+      :left         => MiniMagick::WestGravity,
+      :top_left     => MiniMagick::NorthWestGravity,
     } unless defined?(GRAVITIES)
     
   end # Operator

@@ -6,8 +6,8 @@ module Fleximage
     # It accepts the following options:
     #
     # * +color+: the color of the background image.
-    #   Use an RMagick named color or use the +color+ method in Fleximage::Controller, or a
-    #   Magick::Pixel object.
+    #   Use an RMiniMagick named color or use the +color+ method in Fleximage::Controller, or a
+    #   MiniMagick::Pixel object.
     # 
     # * +size+: The size of the background image, in Fleximage *size* format.  
     #   By default the background image is the same size as the foreground image
@@ -19,13 +19,13 @@ module Fleximage
     # 
     # * +offset+: the number of pixels to offset the foreground image from it's :+alignment+ anchor, in FlexImage 
     #   *size* format.  Useful to give a bit a space between your image and the edge of the background, for instance.
-    #   *NOTE:* Due to some unexpected (buggy?) RMagick behaviour :+offset+ will work strangely
+    #   *NOTE:* Due to some unexpected (buggy?) RMiniMagick behaviour :+offset+ will work strangely
     #   if :+alignment+ is set to a corner non-corner value, such as :+top+ or :+center+.  Using :+offset+ in
     #   these cases will force the overlay into a corner anyway.
     # 
     # * +blending+: The blending mode governs how the foreground image gets composited onto the background.  You can 
     #   get some funky effects with modes like :+copy_cyan+ or :+screen+.  For a full list of blending
-    #   modes checkout the RMagick documentation (http://www.simplesystems.org/RMagick/doc/constants.html#CompositeOperator).
+    #   modes checkout the RMiniMagick documentation (http://www.simplesystems.org/RMiniMagick/doc/constants.html#CompositeOperator).
     #   To use a blend mode remove the +CompositeOp+ form the name and "unserscorize" the rest.  For instance,
     #   +MultiplyCompositeOp+ becomes :+multiply+, and +CopyBlackCompositeOp+ becomes :+copy_black+.
 
@@ -40,7 +40,7 @@ module Fleximage
         width, height = options.key?(:size) ? size_to_xy(options[:size]) : [@image.columns, @image.rows]
 
         #create the background image onto which we will composite the foreground image
-        bg = Magick::Image.new(width, height) do 
+        bg = MiniMagick::Image.new(width, height) do 
           self.background_color = color
           self.format = 'PNG'
         end

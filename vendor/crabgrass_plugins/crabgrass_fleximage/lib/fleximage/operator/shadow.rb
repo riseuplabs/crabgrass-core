@@ -14,11 +14,11 @@ module Fleximage
     # 
     # * +background+: a color for the background of the image.  What the shadow fades into.  
     #   Use an RMagick named color or use the +color+ method in FlexImage::Controller, or a
-    #   Magick::Pixel object.
+    #   MiniMagick::Pixel object.
     #   
     # * +color+: color of the shadow itself.
     #   Use an RMagick named color or use the +color+ method in FlexImage::Controller, or a
-    #   Magick::Pixel object.
+    #   MiniMagick::Pixel object.
     #   
     # * +opacity+: opacity of the shadow.  A value between 0.0 and 1.0, where 1 is opaque and 0 is
     #   transparent.
@@ -60,8 +60,8 @@ module Fleximage
         options[:offset] = size_to_xy(options[:offset])
         options[:blur]   = options[:blur].to_i
 
-        options[:background]    = Magick::Pixel.from_color(options[:background]) unless options[:background].is_a?(Magick::Pixel)
-        options[:color]         = Magick::Pixel.from_color(options[:color])      unless options[:color].is_a?(Magick::Pixel)
+        options[:background]    = MiniMagick::Pixel.from_color(options[:background]) unless options[:background].is_a?(MiniMagick::Pixel)
+        options[:color]         = MiniMagick::Pixel.from_color(options[:color])      unless options[:color].is_a?(MiniMagick::Pixel)
         options[:color].opacity = (1 - options[:opacity]) * 255
 
         # generate shadow image

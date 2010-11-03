@@ -55,6 +55,7 @@ Crabgrass::Initializer.run do |config|
   # required, and compilation is required to install
   config.gem 'haml', :version => '~> 3.0'
   config.gem 'RedCloth', :version => '~> 4.2'
+  config.gem 'hpricot', :version => '~> 0.8'
 
   # required, included with crabgrass
   config.gem 'riseuplabs-greencloth', :lib => 'greencloth'

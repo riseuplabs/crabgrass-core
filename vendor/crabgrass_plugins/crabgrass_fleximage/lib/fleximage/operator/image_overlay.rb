@@ -53,7 +53,7 @@ module Fleximage
         options = options.symbolize_keys
       
         #load overlay
-        overlay = Magick::Image.read(image_overlay_path).first
+        overlay = MiniMagick::Image.read(image_overlay_path).first
       
         #resize overlay
         if options[:size]

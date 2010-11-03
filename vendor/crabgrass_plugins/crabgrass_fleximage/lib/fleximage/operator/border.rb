@@ -12,7 +12,7 @@ module Fleximage
     #   all sides.
     #   
     # * +color+: the color of the border. Use an RMagick named color or use the +color+ method in 
-    #   FlexImage::Controller, or a Magick::Pixel object.
+    #   FlexImage::Controller, or a MiniMagick::Pixel object.
     #   
     # Example:
     #   
