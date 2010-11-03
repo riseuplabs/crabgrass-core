@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510212536) do
+ActiveRecord::Schema.define(:version => 20101103133322) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -133,6 +133,11 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
 
   add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
   add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
+
+  create_table "contacts", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "contact_id"
+  end
 
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id"
@@ -296,6 +301,13 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
   add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
 
+  create_table "groups_to_networks", :force => true do |t|
+    t.integer "group_id"
+    t.integer "network_id"
+    t.integer "council_id"
+    t.integer "delegates_id"
+  end
+
   create_table "hourlies", :force => true do |t|
     t.integer  "page_id"
     t.integer  "views"
@@ -324,6 +336,11 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
   end
 
   add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
+
+  create_table "links", :id => false, :force => true do |t|
+    t.integer "page_id"
+    t.integer "other_page_id"
+  end
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"
@@ -473,6 +490,15 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
 
+  create_table "permissions", :force => true do |t|
+    t.integer "mask",        :default => 0
+    t.integer "object_id"
+    t.string  "object_type"
+    t.integer "entity_code"
+  end
+
+  add_index "permissions", ["object_id", "object_type", "entity_code"], :name => "index_permissions_on_object_id_and_object_type_and_entity_code"
+
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id"
     t.boolean "preferred",         :default => false
@@ -482,6 +508,17 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
   end
 
   add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
+
+  create_table "pictures", :force => true do |t|
+    t.string   "comment"
+    t.string   "name"
+    t.string   "content_type"
+    t.binary   "data"
+    t.integer  "created_by_id"
+    t.datetime "created_at"
+    t.binary   "thumb"
+    t.string   "type"
+  end
 
   create_table "polls", :force => true do |t|
     t.string "type"
