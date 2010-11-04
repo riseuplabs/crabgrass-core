@@ -1,6 +1,0 @@
-This is the standard fleximage plugin modified to use MiniMagick instead of RMagick.
-
-Why? Because RMagick is actually much slower and memory intensive than using the
-command line graphicsmagick tool. Also, graphicsmagick is easier to install.
-
-

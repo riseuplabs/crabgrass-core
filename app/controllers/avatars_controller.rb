@@ -41,7 +41,10 @@ class AvatarsController < ApplicationController
       filename = "#{File.dirname(__FILE__)}/../../public/images/default/#{size}.jpg"
       send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
     else
-      render :template => 'avatars/show.jpg.flexi'
+      content_type = 'image/jpeg'
+      data = @image.resize(params[:size], content_type); 
+      response.headers['Cache-Control'] = 'public, max-age=86400'
+      send_data data, :type => content_type, :disposition => 'inline'
     end
   end
 

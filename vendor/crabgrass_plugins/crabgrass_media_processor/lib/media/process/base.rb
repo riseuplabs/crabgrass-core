@@ -7,12 +7,16 @@ module Media::Process
     def cmd(*args)
       cmdstr = args.collect{|arg| arg.shell_escape}.join(' ')
       log cmdstr
-      if log_to_stdout_when == :never
-        output = `#{cmdstr} 2>/dev/null`
-      else
-        output = `#{cmdstr}`
+      #if log_to_stdout_when == :never
+      #  output = `#{cmdstr} 2>/dev/null`
+      #else
+        output = `#{cmdstr} 2>&1`
+      #end
+      success = $?.success?
+      unless success
+        log_error(output)
       end
-      return [$?.success?, output]
+      return [success, output]
     end
 
     def log(*args)
@@ -21,7 +25,7 @@ module Media::Process
     end
 
     def log_error(*args)
-      log(*args)
+      log('ERROR', *args)
       puts args.join(' ') if log_to_stdout_when == :on_error
     end
 
@@ -57,7 +61,7 @@ module Media::Process
         end
       end
       return success
-  end
+    end
 
     def open_read_lock(filename, &block)
       open_lock(filename,'r', &block)

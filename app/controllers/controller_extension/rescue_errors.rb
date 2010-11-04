@@ -33,7 +33,7 @@ module ControllerExtension::RescueErrors
     base.class_eval do
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, :with => :render_error
-      #rescue_from CrabgrassException, :with => :render_error
+      rescue_from CrabgrassException, :with => :render_error
       #rescue_from ErrorNotFound,    :with => :render_not_found
       #rescue_from PermissionDenied, :with => :render_permission_denied
       #rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error

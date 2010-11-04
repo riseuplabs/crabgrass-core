@@ -99,14 +99,14 @@ module AssetExtension
         self.content_type = mime_type
         self.filename = file_data.original_filename
         self.filename_will_change! # just in case nothing is different, force dirty.
-        @temp_files = Media::TempFileArray.new(file_data)
+        @temp_file = Media::TempFile.new(file_data)
       end
 
       def process_attachment
         if uploaded_data_changed?
-          self.size = File.size(@temp_files.path)
+          self.size = File.size(@temp_file.path)
           if Media::Process.has_dimensions?(self.content_type)
-            self.width, self.height = Media::Process.dimensions(@temp_files.path)
+            self.width, self.height = Media::Process.dimensions(@temp_file.path)
           end
         end
         true
@@ -116,14 +116,14 @@ module AssetExtension
         return true unless uploaded_data_changed?
         remove_files(*@old_files)
         @old_files.clear
-        save_to_storage(@temp_files.path)
-        @temp_files.clear
+        save_to_storage(@temp_file.path)
+        @temp_file.clear
         create_thumbnail_records
         true
       end
 
       def uploaded_data_changed?
-        @temp_files.any?
+        @temp_file.any?
       end
 
     end
