@@ -1,30 +1,66 @@
+//
+// ALERT MESSAGES
+//
+// types: error, warning, notice, success
+//
 
-#flash_message {
-  @include full;
+$alert_opacity: 0.8;
+$alert_width: 600px;
+$alert_padding: gutter()/2;
+
+// alert message overlay. not used when the modalbox is visible.
+.alert_message_container {
+  width: 100%;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  .alert_message_list {
+    max-width: 100%;
+    width: $alert_width;
+    margin: 0 auto;
+    .message {
+      padding: $alert_padding;
+      margin: $alert_padding 0;
+    }
+  }
 }
-.small_notice {
-  padding: gutter();
-  margin: gutter() 0;
-  .text {
-    padding-left: 20px;
-  }
-  p, ul {
-    margin: 0.25em;
-  }
-  ul {
-    padding-left: 1em;
-  }
-  &.error {
-    border: 1px solid red;
-    background: #fcc;
-  }
-  &.success {
-    border: 1px solid green;
-    background: #cfc;
-  }
-  &.info {
-    border: 1px solid blue;
-    background: #cdf;
+
+.alert_message_list {
+  .message {
+    .text {
+      @extend .small_icon;
+    }
+    .close {
+      float: right;
+      color: #999;
+      font-size: 26px;
+      text-decoration: none;
+      font-weight: bold;
+      &:hover {
+        color: #000;
+      }
+    }
+    &.error {
+      border: 1px solid red;
+      background: #fcc;
+      background-color: rgba(255,204,204,$alert_opacity);
+    }
+    &.warning {
+      border: 1px solid #a60;
+      background: #fd6;
+      background-color: rgba(255,221,102,$alert_opacity);
+    }
+    &.notice {
+      border: 1px solid blue;
+      background: #cdf;
+      background-color: rgba(204,221,255,$alert_opacity);
+    }
+    &.success {
+      border: 1px solid green;
+      background: #cfc;
+      background-color: rgba(204,255,204,$alert_opacity);
+    }
   }
 }
 

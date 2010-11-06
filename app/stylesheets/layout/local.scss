@@ -7,56 +7,18 @@ div#local {
 
 #column_center.full {
   @include full;
+  article#content {
+    padding: resolve_width($local_content_padding, $grid_column_count);
+  }
 }
 
 #column_center.with_left {
   @include omega;
   @include columns($center_columns);
-  // @include columns(6);
-  // @include full;
-  // background: $local_content_background;
-}
-
-//#column_center {
-//  background-color: rgba(254,254,254,.5);
-//  // background: blue;
-//}
-
-#column_left {
-  @include alpha;
-  @if $local_nav_style == 'tabs' {
-    @include columns-eat-gutter($local_nav_column_count);
-  } @else {
-    @include columns($local_nav_column_count);
+  article#content {
+    padding: resolve_width($local_content_padding, $center_columns);
   }
 }
-
-//nav#local_nav {
-//  li {
-//    border: border_size($local_content_border) "solid transparent";
-//    @if $local_nav_style == 'tabs' {
-//      text-align: right;
-//      &.active {
-//        border: $local_content_border;
-//        border-right: 0;
-//      }
-//    }
-//  }
-//  li a {
-//    padding: gutter($local_nav_column_count) / 2;
-//    padding-right: gutter($local_nav_column_count) * 2;
-//    display: block;
-//    @if $local_nav_style == 'tabs' {
-//      &.active {
-//        background: $local_content_background;
-//        @if border_size($local_content_border) > 0px {
-//          position: relative;
-//         left: border_size($local_content_border);
-//       }
-//      }
-//    }
-//  }
-//}
 
 @if $local_nav_style == 'tabs' {
   //
@@ -116,7 +78,6 @@ div#local {
 article#content {
   border: $local_content_border;
   background: $local_content_background;
-  padding: resolve_width($local_content_padding, $center_columns);
 
   // i don't know how well supported this is, but it makes everything
   // look much better in modern browsers.
@@ -128,5 +89,10 @@ article#content {
     margin-bottom: resolve_width($local_content_padding, $center_columns);
     display: block;
   }
+
+  // allows us to have floated columns within the #content
+  @include clearfix;
 }
+
+
 

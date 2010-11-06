@@ -6,3 +6,15 @@
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+// simulate a blockquote.
+
+.bq {
+  margin: 1em;
+}
+
+// simulate that an element is followed with a <br>
+
+.br {
+  margin-bottom: 1em;
+}
