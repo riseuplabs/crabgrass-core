@@ -60,7 +60,7 @@ label}</a></span>)
   def link_to_active(link_label, url_hash, active=nil, html_options={})
     active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
-    html_options[:class] = [html_options[:class], selected_class].combine
+    html_options = html_options.merge(:class => [html_options[:class], selected_class].combine)
     link_to(link_label, url_hash, html_options)
   end
 
@@ -74,6 +74,31 @@ label}</a></span>)
       link_to_remote_with_icon(link_label, options, html_options)
     else
       link_to_remote(link_label, options, html_options)
+    end
+  end
+
+  #
+  # a toggle bug is a set of grouped links, only one of which may be active at a
+  # a time.
+  #
+  # links is an array of hashes, each with these keys:
+  #
+  #   :label
+  #   :url
+  #   :active
+  # 
+  def toggle_bug_links(*links)
+    content_tag(:ul, :class => 'toggle_bug') do 
+      links.collect do |link|
+        classes = [
+          link[:active] ? 'active' : '',
+          link == links.first ? 'first' : '',
+          link == links.last ? 'last' : ''
+        ].combine
+        content_tag(:li, :class => classes) do
+          link_to(link[:label], link[:url])
+        end
+      end.join
     end
   end
 
