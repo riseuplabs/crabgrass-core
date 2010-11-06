@@ -3,19 +3,34 @@
 // CRABGRASS HELPERS
 //
 
-// shows the 'notice' message (ie errors and success)
+// shows the alert message.
 // if there is a popup currently open, then the messages shows up there.
 // set msg to "" in order to hide it.
-function showNoticeMessage(msg) {
+function showAlertMessage(msg) {
   Autocomplete.hideAll();
   if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
     $('modal_message').update(msg);
-  } else if ($('flash-message')) {
-    $('flash-message').update(msg);
-    if (msg)
-      window.location.hash = "flash-message";
+  } else if ($('alert_message_list')) {
+    if (msg=='') {
+      $('alert_message_list').update('');
+    } else {
+      $('alert_message_list').insert({bottom: msg});
+    }
   }
-  $$('.spin').invoke('hide');
+}
+
+function hideSpinners() {$$('.spin').invoke('hide');}
+
+function hideAlertMessage(target, fade_seconds) {
+  target = $(target);
+  console.log(target);
+  if (!target.hasClassName('message'))
+    target = target.up('.message');
+  if (fade_seconds) {
+    Element.fade.delay(fade_seconds, target);
+  } else {
+    target.hide();
+  }
 }
 
 // opens the greencloth editing reference.
@@ -410,6 +425,7 @@ document.observe("dom:loaded", function() {
 
 //
 // COMMON MODAL DIALOGS
+// todo: change this. it doesn't work well with remembered forms.
 //
 
 function loginDialog(txt,options) {
@@ -428,3 +444,4 @@ function loginDialog(txt,options) {
   form = form.interpolate(txt);
   Modalbox.show(form, {title:txt.login, width:350});
 }
+

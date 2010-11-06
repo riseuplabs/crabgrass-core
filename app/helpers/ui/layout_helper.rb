@@ -147,9 +147,9 @@ module Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
     lines << '<script type="text/javascript">'
-    lines << @content_for_script
     lines << localize_modalbox_strings
     lines << detect_browser_js
+    lines << @content_for_script
     lines << '</script>'
     lines << '<!--[if IE]>'
     lines << '<script src="/javascripts/ie/html5.js"></script>'

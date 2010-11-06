@@ -4,8 +4,8 @@
   %body{:class=>language_direction}
     = render :partial => '/layouts/global/masthead'
     #container
-      = render :partial => '/layouts/global/messages'
       = render :partial => '/layouts/context/banner'
-      = render :partial => '/layouts/local/content'
+      = render :partial => '/layouts/local/local'
       = render :partial => '/layouts/global/footer'
+      = display_alert_messages
 

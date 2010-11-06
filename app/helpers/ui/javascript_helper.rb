@@ -3,6 +3,23 @@
 
 module Ui::JavascriptHelper
 
+  ##
+  ## rjs page updates
+  ##
+  
+  def standard_update(page)
+    update_alert_messages(page)
+    hide_spinners(page)
+  end
+
+  def hide_spinners(page)
+    page.call 'hideSpinners'
+  end
+
+  ##
+  ## 
+  ##
+
   # produces javascript to hide the given id or object
   def hide(id, extra=nil)
     id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
