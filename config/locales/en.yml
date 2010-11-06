@@ -28,13 +28,17 @@ en:
   ##
 
   create_a_new_thing: "Create a new %{thing}"
-
   thing_not_found: "%{thing} not found"
+  no_things_found: "No %{things} found."
   thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
-
   thing_settings: "%{thing} Settings"
   update_thing: "Update %{thing}"
-
+  thing_destroyed: "%{thing} destroyed"
+  created_by_entity: "Created by %{entity}"
+  approved_by_entity: "Approved by %{entity}"
+  rejected_by_entity: "Rejected by %{entity}"
+  #created_when_by: "Created by %{user} on %{when}."
+  #approved_when_by: "Approved by %{user} on %{when}."
 
   ##
   ## GENERIC TERMS
@@ -134,6 +138,7 @@ en:
   permissions: "Permissions"
   description: "Description"
   requests: "Requests"
+  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
@@ -953,13 +958,35 @@ en:
   outgoing: "Outgoing"
   state: "state"
   action: "action"
+
+  #
+  # request types:
+  #
+
+  request_to_friend: "Friend Request"
   request_to_friend_description: "%{user} would like to be the friend of %{other_user}"
+
+  request_to_join_our_network: "Network Join Invite"
   request_to_join_our_network_description: "group %{group} was invited to join network %{network}"
+
+  request_to_join_us: "Join Invite"
   request_to_join_us_description: "%{user} was invited to join %{group}"
+
+  request_to_join_us_via_email: "Join Invite"
   request_to_join_us_via_email_description: "%{email} was invited to join %{group}"
+
+  request_to_join_you: "Join Request"
   request_to_join_you_description: "%{user} requested to join %{group}"
+
+  request_to_join_your_network: "Network Join Request"
   request_to_join_your_network_description: "%{group} requested to join network %{network}"
+
+  request_to_destroy_our_group: "Destroy Group Vote"
   request_to_destroy_our_group_description: "%{user} has proposed to destroy %{group_type} %{group}"
+
+  request_to_remove_user: "Remove Member Vote"
+  request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
+
   request_to_remove_coordinator_user_tooltip_title: "(voting details)"
 
   request_to_remove_coordinator_user_tooltip_description: |
@@ -1509,7 +1536,6 @@ en:
   version_doesnt_exist: "There is no version %{version}"
   you_are_viewing_version: "You are viewing version %{version} by %{user}"
   diff_link: "view changes"
-  created_when_by: "created %{when} by %{user}"
   insert_image_heading: "Insert Image"
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"

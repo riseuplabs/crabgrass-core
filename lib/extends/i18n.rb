@@ -2,11 +2,27 @@ class Symbol
   def t(options={})
     I18n.t(self,options)
   end
+  def tcap(options={})
+    result = I18n.t(self, options).mb_chars
+    result[0..0].upcase + result[1..-1]
+  end
 end
 
 class String
   def t(options={})
     I18n.t(self,options)
+  end
+
+  # 
+  # translates a string, but capitalizes the first letter of the result.
+  # 
+  # this differs from String.capitalize (which lowers subsequent characters),
+  # and from String.titlecase (which makes the first letter of each word
+  # a capital letter).
+  # 
+  def tcap(options={})
+    result = I18n.t(self, options).mb_chars # get multibyte proxy
+    result[0..0].upcase + result[1..-1]
   end
 end
 
