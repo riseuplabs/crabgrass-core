@@ -48,7 +48,7 @@ module Ui::TextHelper
   end
 
   #
-  # used to convert the text produced by activities into actual links
+  # used to convert the text produced by activities & requests into actual links
   #
   def expand_links(description)
     description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
@@ -56,6 +56,15 @@ module Ui::TextHelper
         when "user": link_to_user($2)
         when "group": link_to_group($2)
       end
+    end
+  end
+
+  #
+  # converts the link markers in the text of activies and requests in bolded text
+  #
+  def embold_links(description)
+    description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
+      content_tag(:b, $2)
     end
   end
 

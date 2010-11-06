@@ -1,0 +1,6 @@
+- avatar_size = local_assigns[:avatar_size] || 'small'
+= avatar_for(request.created_by, avatar_size)
+%i= friendly_date(request.created_at)
+&ndash;
+= embold_links request.description
+

@@ -445,3 +445,27 @@ function loginDialog(txt,options) {
   Modalbox.show(form, {title:txt.login, width:350});
 }
 
+//
+// split panel
+//
+
+function activatePanelRow(row_id) {
+  // reset styles
+  $$('.panel_right .row').invoke('hide');
+  $$('.panel_arrow').invoke('hide');
+  $$('.panel_left .row').invoke('removeClassName', 'active');
+
+  if (row_id) {
+    // highlight left panel row
+    $('panel_left_'+row_id).addClassName('active');
+    var halfHeight = $('panel_left_'+row_id).getHeight() / 2 + "px";
+    var borderWidthStr = "#{top} #{right} #{bottom} #{left}".interpolate({top: halfHeight, right:"0px", bottom: halfHeight, left:"10px"});
+    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'}); 
+
+    // position and show right panel row
+    var offset = $('panel_left_'+row_id).offsetTop + 'px';
+    $$('.panel_right').first().setStyle({paddingTop:offset})
+    $('panel_right_'+row_id).show();
+  }
+}
+

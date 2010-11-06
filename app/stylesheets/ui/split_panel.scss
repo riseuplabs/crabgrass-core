@@ -1,0 +1,116 @@
+//
+// split panel view
+//
+// a list on the left. when you click on an item, it becomes selected and 
+// more details are loaded in the right panel.
+//
+// the structure looks like this:
+//
+// .split_panel
+//   .panel_left
+//     .row
+//     .row
+//   .panel_right
+//     .row
+//     .row
+//
+
+//
+// panel sizing
+// we could do this with susy, but it would be then it would need to not be
+// in the article#content. 
+//
+// here, we simulate what susy would do, but account for the inner
+// article#content padding.
+//
+
+// full width
+
+$content_padding: resolve_width($local_content_padding, $grid_column_count);
+$content_width: 100%;
+$panel_width: ($content_width - $content_padding) / 2;
+
+#column_center.full {
+  .panel_left {
+    width: $panel_width;
+  }
+  .panel_right {
+    width: $panel_width;
+    margin-left: $panel_width + $content_padding;
+  }
+}
+
+// with left sidebar
+
+$content_padding: resolve_width($local_content_padding, $center_columns);
+$content_width: 100%;
+$panel_width: ($content_width - $content_padding) / 2;
+
+#column_center.with_left {
+  .panel_left {
+    width: $panel_width;
+  }
+  .panel_right {
+    width: $panel_width;
+    margin-left: $panel_width + $content_padding;
+  }
+}
+
+//
+// left panel decoration
+//
+
+$row_height: 32px + 2px;  // at least enough space for the avatar and its border
+$row_padding: 8px;
+$row_separator: 1px solid #ddd;
+$row_arrow_image_width: 15px;
+$row_active_background: #666;
+$row_active_color: #fff;
+$row_hover_background: #eef;
+$row_img_border: 1px solid white;
+
+.panel_left {
+  float: left;        // allow right panel to flow to the right.
+  position: relative; // this is required in order to calculate the offset 
+                      // of this row, which is used to position the right row.
+  .row {
+    border-top: $row_separator;
+    padding: $row_padding 0;
+    cursor: pointer;
+    overflow: hidden;
+    clear:left;
+    &:hover  { background: $row_hover_background; }
+    &.active {
+      background: $row_active_background;
+      color: $row_active_color;
+      &:hover {background: $row_active_background;}
+      padding-left: $row_padding;
+    }
+    .avatar {
+      float: left;
+      margin-right: $row_padding;
+      border: $row_img_border;
+    }
+  }
+  .panel_arrow {
+    float: right;
+    display: none;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    border-color: transparent transparent transparent $row_active_background;
+    border-style: solid;
+    border-width: 0;
+    margin-right: -10px; // this much match border-width-left in js.
+  }
+}
+
+//
+// right panel
+//
+
+.panel_right .row h2 {
+  color: $row_active_background;
+}
+
+

@@ -49,6 +49,10 @@ module Utility::TimeHelper
     time.strftime('%A %Y/%b/%d %I:%M%p')
   end
 
+  def full_date(date)
+    date.strftime('%A %d/%b/%Y')
+  end
+
 #  def to_local(time)
 #    Time.zone.utc_to_local(time)
 #  end
