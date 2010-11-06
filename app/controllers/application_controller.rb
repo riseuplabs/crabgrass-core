@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   filter_parameter_logging :password
   protect_from_forgery
+  layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
   ##
   ## COMMON CONTROLLER EXTENSIONS
@@ -108,5 +109,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  
 end
