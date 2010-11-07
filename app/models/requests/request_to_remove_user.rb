@@ -64,24 +64,32 @@ class RequestToRemoveUser < VotableRequest
   end
 
   def description
-    raise "Do not call directly"
+    :request_to_remove_user_description.t(:user => user_span(created_by), 
+      :member => user_span(user), :group_type => group.group_type.downcase,
+      :group => group_span(group))
   end
 
-  def description_translation
-    :request_to_remove_coordinator_user_description
+  def short_description
+    :request_to_remove_user_short.t(:user => user_span(created_by), 
+      :member => user_span(user), :group_type => group.group_type.downcase,
+      :group => group_span(group))
   end
 
-  def description_translation_params
-    {:group => group_span(group),
-      :group_type => group.group_type.downcase,
-      :user => user_span(created_by),
-      :target_user => user_span(user)}
-  end
+#  def description_translation
+#    :request_to_remove_coordinator_user_description
+#  end
 
-  def description_tooltip_translations
-    {:caption => :request_to_remove_coordinator_user_tooltip_title,
-      :content => :request_to_remove_coordinator_user_tooltip_description}
-  end
+#  def description_translation_params
+#    {:group => group_span(group),
+#      :group_type => group.group_type.downcase,
+#      :user => user_span(created_by),
+#      :target_user => user_span(user)}
+#  end
+
+#  def description_tooltip_translations
+#    {:caption => :request_to_remove_coordinator_user_tooltip_title,
+#      :content => :request_to_remove_coordinator_user_tooltip_description}
+#  end
 
   protected
 

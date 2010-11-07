@@ -21,4 +21,12 @@ added in crabgrass-core, not translated:
   request_to_remove_user: "Remove Member Vote"
   request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
 
+  request_to_friend_short: "%{user} friends %{other_user}?"
+  request_to_join_our_network_short: "%{network} joins %{group}?"
+  request_to_join_us_short: "%{user} joins %{group}?"
+  request_to_join_us_via_email_short: "%{email} joins %{group}?"
+  request_to_join_you_short: "%{user} joins %{group}?"
+  request_to_join_your_network_short: "%{group} joins %{network}?"
+  request_to_destroy_our_group_short: "Destroy %{group}?"
+  request_to_remove_user_short: "Expell %{member}?"
 

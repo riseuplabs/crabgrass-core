@@ -45,5 +45,9 @@ class RequestToJoinUs < Request
     I18n.t(:request_to_join_us_description, :user => user_span(recipient), :group => group_span(group))
   end
 
+  def short_description
+    I18n.t(:request_to_join_us_short, :user => user_span(recipient), :group => group_span(group))
+  end
+
 end
 

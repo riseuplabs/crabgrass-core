@@ -964,27 +964,35 @@ en:
   #
 
   request_to_friend: "Friend Request"
+  request_to_friend_short: "%{user} friends %{other_user}?"
   request_to_friend_description: "%{user} would like to be the friend of %{other_user}"
 
   request_to_join_our_network: "Network Join Invite"
+  request_to_join_our_network_short: "%{network} joins %{group}?"
   request_to_join_our_network_description: "group %{group} was invited to join network %{network}"
 
   request_to_join_us: "Join Invite"
+  request_to_join_us_short: "%{user} joins %{group}?"
   request_to_join_us_description: "%{user} was invited to join %{group}"
 
   request_to_join_us_via_email: "Join Invite"
+  request_to_join_us_via_email_short: "%{email} joins %{group}?"
   request_to_join_us_via_email_description: "%{email} was invited to join %{group}"
 
   request_to_join_you: "Join Request"
+  request_to_join_you_short: "%{user} joins %{group}?"
   request_to_join_you_description: "%{user} requested to join %{group}"
 
   request_to_join_your_network: "Network Join Request"
+  request_to_join_your_network_short: "%{group} joins %{network}?"
   request_to_join_your_network_description: "%{group} requested to join network %{network}"
 
   request_to_destroy_our_group: "Destroy Group Vote"
+  request_to_destroy_our_group_short: "Destroy %{group}?"
   request_to_destroy_our_group_description: "%{user} has proposed to destroy %{group_type} %{group}"
 
   request_to_remove_user: "Remove Member Vote"
+  request_to_remove_user_short: "Expell %{member}?"
   request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
 
   request_to_remove_coordinator_user_tooltip_title: "(voting details)"
