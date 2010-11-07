@@ -54,10 +54,12 @@ class Avatar < ActiveRecord::Base
   end
 
   def image_file_url=(url)
-    begin
-      self.image_file_data = resize_from_blob(open(url).read, 'huge') # from 'open-uri'
-    rescue Exception => exc
-      raise ErrorMessage.new(exc.to_s)
+    if url.any?
+      begin
+        self.image_file_data = resize_from_blob(open(url).read, 'huge') # from 'open-uri'
+      rescue Exception => exc
+        raise ErrorMessage.new(exc.to_s)
+      end
     end
   end
 

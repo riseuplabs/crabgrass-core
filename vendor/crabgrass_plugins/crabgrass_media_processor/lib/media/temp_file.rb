@@ -78,8 +78,9 @@ module Media
     end
 
     def clear
-      # disable this to debug the files in their various states...
-      @tmpfile.unlink
+      # this is not really needed, because the tmp files are deleted as soon as
+      # @tmpfile gets garbage collected.
+      # @tmpfile.unlink
     end
 
     def any?
