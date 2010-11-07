@@ -84,7 +84,7 @@ module ControllerExtension::Authentication
   # to access the requested action.  For example, a popup window might
   # simply close itself.
   def access_denied
-    raise PermissionDenied
+    raise_denied
   end
 
   # Store the URI of the current request in the session.

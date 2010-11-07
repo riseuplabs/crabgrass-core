@@ -78,7 +78,7 @@ module ControllerExtension::BeforeFilters
   # if we have login_required this will be called and check the
   # permissions accordingly
   def authorized?
-    may_action?(params[:action])
+    check_permissions!
   end
 
   # set the current timezone, if the user has it configured.

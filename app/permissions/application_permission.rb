@@ -14,6 +14,7 @@ module ApplicationPermission
   alias_method :may_create_wiki_pages?, :may_create_pages?
 
   def may_signup?
+    return false if logged_in?
     if current_site.signup_mode == Conf::SIGNUP_MODE[:invite_only]
       session[:user_has_accepted_invite] == true
     elsif current_site.signup_mode == Conf::SIGNUP_MODE[:closed]
