@@ -1,6 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
-  helper :requests
+  permissions 'requests'
+  prepend_before_filter :fetch_request, :only => [:update, :destroy]
 
   def index
     @requests = Request.
@@ -17,19 +18,22 @@ class Me::RequestsController < Me::BaseController
   #end
 
   def update
-    request = Request.find(params[:id])
-    if params[:as]
-      mark_as = params[:as].to_sym
-      request.mark!(mark_as, current_user)
+    if mark_as(params)
+      @request.mark!(mark_as(params), current_user)
+      success
     end
   end
 
   def destroy
-    @request = Request.find(params[:id])
-    notice :thing_destroyed.tcap(:thing => :request.t)
+    #@request.destroy
+    notice :thing_destroyed.tcap(:thing => @request.name.tcap)
   end
 
   protected
+
+  def fetch_request
+    @request = Request.find(params[:id])
+  end
 
   def current_view
     case params[:view]
@@ -47,6 +51,14 @@ class Me::RequestsController < Me::BaseController
     end
   end
 
+  def mark_as(params)
+    case params[:state]
+      when 'rejected' then :rejected;
+      when 'approved' then :approved;
+      when 'pending' then :pending;
+    end
+  end
+
   def left_id(request)
     "panel_left_#{request.dom_id}"
   end
@@ -56,5 +68,11 @@ class Me::RequestsController < Me::BaseController
     "panel_right_#{request.dom_id}"
   end
   helper_method :right_id
+
+  # unlike other me controllers, we actually want to check
+  # permissions for requests.
+  def authorized?
+    check_permissions!
+  end
 
 end
