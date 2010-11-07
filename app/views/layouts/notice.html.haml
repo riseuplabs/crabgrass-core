@@ -1,0 +1,11 @@
+-#
+-# A template for displaying a notice.
+-# This is a little odd. what it does is render the template first, and then
+-# it renders the layout. This is the opposite of the normal order of operations.
+-# We do this so that we can clear the alert messages if desired.
+-#
+
+- content_for :content do
+  = yield
+= render :file => 'layouts/application'
+

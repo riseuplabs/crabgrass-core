@@ -1,45 +1,71 @@
 //
 // ALERT MESSAGES
 //
-// types: error, warning, notice, success
+// types of messages: error, warning, notice, success
 //
+// there are three places where alert messages might be shown:
+//
+// (1) the alert message overlay for the entire screen
+//     .alert_message_container
+//       #alert_message_list
+//
+// (2) in a modalbox
+//    not sure yet.
+//
+// (3) inline the main content area
+//     .inline_message_list
+// 
+// 
 
 $alert_opacity: 0.8;
 $alert_width: 600px;
-$alert_padding: gutter()/2;
+$alert_padding: gutter();
+$alert_margin: gutter()/2;
 
-// alert message overlay. not used when the modalbox is visible.
+//
+// for alert messages everywhere
+//
+
+.message {
+  .text {
+    @extend .small_icon;
+    line-height: 1em !important;
+  }
+}
+
+//
+// for alert message overlay
+//
+
 .alert_message_container {
   width: 100%;
   max-width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  .alert_message_list {
-    max-width: 100%;
-    width: $alert_width;
-    margin: 0 auto;
-    .message {
-      padding: $alert_padding;
-      margin: $alert_padding 0;
-    }
-  }
 }
 
-.alert_message_list {
+#alert_message_list {
+  max-width: 100%;
+  width: $alert_width;
+  margin: 0 auto;
   .message {
-    .text {
-      @extend .small_icon;
-    }
+    padding: $alert_padding;
+    margin: $alert_margin 0;
     .close {
       float: right;
       color: #999;
-      font-size: 26px;
+      font-size: 24px;
       text-decoration: none;
       font-weight: bold;
+      line-height: $grid_font_size;
       &:hover {
         color: #000;
       }
+    }
+    li {
+      margin-left: 36px;
+      list-style: square;
     }
     &.error {
       border: 1px solid red;
@@ -63,6 +89,26 @@ $alert_padding: gutter()/2;
     }
   }
 }
+
+//
+// for inline alert messages
+//
+
+.inline_message_list {
+  .close {display:none}
+  .message .text {
+    background-position: 0px 10px !important;
+  }
+  p.first {
+    font-size: 1.5em;
+    line-height: 1.5em;
+  }
+}
+
+
+//
+// forms with errors
+//
 
 .fieldWithErrors {
   border: 2px solid #c00;

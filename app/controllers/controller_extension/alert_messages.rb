@@ -54,6 +54,7 @@ module ControllerExtension::AlertMessages
       # display
       helper_method :alert_messages?
       helper_method :display_alert_messages
+      helper_method :clear_alert_messages
       helper_method :update_alert_messages
     end
   end
@@ -80,6 +81,17 @@ module ControllerExtension::AlertMessages
     alert_message(:success, *args)
   end
 
+  def alert_message(*args)
+    options = Hash[args.collect {|i|i.is_a?(Symbol) ? [i,true] : nil}]
+    type = determine_type(options)
+    flsh = determine_flash(type, options)
+    flsh[:messages] ||= []
+    add_flash(type, *args).each do |msg|
+      # allow options to override the defaults
+      flsh[:messages] << msg.merge(options);
+    end
+  end
+
   ##
   ## DISPLAYING ALERTS
   ##
@@ -93,11 +105,12 @@ module ControllerExtension::AlertMessages
     end
     
     if include_container
-      content_tag(
-        :div,
-        content_tag(:div, inner, :id => 'alert_message_list', :class => 'alert_message_list'),
-        :class => 'alert_message_container'
-      )
+      # the id alert_message_list is required by the showAlertMessage
+      # javascript function.
+      content_tag(:div,
+        content_tag(:div,
+          inner, :id => 'alert_message_list'),
+        :class => 'alert_message_container')
     else
       inner
     end
@@ -105,6 +118,10 @@ module ControllerExtension::AlertMessages
 
   def alert_messages?
     flash[:messages].any?
+  end
+
+  def clear_alert_messages
+    flash[:messages] = nil
   end
 
   #
@@ -141,16 +158,6 @@ module ControllerExtension::AlertMessages
   ## BUILDING THE MESSAGE
   ##
 
-  def alert_message(type, *args)
-    options = Hash[args.collect {|i|i.is_a?(Symbol) ? [i,true] : nil}]
-    flsh = determine_flash(type, options)
-    flsh[:messages] ||= []
-    add_flash(type, *args).each do |msg|
-      # allow options to override the defaults
-      flsh[:messages] << msg.merge(options);
-    end
-  end
-
   def add_flash(type, *args)
     if exception = args.detect{|a|a.is_a? Exception}
       add_flash_exception(exception)
@@ -178,13 +185,15 @@ module ControllerExtension::AlertMessages
 
   def add_flash_exception(exception)
     if exception.is_a? PermissionDenied
-      [{:type => :warning, :text => :alert_permission_denied.t}]
+      [{:type => :warning, :text => [:alert_permission_denied.t, :permission_denied_description.t]}]
+    elsif exception.is_a? AuthenticationRequired
+      [{:type => :notice, :text => [:login_required.t, :login_required_description.t]}]
     elsif exception.is_a? ErrorMessages
       exception.errors.collect do |msg|
         {:type => :error, :text => msg}
       end
-    elsif exc.is_a? ActiveRecord::RecordInvalid
-      add_flash_record(exc.record)
+    elsif exception.is_a? ActiveRecord::RecordInvalid
+      add_flash_record(exception.record)
     else
       [{:type => :error, :text => exception.to_s}]
     end
@@ -194,7 +203,7 @@ module ControllerExtension::AlertMessages
     if record.errors.any?
       [{ :type => :error,
          :text => [:alert_not_saved.t, :alert_field_errors.t],
-         :list => object.errors.full_messages }]
+         :list => record.errors.full_messages }]
     else
       [{ :type => :success,
          :text => :alert_saved.t }]
@@ -218,6 +227,14 @@ module ControllerExtension::AlertMessages
     end
   end
 
+  def determine_type(options)
+    if options[:error];      :error
+    elsif options[:warning]; :warning
+    elsif options[:notice];  :notice
+    elsif options[:success]; :success 
+    end
+  end
+
   ##
   ## DISPLAY
   ##
@@ -225,15 +242,21 @@ module ControllerExtension::AlertMessages
   # generate html for a single message line.
   def message_html(message)
     icon_class = case message[:type]
-      when :error then 'caution_16'
+      when :error   then 'caution_16'
       when :warning then 'exclamation_16'
-      when :notice then 'lightbulb_16'
+      when :notice  then 'lightbulb_16'
       when :success then 'ok_16'
     end
     message_id = "alert_message_#{rand(100_000_000)}"
+    text = if message[:text].is_a? Array
+      content_tag(:p, message[:text][0], :class => 'first') +
+      content_tag(:p, message[:text][1..-1])
+    else
+      message[:text]
+    end
     html = []
     html << view.link_to_function('×', "hideAlertMessage('#{message_id}')", :class => 'close')
-    html << content_tag(:div, message[:text], :class => "text #{icon_class}")
+    html << content_tag(:div, text, :class => "text #{icon_class}")
     if message[:list]
       html << content_tag(:ul, message[:list].collect{|item|content_tag(:li, item)})
     end
