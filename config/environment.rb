@@ -2,7 +2,8 @@
 require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
-RAILS_GEM_VERSION = '~> 2.3.0'  # Use any Rails in the 2.3.x series 
+# Use any Rails in the 2.3.x series, greater than or equal to 2.3.10
+RAILS_GEM_VERSION = '~> 2.3.10'  
 require File.join(File.dirname(__FILE__), 'boot')
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 
