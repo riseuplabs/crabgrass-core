@@ -4,7 +4,7 @@
 module Sass::Script::Functions
   # takes a border string, like '1px solid green'
   # and returns 1px
-  def border_size(string)
+  def border_width(string)
     Sass::Script::Number.new( string.to_s.split(' ').first.to_i, ['px'])
   end
 

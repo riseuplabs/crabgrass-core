@@ -1,4 +1,4 @@
-%h2= request.class.name.underscore.tcap
+%h2= request.name.tcap
 .p
   = :created_by_entity.tcap(:entity => link_to_entity(request.created_by))
   .br= content_tag(:i,full_date(request.created_at))

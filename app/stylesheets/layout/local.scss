@@ -34,8 +34,8 @@ div#local {
   nav#local_nav {
     li {
       text-align: right;
-      @if border_size($local_content_border) > 0px {
-        border: border_size($local_content_border) "solid transparent";
+      @if border_width($local_content_border) > 0px {
+        border: border_width($local_content_border) "solid transparent";
       }
       &.active {
         border: $local_content_border;
@@ -50,11 +50,11 @@ div#local {
       @include hover-link;
       &.active {
         background: $local_content_background;
-        @if border_size($local_content_border) > 0px {
+        @if border_width($local_content_border) > 0px {
           // shift the tab slightly to the right to make it flush
           // with the content.
           position: relative;
-          left: border_size($local_content_border);
+          left: border_width($local_content_border);
         }
       }
     }

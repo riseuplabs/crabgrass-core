@@ -42,17 +42,18 @@ $panel_width: ($content_width - $content_padding) / 2;
 
 // with left sidebar
 
-$content_padding: resolve_width($local_content_padding, $center_columns);
+$split_panel_gutter: resolve_width($local_content_padding, $center_columns);
+$split_panel_gutter_padding: resolve_width($local_content_padding, $center_columns/2);
 $content_width: 100%;
-$panel_width: ($content_width - $content_padding) / 2;
+$panel_width: ($content_width - $split_panel_gutter) / 2;
 
 #column_center.with_left {
   .panel_left {
     width: $panel_width;
   }
   .panel_right {
-    width: $panel_width;
-    margin-left: $panel_width + $content_padding;
+    width: $panel_width + $split_panel_gutter;
+    margin-left: $panel_width;
   }
 }
 
@@ -62,34 +63,44 @@ $panel_width: ($content_width - $content_padding) / 2;
 
 $row_height: 32px + 2px;  // at least enough space for the avatar and its border
 $row_padding: 8px;
-$row_separator: 1px solid #ddd;
+$row_arrow_width: 10px;   // this much match border-width-left set by javascript.
+$row_separator: 1px solid #d9d9d9;
 $row_arrow_image_width: 15px;
-$row_active_background: #666;
-$row_active_color: #fff;
+$row_active_background: #d9d9d9;
+$row_active_color: #000;
 $row_hover_background: #eef;
 $row_img_border: 1px solid white;
+$row_right_active_background: #efefef;
+$row_right_border: 1px solid $row_active_background;
 
 .panel_left {
   float: left;        // allow right panel to flow to the right.
   position: relative; // this is required in order to calculate the offset 
                       // of this row, which is used to position the right row.
   .row {
-    border-top: $row_separator;
-    padding: $row_padding 0;
     cursor: pointer;
-    overflow: hidden;
     clear:left;
-    &:hover  { background: $row_hover_background; }
+    // this is a kind of border-collapse for divs, to make the 
+    // space of the border shared by both rows.
+    margin-bottom: -1 * border_width($row_separator);
     &.active {
       background: $row_active_background;
       color: $row_active_color;
-      &:hover {background: $row_active_background;}
       padding-left: $row_padding;
+      .content:hover {background: $row_active_background;}
     }
     .avatar {
       float: left;
       margin-right: $row_padding;
       border: $row_img_border;
+    }
+    .content {
+      &:hover  { background: $row_hover_background; }
+      border-top: $row_separator;
+      // border-bottom: $row_separator;
+      margin-right: $split_panel_gutter_padding;
+      overflow: hidden;
+      padding: $row_padding 0;
     }
   }
   .panel_arrow {
@@ -101,8 +112,12 @@ $row_img_border: 1px solid white;
     border-color: transparent transparent transparent $row_active_background;
     border-style: solid;
     border-width: 0;
-    margin-right: -10px; // this much match border-width-left in js.
+    margin-right: -1 * ($row_arrow_width + border_width($row_right_border));
   }
+  //.rule {
+  //  border-top: $row_separator;
+  //  margin-right: 20px;
+  //}
 }
 
 //
@@ -110,7 +125,12 @@ $row_img_border: 1px solid white;
 //
 
 .panel_right .row h2 {
-  color: $row_active_background;
+  // color: $row_active_background;
+}
+.panel_right .row {
+  background: $row_right_active_background;
+  padding: 1em;
+  border: $row_right_border;
 }
 
 
