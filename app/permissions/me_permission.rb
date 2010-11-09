@@ -45,6 +45,6 @@ module MePermission
   #alias_method :may_update_trash?, :may_edit_me?
 
   # Messages
-  #alias_method :may_create_posts?, :may_edit_me?
+  alias_method :may_create_posts?, :may_access_me?
 
 end
