@@ -218,6 +218,8 @@ module ControllerExtension::AlertMessages
       flash.now
     elsif options[:later]
       flash
+    elsif @performed_redirect
+      flash
     elsif request.post? and (type == :error or type == :warning)
       flash.now
     elsif request.xhr?

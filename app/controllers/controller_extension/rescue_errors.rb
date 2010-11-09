@@ -163,11 +163,7 @@ module ControllerExtension::RescueErrors
       redirect_to options[:redirect]
     end
     if exception
-      if @performed_redirect
-        alert_message :error, exception
-      else
-        alert_message :error, exception, :now
-      end
+      alert_message :error, exception
     end
     if !performed? and !@performed_render
       if options[:template]
@@ -189,7 +185,7 @@ module ControllerExtension::RescueErrors
     if logged_in?
       render :template => 'error/permission_denied', :layout => 'notice'
     else
-      redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
+      redirect_to login_path, :redirect => request.request_uri
     end
   end
 
