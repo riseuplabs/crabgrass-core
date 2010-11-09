@@ -6,7 +6,7 @@
   %td.avatar
     = display_entity(other_user, :avatar => :small, :format => :short, :link => true)
   %td.message
-    = link_to(post_summary_body(post), me_discussion_posts_path(other_user.login, :anchor => 'last'))
+    = link_to(post_summary_body(post), me_discussion_posts_path(other_user.login))
   %td.date
     = friendly_date(post.created_at)
 

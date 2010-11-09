@@ -46,6 +46,18 @@ function quickRedReference() {
 }
 
 //
+// CRABGRASS DOM EXTENSIONS
+//
+
+var CgUtils = {
+  scrollToBottom: function(element) {
+    element = $(element);
+    window.scrollTo(0, element.cumulativeOffset()[1] + element.getHeight() - document.viewport.getDimensions().height);
+  }
+}
+Element.addMethods(CgUtils);
+
+//
 // CSS UTILITY
 //
 
