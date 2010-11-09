@@ -12,6 +12,7 @@ config/crabgrass/secret.txt
 doc/api
 doc/app
 doc/coverage
+doc/guides
 *~
 public/plugin_assets/*
 db/*.sqlite3
