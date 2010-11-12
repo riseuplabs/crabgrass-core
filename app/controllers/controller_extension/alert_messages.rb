@@ -14,14 +14,20 @@
 #  notice: no default
 #  success: "Changes saved"
 #
-# The alert methods accept Strings, Exceptions, and Symbols. 
-# Symbols are used to set options.
+# The alert methods accept arguments, in any order, that are Strings, Exceptions,
+# Arrays or Symbols. 
 #
-# Available options:
-#   :now    -- flash now
-#   :later  -- flash later
-#   :fade   -- hide message after about 5 seconds
-#   :nofade -- prevent fade
+# Exception -- display an alert appropriate to the exception.
+# String -- displays the content of the string.
+# Array -- displays each of the strings in the array, each on their own line.
+# Symbol -- set options with the alert message:
+#
+#    Available options:
+#      :now    -- flash now
+#      :later  -- flash later
+#      :fade   -- hide message after 5 seconds
+#                 (by default, success and notice messages fade.)
+#      :nofade -- prevent fade
 #
 # Flash now or flash later? The code tries to pick an intelligent default:
 #
@@ -163,7 +169,7 @@ module ControllerExtension::AlertMessages
       add_flash_exception(exception)
     elsif record = args.detect{|a|a.is_a? ActiveRecord::Base}
       add_flash_record(record)
-    elsif message = args.detect{|a|a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars)}
+    elsif message = args.detect{|a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars) or a.is_a?(Array)}
       add_flash_message(type, message)
     else
       add_flash_default(type)

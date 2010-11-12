@@ -36,8 +36,7 @@ class SessionController < ApplicationController
       UnreadActivity.create(:user => current_user)
       redirect_successful_login
     else
-      flash_message_now :title => I18n.t(:login_failed),
-      :error => I18n.t(:login_failure_reason)
+      error [I18n.t(:login_failed), I18n.t(:login_failure_reason)], :now
     end
 
   end
@@ -48,8 +47,7 @@ class SessionController < ApplicationController
     language = session[:language_code]
     reset_session
     session[:language_code] = language
-    flash_message :title => I18n.t(:logout_success),
-      :success => I18n.t(:logout_success_message)
+    success [:logout_success.t, :logout_success_message.t]
     redirect_to '/'
   end
 
@@ -75,9 +73,8 @@ class SessionController < ApplicationController
   # before filter
   def stop_illegal_redirect
     unless params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//
-      flash_message(:title => I18n.t(:illegal_redirect),
-      :error => I18n.t(:redirect_to_foreign_domain, :url => params.delete(:redirect)))
       redirect_to params
+      error [:illegal_redirect.t, :redirect_to_foreign_domain.t(:url => params.delete(:redirect))]
       false
     else
       true
