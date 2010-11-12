@@ -1,11 +1,14 @@
-- left_column = @local_navigation.any?
-- # left_column = true if <some other reason>
+-# local_navigation_content = @local_navigation_content || yield(:local_navigation)
+-# show_left_column = local_navigation_content.any? || @local_navigation.any?
+-# # left_column = true if <some other reason>
+
+- show_left_column = @local_navigation.any?
 
 #local
-  - if left_column
+  - if show_left_column
     #column_left
       %nav#local_nav
-        = render :partial => 'layouts/local/nav/sidebar'
+        = render(:partial => 'layouts/local/nav/sidebar')
     #column_center.with_left
       = render :partial => 'layouts/local/content'
   - else

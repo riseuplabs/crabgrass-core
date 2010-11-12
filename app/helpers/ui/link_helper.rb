@@ -77,30 +77,6 @@ label}</a></span>)
     end
   end
 
-  #
-  # a toggle bug is a set of grouped links, only one of which may be active at a
-  # a time.
-  #
-  # links is an array of hashes, each with these keys:
-  #
-  #   :label
-  #   :url
-  #   :active
-  # 
-  def toggle_bug_links(*links)
-    content_tag(:ul, :class => 'toggle_bug') do 
-      links.collect do |link|
-        classes = [
-          link[:active] ? 'active' : '',
-          link == links.first ? 'first' : '',
-          link == links.last ? 'last' : ''
-        ].combine
-        content_tag(:li, :class => classes) do
-          link_to(link[:label], link[:url])
-        end
-      end.join
-    end
-  end
 
   ##
   ## LINKS WITH ICONS

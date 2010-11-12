@@ -18,6 +18,7 @@ module PathFinder::ControllerExtension
   def self.included(base)
     base.class_eval do
       helper_method :parse_filter_path
+      helper_method :parse_hash_filter_path
       helper_method :options_for_me
       helper_method :options_for_mentor
       helper_method :options_for_public
@@ -41,6 +42,10 @@ module PathFinder::ControllerExtension
     end
   end
 
+  # in case of a window.location.hash based path.
+  def parse_hash_filter_path(path)
+    PathFinder::ParsedPath.new(path.gsub('.','/'))
+  end
 
   # access options for pages current_user has access to
   def options_for_me(args={})

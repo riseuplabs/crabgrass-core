@@ -23,7 +23,6 @@ function hideSpinners() {$$('.spin').invoke('hide');}
 
 function hideAlertMessage(target, fade_seconds) {
   target = $(target);
-  console.log(target);
   if (!target.hasClassName('message'))
     target = target.up('.message');
   if (fade_seconds) {
@@ -432,7 +431,7 @@ function pollHash() {
   }
 }
 document.observe("dom:loaded", function() {
-  if (onHashChanged) {setInterval("pollHash()", 100)}
+  if (onHashChanged) {setInterval("pollHash()", 300)}
 });
 
 //
@@ -478,6 +477,75 @@ function activatePanelRow(row_id) {
     var offset = $('panel_left_'+row_id).offsetTop + 'px';
     $$('.panel_right').first().setStyle({paddingTop:offset})
     $('panel_right_'+row_id).show();
+  }
+}
+
+
+//
+// ajaxy page search filter path
+//
+var FilterPath = {
+  encode: function() {
+    return "filter=" + window.location.hash.sub("#","");
+  },
+  set: function(path) {
+    window.location.hash = path;
+  },
+  add: function(segment) {
+    if (window.location.hash.indexOf(segment) == -1) {
+      window.location.hash = (window.location.hash + segment).gsub('//','/');
+    }
+  },
+  remove: function(segment) {
+    window.location.hash = window.location.hash.gsub(segment,'/');
+  }
+}
+
+
+//
+// RequestQueue allows us to make sure some requests finish before
+// others start. Parameters are eval'ed when the request is fired off,
+// not when it is queued.
+//
+var RequestQueue = {
+  add: function(url, options, parameters) {
+    this.queue = this.queue || []
+    this.queue.push({url:url, options:options, parameters:parameters});
+    if (!this.timer)
+      this.timer = setInterval("RequestQueue.poll()", 100)
+  },
+  poll: function() {
+    if (Ajax.activeRequestCount == 0) {
+      var req = this.queue.pop();
+      if (req) {
+        if (req.parameters) {req.options.parameters = eval(req.parameters)}
+        new Ajax.Request(req.url, req.options);
+      } else {
+        clearInterval(this.timer);
+        this.timer = false;
+      }
+    }
+  }
+}
+
+// 
+// This allows you to set and remove global styles programatically
+//
+var Style = {
+  set:function(id, css) {
+    var styleNode = $(id);
+    if (!styleNode) {
+      styleNode = new Element('style', {id:id, type:'text/css'});
+      $$('head')[0].appendChild(styleNode);
+    }
+    if(Prototype.Browser.IE) {
+      styleNode.styleSheet.cssText = css;
+    } else {
+      styleNode.update(css);
+    }
+  },
+  clear:function(id) {
+    this.set(id,'');
   }
 }
 

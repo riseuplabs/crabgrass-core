@@ -1,0 +1,7 @@
+%ul#search_controls_possible
+  - if @path.any?
+    = filter_checkbox_li_tag :add, filter_all
+  - for filter in possible_filter_definitions
+    - unless @path.include?(filter[:path])
+      = filter_checkbox_li_tag :add, filter
+

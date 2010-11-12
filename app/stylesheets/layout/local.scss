@@ -31,23 +31,27 @@ div#local {
     @include columns-eat-gutter($local_nav_column_count);
   }
 
-  nav#local_nav {
-    li {
-      text-align: right;
-      @if border_width($local_content_border) > 0px {
-        border: border_width($local_content_border) "solid transparent";
-      }
-      &.active {
-        border: $local_content_border;
-        background: $local_content_background;
-        border-right: 0;
-      }
+  nav#local_nav li.nav {
+    @if border_width($local_content_border) > 0px {
+      border: border_width($local_content_border) "solid transparent";
     }
-    li a {
+    &.active {
+      border: $local_content_border;
+      background: $local_content_background;
+      border-right: 0;
+    }
+    a.nav {
+      @include hover-link;
+      text-align: right;
+      display: block;
+    }
+
+    // a.nav and div.nav are used to give the tab its padding to create the
+    // illusion of a tab. a.nav should normally be the one used, but sometimes
+    // we want a tab that doesnt have links.
+    a.nav, div.nav {
       padding: resolve_width($local_nav_padding, $local_nav_column_count) / 2;
       padding-right: resolve_width($local_nav_padding, $local_nav_column_count);
-      display: block;
-      @include hover-link;
       &.active {
         background: $local_content_background;
         @if border_width($local_content_border) > 0px {

@@ -1,0 +1,5 @@
+standard_update(page)
+page << "FilterPath.set('%s')" % @path.to_hash_path
+page.replace 'search_controls_active', :partial => 'me/pages/search_controls_active'
+page.replace 'search_controls_possible', :partial => 'me/pages/search_controls_possible'
+

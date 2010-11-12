@@ -18,6 +18,9 @@ class PathFinder::ParsedPath < Array
 
   # path keyword => number of arguments required for the keyword.
   PATH_KEYWORDS = {
+    # special
+    'all' => 0, # any path merged with 'all' gets cleared.
+
     # boolean
     'or' => 0,
 
@@ -187,6 +190,20 @@ class PathFinder::ParsedPath < Array
   alias_method :to_s, :to_path     # manual string conversion
   alias_method :to_str, :to_path   # automatic string conversion
 
+  HASH_PATH_SEGMENT_DIVIDER = '.'
+  ENCODED_DIVIDER = '%' + HASH_PATH_SEGMENT_DIVIDER[0].to_s(16)
+
+  # path used for the window.location.hash
+  # [['public'],['created_by','blue']] --> /public/created_by.blue/
+  def to_hash_path
+    "/" + collect{|segment| 
+      segment.collect{|part|
+        CGI.escape(part).
+        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
+      }.join(HASH_PATH_SEGMENT_DIVIDER)
+    }.join("/") + "/"
+  end
+
   def to_param
     self.flatten + (@format ? [@format] : [])
   end
@@ -272,6 +289,9 @@ class PathFinder::ParsedPath < Array
   # for duplicate keywords use the ones in the path_b arg
   def merge(path_b)
     path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    if path_b.first == ['all']
+      return PathFinder::ParsedPath.new([])
+    end
     path_a = self.dup
     path_a.remove_sort if path_b.sort_arg?
     path_a.replace((path_a + path_b).uniq)
@@ -280,9 +300,28 @@ class PathFinder::ParsedPath < Array
   # same as merge, but replaces self.
   def merge!(path_b)
     path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    if path_b.first == ['all']
+      return self.replace(PathFinder::ParsedPath.new([]))
+    end
     self.remove_sort if path_b.sort_arg?
     self.concat(path_b).uniq!
     self
+  end
+
+  # removes the path elements in path_b from self, returns a copy
+  def remove(path_b)
+    path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    if path_b.first == ['all']
+      return PathFinder::ParsedPath.new([])
+    end
+    path_a = self.dup
+    path_a.remove_sort if path_b.sort_arg?
+    return path_a - path_b
+  end
+
+  # removes the path elements in path_b from self
+  def remove!(path_b)
+    self.replace(remove(path_b))
   end
 
   # replace one keyword with another.

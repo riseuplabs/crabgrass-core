@@ -1,21 +1,55 @@
 //
-// SMALL ICONS
+// ICONS AS BACKGROUND IMAGES
 //
 
-// the small icons are used everywhere. the basic idea is that 
-// we add some padding and then position the background image in the space
-// created. this has the advantage of telling the browser to load the images
-// later. 
-// horizontal spacing is no problem. vertical spacing is a bit more of a pain.
-// we can add vertical padding, or we can set the line-height.
+// Most often, we display icons as background images. This is used for small
+// icons, big icons, and for avatar icons.
+// 
+// The basic idea is that we add some padding and then position the background
+// image in the space created. This has the advantage of telling the browser to
+// load the images later, there is very little markup, and it is easy to add
+// icons to existing elements.
+//
+// Using this method, the horizontal spacing is no problem. However, vertical
+// spacing is a bit more of a pain. Small icons, 16px, are usually ok no matter
+// what: the text is usually about the same size as the icons.
+// 
+// For bigger icons, there are three possible methods of ensuring enough
+// vertical space in the element for an icon to appear fully and not get clipped:
+//
+// * vertical padding: 
+//   Using this method, you add a few pixels of top and bottom padding to try
+//   to give the element enough height. This is OK, but creates inconsistant 
+//   results with different font sizes and font families. 
+//   This is the only method that works with display:inline.
+//
+// * line-height: 
+//   using this method, you set the line height of the element to be greater than
+//   the size of the icon. This works great, so long as the element doesnt have
+//   text that wraps on multiple lines, then this method really sucks.
+//   This required display:inline or display:inline-block.
+//
+// * min-height: 
+//   this problem seems like a job for min-height, but this only works in modern
+//   browsers. ie7-js supposedly makes min-height work for older IEs, so maybe
+//   this is the way to go for blocks.
+//   This requires display:inline or display:inline-block.
+//
+// unfortunately, display:inline-block is not supported by IE.
+//
+// at various times, the crabgrass stylesheets have used each of these methods.
+// currently, it uses min-height, until we figure out some reason not to.
+//
 
 .small_icon {
   background-repeat: no-repeat !important;;
   background-position: 0 50% !important;   // flush left, vertical align middle
   padding-left: 20px !important;           // 16px + 4 more for space between icon and text.
   min-height: 16px !important;             // make sure the 16x16 icon doesn't get clipped.
-  line-height: 1.6em;
+
   // alternately:
+  // line-height: 16px;
+  // or
   // padding-top: 2px  
   // padding-bottom: 2px
 
@@ -51,7 +85,6 @@
 //  background-position: 1px 50%;
 //  padding: 14px 0 14px 54px; }
 
-
 //
 // currently used in the table-list view for pages.
 //
@@ -79,38 +112,31 @@
 // xlarge   96px
 // big      202px
 //
-// we display the icons as background images, aligned center,
-// and then add padding or line-height to make enough room for the icon.
-//
-// there are other ways we could do this: we could set the height
-// or the min-height. however, then the text does not appear centered
-// if the icon is much bigger than the line height.
-//
-// the padding method is not ideal:
-// * if the font is a different size, then the top/bottom padding numbers will be wrong
-// * if the text takes up two lines instead of one, then there should be no padding.
-//
-// however, after having tried other methods, the padding method seems to do better.
 //
 
 .name_icon {
   background-repeat: no-repeat;
   background-position: 1px 50%;
   &.tiny {
-    padding: 0px 0 0px 17px;
+    padding-left: 17px;
+    min-height: 17px;
+    //padding: 0px 0 0px 17px;
   }
   &.xsmall {
-    padding: 2px 0 4px 26px;
+    padding-left: 26px;
+    min-height: 26px;
+    //padding: 2px 0 4px 26px;
   }
   &.small {
-    padding: 7px 0 7px 40px;
-    line-height: 32px + 8px;
-    //line-height: 14px;
+    padding-left: 40px;
+    min-height: 40px;
+    //padding: 7px 0 7px 40px;
+    //line-height: 32px + 8px;
   }
   &.medium {
-    padding: 15px 0 15px 60px;
-    //display: block;
-    //font-size: 1.3em;
+    padding-left: 60px;
+    min-height: 60px;
+    //padding: 15px 0 15px 60px;
   }
 }
 
@@ -119,10 +145,9 @@
 // used when you want to make sure an element that contains an avatar
 // has enough room.
 
-.avatar_height_small {
-  line-height: 32px + 8px;
-}
-
+//.avatar_height_small {
+//  line-height: 32px + 8px;
+//}
 
 //
 // hover icons

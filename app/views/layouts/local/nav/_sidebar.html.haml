@@ -1,4 +1,18 @@
-%ul
+-#
+-# @local_navigation can be an array of NavigationItems, or it could just
+-# be an array of hashes, each with keys :active, :label, and :url.
+-#
+-# each element, ul, li, and <a> get the class 'nav'. This helps us distinguish 
+-# the navigation elements from other ul, li, and <a>'s that might be around.
+-#
+
+%ul.nav
   - @local_navigation.each do |item|
-    %li{:class => (item.active ? 'active' : '')}
-      = link_to_active(item.label, item.url, item.active)
+    - active = item[:active] ? 'active' : ''
+    %li{:class => [active, 'nav']}
+      - if item[:html]
+        %div{:class => [active, 'nav']}
+          = theme_render(item[:html])
+      - else
+        = link_to_active(item[:label], item[:url], item[:active], :class => 'nav')
+

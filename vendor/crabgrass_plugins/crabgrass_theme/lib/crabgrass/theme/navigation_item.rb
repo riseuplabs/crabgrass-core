@@ -17,6 +17,10 @@ class Crabgrass::Theme::NavigationItem < Array
     @visible = true
   end
 
+  def [](key)
+    self.send(key) if ATTRIBUTES.include?(key)
+  end
+
   def current
     self[@pointer]
   end
