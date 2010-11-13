@@ -14,8 +14,6 @@ class User < ActiveRecord::Base
   include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
 
-  acts_as_permissive
-
   ##
   ## VALIDATIONS
   ##
@@ -255,7 +253,7 @@ class User < ActiveRecord::Base
       @access[key] ||= {}
       @access[key][perm] = result
     end
-    result or raise PermissionDenied.new ("Permission denied!")
+    result or raise PermissionDenied.new("Permission denied!")
   end
 
   # zeros out the in-memory page access cache. generally, this is called for
