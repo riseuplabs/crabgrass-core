@@ -59,6 +59,12 @@ class RequestToDestroyOurGroup < VotableRequest
               :user => user_span(created_by))
   end
 
+  def short_description
+    I18n.t(:request_to_destroy_our_group_short,
+              :group => group_span(group),
+              :group_type => group.group_type.downcase,
+              :user => user_span(created_by))
+  end
 
   protected
 

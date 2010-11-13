@@ -1,0 +1,24 @@
+<div class="toggle_bugs">
+<%= toggle_bug_links(
+  { :label => :pending.t.downcase,
+    :url => params.merge(:state=>'pending'),
+    :active => (params[:state] == 'pending' or params[:state].empty?) },
+  { :label => :approved.t.downcase,
+    :url => params.merge(:state => 'approved'),
+    :active => params[:state] == 'approved' },
+  { :label => :rejected.t.downcase,
+    :url => params.merge(:state => 'rejected'),
+    :active => params[:state] == 'rejected' }
+)%>
+<%= toggle_bug_links(
+  { :label => :all.t.downcase,
+    :url => params.merge(:view => 'all'),
+    :active => (params[:view] == 'all' or params[:view].empty?) },
+  { :label => :incoming.t.downcase,
+    :url => params.merge(:view => 'incoming'),
+    :active => params[:view] == 'incoming' },
+  { :label => :outgoing.t.downcase,
+    :url => params.merge(:view => 'outgoing'),
+    :active => params[:view] == 'outgoing'}
+)%>
+</div>

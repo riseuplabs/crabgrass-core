@@ -20,7 +20,7 @@ class Me::PostsController < Me::BaseController
     in_reply_to = Post.find_by_id(params[:in_reply_to_id])
     current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
     respond_to do |wants|
-      wants.html { redirect_to me_discussion_posts_url(@recipient.login) + '#last'}
+      wants.html { redirect_to me_discussion_posts_url(@recipient.login)}
       wants.js { render :nothing => true }
     end
   end
@@ -34,11 +34,11 @@ class Me::PostsController < Me::BaseController
 
   def authorized?
     if current_user == @recipient
-      flash_message :error => I18n.t(:message_to_self_error)
       redirect_to me_discussions_url
+      error :message_to_self_error.t
     elsif !@recipient.may_be_pestered_by?(current_user)
-      flash_message :error => I18n.t(:message_cant_perster_error, :user => @recipient.name)
       redirect_to me_discussions_url
+      error :message_cant_pester_error.t(:user => @recipient.name)
     end
     true
   end

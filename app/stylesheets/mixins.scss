@@ -63,11 +63,11 @@
     bottom: $vertical_padding + 1px;  // puts the menu at the bottom of the masthead
     padding-left: $tab_padding;
     white-space: nowrap;
+    width: 80%;
     li.tab {
       display:inline;
       a.tab {
-        // a slight 0.25px nudge seems to help with rendering in different sizes.
-        padding: $vertical_padding $tab_padding;
+        padding: $vertical_padding 1.5%;
         @include hover-link;
         border: $inactive_border;
         &.active {

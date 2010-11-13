@@ -125,16 +125,19 @@ options {
   # these should not ever need to be changed. 
   zindex {
     menu 99            # masthead navigation menus
-    tooltip 300        #
+    modalbox 200       # modal dialog boxes
+    tooltip 300        # 
     autocomplete 400   # autocomplete popups
-
-
   }
 
   avatar {
     Avatar::SIZES.each do |size, pixels|
       send(size, "#{pixels}px")
     end
+  }
+
+  modalbox {
+    background_color "#F3F2EE"
   }
 }
 

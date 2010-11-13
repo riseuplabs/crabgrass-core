@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   filter_parameter_logging :password
   protect_from_forgery
+  layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
   ##
   ## COMMON CONTROLLER EXTENSIONS
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  # this is used by the code that is included for both controllers and helpers.
+  # this way, they don't need to know if they are in a view or a controller, 
+  # they can always just reference controller().
+  def controller(); self; end
 
   def current_theme
     @current_theme ||= Crabgrass::Theme[current_site.theme]
@@ -108,5 +114,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  
 end

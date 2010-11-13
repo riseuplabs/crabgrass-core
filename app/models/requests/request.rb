@@ -171,11 +171,16 @@ class Request < ActiveRecord::Base
     may_approve?(approved_by)
   end
 
+  def name
+    self.class.name.underscore
+  end
+
   ##
   ## to be overridden by subclasses
   ##
 
   def description() end
+  def short_description() end
   def votable?() false end
 
   def may_create?(user)  false end

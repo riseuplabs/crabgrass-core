@@ -1,6 +1,8 @@
 - @avatar ||= @user.avatar
 
-= render :partial => 'me/settings/avatar_form'
+= avatar_for current_user, 'huge'
+- url = current_user.avatar ? edit_me_avatar_path(current_user.avatar) : new_me_avatar_path
+.p= link_to_modal(:upload_image_link.t, :url => url, :icon => 'picture_edit')
 
 .form
   - form_tag(me_settings_path, :method => :put) do

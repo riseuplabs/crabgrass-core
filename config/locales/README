@@ -2,4 +2,31 @@ added in crabgrass-core, not translated:
 
   recipient: "Recipient"
   messages_with: "Conversation with %{other_user}"
+  no_things_found: "No %{things} found."
+  thing_destroyed: "%{thing} destroyed"
+
+  created_by_entity: "Created by %{entity}"
+  approved_by_entity: "Approved by %{entity}"
+  rejected_by_entity: "Rejected by %{entity}"
+
+  request: "Request"
+
+  request_to_friend: "Friend Request"
+  request_to_join_our_network: "Network Join Invite"
+  request_to_join_us: "Join Invite"
+  request_to_join_us_via_email: "Join Invite"
+  request_to_join_you: "Join Request"
+  request_to_join_your_network: "Network Join Request"
+  request_to_destroy_our_group: "Destroy Group Vote"
+  request_to_remove_user: "Remove Member Vote"
+  request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
+
+  request_to_friend_short: "%{user} friends %{other_user}?"
+  request_to_join_our_network_short: "%{network} joins %{group}?"
+  request_to_join_us_short: "%{user} joins %{group}?"
+  request_to_join_us_via_email_short: "%{email} joins %{group}?"
+  request_to_join_you_short: "%{user} joins %{group}?"
+  request_to_join_your_network_short: "%{group} joins %{network}?"
+  request_to_destroy_our_group_short: "Destroy %{group}?"
+  request_to_remove_user_short: "Expell %{member}?"
 

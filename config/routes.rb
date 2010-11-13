@@ -34,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :permissions
     me.resource  :profile, :controller => 'profile'
     me.resources :requests
+    me.resources :avatars
   end
 
   ##

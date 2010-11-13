@@ -11,6 +11,19 @@
 .debug {
   overflow: hidden;
   color: #999;
+  ul {
+    margin-left: 0.5em;
+    li {
+      margin-left: 1em;
+    }
+    li.first {
+      margin-left: 0.5em;
+      font-weight: bold;
+    }
+    li.method {
+      font-weight: bold;
+    }
+  }
 }
 
 .wtf {

@@ -33,9 +33,9 @@ module ControllerExtension::RescueErrors
     base.class_eval do
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, :with => :render_error
-      #rescue_from CrabgrassException, :with => :render_error
-      #rescue_from ErrorNotFound,    :with => :render_not_found
-      #rescue_from PermissionDenied, :with => :render_permission_denied
+      rescue_from CrabgrassException, :with => :render_error
+      rescue_from ErrorNotFound,    :with => :render_not_found
+      rescue_from PermissionDenied, :with => :render_permission_denied
       #rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
       #helper_method :rescues_path
       #alias_method_chain :rescue_action_locally, :js
@@ -45,9 +45,17 @@ module ControllerExtension::RescueErrors
   module ClassMethods
     #
     # for automatic rendering of errors, this helps us figure out what
-    # template we should render for a particular action, if it is non-standard.
+    # action we should render, if it is non-standard.
     #
-    # standard is:
+    # example:
+    #
+    #   class RobotController < ApplicationController
+    #     rescue_render :update => :show
+    #   end
+    #
+    #   this will render action :show when there is a caught error exception for :update
+    #
+    # standard default is:
     #   update -> edit
     #   create -> new
     #   otherwise, render current action
@@ -84,34 +92,26 @@ module ControllerExtension::RescueErrors
 #    render :template => 'common/not_found', :status => :not_found, :layout => 'default'
 #  end
 
-#  # show a permission denied page, or prompt for login
-#  def render_permission_denied(exception=nil)
-#    @skip_context = true
+  # show a permission denied page, or prompt for login
 
-#    respond_to do |format|
-#      # rails defaults to first format if params[:format] is not set
-#      format.html do
-#        if logged_in?
-#          render :template => 'common/permission_denied', :layout => 'default'
-#        else
-#          flash_auth_error(:later)
-#          redirect_to :controller => '/account', :action => 'login',
-#            :redirect => request.request_uri
-#        end
-#      end
-#      format.js do
-#        flash_auth_error(:now)
-#        render :update do |page|
-#          page.call('showNoticeMessage', display_messages)
-#        end
-#      end
-#      format.xml do
-#        headers["Status"]           = "Unauthorized"
-#        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-#        render :text => "Could not authenticate you", :status => '401 Unauthorized'
-#      end
-#    end
-#  end
+  def render_permission_denied(exception)
+    if !logged_in?
+      exception = AuthenticationRequired.new(exception.to_s)
+    end
+    respond_to do |format|
+      format.html do
+        render_auth_error_html(exception)
+      end
+      format.js do
+        render_error_js(exception)
+      end
+      format.xml do
+        headers["Status"]           = "Unauthorized"
+        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+        render :text => "Could not authenticate you", :status => '401 Unauthorized'
+      end
+    end
+  end
 
   # renders an error message or messages
   def render_error(exception=nil, options={})
@@ -137,24 +137,24 @@ module ControllerExtension::RescueErrors
   #
   # How is this different than 'render_error' with format.js?
   #
-  def rescue_action_locally_with_js(exception)
-    respond_to do |format|
-      format.html do
-        if RAILS_ENV == "production" or RAILS_ENV == "development"
-          rescue_action_locally_without_js(exception)
-        else
-          render :text => exception
-         end
-      end
-      format.js do
-        add_variables_to_assigns
-        @template.instance_variable_set("@exception", exception)
-        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
-        @template.send!(:assign_variables_from_controller)
-        render :template => 'rescues/diagnostics.rjs', :layout => false
-      end
-    end
-  end
+#  def rescue_action_locally_with_js(exception)
+#    respond_to do |format|
+#      format.html do
+#        if RAILS_ENV == "production" or RAILS_ENV == "development"
+#          rescue_action_locally_without_js(exception)
+#        else
+#          render :text => exception
+#         end
+#      end
+#      format.js do
+#        add_variables_to_assigns
+#        @template.instance_variable_set("@exception", exception)
+#        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
+#        @template.send!(:assign_variables_from_controller)
+#        render :template => 'rescues/diagnostics.rjs', :layout => false
+#      end
+#    end
+#  end
 
   private
 
@@ -163,11 +163,7 @@ module ControllerExtension::RescueErrors
       redirect_to options[:redirect]
     end
     if exception
-      if @performed_redirect
-        flash_message :exception => exception
-      else
-        flash_message_now :exception => exception
-      end
+      alert_message :error, exception
     end
     if !performed? and !@performed_render
       if options[:template]
@@ -184,29 +180,37 @@ module ControllerExtension::RescueErrors
     end
   end
 
+  def render_auth_error_html(exception)
+    alert_message exception, :later
+    if logged_in?
+      render :template => 'error/permission_denied', :layout => 'notice'
+    else
+      redirect_to login_path, :redirect => request.request_uri
+    end
+  end
+
   def render_error_js(exception=nil, options={})
     if exception
-      flash_message_now :exception => exception
+      alert_message :error, exception
     end
     render :update do |page|
-      page.call('showNoticeMessage', display_messages)
+      update_alert_messages(page)
     end
   end
 
-
-  def flash_auth_error(mode)
-    if mode == :now
-      flsh = flash.now
-    else
-      flsh = flash
-    end
-
-    if logged_in?
-      add_flash_message(flsh, :title => I18n.t(:alert_permission_denied), :error => I18n.t(:permission_denied_description))
-    else
-      add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
-    end
-  end
+  #def flash_auth_error(mode)
+  #  if mode == :now
+  #    flsh = flash.now
+  #  else
+  #    flsh = flash
+  #  end
+  #
+  #  if logged_in?
+  #    add_flash_message(flsh, :title => I18n.t(:alert_permission_denied), :error => I18n.t(:permission_denied_description))
+  #  else
+  #    add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
+  #  end
+  #end
 
 end
 

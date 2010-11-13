@@ -3,19 +3,33 @@
 // CRABGRASS HELPERS
 //
 
-// shows the 'notice' message (ie errors and success)
+// shows the alert message.
 // if there is a popup currently open, then the messages shows up there.
 // set msg to "" in order to hide it.
-function showNoticeMessage(msg) {
+function showAlertMessage(msg) {
   Autocomplete.hideAll();
   if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
     $('modal_message').update(msg);
-  } else if ($('flash-message')) {
-    $('flash-message').update(msg);
-    if (msg)
-      window.location.hash = "flash-message";
+  } else if ($('alert_message_list')) {
+    if (msg=='') {
+      $('alert_message_list').update('');
+    } else {
+      $('alert_message_list').insert({bottom: msg});
+    }
   }
-  $$('.spin').invoke('hide');
+}
+
+function hideSpinners() {$$('.spin').invoke('hide');}
+
+function hideAlertMessage(target, fade_seconds) {
+  target = $(target);
+  if (!target.hasClassName('message'))
+    target = target.up('.message');
+  if (fade_seconds) {
+    Element.fade.delay(fade_seconds, target);
+  } else {
+    target.hide();
+  }
 }
 
 // opens the greencloth editing reference.
@@ -29,6 +43,18 @@ function quickRedReference() {
   );
   return false;
 }
+
+//
+// CRABGRASS DOM EXTENSIONS
+//
+
+var CgUtils = {
+  scrollToBottom: function(element) {
+    element = $(element);
+    window.scrollTo(0, element.cumulativeOffset()[1] + element.getHeight() - document.viewport.getDimensions().height);
+  }
+}
+Element.addMethods(CgUtils);
 
 //
 // CSS UTILITY
@@ -405,11 +431,12 @@ function pollHash() {
   }
 }
 document.observe("dom:loaded", function() {
-  if (onHashChanged) {setInterval("pollHash()", 100)}
+  if (onHashChanged) {setInterval("pollHash()", 300)}
 });
 
 //
 // COMMON MODAL DIALOGS
+// todo: change this. it doesn't work well with remembered forms.
 //
 
 function loginDialog(txt,options) {
@@ -428,3 +455,97 @@ function loginDialog(txt,options) {
   form = form.interpolate(txt);
   Modalbox.show(form, {title:txt.login, width:350});
 }
+
+//
+// split panel
+//
+
+function activatePanelRow(row_id) {
+  // reset styles
+  $$('.panel_right .row').invoke('hide');
+  $$('.panel_arrow').invoke('hide');
+  $$('.panel_left .row').invoke('removeClassName', 'active');
+
+  if (row_id) {
+    // highlight left panel row
+    $('panel_left_'+row_id).addClassName('active');
+    var halfHeight = $('panel_left_'+row_id).getHeight() / 2 + "px";
+    var borderWidthStr = "#{top} #{right} #{bottom} #{left}".interpolate({top: halfHeight, right:"0px", bottom: halfHeight, left:"10px"});
+    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'}); 
+
+    // position and show right panel row
+    var offset = $('panel_left_'+row_id).offsetTop + 'px';
+    $$('.panel_right').first().setStyle({paddingTop:offset})
+    $('panel_right_'+row_id).show();
+  }
+}
+
+
+//
+// ajaxy page search filter path
+//
+var FilterPath = {
+  encode: function() {
+    return "filter=" + window.location.hash.sub("#","");
+  },
+  set: function(path) {
+    window.location.hash = path;
+  },
+  add: function(segment) {
+    if (window.location.hash.indexOf(segment) == -1) {
+      window.location.hash = (window.location.hash + segment).gsub('//','/');
+    }
+  },
+  remove: function(segment) {
+    window.location.hash = window.location.hash.gsub(segment,'/');
+  }
+}
+
+
+//
+// RequestQueue allows us to make sure some requests finish before
+// others start. Parameters are eval'ed when the request is fired off,
+// not when it is queued.
+//
+var RequestQueue = {
+  add: function(url, options, parameters) {
+    this.queue = this.queue || []
+    this.queue.push({url:url, options:options, parameters:parameters});
+    if (!this.timer)
+      this.timer = setInterval("RequestQueue.poll()", 100)
+  },
+  poll: function() {
+    if (Ajax.activeRequestCount == 0) {
+      var req = this.queue.pop();
+      if (req) {
+        if (req.parameters) {req.options.parameters = eval(req.parameters)}
+        new Ajax.Request(req.url, req.options);
+      } else {
+        clearInterval(this.timer);
+        this.timer = false;
+      }
+    }
+  }
+}
+
+// 
+// This allows you to set and remove global styles programatically
+//
+var Style = {
+  set:function(id, css) {
+    var styleNode = $(id);
+    if (!styleNode) {
+      styleNode = new Element('style', {id:id, type:'text/css'});
+      $$('head')[0].appendChild(styleNode);
+    }
+    if(Prototype.Browser.IE) {
+      styleNode.styleSheet.cssText = css;
+    } else {
+      styleNode.update(css);
+    }
+  },
+  clear:function(id) {
+    this.set(id,'');
+  }
+}
+

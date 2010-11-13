@@ -1,0 +1,48 @@
+%style
+  :sass
+    .bq
+      width: 5em
+      //padding: 10px
+      // border: 1px solid #ccc
+      //background: #eee
+      // border: 1px solid #ccc
+    .small_icon
+      outline: 1px solid #ccc
+
+%div
+  block: using the min-height method.
+  .bq
+    %div.small_icon.info_16
+      1 line
+  .bq
+    %div.small_icon.trash_16
+      multiple lines .. la la laaaa
+  .bq
+    %div.small_icon.color_wheel_16{:style => 'font-size: 70%'}
+      small font
+  .bq
+    %div.small_icon.house_16{:style => 'font-size: 130%'}
+      big font
+
+
+%div
+  inline: using the ?
+  .bq
+    101 01 011 00
+    %span.small_icon.lightbulb_16
+      1 line
+    10 11 1001
+
+  .bq
+    101 01 011 00
+    %span.small_icon.user_16
+      multiple lines
+    10 11 1001
+
+  .bq
+    101 01 011 00
+    %span.small_icon.lightbulb_16{:style => 'font-size: 50%', :line_height => '16px'}
+      small font
+    10 11 1001
+
+

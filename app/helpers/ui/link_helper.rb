@@ -60,7 +60,7 @@ label}</a></span>)
   def link_to_active(link_label, url_hash, active=nil, html_options={})
     active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
-    html_options[:class] = [html_options[:class], selected_class].combine
+    html_options = html_options.merge(:class => [html_options[:class], selected_class].combine)
     link_to(link_label, url_hash, html_options)
   end
 
@@ -76,6 +76,7 @@ label}</a></span>)
       link_to_remote(link_label, options, html_options)
     end
   end
+
 
   ##
   ## LINKS WITH ICONS

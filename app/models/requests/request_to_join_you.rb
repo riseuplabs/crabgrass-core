@@ -47,5 +47,10 @@ class RequestToJoinYou < Request
       :user => user_span(created_by), :group => group_span(group))
   end
 
+  def short_description
+    I18n.t(:request_to_join_you_short,
+      :user => user_span(created_by), :group => group_span(group))
+  end
+
 end
 

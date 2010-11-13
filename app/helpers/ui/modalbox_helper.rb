@@ -1,6 +1,12 @@
-
+#
+# Modalbox
+#
+# Displays a modal dialog box
+#
 # how to deal with errors?
-# page.replace_html 'flash-message', display_messages if display_messages.any?
+#   page.replace_html 'flash-message', display_messages if display_messages.any?
+#   render_error(..) should do this for you.
+#
 
 module Ui::ModalboxHelper
 

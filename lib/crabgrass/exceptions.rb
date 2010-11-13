@@ -9,6 +9,9 @@ end
 # the user does not have permission to do that.
 class PermissionDenied < CrabgrassException; end
 
+# the user is not logged in and tried to access a restricted action.
+class AuthenticationRequired < CrabgrassException; end
+
 # thrown when an activerecord has made a bad association
 # (for example, duplicate associations to the same object).
 class AssociationError < CrabgrassException; end

@@ -1,0 +1,65 @@
+//
+// little navigation UI widgets
+//
+
+
+//
+// toggle bug: a set of links, one of which is active.
+//
+
+$toggle_bug_border: 1px solid #555;
+$toggle_bug_radius: 10px;
+$toggle_bug_font_size: 0.9em;
+$toggle_bug_active_background_color: #555;
+$toggle_bug_active_color: #fff;
+$toggle_bug_background_color: #efefef;
+$toggle_bug_color: #333;
+$toggle_bug_padding: 4px;
+
+.toggle_bugs {
+  margin-bottom: 1em;
+}
+
+ul.toggle_bug {
+  display: inline-block;
+  white-space: nowrap;
+  // the margin should be set equal to the padding because the padding
+  // makes the ul expand beyond its normal size. an equal margin makes
+  // the ul take up the amount of space in the flow that is appears to.
+  margin: $toggle_bug_padding 0.5em $toggle_bug_padding 0;
+  li {
+    display: inline;
+    padding: 0px $toggle_bug_padding;
+    border-top: $toggle_bug_border;
+    border-bottom: $toggle_bug_border;
+    background-color: $toggle_bug_background_color;
+    @include linear-gradient(color-stops(#fff, #eee, #ccc));
+    &.first {
+      @include border-left-radius($toggle_bug_radius);
+      border-left: $toggle_bug_border;
+      padding-left: $toggle_bug_padding*2;
+    }
+    &.last {
+      @include border-right-radius($toggle_bug_radius);
+      border-right: $toggle_bug_border;
+      padding-right: $toggle_bug_padding*2;
+    }
+    &.active {
+      background-color: $toggle_bug_active_background_color;
+      @include linear-gradient(color-stops(#444, #666, #888));
+      a {
+        color: $toggle_bug_active_color;
+      }
+    }
+  }
+  a {
+    @include hover-link;
+    font-size: $toggle_bug_font_size;
+    color: $toggle_bug_color;
+    // a vertical-align of 8% is a magic number. for whatever reason, it 
+    // makes the text much more centered in gecko and webkit. 
+    // i was not able to vertically center it consistently using line-height.
+    vertical-align: 8%;
+  }
+}
+

@@ -4,7 +4,7 @@
 class Me::BaseController < ApplicationController
 
   before_filter :login_required, :fetch_user
-  stylesheet 'me'
+  #stylesheet 'me'
   permissions 'me'
 
   protected

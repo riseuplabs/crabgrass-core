@@ -190,7 +190,7 @@ class Conf
   # This is a callback method that we set in lib/crabgrass/boot.rb.
   # We should return true if we want the plugin to be loaded, false otherwise.
   def self.plugin_enabled?(plugin_path)
-    if plugin_path =~ /^#{RAILS_ROOT}\/extensions\/mods\//
+    if plugin_path =~ /^#{RAILS_ROOT}\/extensions\/mods\/[^\/]+$/
       self.mod_enabled?( File.basename(plugin_path) )
     elsif plugin_path =~ /^#{RAILS_ROOT}\/extensions\/pages\//
       self.page_enabled?( File.basename(plugin_path) )

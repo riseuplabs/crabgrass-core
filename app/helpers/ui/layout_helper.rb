@@ -147,9 +147,13 @@ module Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
     lines << '<script type="text/javascript">'
-    lines << @content_for_script
     lines << localize_modalbox_strings
+
+    lines << @content_for_script
+    lines << 'document.observe("dom:loaded",function(){'
     lines << detect_browser_js
+    lines << @content_for_dom_loaded
+    lines << '});'
     lines << '</script>'
     lines << '<!--[if IE]>'
     lines << '<script src="/javascripts/ie/html5.js"></script>'
@@ -354,7 +358,8 @@ module Ui::LayoutHelper
   # is a webkit browser. I am not sure if this should be done on dom:loaded or
   # before. 
   def detect_browser_js
-    "document.observe('dom:loaded',function(){if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}});"
+    # "document.observe('dom:loaded',function(){if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}});"
+    "if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}"
   end
 
 end

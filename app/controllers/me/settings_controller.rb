@@ -7,7 +7,7 @@ class Me::SettingsController < Me::BaseController
 
   def update
     current_user.update_attributes!(params[:user])
-    flash_message :success
+    success
     redirect_to me_settings_url
   end
 

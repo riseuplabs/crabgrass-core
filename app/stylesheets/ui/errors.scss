@@ -1,32 +1,114 @@
+//
+// ALERT MESSAGES
+//
+// types of messages: error, warning, notice, success
+//
+// there are three places where alert messages might be shown:
+//
+// (1) the alert message overlay for the entire screen
+//     .alert_message_container
+//       #alert_message_list
+//
+// (2) in a modalbox
+//    not sure yet.
+//
+// (3) inline the main content area
+//     .inline_message_list
+// 
+// 
 
-#flash_message {
-  @include full;
-}
-.small_notice {
-  padding: gutter();
-  margin: gutter() 0;
+$alert_opacity: 0.8;
+$alert_width: 600px;
+$alert_padding: gutter();
+$alert_margin: gutter()/2;
+
+//
+// for alert messages everywhere
+//
+
+.message {
   .text {
-    padding-left: 20px;
-  }
-  p, ul {
-    margin: 0.25em;
-  }
-  ul {
-    padding-left: 1em;
-  }
-  &.error {
-    border: 1px solid red;
-    background: #fcc;
-  }
-  &.success {
-    border: 1px solid green;
-    background: #cfc;
-  }
-  &.info {
-    border: 1px solid blue;
-    background: #cdf;
+    @extend .small_icon;
+    line-height: 1em !important;
   }
 }
+
+//
+// for alert message overlay
+//
+
+.alert_message_container {
+  width: 100%;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#alert_message_list {
+  max-width: 100%;
+  width: $alert_width;
+  margin: 0 auto;
+  .message {
+    padding: $alert_padding;
+    margin: $alert_margin 0;
+    .close {
+      float: right;
+      color: #999;
+      font-size: 24px;
+      text-decoration: none;
+      font-weight: bold;
+      line-height: $grid_font_size;
+      &:hover {
+        color: #000;
+      }
+    }
+    li {
+      margin-left: 36px;
+      list-style: square;
+    }
+    &.error {
+      border: 1px solid red;
+      background: #fcc;
+      background-color: rgba(255,204,204,$alert_opacity);
+    }
+    &.warning {
+      border: 1px solid #a60;
+      background: #fd6;
+      background-color: rgba(255,221,102,$alert_opacity);
+    }
+    &.notice {
+      border: 1px solid blue;
+      background: #cdf;
+      background-color: rgba(204,221,255,$alert_opacity);
+    }
+    &.success {
+      border: 1px solid green;
+      background: #cfc;
+      background-color: rgba(204,255,204,$alert_opacity);
+    }
+  }
+}
+
+//
+// for inline alert messages
+//
+
+.inline_message_list {
+  .close {display:none}
+  .message .text {
+    background-position: 0px 10px !important;
+  }
+  p.first {
+    font-size: 1.5em;
+    line-height: 1.5em;
+  }
+}
+
+
+//
+// forms with errors
+//
 
 .fieldWithErrors {
   border: 2px solid #c00;

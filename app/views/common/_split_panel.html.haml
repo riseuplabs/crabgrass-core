@@ -1,0 +1,31 @@
+-#
+-# required local assigns:
+-# 
+-#   :items -- the name of a variable, like @requests, to list in the split panel.
+-#             it must NOT be empty.
+-#   :left_panel -- 
+-#   :right_panel -- 
+-#   :right_url -- 
+-# 
+
+- items_name = items.sub('@','')
+- item_name = items_name.singularize.to_sym
+- @items = eval(items)
+- right_panel = local_assigns[:right_panel]
+
+.split_panel
+  .panel_left
+    - for item in @items
+      - id = item.dom_id
+      .panel_arrow{:id => "panel_arrow_#{id}"}
+      .row{:id => "panel_left_#{id}", :onmousedown=>"activatePanelRow('#{id}')"}
+        .content
+          = render :partial => left_panel, :locals => {item_name => item}
+  .panel_right
+    - for item in @items
+      .row{:id => "panel_right_#{item.dom_id}", :style => 'display:none'}
+        - if right_panel
+          = render :partial => right_panel, :locals => {item_name => item}
+
+- content_for :script do
+  = "document.observe('dom:loaded',function(){activatePanelRow('#{@items.first.dom_id}')});"

@@ -46,4 +46,8 @@ class RequestToFriend < Request
     I18n.t(:request_to_friend_description, :user => user_span(created_by), :other_user => user_span(recipient))
   end
 
+  def short_description
+    I18n.t(:request_to_friend_short, :user => user_span(created_by), :other_user => user_span(recipient))
+  end
+
 end

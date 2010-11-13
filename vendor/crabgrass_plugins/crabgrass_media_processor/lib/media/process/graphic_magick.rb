@@ -13,8 +13,15 @@ module Media::Process
     def run(options)
       # +profile '*' will remove all the image profiles, which will save
       # space (sometimes) and are not useful for thumbnails
-      arguments = [self.gm_override || GM_COMMAND, 'convert', '-geometry', options[:size],
-                  '+profile', "'*'", options[:in]+'[0]', options[:out]]
+      arguments = [GM_COMMAND, 'convert', '+profile', "'*'"]
+      if options[:size]
+        arguments << '-geometry' << options[:size]
+      end
+      if options[:crop]
+        arguments << '-crop' << options[:crop]+'+0+0'
+        # (we add '+0+0' because we don't want tiles, just a single image)
+      end
+      arguments << options[:in].to_s << options[:out].to_s
       success, output = cmd(*arguments)
       return success
     end
@@ -32,3 +39,4 @@ module Media::Process
 
   end
 end
+

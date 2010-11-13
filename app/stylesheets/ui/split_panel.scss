@@ -1,0 +1,136 @@
+//
+// split panel view
+//
+// a list on the left. when you click on an item, it becomes selected and 
+// more details are loaded in the right panel.
+//
+// the structure looks like this:
+//
+// .split_panel
+//   .panel_left
+//     .row
+//     .row
+//   .panel_right
+//     .row
+//     .row
+//
+
+//
+// panel sizing
+// we could do this with susy, but it would be then it would need to not be
+// in the article#content. 
+//
+// here, we simulate what susy would do, but account for the inner
+// article#content padding.
+//
+
+// full width
+
+$content_padding: resolve_width($local_content_padding, $grid_column_count);
+$content_width: 100%;
+$panel_width: ($content_width - $content_padding) / 2;
+
+#column_center.full {
+  .panel_left {
+    width: $panel_width;
+  }
+  .panel_right {
+    width: $panel_width;
+    margin-left: $panel_width + $content_padding;
+  }
+}
+
+// with left sidebar
+
+$split_panel_gutter: resolve_width($local_content_padding, $center_columns);
+$split_panel_gutter_padding: resolve_width($local_content_padding, $center_columns/2);
+$content_width: 100%;
+$panel_width: ($content_width - $split_panel_gutter) / 2;
+
+#column_center.with_left {
+  .panel_left {
+    width: $panel_width;
+  }
+  .panel_right {
+    width: $panel_width + $split_panel_gutter;
+    margin-left: $panel_width;
+  }
+}
+
+//
+// left panel decoration
+//
+
+$row_height: 32px + 2px;  // at least enough space for the avatar and its border
+$row_padding: 8px;
+$row_arrow_width: 10px;   // this much match border-width-left set by javascript.
+$row_separator: 1px solid #d9d9d9;
+$row_arrow_image_width: 15px;
+$row_active_background: #d9d9d9;
+$row_active_color: #000;
+$row_hover_background: #eef;
+$row_img_border: 1px solid white;
+$row_right_active_background: #efefef;
+$row_right_border: 1px solid $row_active_background;
+
+.panel_left {
+  float: left;        // allow right panel to flow to the right.
+  position: relative; // this is required in order to calculate the offset 
+                      // of this row, which is used to position the right row.
+  .row {
+    cursor: pointer;
+    clear:left;
+    // this is a kind of border-collapse for divs, to make the 
+    // space of the border shared by both rows.
+    margin-bottom: -1 * border_width($row_separator);
+    &.active {
+      background: $row_active_background;
+      color: $row_active_color;
+      padding-left: $row_padding;
+      .content:hover {background: $row_active_background;}
+    }
+    .avatar {
+      float: left;
+      margin-right: $row_padding;
+      border: $row_img_border;
+    }
+    .content {
+      &:hover  { background: $row_hover_background; }
+      border-top: $row_separator;
+      // border-bottom: $row_separator;
+      margin-right: $split_panel_gutter_padding;
+      overflow: hidden;
+      padding: $row_padding 0;
+    }
+  }
+  .panel_arrow {
+    float: right;
+    display: none;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    border-color: transparent transparent transparent $row_active_background;
+    border-style: solid;
+    border-width: 0;
+    margin-right: -1 * ($row_arrow_width + border_width($row_right_border));
+  }
+  //.rule {
+  //  border-top: $row_separator;
+  //  margin-right: 20px;
+  //}
+}
+
+//
+// right panel
+//
+
+.panel_right .row h2 {
+  // color: $row_active_background;
+}
+.panel_right .row {
+  background: $row_right_active_background;
+  padding: 1em;
+  border: $row_right_border;
+}
+
+

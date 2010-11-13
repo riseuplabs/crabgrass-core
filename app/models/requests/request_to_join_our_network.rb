@@ -47,5 +47,9 @@ class RequestToJoinOurNetwork < Request
     I18n.t(:request_to_join_our_network_description,  :group => group_span(group), :network => group_span(network))
   end
 
+  def short_description
+    I18n.t(:request_to_join_our_network_short, :group => group_span(group), :network => group_span(network))
+  end
+
 end
 
