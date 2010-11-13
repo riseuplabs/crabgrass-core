@@ -77,7 +77,7 @@ class Committee < Group
     elsif access == :view
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
     end
-    ok or raise PermissionDenied.new
+    ok or raise PermissionDenied.new("You may not access that committee.")
   end
 
   def may_be_pestered_by!(user)

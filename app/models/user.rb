@@ -248,14 +248,14 @@ class User < ActiveRecord::Base
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
-      result = protected_thing.has_access!(perm,self) rescue PermissionDenied
-      # has_access! might call clear_access_cache, so we need to rebuild it
+      result = protected_thing.has_access?(perm, self)
+      # has_access? might call clear_access_cache, so we need to rebuild it
       # after it has been called.
       @access ||= {}
       @access[key] ||= {}
       @access[key][perm] = result
     end
-    result or raise PermissionDenied.new
+    result or raise PermissionDenied.new ("Permission denied!")
   end
 
   # zeros out the in-memory page access cache. generally, this is called for

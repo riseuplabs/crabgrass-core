@@ -301,7 +301,7 @@ class Group < ActiveRecord::Base
     elsif access == :view
       ok = user.member_of?(self) || self.allows?(:see, :to_user => user)
     end
-    ok or raise PermissionDenied.new
+    ok or raise PermissionDenied.new("You may not access that group.")
   end
 
   def has_access?(access, user)
