@@ -4,14 +4,8 @@ class Permission < ActiveRecord::Base
   belongs_to :object, :polymorphic => true
 
   named_scope :for_user, lambda { |user|
-    { :select => '*, BIT_OR(mask) as or_mask',
-      :conditions => "entity_code IN (#{user.entity_access_cache.join(", ")})" }
+    { :conditions => "entity_code IN (#{user.access_codes.join(", ")})" }
   }
-
-  def allows?(keys)
-    not_allowed = bits_for_keys(keys) & ~bitmask
-    not_allowed == 0
-  end
 
   def allow!(keys, options = {})
     if options[:reset]
@@ -27,22 +21,6 @@ class Permission < ActiveRecord::Base
     save!
   end
 
-  protected
-
-  # we add an or_mask to the permissions when getting the
-  # current_user_permission_set. This contains all permissions the
-  # user has through different groups. If it's there - use it.
-  def bitmask
-    self.respond_to?(:or_mask) ?
-      or_mask.to_i :
-      mask
-  end
-
-  def bits_for_keys(keys)
-    keys = [keys] unless keys.is_a? Array
-    keys.inject(0) {|any, key| any | object.class.bit_for(key)}
-  end
-
 end
 
 module ActsAsPermissive
@@ -56,33 +34,44 @@ module ActsAsPermissive
       # via groups without joins
 
       def self.acts_as_permissive(*permissions)
-        has_many :permissions, :as => :object
+
+        has_many :permissions, :as => :object do
+          def allow?(keys)
+            allowed = self.inject(0) {|any, permission| any | permission.mask}
+            not_allowed = proxy_owner.class.bits_for_keys(keys) & ~allowed
+            not_allowed == 0
+          end
+        end
 
         # let's use AR magic to cache permissions from the controller like this...
-        # @pages = Page.find... :include => {:owner => :current_user_permission_set}
-        has_one :current_user_permission_set,
+        # @pages = Page.find... :include => {:owner => :current_user_permissions}
+        has_one :current_user_permissions,
           :class_name => "Permission",
           :as => :object,
-          :select => '*, BIT_OR(mask) as or_mask',
-          :conditions => 'entity_code IN (#{User.current.entity_access_cache.join(", ")})'
+          :conditions => 'entity_code IN (#{User.current.access_codes.join(", ")})'
 
         class_eval do
           def allows?(keys, options = {})
             if user=options[:to_user]
-              permissions.for_user(user).allows?(keys)
+              permissions.for_user(user).allow?(keys)
             else
-              current_user_permission_set.allows?(keys)
+              current_user_permissions.allow?(keys)
             end
           end
 
           def allow!(entity, keys, options = {})
-            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code)
+            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code.to_i)
             permission.allow! keys, options
           end
 
           def disallow!(entity, keys)
-            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code)
+            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code.to_i)
             permission.disallow! keys
+          end
+
+          def self.bits_for_keys(keys)
+            keys = [keys] unless keys.is_a? Array
+            keys.inject(0) {|any, key| any | self.bit_for(key)}
           end
 
           def self.bit_for(key)
