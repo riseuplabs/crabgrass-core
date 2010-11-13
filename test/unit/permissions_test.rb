@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ProfileTest < ActiveSupport::TestCase
+class PermissionsTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :profiles, :permissions
 
