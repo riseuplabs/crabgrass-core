@@ -67,31 +67,8 @@ class Committee < Group
 
   public
 
-  # if user has +access+ to group, return true.
-  # otherwise, raise PermissionDenied
-  def has_access!(access, user)
-    if access == :admin
-      ok = user.member_of?(self) || self.parent.has_access?(:admin, user)
-    elsif access == :edit
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
-    elsif access == :view
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
-    end
-    ok or raise PermissionDenied.new("You may not access that committee.")
-  end
-
-  def may_be_pestered_by!(user)
-    if user.member_of?(self)
-      true  # members may pester
-    elsif user.member_of?(self.parent)
-      true  # members of parents may pester
-    elsif profile.may_see? and parent.profile.may_see_committees?
-      true  # strangers may pester if they can see self, and parent thinks that is ok.
-            # TODO: i think it would be better for us to ensure that if the parent forbits
-            # seeing committee, that all the subcommittees just have may_see set to false.
-    else
-      false
-    end
+  def has_access?(access, user)
+    super || self.parent.has_access?(access, user)
   end
 
 end
