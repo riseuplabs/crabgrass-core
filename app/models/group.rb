@@ -284,7 +284,7 @@ class Group < ActiveRecord::Base
 
   ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or profiles.visible_by(user).may_see?
+    if user.member_of?(self) || self.allows?(:see, :to_user => user)
       return true
     else
       raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
@@ -299,7 +299,7 @@ class Group < ActiveRecord::Base
     elsif access == :edit
       ok = user.member_of?(self) || user.member_of?(self.council)
     elsif access == :view
-      ok = user.member_of?(self) || profiles.public.may_see?
+      ok = user.member_of?(self) || self.allows?(:see, :to_user => user)
     end
     ok or raise PermissionDenied.new
   end
