@@ -125,6 +125,17 @@ class User < ActiveRecord::Base
     "%04d" % "1#{id}"
   end
 
+  # all codes of the entities I have access to:
+  def access_codes
+    codes = [1] # public
+    codes << entity_code.to_i # me
+    codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
+    codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
+    codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
+  end
+
+
+
   def to_param
     return login
   end
