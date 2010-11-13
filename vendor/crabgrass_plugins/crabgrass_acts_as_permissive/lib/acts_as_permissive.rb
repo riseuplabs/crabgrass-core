@@ -50,6 +50,11 @@ module ActsAsPermissive
           :as => :object,
           :conditions => 'entity_code IN (#{User.current.access_codes.join(", ")})'
 
+        named_scope :with_access, lambda { |key, user|
+          { :joins => :permissions,
+            :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND mask = '#{self.bit_for_key(key)}'" }
+        }
+
         class_eval do
           def allows?(keys, options = {})
             if user=options[:to_user]
