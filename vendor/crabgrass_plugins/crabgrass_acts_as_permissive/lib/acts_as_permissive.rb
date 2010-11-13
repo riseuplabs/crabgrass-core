@@ -3,6 +3,11 @@ require 'activesupport'
 class Permission < ActiveRecord::Base
   belongs_to :object, :polymorphic => true
 
+  named_scope :for_user, lambda { |user|
+    { :select => '*, BIT_OR(mask) as or_mask',
+      :conditions => "entity_code IN (#{user.entity_access_cache.join(", ")})" }
+  }
+
   def allows?(keys)
     not_allowed = bits_for_keys(keys) & ~bitmask
     not_allowed == 0
@@ -52,6 +57,7 @@ module ActsAsPermissive
 
       def self.acts_as_permissive(*permissions)
         has_many :permissions, :as => :object
+
         # let's use AR magic to cache permissions from the controller like this...
         # @pages = Page.find... :include => {:owner => :current_user_permission_set}
         has_one :current_user_permission_set,
@@ -61,8 +67,12 @@ module ActsAsPermissive
           :conditions => 'entity_code IN (#{User.current.entity_access_cache.join(", ")})'
 
         class_eval do
-          def allows?(keys)
-            current_user_permission_set.allows?(keys)
+          def allows?(keys, options = {})
+            if user=options[:to_user]
+              permissions.for_user(user).allows?(keys)
+            else
+              current_user_permission_set.allows?(keys)
+            end
           end
 
           def allow!(entity, keys, options = {})
