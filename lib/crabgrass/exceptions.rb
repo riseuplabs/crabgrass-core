@@ -1,6 +1,6 @@
 class CrabgrassException < Exception
   attr_accessor :options
-  def initialize(message, opts={})
+  def initialize(message = nil, opts={})
     self.options = opts
     super(message)
   end
