@@ -1,12 +1,12 @@
 ##
 ## blueprints file for crabgrass
 ## an alternative to fixtures
-# 
+#
 ## see http://github.com/sinsiliux/Blueprints
 ##
 ## note: don't name this file blueprints.rb. If you do that, it will get
 ## auto loaded when the blueprints gem is loaded, which is before
-## initializers are run, which are needed to load the User class, 
+## initializers are run, which are needed to load the User class,
 ## among others.
 ##
 
@@ -97,6 +97,7 @@ def Committee.make_for(attributes)
   group = attributes.delete :group
   committee = Committee.make(attributes)
   group.add_committee!(committee)
+  committee
 end
 
 Committee.blueprint do
@@ -108,6 +109,7 @@ def Council.make_for(attributes)
   group = attributes.delete :group
   committee = Council.make(attributes)
   group.add_committee!(committee)
+  committee
 end
 
 Council.blueprint do
