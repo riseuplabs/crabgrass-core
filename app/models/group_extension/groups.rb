@@ -97,20 +97,11 @@ module GroupExtension::Groups
       committee.parent_id = self.id
       committee.parent_name_changed
       if make_council
-        if real_council
-          real_council.update_attribute(:type, "Committee")
-        end
-        self.council = committee
-        committee.type = "Council"
-
-        # creating a new council for a new group
-        # the council members will be able to remove other members
-        if self.memberships.count < 2
-          committee.full_council_powers = true
-        end
-      elsif self.real_council == committee && !make_council
+        add_council(committee)
+      elsif self.real_council == committee
         committee.type = "Committee"
         self.council = nil
+        self.allow! self, :all
       end
       committee.save!
       self.org_structure_changed
@@ -172,6 +163,25 @@ module GroupExtension::Groups
     def destroy_council
       if self.normal? and self.council_id and self.council_id != self.id
         self.council.destroy
+      end
+    end
+
+    private
+
+    def add_council(committee)
+      if real_council
+        real_council.update_attribute(:type, "Committee")
+      end
+      self.council = committee
+      committee.type = "Council"
+      self.allow! committee, :all
+      self.disallow! self, :admin
+      self.save!
+
+      # creating a new council for a new group
+      # the council members will be able to remove other members
+      if self.memberships.count < 2
+        committee.full_council_powers = true
       end
     end
   end
