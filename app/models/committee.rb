@@ -46,6 +46,24 @@ class Committee < Group
   end
 
   ##
+  ## PERMISSIONS
+  ##
+
+  # admin rights are restricted to members of the parents council if it exists
+  # everything else can be accessed by members of the committee itself or its
+  # parent group.
+  # This saves us a lot of syncing of committee permissions when a groups
+  # council changes.
+
+  def has_access?(access, user)
+    if access == :admin and parent.real_council
+      parent.has_access?(:admin, user)
+    else
+      super or parent.has_access?(access, user)
+    end
+  end
+
+  ##
   ## ORGANIZATIONAL
   ##
 
@@ -59,16 +77,6 @@ class Committee < Group
 
   def parent=(p)
     raise 'call group.add_committee! instead'
-  end
-
-  ##
-  ## PERMISSIONS
-  ##
-
-  public
-
-  def has_access?(access, user)
-    super || self.parent.has_access?(access, user)
   end
 
 end
