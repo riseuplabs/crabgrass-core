@@ -21,6 +21,9 @@ class Permission < ActiveRecord::Base
     save!
   end
 
+  def bits_for_keys(keys)
+    self.object.class.bits_for_keys(keys)
+  end
 end
 
 module ActsAsPermissive
@@ -52,35 +55,60 @@ module ActsAsPermissive
 
         named_scope :with_access, lambda { |key, user|
           { :joins => :permissions,
-            :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND mask = '#{self.bit_for_key(key)}'" }
+            :group => 'object_id, object_type',
+            :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND #{self.bit_for(key)} & ~mask = 0" }
         }
 
         class_eval do
-          def allows?(keys, options = {})
-            if user=options[:to_user]
-              permissions.for_user(user).allow?(keys)
+
+          # short cut for current user - uses cached permissions
+          def allows?(keys)
+            current_user_permissions.allow?(keys)
+          end
+
+          def has_access!(key, user)
+            if has_access?(key, user)
+              return true
             else
-              current_user_permissions.allow?(keys)
+              # TODO: make the error message flexible and meaningful
+              raise PermissionDenied.new(I18n.t(:permission_denied))
             end
           end
 
+          def has_access?(key, user)
+            permissions.for_user(user).allow?(key)
+          end
+
+          def public_permissions=(hash)
+            code = 1
+            permission = permissions.find_or_initialize_by_entity_code(code)
+            allow = hash.select{|k,v| v!=0}
+            disallow = hash.select{|k,v| v==0}
+            permission.allow! allow.map(&:first)
+            permission.disallow! disallow.map(&:first)
+          end
+
+
           def allow!(entity, keys, options = {})
-            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code.to_i)
+            code = ActsAsPermissive::Permissions.code_for_entity(entity)
+            permission = permissions.find_or_initialize_by_entity_code(code)
             permission.allow! keys, options
           end
 
           def disallow!(entity, keys)
-            permission = permissions.find_or_initialize_by_entity_code(entity.entity_code.to_i)
-            permission.disallow! keys
+            code = ActsAsPermissive::Permissions.code_for_entity(entity)
+            permission = permissions.find_by_entity_code(code)
+            permission.disallow!(keys) if permission
           end
 
           def self.bits_for_keys(keys)
+            return ~0 if keys == :all
             keys = [keys] unless keys.is_a? Array
             keys.inject(0) {|any, key| any | self.bit_for(key)}
           end
 
           def self.bit_for(key)
-            ActsAsPermissive::Permissions.bit_for(self.name, key)
+            ActsAsPermissive::Permissions.bit_for(self, key)
           end
 
           def self.add_permissions(*keys)
@@ -108,12 +136,23 @@ module ActsAsPermissive
       class_hash.merge! build_bit_hash(keys, @@hash[class_name].count)
     end
 
-    def self.bit_for(class_name, key)
-      bit = @@hash[class_name][key.to_s.downcase.to_sym]
+    def self.bit_for(klass, key)
+      bit = @@hash[key_for_class(klass)][key.to_s.downcase.to_sym]
       if bit.nil?
         raise ActsAsPermissive::PermissionError.new("Permission '#{key}' is unknown to class '#{class_name}'")
       else
         bit
+      end
+    end
+
+    def self.code_for_entity(entity)
+      if entity.is_a? Symbol
+        code = case entity
+               when :all then 1
+               else raise ActsAsPermissive::PermissionError.new("ActsAsPermissive: Entity alias '#{entity}' is unknown.")
+               end
+      else
+        code = entity.entity_code.to_i
       end
     end
 
@@ -132,6 +171,17 @@ module ActsAsPermissive
       bitwise_hash
     rescue ArgumentError
       raise ActsAsPermissive::PermissionError.new("Permission bits must be integers or longs.")
+    end
+
+    def self.key_for_class(klass)
+      current=klass
+      until @@hash.keys.include?(current.name) do
+        current = current.superclass
+        if current.nil?
+          raise ActsAsPermissive::PermissionError.new("Class #{klass} not registered with acts_as_permissive.")
+        end
+      end
+      current.name
     end
   end
 end
