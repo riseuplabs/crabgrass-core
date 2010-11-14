@@ -84,7 +84,10 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_associations
+    # current_user_permissions needs a current user
+    User.current = users(:blue)
     assert check_associations(Committee)
+    User.current = nil
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
@@ -129,8 +132,7 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.profiles.public.update_attribute(:may_see, true)
-    g.profiles.public.update_attribute(:may_see_committees, true)
+    g.allow! :all, [:view, :pester, :see_committees]
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
