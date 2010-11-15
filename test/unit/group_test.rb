@@ -89,10 +89,10 @@ class GroupTest < ActiveSupport::TestCase
   def test_committee_access
     g = groups(:public_group)
     assert_equal [groups(:public_committee)],
-                 g.committees_for(:public).sort_by{|c| c.id},
+                 g.committees_for(users(:red)).sort_by{|c| c.id},
                  "should find 1 public committee"
     assert_equal [groups(:public_committee), groups(:private_committee)].sort_by{|c| c.id},
-                 g.committees_for(:private).sort_by{|c| c.id},
+                 g.committees_for(users(:blue)).sort_by{|c| c.id},
                  "should find 2 committee with private access"
   end
 

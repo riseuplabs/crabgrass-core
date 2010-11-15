@@ -27,6 +27,11 @@ module GroupExtension::Groups
       )
       alias_method :committees, :children
 
+      has_many :real_committees,
+        :foreign_key => 'parent_id',
+        :class_name => 'Committee',
+        :conditions => {:type => 'Committee'}
+
       alias_method :real_council, :council
       define_method :council do |*args|
         real_council(*args) || self
@@ -85,10 +90,6 @@ module GroupExtension::Groups
 
   module InstanceMethods
 
-    def real_committees
-      committees.select {|c|c.committee?}
-    end
-
     # Adds a new committee or makes an existing committee be the council (if
     # the make_council argument is set). No other method of adding committees
     # should be used.
@@ -128,17 +129,9 @@ module GroupExtension::Groups
       @group_ids ||= ([self.id] + Group.committee_ids(self.id))
     end
 
-    # returns an array of committees visible to appropriate access level
-    def committees_for(access)
-      if access == :private
-        return self.real_committees
-      elsif access == :public
-        if has_access? :see_committees, :public
-          return @comittees_for_public ||= self.real_committees.select {|c| c.has_access? :view, :public}
-        else
-          return []
-        end
-      end
+    # returns an array of committees visible to the given user
+    def committees_for(user)
+      self.real_committees.with_access :view, user
     end
 
     # whenever the structure of this group has changed
