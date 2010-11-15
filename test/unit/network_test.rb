@@ -101,8 +101,10 @@ class NetworkTest < ActiveSupport::TestCase
   end
 
   def test_associations
+    User.current = users(:blue)
     assert check_associations(Network)
     assert check_associations(Federating)
+    User.current = nil
   end
 
 end
