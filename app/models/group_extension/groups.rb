@@ -133,8 +133,8 @@ module GroupExtension::Groups
       if access == :private
         return self.real_committees
       elsif access == :public
-        if profiles.public.may_see_committees?
-          return @comittees_for_public ||= self.real_committees.select {|c| c.profiles.public.may_see?}
+        if has_access? :see_committees, :public
+          return @comittees_for_public ||= self.real_committees.select {|c| c.has_access? :view, :public}
         else
           return []
         end
