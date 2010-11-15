@@ -103,7 +103,6 @@ private_committee:
   entity_code: 81002
   mask: <%= ~0 %>
 
-
 private_group:
   object_id: 2000
   object_type: Group
