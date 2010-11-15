@@ -70,11 +70,11 @@ class GroupTest < ActiveSupport::TestCase
       g = groups(:animals)
 
       # g.profiles.public.update_attributes!(:may_request_membership => true)
-      g.allow! :all, [:request_memberships]
+      g.allow! :all, [:request_membership]
       g.reload
 
       assert g.profiles.visible_by(u).public?
-      assert g.allows? :request_membership
+      assert g.has_access? :request_membership, u
 
     end
   end

@@ -134,6 +134,7 @@ class CommitteeTest < ActiveSupport::TestCase
     g = Group.create :name => 'riseup'
     g.allow! :all, [:view, :pester, :see_committees]
     c = Committee.create :name => 'outreach'
+    c.allow! :all, [:view, :pester]
     g.add_committee!(c)
 
     u = User.create :login => 'user'
