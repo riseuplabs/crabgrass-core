@@ -7,6 +7,19 @@
 # If they do have a council they may not admin the group themselves 
 # anymore so it is ~4 (:admin being the 3rd bit permission)
 #
+# === Group Permissions:
+#
+# bit dec key
+#  0   1   :view
+#  1   2   :edit
+#  2   4   :admin
+#  3   8   :pester
+#  4  16
+#  5  32
+#  6  64   :see_members
+#  7  128  :request_membership
+#  8  256  :see_committees
+#  9  512  :see_networks
 
 true_levellers:
   object_id: 1
@@ -20,11 +33,25 @@ animals:
   entity_code: 82
   mask: <%= ~0 %>
 
+animals_for_public:
+  object_id: 2
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
+
 rainbow:
   object_id: 3
   object_type: Group
   entity_code: 83
   mask: <%= ~0 %>
+
+rainbow_for_public:
+  object_id: 3
+  object_type: Group
+  entity_code: 1
+  # see, pester
+  mask: <%= 9 %>
 
 warm:
   object_id: 31
@@ -50,11 +77,25 @@ public_group:
   entity_code: 81000
   mask: <%= ~0 %>
 
+public_group_for_public:
+  object_id: 1000
+  object_type: Group
+  entity_code: 1
+  # see, pester and see committees
+  mask: <%= 265 %>
+
 public_committee:
   object_id: 1001
   object_type: Group
   entity_code: 81001
   mask: <%= ~0 %>
+
+public_committee_for_public:
+  object_id: 1001
+  object_type: Group
+  entity_code: 1
+  # see, pester, see members, request membership
+  mask: <%= 201 %>
 
 private_committee:
   object_id: 1002
@@ -76,11 +117,25 @@ cnt:
   entity_code: 83001
   mask: <%= ~0 %>
 
+cnt_for_public:
+  object_id: 3001
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
+
 fai:
   object_id: 3002
   object_type: Group
   entity_code: 83002
   mask: <%= ~0 %>
+
+fai:
+  object_id: 3002
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
 
 # lets have another one so we can access it from within the sites.
 fau:
@@ -98,4 +153,18 @@ super_admin_group:
   object_type: Group
   entity_code: 84001
   mask: <%= ~0 %>
+
+# === User Permissions:
+#
+# bit dec key
+#  0   1   :view
+#  1   2   
+#  2   4   
+#  3   8   
+#  4  16
+#  5  32
+#  6  64   
+#  7  128  
+#  8  256  
+#  9  512  
 

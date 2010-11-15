@@ -2,9 +2,6 @@ profile_for_public_group:
   id: 1
   entity_type: "Group"
   entity_id: 1000
-  may_see: true
-  may_see_members: false
-  may_see_committees: true
   stranger: true
   geo_location_id: 2
 
@@ -12,35 +9,24 @@ profile_for_public_committee:
   id: 101
   entity_type: "Group"
   entity_id: 1001
-  may_see: true
-  may_see_members: true
-  may_request_membership: true
   stranger: true
 
 profile_for_private_committee:
   id: 102
   entity_type: "Group"
   entity_id: 1002
-  may_see: false
-  may_see_members: false
   stranger: true
 
 profile_for_private_group:
   id: 2
   entity_type: "Group"
   entity_id: 2000
-  may_see: false
-  may_see_members: false
-  may_request_membership: false
   stranger: true
 
 profile_for_rainbow:
   id: 3
   entity_type: "Group"
   entity_id: 3
-  may_see: true
-  may_see_members: false
-  may_request_membership: false
   stranger: true
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
@@ -50,9 +36,6 @@ private_profile_for_rainbow:
   id: 31
   entity_type: "Group"
   entity_id: 3
-  may_see: true
-  may_see_members: false
-  may_request_membership: false
   stranger: false 
   friend: true
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
@@ -64,7 +47,6 @@ profile_for_warm:
   entity_type: "Group"
   entity_id: 31
   stranger: true
-  may_see: false
   summary: colors that are warm.
   summary_html: colors that are warm.
 
@@ -73,7 +55,6 @@ profile_for_cold:
   entity_type: "Group"
   entity_id: 32
   stranger: true
-  may_see: false
   summary: colors that are cold.
   summary_html: colors that are cold.
 
@@ -81,9 +62,6 @@ profile_for_animals:
   id: 4
   entity_type: "Group"
   entity_id: 2
-  may_see: true
-  may_see_members: false
-  may_request_membership: true
   stranger: true
   summary: all the animals party down!
   summary_html: all the animals party down!
@@ -92,9 +70,6 @@ profile_for_cnt:
   id: 5
   entity_type: "Group"
   entity_id: 3001
-  may_see: true
-  may_see_members: false
-  may_request_membership: true
   stranger: true
   video_id: 1
   summary: |-
@@ -110,9 +85,6 @@ profile_for_fai:
   id: 6
   entity_type: "Group"
   entity_id: 3002
-  may_see: true
-  may_see_members: false
-  may_request_membership: true
   stranger: true
 
 # this is used by page sharing test as an example of a user
