@@ -59,7 +59,7 @@ class Committee < Group
     if access == :admin and parent.real_council
       parent.has_access?(:admin, user)
     else
-      super or parent.has_access?(access, user)
+      super
     end
   end
 

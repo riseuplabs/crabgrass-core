@@ -13,6 +13,7 @@ class PermissionsTest < ActiveSupport::TestCase
     assert !user.may?(:view, invisible), "should not view group i'm not in."
 
     committee = Committee.make_for :group => group
+    user.update_membership_cache
     assert user.may?(:admin, committee), "should admin committee of my group."
     council = Council.make_for :group => group
     group.reload
