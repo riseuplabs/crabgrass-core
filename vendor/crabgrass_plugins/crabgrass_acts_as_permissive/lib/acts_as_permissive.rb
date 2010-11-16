@@ -7,6 +7,8 @@ class Permission < ActiveRecord::Base
     { :conditions => "entity_code IN (#{user.access_codes.join(", ")})" }
   }
 
+  named_scope :for_public, :conditions => {:entity_code => 1}
+
   def allow!(keys, options = {})
     if options[:reset]
       self.mask = bits_for_keys(keys)
@@ -83,6 +85,8 @@ module ActsAsPermissive
             if user == User.current
               # these might be cached through AR.
               current_user_permissions.allow?(key)
+            elsif user == :public
+              permissions.for_public.allow?(key)
             else
               # the named scope might have changed so we need to reload.
               permissions.for_user(user).allow?(key, true)
@@ -149,7 +153,7 @@ module ActsAsPermissive
     def self.bit_for(klass, key)
       bit = @@hash[key_for_class(klass)][key.to_s.downcase.to_sym]
       if bit.nil?
-        raise ActsAsPermissive::PermissionError.new("Permission '#{key}' is unknown to class '#{class_name}'")
+        raise ActsAsPermissive::PermissionError.new("Permission '#{key}' is unknown to class '#{klass.name}'")
       else
         bit
       end
