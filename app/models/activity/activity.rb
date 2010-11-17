@@ -102,19 +102,6 @@ class Activity < ActiveRecord::Base
 
   named_scope :unique, {:group => '`key`'}
 
-  ### I DON'T THINK THIS IS NEEDED
-  ### you should be able to resolve this when the activity is created.
-  # TODO: make activity queries work with the new permission system
-  #named_scope :only_visible_groups,
-  #  {:joins => "LEFT JOIN profiles ON
-  #    object_type <=> 'Group' AND
-  #    profiles.entity_type <=> 'Group' AND
-  #    profiles.entity_id <=> object_id AND
-  #    profiles.stranger = TRUE",
-  #  :conditions => "NOT profiles.may_see <=> FALSE",
-  #  :select => "activities.*",
-  #}
-
   #
   # for 'me/activities'
   #
