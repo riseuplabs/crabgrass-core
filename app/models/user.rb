@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  acts_as_permissive :see, :pester, :burdon, :spy
+  acts_as_permissive :view, :pester, :burdon, :spy
 
   ##
   ## CORE EXTENSIONS
@@ -84,6 +84,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  after_create :add_permissions
+  def add_permissions
+    self.allow! :public, [:view, :pester]
+  end
+
   after_save :update_name
   def update_name
     if login_changed? and !login_was.nil?
@@ -119,21 +124,6 @@ class User < ActiveRecord::Base
   def cut_name
     name[0..20]
   end
-
-  # entity_codes used by permissions and pathfinder
-  def entity_code
-    "%04d" % "1#{id}"
-  end
-
-  # all codes of the entities I have access to:
-  def access_codes
-    codes = [1] # public
-    codes << entity_code.to_i # me
-    codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
-    codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
-    codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
-  end
-
 
 
   def to_param
@@ -231,6 +221,20 @@ class User < ActiveRecord::Base
   ##
   ## PERMISSIONS
   ##
+
+  # entity_codes used by permissions and pathfinder
+  def entity_code
+    "%04d" % "1#{id}"
+  end
+
+  # all codes of the entities I have access to:
+  def access_codes
+    codes = [1] # public
+    codes << entity_code.to_i # me
+    codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
+    codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
+    codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
+  end
 
   # Returns true if self has the specified level of access on the protected thing.
   # Thing may be anything that defines the method:

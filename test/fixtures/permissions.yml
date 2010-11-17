@@ -176,11 +176,17 @@ super_admin_group:
   entity_code: 7<%= id %>
   mask: 3
 
-# peers may pester
+# peers may view and pester
 <%=login%>_peers:
   object_id: <%= id %>
   object_type: User
   entity_code: 9<%= id %>
-  mask: 2
+  mask: 3
 
+# public may view and pester
+<%=login%>_peers:
+  object_id: <%= id %>
+  object_type: User
+  entity_code: 1
+  mask: 3
 <% end %>
