@@ -49,13 +49,12 @@ class Group < ActiveRecord::Base
   ##
 
   # finds groups that user may see
+  # this is a depcrecated special case of with_access provided by acts_as_permissive.
+  # Please use with_access(:view, user) instead.
   named_scope :visible_by, lambda { |user|
-    group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
-    # The grouping serves as a distinct.
-    # A DISTINCT term in the select seems to get striped of by rails.
-    # The other way to solve duplicates would be to put profiles.friend = true
-    # in other side of OR
-    {:include => :profiles, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
+    { :joins => :permissions,
+      :group => 'object_id, object_type',
+      :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
   }
 
   # finds groups that are of type Group (but not Committee or Network)
