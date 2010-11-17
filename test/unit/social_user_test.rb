@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SocialUserTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :pages
+  fixtures :users, :groups, :pages, :permissions
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
@@ -42,19 +42,21 @@ class SocialUserTest < ActiveSupport::TestCase
   end
 
   def test_associations
+    User.current = users(:blue)
     assert check_associations(User)
+    User.current = nil
   end
 
   def test_pestering
-    users(:green).profiles.public.may_pester = false
+    users(:green).disallow! :public, :pester
     assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
-    assert users(:kangaroo).may_pester?(users(:green)), 'strangers should be not be able to pester'
+    assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should be not be able to pester'
 
     assert users(:red).peer_of?(users(:green)), 'must be peers'
     assert users(:red).may_pester?(users(:green)), 'peers should always be able to pester'
 
     users(:green).profiles.public.may_pester = true
-    users(:green).profiles.public.save
+    users(:green).allow! :public, :pester
     assert users(:kangaroo).may_pester?(users(:green)), 'should be able to pester if set in profile'
   end
 
