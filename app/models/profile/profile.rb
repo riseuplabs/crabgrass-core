@@ -35,18 +35,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see",                              :default => true
-    t.boolean  "may_see_committees"
-    t.boolean  "may_see_networks"
-    t.boolean  "may_see_members"
-    t.boolean  "may_request_membership"
     t.integer  "membership_policy",      :limit => 11, :default => 0
-    t.boolean  "may_see_groups"
-    t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact",                  :default => true
-    t.boolean  "may_pester",                           :default => true
-    t.boolean  "may_burden"
-    t.boolean  "may_spy"
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
@@ -55,14 +44,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "geo_location_id"
   end
 
-Applies to both groups and users: may_see, may_see_groups
-
-Applies to users only: may_see_contacts, may_request_contact, may_pester
-
-Applies to groups only: may_see_committees, may_see_networks, may_see_members,
-  may_request_membership, membership_policy
-
-Currently unused: may_burden, may_spy, language.
+Currently unused: language.
 
 =end
 
@@ -127,9 +109,6 @@ class Profile < ActiveRecord::Base
     self.membership_policy == MEMBERSHIP_POLICY[name.to_sym]
   end
 
-  def may_comment?() read_attribute(:may_pester) end
-  def may_comment=(value) write_attribute(:may_pester, value) end
-
   ##
   ## ASSOCIATED ATTRIBUTES
   ##
@@ -178,10 +157,8 @@ class Profile < ActiveRecord::Base
   def save_from_params(profile_params)
 
     valid_params = ["first_name", "middle_name", "last_name", "role",
-      "organization", "place", "may_see", "may_see_committees", "may_see_networks",
-      "may_see_members", "may_request_membership", "membership_policy",
-      "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer", "photo", "video", "summary", "admins_may_moderate",
+      "organization", "place", "membership_policy",
+      "peer", "photo", "video", "summary", "admins_may_moderate",
       "country_id","state_id","city_id"]
 
     collections = {
@@ -226,12 +203,6 @@ class Profile < ActiveRecord::Base
       end
     elsif !self.geo_location.nil?
       self.geo_location.destroy
-    end
-
-    if params['may_see'] == "0"
-      %w(committees networks members groups contacts).each do |subject|
-        params["may_see_#{subject}"] = "0"
-      end
     end
 
     self.update_attributes( params )
