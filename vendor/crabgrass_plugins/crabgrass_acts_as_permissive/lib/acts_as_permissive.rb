@@ -7,6 +7,20 @@ class Permission < ActiveRecord::Base
     { :conditions => "entity_code IN (#{user.access_codes.join(", ")})" }
   }
 
+  named_scope :for_entity, lambda { |entity|
+    { :conditions => access_conditions_for(entity) }
+  }
+
+  def self.access_conditions_for(entity)
+    if entity.is_a? User
+      "entity_code IN (#{entity.access_codes.join(", ")})"
+    elsif [:public, :all].include? entity
+      {:entity_code => 1}
+    else
+      {:entity_code => entity.entity_code}
+    end
+  end
+
   named_scope :for_public, :conditions => {:entity_code => 1}
 
   def allow!(keys, options = {})
@@ -64,10 +78,10 @@ module ActsAsPermissive
         end
 
 
-        named_scope :with_access, lambda { |key, user|
+        named_scope :with_access, lambda { |key, entity|
           { :joins => :permissions,
             :group => 'object_id, object_type',
-            :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND #{self.bit_for(key)} & ~mask = 0" }
+            :conditions => Permission.access_conditions_for(entity) }
         }
 
         class_eval do
@@ -81,15 +95,13 @@ module ActsAsPermissive
             end
           end
 
-          def has_access?(key, user = User.current)
-            if user == User.current
+          def has_access?(key, entity = User.current)
+            if entity == User.current
               # these might be cached through AR.
               current_user_permissions.allow?(key)
-            elsif user == :public
-              permissions.for_public.allow?(key)
             else
               # the named scope might have changed so we need to reload.
-              permissions.for_user(user).allow?(key, true)
+              permissions.for_entity(entity).allow?(key, true)
             end
           end
 
@@ -162,7 +174,7 @@ module ActsAsPermissive
     def self.code_for_entity(entity)
       if entity.is_a? Symbol
         code = case entity
-               when :all then 1
+               when :all,:public then 1
                else raise ActsAsPermissive::PermissionError.new("ActsAsPermissive: Entity alias '#{entity}' is unknown.")
                end
       else
