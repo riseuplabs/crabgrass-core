@@ -62,7 +62,7 @@ module Groups::BasePermission
   end
 
   def may_show_public_profile?(group = @group)
-    group.profiles.public.may_see?
+    group.has_access? :see
   end
 
   def may_update_profile?(group = @group)
@@ -93,11 +93,7 @@ module Groups::BasePermission
 
   def may_show_subcommittees_of_group?(group = @group)
     return false if group.parent_id
-    if logged_in?
-      current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_committees?
-    else
-      group.profiles.public.may_see_committees?
-    end
+    group.has_access? :see_committees
   end
 
   def may_create_subcommittees?(group = @group)
@@ -106,15 +102,13 @@ module Groups::BasePermission
 
   def may_show_networks_of_group?(group = @group)
     return false if group.parent_id
-    if logged_in?
-      current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_members?
-    else
-      group.profiles.public.may_see_members?
-    end
+    group.has_access? :see_networks
   end
 
   def may_show_affiliations?(group = @group)
-    return true if (may_show_networks_of_group?(group) or may_show_subcommittees_of_group?(group) or group.real_council)
+    may_show_networks_of_group?(group) or
+    may_show_subcommittees_of_group?(group) or
+    group.real_council
   end
 
   ##

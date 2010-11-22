@@ -19,7 +19,7 @@ module ContactPermission
   def may_create_contact?(user=@user)
     logged_in? and
     user != current_user and
-    user.profiles.visible_by(current_user).may_request_contact?
+    user.has_access? :request_contact
   end
 
   alias_method :may_add_contact?, :may_create_contact?
