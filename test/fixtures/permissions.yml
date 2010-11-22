@@ -184,7 +184,7 @@ super_admin_group:
   mask: 3
 
 # public may view and pester
-<%=login%>_peers:
+<%=login%>_public:
   object_id: <%= id %>
   object_type: User
   entity_code: 1

@@ -55,7 +55,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_associations
+    User.current = users(:blue)
     assert check_associations(User)
+    User.current = nil
   end
 
   def test_alphabetized
