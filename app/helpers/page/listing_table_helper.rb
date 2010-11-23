@@ -1,7 +1,7 @@
 ##
 ## Helpers for page lists in "table" style (ie in a table of columns and rows).
-## 
-## The idea here is to allow the columns to be displayed in any order. 
+##
+## The idea here is to allow the columns to be displayed in any order.
 ##
 
 module Page::ListingTableHelper
@@ -56,7 +56,7 @@ module Page::ListingTableHelper
   ##
   ## PRIVATE
   ##
- 
+
   private
 
   #
@@ -76,11 +76,11 @@ module Page::ListingTableHelper
     elsif column == :title
       page_list_cell_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
-      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
+      page.updated_by_login ? link_to_user(page.updated_by) : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
-      page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+      page.created_by_login ? link_to_user(page.created_by) : '&nbsp;'
     elsif column == :deleted_by or column == :deleted_by_login
-      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
+      page.updated_by_login ? link_to_user(page.updated_by) : '&nbsp;'
     elsif column == :updated_at
       friendly_date(page.updated_at)
     elsif column == :created_at

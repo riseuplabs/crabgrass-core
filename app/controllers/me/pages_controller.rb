@@ -18,7 +18,8 @@ class Me::PagesController < Me::BaseController
       end
       # @path = parse_filter_path('all') if @path.empty?
     else
-      @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
+      options = options_for_me.merge(:include => :updated_by)
+      @pages = Page.paginate_by_path(@path, options, pagination_params)
     end
   end
 
