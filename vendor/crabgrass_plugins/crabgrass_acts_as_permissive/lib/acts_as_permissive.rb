@@ -12,9 +12,14 @@ class Permission < ActiveRecord::Base
   }
 
   def self.access_conditions_for(entity)
-    if entity.is_a? User
+    case entity
+    when User
       "entity_code IN (#{entity.access_codes.join(", ")})"
-    elsif [:public, :all].include? entity
+    when :public, :all
+      {:entity_code => 1}
+    when UnauthenticatedUser
+      {:entity_code => 1}
+    when nil
       {:entity_code => 1}
     else
       {:entity_code => entity.entity_code}
