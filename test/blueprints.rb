@@ -37,7 +37,6 @@ end
 #
 # Users
 #
-debugger
 User.blueprint do
   login
   display_name
