@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   ## NAMED SCOPES
   ##
 
-  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
   # alphabetized and (optional) limited to +letter+
   named_scope :alphabetized, lambda {|letter|
