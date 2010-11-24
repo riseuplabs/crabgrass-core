@@ -34,16 +34,50 @@ class Permission < ActiveRecord::Base
     else
       self.mask |= bits_for_keys(keys)
     end
-    save!
+    save
   end
 
   def disallow!(keys)
     self.mask &= ~bits_for_keys(keys)
-    save!
+    save
   end
 
   def bits_for_keys(keys)
     self.object.class.bits_for_keys(keys)
+  end
+
+  def actions(options={})
+    klass = self.object.class
+    if options[:disabled]
+      actions = klass.keys_for_bits(~self.mask)
+    else
+      actions = klass.keys_for_bits(self.mask)
+    end
+    postfix = klass.name.underscore
+    if options[:with_class]
+      actions.map{|a| (a.to_s + '_' + postfix).to_sym}
+    elsif options[:select_options]
+      actions.map{|a| [(a.to_s + '_' + postfix).to_sym, klass.bits_for_keys(a)]}
+    else
+      actions
+    end
+  end
+
+  def accessors
+    prefix = case self.entity_code.to_s
+    when "1"
+      :public
+    when /^1\d+/
+      :user
+    when /^7\d+/
+      :friends
+    when /^8\d+/
+      :group
+    when /^9\d+/
+      :peers
+    else
+      raise ActsAsPermissive::PermissionError "unknown entity code"
+    end
   end
 end
 
@@ -121,21 +155,43 @@ module ActsAsPermissive
 
 
           def allow!(entity, keys, options = {})
-            code = ActsAsPermissive::Permissions.code_for_entity(entity)
+            code = code_for_entity(entity)
             permission = permissions.find_or_initialize_by_entity_code(code)
             permission.allow! keys, options
           end
 
           def disallow!(entity, keys)
-            code = ActsAsPermissive::Permissions.code_for_entity(entity)
+            code = code_for_entity(entity)
             permission = permissions.find_by_entity_code(code)
             permission.disallow!(keys) if permission
+          end
+
+          def code_for_entity(entity)
+            entity = entity.to_sym if entity.is_a? String
+            case entity
+            when :all,:public
+              1
+            when :friends
+              self.friends.entity_code.to_i
+            when :peers
+              self.peers.entity_code.to_i
+            when :self, :members
+              self.entity_code.to_i
+            when Symbol
+              raise ActsAsPermissive::PermissionError.new("ActsAsPermissive: Entity alias '#{entity}' is unknown.")
+            else
+              code = entity.entity_code.to_i
+            end
           end
 
           def self.bits_for_keys(keys)
             return ~0 if keys == :all
             keys = [keys] unless keys.is_a? Array
             keys.inject(0) {|any, key| any | self.bit_for(key)}
+          end
+
+          def self.keys_for_bits(bits)
+            ActsAsPermissive::Permissions.keys_for(self, bits)
           end
 
           def self.bit_for(key)
@@ -176,16 +232,12 @@ module ActsAsPermissive
       end
     end
 
-    def self.code_for_entity(entity)
-      if entity.is_a? Symbol
-        code = case entity
-               when :all,:public then 1
-               else raise ActsAsPermissive::PermissionError.new("ActsAsPermissive: Entity alias '#{entity}' is unknown.")
-               end
-      else
-        code = entity.entity_code.to_i
-      end
+    def self.keys_for(klass, bits)
+      hash = @@hash[key_for_class(klass)]
+      array = hash.map{|k,b| k if (bits & b) != 0}
+      array.compact
     end
+
 
     protected
     def self.build_bit_hash(keys, offset)
