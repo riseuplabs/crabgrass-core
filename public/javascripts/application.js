@@ -343,6 +343,62 @@ var DropMenu = Class.create({
 });
 DropMenu.instances = [];
 
+//
+// DESCRIPTIONS
+//
+
+var AddDescription = Class.create({
+  initialize: function(item) {
+    if(!item) return;
+    this.trigger = item;
+    this.description = item.down('.description');
+    this.timeout = null;
+    if(!this.trigger) return;
+    if(!this.description) return;
+    this.trigger.observe('mouseover', this.showDescriptionEvent.bind(this));
+    this.trigger.observe('mouseout', this.hideDescriptionEvent.bind(this));
+    AddDescription.instances.push(this);
+  },
+
+  descriptionIsOpen: function() {
+    return($$('.description').detect(function(e){return e.visible()}) != null);
+  },
+
+  clearEvents: function(event) {
+    if (this.timeout) window.clearTimeout(this.timeout);
+    event.stop();
+  },
+
+  showDescriptionEvent: function(event) {
+    evalOnclickOnce(this.description);
+    this.clearEvents(event);
+    if (this.descriptionIsOpen()) {
+      DropMenu.instances.invoke('hideMenu');
+      this.showDescription();
+    } else {
+      this.timeout = this.showDescription.bind(this).delay(1);
+    }
+  },
+
+  hideDescriptionEvent: function(event) {
+    this.clearEvents(event);
+    this.timeout = this.hideDescription.bind(this).delay(.5);
+  },
+
+  showDescription: function() {
+    this.description.show();
+    this.trigger.addClassName('with_description');
+  },
+
+  hideDescription: function() {
+    this.description.hide();
+    this.trigger.removeClassName('with_description');
+  }
+
+});
+AddDescription.instances = [];
+
+
 //var statuspostCounter = Class.create({
 //  initialize: function(id) {
 //    if (!$(id)) return;
@@ -411,6 +467,9 @@ DropMenu.instances = [];
 document.observe('dom:loaded', function() {
   $$(".drop_menu").each(function(element){
     new DropMenu(element.id);
+  })
+  $$(".add_description").each(function(element){
+    new AddDescription(element);
   })
   // new statuspostCounter("say_text");
   // new LoadSocial();
