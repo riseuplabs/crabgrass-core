@@ -137,7 +137,7 @@ class Conf
 
   def self.load(filename)
     self.load_defaults
-    self.configuration_filename = [RAILS_ROOT, 'config', filename].join('/')
+    self.configuration_filename = "#{CRABGRASS_CONFIG_DIRECTORY}/#{filename}"
     hsh = YAML.load_file(configuration_filename) || {}
     hsh.each do |key, value|
       method = key.to_s + '='
@@ -190,9 +190,9 @@ class Conf
   # This is a callback method that we set in lib/crabgrass/boot.rb.
   # We should return true if we want the plugin to be loaded, false otherwise.
   def self.plugin_enabled?(plugin_path)
-    if plugin_path =~ /^#{RAILS_ROOT}\/extensions\/mods\/[^\/]+$/
+    if plugin_path =~ /^#{Regexp.escape(MODS_DIRECTORY)}\/[^\/]+$/
       self.mod_enabled?( File.basename(plugin_path) )
-    elsif plugin_path =~ /^#{RAILS_ROOT}\/extensions\/pages\//
+    elsif plugin_path =~ /^#{Regexp.escape(PAGES_DIRECTORY)}\/[^\/]+$/
       self.page_enabled?( File.basename(plugin_path) )
     else
       true
@@ -220,7 +220,7 @@ class Conf
 
   # in development mode, allow all pages to be reloadable
   def self.plugin_reloadable?(plugin_path)
-    plugin_path =~ /^#{RAILS_ROOT}\/extensions\/pages\//
+    plugin_path.starts_with?(PAGES_DIRECTORY)
   end
 
   ##
