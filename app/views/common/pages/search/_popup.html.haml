@@ -1,0 +1,39 @@
+-#
+-# This is used to generate the content for search filter popups
+-#
+-# requires variables:
+-# * filter
+-# * url
+
+-# search filters can set these member variables to control how the popup is displayed:
+- @filter_submit_button = true
+
+-#
+-# notes:
+-#
+-# form_remote_tag does not support the :with option, so we must use submit_to_remote.
+-# 
+-# when we specify :with, it overrides the default parameters used by submit_to_remote.
+-# therefore, we must manually specify Form.serialize.
+-# 
+-# @filter_submit_options is a member variable because the search filter may be
+-# responsible for generating the submit button for this popup. If that is the case,
+-# it needs some access to the submit options to use. awkward, but it works. 
+-#
+
+- with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
+- @filter_submit_options = {:url => url, :with => with, :loading => show_spinner('search_filter'), :complete => close_modal_function}
+
+- form_tag(:url => url) do
+  - if filter.description.any?
+    .tip.info_16
+      = filter.description.t
+  = self.instance_eval(&filter.html_block)
+  .buttons
+    - if @filter_submit_button
+      = spinner('search_filter')
+      = close_modal_button
+      = submit_to_remote 'submit', :search.t, @filter_submit_options
+    - else
+      = spinner('search_filter', :text => 'loading...')
+

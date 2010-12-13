@@ -78,6 +78,7 @@ en:
   my_contacts: "My Friends"
   friends: "Friends"
   people: "People"
+  person: "Person"
   members: "Members"
   new_members: "New members"
   profile: "Profile"
@@ -98,8 +99,6 @@ en:
   recent_pages: "Recent Pages"
   group_pages: "Group Pages"
   recently_created: "Recently Created"
-  most_active: "Most Active"
-  most_stars: "Most Stars"
   no_search_results: "No Results"
   empty_results: "None"
   not_found: "Not Found"
@@ -179,6 +178,10 @@ en:
 
   optional_message: "optional message"
 
+  created_by: "Created by"
+  created: "Created"
+  updated_by: "Updated by"
+  updated: "Updated"
 
   ##
   ## MEDIA
@@ -448,9 +451,6 @@ en:
   delete_version_confirm: "Are you sure you want to delete this version?"
   delete_this_version: "delete this version"
   galleries: "Galleries"
-  created_by: "Created by"
-  created: "Created"
-  updated: "Updated"
   created_on: "Created on"
   file_size: "File size"
   format: "Format"
@@ -709,7 +709,6 @@ en:
   delete_post: Delete Post
   post_message: Post Message
   top_rated: Top Rated
-  most_viewed: Most Viewed
   highest_contributors: Highest Contributors
   users_world: "%{user}'s World"
   request_friend_link: "Add To My Friends"
@@ -1058,6 +1057,38 @@ en:
   ## PAGES
   ##
 
+  # search filter sections
+  popular_pages: "Popular Pages"
+
+  # search filters
+  all_pages: "All Pages"
+
+  created_by_me: "Created By Me"
+  created_by_user: "Created By %{user}"
+  created_by_user_description: "Search for pages created by a particular person."
+  created_by_dotdotdot: "Created By..."
+
+  starred_by_me: "Starred By Me"
+  starred_by_user: "Starred By %{user}"
+  starred_by_user_description: "Search for pages starred by a particular person."
+  starred_by_dotdotdot: "Starred By..."
+
+  watched_by_me: "Watched By Me"
+  watched_by_user: "Watched By %{user}"
+  watched_by_user_description: "Search for pages watched by a particular person."
+  watched_by_dotdotdot: "Watched By..."
+
+  edited_by_me: "Edited By Me"
+  edited_by_user: "Edited By %{user}"
+  edited_by_user_description: "Search for pages edited by a particular person."
+  edited_by_dotdotdot: "Edited By..."
+
+  most_active: "Most Active"
+  most_stars: "Most Stars"
+  most_viewed: "Most Viewed"
+
+  filter_group_description: "Search for pages with access by a particular group."
+
   starred: "Starred"
   viewed: "Viewed"
   edited: "Edited"
@@ -1082,24 +1113,24 @@ en:
 
   # page list
 
-  page_list_heading_updated_by: "updated by"
-  page_list_heading_created_by: "created by"
-  page_list_heading_deleted_by: "deleted by"
+  #page_list_heading_updated_by: "updated by"
+  #page_list_heading_created_by: "created by"
+  #page_list_heading_deleted_by: "deleted by"
 
-  page_list_heading_title: "title"
-  page_list_heading_new: "new"
-  page_list_heading_created: "created"
-  page_list_heading_updated: "updated"
-  page_list_heading_deleted: "deleted"
-  page_list_heading_posts: "posts"
-  page_list_heading_owner: "owner"
-  page_list_heading_contribution: "contribution"
-  page_list_heading_last_updated: "last updated"
-  page_list_heading_stars: "stars"
-  page_list_heading_happens: "happens"
-  page_list_heading_last_post: "last post"
-  page_list_heading_views: "views"
-  page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
+  #page_list_heading_title: "title"
+  #page_list_heading_new: "new"
+  #page_list_heading_created: "created"
+  #page_list_heading_updated: "updated"
+  #page_list_heading_deleted: "deleted"
+  #page_list_heading_posts: "posts"
+  #page_list_heading_owner: "owner"
+  #page_list_heading_contribution: "contribution"
+  #page_list_heading_last_updated: "last updated"
+  #page_list_heading_stars: "stars"
+  #page_list_heading_happens: "happens"
+  #page_list_heading_last_post: "last post"
+  #page_list_heading_views: "views"
+  #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
 
   page_notice_message: "%{user} notified you about this page on %{date}"
   page_with_message: "with message"
@@ -1379,6 +1410,7 @@ en:
   date_yesterday: Yesterday
   date_this_week: This Week
   date_this_month: This Month
+  date_this_year: This Year
   date_all_time: All Time
   date_older: Older
   date_centuries: centuries

@@ -1,7 +1,22 @@
-%ul#search_controls_possible
+%ul#search_controls_possible.page_search_controls
   - if @path.any?
     = filter_checkbox_li_tag :add, filter_all
-  - for filter in possible_filter_definitions
-    - unless @path.include?(filter[:path])
-      = filter_checkbox_li_tag :add, filter
+  - for section in search_filter_sections
+    - filters = possible_filters_for_section(section)
+    - id = "#{section}_section"
+    - if filters.any?
+      %li
+        .section= section.tcap
+        %ul
+          - for filter in filters
+            = filter_checkbox_li_tag :add, filter
+
+-# for expanding sections:
+  = link_to_toggle(section.to_s, id, :open => opened_section?(section))
+  %ul{:id => id, :style => (opened_section?(section) ? '' : 'display:none')}
+    - for filter in SearchFilter.filters_for_section(section)
+      - next if filter_active?(filter)
+      %li
+        = filter_checkbox_li_tag :add, filter
+
 

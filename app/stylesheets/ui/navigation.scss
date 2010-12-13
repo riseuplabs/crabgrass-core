@@ -23,10 +23,11 @@ $toggle_bug_padding: 4px;
 ul.toggle_bug {
   display: inline-block;
   white-space: nowrap;
-  // the margin should be set equal to the padding because the padding
-  // makes the ul expand beyond its normal size. an equal margin makes
+  // the margin should be set equal to half the padding because the padding
+  // makes the ul expand beyond its normal size. this margin makes
   // the ul take up the amount of space in the flow that is appears to.
-  margin: $toggle_bug_padding 0.5em $toggle_bug_padding 0;
+  // the padding should be even.
+  margin: $toggle_bug_padding/2 0 $toggle_bug_padding/2 0;
   li {
     display: inline;
     padding: 0px $toggle_bug_padding;

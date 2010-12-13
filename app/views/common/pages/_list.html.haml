@@ -1,6 +1,6 @@
 - style = local_assigns[:style] ||= :table
 - pages = local_assigns[:pages] ||= @pages
-- paginate = pages.respond_to?(:total_entries)
+- paginate = false # pages.respond_to?(:total_entries)
 - paginate_options ||= {}
 
 %section{:class => "page_list #{style}"}

@@ -6,17 +6,17 @@ module PathFinder
 
   def self.get_options_module(sym)
     case sym
-      when :mysql:  PathFinder::Mysql::Options
-      when :sql:    PathFinder::Sql::Options
-      when :sphinx: PathFinder::Sphinx::Options
+      when :mysql:      PathFinder::Mysql::Options
+      when :postgres:   PathFinder::Postgres::Options
+      when :sphinx:     PathFinder::Sphinx::Options
     end
   end
 
-  def self.get_builder(sym)
+  def self.get_query(sym)
     case sym
-      when :mysql:  PathFinder::Mysql::Builder
-      when :sql:    PathFinder::Sql::Builder
-      when :sphinx: PathFinder::Sphinx::Builder
+      when :mysql:      PathFinder::Mysql::Query
+      when :postgres:   PathFinder::Postgres::Query
+      when :sphinx:     PathFinder::Sphinx::Query
     end
   end
 

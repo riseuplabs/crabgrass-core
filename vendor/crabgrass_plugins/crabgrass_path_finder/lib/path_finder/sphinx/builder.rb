@@ -10,6 +10,8 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   include PathFinder::Sphinx::BuilderFilters
 
   def initialize(path, options, klass)
+    super
+
     @original_path = path
     @original_options = options
     @klass = klass #What are we searching Pages or Posts?
