@@ -36,12 +36,24 @@ module Ui::AutocompleteHelper
     javascript_tag(auto_complete_js)
   end
 
-  def autocomplete_users_tag(field_id, options={})
-    autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/people'))
+  #def autocomplete_users_tag(field_id, options={})
+  #  autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/people'))
+  #end
+
+  #def autocomplete_friends_tag(field_id, options={})
+  #  autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  #end
+
+  # this searches on friends and peers. if needed, we could modify
+  # this to allow the option to search all users.
+  def autocomplete_users_field_tag(field_id)
+    text_field_tag(field_id, '', :onkeypress => eat_enter) +
+    javascript_tag("cgAutocompleteEntities('%s', '%s')" % [field_id, entities_path(:format => 'json')])
   end
 
-  def autocomplete_friends_tag(field_id, options={})
-    autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  def autocomplete_groups_field_tag(field_id)
+    text_field_tag(field_id, '', :onkeypress => eat_enter) +
+    javascript_tag("cgAutocompleteEntities('%s', '%s')" % [field_id, entities_path(:view => 'groups', :format => 'json')])
   end
 
   private

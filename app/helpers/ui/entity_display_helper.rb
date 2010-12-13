@@ -6,6 +6,13 @@ module Ui::EntityDisplayHelper
 
   protected
 
+  # linking to users and groups takes a lot of time if we have to fetch the
+  # record to get the display name or avatar. if we already have the login or
+  # group name, this method is much faster (saves about 150ms per request). 
+  def link_to_name(name)
+    "<a href=\"/#{name}\">#{name}</a>"
+  end
+
   ##
   ## GROUPS
   ##
