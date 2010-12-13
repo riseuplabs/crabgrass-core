@@ -16,10 +16,8 @@ class Me::PagesController < Me::BaseController
         @remove_segment = parse_filter_path(params[:remove])
         @path.remove!(@remove_segment)
       end
-      # @path = parse_filter_path('all') if @path.empty?
-    else
-      @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
     end
+    @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
   end
 
   protected
@@ -37,24 +35,9 @@ class Me::PagesController < Me::BaseController
     elsif params[:filter]
       @path = parse_hash_filter_path(params[:filter])
     else
-      @path = [] #parse_filter_path(['all'])
+      @path = parse_filter_path([])
     end
   end
-
-  # We are not required to store the current filter path in the session.
-  # However, if we don't do this, there are problems with the anchor-based
-  # ajax search filters: there is a race condition when you click two
-  # checkboxes at once. Both report the their current anchor-based path,
-  # but the second one in then overwriting the changes made by the first one.
-  #
-  # Instead, we can use the session to keep our own record of the current
-  # ajax search filter. This does not work well if you are using cookie
-  # based sessions.
-  #
-  #def store_path_in_session?
-  # #ActionController.session_store != ActionController::Session::CookieStore
-  # return false
-  #end
 
 end
 

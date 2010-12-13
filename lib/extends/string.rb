@@ -80,5 +80,10 @@ class String
     return substrings
   end
 
+  # returns true if the string is an integer
+  def is_integer?
+    self =~ /^-?\d+$/
+  end
+
 end
 

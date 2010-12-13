@@ -9,8 +9,11 @@ class Symbol
 end
 
 class String
+  # When called on a string t() returns self. One advantage of this, is you
+  # can call t() on anything you are about to display, and if it is a symbol
+  # it gets localized, but if it is a string then no harm done.
   def t(options={})
-    I18n.t(self,options)
+    self
   end
 
   # 
@@ -21,8 +24,9 @@ class String
   # a capital letter).
   # 
   def tcap(options={})
-    result = I18n.t(self, options).mb_chars # get multibyte proxy
-    result[0..0].upcase + result[1..-1]
+    self
+    #result = I18n.t(self, options).mb_chars # get multibyte proxy
+    #result[0..0].upcase + result[1..-1]
   end
 end
 
