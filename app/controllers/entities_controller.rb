@@ -12,6 +12,7 @@ class EntitiesController < ApplicationController
   def index
     @entities = case params[:view]
       when 'recipients' then recipients();
+      when 'groups' then groups();
       else recipients();
     end
   end
@@ -22,13 +23,22 @@ class EntitiesController < ApplicationController
   # people that the current user is allowed to pester
   #
   def recipients
-    if params[:query] == ""
+    if params[:query].empty?
       # preload friends and peers
-      recipients = User.friends_or_peers_of(current_user)
+      User.friends_or_peers_of(current_user)
     else
       # TODO: make this actually work, so something like it:
       # recipients = User.may_be_pestered_by(current_user).name_like(params[:query])
-      recipients = []
+      []
+    end
+  end
+
+  def groups
+    if params[:query].empty? and logged_in?
+      # preload user's groups
+      current_user.groups
+    elsif params[:query].any?
+      Group.find :all, :limit => 20, :conditions => ["name LIKE ?", '%' + params[:query]]
     end
   end
 
