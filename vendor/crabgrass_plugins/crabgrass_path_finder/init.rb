@@ -1,7 +1,8 @@
 require 'active_record'
 require 'action_controller'
 
-reloadable
+# uncomment when debugging:
+# reloadable
 
 #
 # allowed adding find_by_path to models
