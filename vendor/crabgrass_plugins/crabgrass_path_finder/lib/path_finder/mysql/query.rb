@@ -120,7 +120,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def apply_filter(filter, args)
-    (filter.query_block || filter.mysql_block).call(self, *args)
+    query_filter = filter.query_block || filter.mysql_block
+    if query_filter
+      query_filter.call(self, *args)
+    end
   end
 
   ##

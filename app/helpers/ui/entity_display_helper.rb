@@ -19,20 +19,20 @@ module Ui::EntityDisplayHelper
 
   # see function name_and_path_for_group for description of options
   def link_to_group(arg, options={})
-    if arg.is_a? Integer
-      @group_cache ||= {}
-      # hacky fix for error when a page persists after it's group is deleted --af
-      # what is this trying to do? --e
-      if not @group_cache[arg]
-        if Group.exists?(arg)
-          @group_cache[arg] = Group.find(arg)
-        else
-          return ""
-        end
-      end
-      # end hacky fix
-      arg = @group_cache[arg]
-    end
+    #if arg.is_a? Integer
+    #  @group_cache ||= {}
+    #  # hacky fix for error when a page persists after it's group is deleted --af
+    #  # what is this trying to do? --e
+    #  if not @group_cache[arg]
+    #    if Group.exists?(arg)
+    #      @group_cache[arg] = Group.find(arg)
+    #    else
+    #      return ""
+    #    end
+    #  end
+    #  # end hacky fix
+    #  arg = @group_cache[arg]
+    #end
 
     display_name, path = name_and_url_for_group(arg,options)
     style = options[:style] || ""

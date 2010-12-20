@@ -30,11 +30,23 @@ module Ui::GizmoHelper
           link == links.first ? 'first' : '',
           link == links.last ? 'last' : ''
         ].combine
-        content_tag(:li, :class => classes) do
-          link_to(link[:label], link[:url])
+        content_tag(:li, :class => classes, :id => link[:id]) do
+          if link[:remote]
+            link_to_remote(link[:label], link[:remote])
+          else
+            link_to(link[:label], link[:url])
+          end
         end
       end.join
     end
+  end
+
+  # used for javascript toggle bugs
+  def deactivate_toggle_bugs
+    "$$('.toggle_bug li').invoke('removeClassName', 'active');"
+  end
+  def activate_toggle_bug(id)
+    deactivate_toggle_bugs + "$('#{id}').addClassName('active');" 
   end
 
   # 
