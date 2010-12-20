@@ -3,19 +3,20 @@ draft install instructions
 
 install basic ruby environment:
 
-  sudo apt-get install ruby1.8 rake rubygems libmysql-ruby mysql-server
+  sudo apt-get install ruby1.8 ruby-dev rake rubygems libmysql-ruby mysql-server
 
 prevent rubygems from installing rdoc (optional):
 
-  cat > ~/.gemrc
+  edit ~/.gemrc and add this:
   gem: --no-rdoc --no-ri
 
 install required gems:
 
   cd crabgrass-core
-  sudo gem install rails --version='~>2.3'
+  sudo gem install rails --version='2.3.10'
   mkdir log
   touch log/development.log
+  rake create_a_secret
   sudo rake gems:install
 
 create the database:
