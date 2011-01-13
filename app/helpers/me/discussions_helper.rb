@@ -17,10 +17,11 @@ module Me::DiscussionsHelper
   ## Say box
   ##
 
-  def recipient_field_tag(id)
-    text_field_tag(id, '', :onkeypress => eat_enter) + 
-    autocomplete_entity_tag(id, :url => entities_path(:format => 'json'))
-  end
+  # autocomplete_users_field_tag(field_id)
+  #def recipient_field_tag(id)
+  #  text_field_tag(id, '', :onkeypress => eat_enter) + 
+  #  autocomplete_entity_tag(id, :url => entities_path(:format => 'json'))
+  #end
 
 #  def recipient_field(recipient_name)
 #    if recipient_name.blank?

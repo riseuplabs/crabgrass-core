@@ -86,11 +86,18 @@ module ControllerExtension::RescueErrors
 #    render :template => 'account/csrf_error', :layout => 'default'
 #  end
 
-#  # shows a generic not found page
-#  def render_not_found(exception=nil)
-#    @skip_context = true
-#    render :template => 'common/not_found', :status => :not_found, :layout => 'default'
-#  end
+  # shows a generic not found page or error message, customized
+  # by any message in the exception.
+  def render_not_found(exception=nil)
+    respond_to do |format|
+      format.html do
+        render_not_found_html(exception)
+      end
+      format.js do
+        render_error_js(exception)
+      end
+    end
+  end
 
   # show a permission denied page, or prompt for login
 
@@ -183,10 +190,15 @@ module ControllerExtension::RescueErrors
   def render_auth_error_html(exception)
     alert_message exception, :later
     if logged_in?
+      # fyi, this template will eat the alert_message
       render :template => 'error/permission_denied', :layout => 'notice'
     else
       redirect_to login_path, :redirect => request.request_uri
     end
+  end
+
+  def render_not_found_html(exception)
+    render :template => 'error/not_found', :status => :not_found, :layout => 'notice', :locals => {:exception => exception}
   end
 
   def render_error_js(exception=nil, options={})
@@ -194,6 +206,7 @@ module ControllerExtension::RescueErrors
       alert_message :error, exception
     end
     render :update do |page|
+      hide_spinners(page)
       update_alert_messages(page)
     end
   end

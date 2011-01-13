@@ -1,7 +1,6 @@
-%ul#search_controls_active
+%ul#search_controls_active.page_search_controls
   - if @path.empty?
     = filter_checkbox_li_tag :remove, filter_all
-  - for path_segment in @path
-    - if (filter = get_filter_definition(path_segment)).any?
-      = filter_checkbox_li_tag :remove, filter
+  - @path.filters.each do |filter, args|
+    = filter_checkbox_li_tag :remove, filter
 

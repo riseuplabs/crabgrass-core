@@ -29,22 +29,21 @@ module Ui::TextHelper
     I18n.t(:total, :count => (collection.size).to_s)
   end
 
-  # *NEWUI
   #
-  # Construct a content tag with a more link
+  # Text with a more link
   #
-  # :options[:more_url] = the url for more link
+  # :options[:url] = the url for more link
   # :options[:length] = the max lenght to display
-  # :options[:class] = any html options can be added and will be applied to the tag
-
-  def text_with_more(text, tag='p', options={})
-    length = options.delete(:length) || 50
-    omission = options.delete(:omission) || "... "
-    link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
-    out = truncate(text, :length => length, :omission => omission + link)
-    capture_haml do
-      haml_tag(tag, out,  options)
+  #
+  def text_with_more(text,  options={})
+    length = options[:length] || 50
+    omission = options[:omission] || "... "
+    if options[:url]
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options[:url])
+    else
+      link = ''
     end
+    truncate(text, :length => length, :omission => omission + link)
   end
 
   #

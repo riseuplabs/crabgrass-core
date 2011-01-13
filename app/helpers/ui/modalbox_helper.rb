@@ -36,6 +36,7 @@ module Ui::ModalboxHelper
   def link_to_modal(label, options={}, html_options={})
     options[:title] = label unless options[:title]
     #html_options = [:id, :class, :style, :icon]
+    html = options[:html].any?
     icon = options.delete(:icon) || html_options.delete(:icon)
     contents = options.delete(:url) || options.delete(:html)
     if contents.is_a? Hash
@@ -44,11 +45,15 @@ module Ui::ModalboxHelper
     if icon
       html_options[:id] ||= 'link%s'%rand(1000000)
       html_options[:icon] = icon
-      options.merge!(
-        :loading => spinner_icon_on(icon, html_options[:id]),
-        :complete => spinner_icon_off(icon, html_options[:id]),
-        :showAfterLoading => true
-      )
+      if !html
+        # skip these ajax options if we are just directly showing some
+        # static content.
+        options.merge!(
+          :loading => spinner_icon_on(icon, html_options[:id]),
+          :complete => spinner_icon_off(icon, html_options[:id]),
+          :showAfterLoading => true
+        )
+      end
       function = modalbox_function(contents, options)
       if label
         link_to_function_with_icon(label, function, html_options)
@@ -73,6 +78,7 @@ module Ui::ModalboxHelper
   end
 
   def modalbox_function(contents, options)
+    contents = escape_javascript(contents)
     "Modalbox.show('%s', %s)" % [contents, options_for_modalbox_function(options)]
   end
 

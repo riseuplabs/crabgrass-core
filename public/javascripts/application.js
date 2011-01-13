@@ -19,6 +19,7 @@ function showAlertMessage(msg) {
   }
 }
 
+// hides all spinners. this is called by default by most rjs templates.
 function hideSpinners() {$$('.spin').invoke('hide');}
 
 function hideAlertMessage(target, fade_seconds) {
@@ -42,6 +43,24 @@ function quickRedReference() {
     "resizable=0,scrollbars=1,status=1,toolbar=0"
   );
   return false;
+}
+
+//
+// AUTOCOMPLETE
+//
+
+function cgAutocompleteEntities(id, url) {
+   var random_id = Math.floor(Math.random() * 1000000000);
+   var options = {serviceUrl:url, minChars:2, maxHeight:400, width:300, onSelect: null, message: '', container: '', preloadedOnTop: true, rowRenderer: autoCompleteRowRenderer, selectValue: autoCompleteSelectValue};
+   new Autocomplete(id, options, random_id);
+}
+
+function autoCompleteRowRenderer(value, re, data) {
+  return "<p class='name_icon xsmall' style='background-image: url(/avatars/" + data + "/xsmall.jpg)'>" + value.replace(/^<em>(.*)<\/em>(<br\/>(.*))?$/gi, function(m, m1, m2, m3){return "<em>" + Autocomplete.highlight(m1,re) + "</em>" + (m3 ? "<br/>" + Autocomplete.highlight(m3, re) : "")}) + "</p>";
+}
+
+function autoCompleteSelectValue(value){
+  return value.replace(/<em>(.*)<\/em>.*/g,'$1');
 }
 
 //
@@ -205,6 +224,7 @@ function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelector
 
 // returns true if the enter key was pressed
 function enterPressed(event) {
+  event = event || window.event;
   if(event.which) { return(event.which == 13); }
   else { return(event.keyCode == 13); }
 }
@@ -481,16 +501,18 @@ document.observe('dom:loaded', function() {
 // allow location.hash change to trigger a callback event.
 //
 
-var onHashChanged = null; // called whenever location.hash changes
-var currentHash = '##';
-function pollHash() {
-  if ( window.location.hash != currentHash ) {
-    currentHash = window.location.hash;
-    onHashChanged();
+var LocationHash = {
+  onChange: null,   // called whenever location.hash changes
+  current: '##',
+  poll: function() {
+    if (window.location.hash != this.current) {
+      this.current = window.location.hash;
+      onChange();
+    }
   }
 }
 document.observe("dom:loaded", function() {
-  if (onHashChanged) {setInterval("pollHash()", 300)}
+  if (LocationHash.onChange) {setInterval("LocationHash.poll()", 300)}
 });
 
 //
@@ -558,6 +580,10 @@ var FilterPath = {
   remove: function(segment) {
     window.location.hash = window.location.hash.gsub(segment,'/');
   }
+  // send in a request to update the page list
+  //update: function() {
+  //
+  //}
 }
 
 
@@ -589,22 +615,23 @@ var RequestQueue = {
 
 // 
 // This allows you to set and remove global styles programatically
+// really cool, but not currently used.
 //
-var Style = {
-  set:function(id, css) {
-    var styleNode = $(id);
-    if (!styleNode) {
-      styleNode = new Element('style', {id:id, type:'text/css'});
-      $$('head')[0].appendChild(styleNode);
-    }
-    if(Prototype.Browser.IE) {
-      styleNode.styleSheet.cssText = css;
-    } else {
-      styleNode.update(css);
-    }
-  },
-  clear:function(id) {
-    this.set(id,'');
-  }
-}
+//var Style = {
+//  set:function(id, css) {
+//    var styleNode = $(id);
+//    if (!styleNode) {
+//      styleNode = new Element('style', {id:id, type:'text/css'});
+//      $$('head')[0].appendChild(styleNode);
+//    }
+//    if(Prototype.Browser.IE) {
+//      styleNode.styleSheet.cssText = css;
+//    } else {
+//      styleNode.update(css);
+//    }
+//  },
+//  clear:function(id) {
+//    this.set(id,'');
+//  }
+//}
 

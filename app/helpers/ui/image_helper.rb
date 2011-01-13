@@ -71,8 +71,13 @@ module Ui::ImageHelper
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
-    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' class='#{options[:class]}' />"
+    if options[:text]
+      "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:middle' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
+    else
+      "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='' class='#{options[:class]}' />"
+    end
   end
+
   def spinner_id(id)
     if id.is_a? ActiveRecord::Base
       id = dom_id(id, 'spinner')

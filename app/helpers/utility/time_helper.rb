@@ -1,41 +1,64 @@
 module Utility::TimeHelper
 
+  protected
+
+  # 
+  # friendly_date()
+  #
   # Our goal here it to automatically display the date in the way that
   # makes the most sense. Elusive, i know. If an array of times is passed in
   # we display the newest one.
+  #
   # Here are the current options:
+  #
   #   4:30PM    -- time was today
   #   Wednesday -- time was within the last week.
-  #   7/Mar     -- time was in the current year.
-  #   7/Mar/08  -- time was in a different year.
+  #   Mar 7     -- time was in the current year (depends on current locale)
+  #   Mar 7 08  -- time was in a different year (depends on current locale)
+  #
   # The date is then wrapped in a label, so that if you hover over the text
   # you will see the full details.
-
+  #
+  # NOTE: unfortunately, I think this method is incredibly slow, adding about 100ms
+  # if called on a table of dates. I don't think this is avoidable: formatting times
+  # just takes a lot of logic.
+  #
 
   WeekdaySymbols = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 
-  def friendly_date(*times)
-    return "" unless times.any?
-
-    time  = times.compact.max
-    today = Time.zone.today
+  def friendly_date(time)
+    @today ||= Time.zone.today
     date  = time.to_date
 
-    if date == today
+    if date == @today
       # 4:30PM
       str = time.strftime("%I:%M<span>%p</span>")
-    elsif today > date and (today-date) < 7
+    elsif @today > date and (@today-date) < 7
       # I18n.t(:wednesday) => Wednesday
       str = I18n.t(WeekdaySymbols[time.wday])
-    elsif date.year != today.year
+    elsif date.year != @today.year
+      str = I18n.l date
       # 7/Mar/08
-      str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
+      #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
     else
+      str = I18n.l date, :format => :short
       # 7/Mar
-      str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
+      #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
     end
-    "<label class='date' title='#{ full_time(time) }'>#{str}</label>"
+    #"<label class='date' title='#{ full_time(time) }'>#{str}</label>"
+    return str
   end
+
+  # localized short date (or time if timestamp is from today).
+ # def short_date(time)
+    #@today ||= Time.zone.today
+    #date = time.to_date
+    #if date == @today
+    #  I18n.l time, :format => :short
+    #else
+    #  I18n.l time.to_date, :format => :short
+    #end
+  #end
 
   def localize_month(month)
     # for example => :month_short_january

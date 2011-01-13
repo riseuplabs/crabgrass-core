@@ -32,8 +32,11 @@
 @import "ui/navigation";
 @import "ui/split_panel";
 @import "ui/gizmos";
+@import "ui/ui_elements";
 
+// page styling
 @import "pages/listing";
+@import "pages/search";
 
 @import "debug";
 

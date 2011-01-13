@@ -6,26 +6,33 @@ module Ui::EntityDisplayHelper
 
   protected
 
+  # linking to users and groups takes a lot of time if we have to fetch the
+  # record to get the display name or avatar. if we already have the login or
+  # group name, this method is much faster (saves about 150ms per request). 
+  def link_to_name(name)
+    "<a href=\"/#{name}\">#{name}</a>"
+  end
+
   ##
   ## GROUPS
   ##
 
   # see function name_and_path_for_group for description of options
   def link_to_group(arg, options={})
-    if arg.is_a? Integer
-      @group_cache ||= {}
-      # hacky fix for error when a page persists after it's group is deleted --af
-      # what is this trying to do? --e
-      if not @group_cache[arg]
-        if Group.exists?(arg)
-          @group_cache[arg] = Group.find(arg)
-        else
-          return ""
-        end
-      end
-      # end hacky fix
-      arg = @group_cache[arg]
-    end
+    #if arg.is_a? Integer
+    #  @group_cache ||= {}
+    #  # hacky fix for error when a page persists after it's group is deleted --af
+    #  # what is this trying to do? --e
+    #  if not @group_cache[arg]
+    #    if Group.exists?(arg)
+    #      @group_cache[arg] = Group.find(arg)
+    #    else
+    #      return ""
+    #    end
+    #  end
+    #  # end hacky fix
+    #  arg = @group_cache[arg]
+    #end
 
     display_name, path = name_and_url_for_group(arg,options)
     style = options[:style] || ""

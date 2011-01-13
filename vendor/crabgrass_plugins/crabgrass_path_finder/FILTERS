@@ -1,3 +1,44 @@
+== new filters
+
+associations
+  /created-by/<user id>
+  /modified-by/<user id>
+  /starred-by/<user id>
+  /watched-by/<user id>
+  /person/<user id>
+  /group/<group id>
+
+permissions
+  /visible-to/["group"|"person"]/<id>
+  /owned-by/["group"|"person"]/<id>
+  /public
+  /published
+
+page properties
+  /type/<type>
+  /tag/<tag>
+  /text/<text>
+
+popularity
+  /most-views-in/<num>/[days,hours]
+  /most-edits-in/<num>/[days,hours]
+  /most-stars-in/<num>/[days,hours]
+
+date
+  /created-within/<num>/[hours|days|months]
+  /modified-within/<num>/[hours|days|months]
+  /created-before/YYYY-MM-DD
+  /created-after/YYYY-MM-DD
+  /modified-before/YYYY-MM-DD
+  /modified-after/YYYY-MM-DD
+
+sort
+  /ascending/<column name>
+  /descending/<column name>
+
+limit
+  /limit/<number>
+
 == available filters
 
 === boolean filters 

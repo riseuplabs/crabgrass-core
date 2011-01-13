@@ -41,3 +41,80 @@ Why all this sillyness?
    logic hidden away.
 
 
+
+------------------------
+
+
+  # path keyword => number of arguments required for the keyword.
+  PATH_KEYWORDS = {
+    # special
+    'all' => 0, # any path merged with 'all' gets cleared.
+
+    # association
+    'created-by' => 1,
+    'modified-by' => 1,
+    'starred-by' => 1,
+    'watched-by' => 1,
+    'person' => 1,
+    'group' => 1,
+
+    # permissions
+    'visible-to' => 2,
+    'owned-by' => 2,
+    'public' => 0,
+    'published' => 0,
+
+    # page properties
+    'type' => 1,
+    'tag' => 1,
+    'name' => 1,
+    'text' => 1,
+
+    # popularity
+    'most_views' => 2,
+    'most_edits' => 2,
+    'most_stars' => 2,
+
+    # date
+    'created-within' => 2,
+    'created-before' => 1,
+    'created-after' => 1,
+    'modified-within' => 2,
+    'modified-before' => 1,
+    'modified-after' => 1,
+    'published-within' => 2,
+    'published-before' => 1,
+    'published-after' => 1,
+
+    # sorting
+    'ascending' => 1,
+    'descending' => 1,
+
+    # limit
+    'limit' => 1,
+
+  }.freeze
+
+  # path keyword => order weight
+  # things with a lower weight show up sooner in the path
+  PATH_ORDER = {
+     # date ones come first, so they can set @date_field
+    'created-within' => 0,
+    'created-before' => 0,
+    'created-after' => 0,
+    'modified-within' => 0,
+    'modified-before' => 0,
+    'modified-after' => 0,
+    'published-within' => 0,
+    'published-before' => 0,
+    'published-after' => 0,
+    'person' => 1,
+    'group' => 1,
+    'public' => 2,
+    'default' => 10,
+    'descending' => 20,
+    'ascending' => 20,
+    'limit' => 50,
+    'text' => 100
+  }.freeze
+

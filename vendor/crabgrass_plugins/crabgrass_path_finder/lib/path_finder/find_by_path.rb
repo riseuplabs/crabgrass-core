@@ -10,7 +10,7 @@ module PathFinder
     # For path see ParsedPath.
     # For options see Options.
     def find_by_path(path, options={})
-      builder(path, options).find
+      query(path, options).find
     end
 
     # For path see ParsedPath.
@@ -20,33 +20,33 @@ module PathFinder
     # and :per_page are used for pagination, and don't refer to the type of pages
     # that we are finding.
     def paginate_by_path(path, options={}, pagination_options={})
-      builder(path, options.merge(pagination_options)).paginate
+      query(path, options.merge(pagination_options)).paginate
     end
 
     # For path see ParsedPath.
     # For options see Options.
     def count_by_path(path, options={})
-      builder(path, options).count
+      query(path, options).count
     end
 
     # For path see ParsedPath.
     # For options see Options.
     def ids_by_path(path, options={})
-      builder(path, options).ids
+      query(path, options).ids
     end
 
     # construct_finder_sql is private, but we would like to be able to use it
     # in the builders.
-    def find_ids(options)
-      self.connection.select_values construct_finder_sql(options)
-    end
+    #def find_ids(options)
+    #  self.connection.select_values construct_finder_sql(options)
+    #end
 
     private
 
-    def builder(path, options)
+    def query(path, options)
       query_method  = options[:method] || :mysql
       query_options = resolve_options(query_method, path, options)
-      PathFinder.get_builder(query_method).new(path, query_options, self)
+      PathFinder.get_query(query_method).new(path, query_options, self)
     end
 
     def resolve_options(query_method, path, options)

@@ -63,15 +63,20 @@ class PageTerms < ActiveRecord::Base
       # timedates
       has :page_created_at
       has :page_updated_at
-      has :views_count
 
       # ids
       has :created_by_id
       has :updated_by_id
+      # has :updated_by_ids, :type => :multi
+      # has :watched_by_ids, :type => :multi
+      # has :owner_id (encoded)
+      
+      # counts
+      has :views_count
+      has :stars_count
 
       # flags and access
       has :resolved
-      has :stars_count
       has :access_ids, :type => :multi # multi: indexes as an array of ints
       has :media, :type => :multi
 

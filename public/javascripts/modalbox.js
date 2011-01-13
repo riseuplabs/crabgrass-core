@@ -239,11 +239,10 @@ Modalbox.Methods = {
 			if(typeof this.content == 'string') {
 				var htmlRegExp = new RegExp(/<\/?[^>]+>/gi);
 				if(htmlRegExp.test(this.content)) { // Plain HTML given as a parameter
-					this._insertContent(this.content.stripScripts(), function(){
-						this.content.extractScripts().map(function(script) {
-							return eval(script.replace("<!--", "").replace("// -->", ""));
-						}.bind(window));
-					}.bind(this));
+					this._insertContent(this.content.stripScripts());
+					this.content.extractScripts().map(function(script) {
+						return eval(script.replace("<!--", "").replace("// -->", ""));
+					}.bind(window));
 				} else // URL given as a parameter. We'll request it via Ajax
 					new Ajax.Request( this.content, {
 						method: this.options.method.toLowerCase(),
@@ -280,7 +279,7 @@ Modalbox.Methods = {
 	},
 
 	// replaces current content html with new html. ultimately, all updating of the content goes through this function.
-	_insertContent: function(content, callback) {
+	_insertContent: function(content) {
 		// Plain HTML is given
 		if(typeof content == 'string') {
 			this.MBcontent.update(new Element("div", { style: "display: none" }).update(content)).down().show();

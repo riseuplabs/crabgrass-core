@@ -4,11 +4,42 @@
 .page_list.table {
   table {
     width: 100%;
+    border-collapse: collapse;
   }
   td, th {
     padding: 8px;
+    border: 1px solid #ddd;
+    border-width: 1px 0;
   }
   th {
     font-weight: bold;
+    background-color: #f9f9f9;
+  }
+}
+
+.page_list.rows {
+  .page_row {
+    clear: both;
+    padding: 0.8em 0;
+    border-top: 1px dotted #ccc;
+  }
+  .page_title {
+    display: block;
+    padding-bottom: 0.5em;
+    font-weight: bold;
+  }
+  .page_owner {
+    display: block;
+    float: left;
+    padding-bottom: 0.5em;
+  }
+  .page_summary {
+    font-size: 90%;
+  }
+  .page_info {
+    float: right;
+    text-align: right;
+    display: inline-block;
+    font-size: 90%;
   }
 }

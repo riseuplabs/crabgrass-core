@@ -7,24 +7,29 @@ config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = true
 config.action_view.cache_template_loading            = true
 
-# Use a different logger for distributed setups
-# config.logger = SyslogLogger.new
-
 ##
 ## LOGGING
+## use syslog if available, trying gems 'logging' and 'SyslogLogger'
 ##
 
-config.log_level = :warn
+config.log_level = :debug
 
+# try gem 'logging'
 begin
-  # use syslog if available
-  config.gem 'log4r', :version => '>=1.1.0'
-  require 'log4r/outputter/syslogoutputter'
-  config.logger = Log4r::Logger.new('main')
-  config.logger.outputters = Log4r::SyslogOutputter.new('crabgrass')
-  config.logger.info "initializing production server"
+  require 'logging'
+  config.logger = Logging::Logger['main'].tap do |l|
+    l.add_appenders( Logging::Appenders::Syslog.new('crabgrass') )
+    l.level = config.log_level
+  end
 rescue LoadError => exc
-  # i guess there is no log4r
+  # try gem 'SyslogLogger'
+  # i am not sure how to turn down the verbosity with syslog. 
+  # even with config.log_level = :warn, it does debug logging.
+  begin
+    require 'syslog_logger' 
+    config.logger = SyslogLogger.new('crabgrass')
+  rescue LoadError => exc
+  end
 end
 
 ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"

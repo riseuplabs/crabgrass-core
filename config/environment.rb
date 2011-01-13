@@ -5,6 +5,7 @@ info "LOAD FRAMEWORK"
 # Use any Rails in the 2.3.x series, greater than or equal to 2.3.10
 RAILS_GEM_VERSION = '~> 2.3.10'  
 require File.join(File.dirname(__FILE__), 'boot')
+require "#{RAILS_ROOT}/config/directories.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 
 Crabgrass::Initializer.run do |config|
@@ -26,15 +27,15 @@ Crabgrass::Initializer.run do |config|
   config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
 
   # store fragments on disk, we might have a lot of them.
-  config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
+  config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 
   # Make Active Record use UTC-base instead of local time
   config.time_zone = 'UTC'
   config.active_record.default_timezone = :utc
 
   # allow plugins in more places
-  ['vendor/crabgrass_plugins', 'extensions/mods', 'extensions/pages'].each do |path|
-    config.plugin_paths << "#{RAILS_ROOT}/#{path}"
+  [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY].each do |path|
+    config.plugin_paths << path
   end
 
   # Deliveries are disabled by default. Do NOT modify this section.

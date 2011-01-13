@@ -1,4 +1,4 @@
 task :create_a_secret do
-  path = File.join(RAILS_ROOT, "config/crabgrass/secret.txt")
-  `rake -s secret > #{path}`
+  require File.dirname(__FILE__) + '/../../config/directories.rb'
+  `rake -s secret > #{CRABGRASS_SECRET_FILE}`
 end

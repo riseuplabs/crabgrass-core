@@ -1,5 +1,10 @@
 added in crabgrass-core, not translated:
 
+  date_this_year: "This Year"
+
+  updated_by: "Updated by"
+  person: "Person"
+
   recipient: "Recipient"
   messages_with: "Conversation with %{other_user}"
   no_things_found: "No %{things} found."
@@ -29,4 +34,11 @@ added in crabgrass-core, not translated:
   request_to_join_your_network_short: "%{group} joins %{network}?"
   request_to_destroy_our_group_short: "Destroy %{group}?"
   request_to_remove_user_short: "Expell %{member}?"
+
+  # search filters
+  created_by_user: "Created by %{user}"
+  created_by_dotdotdot: "Created by..."
+  search_most_edits: "Most Edits"
+  search_most_views: "Most Views"
+  search_most_stars: "Most Stars"
 

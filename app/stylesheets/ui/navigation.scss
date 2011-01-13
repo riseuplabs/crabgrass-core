@@ -7,14 +7,14 @@
 // toggle bug: a set of links, one of which is active.
 //
 
-$toggle_bug_border: 1px solid #555;
-$toggle_bug_radius: 10px;
+$toggle_bug_border: 1px solid #888;
+$toggle_bug_radius: 14px;
 $toggle_bug_font_size: 0.9em;
 $toggle_bug_active_background_color: #555;
 $toggle_bug_active_color: #fff;
 $toggle_bug_background_color: #efefef;
 $toggle_bug_color: #333;
-$toggle_bug_padding: 4px;
+$toggle_bug_padding: 6px;
 
 .toggle_bugs {
   margin-bottom: 1em;
@@ -23,17 +23,18 @@ $toggle_bug_padding: 4px;
 ul.toggle_bug {
   display: inline-block;
   white-space: nowrap;
-  // the margin should be set equal to the padding because the padding
-  // makes the ul expand beyond its normal size. an equal margin makes
+  // the margin should be set equal to half the padding because the padding
+  // makes the ul expand beyond its normal size. this margin makes
   // the ul take up the amount of space in the flow that is appears to.
-  margin: $toggle_bug_padding 0.5em $toggle_bug_padding 0;
+  // the padding should be even.
+  margin: $toggle_bug_padding/2+2 0;
   li {
     display: inline;
-    padding: 0px $toggle_bug_padding;
+    padding: $toggle_bug_padding/2 $toggle_bug_padding;
     border-top: $toggle_bug_border;
     border-bottom: $toggle_bug_border;
     background-color: $toggle_bug_background_color;
-    @include linear-gradient(color-stops(#fff, #eee, #ccc));
+    @include linear-gradient(color-stops(#fff, #eee, #ddd));
     &.first {
       @include border-left-radius($toggle_bug_radius);
       border-left: $toggle_bug_border;
@@ -46,7 +47,7 @@ ul.toggle_bug {
     }
     &.active {
       background-color: $toggle_bug_active_background_color;
-      @include linear-gradient(color-stops(#444, #666, #888));
+      @include linear-gradient(color-stops(#666, #888, #999));
       a {
         color: $toggle_bug_active_color;
       }

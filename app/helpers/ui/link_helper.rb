@@ -146,11 +146,20 @@ label}</a></span>)
   #    ... html ..
   #  end
   #
+  # options:
+  # * :icon -- replace the default icon
+  # * :open -- if true, the toggle area will start opened instead of closed.
+  #
   def link_to_toggle(label, *args, &block)
     if block_given?
       options = args.first || {}
-      #html_options = args[2] # unsupported
-      options[:icon] ||= 'right'
+      if options[:open]
+        options[:icon] ||= 'sort_down'
+        style = ''
+      else
+        options[:icon] ||= 'right'
+        style = 'display:none'
+      end
       id = label.nameize + '-toggle-area'
       if options[:onvisible]
         function = "fn = function(){%s}; " % options[:onvisible]
@@ -159,11 +168,15 @@ label}</a></span>)
       end
       function += "linkToggle(eventTarget(event), '#{id}', fn)"
       concat( link_to_function_with_icon(label, function, options) )
-      concat( content_tag(:div, capture(&block), :id => id, :style => 'display:none') )
+      concat( content_tag(:div, capture(&block), :id => id, :style => style) )
     else
       id = args.first
       options = args[1] || {}
-      options[:icon] ||= 'right'
+      if options[:open]
+        options[:icon] ||= 'sort_down'
+      else
+        options[:icon] ||= 'right'
+      end
       function = "linkToggle(eventTarget(event), '#{id}')"
       link_to_function_with_icon label, function, options
     end

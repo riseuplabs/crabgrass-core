@@ -1,125 +1,43 @@
 #=PathFinder::ParsedPath
-#A simple class for parsing and generating 'readable url query paths'
+# A simple class for parsing and generating 'readable url query paths'
 #
-#Given a path string like so:
+# Given a path string like so:
 #
 #   /unread/tag/urgent/person/23/starred
 #
-#The corresponding ParsedPath would be an array that looks like this:
+# The corresponding ParsedPath would be an array that looks like this:
 #
 #  [ ['unread'], ['tag','urgent'], ['person',23], ['starred'] ]
 #
-#To create a ParsedPath, we identify the key words and their arguments, and split
-#up that path into an array where each element is a different keyword (with its
-#included arguments).
+# To create a ParsedPath, we identify the key words and their arguments, and split
+# up that path into an array where each element is a different keyword (with its
+# included arguments).
 #
+# This class has grown over time. It would have been much cleaner to implement
+# as a hash.
+# 
 #:include:FILTERS
-class PathFinder::ParsedPath < Array
+module PathFinder
+class ParsedPath < Array
 
-  # path keyword => number of arguments required for the keyword.
-  PATH_KEYWORDS = {
-    # special
-    'all' => 0, # any path merged with 'all' gets cleared.
+  ##
+  ## CLASS METHODS
+  ##
 
-    # boolean
-    'or' => 0,
-
-    # conditions
-    'unread' => 0,
-    'pending' => 0,
-    'interesting' => 0,
-    'attending' => 0,
-    'watching' => 0,
-    'inbox' => 0,
-    'starred' => 0,
-    'contributed' => 0,
-    'stars' => 1,
-    'type' => 1,
-    'tag' => 1,
-    'name' => 1,
-    'changed' => 0,
-    'text' => 1,
-    'most_views' => 2,
-    'most_edits' => 2,
-    'most_stars' => 2,
-
-
-    # associations
-    'person' => 1,
-    'group' => 1,
-    'created_by' => 1,
-    'not_created_by' => 1,
-    'contributed_by' => 1,
-    'contributed_group' => 1,
-    'featured_by' => 1,
-    'admin' => 1,
-
-    # date
-    'date' => 1,
-    'ago' => 2,
-    'upcoming' => 0,
-#    'created_after' => 1,
-#    'created_before' => 1,
-#    'before' => 1,
-#    'after' => 1,
-
-    # date field
-    'starts' => 0,
-    'updated' => 0,
-    'created' => 0,
-
-    # limit
-    'limit' => 1,
-
-    # sorting
-    'ascending' => 1,
-    'descending' => 1,
-#    'recent' => 1,
-#    'old' => 1,
-
-    # pseudo keywords (used to make forms easier)
-    # ie {:page_state => 'unread'}
-    'page_state' => 1,
-
-    # views - we have a number of special views on ones pages
-    # we have to hand over the user_id via one field.
-    'work' => 1,
-    'unread' => 1,
-    'read' => 1,
-    'owner' => 1,
-    'editor' => 1,
-    'watched' => 1,
-    'notified' => 1,
-
-    # moderation
-    'public' => 0,
-    'public_requested' => 0,
-    'moderation' => 1
-  }.freeze
-
-  # path keyword => order weight
-  # things with a lower weight show up sooner in the path
-  PATH_ORDER = {
-    'started' => 0, # \
-    'created' => 0, #  > this come first, because they set @date_field
-    'updated' => 0, # /
-    'month' => 1,
-    'year' => 2,
-    'person' => 5,
-    'group' => 5,
-    'public' => 7,
-    'public_requested' => 7,
-    'moderation' => 8,
-    'default' => 10,
-    'descending' => 20,
-    'ascending' => 20,
-    'limit' => 21,
-    'text' => 100
-  }.freeze
-
-  def unparsable
-    @unparsable ||= []
+  def self.parse(path)
+    if path.is_a?(ParsedPath)
+      path
+    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+      # i am not sure where this is used
+      ParsedPath.new(path[0])
+    else
+      ParsedPath.new(path)
+    end
   end
+
+  ##
+  ## CONSTRUCTOR
+  ##
 
   # constructs a ParsedPath from a path string, array, or hash
   #
@@ -132,42 +50,13 @@ class PathFinder::ParsedPath < Array
   #
   def initialize(path=nil)
     return unless path
-    last = nil
+    @unparsable = []
+    @last = nil
     if path.is_a? String or path.is_a? Array
       path = path.split('/') if path.instance_of? String
-      last = path.last
-      path = path.reverse
-      while keyword = path.pop
-        if PATH_KEYWORDS[keyword]
-          element = [keyword]
-          args = PATH_KEYWORDS[keyword]
-          args.times do |i|
-            element << path.pop if path.any?
-          end
-          self << element
-        else
-          self.unparsable << keyword
-        end
-      end
+      new_from_array(path)
     elsif path.is_a? Hash
-      path = path.sort{|a,b| (PATH_ORDER[a[0]]||PATH_ORDER['default']) <=> (PATH_ORDER[b[0]]||PATH_ORDER['default']) }
-      path.each do |pair|
-        key, value = pair
-        key = key.to_s
-        if PATH_KEYWORDS[key]
-          if key == 'page_state' and value.any? # handle special pseudo keyword...
-            self << [value.to_s]
-          elsif PATH_KEYWORDS[key] == 0
-            self << [key] if value == 'true'
-          elsif PATH_KEYWORDS[key] == 1 and !value.nil? and !value.to_s.empty?
-            self << [key, value.to_s]
-          elsif PATH_KEYWORDS[key] == 2 and value.size = 2
-            self << [key, value[0].to_s, value[1].to_s]
-          end
-        else
-          self.unparsable << key
-        end
-      end
+      new_from_hash(path)
     end
     # special post processing for some keywords
     self.each do |element|
@@ -175,11 +64,15 @@ class PathFinder::ParsedPath < Array
         element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
       end
     end
-    if last == 'rss' and unparsable.include?('rss')
+    if @last == 'rss' and @unparsable.include?('rss')
       @format = last.to_s
     end
     return self
   end
+
+  ##
+  ## CONVERSION
+  ##
 
   #
   # converts a parsed path to a string, suitable for a url.
@@ -190,19 +83,28 @@ class PathFinder::ParsedPath < Array
   alias_method :to_s, :to_path     # manual string conversion
   alias_method :to_str, :to_path   # automatic string conversion
 
-  HASH_PATH_SEGMENT_DIVIDER = '.'
-  ENCODED_DIVIDER = '%' + HASH_PATH_SEGMENT_DIVIDER[0].to_s(16)
-
-  # path used for the window.location.hash
-  # [['public'],['created_by','blue']] --> /public/created_by.blue/
-  def to_hash_path
-    "/" + collect{|segment| 
-      segment.collect{|part|
-        CGI.escape(part).
-        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
-      }.join(HASH_PATH_SEGMENT_DIVIDER)
-    }.join("/") + "/"
+  # skip the cgi escaping
+  def to_raw_path
+    '/' + self.flatten.join('/') + (@format || '')
   end
+
+  #  HASH_PATH_SEGMENT_DIVIDER = '.'
+  #  ENCODED_DIVIDER = '%' + HASH_PATH_SEGMENT_DIVIDER[0].to_s(16)
+  #  # path used for the window.location.hash
+  #  # [['public'],['created_by','blue']] --> /public/created_by.blue/
+  #  def to_hash_path
+  #    path = collect{|segment| 
+  #      segment.collect{|part|
+  #        CGI.escape(part).
+  #        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
+  #      }.join(HASH_PATH_SEGMENT_DIVIDER)
+  #    }.join("/")
+  #    unless path.empty?
+  #      return "/#{path}/"
+  #    else
+  #      return ""
+  #    end
+  #  end
 
   def to_param
     self.flatten + (@format ? [@format] : [])
@@ -218,11 +120,29 @@ class PathFinder::ParsedPath < Array
     self.collect{|segment| segment.join(' ')}.join(' > ')
   end
 
+  ##
+  ## PUBLIC ACCESS METHODS
+  ##
+
+  # returns an array of SearchFilter objects that correspond to the path, loaded
+  # with the arguments contained in this ParsedPath.
+  def filters
+    @filters ||= self.collect do |segment|
+      keyword = segment[0]
+      args = segment[1..-1]
+      search_filter = SearchFilter[keyword]
+      [search_filter, args]
+    end
+  end
+
   # return true if keyword is in the path
   def keyword?(word)
-    detect do |e|
-      e[0] == word
-    end
+    detect{|e| e[0] == word}
+  end
+
+  # returns a parsed path for one segment in the path
+  def segment(word)
+    ParsedPath.new(detect{|e| e[0] == word})
   end
 
   # returns the first argument of the pathkeyword
@@ -241,10 +161,21 @@ class PathFinder::ParsedPath < Array
     (arg_for(word)||0).to_i
   end
 
-  # returns the arguments for the keyword
-  def args_for(word)
-    keyword?(word)
+  # returns all the arguments for the keyword, as an array
+  def args_for(keyword)
+    segment = detect{|e| e[0] == keyword}
+    if segment and segment.length > 1
+      segment[1..-1]
+    else
+      []
+    end
   end
+
+  # assuming this parsed path contains just one keyword, this returns the
+  # args for it.
+  #def args()
+  #  args_for(first[0])
+  #end
 
   # returns the search text, if any
   # ie returns "glorious revolution" if path == "/text/glorious+revolution"
@@ -288,9 +219,9 @@ class PathFinder::ParsedPath < Array
   # merge two parsed paths together.
   # for duplicate keywords use the ones in the path_b arg
   def merge(path_b)
-    path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    path_b = ParsedPath.parse(path_b)
     if path_b.first == ['all']
-      return PathFinder::ParsedPath.new([])
+      return ParsedPath.new([])
     end
     path_a = self.dup
     path_a.remove_sort if path_b.sort_arg?
@@ -299,9 +230,9 @@ class PathFinder::ParsedPath < Array
 
   # same as merge, but replaces self.
   def merge!(path_b)
-    path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    path_b = ParsedPath.parse(path_b)
     if path_b.first == ['all']
-      return self.replace(PathFinder::ParsedPath.new([]))
+      return self.replace(ParsedPath.new([]))
     end
     self.remove_sort if path_b.sort_arg?
     self.concat(path_b).uniq!
@@ -310,13 +241,16 @@ class PathFinder::ParsedPath < Array
 
   # removes the path elements in path_b from self, returns a copy
   def remove(path_b)
-    path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    path_b = ParsedPath.parse(path_b)
     if path_b.first == ['all']
-      return PathFinder::ParsedPath.new([])
+      return ParsedPath.new([])
     end
-    path_a = self.dup
-    path_a.remove_sort if path_b.sort_arg?
-    return path_a - path_b
+    keywords = path_b.keywords
+    self.select do |segment|
+      unless keywords.include?(segment[0])
+        segment
+      end
+    end
   end
 
   # removes the path elements in path_b from self
@@ -326,13 +260,44 @@ class PathFinder::ParsedPath < Array
 
   # replace one keyword with another.
   def replace_keyword(keyword, newkeyword, arg1=nil, arg2=nil)
-    PathFinder::ParsedPath.new.replace(collect{|elem|
+    ParsedPath.new.replace(collect{|elem|
       if elem[0] == keyword
         [newkeyword,arg1,arg2].compact
       else
         elem
       end
     })
+  end
+
+  #
+  # uniq()
+  # ensures there are no search filters duplicates for search filters
+  # defined as singletons. later segments take priority over earlier segments.
+  # the path returned is reordered based on the search filter path_order settings.
+  #
+  def uniq()
+    seen = {}
+    new_path = ParsedPath.new([])
+    reverse.each do |segment|
+      keyword = segment.first
+      if SearchFilter[keyword].singleton?
+        unless seen[keyword]
+          new_path << segment
+          seen[keyword] = true
+        end
+      else
+        new_path << segment
+      end
+    end
+    new_path.sort_by_order
+  end
+
+  def uniq!()
+    self.replace(self.uniq)
+  end
+
+  def sort_by_order
+    self.sort {|a,b| path_order(a[0]) <=> path_order(b[0])}
   end
 
   # sets the value of the keyword in the parsed path,
@@ -359,5 +324,63 @@ class PathFinder::ParsedPath < Array
   def format=(value)
     @format = value.to_s
   end
-end
 
+  ##
+  ## PRIVATE METHODS
+  ##
+
+  protected
+
+  # returns an array of just the keywords
+  def keywords
+    self.collect {|segment| segment[0] }
+  end
+
+  private
+
+  def path_order(keyword)
+   SearchFilter[keyword].try(:path_order) || 10000
+  end
+
+  def new_from_array(path)
+    @last = path.last
+    pathqueue = path.reverse
+    while keyword = pathqueue.pop
+      search_filter = SearchFilter[keyword]
+      if search_filter
+        element = [keyword]
+        search_filter.path_argument_count.times do |i|
+          element << pathqueue.pop if pathqueue.any?
+        end
+        self << element
+      else
+        @unparsable << keyword
+      end
+    end
+  end
+
+  def new_from_hash(path)
+    path = path.sort_by_order
+    path.each do |key,value|
+      next unless value.any?
+      keyword = key.to_s
+      search_filter = SearchFilter[keyword]
+      if search_filter
+        #if keyword == 'page_state' and value.any? # handle special pseudo keyword...
+        #  self << [value.to_s]
+        arg_count =  search_filter.path_argument_count
+        if arg_count == 0
+          self << [keyword]
+        elsif arg_count == 1
+          self << [keyword, value.to_s]
+        elsif arg_count == 2
+          self << [keyword, value[0].to_s, value[1].to_s]
+        end
+      else
+        @unparsable << keyword
+      end
+    end
+  end
+
+end
+end

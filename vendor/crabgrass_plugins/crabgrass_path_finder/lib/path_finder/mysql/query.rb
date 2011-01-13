@@ -1,13 +1,15 @@
-# = PathFinder::Mysql::Builder
+# = PathFinder::Mysql:Query
 #
-# Concrete subclass of PathFinder::Builder
+# Concrete subclass of PathFinder::Query
 #
 # == Usage:
+#
 # This class generates the SQL and makes the call to find_by_sql.
 # It is called from find_by_path in PathFinder::FindByPath. Look there
 # for an example how to use it.
 #
 # == Resolving Permissions
+#
 # It uses a fulltext index on page_terms in order to resolve permissions for pages.
 # This bypasses potentially really hairy four-way joins on user_participations
 # and group_participations tables.
@@ -55,14 +57,16 @@
 # entirely on what is in the filter path.
 #
 
-class PathFinder::Mysql::Builder < PathFinder::Builder
-
-  include PathFinder::Mysql::BuilderFilters
+class PathFinder::Mysql::Query < PathFinder::Query
 
   public
 
-  # initializes all the arrays for conditions, aliases, clauses and so on
+  ##
+  ## OVERRIDES
+  ##
+
   def initialize(path, options, klass)
+    super
 
     ## page_terms access clauses
     ## (within each clause, the values are OR'ed, but the clauses are AND'ed
@@ -112,9 +116,19 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @klass = klass
     @selects <<  @klass.table_name + ".*"
 
-    # parse the path and apply each filter
-    apply_filters_from_path( path )
+    apply_filters_from_path(path)
   end
+
+  def apply_filter(filter, args)
+    query_filter = filter.query_block || filter.mysql_block
+    if query_filter
+      query_filter.call(self, *args)
+    end
+  end
+
+  ##
+  ## FINDERS
+  ##
 
   def find
     options = options_for_find
@@ -137,7 +151,76 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @klass.find_ids options_for_find.merge(:select => 'pages.id')
   end
 
+  ##
+  ## utility methods called by SearchFilter classes
+  ##
+
+  def add_sql_condition(condition, value)
+    @conditions << condition
+    @values << value
+  end
+
+  # and a condition based on an attribute of the page
+  def add_attribute_constraint(attribute, value)
+    add_sql_condition("pages.#{attribute} = ?", value)
+  end
+
+  # add a condition based on the fulltext access field
+  def add_access_constraint(access_hash)
+    @access_filter_clause << "+(#{Page.access_ids_for(access_hash).join(' ')})"
+  end
+
+  def add_order(order_sql)
+    if @order # if set to nil, this means we must skip sorting
+      if order_sql =~ /\./
+        @order << order_sql
+      else
+        @order << "#{@klass.table_name}.#{order_sql}"
+      end
+    end
+  end
+
+  def cleanup_sort_column(column)
+    case column
+      when 'views' then 'views_count'
+      when 'stars' then 'stars_count'
+      # MISSING: when 'edits' then 'edits_count'
+      when 'contributors' then 'contributors_count'
+      when 'posts' then 'posts_count'
+      else column
+    end
+    return column.gsub(/[^[:alnum:]]+/, '_')
+  end
+
+  def add_most_condition(what, num, unit)
+    unit=unit.downcase.pluralize
+    name= what=="edits" ? "contributors" : what
+    num.gsub!(/[^\d]+/, ' ')
+    if unit=="months"
+      unit = "days"
+      num = num.to_i * 31
+    elsif unit=="years"
+      unit = "days"
+      num = num.to_i * 365
+    end
+    if unit=="days"
+      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      @order << "SUM(dailies.#{what}) DESC"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
+    elsif unit=="hours"
+      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      @order << "SUM(hourlies.#{what}) DESC"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
+    else
+      return
+    end
+  end
+
   private
+
+  ##
+  ## private guts for building the actual query
+  ##
 
   def options_for_find
     fulltext_filter = [@access_me_clause, @access_target_clause,
@@ -218,9 +301,18 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   end
 
   def sql_for_order
-    return nil if @order.nil?
-    filter_descending('updated_at') unless @order.any?
-    @order.reject(&:blank?).join(', ')
+    if @order.nil?
+      return nil
+    else
+      if @order.empty? and SearchFilter['decending']
+        apply_filter(SearchFilter['decending'], 'updated-at')
+      end
+      if @order.empty?
+        return nil
+      else
+        return @order.reject(&:blank?).join(', ')
+      end
+    end
   end
 
   def add_flow(flow)

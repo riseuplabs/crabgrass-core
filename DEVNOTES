@@ -1,7 +1,26 @@
 crabgrass-core is a basic, paired down crabgrass.
 
+schema changes
+============================
 
+remove pages.message_count
+add pages.edits_count
+add page_terms.updated_by_ids
+add page_terms.watched_by_ids
+add page_terms.owner_id
 
+it is really random what columns are indexed by page_terms and pages:
+
+ pages:
+   type, flow, created_at, updated_at, owner_name, name.
+
+ page_terms:
+   title, created_by_login, updated_by_login, owner_name, page_created_at,
+   page_updated_at, created_by_id, updated_by_id, views_count, stars_count.
+
+this should be cleaned up. i think a lot of these are unused, yet others may be needed. why do we have
+created_by_login as a sortable index, but not contributors_count? do we really use the owner_name
+indexes?
 
 mailing list integration
 =============================
@@ -63,5 +82,12 @@ calendars
 ======================================
 
 http://tenderapp.com/tour/
+
+
+documentation
+=================================
+
+http://yardoc.org/
+
 
 

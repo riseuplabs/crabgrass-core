@@ -2,8 +2,9 @@
 - ## displays a list of pages in a table (ie, using rows and columns). 
 - ##
 -
--  columns = local_assigns[:collums] ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
--  colspan = columns.size
+-  style = :updated
+-  # local_assigns[:columns] ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
+-  colspan = 5
 -  heading = true if heading.nil?
 -  sortable = false
 
@@ -14,8 +15,9 @@
         = I18n.t(:no_search_results)
   - else
     - if heading
-      = page_table_header_row(columns, :sortable => sortable)
+      = page_table_header_row(style)
     - pages.each do |page|
-      = page_table_row(page, columns)
+      = page_table_row(page, style)
+      =# "<tr><td></td><td>#{page.title}</td><td>#{page.updated_by_login}</td><td>#{page.updated_at}</td></tr>"
 
 

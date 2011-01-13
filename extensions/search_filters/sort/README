@@ -1,0 +1,12 @@
+#
+# few columns have indexes on them, either for mysql or sphinx, so
+# sorting should be used with caution.
+#
+# mysql indexes:
+#   type, flow, created_at, updated_at, name.
+#
+# sphinx indexes:
+#   title, created_by_login, updated_by_login, owner_name, page_created_at,
+#   page_updated_at, created_by_id, updated_by_id, views_count, stars_count.
+#
+
