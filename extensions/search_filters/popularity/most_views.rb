@@ -13,11 +13,10 @@ SearchFilter.new('/most-views-in/:time/:unit/') do
 
   self.singleton = true
   self.section = :popular_pages
-  self.label = :most_viewed
+  self.exclude = :popular_pages
 
   self.description = "pages that have been viewed the most"
-  html do
-    @filter_submit_button = false
+  html(:submit_button => false) do
     content_tag(:p) do
       [ filter_submit_button(:date_today.t, {:time => 24, :unit=>'hours'}),
         filter_submit_button(:date_this_week.t, {:time => 7, :unit=>'days'}),
@@ -25,6 +24,14 @@ SearchFilter.new('/most-views-in/:time/:unit/') do
         filter_submit_button(:date_this_year.t, {:time => 1, :unit=>'years'})
       ].join(' ')
     end 
+  end
+
+  label do |time,unit|
+    if time
+      :most_viewed.t
+    else
+      :most_viewed.t + '...'
+    end
   end
 
 end

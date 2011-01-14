@@ -8,7 +8,7 @@ SearchFilter.new('/created-by-me/') do
   # ui
   #
  
-  self.exclude = 'created-by'
+  self.exclude = :created
   self.singleton = true
   self.section = :my_pages
   self.label   = :created_by_me

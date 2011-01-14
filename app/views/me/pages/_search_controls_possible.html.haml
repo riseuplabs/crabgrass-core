@@ -1,8 +1,8 @@
 %ul#search_controls_possible.page_search_controls
-  - if @path.any?
+  - unless show_all?
     = filter_checkbox_li_tag :add, filter_all
   - for section in search_filter_sections
-    - filters = possible_filters_for_section(section)
+    - filters = possible_filters_for_section(section).select{|filter| !filter_excluded?(filter)}
     - id = "#{section}_section"
     - if filters.any?
       %li

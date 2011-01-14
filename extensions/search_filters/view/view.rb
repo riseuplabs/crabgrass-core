@@ -10,7 +10,6 @@ SearchFilter.new('/view/:mode/') do
   #
 
   self.path_order = 1000
-  self.section = :view
 
 end
 

@@ -4,10 +4,13 @@
 -# requires variables:
 -# * filter
 -# * url
-
--# search filters can set these member variables to control how the popup is displayed:
-- @filter_submit_button = true
-
+-#
+-# search filters can set these html options to control how the popup is displayed:
+-#
+-# :submit_button -- if true, include an extra submit button in the popup.
+-#                   otherwise we still include the button, but hidden
+-#                   (because of how form_tag and :with work, we use this button for all submits).
+-#
 -#
 -# notes:
 -#
@@ -16,24 +19,27 @@
 -# when we specify :with, it overrides the default parameters used by submit_to_remote.
 -# therefore, we must manually specify Form.serialize.
 -# 
--# @filter_submit_options is a member variable because the search filter may be
--# responsible for generating the submit button for this popup. If that is the case,
--# it needs some access to the submit options to use. awkward, but it works. 
+-# When calculating the path, params submitted in this form are used to substitute
+-# into the path. For example, 
+-#
+-#   if params['user_id']  --> 'green', then
+-#   /created-by/:user_id/ --> /created-by/green/
 -#
 
 - with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
 - @filter_submit_options = {:url => url, :with => with, :loading => show_spinner('search_filter'), :complete => close_modal_function}
 
-- form_tag(:url => url) do
+- form_tag(url, :id => 'page_search_form') do
   - if filter.description.any?
     .tip.info_16
       = filter.description.t
   = self.instance_eval(&filter.html_block)
   .buttons
-    - if @filter_submit_button
+    - if filter.options[:submit_button]
       = spinner('search_filter')
       = close_modal_button
       = submit_to_remote 'submit', :search.t, @filter_submit_options
     - else
       = spinner('search_filter', :text => 'loading...')
+      = submit_to_remote 'submit', '', @filter_submit_options.merge({:html=>{:style => 'display:none'}})
 

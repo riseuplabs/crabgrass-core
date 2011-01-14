@@ -1058,30 +1058,39 @@ en:
   ##
 
   # search filter sections
+  my_pages: "My Pages"
+  properties: "Properties"
   popular_pages: "Popular Pages"
+  advanced: "Advanced"
+  access: "Access"
 
   # search filters
   all_pages: "All Pages"
 
-  created_by_me: "Created By Me"
+  created_by_me: "Created"
   created_by_user: "Created By %{user}"
   created_by_user_description: "Search for pages created by a particular person."
   created_by_dotdotdot: "Created By..."
 
-  starred_by_me: "Starred By Me"
+  starred_by_me: "Starred"
   starred_by_user: "Starred By %{user}"
   starred_by_user_description: "Search for pages starred by a particular person."
   starred_by_dotdotdot: "Starred By..."
 
-  watched_by_me: "Watched By Me"
+  watched_by_me: "Watched"
   watched_by_user: "Watched By %{user}"
   watched_by_user_description: "Search for pages watched by a particular person."
   watched_by_dotdotdot: "Watched By..."
 
-  edited_by_me: "Edited By Me"
+  edited_by_me: "Edited"
   edited_by_user: "Edited By %{user}"
   edited_by_user_description: "Search for pages edited by a particular person."
   edited_by_dotdotdot: "Edited By..."
+
+  owned_by_me: "Own"
+  owned_by_user: "Owned By %{user}"
+  owned_by_user_description: "Search for pages owned by a particular person."
+  owned_by_dotdotdot: "Owned By..."
 
   most_active: "Most Active"
   most_stars: "Most Stars"
@@ -1095,6 +1104,8 @@ en:
 
   watched: "Watched"
   unwatched: "Unwatched"
+
+  type: "Type"
 
   all_page_types: "all page types"
   edit_title: "edit title"
@@ -1720,6 +1731,8 @@ en:
   ## TAGS
   ##
 
+  tag: "Tag"
+  tags: "Tags"
   edit_tags: "Edit Tags"
   no_tags: "no tags"
   add_one_or_more_tags: "Add one or more tags, separated by commas"

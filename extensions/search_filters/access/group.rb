@@ -16,7 +16,7 @@ SearchFilter.new('/group/:group_id/') do
     if id
       "#{:group.t}: #{group_name(id)}"
     else
-      :group.t
+      :group.t + '...'
     end
   end
 

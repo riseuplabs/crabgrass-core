@@ -19,30 +19,21 @@
 -# instead of :add. ie params[:add] -> '/text/:text/'.
 -# The :text is replaced with params[:text] by the path parser.
 -#
+
 -#
 -# options for text filter form
+-#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
 - with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize(this.form)"
 - text_filter_submit_options = {:url => url, :with => with, :loading => show_spinner('text_filter'), :html => {:id => 'search_submit'}}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').click(); return false;}"
--#
--# options for view toggle
-- with = "FilterPath.encode()"
-- view_toggle_options = {:url => url, :with => with, :loading => show_spinner('view_toggle')}
-- current_view = @path.arg_for('view') || 'compact'
-- options = view_toggle_options.merge(:url => url+'?add=/view/compact/')
-- compact_link = {:label => 'compact', :remote => options, :active => current_view == 'compact', :id => 'toggle_view_compact'}
-- options = view_toggle_options.merge(:url => url+'?add=/view/detailed/')
-- detailed_link = {:label => 'detailed', :remote => options, :active => current_view == 'detailed', :id => 'toggle_view_detailed'}
-- options = view_toggle_options.merge(:url => url+'?add=/view/grid/')
-- grid_link = {:label => 'grid', :remote => options, :active => current_view == 'grid', :id => 'toggle_view_grid'}
 
 - form_tag do
   %table.search_controls_top
     %tr
       %td.view
         %span.toggle_bugs
-          = toggle_bug_links(compact_link, detailed_link, grid_link)
+          = search_view_toggle_links(url)
         = spinner('view_toggle')
       %td.text_field
         = spinner('text_filter')
