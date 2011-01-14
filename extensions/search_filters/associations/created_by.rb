@@ -12,6 +12,7 @@ SearchFilter.new('/created-by/:user_id/') do
   self.exclude = 'created-by-me'
   self.singleton = true
   self.section = :advanced
+  self.exclude = :created
 
   label do |id|
     if id

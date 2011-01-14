@@ -56,6 +56,38 @@ module PathFinder
       end
     end
 
+    #
+    # page types can come in many forms:
+    #
+    #  wiki                -- page_type => wiki
+    #  text                -- page_group => text
+    #  text+wiki           -- page_group => text, page_type => wiki
+    #  media-image         -- media_type => image
+    #  media-image+gallery -- media_type => image, page_type => gallery
+    #
+    # this method parses the arg into this form and returns an
+    # array [page_group, page_type, media_type]
+    #
+    def parse_page_type(arg)
+      page_group = nil
+      page_type = nil
+      media_type = nil
+      unless arg == 'all'
+        if arg =~ /[\+\ ]/
+          page_group, page_type = arg.split(/[\+\ ]/)
+        elsif Page.is_page_group?(arg)
+          page_group = arg
+        elsif Page.is_page_type?(arg)
+          page_type = arg
+        end
+        if page_group and page_group =~ /^media-(image|audio|video|document)$/
+          media_type = page_group.sub(/^media-/,'')
+          page_group = nil
+        end
+      end
+      [page_group, page_type, media_type]
+    end 
+
   end
 end
 

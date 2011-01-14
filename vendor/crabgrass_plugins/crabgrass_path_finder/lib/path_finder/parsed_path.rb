@@ -221,7 +221,7 @@ class ParsedPath < Array
   def merge(path_b)
     path_b = ParsedPath.parse(path_b)
     if path_b.first == ['all']
-      return ParsedPath.new([])
+      return remove(path_b)
     end
     path_a = self.dup
     path_a.remove_sort if path_b.sort_arg?
@@ -232,7 +232,7 @@ class ParsedPath < Array
   def merge!(path_b)
     path_b = ParsedPath.parse(path_b)
     if path_b.first == ['all']
-      return self.replace(ParsedPath.new([]))
+      return self.replace(remove(path_b))
     end
     self.remove_sort if path_b.sort_arg?
     self.concat(path_b).uniq!
@@ -242,15 +242,30 @@ class ParsedPath < Array
   # removes the path elements in path_b from self, returns a copy
   def remove(path_b)
     path_b = ParsedPath.parse(path_b)
+    new_path = self.dup
     if path_b.first == ['all']
-      return ParsedPath.new([])
-    end
-    keywords = path_b.keywords
-    self.select do |segment|
-      unless keywords.include?(segment[0])
-        segment
+      # when we remove 'all', keep filters that don't have queries.
+      new_path = new_path.select do |segment|
+        filter = SearchFilter[segment[0]]
+        !filter.has_query?
+      end
+    else
+      # intersect self with path_b
+      path_b.each do |remove_segment|
+        remove_keyword = remove_segment[0]
+        remove_filter  = SearchFilter[remove_keyword]
+        new_path = new_path.select do |segment|
+          if remove_filter.singleton? or !remove_filter.has_args?
+            # if the filter is a singleton, or has no args, then
+            # just compare the keyword.
+            segment[0] != remove_keyword
+          else
+            segment != remove_segment
+          end
+        end
       end
     end
+    return ParsedPath.new().replace(new_path)
   end
 
   # removes the path elements in path_b from self

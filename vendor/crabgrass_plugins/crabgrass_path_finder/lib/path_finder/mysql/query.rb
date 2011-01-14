@@ -170,6 +170,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @access_filter_clause << "+(#{Page.access_ids_for(access_hash).join(' ')})"
   end
 
+  def add_tag_constraint(tag)
+    @tags << "+" + Page.searchable_tag_list([tag]).first
+  end
+
   def add_order(order_sql)
     if @order # if set to nil, this means we must skip sorting
       if order_sql =~ /\./
@@ -213,6 +217,24 @@ class PathFinder::Mysql::Query < PathFinder::Query
       @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
       return
+    end
+  end
+
+  # filter on page type or types, and maybe even media flag too!
+  def add_type_constraint(arg)
+    page_group, page_type, media_type = parse_page_type(arg)
+
+    if media_type
+      @conditions << "pages.is_#{media_type} = ?" # safe because media_type is limited by parge_page_type
+      @values << true
+    elsif page_type
+      @conditions << 'pages.type = ?'
+      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+    elsif page_group
+      @conditions << 'pages.type IN (?)'
+      @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+    else
+      # we didn't find either a type or a group for arg
     end
   end
 

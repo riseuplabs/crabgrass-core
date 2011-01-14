@@ -13,18 +13,36 @@
 ##############################################################################%>
 
 --- 
-taggings_004: 
-  tag_id: "2"
-  id: "4"
-  taggable_type: Page
-  taggable_id: "2"
-taggings_001: 
+taggings_1: 
   tag_id: "1"
   id: "1"
   taggable_type: Page
   taggable_id: "1"
-taggings_002: 
+taggings_2: 
   tag_id: "1"
   id: "2"
   taggable_type: Page
   taggable_id: "2"
+taggings_4: 
+  tag_id: "2"
+  id: "4"
+  taggable_type: Page
+  taggable_id: "2"
+
+<%
+tags_start_id = 3
+page_count = 100
+tags = %w(joy trust fear surprise sadness disgust anger anticipation)
+index = 5
+%>
+<% for tag_id in tags_start_id..tags.length %>
+<%   index += 1 %>
+<%   10.times do %>
+taggings_<%= index %>:
+  tag_id: <%= tag_id %>
+  id: <%= index %>
+  taggable_type: Page
+  taggable_id: <%= rand(page_count) %>
+<%   end %>
+<% end %>
+

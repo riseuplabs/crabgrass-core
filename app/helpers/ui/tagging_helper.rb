@@ -3,9 +3,13 @@
 #
 # View:
 #
-#  <% tag_cloud @tags, %w(tag1 tag2 tag3 tag4) do |tag, css_class| %>
+#  <% tag_cloud(@tags, :classes => %w(tag1 tag2 tag3 tag4)) do |tag, css_class| %>
 #    <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => css_class %>
 #  <% end %>
+#
+# alternately:
+# 
+#  <%= tag_cloud(tags) {|tag, klass| link_to(...) }.join(', ') %>
 #
 # CSS:
 #
@@ -17,20 +21,28 @@
 
 module Ui::TaggingHelper
 
-  def tag_cloud(tags, classes, max_list=false)
+  def tag_cloud(tags, options={})
+    options = {:classes => ['tag1','tag2','tag3','tag4'], :max => false}.merge(options)
     return if tags.empty?
     max_count = tags.sort_by(&:count).last.count.to_f
-    if max_list
-      max_list_count = tags.sort_by(&:count)[0-max_list].count if tags.size >= max_list
-      max_list_count = tags.sort_by(&:count)[0].count if tags.size < max_list
+    if options[:max]
+      if tags.size >= options[:max]
+        max_list_count = tags.sort_by(&:count)[0-options[:max_list]].count
+      elsif tags.size < options[:max]
+        max_list_count = tags.sort_by(&:count)[0].count
+      end
     end
 
     tag_count = 0
-    tags.each do |tag|
-      next if max_list and (tag.count < max_list_count || (tag.count == max_list_count && tag_count >= max_list))
+    tags.collect do |tag|
+      next if options[:max] and (tag.count < max_list_count || (tag.count == max_list_count && tag_count >= options[:max]))
       tag_count += 1
-      index = ((tag.count / max_count) * (classes.size - 1)).round
-      yield tag, classes[index]
+      if max_count > 0
+        index = ((tag.count / max_count) * (options[:classes].size - 1)).round
+      else
+        index = 0
+      end
+      yield tag, options[:classes][index]
     end
   end
 

@@ -42,3 +42,11 @@ added in crabgrass-core, not translated:
   search_most_views: "Most Views"
   search_most_stars: "Most Stars"
 
+  # page searchin sections, maybe:
+  my_pages: "My Pages"
+  properties: "Properties"
+  popular_pages: "Popular Pages"
+  advanced: "Advanced"
+  access: "Access"
+  type: "Type"
+

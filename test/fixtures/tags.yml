@@ -13,9 +13,22 @@
 ##############################################################################%>
 
 --- 
-tags_001: 
+tags_1: 
   name: pale
   id: "1"
-tags_002: 
+tags_2: 
   name: imperial
   id: "2"
+
+<%
+# emotions
+tags = %w(joy trust fear surprise sadness disgust anger anticipation)
+index = 2
+%>
+<% for tag in tags %>
+<% index += 1 %>
+tags_<%= index %>:
+  name: <%=tag%>
+  id: <%= index %>
+<% end %>
+

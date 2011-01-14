@@ -13,11 +13,10 @@ SearchFilter.new('/most-stars-in/:time/:unit/') do
 
   self.singleton = true
   self.section = :popular_pages
-  self.label = :most_stars
+  self.exclude = :popular_pages
 
   self.description = "pages that have the most stars"
-  html do
-    @filter_submit_button = false
+  html(:submit_button => false) do
     content_tag(:p) do
       [ filter_submit_button(:date_today.t, {:time => 24, :unit=>'hours'}),
         filter_submit_button(:date_this_week.t, {:time => 7, :unit=>'days'}),
@@ -25,6 +24,14 @@ SearchFilter.new('/most-stars-in/:time/:unit/') do
         filter_submit_button(:date_this_year.t, {:time => 1, :unit=>'years'})
       ].join(' ')
     end 
+  end
+
+  label do |time,unit|
+    if time
+      :most_stars.t
+    else
+      :most_stars.t + '...'
+    end
   end
 
 end

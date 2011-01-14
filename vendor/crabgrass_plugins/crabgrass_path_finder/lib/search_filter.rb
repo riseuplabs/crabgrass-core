@@ -20,6 +20,7 @@ class SearchFilter
   attr_accessor :section        # a symbol that determines the clustering of the ui controls
   attr_writer   :label          # the text for the ui control
   attr_accessor :html_block     # dynamic code for when you click on the ui control
+  attr_accessor :html_options   # options for rendering the html
   attr_accessor :description    # hints for the user on how this filter works
   attr_accessor :exclude        # if set to the keyword of another filter, then the other filter
                                 # may not be active when this one is
@@ -29,6 +30,7 @@ class SearchFilter
     self.path_keyword        = path_definition.split('/')[1] # '/created_by/:user_id/' --> 'created_by'
     self.path_argument_count = path_definition.count(':')
     self.singleton           = true
+    self.exclude             = false
     self.instance_eval &block
   ensure
     SearchFilter.add_filter(self.path_keyword, self)
@@ -81,10 +83,37 @@ class SearchFilter
     self.path_argument_count != 0
   end
 
+  def has_query?
+    sphinx_block or mysql_block or postgres_block or query_block
+  end
+
   def singleton?
     singleton
   end
 
+  def has_control_ui?
+    self.section.any?
+  end
+
+  def options
+    self.html_options
+  end
+
+  # return the path of this filter, with these particular args.
+  def path(args=nil)
+    if args
+      [@path_keyword, *args].join('/')
+    else
+      @path_keyword
+    end
+  end
+
+  # return a unique name that can be given to ui elements for this filter
+  # bound to these particular args.
+  def name(args=nil)
+    path(args).gsub('/','_')
+  end
+  
   ##
   ## FILTER DEFINITION METHODS
   ##
@@ -111,7 +140,8 @@ class SearchFilter
     self.query_block = block
   end
 
-  def html(&block)
+  def html(options={},&block)
+    self.html_options = {:submit_button => true}.merge(options)
     self.html_block = block
   end
 
@@ -168,14 +198,27 @@ class SearchFilter
 
   public
 
-  def label(&block)
+  #
+  # used to either define the label block, or to call the label block, or
+  # return the static label.
+  # The label block is used when a filter wants dynamic control over what the
+  # label is. The args are the actual current args for the filter, if it is
+  # active. Otherwise, the args will be empty.
+  #
+  def label(args=[], &block)
     if block # setter
       @label_block = block
     else # getter
       if @label_block
-        # call block with empty arguments
-        @label_block.call(*([nil]*@path_argument_count)).t
-      else
+        if has_args?
+          while args.size < @path_argument_count
+            args << nil
+          end
+          @label_block.call(*args).t
+        else
+          @label_block.call().t
+        end
+      elsif @label
         @label.t
       end
     end
@@ -184,17 +227,17 @@ class SearchFilter
   # returns the label for this filter, given a particular path.
   # some filters may change what the label says depending on the currently
   # active path (they do this by defining @label_block)
-  def label_from_path(path)
-    unless @label or @label_block
-      return nil
-    end
-    args = path.args_for(@path_keyword)
-    if args.size < @path_argument_count
-      args = [nil] * @path_argument_count
-    end
-    lbl = @label || @label_block.call(*args)
-    return lbl.t
-  end
+#  def label_from_path(path)
+#    unless @label or @label_block
+#      return nil
+#    end
+#    args = path.args_for(@path_keyword)
+#    if args.size < @path_argument_count
+#      args = [nil] * @path_argument_count
+#    end
+#    lbl = @label || @label_block.call(*args)
+#    return lbl.t
+#  end
   
   #
   # resolves the path definition of this filter based on the content of the
@@ -204,9 +247,9 @@ class SearchFilter
   #   returns /created-by/green/ for a filter with definition /created-by/:user_id/
   #   if the current path contains /created-by/green/
   #
-  def path_segment(path)
-    args = path.args_for(@path_keyword).reverse
-    return @path_definition.gsub(/\/:\w+/) {|segment| "/#{args.pop}/"}
-  end
+  #def path_segment(path)
+  #  args = path.args_for(@path_keyword).reverse
+  #  return @path_definition.gsub(/\/:\w+/) {|segment| "/#{args.pop}/"}
+  #end
 
 end

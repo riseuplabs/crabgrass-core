@@ -16,7 +16,7 @@ SearchFilter.new('/user/:user_id/') do
     if id
       "#{:user.t}: #{user_login(id)}"
     else
-      :user.t
+      :user.t + '...'
     end
   end
 
