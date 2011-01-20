@@ -3,18 +3,23 @@
 // CRABGRASS HELPERS
 //
 
-// shows the alert message.
-// if there is a popup currently open, then the messages shows up there.
-// set msg to "" in order to hide it.
+// shows the alert message. if there is a modalbox currently open, then the
+// messages shows up there. set msg to "" in order to hide it.
 function showAlertMessage(msg) {
   Autocomplete.hideAll();
-  if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
-    $('modal_message').update(msg);
-  } else if ($('alert_message_list')) {
+  var alert_area = null;
+  var modal    = $('modal_alert_messages');
+  var nonmodal = $('alert_messages');
+  if (modal && !modal.ancestors().detect(function(e){return !e.visible()})) {
+    alert_area = modal;
+  } else if (nonmodal) {
+    alert_area = nonmodal;
+  }
+  if (alert_area) {
     if (msg=='') {
-      $('alert_message_list').update('');
+      alert_area.update('');
     } else {
-      $('alert_message_list').insert({bottom: msg});
+      alert_area.insert({bottom: msg});
     }
   }
 }

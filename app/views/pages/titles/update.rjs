@@ -1,0 +1,21 @@
+page.call 'Modalbox.hide'
+page.replace 'title', :partial => 'layouts/local/page/title'
+
+#
+# the problem:
+#
+# If the page name has changed, this has invalidated many of the existing page
+# links based on the name. Ideally, most links should use the page id, but some
+# do not.
+#
+# the solution:
+#
+# Replace the page name in all links with the class page_url. This should work
+# even if the page and the context have the same name or if there are nasty
+# chars in the title.
+#
+
+if !@new_name.nil? and !@old_name.nil? and @old_name != @new_name
+  page << "$$('.page_url').each( function(link) {link.href = link.href.replace(/(.*\\/)%s($|\\/|\\?)/, '$1%s$2')} );" % [Regexp.escape(@old_name), Regexp.escape(@new_name)]
+end
+

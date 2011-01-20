@@ -56,14 +56,18 @@ textarea, input, select {
 
 //
 // FORMY STYLE: SIMPLE FORM
-//
+// 
 
 .simple_form {
   // add a gap between each row
   .row {
     margin-top: 1em;
+    &.first {
+      margin-top: 0;
+    }
     label {
       font-weight: bold;
+      display: block;
     }
   }
 

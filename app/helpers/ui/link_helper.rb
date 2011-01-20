@@ -105,10 +105,10 @@ label}</a></span>)
     )
   end
 
-  def link_to_function_with_icon(label, function, options={})
-    icon = options.delete(:icon)
-    options[:class] = ['small_icon', "#{icon}_16", options[:class]].combine
-    link_to_function(label, function, options)
+  def link_to_function_with_icon(label, function, html_options={})
+    icon = html_options.delete(:icon)
+    html_options[:class] = ['small_icon', "#{icon}_16", html_options[:class]].combine
+    link_to_function(label, function, html_options)
   end
 
   def link_to_remote_icon(icon, options={}, html_options={})
@@ -117,8 +117,10 @@ label}</a></span>)
     link_to_remote_with_icon('', options, html_options)
   end
 
-  def link_to_function_icon(icon, function, options={})
-    link_to_function_with_icon(' ', function, options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
+  def link_to_function_icon(icon, function, html_options={})
+    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
+    html_options[:icon] = icon
+    link_to_function_with_icon('', function, html_options)
   end
 
   def link_to_with_icon(icon, label, url, options={})

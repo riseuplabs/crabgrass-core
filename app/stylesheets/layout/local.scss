@@ -7,7 +7,7 @@ div#local {
 
 #column_center.full {
   @include full;
-  article#content {
+  article#content, #title {
     padding: resolve_width($local_content_padding, $grid_column_count);
   }
 }
@@ -16,6 +16,14 @@ div#local {
   @include omega;
   @include columns($center_columns);
   article#content {
+    padding: resolve_width($local_content_padding, $center_columns);
+  }
+}
+
+#column_center.with_right {
+  @include alpha;
+  @include columns($center_columns);
+  article#content, #title {
     padding: resolve_width($local_content_padding, $center_columns);
   }
 }
@@ -78,6 +86,10 @@ div#local {
 
 }
 
+#column_right {
+  @include omega;
+  @include columns($local_nav_column_count);
+}
 
 article#content {
   border: $local_content_border;

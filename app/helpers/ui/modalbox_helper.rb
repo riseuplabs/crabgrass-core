@@ -34,7 +34,7 @@ module Ui::ModalboxHelper
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
   #
   def link_to_modal(label, options={}, html_options={})
-    options[:title] = label unless options[:title]
+    options[:title] ||= label
     #html_options = [:id, :class, :style, :icon]
     html = options[:html].any?
     icon = options.delete(:icon) || html_options.delete(:icon)
@@ -44,7 +44,6 @@ module Ui::ModalboxHelper
     end
     if icon
       html_options[:id] ||= 'link%s'%rand(1000000)
-      html_options[:icon] = icon
       if !html
         # skip these ajax options if we are just directly showing some
         # static content.
@@ -56,6 +55,7 @@ module Ui::ModalboxHelper
       end
       function = modalbox_function(contents, options)
       if label
+        html_options[:icon] = icon
         link_to_function_with_icon(label, function, html_options)
       else
         link_to_function_icon(icon, function, html_options)

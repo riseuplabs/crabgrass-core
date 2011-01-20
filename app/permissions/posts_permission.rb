@@ -3,8 +3,7 @@ module PostsPermission
   protected
 
   def may_create_posts?(page=@page)
-    logged_in? and
-    current_user.may?(:view, page)
+    logged_in? and @options.show_reply and current_user.may?(:view, page)
   end
 
   def may_edit_posts?(post=@post)

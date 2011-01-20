@@ -86,14 +86,14 @@ ActionController::Routing::Routes.draw do |map|
   map.networks_directory 'networks/directory/*path', :controller => 'groups/networks_directory'
   map.groups_directory 'groups/directory/*path', :controller => 'groups/groups_directory'
 
-#  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
-#    groups.resource  :page, :only => [:new, :create]
-#    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
-#    groups.resources :members
-#    groups.resources :requests
-#    groups.resources :invites
-#    groups.resource  :settings, :only => [:show, :update]
-#  end
+  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+    groups.resource  :page, :only => [:new, :create]
+    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
+    groups.resources :members
+    groups.resources :requests
+    groups.resources :invites
+    groups.resource  :settings, :only => [:show, :update]
+  end
 
 #  ##
 #  ## DEBUGGING
@@ -106,19 +106,39 @@ ActionController::Routing::Routes.draw do |map|
   map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
+  ## NORMAL PAGE ROUTES
+  ##
+
+  # base page
+  map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
+    pages.resources :participations
+    pages.resources :changes
+    pages.resources :assets
+    pages.resources :tags
+    pages.resources :posts
+    pages.resource :title, :only => [:edit, :update]
+    pages.resource :attributes
+  end
+
+  # page subclasses, gets triggered for any controller class Pages::XxxController
+  map.connect '/pages/:controller/:action/:page_id', :controller => /pages\/[^\/]+/
+
+  ##
   ## DEFAULT ROUTE
   ##
 
   map.connect '/do/:controller/:action/:id'
   map.root :controller => 'root'
 
-#  ##
-#  ## PAGES and ENTITY LANDING
-#  ##
+  ##
+  ## SPECIAL PATH ROUTES for PAGES and ENTITIES
+  ##
+
 
 #  map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
 #  map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-#  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-#  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
+
+  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
 
 end

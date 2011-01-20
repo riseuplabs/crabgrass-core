@@ -113,6 +113,10 @@ options {
       side 'left'   # only left for now.
       column_count 3
     }
+    title {
+      background '#f6f6f6'
+      border $border
+    }
   }
 
   posts {

@@ -1,0 +1,11 @@
+#local
+  - if @options.show_sidebar
+    #column_center.with_right
+      = render :partial => 'layouts/local/page/content'
+    #column_right
+      %nav#sidebar
+        = render(:partial => 'layouts/local/page/sidebar')
+  - else
+    #column_center.full
+      = render :partial => 'layouts/local/page/content'
+

@@ -1,0 +1,8 @@
+%div#title.page_title.shy_parent
+  - if may_edit_page?
+    %div.float_right
+      = link_to_modal(:edit_title.tcap, {:url => edit_page_title_path(@page)}, {:class => 'shy', :icon => 'pencil'})
+  %h1=h @page.title
+  - if @page.summary.any?
+    %div.summary= h @page.summary
+

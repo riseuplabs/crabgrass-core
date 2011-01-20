@@ -111,11 +111,11 @@ module ControllerExtension::AlertMessages
     end
     
     if include_container
-      # the id alert_message_list is required by the showAlertMessage
+      # the id alert_messages is required by the showAlertMessage
       # javascript function.
       content_tag(:div,
         content_tag(:div,
-          inner, :id => 'alert_message_list'),
+          inner, :id => 'alert_messages'),
         :class => 'alert_message_container')
     else
       inner

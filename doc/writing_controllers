@@ -1,0 +1,16 @@
+
+
+class RobotController < ApplicationController
+
+  before_filter :login_required      # if you want to require logins
+  
+  permissions :robot                 # will load app/permissions/robot
+
+  protected
+
+  def context
+    # set @context to an appropriate object if you want to display a context.
+    # this method is called right before render, and only when showing a page.
+  end
+
+end

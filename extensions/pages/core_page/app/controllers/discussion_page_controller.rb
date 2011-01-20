@@ -1,6 +1,7 @@
-class DiscussionPageController < BasePageController
+class DiscussionPageController < Pages::BaseController
 
   def show
+    @context = Context::Me.new(current_user)
   end
 
   def print
