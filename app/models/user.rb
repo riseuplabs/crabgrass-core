@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  acts_as_permissive :view, :pester, :burdon, :spy
+  acts_as_locked :view, :pester, :burdon, :spy
 
   ##
   ## CORE EXTENSIONS

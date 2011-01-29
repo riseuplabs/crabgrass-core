@@ -1,2 +1,0 @@
-class Permission
-end

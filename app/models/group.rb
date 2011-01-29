@@ -26,7 +26,7 @@ end
 
 class Group < ActiveRecord::Base
 
-  acts_as_permissive :view, :edit, :admin, :pester, :burdon, :spy
+  acts_as_locked :view, :edit, :admin, :pester, :burdon, :spy
 
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
@@ -49,7 +49,7 @@ class Group < ActiveRecord::Base
   ##
 
   # finds groups that user may see
-  # this is a depcrecated special case of with_access provided by acts_as_permissive.
+  # this is a depcrecated special case of with_access provided by acts_as_locked.
   # Please use with_access(:view, user) instead.
   named_scope :visible_by, lambda { |user|
     { :joins => :permissions,
