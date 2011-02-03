@@ -115,7 +115,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resources :changes
     pages.resources :assets
     pages.resources :tags
-    pages.resources :posts
+    pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
     pages.resource :title, :only => [:edit, :update]
     pages.resource :attributes
   end
@@ -135,8 +135,8 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
 
-#  map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
-#  map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+  #map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
+  #map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
 
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
   map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil

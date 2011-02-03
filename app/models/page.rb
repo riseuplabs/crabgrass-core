@@ -66,6 +66,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Users     # page <> users relationship
   include PageExtension::Groups    # page <> group relationship
   include PageExtension::Assets    # page <> asset relationship
+  include PageExtension::Comments  # page <> post relationship
   include PageExtension::Create    # page creation
   include PageExtension::Subclass  # page subclassing
   include PageExtension::Index     # page full text searching
@@ -163,11 +164,9 @@ class Page < ActiveRecord::Base
   ##
 
   belongs_to :data, :polymorphic => true, :dependent => :destroy
-  has_one :discussion, :dependent => :destroy
 
   validates_presence_of :title
   validates_associated :data
-  validates_associated :discussion
 
   def unresolve
     resolve(false)
@@ -179,23 +178,6 @@ class Page < ActiveRecord::Base
     end
     self.resolved=value
     save
-  end
-
-  def build_post(post,user)
-    # this looks like overkill, but it seems to be needed
-    # in order to build the post in memory and have it saved when
-    # (possibly new) pages is saved
-    self.discussion ||= Discussion.new
-    self.discussion.page = self
-    if post.instance_of? String
-      post = Post.new(:body => post)
-    end
-    self.discussion.posts << post
-    post.discussion = self.discussion
-    post.user = user
-    post.page_terms = self.page_terms
-    association_will_change(:posts)
-    return post
   end
 
   def association_will_change(assn)
@@ -220,14 +202,6 @@ class Page < ActiveRecord::Base
     end
     true
   end
-
-  before_save :update_posts_count
-  def update_posts_count
-    if posts_count_changed?
-      self.posts_count = self.discussion.posts_count if self.discussion
-    end
-  end
-
 
   ##
   ## PAGE ACCESS CONTROL
@@ -281,6 +255,12 @@ class Page < ActiveRecord::Base
       parts << participation_for_group(entity)
     end
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
+  end
+
+  # this should be in the database, for now hardwired as "true". 
+  # if true, then anyone who can view a page can comment on it.
+  def public_comments?
+    true
   end
 
   protected

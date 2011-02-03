@@ -17,10 +17,15 @@
     border-top: $posts_border;
   }
   .shade_even {
-    background: $local_content_background;
+    background: $posts_even_background;
   }
   .shade_odd {
-    background: $posts_background;
+    background: $posts_odd_background;
+  }
+  .pagination {
+    border-bottom: $posts_border;
+    text-align: center;
+    padding: $posts_padding;
   }
   tr.post td {
     vertical-align: top;

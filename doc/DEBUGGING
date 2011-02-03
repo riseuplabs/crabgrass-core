@@ -73,4 +73,13 @@ via rake:
 Set the ENV variable DEBUG_CALLBACKS=1 to trace the execution of activerecord
 callbacks
 
+== Showing the call stack
+
+This is not specific to crabgrass, but it is hard to find much mention of this
+on the 'net: you can print out a trace of the call stack by doing this in your
+code:
+  
+  puts caller
+
+Thats it. Handy.
 

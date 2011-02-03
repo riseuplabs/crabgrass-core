@@ -32,8 +32,7 @@ class Pages::BaseController < ApplicationController
   after_filter :save_if_needed, :except => :create
   after_filter :update_view_count, :only => [:show, :edit, :create]
 
-  include "pages/before_filters".camelize.constantize
-  #include Pages::BeforeFilters
+  include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work? 
 
   ##
   ## CONSTRUCTOR
@@ -42,11 +41,11 @@ class Pages::BaseController < ApplicationController
   # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
-  def initialize(options={})
+  def initialize(seed={})
     super()
-    @user = options[:user]   # the user context, if any
-    @group = options[:group] # the group context, if any
-    @page = options[:page]   # the page object, if already fetched
+    @user  = seed[:user]   # the user context, if any
+    @group = seed[:group]  # the group context, if any
+    @page  = seed[:page]   # the page object, if already fetched
   end
 
   ##
@@ -125,8 +124,8 @@ class Pages::BaseController < ApplicationController
   }
   PageOptions = Struct.new("PageOptions", *OPTIONS.keys)
 
-  def options
-    @options ||= PageOptions.new(*OPTIONS.values)
+  def new_options
+    PageOptions.new(*OPTIONS.values)
   end
 
   ##

@@ -121,7 +121,8 @@ options {
 
   posts {
     border "1px solid #ccc"
-    background "#efefef"
+    odd_background "#efefef"
+    even_background var(:local_content_background)
     padding "10px"
   }
 

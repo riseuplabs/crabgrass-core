@@ -24,10 +24,11 @@ module Pages::BeforeFilters
   end
  
   def default_setup_options
+    @options = new_options()
     if request.get?
-      options.show_posts = action?(:show) || action?(:print)
-      options.show_reply = false
-      options.title = @page.title
+      @options.show_posts = action?(:show) || action?(:print)
+      @options.show_reply = @options.show_posts
+      @options.title = @page.title
     end
     setup_options
     true
@@ -48,13 +49,9 @@ module Pages::BeforeFilters
   end
   
   def load_posts
-    if options.show_posts and request.get? and !@page.nil?
-      @discussion ||= (@page.discussion ||= Discussion.new)
-      current_page = params[:posts] || @discussion.last_page
-      @posts = Post.visible.paginate_by_discussion_id(@discussion.id,
-        :order => "created_at ASC", :page => current_page,
-        :per_page => current_site.pagination_size, :include => :ratings)
-      if options.show_reply
+    if @options.show_posts and request.get? and !@page.nil?
+      @posts = @page.posts(:page => params[:posts]) # use params[:posts] for pagination
+      if @options.show_reply
         @post = Post.new
       end
     end

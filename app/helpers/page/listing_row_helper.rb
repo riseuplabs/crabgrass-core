@@ -4,6 +4,8 @@
 
 module Page::ListingRowHelper
 
+  protected
+
   #
   # helper to show stars of an item (page or whatever that responds to stars_count)
   #

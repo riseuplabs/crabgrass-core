@@ -128,13 +128,32 @@ class Discussion < ActiveRecord::Base
     end
   end
 
-  def posts_changed
-    @head_posts.try.clear
-    update_attributes! :posts_count => visible_posts.count,
-      :last_post => visible_posts.last,
-      :replied_by => visible_posts.last.try.user,
-      :replied_at => visible_posts.last.try.updated_at
-    page.save if page
+  #
+  # called when ever a new post is created
+  #
+  def post_created(post)
+    self.posts_count += 1
+    page.update_attribute(:posts_count, posts_count) if page
+    update_attributes!(
+      :posts_count => posts_count,
+      :last_post => post, 
+      :replied_by_id => post.user_id,
+      :replied_at => post.updated_at )
+  end
+
+  #
+  # called whenever a new post is destroyed, or marked as deleted.
+  #
+  def post_destroyed(post, decrement=true)
+    if decrement
+      self.posts_count -= 1
+      page.update_attribute(:posts_count, posts_count) if page
+    end
+    update_attributes!(
+      :posts_count => posts_count,
+      :last_post => visible_posts.last, 
+      :replied_by_id => visible_posts.last.try.user_id,
+      :replied_at => visible_posts.last.try.updated_at )
   end
 
 end

@@ -2,8 +2,16 @@ module PostsPermission
 
   protected
 
-  def may_create_posts?(page=@page)
-    logged_in? and @options.show_reply and current_user.may?(:view, page)
+  def may_create_posts?
+    if !logged_in?
+      false
+    elsif current_user.may?(:edit, @page)
+      true
+    elsif current_user.may?(:view, @page) and @page.public_comments?
+      true
+    elsif @page.public and @page.public_comments?
+      false
+    end
   end
 
   def may_edit_posts?(post=@post)

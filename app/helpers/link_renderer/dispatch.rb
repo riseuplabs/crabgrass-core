@@ -1,3 +1,8 @@
+#
+# This is a link renderer that makes nice URLs for the pagination links when
+# we happen to be on a page with a funky dispatch based route.
+# eg: /:context/:page
+#
 
 class LinkRenderer::Dispatch < WillPaginate::LinkRenderer
   def url_for(page)

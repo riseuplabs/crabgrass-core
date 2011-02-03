@@ -8,6 +8,8 @@ require 'cgi'
 
 module Page::SearchHelper
 
+  protected
+
   def search_filter_sections
     [:my_pages, :access, :properties, :popular_pages, :advanced]
   end

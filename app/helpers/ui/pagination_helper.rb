@@ -34,7 +34,7 @@ module Ui::PaginationHelper
   #   :param_name   => :page,
   #   :params       => nil,
   #   :renderer     => 'WillPaginate::LinkRenderer',
-  #   :page_links   => true,
+  #   :page_links   => true,    # when false, only previous/next links are rendered
   #   :container    => true
   #
   def pagination_links(things, options={})

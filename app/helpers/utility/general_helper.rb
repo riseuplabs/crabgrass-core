@@ -35,6 +35,15 @@ module Utility::GeneralHelper
     session[:logged_in_since] || Time.now
   end
 
+  # calls 'call' on proc if it really is a proc.
+  def safe_call(proc, *args)
+    if proc.is_a? Proc
+      proc.call(*args)
+    else
+      proc
+    end
+  end
+
   # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
   # Only need this helper once, it will provide an interface to convert a block into a partial.
   # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable

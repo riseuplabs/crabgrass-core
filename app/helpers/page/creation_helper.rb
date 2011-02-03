@@ -4,6 +4,8 @@
 
 module Page::CreationHelper
 
+  protected
+
   # TODO: wtf? seems like a ton duplication here.
 
   # returns a link to the create action for the type given.

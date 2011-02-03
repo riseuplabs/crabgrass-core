@@ -17,13 +17,12 @@ class Post < ActiveRecord::Base
   ##
 
   acts_as_rateable
-  belongs_to :discussion
+  belongs_to :discussion    # counter_cache is handled manually, see Discussion.post_created.
   belongs_to :user
-  # if this is on a page we set page_terms so we can use path_finder
-  belongs_to :page_terms
+  belongs_to :page_terms    # if this is on a page we set page_terms so we can use path_finder
 
-  after_create :update_discussion
-  after_destroy :update_discussion
+  after_create :post_created
+  after_destroy :post_destroyed
 
   ##
   ## named scopes
@@ -56,15 +55,56 @@ class Post < ActiveRecord::Base
   # discussion record yet, then it is created and saved). Arg is a hash, with
   # these required keys: :user, :page, and :body. Afterwards, you must save the
   # post, and the probably the page too, although it is not required.
-  # In a non-page context, this method is not required: discussion.posts.build()
-  # is sufficient.
-  def self.build(options)
-    raise ArgumentError.new unless options[:user] && options[:page] && options[:body]
-    page = options.delete(:page)
-    page.discussion ||= Discussion.create!(:page => page)
-    post = page.discussion.posts.build(options)
-    page.posts_count_will_change!
-    post.page_terms = page.page_terms
+  # In a non-page context, this method is not needed. simply calling
+  # discussion.posts.build() is sufficient.
+  # def self.build(options)
+  #   raise ArgumentError.new unless options[:user] && options[:page] && options[:body]
+  #   page = options.delete(:page)
+  #   page.discussion ||= Discussion.create!(:page => page)
+  #   post = page.discussion.posts.build(options)
+  #   page.posts_count_will_change!
+  #   post.page_terms_id = page.page_terms_id
+  #   return post
+  # end
+
+  #
+  # this is like a normal create, except that it optionally accepts multiple arguments:
+  # 
+  # page -- the page that this post belongs to (optional)
+  # user -- the user creating the post (optional)
+  # discussion -- the discussion holding this post (optional)
+  # attributes -- a hash of attributes to fill the new post.
+  #
+  # You should have at least page or discussion.
+  #
+  # for example: 
+  # 
+  #   Post.create! @page, current_user, params[:post]
+  #
+  def self.create!(*args, &block)
+    user = nil
+    page = nil
+    discussion = nil
+    attributes = {}
+    args.each do |arg|
+      user       = arg if arg.is_a? User
+      page       = arg if arg.is_a? Page
+      attributes = arg if arg.is_a? Hash
+      discussion = arg if arg.is_a? Discussion
+    end
+    if page
+      page.create_discussion unless page.discussion
+      attributes[:discussion] = page.discussion
+      attributes[:page_terms_id] = page.page_terms.id
+    end
+    if discussion
+      attributes[:discussion] = discussion
+    end
+    if user
+      attributes[:user] = user
+    end
+    post = Post.new(attributes, &block)
+    post.save!
     return post
   end
 
@@ -91,12 +131,12 @@ class Post < ActiveRecord::Base
   # These are currently only used from moderation mod.
   def delete
     update_attribute :deleted_at, Time.now
-    update_discussion
+    post_destroyed(true)
   end
 
   def undelete
     update_attribute :deleted_at, nil
-    update_discussion
+    post_created
   end
 
   # this should be able to be handled in the subclasses, but sometimes
@@ -116,10 +156,20 @@ class Post < ActiveRecord::Base
     GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
   end
 
+  def body_id
+   "post_#{self.id}_body"
+  end
+
   protected
 
-  def update_discussion
-    discussion.posts_changed
+  def post_created
+    discussion.post_created(self)
+  end
+
+  def post_destroyed(force_decrement=false)
+    # don't decrement if post is already marked deleted.
+    decrement = force_decrement || self.deleted_at.nil?
+    discussion.post_destroyed(self, decrement)
   end
 
 end
