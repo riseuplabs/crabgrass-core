@@ -52,6 +52,18 @@ module UserExtension
     def self.included(base)
       base.extend ClassMethods
     end
+    
+    #
+    # friendly access, in a more railsy form
+    #
+
+    def group_ids();           direct_group_id_cache;    end
+    def all_group_ids();       all_group_id_cache;       end
+    def admin_for_group_ids(); admin_for_group_id_cache; end
+    def peer_ids();            peer_id_cache;            end
+    def friend_ids();          friend_id_cache;          end
+    def foe_ids();             foe_id_cache;             end
+    def tag_ids();             tag_id_cache;             end
 
     # Be careful with this method: it is called any time a Membership
     # object is created or destroyed, and it is also called any time
