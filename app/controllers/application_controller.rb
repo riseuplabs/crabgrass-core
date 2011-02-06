@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
 
   helper :application
   [:utility, :ui, :page].each do |helper_namespace|
-    Dir.entries("app/helpers/#{helper_namespace}/").each do |file|
-      helper("#{helper_namespace}/#{$1}") if file =~ /(.*)_helper\.rb$/
+    Dir.entries("app/helpers/common/#{helper_namespace}/").each do |file|
+      helper("common/#{helper_namespace}/#{$1}") if file =~ /(.*)_helper\.rb$/
     end
   end
 
