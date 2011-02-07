@@ -36,7 +36,7 @@ header#context_banner {
   a.title {
     color: $banner_default_foreground;
     font-size: $banner_font_size;
-    @include hover-link;
+    @include cg-hover-link;
   }
 
 }

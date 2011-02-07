@@ -5,7 +5,12 @@ module Sass::Script::Functions
   # takes a border string, like '1px solid green'
   # and returns 1px
   def border_width(string)
-    Sass::Script::Number.new( string.to_s.split(' ').first.to_i, ['px'])
+    string = string.to_s
+    if string =~ /px/
+      Sass::Script::Number.new(string.split(' ').first.to_i, ['px'])
+    else
+      Sass::Script::Number.new(0,['px'])
+    end
   end
 
   def border_color(string)

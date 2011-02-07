@@ -3,14 +3,11 @@
 //
 
 //
-// make form elements line up better in chrome:
+// this seems to make form elements line up better, 
+// especially in chrome:
 //
 
-body.webkit {
-  textarea, input[type=submit] {
-    margin: 0;
-  }
-}
+textarea, input[type=submit] {margin: 0;}
 
 //
 // form elements are often really misaligned because in the w3c box
@@ -46,11 +43,10 @@ textarea, input, select {
 //
 
 .form_buttons {
-  // text-align: right; 
-  margin-top: 1em;
-  input {
+  margin-top: 0.75em;
+  input[type=submit] {
     // font-size: 1.15em;
-    margin-right: 1em;
+    // margin-right: 0.5em;
   }
 }
 

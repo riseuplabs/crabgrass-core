@@ -14,7 +14,7 @@ ul.page_search_controls {
     display: block;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
-    @include hover-link;
+    @include cg-hover-link;
   }
 }
 

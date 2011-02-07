@@ -28,4 +28,9 @@
   opacity: 0;
 }
 
+// don't hide the shy element if it has a spinner icon. we want the user
+// to know that the request is pending, even when they move the mouse away.
+.shy.spinner_icon {
+  opacity: 1;
+}
 

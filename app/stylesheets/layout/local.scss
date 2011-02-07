@@ -49,7 +49,7 @@ div#local {
       border-right: 0;
     }
     a.nav {
-      @include hover-link;
+      @include cg-hover-link;
       text-align: right;
       display: block;
     }

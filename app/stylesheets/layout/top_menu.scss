@@ -74,7 +74,8 @@ $masthead_nav_dropdown_border_size: 1px;
 
   // this positions the top of the menu items exactly under the menu tab.
   // not sure if it works in all browsers.
-  margin-top: $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
+  margin-top: -1px;
+  // $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
 
   // appearance
   background-color: $masthead_nav_dropdown_background_color;
