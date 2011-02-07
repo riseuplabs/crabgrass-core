@@ -1,4 +1,4 @@
-module BasePage::ShareHelper
+module Pages::ShareHelper
 
   # returns option tags usable in a select menu to choose a page owner.
   #
@@ -138,11 +138,14 @@ module BasePage::ShareHelper
   #  [remove] if true, show an entry that allows for access removal
   #
   def select_page_access(name, participation={}, options=nil)
-    options = participation if participation.is_a?(Hash)
+    if participation.is_a?(Hash)
+      options = participation
+      selected = options[:selected]
+    else
+      selected = participation.access_sym
+    end
 
-    selected = participation.try(:access_sym) || options[:selected]
-    options.reverse_merge!(:blank => true, :expand => false, :remove => false, :class => 'access')
-
+    options = options.reverse_merge(:blank => true, :expand => false, :remove => false, :class => 'access')
     select_options = page_access_options(:blank => options[:blank], :remove => options.delete(:remove))
     if options.delete(:blank)
       selected ||= ''

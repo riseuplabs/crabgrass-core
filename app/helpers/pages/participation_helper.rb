@@ -1,4 +1,4 @@
-module BasePage::ParticipationHelper
+module Pages::ParticipationHelper
 
   # we need to be careful not to trigger any extra queries with this helper,
   # since this could produce really bad load times.

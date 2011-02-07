@@ -121,7 +121,7 @@
     background: #ebeae6;
     border-top: 1px solid white;
     input {
-      margin-left: 1em;
+      margin-left: 0.5em;
     }
   }
   .tip {
@@ -130,6 +130,13 @@
     background-repeat: no-repeat;
     background-position: 0px 0px;
     padding-left: 20px;
+  }
+  h2 {
+    margin-bottom: 0.25em;
+    margin-top: 1em;
+    &.first {
+      margin-top: 0;
+    }
   }
 }
 

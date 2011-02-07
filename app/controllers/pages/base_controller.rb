@@ -7,7 +7,7 @@ class Pages::BaseController < ApplicationController
   public
 
   layout :choose_layout
-  #permissions :pages, :object => 'page'
+  permissions :pages, :object => 'page'
   permissions :pages
   permissions :posts, :object => 'post'
   permissions 'groups/memberships', 'groups/base'    # required to show the banner if page is owned by a group.
@@ -16,6 +16,8 @@ class Pages::BaseController < ApplicationController
   #javascript 'page'
   #permissions 'pages', 'posts'
   #helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
+
+  helper 'pages/base', 'pages/sidebar'
 
   ##
   ## FILTERS

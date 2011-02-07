@@ -1,4 +1,4 @@
-module BasePage::TagsHelper
+module Pages::TagsHelper
 
   def remove_tag_link(tag)
     link = link_to_remote_with_icon(

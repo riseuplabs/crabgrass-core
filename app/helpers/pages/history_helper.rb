@@ -1,4 +1,4 @@
-module BasePage::HistoryHelper
+module Pages::HistoryHelper
   def description_for(page_history)
     build_description(page_history) || ""
   end

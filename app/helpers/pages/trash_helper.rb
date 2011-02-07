@@ -1,4 +1,4 @@
-module BasePage::TrashHelper
+module Pages::TrashHelper
 
 #  def destroy_page_line
 #    if current_user.may?(:delete, @page)

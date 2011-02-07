@@ -1,4 +1,4 @@
-module BasePage::AssetsHelper
+module Pages::AssetsHelper
 
   # TODO: fix styles so that we don't have to force no padding here
   def asset_row(asset)
