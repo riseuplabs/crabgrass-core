@@ -36,20 +36,19 @@ module Common::Ui::AutocompleteHelper
   # this searches on friends and peers. if needed, we could modify
   # this to allow the option to search all users.
   def autocomplete_users_field_tag(field_id)
-    text_field_tag(field_id, '', :onkeypress => eat_enter) +
-    javascript_tag("cgAutocompleteEntities('%s', '%s')" % [field_id, entities_path(:view => 'recipients', :format => 'json')])
+    autocomplete_entity_field_tag(field_id, :view => 'recipients')
   end
 
   # just for groups
   def autocomplete_groups_field_tag(field_id)
-    text_field_tag(field_id, '', :onkeypress => eat_enter) +
-    javascript_tag("cgAutocompleteEntities('%s', '%s')" % [field_id, entities_path(:view => 'groups', :format => 'json')])
+    autocomplete_entity_field_tag(field_id, :view => 'groups')
   end
 
   # for groups and users
   def autocomplete_entity_field_tag(field_id, options={})
     # setup options
-    options[:keypress] ||= eat_enter
+    options[:view] ||= 'all'
+    options[:onkeypress] ||= eat_enter
     if options[:onselect] || options[:message] || options[:container]
       options[:onselect] ||= 'null'
       option_string = ", {onSelect: #{options[:onselect]}, message: '#{escape_javascript(options[:message])}', container: '#{options[:container]}'}"
@@ -58,10 +57,10 @@ module Common::Ui::AutocompleteHelper
     end
 
     # create tag
-    text_field_tag(field_id, '', :style => options[:style], :onkeypress => options[:keypress]) +
+    text_field_tag(field_id, '', :style => options[:style], :onkeypress => options[:onkeypress]) +
     javascript_tag("cgAutocompleteEntities('%s', '%s' %s)" % [
       field_id,
-      entities_path(:view => 'all', :format => 'json'),
+      entities_path(:view => options[:view], :format => 'json'),
       option_string
     ])
   end
