@@ -400,19 +400,6 @@ class Page < ActiveRecord::Base
     true
   end
 
-  public
-
-  # used to mark stuff that has been changed.
-  # so that we know we need to update other stuff when saving.
-  def dirty(what)
-    @dirty ||= {}
-    @dirty[what] = true
-  end
-  def dirty?(what)
-    @dirty ||= {}
-    @dirty[what]
-  end
-
   ##
   ## MISC. HELPERS
   ##

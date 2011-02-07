@@ -109,22 +109,24 @@ module PageExtension::Users
   # This method is almost always called on the current user.
   def participation_for_user(user)
     return false unless user.real?
-    # grab the user_participation object and cache it in @uparts
-    # (@uparts ||= {})[user.id] ||= 
-    begin
-      if @user_participations
-        # if we currently have in-memory data for user_participations, we must use it.
-        # why? participation_for_user is called sometimes on pages that have not yet been
-        # saved. Also, heck, it is faster. There is a danger here, in that Rails is not
-        # gauranteed to set the member variable @user_participations. If this is no longer
-        # the case, a bunch of tests will fail.
-        @user_participations.detect{|p| p.user_id==user.id }
-      else
-        # go ahead and fetch the one record we care about. We probably don't care about others
-        # anyway.
-        user_participations.find_by_user_id(user.id)
-      end
+    if @user_participations
+      # if we currently have in-memory data for user_participations, we must use it.
+      # why? participation_for_user is called sometimes on pages that have not yet been
+      # saved. Also, heck, it is faster. There is a danger here, in that Rails is not
+      # gauranteed to set the member variable @user_participations. If this is no longer
+      # the case, a bunch of tests will fail.
+      upart = @user_participations.detect{|p| p.user_id==user.id }
+    else
+      # go ahead and fetch the one record we care about. We probably don't care about others
+      # anyway.
+      upart = user_participations.find_by_user_id(user.id)
     end
+    upart.page = self if upart
+    # ^^ use the same memory for upart.page. this is really useful
+    # for when @page is already loaded and the upart code changes
+    # a value, like stars_count. also, it saves a bunch of extra
+    # queries.
+    upart
   end
 
   # A list of the user participations, with the following properties:
