@@ -8,7 +8,6 @@ class Pages::BaseController < ApplicationController
 
   layout :choose_layout
   permissions :pages, :object => 'page'
-  permissions :pages
   permissions :posts, :object => 'post'
   permissions 'groups/memberships', 'groups/base'    # required to show the banner if page is owned by a group.
 

@@ -116,9 +116,11 @@ ActionController::Routing::Routes.draw do |map|
     pages.resources :assets
     pages.resources :tags
     pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
-    pages.resource :title, :only => [:edit, :update]
+
     pages.resource :share, :only => [:show, :update]
     pages.resource :attributes, :only => [:update]
+    pages.resource :title, :only => [:edit, :update], :controller => 'title'
+    pages.resource :trash, :only => [:edit, :update], :controller => 'trash'
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController

@@ -72,8 +72,18 @@
 # is found and the test passes, then check_permissions! returns true. If the test
 # failed, then a PermissionDenied exception is raised.
 #
-# note:
-# The 'authorized?' before filter is only called if filter :login_required is active.
+# Alternately, you can do this manually:
+#
+# def authorized?
+#   if params[:blah]
+#     may_blah_blah?
+#   else
+#     false
+#   end
+# end
+#
+# NOTE: The 'authorized?' before filter is only called if filter
+#       :login_required is active.
 #
 
 # NOTE:
@@ -369,8 +379,14 @@ module ControllerExtension::Permissions
     def add_permission_log(opts = {})
       if RAILS_ENV == 'development'
         log = permission_log[@permission_log_key]
-        log[:attempted] << opts[:attempted] unless opts[:attempted].blank?
-        log[:decided] = opts[:decided] unless opts[:decided].blank?
+        if opts[:attempted]
+          info('PERMISSIONS: attempting %s' % opts[:decided], 2)
+          log[:attempted] << opts[:attempted]
+        end
+        if opts[:decided]
+          info('PERMISSIONS: using %s' % opts[:decided], 0)
+          log[:decided] = opts[:decided]
+        end
       end
     end
 

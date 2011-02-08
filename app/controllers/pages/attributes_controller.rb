@@ -1,7 +1,7 @@
 # 
 # Routes:
 #
-#  update:  page_participation_path      /pages/:page_id/attributes
+#  update:  page_attributes_path      /pages/:page_id/attributes
 #
 
 class Pages::AttributesController < Pages::BaseController

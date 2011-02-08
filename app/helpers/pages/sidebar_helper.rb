@@ -117,19 +117,18 @@ module Pages::SidebarHelper
   # used in the sidebar of deleted pages
   def undelete_line
     if may_undelete_page?
-      link = link_to(I18n.t(:undelete_from_trash),
-        {:controller => '/base_page/trash', :page_id => @page.id, :action => 'undelete'},
-        :method => 'post'
-      )
-      content_tag :li, link, :class => 'small_icon refresh_16'
+      content_tag :li do
+        link_to_remote_with_icon(I18n.t(:undelete_from_trash), :url => page_trash_path(@page, :type => 'undelete'), :method => 'put', :icon => 'refresh')
+      end
     end
   end
 
   # used in the sidebar of deleted pages
   def destroy_line
     if may_destroy_page?
-      link = link_to_with_confirm(I18n.t(:destroy_page_via_shred), {:confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:page)), :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
-      content_tag :li, link, :class => 'small_icon minus_16'
+      content_tag :li do
+        link_to_remote_with_icon(:destroy_page_via_shred.t, :icon => 'minus', :confirm => :destroy_confirmation.t(:thing => :page.t), :url => page_trash_path(@page, :type => 'destroy'), :method => 'put')
+      end
     end
   end
 
@@ -253,13 +252,23 @@ module Pages::SidebarHelper
 
   def notify_line
     if may_notify_page?
-      popup_line(:name => 'notify', :label => I18n.t(:notify_page_link), :icon => 'whistle', :controller => 'share')
+      popup_line(
+        :id => 'notify_li',
+        :icon => 'whistle',
+        :label => I18n.t(:notify_page_link),
+        :url => page_share_path(@page, :mode => 'notify')
+      )
     end
   end
 
   def delete_line
     if may_delete_page?
-      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => :page.t), :icon => 'trash')
+      popup_line(
+        :id => 'trash_li',
+        :icon => 'trash',
+        :label => I18n.t(:delete_page_link, :page_class => :page.t),
+        :url => edit_page_trash_path(@page)
+      )
     end
   end
 

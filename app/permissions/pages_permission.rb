@@ -48,29 +48,13 @@ module PagesPermission
   ## TRASH
   ##
 
-  alias_method :may_delete_page?, :may_create_page?
-  alias_method :may_undelete_page?, :may_create_page?
-  alias_method :may_show_trash?, :may_delete_page?
+  # ability to move to trash
+  # you can change this to be different than destroy, 
+  # if you can destroy, you should also be able to delete. 
+  alias_method :may_delete_page?, :may_destroy_page?
 
-  # we are using may_remove_page from trash controllers.
-  alias_method :may_remove_page?, :may_destroy_page?
-
-  # this can only be used from authorized? because of
-  # checking the params. Use one of
-  #  - may_delete_page?
-  #  - may_destroy_page?
-  # from the views and helpers.
-  def may_update_trash?(page=@page)
-    if params[:cancel]
-      may_delete_page?
-    elsif params[:delete] && params[:type]=='move_to_trash'
-      may_delete_page?
-    elsif params[:delete] && params[:type]=='shred_now'
-      may_destroy_page?
-    else
-      false
-    end
-  end
+  # ability to remove from trash
+  alias_method :may_undelete_page?, :may_delete_page?
 
   ##
   ## TAGS

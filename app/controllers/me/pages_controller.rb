@@ -2,7 +2,6 @@ class Me::PagesController < Me::BaseController
 
   before_render :setup_navigation
   before_filter :parse_path
-  helper 'page/search'
 
   def show
   end

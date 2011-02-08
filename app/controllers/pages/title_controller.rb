@@ -1,12 +1,10 @@
 # 
 # Routes:
-#  edit_page_title_path  GET /pages/:page_id/title/edit  {:controller=>"pages/titles", :action=>"edit"}
-#  page_title_path       PUT /pages/:page_id/title       {:controller=>"pages/titles", :action=>"update"}
-#  
-# I don't know why this is plural, and I am not sure how to make it singular. 
+#  edit_page_title_path  GET /pages/:page_id/title/edit  {:controller=>"pages/title", :action=>"edit"}
+#  page_title_path       PUT /pages/:page_id/title       {:controller=>"pages/title", :action=>"update"}
 #
 
-class Pages::TitlesController < Pages::BaseController
+class Pages::TitleController < Pages::BaseController
 
   before_filter :login_required
   layout nil

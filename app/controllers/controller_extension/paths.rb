@@ -12,6 +12,8 @@ module ControllerExtension::Paths
       helper_method :page_url
       helper_method :page_xpath
       helper_method :page_xurl
+      helper_method :me_path
+      helper_method :me_url
       helper_method :build_query_string
     end
   end
@@ -28,6 +30,10 @@ module ControllerExtension::Paths
     else
       "/"+entity.name
     end
+  end
+
+  def entity_url(entity)
+    urlize entity_path(entity)
   end
 
   ##
@@ -69,7 +75,7 @@ module ControllerExtension::Paths
   end
 
   def page_url(page, options={})
-    page_path(page, options)
+    urlize page_path(page, options)
   end
 
   # DIRECT PAGE PATHS
@@ -81,9 +87,21 @@ module ControllerExtension::Paths
   end
 
   def page_xurl(page, options={})
-    page_xpath(page,options)
+    urlize page_xpath(page,options)
   end
 
+  ##
+  ## ME
+  ##
+
+  def me_path(*args)
+    me_home_path(*args)
+  end
+
+  def me_url(*args)
+    me_home_url(*args)
+  end
+  
   ##
   ## UTILITY
   ##
@@ -116,6 +134,10 @@ module ControllerExtension::Paths
     query_string || ""
   end
 
+  private
 
+  def urlize(path)
+    request.protocol + request.host_with_port + path
+  end
 end
 

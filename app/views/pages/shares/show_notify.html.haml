@@ -1,0 +1,10 @@
+- form_remote_tag(:url => page_share_path(@page, :mode => 'notify'),
+  :loading => show_spinner('popup'),
+  :html => {:id => 'notify_page_form'},
+  :method => 'put') do
+  = render :partial => 'pages/shares/notify_form'
+  .buttons
+    = spinner 'popup'
+    = close_modal_button(:cancel)
+    = submit_tag I18n.t(:notify_page_link), :name => 'notify_button'
+

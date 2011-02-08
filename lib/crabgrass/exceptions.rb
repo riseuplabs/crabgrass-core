@@ -7,7 +7,11 @@ class CrabgrassException < Exception
 end
 
 # the user does not have permission to do that.
-class PermissionDenied < CrabgrassException; end
+class PermissionDenied < CrabgrassException
+  def initialize(message='', opts={})
+    super(message, opts)
+  end
+end
 
 # the user is not logged in and tried to access a restricted action.
 class AuthenticationRequired < CrabgrassException; end

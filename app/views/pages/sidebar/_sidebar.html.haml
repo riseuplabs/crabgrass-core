@@ -2,11 +2,10 @@
   - if logged_in?
     - if @page.deleted?
       %ul.side_list.commands
-        %ul.side_list.commands
-          = undelete_line
-          = destroy_line
-          = details_line 
-          = history_line
+        = undelete_line
+        = destroy_line
+        = details_line 
+        =# history_line
     - else
       %ul.side_list.commands
         = watch_line

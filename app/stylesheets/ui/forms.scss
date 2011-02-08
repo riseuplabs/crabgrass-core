@@ -51,6 +51,26 @@ textarea, input, select {
 }
 
 //
+// RADIO BUTTONS AND CHECK BOXES
+
+// make checkboxes have a hanging indent look, like bullets.
+label.checkbox, label.radio {
+  display: block;
+  margin-left: 1.7em;
+}
+input.checkbox, input.radio {
+  // position: relative;
+  // top: 2px
+  margin-left: -1.6em;
+}
+
+// in webkit and gecko, checkboxes and radio buttons seem to look better this way
+input[type=radio], input[type=checkbox] {
+  vertical-align: top;
+}
+
+
+//
 // FORMY STYLE: SIMPLE FORM
 // 
 

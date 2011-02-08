@@ -23,9 +23,8 @@
     %tr
       %td
       %td
-        %label
-          = check_box :notification, :send_email, :checked => send_email
-          = I18n.t(:send_email)
+        = check_box :notification, :send_email, :checked => send_email
+        %label{:for => 'notification_send_email'}= I18n.t(:send_email)
         -#  %label
         -#    = check_box :notification, :send_sms
         -#    = I18n.t(:text_message)
@@ -35,12 +34,9 @@
         -#  %label
         -#    = check_box :notification, :send_encrypted
         -#    = I18n.t(:send_only_with_encryption)
-    %tr
+    %tr.gap
       %td{:colspan=>"2"}
-        %label{:for=>'ignored_include_message'}
-          = I18n.t(:share_include_message)
-    %tr
-      %td{:colspan=>"2"}
+        %label= I18n.t(:share_include_message)
         #share_message_holder
-          = text_area :notification, :send_message, :rows => 6, :cols => 60
+          = text_area :notification, :send_message, :rows => 6, :style => 'width:100%'
 
