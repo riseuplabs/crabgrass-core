@@ -3,7 +3,9 @@ draft install instructions
 
 install basic ruby environment:
 
-  sudo apt-get install ruby1.8 ruby-dev rake rubygems libmysql-ruby mysql-server
+  sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server
+
+  install rubygems manually from rubygems.org
 
 prevent rubygems from installing rdoc (optional):
 
@@ -32,3 +34,12 @@ install helper applications:
 run server:
 
   INFO=1 BOOST=1 script/server
+
+
+development
+============================
+
+additional gems needed for testing:
+
+sudo RAILS_ENV=test rake gems:install
+
