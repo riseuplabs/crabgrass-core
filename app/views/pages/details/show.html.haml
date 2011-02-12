@@ -1,0 +1,14 @@
+= render :partial => 'tabs'
+
+#information_tab.tab_content.tab_area
+  = render :partial => 'information'
+
+#permissions_tab.tab_content.tab_area{:style=>'display:none'}
+  = render :partial => 'pages/participation/permissions'
+
+#participation_tab.tab_content.tab_area{:style=>'display:none'}
+  = render :partial => 'pages/participation/participation'
+
+.buttons
+  = close_modal_button
+

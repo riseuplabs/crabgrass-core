@@ -1,0 +1,14 @@
+= formy(:tabset) do |f|
+  - f.tab do |t|
+    - t.label I18n.t(:information)
+    - t.show_tab 'information_tab'
+    - t.selected true
+  - f.tab do |t|
+    - t.label I18n.t(:permissions)
+    - t.show_tab 'permissions_tab'
+    - t.selected false
+  - f.tab do |t|
+    - t.label I18n.t(:participation)
+    - t.show_tab 'participation_tab'
+    - t.selected false
+

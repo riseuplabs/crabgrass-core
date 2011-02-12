@@ -9,23 +9,23 @@ module Pages::SidebarHelper
   protected
 
   def link_to_user_participation(upart)
-    klass = case upart.access_sym
+    icon = case upart.access_sym
       when :admin : 'tiny_wrench_16'
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = '' #content_tag :span, upart.user.display_name, :class => klass
-    link_to_user_avatar(upart.user, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
+    label = content_tag :span, upart.user.display_name, :class => icon
+    link_to_entity(upart.user, :avatar => 'xsmall', :label => label)
   end
 
   def link_to_group_participation(gpart)
-    klass = case gpart.access_sym
+    icon = case gpart.access_sym
       when :admin : 'tiny_wrench_16'
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = '' #content_tag :span, gpart.group.display_name, :class => klass
-    link_to_group_avatar(gpart.group, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
+    label = content_tag :span, gpart.group.display_name, :class => icon
+    link_to_entity(gpart.group, :avatar => 'xsmall', :label => label)
   end
 
   ##
@@ -55,9 +55,9 @@ module Pages::SidebarHelper
       existing_watch = (@upart and @upart.watch?) or false
       li_id = 'watch_li'
       checkbox_id = 'watch_checkbox'
-      url = page_participation_path(@page, @upart, :watch => (!existing_watch).inspect)
+      url = page_participations_path(@page, :watch => (!existing_watch).inspect)
       content_tag :li, :id => li_id do
-        sidebar_checkbox(I18n.t(:watch_checkbox), existing_watch, url, :id => checkbox_id, :method => 'put')
+        sidebar_checkbox(I18n.t(:watch_checkbox), existing_watch, url, :id => checkbox_id, :method => 'post')
       end
     end
   end
@@ -107,9 +107,9 @@ module Pages::SidebarHelper
         add = true
         label = I18n.t(:add_star_link, :star_count => @page.stars_count)
       end
-      url = page_participation_path(@page, @upart, :star => add.inspect)
+      url = page_participations_path(@page, :star => add.inspect)
       content_tag :li, :id => 'star_li' do
-        link_to_remote_with_icon(label, :url => url, :icon => icon, :method => 'put')
+        link_to_remote_with_icon(label, :url => url, :icon => icon, :method => 'post')
       end
     end
   end
@@ -272,17 +272,14 @@ module Pages::SidebarHelper
     end
   end
 
-  def details_line(id='details')
-    if id == 'details'
-      label = I18n.t(:page_details_link, :page_class => :page.t)
-      icon = 'table'
-    elsif id == 'more'
-      label = I18n.t(:see_more_link)
-      icon = nil
-    end
-
+  def details_line
     if may_show_page?
-      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => :page.t), :icon => icon, :controller => 'participation')
+      popup_line(
+        :id => 'details_li',
+        :icon => 'table',
+        :label => I18n.t(:page_details_link, :page_class => :page.t),
+        :url => page_details_path(@page)
+      )
     end
   end
 
