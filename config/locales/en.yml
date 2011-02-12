@@ -1,4 +1,5 @@
 en:
+ 
   ##
   ## TO BE DESTROYED
   ##
@@ -264,7 +265,7 @@ en:
   subject: subject
   from: from
   to: To
-  date: date
+  # date: date <<< this conflicts with time formats. don't do it.
   request_status: "This request is: %{status}."
   status_resolved: resolved
   status_pending: pending

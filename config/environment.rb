@@ -2,8 +2,8 @@
 require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
-# Use any Rails in the 2.3.x series, greater than or equal to 2.3.10
-RAILS_GEM_VERSION = '~> 2.3.10'  
+# Use any Rails in the 2.3.x series, greater than or equal to 2.3.11
+RAILS_GEM_VERSION = '~> 2.3.11'
 require File.join(File.dirname(__FILE__), 'boot')
 require "#{RAILS_ROOT}/config/directories.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
@@ -49,11 +49,13 @@ Crabgrass::Initializer.run do |config|
   ##
 
   # required, but not included with crabgrass:
+  config.gem 'i18n', :version => '~> 0.5'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3'
   config.gem 'will_paginate', :version => '~> 2.3'
   config.gem 'mini_magick', :version => '~> 2.3'
   config.gem 'compass', :version => '~> 0.10'
-
+  config.gem 'password'
+  
   # required, and compilation is required to install
   config.gem 'haml', :version => '~> 3.0'
   config.gem 'RedCloth', :version => '~> 4.2'
