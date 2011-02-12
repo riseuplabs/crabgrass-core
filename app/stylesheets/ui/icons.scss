@@ -5,17 +5,14 @@
 // Most often, we display icons as background images. This is used for small
 // icons, big icons, and for avatar icons.
 // 
-// The basic idea is that we add some padding and then position the background
+// The basic idea is that we add some left-padding and then position the background
 // image in the space created. This has the advantage of telling the browser to
 // load the images later, there is very little markup, and it is easy to add
 // icons to existing elements.
 //
 // Using this method, the horizontal spacing is no problem. However, vertical
-// spacing is a bit more of a pain. Small icons, 16px, are usually ok no matter
-// what: the text is usually about the same size as the icons.
-// 
-// For bigger icons, there are three possible methods of ensuring enough
-// vertical space in the element for an icon to appear fully and not get clipped:
+// spacing is a bit more of a pain. There are three methods we can use to
+// ensure the element has enough height for the icon:
 //
 // * vertical padding: 
 //   Using this method, you add a few pixels of top and bottom padding to try
@@ -27,151 +24,148 @@
 //   using this method, you set the line height of the element to be greater than
 //   the size of the icon. This works great, so long as the element doesnt have
 //   text that wraps on multiple lines, then this method really sucks.
-//   This required display:inline or display:inline-block.
+//   This requires display:block or display:inline-block.
 //
 // * min-height: 
 //   this problem seems like a job for min-height, but this only works in modern
 //   browsers. ie7-js supposedly makes min-height work for older IEs, so maybe
-//   this is the way to go for blocks.
-//   This requires display:inline or display:inline-block.
+//   this is the way to go for blocks. also, min-height will not vertically center
+//   the text and the icon, so it looks bad.
+//   This requires display:block or display:inline-block.
 //
-// unfortunately, display:inline-block is not supported by IE.
 //
-// at various times, the crabgrass stylesheets have used each of these methods.
-// currently, it uses min-height, until we figure out some reason not to.
+// There is no good method that works in all cases. We use each of these
+// hacks for different icon sizes, for single line or multi line text, and for inline
+// or block elements.
+//
+// Here is a chart overview of the icon hacks we use:
+//
+// lines   icon   element  classes             hack used
+// ----------------------------------------------------------------------------
+// *       =16px  inline   .icon.inline        1px padding
+// *       =16px  block    .icon               no hacks needed!
+// *       >16px  inline   -                   avoid, it always looks horrible.
+// single  >16px  block    .icon.single.large  line-height, height, overflow:hidden
+// multi   >16px  block    .icon.large         min-height
+//
+// the default assumption is 'block', 'multi', and 'tiny' (16x16 px).
+//
+// these defaults can be overridden by adding the classes 'inline', 'single', or
+// one of 'xsmall', 'small', 'medium', 'large', 'xlarge', 'big'.
+//
+// notes on these hacks:
+//
+// * small icon, inline:
+//   setting a 1px padding seems to change the rendering algorithm in such a way
+//   that the icon is more vertically centered on the text.
+//
+// * large icon, single line:
+//   together, setting line-height and height will center the text on the icon,
+//   give the icon enough space, and ensure that we don't break across multiple
+//   lines (multiple lines look bad when line-height is set).
+//
+// * large icon, multi line: min-height allows the icon to be fully visible if
+//   there is only a single line of text, although it does not center the icon
+//   vertically unless there are multiple lines of text. 
+//
+// min-height is applied to single line icons larger than 16px, but it is not
+// needed. the styles are just easier that way.
 //
 
-.small_icon {
-  background-repeat: no-repeat !important;;
-  background-position: 0 50% !important;   // flush left, vertical align middle
-  padding-left: 20px !important;           // 16px + 4 more for space between icon and text.
-  min-height: 16px !important;             // make sure the 16x16 icon doesn't get clipped.
+//
+// icon sizes, as defined in avatar.rb (and automatically imported by the
+// default theme):
+// 
+// $icon_tiny    = 16px;
+// $icon_xsmall  = 22px;
+// $icon_small   = 32px;
+// $icon_medium  = 48px;
+// $icon_large   = 60px;
+// $icon_xlarge  = 96px;
+// $icon_big     = 202px;
+//
 
-  // alternately:
-  // line-height: 16px;
-  // or
-  // padding-top: 2px  
-  // padding-bottom: 2px
+.icon {
+  background-repeat: no-repeat !important;   // single icon
+  background-position: 0 50% !important;     // flush left, vertical align middle
 
-  // not sure if these are still used.
-  //&.twenty
-  //  padding-left: 22px
-  //  min-height: 24px
-  //&.right
-  //  background-position: 100% 4px
-  //  padding-left: 4px
-  //  padding-right: 20px
-  //&.bullet
-  //  background-position: 0 2px
-  //  margin: 0.5em 0
+  // defaults to be overridden by additional classes
+  display: block;                             // default to block, use class 'inline' to change
+  padding-left: $icon_tiny + 4px !important;  // create space for the icon to appear
+
+  &.inline {
+    display: inline;
+    padding: 1px;
+  }
+  &.inline-block {
+    display: inline-block;  // not supported in ie6
+  }
+
+  &.single {
+    overflow: hidden;  // only applies when display:block
+  }
+
+  &.xsmall {
+    padding-left: $icon_xsmall + 6px !important;
+    min-height: $icon_xsmall;
+    &.single {
+      line-height: $icon_xsmall;
+      height: $icon_xsmall;
+    }
+  }
+
+  &.small {
+    padding-left: $icon_small + 8px !important;
+    min-height: $icon_small;
+    &.single {
+      line-height: $icon_small;
+      height: $icon_small;
+    }
+  }
+
+  &.medium {
+    padding-left: $icon_medium + 12px !important;
+    min-height: $icon_medium;
+    &.single {
+      line-height: $icon_medium;
+      height: $icon_medium;
+    }
+  }
 }
 
+//
 // an empty icon
+// the actual image icons are defined in png.css or gif.css
+//
+
 .none_16 { background-image: none; }
 
-//.small_icon_button {
-//  height: 16px;
-//  width: 16px;
-//  display: block;
-//  padding: 0; }
-
+//
 // a special spinning small icon
+//
+
 .spinner_icon {
   background-image: url(/images/spinner.gif);
 }
 
-// .big_icon {
-//   background-repeat: no-repeat;
-//  background-position: 1px 50%;
-//  padding: 14px 0 14px 54px; }
-
 //
 // currently used in the table-list view for pages.
 //
+
 .page_icon {
-  height: 16px;
-  width: 16px;
+  height: $icon_tiny;
+  width: $icon_tiny;
   background-repeat: no-repeat;
   background-position: 0 50%;
 }
 
 
 //
-// AVATARS / NAME ICONS
-//
-// the "name_icons" classes are used to an avatar with text.
-//
-// the "avatar" classes are used when just displaying the avatar.
-//
-// sizes, as defined in avatar.rb:
-// tiny     16px
-// xsmall   22px
-// small    32px
-// medium   48px
-// large    60px
-// xlarge   96px
-// big      202px
-//
+// mobi icons are used to turn some text into icons when the
+// screen gets very small. by default, these elements are hidden.
 //
 
-.name_icon {
-  background-repeat: no-repeat;
-  background-position: 1px 50%;
-  &.tiny {
-    padding-left: 20px;
-    min-height: 17px;
-    //padding: 0px 0 0px 17px;
-  }
-  &.xsmall {
-    padding-left: 26px;
-    min-height: 26px;
-    //padding: 2px 0 4px 26px;
-  }
-  &.small {
-    padding-left: 40px;
-    min-height: 40px;
-    //padding: 7px 0 7px 40px;
-    //line-height: 32px + 8px;
-  }
-  &.medium {
-    padding-left: 60px;
-    min-height: 60px;
-    //padding: 15px 0 15px 60px;
-  }
+.mobi_icon {
+  display: none;
 }
-
-//
-// AVATAR ICONS
-// used when you want to make sure an element that contains an avatar
-// has enough room.
-
-//.avatar_height_small {
-//  line-height: 32px + 8px;
-//}
-
-//
-// hover icons
-// i am not sure i want to still do it this way.
-//
-
-.name_icon b { display: none; }
-
-// .name_icon:hover {
-//   b {
-//    display: block;
-//    position: absolute;
-//    background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left;
-//    color: white;
-//    bottom: 25px;
-//    left: -5px;
-//    z-index: $z_tooltip;
-//    padding: 3px 5px 9px 5px;
-//    // ^^ must be in px to match gif bg
-//    &:hover {
-//      display: none;
-//    }
-//  }
-//}
-
-
 

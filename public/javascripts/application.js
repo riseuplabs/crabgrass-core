@@ -66,7 +66,7 @@ function cgAutocompleteEntities(id, url, opts) {
 }
 
 function autoCompleteRowRenderer(value, re, data) {
-  return "<p class='name_icon xsmall' style='background-image: url(/avatars/" + data + "/xsmall.jpg)'>" + value.replace(/^<em>(.*)<\/em>(<br\/>(.*))?$/gi, function(m, m1, m2, m3){return "<em>" + Autocomplete.highlight(m1,re) + "</em>" + (m3 ? "<br/>" + Autocomplete.highlight(m3, re) : "")}) + "</p>";
+  return "<p class='icon xsmall' style='background-image: url(/avatars/" + data + "/xsmall.jpg)'>" + value.replace(/^<em>(.*)<\/em>(<br\/>(.*))?$/gi, function(m, m1, m2, m3){return "<em>" + Autocomplete.highlight(m1,re) + "</em>" + (m3 ? "<br/>" + Autocomplete.highlight(m3, re) : "")}) + "</p>";
 }
 
 function autoCompleteSelectValue(value){

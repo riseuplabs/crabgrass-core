@@ -60,7 +60,8 @@ label}</a></span>)
   def link_to_active(link_label, url_hash, active=nil, html_options={})
     active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
-    html_options = html_options.merge(:class => [html_options[:class], selected_class].combine)
+    classes = [selected_class, html_options[:class]]
+    html_options[:class] = classes.join(' ')
     link_to(link_label, url_hash, html_options)
   end
 
@@ -88,7 +89,7 @@ label}</a></span>)
   def link_to_remote_with_icon(label, options, html_options={})
     id = html_options[:id] || 'link%s'%rand(1000000)
     icon = options.delete(:icon) || html_options.delete(:icon)
-    html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
+    html_options[:class] = ["icon", "#{icon}_16", html_options[:class]].combine
     html_options[:id] ||= id
 
     # don't bother with spinner for confirm links:
@@ -112,7 +113,7 @@ label}</a></span>)
 
   def link_to_function_with_icon(label, function, html_options={})
     icon = html_options.delete(:icon)
-    html_options[:class] = ['small_icon', "#{icon}_16", html_options[:class]].combine
+    html_options[:class] = ['icon', "#{icon}_16", html_options[:class]].combine
     link_to_function(label, function, html_options)
   end
 
@@ -129,7 +130,7 @@ label}</a></span>)
   end
 
   def link_to_with_icon(icon, label, url, options={})
-    options=options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    options=options.merge(:class => "icon #{icon}_16 #{options[:class]}")
     if url
       link_to label, url, options
     else

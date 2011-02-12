@@ -7,6 +7,19 @@ module Common::Ui::EntityUrlHelper
 
   protected
 
+  def url_for_entity(entity)
+    "/#{entity.name}"
+  end
+
+  def url_for_group(group)
+    url_for_entity(group)
+  end
+
+  def url_for_user(user)
+    url_for_entity(user)
+  end
+  
+=begin
   ##
   ## GROUPS
   ##
@@ -126,5 +139,7 @@ module Common::Ui::EntityUrlHelper
       url_for_group(entity, options)
     end
   end
+
+=end
 
 end

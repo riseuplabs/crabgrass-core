@@ -121,7 +121,7 @@
         border-bottom: 0;
 
         &.active {
-          background: $active_background;
+          background-color: $active_background;
           @if $active_border {
             border: $active_border;
             border-bottom: 0;

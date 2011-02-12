@@ -140,12 +140,14 @@ navigation do
 
     context_section :home do
       label  "Home"
+      icon   :house
       url    { entity_path(@group) }
       active { controller?('groups/groups') }
     end
 
     context_section :pages do
       label  "Pages"
+      icon   :page_white_copy
       url    { group_pages_path(@group) }
       active { controller?('groups/pages') or controller.is_a?(Pages::BaseController)}
     end
@@ -153,6 +155,7 @@ navigation do
     context_section :members do
       visible { may_list_memberships? }
       label   "Members"
+      icon    :user
       url     { group_members_path(@group) }
       active  { controller?('groups/members', 'groups/invites') }
 
@@ -174,6 +177,7 @@ navigation do
     context_section :settings do
       visible { may_edit_group? }
       label  "Settings"
+      icon   :control
       url    { group_settings_path(@group) }
       active { (controller?('groups/groups') and action?(:edit, :update)) or controller?('groups/requests', 'groups/permissions', 'groups/profile')}
 

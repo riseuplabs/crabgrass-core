@@ -51,10 +51,11 @@ module Common::Ui::TextHelper
   #
   def expand_links(description)
     description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
-      case $1
-        when "user": link_to_user($2)
-        when "group": link_to_group($2)
-      end
+      link_to_name($2)
+      #case $1
+      #  when "user": link_to_user($2)
+      #  when "group": link_to_group($2)
+      #end
     end
   end
 

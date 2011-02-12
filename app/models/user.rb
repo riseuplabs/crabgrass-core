@@ -122,6 +122,10 @@ class User < ActiveRecord::Base
     return login
   end
 
+  def path
+    "/#{login}"
+  end
+  
   def banner_style
     #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")

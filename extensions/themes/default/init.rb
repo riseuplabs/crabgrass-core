@@ -135,7 +135,7 @@ options {
     autocomplete 400   # autocomplete popups
   }
 
-  avatar {
+  icon {
     Avatar::SIZES.each do |size, pixels|
       send(size, "#{pixels}px")
     end

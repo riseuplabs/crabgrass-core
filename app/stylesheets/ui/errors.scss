@@ -28,7 +28,7 @@ $alert_margin: gutter()/2;
 
 .message {
   .text {
-    @extend .small_icon;
+    @extend .icon;
     line-height: 1em !important;
   }
 }

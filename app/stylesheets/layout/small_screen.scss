@@ -5,6 +5,13 @@
 
 @media only screen and (max-width: 590px), only screen and (max-height: 400px) {
 
+  .mobi_icon {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 30px;
+    height: 24px;
+  }
+
   // 
   // i dont know what to do about the context banner tabs, they dont work
   // look very nice on small screen. this is a hacky attempt to squish them.
@@ -25,10 +32,12 @@
     }
     @if $banner_nav_style == 'cutout' {
       ul#banner_nav_ul {
-        a.tab {
-          max-width: 2em;
-          overflow: hidden;
-          // font-size: 0.8em;
+        li.tab a.tab {
+          padding: 0px;
+          line-height: inherit;
+          height: inherit;
+          .text { display: none }
+          .mobi_icon { display: block; }
         }
       }
     }

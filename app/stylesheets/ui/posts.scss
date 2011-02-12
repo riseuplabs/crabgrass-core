@@ -49,9 +49,10 @@
     text-align: right;
     padding: 0 $posts_padding;
     .author {
-      padding-right: $avatar_small + $posts_padding;
+      padding-right: $icon_small + $posts_padding;
       background-position: right top;
       background-repeat:no-repeat;
+      min-height: $icon_small;
     }
   }
 
