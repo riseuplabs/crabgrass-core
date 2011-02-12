@@ -1,6 +1,8 @@
 FORMY -- a form creator for rails
 
-<%= Formy.form :option => value do |f|
+ERB example:
+
+<%= formy(:form, :option => value) do |f|
   f.title "My Form"
   f.label "Mail Client"
   f.row do |r|
@@ -10,12 +12,15 @@ FORMY -- a form creator for rails
   end
 end %>
 
-A form consistants of a tree of elements.
-Each element may contain other elements.
-In the close method of each element, the element
-must render its contents to its local string buffer.
-the parent element then uses that buffer when doing
-its own rendering.
+HAML example:
+
+= formy(:form, :option => value) do |f|
+  - f.title "My Form"
+  - f.label "Mail Client"
+  - f.row do |r|
+    - r.info "info about this row"
+    - r.label "row label"
+    - r.input text_field('object','method')
 
 Examples
 ===================================================
@@ -32,7 +37,7 @@ the rules for javascript tabs:
 (3) whichever tab you make selected by default should
     also have its area visible by default, and the others hidden.
 
-<%= Formy.tabs do |f|
+<%= formy(:tabset) do |f|
   f.tab do |t|
     t.label 'Tab One'
     t.show_tab 'tab-one-div'
@@ -59,4 +64,13 @@ end
   <%= render :partial => 'something/better' %>
 </div>
 
+DEVELOPMENT NOTES
+==========================
+
+A form consistants of a tree of elements.
+Each element may contain other elements.
+In the close method of each element, the element
+must render its contents to its local string buffer.
+the parent element then uses that buffer when doing
+its own rendering.
 
