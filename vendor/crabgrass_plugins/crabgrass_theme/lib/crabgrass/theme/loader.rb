@@ -3,6 +3,7 @@
 ##
 
 require 'fileutils'
+require 'pathname'
 
 module Crabgrass::Theme::Loader
  
@@ -21,13 +22,8 @@ module Crabgrass::Theme::Loader
 
     # create the theme's public directory and link the theme's
     # 'images' directory to it.
-    unless File.exists?(@public_directory)
-      FileUtils.mkdir_p(@public_directory)
-    end
-    if File.exists?("#{@public_directory}/images")
-      FileUtils.rm("#{@public_directory}/images") # it might be pointing to wrong path
-    end
-    FileUtils.ln_s("#{@directory}/images", "#{@public_directory}/images")
+    ensure_dir(@public_directory)
+    symlink("#{@directory}/images", "#{@public_directory}/images")
   end
 
   private
@@ -50,5 +46,33 @@ module Crabgrass::Theme::Loader
     return paths
   end
 
+  # ensures relative path symlink
+  def symlink(src,dst)
+  
+    # this must come before the pathname stuff, because realpath will try to resolve
+    # any existing bad symlinks
+    if File.symlink?(dst)
+      FileUtils.rm(dst)
+    elsif File.exists?(dst)
+      raise 'For the theme to work, the file "%s" should not exist.' % dst
+    end
+
+    real_src_path = Pathname.new(src).realpath
+    real_dst_dir = Pathname.new(File.dirname(dst)).realpath
+
+    relative_path = real_src_path.relative_path_from(real_dst_dir)
+    FileUtils.ln_s(relative_path, real_dst_dir)
+  end
+
+  # ensures the directory exists
+  def ensure_dir(dir)
+    unless File.exists?(dir)
+      FileUtils.mkdir_p(dir)
+    end
+    unless File.directory?(dir)
+      raise 'For the theme to work, "%s" must be a directory.' % dir
+    end
+  end  
+  
 end
 
