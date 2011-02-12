@@ -27,8 +27,9 @@ module Common::Utility::TimeHelper
   WeekdaySymbols = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 
   def friendly_date(time)
+    return '' if time.nil?
     @today ||= Time.zone.today
-    date  = time.to_date
+    date = time.to_date
 
     if date == @today
       # 4:30PM
