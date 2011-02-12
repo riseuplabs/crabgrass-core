@@ -1,10 +1,9 @@
 
 
-class Pages::TrashController < Pages::BaseController
+class Pages::TrashController < Pages::SidebarController
 
   before_filter :login_required
   helper 'pages/trash'
-  layout nil
 
   # loads popup
   def edit

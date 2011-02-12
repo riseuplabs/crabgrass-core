@@ -9,10 +9,9 @@
 #  destroy: page_participation_path      /pages/:page_id/participations/:id
 #
 
-class Pages::ParticipationsController < Pages::BaseController
+class Pages::ParticipationsController < Pages::SidebarController
 
   before_filter :login_required
-  layout nil
 
   def update
     if params[:watch]
@@ -26,17 +25,18 @@ class Pages::ParticipationsController < Pages::BaseController
     end
   end
 
+  def create
+    update
+  end
+
   protected
 
   def fetch_data
-    @participation = UserParticipation.find(params[:id])
+    @participation = UserParticipation.find(params[:id]) if params[:id]
   end
 
   def authorized?
-    #if params[:watch]
-    #  current_user.id == @participation.user_id
-    #end
-    true
+    may_show_page?
   end
 
 end

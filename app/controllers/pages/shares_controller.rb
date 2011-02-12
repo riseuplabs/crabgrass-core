@@ -22,11 +22,10 @@
 # you cannot share to users/groups that you cannot pester, unless
 # the page is private and they already have access.
 #
-class Pages::SharesController < Pages::BaseController
+class Pages::SharesController < Pages::SidebarController
 
   before_filter :login_required
   verify :xhr => true
-  layout nil
 
   helper 'pages/share' #, 'autocomplete'
 
@@ -109,10 +108,6 @@ class Pages::SharesController < Pages::BaseController
   ##
   ## UI METHODS FOR THE SHARE & NOTIFY FORMS
   ##
-
-  def close_popup
-    render :template => 'pages/sidebar/reset'
-  end
 
   #def show_error_message
   #  render :template => 'base_page/show_errors'

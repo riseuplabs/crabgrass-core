@@ -4,10 +4,9 @@
 #  update:  page_attributes_path      /pages/:page_id/attributes
 #
 
-class Pages::AttributesController < Pages::BaseController
+class Pages::AttributesController < Pages::SidebarController
 
   before_filter :login_required
-  layout nil
 
   def update
     if params[:public]
