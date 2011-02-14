@@ -62,8 +62,8 @@ class UserParticipationTest < ActiveSupport::TestCase
   end
 
   def test_user_destroyed
-    user = User.make
-    page = Page.make :title => 'boing'
+    user = users(:blue)
+    page = Page.create! :title => 'boing'
     page.add(user)
     page.save!
     user.destroy
@@ -103,6 +103,21 @@ class UserParticipationTest < ActiveSupport::TestCase
     page.reload
 
     assert !user.may_admin_page_without?(page, gpart), 'cannot remove gpart'
+  end
+
+  def test_stars_update
+    user = users(:blue)
+    page = Page.create! :title => 'the moon and all the stars'
+
+    participation = page.add(user, :star => true)
+    participation.save!
+    assert_equal 1, page.stars_count
+    assert_equal 1, page.reload.stars_count
+
+    participation = page.add(user, :star => false)
+    participation.save!
+    assert_equal 0, page.stars_count
+    assert_equal 0, page.reload.stars_count
   end
 
 end

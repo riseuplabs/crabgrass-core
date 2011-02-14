@@ -129,9 +129,11 @@ module UserExtension::Pages
     # user_participations.build doesn't update the pages.users
     # until it is saved. If you need an updated users list, then
     # use user_participations directly.
-    page.user_participations.build(part_attrs.merge(
+    part = page.user_participations.build(part_attrs.merge(
       :page_id => page.id, :user_id => id,
       :resolved => page.resolved?))
+    part.page = page
+    return part
   end
 
   public 
