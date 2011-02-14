@@ -1,6 +1,19 @@
 en:
  
   ##
+  ## Time Formats
+  ## (override the defaults in locale/rails)
+  ##
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      # change to am/pm...
+      short: "%d %b %I:%M %p"
+      long: "%B %d, %Y %I:%M %p"
+
+
+  ##
   ## TO BE DESTROYED
   ##
 

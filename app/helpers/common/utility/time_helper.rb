@@ -50,6 +50,10 @@ module Common::Utility::TimeHelper
     return str
   end
 
+  def friendly_time(time, format = :long)
+    I18n.l time, :format => format
+  end
+
   # localized short date (or time if timestamp is from today).
  # def short_date(time)
     #@today ||= Time.zone.today
