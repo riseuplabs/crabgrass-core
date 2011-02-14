@@ -42,8 +42,11 @@ module Common::Ui::ImageHelper
 
   ## returns the url for the user's or group's avatar
   def avatar_url_for(viewable, size='medium')
-    #avatar_url(:id => (viewable.avatar_id||0), :size => size)
-    '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
+    if viewable
+      '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
+    else
+      '/avatars/0/%s.jpg' % size
+    end
   end
 
   def avatar_style(viewable, size='medium')

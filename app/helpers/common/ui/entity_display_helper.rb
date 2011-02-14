@@ -13,6 +13,20 @@ module Common::Ui::EntityDisplayHelper
     "<a href=\"/#{name}\">#{name}</a>"
   end
 
+  #
+  # provides placeholder for when the user or group record has been destroyed.
+  #
+  def link_to_unknown(options)
+    styles  = [options[:style]]
+    classes = [options[:class]]
+    if options[:avatar]
+      classes << options[:avatar]
+      classes << 'icon'
+      styles  << avatar_style(nil, options[:avatar])
+    end
+    content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
+  end
+
   ##
   ## GROUPS
   ##
@@ -26,17 +40,18 @@ module Common::Ui::EntityDisplayHelper
   #  :class  => added to <a> tag
   #  
   def link_to_group(group, options={})
+    return link_to_unknown(options) if group.nil?
+
     url          = url_for_group(group)
     display_name = group.display_name
-    style = options[:style] || ""
-    classes = [options[:class]]
+    styles       = [options[:style]]
+    classes      = [options[:class]]
     if options[:avatar]
       classes << options[:avatar]
       classes << 'icon'
-      url = avatar_url_for(group, options[:avatar])
-      style = "background-image:url(#{url});" + style
+      styles  << avatar_style(group, options[:avatar])
     end
-    link_to(display_name, url, :class => classes.join(' '), :style => style)
+    link_to(display_name, url, :class => classes.join(' '), :style => styles.join(';'))
   end
 
 
@@ -54,6 +69,8 @@ module Common::Ui::EntityDisplayHelper
   #  :class -- add additional classes
   #
   def link_to_user(user, options={})
+    return link_to_unknown(options) if user.nil?
+
     styles  = [options[:style]]
     classes = [options[:class]]
     path    = user.path
