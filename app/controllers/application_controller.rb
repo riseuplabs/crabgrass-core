@@ -6,26 +6,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
-  ##
-  ## COMMON CONTROLLER EXTENSIONS
-  ## 
-
-  Dir.entries("app/controllers/controller_extension/").each do |file|   
-    include("controller_extension/#{$1}".camelize.constantize) if file =~ /(.*)\.rb$/
-  end
-
-  permissions :application
-
-  ##
-  ## COMMON HELPERS
-  ##
-
+  include_extensions("app/controllers/controller_extension/*.rb")
   helper :application
-  [:utility, :ui, :page].each do |helper_namespace|
-    Dir.entries("app/helpers/common/#{helper_namespace}/").each do |file|
-      helper("common/#{helper_namespace}/#{$1}") if file =~ /(.*)_helper\.rb$/
-    end
-  end
+  include_helpers("app/helpers/common/*/*.rb")
+  permissions :application
 
   protected
 

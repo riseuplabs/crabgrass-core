@@ -17,7 +17,6 @@ require 'action_controller'
 class ActionView::Base
   alias_method :rails_submit_tag, :submit_tag
   def submit_tag(value = "Save changes", options = {})
-    #options[:id] = (options[:id] || options[:name] || :commit)
     options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
     rails_submit_tag(value, options)
   end
