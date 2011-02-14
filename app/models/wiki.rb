@@ -234,14 +234,14 @@ class Wiki < ActiveRecord::Base
     Wiki.connection.execute(quote_sql([
       "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ?",
       owner.id,
-      owner.class.class_name
+      owner.class.base_class.name
     ]))
 
     # for wiki's owned by by profiles
     Wiki.connection.execute(quote_sql([
       "UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?",
       owner.id,
-      owner.class.class_name
+      owner.class.base_class.name
     ]))
   end
 
