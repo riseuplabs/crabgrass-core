@@ -54,7 +54,6 @@ Crabgrass::Initializer.run do |config|
   config.gem 'will_paginate', :version => '~> 2.3'
   config.gem 'mini_magick', :version => '~> 2.3'
   config.gem 'compass', :version => '~> 0.10'
-  config.gem 'password'
   
   # required, and compilation is required to install
   config.gem 'haml', :version => '~> 3.0'
