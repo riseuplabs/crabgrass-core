@@ -1,7 +1,7 @@
 class Me::PermissionsController < Me::BaseController
 
   def index
-    @holders_by_lock = current_user.holders_by_lock
+    @keys_by_lock = current_user.keys_by_lock
   end
 
   def create
