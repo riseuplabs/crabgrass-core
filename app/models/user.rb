@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
 
   after_create :add_permissions
   def add_permissions
-    self.allow! :public, [:view, :pester]
+    self.grant! :public, [:view, :pester]
   end
 
   after_save :update_name

@@ -102,7 +102,7 @@ module GroupExtension::Groups
       elsif self.real_council == committee
         committee.type = "Committee"
         self.council = nil
-        self.allow! self, :all
+        self.grant! self, :all
       end
       committee.save!
       self.org_structure_changed
@@ -167,8 +167,8 @@ module GroupExtension::Groups
       end
       self.council = committee
       committee.type = "Council"
-      self.allow! committee, :all
-      self.disallow! self, :admin
+      self.grant! committee, :all
+      self.disgrant! self, :admin
       self.save!
 
       # creating a new council for a new group

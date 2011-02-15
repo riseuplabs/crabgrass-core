@@ -119,8 +119,8 @@ module UserExtension::Users
   module InstanceMethods
 
     def add_social_permissions
-      self.allow! self.friends, [:view, :pester]
-      self.allow! self.peers, [:view, :pester]
+      self.grant! self.friends, [:view, :pester]
+      self.grant! self.peers, [:view, :pester]
     end
 
     ##

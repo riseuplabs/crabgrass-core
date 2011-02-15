@@ -268,7 +268,7 @@ class Group < ActiveRecord::Base
 
   after_create :create_permissions
   def create_permissions
-    self.allow! self, :all
+    self.grant! self, :all
   end
 
   ##

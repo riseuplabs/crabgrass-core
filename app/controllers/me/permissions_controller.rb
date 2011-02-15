@@ -1,11 +1,11 @@
 class Me::PermissionsController < Me::BaseController
 
   def index
-    @permissions = current_user.permissions #.without_self
+    @holders_by_lock = current_user.holders_by_lock
   end
 
   def create
-    @permission = current_user.allow! params[:permission][:entity_code], :view
+    @permission = current_user.grant! params[:permission][:entity_code], :view
     if @permission
       redirect_to me_permissions_url, :notice => 'Permission added'
     else
