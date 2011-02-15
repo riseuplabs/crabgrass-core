@@ -99,19 +99,19 @@ module Common::Ui::EntityDisplayHelper
   #  :style -- override the default style
   #  :class -- override the default class of the link (icon)
   #
-  def link_to_user_avatar(arg, options={})
-    login, path, display_name = login_and_path_for_user(arg,options)
-    return "" if login.blank?
-
-    style = options[:style] || ""                   # allow style override
-    label = options[:login] ? login : display_name  # use display_name for label by default
-    label = options[:label] || label                # allow label override
-    klass = options[:class] || 'icon'
-    options[:title] ||= display_name
-    options[:alt] ||= display_name
-
-    avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
-  end
+  #def link_to_user_avatar(arg, options={})
+  #  login, path, display_name = login_and_path_for_user(arg,options)
+  #  return "" if login.blank?
+  #
+  #  style = options[:style] || ""                   # allow style override
+  #  label = options[:login] ? login : display_name  # use display_name for label by default
+  #  label = options[:label] || label                # allow label override
+  #  klass = options[:class] || 'icon'
+  #  options[:title] ||= display_name
+  #  options[:alt] ||= display_name
+  #
+  #  avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
+  #end
 
   ##
   ## GENERIC PERSON OR GROUP
@@ -125,63 +125,76 @@ module Common::Ui::EntityDisplayHelper
     end
   end
 
-  # Display a group or user, without a link. All such displays should be made by
-  # this method.
+  #
+  # Display a group or user, with or without a link.
+  # All such displays should be made by this method.
   #
   # options:
-  #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
-  #   :format => :short | :full | :both | :hover | :twolines (default: full)
-  #   :link => nil | true | url (default: nil)
-  #   :class => passed through to the tag as html class attr
-  #   :style => passed through to the tag as html style attr
-  #   :tag   => the html tag to use for this display (ie :div, :span, :li, :a, etc)
+  #
+  #   :avatar => nil | :tiny | :xsmall | :small | :medium | :large | :xlarge (default: nil)
+  #
+  #   :format => :short (entity.name)
+  #              :full  (entity.display_name)
+  #              :both  (both name and display name)
+  #              :two   (both name and display name on two lines)
+  #              (default: full)
+  #
+  #   to create a link, specify one of one of:
+  #     (1) :url      => creates a normal link_to
+  #     (2) :remote   => creates a link_to_remote
+  #     (3) :function => creates a link_to_function
+  #
+  #   :class => added to the elements's class
+  #   :style => added to the element's style
   #
   def display_entity(entity, options={})
-    format  = options[:format] || :full
-    display = nil
-    hover   = nil
-    classes = [options[:class], 'entity']
-    styles  = [options[:style]]
-    link    = options[:link] || options[:tag] == :a
 
-    name = entity.name
-    display_name = h(entity.display_name)
-    both_names = h(entity.both_names)
-    if link
-      url = link === true ? url_for_entity(entity) : link
-      if options[:tag] == :a
-        href = url
+    format   = options[:format] || :full
+    styles   = [options[:style]]
+    classes  = [options[:class], 'entity']
+
+    # avatar
+
+    if options[:avatar]
+      classes << options[:avatar]
+      classes << 'icon'
+      styles  << avatar_style(entity, options[:avatar])
+    end
+
+    # label 
+
+    display, title = if entity.nil?
+      [:unknown.t, nil]
+    elsif format == :short
+      classes << 'single'
+      [entity.name, h(entity.display_name)]
+    elsif format == :full
+      classes << 'single'
+      [h(entity.display_name), entity.name]
+    elsif format == :both
+      classes << 'single'
+      [h(entity.both_names), nil]
+    elsif format == :two
+      if entity.name != entity.display_name
+        ["#{entity.name}<br/>#{h(entity.display_name)}", nil]
       else
-        name         = link_to(name, url)
-        display_name = link_to(display_name, url)
-        both_name    = link_to(both_names, url)
-        href = nil
+        classes << 'single'
+        [entity.name, nil]
       end
     end
 
-    if options[:avatar]
-      url = avatar_url_for(entity, options[:avatar])
-      classes << "icon"
-      classes << options[:avatar]
-      styles << "background-image:url(#{url})"
+    # element
+
+    element_options = {:class => classes.join(' '), :style => styles.join(';'), :title => title}
+    if options[:remote]
+      link_to_remote(display, options[:remote], element_options)
+    elsif options[:function]
+      link_to_function(display, options[:function], element_options)
+    elsif options[:url]
+      link_to(display, options[:url], element_options)
+    else
+      content_tag(:div, display, element_options)
     end
-    display, title, hover = case options[:format]
-      when :short then [name,         display_name, nil]
-      when :full  then [display_name, name,         nil]
-      when :both  then [both_names,   nil,          nil]
-      when :hover then [name,         nil,          display_name]
-      when :twolines then ["<div class='name'>%s</div>%s"%[name, (display_name if name != display_name)], nil, nil]
-    end
-    #if hover
-    #  display += content_tag(:b,hover)
-    #  options[:style] = [options[:style], "position:relative"].compact.join(';')
-    #  # ^^ to allow absolute popup with respect to the name
-    #end
-    if options[:format] == :twolines and name != display_name
-      classes << 'two'
-    end
-    element = options[:tag] || :div
-    content_tag(element, display, :style => styles.join(';'), :class => classes.join(' '), :title => title, :href => href)
   end
 
   #
