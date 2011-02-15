@@ -89,7 +89,7 @@ module Pages::SidebarHelper
     else
       checked = @page.public? ? 'check_on_16' : 'check_off_16'
       content_tag :li do
-        content_tag :span, :class => "a small_icon #{checked}" do
+        content_tag :span, :class => "a icon #{checked}" do
           :public_checkbox.t
         end
       end

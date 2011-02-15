@@ -2,10 +2,10 @@ module Mailers::PageHistory
   def self.included(base)
     base.instance_eval do
       # TODO: figure out which helpers are really needed.
-      add_template_helper(BasePage::HistoryHelper)
+      add_template_helper(Pages::HistoryHelper)
       #add_template_helper(PageHelper)
-      add_template_helper(Page::UrlHelper)
-      add_template_helper(Utility::TimeHelper)
+      #add_template_helper(Page::UrlHelper)
+      add_template_helper(Common::Utility::TimeHelper)
     end
   end
 

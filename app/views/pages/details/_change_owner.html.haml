@@ -1,0 +1,12 @@
+-# all direct and indirect groups we are members of
+- groups = current_user.all_groups.sort {|a,b| a.name <=> b.name}  
+
+%ul
+  - for group in groups
+    - url = 
+    %li.hoverbutton= display_entity :avatar => 'xsmall', :format => :twolines
+
+.buttons
+  = back_modal_button
+  = close_modal_button
+

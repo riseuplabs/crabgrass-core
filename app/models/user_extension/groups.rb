@@ -98,17 +98,17 @@ module UserExtension::Groups
         end
       end
 
-      # DEPRECATED!!
-      named_scope :on, lambda { |site|
-        if site.network.nil?
-          {}
-        else
-          { :select => "users.*",
-            :joins => :memberships,
-            :conditions => ["memberships.group_id = ?", site.network.id]
-          }
-        end
-      }
+      ## DEPRECATED!!
+      #named_scope :on, lambda { |site|
+      #  if site.network.nil?
+      #    {}
+      #  else
+      #    { :select => "users.*",
+      #      :joins => :memberships,
+      #      :conditions => ["memberships.group_id = ?", site.network.id]
+      #    }
+      #  end
+      #}
 
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache

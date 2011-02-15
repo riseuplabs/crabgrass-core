@@ -123,6 +123,12 @@ table.form {
     text-align: right;
     padding: 1em;
     padding-right: 0;
+    .not_label {
+      // silly way to put stuff in td.label that doesn't look like a label:
+      text-align: left;
+      float: right;
+      font-weight: normal;
+    }
   }
   td.input {
     padding: 1em;
