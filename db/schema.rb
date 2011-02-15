@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101103133322) do
+ActiveRecord::Schema.define(:version => 20110215132532) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -327,6 +327,15 @@ ActiveRecord::Schema.define(:version => 20101103133322) do
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
 
+  create_table "keys", :force => true do |t|
+    t.integer "mask",         :default => 0
+    t.integer "locked_id"
+    t.string  "locked_type"
+    t.integer "keyring_code"
+  end
+
+  add_index "keys", ["locked_id", "locked_type", "keyring_code"], :name => "index_keys_on_locked_id_and_locked_type_and_keyring_code"
+
   create_table "languages", :force => true do |t|
     t.string   "name"
     t.string   "code"
@@ -489,15 +498,6 @@ ActiveRecord::Schema.define(:version => 20101103133322) do
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
-
-  create_table "permissions", :force => true do |t|
-    t.integer "mask",        :default => 0
-    t.integer "object_id"
-    t.string  "object_type"
-    t.integer "entity_code"
-  end
-
-  add_index "permissions", ["object_id", "object_type", "entity_code"], :name => "index_permissions_on_object_id_and_object_type_and_entity_code"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id"
