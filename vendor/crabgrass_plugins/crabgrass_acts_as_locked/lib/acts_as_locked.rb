@@ -14,7 +14,7 @@ module ActsAsLocked
 
       def self.acts_as_locked(*locks)
 
-        has_many :keys, :as => :locked do
+        has_many :keys, :class_name => "ActsAsLocked::Key", :as => :locked do
 
           def open?(locks, reload=false)
             self.reload if reload
@@ -27,7 +27,7 @@ module ActsAsLocked
         # let's use AR magic to cache keyss from the controller like this...
         # @pages = Page.find... :include => {:owner => :current_user_keys}
         has_many :current_user_keys,
-          :class_name => "Key",
+          :class_name => "ActsAsLocked::Key",
           :conditions => 'keyring_code IN (#{User.current.access_codes.join(", ")})',
           :as => :locked do
           def open?(locks)
@@ -82,11 +82,11 @@ module ActsAsLocked
             end
           end
 
-          def holders_by_lock
+          def keys_by_lock
             keys.inject({}) do |hash, key|
               key.locks.each do |lock|
                 hash[lock] ||= []
-                hash[lock].push key.holder
+                hash[lock].push key
               end
               hash
             end
