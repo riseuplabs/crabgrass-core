@@ -19,16 +19,9 @@ module Groups::MembershipsPermission
     may_create_memberships? and group.committee?
   end
 
-  # this seems a little overly complicated
   def may_list_memberships?(group=@group)
-    if logged_in?
-      current_user.may?(:admin, group) or
-      current_user.member_of?(group) or
-      group.profiles.visible_by(current_user).may_see_members? or
-      (group.committee? && may_list_memberships?(group.parent))
-    else
-      group.profiles.public.may_see_members?
-    end
+    group.has_access :see_members or
+    (group.committee? && may_list_memberships?(group.parent))
   end
 
   def may_update_memberships?(group=@group)

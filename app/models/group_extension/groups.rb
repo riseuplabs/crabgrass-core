@@ -10,6 +10,9 @@ module GroupExtension::Groups
     base.send :include, InstanceMethods
 
     base.instance_eval do
+
+      add_locks :see_committees => 8, :see_networks => 9
+
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
       belongs_to :council, :class_name => 'Group'
@@ -23,6 +26,11 @@ module GroupExtension::Groups
         :after_remove => :org_structure_changed
       )
       alias_method :committees, :children
+
+      has_many :real_committees,
+        :foreign_key => 'parent_id',
+        :class_name => 'Committee',
+        :conditions => {:type => 'Committee'}
 
       alias_method :real_council, :council
       define_method :council do |*args|
@@ -82,10 +90,6 @@ module GroupExtension::Groups
 
   module InstanceMethods
 
-    def real_committees
-      committees.select {|c|c.committee?}
-    end
-
     # Adds a new committee or makes an existing committee be the council (if
     # the make_council argument is set). No other method of adding committees
     # should be used.
@@ -94,20 +98,11 @@ module GroupExtension::Groups
       committee.parent_id = self.id
       committee.parent_name_changed
       if make_council
-        if real_council
-          real_council.update_attribute(:type, "Committee")
-        end
-        self.council = committee
-        committee.type = "Council"
-
-        # creating a new council for a new group
-        # the council members will be able to remove other members
-        if self.memberships.count < 2
-          committee.full_council_powers = true
-        end
-      elsif self.real_council == committee && !make_council
+        add_council(committee)
+      elsif self.real_council == committee
         committee.type = "Committee"
         self.council = nil
+        self.grant! self, :all
       end
       committee.save!
       self.org_structure_changed
@@ -134,17 +129,9 @@ module GroupExtension::Groups
       @group_ids ||= ([self.id] + Group.committee_ids(self.id))
     end
 
-    # returns an array of committees visible to appropriate access level
-    def committees_for(access)
-      if access == :private
-        return self.real_committees
-      elsif access == :public
-        if profiles.public.may_see_committees?
-          return @comittees_for_public ||= self.real_committees.select {|c| c.profiles.public.may_see?}
-        else
-          return []
-        end
-      end
+    # returns an array of committees visible to the given user
+    def committees_for(user)
+      self.real_committees.with_access :view, user
     end
 
     # whenever the structure of this group has changed
@@ -169,6 +156,25 @@ module GroupExtension::Groups
     def destroy_council
       if self.normal? and self.council_id and self.council_id != self.id
         self.council.destroy
+      end
+    end
+
+    private
+
+    def add_council(committee)
+      if real_council
+        real_council.update_attribute(:type, "Committee")
+      end
+      self.council = committee
+      committee.type = "Council"
+      self.grant! committee, :all
+      self.disgrant! self, :admin
+      self.save!
+
+      # creating a new council for a new group
+      # the council members will be able to remove other members
+      if self.memberships.count < 2
+        committee.full_council_powers = true
       end
     end
   end

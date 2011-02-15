@@ -1,0 +1,11 @@
+- accessors = @permissions.map(&:accessors)
+- missing_accessors = [:friends, :peers, :public] - accessors
+- return unless missing_accessors.any?
+.permission{:style=>"clear:both; padding: 20px"}
+  .accessors{:style=>"float:left"}
+    - form_for :permission, :url => me_permissions_path do |f|
+      .add_description.action.create
+        = f.select :entity_code, missing_accessors
+        = f.submit t(:add)
+        .description{:style=>"display: none"}
+          =t :add_permission_description

@@ -13,6 +13,14 @@ module UserExtension::Users
 
     base.instance_eval do
 
+      add_locks :see_contacts => 4, :request_contact => 5, :comment => 6
+      serialize_as IntArray, :friend_id_cache, :foe_id_cache
+
+      initialized_by :update_contacts_cache,
+        :friend_id_cache, :foe_id_cache
+
+      after_create :add_social_permissions
+
       ##
       ## PEERS
       ##
@@ -31,6 +39,11 @@ module UserExtension::Users
           sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
 
           User.find_by_sql(sql)
+        end
+
+        # entity_codes used by permissions and pathfinder
+        def entity_code
+          "%04d" % "9#{proxy_owner.id}"
         end
       end
 
@@ -65,6 +78,12 @@ module UserExtension::Users
           select = "users.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
         end
+
+        # entity_codes used by permissions and pathfinder
+        def entity_code
+          "%04d" % "7#{proxy_owner.id}"
+        end
+
       end
 
       # same result as user.friends, but chainable with other named scopes
@@ -98,6 +117,11 @@ module UserExtension::Users
   end
 
   module InstanceMethods
+
+    def add_social_permissions
+      self.grant! self.friends, [:view, :pester]
+      self.grant! self.peers, [:view, :pester]
+    end
 
     ##
     ## STATUS / PUBLIC WALL
@@ -250,9 +274,7 @@ module UserExtension::Users
     end
 
     def may_be_pestered_by!(user)
-      # TODO: perhaps being someones friend or peer does not automatically
-      # mean that you can pester them. It should all be based on the profile?
-      if friend_of?(user) or peer_of?(user) or profiles.visible_by(user).may_pester?
+      if has_access? :pester, user
         return true
       else
         raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))

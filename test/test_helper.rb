@@ -13,6 +13,7 @@ require 'test_help'
 
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 ##
 ## misc.
 ##
@@ -21,7 +22,9 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-  ## setup { Sham.reset } what is this for?
+  # Make sure Faker generates random but predictable content
+  # https://github.com/technoweenie/machinist
+  setup { Sham.reset }
 
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false

@@ -10,7 +10,7 @@ class UserJoinedGroupActivity < Activity
 
   before_create :set_access
   def set_access
-    if user.profiles.public.may_see_groups? and group.profiles.public.may_see_members?
+    if user.has_access?(:see_groups, :public) and group.has_access?(:see_members, :public)
       self.access = Activity::PUBLIC
     end
   end

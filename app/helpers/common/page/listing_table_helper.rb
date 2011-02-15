@@ -1,7 +1,7 @@
 ##
 ## Helpers for page lists in "table" style (ie in a table of columns and rows).
-## 
-## The idea here is to allow the columns to be displayed in any order. 
+##
+## The idea here is to allow the columns to be displayed in any order.
 ##
 
 module Common::Page::ListingTableHelper

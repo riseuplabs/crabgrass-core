@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class RequestTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :requests, :memberships, :federatings
+  fixtures :users, :groups, :requests, :memberships, :federatings, :permissions
 
   def test_request_to_friend
     u1 = users(:kangaroo)

@@ -1,7 +1,8 @@
 require 'test/unit'
 require 'rubygems'
-require 'active_record'
+require 'activerecord'
 require 'ruby_debug'
+require 'logger'
 
 require "#{File.dirname(__FILE__)}/../init"
 
@@ -96,7 +97,7 @@ class ActsAsSiteLimitedTest < Test::Unit::TestCase
     Site.current = Site.find_by_name(1)
     thing1a = Thing.create! :name => 'a'
     thing1b = Thing.create! :name => 'b'
-    Site.current = Site.find_by_name(2)    
+    Site.current = Site.find_by_name(2)
     thing2a = Thing.create! :name => 'a'
     thing2b = Thing.create! :name => 'b'
     thing2c = Thing.create! :name => 'c'
@@ -144,8 +145,8 @@ class ActsAsSiteLimitedTest < Test::Unit::TestCase
     bundle = Bundle.create!
     bundle.things.create! :name => 'a'
     bundle.things.create! :name => 'b'
-    
-    assert_equal 'b', bundle.conditional_things.first.name    
+
+    assert_equal 'b', bundle.conditional_things.first.name
   end
 
   def test_named_scope
@@ -166,7 +167,7 @@ class ActsAsSiteLimitedTest < Test::Unit::TestCase
     bundle = Bundle.create!
     bundle.things.create! :name => 'a'
     bundle.things.create! :name => 'b'
-    
+
     assert_equal 2, bundle.things_by_sql.count
     assert_equal 'a', bundle.things_by_sql.first.name
   end

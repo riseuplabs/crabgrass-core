@@ -5,7 +5,7 @@ module Groups::RequestsPermission
   def may_create_join_request?(group=@group)
     logged_in? and
     group and
-    group.profiles.visible_by(current_user).may_request_membership?
+    group.has_access? :request_membership
   end
 
   def may_create_invite_request?(group=@group)

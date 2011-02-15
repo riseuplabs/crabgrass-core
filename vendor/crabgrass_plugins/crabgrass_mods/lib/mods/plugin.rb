@@ -24,7 +24,7 @@ class Mods::Plugin < Rails::Plugin
   #
   # in development mode, rails unloads most classes and reloads them on each
   # request. plugins, by default, don't get reloaded. this can be a problem
-  # when we have code, like models, in the plugin that rails unloaded. 
+  # when we have code, like models, in the plugin that rails unloaded.
   # you can force all plugins to get reloaded with "config.reload_plugins = true"
   #
   # alternately, you can call this method from the plugin's init.rb.
@@ -39,7 +39,7 @@ class Mods::Plugin < Rails::Plugin
     end
   end
 
-  # make app/permissions to be considered part of the app paths for 
+  # make app/permissions to be considered part of the app paths for
   # a plugin.
   def app_paths
     super + [ File.join(directory, 'app', 'permissions') ]

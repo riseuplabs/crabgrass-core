@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class RequestToRemoveUserTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :requests, :memberships, :federatings
+  fixtures :users, :groups, :requests, :memberships, :federatings, :permissions
 
   def setup
     # 6 in total users in rainbow:

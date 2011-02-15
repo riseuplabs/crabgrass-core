@@ -1,0 +1,192 @@
+# == Permissions
+# 
+#
+# As we use permissions for access rights on groups we need some
+# self-referential permissions for all groups. If they do not have a
+# council their permission mask is ~0 - so all true.
+# If they do have a council they may not admin the group themselves 
+# anymore so it is ~4 (:admin being the 3rd bit permission)
+#
+# === Group Permissions:
+#
+# bit dec key
+#  0   1   :view
+#  1   2   :edit
+#  2   4   :admin
+#  3   8   :pester
+#  4  16
+#  5  32
+#  6  64   :see_members
+#  7  128  :request_membership
+#  8  256  :see_committees
+#  9  512  :see_networks
+
+true_levellers:
+  object_id: 1
+  object_type: Group
+  entity_code: 81
+  mask: <%= ~0 %>
+
+animals:
+  object_id: 2
+  object_type: Group
+  entity_code: 82
+  mask: <%= ~0 %>
+
+animals_for_public:
+  object_id: 2
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
+
+rainbow:
+  object_id: 3
+  object_type: Group
+  entity_code: 83
+  mask: <%= ~0 %>
+
+rainbow_for_public:
+  object_id: 3
+  object_type: Group
+  entity_code: 1
+  # see, pester
+  mask: <%= 9 %>
+
+warm:
+  object_id: 31
+  object_type: Group
+  entity_code: 831
+  mask: <%= ~0 %>
+
+cold:
+  object_id: 32
+  object_type: Group
+  entity_code: 832
+  mask: <%= ~0 %>
+
+recent_group:
+  object_id: 33
+  object_type: Group
+  entity_code: 833
+  mask: <%= ~0 %>
+
+public_group:
+  object_id: 1000
+  object_type: Group
+  entity_code: 81000
+  mask: <%= ~0 %>
+
+public_group_for_public:
+  object_id: 1000
+  object_type: Group
+  entity_code: 1
+  # see, pester and see committees
+  mask: <%= 265 %>
+
+public_committee:
+  object_id: 1001
+  object_type: Group
+  entity_code: 81001
+  mask: <%= ~0 %>
+
+public_committee_for_public:
+  object_id: 1001
+  object_type: Group
+  entity_code: 1
+  # see, pester, see members, request membership
+  mask: <%= 201 %>
+
+private_committee:
+  object_id: 1002
+  object_type: Group
+  entity_code: 81002
+  mask: <%= ~0 %>
+
+private_group:
+  object_id: 2000
+  object_type: Group
+  entity_code: 82000
+  mask: <%= ~0 %>
+
+# these two are also the sites networks.
+cnt:
+  object_id: 3001
+  object_type: Group
+  entity_code: 83001
+  mask: <%= ~0 %>
+
+cnt_for_public:
+  object_id: 3001
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
+
+fai:
+  object_id: 3002
+  object_type: Group
+  entity_code: 83002
+  mask: <%= ~0 %>
+
+fai:
+  object_id: 3002
+  object_type: Group
+  entity_code: 1
+  # see, pester, request membership
+  mask: <%= 137 %>
+
+# lets have another one so we can access it from within the sites.
+fau:
+  object_id: 3003
+  object_type: Group
+  entity_code: 83003
+  mask: <%= ~0 %>
+
+#
+# super admin group
+#
+
+super_admin_group:
+  object_id: 4001
+  object_type: Group
+  entity_code: 84001
+  mask: <%= ~0 %>
+
+# === User Permissions:
+#
+# bit dec key
+#  0   1   :view
+#  1   2   :pester
+#  2   4   
+#  3   8   
+#  4  16
+#  5  32
+#  6  64   
+#  7  128  
+#  8  256  
+#  9  512  
+
+<% [[1, "quentin"], [2, "aaron"], [3, "gerrard"], [4, "blue"], [5, "orange"], [6, "purple"], [7, "yellow"], [8, "red"], [9, "green"], [10, "kangaroo"], [11, "dolphin"], [12, "penguin"], [13, "iguana"]].each do |id,login| %>
+
+# friends may view and pester
+<%=login%>_friends:
+  object_id: <%= id %>
+  object_type: User
+  entity_code: 7<%= id %>
+  mask: 3
+
+# peers may view and pester
+<%=login%>_peers:
+  object_id: <%= id %>
+  object_type: User
+  entity_code: 9<%= id %>
+  mask: 3
+
+# public may view and pester
+<%=login%>_public:
+  object_id: <%= id %>
+  object_type: User
+  entity_code: 1
+  mask: 3
+<% end %>

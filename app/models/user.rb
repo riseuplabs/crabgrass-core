@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  acts_as_locked :view, :pester, :burdon, :spy
+
   ##
   ## CORE EXTENSIONS
   ##
@@ -44,7 +46,7 @@ class User < ActiveRecord::Base
   ## NAMED SCOPES
   ##
 
-  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
   # alphabetized and (optional) limited to +letter+
   named_scope :alphabetized, lambda {|letter|
@@ -80,6 +82,11 @@ class User < ActiveRecord::Base
     if t_name
       write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
     end
+  end
+
+  after_create :add_permissions
+  def add_permissions
+    self.grant! :public, [:view, :pester]
   end
 
   after_save :update_name
@@ -118,6 +125,7 @@ class User < ActiveRecord::Base
     name[0..20]
   end
 
+
   def to_param
     return login
   end
@@ -125,7 +133,7 @@ class User < ActiveRecord::Base
   def path
     "/#{login}"
   end
-  
+
   def banner_style
     #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
@@ -218,6 +226,20 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
+  # entity_codes used by permissions and pathfinder
+  def entity_code
+    "%04d" % "1#{id}"
+  end
+
+  # all codes of the entities I have access to:
+  def access_codes
+    codes = [1] # public
+    codes << entity_code.to_i # me
+    codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
+    codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
+    codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
+  end
+
   # Returns true if self has the specified level of access on the protected thing.
   # Thing may be anything that defines the method:
   #
@@ -243,14 +265,14 @@ class User < ActiveRecord::Base
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
-      result = protected_thing.has_access!(perm,self) rescue PermissionDenied
-      # has_access! might call clear_access_cache, so we need to rebuild it
+      result = protected_thing.has_access!(perm, self) rescue false
+      # has_access? might call clear_access_cache, so we need to rebuild it
       # after it has been called.
       @access ||= {}
       @access[key] ||= {}
       @access[key][perm] = result
     end
-    result or raise PermissionDenied.new
+    result or raise PermissionDenied.new("Permission denied!")
   end
 
   # zeros out the in-memory page access cache. generally, this is called for

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites
+  fixtures :groups, :users, :profiles, :memberships, :sites, :permissions
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -46,7 +46,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.profiles.public.update_attribute(:may_see, false)
+    g.disallow! :public, :see
     u = User.create :login => 'user'
 
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +55,8 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.profiles.public.update_attribute(:may_see, true)
+    g.allow! :all, [:view, :pester]
+    g.reload
     u = User.create :login => 'user'
 
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
@@ -67,10 +68,11 @@ class GroupTest < ActiveSupport::TestCase
       u = users(:red)
       g = groups(:animals)
 
-      g.profiles.public.update_attributes!(:may_request_membership => true)
+      g.allow! :all, [:request_membership]
+      g.reload
 
       assert g.profiles.visible_by(u).public?
-      assert g.profiles.visible_by(u).may_request_membership?
+      assert g.has_access? :request_membership, u
 
     end
   end
@@ -85,10 +87,10 @@ class GroupTest < ActiveSupport::TestCase
   def test_committee_access
     g = groups(:public_group)
     assert_equal [groups(:public_committee)],
-                 g.committees_for(:public).sort_by{|c| c.id},
+                 g.committees_for(users(:red)).sort_by{|c| c.id},
                  "should find 1 public committee"
     assert_equal [groups(:public_committee), groups(:private_committee)].sort_by{|c| c.id},
-                 g.committees_for(:private).sort_by{|c| c.id},
+                 g.committees_for(users(:blue)).sort_by{|c| c.id},
                  "should find 2 committee with private access"
   end
 
@@ -135,7 +137,9 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_associations
+    User.current = users(:blue)
     assert check_associations(Group)
+    User.current = nil
   end
 
   def test_alphabetized

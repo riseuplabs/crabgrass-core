@@ -17,6 +17,9 @@
 module UserExtension::Groups
   def self.included(base)
     base.instance_eval do
+
+      add_locks :see_groups => 7
+
       has_many :memberships, :foreign_key => 'user_id',
         :dependent => :destroy,
         :before_add => :check_duplicate_memberships

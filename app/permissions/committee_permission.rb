@@ -6,11 +6,7 @@ module CommitteePermission
   # otherwise, it returns true if the current committee is visible.
   def may_view_committee?(group = @group)
     return may_view_group?(group) if group.committee?
-    if logged_in?
-      current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_committees?
-    else
-      group.profiles.public.may_see_committees?
-    end
+    group.has_access? :see_committees
   end
 
   [:show, :list].each do |action|

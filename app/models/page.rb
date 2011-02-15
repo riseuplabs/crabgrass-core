@@ -346,7 +346,7 @@ class Page < ActiveRecord::Base
       "UPDATE pages SET `owner_name` = ? WHERE pages.owner_id = ? AND pages.owner_type = ?",
       owner.name,
       owner.id,
-      owner.class.class_name
+      owner.class.name
     ]))
     if owner.is_a? User
       Page.connection.execute(quote_sql([

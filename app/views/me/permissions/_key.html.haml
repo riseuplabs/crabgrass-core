@@ -1,0 +1,5 @@
+.key
+  - if key.holder.is_a? Symbol
+    = key.holder
+  - else
+    = key.holder.display_name

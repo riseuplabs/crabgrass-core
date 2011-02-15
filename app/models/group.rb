@@ -26,6 +26,8 @@ end
 
 class Group < ActiveRecord::Base
 
+  acts_as_locked :view, :edit, :admin, :pester, :burdon, :spy
+
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
   include GroupExtension::Users      # group <--> user behavior
@@ -47,13 +49,12 @@ class Group < ActiveRecord::Base
   ##
 
   # finds groups that user may see
+  # this is a depcrecated special case of with_access provided by acts_as_locked.
+  # Please use with_access(:view, user) instead.
   named_scope :visible_by, lambda { |user|
-    group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
-    # The grouping serves as a distinct.
-    # A DISTINCT term in the select seems to get striped of by rails.
-    # The other way to solve duplicates would be to put profiles.friend = true
-    # in other side of OR
-    {:include => :profiles, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
+    { :joins => :permissions,
+      :group => 'object_id, object_type',
+      :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
   }
 
   # finds groups that are of type Group (but not Committee or Network)
@@ -136,6 +137,11 @@ class Group < ActiveRecord::Base
   def self.find_by_name(name)
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
+  end
+
+  # entity_codes used by permissions and pathfinder
+  def entity_code
+    "%04d" % "8#{id}"
   end
 
   # name stuff
@@ -260,6 +266,10 @@ class Group < ActiveRecord::Base
     end
   end
 
+  after_create :create_permissions
+  def create_permissions
+    self.grant! self, :all
+  end
 
   ##
   ## PERMISSIONS
@@ -268,40 +278,17 @@ class Group < ActiveRecord::Base
   public
 
   def may_be_pestered_by?(user)
-    begin
-      may_be_pestered_by!(user)
-    rescue PermissionDenied
-      false
-    end
+    has_access?(:pester, user)
   end
 
-  ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or profiles.visible_by(user).may_see?
+    if has_access?(:pester, user)
       return true
     else
       raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
     end
   end
 
-  # if user has +access+ to group, return true.
-  # otherwise, raise PermissionDenied
-  def has_access!(access, user)
-    if access == :admin
-      ok = user.member_of?(self.council)
-    elsif access == :edit
-      ok = user.member_of?(self) || user.member_of?(self.council)
-    elsif access == :view
-      ok = user.member_of?(self) || profiles.public.may_see?
-    end
-    ok or raise PermissionDenied.new
-  end
-
-  def has_access?(access, user)
-    return has_access!(access, user)
-  rescue PermissionDenied
-    return false
-  end
 
   ##
   ## GROUP SETTINGS

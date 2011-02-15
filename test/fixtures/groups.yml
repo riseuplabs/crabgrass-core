@@ -74,7 +74,6 @@ private_committee:
   type: Committee
   created_at: <%= rand(30).days.ago.to_s :db %>
 
-
 private_group:
   id: 2000
   name: private_group

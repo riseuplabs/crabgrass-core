@@ -12,9 +12,9 @@ class FriendActivity < Activity
   def set_access
     # this has a weird side effect of creating public and private
     # profiles if they don't already exist.
-    if user.profiles.public.may_see_contacts?
+    if user.has_access? :see_contacts, :public
       self.access = Activity::PUBLIC
-    elsif user.profiles.private.may_see_contacts?
+    elsif user.has_access? :see_contacts, user.friends
       self.access = Activity::DEFAULT
     else
       self.access = Activity::PRIVATE

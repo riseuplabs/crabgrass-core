@@ -1,5 +1,4 @@
 class Council < Committee
 
-
 end
 

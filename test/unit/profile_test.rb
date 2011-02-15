@@ -78,45 +78,13 @@ class ProfileTest < ActiveSupport::TestCase
   def test_find_by_access
     g = Group.create :name => 'berries'
     p1 = g.profiles.create(
-      :stranger => true,
-      :may_see => true,
-      :may_see_committees => false,
-      :may_see_members => false,
-      :may_request_membership => true
+      :stranger => true
     )
     p2 = g.profiles.find_by_access(:stranger)
     p3 = g.profiles.public
 
     assert_equal p1.id, p2.id, 'find_by_access should have returned the profile we just created'
     assert_equal p1.id, p3.id, 'profiles.public should return the profile we just created'
-  end
-
-  def test_find_group
-    user = users(:red)
-
-    correct_visible_groups = Group.find(:all, :conditions => 'type IS NULL').select do |g|
-      user.may?(:view,g)
-    end
-    visible_groups = Group.visible_by(user).only_groups.find(:all)
-
-    correct_names = correct_visible_groups.collect{|g|g.name}.sort
-    names         = visible_groups.collect{|g|g.name}.sort
-
-    assert_equal  correct_names, names
-  end
-
-  def test_find_committee
-    user = users(:red)
-
-    correct_visible_groups = Committee.find(:all).select do |g|
-      user.may?(:view,g)
-    end
-    visible_groups = Committee.visible_by(user).find(:all)
-
-    correct_names = correct_visible_groups.collect{|g|g.name}.sort
-    names         = visible_groups.collect{|g|g.name}.sort
-
-    assert_equal  correct_names, names
   end
 
   def test_assets

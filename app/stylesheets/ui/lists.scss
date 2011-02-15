@@ -36,3 +36,33 @@
 
 }
 
+//
+// ROWS
+//
+
+ul.list_as_rows {
+  padding: 2px;
+  li {
+    padding: 2px;
+    float: left;
+  }
+  li.add_description {
+    width: 100px;
+  }
+}
+
+//
+// EXPANDED
+//
+
+ul.list_as_expanded {
+  clear: left;
+  padding: 4px;
+  li {
+    padding: 2px;
+    float: left;
+  }
+  li.add_description {
+    width: 200px;
+  }
+}
