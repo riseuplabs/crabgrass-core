@@ -112,7 +112,7 @@ module Formy
           end
           if value.is_a? String
             (@#{a} ||= '') << value
-          else
+          elsif !value.nil?
             @#{a} = value
           end
         end
