@@ -1,0 +1,11 @@
+!!!
+%html{:dir=>language_direction}
+  = render :partial => '/layouts/global/head'
+  %body{:class=>language_direction}
+    = render :partial => '/layouts/global/masthead'
+    #container
+      = render :partial => '/layouts/context/banner'
+      = render :partial => '/layouts/local/page/local'
+      = render :partial => '/layouts/global/footer'
+      = display_alert_messages
+

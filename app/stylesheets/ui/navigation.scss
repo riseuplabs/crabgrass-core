@@ -54,7 +54,7 @@ ul.toggle_bug {
     }
   }
   a {
-    @include hover-link;
+    @include cg-hover-link;
     font-size: $toggle_bug_font_size;
     color: $toggle_bug_color;
     // a vertical-align of 8% is a magic number. for whatever reason, it 

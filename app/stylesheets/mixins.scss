@@ -43,35 +43,85 @@
 }
 
 //
-// An UL,LI menu that looks like a cutout and is posited at the bottom
-// of the enclosing element.
+// An UL,LI menu that looks like a cutout and is positioned at the bottom
+// of the enclosing block.
 //
-// requires li.tab and a.tab classes set for the tabs.
+// This mixin is applied to the enclosing block.
+//
+// the markup should look like this:
+//
+// enclosing-block
+//   ul
+//     li.tab
+//       a.tab
+//     li.tab
+//       a.tab
+//
+// the selector the ul is passed into this method.
+//
+// it is difficult to create cutout tabs with a border that look good
+// in all browsers and at different client font-sizes. 
+// 
+// the problem is that the tab element needs to line up exactly with the
+// bottom of the enclosing block in order to make the cutout illusion work.
+// most methods of doing this create weird jitters in webkit
+// and gecko when resizing the screen or changing the font size. it does not
+// look so good to have a dark line under your tab, breaking the illusion of
+// a cutout.
+//
+// the method which makes this jitter-free is to use a height and a line-height
+// for the <a> tag instead of vertical padding. This requires that <a> is a block
+// which requires that the <li> is block & floated, instead of inline.
+//
+// This method seems to produce by far the most consistant results of letting
+// the active tab sit snugly on the bottom of the enclosing div.
+//
+// Change with caution: I spent way too much time getting this to work.
 //
 
 @mixin cutout_menu(
   $ul_id,
   $tab_padding: 10px,
   $active_background: white,
-  $active_border: false,
-  $inactive_border: 1px solid transparent) {
+  $active_border: false) {
 
-  $vertical_padding: $tab_padding/2;
-  position: relative;                 // allows us to put the menu at the bottom
+  // $tab_padding currently unused.
+  
+  // allows us to put the menu at the bottom
+  position: relative;
+
   ul##{$ul_id} {
-    position: absolute;               // allows us to put the menu at the bottom
-    bottom: $vertical_padding + 1px;  // puts the menu at the bottom of the masthead
+    // allows us to put the menu at the bottom
+    position: absolute;
+
+    // puts the menu at the bottom of the enclosing block,
+    // minus the overhand needed to cover the border:
+    bottom: -(border_width($active_border));
+
     padding-left: $tab_padding;
     white-space: nowrap;
     width: 80%;
     li.tab {
-      display:inline;
+      display: block;
+      float: left;
       a.tab {
-        padding: $vertical_padding 1.5%;
-        @include hover-link;
-        border: $inactive_border;
+        @include cg-hover-link;
+        display: block;
+        padding: 0px 0.75em;
+
+        // using height and line-height makes for much more consistant rendering
+        // than using vertical padding. essential to prevent tabs from looking
+        // horrible at different fonts sizes.
+        height: 1.75em;
+        line-height: 1.75em;
+
+        // the transparent border is needed to prevent the menu from jittering
+        // when the active border is applied.
+        border: 1px solid transparent;
+        border-bottom: 0;
+
         &.active {
-          background: $active_background;
+          background-color: $active_background;
           @if $active_border {
             border: $active_border;
             border-bottom: 0;
@@ -81,5 +131,16 @@
     }
   }
 
+}
+
+
+//
+// by default, we include hover-link for all <a> tags. 
+// If you don't want this behavior, then you can enable hover-link here
+// and it will be included in appropriate places.
+//
+
+@mixin cg-hover-link() {
+  // @include hover-link;
 }
 

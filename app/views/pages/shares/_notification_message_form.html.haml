@@ -1,0 +1,42 @@
+-
+- forced_send     = false if forced_send.nil?
+- send_notice     = false if send_notice.nil?
+- include_message = false if include_message.nil?
+- send_email      = false if send_email.nil?
+- #include_email_option = (@current_site && @current_site.never_pester_users) ? false : true
+- include_email_option = true
+- check_box_options = {:checked => send_notice, :onclick => "checkboxToggle(this, 'notification_details');" + resize_modal}
+- if forced_send
+  - check_box_options.merge!({:checked => true, :disabled => true})
+  - send_notice = true
+
+%tr
+  %td= check_box :notification, :send_notice, check_box_options
+  %td{:style=>"width:100%"}
+    %label{:for=>'notification_send_notice'}
+      = I18n.t(:share_send_notification)
+
+-# don't include the rest at all if sharing emails is disabled
+- style = send_notice ? '' : 'display:none'
+%tbody#notification_details{:style => style}
+  - if include_email_option
+    %tr
+      %td
+      %td
+        = check_box :notification, :send_email, :checked => send_email
+        %label{:for => 'notification_send_email'}= I18n.t(:send_email)
+        -#  %label
+        -#    = check_box :notification, :send_sms
+        -#    = I18n.t(:text_message)
+        -#  %label
+        -#    = check_box :notification, :send_xmpp
+        -#    = I18n.t(:chat)
+        -#  %label
+        -#    = check_box :notification, :send_encrypted
+        -#    = I18n.t(:send_only_with_encryption)
+    %tr.gap
+      %td{:colspan=>"2"}
+        %label= I18n.t(:share_include_message)
+        #share_message_holder
+          = text_area :notification, :send_message, :rows => 6, :style => 'width:100%'
+

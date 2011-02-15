@@ -1,3 +1,12 @@
+//
+// default font
+//
+
+p, ol, ul, td, div {
+  font-family: verdana, 'bitstream vera sans', helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
 
 // simulate a <p> using a class. technically, <p>'s are not
 // supposed to contain blocks. Therefore, use this instead.
@@ -18,3 +27,8 @@
 .br {
   margin-bottom: 1em;
 }
+
+a {
+  @include hover-link;
+}
+

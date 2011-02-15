@@ -1,10 +1,14 @@
-- edit_loading_id = "spinner_#{post.id}"
-- stars = post.ratings.with_rating(1).size
+- # edit_loading_id = "spinner_#{post.id}"
+- # stars = post.ratings.with_rating(1).size
 - # @page ||= post.discussion.page # in case @page is not already set
 
-%div.post_body
+%div.post_body.shy_parent{:id => post.body_id}
+  %div.float_right
+    - if local_assigns[:edit_url]
+      - url = safe_call(edit_url, post)
+      = link_to_remote_with_icon :edit.t, {:icon => 'pencil', :url => url}, {:class => 'shy'}
+    = #edit_post_action(post)
+    = #star_post_action(post)
+    = # call_hook :post_actions, {:post => post}
   = post.body_html
-  = #edit_post_action(post)
-  = #star_post_action(post)
-  = # call_hook :post_actions, {:post => post}
 

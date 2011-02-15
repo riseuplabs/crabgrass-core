@@ -93,13 +93,15 @@ module UserExtension::Pages
     part_attrs[:notice] = [part_attrs[:notice]] if part_attrs[:notice]
     participation = page.participation_for_user(self)
     if participation
-      self.update_participation(participation, part_attrs)
+      update_participation(participation, part_attrs)
     else
-      participation = self.build_participation(page, part_attrs)
+      participation = build_participation(page, part_attrs)
     end
     page.association_will_change(:users)
     participation
   end
+
+  private
 
   ## called only by add_page
   def update_participation(participation, part_attrs)
@@ -127,10 +129,14 @@ module UserExtension::Pages
     # user_participations.build doesn't update the pages.users
     # until it is saved. If you need an updated users list, then
     # use user_participations directly.
-    page.user_participations.build(part_attrs.merge(
+    part = page.user_participations.build(part_attrs.merge(
       :page_id => page.id, :user_id => id,
       :resolved => page.resolved?))
+    part.page = page
+    return part
   end
+
+  public 
 
   # remove self from the page.
   # only call by page.remove(user)

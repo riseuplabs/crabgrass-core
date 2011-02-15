@@ -1,6 +1,6 @@
 module Formy
 
-  class Form < Root
+  class TableForm < Root
     def title(value)
       puts "<tr class='title #{first}'><td colspan='2'>#{value}</td></tr>"
     end
@@ -118,12 +118,11 @@ module Formy
             super
           end
         end
-        sub_element Form::Row::Checkboxes::Checkbox
+        sub_element TableForm::Row::Checkboxes::Checkbox
       end
-      sub_element Form::Row::Checkboxes
-
+      sub_element TableForm::Row::Checkboxes
     end
-
-    sub_element Form::Row
-
+    sub_element TableForm::Row
+    
+  end
 end

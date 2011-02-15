@@ -60,6 +60,11 @@ class Context
     self.breadcrumbs << object
   end
 
+  # returns the correct context for the given entity.
+  def self.find(entity)
+    "Context::#{entity.class}".constantize.new(entity)
+  end
+
   protected
 
   def define_crumbs()
@@ -108,7 +113,7 @@ class Context::Me < Context
   end
 end
 
-class Context::Person < Context
+class Context::User < Context
   def define_crumbs
     push_crumb :people
     if self.entity and !self.entity.new_record?

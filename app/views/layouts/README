@@ -1,3 +1,5 @@
+directories
+============================
 
 /app/views/layouts
 
@@ -7,4 +9,26 @@
 
   Where the partials used by the layouts live
 
+html structure
+=================================
 
+%html
+  %head
+    %title
+  %body
+    %header#masthead
+      %div#masthead_content
+      %nav#global_nav
+    %div#container
+      %header#context_banner
+        %div#banner_content
+        %nav#banner_nav
+      %div#local
+        %div#column_left
+          %nav#local_nav
+        %div#column_center.with_left
+          %article#content
+      %footer#footer
+
+there are some variations (context banner or not, left column or not, etc),
+but this is the basic structure of every layout.

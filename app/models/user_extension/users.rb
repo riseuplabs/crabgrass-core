@@ -21,7 +21,9 @@ module UserExtension::Users
 
       after_create :add_social_permissions
 
+      ##
       ## PEERS
+      ##
 
       # (peer_id_cache defined in UserExtension::Organize)
       has_many :peers, :class_name => 'User',
@@ -50,13 +52,18 @@ module UserExtension::Users
         {:conditions => ['users.id in (?)', user.peer_id_cache]}
       end)
 
+      ##
       ## USER'S STATUS / PUBLIC WALL
+      ##
+
       has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
 
       before_destroy :save_relationships
       attr_reader :peers_before_destroy, :contacts_before_destroy
 
+      ##
       ## RELATIONSHIPS
+      ##
 
       has_many :relationships, :dependent => :destroy do
         def with(user) find_by_contact_id(user.id) end
@@ -93,6 +100,19 @@ module UserExtension::Users
         {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
       end)
 
+      ##
+      ## CACHE
+      ##
+
+      serialize_as IntArray, :friend_id_cache, :foe_id_cache, :peer_id_cache
+      initialized_by :update_contacts_cache, :friend_id_cache, :foe_id_cache
+      initialized_by :update_membership_cache, :peer_id_cache
+
+      # this seems to be the only way to override the A/R created methods.
+      # new accessor defined in user_extension/cache.rb
+      remove_method :friend_ids
+      #remove_method :foe_ids
+      remove_method :peer_ids
     end
   end
 

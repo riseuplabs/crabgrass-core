@@ -1,0 +1,12 @@
+
+some obervations
+
+EXTRA DATABASE ACTIVITY
+
+There is a lot of extra database activity that I don't like. 
+
+In particular: any change to page will generate a huge number of queries to re-build page_terms. This is very expensive. Page terms should only be rebuilt then it is needed and also it should be queued for later processing. 
+
+for example, page.update_attribute('posts_count', 1) will rebuilt page_terms. maybe this is needed? it seems aweful to me. part of the problem is that rebuilding page terms also fetches all the posts and all the tags. 
+
+

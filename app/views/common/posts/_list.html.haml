@@ -1,10 +1,17 @@
+-#
+-# Every time we show a list of posts, it should go through this partial.
+-# 
+-# options:
+-#   style -- currently, only 'table'
+-#   posts -- the array of Post objects.
+-# 
+-# requires:
+-#   create_url -- if we are going to show the reply form.
+-#
+
 - style = local_assigns[:style] ||= :table
 - posts = local_assigns[:posts] ||= @posts
-- paginate = posts.respond_to?(:total_entries)
-- paginate_options ||= {}
 
-%section{:class => "post_list #{style}"}
+%section{:class => "post_list #{style}", :id => 'posts'}
   = render :partial => "/common/posts/list_as_#{style}", :locals => local_assigns
-  - if paginate
-    = pagination_links( posts, paginate_options )
 

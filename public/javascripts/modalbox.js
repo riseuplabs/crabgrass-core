@@ -107,7 +107,7 @@ Modalbox.Methods = {
 		this.MBcontent = new Element("div", {id: "MB_content"}).update(
 			this.MBloading = new Element("div", {id: "MB_loading"}).update(this.strings.loading)
 		);
-		this.MBframe.insert({'bottom':new Element("div",{id:'modal_message'})});
+		this.MBframe.insert({'bottom':new Element("div",{id:'modal_alert_messages'})});
 		this.MBframe.insert({'bottom':this.MBcontent});
 
 		var injectToEl = $(document.body);

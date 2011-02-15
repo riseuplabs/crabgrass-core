@@ -74,7 +74,8 @@ $masthead_nav_dropdown_border_size: 1px;
 
   // this positions the top of the menu items exactly under the menu tab.
   // not sure if it works in all browsers.
-  margin-top: $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
+  margin-top: -1px;
+  // $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
 
   // appearance
   background-color: $masthead_nav_dropdown_background_color;
@@ -85,15 +86,18 @@ $masthead_nav_dropdown_border_size: 1px;
   // the name icons have a fancy hover effect
   // which requires adjusting the padding and position
   // of the icon. 
-  a.name_icon {
-    display: block;
+  a.icon {
     border: 1px solid $masthead_nav_dropdown_background_color;
-    background-position: 4px 50%;
-    padding: 12px 5px 12px 45px;
+    background-position: 4px 50% !important;
+    padding: 4px 4px 4px 45px !important;
     &:hover {
       background-color: $masthead_nav_dropdown_hover_background_color;
       border: $masthead_nav_dropdown_hover_border;
     }
+  }
+  // for the me links
+  li.icon {
+    margin: 8px 0;
   }
 
   // allow menus to contain normal lists

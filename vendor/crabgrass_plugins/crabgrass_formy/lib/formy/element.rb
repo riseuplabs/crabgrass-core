@@ -89,23 +89,36 @@ module Formy
       end
     end
 
+    #
+    # define setters for attributes.
+    #
+    # if the value passed to the attribute setter is a string
+    # then we append it to the attribute. otherwise, we replace it.
+    #
+    # if a block is given to the attribute setter, the result is
+    # used as the value argument.
+    # 
     def self.element_attr(*attr_names)
       for a in attr_names
         a = a.id2name
         module_eval <<-"end_eval"
         def #{a}(*args)
-          if block_given?
-            @#{a} = yield
+          value = if block_given?
+            yield
           elsif args.size == 1
-            @#{a} = args.first
+            args.first
           else
-            @#{a} = args
+            args
+          end
+          if value.is_a? String
+            (@#{a} ||= '') << value
+          else
+            @#{a} = value
           end
         end
         end_eval
       end
     end
-
 
     # work around rails 2.3.5 to_json circular reference problem
     def to_json

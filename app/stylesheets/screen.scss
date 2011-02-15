@@ -16,6 +16,7 @@
 @import "layout/masthead";
 @import "layout/top_menu";
 @import "layout/banner";
+@import "layout/title";
 @import "layout/local";
 @import "layout/footer";
 
@@ -33,10 +34,13 @@
 @import "ui/split_panel";
 @import "ui/gizmos";
 @import "ui/ui_elements";
+@import "ui/tabs";
 
 // page styling
 @import "pages/listing";
 @import "pages/search";
+@import "pages/title";
+@import "pages/sidebar";
 
 @import "debug";
 

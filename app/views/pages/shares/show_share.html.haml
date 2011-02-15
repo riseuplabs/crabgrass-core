@@ -1,0 +1,8 @@
+- form_remote_tag(:url => page_share_path(@page, :mode => 'share'), :loading => show_spinner('popup'), :html => {:id => 'share_page_form'}, :method => 'put') do
+  = render :partial => 'pages/shares/share_form'
+  .buttons
+    = spinner 'popup'
+    =# submit_tag I18n.t(:cancel_button), :name => 'cancel_button'
+    = close_modal_button(:cancel)
+    = submit_tag I18n.t(:share_button), :name => 'share_button'
+

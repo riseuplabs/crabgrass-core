@@ -1,4 +1,18 @@
 en:
+ 
+  ##
+  ## Time Formats
+  ## (override the defaults in locale/rails)
+  ##
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      # change to am/pm...
+      short: "%d %b %I:%M %p"
+      long: "%B %d, %Y %I:%M %p"
+
+
   ##
   ## TO BE DESTROYED
   ##
@@ -264,7 +278,7 @@ en:
   subject: subject
   from: from
   to: To
-  date: date
+  # date: date <<< this conflicts with time formats. don't do it.
   request_status: "This request is: %{status}."
   status_resolved: resolved
   status_pending: pending

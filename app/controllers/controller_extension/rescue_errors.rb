@@ -44,21 +44,27 @@ module ControllerExtension::RescueErrors
 
   module ClassMethods
     #
-    # for automatic rendering of errors, this helps us figure out what
-    # action we should render, if it is non-standard.
+    # The rescue errors code does automatic rendering of errors:
     #
-    # example:
+    #   update -> edit
+    #   create -> new
+    #   otherwise, render current action
+    #
+    # You can change this default using 'rescue_render'.
+    #
+    # This only makes sense for normal html posts: ajax requests just return an
+    # error message to the requesting page.
+    #
+    # example usage:
     #
     #   class RobotController < ApplicationController
     #     rescue_render :update => :show
     #   end
     #
-    #   this will render action :show when there is a caught error exception for :update
+    # this will render action :show when there is a caught error exception for :update.
+    # If a Proc is specified instead of a symbol, the resulting code is executed.
     #
-    # standard default is:
-    #   update -> edit
-    #   create -> new
-    #   otherwise, render current action
+    #   rescue_render :update => lambda { blah blah }
     #
     def rescue_render(hsh=nil)
       if hsh
@@ -169,21 +175,29 @@ module ControllerExtension::RescueErrors
     if options[:redirect]
       redirect_to options[:redirect]
     end
-    if exception
-      alert_message :error, exception
-    end
     if !performed? and !@performed_render
       if options[:template]
         render :template => options[:template], :status => options[:status]
       elsif options[:action]
         render :action => options[:action], :status => options[:status]
       elsif self.class.rescue_render && self.class.rescue_render[params[:action]]
-        render :action => self.class.rescue_render[params[:action]]
+        action = self.class.rescue_render[params[:action]]
+        if action.is_a?(Symbol)
+          render :action => action
+        elsif action.is_a?(Proc)
+          self.instance_eval(&action)
+        end
       elsif params[:action] == 'update'
         render :action => 'edit'
       elsif params[:action] == 'create'
         render :action => 'new'
       end
+    end
+   
+    # it is weird to build the alert_message after the render or redirect, but
+    # by putting it here we will be able to guess better defaults for :now or :later.
+    if exception
+      alert_message :error, exception
     end
   end
 

@@ -113,11 +113,16 @@ options {
       side 'left'   # only left for now.
       column_count 3
     }
+    title {
+      background '#f6f6f6'
+      border $border
+    }
   }
 
   posts {
     border "1px solid #ccc"
-    background "#efefef"
+    odd_background "#efefef"
+    even_background var(:local_content_background)
     padding "10px"
   }
 
@@ -130,7 +135,7 @@ options {
     autocomplete 400   # autocomplete popups
   }
 
-  avatar {
+  icon {
     Avatar::SIZES.each do |size, pixels|
       send(size, "#{pixels}px")
     end

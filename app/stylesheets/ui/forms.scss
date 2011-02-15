@@ -3,14 +3,11 @@
 //
 
 //
-// make form elements line up better in chrome:
+// this seems to make form elements line up better, 
+// especially in chrome:
 //
 
-body.webkit {
-  textarea, input[type=submit] {
-    margin: 0;
-  }
-}
+textarea, input[type=submit] {margin: 0;}
 
 //
 // form elements are often really misaligned because in the w3c box
@@ -46,24 +43,47 @@ textarea, input, select {
 //
 
 .form_buttons {
-  // text-align: right; 
-  margin-top: 1em;
-  input {
-    font-size: 1.15em;
-    margin-right: 1em;
+  margin-top: 0.75em;
+  input[type=submit] {
+    // font-size: 1.15em;
+    // margin-right: 0.5em;
   }
 }
 
 //
-// FORMY STYLE: SIMPLE FORM
+// RADIO BUTTONS AND CHECK BOXES
+
+// make checkboxes have a hanging indent look, like bullets.
+label.checkbox, label.radio {
+  display: block;
+  margin-left: 1.7em;
+}
+input.checkbox, input.radio {
+  // position: relative;
+  // top: 2px
+  margin-left: -1.6em;
+}
+
+// in webkit and gecko, checkboxes and radio buttons seem to look better this way
+input[type=radio], input[type=checkbox] {
+  vertical-align: top;
+}
+
+
 //
+// FORMY STYLE: SIMPLE FORM
+// 
 
 .simple_form {
   // add a gap between each row
   .row {
     margin-top: 1em;
+    &.first {
+      margin-top: 0;
+    }
     label {
       font-weight: bold;
+      display: block;
     }
   }
 
@@ -74,5 +94,46 @@ textarea, input, select {
   input[type=text], input[type=password], textarea, select {
     width: 100%;
   }
+}
+
+//
+// FORMY STYLE: TABLE FORM
+//
+
+table.form {
+  border-collapse: collapse;
+  tr.first td {
+    border-top: 0;
+  }
+  & > tbody > tr > td {
+    vertical-align: top;
+    border-top: 1px dotted #ccc;
+  }
+  td.heading {
+    padding: 0.5em 0;
+    h2 {
+      color: #666;
+      font-size: 1.5em;
+      margin: 0;
+    }
+  }
+  td.label {
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: right;
+    padding: 1em;
+    padding-right: 0;
+  }
+  td.input {
+    padding: 1em;
+  }
+  .info {
+    font-size: 0.9em;
+    font-style: italic;
+    color: #777;
+  }
+  //input[type=text], textarea {
+  //  width: 100%;
+  //}
 }
 

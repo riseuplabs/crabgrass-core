@@ -3,7 +3,14 @@
 // css. this actually works in recent browsers, and is super cool.
 // 
 
-@media only screen and (max-width: 590px) {
+@media only screen and (max-width: 590px), only screen and (max-height: 400px) {
+
+  .mobi_icon {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 30px;
+    height: 24px;
+  }
 
   // 
   // i dont know what to do about the context banner tabs, they dont work
@@ -25,13 +32,12 @@
     }
     @if $banner_nav_style == 'cutout' {
       ul#banner_nav_ul {
-        bottom: -($banner_nav_padding/2 + 1);
-        // padding-left: 0;
-        a.tab {
-          display: inline-block;
-          max-width: 3em;
-          overflow: hidden;
-          font-size: 0.8em;
+        li.tab a.tab {
+          padding: 0px;
+          line-height: inherit;
+          height: inherit;
+          .text { display: none }
+          .mobi_icon { display: block; }
         }
       }
     }
@@ -40,16 +46,16 @@
 }
 
 
-@media only screen and (max-height: 400px) {
-  #context_banner {
-    a.avatar img {
-      // it would be better to instead make visible a version with 32px size.
-      height: 32px;
-      width: 32px;
-    }
-    a.title {
-      font-size: 1.1em;
-    }
-  }
-}
+//@media only screen and (max-height: 400px) {
+//  #context_banner {
+//    a.avatar img {
+//      // it would be better to instead make visible a version with 32px size.
+//      height: 32px;
+//      width: 32px;
+//    }
+//    a.title {
+//      font-size: 1.1em;
+//    }
+//  }
+//}
 

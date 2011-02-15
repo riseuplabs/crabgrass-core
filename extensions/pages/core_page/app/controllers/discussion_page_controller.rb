@@ -1,4 +1,4 @@
-class DiscussionPageController < BasePageController
+class DiscussionPageController < Pages::BaseController
 
   def show
   end
@@ -10,9 +10,6 @@ class DiscussionPageController < BasePageController
   protected
 
   def setup_view
-    @show_reply = true
-    @show_attach = true
-    @show_print = true
   end
 
 end

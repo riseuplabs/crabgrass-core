@@ -21,8 +21,10 @@
 # and so on...
 #
 
+DEFAULT_INFO_LEVEL = 0
+
 def info(str,level=0)
-  if ENV['INFO'] and ENV['INFO'].to_i >= level
+  if (ENV['INFO'] and ENV['INFO'].to_i >= level) or (DEFAULT_INFO_LEVEL >= level)
     puts ('  '*level) + str.to_s
     STDOUT.flush
   end

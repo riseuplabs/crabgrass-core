@@ -114,31 +114,17 @@ module UserExtension::Groups
       }
 
       serialize_as IntArray,
-        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
+        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
 
       initialized_by :update_membership_cache,
-        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
+        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
 
-
-      #this seems to be the only way to override the A/R created method
+      # this seems to be the only way to override the A/R created methods.
+      # new accessor defined in user_extension/cache.rb
       remove_method :all_group_ids
       remove_method :group_ids
+      #remove_method :admin_for_group_ids
     end
-  end
-
-  # alias for the cache.
-  def group_ids
-    self.direct_group_id_cache
-  end
-
-  # alias for the cache
-  def all_group_ids
-    self.all_group_id_cache
-  end
-
-  # a list of groups that the user is an admin for.
-  def admin_for_group_ids
-    self.admin_for_group_id_cache
   end
 
   # is this user a member of the group?

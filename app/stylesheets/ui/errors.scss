@@ -7,10 +7,10 @@
 //
 // (1) the alert message overlay for the entire screen
 //     .alert_message_container
-//       #alert_message_list
+//       #alert_messages
 //
 // (2) in a modalbox
-//    not sure yet.
+//    #modal_alert_messages
 //
 // (3) inline the main content area
 //     .inline_message_list
@@ -28,7 +28,7 @@ $alert_margin: gutter()/2;
 
 .message {
   .text {
-    @extend .small_icon;
+    @extend .icon;
     line-height: 1em !important;
   }
 }
@@ -45,13 +45,24 @@ $alert_margin: gutter()/2;
   left: 0;
 }
 
-#alert_message_list {
+#alert_messages {
   max-width: 100%;
   width: $alert_width;
   margin: 0 auto;
   .message {
     padding: $alert_padding;
     margin: $alert_margin 0;
+  }
+}
+
+#modal_alert_messages .message {
+  padding: 6px;
+  margin: 3px;
+  font-size: 0.9em;
+}
+
+#alert_messages, #modal_alert_messages {
+  .message {
     .close {
       float: right;
       color: #999;

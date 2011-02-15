@@ -1,0 +1,11 @@
+#title_box
+  = render :partial => 'layouts/local/page/title'
+%article#content
+  = yield
+  - if @options.show_posts
+    = render :partial => 'common/posts/list',
+      :locals => {:style => 'table',
+        :remote => true,
+        :create_url => page_posts_path(@page),
+        :edit_url => lambda{|post| edit_page_post_path(@page, post)}}
+

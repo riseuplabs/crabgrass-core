@@ -1,0 +1,9 @@
+page.replace(
+  @post.body_id,
+  :partial => 'common/posts/table/body',
+  :locals => {
+    :post => @post,
+    :edit_url => edit_page_post_path(@page, @post)
+  }
+)
+

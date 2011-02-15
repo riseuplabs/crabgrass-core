@@ -26,7 +26,7 @@ module Formy
         end
         html = []
         html << "<div class=\"row\">"
-        html << "<label for=\"#{@label_for}\">#{@label}</label><br/>"
+        html << "<label for=\"#{@label_for}\">#{@label}</label>"
         html << @input
         html << "</div>"
         puts html.join
