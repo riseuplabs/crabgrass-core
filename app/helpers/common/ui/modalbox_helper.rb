@@ -71,6 +71,10 @@ module Common::Ui::ModalboxHelper
     button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();')
   end
 
+  def back_modal_button
+    button_to_function(:back.t, 'Modalbox.back();')
+  end
+
   # to be called each and every time you have programmatically changed the size
   # of the modalbox.
   def resize_modal
