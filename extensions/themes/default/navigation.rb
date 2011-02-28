@@ -142,7 +142,7 @@ navigation do
       label  "Home"
       icon   :house
       url    { entity_path(@group) }
-      active { controller?('groups/groups') }
+      active { controller?('groups/home') }
     end
 
     context_section :pages do
@@ -161,43 +161,72 @@ navigation do
 
       local_section :people do
         visible { may_list_memberships? }
-        label   "People"
+        label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }
       end
 
-      local_section :invites do
-        visible { may_create_invite_request? }
-        label   "Send Invites"
-        url     { group_invites_path(@group) }
-        active  { controller?('groups/invites') }
+      local_section :groups do
+        visible { false }
+        label   { :groups.t }
+        url     { group_members_path(@group, :view => 'groups') }
+        active  { controller?('groups/members') and params[:view] == 'groups' }
       end
+
+      local_section :send_invites do
+        visible { may_create_invite_request? }
+        label   { :send_invites.t }
+        url     { new_group_invite_path(@group) }
+        active  { controller?('groups/invites') and action?('new') }
+      end
+
+      local_section :invites do
+        visible { may_list_requests? }
+        label   { 'Review Membership Invites and Requests' }
+        url     { group_invites_path(@group) }
+        active  { controller?('groups/invites') and !action?('new') }
+      end
+
+      local_section :membership_settings do
+        visible { may_edit_group? }
+        label   { 'Membership Settings' }
+        url     { group_permissions_path(@group, :view => 'membership') }
+        active  false
+      end
+
     end
 
     context_section :settings do
       visible { may_edit_group? }
-      label  "Settings"
+      label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { (controller?('groups/groups') and action?(:edit, :update)) or controller?('groups/requests', 'groups/permissions', 'groups/profile')}
+      active { controller?('groups/settings', 'groups/requests', 'groups/permissions', 'groups/profile') }
+
+      local_section :settings do
+        visible { may_edit_group? }
+        label  { :basic_settings.t }
+        url    { group_settings_path(@group) }
+        active { controller?('groups/settings') }
+      end
 
       local_section :permissions do
-        visible { may_admin_group? }
-        label  "Permissions"
+        visible { may_edit_group? }
+        label  { :permissions.t }
         url    { group_permissions_path(@group) }
         active { controller?('groups/permissions') }
       end
 
       local_section :profile do
-        visible { may_admin_group? }
-        label  "Profile"
+        visible { may_edit_group? }
+        label  { :profile.t }
         url    { group_profile_path(@group) }
         active { controller?('groups/profile') }
       end
 
       local_section :requests do
         visible { may_admin_requests? }
-        label  "Requests"
+        label  { :requests.t }
         url    { group_requests_path(@group) }
         active { controller?('groups/requests') }
       end

@@ -83,15 +83,20 @@ ActionController::Routing::Routes.draw do |map|
 #  ## GROUP
 #  ##
 
-  map.networks_directory 'networks/directory/*path', :controller => 'groups/networks_directory'
-  map.groups_directory 'groups/directory/*path', :controller => 'groups/groups_directory'
+  map.networks_directory 'networks/directory/*path', :controller => 'groups/directory'
+  map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
 
   map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+    groups.resource  :home, :only => [:show]
     groups.resource  :page, :only => [:new, :create]
     groups.pages     'pages/*path', :controller => 'pages' #, :path => []
     groups.resources :members
-    groups.resources :requests
+    groups.resources :committees
     groups.resources :invites
+    groups.resources :requests
+    groups.resources :permissions
+    groups.resources :activities
+    groups.resource  :profile, :controller => 'profile'
     groups.resource  :settings, :only => [:show, :update]
   end
 

@@ -1,0 +1,11 @@
+.sidebox
+  = render :partial => 'sidebox'
+
+.entity_list
+
+  - if may_list_memberships?
+    = render :partial => 'memberships'
+
+  - if may_show_affiliations?
+    = render :partial => 'affiliations'
+

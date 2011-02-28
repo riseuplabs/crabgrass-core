@@ -1,0 +1,11 @@
+- content_for :left_column do
+  = render :partial => 'sidecolumn'
+
+-#
+-# super temporary... should be replaced by a simple widget system.
+-#
+
+%h2= :recent_pages.t
+- @pages = Page.find_by_path('/descending/updated_at/limit/30/', options_for_group(@group))
+= render :partial => 'common/pages/list'
+

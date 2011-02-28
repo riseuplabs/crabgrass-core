@@ -1,0 +1,6 @@
+- cache(group_cache_key(@group, :what => 'user_members', :expires_in => hours(3))) do
+  = entity_list(:entities => @group.users.most_recently_active(:limit => 10),
+    :avatar => 'small',
+    :before => content_tag(:h3, :members.t),
+    :after => link_line(:bullet, list_membership_link, invite_link, requests_link))
+

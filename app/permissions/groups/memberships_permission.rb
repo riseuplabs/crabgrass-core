@@ -20,7 +20,7 @@ module Groups::MembershipsPermission
   end
 
   def may_list_memberships?(group=@group)
-    group.has_access :see_members or
+    group.has_access? :see_members or
     (group.committee? && may_list_memberships?(group.parent))
   end
 

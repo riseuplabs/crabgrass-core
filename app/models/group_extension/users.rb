@@ -22,6 +22,9 @@ module GroupExtension::Users
         def delete(*records)
           raise Exception.new("don't call delete on group.users");
         end
+        def most_recently_active(options={})
+          find(:all, {:order => 'memberships.visited_at DESC', :limit => 10}.merge(options))
+        end
       end
 
       # tmp hack until we have a better viewing system in place.

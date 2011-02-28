@@ -1,0 +1,14 @@
+-# this is just a stub for now
+
+%i
+  = @group.profiles.public.summary_html
+
+.p
+  Created on 
+  = friendly_date @group.created_at
+  %br
+  = :group_membership_count.t(:count => @group.users.count)
+
+%div
+  = link_span(:bullet, more_info_link, join_group_link, leave_group_link)
+

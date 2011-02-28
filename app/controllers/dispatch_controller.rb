@@ -238,8 +238,8 @@ class DispatchController < ApplicationController
         new_controller('Groups::NetworksController')
       end
     else
-      params[:controller] = 'groups/groups'
-      new_controller('Groups::GroupsController')
+      params[:controller] = 'groups/home'
+      new_controller('Groups::HomeController')
     end
   end
 
