@@ -1,5 +1,7 @@
 module ControllerExtension::ContextParser
 
+  protected
+
   # returns the group and the page for a particular context path
   # eg.
   #   entity, page = resolve_context('riseup', 'minutes')

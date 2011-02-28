@@ -1,4 +1,12 @@
+#
+# i am not sure this is the best place for all this.
+# seems like a job for an extension.
+#
+
 module ControllerExtension::WikiPopup
+
+  protected
+
   # xhr only
   def image_popup_show
     @images = image_popup_visible_images

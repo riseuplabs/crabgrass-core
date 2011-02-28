@@ -1,5 +1,7 @@
 module ControllerExtension::Authentication
 
+  protected
+
   # Accesses the current user from the session.
   def current_user
     @current_user ||= begin
@@ -28,8 +30,6 @@ module ControllerExtension::Authentication
   def logged_in_since
     session[:logged_in_since]
   end
-
-  protected
 
   # Store the given user in the session.
   def current_user=(new_user)

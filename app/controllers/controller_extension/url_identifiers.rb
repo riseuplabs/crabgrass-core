@@ -23,9 +23,19 @@ module ControllerExtension::UrlIdentifiers
   ## PARAMS COMPARISON
   ##
 
+  protected
+
+  #
   # returns true if params[:action] matches one of the args.
+  #
   def action?(*actions)
-    actions.include?(params[:action].to_sym)
+    actions.detect do |action|
+      if action.is_a? String
+        action == action_string
+      elsif action.is_a? Symbol
+        action == action_symbol
+      end
+    end
   end
 
   # returns true if params[:controller] matches one of the args.
@@ -126,6 +136,18 @@ module ControllerExtension::UrlIdentifiers
 
   def controller_symbol
     @controller_symbol ||= params[:controller].gsub(/^\//,'').gsub('/','_').to_sym
+  end
+
+  def action_string
+    params[:action]
+  end
+
+  def action_symbol
+    @action_symbol ||= if params[:action].any?
+      params[:action].to_sym
+    else
+      nil
+    end
   end
 
 end
