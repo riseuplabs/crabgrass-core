@@ -266,13 +266,13 @@ module Common::Ui::LayoutHelper
   # content_starts_here do
   #   %h1 my page
   #
-  def content_starts_here(&block)
-    capture_haml do
-      haml_tag :div, :id =>'main-content' do
-        haml_concat capture_haml(&block)
-      end
-    end
-  end
+  #def content_starts_here(&block)
+  #  capture_haml do
+  #    haml_tag :div, :id =>'main-content' do
+  #      haml_concat capture_haml(&block)
+  #    end
+  #  end
+  #end
 
   ##
   ## CUSTOMIZED STUFF
@@ -333,24 +333,15 @@ module Common::Ui::LayoutHelper
     }
   end
 
-  ## this is some super ugly shit that should go away
-#  def banner_partial_for(toplevel_tab)
-#    case toplevel_tab
-#    when :me then 'me/navigation/banner'
-#    when :account then 'me/navigation/banner'
-#    when :people then 'people/navigation/banner'
-#    else 'groups/navigation/banner'
-#    end
-#  end
-#  def menu_partial_for(toplevel_tab)
-#    case toplevel_tab
-#    when :me then 'me/navigation/menu'
-#    when :account then nil
-#    when :people then 'people/navigation/menu'
-#    else 'groups/navigation/menu'
-#    end
-#  end
-
+  #
+  # rails 3.0 has "content_for?"
+  # i want it too!
+  # this takes advantage of deprecated member variables,
+  # but that is ok since this method won't be needed under v3.
+  #
+  def content_for?(block_name)
+    instance_variable_get("@content_for_#{block_name}")
+  end
 
   private
 
