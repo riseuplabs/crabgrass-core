@@ -8,7 +8,7 @@
 class Crabgrass::Theme::NavigationItem < Array
 
   attr_reader :name
-  ATTRIBUTES = [:label, :url, :active, :visible, :html, :icon]
+  ATTRIBUTES = [:label, :url, :active?, :visible?, :html, :icon]
 
   def initialize(name, navdef)
     @name = name
@@ -59,9 +59,10 @@ class Crabgrass::Theme::NavigationItem < Array
   # raises an exception if the attribute is not in ATTRIBUTES.
   #
   def set_attribute(name, value)
-    if !ATTRIBUTES.include?(name)
+    if !ATTRIBUTES.include?(name) and !ATTRIBUTES.include?("#{name}?".to_sym)
       raise 'ERROR in theme definition: "%s" is not a known attribute.' % name
     else
+      name = name.to_s.chop if name.to_s =~ /\?$/
       instance_variable_set("@#{name}", value)
     end
   end
@@ -93,7 +94,7 @@ class Crabgrass::Theme::NavigationItem < Array
   # currently_active_item returns the first sub-tree that is currently active, if any.
   #
   def currently_active_item
-    detect{|i| i.active && i.visible}
+    detect{|i| i.active? && i.visible?}
   end
 end
 
