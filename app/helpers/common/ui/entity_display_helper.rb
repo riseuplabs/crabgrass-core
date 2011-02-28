@@ -16,42 +16,29 @@ module Common::Ui::EntityDisplayHelper
   #
   # provides placeholder for when the user or group record has been destroyed.
   #
-  def link_to_unknown(options)
-    styles  = [options[:style]]
-    classes = [options[:class]]
-    if options[:avatar]
-      classes << options[:avatar]
-      classes << 'icon'
-      styles  << avatar_style(nil, options[:avatar])
-    end
-    content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
-  end
+  #def link_to_unknown(options)
+  #  styles  = [options[:style]]
+  #  classes = [options[:class]]
+  #  if options[:avatar]
+  #    classes << options[:avatar]
+  #    classes << 'icon'
+  #    styles  << avatar_style(nil, options[:avatar])
+  #  end
+  #  content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
+  #nd
 
   ##
   ## GROUPS
   ##
 
   # 
+  # creates a link to a group. see display_entity for options
   #
-  # options:
-  #
-  #  :avatar => [:small | :medium | :large]
-  #  :style  => added to <a> tag
-  #  :class  => added to <a> tag
-  #  
   def link_to_group(group, options={})
-    return link_to_unknown(options) if group.nil?
-
-    url          = url_for_group(group)
-    display_name = group.display_name
-    styles       = [options[:style]]
-    classes      = [options[:class]]
-    if options[:avatar]
-      classes << options[:avatar]
-      classes << 'icon'
-      styles  << avatar_style(group, options[:avatar])
+    unless options[:url] or options[:remote] or options[:function]
+      options[:url] = url_for_group(group)
     end
-    link_to(display_name, url, :class => classes.join(' '), :style => styles.join(';'))
+    display_entity(group, options)
   end
 
 
@@ -60,45 +47,16 @@ module Common::Ui::EntityDisplayHelper
   ##
 
   #
-  # creates a link to a user, with or without the avatar.
-  #
-  # accepts:
-  #
-  #  :avatar => [:small | :medium | :large]
-  #  :style -- add additional styles
-  #  :class -- add additional classes
+  # creates a link to a user. see display entity for options
   #
   def link_to_user(user, options={})
-    return link_to_unknown(options) if user.nil?
-
-    styles  = [options[:style]]
-    classes = [options[:class]]
-    path    = user.path
-   
-    label   = user.display_name    
-    if label.length > 19
-      options[:title] = label
-      label = truncate(label, :length => 19)
+    unless options[:url] or options[:remote] or options[:function]
+      options[:url] = url_for_user(user)
     end
-
-    if options[:avatar]
-      classes << options[:avatar]
-      classes << 'icon'
-      url = avatar_url_for(user, options[:avatar])
-      styles << "background-image:url(#{url})"
-    end
-    link_to(label, path, :class => classes.join(' '), :style => styles.join(';'), :title => options[:title])
+    display_entity(user, options)
   end
 
-  # creates a link to a user, with or without the avatar.
-  # avatars are displayed as background images, with padding
-  # set on the <a> tag to make room for the image.
-  # accepts:
-  #  :avatar => [:small | :medium | :large]
-  #  :label -- override display_name as the link text
-  #  :style -- override the default style
-  #  :class -- override the default class of the link (icon)
-  #
+
   #def link_to_user_avatar(arg, options={})
   #  login, path, display_name = login_and_path_for_user(arg,options)
   #  return "" if login.blank?
@@ -122,6 +80,8 @@ module Common::Ui::EntityDisplayHelper
       link_to_user(entity, options)
     elsif entity.is_a? Group
       link_to_group(entity, options)
+    else
+      display_entity(entity, options)
     end
   end
 
@@ -203,5 +163,32 @@ module Common::Ui::EntityDisplayHelper
   def entity_autocomplete_line(entity)
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
-   
+  
+  #
+  # used to display a list of entities
+  #
+  # options:
+  #
+  #   :entities -- the entity objects to list. if empty, nothing is displayed.
+  #   :before   -- text to put before the list, if enitities is non-empty.
+  #   :after    -- text to put after the list. if set, entity list is always treated as non-empty.
+  # 
+  # other options are passed on through to display_entity
+  #
+  def entity_list(options)
+    html = []
+    if options[:entities].any? or options[:after]
+      html << options[:before]
+      if options[:entities].any?
+        html << content_tag(:ul, :class => 'entities') do
+          options[:entities].collect do |entity|
+            content_tag(:li, link_to_entity(entity, options))
+          end
+        end
+      end
+      html << options[:after]
+    end
+    return html.join
+  end
+
 end
