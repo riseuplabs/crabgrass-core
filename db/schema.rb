@@ -134,11 +134,6 @@ ActiveRecord::Schema.define(:version => 20110215132532) do
   add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
   add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
-  create_table "contacts", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "contact_id"
-  end
-
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id"
     t.boolean "preferred",                         :default => false
@@ -301,13 +296,6 @@ ActiveRecord::Schema.define(:version => 20110215132532) do
   add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
 
-  create_table "groups_to_networks", :force => true do |t|
-    t.integer "group_id"
-    t.integer "network_id"
-    t.integer "council_id"
-    t.integer "delegates_id"
-  end
-
   create_table "hourlies", :force => true do |t|
     t.integer  "page_id"
     t.integer  "views"
@@ -345,11 +333,6 @@ ActiveRecord::Schema.define(:version => 20110215132532) do
   end
 
   add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
-
-  create_table "links", :id => false, :force => true do |t|
-    t.integer "page_id"
-    t.integer "other_page_id"
-  end
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"
@@ -508,17 +491,6 @@ ActiveRecord::Schema.define(:version => 20110215132532) do
   end
 
   add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
-
-  create_table "pictures", :force => true do |t|
-    t.string   "comment"
-    t.string   "name"
-    t.string   "content_type"
-    t.binary   "data"
-    t.integer  "created_by_id"
-    t.datetime "created_at"
-    t.binary   "thumb"
-    t.string   "type"
-  end
 
   create_table "polls", :force => true do |t|
     t.string "type"
