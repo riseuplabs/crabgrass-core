@@ -1,95 +1,167 @@
-$center_columns: $grid_column_count - $local_nav_column_count;
-
 div#local {
   // for when there is no banner:
   margin-top: gutter();
 }
 
-#column_center.full {
-  @include full;
-  article#content, #title {
-    padding: resolve_width($local_content_padding, $grid_column_count);
+//
+// FULL WIDTH
+//
+
+#local.full_width {
+
+  $center_columns: $grid_column_count;
+
+  .title { margin-bottom: resolve_width($local_content_padding, $center_columns) }
+
+  #column_center {
+    @include full;
+    article#content, #title {
+      padding: resolve_width($local_content_padding, $center_columns);
+    }
   }
 }
 
-#column_center.with_left {
-  @include omega;
-  @include columns($center_columns);
-  article#content {
-    padding: resolve_width($local_content_padding, $center_columns);
+//
+// SIDEBAR LAYOUT
+//
+
+#local.sidebar {
+
+  $center_columns: $grid_column_count - $local_nav_width;
+  $padding: resolve_width($local_content_padding, $center_columns);
+  #title {
+    // margin-bottom: $padding;
+    padding: $padding;
   }
-}
+  article#content { padding: $padding; }
 
-#column_center.with_right {
-  @include alpha;
-  @include columns($center_columns);
-  article#content, #title {
-    padding: resolve_width($local_content_padding, $center_columns);
-  }
-}
-
-@if $local_nav_style == 'tabs' {
-  //
-  // side tab navigation
-  // make the sidebar navigation look like vertical tabs
-  //
-
-  #column_left {
-    @include alpha;
-    @include columns-eat-gutter($local_nav_column_count);
-  }
-
-  nav#local_nav li.nav {
-    @if border_width($local_content_border) > 0px {
-      border: border_width($local_content_border) "solid transparent";
-    }
-    &.active {
-      border: $local_content_border;
-      background: $local_content_background;
-      border-right: 0;
-    }
-    a.nav {
-      @include cg-hover-link;
-      text-align: right;
-      display: block;
+  &.on_left {
+    #column_center {
+      @include omega;
+      @include columns($center_columns);
     }
 
-    // a.nav and div.nav are used to give the tab its padding to create the
-    // illusion of a tab. a.nav should normally be the one used, but sometimes
-    // we want a tab that doesnt have links.
-    a.nav, div.nav {
-      padding: resolve_width($local_nav_padding, $local_nav_column_count) / 2;
-      padding-right: resolve_width($local_nav_padding, $local_nav_column_count);
-      &.active {
-        background: $local_content_background;
+    @if $local_nav_style == 'tabs' {
+      //
+      // side tab navigation
+      // make the sidebar navigation look like vertical tabs
+      //
+
+      #column_left {
+        @include alpha;
+        @include columns-eat-gutter($local_nav_width);
+      }
+
+      nav#local_nav li.nav {
         @if border_width($local_content_border) > 0px {
-          // shift the tab slightly to the right to make it flush
-          // with the content.
-          position: relative;
-          left: border_width($local_content_border);
+          border: border_width($local_content_border) "solid transparent";
+        }
+        &.active {
+          border: $local_content_border;
+          background: $local_content_background;
+          border-right: 0;
+        }
+        a.nav {
+          @include cg-hover-link;
+          text-align: right;
+          display: block;
+        }
+
+        // a.nav and div.nav are used to give the tab its padding to create the
+        // illusion of a tab. a.nav should normally be the one used, but sometimes
+        // we want a tab that doesnt have links.
+        a.nav, div.nav {
+          padding: resolve_width($local_nav_padding, $local_nav_width) / 2;
+          padding-right: resolve_width($local_nav_padding, $local_nav_width);
+          &.active {
+            background: $local_content_background;
+            @if border_width($local_content_border) > 0px {
+              // shift the tab slightly to the right to make it flush
+              // with the content.
+              position: relative;
+              left: border_width($local_content_border);
+            }
+          }
+        }
+      }
+
+    } @else {
+
+      #column_left {
+        @include alpha;
+        @include columns($local_nav_width);
+      }
+      nav#local_nav {
+        li a {
+          padding: resolve_width($local_nav_padding, $local_nav_width);
         }
       }
     }
   }
 
-} @else {
-
-  #column_left {
-    @include alpha;
-    @include columns($local_nav_column_count);
+  &.on_right {
+    #column_center {
+      @include alpha;
+      @include columns($center_columns);
+    }
+    #column_right {
+      @include omega;
+      @include columns($local_nav_width);
+    }
   }
-  nav#local_nav {
-    li a {
-      padding: resolve_width($local_nav_padding, $local_nav_column_count);
+}
+
+//
+// SIDECOLUMN LAYOUT
+//
+
+#local.sidecolumn {
+
+  $center_columns: $grid_column_count - $local_sidecolumn_width;
+  $padding: resolve_width($local_content_padding, $center_columns);
+
+  #title { margin-bottom: $padding }
+  article#content { padding: $padding }
+  .sidebox {
+    border: 1px solid #ccc;
+    background: #efefef;
+    padding: resolve_width($local_content_padding, $local_sidecolumn_width);
+  }
+
+  &.on_left {
+    #column_center {
+      @include omega;
+      @include columns($center_columns);
+    }
+    #column_left {
+      @include alpha;
+      @include columns($local_sidecolumn_width);
     }
   }
 
+  &.on_right {
+    #column_center {
+      @include alpha;
+      @include columns($center_columns);
+    }
+    #column_right {
+      @include omega;
+      @include columns($local_sidecolumn_width);
+    }
+  }
 }
 
-#column_right {
-  @include omega;
-  @include columns($local_nav_column_count);
+//
+// TITLE
+//
+
+#local #title {
+  display: block;
 }
+
+//
+// CONTENT
+//
 
 article#content {
   border: $local_content_border;
@@ -97,14 +169,7 @@ article#content {
 
   // i don't know how well supported this is, but it makes everything
   // look much better in modern browsers.
-  min-height: 10em;
-
-  // this is an optional title for the content area.
-  // ideally, it should be heading.title, but it doesn't have to be.
-  .title {
-    margin-bottom: resolve_width($local_content_padding, $center_columns);
-    display: block;
-  }
+  min-height: 20em;
 
   // allows us to have floated columns within the #content
   @include clearfix;

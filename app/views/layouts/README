@@ -9,6 +9,21 @@ directories
 
   Where the partials used by the layouts live
 
+the layouts
+==================================
+
+layouts/application.html.haml
+  the default layout. will show two columns if there is any local navigation.
+
+layouts/page.html.haml
+  special layout used for pages, with a right column for page sidebar.
+
+layouts/sidecolumn.html.haml
+  used to force a layout with one main column and a smaller side column.
+  ignores local navigation. use content_for(:left_column) or
+  content_for(:right_column) to set the content of the side columns (either left
+  or right, but not both).
+
 html structure
 =================================
 

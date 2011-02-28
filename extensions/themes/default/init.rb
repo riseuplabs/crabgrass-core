@@ -46,7 +46,7 @@ options {
     style 'full'   # accepts [full | grid]
                    # full -- the masthead stretches the full width of the screen
                    # grid -- the masthead stops at the edge of the grid.
-    border $border # not yet supported
+    border $border
     height '100px'
     css "background-color: #f9f9f9;"
 #    css %{
@@ -111,7 +111,12 @@ options {
       style 'tabs'
       padding '1g'
       side 'left'   # only left for now.
-      column_count 3
+      width 3       # in grid column units
+    }
+    sidecolumn {
+      # for fun, make the side column width approximate a golden ratio.
+      # width (0.3819660113 * var(:grid_column_count).to_i).round
+      width 4
     }
     title {
       background '#f6f6f6'

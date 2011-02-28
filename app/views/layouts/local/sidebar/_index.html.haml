@@ -1,0 +1,13 @@
+- if @local_navigation.any?
+  #local.sidebar.on_left
+    #column_left
+      %nav#local_nav
+        = render(:partial => 'layouts/local/sidebar/sidebar')
+    #column_center
+      = render :partial => 'layouts/local/content'
+
+- else
+  #local.full_width
+    #column_center
+      = render :partial => 'layouts/local/content'
+

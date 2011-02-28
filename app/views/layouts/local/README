@@ -3,29 +3,48 @@ The "Local" part of the layout is everything below the context banner
 and above the footer.
 
 It should have one of the following structures:
+ 
+option 0: full width
+-------------------------------
 
-option 1: with left column
-------------------------------
-
-#local
-  #column_left
-    %nav#local_nav
-  #column_center.with_left
+#local.full_width
+  #column_center
     %article#content
 
-option 2: with right column
------------------------------
+option 1: with sidebar
+------------------------------
 
-#local
-  #column_center.with_right
+on the left side:
+
+#local.sidebar.on_left
+  #column_left
+    %nav#local_nav
+  #column_center
+    %article#content
+
+on the right side:
+
+#local.sidebar.on_right
+  #column_center
     %article#content
   #column_right
     %nav#local_nav
 
-option 2: full width
--------------------------------
+option 3: with side column
+------------------------------
 
-#local
-  #column_center.full
+a left side column:
+
+#local.sidecolumn.on_left
+  #column_left
+  #column_center
     %article#content
+
+a right side column:
+
+#local.sidecolumn.on_right
+  #column_center
+    %article#content
+  #column_right
+
 

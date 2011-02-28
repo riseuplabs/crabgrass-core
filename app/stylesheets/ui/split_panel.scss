@@ -42,6 +42,7 @@ $panel_width: ($content_width - $content_padding) / 2;
 
 // with left sidebar
 
+$center_columns: $grid_column_count - $local_nav_width; // << for now, this only works for sidebar layouts.
 $split_panel_gutter: resolve_width($local_content_padding, $center_columns);
 $split_panel_gutter_padding: resolve_width($local_content_padding, $center_columns/2);
 $content_width: 100%;
