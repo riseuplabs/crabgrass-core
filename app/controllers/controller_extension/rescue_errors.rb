@@ -172,6 +172,10 @@ module ControllerExtension::RescueErrors
   private
 
   def render_error_html(exception=nil, options={})
+    if exception
+      alert_message :error, exception
+    end
+
     if options[:redirect]
       redirect_to options[:redirect]
     end
@@ -191,13 +195,15 @@ module ControllerExtension::RescueErrors
         render :action => 'edit'
       elsif params[:action] == 'create'
         render :action => 'new'
+      elsif params[:action]
+        render :action => params[:action]  # this is generally a bad idea. it probably means
+                                           # that a GET request resulted in an error. 
       end
     end
-   
-    # it is weird to build the alert_message after the render or redirect, but
-    # by putting it here we will be able to guess better defaults for :now or :later.
-    if exception
-      alert_message :error, exception
+
+    # if we ended up redirecting, then ensure that any :now flash is changed to :later
+    if @preformed_redirect
+      force_later_alert
     end
   end
 

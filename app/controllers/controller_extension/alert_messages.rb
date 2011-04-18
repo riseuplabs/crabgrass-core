@@ -33,11 +33,14 @@
 #
 # Flash now:
 #  - ajax requests
-#  - post with error
-# Flash later
-#  - get requests
-#  - post with success
+#  - post/put with error
 #
+# Flash later
+#  - @preformed_redirect is true
+#  - get requests
+#  - post/put with success
+#
+# NOTE: i think @preformed_redirect is undocumented and might change in the future.
 #
 
 require 'active_support/multibyte/chars'
@@ -96,6 +99,14 @@ module ControllerExtension::AlertMessages
       # allow options to override the defaults
       flsh[:messages] << msg.merge(options);
     end
+  end
+
+  # 
+  # forces the alert messages to come later, even if we previously said :now.
+  # this is used in case we did :now but then redirected.
+  #
+  def force_later_alert()
+    flash[:messages] = flash.now[:messages]
   end
 
   ##
@@ -226,7 +237,7 @@ module ControllerExtension::AlertMessages
       flash
     elsif @performed_redirect
       flash
-    elsif request.post? and (type == :error or type == :warning)
+    elsif (request.post? or request.put?) and (type == :error or type == :warning)
       flash.now
     elsif request.xhr?
       flash.now
