@@ -52,6 +52,7 @@ textarea, input, select {
 
 //
 // RADIO BUTTONS AND CHECK BOXES
+//
 
 // make checkboxes have a hanging indent look, like bullets.
 label.checkbox, label.radio {
@@ -102,7 +103,7 @@ input[type=radio], input[type=checkbox] {
 
 table.form {
   border-collapse: collapse;
-  tr.first td {
+  tr.first > td {
     border-top: 0;
   }
   & > tbody > tr > td {
@@ -138,8 +139,12 @@ table.form {
     font-style: italic;
     color: #777;
   }
-  //input[type=text], textarea {
-  //  width: 100%;
-  //}
+  // see above for note as to why this makes nice forms.
+  div.input {
+    max-width: 30em;
+    input[type=text], input[type=password], textarea, select {
+      width: 100%;
+    }
+  }
 }
 

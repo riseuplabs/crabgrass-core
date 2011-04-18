@@ -66,17 +66,17 @@ module Formy
           labelspan = inputspan = 1
           #labelspan = 2 if @label and not @input
           #inputspan = 2 if @input and not @label
-          puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
-          puts "<td colspan='#{labelspan}' class='label'><label for='#{@label_for}'>#{@label}</label></td>"
+          puts '<tr class="row %s %s" id="%s" style="%s">' % [parent.first, @classes, @id, @style]
+          puts '<td colspan="%s" class="label"><label for="%s">%s</label></td>' % [labelspan, @label_for, @label]
           if @input
-            puts "<td colspan='#{inputspan}' class='input'>"
-            puts @input
+            puts '<td colspan="%s" class="input">' % inputspan
+            puts '<div class="input">%s</div>' % @input
             if @info
-              puts "<div class='info'>#{@info}</div>"
+              puts '<div class="info">%s</div>' % @info
             end
-            puts "</td>"
+            puts '</td>'
           end
-          puts "</tr>"
+          puts '</tr>'
         elsif @options[:style] == :stack
           if @label
             puts '<tr><td class="label">%s</td></tr>' % @label
