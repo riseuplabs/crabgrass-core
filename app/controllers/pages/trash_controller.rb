@@ -48,7 +48,7 @@ class Pages::TrashController < Pages::SidebarController
   end
 
   def new_url
-    if @page.owner
+    if @page.owner and @page.owner != current_user
       entity_url @page.owner
     else
       me_url
