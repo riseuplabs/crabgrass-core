@@ -15,7 +15,7 @@ prevent rubygems from installing rdoc (optional):
 install required gems:
 
   cd crabgrass-core
-  sudo gem install rails --version='2.3.10'
+  sudo gem install rails --version='2.3.11'
   mkdir log
   touch log/development.log
   rake create_a_secret

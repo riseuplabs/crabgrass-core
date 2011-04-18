@@ -1,13 +1,19 @@
 crabgrass-core is a basic, paired down crabgrass.
 
+page changes
+============================
+
+assets for pages are not modular and should be defined in extensions/pages, instead of public/images.
+
 schema changes
 ============================
 
-remove pages.message_count
-add pages.edits_count
-add page_terms.updated_by_ids
-add page_terms.watched_by_ids
-add page_terms.owner_id
+todo:
+  remove pages.message_count
+  add pages.edits_count
+  add page_terms.updated_by_ids
+  add page_terms.watched_by_ids
+  add page_terms.owner_id
 
 it is really random what columns are indexed by page_terms and pages:
 
@@ -90,4 +96,30 @@ documentation
 http://yardoc.org/
 
 
+background tasks
+=====================
 
+There is an incredible number of background processing options in rails.
+
+a list: http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+
+
+http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
+http://codeforpeople.rubyforge.org/svn/bj/trunk/README
+https://github.com/barttenbrinke/worker_queue/
+https://github.com/starling/active_queue
+
+
+message/work processing queues:
+  http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
+  https://github.com/starling/starling
+  http://kr.github.com/beanstalkd/
+
+backgrounding code snippets:
+  spawn
+  http://code.google.com/p/asynchronous/
+  https://github.com/imedo/background_lite
+
+
+On linux, fixes thread timeout problems:
+  http://systemtimer.rubyforge.org/
