@@ -131,6 +131,11 @@
       height: $icon_medium;
     }
   }
+
+  // some elements may want the icon to vertically aligned top instead of middle.
+  &.top {
+    background-position: 0 0 !important; // flush left, vertical align top
+  }
 }
 
 //
@@ -159,9 +164,20 @@
   background-position: 0 50%;
 }
 
+//
+// for use with icon stand alone without any text
+//
+
+.small_icon_button {
+  height: 16px;
+  width: 16px;
+  display: block;
+  padding: 0;
+}
+
 
 //
-// mobi icons are used to turn some text into icons when the
+// mobi icons are used to transform some text into icons when the
 // screen gets very small. by default, these elements are hidden.
 //
 

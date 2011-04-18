@@ -1,0 +1,26 @@
+//
+// in a few places, we use a table to display stuff in a layout grid.
+// i suppose this should be replaced by divs eventually.
+// 
+
+table.layout td {
+  vertical-align: top;
+}
+
+//
+// styled tables
+//
+// these are used in a couple places. for example, recipient list when creating a new page.
+// for now, it uses the same styling as the titlebox.
+//
+
+table.styled {
+  border-collapse: collapse;
+  td {
+    background-color: $local_title_background;
+    border-top: $local_title_border;
+    border-bottom: $local_title_border;
+    padding: 0.5em;
+  }
+}
+
