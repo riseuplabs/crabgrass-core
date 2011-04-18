@@ -114,6 +114,9 @@ ActionController::Routing::Routes.draw do |map|
   ## NORMAL PAGE ROUTES
   ##
 
+  # default page creator
+  map.create_page '/pages/create/:type', :controller => 'pages/create', :action => 'new', :type => nil
+
   # base page
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
     pages.resources :participations, :only => [:update, :create]

@@ -26,17 +26,17 @@ module PageExtension::Subclass
   end
 
   module InstanceMethods
-    def class_definition
+    def definition
       PAGES[self.class.name] || Crabgrass::Page::ClassProxy.new({})
     end
     def icon
-      class_definition.icon
+      definition.icon
     end
     def controller
-      class_definition.controller
+      definition.controller
     end
     #def controller_class_name
-    #  class_definition.controller_class_name
+    #  definition.controller_class_name
     #end
   end
 
@@ -117,32 +117,32 @@ module PageExtension::Subclass
       } || [])[1]
     end
 
-    def class_definition
+    def definition
       PAGES[name] || Crabgrass::Page::ClassProxy.new
     end
 
     def icon
-      class_definition.icon
+      definition.icon
     end
     def controller
-      class_definition.controller
+      definition.controller
     end
     #def controller_class_name
-    #  class_definition.controller_class_name
+    #  definition.controller_class_name
     #end
     def class_display_name
-      class_definition.class_display_name
+      definition.class_display_name
     end
     def class_description
-      class_definition.class_description
+      definition.class_description
     end
     #The names used in Site.available_page_types; inverse of class_name_to_class
     def short_class_name
-      class_definition.full_class_name.sub("Page","")
+      definition.full_class_name.sub("Page","")
     end
 
     def param_id
-      class_definition.url
+      definition.url
     end
   end
 

@@ -12,14 +12,15 @@ module Pages::BeforeFilters
   ##
 
   def default_fetch_data
-    if @page.nil? 
-      # if page not yet loaded by dispatch controller...
+    unless @page or action?(:new, :create)
       id = params[:page_id] || params[:id]
-      @page = Page.find(id)
+      if id and id != "0"
+        @page = Page.find(id)
+        # grab the current user's participation from memory
+        @upart = (@page.participation_for_user(current_user) if logged_in?)
+        fetch_data
+      end
     end
-    # grab the current user's participation from memory
-    @upart = (@page.participation_for_user(current_user) if logged_in?)
-    fetch_data
     true
   end
  
@@ -28,14 +29,14 @@ module Pages::BeforeFilters
     if request.get?
       @options.show_posts = action?(:show) || action?(:print)
       @options.show_reply = @options.show_posts
-      @options.title = @page.title
+      @options.title = @page.title if @page
     end
     setup_options
     true
   end
 
   def choose_layout
-    return 'default' if params[:action] == 'create'
+    return 'application' if action?(:create, :new)
     return 'page'
   end
 

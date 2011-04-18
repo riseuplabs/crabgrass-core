@@ -18,14 +18,14 @@ module Pages::ShareHelper
   #
   def options_for_page_owner(options={})
     items = current_user.primary_groups_and_networks.sort { |a, b|
-       a.display_name.downcase <=> b.display_name.downcase
+       a.name <=> b.name
     }.collect {|group| {:value => group.name, :label => group.name, :group => group} }
 
     selected_item = nil
 
     if options[:selected]
       if options[:selected].nil?
-        # this method was called with :selected => nil
+        # this method was called with :selected => nil indicating that there should be no owner.
         options[:include_none] = true
       elsif options[:selected].is_a? String
         selected_item = options[:selected].sub(' ', '+')   # sub '+' for committee names
@@ -59,7 +59,7 @@ module Pages::ShareHelper
       selected = ('selected' if item[:value] == selected_item)
       html << content_tag(
         :option,
-        h(truncate(item[:label], :length => 40)),
+        truncate(item[:label], :length => 40),
         :value => item[:value],
         :class => 'spaced',
         :selected => selected,
@@ -70,7 +70,7 @@ module Pages::ShareHelper
           selected = ('selected' if committee.name == selected_item)
           html << content_tag(
             :option,
-            h(truncate(committee.short_name, :length => 40)),
+            "&nbsp; + " + truncate(committee.short_name, :length => 40),
             :value => committee.name,
             :class => 'indented',
             :selected => selected
@@ -155,6 +155,7 @@ module Pages::ShareHelper
     if options.delete(:expand)
       options[:size] = select_options.size
     end
+    options[:style] = "width: auto"
     select_tag name, options_for_select(select_options, selected.to_s), options
   end
 
