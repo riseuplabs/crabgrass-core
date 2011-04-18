@@ -1,6 +1,16 @@
 -#
+-# This is the default partial that handles displaying the content.
+-# The 'page' layout uses a different partial, but most other layouts use this one.
+-#
 -# yield(:content) in case we are rendering a nested layout
 -#
+-# the #title_box is an area above article#content where we display information
+-# about the page. If nothing is set for the #title_box, we ignore this element.
+-# 
+
+- if title_content = yield(:title)
+  #title_box
+    #title= title_content
 
 %article#content
   = yield(:content) or yield
