@@ -22,12 +22,12 @@ navigation do
     label "Me"
     visible { logged_in? }
     url     { me_home_path }
-    active  { controller?('me/') }
+    active  { controller?('me/') or context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do
       label  "Create Page"
-      url     { new_me_page_path }
+      url     { new_page_path }
       active  false
       icon    :plus
       visible { @drop_down_menu }
@@ -43,7 +43,7 @@ navigation do
     context_section :pages do
       label  "Pages"
       url    { me_pages_path }
-      active { controller?('me/pages') }
+      active { page_controller? }
       icon   :page_white_copy
     end
 
@@ -135,7 +135,7 @@ navigation do
     visible { @group }
     label  "Groups"
     url    { groups_directory_path }
-    active { controller?('groups/') or @group}
+    active { controller?('groups/') or @group or context?(:group) }
     html    :partial => '/layouts/global/nav/groups_menu'
 
     context_section :home do
@@ -149,7 +149,7 @@ navigation do
       label  "Pages"
       icon   :page_white_copy
       url    { group_pages_path(@group) }
-      active { controller?('groups/pages') or controller.is_a?(Pages::BaseController)}
+      active { page_controller? }
     end
 
     context_section :members do

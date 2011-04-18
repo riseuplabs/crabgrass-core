@@ -2,11 +2,27 @@ module ControllerExtension::ContextParser
 
   protected
 
+  #
+  # returns true if the current display context matches the symbol.
+  # options are :me, :group, or :user
+  #
+  def context?(symbol)
+    return false unless @context
+    case symbol
+      when :me then @context.is_a?(Context::Me)
+      when :group then @context.is_a?(Context::Group)
+      when :user then @context.is_a?(Context::User)
+    end
+  end
+
+  #
   # returns the group and the page for a particular context path
   # eg.
   #   entity, page = resolve_context('riseup', 'minutes')
   #
   # This would correspond to: https://we.riseup.net/riseup/minutes
+  #
+  # currently, i think this is only used by the wiki renderer
   #
   def resolve_context(context_name, page_name, allow_multiple_results=false)
 

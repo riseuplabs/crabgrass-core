@@ -12,6 +12,7 @@ module ControllerExtension::Paths
       helper_method :page_url
       helper_method :page_xpath
       helper_method :page_xurl
+      helper_method :new_page_path
       helper_method :me_path
       helper_method :me_url
       helper_method :build_query_string
@@ -39,6 +40,12 @@ module ControllerExtension::Paths
   ##
   ## PAGE PATHS
   ##
+
+  # for a couple reasons, page creation is handled by a separate controller. 
+  # using 'new_page_create_path' is just awkward, so we alias it here.
+  def new_page_path(options={})
+    create_page_path(options)
+  end
 
   # The default url helpers based on the routes will not create correct links.
   # They link to the super class Pages::BaseController, ie /pages/:id. 
