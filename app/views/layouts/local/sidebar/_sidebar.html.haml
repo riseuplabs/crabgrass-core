@@ -8,12 +8,12 @@
 
 %ul.nav
   - @local_navigation.each do |item|
-    - next unless item.visible?
-    - active = item.active? ? 'active' : ''
+    - next unless item[:visible]
+    - active = item[:active] ? 'active' : ''
     %li{:class => [active, 'nav']}
-      - if item.html
+      - if item[:html]
         %div{:class => [active, 'nav']}
-          = theme_render(item.html)
+          = theme_render(item[:html])
       - else
-        = link_to_active(item.label, item.url, item.active?, :class => 'nav')
+        = link_to_active(item[:label], item[:url], item[:active], :class => 'nav')
 

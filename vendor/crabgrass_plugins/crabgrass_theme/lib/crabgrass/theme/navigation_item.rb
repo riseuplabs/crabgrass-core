@@ -8,7 +8,7 @@
 class Crabgrass::Theme::NavigationItem < Array
 
   attr_reader :name
-  ATTRIBUTES = [:label, :url, :active?, :visible?, :html, :icon]
+  ATTRIBUTES = [:label, :url, :active, :active?, :visible, :visible?, :html, :icon]
 
   def initialize(name, navdef)
     @name = name
@@ -59,7 +59,7 @@ class Crabgrass::Theme::NavigationItem < Array
   # raises an exception if the attribute is not in ATTRIBUTES.
   #
   def set_attribute(name, value)
-    if !ATTRIBUTES.include?(name) and !ATTRIBUTES.include?("#{name}?".to_sym)
+    if !ATTRIBUTES.include?(name)
       raise 'ERROR in theme definition: "%s" is not a known attribute.' % name
     else
       name = name.to_s.chop if name.to_s =~ /\?$/
@@ -79,13 +79,14 @@ class Crabgrass::Theme::NavigationItem < Array
       define_method(attr_name + '?') do
         send(attr_name)
       end
-    end
-    define_method(attr_name) do
-      value = instance_variable_get("@#{attr_name}")
-      if value.is_a?(Proc) and @navigation.controller
-        @navigation.controller.instance_eval(&value)
-      else
-        value
+    else
+      define_method(attr_name) do
+        value = instance_variable_get("@#{attr_name}")
+        if value.is_a?(Proc) and @navigation.controller
+          @navigation.controller.instance_eval(&value)
+        else
+          value
+        end
       end
     end
   end
