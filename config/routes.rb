@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
     assets.connect 'assets/:id/*path', :action => 'show'
   end
 
-  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show' 
+  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
   ##
@@ -25,6 +25,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :notices
     me.home      '', :controller => 'notices', :action => 'index'
     me.resource  :page, :only => [:new, :create]
+    debugger
     me.pages     'pages/*path', :controller => 'pages'
     me.resources :activities
     me.resources(:discussions, :as => 'messages') do |discussion|
