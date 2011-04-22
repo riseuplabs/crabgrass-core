@@ -41,5 +41,14 @@ development
 
 additional gems needed for testing:
 
-sudo RAILS_ENV=test rake gems:install
+  sudo RAILS_ENV=test rake gems:install
+
+testing database:
+
+  sudo mysqladmin create crabgrass_test
+  rake db:test:prepare
+
+run tests:
+
+  rake test
 
