@@ -90,7 +90,7 @@ module ControllerExtension::Paths
   def page_xpath(page, options={})
     controller = '/' + [page.controller, options.delete(:controller)].compact.join('_')
     options[:action] ||= 'index'
-    '/pages/' + [controller,options.delete(:action),page.id].join('/') + build_query_string(options)
+    '/pages' + [controller,page.id,options.delete(:action)].join('/') + build_query_string(options)
   end
 
   def page_xurl(page, options={})
