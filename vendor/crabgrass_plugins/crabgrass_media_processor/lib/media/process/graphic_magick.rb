@@ -13,7 +13,7 @@ module Media::Process
     def run(options)
       # +profile '*' will remove all the image profiles, which will save
       # space (sometimes) and are not useful for thumbnails
-      arguments = [GM_COMMAND, 'convert', '+profile', "'*'"]
+      arguments = [self.gm_override||GM_COMMAND, 'convert', '+profile', "'*'"]
       if options[:size]
         arguments << '-geometry' << options[:size]
       end

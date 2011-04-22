@@ -174,6 +174,7 @@ class AssetTest < ActiveSupport::TestCase
     # change to TextAsset
     @asset.uploaded_data = upload_data('msword.doc')
     @asset.save
+    assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
     assert_equal 6, @asset.thumbnails.count
 
@@ -296,6 +297,21 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_content_type
     assert_equal 'application/octet-stream', Asset.new.content_type
+  end
+
+  # data without a file upload, but just from memory
+  def test_direct_data
+    data1 = '<b>this is some very interesting data</b>'
+    data2 = '<i>but not this</i>'
+
+    asset = Asset.create!(:data => '<b>this is some very interesting data</b>', :content_type => 'text/html', :filename => 'data')
+    assert_equal data1, File.read(asset.private_filename)
+    
+    asset.data = data2
+    asset.save
+
+    assert_equal data2, File.read(asset.private_filename)
+    assert_equal data1, File.read(asset.versions.earliest.private_filename)
   end
 
   protected
