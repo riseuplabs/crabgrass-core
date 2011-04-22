@@ -277,13 +277,9 @@ class Asset < ActiveRecord::Base
   ## ASSET CREATION
   ##
 
-  # Auto-determine the appropriate Asset class from the file_data, and calls
-  # create on that class.
-  # eg. Asset.create_from_params(attributes) ---> ImageAsset.create(attributes)
-  #     if attributes contains an image file.
-  # if attributes[:page] is given, an AssetPage is created with the given
-  # attributes. The page's title defaults to the original filename of the
-  # uploaded asset.
+  # 
+  # creates an Asset of the appropriate subclass (ie ImageAsset). 
+  # 
   def self.create_from_params(attributes = nil, &block)
     begin
       return self.create_from_params!(attributes, &block)
@@ -295,15 +291,36 @@ class Asset < ActiveRecord::Base
   end
 
   def self.create_from_params!(attributes = nil, &block)
-    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create!(attributes, &block)
+    asset_class(attributes).create!(attributes, &block)
   end
 
   # like create_from_attributes(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil, &block)
-    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.new(attributes, &block)
+    asset_class(attributes).new(attributes, &block)
   end
+
+  before_create :set_default_type
+  def set_default_type
+    self.type ||= 'Asset'  # make Asset the default type so Asset::Version.versioned_type will be accurate.
+  end
+
+  private
+
+  # 
+  # returns the appropriate asset class, ie ImageAsset, for the attributes passed in.
+  #
+  def self.asset_class(attributes)
+    content_type = if attributes[:uploaded_data]
+      mime_type_from_data(attributes[:uploaded_data])
+    elsif attributes[:data]
+      attributes[:content_type]
+    end
+    return class_for_mime_type( content_type )
+  end
+
+  #
+  # MIME TYPES
+  #
 
   # eg: 'image/jpg' --> ImageAsset
   def self.class_for_mime_type(mime)
@@ -313,19 +330,17 @@ class Asset < ActiveRecord::Base
       Asset
     end
   end
+
+  #
+  # returns a mime type of the file_data
+  #
   def self.mime_type_from_data(file_data)
-    return nil unless file_data and file_data.any?
-    mime = file_data.content_type
-    if mime =~ /^application/
-      mime = Media::MimeType.mime_type_from_extension(file_data.original_filename)
+    if file_data and file_data.any?
+      file_data.content_type || Media::MimeType.mime_type_from_extension(file_data.original_filename)
     end
-    return mime
   end
 
-  before_create :set_default_type
-  def set_default_type
-    self.type ||= 'Asset'  # make Asset the default type so Asset::Version.versioned_type will be accurate.
-  end
+  public 
 
   ##
   ## MEDIA TYPES

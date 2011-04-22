@@ -1,10 +1,10 @@
-begin
-  require 'mime/types'
-rescue LoadError => exc
-  # can't fix messed up IE mime_types without mime_types gem.
-end
-require 'fileutils'
+#
+# AssetExtension::Upload
+#
+# Code that handles the creation of new assets from uploaded data.
+# 
 
+require 'fileutils'
 
 ## can be used to create assets from a script instead of uploaded from a browser:
 ## asset = Asset.create_from_params :uploaded_data => FileData.new('/path/to/file')
@@ -18,16 +18,14 @@ class FileData < String
   end
 end
 
-
-
 module AssetExtension
   module Upload
 
     def self.included(base)
 
-      base.after_validation :process_attachment
-      base.after_update :finalize_attachment  #  \  both are needed
-      base.after_create :finalize_attachment  #  /
+      base.before_validation :process_attachment
+      base.after_update :finalize_attachment  #  \  both are
+      base.after_create :finalize_attachment  #  /  needed
 
       base.extend(ClassMethods)
       base.instance_eval do
@@ -83,47 +81,102 @@ module AssetExtension
     end
 
     module InstanceMethods
+
+      #
+      # html forms for assets have a field called 'uploaded_data'. This setter
+      # will grab the uploaded file from that field. There is not actually a 
+      # column in the db called 'uploaded_data'. the actual work is done in
+      # finalize_attachment
+      #
       def uploaded_data=(file_data)
-        return nil if file_data.nil? || file_data.size == 0
-        mime_type = Asset.mime_type_from_data(file_data)
-        klass = Asset.class_for_mime_type(mime_type)
-        @old_files = self.all_filenames || []
-        if self.class != klass
-           # we are attempting something weird and strange:
-           # the new file_data is totally different than our previous file data,
-           # so we try to make ourselves quack like the new asset class.
-           self.thumbnails.clear
-           self.type = Media::MimeType.asset_class_from_mime_type(mime_type)
-           self.thumbdefs = klass.class_thumbdefs
-        end
-        self.content_type = mime_type
-        self.filename = file_data.original_filename
-        self.filename_will_change! # just in case nothing is different, force dirty.
-        @temp_file = Media::TempFile.new(file_data)
+        @data_changed = true
+        @file_data = file_data
       end
 
+      # 
+      # some POSTs may encode the data in the params directly as a blob, instead of
+      # as an uploaded file. This setter will grab the raw blob and create a file
+      # from it (the file is actually created later in finalize_attachment).
+      #
+      def data=(raw_data)
+        @data_changed = true
+        @raw_data = raw_data
+      end
+
+      #
+      # called before validation in order to create @temp_file from the data and
+      # to extract meta-data. @temp_file is turned into permanent storage later on
+      # in finalize_attachment(). 
+      #
       def process_attachment
-        if uploaded_data_changed?
-          self.size = File.size(@temp_file.path)
-          if Media::Process.has_dimensions?(self.content_type)
-            self.width, self.height = Media::Process.dimensions(@temp_file.path)
+        if @file_data or @raw_data
+          # temporarily capture old filenames
+          @old_files = self.all_filenames || []
+
+          # create @temp_file
+          if @file_data and @file_data.size != 0
+            # handle an uploaded file
+            self.content_type  = Asset.mime_type_from_data(@file_data)
+            self.filename      = @file_data.original_filename
+            self.filename_will_change! # just in case nothing is different, force dirty.
+            @temp_file = Media::TempFile.new(@file_data, content_type)
+            @file_data = nil
+          elsif @raw_data
+            # handle raw data
+            @temp_file = Media::TempFile.new(@raw_data, content_type)
+            @raw_data = nil
+          end
+
+          if @temp_file
+            alter_asset_class(content_type)
+            extract_metadata(@temp_file)
           end
         end
         true
       end
 
+      # 
+      # copies the temporary files or raw data to permanent storage.
+      # called after creation and every update.
+      #
       def finalize_attachment
-        return true unless uploaded_data_changed?
-        remove_files(*@old_files)
-        @old_files.clear
-        save_to_storage(@temp_file.path)
-        @temp_file.clear
-        create_thumbnail_records
+        if @old_files
+          remove_files(*@old_files)
+          @old_files.clear
+          @old_files = nil
+        end
+        if @temp_file
+          save_to_storage(@temp_file.path)
+          @temp_file.clear
+          @temp_file = nil
+          create_thumbnail_records
+        end
+        @data_changed = false
         true
       end
 
       def uploaded_data_changed?
-        @temp_file.any?
+        @data_changed
+      end
+
+      private
+
+      # if the asset class has changed, then we change the type column for this
+      # model. the next time this object is loaded, it will be a different class.
+      def alter_asset_class(content_type)
+        asset_class = Asset.class_for_mime_type(content_type)
+        if self.class != asset_class
+          self.thumbnails.clear
+          self.type = Media::MimeType.asset_class_from_mime_type(content_type)
+          self.thumbdefs = asset_class.class_thumbdefs
+        end
+      end
+
+      def extract_metadata(file)
+        self.size = File.size(file.path)
+        if Media::Process.has_dimensions?(self.content_type)
+          self.width, self.height = Media::Process.dimensions(file.path)
+        end
       end
 
     end

@@ -1,7 +1,8 @@
 begin
   require 'mime/types'
 rescue LoadError => exc
-  ;# no mime_types gem
+  puts "WARNING! no mime-types gem installed"
+  puts "you should really do 'gem install mime-types'"
 end
 
 
@@ -54,6 +55,10 @@ module Media
 
     def self.description_from_mime_type(mime_type)
       lookup(mime_type,DESCRIPTION) || lookup(mime_group(mime_type),DESCRIPTION) || lookup('default',DESCRIPTION)
+    end
+
+    def self.compatible_types?(type1, type2)
+      (TYPE_ALIASES[type1] || []).include?(type2)
     end
 
     EXT = 0; ICON = 1; ASSET_CLASS = 2; DESCRIPTION = 3;
@@ -175,6 +180,7 @@ module Media
 
       'image/'                   => [nil,:image,:image_asset,'Image'],
       'image/jpeg'               => [:jpg,:image,:image_asset],
+      'image/jpg'                => [:jpg,:image,:image_asset],
       'image/png'                => [:png,:image,:png_asset],
       'image/gif'                => [:png,:image,:gif_asset],
 
@@ -205,8 +211,21 @@ module Media
       'flv' => 'video/flv',
       'ogg' => 'audio/ogg',
       'oga' => 'audio/ogg',
-      'ogv' => 'vidoe/ogg',
+      'ogv' => 'video/ogg',
       'pdf' => 'application/pdf',
+
+      'doc' => 'application/msword',
+      'xsl' => 'application/excel',
+      'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'pptm' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'potx' => 'application/vnd.openxmlformats-officedocument.presentationml.template',
+      'docm' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+      'xlsm' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+
       'odt' => 'application/vnd.oasis.opendocument.text',
       'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
       'odp' => 'application/vnd.oasis.opendocument.presentation',
@@ -224,6 +243,12 @@ module Media
       'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template'
     }.freeze
 
-
+    #
+    # some types can have multiple names
+    #
+    TYPE_ALIASES = {
+      'image/jpg' => ['image/jpeg'],
+      'image/jpeg' => ['image/jpg']
+    }
   end
 end

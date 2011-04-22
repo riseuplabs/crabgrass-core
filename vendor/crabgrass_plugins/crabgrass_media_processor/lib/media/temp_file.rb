@@ -25,11 +25,20 @@ end
 # when the Tempfile gets garbage collected.
 #
 
+unless defined?(MEDIA_TMP_PATH)
+  if defined?(Rails)
+    MEDIA_TMP_PATH = File.join(Rails.root, 'tmp', 'media')
+  else
+    MEDIA_TMP_PATH = File.join('', 'tmp', 'media')
+  end
+end
+
 module Media
   class TempFile
 
-    @@tempfile_path = File.join(RAILS_ROOT, 'tmp', 'processing')
-    cattr_accessor :tempfile_path
+    def self.tempfile_path
+      MEDIA_TMP_PATH
+    end
 
     ##
     ## INSTANCE METHODS
@@ -38,8 +47,9 @@ module Media
     public
 
     # 
-    # file data may be one of:
+    # data may be one of:
     # 
+    #  - FileUpload object: like the kind returned in multibyte encoded file upload forms.
     #  - Pathname object: then load data from the file pointed to by the pathname.
     #  - IO object: read the contents of the io object, copy to tmp file.
     #  - otherwise, dump the contents of the data to the tmp file.
@@ -49,11 +59,14 @@ module Media
     def initialize(data, content_type=nil)
       if data.nil?
         @tmpfile = TempFile.create_from_content_type(content_type)
+      elsif data.respond_to?(:path)
+        # we are dealing with an uploaded file object
+        @tmpfile = TempFile.create_from_file(data.path, content_type, {:mode => :move})
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
       elsif data.instance_of?(Pathname)
-        @tmpfile = TempFile.create_from_file(data.to_s)
+        @tmpfile = TempFile.create_from_file(data.to_s, content_type)
       else
         @tmpfile = TempFile.create_from_data(data, content_type)
       end
@@ -105,39 +118,44 @@ module Media
     # creates a tempfile filled with the given binary data
     #
     def self.create_from_data(data, content_type=nil)
-      returning Tempfile.new(content_type_basename(content_type), @@tempfile_path) do |tmp|
-        tmp.binmode
-        tmp.write(data)
-        tmp.close
-      end
+      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf.binmode
+      tf.write(data)
+      tf.close
+      tf
     end
 
     #
     # create an empty temp file with an extension to match the content_type
     #
     def self.create_from_content_type(content_type)
-      returning Tempfile.new(content_type_basename(content_type), @@tempfile_path) do |tmp|
-        tmp.close
-      end
+      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf.close
+      tf
     end
 
     #
     # create a tmp file that is a copy of another file.
     #
-    def self.create_from_file(filepath)
-      returning Tempfile.new(File.basename(filepath), @@tempfile_path) do |tmp|
-        tmp.close
-        FileUtils.cp filepath, tmp.path
-      end
+    def self.create_from_file(filepath, content_type, options)
+      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf.close
+      # mv does not work, but i am not sure why. -elijah
+      #if options[:mode] == :move
+      #  FileUtils.mv filepath, tf.path
+      #else
+        FileUtils.cp filepath, tf.path
+      #end
+      tf
     end
 
     # 
-    # create a type file basename with a file extension from the content_type
-    # (new method)
+    # create a filename with a file extension from the content_type
     #
     def self.content_type_basename(content_type)
       if content_type
-       "%s.%s" % ['media_temp_file', Media::MimeType.extension_from_mime_type(content_type)]
+       extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
+       "%s.%s" % ['media_temp_file', extension]
       else
         'media_temp_file'
       end
