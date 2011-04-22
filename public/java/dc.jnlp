@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0" codebase="http://localhost:3000/java/" href="dc.jnlp">
+  <information>
+    <title>Data Checker</title>
+    <vendor>IHME UW</vendor>
+    <offline-allowed/>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.6+" initial-heap-size="128m" max-heap-size ="1024m"/>
+    <jar href="DataChecker.jar"/>
+    <jar href="opencsv-2.2.jar"/>
+  </resources>
+  <application-desc main-class="uw.ihme.dismod.DataCheckerFrame">
+    <argument>DISMOD_BASE_URL</argument>
+    <argument>sessionid</argument>
+    <argument>cov_slugs</argument>
+    <argument>ext_url</argument>
+  </application-desc>
+</jnlp>
+

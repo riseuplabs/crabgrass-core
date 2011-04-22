@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0" codebase="<%= request.protocol + request.host_with_port %>" href="<%= request.path %>">
+  <information>
+    <title>Data Checker</title>
+    <vendor>IHME UW</vendor>
+    <offline-allowed/>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.6+" initial-heap-size="128m" max-heap-size ="1024m"/>
+    <jar href="/java/DataChecker.jar"/>
+    <jar href="/java/opencsv-2.2.jar"/>
+  </resources>
+  <application-desc main-class="uw.ihme.dismod.DataCheckerFrame">
+    <argument><%= request.protocol + request.host_with_port %></argument>
+    <argument>0</argument>
+    <argument>0</argument>
+    <argument><%= request.protocol + request.host_with_port + page_xpath(@page, :action => 'dataset') %></argument>
+  </application-desc>
+</jnlp>
+

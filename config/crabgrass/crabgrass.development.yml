@@ -15,10 +15,10 @@
 #  * to work with super_admin, enable super_admin mod and site 'site1'.
 #
 
-title: "Crabgrass Development"
+title: "Generic Disease Modeling System"
 
 enabled_mods:
-  - view_examples
+  #- view_examples
   #- super_admin
   #- moderation
   #- translator
@@ -33,9 +33,10 @@ text_editor: greencloth_only
 #use_full_geonames_data: true
 
 available_page_types:
-  - AssetPage
+  #- AssetPage
   - DiscussionPage
   - WikiPage
+  - DismodPage
 
 ##
 ## SITES

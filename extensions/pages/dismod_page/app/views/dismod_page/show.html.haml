@@ -1,0 +1,8 @@
+%blockquote
+  dismod page
+
+.p
+  = button_to 'Open Model Designer', page_xpath(@page, :action => 'Model_Design_Agent'), {:method => :get}
+
+= render :partial => 'versions'
+
