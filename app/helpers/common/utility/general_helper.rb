@@ -31,6 +31,12 @@ module Common::Utility::GeneralHelper
     @called_before[key]=true
   end
 
+  # used to set the class 'first' for lists of things, because css selector :first
+  # is not very reliable.
+  def first(key)
+    once?(key) ? 'first' : ''
+  end
+
   def logged_in_since
     session[:logged_in_since] || Time.now
   end
