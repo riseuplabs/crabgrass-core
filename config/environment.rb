@@ -52,7 +52,6 @@ Crabgrass::Initializer.run do |config|
   config.gem 'i18n', :version => '~> 0.5'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3'
   config.gem 'will_paginate', :version => '~> 2.3'
-  config.gem 'mini_magick', :version => '~> 2.3'
   config.gem 'compass', :version => '~> 0.10'
   
   # required, and compilation is required to install

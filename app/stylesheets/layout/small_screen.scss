@@ -43,6 +43,11 @@
     }
   }
 
+  // notice pages center the text in the middle.
+  // but we want to reduce the border for small screens.
+  #center {
+    margin: 2%;
+  }
 }
 
 

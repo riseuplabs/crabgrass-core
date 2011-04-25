@@ -17,10 +17,11 @@
 # The alert methods accept arguments, in any order, that are Strings, Exceptions,
 # Arrays or Symbols. 
 #
-# Exception -- display an alert appropriate to the exception.
-# String -- displays the content of the string.
-# Array -- displays each of the strings in the array, each on their own line.
-# Symbol -- set options with the alert message:
+# Exception    -- display an alert appropriate to the exception.
+# String       -- displays the content of the string.
+# Array        -- displays each of the strings in the array, each on their own line.
+# ActiveRecord -- displays the validation errors for the object.
+# Symbol       -- set options with the alert message:
 #
 #    Available options:
 #      :now    -- flash now
@@ -103,7 +104,7 @@ module ControllerExtension::AlertMessages
 
   # 
   # forces the alert messages to come later, even if we previously said :now.
-  # this is used in case we did :now but then redirected.
+  # this is used in case we did :now but then redirected later.
   #
   def force_later_alert()
     flash[:messages] = flash.now[:messages]
@@ -122,12 +123,13 @@ module ControllerExtension::AlertMessages
     end
     
     if include_container
-      # the id alert_messages is required by the showAlertMessage
-      # javascript function.
-      content_tag(:div,
-        content_tag(:div,
-          inner, :id => 'alert_messages'),
-        :class => 'alert_message_container')
+      # the id alert_messages is required by the
+      # showAlertMessage javascript function.
+      content_tag(:div, :class => 'alert_message_container') do
+        content_tag(:div, :id => 'alert_messages') do
+          inner
+        end
+      end
     else
       inner
     end
@@ -180,8 +182,10 @@ module ControllerExtension::AlertMessages
       add_flash_exception(exception)
     elsif record = args.detect{|a|a.is_a? ActiveRecord::Base}
       add_flash_record(record)
-    elsif message = args.detect{|a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars) or a.is_a?(Array)}
-      add_flash_message(type, message)
+    elsif (messages = args.select{|a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars)}).any?
+      add_flash_message(type, messages)
+    elsif message_array = args.detect{|a| a.is_a?(Array)}
+      add_flash_message(type, message_array)
     else
       add_flash_default(type)
     end
@@ -267,9 +271,13 @@ module ControllerExtension::AlertMessages
       when :success then 'ok_16'
     end
     message_id = "alert_message_#{rand(100_000_000)}"
-    text = if message[:text].is_a? Array
-      content_tag(:p, message[:text][0], :class => 'first') +
-      content_tag(:p, message[:text][1..-1])
+    text = if message[:text].is_a?(Array)
+      if message[:text].size > 1
+        content_tag(:p, message[:text][0], :class => 'first') +
+        content_tag(:p, message[:text][1..-1])
+      else
+        message[:text].first
+      end
     else
       message[:text]
     end

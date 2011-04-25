@@ -98,12 +98,18 @@
     // minus the overhand needed to cover the border:
     bottom: -(border_width($active_border));
 
-    padding-left: $tab_padding;
+    // padding-left: don't do it. we need width of 100% to actually be the screen width.
+    // so, instead, we add margin to the first and last li.
+
     white-space: nowrap;
-    width: 80%;
+    width: 100%;
+
     li.tab {
       display: block;
       float: left;
+      &:first {
+        margin-left: $tab_padding;
+      }
       a.tab {
         @include cg-hover-link;
         display: block;

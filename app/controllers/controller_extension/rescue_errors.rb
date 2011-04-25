@@ -36,7 +36,8 @@ module ControllerExtension::RescueErrors
       rescue_from CrabgrassException, :with => :render_error
       rescue_from ErrorNotFound,    :with => :render_not_found
       rescue_from PermissionDenied, :with => :render_permission_denied
-      #rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
+      rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
+
       #helper_method :rescues_path
       #alias_method_chain :rescue_action_locally, :js
     end
@@ -87,10 +88,12 @@ module ControllerExtension::RescueErrors
 #    end
 #  end
 
-#  # handles suspected "cross-site request forgery" errors
-#  def render_csrf_error(exception=nil)
-#    render :template => 'account/csrf_error', :layout => 'default'
-#  end
+  #
+  # handles suspected "cross-site request forgery" errors
+  #
+  def render_csrf_error(exception=nil)
+    render :template => 'account/csrf_error', :layout => 'notice'
+  end
 
   # shows a generic not found page or error message, customized
   # by any message in the exception.
@@ -126,7 +129,11 @@ module ControllerExtension::RescueErrors
     end
   end
 
-  # renders an error message or messages
+  # 
+  # tries to automatically render the most appropriate thing. 
+  # for ajax, no problem, we render some rjs.
+  # for html, we try to to figure out the best template to render.
+  #
   def render_error(exception=nil, options={})
     #if exception
     #  options[:template] ||= exception.template
@@ -142,6 +149,15 @@ module ControllerExtension::RescueErrors
         render_error_js(exception, options)
       end
     end
+  end
+
+  #
+  # used to render the alerts inline as the sole content of the page, useful
+  # when you want to report an error but floating errors are no good because you
+  # don't want to disclose anything about the page.
+  #
+  def render_alert
+    render :template => 'error/alert', :layout => 'notice'
   end
 
   #
@@ -230,7 +246,7 @@ module ControllerExtension::RescueErrors
       update_alert_messages(page)
     end
   end
-
+ 
   #def flash_auth_error(mode)
   #  if mode == :now
   #    flsh = flash.now

@@ -48,6 +48,9 @@ textarea, input, select {
     // font-size: 1.15em;
     // margin-right: 0.5em;
   }
+  //&.right  {text-align: right;}
+  //&.left   {text-align: left;}
+  //&.center {text-align: center;}
 }
 
 //
@@ -146,5 +149,11 @@ table.form {
       width: 100%;
     }
   }
+  td.buttons .form_buttons {
+    float: right;
+  }
 }
 
+#center table.form {
+  margin: 0 auto;
+}

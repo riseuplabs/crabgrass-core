@@ -1,6 +1,10 @@
 unless defined?(FORBIDDEN_NAMES)
-  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues static stats stylesheets theme).freeze
+  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues session static stats stylesheets theme)
 end
+
+#
+# :conditions => {:method => :post}
+#
 
 ActionController::Routing::Routes.draw do |map|
 
@@ -14,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
     assets.connect 'assets/:id/*path', :action => 'show'
   end
 
-  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show' 
+  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
   ##
@@ -64,19 +68,22 @@ ActionController::Routing::Routes.draw do |map|
 #  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
 #  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
 
-#  ##
-#  ## ACCOUNT
-#  ##
+  ##
+  ## ACCOUNT
+  ##
 
   map.with_options(:controller => 'account') do |account|
-    account.reset_password 'account/reset_password/:token', :action => 'reset_password'
-    account.account_verify 'account/verify_email/:token', :action => 'verify_email'
-    account.connect 'account/:action/:id'
+    account.reset_password 'account/reset_password/:token', :action => 'reset_password', :token => nil
+    account.verify_account 'account/verify_email/:token',   :action => 'verify_email'
+    account.new_account    'account/new', :action => 'new'
+    account.account        'account/:action/:id'
   end
 
   map.with_options(:controller => 'session') do |session|
-    session.login 'session/login', :action => 'login'
-    session.logout 'session/logout', :action => 'logout'
+    session.login    'session/login',  :action => 'login'
+    session.logout   'session/logout', :action => 'logout'
+    session.language 'session/logout', :action => 'language'
+    session.session  'session/:action/:id'
   end
 
 #  ##
