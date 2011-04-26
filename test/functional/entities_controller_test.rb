@@ -7,12 +7,14 @@ class EntitiesControllerTest < ActionController::TestCase
 
   def test_preloading_entities
     login_as :blue
+    blue = users(:blue)
     xhr :get, :index, :format => :json, :view => :all, :query => ''
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
+    friends_and_peers = (blue.friends + blue.peers).uniq
     assert_equal response["suggestions"].size,
-      users(:blue).friends.count + users(:blue).groups.count,
-      "suggestions should contain all friends and groups."
+      friends_and_peers.count + blue.all_groups.count,
+      "suggestions should contain all friends, peers and groups."
     assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
     assert response["suggestions"].size > 5,
@@ -22,14 +24,14 @@ class EntitiesControllerTest < ActionController::TestCase
   end
 
   def test_querying_entities
-    login_as :blue
+    login_as :red
     xhr :get, :index, :format => :json, :view => :all, :query => 'pu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
     assert response["suggestions"].size > 0,
-      "there should be suggestions for blue starting with 'pu'."
+      "there should be suggestions for red starting with 'pu'."
     assert_equal response["query"], 'pu',
       "response.query should contain the query string."
   end
@@ -59,14 +61,14 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert_equal 0, users(:red).friends.count,
       "red should not have any friends."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'bl'
+    xhr :get, :index, :format => :json, :view => :all, :query => 'qu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
     assert response["suggestions"].size > 0,
-      "there should be suggestions for red starting with 'bl' -> blue."
-    assert_equal response["query"], 'bl',
+      "there should be suggestions for red starting with 'qu' -> quentin."
+    assert_equal response["query"], 'qu',
       "response.query should contain the query string."
   end
 

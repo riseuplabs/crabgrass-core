@@ -36,7 +36,7 @@ animals:
 animals_for_public:
   locked_id: 2
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester, request membership
   mask: <%= 137 %>
 
@@ -49,7 +49,7 @@ rainbow:
 rainbow_for_public:
   locked_id: 3
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester
   mask: <%= 9 %>
 
@@ -80,7 +80,7 @@ public_group:
 public_group_for_public:
   locked_id: 1000
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester and see committees
   mask: <%= 265 %>
 
@@ -93,7 +93,7 @@ public_committee:
 public_committee_for_public:
   locked_id: 1001
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester, see members, request membership
   mask: <%= 201 %>
 
@@ -119,7 +119,7 @@ cnt:
 cnt_for_public:
   locked_id: 3001
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester, request membership
   mask: <%= 137 %>
 
@@ -132,7 +132,7 @@ fai:
 fai:
   locked_id: 3002
   locked_type: Group
-  keyring_code: 1
+  keyring_code: 0
   # see, pester, request membership
   mask: <%= 137 %>
 
@@ -187,6 +187,6 @@ super_admin_group:
 <%=login%>_public:
   locked_id: <%= id %>
   locked_type: User
-  keyring_code: 1
+  keyring_code: 0
   mask: 3
 <% end %>
