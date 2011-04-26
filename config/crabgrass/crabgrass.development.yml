@@ -37,6 +37,8 @@ available_page_types:
   - DiscussionPage
   - WikiPage
 
+theme: default
+
 ##
 ## SITES
 ##
@@ -45,6 +47,7 @@ sites:
 
 # bound to localhost:
 #  - name: site1
+#    theme: blueberry
 #    admin_group: rainbow
 #    moderation_group: rainbow
 

@@ -8,6 +8,7 @@
 class Crabgrass::Theme::NavigationItem < Array
 
   attr_reader :name
+  attr_reader :navigation
   ATTRIBUTES = [:label, :url, :active, :active?, :visible, :visible?, :html, :icon]
 
   def initialize(name, navdef)
@@ -15,6 +16,16 @@ class Crabgrass::Theme::NavigationItem < Array
     @navigation = navdef
     @pointer = 0
     @visible = true
+  end
+
+  # allow reassignment of navigation object. 
+  # recursively descends the tree, reassigning nav.
+  # this is necessary when we duplicate a tree for navigation inheritance.
+  def navigation=(new_nav)
+    @navigation = new_nav
+    each do |item|
+      item.navigation = new_nav
+    end
   end
 
   def [](key)
@@ -43,11 +54,33 @@ class Crabgrass::Theme::NavigationItem < Array
         return elem
       end
     end
-    @pointer = length
+    @pointer = -1 # could not find it
     nil
   end
 
+  def seek_last
+    @pointer = length - 1
+  end
+
   #
+  # removes the named sub navigation item
+  #
+  def remove(name)
+    seek(name)
+    remove_current
+  end
+
+  #
+  # removes the current() navigation item (ie, one pointed to by @pointer).
+  #
+  def remove_current
+    if @pointer >= 0
+      item = self.delete_at(@pointer)
+      seek_last
+      return item
+    end
+  end
+
   # used for debugging
   #
   def inspect
