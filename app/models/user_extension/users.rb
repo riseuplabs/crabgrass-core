@@ -91,13 +91,15 @@ module UserExtension::Users
         {:conditions => ['users.id in (?)', user.friend_id_cache]}
       end)
 
-      # not friends of... used for autocomplete when we preloaded the friends.
-      named_scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)', user.friend_id_cache + [user.id]]}
-      end)
-
       named_scope(:friends_or_peers_of, lambda do |user|
         {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
+      end)
+
+      # neither friends nor peers
+      # used for autocomplete when we preloaded the friends and peers
+      named_scope(:strangers_to, lambda do |user|
+        {:conditions => ['users.id NOT IN (?)',
+          user.friend_id_cache + user.peer_id_cache + [user.id]]}
       end)
 
       ##
