@@ -58,7 +58,7 @@ class DismodPageController < Pages::BaseController
   # generates a new filename for an uploaded dismod input file.
   #
   def new_filename(version)
-    "%s.%s.%s.json" % [@page.title.nameize, Time.now.strftime('%Y-%m-%d'), version]
+    "%s.v%s.%s.json" % [@page.title.nameize, version, Time.now.strftime('%Y-%m-%d')]
   end
 end
 

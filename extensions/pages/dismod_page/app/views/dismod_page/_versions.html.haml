@@ -1,21 +1,27 @@
 %table.pretty
   %tr
-    %th
-    %th
     %th{:nowrap=>"nowrap"}
       = I18n.t(:asset_version_list_version_heading)
     %th{:nowrap=>"nowrap"}
       = I18n.t(:updated)
-- @asset.versions.reverse.each do |version|
-  - row_class = cycle('odd', 'even')
-  - id = 'asset_' + @asset.id + '_version_' + version.version
-  %tr{ :class => row_class, :id => id }
-    %td
-      - if current_user.may?(:edit, @page) and version.version < @asset.version
-        %span= 'destroy_version_link(version)'
-    -# %td= link_to_asset(version, :small, :crop! => '32x32')
-    %td{:nobreak=>'nobreak'}
-      = link_to I18n.t(:version_number, :version => version.version), version.url
-    %td
-      = friendly_date(version.updated_at)
+    %th{:nowrap=>"nowrap"}
+      &nbsp;
+    %th{:nowrap=>"nowrap"}
+      &nbsp;
+
+  - @asset.versions.reverse.each do |version|
+    - row_class = cycle('odd', 'even')
+    - id = 'asset_%s_version_%s' % [@asset.id, version.version]
+    %tr{:class => row_class, :id => id}
+      %td{:nobreak=>'nobreak'}
+        = link_to I18n.t(:version_number, :version => version.version), version.url
+      %td
+        = friendly_date(version.updated_at)
+      %td
+        = button_to('edit', page_xpath(@page, :action => 'Model_Design_Agent', :version => version.version), {:method => :get})
+      %td
+        - if current_user.may?(:edit, @page) and version.version < @asset.version
+          %span= link_to('destroy', page_xpath(@page, :action => 'destroy'), :confirm => 'are you sure?')
+
+
 
