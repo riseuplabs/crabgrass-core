@@ -1,44 +1,45 @@
-=begin
+#
+# AssetExtension::Storage
+#
+# Code to handle the backend file storage for asset models.
+#
+# Notes:
+#
+#
+# (1) We want to keep two sets of file storage paths: one for private files and
+#     one for public files. When an asset becomes public, we create a symbolic
+#     link in the public directory to the file in the private directory.
+#
+# (2) Assets may be versioned. We keep the versions in a subfolder called 'versions'
+#
+# Lets suppose you have an asset called 'myfile.jpg' and have defined two thumbnails,
+# one called :minithumb and one called :bigthumb.
+# 
+# This is what the directory structure will look like:
+# 
+#   RAILS_ROOT/
+#     assets/
+#       0000/
+#         0055/
+#          myfile.jpg
+#          myfile_minithumb.jpg
+#          myfile_bigthumb.jpg
+#          versions/
+#            1/
+#              myfile.jpg
+#              myfile_minithumb.jpg
+#              myfile_bigthumb.jpg
+#   public/
+#     assets/
+#       55 --> ../../assets/0000/0055/
 
-This file is adapted from vendor/plugins/attachment_fu/lib/technoweenie/attachment_fu/backends/file_system_backend.rb
+#Multiple asset hosts
+#--------------------
 
-There are two main modifications:
+#config.action_controller.asset_host = 'assets%d.example.com'
 
-(1) We want to keep two sets of file storage paths: one for private files and
-    one for public files. When an asset becomes public, we create a symbolic
-    link in the public directory to the file in the private directory.
+#This tells Rails to generate links to the following four hosts: assets0.example.com, assets1.example.com, assets2.example.com, and assets3.example.com.
 
-(2) Assets may be versioned. We keep the versions in a subfolder called 'versions'
-
-Lets suppose you have an asset called 'myfile.jpg' and have defined two thumbnails,
-one called :minithumb and one called :bigthumb.
-
-This is what the directory structure will look like:
-
-  RAILS_ROOT/
-    assets/
-      0000/
-        0055/
-          myfile.jpg
-          myfile_minithumb.jpg
-          myfile_bigthumb.jpg
-          versions/
-            1/
-              myfile.jpg
-              myfile_minithumb.jpg
-              myfile_bigthumb.jpg
-    public/
-      assets/
-        55 --> RAILS_ROOT/assets/0000/0055/
-
-Multiple asset hosts
---------------------
-
-config.action_controller.asset_host = 'assets%d.example.com'
-
-This tells Rails to generate links to the following four hosts: assets0.example.com, assets1.example.com, assets2.example.com, and assets3.example.com.
-
-=end
 
 require 'ftools'
 require 'pathname'
@@ -193,6 +194,10 @@ module AssetExtension # :nodoc:
       end
     end
 
+    #
+    # renames the stored file if the self.filename attribute has changed.
+    # called as before_update callback.
+    #
     def rename_file
       if filename_changed? and !new_record? and !uploaded_data_changed?
         Dir.chdir( File.dirname(private_filename) ) do
@@ -241,7 +246,7 @@ module AssetExtension # :nodoc:
     # currently unused
     def sanitize_filename(filename)
       return unless filename
-      returning filename.strip do |name|
+      filename.strip.tap do |name|
         # NOTE: File.basename doesn't work right with Windows paths on Unix
         # get only the filename, not the whole path
         name.gsub! /^.*(\\|\/)/, ''

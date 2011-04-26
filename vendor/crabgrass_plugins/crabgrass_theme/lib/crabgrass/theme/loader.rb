@@ -46,19 +46,23 @@ module Crabgrass::Theme::Loader
     return paths
   end
 
-  # ensures relative path symlink
-  def symlink(src,dst)
-  
-    # this must come before the pathname stuff, because realpath will try to resolve
-    # any existing bad symlinks
-    if File.symlink?(dst)
+  #
+  # symlink, ensuring RELATIVE paths.
+  #
+  def symlink(src, dst)
+    # these sanity checks are necessary to prevent Pathname from throwing
+    # exceptions... Pathname does not act gracefully if it references bad symlinks
+    # or missing files. 
+    if !File.exists?(src)
+      return    
+    elsif File.symlink?(dst)
       FileUtils.rm(dst)
     elsif File.exists?(dst)
-      raise 'For the theme to work, the file "%s" should not exist.' % dst
+      raise 'For the theme to work, the file "%s" must not exist.' % dst
     end
 
     real_src_path = Pathname.new(src).realpath
-    real_dst_dir = Pathname.new(File.dirname(dst)).realpath
+    real_dst_dir  = Pathname.new(File.dirname(dst)).realpath
 
     relative_path = real_src_path.relative_path_from(real_dst_dir)
     FileUtils.ln_s(relative_path, real_dst_dir)

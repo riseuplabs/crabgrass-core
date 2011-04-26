@@ -25,7 +25,7 @@ class Avatar < ActiveRecord::Base
     'xsmall' => 22,
     'small'  => 32,
     'medium' => 48,
-    'large'  => 60,
+    'large'  => 64,
     'xlarge' => 96,
     'huge'   => 202
   ).freeze

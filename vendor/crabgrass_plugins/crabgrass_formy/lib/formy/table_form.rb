@@ -1,6 +1,8 @@
 module Formy
 
   class TableForm < Root
+    element_attr :buttons
+
     def title(value)
       puts "<tr class='title #{first}'><td colspan='2'>#{value}</td></tr>"
     end
@@ -33,7 +35,10 @@ module Formy
 
     def close
       @elements.each {|e| raw_puts e}
-      puts "</table>"
+      if @buttons
+        puts '<tr><td colspan="2" class="buttons"><div class="form_buttons">%s</div></td></tr>' % @buttons
+      end
+      puts '</table>'
       super
     end
 

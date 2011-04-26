@@ -6,8 +6,8 @@
 $masthead_nav_tab_css: false !default;
 $masthead_nav_tab_inactive_css: false !default;
 $masthead_nav_tab_active_css: false !default;
-$masthead_nav_tab_padding: 0.5em !default;
-$masthead_nav_tab_margin: 0 !default;
+//$masthead_nav_tab_padding: 0.5em !default;
+//$masthead_nav_tab_margin: 0 !default;
 
 $masthead_nav_dropdown_border_size: 1px; 
 
@@ -21,21 +21,24 @@ $masthead_nav_dropdown_border_size: 1px;
     $ul_id: 'menu';
     @include cutout_menu(
       $ul_id,
-      $masthead_nav_tab_padding,
+      resolve_width($masthead_content_padding),
       $background_color,
       $masthead_border
     );
-    // a minor adjustment: align the first tab with the masthead content.
     ul#menu {
-      padding-left: resolve_width($masthead_content_padding);
+      width: 100%;
     }
   }
 } @else {
   #menu li.tab {@include inline-list;}
 }
 
-#menu li.tab {
+#masthead ul#menu li.tab {
   position: relative;  // requires for the submenus to line up under the menu titles
+  &.account {
+    float: right;
+    a {padding-right: 0px}
+  }
 }
 
 // make the menu title look different when the dropdown is visible
@@ -75,7 +78,6 @@ $masthead_nav_dropdown_border_size: 1px;
   // this positions the top of the menu items exactly under the menu tab.
   // not sure if it works in all browsers.
   margin-top: -1px;
-  // $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
 
   // appearance
   background-color: $masthead_nav_dropdown_background_color;

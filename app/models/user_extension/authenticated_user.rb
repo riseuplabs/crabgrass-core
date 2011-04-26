@@ -44,7 +44,8 @@ module AuthenticatedUser
       validates_confirmation_of :password,                   :if => :password_required?
       validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
       validates_length_of       :login, :within => 3..40
-      validates_uniqueness_of   :login, :case_sensitive => false
+      # uniqueness is validated elsewhere
+      #validates_uniqueness_of   :login, :case_sensitive => false
       before_save :encrypt_password
     end
   end

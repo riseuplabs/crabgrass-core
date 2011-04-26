@@ -350,7 +350,7 @@ Modalbox.Methods = {
 			return []; // IE dies a horrible death if the modalbox includes an iframe, unless we return [] here.
                  // Not sure if it is the focus or the adding the class that triggers it.
 		} else {
-			this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]').invoke('addClassName', 'MB_focusable');
+			this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]:not(.nofocus)').invoke('addClassName', 'MB_focusable');
 			return this.MBcontent.select('.MB_focusable');
 		}
 	},
