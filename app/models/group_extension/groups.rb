@@ -131,7 +131,7 @@ module GroupExtension::Groups
 
     # returns an array of committees visible to the given user
     def committees_for(user)
-      self.real_committees.with_access :view, user
+      self.real_committees.access_by(user).allows(:view)
     end
 
     # whenever the structure of this group has changed

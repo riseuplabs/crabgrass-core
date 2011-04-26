@@ -49,8 +49,9 @@ class Group < ActiveRecord::Base
   ##
 
   # finds groups that user may see
-  # this is a depcrecated special case of with_access provided by acts_as_locked.
-  # Please use with_access(:view, user) instead.
+  # this is a depcrecated special case of access_by(user).allows(action)
+  # provided by acts_as_locked.
+  # Please use access_by(user).allows(:view) instead.
   named_scope :visible_by, lambda { |user|
     { :joins => :permissions,
       :group => 'object_id, object_type',
