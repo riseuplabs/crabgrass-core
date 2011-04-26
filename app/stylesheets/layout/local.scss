@@ -8,16 +8,15 @@ div#local {
 //
 
 #local.full_width {
-
   $center_columns: $grid_column_count;
+  $padding: resolve_width($local_content_padding, $center_columns);
 
   .title { margin-bottom: resolve_width($local_content_padding, $center_columns) }
 
   #column_center {
     @include full;
-    article#content, #title {
-      padding: resolve_width($local_content_padding, $center_columns);
-    }
+    article#content, #title { padding: $padding }
+    section#posts { margin-top: $padding; }
   }
 }
 
@@ -34,6 +33,7 @@ div#local {
     padding: $padding;
   }
   article#content { padding: $padding; }
+  section#posts   { margin-top: $padding; }
 
   &.on_left {
     #column_center {
@@ -122,6 +122,8 @@ div#local {
 
   #title { margin-bottom: $padding }
   article#content { padding: $padding }
+  section#posts   { margin-top: $padding; }
+
   .sidebox {
     border: 1px solid #ccc;
     background: #efefef;

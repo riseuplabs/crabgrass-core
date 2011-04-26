@@ -81,12 +81,10 @@
 
 @mixin cutout_menu(
   $ul_id,
-  $tab_padding: 10px,
+  $tab_margin: 10px,
   $active_background: white,
   $active_border: false) {
 
-  // $tab_padding currently unused.
-  
   // allows us to put the menu at the bottom
   position: relative;
 
@@ -98,18 +96,18 @@
     // minus the overhand needed to cover the border:
     bottom: -(border_width($active_border));
 
-    // padding-left: don't do it. we need width of 100% to actually be the screen width.
-    // so, instead, we add margin to the first and last li.
+    // padding-left: don't do it.
+    // ^^ In some cases, we need width of 100% to actually be the screen width,
+    // but adding padding makes 100% width be wider than the screen.
+    // So, instead, we add margin to the first and last li.
 
     white-space: nowrap;
-    width: 100%;
 
     li.tab {
       display: block;
       float: left;
-      &:first {
-        margin-left: $tab_padding;
-      }
+      &.first {margin-left: $tab_margin;}
+      &.last  {margin-right: $tab_margin;}
       a.tab {
         @include cg-hover-link;
         display: block;
