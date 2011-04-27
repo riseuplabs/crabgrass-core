@@ -38,7 +38,5 @@ ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
 ## CRABGRASS OPTIONS
 ##
 
-ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/assets"
-ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"
-KEYRING_STORAGE = "#{RAILS_ROOT}/assets/keyrings"
+
 
