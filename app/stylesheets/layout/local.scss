@@ -175,6 +175,8 @@ article#content {
 
   // allows us to have floated columns within the #content
   @include clearfix;
+
+  @if $local_content_css { @include local_content_css; }
 }
 
 

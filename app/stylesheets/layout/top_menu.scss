@@ -34,17 +34,33 @@ $masthead_nav_dropdown_border_size: 1px;
 }
 
 #masthead ul#menu li.tab {
-  position: relative;  // requires for the submenus to line up under the menu titles
+  // required for the submenus to line up under the menu titles
+  position: relative;  
+
+  // custom theme css override for top menu links
+  // most of the a.tab styling is done with "@include cutout_menu"
+  a.tab {
+    @if $masthead_nav_tab_css { @include masthead_nav_tab_css; }
+    &.active {@if $masthead_nav_tab_active_css { @include masthead_nav_tab_active_css; }}
+    &:not(.active) {@if $masthead_nav_tab_inactive_css { @include masthead_nav_tab_inactive_css; }}
+    // ^^ note: :not is unsupported in IE, but is fixed with ie9.js
+  }
+
+  // account links are inline with the main navigation links, but flush to the right
   &.account {
     float: right;
-    a {padding-right: 0px}
+    a.tab {
+     padding-right: 0px;
+     background: none;
+    }
   }
 }
 
 // make the menu title look different when the dropdown is visible
 // this is super cool, not sure if it works in ie.
 
-#masthead ul#menu li.menu_visible a.tab {
+#masthead ul#menu li.tab.menu_visible a.tab {
+  color: $link_standard_color;
   border: $masthead_nav_dropdown_border_size solid $masthead_nav_dropdown_border_color;
   border-bottom: 0;
   z-index: $zindex_menu + 1;
