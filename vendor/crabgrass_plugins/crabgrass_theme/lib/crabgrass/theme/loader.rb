@@ -21,6 +21,10 @@ module Crabgrass::Theme::Loader
       @navigation = default_navigation
     end
 
+    if @data.nil?
+      @data = default_data
+    end
+
     # in production, clear the cache once at startup.
     clear_cache if Rails.env == 'production'
 
@@ -44,6 +48,9 @@ module Crabgrass::Theme::Loader
     theme
   end
 
+  #
+  # this method does the work of actually evaluating the theme definition .rb files.
+  #
   def evaluate_theme_definition(file)
     eval(IO.read(file), binding, file)
   end
@@ -55,6 +62,55 @@ module Crabgrass::Theme::Loader
     raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
     return paths
   end
+
+  def reload
+    info 'Reloading theme %s' % @name
+    load()
+  end
+
+  #
+  # triggered when navigation.rb calls 'navigation()'
+  #
+  def load_navigation(args, &block)
+    if args[:parent]
+      # load the parent navigation first, hopefully, we don't have circular dependencies!
+      parent = Crabgrass::Theme[args[:parent]]
+      if parent.nil?
+        puts "ERROR: no such parent theme '%s' available for theme '%s' (navigation)" % [args[:parent], @name]
+      else
+        base_nav = parent.navigation
+      end
+    else
+      base_nav = nil
+    end
+    return Crabgrass::Theme::NavigationDefinition.parse(self, base_nav, &block)
+  end
+
+  #
+  # triggered when init.rb calls 'options()'
+  #
+  def load_data(args, &block)
+    if args[:parent]
+      # load the parent theme first, hopefully, we don't have circular dependencies!
+      @parent = Crabgrass::Theme[args[:parent]]
+      if @parent.nil?
+        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
+      else
+        starting_data = @parent.data_copy
+      end
+    end
+    starting_data ||= {}
+    Crabgrass::Theme::Options.parse(starting_data, &block)
+  end
+
+  def default_navigation
+    load_navigation(:parent => 'default')
+  end
+
+  def default_data
+    load_data(:parent => 'default')
+  end
+
 
   #
   # symlink, ensuring RELATIVE paths.

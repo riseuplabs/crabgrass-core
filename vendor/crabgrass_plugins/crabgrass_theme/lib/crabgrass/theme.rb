@@ -42,7 +42,7 @@ module Crabgrass
       @directory  = Theme::theme_directory(theme_name)
       @name       = File.basename(@directory) rescue nil
       @public_directory = File.join(CSS_ROOT,@name)
-      @data       = {}
+      @data       = nil
       @style      = nil
       @controller = nil
     end
@@ -111,17 +111,7 @@ module Crabgrass
     # end
 
     def options(args={}, &block)
-      if args[:parent]
-        # load the parent theme first, hopefully, we don't have circular dependencies!
-        @parent = Theme[args[:parent]]
-        if @parent.nil?
-          puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
-        else
-          starting_data = @parent.data_copy
-        end
-      end
-      starting_data ||= {}
-      @data = Options.parse(starting_data, &block)
+      @data = load_data(args, &block)
     end
 
     # used to define or fetch the navigation
@@ -140,43 +130,26 @@ module Crabgrass
       @style = str
     end
 
-    # used for theme inheritence
+    # used for theme inheritance.
+    # a deep clone is not needed, because @data is just a shallow hash, even
+    # though the theme definition files seem all nesty.
     def data_copy
       @data.dup
     end
 
     private
    
-    def load_navigation(args, &block)
-      if args[:parent]
-        # load the parent navigation first, hopefully, we don't have circular dependencies!
-        parent = Theme[args[:parent]]
-        if parent.nil?
-          puts "ERROR: no such parent theme '%s' available for theme '%s' (navigation)" % [args[:parent], @name]
-        else
-          base_nav = parent.navigation
-        end
-      else
-        base_nav = nil
-      end
-      return NavigationDefinition.parse(self, base_nav, &block)
-    end
-
-    def default_navigation
-      load_navigation(:parent => 'default')
-    end
-
     def self.theme_directory(theme_name)
       File.join(THEME_ROOT,theme_name)
     end
 
-    def self.theme_loaded?(theme_name)
-      not @@themes[theme_name].nil?
-    end
+    #def self.theme_loaded?(theme_name)
+    #  not @@themes[theme_name].nil?
+    #end
 
-    def self.needs_reloading?(theme_name)
-      Cache::directory_changed_since?(theme_directory(theme_name), @@theme_timestamps[theme_name])
-    end
+    #def self.needs_reloading?(theme_name)
+    #  Cache::directory_changed_since?(theme_directory(theme_name), @@theme_timestamps[theme_name])
+    #end
 
   end
 end

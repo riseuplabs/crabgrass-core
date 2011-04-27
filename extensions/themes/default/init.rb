@@ -74,9 +74,9 @@ options {
                      # bar -- creates a separate menu nav bar
       tab {
         padding '8px'   # must be in pixels
-        css %{ }
-        active_css %{   }
-        inactive_css %{   }
+        css false
+        active_css false
+        inactive_css false
       }
       dropdown {
         background_color 'white'
@@ -103,7 +103,7 @@ options {
       style 'cutout' # [cutout | inset | none]
       padding '6px'
     }
-    css ""
+    css false
   }
 
   local {
@@ -112,6 +112,7 @@ options {
       border $border
       background 'white'
       padding '1g'
+      css false
     }
     nav {
       style 'tabs'

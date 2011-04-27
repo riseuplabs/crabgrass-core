@@ -59,6 +59,7 @@ div#local {
         &.active {
           border: $local_content_border;
           background: $local_content_background;
+          @if $local_content_css { @include local_content_css; }
           border-right: 0;
         }
         a.nav {

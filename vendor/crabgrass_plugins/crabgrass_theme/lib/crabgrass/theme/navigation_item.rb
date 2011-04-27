@@ -42,6 +42,22 @@ class Crabgrass::Theme::NavigationItem < Array
   end
 
   #
+  # in navigation inheritance, we need to be able to deep clone a navigation tree.
+  #
+  def deep_clone
+    # clone thy self!
+    self_clone = self.clone
+
+    # remove all the array entries. they point to the wrong nav items.
+    self_clone.clear 
+
+    # clone each nav item in turn
+    each {|item| self_clone << item.deep_clone }
+    
+    return self_clone
+  end
+
+  #
   # finds the element with the given name. does not decend the tree.
   # this is needed so that navigation definitions can add items to
   # pre-existing trees.
@@ -92,7 +108,7 @@ class Crabgrass::Theme::NavigationItem < Array
   #
   def set_attribute(name, value)
     if !ATTRIBUTES.include?(name)
-      raise 'ERROR in theme definition: "%s" is not a known attribute.' % name
+      raise 'ERROR in theme definition "%s": "%s" is not a known navigation attribute.' % [@theme.name, name]
     else
       name = name.to_s.chop if name.to_s =~ /\?$/
       instance_variable_set("@#{name}", value)

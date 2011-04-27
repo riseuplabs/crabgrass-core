@@ -6,7 +6,7 @@ class Crabgrass::Theme::NavigationDefinition
 
   def self.parse(theme, parent_nav=nil, &block)
     if parent_nav
-      tree = parent_nav.root.dup
+      tree = parent_nav.root.deep_clone
     else
       tree = nil
     end
@@ -26,7 +26,7 @@ class Crabgrass::Theme::NavigationDefinition
       @tree.theme = @theme
     else
       # create a new tree
-      @tree = Crabgrass::Theme::NavigationItem.new('root',@theme)
+      @tree = Crabgrass::Theme::NavigationItem.new('root', @theme)
     end
     @section_stack = []
     @section_stack << @tree
@@ -47,7 +47,7 @@ class Crabgrass::Theme::NavigationDefinition
   # exists, then we redefine it.
   #
   def section(name)
-    section = current_section.seek(name) || current_section.add(Crabgrass::Theme::NavigationItem.new(name,self))
+    section = current_section.seek(name) || current_section.add(Crabgrass::Theme::NavigationItem.new(name, @theme))
     @section_stack.push(section)
       yield
     @section_stack.pop

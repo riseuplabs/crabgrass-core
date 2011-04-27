@@ -35,8 +35,7 @@ module Crabgrass::Theme::Cache
       updated_at = css_updated_at(sheet_name)
       if updated_at
         if config_changed_since?(updated_at)
-          info 'Reloading theme %s' % @name
-          load
+          reload
           clear_cache
         elsif sass_updated_at(sheet_name) > updated_at
           clear_cache(sheet_name)

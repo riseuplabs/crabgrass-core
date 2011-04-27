@@ -33,16 +33,13 @@ class ThemeController < ApplicationController
     expire_page :name => params[:name], :file => params[:file]
   end
 
-  # don't cache css if '_refresh' is in the theme or stylesheet name.
+  # don't cache css if params[:refresh]. 
   # useful for debugging.
   prepend_before_filter :get_theme
   def get_theme
     self.cache_css = true
-    [params[:name], *params[:file]].each do |param|
-      if param =~ /_refresh/
-        param.sub!('_refresh','')
-        self.cache_css = false
-      end
+    if params[:refresh]
+      self.cache_css = false
     end
     @theme = Crabgrass::Theme[params[:name]]
     @file = File.join(params[:file])

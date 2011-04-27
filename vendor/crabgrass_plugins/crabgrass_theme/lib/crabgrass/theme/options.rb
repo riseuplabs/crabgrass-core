@@ -8,7 +8,9 @@ class Crabgrass::Theme::Options
 
   def self.parse(data, &block)
     opts = Crabgrass::Theme::Options.new(data)
-    opts.instance_eval(&block)
+    if block
+      opts.instance_eval(&block)
+    end
     return opts.data
   end
 
