@@ -33,25 +33,35 @@ module Crabgrass
     attr_reader :directory, :public_directory, :name, :data
     @@themes = {}
 
-    def initialize(directory)
-      @directory = File.join(THEME_ROOT,directory)
-      @name      = File.basename(@directory) rescue nil
+    # for the theme to work, this controller must be set.
+    # crabgrass sets it in a before_filter common to call controllers.
+    # TODO: will this be a problem with multiple threads?
+    attr_accessor :controller
+
+    def initialize(theme_name)
+      @directory  = Theme::theme_directory(theme_name)
+      @name       = File.basename(@directory) rescue nil
       @public_directory = File.join(CSS_ROOT,@name)
-      @data      = {}
-      @style     = nil
+      @data       = {}
+      @style      = nil
+      @controller = nil
     end
 
+    #
     # grabs a theme by name, loading if necessary. In production mode, theme is
     # kept loaded in the memory until the app is restarted. In development mode,
-    # the theme is loaded each time (but we call this only once per request).
+    # the theme is reloaded each time the theme configuration changes. 
+    #
+    # This auto-reloading of stale theme configs is triggered by a call to 
+    # Theme.stylesheet_url(), which is typically called in the view. 
+    # Someday, this might be a problem and we might need to trigger manually
+    # a reload if needed.
+    #
     # usage: 
     #   Theme['default'] => <theme>
+    #
     def self.[](theme_name)
-      if RAILS_ENV=='development'
-        @@themes[theme_name] = Loader::create_and_load(theme_name)
-      else
-        @@themes[theme_name] ||= Loader::create_and_load(theme_name)
-      end
+      @@themes[theme_name] ||= Loader::create_and_load(theme_name)
     end
 
     # access the values stored in the theme. eg current_theme[:border_width]
@@ -103,11 +113,11 @@ module Crabgrass
     def options(args={}, &block)
       if args[:parent]
         # load the parent theme first, hopefully, we don't have circular dependencies!
-        parent = Theme[args[:parent]]
-        if parent.nil?
+        @parent = Theme[args[:parent]]
+        if @parent.nil?
           puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
         else
-          starting_data = parent.data_copy
+          starting_data = @parent.data_copy
         end
       end
       starting_data ||= {}
@@ -118,17 +128,19 @@ module Crabgrass
     def navigation(args={}, &block)
       if block
         @navigation = load_navigation(args, &block)
+      elsif @navigation.nil?
+        # hopefully, we should never get here...
+        @navigation = NavigationDefinition.new(self)
       end
-      @navigation ||= NavigationDefinition.new
       return @navigation
     end
 
     # used in init.rb to define custom theme styles
-
     def style(str)
       @style = str
     end
 
+    # used for theme inheritence
     def data_copy
       @data.dup
     end
@@ -147,7 +159,23 @@ module Crabgrass
       else
         base_nav = nil
       end
-      return NavigationDefinition.parse(base_nav, &block)
+      return NavigationDefinition.parse(self, base_nav, &block)
+    end
+
+    def default_navigation
+      load_navigation(:parent => 'default')
+    end
+
+    def self.theme_directory(theme_name)
+      File.join(THEME_ROOT,theme_name)
+    end
+
+    def self.theme_loaded?(theme_name)
+      not @@themes[theme_name].nil?
+    end
+
+    def self.needs_reloading?(theme_name)
+      Cache::directory_changed_since?(theme_directory(theme_name), @@theme_timestamps[theme_name])
     end
 
   end

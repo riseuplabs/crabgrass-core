@@ -4,30 +4,29 @@
 
 class Crabgrass::Theme::NavigationDefinition
 
-  # for the theme to work, this controller must be set.
-  # crabgrass sets it in a before_filter common to call controllers.
-  # TODO: will this be a problem with multiple threads?
-  attr_accessor :controller
-
-  def self.parse(parent_nav=nil, &block)
+  def self.parse(theme, parent_nav=nil, &block)
     if parent_nav
       tree = parent_nav.root.dup
     else
       tree = nil
     end
-    navigation = Crabgrass::Theme::NavigationDefinition.new(tree, &block)
-    navigation.instance_eval(&block)
+    navigation = Crabgrass::Theme::NavigationDefinition.new(theme, tree)
+    if block
+      # parse the navigation.rb file:
+      navigation.instance_eval(&block)
+    end
     return navigation
   end
 
-  def initialize(tree=nil)
+  def initialize(theme, tree=nil)
+    @theme = theme
     if tree
       # work with an existing inherited tree
       @tree = tree
-      @tree.navigation = self
+      @tree.theme = @theme
     else
       # create a new tree
-      @tree = Crabgrass::Theme::NavigationItem.new('root',self)
+      @tree = Crabgrass::Theme::NavigationItem.new('root',@theme)
     end
     @section_stack = []
     @section_stack << @tree

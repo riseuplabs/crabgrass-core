@@ -8,23 +8,22 @@
 class Crabgrass::Theme::NavigationItem < Array
 
   attr_reader :name
-  attr_reader :navigation
   ATTRIBUTES = [:label, :url, :active, :active?, :visible, :visible?, :html, :icon]
 
-  def initialize(name, navdef)
+  def initialize(name, theme)
     @name = name
-    @navigation = navdef
+    @theme = theme
     @pointer = 0
     @visible = true
   end
 
-  # allow reassignment of navigation object. 
-  # recursively descends the tree, reassigning nav.
-  # this is necessary when we duplicate a tree for navigation inheritance.
-  def navigation=(new_nav)
-    @navigation = new_nav
+  # allow reassignment of theme object. 
+  # recursively descends the tree, reassigning theme.
+  # this is necessary when we duplicate a tree for theme inheritance.
+  def theme=(new_theme)
+    @theme = new_theme
     each do |item|
-      item.navigation = new_nav
+      item.theme = new_theme
     end
   end
 
@@ -115,8 +114,8 @@ class Crabgrass::Theme::NavigationItem < Array
     else
       define_method(attr_name) do
         value = instance_variable_get("@#{attr_name}")
-        if value.is_a?(Proc) and @navigation.controller
-          @navigation.controller.instance_eval(&value)
+        if value.is_a?(Proc) and @theme.controller
+          @theme.controller.instance_eval(&value)
         else
           value
         end

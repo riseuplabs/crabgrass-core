@@ -10,20 +10,30 @@ module Crabgrass::Theme::Loader
   public
 
   def load
-    info 'loading theme %s' % @directory, 1
+    start_time = Time.now
 
     # load and eval theme
     init_paths.each do |file|
       evaluate_theme_definition(file)
     end
 
+    if @navigation.nil?
+      @navigation = default_navigation
+    end
+
     # in production, clear the cache once at startup.
-    clear_cache if RAILS_ENV == 'production'
+    clear_cache if Rails.env == 'production'
 
     # create the theme's public directory and link the theme's
     # 'images' directory to it.
     ensure_dir(@public_directory)
+    if @parent
+      # mirror the parent theme's image directory
+      mirror_directory_with_symlinks("#{@parent.directory}/images", "#{@directory}/images")
+    end
     symlink("#{@directory}/images", "#{@public_directory}/images")
+
+    info 'Loaded theme %s (%sms)' % [@directory, (Time.now - start_time)*1000]
   end
 
   private
@@ -68,6 +78,23 @@ module Crabgrass::Theme::Loader
     FileUtils.ln_s(relative_path, real_dst_dir)
   end
 
+  #
+  # this method will fill a destination directory with symlinks to all the files
+  # in a source directory. existing files in the destination directory are skipped.
+  #
+  def mirror_directory_with_symlinks(src, dst)
+    return unless File.directory?(src)
+    ensure_dir(dst)
+    Dir.entries(src).each do |filename|
+      next if filename == '.' or filename == '..'
+      src_filename = File.join(src, filename)
+      dst_filename = File.join(dst, filename)
+      if File.symlink?(dst_filename) or !File.exist?(dst_filename)
+        symlink(src_filename, dst_filename)
+      end
+    end
+  end
+ 
   # ensures the directory exists
   def ensure_dir(dir)
     unless File.exists?(dir)

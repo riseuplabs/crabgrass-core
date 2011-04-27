@@ -140,7 +140,7 @@ module ControllerExtension::BeforeFilters
   # could if they really wanted to.
   #
   def navigation
-    current_theme.navigation.controller = self
+    current_theme.controller = self
     @global_navigation  = current_theme.navigation.root
     @context_navigation = @global_navigation.currently_active_item  if @global_navigation
     @local_navigation   = @context_navigation.currently_active_item if @context_navigation

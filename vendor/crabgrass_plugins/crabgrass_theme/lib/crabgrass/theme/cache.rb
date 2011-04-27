@@ -13,11 +13,29 @@ module Crabgrass::Theme::Cache
 
   private
   
+  #
+  # returns true if any of the ruby files in the directory have been modified since
+  # the timestamp given.
+  #
+  #def self.directory_changed_since?(dir, updated_at)
+  #  Dir[dir + '/*.rb'].inject(100.years.ago) {|previous,current| [previous,File.mtime(current)].max} > updated_at
+  #end
+
+  #
+  # returns true if any of the theme's config files have been modified since
+  # the timestamp given.
+  #
+  def config_changed_since?(updated_at)
+    init_paths.inject(100.years.ago) {|previous,current| [previous,File.mtime(current)].max} > updated_at
+  end
+
+
   def clear_cache_if_needed(sheet_name)
-    if RAILS_ENV == 'development'
+    if Rails.env == 'development'
       updated_at = css_updated_at(sheet_name)
       if updated_at
-        if config_changed_since(updated_at)
+        if config_changed_since?(updated_at)
+          info 'Reloading theme %s' % @name
           load
           clear_cache
         elsif sass_updated_at(sheet_name) > updated_at
@@ -25,14 +43,6 @@ module Crabgrass::Theme::Cache
         end
       end
     end
-  end
-
-  #
-  # returns true if any of the theme's config files have been modified since
-  # the timestamp given.
-  #
-  def config_changed_since(updated_at)
-    init_paths.inject(100.years.ago) {|previous,current| [previous,File.mtime(current)].max} > updated_at
   end
 
   #
