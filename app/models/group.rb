@@ -49,12 +49,22 @@ class Group < ActiveRecord::Base
   ##
 
   # finds groups that user may see
-  # this is a depcrecated special case of with_access provided by acts_as_locked.
-  # Please use with_access(:view, user) instead.
+  # this is a depcrecated special case of access_by(user).allows(action)
+  # provided by acts_as_locked.
+  # Please use access_by(user).allows(:view) instead.
   named_scope :visible_by, lambda { |user|
     { :joins => :permissions,
       :group => 'object_id, object_type',
       :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
+  }
+
+  # find groups that do not contain the given user
+  # used in autocomplete where the users groups are all preloaded
+  named_scope :without_member, lambda { |user|
+    group_ids = user.all_group_ids
+    group_ids.any? ?
+      {:conditions => ["NOT groups.id IN (?)", group_ids]} :
+      {}
   }
 
   # finds groups that are of type Group (but not Committee or Network)
@@ -93,6 +103,13 @@ class Group < ActiveRecord::Base
   named_scope :by_created_at, :order => 'groups.created_at DESC'
 
   named_scope :names_only, :select => 'full_name, name'
+
+  # filters the groups based on their name and full name
+  # filter is a sql query string
+  named_scope :named_like, lambda { |filter|
+    { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
+            filter, filter] }
+  }
 
   named_scope :in_location, lambda { |options|
     country_id = options[:country_id]

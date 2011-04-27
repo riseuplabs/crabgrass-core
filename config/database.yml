@@ -12,7 +12,7 @@ development:
   adapter: mysql
   database: <%=db_name%>_development
   username: root
-  password: 
+  password: nocheinz?
   host: localhost
 
 test:
@@ -20,7 +20,7 @@ test:
   adapter: mysql
   database: <%=db_name%>_test
   username: root
-  password: 
+  password: nocheinz?
   host: localhost
 
 production:

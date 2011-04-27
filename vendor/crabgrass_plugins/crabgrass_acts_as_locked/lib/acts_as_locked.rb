@@ -1,5 +1,5 @@
 require 'activesupport'
-require "#{File.dirname(__FILE__)}/key.rb"
+require "#{File.dirname(__FILE__)}/acts_as_locked/key.rb"
 
 module ActsAsLocked
 
@@ -38,10 +38,17 @@ module ActsAsLocked
         end
 
 
-        named_scope :with_access, lambda { |holder|
+        named_scope :access_by, lambda { |holder|
           { :joins => :keys,
             :group => 'locked_id, locked_type',
-            :conditions => Keys.access_conditions_for(holder) }
+            :conditions => Key.access_conditions_for(holder) }
+        }
+
+        # please use in conjunction with access_by like this
+        # Klass.access_by(holder).allows(lock)
+        named_scope :allows, lambda { |lock|
+          bit = self.bits_for_locks(lock)
+          { :conditions => "(#{bit} & ~keys.mask) = 0" }
         }
 
         class_eval do

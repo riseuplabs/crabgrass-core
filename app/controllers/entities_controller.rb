@@ -1,12 +1,12 @@
 #
 # this is a controller for generating a list of entities (users or groups)
 # for autocompletion forms.
-# 
+#
 # all the requests are ajax.
 #
 # TODO: you should be able to control in your permissions if your name shows
 # up in someone's recipient list.
-# 
+#
 # TODO: there is a lot of extra logic here to prevent duplicates being sent.
 # it might make more sense to have autocomplete js handle duplicates more
 # gracefully.
@@ -35,11 +35,11 @@ class EntitiesController < ApplicationController
   #
   def recipients
     if preload?
-      User.friends_or_peers_of(current_user)
-    else
-      # TODO: make this actually work, so something like it:
-      # recipients = User.may_be_pestered_by(current_user).name_like(params[:query])
-      []
+      User.friends_or_peers_of(current_user).access_by(current_user).allows(:pester)
+    elsif filter.any?
+      recipients = User.on(current_site).strangers_to(current_user)
+      recipients = recipients.access_by(:public).allows(:pester)
+      recipients.named_like(filter).find(:all, :limit => LIMIT)
     end
   end
 
@@ -50,17 +50,9 @@ class EntitiesController < ApplicationController
     if preload?
       current_user.all_groups
     elsif filter.any?
-      if logged_in? and current_user.all_group_ids
-        Group.find(:all,
-          :conditions => [
-            "(groups.name LIKE ? OR groups.full_name LIKE ? ) AND NOT groups.id IN (?)",
-            filter, filter, current_user.all_group_ids
-          ],
-          :limit => LIMIT
-        )
-      else
-        Group.find :all, :limit => LIMIT, :conditions => ["name LIKE ?", filter]
-      end
+      other_groups = Group.without_member(current_user)
+      other_groups = other_groups.access_by(:public).allows(:view)
+      other_groups.named_like(filter).find :all, :limit => LIMIT
     end
   end
 
@@ -70,10 +62,11 @@ class EntitiesController < ApplicationController
   def users
     if preload?
       # preload user's groups
-      User.friends_or_peers_of(current_user)
+      User.friends_or_peers_of(current_user).access_by(current_user).allows(:view)
     elsif filter.any?
-      not_ids = current_user.friend_ids + current_user.peer_ids
-      User.on(current_site).find(:all, :conditions => ["(users.login LIKE ? OR users.display_name LIKE ?) AND NOT users.id in (?)", filter, filter, not_ids], :limit => LIMIT)
+      strangers = User.on(current_site).strangers_to(current_user)
+      strangers = strangers.access_by(:public).allows(:view)
+      strangers.named_like(filter).find(:all, :limit => LIMIT)
     end
   end
 
@@ -86,7 +79,7 @@ class EntitiesController < ApplicationController
   end
 
   protected
-  
+
   def filter
     @filter ||= begin
       if params[:query].any?
@@ -97,7 +90,7 @@ class EntitiesController < ApplicationController
     end
   end
 
-  # the autocomplete will issues an empty query when first loaded. 
+  # the autocomplete will issues an empty query when first loaded.
   # which gives us an oppotunity to early load likely results.
   def preload?
     filter.empty? and logged_in?
