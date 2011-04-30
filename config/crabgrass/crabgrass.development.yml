@@ -38,6 +38,8 @@ available_page_types:
   - WikiPage
   - DismodPage
 
+theme: blueberry
+
 ##
 ## SITES
 ##
@@ -46,6 +48,7 @@ sites:
 
 # bound to localhost:
 #  - name: site1
+#    theme: blueberry
 #    admin_group: rainbow
 #    moderation_group: rainbow
 

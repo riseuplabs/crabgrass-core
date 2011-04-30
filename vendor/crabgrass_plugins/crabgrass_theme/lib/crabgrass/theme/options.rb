@@ -4,8 +4,18 @@
 
 class Crabgrass::Theme::Options
 
-  def initialize(theme)
-    @theme = theme
+  attr_reader :data
+
+  def self.parse(data, &block)
+    opts = Crabgrass::Theme::Options.new(data)
+    if block
+      opts.instance_eval(&block)
+    end
+    return opts.data
+  end
+
+  def initialize(data={})
+    @data = data
     @namespace = []
   end
 
@@ -20,7 +30,7 @@ class Crabgrass::Theme::Options
     else
       key = (@namespace + [name]).join('_').to_sym
       value = args.first
-      @theme.data[key] = value
+      @data[key] = value
     end
     nil
   end
@@ -28,12 +38,12 @@ class Crabgrass::Theme::Options
   def html(*args, &block)
     key = (@namespace + ['html']).join('_').to_sym
     value = args.first || block
-    @theme.data[key] = value
+    @data[key] = value
     nil
   end
   
   def var(variable_name)
-    @theme.data[variable_name]
+    @data[variable_name]
   end
 
 end

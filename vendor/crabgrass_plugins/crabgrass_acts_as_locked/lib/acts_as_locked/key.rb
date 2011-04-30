@@ -53,13 +53,13 @@ module ActsAsLocked
 
     def self.access_conditions_for(holder)
       if holder.is_a? Symbol and code = self.symbol_codes[holder]
-        {keyring_code => code}
-      elsif holder.responds_to? :access_codes
-        "keyring_code IN (#{holder.access_codes.join(", ")})"
-      elsif holder.responds_to? :keyring_code
-        {keyring_code => holder.keyring_code}
+        ["keys.keyring_code = ?", code]
+      elsif holder.respond_to? :access_codes
+        ["keys.keyring_code IN (?)", holder.access_codes]
+      elsif holder.respond_to? :keyring_code
+        ["keys.keyring_code = ?", holder.keyring_code]
       else
-        "keyring_code IS NULL"
+        "keys.keyring_code IS NULL"
       end
     end
 

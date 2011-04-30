@@ -3,7 +3,7 @@
     %ul#banner_nav_ul
       - @context_navigation.each do |tab|
         - if tab.visible
-          %li.tab
+          %li{:class => "tab #{first('banner_menu')}"}
             - if tab.icon
               = link_to_active("<span class='text'>#{tab.label}</span><span class='mobi_icon #{tab.icon}_16'/>", tab.url, tab.active, :class => "tab")
             - else

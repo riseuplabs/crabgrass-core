@@ -30,9 +30,7 @@ config.gem 'blueprints'
 ## CRABGRASS OPTIONS
 ##
 
-ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
-ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
-# MIN_PASSWORD_STRENGTH = 0
+DEFAULT_INFO_LEVEL = 0
 
 ##
 ## DEBUGGING

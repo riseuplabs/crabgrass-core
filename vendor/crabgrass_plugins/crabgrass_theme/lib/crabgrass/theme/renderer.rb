@@ -9,6 +9,14 @@ module Crabgrass::Theme::Renderer
   # returns rendered css from a sass source file
 
   def render_css(file)
+    if Rails.env == 'development'
+      # in dev mode, the only reason to render the css is if the theme definition
+      # changed and the cached css was destroyed. In this case, we better reload
+      # the theme. Normally, this will get triggered automatically when we call
+      # theme.stylesheet_url. However, sometimes this never gets called, like if
+      # you are manually refreshing the url for the stylesheet for debugging purposes.
+      reload
+    end
     sass_text = generate_sass_text(file)
     Sass::Engine.new(sass_text, sass_options).render
   end
@@ -50,7 +58,7 @@ module Crabgrass::Theme::Renderer
     data.collect do |key,value|
       if skip_variable?(key)
         next
-      elsif mixin_variable?(key)
+      elsif mixin_variable?(key) and value
         sass << "@mixin #{key} {"
         sass << value
         sass << "}"
