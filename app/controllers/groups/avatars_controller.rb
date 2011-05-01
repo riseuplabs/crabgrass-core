@@ -6,9 +6,9 @@ class Groups::AvatarsController < Groups::BaseController
   end
 
   def create
-    raise ErrorMessage.new('already exists') if current_user.avatar
-    current_user.avatar = Avatar.create!(params[:avatar])
-    current_user.save!
+    raise ErrorMessage.new('already exists') if @group.avatar
+    @group.avatar = Avatar.create!(params[:avatar])
+    @group.save!
   ensure
     redirect_to group_settings_url(@group)
   end
