@@ -1,0 +1,7 @@
+- formy(:simple_form) do |f|
+  - f.row do |r|
+    = r.label :display_name.t, 'group_display_name'
+    = r.input text_field('group', 'display_name')
+  - f.buttons do |b|
+    = b.button submit_tag I18n.t(:save_changes)
+
