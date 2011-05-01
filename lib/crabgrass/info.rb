@@ -21,11 +21,25 @@
 # and so on...
 #
 
-DEFAULT_INFO_LEVEL = 0
+unless defined?(DEFAULT_INFO_LEVEL)
+  DEFAULT_INFO_LEVEL = -1
+end
+
+unless defined?(INFO_PAD_CHARACTER)
+  INFO_PAD_CHARACTER = '-'
+end
 
 def info(str,level=0)
   if (ENV['INFO'] and ENV['INFO'].to_i >= level) or (DEFAULT_INFO_LEVEL >= level)
-    puts ('  '*level) + str.to_s
+    str = str.to_s
+    if INFO_PAD_CHARACTER.any?
+      prefix = (INFO_PAD_CHARACTER * 2 * (level+1)) + ' ' + str + ' '
+      postfix = INFO_PAD_CHARACTER * ([80 - prefix.length, 0].max)
+      print prefix 
+      puts postfix
+    else
+      puts(('  '*level) + str)
+    end
     STDOUT.flush
   end
 end

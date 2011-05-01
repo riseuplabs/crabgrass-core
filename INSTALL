@@ -3,9 +3,13 @@ draft install instructions
 
 install basic ruby environment:
 
-  sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server
+  sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server git
 
-  install rubygems manually from rubygems.org
+install rubygems from rubygems.org:
+
+  download rubygems-x.x.x.tgz from http://rubygems.org
+  extract the tarball, and cd to the directory
+  sudo ruby setup.rb --no-format-executable
 
 prevent rubygems from installing rdoc (optional):
 
@@ -15,7 +19,7 @@ prevent rubygems from installing rdoc (optional):
 install required gems:
 
   cd crabgrass-core
-  sudo gem install rails --version='2.3.10'
+  sudo gem install rails --version='2.3.11'
   mkdir log
   touch log/development.log
   rake create_a_secret
@@ -35,11 +39,47 @@ run server:
 
   INFO=1 BOOST=1 script/server
 
+connect to the web application from your browser:
+
+  http://localhost:3000
+  login: blue
+  password: blue
+
+See doc/development_tips for information on the arguments to script/server
+
 
 development
 ============================
 
 additional gems needed for testing:
 
-sudo RAILS_ENV=test rake gems:install
+  sudo RAILS_ENV=test rake gems:install
+
+testing database:
+
+  sudo mysqladmin create crabgrass_test
+  rake db:test:prepare
+
+run tests:
+
+  rake test
+
+database options
+===============================
+
+The simple instructions assume you have a mysql user 'root' with no password set. If you are a glutton for punishment, you can set a user and password for crabgrass development:
+
+add a database user 'crabgrass':
+
+  > mysql --user root -p 
+  mysql> use crabgrass_development;
+  mysql> grant all on crabgrass_development.* to crabgrass@localhost identified by 'your_password';
+  mysql> flush privileges;
+  mysql> quit
+
+in crabgrass/config/database.yml:
+
+  username: crabgrass
+  password: your_password
+
 

@@ -1,19 +1,27 @@
+-# 
+-# this login form is used inline on the login page and for the login modal popup.
+-# 
+-# for the popup, the class 'nofocus' tells modalbox to skip the element for
+-# tab focus.
+-#
+
 - @login_form_already_rendered = true
+- # if this form is rendered, then we don't create one on the menubar
 
-- form_tag({:controller => 'session', :action => 'login'}, :id => "entry") do
-  %div
-    = text_field_tag 'login',params['login'],:id => 'login'
-    %label(for = 'login')= I18n.t(:login_name)
-  %div
-    = password_field_tag 'password',:id => 'password'
-    %label(for = 'password')= I18n.t(:login_password)
-  %div
-    %input{ :type => 'submit', :value => I18n.t(:login_button) }
-  %div
-    - if may_signup?
-      = link_to(I18n.t(:signup_link), { :controller => '/account', :action => 'signup', :redirect => params[:redirect] })
-    = link_to(I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password')
-    = hidden_field_tag 'redirect', params[:redirect]
-
-= javascript_tag "Form.focusFirstElement('entry');"
+.login_form
+  - form_tag(login_path, :id => "entry") do
+    %div
+      %label(for = 'login')= :login_name.t
+      - if may_signup?
+        %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
+      = text_field_tag 'login', params['login'], :id => 'login', :tabindex => 1
+    %div.password
+      %label(for = 'password')= :login_password.t
+      %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
+      = password_field_tag 'password', {:id => 'password'}, {:tabindex => 2}
+    %div.buttons
+      %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3 }
+    %div
+      = hidden_field_tag 'redirect', params[:redirect]
+      = javascript_tag "Form.focusFirstElement('entry');"
 

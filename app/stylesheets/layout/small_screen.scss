@@ -12,37 +12,11 @@
     height: 24px;
   }
 
-  // 
-  // i dont know what to do about the context banner tabs, they dont work
-  // look very nice on small screen. this is a hacky attempt to squish them.
-  //
-  #context_banner {
-    a.avatar img {
-      // it would be better to instead make visible a version with 32px size.
-      height: 32px;
-      width: 32px;
-    }
-    a.title {
-      font-size: 1.1em;
-    }
-    ul#banner_nav_ul {
-      // 32px = width of avatar
-      // 6px = width of avatar border
-      margin-left: 32px + 6px + $banner_padding;
-    }
-    @if $banner_nav_style == 'cutout' {
-      ul#banner_nav_ul {
-        li.tab a.tab {
-          padding: 0px;
-          line-height: inherit;
-          height: inherit;
-          .text { display: none }
-          .mobi_icon { display: block; }
-        }
-      }
-    }
+  // notice pages center the text in the middle.
+  // but we want to reduce the border for small screens.
+  #center {
+    margin: 2%;
   }
-
 }
 
 

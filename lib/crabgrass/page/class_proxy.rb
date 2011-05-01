@@ -10,8 +10,8 @@ classes of each page type and load the actually class only when we have to.
 module Crabgrass::Page
   class ClassProxy
 
-    attr_accessor :controller, :model, :icon, :class_group
-    attr_accessor :class_name, :full_class_name, :internal, :order, :short_class_name
+    attr_accessor :controller, :creation_controller, :model, :icon, :class_group,
+      :form_sections, :class_name, :full_class_name, :internal, :order, :short_class_name
 
     ORDER = ['text', 'media', 'vote', 'planning']
 
@@ -28,6 +28,10 @@ module Crabgrass::Page
         self.short_class_name = self.class_name.sub("Page","")
         self.order ||= 100
       end
+    end
+
+    def definition
+      self
     end
 
     def class_display_name

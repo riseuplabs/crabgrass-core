@@ -44,11 +44,11 @@ class DispatchController < ApplicationController
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       if logged_in? and (@group or (@user and @user == current_user))
-        flash_message :info => I18n.t(:thing_not_found, :thing => I18n.t(:page))
-        redirect_to create_page_url(WikiPage, {:group => @group, 'page[title]' => params[:_page]})
+        redirect_to create_page_url(:type => 'wiki', :group => @group, 'page[title]' => params[:_page])
+        warning :thing_not_found.t(:thing => :page.t)
       else
         set_language do
-          render(:template => 'dispatch/not_found', :status => :not_found)
+          raise_not_found(:thing_not_found.t(:thing => :page.t))
         end
       end
     end

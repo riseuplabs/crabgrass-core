@@ -2,7 +2,17 @@
 // THE BANNER
 //
 
-header#context_banner {
+// the space between the avatar and the avatar border
+$banner_avatar_spacer: 2px solid white;
+
+// the width of the avatar border
+$avatar_border_width: border_width($banner_avatar_spacer) + border_width($banner_border);
+
+// the base offset between the left edge of the banner and the start of the first tab.
+// this base has the current avatar's width added to it to get the final offset.
+$base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($banner_border)) * 2);
+
+#context_banner {
   @include full;
   background: $banner_default_background;
   border: $banner_border;
@@ -18,6 +28,14 @@ header#context_banner {
   // @if $banner_nav_style == 'inset' {
   //  padding: $banner_padding;
   // }
+
+  // for different size banners we need different first tab margins.
+  // not so clean, but at least no magic numbers.
+  &.large  {ul#banner_nav_ul li.tab.first {margin-left: $icon_large  + $base_margin;}}
+  &.medium {ul#banner_nav_ul li.tab.first {margin-left: $icon_medium + $base_margin;}}
+  &.small  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small  + $base_margin;}}
+
+  @if $banner_css { @include banner_css; }
 }
 
 #banner_content {
@@ -26,7 +44,7 @@ header#context_banner {
   a.avatar {
     margin-right: $banner_padding;
     img {
-      border: 2px solid white;
+      border: $banner_avatar_spacer;
       outline: $banner_border;
       // this is necessary for the img to not have a gap under it
       vertical-align: middle;
@@ -38,7 +56,6 @@ header#context_banner {
     font-size: $banner_font_size;
     @include cg-hover-link;
   }
-
 }
 
 //
@@ -95,17 +112,44 @@ header#context_banner {
 @if $banner_nav_style == 'cutout' {
   #context_banner {
     $ul_id: 'banner_nav_ul';
-    @include cutout_menu($ul_id, $banner_nav_padding, $background_color, $banner_border);
-    a.tab.active {
-      color: inherit;
-    }
-    ul#banner_nav_ul {
-      // 64px = width of avatar
-      // 6px = width of avatar border
-      margin-left: 64px + 6px + $banner_padding;
-    }
+    @include cutout_menu($ul_id, 0, $background_color, $banner_border);
+    a.tab.active {color: inherit;}
     margin-bottom: gutter();
   }
 }
 
+//
+// small screen
+//
+
+@media only screen and (max-width: 590px), only screen and (max-height: 400px) {
+  // 
+  // i dont know what to do about the context banner tabs, they dont work
+  // look very nice on small screen. this is a hacky attempt to squish them.
+  //
+  #context_banner {
+    a.avatar img {
+      // it would be better to instead make visible a version with 32px size.
+      height: 32px;
+      width: 32px;
+    }
+    a.title {font-size: 1.1em;}
+
+    // the avatar icon is always small
+    &.large  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
+    &.medium {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
+    &.small  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
+
+    // replace text with icons
+    ul#banner_nav_ul {
+      li.tab a.tab {
+        padding: 0px;
+        line-height: inherit;
+        height: inherit;
+        .text { display: none }
+        .mobi_icon { display: block; }
+      }
+    }
+  }
+}
 

@@ -1,48 +1,48 @@
 %style
   :sass
-    
-    .icon
-      outline: 1px solid #ccc
-    
-    .icon
-      background-repeat: no-repeat !important
-      background-position: 0 50% !important
-     
-    .small
-      padding-left: 20px !important
-      &.inline
-        padding: 1px 0
-        
-    .large
-      padding-left: 36px !important
-      background-image: url(/images/default/32.jpg)
-      &.single.block, &.single.inline-block
-        line-height: 32px
-        height: 32px
-        overflow: hidden
-      &.multi.block, &.multi.inline-block
-        min-height: 32px
-      &.inline
-        opacity: 0.5
+    table.icon_test
+      .iconx
+        outline: 1px solid #ccc
+      
+      .iconx
+        background-repeat: no-repeat !important
+        background-position: 0 50% !important
+       
+      .smallx
+        padding-left: 20px !important
+        &.inlinex
+          padding: 1px 0
+          
+      .largex
+        padding-left: 36px !important
+        background-image: url(/images/default/32.jpg)
+        &.singlex.block, &.singlex.inline-block
+          line-height: 32px
+          height: 32px
+          overflow: hidden
+        &.multix.block, &.multix.inline-block
+          min-height: 32px
+        &.inline
+          opacity: 0.5
 
-    .block
-      display: block
-    .inline
-      display: inline
-    .inline-block
-      display: inline-block
-    
-    table td, table th
-      padding: 20px
-      border: 1px dotted #ccc
-    td.good
-      background: #dfd
-    td.bad
-      background: #fdd
-    td.ok
-      background: #ffd
+      .block
+        display: block
+      .inline
+        display: inline
+      .inline-block
+        display: inline-block
+      
+      td, th
+        padding: 20px
+        border: 1px dotted #ccc
+      td.good
+        background: #dfd
+      td.bad
+        background: #fdd
+      td.ok
+        background: #ffd
 
-%table
+%table.icon_test
   %tr
     %th   
     %th inline
@@ -51,56 +51,56 @@
   %tr
     %td 1 line, small icon
     %td.good
-      .icon.single.small.inline.info_16 aa aaaa aaaaa aaaaa
+      .iconx.singlex.smallx.inline.info_16 aa aaaa aaaaa aaaaa
       %br padding 1px
     %td.good
-      .icon.single.small.block.info_16 bbb b b bbbbbbb bbbbb bb
+      .iconx.singlex.smallx.block.info_16 bbb b b bbbbbbb bbbbb bb
       no hacks
     %td.good
-      .icon.single.small.inline-block.info_16 ccccc cc cccc
+      .iconx.singlex.smallx.inline-block.info_16 ccccc cc cccc
       %br no hacks
   %tr
     %td 1 line, big icon
     %td.bad
-      .icon.single.large.inline dddddd dddd ddd
+      .iconx.singlex.largex.inline dddddd dddd ddd
       %br nothing works well, avoid.
     %td.ok
-      .icon.single.large.block eeee eeee eeeeeeeee ee
+      .iconx.singlex.largex.block eeee eeee eeeeeeeee ee
       line-height 32px, height 32px, error: multi line overflow is hidden
     %td.ok
-      .icon.single.large.inline-block fffff ffff ffffffff ffff fff
+      .iconx.singlex.largex.inline-block fffff ffff ffffffff ffff fff
       %br same as block
   %tr
     %td multi line, small icon
     %td.good
-      .icon.small.inline.color_wheel_16 gggg gggg g gg ggg ggggggg gggg gggg ggg gggg ggg ggg g ggggg gg g g 
+      .iconx.smallx.inline.color_wheel_16 gggg gggg g gg ggg ggggggg gggg gggg ggg gggg ggg ggg g ggggg gg g g 
       %br
-      .icon.small.inline.color_wheel_16 gggg gggg g gg
+      .iconx.smallx.inline.color_wheel_16 gggg gggg g gg
       %br
       padding 1px
     %td.good
-      .icon.small.block.color_wheel_16 hhhh hhhh hhhh hh hhhhhhhh hhhhh hhhhh hhhhhhh hhhhh hhhh hhhh hhhhh hh
-      .icon.small.block.color_wheel_16 hhhh hhhh hhhh hh
+      .iconx.smallx.block.color_wheel_16 hhhh hhhh hhhh hh hhhhhhhh hhhhh hhhhh hhhhhhh hhhhh hhhh hhhh hhhhh hh
+      .iconx.smallx.block.color_wheel_16 hhhh hhhh hhhh hh
       no hacks
     %td.good
-      .icon.small.inline-block.color_wheel_16 iiii iiii ii i i iiiiiiii iiiii ii i iiiii ii iiiii iiii iiiiiii
+      .iconx.smallx.inline-block.color_wheel_16 iiii iiii ii i i iiiiiiii iiiii ii i iiiii ii iiiii iiii iiiiiii
       %br
-      .icon.small.inline-block.color_wheel_16 iiii iiii ii
+      .iconx.smallx.inline-block.color_wheel_16 iiii iiii ii
       %br
       no hacks
   %tr
     %td multi line, big icon
     %td.bad
-      .icon.large.multi.inline jjjjjj jjjjj jjjjjj jjjj jjjjj jjj j j jjjjjjjj jjjjj jjjjj jjj j jjj j jj jjj
+      .iconx.largex.multix.inline jjjjjj jjjjj jjjjjj jjjj jjjjj jjj j j jjjjjjjj jjjjj jjjjj jjj j jjj j jj jjj
       %br nothing works well, avoid.
     %td.ok
-      .icon.large.multi.block kkkk kkkkkkkkkkk kkkkkkk kkkkkkkk k kk k kkkkk kk k kkkkkk kkkkkk kkkkk kkkk
-      .icon.large.multi.block kkkk kkkkkkkkkkk
+      .iconx.largex.multix.block kkkk kkkkkkkkkkk kkkkkkk kkkkkkkk k kk k kkkkk kk k kkkkkk kkkkkk kkkkk kkkk
+      .iconx.largex.multix.block kkkk kkkkkkkkkkk
       min-height 32px, error: text not centered if only one line of text.
     %td.ok
-      .icon.large.multi.inline-block llll lllllllll lllll llllll lll llll lllll l llll l l llllllllll l ll llll
+      .iconx.largex.multix.inline-block llll lllllllll lllll llllll lll llll lllll l llll l l llllllllll l ll llll
       %br
-      .icon.large.multi.inline-block llll lllllllll
+      .iconx.largex.multix.inline-block llll lllllllll
       %br same as block
 
 .p notes

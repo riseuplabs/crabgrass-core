@@ -62,39 +62,6 @@ class Pages::BaseController < ApplicationController
   def update
   end
 
-  def new
-  end
-
-  def create
-    if params[:cancel]
-      redirect_to(new_page_path(:group => params[:group]))
-    elsif request.post?
-      begin
-        @page = build_new_page(
-          params[:type],        params[:page],
-          params[:recipients],  params[:access]
-        )
-        # setup the data (done by subclasses)
-        @data = build_page_data
-        raise ActiveRecord::RecordInvalid.new(@data) if @data and !@data.valid?
-
-        # save the page (also saves the data)
-        @page.data = @data
-        @page.save!
-
-        redirect_to(page_url(@page))
-      rescue Exception => exc
-        destroy_page_data
-        # in case page gets saved before the exception happens
-        @page.destroy unless @page.new_record?
-        raise ErrorMessage.new(exc.to_s)
-      end
-    end
-  end
-
-  def destroy
-  end
-
   protected
 
   # to be overridden by subclasses
@@ -127,41 +94,6 @@ class Pages::BaseController < ApplicationController
 
   def new_options
     PageOptions.new(*OPTIONS.values)
-  end
-
-  ##
-  ## PAGE CREATION HELPERS
-  ##
-
-  def build_new_page(page_type, page_params, recipients, access)
-    raise 'page type required' unless page_type
-    page_class = Page.param_id_to_class(page_type)
-
-    page_params = page_params.dup
-    page_params[:share_with] = recipients
-    page_params[:access] = case access
-      when 'admin' then :admin
-      when 'edit'  then :edit
-      when 'view'  then :view
-      else Conf.default_page_access
-    end
-    page_params[:user] = current_user
-    page_class.build!(page_params)
-  end
-
-  # returns a new data object for page initialization.
-  # subclasses override this to build their own data objects
-  def build_page_data
-    # if something goes terribly wrong with the data do this:
-    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
-    # raise ActiveRecord::RecordInvalid.new(@page)
-    # return new data if everything goes well
-  end
-
-  def destroy_page_data
-    if @data and !@data.new_record?
-      @data.destroy
-    end
   end
 
   ##

@@ -62,6 +62,11 @@ class User < ActiveRecord::Base
     opts
   }
 
+  named_scope :named_like, lambda {|filter|
+    { :conditions => ["users.login LIKE ? OR users.display_name LIKE ?",
+      filter, filter] }
+  }
+
   # select only logins
   named_scope :logins_only, :select => 'login'
 

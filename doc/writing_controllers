@@ -1,16 +1,313 @@
 
 
-class RobotController < ApplicationController
+class RobotsController < ApplicationController
 
-  before_filter :login_required      # if you want to require logins
+  before_filter :login_required       # if you want to require logins
   
-  permissions :robot                 # will load app/permissions/robot
+  permissions :robots                 # will load app/permissions/robots_permissions.rb
+  permissions 'robots/cyborgs'        # app/permissions/robots/cyborgs_permissions.rb
 
   protected
 
+  # called after all other controller code, but right before view code.
+  # (and only for normal html requests).
   def context
-    # set @context to an appropriate object if you want to display a context.
-    # this method is called right before render, and only when showing a page.
+    @context = @context = Context.find(@group)
   end
 
 end
+
+General Guidelines
+============================
+
+(1) Controllers should be use resource routes whenever possible and it makes sense to. If you have a controller that provides logic to some database object or objects, it can almost always be decomposed into multiple REST-like controllers.
+
+(2) thin controllers are good, even if this means some code duplication: for example, controllers for me/pages and groups/pages is OK. most the logic is handled elsewhere. this makes it much easier to have clean routes and permissions. 
+
+Helpers defined for controllers
+=================================
+
+There are a few helper-like methods that need to be available to both controllers and views. We try to keep this to a minimum, but sometimes it is necessary.
+These are defined in app/controllers/controller_extension/*.rb
+
+Here are the common ones you will use frequently:
+
+current_user()
+  returns the currently authenticated user
+
+page_path(page, {})
+page_url(page, {})
+  there is no route defined for pages, so we have to manually define page_path and
+  page_url. These work like other automatically defined path methods.
+  these methods create pretty urls, like /rainbows/page-name
+
+page_xpath(page, {})
+page_xurl(page, {})
+  like page_path and page_url, except that they create direct, non-pretty urls.
+  typically, you use these whenever the user will not see the url, like ajax
+  requests.
+
+controller?(x,y,z)
+  returns true if the current params has a controller that matches any of the args,
+  be they symbol or strings. used frequently, especially in theme navigation
+  definitions.
+
+action?(x,y,z)
+id?(x,y,z)
+  just like controller?(), but for params[:action] and params[:id], respectively.
+
+
+Alert messages
+===========================
+
+Setting the alert message
+----------------------------
+
+There are four different alert methods:
+
+  error()   -- when something has gone horribly wrong. RED
+  warning() -- bad input or permissioned denied. YELLOW
+  notice()  -- information, but not necessarily bad or good. BLUE.
+  success() -- yeah, confirmation that something went right. GREEN.
+
+The alert methods accept arguments, in any order, that are Strings, Exceptions,
+Arrays or Symbols. The methods can be called in controllers or views.
+
+Arguments:
+ 
+  Exception -- display an alert appropriate to the exception.
+  String    -- displays the content of the string.
+  Array     -- displays each of the strings in the array, each on their own line.
+  Symbol    -- set options with the alert message:
+    :now      -- flash now (for this request)
+    :later    -- flash later (for the next request)
+    :fade     -- hide message after 5 seconds
+                 (by default, success and notice messages fade.)
+    :nofade   -- prevent fade
+
+If message is empty, these standard messages are shown:
+ 
+  error:   "Changes could not be saved"
+  warning: "Changes could not be saved"
+  notice:  <no default>
+  success: "Changes saved"
+
+Examples:
+
+  warning(:fade, "danger will robinson")
+  error(exception)
+  succcess(["your action was a success","yeah for you"], :now)
+
+Flash now or flash later? The code tries to pick an intelligent default:
+* Flash now for Ajax requests and POST with error.
+* Flash later for GET requests and POST with success.
+
+Display alert messages
+-------------------------------
+
+For html layouts, just add <%= display_alert_messages %> to the template.
+All the current templates do this already.
+
+For ajax responses, you should just put this at the top of all your .rjs views:
+
+  standard_update(page)
+
+This will update the alert messages if needed and will also stop all the spinners.
+
+You don't need to worry about the modalbox: if it is visible, then alert messages
+are shown in the modalbox, otherwise you get the normal alert messages.
+
+
+Errors
+===========================
+
+You can handle error reporting in a controller yourself, using the alert message
+methods, or you can use the automatic error reporting system base on exceptions.
+
+There are three helper methods to raise error exceptions:
+
+  def raise_error(message)
+    raise ErrorMessage.new(message)
+  end
+
+  def raise_not_found(message)
+    raise ErrorNotFound.new(message)
+  end
+
+  def raise_denied(message=nil)
+    raise PermissionDenied.new(message)
+  end
+
+For non-controller and non-view code, you can't use the helper methods, but
+raising one of these exceptions produces the same result.
+
+Whenever any of these exceptions are raised, executions stops and turned over to 
+app/controllers/controller_extension/rescue_errors.rb. 
+
+This code tries to do a good job of automatically doing the right thing.
+
+In general, the approach is this:
+
+  For ajax requests:
+  * update the page to show the appropriate alert message
+
+  For html requests:
+  * show special pages for not found and permission denied errors.
+  * otherwise, if there is a redirect already defined, then follow the redirect,
+    and show the error message on the new page.
+  * otherwise, try to guess what action to render and display the error message.
+
+This 'guessing' is not always right. It assumes 'update' actions should render
+as 'edit' actions if there is an error and 'create' actions should render as
+'new' actions if there is an error.
+
+This is right most of the time, but not all the time. If you want to change this,
+you can override this default with 'rescue_render':
+
+  class MyController < ApplicationController
+    rescue_render :update => :show
+  end
+
+In this case, if there is any error exception during the "update" action, it will
+render the "show" action and display the error. (normally it would render the
+"edit" action).
+
+The thing to remember is that most of the time you can just call raise_error(),
+raise_not_found(), or raise_denied() and everything will work correctly. For the
+case of HTML requests using POST, you may have to give hints as to what action
+to render by using 'rescue_render'. 
+
+In general, you should NOT have error messages for GET requests, unless they are
+"not found" or "permission denied" errors.
+
+Permissions
+===========================
+
+There are two methods of dealing with controller permissions:
+* manually
+* automatically
+
+In both of the example that follow, the :fetch_robot before filter is called
+before :login_required. This is so that the @robot variable can be loaded before
+the permission check happens.
+
+Manual approach
+--------------------
+
+  before_filter :fetch_robot, :login_required
+  permissions :robots
+
+  protected
+
+  def fetch_robot
+    @robot = Robot.find(params[:id])
+  end
+
+  def authorized?
+    if action?(:powerup)
+      may_powerup_robot?
+    elsif action?(:show)
+      @robot.visible?
+    else
+      false
+    end
+  end
+
+Basically, you define 'authorized?' and return true or false, likely using
+helpers defined in app/permissions. 
+
+Automatic approach
+---------------------------------------
+
+in app/controllers/robots_controller.rb:
+
+  before_filter :fetch_robot, :login_required
+  permissions :robots
+
+  def show
+  end
+
+  protected
+
+  def fetch_robot
+    @robot = Robot.find(params[:id])
+  end
+
+In app/permissions/robots_permission.rb
+
+  protected
+
+  def may_show_robot?
+    @robot.visible?
+  end
+
+In this example, may_show_robot? is automatically called for the action show.
+
+Mixing automatic and manual
+-------------------------------
+
+This is the default authorized?() method definition:
+
+  def authorized?
+    check_permissions!
+  end
+
+If you want to mix the automatic and manual permissions, you can do this:
+
+  def authorized?
+    if blah
+      may_blah_blah?
+    else
+      check_permissions!
+    end
+  end
+
+Defining permissions
+-------------------------------
+
+In app/permissions most permission methods have a standard form:
+
+  def may_{verb}_{object}?
+    ...
+  end
+ 
+This form is not required, but is highly recommended in most cases.
+
+When attempting to match the current request to the appropriate permission,
+method, params[:action] is the default verb and params[:controller] is the
+default object.
+
+In other words, if the request is 'update' on controller 'robots', then by
+by default we will call 'may_update_robot?' ("robots" gets singularized just
+like in resource paths).
+
+A permission method should return true or false. It may take optional arguments,
+but no arguments should be required.
+
+The file robots_permissions.rb should look like this:
+
+  module RobotsPermissions
+    protected
+    may_show_robot?
+      ...
+    end
+    may_edit_robot?
+      ...
+    end
+  end
+
+You can alter the default verb or object by appending a hash:
+
+  permissions :robots, :object => :cyborgs
+
+You can also do this dynamically by defining the methods permission_verb or
+permission_object:
+
+  def permission_object
+    half_human? ? :cyborgs : :robots
+  end
+
+For example, this will instead look for the method may_show_cyborg? instead of may_show_robot?
+
+
+

@@ -29,6 +29,10 @@ p, ol, ul, td, div {
 }
 
 a {
-  @include hover-link;
+  @if $link_underline == false {
+    @include hover-link;
+  }
+  color: $link_standard_color;
+  &:visited { color: $link_visited_color;}
+  &:active { color: $link_active_color;}
 }
-

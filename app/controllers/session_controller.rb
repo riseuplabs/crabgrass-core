@@ -1,3 +1,7 @@
+#
+# responsible for login and logout
+#
+
 class SessionController < ApplicationController
 
   # stylesheet 'account'
@@ -18,13 +22,14 @@ class SessionController < ApplicationController
       # have to reauth, since we just cleared the session
       self.current_user = User.authenticate(params[:login], params[:password])
 
-      if params[:remember_me] == "1"
-        self.current_user.remember_me
-        cookies[:auth_token] = {
-          :value => self.current_user.remember_token,
-          :expires => self.current_user.remember_token_expires_at
-        }
-      end
+      # i feel like this is a security flaw, and i don't like it....
+      #if params[:remember_me] == "1"
+      #  self.current_user.remember_me
+      #  cookies[:auth_token] = {
+      #    :value => self.current_user.remember_token,
+      #    :expires => self.current_user.remember_token_expires_at
+      #  }
+      #end
 
       if self.current_user.language.any?
         session[:language_code] = self.current_user.language.to_sym
@@ -32,8 +37,12 @@ class SessionController < ApplicationController
         session[:language_code] = previous_language
       end
 
-      current_site.add_user!(current_user)
-      UnreadActivity.create(:user => current_user)
+      # replace this:
+      #current_site.add_user!(current_user)
+      #UnreadActivity.create(:user => current_user)
+      # with
+      # hook(:successful_login)
+
       redirect_successful_login
     else
       error [I18n.t(:login_failed), I18n.t(:login_failure_reason)], :now
@@ -42,8 +51,10 @@ class SessionController < ApplicationController
   end
 
   def logout
-    self.current_user.forget_me if logged_in?
-    cookies.delete :auth_token
+    # i think the remember me stuff is a security flaw, so it is commented out for now:
+    #self.current_user.forget_me if logged_in?
+    #cookies.delete :auth_token
+    
     language = session[:language_code]
     reset_session
     session[:language_code] = language
@@ -55,6 +66,11 @@ class SessionController < ApplicationController
   def language
     session[:language_code] = params[:id].to_sym
     redirect_to referer
+  end
+
+  # returns login form without layout
+  def login_form
+    render :partial => 'session/login_form', :layout => false
   end
 
   protected

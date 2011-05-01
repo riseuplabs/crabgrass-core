@@ -14,7 +14,7 @@ module Formy
     end
 
     class Row < Element
-      element_attr :info, :label, :input
+      element_attr :id, :info, :label, :input
 
       def open
         super
@@ -25,10 +25,10 @@ module Formy
           @label, @label_for = @label
         end
         html = []
-        html << "<div class=\"row\">"
-        html << "<label for=\"#{@label_for}\">#{@label}</label>"
+        html << '<div class="row" id="%s">' % @id
+        html << '<label for="%s">%s</label>' % [@label_for, @label]
         html << @input
-        html << "</div>"
+        html << '</div>'
         puts html.join
         super
       end

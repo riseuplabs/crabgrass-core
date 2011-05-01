@@ -1,0 +1,56 @@
+
+
+.login_form {
+  max-width: 20em;
+  width: 100%;
+  //padding: 10px;
+  //border: 1px solid #ccc;
+  //background: #efefef;
+  label {
+    font-weight: bold;
+    display: block;
+    float: left;
+  }
+  span {
+    display: block;
+    font-size: 90%;
+    text-align: right;
+  }
+  div.password {
+    margin-top: 1em;
+  }
+  input[type=text], input[type=password] {
+    width: 100%;
+    font-size: 120%;
+    padding: 0.20em;
+  }
+  .buttons {
+    margin-top: 1em;
+    text-align: right;
+  }
+  input[type=submit] {
+    font-size: 110%;
+    padding: 4px 10px;
+  }
+}
+
+// center the login form, if displayed in #center
+#center .login_form {
+  margin: 0 auto;
+}
+
+// welcome screen
+// this does not need to be universal, and perhaps should be moved to as_needed
+//
+//#welcome {
+//  #message {
+//    float: left;
+//    text-align: right;
+//    max-width: 30em;
+//    margin-right: 2em;
+//  }
+//  #login {
+//    float: left;
+//  }
+//}
+

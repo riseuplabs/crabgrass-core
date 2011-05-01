@@ -1,4 +1,4 @@
-class AssetPageController < BasePageController
+class AssetPageController < Pages::BaseController
   before_filter :fetch_asset
 #  javascript :extra
   stylesheet 'asset'

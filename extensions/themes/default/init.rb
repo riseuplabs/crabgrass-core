@@ -24,22 +24,29 @@ options {
 
   # general color constants that are frequently reused
   color {
-    dim '#999';
-    bright '#f33';
+    dim '#999'
+    bright '#f33'
   }
 
   font {
     heading {
-      family :"sans-serif";
-      h1_size "2.10em";
-      h2_size "1.125em";
-      h3_size "1em";
-      h4_size "1em";
+      family "sans-serif"
+      h1_size "2.10em"
+      h2_size "1.125em"
+      h3_size "1em"
+      h4_size "1em"
     }
   }
 
+  link {
+    standard_color "#0000EE"
+    visited_color "#551A8B"
+    active_color "#EE0000"
+    underline false
+  }
+
   background {
-    color '#e6e6e6';
+    color '#e6e6e6'
   }
 
   masthead {
@@ -67,21 +74,19 @@ options {
                      # bar -- creates a separate menu nav bar
       tab {
         padding '8px'   # must be in pixels
-        css %{ }
-        active_css %{   }
+        css false
+        active_css false
+        inactive_css false
       }
       dropdown {
         background_color 'white'
         border_color '#999'
         hover {
-          background_color '#ffc';
-          border '1px solid #cc9';
+          background_color '#ffc'
+          border '1px solid #cc9'
         }
       }
     }
-  }
-
-  global_nav {
   }
 
   banner {
@@ -98,6 +103,7 @@ options {
       style 'cutout' # [cutout | inset | none]
       padding '6px'
     }
+    css false
   }
 
   local {
@@ -106,6 +112,7 @@ options {
       border $border
       background 'white'
       padding '1g'
+      css false
     }
     nav {
       style 'tabs'

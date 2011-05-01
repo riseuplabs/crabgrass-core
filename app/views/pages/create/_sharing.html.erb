@@ -1,0 +1,49 @@
+<%
+  ## PAGE OWNER
+  if params[:group].any?
+    form.hidden hidden_field_tag('page[owner]', params[:group])
+  else
+    # if :selected is set to nil, then 'none' will be added as an option.
+    # so, we only specify :selected if there is a owner to select.
+    options = {:include_me => true}
+    options[:selected] = @page.owner if @page
+    form.row do |r|
+      r.label I18n.t(:page_create_owner)
+      r.label_for 'page_owner'
+      r.input select_tag('page[owner]', options_for_page_owner(options), :id => 'page_owner')
+      r.info help(:page_owner)
+    end
+  end
+
+  ## ADDITIONAL ACCESS
+  form.hidden spinner('popup') # unused, but _add_recipient.rjs tries to hide it
+  form.row do |r|
+    r.input link_to_toggle(I18n.t(:additional_page_access), 'recipient_row')
+  end
+  form.row do |r|
+    r.style 'display:none'
+    r.id 'recipient_row'
+    r.classes 'first'
+    r.label I18n.t(:recipients)
+    r.input %Q{
+      <div class='share_page'>
+        <div id='share_error_message'></div>
+        #{render(:partial => 'pages/shares/add_recipient_widget')}
+      </div>
+    }
+    if may_select_access_participation?
+      r.info(
+        content_tag(:div, [help(:sharing),
+          content_tag(:div, help(:coordinator), :class => 'icon tiny_wrench_16'),
+          content_tag(:div, help(:participant), :class => 'icon tiny_pencil_16'),
+          content_tag(:div, help(:viewer), :class => 'icon tiny_no_pencil_16'),
+        ].join, :class => 'p')
+      )
+    else
+      r.info help(:sharing)
+    end
+  end
+%>
+
+
+

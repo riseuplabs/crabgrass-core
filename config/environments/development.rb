@@ -14,9 +14,7 @@ config.log_level = :debug
 ## CRABGRASS OPTIONS
 ##
 
-ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets"
-ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"
-KEYRING_STORAGE       = "#{RAILS_ROOT}/test/fixtures/assets/keyrings"
+DEFAULT_INFO_LEVEL = 0
 
 ##
 ## DEBUGGING

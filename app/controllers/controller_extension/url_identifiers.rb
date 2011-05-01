@@ -13,6 +13,7 @@ module ControllerExtension::UrlIdentifiers
     base.class_eval do
       helper_method :action?
       helper_method :controller?
+      helper_method :page_controller?
       helper_method :id?
       helper_method :active_url?
       helper_method :url_active?
@@ -54,6 +55,11 @@ module ControllerExtension::UrlIdentifiers
       end
     end
     return false
+  end
+
+  # return true if the current controller is page related.
+  def page_controller?
+    controller?('me/pages', 'groups/pages', 'pages/') or controller.is_a?(Pages::BaseController)
   end
 
   # returns true if params[:id] matches the id passed in

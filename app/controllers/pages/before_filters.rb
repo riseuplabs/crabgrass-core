@@ -11,15 +11,32 @@ module Pages::BeforeFilters
   ## BEFORE FILTERS
   ##
 
+  #
+  # a before filter that comes before all the others. 
+  # allows us to grab the @page before the permissions need to be resolved.
+  # subclasses should define 'fetch_data', which this method calls.
+  #
   def default_fetch_data
-    if @page.nil? 
-      # if page not yet loaded by dispatch controller...
+    return true if action?(:new, :create)
+
+    unless @page
       id = params[:page_id] || params[:id]
-      @page = Page.find(id)
+      if id and id != "0"
+        @page = Page.find_by_id(id)
+        unless @page
+          raise_not_found(:thing_not_found.t(:thing => :page.t))
+        end
+      end
     end
-    # grab the current user's participation from memory
-    @upart = (@page.participation_for_user(current_user) if logged_in?)
+
+    if logged_in?
+      # grab the current user's participation from memory
+      @upart = @page.participation_for_user(current_user)
+    end
+
+    # hook for subclasses to define:
     fetch_data
+
     true
   end
  
@@ -28,14 +45,14 @@ module Pages::BeforeFilters
     if request.get?
       @options.show_posts = action?(:show) || action?(:print)
       @options.show_reply = @options.show_posts
-      @options.title = @page.title
+      @options.title = @page.title if @page
     end
     setup_options
     true
   end
 
   def choose_layout
-    return 'default' if params[:action] == 'create'
+    return 'application' if action?(:create, :new)
     return 'page'
   end
 
