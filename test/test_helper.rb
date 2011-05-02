@@ -13,7 +13,6 @@ require 'test_help'
 
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
-require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 ##
 ## misc.
 ##
