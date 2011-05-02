@@ -19,7 +19,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_default_list
+  def test_update
     login_as @user
     post :update, :group => {:full_name => 'full name'}, :id => @group.id
     assert_response 302
