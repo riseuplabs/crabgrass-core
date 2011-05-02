@@ -106,6 +106,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :activities
     groups.resource  :profile, :controller => 'profile'
     groups.resource  :settings, :only => [:show, :update]
+    groups.resources :avatars
   end
 
 #  ##

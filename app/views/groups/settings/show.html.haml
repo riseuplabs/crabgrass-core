@@ -1,2 +1,9 @@
-change basic group settings, like the display name, the avatar, etc.
+- @avatar ||= @group.avatar
 
+= avatar_for @group, 'huge'
+- url = @group.avatar ? edit_group_avatar_path(@group, @avatar) : new_group_avatar_path
+.p= link_to_modal(:upload_image_link.t, :url => url, :icon => 'picture_edit')
+
+.form
+  - form_tag(group_settings_path(@group), :method => :put) do
+    = render :partial => '/groups/settings/form'

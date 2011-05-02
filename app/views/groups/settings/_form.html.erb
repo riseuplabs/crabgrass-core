@@ -1,0 +1,10 @@
+<%= formy(:simple_form) do |f|
+  f.row do |r|
+    r.label :display_name.t
+    r.input text_field('group', 'full_name')
+  end
+  
+  f.buttons do |b|
+    b.button submit_tag I18n.t(:save_changes)
+  end
+ end %>
