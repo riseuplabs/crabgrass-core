@@ -9,8 +9,8 @@ module ControllerExtension::BeforeFilters
       before_filter :set_timezone
       before_filter :header_hack_for_ie6
       before_filter :redirect_unverified_user
-      before_render :context_if_appropriate
       before_filter :enforce_ssl_if_needed
+      before_filter :setup_theme
     end
   end
 
@@ -86,64 +86,12 @@ module ControllerExtension::BeforeFilters
     Time.zone = current_user.time_zone if logged_in?
   end
 
-
-  ##
-  ## CONTEXT
-  ## 
-
-  private
-
   #
-  # A special 'before_render' filter that calls 'context()' if this is a normal
-  # request for html and there has not been a redirection. This allows
-  # subclasses to put their navigation setup calls in context() because
-  # it will only get called when appropriate.
+  # the theme needs a pointer to the controller for this request.
+  # I am not sure if this will cause problems with multi-threaded servers.
   #
-  def context_if_appropriate
-    if !@skip_context and normal_request?
-      @skip_context = true
-      context()
-      navigation()
-    end
-    true
-  end
-
-  # Returns true if the current request is of type html and we have not
-  # redirected. However, IE 6 totally sucks, and sends the wrong request
-  # which sometimes appears as :gif.
-  def normal_request?
-    format = request.format.to_sym
-    response.redirected_to.nil? and
-    (format == :html or format == :all or format == :gif)
-  end
-
-  protected
-
-  #
-  # a "before_render" filter that may be overridden by controllers.
-  #
-  # context() is called right before rendering starts (by the filter method
-  # context_if_appropriate). in this method, the controller should set the
-  # @context variable
-  #
-  def context
-    @context = nil
-  end
-
-  #
-  # sets up the navigation variables from the current theme.
-  # The 'active' blocks of the navigation definition are evaluated in this
-  # method, so any variables needed by those blocks must be set up before this
-  # is called.
-  #
-  # I don't see any reason why a controller would want to override this, but they
-  # could if they really wanted to.
-  #
-  def navigation
+  def setup_theme
     current_theme.controller = self
-    @global_navigation  = current_theme.navigation.root
-    @context_navigation = @global_navigation.currently_active_item  if @global_navigation
-    @local_navigation   = @context_navigation.currently_active_item if @context_navigation
   end
 
 end

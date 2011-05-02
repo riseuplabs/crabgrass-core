@@ -1,6 +1,69 @@
-module ControllerExtension::ContextParser
+module ControllerExtension::Context
+
+  def self.included(base)
+    base.class_eval do
+      helper_method :get_context
+      helper_method :get_navigation
+    end
+  end
 
   protected
+
+  ##
+  ## HELPERS
+  ## 
+  ## These are called by the layout if they want navigation or context.
+  ## Controllers can override context() to define their own.
+  ##
+
+  #
+  # In the layout, this is called to set @context. But we also want @context
+  # set for the controller, it is set here as well. Awkward, but less so than
+  # how it used to be.
+  #
+  def get_context
+    @context = setup_context()
+    return @context
+  end
+
+  #
+  # sets up the navigation variables from the current theme.
+  #
+  # The 'active' blocks of the navigation definition are evaluated in this
+  # method, so any variables needed by those blocks must be set up before this
+  # is called.
+  #
+  # I don't see any reason why a controller would want to override this, but they
+  # could if they really wanted to.
+  #
+  def get_navigation
+    @navigation = {}
+    @navigation[:global] = current_theme.navigation.root
+    if @navigation[:global]
+      @navigation[:context] = @navigation[:global].currently_active_item
+      if @navigation[:context]
+        @navigation[:local] = @navigation[:context].currently_active_item
+      end
+    end
+    setup_navigation(@navigation) # allow controller change to modify @navigation
+    return @navigation
+  end
+
+  ##
+  ## OVERRIDE
+  ##
+
+  def setup_context
+    # this can be implemented by controller subclasses
+  end
+
+  def setup_navigation(nav)
+    # this can be implemented by controller subclasses
+  end
+
+  ##
+  ## DETECTION
+  ##
 
   #
   # returns true if the current display context matches the symbol.
@@ -69,12 +132,8 @@ module ControllerExtension::ContextParser
 
   private
 
-  def includes
-    nil
-  end
-
   def find_page_by_id(id)
-    Page.find_by_id(id.to_i, :include => includes )
+    Page.find_by_id(id.to_i, :include => nil)
   end
 
   # almost every page is fetched using this function.

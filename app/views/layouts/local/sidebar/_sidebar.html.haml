@@ -1,5 +1,5 @@
 -#
--# @local_navigation can be an array of NavigationItems, or it could just
+-# @navigation[:local] can be an array of NavigationItems, or it could just
 -# be an array of hashes, each with keys :active, :label, and :url.
 -#
 -# each element, ul, li, and <a> get the class 'nav'. This helps us distinguish 
@@ -7,7 +7,7 @@
 -#
 
 %ul.nav
-  - @local_navigation.each do |item|
+  - @navigation[:local].each do |item|
     - next unless item[:visible]
     - active = item[:active] ? 'active' : ''
     %li{:class => [active, 'nav']}

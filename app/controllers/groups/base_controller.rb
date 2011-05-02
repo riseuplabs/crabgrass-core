@@ -11,8 +11,8 @@ class Groups::BaseController < ApplicationController
     @group ||= Group.find_by_name(params[:group_id] || params[:id])    
   end
 
-  def context
-    @context = Context.find(@group)
+  def setup_context
+    Context.find(@group)
   end
 
   # temporarily until permissions are fixed.

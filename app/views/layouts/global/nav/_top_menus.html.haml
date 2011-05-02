@@ -4,7 +4,7 @@
 - #
 
 %ul#menu
-  - @global_navigation.each do |tab|
+  - @navigation[:global].each do |tab|
     - if tab.visible
       %li{:class => "tab drop_menu #{first('top_menu')}", :id => "menu_#{tab.name}"}
         = link_to_active(tab.label, tab.url, tab.active, :class => 'tab')
