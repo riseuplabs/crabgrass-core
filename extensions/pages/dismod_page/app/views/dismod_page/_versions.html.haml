@@ -3,6 +3,8 @@
     %th{:nowrap=>"nowrap"}
       = I18n.t(:asset_version_list_version_heading)
     %th{:nowrap=>"nowrap"}
+      &nbsp;
+    %th{:nowrap=>"nowrap"}
       = I18n.t(:updated)
     %th{:nowrap=>"nowrap"}
       &nbsp;
@@ -13,8 +15,11 @@
     - row_class = cycle('odd', 'even')
     - id = 'asset_%s_version_%s' % [@asset.id, version.version]
     %tr{:class => row_class, :id => id}
-      %td{:nobreak=>'nobreak'}
-        = link_to I18n.t(:version_number, :version => version.version), version.url
+      %td{:nobreak=>'nobreak', :class => 'version'}
+        = version.version
+      %td
+        = link_to('input', version.url)
+        = link_to('ouput', version.url)
       %td
         = friendly_date(version.updated_at)
       %td
