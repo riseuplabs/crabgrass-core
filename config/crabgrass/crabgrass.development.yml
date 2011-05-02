@@ -38,7 +38,7 @@ available_page_types:
   - WikiPage
   - DismodPage
 
-theme: blueberry
+theme: dismod
 
 ##
 ## SITES
