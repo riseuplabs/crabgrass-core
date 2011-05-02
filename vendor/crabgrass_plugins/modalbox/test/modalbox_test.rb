@@ -1,4 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.join(File.dirname(__FILE__), 'test_helper.rb')
+
+ActionView::Base.send(:include, ActionView::Helpers::PrototypeHelper)
 
 class DummyRequest
   attr_accessor :symbolized_path_parameters
@@ -46,13 +48,17 @@ class DummyController
 end
 
 class ModalboxTest < ActiveSupport::TestCase
+  #include ActionView::Helpers::JavaScriptHelper
+  #include ActionView::Helpers::AssetTagHelper
+  #include ActionView::Helpers::FormTagHelper
   include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::PrototypeHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::CaptureHelper
-  include Ui::ModalboxHelper
-  include Ui::ModalboxHelper::ActionViewExtension
+  include ModalboxHelper
+  include ModalboxHelper::ActionViewExtension
 
   # for assert_dom_equal
   include ActionController::TestCase::Assertions
@@ -65,6 +71,9 @@ class ModalboxTest < ActiveSupport::TestCase
 
   def setup
     @controller = DummyController.new
+    ActionController::Routing::Routes.draw do |map|
+      map.connect '/:controller/:action/:id'
+    end
   end
 
   def test_link_to_confirm

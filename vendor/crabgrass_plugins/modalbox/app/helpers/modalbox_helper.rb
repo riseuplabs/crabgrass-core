@@ -3,12 +3,9 @@
 #
 # Displays a modal dialog box
 #
-# how to deal with errors?
-#   page.replace_html 'flash-message', display_messages if display_messages.any?
-#   render_error(..) should do this for you.
-#
 
-module Common::Ui::ModalboxHelper
+
+module ModalboxHelper
 
   def self.included(base)
     unless ActionView::Base.method_defined? :link_to_with_confirm
@@ -213,7 +210,7 @@ module Common::Ui::ModalboxHelper
 end
 
 
-  # creates a popup-link using modalbox
+# creates a popup-link using modalbox
 #  def link_to_modalbox(url, label, params={}, options={})
 #    link_to_function(label, modalbox_js(url, label, params, options))
 #  end
