@@ -27,9 +27,9 @@ end
 
 #try_to_load 'leftright'
 
-try_to_load :blueprints, :sham, :faker, :machinist do
-  require File.expand_path(File.dirname(__FILE__) + "/../cg_blueprints")
-end
+#try_to_load :blueprints, :sham, :faker, :machinist do
+#  require File.expand_path(File.dirname(__FILE__) + "/../cg_blueprints")
+#end
 
 #try_to_load 'webrat' do
 #  require 'webrat'

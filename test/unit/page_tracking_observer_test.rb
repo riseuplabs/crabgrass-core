@@ -186,7 +186,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_add_comment
-    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    Post.create! @page, @pepe, :body => "Some nice comment"
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::AddComment, PageHistory.last.class
@@ -195,7 +195,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_edit_comment
-    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    Post.create! @page, @pepe, :body => "Some nice comment"
     @post = Post.last
     @post.update_attribute("body", "Some nice comment, congrats!")
     assert_equal @last_count + 2, @page.page_histories.count
@@ -206,7 +206,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_delete_comment
-    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    Post.create! @page, @pepe, :body => "Some nice comment"
     @post = Post.last
     @post.destroy
     assert_equal @last_count + 2, @page.page_histories.count

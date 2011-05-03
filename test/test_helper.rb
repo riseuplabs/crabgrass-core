@@ -14,6 +14,12 @@ require 'test_help'
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 ##
+## load machinist blueprints
+##
+
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+
+##
 ## misc.
 ##
 
@@ -21,9 +27,15 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-  # Make sure Faker generates random but predictable content
-  # https://github.com/technoweenie/machinist
-  setup { Sham.reset }
+
+  # only for Machinist v2
+  # setup { Machinist.reset_before_test }
+
+  #  setup {
+  #    # Make sure Faker generates random but predictable content
+  #    # https://github.com/technoweenie/machinist
+  #    # Sham.reset
+  #   }
 
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
@@ -46,10 +58,13 @@ end
 ##
 
 class ActionController::IntegrationTest
+
+  #
   # we load all fixtures because webrat integration test should see exactly
-  # the same thing the user sees in development mode
-  # using self.inherited to make sure
-  # all fixtures are being loaded only if some integration tests are being defined
+  # the same thing the user sees in development mode.
+  # using self.inherited to ensure all fixtures are being loaded only if some
+  # integration tests are being defined
+  #
   def self.inherited(subclass)
     subclass.fixtures :all
   end
