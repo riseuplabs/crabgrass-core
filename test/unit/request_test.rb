@@ -104,7 +104,7 @@ class RequestTest < ActiveSupport::TestCase
 
     assert_equal req, Request.to_user(insider).having_state('pending').find(:first, :conditions => {:created_by_id => outsider})
 
-    assert_raises PermissionDenied do
+    assert_raises PermissionDenied, 'PERMISSIONS DISABLED: non member is able to accept request for a group' do
       req.approve_by!(outsider)
     end
 
@@ -144,62 +144,6 @@ class RequestTest < ActiveSupport::TestCase
     end
 
     assert outsider.member_of?(group), 'outsider should be added to group'
-  end
-
-  def test_request_to_join_your_network
-    user = users(:blue)
-    network = groups(:fau)
-
-    assert network.groups.include?(groups(:animals))
-    assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do
-      RequestToJoinYourNetwork.create!(:created_by => user, :recipient => network, :requestable => groups(:animals))
-    end
-
-    assert !network.groups.include?(groups(:rainbow))
-    assert_raises ActiveRecord::RecordInvalid, 'kangaroo not part of rainbow not allowed' do
-      RequestToJoinYourNetwork.create!(:created_by => users(:kangaroo), :recipient => network, :requestable => groups(:rainbow))
-    end
-
-    req = nil
-    assert_nothing_raised do
-      req = RequestToJoinYourNetwork.create!(:created_by => user, :recipient => network, :requestable => groups(:rainbow))
-    end
-
-    assert users(:gerrard).may?(:admin,network)
-    assert_nothing_raised do
-      req.approve_by!(users(:gerrard))
-    end
-
-    assert network.groups(true).include?(groups(:rainbow))
-  end
-
-  def test_request_to_join_our_network
-    insider = users(:gerrard)
-    group = groups(:rainbow)
-    user  = users(:red)
-    network = groups(:fau)
-
-    assert network.groups.include?(groups(:animals))
-    assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do
-      RequestToJoinOurNetwork.create!(:created_by => users(:kangaroo), :recipient => groups(:animals), :requestable => network)
-    end
-
-    assert !network.groups.include?(group)
-    assert_raises ActiveRecord::RecordInvalid, 'red not part of network' do
-      RequestToJoinOurNetwork.create!(:created_by => user, :recipient => group, :requestable => network)
-    end
-
-    req = nil
-    assert_nothing_raised do
-      req = RequestToJoinOurNetwork.create!(:created_by => insider, :recipient => group, :requestable => network)
-    end
-
-    assert user.may?(:admin,group)
-    assert_nothing_raised do
-      req.approve_by!(user)
-    end
-
-    assert network.groups(true).include?(group)
   end
 
   def test_destroy_recipient
