@@ -40,6 +40,14 @@ module Crabgrass::Theme::Loader
     info 'Loaded theme %s (%sms)' % [@directory, (Time.now - start_time)*1000]
   end
 
+  def reload!
+    if @parent
+      @parent.reload!
+    end
+    info 'Reloading theme %s' % @name
+    load()
+  end
+
   private
 
   def self.create_and_load(theme_name)
@@ -61,11 +69,6 @@ module Crabgrass::Theme::Loader
     paths << @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
     raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
     return paths
-  end
-
-  def reload
-    info 'Reloading theme %s' % @name
-    load()
   end
 
   #
