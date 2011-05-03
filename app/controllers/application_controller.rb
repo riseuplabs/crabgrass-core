@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
   include_extensions("app/application_controller/*.rb")
-  helper :application
+  helper :application, :modalbox
   include_helpers("app/helpers/common/*/*.rb")
   permissions :application
 
