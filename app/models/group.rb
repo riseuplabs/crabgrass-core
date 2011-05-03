@@ -53,9 +53,9 @@ class Group < ActiveRecord::Base
   # provided by acts_as_locked.
   # Please use access_by(user).allows(:view) instead.
   named_scope :visible_by, lambda { |user|
-    { :joins => :permissions,
-      :group => 'object_id, object_type',
-      :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
+    { :joins => :keys,
+      :group => 'locked_id, locked_type',
+      :conditions => "keyring_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
   }
 
   # find groups that do not contain the given user
@@ -156,8 +156,8 @@ class Group < ActiveRecord::Base
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
-  # entity_codes used by permissions and pathfinder
-  def entity_code
+  # keyring_code used by acts_as_locked and pathfinder
+  def keyring_code
     "%04d" % "8#{id}"
   end
 

@@ -41,8 +41,8 @@ module UserExtension::Users
           User.find_by_sql(sql)
         end
 
-        # entity_codes used by permissions and pathfinder
-        def entity_code
+        # keyring_codes used by acts_as_locked
+        def keyring_code
           "%04d" % "9#{proxy_owner.id}"
         end
       end
@@ -79,8 +79,8 @@ module UserExtension::Users
           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
         end
 
-        # entity_codes used by permissions and pathfinder
-        def entity_code
+        # keyring_codes used by acts_as_locked
+        def keyring_code
           "%04d" % "7#{proxy_owner.id}"
         end
 
