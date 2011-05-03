@@ -7,7 +7,7 @@
 #   active = controller?(:requests) and action?(:pending, :open)
 #
 
-module ApplicationController::UrlIdentifiers
+module Common::Controllers::Application::UrlIdentifiers
 
   def self.included(base)
     base.class_eval do

@@ -2,13 +2,15 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+
+  prepend_view_path "app/common/views"
   filter_parameter_logging :password
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
-  include_extensions("app/application_controller/*.rb")
+  include_controllers 'common/controllers/application'
+  include_helpers 'app/helpers/common/*/*.rb'
   helper :application, :modalbox
-  include_helpers("app/helpers/common/*/*.rb")
   permissions :application
 
   protected

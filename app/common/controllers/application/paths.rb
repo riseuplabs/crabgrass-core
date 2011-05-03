@@ -3,7 +3,7 @@
 # be available to all views and controllers. 
 #
 
-module ApplicationController::Paths
+module Common::Controllers::Application::Paths
 
   def self.included(base)
     base.class_eval do

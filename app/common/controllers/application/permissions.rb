@@ -34,7 +34,7 @@
 # (2) Controllers include permissions
 # -------------------------------------------
 # 
-# class RobotsController < ApplicationController
+# class RobotsController < Common::Controllers::Application
 #   permissions :robots
 # end
 # 
@@ -61,7 +61,7 @@
 # However, permission methods, in order to be useful, are usually called
 # by the controller in a before filter. 
 # 
-# ApplicationController has this before_filter:
+# Common::Controllers::Application has this before_filter:
 #
 #  def authorized?
 #    check_permissions!
@@ -88,12 +88,12 @@
 
 # NOTE:
 # The code here relies on this:
-#   class ApplicationController
+#   class Common::Controllers::Application
 #     def controller(); self; end
 #   end
 # ...and will not work without it.
 
-module ApplicationController::Permissions
+module Common::Controllers::Application::Permissions
 
   def self.included(base)
     base.extend ClassMethods
@@ -328,7 +328,7 @@ module ApplicationController::Permissions
 #    def permission_for_controller(controller, action, *args)
 #      permission_log_setup(controller, action, args)
 #      names=[]
-#      if controller.is_a? ApplicationController
+#      if controller.is_a? Common::Controllers::Application
 #        names << controller.controller_name
 #        names << controller.controller_path.split("/")[-2]
 #        names << controller.class.superclass.controller_name

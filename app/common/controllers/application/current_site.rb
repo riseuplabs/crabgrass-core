@@ -1,4 +1,4 @@
-module ApplicationController::CurrentSite
+module Common::Controllers::Application::CurrentSite
 
   def self.included(base)
     base.class_eval do

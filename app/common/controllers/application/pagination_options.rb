@@ -1,7 +1,7 @@
 # handles pagination options for all controllers
 # they should override these methods for special behavior
 
-module ApplicationController::PaginationOptions
+module Common::Controllers::Application::PaginationOptions
 
   protected
 
