@@ -48,7 +48,8 @@ class SocialUserTest < ActiveSupport::TestCase
   end
 
   def test_pestering
-    users(:green).disallow! :public, :pester
+    users(:green).revoke! :public, :pester
+
     assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
     assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should be not be able to pester'
 
