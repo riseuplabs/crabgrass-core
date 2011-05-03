@@ -1,4 +1,4 @@
-require 'activesupport'
+require 'active_support'
 require "#{File.dirname(__FILE__)}/acts_as_locked/key.rb"
 
 module ActsAsLocked
