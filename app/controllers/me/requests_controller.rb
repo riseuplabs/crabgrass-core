@@ -11,22 +11,27 @@ class Me::RequestsController < Me::BaseController
       paginate(pagination_params)
   end
 
-  # for now, no detailed view of a request :(
+  # for now, no detailed view of a request
   #def show
   #end
   #def edit
   #end
 
   def update
-    if mark_as(params)
-      @request.mark!(mark_as(params), current_user)
-      success
+    if mark
+      @request.mark!(mark, current_user)
+      if mark == :approved
+        msg = :approved_by_entity.t(:entity => current_user.name)
+      elsif mark == :rejected
+        msg = :rejected_by_entity.t(:entity => current_user.name)
+      end
+      success I18n.t(@request.name), msg
     end
   end
 
   def destroy
-    #@request.destroy
-    notice :thing_destroyed.tcap(:thing => @request.name.tcap)
+    @request.destroy
+    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
   end
 
   protected
@@ -50,12 +55,12 @@ class Me::RequestsController < Me::BaseController
       else :pending;
     end
   end
+  helper_method :current_state
 
-  def mark_as(params)
-    case params[:state]
-      when 'rejected' then :rejected;
-      when 'approved' then :approved;
-      when 'pending' then :pending;
+  def mark
+    case params[:mark]
+      when 'reject' then :reject;
+      when 'approve' then :approve;
     end
   end
 
@@ -72,7 +77,7 @@ class Me::RequestsController < Me::BaseController
   # unlike other me controllers, we actually want to check
   # permissions for requests.
   def authorized?
-    check_permissions!
+    true # check_permissions!
   end
 
 end

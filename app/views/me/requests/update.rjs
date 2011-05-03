@@ -1,0 +1,6 @@
+standard_update(page)
+
+page.call 'activatePanelRow'
+page.hide left_id(@request)
+page.hide right_id(@request)
+
