@@ -1,4 +1,9 @@
-module ApplicationController::Context
+#
+# methods and helpers for context and navigation that should
+# be available in all controllers.
+#
+
+module ApplicationController::ContextNavigation
 
   def self.included(base)
     base.class_eval do
