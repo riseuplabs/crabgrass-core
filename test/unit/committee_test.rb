@@ -132,9 +132,9 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.grant! :all, [:view, :pester, :see_committees]
+    g.grant! :public, [:view, :pester, :see_committees]
     c = Committee.create :name => 'outreach'
-    c.grant! :all, [:view, :pester]
+    c.grant! :public, [:view, :pester]
     g.add_committee!(c)
 
     u = User.create :login => 'user'
