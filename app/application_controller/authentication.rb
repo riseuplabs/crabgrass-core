@@ -1,4 +1,4 @@
-module ControllerExtension::Authentication
+module ApplicationController::Authentication
 
   protected
 

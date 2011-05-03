@@ -1,4 +1,4 @@
-module ControllerExtension::Tracking
+module ApplicationController::Tracking
 
   protected
 

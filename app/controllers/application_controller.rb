@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
-  include_extensions("app/controllers/controller_extension/*.rb")
+  include_extensions("app/application_controller/*.rb")
   helper :application
   include_helpers("app/helpers/common/*/*.rb")
   permissions :application

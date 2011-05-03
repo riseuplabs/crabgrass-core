@@ -26,7 +26,7 @@
 # it would be impractical to expose an api for testing the validity of every oject.
 #
 
-module ControllerExtension::RescueErrors
+module ApplicationController::RescueErrors
 
   def self.included(base)
     base.extend ClassMethods

@@ -1,5 +1,5 @@
 
-module ControllerExtension::BeforeFilters
+module ApplicationController::BeforeFilters
 
   def self.included(base)
     base.class_eval do

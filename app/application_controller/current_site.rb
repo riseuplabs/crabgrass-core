@@ -1,4 +1,4 @@
-module ControllerExtension::CurrentSite
+module ApplicationController::CurrentSite
 
   def self.included(base)
     base.class_eval do

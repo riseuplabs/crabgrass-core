@@ -1,4 +1,4 @@
-module ControllerExtension::Context
+module ApplicationController::Context
 
   def self.included(base)
     base.class_eval do

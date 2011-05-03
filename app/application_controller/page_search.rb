@@ -1,4 +1,4 @@
-module ControllerExtension::PageSearch
+module ApplicationController::PageSearch
 
   protected
 

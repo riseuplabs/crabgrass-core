@@ -93,7 +93,7 @@
 #   end
 # ...and will not work without it.
 
-module ControllerExtension::Permissions
+module ApplicationController::Permissions
 
   def self.included(base)
     base.extend ClassMethods
@@ -105,14 +105,6 @@ module ControllerExtension::Permissions
     end
   end
   
-  ACTION_ALIASES = {
-    'index'  => ['list'],
-    'update' => ['edit'],
-    'edit'   => ['update'],
-    'create' => ['new'],
-    'new'    => ['create']
-  }
-
   #SINGULARIZE_ACTIONS = ['update', 'edit', 'show', 'create', 'new']
   #PLURALIZE_ACTIONS = ['index']
 
@@ -212,6 +204,17 @@ module ControllerExtension::Permissions
     end
 
     private
+
+    ACTION_ALIASES = {
+      'index'  => ['list'],
+      'update' => ['edit'],
+      'edit'   => ['update'],
+      'create' => ['new'],
+      'new'    => ['create']
+    }
+
+    puts '#################################################'
+    puts caller
 
     #
     # I don't know if this is a good idea, but it caches the permission method
