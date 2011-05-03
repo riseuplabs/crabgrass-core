@@ -213,9 +213,6 @@ module ApplicationController::Permissions
       'new'    => ['create']
     }
 
-    puts '#################################################'
-    puts caller
-
     #
     # I don't know if this is a good idea, but it caches the permission method
     # that we find. It seems reasonable, since trying dozens of possible methods
