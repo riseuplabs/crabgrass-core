@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites, :permissions
+  fixtures :groups, :users, :profiles, :memberships, :sites, :keys
 
   def test_memberships
     g = Group.create :name => 'fruits'
