@@ -12,6 +12,14 @@
 class Groups::InvitesController < Groups::BaseController
 
   def index
+    scope = case params[:view]
+      when 'incoming': :to_group
+      when 'outgoing': :from_group
+      else :regarding_group
+      end
+    @requests = Request.send(scope, @group).
+      having_state(params[:state]).by_created_at.paginate(pagination_params(:page => params[:out_page]))
+    render :template => 'requests/index.html.haml'
   end
 
   def new
