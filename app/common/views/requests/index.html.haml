@@ -1,0 +1,8 @@
+= render :partial => 'requests/nav'
+
+- if @requests.empty?
+  = :no_things_found.t(:things => :requests.t.downcase)
+- else
+  = render :partial => 'common/split_panel',
+    :locals => {:items => '@requests', :left_panel => 'requests/request_short_entry', :right_panel => 'requests/request_long_entry', :right_url => 'me_request_path' }
+

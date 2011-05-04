@@ -73,7 +73,7 @@ class TagList < Array
     #   tag_list = TagList.from("One , Two,  Three")
     #   tag_list # ["One", "Two", "Three"]
     def from(string)
-      returning new do |tag_list|
+      new.tap do |tag_list|
         string = string.to_s.dup
         
         # Parse the quoted tags
@@ -85,7 +85,7 @@ class TagList < Array
     end
     
     def from_owner(owner, *tags)
-      returning from(*tags) do |taglist|
+      from(*tags).tap do |taglist|
         taglist.owner = owner
       end
     end

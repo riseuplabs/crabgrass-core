@@ -53,9 +53,9 @@ class Group < ActiveRecord::Base
   # provided by acts_as_locked.
   # Please use access_by(user).allows(:view) instead.
   named_scope :visible_by, lambda { |user|
-    { :joins => :permissions,
-      :group => 'object_id, object_type',
-      :conditions => "entity_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
+    { :joins => :keys,
+      :group => 'locked_id, locked_type',
+      :conditions => "keyring_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
   }
 
   # find groups that do not contain the given user
@@ -156,8 +156,8 @@ class Group < ActiveRecord::Base
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
-  # entity_codes used by permissions and pathfinder
-  def entity_code
+  # keyring_code used by acts_as_locked and pathfinder
+  def keyring_code
     "%04d" % "8#{id}"
   end
 
@@ -229,19 +229,19 @@ class Group < ActiveRecord::Base
 
   belongs_to :avatar, :dependent => :destroy
 
-  alias_method 'avatar_equals', 'avatar='
-  def avatar=(data)
-    if data.is_a? Avatar
-      avatar_equals data
-    elsif data.is_a? Hash
-      if avatar_id
-        avatar.image_file = data[:image_file]
-        avatar.image_file_data_will_change!
-      else
-        avatar_equals Avatar.new(data)
-      end
-    end
-  end
+#  alias_method 'avatar_equals', 'avatar='
+#  def avatar=(data)
+#    if data.is_a? Avatar
+#      avatar_equals data
+#    elsif data.is_a? Hash
+#      if avatar_id
+#        avatar.image_file = data[:image_file]
+#        avatar.image_file_data_will_change!
+#      else
+#        avatar_equals Avatar.new(data)
+#      end
+#    end
+#  end
 
   def destroy_by(user)
     # needed for the activity

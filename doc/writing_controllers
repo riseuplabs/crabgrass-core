@@ -24,6 +24,33 @@ General Guidelines
 
 (2) thin controllers are good, even if this means some code duplication: for example, controllers for me/pages and groups/pages is OK. most the logic is handled elsewhere. this makes it much easier to have clean routes and permissions. 
 
+Callbacks
+=================================
+
+Controllers can define a few special methods that will get called when the time is right:
+
+Context
+----------
+
+Define 'context' in your controller to set the banner. For example:
+
+  def context()
+    @context = Context::Me.new(current_user)
+  end
+
+Before Layout
+----------------
+
+Suppose you want to set up something in the view, but it is only needed when there
+is a layout active (ie, not needed for xml, rjs, etc). 
+
+You can define the method 'before_layout'. It will get called right before the view
+renderings starts but only if we are rendering a normal html response with a layout.
+
+  def before_layout()
+    # do something here....
+  end
+
 Helpers defined for controllers
 =================================
 

@@ -168,7 +168,7 @@ module GroupExtension::Groups
       self.council = committee
       committee.type = "Council"
       self.grant! committee, :all
-      self.disgrant! self, :admin
+      self.revoke! self, :admin
       self.save!
 
       # creating a new council for a new group

@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SocialUserTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :pages, :permissions
+  fixtures :users, :groups, :pages, :keys
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
@@ -48,7 +48,8 @@ class SocialUserTest < ActiveSupport::TestCase
   end
 
   def test_pestering
-    users(:green).disallow! :public, :pester
+    users(:green).revoke! :public, :pester
+
     assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
     assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should be not be able to pester'
 

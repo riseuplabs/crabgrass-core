@@ -1,12 +1,19 @@
 
+Upgrading to Crabgrass 1.0 from earlier versions
+------------------------------------------------
+
+todo: when crabgrass core stabilizes, work out instructions
+for how to upgrade and put them here.
 
 directory changes
+
   tools -> extensions/page_types
-  mods -> extensions/page_types
+  mods -> extensions/mods
   config/crabgrass.*.yml -> config/crabgrass/crabgrass.*.yml
   config/secret.txt -> config/crabgrass/secret.txt
 
 configuration changes
+
   enabled_tools is now enabled_pages
   added login_redirect_url
 

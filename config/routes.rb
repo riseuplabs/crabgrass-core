@@ -13,9 +13,10 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.with_options(:controller => 'assets') do |assets|
-    assets.connect '/assets/:action/:id', :action => /create|destroy/
-    assets.connect 'assets/:id/versions/:version/*path', :action => 'show'
-    assets.connect 'assets/:id/*path', :action => 'show'
+    assets.create_asset '/assets/create/:id', :action => :create
+    assets.destroy_asset '/assets/destroy/:id', :action => :destroy
+    assets.asset_version '/assets/:id/versions/:version/*path', :action => 'show'
+    assets.asset '/assets/:id/*path', :action => 'show'
   end
 
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
@@ -105,6 +106,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :activities
     groups.resource  :profile, :controller => 'profile'
     groups.resource  :settings, :only => [:show, :update]
+    groups.resources :avatars
   end
 
 #  ##

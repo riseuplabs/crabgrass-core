@@ -17,8 +17,8 @@ options {
       side_gutter '15px'
     }
     font {
-      size '16px'
-      line_height '24px'
+      size '13px'
+      line_height '18px'
     }
   }
 
@@ -29,12 +29,17 @@ options {
   }
 
   font {
+    default {
+      family "verdana, 'bitstream vera sans', helvetica, sans-serif"
+      size '13px'
+      line_height '18px'
+    }
     heading {
-      family "sans-serif"
-      h1_size "2.10em"
-      h2_size "1.125em"
-      h3_size "1em"
-      h4_size "1em"
+      family  'sans-serif'
+      h1_size '2.10em'
+      h2_size '1.125em'
+      h3_size '1em'
+      h4_size '1em'
     }
   }
 

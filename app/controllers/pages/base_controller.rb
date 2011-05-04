@@ -100,9 +100,9 @@ class Pages::BaseController < ApplicationController
   ## CONTEXT
   ##
 
-  def context
+  def setup_context
     if @page and @page.owner
-      @context = Context.find(@page.owner)
+      return Context.find(@page.owner)
     end
   end
 

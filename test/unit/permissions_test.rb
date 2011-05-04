@@ -41,7 +41,7 @@ class PermissionsTest < ActiveSupport::TestCase
     correct_visible_groups = Group.find(:all, :conditions => 'type IS NULL').select do |g|
       user.may?(:view,g)
     end
-    visible_groups = Group.with_access(:view, user).only_groups.find(:all)
+    visible_groups = Group.access_by(user).allows(:view).only_groups.find(:all)
 
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
     names         = visible_groups.collect{|g|g.name}.sort
@@ -55,7 +55,7 @@ class PermissionsTest < ActiveSupport::TestCase
     correct_visible_groups = Committee.find(:all).select do |g|
       user.may?(:view,g)
     end
-    visible_groups = Committee.with_access(:view, user).find(:all)
+    visible_groups = Committee.access_by(user).allows(:view).find(:all)
 
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
     names         = visible_groups.collect{|g|g.name}.sort

@@ -1,0 +1,19 @@
+Internet explorer poses something of a problem. IE sends to the webserver
+this for its accept header:
+
+  "image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, */*"
+
+There are a couple consequences of this if the browser is IE:
+
+(1) request.format is useless. It will be image/jpeg even for html requests.
+
+(2) if you do respond_to() {format.xml{'x'}; format.html {'x'}} then
+    the xml will ALWAYS be returned because it is first in the accepts
+    (higher priority than '*/*')
+
+There is an interesting workaround here:
+http://www.chrissearle.org/node/565
+
+This order is important. It means if you want to send HTML, This will cause request.format to be 'image/jpeg'. 
+
+

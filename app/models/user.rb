@@ -231,15 +231,15 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  # entity_codes used by permissions and pathfinder
-  def entity_code
+  # keyring_code used by acts_as_locked and pathfinder
+  def keyring_code
     "%04d" % "1#{id}"
   end
 
   # all codes of the entities I have access to:
   def access_codes
     codes = [1] # public
-    codes << entity_code.to_i # me
+    codes << keyring_code.to_i # me
     codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
     codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
     codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
