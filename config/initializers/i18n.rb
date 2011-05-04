@@ -14,6 +14,11 @@ unless Conf.enabled_languages.blank?
   end
 end
 
+# put override paths last
+Dir[File.join(LOCALE_OVERRIDE_DIRECTORY, '*.yml')].each do |path|
+  locale_paths << path
+end
+
 # set the load paths
 I18n.load_path << locale_paths
 I18n.default_locale = Conf.default_language

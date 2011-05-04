@@ -24,6 +24,9 @@ class ApplicationController < ActionController::Base
     @theme ||= if Rails.env == 'development'
       # in dev mode, allow switching themes. maybe allow anyone to switch themes... 
       session[:theme] = params[:theme] || session[:theme] || current_site.theme
+      unless Crabgrass::Theme.exists?(session[:theme])
+        session[:theme] = current_site.theme
+      end
       Crabgrass::Theme[session[:theme]]
     else
       Crabgrass::Theme[current_site.theme]

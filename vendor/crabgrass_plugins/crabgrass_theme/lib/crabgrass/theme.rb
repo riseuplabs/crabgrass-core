@@ -64,6 +64,11 @@ module Crabgrass
       @@themes[theme_name] ||= Loader::create_and_load(theme_name)
     end
 
+    # return true if the theme's directory exists.
+    def self.exists?(theme_name)
+      File.directory? Theme::theme_directory(theme_name)
+    end
+
     # access the values stored in the theme. eg current_theme[:border_width]
     def [](key)
       @data[key.to_sym]

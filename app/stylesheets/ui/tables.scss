@@ -16,7 +16,10 @@ table.layout td {
 
 table.styled {
   border-collapse: collapse;
-  td {
+  th {
+    font-weight: bold;
+  }
+  td, th {
     background-color: $local_title_background;
     border-top: $local_title_border;
     border-bottom: $local_title_border;

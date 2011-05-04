@@ -295,6 +295,15 @@ class AssetTest < ActiveSupport::TestCase
     assert !File.exists?(asset.public_filename), 'public file "%s" should NOT exist' % asset.public_filename
   end
 
+  # make sure assigning page.data later still updates permissions.
+  def test_asset_page_alt_method
+    page = AssetPage.create! :title => 'perm test', :user => users(:blue)
+    asset = Asset.create! :data => 'hi', :filename => 'x', :content_type => 'text/text'
+    page.data = asset
+    page.save!
+    assert asset.visible?(users(:blue))
+  end
+
   def test_content_type
     assert_equal 'application/octet-stream', Asset.new.content_type
   end
