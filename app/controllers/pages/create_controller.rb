@@ -113,12 +113,12 @@ class Pages::CreateController < ApplicationController
   ## DISPLAY
   ##
 
-  def context
+  def setup_context
     @group = Group.find_by_name(params[:group]) if params[:group]
     if @group
-      @context = Context::Group.new(@group)
+      Context::Group.new(@group)
     else
-      @context = Context::Me.new(current_user)
+      Context::Me.new(current_user)
     end
   end
 
