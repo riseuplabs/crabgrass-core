@@ -17,8 +17,8 @@ class Me::BaseController < ApplicationController
     @user = current_user
   end
 
-  def context
-    @context = Context::Me.new(current_user)
+  def setup_context
+    Context::Me.new(current_user)
   end
 
 end

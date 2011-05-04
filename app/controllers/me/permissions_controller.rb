@@ -5,7 +5,7 @@ class Me::PermissionsController < Me::BaseController
   end
 
   def create
-    @permission = current_user.grant! params[:permission][:entity_code], :view
+    @permission = current_user.grant! params[:permission][:keyring_code], :view
     if @permission
       redirect_to me_permissions_url, :notice => 'Permission added'
     else

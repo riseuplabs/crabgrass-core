@@ -10,7 +10,7 @@ class GroupGainedUserActivity < Activity
 
   before_create :set_access
   def set_access
-    if user.has_access?(:see_groups, :public) and group.has_access(:see_members, :public)
+    if user.has_access?(:see_groups, :public) and group.has_access?(:see_members, :public)
       self.access = Activity::PUBLIC
     end
   end

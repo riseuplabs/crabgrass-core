@@ -3,8 +3,8 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
   font-weight: bold;
   font-family: $font_heading_family;
   line-height: 1.0em;
-  /* "more" links are commonly used to embed a small link inside a heading
-     to see more information. */
+  // "more" links are commonly used to embed a small link inside a heading
+  //   to see more information.
   .more {
     padding-left: 1em;
     font-size: 0.8em; // $grid_font_size;

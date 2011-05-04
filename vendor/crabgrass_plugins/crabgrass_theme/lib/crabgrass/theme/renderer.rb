@@ -15,7 +15,7 @@ module Crabgrass::Theme::Renderer
       # the theme. Normally, this will get triggered automatically when we call
       # theme.stylesheet_url. However, sometimes this never gets called, like if
       # you are manually refreshing the url for the stylesheet for debugging purposes.
-      reload
+      reload!
     end
     sass_text = generate_sass_text(file)
     Sass::Engine.new(sass_text, sass_options).render
@@ -81,12 +81,18 @@ module Crabgrass::Theme::Renderer
     return sass.join("\n")
   end
 
+  #
   # when definiting sass variables, it matters a lot whether the value
   # is quoted or not, because this is passed on to css.
   # see http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
   #
   # this method determines if we should puts quotes or not.
-
+  #
+  # For CSS, when generally don't ever need quotes. However, 
+  # because all theme variables get defined as sass variables, even
+  # ones that are not used for CSS, we need to make sure we quote
+  # anything that would require quotes in CSS.
+  #
   def quote_sass_variable?(value)
     if value =~ /^#/
       false
@@ -99,6 +105,8 @@ module Crabgrass::Theme::Renderer
       false
     elsif value =~ /aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|light|dark/
       value =~ / /
+    elsif value =~ /serif/
+      false
     elsif value.is_a? String
       true
     else

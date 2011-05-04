@@ -1,7 +1,5 @@
 class Me::PagesController < Me::BaseController
 
-  before_render :setup_navigation
-
   def show
   end
 
@@ -15,8 +13,8 @@ class Me::PagesController < Me::BaseController
 
   protected
 
-  def setup_navigation
-    @local_navigation = [
+  def setup_navigation(nav)
+    nav[:local] = [
       {:active => true,  :visible => true, :html => {:partial => 'me/pages/search_controls_active'}},
       {:active => false, :visible => true, :html => {:partial => 'me/pages/search_controls_possible'}}
     ]

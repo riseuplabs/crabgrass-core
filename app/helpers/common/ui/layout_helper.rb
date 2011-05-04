@@ -146,30 +146,39 @@ module Common::Ui::LayoutHelper
 
   def crabgrass_javascripts
     lines = javascript_include_tags
-    lines << '<script type="text/javascript">'
-    lines << localize_modalbox_strings
 
+    # inline script code
+    lines << '<script type="text/javascript">'
+    #lines << localize_modalbox_strings
     lines << @content_for_script
     lines << 'document.observe("dom:loaded",function(){'
     lines << detect_browser_js
     lines << @content_for_dom_loaded
     lines << '});'
     lines << '</script>'
-    lines << '<!--[if IE]>'
-    lines << '<script src="/javascripts/ie/html5.js"></script>'
+
+    # fixes for IE
+    #lines << '<!--[if IE]>'
+    #lines << '<script src="/javascripts/ie/html5.js"></script>'
+    #lines << '<![endif]-->'
+    #lines << '<!--[if lt IE 7.]>'
+    # # make 24-bit pngs work in ie6
+    #  lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
+    #  # prevent flicker on background images in ie6
+    #  lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
+    #lines << '<![endif]-->'
+
+    # make all IEs behave like IE 9
+    lines << '<!--[if lt IE 9]>'
+      lines << '<script src="/javascripts/ie/IE9.js"></script>'
     lines << '<![endif]-->'
-    lines << '<!--[if lt IE 7.]>'
-      # make 24-bit pngs work in ie6
-      lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
-      # prevent flicker on background images in ie6
-      lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
-    lines << '<![endif]-->'
+
     # run firebug lite in dev mode for ie
-    if false and RAILS_ENV == 'development'
-      lines << '<!--[if IE]>'
-      lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
-      lines << '<![endif]-->'
-    end
+    #if true and RAILS_ENV == 'development'
+    #  lines << '<!--[if IE]>'
+    #  lines << "<script type='text/javascript' src='http://getfirebug.com/firebug-lite-beta.js'></script>"
+    #  lines << '<![endif]-->'
+    #end
     
     lines.join("\n")
   end

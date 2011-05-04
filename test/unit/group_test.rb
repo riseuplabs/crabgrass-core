@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites, :permissions
+  fixtures :groups, :users, :profiles, :memberships, :sites, :keys
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -46,7 +46,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.disallow! :public, :see
+    g.revoke! :public, :view
     u = User.create :login => 'user'
 
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +55,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.allow! :all, [:view, :pester]
+    g.grant! :public, [:view, :pester]
     g.reload
     u = User.create :login => 'user'
 
@@ -68,7 +68,7 @@ class GroupTest < ActiveSupport::TestCase
       u = users(:red)
       g = groups(:animals)
 
-      g.allow! :all, [:request_membership]
+      g.grant! :public, [:request_membership]
       g.reload
 
       assert g.profiles.visible_by(u).public?

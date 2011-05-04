@@ -2,13 +2,15 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+
+  prepend_view_path "app/common/views"
   filter_parameter_logging :password
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
-  include_extensions("app/controllers/controller_extension/*.rb")
-  helper :application
-  include_helpers("app/helpers/common/*/*.rb")
+  include_controllers 'common/controllers/application'
+  include_helpers 'app/helpers/common/*/*.rb'
+  helper :application, :modalbox
   permissions :application
 
   protected
@@ -22,6 +24,9 @@ class ApplicationController < ActionController::Base
     @theme ||= if Rails.env == 'development'
       # in dev mode, allow switching themes. maybe allow anyone to switch themes... 
       session[:theme] = params[:theme] || session[:theme] || current_site.theme
+      unless Crabgrass::Theme.exists?(session[:theme])
+        session[:theme] = current_site.theme
+      end
       Crabgrass::Theme[session[:theme]]
     else
       Crabgrass::Theme[current_site.theme]

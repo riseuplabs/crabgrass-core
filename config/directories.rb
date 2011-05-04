@@ -12,6 +12,7 @@ CRABGRASS_SECRET_FILE      = "#{CRABGRASS_CONFIG_DIRECTORY}/secret.txt"
 EXTENSION_DIRECTORY       = "#{Rails.root}/extensions"
 THEMES_DIRECTORY          = "#{EXTENSION_DIRECTORY}/themes"
 SEARCH_FILTERS_DIRECTORY  = "#{EXTENSION_DIRECTORY}/search_filters"
+LOCALE_OVERRIDE_DIRECTORY = "#{EXTENSION_DIRECTORY}/locales"
 
 # plugins
 
@@ -26,7 +27,7 @@ CACHE_DIRECTORY = "#{TMP_DIRECTORY}/cache"
 
 # assets
 
-if Rails.env == 'test'
+if RAILS_ENV == 'test'
   ASSET_PRIVATE_STORAGE = "#{Rails.root}/tmp/private_assets"
   ASSET_PUBLIC_STORAGE  = "#{Rails.root}/tmp/public_assets"
   KEYRING_STORAGE       = "#{Rails.root}/tmp/private_assets/keyrings"

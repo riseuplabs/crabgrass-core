@@ -1,10 +1,10 @@
-- if @context_navigation
+- if @navigation[:context]
   %nav#banner_nav
     %ul#banner_nav_ul
-      - @context_navigation.each do |tab|
+      - @navigation[:context].each do |tab|
         - if tab.visible
           %li{:class => "tab #{first('banner_menu')}"}
             - if tab.icon
-              = link_to_active("<span class='text'>#{tab.label}</span><span class='mobi_icon #{tab.icon}_16'/>", tab.url, tab.active, :class => "tab")
+              = link_to_active("<span class='text'>#{tab.label}</span><span class='mobi_icon #{tab.icon}_16'></span>", tab.url, tab.active, :class => "tab")
             - else
-              = link_to_active(tab.label, tab.url,  tab.active, :class => "tab")
+              = link_to_active(tab.label, tab.url, tab.active, :class => "tab")

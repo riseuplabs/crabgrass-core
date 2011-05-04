@@ -10,6 +10,7 @@ config.action_view.cache_template_loading            = true
 config.action_controller.allow_forgery_protection    = false
 config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :test
+config.action_mailer.default_url_options = { :host => "localhost" }
 
 # Use SQL instead of Active Record's schema dumper when creating the test database.
 # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -20,10 +21,9 @@ config.action_mailer.delivery_method = :test
 ## GEMS REQUIRED FOR TESTS
 ##
 
-#config.gem 'mocha'
-config.gem 'blueprints'
-#config.gem 'machinist'
-#config.gem 'faker'
+config.gem 'machinist', :version => '~> 1.0' # switch to v2 when stable.
+config.gem 'faker'
+
 #config.gem 'webrat'
 
 ##

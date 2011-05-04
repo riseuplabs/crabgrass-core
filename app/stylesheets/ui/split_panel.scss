@@ -24,13 +24,15 @@
 // article#content padding.
 //
 
+
+
 // full width
 
 $content_padding: resolve_width($local_content_padding, $grid_column_count);
 $content_width: 100%;
 $panel_width: ($content_width - $content_padding) / 2;
 
-#column_center.full {
+#local.full_width {
   .panel_left {
     width: $panel_width;
   }
@@ -48,7 +50,7 @@ $split_panel_gutter_padding: resolve_width($local_content_padding, $center_colum
 $content_width: 100%;
 $panel_width: ($content_width - $split_panel_gutter) / 2;
 
-#column_center.with_left {
+#local.sidebar.on_left {
   .panel_left {
     width: $panel_width;
   }
@@ -57,6 +59,13 @@ $panel_width: ($content_width - $split_panel_gutter) / 2;
     margin-left: $panel_width;
   }
 }
+
+// with left side column
+
+#local.sidecolumn.on_left {
+  // none yet
+}
+
 
 //
 // left panel decoration
@@ -72,7 +81,8 @@ $row_active_color: #000;
 $row_hover_background: #eef;
 $row_img_border: 1px solid white;
 $row_right_active_background: #efefef;
-$row_right_border: 1px solid $row_active_background;
+$row_right_border: none;
+// $row_right_border: 1px solid $row_active_background;
 
 .panel_left {
   float: left;        // allow right panel to flow to the right.
@@ -110,7 +120,7 @@ $row_right_border: 1px solid $row_active_background;
     font-size: 0;
     line-height: 0;
     width: 0;
-    border-color: transparent transparent transparent $row_active_background;
+    border-color: $row_right_active_background $row_right_active_background $row_right_active_background $row_active_background;
     border-style: solid;
     border-width: 0;
     margin-right: -1 * ($row_arrow_width + border_width($row_right_border));

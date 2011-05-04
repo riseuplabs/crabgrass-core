@@ -18,7 +18,7 @@
     %div.password
       %label(for = 'password')= :login_password.t
       %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
-      = password_field_tag 'password', {:id => 'password'}, {:tabindex => 2}
+      = password_field_tag 'password', '', {:id => 'password', :tabindex => 2}
     %div.buttons
       %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3 }
     %div
