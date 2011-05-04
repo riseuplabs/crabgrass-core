@@ -1,0 +1,6 @@
+%section{:class => 'table'}
+  %table.styled{:width => '100%'}
+    %tr
+      %th.styled User
+      %th.styled Joined
+    = render :partial => '/groups/members/membership', :collection => @memberships

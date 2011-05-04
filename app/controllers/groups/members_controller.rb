@@ -10,6 +10,7 @@
 class Groups::MembersController < Groups::BaseController
 
   def index
+    @memberships = @group.memberships
   end
 
 end
