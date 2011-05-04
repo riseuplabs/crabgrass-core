@@ -17,7 +17,7 @@
     <argument><%= request.protocol + request.host_with_port %></argument>
     <argument>0</argument>
     <argument>0</argument>
-    <argument><%= request.protocol + request.host_with_port + page_xpath(@page, :action => 'dataset') %></argument>
+    <argument><%= dismod_get_dataset_url %></argument>
   </application-desc>
 </jnlp>
 

@@ -1,0 +1,59 @@
+
+URLS
+------------
+
+I think there needs to be a way to tell the designer that it can push new model, but it
+cannot pull a previous model.
+
+There are two types of buttons on crabgrass for launching the Designer:
+
+* "open model designer" button -- this should open the designer and NOT get data from crabgrass. Ideally, the get button would be disabled. This button is for when there is no input model yet uploaded.
+
+* "edit" button -- this should open the designer and immediately fetch the data from the URL provided to it. This button is for editing existing input models that have been uploaded.
+
+I think this should be done by passing it two urls, instead of of one. A GET url and a POST url. If the GET url exists, it should fetch from the URL on loading. If the GET url doesn't exist, it should disable the get button. Alternately, the Designer could take an additional parameter to alter its behavior. 
+
+PAGE REFRESH
+-----------------
+
+After you push a new model to the web application, it would be nice if the there was a way that the web application could get its page refreshed. Otherwise, it is weird: you close the Design Agent, but the web page has not changed.
+
+You can do this with an applet:
+
+  appletContext.showDocument(url,"_parent")
+
+Or javascript:
+
+  location.reload(true)
+
+But not with java web start
+
+Here are a few options.
+
+option 1: ignore prior window, open a new one.
+
+  the Design can open a new browser window after it has uploaded the input file.
+  not ideal, because you might get confused by a bunch of windows, but clean and it works.
+
+  Advantages: easy
+  Disavantages: window clutter
+
+option 2: poll the server
+
+  the web page can poll the server every few seconds to see if it should reload.
+
+  Advantages: each to implement
+  Disadvantages: there will be a potentially long delay between when the new data
+  is uploaded by Designer and when the webpage is reloaded. Also, polling is hacky.
+
+option 3: push from the server
+
+  this would involve setting up some fancy comet push server. when the server
+  realizes there is a new model uploaded, it pushes out a refresh command to the
+  web page. i think this would be the most smooth solution from the user
+  standpoint, but would be a lot of work to program.
+
+  Advantages: good ui experience
+  Disavantages: hard
+
+

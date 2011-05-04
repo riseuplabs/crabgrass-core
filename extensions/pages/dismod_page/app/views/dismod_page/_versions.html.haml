@@ -1,32 +1,27 @@
-%table.pretty
+%table.styled
   %tr
-    %th{:nowrap=>"nowrap"}
-      = I18n.t(:asset_version_list_version_heading)
-    %th{:nowrap=>"nowrap"}
-      &nbsp;
-    %th{:nowrap=>"nowrap"}
-      = I18n.t(:updated)
-    %th{:nowrap=>"nowrap"}
-      &nbsp;
-    %th{:nowrap=>"nowrap"}
-      &nbsp;
+    %th Version
+    %th Date
+    %th Input File
+    %th Output File
+    %th Action
 
   - @asset.versions.reverse.each do |version|
+    - @version = version
     - row_class = cycle('odd', 'even')
     - id = 'asset_%s_version_%s' % [@asset.id, version.version]
+ 
     %tr{:class => row_class, :id => id}
-      %td{:nobreak=>'nobreak', :class => 'version'}
-        = version.version
-      %td
-        = link_to('input', version.url)
-        = link_to('ouput', version.url)
-      %td
-        = friendly_date(version.updated_at)
-      %td
-        = button_to('edit', page_xpath(@page, :action => 'Model_Design_Agent', :version => version.version), {:method => :get})
-      %td
-        - if current_user.may?(:edit, @page) and version.version < @asset.version
-          %span= link_to('destroy', page_xpath(@page, :action => 'destroy'), :confirm => 'are you sure?')
-
+      %td{:class => 'version'}
+        = @version.version
+      %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
+        = friendly_date(@version.updated_at)
+      %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
+        = link_to('input', @version.url)
+      %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
+        = processing_link
+      %td{:nowrap=>"nowrap", :nobreak=>"nobreak", :class => 'form_buttons'}
+        = edit_button
+        = delete_button
 
 

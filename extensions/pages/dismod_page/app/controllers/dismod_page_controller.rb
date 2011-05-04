@@ -6,13 +6,27 @@ class DismodPageController < Pages::BaseController
   def update
   end
 
+  def destroy
+    asset_version = @asset.versions.find_by_version(params[:version])
+    asset_version.destroy
+    notice 'version %s destroyed' % asset_version.version
+  end
+
   #
   # used for communication with the Model Design Agent
   #
   def dataset
     if request.get?
       # return the dismod input file to the model design agent
-      render :text => "xxxxx\nyyyyy\nzzzzz"
+      if params[:version]
+        asset_version = @asset.versions.find_by_version(params[:version])
+        raise_not_found unless asset_version
+        send_file(asset_version.private_filename, :type => asset_version.content_type)
+      else
+        # we should never get here, really. There is no point in fetching
+        # a model that has not yet been uploaded.
+        render :text => "xxxxx\nyyyyy\nzzzzz"
+      end
     elsif request.post?
       # get the dismod input file from the model design agent
       dismod_input = params[:dismod_input]
@@ -56,9 +70,9 @@ class DismodPageController < Pages::BaseController
     if @asset
       @asset.update_attributes(:data => data, :filename => new_filename(@asset.version))
     elsif @page
-      @asset = Asset.create! :data => data, :filename => new_filename(1), :content_type => 'application/dismod-input'
+      @asset = Asset.create! :data => data, :filename => new_filename(0), :content_type => 'application/dismod-input'
       @page.data = @asset
-      @page.save
+      @page.save!
     end
   end
 
