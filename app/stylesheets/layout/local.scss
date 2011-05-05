@@ -3,6 +3,10 @@ div#local {
   margin-top: gutter();
 }
 
+#column_center {
+  @if $local_content_shadow { @include local_content_shadow; }
+}
+
 //
 // FULL WIDTH
 //
@@ -60,6 +64,7 @@ div#local {
           border: $local_content_border;
           background: $local_content_background;
           @if $local_content_css { @include local_content_css; }
+          @if $local_content_shadow { @include local_content_shadow; }
           border-right: 0;
         }
         a.nav {

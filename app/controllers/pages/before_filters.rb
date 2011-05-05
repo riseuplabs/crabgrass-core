@@ -17,7 +17,7 @@ module Pages::BeforeFilters
   # subclasses should define 'fetch_data', which this method calls.
   #
   def default_fetch_data
-    return true if action?(:new, :create)
+    return true if action?(:new)
 
     unless @page
       id = params[:page_id] || params[:id]

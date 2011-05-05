@@ -109,6 +109,7 @@ options {
       padding '6px'
     }
     css false
+    shadow false
   }
 
   local {
@@ -118,6 +119,7 @@ options {
       background 'white'
       padding '1g'
       css false
+      shadow false
     }
     nav {
       style 'tabs'
