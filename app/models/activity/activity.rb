@@ -140,6 +140,7 @@ class Activity < ActiveRecord::Base
     ]}
   end)
 
+  # DEPRECATED - use for_all instead. it does the same
   #named_scope(:social_activities_for_groups_and_friends, lambda do |user|
   #  {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
   #end)
