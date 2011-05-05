@@ -24,14 +24,9 @@
   %h3 Deciding
   %ul
     - permission_log.each do |key, info|
-      -# %li.key= "KEY: " + key.inspect
       %li.method
         METHOD FOUND:
         = info[:decided]
-      -# %li
-        - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
-        %span{:style => ([controller_path, key[1]] == [params[:controller], params[:action]] ? "border:1px solid black" : "")}
-          = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json} => <b>#{info[:decided]}</b>"
         %br/
         %br/
   %br/
