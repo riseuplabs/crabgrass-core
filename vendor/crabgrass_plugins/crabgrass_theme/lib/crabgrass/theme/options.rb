@@ -29,7 +29,11 @@ class Crabgrass::Theme::Options
       @namespace.pop
     else
       key = (@namespace + [name]).join('_').to_sym
-      value = args.first
+      if args.length == 1
+        value = args.first
+      else
+        value = args
+      end
       @data[key] = value
     end
     nil

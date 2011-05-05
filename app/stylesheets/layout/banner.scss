@@ -36,6 +36,7 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   &.small  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small  + $base_margin;}}
 
   @if $banner_css { @include banner_css; }
+  @if $banner_shadow { @include banner_shadow; }
 }
 
 #banner_content {
