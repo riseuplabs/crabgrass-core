@@ -6,7 +6,7 @@
       = I18n.t(:invite_info, :group_type => @group.group_type.downcase)
     %br
     %em= I18n.t(:recipient_tip)
-  - form_tag(group_requests_path(@group), :method => :post) do 
+  - form_tag(group_invites_path(@group), :method => :post) do 
     %p
       = text_area_tag 'recipients', params[:recipients], :rows => 2, :cols => 50
     =# I18n.t(:optional_message) + ':'
