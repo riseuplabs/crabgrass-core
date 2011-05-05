@@ -24,7 +24,7 @@
   -# 
   -# TAGS
   -#
-  - if !(tag_content = page_tags).nil? || may_update_tags?
+  -# if !(tag_content = page_tags).nil? || may_update_tags?
     %h3= I18n.t(:tags)
     %div.tags
       = tag_content
@@ -34,7 +34,7 @@
   -# 
   -# ATTACHMENTS
   -#
-  - if @page.supports_attachments and !(attachment_content = page_attachments).nil?
+  -# if @page.supports_attachments and !(attachment_content = page_attachments).nil?
     %section#attachments
       %h3= I18n.t(:attachments)
       .attachments
@@ -47,7 +47,6 @@
   -#
   - if @page.group_participations.any? or @page.user_participations.any?
     %section#contributors
-      // %h3= I18n.t(:contributors)
       - if @page.group_participations.any?
         %h3= I18n.t(:groups)
         %ul#groups
