@@ -14,6 +14,8 @@ class Groups::InvitesController < Groups::BaseController
 
   permissions :invites
 
+  include Common::Controllers::Request
+
   def index
     scope = case params[:view]
       when 'incoming': :to_group
