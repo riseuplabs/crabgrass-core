@@ -102,6 +102,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   def pretend_we_are_in_the_future!
     # we don't have mocha and minitest does not support stubbing
     # Time.stubs(:now).returns(future_time)
+    return if Time.respond_to? :now_with_stubbing
     Time.class_eval do
       class << self
         def now_with_stubbing
@@ -118,7 +119,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
     # teardown_stubs
     Time.class_eval do
       class << self
-        alias_method :now, :now_without_stubbing
+        alias :now :now_without_stubbing
       end
     end
   end
