@@ -25,6 +25,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'approved', @request.state
     assert !@group.reload.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   # 1 approval, 3 rejections
@@ -50,6 +51,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'approved', @request.state
     assert !@group.reload.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   def test_delayed_rejection
@@ -63,6 +65,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'rejected', @request.state
     assert @group.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   def test_voting_scenarios
@@ -91,6 +94,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
         pretend_we_are_in_the_future!
         request.tally!
         assert_equal scenario[:delayed], request.state, "On scenario: #{scenario}"
+        reset_time_to_present!
       end
 
       request.destroy
@@ -100,12 +104,29 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   end
 
   def pretend_we_are_in_the_future!
-    future_time = Time.now + 2.months
-    Time.stubs(:now).returns(future_time)
+    # we don't have mocha and minitest does not support stubbing
+    # Time.stubs(:now).returns(future_time)
+    return if Time.respond_to? :now_with_stubbing
+    Time.class_eval do
+      class << self
+        def now_with_stubbing
+          now_without_stubbing + 2.months
+        end
+      
+        alias_method_chain :now, :stubbing
+      end
+    end
   end
 
   def reset_time_to_present!
-    teardown_stubs
+    # we don't have mocha and minitest does not support stubbing
+    # teardown_stubs
+    Time.class_eval do
+      class << self
+        alias_method :now, :now_without_stubbing
+        undef :now_with_stubbing
+      end
+    end
   end
 
 

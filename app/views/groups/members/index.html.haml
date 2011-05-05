@@ -1,0 +1,7 @@
+%section{:class => 'table'}
+  %table.styled{:width => '100%'}
+    %tr
+      %th.styled User
+      %th.styled Joined
+    = render :partial => '/groups/members/membership', :collection => @memberships
+  %div{:align => 'right', :style => 'padding-top: 0.3em;'}= pagination_links(@memberships)
