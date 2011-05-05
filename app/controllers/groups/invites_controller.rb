@@ -21,7 +21,7 @@ class Groups::InvitesController < Groups::BaseController
       else :regarding_group
       end
     @requests = Request.send(scope, @group).
-      having_state(params[:state]).by_created_at.paginate(pagination_params(:page => params[:out_page]))
+      having_state(params[:state] || 'pending').by_created_at.paginate(pagination_params(:page => params[:out_page]))
     render :template => 'requests/index.html.haml'
   end
 
