@@ -25,6 +25,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'approved', @request.state
     assert !@group.reload.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   # 1 approval, 3 rejections
@@ -50,6 +51,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'approved', @request.state
     assert !@group.reload.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   def test_delayed_rejection
@@ -63,6 +65,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
     assert_equal 'rejected', @request.state
     assert @group.users.include?(users(:orange))
+    reset_time_to_present!
   end
 
   def test_voting_scenarios
@@ -91,6 +94,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
         pretend_we_are_in_the_future!
         request.tally!
         assert_equal scenario[:delayed], request.state, "On scenario: #{scenario}"
+        reset_time_to_present!
       end
 
       request.destroy
@@ -119,7 +123,8 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
     # teardown_stubs
     Time.class_eval do
       class << self
-        alias :now :now_without_stubbing
+        alias_method :now, :now_without_stubbing
+        undef :now_with_stubbing
       end
     end
   end
