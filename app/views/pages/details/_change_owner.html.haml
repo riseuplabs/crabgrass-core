@@ -1,12 +1,8 @@
--# all direct and indirect groups we are members of
-- groups = current_user.all_groups.sort {|a,b| a.name <=> b.name}  
+- options = {:selected => @page.owner}
 
-%ul
-  - for group in groups
-    - url = 
-    %li.hoverbutton= display_entity :avatar => 'xsmall', :format => :twolines
-
-.buttons
-  = back_modal_button
-  = close_modal_button
+- form_tag(page_attributes_path(@page), :method => :put) do
+  = select_tag('owner', options_for_page_owner(options), :size => 16, :style => 'width:100%')
+  .buttons
+    = close_modal_button(:cancel)
+    = submit_tag('Change Owner')
 

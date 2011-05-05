@@ -30,20 +30,12 @@ options(:parent => 'default') {
   }
 
   banner {
-    css %{
-      -webkit-box-shadow: inset 1px 1px 3px rgba(0,0,0,0.15);
-      -moz-box-shadow: inset 1px 1px 3px rgba(0,0,0,0.15);
-      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.15);
-    }
+    shadow :inset => true, :x => '1px', :y => '1px', :blur => '3px', :color => 'rgba(0,0,0,0.15)'
   }
 
   local {
     content {
-      css %{
-        -webkit-box-shadow: 1px 1px 4px #CCC9C3;
-        -moz-box-shadow: 1px 1px 4px #CCC9C3;
-        box-shadow: 1px 1px 4px #CCC9C3;
-      }
+       shadow :x => '1px', :y => '1px', :color => '#CCC9C3', :blur => '4px'
     }
   }
 

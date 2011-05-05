@@ -58,17 +58,10 @@ module Crabgrass::Theme::Renderer
     data.collect do |key,value|
       if skip_variable?(key)
         next
-      elsif mixin_variable?(key) and value
-        sass << "@mixin #{key} {"
-        sass << value
-        sass << "}"
-        sass << '$%s: true;' % key
+      elsif special_variable?(key) and value
+        sass += handle_special_variable(key, value)
       else
-        if quote_sass_variable?(value)
-          sass << '$%s: "%s";' % [key,value]
-        else
-          sass << '$%s: %s;' % [key,value]
-        end
+        sass << handle_normal_variable(key,value)
       end
     end
     sass << ""
@@ -118,9 +111,50 @@ module Crabgrass::Theme::Renderer
     key.to_s =~ /_css$/
   end
 
+  def shadow_variable?(key)
+    key.to_s =~ /_shadow$/
+  end
+
+  def special_variable?(key)
+    shadow_variable?(key) or mixin_variable?(key)
+  end
+
   def skip_variable?(key)
     key.to_s =~ /_html$/
   end
+
+  def handle_normal_variable(key,value)
+    if quote_sass_variable?(value)
+      '$%s: "%s";' % [key,value]
+    else
+      '$%s: %s;' % [key,value]
+    end
+  end
+
+  def handle_special_variable(key, value)
+    sass = []
+    if mixin_variable?(key)
+      sass << "@mixin #{key} {"
+      sass << value
+      sass << "}"
+      sass << '$%s: true;' % key
+    elsif shadow_variable?(key)
+      unless value.is_a? Array
+        value = [value]
+      end
+      sass << "@mixin #{key} {"
+      value.each do |args|
+        border = "%s %s %s %s %s" % [(args[:inset] ? 'inset' : ''), (args[:x]||'1px'), (args[:y]||'1px'), (args[:blur]||'4px'), (args[:color]||'#333')]
+        sass << "-webkit-box-shadow: #{border};"
+        sass << "-moz-box-shadow: #{border};"
+        sass << "box-shadow: #{border};"
+      end
+      sass << "}"
+      sass << '$%s: true;' % key
+    end
+    return sass
+  end
+
 
   # given a css sheet name, return the corresponding sass file
   # e.g.
