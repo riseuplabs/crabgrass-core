@@ -1,8 +1,20 @@
 
 body {
-  background-color: $background_color;
+  @if $footer_background_color {
+    background-color: $footer_background_color;
+  } @else {
+    background-color: $background_color;
+  }
 }
 
-#container {
+#middle_container, #footer_continer {
   @include container;
 }
+
+@if $masthead_style == 'grid' {
+  // there is only an enclosing container for the 'grid' style.
+  #masthead_container {
+    @include container;
+  }
+}
+

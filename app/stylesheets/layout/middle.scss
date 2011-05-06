@@ -1,0 +1,24 @@
+
+
+#middle {
+
+  // if the footer is a different color then we make the body color to be
+  // the color of the footer, and then color #middle to be our 'background'.
+  // this is awkward, but seems to be the most compatible way of getting a colored
+  // footer without buggy absolute positioning.
+  @if $footer_background_color {
+    background-color: $background_color;
+  }
+
+  @if $masthead_nav_style == 'cutout' {
+    // leave a gap between the bottom of the masthead
+    // and the banner / local area.
+    padding-top: gutter();
+  }
+
+  // for now, always put a gap before the footer
+  padding-bottom: gutter();
+
+} 
+
+

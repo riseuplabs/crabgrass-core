@@ -1,7 +1,3 @@
-div#local {
-  // for when there is no banner:
-  margin-top: gutter();
-}
 
 #column_center {
   @if $local_content_shadow { @include local_content_shadow; }

@@ -21,14 +21,6 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
     color: $banner_default_foreground;
   }
 
-  @if $masthead_nav_style == 'cutout' {
-    margin-top: gutter();
-  }
-
-  // @if $banner_nav_style == 'inset' {
-  //  padding: $banner_padding;
-  // }
-
   // for different size banners we need different first tab margins.
   // not so clean, but at least no magic numbers.
   &.large  {ul#banner_nav_ul li.tab.first {margin-left: $icon_large  + $base_margin;}}

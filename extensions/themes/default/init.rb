@@ -11,8 +11,10 @@ options {
 
   grid {
     column {
-      width '40px'
-      count 16
+      #width '40px'
+      #count 16
+      width '22px'
+      count 24
       gutter '15px'
       side_gutter '15px'
     }
@@ -66,10 +68,13 @@ options {
 #    }
     content {
       vertical_align 'center' # accepts [center | top]
-                              # if you set center alignment, you are still
-                              # responsible for aligning whatever text you put
-                              # in the content block.
-      height "2.5em"          # required if vertical_align == 'center'
+
+      # for vertical_align 'center'
+      height "2.5em" # vertical alignment only works if there is a fixed height
+
+      # for vertical_align 'top'
+      padding_top "10px"
+
       padding "1g"
       html { content_tag :div, current_site.title, :id => 'masthead_title' }
     }
@@ -125,12 +130,12 @@ options {
       style 'tabs'
       padding '1g'
       side 'left'   # only left for now.
-      width 3       # in grid column units
+      width 4       # in grid column units
     }
     sidecolumn {
       # for fun, make the side column width approximate a golden ratio.
       # width (0.3819660113 * var(:grid_column_count).to_i).round
-      width 4
+      width 8
     }
     title {
       background '#f6f6f6'
@@ -143,6 +148,17 @@ options {
     odd_background "#efefef"
     even_background var(:local_content_background)
     padding "10px"
+  }
+
+  footer {
+    border false
+    background_color false
+    color 'white'
+    column_count 1
+    content {
+      #padding '1g'
+      html :partial => 'layouts/global/default_footer_content'
+    }
   }
 
   # all the various z-index values are defined here. 

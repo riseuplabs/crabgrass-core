@@ -31,19 +31,24 @@ html structure
   %head
     %title
   %body
-    %header#masthead
-      %div#masthead_content
-      %nav#global_nav
-    %div#container
-      %header#context_banner
-        %div#banner_content
-        %nav#banner_nav
-      %div#local
-        %div#column_left
-          %nav#local_nav
-        %div#column_center.with_left
-          %article#content
-      %footer#footer
+    #header
+      #header_container
+        #masthead_content
+        #global_nav
+    #middle
+      #middle_container
+        #context_banner
+          #banner_content
+          #banner_nav
+        #local
+          #column_left
+            #local_nav
+          #column_center.with_left
+            #content
+    #footer
+      #footer_container
+        #footer_content
+
 
 there are some variations (context banner or not, left column or not, etc),
 but this is the basic structure of every layout.
