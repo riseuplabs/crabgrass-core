@@ -1,6 +1,7 @@
 en:
+  welcome_message: "here goes some text about what DisMod is..."
   page_group_analysis: Data Analysis Tools
   dismod_page_display: DiseaseModel
   dismod_page_description: Generic Disease Model
-  welcome_message: "here goes some text about what DisMod is..."
+  dismod_page_introduction: "insert here: introductory text about how to get started uploading a new model"
 

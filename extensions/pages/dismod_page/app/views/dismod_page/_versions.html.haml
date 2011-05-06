@@ -1,6 +1,7 @@
 %table.styled
   %tr
     %th Version
+    %th User
     %th Date
     %th Input File
     %th Output File
@@ -15,9 +16,11 @@
       %td{:class => 'version'}
         = @version.version
       %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
+        = @version.user ? link_to_user(@version.user, :avatar => 'xsmall') : ''
+      %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
         = friendly_date(@version.updated_at)
       %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
-        = link_to('input', @version.url)
+        = link_to('download', @version.url)
       %td{:nowrap=>"nowrap", :nobreak=>"nobreak"}
         = processing_link
       %td{:nowrap=>"nowrap", :nobreak=>"nobreak", :class => 'form_buttons'}

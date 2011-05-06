@@ -33,11 +33,14 @@ module DismodPageHelper
     )
   end
 
+  # 
+  # TODO: auth auth key to the url
+  #
   def dismod_get_dataset_url
     if params[:version].any?
-      path = page_xpath(@page, :action => 'dataset', :version => params[:version])
+      path = page_xpath(@page, :action => 'dataset', :user => current_user.login, :version => params[:version]) + '&x=x' 
     else
-      path = page_xpath(@page, :action => 'dataset')
+      path = page_xpath(@page, :action => 'dataset', :user => current_user.login)
     end
     request.protocol + request.host_with_port + path
   end

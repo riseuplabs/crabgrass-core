@@ -30,7 +30,9 @@ class DismodPageController < Pages::BaseController
     elsif request.post?
       # get the dismod input file from the model design agent
       dismod_input = params[:dismod_input]
-      if save_asset(dismod_input)
+      # in the future, this will be replaced by some auth code.
+      user = User.find_by_login params[:user]
+      if save_asset(dismod_input, user)
         render :text => "success"
       else
         render :text => "failure", :status => 500
@@ -65,12 +67,12 @@ class DismodPageController < Pages::BaseController
   # creates a new asset or pushes a new version onto our existing asset.
   # returns false if there was a failure to save.
   #
-  def save_asset(data)
+  def save_asset(data, user=nil)
     return false unless data.any?
     if @asset
-      @asset.update_attributes(:data => data, :filename => new_filename(@asset.version))
+      @asset.update_attributes(:data => data, :filename => new_filename(@asset.version), :user => user)
     elsif @page
-      @asset = Asset.create! :data => data, :filename => new_filename(0), :content_type => 'application/dismod-input'
+      @asset = Asset.create! :data => data, :filename => new_filename(0), :content_type => 'application/dismod-input', :user => user
       @page.data = @asset
       @page.save!
     end
