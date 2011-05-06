@@ -130,7 +130,7 @@ options {
       style 'tabs'
       padding '1g'
       side 'left'   # only left for now.
-      width 4       # in grid column units
+      width 5       # in grid column units
     }
     sidecolumn {
       # for fun, make the side column width approximate a golden ratio.
