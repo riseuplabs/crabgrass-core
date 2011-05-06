@@ -3,12 +3,28 @@
 - @local_layout ||= 'sidebar'
 !!!
 %html{:dir=>language_direction}
-  = render :partial => '/layouts/global/head'
+
+  %head
+    = render :partial => '/layouts/global/head'
+
   %body{:class=>language_direction}
-    = render :partial => '/layouts/global/masthead'
-    #container
-      = render :partial => "/layouts/context/banner"
-      = render :partial => "/layouts/local/#{@local_layout}/index"
-      = render :partial => "/layouts/global/footer"
-      = display_alert_messages
+
+    #masthead
+      #masthead_container
+        #masthead_content
+          = render :partial => '/layouts/global/masthead_content'
+        #global_nav
+          = render :partial => '/layouts/global/nav/top_menus'
+
+    #middle
+      #middle_container
+        = render :partial => "/layouts/context/banner"
+        = render :partial => "/layouts/local/#{@local_layout}/index"
+
+    #footer
+      #footer_container
+        #footer_content
+          = render :partial => "/layouts/global/footer"
+
+    = display_alert_messages
 

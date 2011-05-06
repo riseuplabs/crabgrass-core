@@ -56,8 +56,7 @@ Crabgrass::Initializer.run do |config|
   config.gem 'compass', :version => '~> 0.10'
   
   # required, and compilation is required to install
-  config.gem 'haml', :version => '~> 3.0.0' # < allow 3.1 when this bug is fixed:
-                                            # https://github.com/nex3/haml/issues/384
+  config.gem 'haml', :version => '~> 3.0'
   config.gem 'RedCloth', :version => '~> 4.2'
   config.gem 'hpricot', :version => '~> 0.8'
 

@@ -1,12 +1,5 @@
 $masthead_css: false !default;
 
-@if $masthead_style == 'grid' {
-  // there is only an enclosing container for the 'grid' style.
-  #masthead_container {
-    @include container;
-  }
-}
-
 #masthead {
   height: $masthead_height;
   @if $masthead_style == 'full' {
@@ -34,6 +27,14 @@ $masthead_css: false !default;
   // note: this only works if #masthead {position: relative;}
   #masthead_content {
     @include center-vertically($masthead_content_height);
+  }
+}
+
+@if $masthead_content_vertical_align == 'top' {
+  #masthead_content {
+    // with top alignment, it looks really weird to have the top padding be
+    // percentage based. So, we override padding-top here.
+    padding-top: $masthead_content_padding_top;
   }
 }
 

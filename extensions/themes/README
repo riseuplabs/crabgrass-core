@@ -1,0 +1,12 @@
+
+
+  using 'html :file => ' seems to cache the file until you restart rails.
+
+  for example:
+
+  footer {
+    content {
+      html :file => 'extensions/themes/dismod/footer.html'
+    }
+  }
+

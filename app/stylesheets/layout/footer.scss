@@ -1,7 +1,41 @@
+//
+// FOOTER
+// 
+// if there is a background color set for the footer, it is set in the body, and 
+// we keep the footer transparent.
+//
 
 #footer {
-  @include full;
-  margin-top: $grid_column_gutter;
+  width: 100%;
+  padding-top: $grid_column_gutter;
+  @if $footer_border { border-top: $footer_border; }
+  #footer_content {
+    @if $footer_column_count > 0 {
+      // if there are any footer columns, make the #footer_content
+      // a container that can hold these columns
+      @include container;
+    }
+    @if $footer_column_count == 1 {
+      @include full; // does this work? can a container also be a column?
+    }
+    @if $footer_column_count == 3 {
+      $col: $grid_column_count / 3;
+      .column1 { 
+        @include alpha;
+        @include columns($col);
+      }
+      .column2 {
+        @include columns($col);
+      }
+      .column3 {
+        @include omega;
+        @include columns($col);
+      }
+      .full {
+        @include alpha;
+        @include full;
+      }
+    }
+  }
 }
-
 
