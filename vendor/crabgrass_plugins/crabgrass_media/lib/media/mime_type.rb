@@ -42,6 +42,7 @@ module Media
     end
 
     def self.mime_type_from_extension(ext)
+      ext = ext.to_s
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
       mimetype = EXTENSIONS[ext]
       if defined?(MIME::Types)

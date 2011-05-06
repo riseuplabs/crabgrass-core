@@ -58,9 +58,8 @@ class Thumbnail < ActiveRecord::Base
     output_type = self.thumbdef.mime_type
     output_file = self.private_filename
 
-    process_chain = Media::Process::Chain.new(input_type, output_type)
-    if process_chain.run(input_file, output_file, thumbdef)
-      # success
+    trans = Media.transmogrifier({:input_file => input_file, :output_file => output_file}.merge(thumdef))
+    if trans.run() == :success
       if Media::Process.has_dimensions?(output_type) and self.thumbdef.size.present?
         set_dimensions Media::Process.dimensions(output_file)
       end

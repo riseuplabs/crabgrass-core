@@ -140,12 +140,11 @@ module Media
     def self.create_from_file(filepath, content_type, options)
       tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
       tf.close
-      # mv does not work, but i am not sure why. -elijah
-      #if options[:mode] == :move
-      #  FileUtils.mv filepath, tf.path
-      #else
+      if options[:mode] == :move
+        FileUtils.mv filepath, tf.path
+      else
         FileUtils.cp filepath, tf.path
-      #end
+      end
       tf
     end
 
@@ -154,7 +153,10 @@ module Media
     #
     def self.content_type_basename(content_type)
       if content_type
-       extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
+       extension = Media::MimeType.extension_from_mime_type(content_type)
+       unless extension
+         puts 'ERROR, cannot find extension for mime type %s' % content_type
+       end
        "%s.%s" % ['media_temp_file', extension]
       else
         'media_temp_file'

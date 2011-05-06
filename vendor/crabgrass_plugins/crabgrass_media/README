@@ -1,0 +1,19 @@
+This is a rails plugin to do media transformations.
+
+You can add new media transformations by subclassing Transmogrifier.
+
+Example usage:
+
+  transmog = Media.transmogrifier(:input_file => 'myfile.odt', :output_file => 'myfile.jpg')
+  status = transmog.run do |progress|
+    puts progress
+  end
+  
+Requirements:
+
+
+Strongly suggested:
+
+  gem install mime-types
+
+
