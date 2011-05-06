@@ -16,7 +16,7 @@
 class Pages::CreateController < ApplicationController
 
   before_filter :login_required
-  helper 'pages/share'
+  helper 'pages/share', 'pages/owner'
   permissions 'pages'
 
   def new
