@@ -323,6 +323,13 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal data1, File.read(asset.versions.earliest.private_filename)
   end
 
+  def test_user_versions
+    asset = Asset.create! :data => 'hi', :filename => 'x'
+    asset.update_attributes :data => 'bye', :user => users(:blue)
+    assert_nil asset.versions.first.user
+    assert_equal users(:blue), asset.versions.last.user
+  end
+
   protected
 
   def debug
