@@ -1,11 +1,13 @@
 -# this is set by the default theme to be the footer
 -# but other themes often override it.
 
-%div#footer_content
-  %div(class='language-menu')
-    = render :partial => 'common/language/select'
-  %div{:style =>'margin: 1em auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
-  - if RAILS_ENV == 'development'
-    %br/
+.full
+  = render :partial => 'common/language/select'
+
+.full
+  %div{:style => 'margin: 0px auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
+
+- if RAILS_ENV == 'development'
+  .full
     = render :partial => 'common/debug/footer'
 

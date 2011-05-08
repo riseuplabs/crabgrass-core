@@ -7,7 +7,7 @@ body {
   }
 }
 
-#middle_container, #footer_continer {
+#middle_container, #footer_container {
   @include container;
 }
 

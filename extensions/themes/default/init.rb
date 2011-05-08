@@ -154,7 +154,7 @@ options {
     border false
     background_color false
     color 'white'
-    column_count 1
+    column_count 3
     content {
       #padding '1g'
       html :partial => 'layouts/global/default_footer_content'
