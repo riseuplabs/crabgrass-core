@@ -1,7 +1,12 @@
+#
+# this are miminally required translations for modalbox
+#
+
 en:
-  cancel_button: "Cancel"
   ok_button: "OK"
+  cancel_button: "Cancel"
   close_button: "Close"
   alert: "Alert"
   confirm: "Confirm"
+  back: "Back"
 
