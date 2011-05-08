@@ -1,38 +1,17 @@
 class Me::AvatarsController < Me::BaseController
 
-  def new
-    @avatar = Avatar.new
-    render :action => 'edit'
-  end
-
-  def create
-    raise ErrorMessage.new('already exists') if current_user.avatar
-    current_user.avatar = Avatar.create!(params[:avatar])
-    current_user.save!
-  ensure
-    redirect_to me_settings_url
-  end
-
-  def edit
-    @avatar = current_user.avatar
-  end
-
-  def update
-    expire_avatar(current_user.avatar)
-    current_user.avatar.update_attributes! params[:avatar]
-    current_user.save! # ensure new updated_at. not sure why?
-  ensure
-    redirect_to me_settings_url
-  end
+  include_controllers 'common/controllers/avatars'
+  before_filter :setup
 
   protected
- 
-  def expire_avatar(avatar)
-    if avatar
-      for size in Avatar::SIZES.keys
-        expire_page :controller => 'avatars', :action => 'show', :id => avatar.id, :size => size
-      end
-    end
+
+  # always enable cache, even in dev mode.
+  def self.perform_caching; true; end
+  def perform_caching; true; end
+
+  def setup
+    @entity = current_user
+    @success_url = me_settings_url
   end
 
 end
