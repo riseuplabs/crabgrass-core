@@ -67,10 +67,11 @@ module Media
       # mime_type       => [file_extension, icon, asset_class, description]
       'default'         => [nil,'default',:asset,'Unknown'],
 
-      'text/'           => [:txt,:html,:doc_asset, 'Text'],
-      'text/html'       => [:html,:html,:doc_asset, 'Webpage'],
-      'application/rtf' => [:rtf,:rtf,:doc_asset, 'Rich Text'],
-      'text/rtf'        => [:rtf,:rtf,:doc_asset, 'Rich Text'],
+      'text/'           => [:txt,:html,:text_asset, 'Text'],
+      'text/plain'      => [:txt,:html,:text_asset, 'Text'],
+      'text/html'       => [:html,:html,:text_asset, 'Webpage'],
+      'application/rtf' => [:rtf,:rtf,:text_asset, 'Rich Text'],
+      'text/rtf'        => [:rtf,:rtf,:text_asset, 'Rich Text'],
       'text/sgml'       => [:sgml,:xml,nil,'XML'],
       'text/xml'        => [:xml,:xml,nil,'XML'],
       'text/csv'        => [:csv,:spreadsheet,:doc_asset, 'Comma Separated Values'],

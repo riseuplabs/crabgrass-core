@@ -22,6 +22,7 @@ module Media
     attr_accessor :options
 
     attr_accessor :command_output # output of last command run
+    @@verbose = true
 
     #
     # takes a has of options, some of which are required:
@@ -70,22 +71,9 @@ module Media
         # we keep the list as instances instead of classes because rails
         # behaves better that way.
         #
-        Transmogrifier.add(self)
+        self.class.add(self)
       end
     end
-
-    ##
-    ## TRANSMOGRIFIER DEFINITION
-    ## instances must define these blocks
-    ##
-
-    #def define_available?(&block)
-    #  self.available_block = block
-    #end
-
-    #def define_apply(&block)
-    #  self.apply_block = block
-    #end
 
     ##
     ## CLASS METHODS
@@ -112,7 +100,7 @@ module Media
     def self.find_class(input_type, output_type)
       input_transmogs = self.input_map[input_type] || []
       output_transmogs = self.output_map[output_type] || []
-      # take first of the intersection
+      # take first of the intersection, maybe add weighting in the future.
       transmog = (input_transmogs & output_transmogs).select {|tm| tm.available?}.first
       if transmog
         transmog.class
@@ -144,6 +132,17 @@ module Media
           self.output_map[output_type] << trans
         end
       end
+    end
+
+    #
+    # set log verbosity
+    #
+
+    def self.verbose=(bool)
+      @@verbose = bool
+    end
+    def self.verbose?
+      @@verbose
     end
 
     #
@@ -187,16 +186,20 @@ module Media
         else :error
       end
       unless status == :success
-        yield('command returned exitstatus '+$?.exitstatus, 'ERROR') if block_given?
+        yield('ERROR: command returned exitstatus %s' % $?.exitstatus) if block_given?
       end
 
       # restore the original output_file name
       unless restore_temporary_outfile
-        yield('could not restore temporary outfile', 'ERROR') if block_given?
+        yield('ERROR: could not restore temporary outfile') if block_given?
         status = :failure
       end
       return status
     end
+
+    #def self.command_available?(command)
+    #  command.any? and File.file?(command) and File.executable?(command)
+    #end
 
     def command_available?(command)
       command.any? and File.file?(command) and File.executable?(command)
@@ -220,15 +223,17 @@ module Media
     end
    
     def log_error(*args)
-      Transmogrifier.log_error(*args)
+      self.class.log_error(*args)
     end
 
     def log(*args)
-      Transmogrifier.log(*args)
+      self.class.log(*args)
     end
 
     def log_command(*args)
-      Transmogrifier.log("\tCOMMAND:", *args)
+      if self.class.verbose?
+        self.class.log("\tCOMMAND:", *args)
+      end
     end
 
     #

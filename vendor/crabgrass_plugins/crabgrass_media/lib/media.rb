@@ -29,9 +29,30 @@ module Media
       raise ArgumentError.new("Both input and output types are required (given %s -> %s)." % [input_type||'nil', output_type||'nil'])
     end
 
-    transmog_class = Media::Transmogrifier.find_class(input_type, output_type)
+    transmog_class = Transmogrifier.find_class(input_type, output_type)
     if transmog_class
       transmog_class.new(options)
+    end
+  end
+
+  def self.may_produce?(src_type, dst_type)
+    Transmogrifier.find_class(src_type, dst_type)
+  end
+
+  #
+  # special graphicsmagick hooks. 
+  # we use graphicsmagick in order to parse the dimensions of image files.
+  #
+
+  def self.has_dimensions?(mime_type)
+    if Transmogrifier.list["GraphicsMagickTransmogrifier"]
+      Transmogrifier.list["GraphicsMagickTransmogrifier"].input_types.include? mime_type
+    end
+  end
+
+  def self.dimensions(filepath)
+    if Transmogrifier.list["GraphicsMagickTransmogrifier"]
+      Transmogrifier.list["GraphicsMagickTransmogrifier"].dimensions filepath
     end
   end
 
