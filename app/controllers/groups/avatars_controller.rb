@@ -1,6 +1,6 @@
 class Groups::AvatarsController < Groups::BaseController
 
-  include_controllers 'common/controllers/avatar'
+  include_controllers 'common/controllers/avatars'
   before_filter :setup
 
   protected
