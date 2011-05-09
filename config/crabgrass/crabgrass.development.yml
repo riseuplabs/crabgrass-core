@@ -40,6 +40,8 @@ available_page_types:
 
 theme: dismod
 
+remote_processing: "http://localhost:3002"
+
 ##
 ## SITES
 ##

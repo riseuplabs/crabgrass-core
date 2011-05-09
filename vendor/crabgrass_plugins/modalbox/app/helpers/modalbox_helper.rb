@@ -32,16 +32,28 @@ module ModalboxHelper
   #
   def link_to_modal(label, options={}, html_options={})
     options[:title] ||= label
-    #html_options = [:id, :class, :style, :icon]
     html = options[:html].any?
     icon = options.delete(:icon) || html_options.delete(:icon)
-    contents = options.delete(:url) || options.delete(:html)
-    if contents.is_a? Hash
-      contents = url_for contents
+    if options[:html]
+      static_html = true
+      contents = options.delete(:html)
+      unless contents =~ /<.+>/
+        # ensure there are some tags in the html, otherwise modalbox
+        # will not recognize it as html.
+        contents = "<p>%s</p>" % contents
+      end
+    elsif options[:url]
+      static_html = false
+      contents = options.delete(:url)
+      if contents.is_a? Hash
+        contents = url_for contents
+      end
+    else
+      raise ArgumentError.new 'must give :html or :url'
     end
     if icon
       html_options[:id] ||= 'link%s'%rand(1000000)
-      if !html
+      if !static_html
         # skip these ajax options if we are just directly showing some
         # static content.
         options.merge!(
@@ -66,6 +78,10 @@ module ModalboxHelper
   # close the modal box
   def close_modal_button(label=nil)
     button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();')
+  end
+
+  def cancel_modal_button()
+    close_modal_button(:cancel)
   end
 
   def back_modal_button
@@ -101,14 +117,19 @@ module ModalboxHelper
   # This is kind of like hash.to_json(), except that callbacks are wrapped in
   # "function(n) {}" and sent raw instead of surrounded by quotes.
   #
-  MODAL_CALLBACKS = [:before_load, :after_load, :before_hide, :after_hide, :after_resize, :on_show, :on_update]
   def options_for_modalbox_function(options)
     hash = {}
+
+    # i tried making callbacks a constant, but then rails complains loudly.
+    # not sure why...
+    callbacks = [:before_load, :after_load, :before_hide, :after_hide,
+      :after_resize, :on_show, :on_update]
+
     options.each do |key,value|
        if ActionView::Helpers::PrototypeHelper::CALLBACKS.include?(key)
          name = 'on' + key.to_s.capitalize
          hash[name] = "function(request){#{value}}"
-       elsif MODAL_CALLBACKS.include?(key)
+       elsif callbacks.include?(key)
          name = key.to_s.camelize
          name[0] = name.at(0).downcase
          hash[name] = "function(request){#{value}}"

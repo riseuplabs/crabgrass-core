@@ -16,4 +16,8 @@ maintained and up to date:
 
   backgroundrb
 
+maintained, but newer version is rails 3 only
+
+  acts_as_versioned
+
 

@@ -32,6 +32,10 @@ config.gem 'faker'
 
 DEFAULT_INFO_LEVEL = 0
 
+if ENV["REMOTE"]
+  Conf.remote_processing = 'http://localhost:3002'
+end
+
 ##
 ## DEBUGGING
 ## See doc/DEBUGGING for tips. 

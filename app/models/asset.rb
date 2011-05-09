@@ -37,6 +37,8 @@ TODO:
     t.integer  "width",          :limit => 11
     t.integer  "height",         :limit => 11
     t.integer  "page_id",        :limit => 11
+    t.integer  "user_id",        :limit => 11
+    t.text     "comment"
     t.datetime "created_at"
     t.string   "versioned_type"
     t.datetime "updated_at"
@@ -66,6 +68,8 @@ TODO:
     t.string   "caption"
     t.datetime "taken_at"
     t.string   "credit"
+    t.integer  "user_id",        :limit => 11
+    t.text     "comment"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -159,6 +163,7 @@ class Asset < ActiveRecord::Base
     def self.included(base)
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
+      base.belongs_to :user
       base.has_many :thumbnails, :class_name => '::Thumbnail', :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT
       base.define_thumbnails( {} ) # root Asset class has no thumbnails
     end

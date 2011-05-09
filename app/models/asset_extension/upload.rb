@@ -174,8 +174,8 @@ module AssetExtension
 
       def extract_metadata(file)
         self.size = File.size(file.path)
-        if Media::Process.has_dimensions?(self.content_type)
-          self.width, self.height = Media::Process.dimensions(file.path)
+        if Media.has_dimensions?(self.content_type)
+          self.width, self.height = Media.dimensions(file.path)
         end
       end
 

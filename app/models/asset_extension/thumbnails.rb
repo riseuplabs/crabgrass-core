@@ -1,23 +1,23 @@
-=begin
-
-
-Thumbdef options:
-
- * :size       -- specify in a format accepted by gm.
-                  ie: "64x64>" for resize but keep aspect ratio.
- * :ext        -- the file extension of the thumbnail.
- * :mime_type  -- usually automatic from :ext, but can be manually specified.
- * :depends    -- specifies the name of a thumbnail that must be created first.
-                  if :depends is specified it is used as the source file for this
-                  thumbnail instead of the main asset.
- * :proxy      -- suppose you need other thumbnails to depend on a thumbnail of
-                  of type odt, but the main asset might be an odt... setting
-                  proxy to true will make it so that we use the main asset
-                  file instead of generating a new one (but only if the mime
-                  types match).
- * :title      -- some descriptive text for the kids.
-=end
-
+#
+# Thumbdef options:
+#
+# * :size       -- specify in a format accepted by gm.
+#                  ie: "64x64>" for resize but keep aspect ratio.
+# * :ext        -- the file extension of the thumbnail.
+# * :mime_type  -- usually automatic from :ext, but can be manually specified.
+# * :depends    -- specifies the name of a thumbnail that must be created first.
+#                  if :depends is specified it is used as the source file for this
+#                  thumbnail instead of the main asset.
+# * :proxy      -- suppose you need other thumbnails to depend on a thumbnail of
+#                  of type odt, but the main asset might be an odt... setting
+#                  proxy to true will make it so that we use the main asset
+#                  file instead of generating a new one (but only if the mime
+#                  types match).
+# * :title      -- some descriptive text for the kids.
+# * :remote     -- if true, try to process this thumbnail remotely, if possible.
+# * :binary     -- if true, this data must be treated as binary. if false,
+#                  it may be transmitted over text-only channels. default is true.
+#
 
 module AssetExtension
   module Thumbnails
@@ -30,10 +30,13 @@ module AssetExtension
     end
 
     class ThumbDef
-      attr_accessor :size, :name, :ext, :mime_type, :depends, :proxy, :title
+      attr_accessor :size, :name, :ext, :mime_type, :depends, :proxy, :title, :remote, :binary
       def initialize(name, hsh)
         self.name = name
-        hsh.each {|key,value| self.send("#{key}=",value)}
+        self.binary = true
+        hsh.each do |key,value|
+          self.send("#{key}=",value)
+        end
         self.mime_type ||= Media::MimeType.mime_type_from_extension(self.ext) if self.ext
       end
     end
@@ -56,7 +59,10 @@ module AssetExtension
 
     module InstanceMethods
 
-      # allow for dynamic reassignment of thumbdefs for instances
+      #
+      # Allow for dynamic reassignment of thumbdefs for instances
+      # This is useful when we change Asset type depending on content type.
+      #
       def thumbdefs
         @thumbdefs || class_thumbdefs
       end
@@ -104,14 +110,6 @@ module AssetExtension
         thumb_done = {}
         thumbnails.each do |thumb|
           thumb.generate(force)
-#          if !thumb_done[thumb.name] and (!thumb.exists? or force)
-#            if thumb.depends_on and !thumb.depends_on.exists?
-#              thumb.depends_on.generate
-#              thumb_done[thumb.depends_on.name] = true
-#            end
-#            thumb.generate
-#            thumb_done[thumb.name] = true
-#          end
         end
         if versions.latest
           # might as well update the thumbnails of our corresponding version
@@ -127,7 +125,7 @@ module AssetExtension
 
       # returns true if this asset may have a thumbnail of dest_type
       def may_thumbnail?(dest_type='image/jpg')
-        Media::Process.may_consume?(content_type) and Media::Process.may_produce?(dest_type)
+        Media.may_produce?(content_type, dest_type)
       end
 
       # creates the thumbnail database records for the particular thumbdef
