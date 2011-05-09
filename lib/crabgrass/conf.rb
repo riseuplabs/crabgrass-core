@@ -67,13 +67,13 @@ class Conf
   cattr_accessor :enabled_languages
   cattr_accessor :email
   cattr_accessor :sites
-  cattr_accessor :themes
   cattr_accessor :secret
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
   cattr_accessor :default_page_access
   cattr_accessor :text_editor
   cattr_accessor :use_full_geonames_data
+  cattr_accessor :remote_processing
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -133,6 +133,7 @@ class Conf
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
+    self.remote_processing = false
   end
 
   def self.load(filename)

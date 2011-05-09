@@ -9,9 +9,8 @@ class TextAsset < Asset
   end
 
   define_thumbnails(
-    :odt    => {:ext => 'odt', :proxy => true},
-    :txt    => {:ext => 'txt', :depends => :odt},
-    :pdf    => {:ext => 'pdf', :depends => :odt},
+    :txt    => {:ext => 'txt'},
+    :pdf    => {:ext => 'pdf'},
     :small  => {:size => '64x64>',   :ext => 'jpg', :depends => :pdf, :title => 'Small Thumbnail'},
     :medium => {:size => '200x200>', :ext => 'jpg', :depends => :pdf, :title => 'Medium Thumbnail'},
     :large  => {:size => '500x500>', :ext => 'jpg', :depends => :pdf, :title => 'Large Thumbnail'}
