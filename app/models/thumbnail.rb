@@ -75,7 +75,7 @@ class Thumbnail < ActiveRecord::Base
         :output_file => output_file, :output_type => output_type
       }
 
-      if thumbdef.remote and Conf.remote_processing
+      if thumbdef.remote and RemoteJob.site
         queue_remote_job(options)
       else
         generate_now(options)
@@ -176,7 +176,7 @@ class Thumbnail < ActiveRecord::Base
       options[:input_file] = nil
       options[:output_file] = nil
     end
-    job = RemoteJob.create(options)
+    job = RemoteJob.create!(options)
     if job
       #self.job_id = job.id
       #self.state  = 'processing'
@@ -187,7 +187,8 @@ class Thumbnail < ActiveRecord::Base
     if !RemoteJob.local? and thumbdef.binary
       # the remote job is on another server, and wants binary data. 
       # we can't push this binary data via the ActiveResource api, 
-      # so we push it using a multipart binary encoded POST. 
+      # so we push it using a multipart binary encoded POST,
+      # after the RemoteJob has been created. 
       
       # TODO: implement me....
     end
