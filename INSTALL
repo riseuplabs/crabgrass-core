@@ -27,13 +27,21 @@ install required gems:
 
 create the database:
 
-  sudo mysqladmin create crabgrass_development
+  sudo mysqladmin create dismod_development
   rake db:schema:load
   rake db:fixtures:load
 
 install helper applications:
 
   sudo apt-get install graphicsmagick
+
+  # install sphinx, which is complicated
+  sudo apt-get install libmysqlclient-dev
+  # download sphinx from http://sphinxsearch.com/downloads/
+  # unzip and enter directory
+  ./configure
+  make
+  sudo make install
 
 run server:
 
