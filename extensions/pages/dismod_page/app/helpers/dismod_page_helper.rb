@@ -40,7 +40,7 @@ module DismodPageHelper
     if params[:version].any?
       path = page_xpath(@page, :action => 'dataset', :user => current_user.login, :version => params[:version]) + '&x=x' 
     else
-      path = page_xpath(@page, :action => 'dataset', :user => current_user.login)
+      path = page_xpath(@page, :action => 'dataset', :user => current_user.login) + '&x=x'
     end
     request.protocol + request.host_with_port + path
   end
