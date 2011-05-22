@@ -6,20 +6,16 @@ class AssetTest < ActiveSupport::TestCase
   # fixes fixture_file_upload for Rails 2.3
   include ActionController::TestProcess
 
-  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
-
   def setup
-    FileUtils.mkdir_p(@@private)
-    FileUtils.mkdir_p(@@public)
-    #Media::Process::Base.log_to_stdout_when = :always
-    Media::Process::Base.log_to_stdout_when = :on_error
+    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
+    FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
     Conf.disable_site_testing
   end
 
   def teardown
-    FileUtils.rm_rf(@@private)
-    FileUtils.rm_rf(@@public)
+    FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
+    FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
   end
 
   def test_associations
@@ -38,11 +34,11 @@ class AssetTest < ActiveSupport::TestCase
   def test_paths
     @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
 
-    assert_equal "%s/0000/%04d/image.png" % [@@private,@asset.id], @asset.private_filename
-    assert_equal "%s/0000/%04d/image_small.png" % [@@private,@asset.id], @asset.private_thumbnail_filename(:small)
+    assert_equal "%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
+    assert_equal "%s/0000/%04d/image_small.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_thumbnail_filename(:small)
 
-    assert_equal "%s/%s/image.png" % [@@public,@asset.id], @asset.public_filename
-    assert_equal "%s/%s/image_small.png" % [@@public,@asset.id], @asset.public_thumbnail_filename(:small)
+    assert_equal "%s/%s/image.png" % [ASSET_PUBLIC_STORAGE,@asset.id], @asset.public_filename
+    assert_equal "%s/%s/image_small.png" % [ASSET_PUBLIC_STORAGE,@asset.id], @asset.public_thumbnail_filename(:small)
 
     assert_equal "/assets/%s/image.png" % @asset.id, @asset.url
     assert_equal "/assets/%s/image_small.png" % @asset.id, @asset.thumbnail_url(:small)
@@ -99,9 +95,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset.base_filename = 'newimage'
     @asset.save
 
-    assert_equal "%s/0000/%04d/newimage.png" % [@@private,@asset.id], @asset.private_filename
+    assert_equal "%s/0000/%04d/newimage.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
     assert File.exists?(@asset.private_filename)
-    assert !File.exists?("%s/0000/%04d/image.png" % [@@private,@asset.id])
+    assert !File.exists?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
   end
 
   def test_file_cleanup_on_destroy
@@ -176,7 +172,7 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
     assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
-    assert_equal 6, @asset.thumbnails.count
+    assert_equal 5, @asset.thumbnails.count
 
     # change back
     @asset = Asset.find(@asset.id)
@@ -187,7 +183,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_dimensions
-    if !Media::Process::GraphicMagick.new.available?
+    if !GraphicsMagickTransmogrifier.new.available?
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
       return
     end
@@ -213,13 +209,13 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_doc
     # must have OO installed
-    if !Media::Process::OpenOffice.new.available?
+    if !LibreOfficeTransmogrifier.new.available?
       puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
 
     # must have GM installed
-    if !Media::Process::GraphicMagick.new.available?
+    if !GraphicsMagickTransmogrifier.new.available?
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
@@ -242,25 +238,23 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_failure_on_corrupted_file
-    Media::Process::Base.log_to_stdout_when = :never
+    #Media::Process::Base.log_to_stdout_when = :never
     @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
     end
-    Media::Process::Base.log_to_stdout_when = :on_error
+    #Media::Process::Base.log_to_stdout_when = :on_error
   end
 
   def test_failure
-    Media::Process::Base.log_to_stdout_when = :never
-    Media::Process::GraphicMagick.gm_override = "false" # the sh command, not the boolean value.
+    GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { false })
     @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
     end
-    Media::Process::GraphicMagick.gm_override = nil
-    Media::Process::Base.log_to_stdout_when = :on_error
+    GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { GRAPHICSMAGICK_COMMAND })
   end
 
   def test_search
@@ -298,7 +292,7 @@ class AssetTest < ActiveSupport::TestCase
   # make sure assigning page.data later still updates permissions.
   def test_asset_page_alt_method
     page = AssetPage.create! :title => 'perm test', :user => users(:blue)
-    asset = Asset.create! :data => 'hi', :filename => 'x', :content_type => 'text/text'
+    asset = Asset.create! :data => 'hi', :filename => 'x'
     page.data = asset
     page.save!
     assert asset.visible?(users(:blue))
@@ -333,6 +327,6 @@ class AssetTest < ActiveSupport::TestCase
   protected
 
   def debug
-    puts `find #{@@private}` if true
+    puts `find #{ASSET_PRIVATE_STORAGE}` if true
   end
 end

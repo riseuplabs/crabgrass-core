@@ -15,6 +15,7 @@ module Common::Controllers::Application::Paths
       helper_method :new_page_path
       helper_method :me_path
       helper_method :me_url
+      helper_method :user_avatar_path
       helper_method :build_query_string
     end
   end
@@ -109,6 +110,10 @@ module Common::Controllers::Application::Paths
     me_home_url(*args)
   end
   
+  def user_avatar_path(*args)
+    me_avatar_path(*args)
+  end
+
   ##
   ## UTILITY
   ##

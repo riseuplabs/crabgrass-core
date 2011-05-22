@@ -86,7 +86,7 @@ it would make more sense to give requests just a column for user and a column fo
 jabber integration
 ==========================
 
-openfire as a REST integration module:
+openfire has a REST integration module:
 https://we.riseup.net/cgdev/openfire-integration
 
 
@@ -102,19 +102,36 @@ documentation
 http://yardoc.org/
 
 
+delayed database updates
+================================
+
+Most of the database updates that are slow for the user are things that don't
+need to be done right away. For example, you change one tiny thing about a page
+and it kicks of tons and tons of database updates, but these are just for searching 
+and could be delayed.
+
+A huge speed improvement can be acheived by running these, and the sphinx indexing,
+in background tasks.
+
 background tasks
 =====================
 
 There is an incredible number of background processing options in rails.
 
-a list: http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+lists:
 
+* http://www.tobinharris.com/past/2009/3/9/6-ways-to-run-background-jobs-in-rubyonrails/
+* http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+
+This one looks good: https://github.com/stympy/delayed_job
+It is a fork of delayed_job but with autoscaling.
+
+Other links:
 
 http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
 http://codeforpeople.rubyforge.org/svn/bj/trunk/README
 https://github.com/barttenbrinke/worker_queue/
 https://github.com/starling/active_queue
-
 
 message/work processing queues:
   http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
@@ -125,7 +142,6 @@ backgrounding code snippets:
   spawn
   http://code.google.com/p/asynchronous/
   https://github.com/imedo/background_lite
-
 
 On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/

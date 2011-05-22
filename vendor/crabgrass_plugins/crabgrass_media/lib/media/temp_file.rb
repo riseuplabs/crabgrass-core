@@ -153,11 +153,8 @@ module Media
     #
     def self.content_type_basename(content_type)
       if content_type
-       extension = Media::MimeType.extension_from_mime_type(content_type)
-       unless extension
-         puts 'ERROR, cannot find extension for mime type %s' % content_type
-       end
-       "%s.%s" % ['media_temp_file', extension]
+        extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
+        "%s.%s" % ['media_temp_file', extension]
       else
         'media_temp_file'
       end

@@ -18,7 +18,8 @@ class LibreMagickTransmogrifier < Media::Transmogrifier
   end
 
   def output_types
-    magick.output_types
+    # we don't want to use this for pdf, since libreoffice by itself can generate pdf
+    magick.output_types - ['application/pdf']
   end
 
   def available?

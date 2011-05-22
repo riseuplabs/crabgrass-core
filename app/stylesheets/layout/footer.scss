@@ -7,18 +7,27 @@
 
 #footer {
   width: 100%;
-  padding-top: $grid_column_gutter;
   @if $footer_border { border-top: $footer_border; }
   #footer_content {
-    @if $footer_column_count > 0 {
-      // if there are any footer columns, make the #footer_content
-      // a container that can hold these columns
-      @include container;
-    }
     @if $footer_column_count == 1 {
-      @include full; // does this work? can a container also be a column?
+      @include full;
     }
-    @if $footer_column_count == 3 {
+    @else if $footer_column_count == 2 {
+      $col: $grid_column_count / 2;
+      .column1 { 
+        @include alpha;
+        @include columns($col);
+      }
+      .column2 {
+        @include omega;
+        @include columns($col);
+      }
+      .full {
+        @include alpha;
+        @include full;
+      }
+    }
+    @else if $footer_column_count == 3 {
       $col: $grid_column_count / 3;
       .column1 { 
         @include alpha;

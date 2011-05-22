@@ -15,6 +15,10 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
         image/png image/x-png image/jpg image/tiff )
   end
 
+  #def input_types
+  #  self.class.input_types
+  #end
+
   def output_types
     %w( application/pdf image/jpeg image/pjpeg
         image/gif image/png image/jpg image/tiff )
@@ -32,7 +36,7 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   def run(&block)
     # +profile '*' will remove all the image profiles, which will save
     # space (sometimes) and are not useful for thumbnails
-    arguments = [GRAPHICSMAGICK_COMMAND, 'convert', '+profile', "'*'"]
+    arguments = [gm_command, 'convert', '+profile', "'*'"]
     if options[:size]
       arguments << '-geometry' << options[:size]
     end
@@ -45,8 +49,8 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   end
 
   def dimensions(filename)
-    if available.any?
-      args = [GRAPHICSMAGICK_COMMAND, 'identify', '-format', '%m %w %h', filename]
+    if available?
+      args = [gm_command, 'identify', '-format', '%m %w %h', filename]
       dimensions = nil
       status = run_command(*args) do |output|
          dimensions = output
@@ -58,6 +62,11 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
         return nil
       end
     end
+  end
+
+  # this override is just used for test, at the moment.
+  def gm_command
+    GRAPHICSMAGICK_COMMAND
   end
 
 end
