@@ -22,23 +22,25 @@ module ActsAsLocked
       locks_hash.slice self.locked.class.locks_for_bits(~0)
       grants = locks_hash.map{|k,v|k if v == 'true'}.compact
       revokes = locks_hash.map{|k,v|k if v == 'false'}.compact
-      self.open! grants
+      self.grant! grants
       self.revoke! revokes
       return grants + revokes
     end
     
-    def open!(locks, options = {})
-      if options[:reset]
+    def grant!(locks, options = {})
+      if !options.nil? and options[:reset]
         self.mask = bits_for_locks(locks)
       else
         self.mask |= bits_for_locks(locks)
       end
       save
+      self
     end
 
     def revoke!(locks)
       self.mask &= ~bits_for_locks(locks)
       save
+      self
     end
 
 

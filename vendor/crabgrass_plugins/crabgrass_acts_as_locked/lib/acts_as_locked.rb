@@ -24,7 +24,7 @@ module ActsAsLocked
           end
         end
 
-        # let's use AR magic to cache keyss from the controller like this...
+        # let's use AR magic to cache keys from the controller like this...
         # @pages = Page.find... :include => {:owner => :current_user_keys}
         has_many :current_user_keys,
           :class_name => "ActsAsLocked::Key",
@@ -36,7 +36,6 @@ module ActsAsLocked
             closed == 0
           end
         end
-
 
         named_scope :access_by, lambda { |holder|
           { :joins => :keys,
@@ -74,17 +73,27 @@ module ActsAsLocked
             end
           end
 
+          # for a single holder call
+          # grant! user.friends, [:pester, :see]
+          #
+          # for multiple holders you can use a hash instead:
+          # grant! :see => :public, :pester => [user.friends, user.peers]
+          # 
+          # Options:
+          # :reset => remove all other locks granted to the holders specified
+          #           (defaults to false)
           def grant!(*args)
-            ActsAsLocked::Locks.get_holders_from_args(*args) do |holder, locks, options|
+            options = args.pop if args.count > 1 and args.last.is_a? Hash
+            ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
               code = Key.code_for_holder(holder)
               key = keys.find_or_initialize_by_keyring_code(code)
-              key.open! locks, options || {}
+              key.grant! locks, options || {}
             end
           end
 
           # no options so far
           def revoke!(*args)
-            ActsAsLocked::Locks.get_holders_from_args(*args) do |holder, locks, options|
+            ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
               code = Key.code_for_holder(holder)
               key = keys.find_or_initialize_by_keyring_code(code)
               key.revoke! locks
@@ -161,21 +170,30 @@ module ActsAsLocked
       array.compact
     end
 
-    def self.get_holders_from_args(*args)
+    def self.each_holder_with_locks(*args)
       if args[0].is_a? Hash
-        args[0].each_pair do |lock, holders|
-          holders = [holders] unless holders.is_a? Array
-          holders.each do |holder|
-            yield holder, lock, args[1]
-          end
+        locks_by_holders(args[0]).each do |holder, locks|
+          yield holder, locks
         end
       else
         yield *args
       end
     end
 
-
     protected
+
+    def self.locks_by_holders(holders_by_lock)
+      holders_by_lock.inject({}) do |locks_by_holders, (lock, holders)|
+        holders = [holders] unless holders.is_a? Array
+        holders.each do |holder|
+          locks_by_holders[holder] ||= []
+          locks_by_holders[holder].push lock
+        end
+        locks_by_holders
+      end
+    end
+
+
     def self.build_bit_hash(locks, offset)
       bitwise_hash = {}
       if locks.is_a? Hash
