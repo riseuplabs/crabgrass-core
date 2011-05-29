@@ -148,8 +148,6 @@ module Common::Page::SearchHelper
     toggle_bug_links(compact_link, detailed_link, grid_link)
   end 
 
-  private
-
   def spinbox_tag(name, label, url, options = {})
     id = "#{name}_check_link"
     if options[:checked]
@@ -162,7 +160,8 @@ module Common::Page::SearchHelper
     function = queued_remote_function(
       :url => url,
       :before  => spinner_icon_on(icon, id),
-      :with => options[:with]
+      :with => options[:with],
+      :method => options[:method]
     )
     content_tag(:li) do
       link_to_function_with_icon(label, function, :url => url, :icon => icon, :id => id)

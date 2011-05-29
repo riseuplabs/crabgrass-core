@@ -1,5 +1,2 @@
-.key
-  - if key.holder.is_a? Symbol
-    = key.holder
-  - else
-    = key.holder.display_name
+%li.key{:id => "#{key.holder.to_sym}_#{lock}_key"}
+  = permission_switch_tag(:me, key.holder, lock)

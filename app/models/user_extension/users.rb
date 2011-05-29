@@ -45,6 +45,14 @@ module UserExtension::Users
         def keyring_code
           "%04d" % "9#{proxy_owner.id}"
         end
+        
+        def display_name
+          "Peers of #{proxy_owner.display_name}"
+        end
+
+        def to_sym
+          :peers
+        end
       end
 
       # same as results as user.peers, but chainable with other named scopes
@@ -84,6 +92,13 @@ module UserExtension::Users
           "%04d" % "7#{proxy_owner.id}"
         end
 
+        def display_name
+          "Friends of #{proxy_owner.display_name}"
+        end
+
+        def to_sym
+          :friends
+        end
       end
 
       # same result as user.friends, but chainable with other named scopes

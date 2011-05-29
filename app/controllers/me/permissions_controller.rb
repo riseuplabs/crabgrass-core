@@ -14,16 +14,15 @@ class Me::PermissionsController < Me::BaseController
   end
 
   def update
-    @permission = current_user.permissions.find params[:id]
-    @permission.update_attributes! params[:permission]
+    @key = current_user.keys.find_by_keyring_code params.delete(:id)
+    @locks = @key.update!(params)
     success
-    redirect_to me_permissions_url
   end
 
-  def destroy
-    @permission = current_user.permissions.find params[:id]
-    @permission.destroy
-    redirect_to me_permissions_url
-  end
+#  def destroy
+#    @permission = current_user.permissions.find params[:id]
+#    @permission.destroy
+#    redirect_to me_permissions_url
+#  end
 
 end
