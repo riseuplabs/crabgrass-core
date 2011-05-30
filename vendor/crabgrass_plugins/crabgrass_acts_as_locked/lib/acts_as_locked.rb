@@ -22,19 +22,16 @@ module ActsAsLocked
           end
 
           def find_or_initialize_by_holder(holder)
-           code = Key.code_for_holder(holder)
-           self.find_or_initialize_by_keyring_code(code)
+            code = Key.code_for_holder(holder)
+            self.find_or_initialize_by_keyring_code(code)
           end
 
         end
 
         # let's use AR magic to cache keys from the controller like this...
         # @pages = Page.find... :include => {:owner => :current_user_keys}
-        has_many :current_user_keys,
-          :class_name => "ActsAsLocked::Key",
-          :conditions => 'keyring_code IN (#{User.current.access_codes.join(", ")})',
-          :as => :locked do
-          
+        has_many :current_user_keys, :class_name => "ActsAsLocked::Key", :conditions => 'keyring_code IN (#{User.current.access_codes.join(", ")})', :as => :locked do
+
           def open?(locks)
             proxy_owner.class.keys_open_locks?(self, locks)
           end
@@ -52,102 +49,97 @@ module ActsAsLocked
           { :conditions => self.conditions_for_locks(lock) }
         }
 
-        class_eval do
-
-          def has_access!(lock, holder)
-            if has_access?(lock, holder)
-              return true
-            else
-              # TODO: make the error message flexible and meaningful
-              raise LockDenied.new(I18n.t(:permission_denied))
-            end
-          end
-
-          def has_access?(lock, holder = User.current)
+        def has_access!(lock, holder)
+          if has_access?(lock, holder)
             return true
-            # ^^^ tmp hack until keys.yml is checked in.
-            if holder == User.current
-              # these might be cached through AR.
-              current_user_keys.open?(lock)
-            else
-              # the named scope might have changed so we need to reload.
-              keys.for_holder(holder).open?(lock, true)
+          else
+            # TODO: make the error message flexible and meaningful
+            raise LockDenied.new(I18n.t(:permission_denied))
+          end
+        end
+
+        def has_access?(lock, holder = User.current)
+          if holder == User.current
+            # these might be cached through AR.
+            current_user_keys.open?(lock)
+          else
+            # the named scope might have changed so we need to reload.
+            keys.for_holder(holder).open?(lock, true)
+          end
+        end
+
+        # for a single holder call
+        # grant! user.friends, [:pester, :see]
+        #
+        # for multiple holders you can use a hash instead:
+        # grant! :see => :public, :pester => [user.friends, user.peers]
+        #
+        # Options:
+        # :reset => remove all other locks granted to the holders specified
+        #           (defaults to false)
+        def grant!(*args)
+          options = args.pop if args.count > 1 and args.last.is_a? Hash
+          ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
+            key = keys.find_or_initialize_by_holder(holder)
+            key.grant! locks, options
+          end
+        end
+
+        # no options so far
+        def revoke!(*args)
+          ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
+            key = keys.find_or_initialize_by_holder(holder)
+            key.revoke! locks
+          end
+        end
+
+        def keys_by_lock
+          keys.inject({}) do |hash, key|
+            key.locks.each do |lock|
+              hash[lock] ||= []
+              hash[lock].push key
             end
+            hash
           end
-
-          # for a single holder call
-          # grant! user.friends, [:pester, :see]
-          #
-          # for multiple holders you can use a hash instead:
-          # grant! :see => :public, :pester => [user.friends, user.peers]
-          # 
-          # Options:
-          # :reset => remove all other locks granted to the holders specified
-          #           (defaults to false)
-          def grant!(*args)
-            options = args.pop if args.count > 1 and args.last.is_a? Hash
-            ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
-              key = keys.find_or_initialize_by_holder(holder)
-              key.grant! locks, options
-            end
-          end
-
-          # no options so far
-          def revoke!(*args)
-            ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
-              key = keys.find_or_initialize_by_holder(holder)
-              key.revoke! locks
-            end
-          end
-
-          def keys_by_lock
-            keys.inject({}) do |hash, key|
-              key.locks.each do |lock|
-                hash[lock] ||= []
-                hash[lock].push key
-              end
-              hash
-            end
-          end
+        end
 
 
 
-          protected
+        protected
 
-          def self.keys_open_locks?(keys, locks)
-            open = bits_for_keys(keys)
-            locked = bits_for_locks(locks)
-            (locked & ~open) == 0
-          end
+        def self.keys_open_locks?(keys, locks)
+          open = bits_for_keys(keys)
+          locked = bits_for_locks(locks)
+          (locked & ~open) == 0
+        end
 
-          def self.bits_for_keys(keys)
-            keys = [keys] unless keys.respond_to? :inject
-            keys.inject(0) {|any, key| any | key.mask}
-          end
+        def self.bits_for_keys(keys)
+          keys = [keys] unless keys.respond_to? :inject
+          keys.inject(0) {|any, key| any | key.mask}
+        end
 
-          def self.conditions_for_locks(locks)
-            bit = self.bits_for_locks(locks)
-            "(#{bit} & ~keys.mask) = 0"
-          end
+        def self.conditions_for_locks(locks)
+          bit = self.bits_for_locks(locks)
+          "(#{bit} & ~keys.mask) = 0"
+        end
 
-          def self.bits_for_locks(locks)
-            return ~0 if locks == :all
-            locks = [locks] unless locks.respond_to? :inject
-            locks.inject(0) {|any, lock| any | self.bit_for(lock)}
-          end
+        def self.bits_for_locks(locks)
+          return ~0 if locks == :all
+          locks = [locks] unless locks.respond_to? :inject
+          locks.inject(0) {|any, lock| any | self.bit_for(lock)}
+        end
 
-          def self.locks_for_bits(bits)
-            ActsAsLocked::Locks.locks_for(self, bits)
-          end
+        def self.locks_for_bits(bits)
+          ActsAsLocked::Locks.locks_for(self, bits)
+        end
 
-          def self.bit_for(lock)
-            ActsAsLocked::Locks.bit_for(self, lock)
-          end
+        def self.bit_for(lock)
+          ActsAsLocked::Locks.bit_for(self, lock)
+        end
 
-          def self.add_locks(*locks)
-            locks = locks.first if locks.first.is_a? Enumerable
-            ActsAsLocked::Locks.add_bits(self.name, locks)
-          end
+        def self.add_locks(*locks)
+          locks = locks.first if locks.first.is_a? Enumerable
+          ActsAsLocked::Locks.add_bits(self.name, locks)
         end
 
         if locks.any?
@@ -163,7 +155,7 @@ module ActsAsLocked
     def self.add_bits(class_name, locks)
       @@hash ||= {}
       class_hash = @@hash[class_name] ||= {}
-      reject_existing_locks!(class_hash, locks) 
+      reject_existing_locks!(class_hash, locks)
       class_hash.merge! build_bit_hash(locks, @@hash[class_name].count)
     end
 
@@ -205,11 +197,11 @@ module ActsAsLocked
     def self.locks_by_holders(holders_by_lock)
       holders_by_lock.inject({}) do |locks_by_holders, (lock, holders)|
         holders = [holders] unless holders.is_a? Array
-        holders.each do |holder|
-          locks_by_holders[holder] ||= []
-          locks_by_holders[holder].push lock
-        end
-        locks_by_holders
+      holders.each do |holder|
+        locks_by_holders[holder] ||= []
+        locks_by_holders[holder].push lock
+      end
+      locks_by_holders
       end
     end
 
