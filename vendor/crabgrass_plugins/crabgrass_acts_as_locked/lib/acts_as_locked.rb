@@ -149,11 +149,12 @@ module ActsAsLocked
             ActsAsLocked::Locks.add_bits(self.name, locks)
           end
         end
+
         if locks.any?
           self.add_locks(*locks)
         end
-      end
 
+      end
     end
   end
 
@@ -162,11 +163,7 @@ module ActsAsLocked
     def self.add_bits(class_name, locks)
       @@hash ||= {}
       class_hash = @@hash[class_name] ||= {}
-      if locks.is_a? Hash
-        locks.reject!{|k,v| class_hash.keys.include? k}
-      elsif locks.is_a? Enumerable
-        locks.reject!{|k| class_hash.keys.include? k}
-      end
+      reject_existing_locks!(class_hash, locks) 
       class_hash.merge! build_bit_hash(locks, @@hash[class_name].count)
     end
 
@@ -196,6 +193,14 @@ module ActsAsLocked
     end
 
     protected
+
+    def self.reject_existing_locks!(class_hash, locks)
+      if locks.is_a? Hash
+        locks.reject!{|k,v| class_hash.keys.include? k}
+      elsif locks.is_a? Enumerable
+        locks.reject!{|k| class_hash.keys.include? k}
+      end
+    end
 
     def self.locks_by_holders(holders_by_lock)
       holders_by_lock.inject({}) do |locks_by_holders, (lock, holders)|
