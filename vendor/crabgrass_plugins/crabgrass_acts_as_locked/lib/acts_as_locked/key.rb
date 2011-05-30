@@ -12,6 +12,10 @@ module ActsAsLocked
     cattr_accessor :holder_klass
     cattr_accessor :holder_block
 
+    def opens?(locks)
+      locked.class.keys_open_locks?(self, locks)
+    end
+
     # update! takes a hash with locks as keys.
     # all locks with true values can be opened
     # all locks with false values can not be opened
@@ -26,7 +30,7 @@ module ActsAsLocked
       self.revoke! revokes
       return grants + revokes
     end
-    
+
     def grant!(locks, options = {})
       if !options.nil? and options[:reset]
         self.mask = bits_for_locks(locks)

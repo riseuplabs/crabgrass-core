@@ -114,7 +114,7 @@ module ActsAsLocked
         end
 
         def self.bits_for_keys(keys)
-          keys = [keys] unless keys.respond_to? :inject
+          return keys.mask unless keys.respond_to? :inject
           keys.inject(0) {|any, key| any | key.mask}
         end
 
@@ -125,7 +125,7 @@ module ActsAsLocked
 
         def self.bits_for_locks(locks)
           return ~0 if locks == :all
-          locks = [locks] unless locks.respond_to? :inject
+          return self.bit_for(locks) unless locks.respond_to? :inject
           locks.inject(0) {|any, lock| any | self.bit_for(lock)}
         end
 
