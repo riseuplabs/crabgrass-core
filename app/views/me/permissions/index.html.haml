@@ -1,7 +1,8 @@
 %ul.locks.list_as_cols
   - @locks.each do |lock|
     %li.lock
-      = lock
+      .name= I18n.t "may_#{lock}".to_sym
+      -#.description= I18n.t "#{lock}_description".to_sym
       %ul.keys{:id => "keys_for_#{lock}"}
         = render :partial => '/me/permissions/key', :collection => @keys, :locals => {:lock => lock}
 - #render '/permissions/accessor_form/'

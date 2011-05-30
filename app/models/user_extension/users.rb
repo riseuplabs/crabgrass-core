@@ -13,7 +13,8 @@ module UserExtension::Users
 
     base.instance_eval do
 
-      add_locks :see_contacts => 4, :request_contact => 5, :comment => 6
+      add_locks :see_contacts => 4, :request_contact => 5
+      # disabled for now: , :comment => 6
       serialize_as IntArray, :friend_id_cache, :foe_id_cache
 
       initialized_by :update_contacts_cache,
@@ -45,7 +46,7 @@ module UserExtension::Users
         def keyring_code
           "%04d" % "9#{proxy_owner.id}"
         end
-        
+
         def display_name
           "Peers of #{proxy_owner.display_name}"
         end

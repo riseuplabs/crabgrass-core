@@ -1,6 +1,6 @@
 <%
   # use a database with the same name as the branch, if the branch is not master:
-  db_name = 'crabgrass'
+  db_name = 'core'
   branch = `git branch`.split("\n").grep(/^\*/).first.sub('*','').strip
   if branch != 'master'
     db_name = branch
@@ -12,7 +12,7 @@ development:
   adapter: mysql
   database: <%=db_name%>_development
   username: root
-  password: 
+  password: diskworldS
   host: localhost
 
 test:
@@ -20,7 +20,7 @@ test:
   adapter: mysql
   database: <%=db_name%>_test
   username: root
-  password: 
+  password: diskworldS
   host: localhost
 
 production:
@@ -28,7 +28,7 @@ production:
   adapter: mysql
   database: <%=db_name%>_development
   username: root
-  password: 
+  password: diskworldS
   host: localhost
 
 cucumber:
@@ -36,7 +36,7 @@ cucumber:
   adapter: mysql
   database: <%=db_name%>_test
   username: root
-  password: 
+  password: diskworldS
   host: localhost
 
 culerity_development:
@@ -44,6 +44,6 @@ culerity_development:
   adapter: mysql
   database: <%=db_name%>_test
   username: root
-  password: 
+  password: diskworldS
   host: localhost
 
