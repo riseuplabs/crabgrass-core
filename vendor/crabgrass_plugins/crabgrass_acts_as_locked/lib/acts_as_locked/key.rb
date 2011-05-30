@@ -69,6 +69,16 @@ module ActsAsLocked
       ActsAsLocked::Key.holder_for(self.keyring_code)
     end
 
+    def self.code_for_holder(holder)
+      holder = holder.to_sym if holder.is_a? String
+      if holder.is_a? Symbol
+        symbol_codes[holder] or
+        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
+      else
+        holder.keyring_code
+      end
+    end
+
     def self.access_conditions_for(holder)
       if holder.is_a? Symbol and code = self.symbol_codes[holder]
         ["keys.keyring_code = ?", code]
@@ -111,14 +121,5 @@ module ActsAsLocked
       symbol_codes.detect{|k,v| v == code}.first
     end
 
-    def self.code_for_holder(holder)
-      holder = holder.to_sym if holder.is_a? String
-      if holder.is_a? Symbol
-        symbol_codes[holder] or
-        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
-      else
-        holder.keyring_code
-      end
-    end
   end
 end

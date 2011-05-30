@@ -18,10 +18,14 @@ module ActsAsLocked
 
           def open?(locks, reload=false)
             self.reload if reload
-            open = self.inject(0) {|any, key| any | key.mask}
-            closed = proxy_owner.class.bits_for_locks(locks) & ~open
-            closed == 0
+            proxy_owner.class.keys_open_locks?(self, locks)
           end
+
+          def find_or_initialize_by_holder(holder)
+           code = Key.code_for_holder(holder)
+           self.find_or_initialize_by_keyring_code(code)
+          end
+
         end
 
         # let's use AR magic to cache keys from the controller like this...
@@ -30,10 +34,9 @@ module ActsAsLocked
           :class_name => "ActsAsLocked::Key",
           :conditions => 'keyring_code IN (#{User.current.access_codes.join(", ")})',
           :as => :locked do
+          
           def open?(locks)
-            open = self.inject(0) {|any, key| any | key.mask}
-            closed = proxy_owner.class.bits_for_locks(locks) & ~open
-            closed == 0
+            proxy_owner.class.keys_open_locks?(self, locks)
           end
         end
 
@@ -46,8 +49,7 @@ module ActsAsLocked
         # please use in conjunction with access_by like this
         # Klass.access_by(holder).allows(lock)
         named_scope :allows, lambda { |lock|
-          bit = self.bits_for_locks(lock)
-          { :conditions => "(#{bit} & ~keys.mask) = 0" }
+          { :conditions => self.conditions_for_locks(lock) }
         }
 
         class_eval do
@@ -85,17 +87,15 @@ module ActsAsLocked
           def grant!(*args)
             options = args.pop if args.count > 1 and args.last.is_a? Hash
             ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
-              code = Key.code_for_holder(holder)
-              key = keys.find_or_initialize_by_keyring_code(code)
-              key.grant! locks, options || {}
+              key = keys.find_or_initialize_by_holder(holder)
+              key.grant! locks, options
             end
           end
 
           # no options so far
           def revoke!(*args)
             ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
-              code = Key.code_for_holder(holder)
-              key = keys.find_or_initialize_by_keyring_code(code)
+              key = keys.find_or_initialize_by_holder(holder)
               key.revoke! locks
             end
           end
@@ -114,10 +114,25 @@ module ActsAsLocked
 
           protected
 
+          def self.keys_open_locks?(keys, locks)
+            open = bits_for_keys(keys)
+            locked = bits_for_locks(locks)
+            (locked & ~open) == 0
+          end
+
+          def self.bits_for_keys(keys)
+            keys = [keys] unless keys.respond_to? :inject
+            keys.inject(0) {|any, key| any | key.mask}
+          end
+
+          def self.conditions_for_locks(locks)
+            bit = self.bits_for_locks(locks)
+            "(#{bit} & ~keys.mask) = 0"
+          end
 
           def self.bits_for_locks(locks)
             return ~0 if locks == :all
-            locks = [locks] unless locks.is_a? Array
+            locks = [locks] unless locks.respond_to? :inject
             locks.inject(0) {|any, lock| any | self.bit_for(lock)}
           end
 
