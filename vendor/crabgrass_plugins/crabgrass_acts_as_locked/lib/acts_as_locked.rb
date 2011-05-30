@@ -173,8 +173,12 @@ module ActsAsLocked
 
     def self.locks_for(klass, bits)
       hash = @@hash[lock_for_class(klass)]
-      array = hash.map{|l,b| l if (bits & b) != 0}
-      array.compact
+      # keep the order of the bits here
+      locks = hash.inject([]) do |rev, (l,b)|
+        rev[bits & b] = l
+        rev
+      end
+      locks[1..-1].compact
     end
 
     def self.each_holder_with_locks(*args)
