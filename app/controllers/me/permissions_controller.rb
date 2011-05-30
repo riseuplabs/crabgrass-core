@@ -1,7 +1,8 @@
 class Me::PermissionsController < Me::BaseController
 
   def index
-    @keys_by_lock = current_user.keys_by_lock
+    @keys = current_user.keys
+    @locks = User.locks
   end
 
   def create
@@ -14,7 +15,8 @@ class Me::PermissionsController < Me::BaseController
   end
 
   def update
-    @key = current_user.keys.find_by_keyring_code params.delete(:id)
+    @keys = current_user.keys
+    @key = @keys.find_by_keyring_code params.delete(:id)
     @locks = @key.update!(params)
     success
   end

@@ -1,7 +1,7 @@
 %ul.locks
-  - @keys_by_lock.each do |lock, keys|
+  - @locks.each do |lock|
     %li.lock
       = lock
-      %ul.keys
-        = render :partial => '/me/permissions/key', :collection => keys, :locals => {:lock => lock}
+      %ul.keys{:id => "keys_for_#{lock}"}
+        = render :partial => '/me/permissions/key', :collection => @keys, :locals => {:lock => lock}
 - #render '/permissions/accessor_form/'
