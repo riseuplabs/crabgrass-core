@@ -66,3 +66,21 @@ ul.list_as_expanded {
     width: 200px;
   }
 }
+
+//
+// COLUMNS
+//
+
+ul.list_as_cols {
+  clear: left;
+  padding: 2px;
+  >li {
+    float: left;
+    margin: 5px;
+    padding: 5px;
+    border: solid #CCC 1px;
+  }
+  li.add_description {
+    width: 100px;
+  }
+}
