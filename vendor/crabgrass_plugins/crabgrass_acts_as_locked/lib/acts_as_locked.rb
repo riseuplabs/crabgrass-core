@@ -103,6 +103,9 @@ module ActsAsLocked
           end
         end
 
+        def self.locks
+          self.locks_for_bits ~0
+        end
 
 
         protected
