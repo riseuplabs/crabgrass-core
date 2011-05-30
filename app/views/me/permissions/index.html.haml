@@ -5,4 +5,3 @@
       -#.description= I18n.t "#{lock}_description".to_sym
       %ul.keys{:id => "keys_for_#{lock}"}
         = render :partial => '/me/permissions/key', :collection => @keys, :locals => {:lock => lock}
-- #render '/permissions/accessor_form/'
