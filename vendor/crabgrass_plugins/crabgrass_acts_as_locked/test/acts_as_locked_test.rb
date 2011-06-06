@@ -142,22 +142,22 @@ class ActsAsLockedTest < Test::Unit::TestCase
     assert @fusion.has_access?([:dance, :hear, :see]), "combining access from different holders should work."
   end
 
-  def test_getting_holders_per_lock
-    @fusion.grant! @soul, [:dance, :hear]
-    @fusion.grant! @jazz, [:hear, :see]
+  def test_getting_keys_per_lock
+    soul_key = @fusion.grant! @soul, [:dance, :hear]
+    jazz_key = @fusion.grant! @jazz, [:hear, :see]
     expected = {
-      :hear => [@soul, @jazz],
-      :see => [@jazz],
-      :dance => [@soul]}
-    assert_equal expected, @fusion.holders_by_lock
+      :hear => [soul_key, jazz_key],
+      :see => [jazz_key],
+      :dance => [soul_key]}
+    assert_equal expected, @fusion.keys_by_lock
   end
 
   def test_setting_holders_per_lock
     @fusion.grant! @soul, :dance
     @fusion.grant! :hear => [@soul, @jazz],
       :see => @jazz
-    assert @fusion.has_access?(:hear), "fusion should allow me to pester as I am a jazz user."
-    assert !@fusion.has_access?(:dance), "fusion should not allow me to spy as I am not a soul user."
+    assert @fusion.has_access?(:hear), "fusion should allow me to hear as I am a jazz user."
+    assert !@fusion.has_access?(:dance), "fusion should not allow me to dance as I am not a soul user."
     # I'm a soul user now
     @soul.users << @me
     @me.reload
@@ -183,12 +183,12 @@ class ActsAsLockedTest < Test::Unit::TestCase
         Artist.find(code -100) :
         Style.find(code)
     end
-    @jazz.grant! @soul, :see
-    @jazz.grant! @miles, [:see, :dance]
+    soul_key = @jazz.grant! @soul, :see
+    miles_key = @jazz.grant! @miles, [:see, :dance]
     expected = {
-      :see => [@soul, @miles],
-      :dance => [@miles]}
-    assert_equal expected, @jazz.holders_by_lock
+      :see => [soul_key, miles_key],
+      :dance => [miles_key]}
+    assert_equal expected, @jazz.keys_by_lock
     ActsAsLocked::Key.resolve_holder :style
   end
 
@@ -210,17 +210,17 @@ class ActsAsLockedTest < Test::Unit::TestCase
         ActsAsLocked::Key.symbol_for(code)
       end
     end
-    @jazz.grant! :admin, [:see, :dance]
+    admin_key = @jazz.grant! :admin, [:see, :dance]
     assert_raises ActsAsLocked::LockError do
       @jazz.grant! :foo, [:see, :dance]
     end
-    @jazz.grant! @soul, :see
-    @jazz.grant! @miles, :hear
+    soul_key = @jazz.grant! @soul, :see
+    miles_key = @jazz.grant! @miles, :hear
     expected = {
-      :see => [:admin, @soul],
-      :dance => [:admin],
-      :hear => [@miles]}
-    assert_equal expected, @jazz.holders_by_lock
+      :see => [admin_key, soul_key],
+      :dance => [admin_key],
+      :hear => [miles_key]}
+    assert_equal expected, @jazz.keys_by_lock
     ActsAsLocked::Key.resolve_holder :style
     ActsAsLocked::Key.symbol_codes = {}
   end

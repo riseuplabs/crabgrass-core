@@ -15,12 +15,7 @@ class EntitiesControllerTest < ActionController::TestCase
     assert_equal response["suggestions"].size,
       friends_and_peers.count + blue.all_groups.count,
       "suggestions should contain all friends, peers and groups."
-    assert_equal response["suggestions"].size, response["data"].size,
-      "there should be as many data objects as suggestions."
-    assert response["suggestions"].size > 5,
-      "there should be a number of preloaded suggestions for blue."
-    assert_equal response["query"], '',
-      "query should be empty for preloading."
+    assert_holds_entities(response, '', 5)
   end
 
   def test_querying_entities
@@ -28,12 +23,7 @@ class EntitiesControllerTest < ActionController::TestCase
     xhr :get, :index, :format => :json, :view => :all, :query => 'pu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].size, response["data"].size,
-      "there should be as many data objects as suggestions."
-    assert response["suggestions"].size > 0,
-      "there should be suggestions for red starting with 'pu'."
-    assert_equal response["query"], 'pu',
-      "response.query should contain the query string."
+    assert_holds_entities(response, 'pu')
   end
 
   def test_querying_entities_without_groups
@@ -46,12 +36,7 @@ class EntitiesControllerTest < ActionController::TestCase
     xhr :get, :index, :format => :json, :view => :all, :query => 'an'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].size, response["data"].size,
-      "there should be as many data objects as suggestions."
-    assert response["suggestions"].size > 0,
-      "there should be suggestions for quentin starting with 'an' -> animals."
-    assert_equal response["query"], 'an',
-      "response.query should contain the query string."
+    assert_holds_entities(response, 'an')
   end
 
   def test_querying_entities_without_friends
@@ -64,12 +49,7 @@ class EntitiesControllerTest < ActionController::TestCase
     xhr :get, :index, :format => :json, :view => :all, :query => 'qu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].size, response["data"].size,
-      "there should be as many data objects as suggestions."
-    assert response["suggestions"].size > 0,
-      "there should be suggestions for red starting with 'qu' -> quentin."
-    assert_equal response["query"], 'qu',
-      "response.query should contain the query string."
+    assert_holds_entities(response, 'qu')
   end
 
   def test_entities_respect_group_privacy
@@ -113,4 +93,13 @@ class EntitiesControllerTest < ActionController::TestCase
 #    assert response["suggestions"].size > 0
 #  end
 
+   def assert_holds_entities(response, query=nil, min_results = 0)
+    assert_equal response["suggestions"].size, response["data"].size,
+      "there should be as many data objects as suggestions."
+    assert response["suggestions"].size > min_results,
+      "There should be results for the query '#{query}'."
+    return unless query
+    assert_equal response["query"], query,
+      "response.query should contain the query string."
+  end
 end

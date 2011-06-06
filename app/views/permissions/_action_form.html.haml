@@ -1,6 +1,0 @@
-- actions = permission.actions(:select_options => true, :disabled => true)
-- return unless actions.any?
-- form_for permission, :url => me_permission_path(permission) do |f|
-  .add_description.action.create
-    = f.select :mask, actions
-    = f.submit t(:add)

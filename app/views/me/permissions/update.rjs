@@ -1,0 +1,6 @@
+@locks.each do |lock|
+  page.replace_html "keys_for_#{lock}",
+    :partial => '/me/permissions/key',
+    :collection => @keys,
+    :locals => {:lock => lock}
+end

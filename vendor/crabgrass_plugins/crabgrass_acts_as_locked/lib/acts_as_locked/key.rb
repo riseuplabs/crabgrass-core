@@ -12,19 +12,41 @@ module ActsAsLocked
     cattr_accessor :holder_klass
     cattr_accessor :holder_block
 
-    def open!(locks, options = {})
-      if options[:reset]
+    def opens?(locks)
+      locked.class.keys_open_locks?(self, locks)
+    end
+
+    # update! takes a hash with locks as keys.
+    # all locks with true values can be opened
+    # all locks with false values can not be opened
+    # locks that are not specified are left untouched
+    # returns an array of the locks set.
+    def update!(locks_hash = {})
+      # make sure we only have valid keys
+      locks_hash.slice self.locked.class.locks_for_bits(~0)
+      grants = locks_hash.map{|k,v|k if v == 'true'}.compact
+      revokes = locks_hash.map{|k,v|k if v == 'false'}.compact
+      self.grant! grants
+      self.revoke! revokes
+      return grants + revokes
+    end
+
+    def grant!(locks, options = {})
+      if !options.nil? and options[:reset]
         self.mask = bits_for_locks(locks)
       else
         self.mask |= bits_for_locks(locks)
       end
       save
+      self
     end
 
     def revoke!(locks)
       self.mask &= ~bits_for_locks(locks)
       save
+      self
     end
+
 
     def bits_for_locks(locks)
       self.locked.class.bits_for_locks(locks)
@@ -49,6 +71,16 @@ module ActsAsLocked
 
     def holder
       ActsAsLocked::Key.holder_for(self.keyring_code)
+    end
+
+    def self.code_for_holder(holder)
+      holder = holder.to_sym if holder.is_a? String
+      if holder.is_a? Symbol
+        symbol_codes[holder] or
+        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
+      else
+        holder.keyring_code
+      end
     end
 
     def self.access_conditions_for(holder)
@@ -93,14 +125,5 @@ module ActsAsLocked
       symbol_codes.detect{|k,v| v == code}.first
     end
 
-    def self.code_for_holder(holder)
-      holder = holder.to_sym if holder.is_a? String
-      if holder.is_a? Symbol
-        symbol_codes[holder] or
-        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
-      else
-        holder.keyring_code
-      end
-    end
   end
 end
