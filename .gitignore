@@ -31,3 +31,5 @@ lang/la_US.yml
 tmp/webrat-*
 webrat-*.png
 webrat-*.html
+*#
+#*
