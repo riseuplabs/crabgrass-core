@@ -7,6 +7,10 @@ unless defined?(GRAPHICSMAGICK_COMMAND)
   GRAPHICSMAGICK_COMMAND = `which gm`.chomp
 end
 
+unless defined?(GRAPHICSMAGICK_VERSION)
+   GRAPHICSMAGICK_VERSION = `#{GRAPHICSMAGICK_COMMAND} -version | head -1 | sed 's/GraphicsMagick \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/'`
+end
+
 class GraphicsMagickTransmogrifier < Media::Transmogrifier
 
   def input_types
@@ -38,6 +42,9 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     # space (sometimes) and are not useful for thumbnails
     arguments = [gm_command, 'convert', '+profile', "'*'"]
     if options[:size]
+      if version_less_than('1.3.6')
+        options[:size] = options[:size].sub('^','!')
+      end
       arguments << '-geometry' << options[:size]
     end
     if options[:crop]
@@ -67,6 +74,24 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   # this override is just used for test, at the moment.
   def gm_command
     GRAPHICSMAGICK_COMMAND
+  end
+
+  def version_less_than(version)
+    major, minor, tiny = version.split('.')
+    installed_major, installed_minor, installed_tiny = GRAPHICSMAGICK_VERSION.split('.')
+    if installed_major > major
+      true
+    elsif (installed_major == major) 
+      if (installed_minor > minor)
+        true
+      elsif (installed_minor == minor) && (installed_tiny >= version)
+        true
+      else
+        false
+      end
+    else
+      false
+    end
   end
 
 end
