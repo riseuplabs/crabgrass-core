@@ -229,35 +229,28 @@ class Group < ActiveRecord::Base
 
   belongs_to :avatar, :dependent => :destroy
 
-#  alias_method 'avatar_equals', 'avatar='
-#  def avatar=(data)
-#    if data.is_a? Avatar
-#      avatar_equals data
-#    elsif data.is_a? Hash
-#      if avatar_id
-#        avatar.image_file = data[:image_file]
-#        avatar.image_file_data_will_change!
-#      else
-#        avatar_equals Avatar.new(data)
-#      end
-#    end
-#  end
-
-  def destroy_by(user)
-    # needed for the activity
-    self.destroyed_by = user
-    self.council.destroyed_by = user if self.council
-    self.children.each {|committee| committee.destroyed_by = user}
-
-    self.destroy
-  end
-
   protected
 
   before_save :save_avatar_if_needed
   def save_avatar_if_needed
     avatar.save if avatar and avatar.changed?
   end
+
+  ##
+  ## DESTROY
+  ##
+
+  public
+
+  def destroy_by(user)
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+    self.destroy
+  end
+
+  protected
 
   # make destroy protected
   # callers should use destroy_by

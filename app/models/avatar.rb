@@ -82,8 +82,8 @@ class Avatar < ActiveRecord::Base
       IO.read(default_file(size))
     else
       Media::TempFile.open(nil,content_type) do |dest_file|
-        success = GraphicsMagickTransmogrifier.new(:input_file => filename, :output_file => dest_file, :size => dimensions, :crop => crop).try.run
-        if success
+        status = GraphicsMagickTransmogrifier.new(:input_file => filename, :output_file => dest_file, :size => dimensions, :crop => crop).try.run
+        if status == :success
           return IO.read(dest_file.path)
         else
           raise ErrorMessage.new('invalid image')
