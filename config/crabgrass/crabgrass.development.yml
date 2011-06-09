@@ -39,6 +39,8 @@ available_page_types:
 
 theme: blueberry
 
+# pagination_size: 3
+
 remote_processing: "http://localhost:3002"
 
 ##
