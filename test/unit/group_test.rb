@@ -19,7 +19,7 @@ class GroupTest < ActiveSupport::TestCase
       m.destroy
     end
     g.reload
-    assert_equal 0, g.users.size, 'theree should be no users'
+    assert_equal 0, g.users.size, 'there should be no users'
   end
 
   def test_missing_name
