@@ -1,11 +1,20 @@
-- type = 'send' if type.nil?
+- type   = 'send' if type.nil?
 - notify = true if notify.nil?
+- url    = page_share_path(@page, :mode => 'share')
+- id     = 'share_page_form'
 
-.share_page
-  %h2.first= I18n.t(:share_page_recipients, :page_class => I18n.t(:page))
-  = render :partial => 'pages/shares/add_recipient_widget'
-  - if notify
-    %h2= I18n.t(:notify_page_link)
-    %table.notify
-      = render :partial => 'pages/shares/notification_message_form'
+- form_remote_tag(:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put') do
+  
+  .share_page
+    %h2.first= :share_page_recipients.t(:page_class => :page.t)
+    = render :partial => 'pages/shares/add_recipient_widget'
+    - if notify
+      %h2= :notify_page_link.t
+      %table.notify
+        = render :partial => 'pages/shares/notification_message_form'
+
+  .buttons
+    = spinner 'popup'
+    = close_modal_button(:cancel)
+    = submit_tag :share_button.t, :name => 'share_button'
 

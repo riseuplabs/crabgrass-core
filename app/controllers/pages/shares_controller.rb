@@ -27,7 +27,7 @@ class Pages::SharesController < Pages::SidebarController
   before_filter :login_required
   verify :xhr => true
 
-  helper 'pages/share' #, 'autocomplete'
+  helper 'pages/share', 'pages/participation'
 
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox

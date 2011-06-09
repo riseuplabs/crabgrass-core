@@ -218,7 +218,7 @@ navigation do
       end
 
       local_section :profile do
-        visible { may_edit_group? }
+        visible { may_edit_profile? }
         label  { :profile.t }
         url    { group_profile_path(@group) }
         active { controller?('groups/profile') }

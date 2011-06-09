@@ -1,10 +1,18 @@
-- form_remote_tag(:url => page_share_path(@page, :mode => 'notify'),
-  :loading => show_spinner('popup'),
-  :html => {:id => 'notify_page_form'},
-  :method => 'put') do
+= formy(:tabset) do |f|
+  - f.tab do |t|
+    - t.label :send_button.t
+    - t.show_tab 'notify_tab'
+    - t.selected true
+  - f.tab do |t|
+    - t.label :participation.t
+    - t.show_tab 'participation_tab'
+    - t.selected false
+
+#notify_tab.tab_content.tab_area
   = render :partial => 'pages/shares/notify_form'
-  .buttons
-    = spinner 'popup'
-    = close_modal_button(:cancel)
-    = submit_tag I18n.t(:notify_page_link), :name => 'notify_button'
+
+#participation_tab.tab_content.tab_area{:style=>'display:none'}
+  = render :partial => 'pages/participation/participation'
+  .buttons= close_modal_button
+
 

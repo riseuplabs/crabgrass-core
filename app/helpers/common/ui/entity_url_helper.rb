@@ -8,7 +8,9 @@ module Common::Ui::EntityUrlHelper
   protected
 
   def url_for_entity(entity)
-    "/#{entity.name}"
+    if entity
+      "/#{entity.name}"
+    end
   end
 
   def url_for_group(group)

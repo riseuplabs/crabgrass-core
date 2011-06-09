@@ -3,18 +3,15 @@ module Pages::ParticipationHelper
   # we need to be careful not to trigger any extra queries with this helper,
   # since this could produce really bad load times.
   def show_or_edit_page_access(participation)
-    if participation.is_a?(UserParticipation)
-      part_id = {:upart_id => participation.id}
-    else
-      part_id = {:gpart_id => participation.id}
-    end
+    url = page_participation_path(@page, participation, :group => participation.is_a?(GroupParticipation))
     select_id = "access_select_#{participation.id}"
     display_access_icon(participation) + '&nbsp;' +
     if may_remove_participation?(participation)
       select_page_access(select_id, participation, {
         :remove => true,
         :onchange => remote_function(
-          :url => {:controller => 'base_page/participation', :action => 'update', :page_id => @page.id}.merge(part_id),
+          :url => url,
+          :method => :put,
           :loading => show_spinner(dom_id(participation)),
           :with => "'access='+$('#{select_id}').value"
         )
