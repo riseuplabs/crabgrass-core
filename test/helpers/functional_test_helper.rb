@@ -22,7 +22,7 @@ module FunctionalTestHelper
 
   def assert_login_required(message='missing "login required" message')
     if block_given?
-      assert_raise PermissionDenied, message do
+      assert_raise AuthenticationRequired, message do
         yield
       end
     else
@@ -82,6 +82,7 @@ module FunctionalTestHelper
     url.rewrite(options)
   end
 
+=begin
   # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
   def assert_redirected_to_with_partial_hash(options={ }, message=nil)
     clean_backtrace do
@@ -123,5 +124,6 @@ module FunctionalTestHelper
       alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
     end
   end
+=end
 
 end

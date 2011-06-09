@@ -46,6 +46,7 @@ class ActiveSupport::TestCase
   include SiteTestHelper
   include LoginTestHelper
   include FixtureTestHelper
+  include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
 
