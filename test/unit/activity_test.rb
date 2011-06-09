@@ -36,7 +36,7 @@ class ActivityTest < ActiveSupport::TestCase
     groupname = group.name
     group.destroy_by(user)
 
-    acts = Activity.for_all.find(:all)
+    acts = Activity.for_all(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
     assert_equal groupname, act.groupname
     assert_in_description(act, group)
