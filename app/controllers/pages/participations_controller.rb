@@ -75,7 +75,7 @@ class Pages::ParticipationsController < Pages::SidebarController
       raise ErrorMessage.new(:remove_access_error.t)
     end
     render :update do |page|
-      page.hide dom_id(upart || gpart)
+      page.hide dom_id(@participation)
     end
   end
 
