@@ -18,9 +18,9 @@
 
 -# unfortunately, there is not yet a rejected_by column.
 -# if request.rejected?
-  .p
-    = :rejected_by_entity.tcap(:entity => link_to_entity(request.rejected_by))
-    .br= content_tag(:i,full_date(request.updated_at))
+-#  .p
+-#    = :rejected_by_entity.tcap(:entity => link_to_entity(request.rejected_by))
+-#    .br= content_tag(:i,full_date(request.updated_at))
 
 - # DESCRIPTION
 .p= expand_links(request.description)

@@ -173,18 +173,18 @@ navigation do
         active  { controller?('groups/members') and params[:view] == 'groups' }
       end
 
-      local_section :send_invites do
+      local_section :invites do
         visible { may_create_invite_request? }
-        label   { :send_invites.t }
+        label   { "Send Invite Request" }
         url     { new_group_invite_path(@group) }
-        active  { controller?('groups/invites') and action?('new') }
+        active  { controller?('groups/invites') && action?('new') }
       end
 
-      local_section :invites do
-        visible { may_list_requests? }
-        label   { 'Review Membership Invites and Requests' }
+      local_section :requests do
+        visible { may_create_invite_request? }
+        label   { 'Membership Requests' }
         url     { group_invites_path(@group) }
-        active  { controller?('groups/invites') and !action?('new') }
+        active  { controller?('groups/invites') && !action?('new') }
       end
 
       local_section :membership_settings do

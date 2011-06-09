@@ -20,4 +20,12 @@ class Me::RequestsController < Me::BaseController
     true # check_permissions!
   end
 
+  def current_view
+    case params[:view]
+      when "incoming" then :to_user;
+      when "outgoing" then :created_by;
+      else :to_or_created_by_user;
+    end
+  end
+
 end

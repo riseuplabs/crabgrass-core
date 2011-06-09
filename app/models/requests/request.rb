@@ -112,6 +112,9 @@ class Request < ActiveRecord::Base
     {:conditions => {:requestable_id => requestable.id}}
   }
 
+  # maybe we should add an "invite?" column?
+  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']} 
+
   before_validation_on_create :set_default_state
   def set_default_state
     self.state = "pending" # needed despite FSM so that validations on create will work.
