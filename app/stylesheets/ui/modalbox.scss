@@ -53,23 +53,25 @@
 
 #MB_header {
   margin: 0;
-  height: 2.1em;
-  padding: 0.4em;
+  padding: 0.5em;
   background: #999999 none repeat scroll 0 0;
   border-bottom: 1px solid #777777;
-  margin: 0; }
+  margin: 0;
+}
 
 #MB_content {
   overflow: hidden;
   padding: 1em;
-  border-top: 1px solid #cccccc; }
+  border-top: 1px solid #cccccc;
+}
 
 #MB_caption {
   font: bold 85% "Lucida Grande", Arial, sans-serif;
-  text-shadow: white 0 1px 0;
+  // text-shadow: white 0 1px 0;
   text-align: left;
-  font-size: 2.1em;
-  color: white; }
+  font-size: 20px;
+  color: white;
+}
 
 #MB_close {
   display: block;
@@ -80,7 +82,8 @@
   font-weight: bold;
   text-decoration: none;
   font-size: 26px;
-  color: #666666; }
+  color: #666666;
+}
 
 #MB_close:hover {
   background: transparent;
@@ -127,6 +130,9 @@
       margin-left: 0.5em;
     }
   }
+  .simple_form {
+    max-width: inherit;
+  }
   .tip {
     margin-bottom: 1em;
     font-style: italic;
@@ -141,5 +147,14 @@
       margin-top: 0;
     }
   }
+  // override look of tabs in modalbox
+  .tab_area {
+    padding: 1em;
+    border: 1px solid #999;
+    border-top: 0;
+    .buttons {
+      margin-top: 0;
+      background: white;
+    }
+  }
 }
-
