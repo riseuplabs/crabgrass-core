@@ -7,11 +7,8 @@ class Me::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    assert_login_required do
-      get :show
-    end
+    get :show
+    assert_login_required
   end
-
-
 
 end

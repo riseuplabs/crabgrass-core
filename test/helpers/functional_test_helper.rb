@@ -20,17 +20,9 @@ module FunctionalTestHelper
     end
   end
 
-  def assert_login_required(message='missing "login required" message')
-    if block_given?
-      assert_raise AuthenticationRequired, message do
-        yield
-      end
-    else
-      assert_equal 'info', flash[:type], message
-      assert_equal 'Login Required', flash[:title], message
-      assert_response :redirect
-      assert_redirected_to url_for(:controller => '/account', :action => :login, :only_path => true)
-    end
+  def assert_login_required
+    assert_response :redirect
+    assert_redirected_to '/session/login'
   end
 
   def assert_error_message(regexp=nil)

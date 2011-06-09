@@ -57,19 +57,11 @@ module Common::Controllers::Application::Authentication
     username, passwd = get_auth_data
     self.current_user ||= User.authenticate(username, passwd) || UnauthenticatedUser.new if username && passwd
     User.current = current_user
-    logged_in? && authorized? ? true : access_denied
-  end
-
-  # Redirect as appropriate when an access request fails.
-  #
-  # The default action is to redirect to the login screen.
-  #
-  # Override this method in your controllers if you want to have special
-  # behavior in case the user is not authorized
-  # to access the requested action.  For example, a popup window might
-  # simply close itself.
-  def access_denied
-    raise_denied
+    if !logged_in?
+      raise_authentication_required
+    else
+      return authorized?
+    end
   end
 
   # Store the URI of the current request in the session.
