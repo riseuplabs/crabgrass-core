@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   acts_as_locked :view, :pester
   # disabled so far:
-  # :burdon, :spy
+  # :burden, :spy
 
   ##
   ## CORE EXTENSIONS

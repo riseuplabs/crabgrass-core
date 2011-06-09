@@ -26,7 +26,7 @@ end
 
 class Group < ActiveRecord::Base
 
-  acts_as_locked :view, :edit, :admin, :pester, :burdon, :spy
+  acts_as_locked :view, :edit, :admin, :pester, :burden, :spy
 
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
