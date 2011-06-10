@@ -1,16 +1,21 @@
-%blockquote
-  %p
-    - if @group.network?
-      = I18n.t(:network_invite_info)
-    - else
-      = I18n.t(:invite_info, :group_type => @group.group_type.downcase)
-    %br
-    %em= I18n.t(:recipient_tip)
-  - form_tag(group_invites_path(@group), :method => :post) do 
-    %p
-      = text_area_tag 'recipients', params[:recipients], :rows => 2, :cols => 50
-    =# I18n.t(:optional_message) + ':'
-    =# text_area_tag 'message', params[:message], :rows => 2, :cols => 50
-    = submit_tag I18n.t(:send_invites_button), :name => 'send'
-    = submit_tag I18n.t(:cancel_button), :name => 'cancel'
+- if @group.network?
+  = I18n.t(:network_invite_info)
+- else
+  = I18n.t(:invite_info, :group_type => @group.group_type.downcase)
+
+%em= I18n.t(:recipient_tip)
+
+- text_area = text_area_tag 'recipients', params[:recipients], :rows => 4, :cols => 50
+- send_button = submit_tag(:send_invites_button.t(:name => 'send'))
+
+- form_tag(group_invites_path(@group), :method => :post) do 
+  = formy(:simple_form) do |f|
+    - f.row do |r|
+      - r.label :recipients.t, 'recipients'
+      - r.input text_area
+    - f.buttons do |b|
+      - b.button send_button
+
+-# I18n.t(:optional_message) + ':'
+-# text_area_tag 'message', params[:message], :rows => 2, :cols => 50
 

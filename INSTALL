@@ -11,23 +11,38 @@ install rubygems from rubygems.org:
   extract the tarball, and cd to the directory
   sudo ruby setup.rb --no-format-executable
 
+  TEMPORARY NOTE: due to a bug in rails 2.3.11, you currently must get rubygems <= 1.7.2.
+  You can download old versions here: https://github.com/rubygems/rubygems/downloads
+
 prevent rubygems from installing rdoc (optional):
 
   edit ~/.gemrc and add this:
   gem: --no-rdoc --no-ri
 
+checkout the codebase:
+
+  git clone git://labs.riseup.net/crabgrass-core.git
+  cd crabgrass-core
+  rake create_a_secret
+
+  Alternate ways of getting the codebase:
+
+  * do a shallow clone:
+    git clone --level 1 git://labs.riseup.net/crabgrass-core.git
+    this will only check out a copy of the most recent version
+  * use gitosis:
+    git clone gitosis@labs.riseup.net:crabgrass-core.git
+    use this if you have gitosis access to crabgrass-core.git
+
 install required gems:
 
-  cd crabgrass-core
   sudo gem install rails --version='2.3.11'
-  mkdir log
-  touch log/development.log
-  rake create_a_secret
   sudo rake gems:install
 
 create the database:
 
   sudo mysqladmin create crabgrass_development
+  cd crabgrass-core
   rake db:schema:load
   rake db:fixtures:load
 

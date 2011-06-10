@@ -128,7 +128,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # base page
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
-    pages.resources :participations, :only => [:update, :create]
+    pages.resources :participations, :only => [:index, :update, :create]
     pages.resources :changes
     pages.resources :assets
     pages.resources :tags

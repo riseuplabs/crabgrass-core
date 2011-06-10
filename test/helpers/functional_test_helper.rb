@@ -20,31 +20,23 @@ module FunctionalTestHelper
     end
   end
 
-  def assert_login_required(message='missing "login required" message')
-    if block_given?
-      assert_raise PermissionDenied, message do
-        yield
-      end
-    else
-      assert_equal 'info', flash[:type], message
-      assert_equal 'Login Required', flash[:title], message
-      assert_response :redirect
-      assert_redirected_to url_for(:controller => '/account', :action => :login, :only_path => true)
-    end
+  def assert_login_required
+    assert_response :redirect
+    assert_redirected_to '/session/login'
   end
 
   def assert_error_message(regexp=nil)
-    assert_equal 'error', flash[:type], flash.inspect
+    errors = flash_messages :error
+    assert errors.any?, 'there should have been flash errors'
     if regexp
-      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, flash[:text]]
+      assert message_text(errors).grep(regexp).any?, 'error message did not match %s. it was %s.'%[regexp.inspect, message_text(errors).inspect] 
     end
   end
 
   def assert_message(regexp=nil)
-    assert ['error','info','success'].include?(flash[:type]), 'no flash message (%s)'%flash.inspect
+    assert flash_messages.any?, 'no flash messages'
     if regexp
-      str = flash[:text].any || flash[:title]
-      assert(str =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, str])
+      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect] 
     end
   end
 
@@ -82,6 +74,7 @@ module FunctionalTestHelper
     url.rewrite(options)
   end
 
+=begin
   # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
   def assert_redirected_to_with_partial_hash(options={ }, message=nil)
     clean_backtrace do
@@ -123,5 +116,29 @@ module FunctionalTestHelper
       alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
     end
   end
+=end
 
+  private
+
+  def flash_messages(type=nil)
+    if type
+      flash[:messages].select{|message| message[:type] == type}    
+    else 
+      flash[:messages]
+    end
+  end
+
+  def message_text(messages)
+    texts = []
+    messages.each do |message|
+      # assumes message[:text] and message[:list] are both arrays
+      if message[:text].is_a?(Array)
+        texts += message[:text] 
+      elsif message[:text]
+        texts << message[:text]
+      end      
+      texts += message[:list] if message[:list]
+    end
+    texts
+  end
 end

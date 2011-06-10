@@ -1,35 +1,35 @@
-#          group_invites GET    /groups/:group_id/invites(.:format)                  {:action=>"index", :controller=>"groups/invites"}
-#                        POST   /groups/:group_id/invites(.:format)                  {:action=>"create", :controller=>"groups/invites"}
-#       new_group_invite GET    /groups/:group_id/invites/new(.:format)              {:action=>"new", :controller=>"groups/invites"}
-#      edit_group_invite GET    /groups/:group_id/invites/:id/edit(.:format)         {:action=>"edit", :controller=>"groups/invites"}
-#           group_invite GET    /groups/:group_id/invites/:id(.:format)              {:action=>"show", :controller=>"groups/invites"}
-#                        PUT    /groups/:group_id/invites/:id(.:format)              {:action=>"update", :controller=>"groups/invites"}
-#                        DELETE /groups/:group_id/invites/:id(.:format)              {:action=>"destroy", :controller=>"groups/invites"}
-
-# invites are just a type of request, so it might make sense to use
-# the requests controller for this...
+#
+# group_invites  GET    /groups/:group_id/invites action=>"index"
+#                POST   /groups/:group_id/invites action=>"create"
+#
+# group_invite   PUT    /groups/:group_id/invites/:id action=>"update"
+#                DELETE /groups/:group_id/invites/:id action=>"destroy"
+#
 
 class Groups::InvitesController < Groups::BaseController
+
   before_filter :login_required
+  permissions :invites #, :requests
 
-  permissions :invites
+  include_controllers 'common/controllers/request'
 
-  include Common::Controllers::Request
-
+  #
+  # list the invites
+  #
   def index
-    scope = case params[:view]
-      when 'incoming': :to_group
-      when 'outgoing': :from_group
-      else :regarding_group
-      end
-    @requests = Request.send(scope, @group).
-      having_state(params[:state] || 'pending').by_created_at.paginate(pagination_params(:page => params[:out_page]))
-    render :template => 'requests/index.html.haml'
+    @requests = Request.invites.
+      having_state(current_state).
+      send(current_view, @group).
+      by_updated_at.
+      paginate(pagination_params)
   end
 
   def new
   end
 
+  #
+  # create some new invites
+  #
   def create
     users, groups, emails = Page.parse_recipients!(params[:recipients])
     groups = [] unless @group.network?
@@ -72,6 +72,16 @@ class Groups::InvitesController < Groups::BaseController
       params[:recipients] = ""
     end
     redirect_to :action => :index 
+  end
+
+  protected
+
+  def current_view
+    case params[:view]
+      when "incoming" then :to_group;
+      when "outgoing" then :from_group;
+      else :regarding_group;
+    end
   end
 
 end

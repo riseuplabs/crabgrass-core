@@ -8,7 +8,7 @@ class Me::PermissionsControllerTest < ActionController::TestCase
 
   def test_not_logged_in
     get :index
-    assert_response 302
+    assert_login_required
   end
 
   def test_default_list

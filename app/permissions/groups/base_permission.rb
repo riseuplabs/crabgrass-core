@@ -12,7 +12,7 @@ module Groups::BasePermission
   ##
 
   def may_show_group?(group = @group)
-    may_show_private_profile?(group) or may_show_public_profile?(group)
+    current_user.may? :see, group
   end
 
   def may_people_group?(group=@group)
@@ -52,23 +52,6 @@ module Groups::BasePermission
   def may_create_network?
     logged_in?
   end
-
-  ##
-  ## GROUP PROFILE
-  ##
-
-  def may_show_private_profile?(group = @group)
-    logged_in? and (current_user.member_of?(group) or current_user.member_of?(group.parent_id))
-  end
-
-  def may_show_public_profile?(group = @group)
-    group.has_access? :see
-  end
-
-  def may_update_profile?(group = @group)
-    group and current_user.may?(:admin, group)
-  end
-  alias_method :may_edit_profile?, :may_update_profile?
 
 
   ##

@@ -33,9 +33,10 @@ module Common::Controllers::Application::RescueErrors
     base.class_eval do
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, :with => :render_error
-      rescue_from CrabgrassException, :with => :render_error
-      rescue_from ErrorNotFound,    :with => :render_not_found
-      rescue_from PermissionDenied, :with => :render_permission_denied
+      rescue_from CrabgrassException,          :with => :render_error
+      rescue_from ErrorNotFound,               :with => :render_not_found
+      rescue_from AuthenticationRequired,      :with => :render_authentication_required
+      rescue_from PermissionDenied,            :with => :render_permission_denied
       rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
 
       #helper_method :rescues_path
@@ -108,12 +109,10 @@ module Common::Controllers::Application::RescueErrors
     end
   end
 
+  #
   # show a permission denied page, or prompt for login
-
+  #
   def render_permission_denied(exception)
-    if !logged_in?
-      exception = AuthenticationRequired.new(exception.to_s)
-    end
     respond_to do |format|
       format.html do
         render_auth_error_html(exception)
@@ -127,6 +126,13 @@ module Common::Controllers::Application::RescueErrors
         render :text => "Could not authenticate you", :status => '401 Unauthorized'
       end
     end
+  end
+
+  #
+  # show the login screen
+  #
+  def render_authentication_required(exception)
+    render_permission_denied(exception)
   end
 
   # 

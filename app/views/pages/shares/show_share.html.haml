@@ -1,8 +1,16 @@
-- form_remote_tag(:url => page_share_path(@page, :mode => 'share'), :loading => show_spinner('popup'), :html => {:id => 'share_page_form'}, :method => 'put') do
-  = render :partial => 'pages/shares/share_form'
-  .buttons
-    = spinner 'popup'
-    =# submit_tag I18n.t(:cancel_button), :name => 'cancel_button'
-    = close_modal_button(:cancel)
-    = submit_tag I18n.t(:share_button), :name => 'share_button'
+= formy(:tabset) do |f|
+  - f.tab do |t|
+    - t.label :share.t
+    - t.show_tab 'share_tab'
+    - t.selected true
+  - f.tab do |t|
+    - t.label :permissions.t
+    - t.show_tab 'permissions_tab'
+    - t.selected false
 
+#share_tab.tab_content.tab_area
+  = render :partial => 'pages/shares/share_form'
+
+#permissions_tab.tab_content.tab_area{:style=>'display:none'}
+  = render :partial => 'pages/participation/permissions'
+  .buttons= close_modal_button

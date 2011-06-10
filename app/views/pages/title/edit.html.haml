@@ -10,7 +10,7 @@
     .row
       %label= :summary.t
       = text_area 'page', 'summary', :size => '50x6'
-    .form_buttons
+    .buttons
       = close_modal_button(:cancel)
       = submit_tag :save_button.t, :name => 'save'
       = spinner('save_title')

@@ -11,7 +11,7 @@ module Common::Ui::ImageHelper
 
   # for example icon_tag('pencil')
   def icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
+    content_tag :button, '', :class => "small_icon #{icon}_#{size}"
   end
 
 #  def pushable_icon_tag(icon, size = 16, id = nil)

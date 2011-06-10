@@ -171,6 +171,10 @@ module Common::Controllers::Application::AlertMessages
     raise PermissionDenied.new(message)
   end
 
+  def raise_authentication_required
+    raise AuthenticationRequired.new
+  end
+
   private
 
   ##

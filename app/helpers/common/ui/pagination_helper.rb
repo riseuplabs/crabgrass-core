@@ -40,9 +40,20 @@ module Common::Ui::PaginationHelper
   def pagination_links(things, options={})
     return if !things.is_a?(WillPaginate::Collection)
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
+      defaults = {
+        :renderer => LinkRenderer::Ajax,
+        :previous_label => :pagination_previous.t,
+        :next_label => :pagination_next.t,
+        :inner_window => 2,
+        :container => false  # LinkRenderer::Ajax uses its own container
+      }
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
+      defaults = {
+        :renderer => LinkRenderer::Dispatch,
+        :previous_label => "&laquo; %s" % :pagination_previous.t,
+        :next_label => "%s &raquo;" % :pagination_next.t,
+        :inner_window => 2
+      }
     end
     will_paginate(things, defaults.merge(options))
   end
