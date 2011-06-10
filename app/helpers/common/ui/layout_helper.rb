@@ -72,14 +72,6 @@ module Common::Ui::LayoutHelper
     end
   end
 
-  def language_direction
-    @language_direction ||= if I18n.language_for_locale(session[:language_code]).try.rtl
-      "rtl"
-    else
-      "ltr"
-    end
-  end
-
   ##
   ## JAVASCRIPT
   ##

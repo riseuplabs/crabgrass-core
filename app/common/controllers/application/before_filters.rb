@@ -63,7 +63,7 @@ module Common::Controllers::Application::BeforeFilters
       if I18n.available_locales.empty?
         'en'
       elsif !logged_in? || current_user.language.empty?
-        code = request.compatible_language_from(I18n.available_locales)
+        code = request.compatible_language_from(Conf.enabled_languages)
         code ||= current_site.default_language
         code ||= 'en'
         code.to_s.sub('-', '_').sub(/_\w\w/, '')
