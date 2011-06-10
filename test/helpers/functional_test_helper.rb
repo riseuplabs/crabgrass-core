@@ -26,17 +26,17 @@ module FunctionalTestHelper
   end
 
   def assert_error_message(regexp=nil)
-    assert_equal 'error', flash[:type], flash.inspect
+    errors = flash_messages :error
+    assert errors.any?, 'there should have been flash errors'
     if regexp
-      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, flash[:text]]
+      assert message_text(errors).grep(regexp).any?, 'error message did not match %s. it was %s.'%[regexp.inspect, message_text(errors).inspect] 
     end
   end
 
   def assert_message(regexp=nil)
-    assert ['error','info','success'].include?(flash[:type]), 'no flash message (%s)'%flash.inspect
+    assert flash_messages.any?, 'no flash messages'
     if regexp
-      str = flash[:text].any || flash[:title]
-      assert(str =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, str])
+      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect] 
     end
   end
 
@@ -118,4 +118,27 @@ module FunctionalTestHelper
   end
 =end
 
+  private
+
+  def flash_messages(type=nil)
+    if type
+      flash[:messages].select{|message| message[:type] == type}    
+    else 
+      flash[:messages]
+    end
+  end
+
+  def message_text(messages)
+    texts = []
+    messages.each do |message|
+      # assumes message[:text] and message[:list] are both arrays
+      if message[:text].is_a?(Array)
+        texts += message[:text] 
+      elsif message[:text]
+        texts << message[:text]
+      end      
+      texts += message[:list] if message[:list]
+    end
+    texts
+  end
 end
