@@ -29,14 +29,14 @@ module FunctionalTestHelper
     errors = flash_messages :error
     assert errors.any?, 'there should have been flash errors'
     if regexp
-      assert message_text(errors).grep(regexp).any?, 'error message did not match %s. it was %s.'%[regexp.inspect, message_text(errors).inspect] 
+      assert message_text(errors).grep(regexp).any?, 'error message did not match %s. it was %s.'%[regexp.inspect, message_text(errors).inspect]
     end
   end
 
   def assert_message(regexp=nil)
     assert flash_messages.any?, 'no flash messages'
     if regexp
-      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect] 
+      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect]
     end
   end
 
@@ -54,17 +54,6 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
-  def assert_no_select(*args)
-    if args.count == 4
-      message = args.pop
-    elsif args.count == 3
-      message = args.pop unless args.first.is_a?(HTML::Node)
-    end
-    message ||= "Selector '#{selector}' was not expected but found."
-    assert_raise Test::Unit::AssertionFailedError, message do
-      assert_select *args
-    end
-  end
   ##
   ## ROUTE HELPERS
   ##
@@ -122,8 +111,8 @@ module FunctionalTestHelper
 
   def flash_messages(type=nil)
     if type
-      flash[:messages].select{|message| message[:type] == type}    
-    else 
+      flash[:messages].select{|message| message[:type] == type}
+    else
       flash[:messages]
     end
   end
@@ -133,10 +122,10 @@ module FunctionalTestHelper
     messages.each do |message|
       # assumes message[:text] and message[:list] are both arrays
       if message[:text].is_a?(Array)
-        texts += message[:text] 
+        texts += message[:text]
       elsif message[:text]
         texts << message[:text]
-      end      
+      end
       texts += message[:list] if message[:list]
     end
     texts

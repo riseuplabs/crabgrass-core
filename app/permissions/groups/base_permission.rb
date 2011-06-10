@@ -12,7 +12,7 @@ module Groups::BasePermission
   ##
 
   def may_show_group?(group = @group)
-    current_user.may? :see, group
+    current_user.may? :view, group
   end
 
   def may_people_group?(group=@group)
@@ -53,6 +53,18 @@ module Groups::BasePermission
     logged_in?
   end
 
+  ##
+  ## Group Settings
+  ##
+
+  def may_show_groups_settings?(group = @group)
+    current_user.may? :admin, group
+  end
+
+  def may_update_groups_settings?(group = @group)
+    current_user.may? :admin, group
+  end
+
 
   ##
   ## GROUP FEATURED PAGES
@@ -76,7 +88,7 @@ module Groups::BasePermission
 
   def may_show_subcommittees_of_group?(group = @group)
     return false if group.parent_id
-    group.has_access? :see_committees
+    current_user.may? :see_committees, group
   end
 
   def may_create_subcommittees?(group = @group)
@@ -85,7 +97,7 @@ module Groups::BasePermission
 
   def may_show_networks_of_group?(group = @group)
     return false if group.parent_id
-    group.has_access? :see_networks
+    current_user.may? :see_networks, group
   end
 
   def may_show_affiliations?(group = @group)

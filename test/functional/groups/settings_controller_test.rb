@@ -5,6 +5,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   def setup
     @user = User.make
     @group = Group.make
+    @group.grant! :public, :view
     @group.add_user!(@user)
   end
 
@@ -13,10 +14,26 @@ class Groups::SettingsControllerTest < ActionController::TestCase
     assert_response 302
   end
 
+  def test_not_a_member
+    stranger = User.make
+    login_as stranger
+    get :show, :id => @group.to_param
+    assert_select '.inline_message_list'
+  end
+
   def test_logged_in
     login_as @user
     get :show, :id => @group.to_param
     assert_response :success
+    assert_select '.inline_message_list', 0
+  end
+
+  def test_member_can_see_private
+    login_as @user
+    @group.revoke! :public, :all
+    get :show, :id => @group.to_param
+    assert_response :success
+    assert_select '.inline_message_list', 0
   end
 
   def test_update
