@@ -6,7 +6,15 @@
 
 module Common::Permissions::TagHelper
 
-  def permission_switch_tag(context, key, lock)
+  def permission_lock_tag(context, lock, keys)
+    content_tag :ul, :class => '', :id => "keys_for_#{lock}" do
+      keys.collect do |key|
+        permission_key_tag(context, lock, key)
+      end
+    end
+  end
+
+  def permission_key_tag(context, lock, key)
     name    = "#{key.holder.to_sym}_#{lock}"
     label   = label_for_holder(key.holder)
     url     = switch_url(context, key.holder)
