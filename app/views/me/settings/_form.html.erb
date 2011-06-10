@@ -24,7 +24,7 @@
 
   f.row do |r|
     r.label :language.t, 'user_language'
-    r.input select('user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true })
+    r.input select('user', 'language', all_languages_for_select, { :include_blank => true })
   end
 
   f.row do |r|

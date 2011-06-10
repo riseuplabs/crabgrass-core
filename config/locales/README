@@ -1,3 +1,6 @@
+RENAMED
+  user_profile_description_may_see ->   user_profile_description_may_view
+
 added in crabgrass-core, not translated:
 
   date_this_year: "This Year"

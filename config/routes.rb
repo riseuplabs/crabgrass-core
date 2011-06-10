@@ -81,9 +81,9 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.with_options(:controller => 'session') do |session|
+    session.language 'session/language', :action => 'language'
     session.login    'session/login',  :action => 'login'
     session.logout   'session/logout', :action => 'logout'
-    session.language 'session/logout', :action => 'language'
     session.session  'session/:action/:id'
   end
 

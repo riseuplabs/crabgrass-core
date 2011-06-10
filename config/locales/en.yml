@@ -731,6 +731,10 @@ en:
   edit_profile_link: "Edit Profile"
   profile_saved: "Your profile has been saved."
 
+  ##
+  ## PERMISSIONS
+  ##
+
   may_see_committees: "Show committees"
   may_see_networks: "Show networks"
   may_see_members: "Show group members"
@@ -746,7 +750,7 @@ en:
   user_profile_description_may_request_contact: "Allow people to request to be your friend."
   user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
   user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
-  user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
+  user_profile_description_may_view: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
   group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
   group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
@@ -754,7 +758,6 @@ en:
   group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
   group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
   group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
-
 
   ##
   ## GROUPS

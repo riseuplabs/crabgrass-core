@@ -65,26 +65,4 @@ module Common::Utility::GeneralHelper
     user_agent =~ /msie/ and user_agent !~ /opera/
   end
 
-  ##
-  ## REFERER
-  ##
-
-  # i am not sure this is used?
-
-  def referer
-    @referer ||= get_referer
-  end
-
-  def get_referer
-    return '/' unless raw = request.env["HTTP_REFERER"]
-    server = request.host_with_port
-    prot = request.protocol
-    if raw.starts_with?("#{prot}#{server}/")
-      raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
-    else
-      '/'
-    end
-  end
-
-
 end

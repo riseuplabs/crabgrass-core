@@ -53,12 +53,6 @@ module Common::Ui::FormHelper
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
 
-  def options_for_language(selected=nil)
-    selected ||= session[:language_code].to_s
-    options_array = I18n.available_locales.collect {|locale| [I18n.language_for_locale(locale).try.name, locale.to_s]}
-    options_for_select(options_array, selected)
-  end
-
   #
   # add some radio buttons, using a similar api to select and select_tag
   #

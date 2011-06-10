@@ -31,16 +31,54 @@ class String
 end
 
 module I18n
+  
+  Lang = Struct.new("Lang", :name, :code, :order, :rtl)
+
   class << self
-    def language_for_locale(locale)
-      load_available_languages if @languages.blank?
-      @languages[locale.to_sym]
+    def languages
+      @languages ||= begin
+        hsh = HashWithIndifferentAccess.new(Lang.new('Unknown', :xx, false))
+        # In order of number of speakers worldwide
+        # http://en.wikipedia.org/wiki/Most_spoken_languages
+        hsh[:zh] = Lang.new('中文', 'zh', 1, false)
+        hsh[:hi] = Lang.new('हिंदी', 'hi', 2, false)
+        hsh[:es] = Lang.new('Español', 'es', 3, false)
+        hsh[:en] = Lang.new('English', 'en', 4, false)
+        hsh[:ar] = Lang.new('العربية', 'ar', 5, true)
+        hsh[:pt] = Lang.new('Português', 'pt', 6, false)
+        hsh[:ru] = Lang.new('Pyccĸий', 'ru', 7, false)
+        hsh[:de] = Lang.new('Deutsch', 'de', 8, false)
+        hsh[:sw] = Lang.new('Kiswahili', 'sw', 9, false)
+        hsh[:fr] = Lang.new('Français', 'fr', 10, false)
+        hsh[:it] = Lang.new('Italiano', 'it', 11, false)
+        hsh[:tr] = Lang.new('Türkçe', 'tr', 12, false)
+        hsh[:pl] = Lang.new('Polski', 'pl', 13, false)
+        hsh[:nl] = Lang.new('Nederlands', 'nl', 14, false)
+        hsh[:el] = Lang.new('Ελληνικά', 'el', 15, false)
+        hsh[:he] = Lang.new('עִבְרִית', 'he', 16, true)
+        hsh[:sv] = Lang.new('Svenska', 'sv', 17, false)
+        hsh[:bg] = Lang.new('български език', 'bg', 18, false)
+        hsh[:ca] = Lang.new('Català', 'ca', 19, false)
+        hsh[:da] = Lang.new('Dansk', 'da', 20, false)
+        hsh
+      end
     end
 
-    def available_languages
-      load_available_languages if @languages.blank?
-      @languages.values.compact.sort_by(&:id)
+    def sorted_languages
+      @sorted_languages ||= languages.values.sort do |a, b|
+        a.order <=> b.order
+      end
     end
+
+    #def language_for_locale(locale)
+    #  load_available_languages if @languages.blank?
+    #  languages[locale.to_sym]
+    #end
+
+    #def available_languages
+    #  load_available_languages if @languages.blank?
+    #  @languages.values.compact.sort_by(&:id)
+    #end
 
     def site_scope
       scope_name = Site.current.try.name.try.to_sym
@@ -65,17 +103,17 @@ module I18n
 
     protected
 
-    def load_available_languages
-      #  @languages = {
-      #   :en => #<Language code:"en" ...>,
-      #   :es => #<Language code:"es" ..>
-      #  }
-
-      @languages = {}
-      I18n.available_locales.each do |code|
-        @languages[code] = Language.find_by_code(code.to_s)
-      end
-    end
+    #def load_available_languages
+    #  #  @languages = {
+    #  #   :en => #<Language code:"en" ...>,
+    #  #   :es => #<Language code:"es" ..>
+    #  #  }
+    #
+    #  @languages = {}
+    #  I18n.available_locales.each do |code|
+    #    @languages[code] = Language.find_by_code(code.to_s)
+    #  end
+    #end
   end
 end
 
