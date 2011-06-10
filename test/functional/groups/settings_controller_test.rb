@@ -9,21 +9,21 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    get :edit, :id => @group.id
+    get :show, :id => @group.to_param
     assert_response 302
   end
 
   def test_logged_in
     login_as @user
-    get :edit, :id => @group.id
+    get :show, :id => @group.to_param
     assert_response :success
   end
 
   def test_update
     login_as @user
-    post :update, :group => {:full_name => 'full name'}, :id => @group.id
+    post :update, :group => {:full_name => 'full name'}, :id => @group.to_param
     assert_response 302
-    assert assigns(:full_name) == 'full name'
+    assert_equal 'full name', assigns('group').full_name
   end
 
 end
