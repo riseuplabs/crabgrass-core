@@ -54,8 +54,13 @@ module Common::Controllers::Application::Authentication
   #   skip_before_filter :login_required
   #
   def login_required
-    username, passwd = get_auth_data
-    self.current_user ||= User.authenticate(username, passwd) || UnauthenticatedUser.new if username && passwd
+    unless current_user
+      # auth using http headers
+      username, passwd = get_auth_data
+      if username and passwd
+        self.current_user = User.authenticate(username, passwd) || UnauthenticatedUser.new
+      end
+    end
     User.current = current_user
     if !logged_in?
       raise_authentication_required

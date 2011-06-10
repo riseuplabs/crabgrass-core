@@ -1,12 +1,10 @@
 #
-# responsible for login and logout
+# Responsible for modifying the session (login, logout, and language setting)
 #
 
 class SessionController < ApplicationController
 
-  # stylesheet 'account'
   layout 'notice'
-
   skip_before_filter :redirect_unverified_user
   before_filter :stop_illegal_redirect, :only => [:login]
   verify :method => :post, :only => [:language, :logout]
@@ -65,10 +63,11 @@ class SessionController < ApplicationController
   # set the language of the current session
   def language
     session[:language_code] = params[:id].to_sym
-    redirect_to referer
+    redirect_to referrer
   end
 
-  # returns login form without layout
+  # returns login form without layout.
+  # used for ajax login form.
   def login_form
     render :partial => 'session/login_form', :layout => false
   end
@@ -94,6 +93,26 @@ class SessionController < ApplicationController
       false
     else
       true
+    end
+  end
+
+  #
+  # returns the url of the HTTP Referrer (aka Referer).
+  #
+  def referrer
+    @referrer ||= begin
+      if request.env["HTTP_REFERER"].empty?
+        '/'
+      else
+        raw = request.env["HTTP_REFERER"]
+        server = request.host_with_port
+        prot = request.protocol
+        if raw.starts_with?("#{prot}#{server}/")
+          raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
+        else
+          '/'
+        end
+      end
     end
   end
 
