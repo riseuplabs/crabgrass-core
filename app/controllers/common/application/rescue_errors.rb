@@ -26,7 +26,7 @@
 # it would be impractical to expose an api for testing the validity of every oject.
 #
 
-module Common::Controllers::Application::RescueErrors
+module Common::Application::RescueErrors
 
   def self.included(base)
     base.extend ClassMethods
@@ -59,7 +59,7 @@ module Common::Controllers::Application::RescueErrors
     #
     # example usage:
     #
-    #   class RobotController < Common::Controllers::Application
+    #   class RobotController < Common::Application
     #     rescue_render :update => :show
     #   end
     #

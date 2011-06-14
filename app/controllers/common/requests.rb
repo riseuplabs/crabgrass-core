@@ -1,4 +1,4 @@
-module Common::Controllers::Request
+module Common::Request
 
   def self.included(base)
     base.class_eval do
@@ -22,7 +22,7 @@ module Common::Controllers::Request
       end
       success I18n.t(@request.name), msg
     end
-    render :template => 'requests/update'
+    render :template => 'common/requests/update'
   end
 
   #
@@ -31,7 +31,7 @@ module Common::Controllers::Request
   def destroy
     @request.destroy
     notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
-    render :template => 'requests/destroy'
+    render :template => 'common/requests/destroy'
   end
 
   protected

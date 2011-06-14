@@ -3,7 +3,7 @@
 # seems like a job for an extension.
 #
 
-module Common::Controllers::Application::WikiPopup
+module Common::Application::WikiPopup
 
   protected
 

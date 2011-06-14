@@ -1,5 +1,5 @@
-module Common::Controllers::Application::WikiRenderer
-  #include Common::Controllers::Application::ContextParser
+module Common::Application::WikiRenderer
+  #include Common::Application::ContextParser
 
   def self.included(base)
     base.class_eval do

@@ -24,7 +24,7 @@ module Common::Controllers::Avatars
 
   def edit
     @avatar = @entity.avatar
-    render :template => 'avatars/edit'
+    render :template => 'common/avatars/edit'
   end
 
   def update

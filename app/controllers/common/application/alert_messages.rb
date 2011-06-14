@@ -46,7 +46,7 @@
 
 require 'active_support/multibyte/chars'
 
-module Common::Controllers::Application::AlertMessages
+module Common::Application::AlertMessages
 
   FADE_TIMEOUT = 5;
 
