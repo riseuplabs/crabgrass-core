@@ -59,8 +59,6 @@
 
 class PathFinder::Mysql::Query < PathFinder::Query
 
-  public
-
   ##
   ## OVERRIDES
   ##
@@ -138,7 +136,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def paginate
     @page ||= 1
-    @per_page ||= SECTION_SIZE
+    @per_page ||= PAGINATION_PER_PAGE
     @klass.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
   end
 

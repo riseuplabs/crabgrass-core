@@ -5,7 +5,8 @@
 # for example, suppose the request was for /pages/25/posts/create, we still
 # create links that look like /:context/:page_name?posts=2
 #
-
+# CURRENTLY UNUSED
+#
 class LinkRenderer::Page < WillPaginate::LinkRenderer
   # page        --> the pagination page (integer)
   # page_object --> the object of class Page

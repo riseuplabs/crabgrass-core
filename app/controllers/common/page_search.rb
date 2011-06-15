@@ -1,4 +1,15 @@
-module Common::Application::PageSearch
+#
+# include this in controllers that let you filter lists of pages
+#
+
+module Common::PageSearch
+
+  def self.included(base)
+    base.class_eval do
+      helper_method :xhr_page_search?
+      helper_method :page_search_path
+    end
+  end
 
   protected
 
@@ -19,7 +30,7 @@ module Common::Application::PageSearch
   end
 
   #
-  # returns a parsed path using either params[:path] or params[:filter].
+  # returns a ParsedPath using either params[:path] or params[:filter].
   #
   # params[:path] will be an array that is set by a wildcard in routes.rb.
   #
@@ -29,7 +40,7 @@ module Common::Application::PageSearch
   # The encoding of :filter and :path are different, so we need to call different
   # methods to convert them to a ParsedPath.
   #
-  def page_search_path
+  def parsed_path
     if params[:path].any?
       parse_filter_path(params[:path])
     elsif params[:filter]
@@ -37,6 +48,22 @@ module Common::Application::PageSearch
     else
       parse_filter_path([])
     end
+  end
+
+  #
+  # controllers that include this mixin should redefine this to true if they
+  # want the page search to not be ajax based.
+  #
+  def xhr_page_search?
+    true
+  end
+
+  # 
+  # the page search code relies on this being defined by controllers that
+  # include this mixin.
+  #
+  def page_search_path(*args)
+    raise 'failure to define page_search_path()'
   end
 
 end

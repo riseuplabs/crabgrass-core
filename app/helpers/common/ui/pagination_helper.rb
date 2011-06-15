@@ -1,3 +1,10 @@
+#
+# defines a one-stop shop for displaying pagination links using the method
+# pagination_links().
+#
+# all the code should use pagination_links() rather than call
+# will_paginate() directly.
+#
 module Common::Ui::PaginationHelper
 
   protected
@@ -39,21 +46,25 @@ module Common::Ui::PaginationHelper
   #
   def pagination_links(things, options={})
     return if !things.is_a?(WillPaginate::Collection)
-    if request.xhr?
-      defaults = {
-        :renderer => LinkRenderer::Ajax,
-        :previous_label => :pagination_previous.t,
-        :next_label => :pagination_next.t,
-        :inner_window => 2,
-        :container => false  # LinkRenderer::Ajax uses its own container
-      }
+
+    defaults = {
+     :previous_label => "&laquo; %s" % :pagination_previous.t,
+     :next_label => "%s &raquo;" % :pagination_next.t,
+     :inner_window => 2
+    }
+
+    if defined? page_search_path
+      if xhr_page_search?
+        defaults[:renderer] = LinkRenderer::AjaxPages
+        defaults[:container] = false  # LinkRenderer::Ajax uses its own container
+      else
+        defaults[:renderer] = LinkRenderer::Pages
+      end
+    elsif request.xhr?
+      defaults[:renderer] = LinkRenderer::Ajax
+      defaults[:container] = false  # LinkRenderer::Ajax uses its own container
     else
-      defaults = {
-        :renderer => LinkRenderer::Dispatch,
-        :previous_label => "&laquo; %s" % :pagination_previous.t,
-        :next_label => "%s &raquo;" % :pagination_next.t,
-        :inner_window => 2
-      }
+      defaults[:renderer] = LinkRenderer::Dispatch
     end
     will_paginate(things, defaults.merge(options))
   end
