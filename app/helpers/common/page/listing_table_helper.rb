@@ -15,7 +15,7 @@ module Common::Page::ListingTableHelper
   end
 
   def page_table_header_row(style)
-    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th>#{:updated_by.tcap}</th><th>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
   end
 
   private

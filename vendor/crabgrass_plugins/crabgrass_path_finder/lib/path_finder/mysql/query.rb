@@ -326,8 +326,8 @@ class PathFinder::Mysql::Query < PathFinder::Query
     if @order.nil?
       return nil
     else
-      if @order.empty? and SearchFilter['decending']
-        apply_filter(SearchFilter['decending'], 'updated-at')
+      if @order.empty? and SearchFilter['descending']
+        apply_filter(SearchFilter['descending'], 'updated-at')
       end
       if @order.empty?
         return nil

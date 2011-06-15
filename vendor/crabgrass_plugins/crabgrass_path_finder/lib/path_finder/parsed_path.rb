@@ -219,13 +219,19 @@ class ParsedPath < Array
   # merge two parsed paths together.
   # for duplicate keywords use the ones in the path_b arg
   def merge(path_b)
-    path_b = ParsedPath.parse(path_b)
-    if path_b.first == ['all']
-      return remove(path_b)
+    if path_b.empty?
+      return self
+    elsif self.empty?
+      return path_b
+    else
+      path_b = ParsedPath.parse(path_b)
+      if path_b.first == ['all']
+        return remove(path_b)
+      end
+      path_a = self.dup
+      path_a.remove_sort if path_b.sort_arg?
+      path_a.replace(path_a.unique_union(path_b))
     end
-    path_a = self.dup
-    path_a.remove_sort if path_b.sort_arg?
-    path_a.replace((path_a + path_b).uniq)
   end
 
   # same as merge, but replaces self.
@@ -235,7 +241,7 @@ class ParsedPath < Array
       return self.replace(remove(path_b))
     end
     self.remove_sort if path_b.sort_arg?
-    self.concat(path_b).uniq!
+    self.unique_union!(path_b)
     self
   end
 
@@ -285,30 +291,32 @@ class ParsedPath < Array
   end
 
   #
-  # uniq()
-  # ensures there are no search filters duplicates for search filters
-  # defined as singletons. later segments take priority over earlier segments.
-  # the path returned is reordered based on the search filter path_order settings.
+  # unique_union(path)
   #
-  def uniq()
+  # adds two paths together, removing duplicates of search filters
+  # defined as singletones. 
+  #
+  def unique_union(path_b)
     seen = {}
     new_path = ParsedPath.new([])
-    reverse.each do |segment|
-      keyword = segment.first
-      if SearchFilter[keyword].singleton?
-        unless seen[keyword]
+    [path_b, self].each do |path|
+      path.reverse.each do |segment|
+        keyword = segment.first
+        if SearchFilter[keyword].singleton?
+          unless seen[keyword]
+            new_path << segment
+            seen[keyword] = true
+          end
+        else
           new_path << segment
-          seen[keyword] = true
         end
-      else
-        new_path << segment
       end
     end
     new_path.sort_by_order
   end
 
-  def uniq!()
-    self.replace(self.uniq)
+  def unique_union!(path_b)
+    self.replace(self.unique_union(path_b))
   end
 
   def sort_by_order
