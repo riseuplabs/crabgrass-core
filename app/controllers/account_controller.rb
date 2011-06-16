@@ -44,6 +44,7 @@ class AccountController < ApplicationController
     #  error :usage_agreement_required.t
     #  render :template => 'account/new'
     #else
+      @user.language   = session[:language_code].to_s
       @user.avatar     = Avatar.new
       @user.unverified = current_site.needs_email_verification?
       @user.save!
