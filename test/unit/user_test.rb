@@ -109,6 +109,12 @@ class UserTest < ActiveSupport::TestCase
     assert accessible.first
   end
 
+  def test_user_creation_adds_keys
+    assert_difference 'Key.count', 3 do
+      user = User.make
+    end
+  end
+
   protected
 
   def create_user(options = {})
