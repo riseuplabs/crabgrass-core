@@ -1,4 +1,4 @@
-module Common::Request
+module Common::Requests
 
   def self.included(base)
     base.class_eval do

@@ -3,7 +3,7 @@
 # which must set @entity and @success_url
 #
 
-module Common::Controllers::Avatars
+module Common::Avatars
 
   ##
   ## ACTIONS

@@ -22,6 +22,7 @@ class Groups::InvitesController < Groups::BaseController
       send(current_view, @group).
       by_updated_at.
       paginate(pagination_params)
+    render :template => 'common/requests/index'
   end
 
   def new
