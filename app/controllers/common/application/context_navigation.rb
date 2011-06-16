@@ -3,7 +3,7 @@
 # be available in all controllers.
 #
 
-module Common::Controllers::Application::ContextNavigation
+module Common::Application::ContextNavigation
 
   def self.included(base)
     base.class_eval do

@@ -11,7 +11,7 @@ class Groups::InvitesController < Groups::BaseController
   before_filter :login_required
   permissions :invites #, :requests
 
-  include_controllers 'common/controllers/request'
+  include_controllers 'common/requests'
 
   #
   # list the invites

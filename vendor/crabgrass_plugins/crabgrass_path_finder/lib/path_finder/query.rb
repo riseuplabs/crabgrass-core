@@ -10,7 +10,7 @@
 module PathFinder
   class Query
 
-    public
+    PAGINATION_PER_PAGE = 30 # used as a last resort if no other definition found.
 
     ##
     ## must be overridden by sub classes
@@ -33,6 +33,14 @@ module PathFinder
     end
 
     def cleanup_sort_column(column)
+    end
+
+    ##
+    ## these adders work the same for mysql and sphinx
+    ##
+
+    def add_pagination(page)
+      @page = page
     end
 
     ##

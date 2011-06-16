@@ -18,35 +18,26 @@ ul.page_search_controls {
   }
 }
 
-table.search_controls_top {
-  width: 100%;
+table#page_search_table {
   margin-bottom: 1em;
+  width: 100%;
+}
+
+table.page_text_search {
+  border: 1px solid #ccc;
+  background-color: #f6f6f6;
+  float: right;
   td {
-    vertical-align: top;
-    &.view {
-      text-align: left;
+    padding: 4px 4px;
+    &.x, &.search {
+      width: 16px;
     }
-    &.text_field {
-      text-align: right;
-    }
-    &.button {
-      width: 1%;
-    }
-  }
-  // todo: figure out some more universal styling.
-  input {
-    border: 1px solid #999;
-    background: white;
-    margin: 0;
-    padding: 4px;
   }
   input[type=text] {
+    border: 0;
+    background-color: #f6f6f6;
+    margin: 0;
     width: 100%;
     max-width: 20em;
-    border-right: 0;
-  }
-  input[type=button] {
-    background: #eee;
-    border-left: 0;
   }
 }

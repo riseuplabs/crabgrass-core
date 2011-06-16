@@ -1,5 +1,58 @@
 crabgrass-core is a basic, paired down crabgrass.
 
+things to work on
+============================
+
+directory
+. group
+. person
+
+profiles
+. me profile
+. group profile
+. profile in directory
+
+account
+. reset lost password
+. cracklib
+
+sphinx
+. new sphinx
+. better fields for sphinx
+. get rid of page_terms
+
+pages
+. history
+. attachments
+. tags
+. group search
+. text page
+. poll page
+. asset page
+. folder page
+
+plugins
+. write new plugin system
+
+themes
+. add more themes
+
+tests
+. minitest
+. write more tests
+
+i18n
+. identify used and unused keys
+. a system to translate
+. better en.yml organization
+
+misc
+. replace backgroundrb
+
+new features
+. issues
+. notices
+
 internet explorer
 ============================
 

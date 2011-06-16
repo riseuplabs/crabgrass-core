@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
-  include_controllers 'common/controllers/application'
+  include_controllers 'common/application'
   include_helpers 'app/helpers/common/*/*.rb'
   helper :application, :modalbox
   permissions :application

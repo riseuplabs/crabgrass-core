@@ -1,0 +1,24 @@
+standard_update(page)
+
+# update the window.location.hash
+page << "FilterPath.set('%s')" % @path.to_path
+
+# update the html
+page.replace 'search_controls_active', :partial => 'common/pages/search/controls_active'
+page.replace 'search_controls_possible', :partial => 'common/pages/search/controls_possible'
+page.replace_html 'search_results', :partial => 'common/pages/list'
+
+# clear text filter field, if needed
+unless @path.keyword? 'text'
+  page << "$('search_text_field').value = ''"
+end
+
+# update the view toggles, if needed
+page << activate_toggle_bug('toggle_view_'+(@path.arg_for('view') || 'compact'))
+
+# scroll to top if paginating
+if params[:add] and params[:add].starts_with?('/page/')
+  # page << 'window.scrollTo(0,0)' (the non-scriptaculous way)
+  page << "Effect.ScrollTo('masthead', {duration: 0.5})" # (the fancy smooth scroll way)
+end
+

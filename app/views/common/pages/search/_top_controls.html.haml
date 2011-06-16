@@ -2,43 +2,46 @@
 -# this is a partial for the top search controls.
 -# which contain a text filter field and view controls. 
 -#
--# requires variables:
--# * url - ie me_pages_path
+-# REQUIREMENTS
 -#
--# notes:
+-#   page_search_path must be defined.
 -#
--# form_remote_tag does not support the :with option, so we must use submit_to_remote.
--# 
--# when we specify :with, it overrides the default parameters used by submit_to_remote.
--# therefore, we must manually specify Form.serialize.
--# 
--# because we are not using form_remote_tag, we eat the return key and trigger a click
--# to the submit button.
+-# NOTES
 -#
--# if the contents of the search text field are empty, then the params get set to :remove
--# instead of :add. ie params[:add] -> '/text/:text/'.
--# The :text is replaced with params[:text] by the path parser.
+-#   form_remote_tag does not support the :with option, so we must use some other method.
+-#   (here we use link_to_remote). 
+-#
+-#   because we are not using form_remote_tag, we eat the return key and trigger a click
+-#   to the submit link.
+-#
+-#   if the contents of the search text field are empty, then the params get set to :remove
+-#   instead of :add. ie params[:add] -> '/text/:text/'.
+-#   The :text is replaced with params[:text] by the path parser.
 -#
 
 -#
 -# options for text filter form
 -#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
-- with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize(this.form)"
-- text_filter_submit_options = {:url => url, :with => with, :loading => show_spinner('text_filter'), :html => {:id => 'search_submit'}}
-- key_pressed = "if (enterPressed(event)) {$('search_submit').click(); return false;}"
+- with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
+- text_filter_submit_options = {:url => page_search_path, :with => with}
+- clear_filter_options = {:url => page_search_path(:remove => '/text/:text'), :with => 'FilterPath.encode()'}
+- key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
-- form_tag do
-  %table.search_controls_top
-    %tr
-      %td.view
-        %span.toggle_bugs
-          = search_view_toggle_links(url)
-        = spinner('view_toggle')
-      %td.text_field
-        = spinner('text_filter')
-        = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
-      %td.button
-        = submit_to_remote 'search_submit', :search.t, text_filter_submit_options
+%table#page_search_table
+  %tr
+    %td
+      = search_view_toggle_links(page_search_path)
+      = spinner('view_toggle')
+    %td
+      - form_tag '', :id => 'page_search_form' do
+        %table.page_text_search
+          %tr
+            %td.x
+              = link_to_remote_icon 'tiny_clear', clear_filter_options
+            %td.text
+              = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
+            %td.search
+              = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
 
-
+= javascript_tag "Form.focusFirstElement('page_search_form');"

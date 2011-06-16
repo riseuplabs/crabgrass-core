@@ -2,7 +2,7 @@
 class Groups::RequestsController < Groups::BaseController
 
   permissions 'requests'
-  include_controllers 'common/controllers/request'
+  include_controllers 'common/requests'
 
   def index
     @requests = Request.
@@ -10,7 +10,7 @@ class Groups::RequestsController < Groups::BaseController
       send(current_view, @group).
       by_updated_at.
       paginate(pagination_params)
-    render :template => 'requests/index'
+    render :template => 'common/requests/index'
   end
 
   protected

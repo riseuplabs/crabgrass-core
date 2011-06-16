@@ -2,6 +2,8 @@
 #
 # Here lie all the helpers for the fancy search form for pages.
 #
+# For many of the methods in this helper to work, 'page_search_path()' must be defined.
+# Typically, this will call me_pages_path or group_pages_path.
 #
 
 require 'cgi'
@@ -28,12 +30,24 @@ module Common::Page::SearchHelper
     active_filters[filter]
   end
 
-  # returns true if the filter is excluded by a currently active filter
+  #
+  # Returns true if the specified filter should not be shown.
+  #
+  # There are two reasons to hide a filter:
+  #
+  # (1) some filters are incompatible with other filters. The filter definition
+  #     for these filters will include filter.exclude. This will be a symbol
+  #     that defines a set of mutually exclusive filters (e.g. :popular_pages).
+  # (2) the current controller can define 'include_filter?(filter)'. If it returns
+  #     false, then the filter is excluded.
+  #
   def filter_excluded?(filter)
     @excluded_filters ||= begin
       @path.filters.to_h {|f| [f[0].exclude, true]}
     end
-    if filter.exclude
+    if !show_filter?(filter)
+      true
+    elsif filter.exclude
       @excluded_filters[filter.exclude]
     else
       false
@@ -73,7 +87,7 @@ module Common::Page::SearchHelper
   # for filters with no args
   def filter_singlevalue_li_tag(mode, filter)
     spinbox_tag(filter.path_keyword, filter.label.t,
-      me_pages_path(mode => filter.path_definition),
+      page_search_path(mode => filter.path_definition),
       :with => 'FilterPath.encode()', :checked => (mode == :remove) )
   end
 
@@ -82,14 +96,14 @@ module Common::Page::SearchHelper
     if mode == :add
       label = filter.label
       html = render(:partial => 'common/pages/search/popup',
-        :locals => {:url => me_pages_path(:add => filter.path_definition), :filter => filter})
+        :locals => {:url => page_search_path(:add => filter.path_definition), :filter => filter})
       link_to_modal(label, :html => html, :icon => 'check_off')
     else
       label = filter.label(args)
       if label
         path = filter.path(args)
         name = filter.name(args)
-        spinbox_tag(name, h(label), me_pages_path(:remove => path), :with => 'FilterPath.encode()', :checked => true)
+        spinbox_tag(name, h(label), page_search_path(:remove => path), :with => 'FilterPath.encode()', :checked => true)
       end
     end
   end

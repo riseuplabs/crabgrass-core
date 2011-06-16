@@ -29,7 +29,7 @@ checkout the codebase:
   Alternate ways of getting the codebase:
 
   * do a shallow clone:
-    git clone --level 1 git://labs.riseup.net/crabgrass-core.git
+    git clone --depth 1 git://labs.riseup.net/crabgrass-core.git
     this will only check out a copy of the most recent version
   * use gitosis:
     git clone gitosis@labs.riseup.net:crabgrass-core.git
@@ -38,6 +38,7 @@ checkout the codebase:
 install required gems:
 
   sudo gem install rails --version='2.3.11'
+  cd crabgrass-core
   sudo rake gems:install
 
 create the database:
@@ -53,6 +54,7 @@ install helper applications:
 
 run server:
 
+  cd crabgrass-core
   INFO=1 BOOST=1 script/server
 
 connect to the web application from your browser:
@@ -74,6 +76,7 @@ additional gems needed for testing:
 testing database:
 
   sudo mysqladmin create crabgrass_test
+  cd crabgrass-core
   rake db:test:prepare
 
 run tests:

@@ -1,4 +1,4 @@
-module Common::Controllers::Application::Authentication
+module Common::Application::Authentication
 
   protected
 

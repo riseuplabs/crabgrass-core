@@ -17,6 +17,8 @@
 # as a hash.
 # 
 #:include:FILTERS
+#
+
 module PathFinder
 class ParsedPath < Array
 
@@ -204,7 +206,7 @@ class ParsedPath < Array
   ## SETTERS
   ##
 
-  def remove_sort
+  def remove_sort!
     self.delete_if{|e| e[0] == 'ascending' or e[0] == 'descending' }
   end
 
@@ -216,27 +218,37 @@ class ParsedPath < Array
     self
   end
 
+  def remove_pagination!
+    self.delete_if{|e| e[0] == 'page' }
+  end
+
+  #
   # merge two parsed paths together.
-  # for duplicate keywords use the ones in the path_b arg
+  # for duplicate keywords, use the ones in the path_b.
+  #
   def merge(path_b)
-    path_b = ParsedPath.parse(path_b)
-    if path_b.first == ['all']
-      return remove(path_b)
-    end
-    path_a = self.dup
-    path_a.remove_sort if path_b.sort_arg?
-    path_a.replace((path_a + path_b).uniq)
+    self.dup.merge!(path_b)
   end
 
   # same as merge, but replaces self.
   def merge!(path_b)
-    path_b = ParsedPath.parse(path_b)
-    if path_b.first == ['all']
-      return self.replace(remove(path_b))
+    if path_b.empty?
+      return self
+    elsif self.empty?
+      return replace(path_b)
+    else
+      path_b = ParsedPath.parse(path_b)
+      if path_b.first == ['all']
+        return replace(remove(path_b))
+      else
+        if path_b.sort_arg?
+          remove_sort!
+        else
+          remove_pagination!
+        end
+        return unique_union!(path_b)
+      end
     end
-    self.remove_sort if path_b.sort_arg?
-    self.concat(path_b).uniq!
-    self
   end
 
   # removes the path elements in path_b from self, returns a copy
@@ -284,33 +296,6 @@ class ParsedPath < Array
     })
   end
 
-  #
-  # uniq()
-  # ensures there are no search filters duplicates for search filters
-  # defined as singletons. later segments take priority over earlier segments.
-  # the path returned is reordered based on the search filter path_order settings.
-  #
-  def uniq()
-    seen = {}
-    new_path = ParsedPath.new([])
-    reverse.each do |segment|
-      keyword = segment.first
-      if SearchFilter[keyword].singleton?
-        unless seen[keyword]
-          new_path << segment
-          seen[keyword] = true
-        end
-      else
-        new_path << segment
-      end
-    end
-    new_path.sort_by_order
-  end
-
-  def uniq!()
-    self.replace(self.uniq)
-  end
-
   def sort_by_order
     self.sort {|a,b| path_order(a[0]) <=> path_order(b[0])}
   end
@@ -349,6 +334,35 @@ class ParsedPath < Array
   # returns an array of just the keywords
   def keywords
     self.collect {|segment| segment[0] }
+  end
+
+  #
+  # unique_union(path)
+  #
+  # adds two paths together, removing duplicates of search filters
+  # defined as singletons. 
+  #
+  def unique_union(path_b)
+    seen = {}
+    new_path = ParsedPath.new([])
+    [path_b, self].each do |path|
+      path.reverse.each do |segment|
+        keyword = segment.first
+        if SearchFilter[keyword].singleton?
+          unless seen[keyword]
+            new_path << segment
+            seen[keyword] = true
+          end
+        else
+          new_path << segment
+        end
+      end
+    end
+    new_path.sort_by_order
+  end
+
+  def unique_union!(path_b)
+    self.replace(self.unique_union(path_b))
   end
 
   private

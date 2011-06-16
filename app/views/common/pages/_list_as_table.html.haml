@@ -18,6 +18,8 @@
       = page_table_header_row(style)
     - pages.each do |page|
       = page_table_row(page, style)
-      =# "<tr><td></td><td>#{page.title}</td><td>#{page.updated_by_login}</td><td>#{page.updated_at}</td></tr>"
+    %tr
+      %td{:colspan => colspan}
+        = pagination_links(@pages)
 
 
