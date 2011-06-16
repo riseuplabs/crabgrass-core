@@ -4,6 +4,7 @@ draft install instructions
 install basic ruby environment:
 
   sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server git
+(depending on what you are running, you might need to install git-core instead of git. you might also need libopenssl-ruby1.8)
 
 install rubygems from rubygems.org:
 
