@@ -3,7 +3,16 @@ unless defined?(FORBIDDEN_NAMES)
 end
 
 #
-# :conditions => {:method => :post}
+# useful options:
+#
+#   for normal routes
+#
+#     :conditions => {:method => :post}
+#
+#   for resources
+#
+#     :only => [:new, :show]
+#     :member => {:edit => :any, :update => :get}
 #
 
 ActionController::Routing::Routes.draw do |map|
@@ -48,9 +57,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :entities, :only => [:index]
 
-#  ##
-#  ## PEOPLE
-#  ##
+  ##
+  ## PEOPLE
+  ##
 
 #  map.people_directory 'people/directory/*path', :controller => 'people/directory'
 
@@ -62,9 +71,9 @@ ActionController::Routing::Routes.draw do |map|
 #    people.resources :pages
 #  end
 
-#  ##
-#  ## EMAIL
-#  ##
+  ##
+  ## EMAIL
+  ##
 
 #  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
 #  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
@@ -87,9 +96,9 @@ ActionController::Routing::Routes.draw do |map|
     session.session  'session/:action/:id'
   end
 
-#  ##
-#  ## GROUP
-#  ##
+  ##
+  ## GROUP
+  ##
 
   map.networks_directory 'networks/directory/*path', :controller => 'groups/directory'
   map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
@@ -97,7 +106,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :groups, :networks, :namespace => 'groups/' do |groups|
     groups.resource  :home, :only => [:show]
     groups.resource  :page, :only => [:new, :create]
-    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
+    groups.pages     'pages/*path', :controller => 'pages'
     groups.resources :members
     groups.resources :committees
     groups.resources :invites
@@ -109,12 +118,11 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :avatars
   end
 
-#  ##
-#  ## DEBUGGING
-#  ##
+  ##
+  ## DEBUGGING
+  ##
 
   if RAILS_ENV == "development"
-    ## DEBUG ROUTE
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
   end
   map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'

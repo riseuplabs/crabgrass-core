@@ -37,3 +37,20 @@
   opacity: 1;
 }
 
+//
+// PAGINATION
+//
+
+.pagination {
+  a, span {
+    padding: 0px 4px 2px 4px;
+  }
+  span.prev_page {
+    padding-left: 0;
+  }
+  span.current {
+    background-color: $link_standard_color;
+    color: white;
+  }
+}
+

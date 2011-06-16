@@ -89,7 +89,11 @@ label}</a></span>)
   def link_to_remote_with_icon(label, options, html_options={})
     id = html_options[:id] || 'link%s'%rand(1000000)
     icon = options.delete(:icon) || html_options.delete(:icon)
-    html_options[:class] = ["icon", "#{icon}_16", html_options[:class]].combine
+    if html_options[:class] and html_options[:class] =~ /small_icon_button/
+      html_options[:class] = ["#{icon}_16", html_options[:class]].combine
+    else
+      html_options[:class] = ["icon", "#{icon}_16", html_options[:class]].combine
+    end
     html_options[:id] ||= id
 
     # don't bother with spinner for confirm links:

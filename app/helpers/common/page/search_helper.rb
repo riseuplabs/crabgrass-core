@@ -30,12 +30,24 @@ module Common::Page::SearchHelper
     active_filters[filter]
   end
 
-  # returns true if the filter is excluded by a currently active filter
+  #
+  # Returns true if the specified filter should not be shown.
+  #
+  # There are two reasons to hide a filter:
+  #
+  # (1) some filters are incompatible with other filters. The filter definition
+  #     for these filters will include filter.exclude. This will be a symbol
+  #     that defines a set of mutually exclusive filters (e.g. :popular_pages).
+  # (2) the current controller can define 'include_filter?(filter)'. If it returns
+  #     false, then the filter is excluded.
+  #
   def filter_excluded?(filter)
     @excluded_filters ||= begin
       @path.filters.to_h {|f| [f[0].exclude, true]}
     end
-    if filter.exclude
+    if !show_filter?(filter)
+      true
+    elsif filter.exclude
       @excluded_filters[filter.exclude]
     else
       false

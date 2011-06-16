@@ -8,6 +8,7 @@ module Common::PageSearch
     base.class_eval do
       helper_method :xhr_page_search?
       helper_method :page_search_path
+      helper_method :show_filter?
     end
   end
 
@@ -63,7 +64,15 @@ module Common::PageSearch
   # include this mixin.
   #
   def page_search_path(*args)
-    raise 'failure to define page_search_path()'
+    raise 'you must define page_search_path()'
+  end
+
+  #
+  # controllers including this mixin may define this to control which
+  # filters are shown.
+  #
+  def show_filter?(filter)
+    true
   end
 
 end
