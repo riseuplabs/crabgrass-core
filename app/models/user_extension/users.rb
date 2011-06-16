@@ -137,9 +137,9 @@ module UserExtension::Users
   module InstanceMethods
 
     def add_social_permissions
-      # TODO: this throws an exception
-      #self.grant! self.friends, [:view, :pester]
-      #self.grant! self.peers, [:view, :pester]
+      self.grant! self.friends, [:view, :pester]
+      self.grant! self.peers, [:view, :pester]
+      self.grant! :public, []
     end
 
     ##
