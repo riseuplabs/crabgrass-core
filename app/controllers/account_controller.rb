@@ -139,6 +139,7 @@ class AccountController < ApplicationController
       Mailer.deliver_forgot_password(token, mailer_options)
     end
 
+    # this gives success even if there is no user, to not confirm that an email is in db
     success :reset_password.t, :reset_password_email_sent.t
     render_alert
   end
@@ -156,7 +157,7 @@ class AccountController < ApplicationController
     if @user.save
       Mailer.deliver_reset_password(@user, mailer_options)
       @token.destroy
-      success :password_reset.t, :password_reset_ok_text.t
+      success :password_reset.t, :password_reset_ok_text.t, :nofade
       redirect_to login_path
     else
       error @user
