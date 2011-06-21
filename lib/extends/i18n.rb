@@ -117,28 +117,34 @@ module I18n
   end
 end
 
-
+#
+# This is called whenever there is a i18n problem.
+#
+# see i18n.rb in activesupport gem
+# for the default I18n exception_handler
+#
 def crabgrass_i18n_exception_handler(exception, locale, key, options)
-  # see i18n.rb in activesupport gem
-  # for the default I18n exception_handler
-  if I18n::MissingTranslationData === exception
-    #options[:scope] ||= []
-    # try falling back to non-site specific translations
-    #keys = I18n.send(:normalize_translation_keys, locale, key, options[:scope])
+  if exception.is_a? I18n::MissingTranslationData
+    # key was not found
     if I18n.site_scope && options[:scope].try.first == I18n.site_scope
-      # do nothing, site scope is alway used optionaly.
+      # do nothing, site scope is optional, so missing data is skipped.
       return nil
     elsif locale == :en
       if RAILS_ENV != "production" && (RAILS_ENV == 'test' ? Conf.raise_i18n_exceptions : true )
+        # raise exceptions when running in development mode
         raise exception
       else
         return key.to_s.humanize
       end
     else
+      # grap the english version of the key
       options[:locale] = :en
       return I18n.translate(key, options)
     end
+  elsif exception.is_a? I18n::MissingTranslation
+    # the language was not found... default to english
+    options[:locale] = :en
+    return I18n.translate(key, options)
   end
-
   raise exception
 end
