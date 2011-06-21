@@ -64,6 +64,7 @@ module Common::Application::AlertMessages
       # display
       helper_method :alert_messages?
       helper_method :display_alert_messages
+      helper_method :inline_alert_messages
       helper_method :clear_alert_messages
       helper_method :update_alert_messages
     end
@@ -114,24 +115,35 @@ module Common::Application::AlertMessages
   ## DISPLAYING ALERTS
   ##
 
-  # generates the html for the alert messages
-  def display_alert_messages(include_container = true)
-    inner = if alert_messages?
-      flash[:messages].collect {|message| message_html(message)}.join
-    else
-      ""
-    end
-    
-    if include_container
+  #
+  # generates the html for the floating alert messages
+  #
+  def display_alert_messages
+    if alert_messages?
       # the id alert_messages is required by the
       # showAlertMessage javascript function.
       content_tag(:div, :class => 'alert_message_container') do
         content_tag(:div, :id => 'alert_messages') do
-          inner
+          flash[:messages].collect {|message| message_html(message)}.join
         end
       end
     else
-      inner
+      ""
+    end
+  end
+
+  #
+  # generates html for the inline alert messages
+  #
+  def inline_alert_messages
+    if alert_messages?
+      html = flash[:messages].collect do |message|
+        message_html(message, false)
+      end.join
+      clear_alert_messages # if display inline, we want ensure they are not also floating.
+      html
+    else
+      ""
     end
   end
 
@@ -153,7 +165,7 @@ module Common::Application::AlertMessages
   #
   def update_alert_messages(page)
     if alert_messages?
-      page.call 'showAlertMessage', display_alert_messages(false)
+      page.call 'showAlertMessage', display_alert_messages
     else
       page.call 'showAlertMessage', ''
     end
@@ -266,8 +278,20 @@ module Common::Application::AlertMessages
   ## DISPLAY
   ##
 
+  #
   # generate html for a single message line.
-  def message_html(message)
+  #
+  # message is a hash with these keys:
+  #
+  #  :type -- one of :error, :warning, :notice, :success
+  #  :text -- a string or array of strings to display. (optional)
+  #  :list -- an array of strings to be used in a bulleted list
+  #  :fade -- if true, force fading of this message
+  #  :nofade -- if true, force no fade
+  #
+  # if allow_fade is false, then we ignore :fade and :nofade options
+  #
+  def message_html(message, allow_fade = true)
     icon_class = case message[:type]
       when :error   then 'caution_16'
       when :warning then 'exclamation_16'
@@ -291,8 +315,10 @@ module Common::Application::AlertMessages
     if message[:list]
       html << content_tag(:ul, message[:list].collect{|item|content_tag(:li, item)})
     end
-    if message[:fade] or ((message[:type] == :success or message[:type] == :notice) and !message[:nofade])
-      html << content_tag(:script, "hideAlertMessage('#{message_id}', #{FADE_TIMEOUT});")
+    if allow_fade
+      if message[:fade] or ((message[:type] == :success or message[:type] == :notice) and !message[:nofade])
+        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{FADE_TIMEOUT});")
+      end
     end
     content_tag(:div, html.join, :class => "message #{message[:type]}", :id => message_id)
   end

@@ -1,11 +1,13 @@
 #
-# basic account management, for unauthenticated users.
-# authenticated user stuff is in me/settings
+# Basic account management, for unauthenticated users.
+#
+# Authenticated user stuff is in Me::SettingsController. 
+#
+# Login and logout are in SessionController.
 #
 
 class AccountController < ApplicationController
 
-  #stylesheet 'account'
   layout 'notice'
 
   skip_before_filter :redirect_unverified_user, :only => [:unverified, :new, :create, :verify_email]
@@ -127,10 +129,10 @@ class AccountController < ApplicationController
   def send_reset_token
     unless RFC822::EmailAddress.match(params[:email])
       error :invalid_email_text.t
-      render_alert and return
+      return
     end
 
-    sleep(rand*3) # prevent timing attacks
+    sleep(rand*3) # an attempt to make timing attacks harder
 
     user = User.find_for_forget(params[:email])
     if user
