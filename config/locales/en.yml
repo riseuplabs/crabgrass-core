@@ -342,7 +342,7 @@ en:
   invalid_token: "Invalid Token"
   invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
   password_reset: "Password Reset"
-  password_reset_ok_text: "Your password has been successfully reset. You an now sign in with your newly changed password."
+  password_reset_ok_text: "Your password has been successfully reset. You can now sign in with your newly changed password."
   requested_forgot_password: "You have requested a change of password"
   password_was_reset: "Your password has been reset"
   forgotten_email_address: "What email address did you give us when you created your account?"
