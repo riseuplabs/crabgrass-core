@@ -79,7 +79,7 @@ class SessionController < ApplicationController
   def redirect_successful_login
     params[:redirect] = nil unless params[:redirect].any?
     if current_user.unverified?
-      redirect_to :action => 'unverified'
+      redirect_to :controller=> 'account', :action => 'unverified'
     else
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
     end
