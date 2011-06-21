@@ -7,12 +7,14 @@ module ActsAsLocked
 
   def self.included(base)
     base.class_eval do
+
+      #
       # This allows you to define access on the object that act as locked.
       # A locked object can have different locks for different actions.
       # Access is granted via keys that belong to a keyring.
       # Keys can open different locks (realized via a bitmap)
-
-      def self.acts_as_locked(*locks)
+      #
+      def self.acts_as_locked(*locks_to_define)
 
         has_many :keys, :class_name => "ActsAsLocked::Key", :as => :locked do
 
@@ -53,8 +55,13 @@ module ActsAsLocked
           if has_access?(lock, holder)
             return true
           else
-            # TODO: make the error message flexible and meaningful
-            raise LockDenied.new(I18n.t(:permission_denied))
+            #
+            # For now, I am making acts_as_locked throw PermissionDenied
+            # when permission is being denied.
+            #
+            # However, PermissionDenied is specific to crabgrass.
+            #
+            raise PermissionDenied.new
           end
         end
 
@@ -145,8 +152,8 @@ module ActsAsLocked
           ActsAsLocked::Locks.add_bits(self.name, locks)
         end
 
-        if locks.any?
-          self.add_locks(*locks)
+        if locks_to_define.any?
+          self.add_locks(*locks_to_define)
         end
 
       end

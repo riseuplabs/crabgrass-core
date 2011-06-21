@@ -174,10 +174,10 @@ class GroupTest < ActiveSupport::TestCase
     assert_nil page.reload.owner_id
 
     red = users(:red)
-    assert_nil GroupLostUserActivity.social_activities_for_groups_and_friends(red).find(:first),
+    assert_nil GroupLostUserActivity.for_all(red).find(:first),
       "there should be no user left group message"
 
-    destroyed_act = GroupDestroyedActivity.social_activities_for_groups_and_friends(red).unique.find(:first)
+    destroyed_act = GroupDestroyedActivity.for_all(red).unique.find(:first)
     assert destroyed_act, "there should exist a group destroyed activity message"
 
     assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"

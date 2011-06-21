@@ -210,13 +210,13 @@ class AssetTest < ActiveSupport::TestCase
   def test_doc
     # must have OO installed
     if !LibreOfficeTransmogrifier.new.available?
-      puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
+      skip "OpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
 
     # must have GM installed
     if !GraphicsMagickTransmogrifier.new.available?
-      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
+      skip "GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
 
@@ -238,23 +238,25 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_failure_on_corrupted_file
-    #Media::Process::Base.log_to_stdout_when = :never
+    Media::Transmogrifier.suppress_errors = true
     @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
     end
-    #Media::Process::Base.log_to_stdout_when = :on_error
+    Media::Transmogrifier.suppress_errors = false
   end
 
   def test_failure
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { false })
+    Media::Transmogrifier.suppress_errors = true
     @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
     end
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { GRAPHICSMAGICK_COMMAND })
+    Media::Transmogrifier.suppress_errors = false
   end
 
   def test_search

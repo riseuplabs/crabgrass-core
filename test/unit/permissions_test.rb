@@ -32,7 +32,7 @@ class PermissionsTest < ActiveSupport::TestCase
     assert user.may?(:admin, committee)
     assert user.may?(:admin, group)
 
-    invisible.allow!(:all, [:view, :pester])
+    invisible.grant!(:public, [:view, :pester])
     user.clear_access_cache
     invisible.reload
     assert user.may?(:pester, invisible)

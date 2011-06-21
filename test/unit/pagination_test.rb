@@ -41,7 +41,7 @@ class PaginationTest < ActiveSupport::TestCase
       :per_page => per_page,
       :page => 1}
 
-    pages = Page.paginate_by_path(["most_views", "30", "days"], paginate_options)
+    pages = Page.paginate_by_path(["most-views-in", "30", "days"], paginate_options)
 
     assert_equal all_pages_ids.size, pages.total_entries
     assert_equal all_pages_ids[0, per_page], pages.collect(&:id).sort

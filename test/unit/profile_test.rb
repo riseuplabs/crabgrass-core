@@ -9,15 +9,14 @@ class ProfileTest < ActiveSupport::TestCase
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
-    FileUtils.mkdir_p(@@private)
-    FileUtils.mkdir_p(@@public)
-    #Media::Process::Base.log_to_stdout_when = :always
-    Media::Process::Base.log_to_stdout_when = :on_error
+    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
+    FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
 
   def teardown
-    FileUtils.rm_rf(@@private)
-    FileUtils.rm_rf(@@public)
+    FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
+    FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
   end
 
   def test_adding_profile

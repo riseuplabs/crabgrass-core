@@ -22,7 +22,9 @@ module Media
     attr_accessor :options
 
     attr_accessor :command_output # output of last command run
+
     @@verbose = true
+    @@suppress_errors = false
 
     #
     # takes a has of options, some of which are required:
@@ -145,6 +147,13 @@ module Media
       @@verbose
     end
 
+    def self.suppress_errors=(bool)
+      @@suppress_errors = bool
+    end
+    def self.suppress_errors?
+      @@suppress_errors
+    end
+
     #
     # removes leading x- from mime-types
     #
@@ -228,11 +237,13 @@ module Media
     end
 
     def self.log_error(*args)
-      msg = ['ERROR:'] + args
-      if defined?(ActiveRecord)
-        ActiveRecord::Base.logger.info "Transmogrifier --- " + msg.join(' ')
+      unless suppress_errors?
+        msg = ['ERROR:'] + args
+        if defined?(ActiveRecord)
+          ActiveRecord::Base.logger.info "Transmogrifier --- " + msg.join(' ')
+        end
+        info msg.join(' '), 0
       end
-      info msg.join(' '), 0
     end
    
     def log_error(*args)
