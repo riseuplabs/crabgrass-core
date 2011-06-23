@@ -102,7 +102,7 @@ navigation do
 
       local_section :profile do
         label  "Profile"
-        url    { me_profile_path }
+        url    { edit_me_profile_path }
         active { controller?('me/profile') }
       end
 
