@@ -338,7 +338,7 @@ en:
   invalid_email: "Invalid Email"
   invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
-  reset_password_email_sent: "An email has been sent containing instructions for resetting your password."
+  reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
   invalid_token: "Invalid Token"
   invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
   password_reset: "Password Reset"
