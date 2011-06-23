@@ -539,8 +539,7 @@ function loginDialog(txt,options) {
   '  <label>#{password}</label><input type="password" name="password" id="password" tabindex="2"/>' +
   '  <input type="submit" value="#{login}" tabindex="3"/>' +
   '  <span class="small">'
-  if (options['may_signup'])
-     form += '<a href="/account/signup">#{create_account}</a> | '
+  form += '<a href="/account/signup">#{create_account}</a> | '
   form += '<a href="/account/forgot_password">#{forgot_password}</a></span>' +
   '</form>'
   form = form.interpolate(txt);

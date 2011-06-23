@@ -29,8 +29,6 @@ class AccountController < ApplicationController
   def new
     if current_site.signup_redirect_url.any?
       redirect_to current_site.signup_redirect_url
-    elsif !may_signup?
-      raise_denied('new user registration is closed at this time')
     end
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
   end

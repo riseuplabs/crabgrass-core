@@ -327,9 +327,6 @@ module Common::Ui::LayoutHelper
         :create_account  => I18n.t(:signup_link),
         :redirect        => params[:redirect] || request.request_uri,
         :token           => form_authenticity_token
-      },
-      :options => {
-        :may_signup => may_signup?
       }
     }
   end
