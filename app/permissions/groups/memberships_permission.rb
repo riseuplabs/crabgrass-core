@@ -36,14 +36,17 @@ module Groups::MembershipsPermission
 
   def may_destroy_memberships?(membership = @membership)
     group = membership.group
-    user = membership.user
+    # user = membership.user
 
-    # has to have a council
-    group.council != group and
-    group.council.full_council_powers? and
-    current_user.may?(:admin, group) and
-    user != current_user and
-    !user.may?(:admin, group) # can't destroy other admins
+    # this is the strict way of doing it:
+    # group.council != group and
+    # group.council.full_council_powers? and
+    # current_user.may?(:admin, group) and
+    # user != current_user and
+    # !user.may?(:admin, group) # can't destroy other admins
+
+    # for now, be flexible:
+    current_user.may?(:admin, group)
   end
 
   def may_create_remove_user_requests?(membership = @membership)
