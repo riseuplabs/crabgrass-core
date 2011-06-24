@@ -62,7 +62,7 @@ class SessionController < ApplicationController
 
   # set the language of the current session
   def language
-    session[:language_code] = params[:id].to_sym
+    session[:language_code] = params[:id]
     redirect_to referrer
   end
 

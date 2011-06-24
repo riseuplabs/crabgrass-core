@@ -5,8 +5,8 @@ module Common::Application::BeforeFilters
     base.class_eval do
       # the order of these filters matters. change with caution.
       before_filter :essential_initialization
-      before_filter :set_language
-      before_filter :set_timezone
+      before_filter :set_session_locale
+      before_filter :set_session_timezone
       before_filter :header_hack_for_ie6
       before_filter :redirect_unverified_user
       before_filter :enforce_ssl_if_needed
@@ -51,38 +51,27 @@ module Common::Application::BeforeFilters
     end
   end
 
-  # an around filter responsible for setting the current language.
-  # order of precedence in choosing a language:
-  # (1) the current session
-  # (2) the current_user's settings
-  # (3) the request's Accept-Language header
-  # (4) the site default
-  # (5) english
-  def set_language
-    session[:language_code] ||= begin
-      if I18n.available_locales.empty?
-        'en'
-      elsif !logged_in? || current_user.language.empty?
-        code = request.compatible_language_from(Conf.enabled_languages)
-        code ||= current_site.default_language
-        code ||= 'en'
-        code.to_s.sub('-', '_').sub(/_\w\w/, '')
-      else
-        current_user.language
-      end
-    end
-
-    I18n.locale = session[:language_code].to_sym
-  end
-
   # if we have login_required this will be called and check the
   # permissions accordingly
   def authorized?
     check_permissions!
   end
 
+  # 
+  # sets the current locale
+  #
+  def set_session_locale
+    if !language_allowed?(session[:language_code])
+      session[:language_code] = nil
+    end
+    session[:language_code] ||= discover_language_code
+    I18n.locale = session[:language_code].to_sym
+  end
+
+  #
   # set the current timezone, if the user has it configured.
-  def set_timezone
+  #
+  def set_session_timezone
     Time.zone = current_user.time_zone if logged_in?
   end
 
@@ -92,6 +81,43 @@ module Common::Application::BeforeFilters
   #
   def setup_theme
     current_theme.controller = self
+  end
+
+  private
+
+  #
+  # we only allow the session to set a language that has been
+  # enabled in the crabgrass configuration.
+  #
+  def language_allowed?(lang_code)
+    Conf.enabled_languages_hash[lang_code]
+  end
+
+  #
+  # order of precedence in choosing a language:
+  # (1) the current session
+  # (2) the current_user's settings
+  # (3) the request's Accept-Language header
+  # (4) the site default
+  # (5) english
+  #
+  def discover_language_code
+    if I18n.available_locales.empty?
+      'en'
+    elsif !logged_in? || current_user.language.empty?
+      if Conf.enabled_languages.any?
+         code = request.compatible_language_from(Conf.enabled_languages)
+      else
+         code = request.user_preferred_languages.first
+      end
+      code ||= current_site.default_language
+      code ||= 'en'
+      code.to_s.sub('-', '_').sub(/_\w\w/, '')
+    elsif language_allowed?(current_user.language)
+      current_user.language
+    else
+      'en'
+    end
   end
 
 end

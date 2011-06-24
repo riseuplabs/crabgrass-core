@@ -65,6 +65,7 @@ class Conf
   cattr_accessor :enabled_tools # deprecated
   cattr_accessor :enabled_pages 
   cattr_accessor :enabled_languages
+  cattr_accessor :enabled_languages_hash # (private)
   cattr_accessor :email
   cattr_accessor :sites
   cattr_accessor :secret
@@ -166,6 +167,9 @@ class Conf
       self.send(conf_var+'=', self.send(conf_var).to_sym)
     end
 
+    ## convert enabled_languages into a hash
+    self.enabled_languages_hash = self.enabled_languages.to_h {|i| [i, true]}
+
     return true
   end
 
@@ -198,6 +202,14 @@ class Conf
     else
       true
     end
+  end
+
+  ##
+  ## LANGUAGE
+  ##
+
+  def self.language_enabled?(lang_code)
+    self.enabled_languages_hash[lang_code]
   end
 
   private

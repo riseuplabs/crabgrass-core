@@ -13,7 +13,6 @@ module Common::Ui::LanguageHelper
   def language_select_links
     @language_form_already_rendered = true
     enabled_language_array.collect do |lang_name, lang_code|
-      #active = lang_code == session[:language_code].to_s ? 'hilight' : ''
       if lang_code == session[:language_code].to_s
         link_to_with_icon('ok', lang_name, language_path(:id => lang_code), :method => 'post', :class => 'inline', :style => 'margin-right: 1em; line-height: 2em')
       else
