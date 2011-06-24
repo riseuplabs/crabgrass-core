@@ -35,4 +35,8 @@ a {
   color: $link_standard_color;
   &:visited { color: $link_visited_color;}
   &:active { color: $link_active_color;}
+  //&.hilight {
+  //  color: white;
+  //  background-color: $link_visited_color;
+  //}
 }
