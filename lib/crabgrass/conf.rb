@@ -11,10 +11,6 @@ class Conf
   ## CONSTANTS
   ##
 
-  SIGNUP_MODE = Hash.new(0).merge({
-    :default => 0, :closed => 1, :invite_only => 2, :verify_email => 3
-  }).freeze
-
   TEXT_EDITOR = Hash.new(0).merge({
     :greencloth_only => 0,        :html_only => 1,
     :greencloth_preferred => 2,   :html_preferred => 3
@@ -46,7 +42,6 @@ class Conf
   cattr_accessor :domain
   cattr_accessor :translation_group
   cattr_accessor :chat
-  cattr_accessor :signup_mode
   cattr_accessor :dev_email
   cattr_accessor :login_redirect_url
   cattr_accessor :theme
@@ -116,7 +111,6 @@ class Conf
     self.show_exceptions   = true
     self.domain            = 'localhost'
     self.chat              = true
-    self.signup_mode       = SIGNUP_MODE[:default]
     self.dev_email         = ''
     self.login_redirect_url = '/me'
     self.theme             = 'default'
@@ -150,15 +144,13 @@ class Conf
     end
 
     ## convert strings in config to numeric constants.
-    ['SIGNUP_MODE', 'TEXT_EDITOR'].each do |const_string|
-      const = ("Conf::"+const_string).constantize
-      attr = const_string.downcase
-      if self.send(attr).is_a? String
-        unless const.has_key? self.send(attr).to_sym
-          raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
-        end
-        self.send(attr+'=', const[self.send(attr).to_sym])
+    const = ("Conf::TEXT_EDITOR").constantize
+    attr = ("TEXT_EDITOR").downcase
+    if self.send(attr).is_a? String
+      unless const.has_key? self.send(attr).to_sym
+        raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
       end
+      self.send(attr+'=', const[self.send(attr).to_sym])
     end
 
     ## convert some strings in config to symbols

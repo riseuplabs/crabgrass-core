@@ -15,31 +15,6 @@ class AccountControllerTest < ActionController::TestCase
     end
   end
 
-  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:closed]}) do
-    def test_signup_disabled
-      assert_no_difference 'User.count' do
-        post_signup_form
-      end
-    end
-  end
-
-  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:invite_only]}) do
-    def test_signup_invite
-      p 'top user count'
-      p User.count
-      assert_no_difference 'User.count' do
-        post_signup_form
-      end
-      p User.count
-      session[:user_has_accepted_invite] = true
-p User.count
-      assert_difference 'User.count' do
-        post_signup_form
-      end
-p User.count
-    end
-  end
-
   def test_should_require_login_on_signup
     assert_no_difference 'User.count' do
       post_signup_form(:user => {:login => nil})
@@ -135,96 +110,23 @@ p User.count
 
   def test_redirect_on_old_or_invalid_token
     get :reset_password, :token => tokens(:old_token).value
-    assert_response :redirect
+    assert_error_message(:invalid_token)
 
     get :reset_password, :token => tokens(:strange).value
-    assert_response :redirect
+    assert_error_message(:invalid_token)
 
-    get :reset_password, :token => "invalid"
-    assert_response :redirect
+    get :reset_password, :token => "invalid" 
+    assert_error_message(:invalid_token)
 
     get :reset_password, :token => tokens(:tokens_003).value
     assert_response :success
   end
 
-  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:default]}) do
-    def test_should_not_send_email_verification_when_not_enabled
-      assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form }
-      assert_response :redirect
-      assert !assigns(:user).unverified
-    end
-  end
 
-  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:verify_email]}) do
-
-    def test_signup_with_verification
-      assert_difference('User.count', 1) { post_signup_form }
-
-      user = assigns(:user)
-      assert user.unverified
-      assert_equal 'quire', user.login
-    end
-
-    def test_signup_should_send_verification_email
-      assert_difference('ActionMailer::Base.deliveries.size', 1) { post_signup_form }
-
-      # should generate a token
-      token = assigns(:token)
-      assert_not_nil token
-      assert_equal 'verify', token.action
-
-      confirmation_email = ActionMailer::Base.deliveries.last
-      #  the email should be for the right person and the right site
-      assert_equal confirmation_email.to[0], 'quire@localhost'
-      assert_equal I18n.t(:welcome_title, :site_title => Site.current.title),
-                    confirmation_email.subject
-      # should have the right link
-      assert_match %r[http://test.host/verify_email/#{token.value}], confirmation_email.body
-    end
-
-    def test_invalid_looking_email_should_fail
-      assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(:user => {:email => "BADEMAIL"}) }
-      assert assigns(:user).errors.on(:email)
-      assert_response :success
-    end
-
-    def test_verify
-      gerrard = users(:gerrard)
-      gerrard.update_attribute(:unverified, true)
-      token = tokens(:verify_gerrard)
-
-      get :verify_email, :token => token.value
-
-      assert_equal token.id, assigns(:token).id
-      assert_response :redirect
-      assert_redirected_to '/'
-      assert_success_message /Successfully Verified/, /Thanks for signing up/
-    end
-
-    def test_unneeded_verification
-      gerrard = users(:gerrard)
-      token = tokens(:verify_gerrard)
-
-      get :verify_email, :token => token.value
-
-      assert_response :redirect
-      assert_redirected_to :controller => 'root', :action => 'index'
-      assert_success_message /Already.Verified/
-    end
-
-    def test_verify_twice
-      gerrard = users(:gerrard)
-      gerrard.update_attribute(:unverified, true)
-      token = tokens(:verify_gerrard)
-
-      get :verify_email, :token => token.value
-      assert_redirected_to '/'
-      assert_success_message /Successfully Verified/, /Thanks for signing up/
-
-      get :verify_email, :token => token.value
-      assert_redirected_to :controller => 'root', :action => 'index'
-      assert_success_message /Already.Verified/
-    end
+  def test_invalid_looking_email_should_fail
+    assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(:user => {:email => "BADEMAIL"}) }
+    assert assigns(:user).errors.on(:email)
+    assert_response :success
   end
 
   protected
@@ -233,10 +135,6 @@ p User.count
     post(:create, {
       :user => {
          :login => 'quire',
-
-
-
-
          :email => 'quire@localhost',
          :password => 'quire',
          :password_confirmation => 'quire'

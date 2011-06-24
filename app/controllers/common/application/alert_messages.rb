@@ -152,6 +152,10 @@ module Common::Application::AlertMessages
   end
 
   def clear_alert_messages
+    if Rails.env == 'test'
+      # for testing it is useful to have the messages.
+      flash[:hidden_messages] = flash[:messages]
+    end
     flash[:messages] = nil
   end
 

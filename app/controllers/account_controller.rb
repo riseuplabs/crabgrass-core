@@ -10,8 +10,6 @@ class AccountController < ApplicationController
 
   layout 'notice'
 
-  skip_before_filter :redirect_unverified_user, :only => [:unverified, :new, :create, :verify_email]
-
   verify :method => :post, :only => [:create]
 
   ##
@@ -46,7 +44,7 @@ class AccountController < ApplicationController
     #else
       @user.language   = session[:language_code].to_s
       @user.avatar     = Avatar.new
-      @user.unverified = current_site.needs_email_verification?
+#      @user.unverified = current_site.needs_email_verification?
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
@@ -54,7 +52,7 @@ class AccountController < ApplicationController
       # replace with hook(:new_user_registered)
       #current_site.add_user!(current_user)
 
-      send_email_verification if current_site.needs_email_verification?
+#      send_email_verification if current_site.needs_email_verification?
 
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
       success :signup_success.t, :signup_success_message.t
@@ -65,30 +63,10 @@ class AccountController < ApplicationController
   ## VERIFICATION
   ##
 
-  # verify the users email
-  def verify_email
-    @token = Token.find_by_value_and_action(params[:token], 'verify')
-    @token.destroy if @token
-    if @token.nil? or @token.user.nil? or !@token.user.unverified?
-      flash_message :title => I18n.t(:already_verified), :success => I18n.t(:already_verified_text)
-    else
-      @token.user.update_attribute(:unverified, false)
-      flash_message :title => I18n.t(:successfully_verified_email_message),
-        :success => I18n.t(:signup_success_message)
-    end
+  # removed
 
-    redirect_to '/'
-  end
 
-  def unverified
-  end
 
-  protected
-
-  def send_email_verification
-    @token = Token.create!(:user => current_user, :action => 'verify')
-    Mailer.deliver_email_verification(@token, mailer_options)
-  end
 
   ##
   ## PASSWORD RESET

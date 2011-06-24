@@ -36,19 +36,18 @@ class SessionControllerTest < ActionController::TestCase
 #    assert_nil @response.cookies["auth_token"]
 #  end
 
-  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:verify_email]}) do
-
-    def test_login_without_verification_should_remind_to_verify
-      gerrard = users(:gerrard)
-      gerrard.update_attribute(:unverified, true)
-
-      post :login, :login => 'gerrard', :password => 'gerrard'
-      assert session[:user]
-      assert_response :redirect
-      assert_redirected_to :controller => 'account', :action => 'unverified'
-    end
-
-  end
+ # repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:verify_email]}) do
+#  def test_login_without_verification_should_remind_to_verify
+#    gerrard = users(:gerrard)
+#    gerrard.update_attribute(:unverified, true)
+#    
+#    post :login, :login => 'gerrard', :password => 'gerrard'
+#    assert session[:user]
+#    assert_response :redirect
+#    assert_redirected_to :controller => 'account', :action => 'unverified'
+#  end
+  
+  #end
   #def test_should_delete_token_on_logout
   #  login_as :quentin
   #  get :logout
