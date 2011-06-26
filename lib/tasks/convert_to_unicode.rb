@@ -13,7 +13,7 @@ namespace :cg do
     charset = 'utf8'
     collation = 'utf8_general_ci'
     @connection = ActiveRecord::Base.connection
-    @connection.execute "ALTER DATABASE #{@connection.current_database} CHARACTER SET #{charset} COLLATE #{collation}"
+    @connection.execute "ALTER DATABASE `#{@connection.current_database}` CHARACTER SET #{charset} COLLATE #{collation}"
     @connection.tables.each do |table|
       @connection.execute "ALTER TABLE `#{table}` CONVERT TO CHARACTER SET #{charset} COLLATE #{collation}"
     end

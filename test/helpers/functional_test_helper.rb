@@ -25,11 +25,17 @@ module FunctionalTestHelper
     assert_redirected_to '/session/login'
   end
 
-  def assert_error_message(regexp=nil)
+  # can pass either a regexp of the flash error string,
+  # or the error symbol
+  def assert_error_message(arg=nil)
     errors = flash_messages :error
     assert errors.any?, 'there should have been flash errors'
-    if regexp
-      assert message_text(errors).grep(regexp).any?, 'error message did not match %s. it was %s.'%[regexp.inspect, message_text(errors).inspect]
+    if arg
+      if arg.is_a?(Regexp)
+        assert message_text(errors).grep(arg).any?, 'error message did not match %s. it was %s.'%[arg.inspect, message_text(errors).inspect]
+      elsif arg.is_a?(Symbol)
+        assert message_text(errors).detect { |text| text == arg.t }, 'error message did not match %s. it was %s'%[arg.inspect, message_text(errors).inspect]
+      end
     end
   end
 
@@ -110,10 +116,11 @@ module FunctionalTestHelper
   private
 
   def flash_messages(type=nil)
+    messages = flash[:messages] || flash[:hidden_messages]
     if type
-      flash[:messages].select{|message| message[:type] == type}
+      messages.select{|message| message[:type] == type}
     else
-      flash[:messages]
+      messages
     end
   end
 

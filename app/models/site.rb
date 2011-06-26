@@ -127,10 +127,6 @@ class Site < ActiveRecord::Base
     end
   end
 
-  def needs_email_verification?
-    self.signup_mode == Conf::SIGNUP_MODE[:verify_email]
-  end
-
   ##
   ## RELATIONS
   ##
