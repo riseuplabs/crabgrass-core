@@ -2,4 +2,4 @@
   - for user in @users
     .person
       = link_to_user user, :avatar => 'small', :class => 'single'
-
+= pagination_links(@users)     
