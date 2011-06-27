@@ -1,12 +1,14 @@
 - content_for :left_column do
-  = render :partial => 'sidecolumn'
+  =# render :partial => 'sidecolumn'
+  blah blahblah
 
 -#
 -# super temporary... should be replaced by a simple widget system.
 -#
 
-- @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_group(@group), pagination_params)
+- @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_user(@user), pagination_params)
 
 %h2= :recent_pages.t
 = render :partial => 'common/pages/list'
+
 

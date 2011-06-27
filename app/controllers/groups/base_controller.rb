@@ -8,17 +8,12 @@ class Groups::BaseController < ApplicationController
 
   def fetch_group
     # group might be preloaded by DispatchController
-    @group ||= Group.find_by_name(params[:group_id] || params[:id])    
+    @group ||= Group.find_by_name(params[:group_id] || params[:id])
   end
 
   def setup_context
     Context.find(@group)
   end
-
-  # temporarily until permissions are fixed.
-  #def authorized?
-  #  true
-  #end
 
 end
 

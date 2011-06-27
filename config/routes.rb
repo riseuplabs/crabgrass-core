@@ -52,26 +52,6 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   ##
-  ## ENTITIES
-  ##
-
-  map.resources :entities, :only => [:index]
-
-  ##
-  ## PEOPLE
-  ##
-
-#  map.people_directory 'people/directory/*path', :controller => 'people/directory'
-
-#  map.resources :people, :namespace => 'people/' do |people|
-#    people.resource  :page, :only => [:new, :create]
-#    people.pages     'pages/*path', :controller => 'pages'
-#    people.resources :messsages
-#    people.resources :activities
-#    people.resources :pages
-#  end
-
-  ##
   ## EMAIL
   ##
 
@@ -94,6 +74,25 @@ ActionController::Routing::Routes.draw do |map|
     session.login    'session/login',  :action => 'login'
     session.logout   'session/logout', :action => 'logout'
     session.session  'session/:action/:id'
+  end
+
+  ##
+  ## ENTITIES
+  ##
+
+  map.resources :entities, :only => [:index]
+
+  ##
+  ## PEOPLE
+  ##
+
+  map.people_directory 'people/directory/*path', :controller => 'people/directory'
+
+  map.resources :people, :namespace => 'people/' do |people|
+    people.resource  :home, :only => [:show]
+    people.pages     'pages/*path', :controller => 'pages'
+    people.resources :messsages
+    people.resources :activities
   end
 
   ##

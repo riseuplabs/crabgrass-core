@@ -6,10 +6,16 @@ class Me::ProfileController < Me::BaseController
   end
 
   def update
-    @profile.save_from_params params['profile']
-    if @profile.valid?
+    if params[:clear_photo]
+      @profile.photo.destroy
       success :profile_saved.t
-      redirect_to edit_me_profile_path
+      redirect_to edit_me_profile_path 
+    else
+      @profile.save_from_params params['profile']
+      if @profile.valid?
+        success :profile_saved.t
+        redirect_to edit_me_profile_path
+      end
     end
   end
 

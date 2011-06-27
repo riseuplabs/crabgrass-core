@@ -1,0 +1,9 @@
+    - f.row do |r|
+      - r.label :phone_number.tcap
+      - r.input text_field_tag("profile[phone_numbers][0][phone_number]", @profile.phone_numbers[0].try.phone_number)
+      - r.input text_field_tag("profile[phone_numbers][0][phone_number_type]", 'Home', :hidden => true)
+    - f.row do |r|
+      - r.label :email_addresses.tcap
+      - r.input text_field_tag("profile[email_addresses][0][email_address]", @profile.email_addresses[0].try.email_address)
+      - r.input text_field_tag("profile[email_addresses][0][email_type]", 'Home', :hidden => true)
+

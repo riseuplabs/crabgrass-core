@@ -3,6 +3,12 @@
 
 module Common::Application::PaginationOptions
 
+  def self.included(base)
+    base.class_eval do
+      helper_method :pagination_params
+    end
+  end
+
   protected
 
   def pagination_default_per_page

@@ -245,8 +245,8 @@ class DispatchController < ApplicationController
 
   def controller_for_people
     params[:action] = 'show'
-    params[:controller] = 'people/people'
-    new_controller('People::PeopleController')
+    params[:controller] = 'people/home'
+    new_controller('People::HomeController')
   end
 
 end

@@ -42,16 +42,16 @@ module Common::Application::ContextNavigation
   # could if they really wanted to.
   #
   def get_navigation
-    @navigation = {}
-    @navigation[:global] = current_theme.navigation.root
-    if @navigation[:global]
-      @navigation[:context] = @navigation[:global].currently_active_item
-      if @navigation[:context]
-        @navigation[:local] = @navigation[:context].currently_active_item
+    navigation = {}
+    navigation[:global] = current_theme.navigation.root
+    if navigation[:global]
+      navigation[:context] = navigation[:global].currently_active_item
+      if navigation[:context]
+        navigation[:local] = navigation[:context].currently_active_item
       end
     end
-    setup_navigation(@navigation) # allow controller change to modify @navigation
-    return @navigation
+    navigation = setup_navigation(navigation) # allow controller change to modify @navigation
+    return navigation
   end
 
   ##
@@ -63,6 +63,7 @@ module Common::Application::ContextNavigation
   end
 
   def setup_navigation(nav)
+    return nav
     # this can be implemented by controller subclasses
   end
 
