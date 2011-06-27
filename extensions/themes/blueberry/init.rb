@@ -1,7 +1,7 @@
 
 
 
-options(:parent => 'default') {
+define_theme(:parent => 'default') {
 
   background {
     color '#E6E3DC'

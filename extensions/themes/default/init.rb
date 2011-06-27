@@ -4,7 +4,7 @@
 
 $border = '1px solid #ccc'
 
-options {
+define_theme {
 
   favicon_png 'favicon.png'
   favicon_ico 'favicon.ico'
@@ -28,6 +28,12 @@ options {
   color {
     dim '#999'
     bright '#f33'
+
+    # used for a subtle highlight (e.g. table headings)
+    light '#eee'
+
+    # used for barely visible highlight (e.g. table rows).
+    lighter '#f6f6f6'
   }
 
   font {
@@ -138,7 +144,7 @@ options {
       width 8
     }
     title {
-      background '#f6f6f6'
+      background var(:color_lighter)
       border $border
     }
   }

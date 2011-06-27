@@ -1,6 +1,6 @@
 
 
-navigation do
+define_navigation do
 
   ##
   ## HOME
@@ -22,7 +22,7 @@ navigation do
     label "Me"
     visible { logged_in? }
     url     { me_home_path }
-    active  { controller?('me/') or context?(:me) }
+    active  { context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do
@@ -120,12 +120,27 @@ navigation do
   ## PEOPLE
   ##
 
-#  global_section :people do 
-#    label  "People"
-#    url    :controller => 'people/directory'
-#    active { controller?('people/') }
-#    html    :partial => '/layouts/global/nav/people_menu'
-#  end
+  global_section :people do 
+    label  "People"
+    url    :controller => 'people/directory'
+    active { controller?('people/') or context?(:user) }
+    html    :partial => '/layouts/global/nav/people_menu'
+
+    context_section :home do
+      label  "Home"
+      icon   :house
+      url    { entity_path(@user) }
+      active { controller?('people/home') }
+    end
+
+    context_section :pages do
+      label  "Pages"
+      icon   :page_white_copy
+      url    { person_pages_path(@user) }
+      active { page_controller? }
+    end
+
+  end
 
   ##
   ## GROUPS
