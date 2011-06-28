@@ -1,5 +1,13 @@
-.directory
-  - for user in @users
-    .person
-      = link_to_user user, :avatar => 'small', :class => 'single'
-= pagination_links(@users)     
+- cutoff = (@users.count + 1) / 2
+
+.directory.split_panel
+  .panel_left
+    - for user in @users[0..cutoff-1]
+      = render :partial => "common/entities/directory_entry", :locals => {:entity => user}
+
+  .panel_right
+    - for user in @users[cutoff..-1]
+      = render :partial => "common/entities/directory_entry", :locals => {:entity => user}
+
+.p
+  = pagination_links(@users)     
