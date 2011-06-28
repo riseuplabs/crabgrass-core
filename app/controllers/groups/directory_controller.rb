@@ -1,10 +1,8 @@
 class Groups::DirectoryController < ApplicationController
 
   def index
-    @groups = Group.all
+    @groups = Group.paginate(pagination_params)
   end
-
-
 
 end
 
