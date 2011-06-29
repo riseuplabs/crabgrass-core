@@ -126,6 +126,23 @@ define_navigation do
     active { controller?('people/') or context?(:user) }
     html    :partial => '/layouts/global/nav/people_menu'
 
+    context_section :no_context do
+      visible { context?(:none) }
+      active  { context?(:none) }
+
+      local_section :all do
+        label "All"
+        url { people_directory_path }
+        active { params[:path].empty? }
+      end
+
+      local_section :friends do
+        label "Friends"
+        url { people_directory_path(:path => ['friends']) }
+        active { params[:path].try.include?('friends') }
+      end
+    end
+
     context_section :home do
       label  "Home"
       icon   :house

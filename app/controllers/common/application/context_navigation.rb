@@ -73,14 +73,14 @@ module Common::Application::ContextNavigation
 
   #
   # returns true if the current display context matches the symbol.
-  # options are :me, :group, or :user
+  # options are :none, :me, :group, or :user
   #
   def context?(symbol)
-    return false unless @context
     case symbol
-      when :me then @context.is_a?(Context::Me)
+      when :none  then @context.nil?
+      when :me    then @context.is_a?(Context::Me)
       when :group then @context.is_a?(Context::Group)
-      when :user then @context.is_a?(Context::User)
+      when :user  then @context.is_a?(Context::User)
     end
   end
 
