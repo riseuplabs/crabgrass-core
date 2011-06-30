@@ -41,7 +41,7 @@ module ActsAsLocked
 
         named_scope :access_by, lambda { |holder|
           { :joins => :keys,
-            :group => 'locked_id, locked_type',
+            :select => "DISTINCT #{self.table_name}.*",
             :conditions => Key.access_conditions_for(holder) }
         }
 

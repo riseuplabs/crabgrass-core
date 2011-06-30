@@ -8,10 +8,10 @@ class People::DirectoryController < ApplicationController
     elsif peers?
       @users = current_user.peers.paginate(pagination_params)
     else
-      @users = User.paginate(pagination_params)
+      @users = User.access_by(current_user).allows(:view).paginate(pagination_params)
     end
   end
-  
+
   protected
 
 #  VIEW_KEYWORDS = ['friends', 'peers']
