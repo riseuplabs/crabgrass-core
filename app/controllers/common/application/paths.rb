@@ -72,10 +72,13 @@ module Common::Application::Paths
 
     if page.owner_name
       path = [page.owner_name, page.name_url]
-    elsif page.created_by_id
+    elsif page.created_by_login
       # we can't use page.name_url, because there might be multiple pages
       # with the same name created by the same user.
       path = [page.created_by_login, page.friendly_url]
+    else
+      # there is some data corruption. not sure what to do.
+      path = ['page', page.friendly_url]
     end
     path << action
     path << options.delete(:id)
