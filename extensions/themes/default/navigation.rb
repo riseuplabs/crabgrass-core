@@ -164,11 +164,27 @@ define_navigation do
   ##
  
   global_section :group do
-    visible { @group }
     label  "Groups"
     url    { groups_directory_path }
     active { controller?('groups/') or @group or context?(:group) }
     html    :partial => '/layouts/global/nav/groups_menu'
+
+    context_section :no_context do
+      visible { context?(:none) }
+      active  { context?(:none) }
+
+      local_section :all do
+        label "All"
+        url { group_directory_path }
+        active { params[:path].empty? }
+      end
+
+      local_section :mygroups do
+        label "My Groups"
+        url { group_directory_path(:path => ['my']) }
+        active { params[:path].try.include?('my') }
+      end
+    end
 
     context_section :home do
       label  "Home"
@@ -269,17 +285,17 @@ define_navigation do
   ## GROUPS DIRECTORY
   ##
 
-  global_section :group_directory do
-    visible { @group.nil? }
-    label  "Groups"
-    url    { groups_directory_path }
-    active { controller?('groups/') }
-    html   :partial => '/layouts/global/nav/groups_menu'
+#  global_section :group_directory do
+#    visible { @group.nil? }
+#    label  "Groups"
+#    url    { groups_directory_path }
+#    active { controller?('groups/') }
+#    html   :partial => '/layouts/global/nav/groups_menu'
 ##    section :place do
 ##    end
 ##    section :location do
 ##    end
-  end
+#  end
 
 end
 

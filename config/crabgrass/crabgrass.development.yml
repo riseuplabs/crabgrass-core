@@ -50,6 +50,10 @@ enabled_languages:
   - ar
   - de
 
+committees: false
+councils: false
+networks: false
+
 ##
 ## SITES
 ##

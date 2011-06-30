@@ -25,7 +25,7 @@ module Common::Page::ListingTableHelper
   end
 
   def cell_title(page)
-    link_to(h(page.title), page_url(page))
+    link_to(h(page.title), page_path(page))
   end
 
   ##

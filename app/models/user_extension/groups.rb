@@ -48,8 +48,9 @@ module UserExtension::Groups
         def councils
           self.select{|group|group.council?}
         end
-        def recently_active
-          find(:all, :limit => 10, :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
+        def recently_active(options={})
+          options[:limit] ||= 13
+          find(:all, :limit => options[:limit], :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
         end
       end
 

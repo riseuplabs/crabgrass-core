@@ -7,8 +7,8 @@ module Common::Application::ContextNavigation
 
   def self.included(base)
     base.class_eval do
-      helper_method :get_context
-      helper_method :get_navigation
+      helper_method :current_context
+      helper_method :current_navigation
     end
   end
 
@@ -22,13 +22,27 @@ module Common::Application::ContextNavigation
   ##
 
   #
-  # In the layout, this is called to set @context. But we also want @context
-  # set for the controller, it is set here as well. Awkward, but less so than
-  # how it used to be.
+  # get access to the current context. 
   #
-  def get_context
-    @context = setup_context()
-    return @context
+  def current_context
+    @context ||= begin
+      context = setup_context() # should be defined by the current controller.
+
+      # Typically, the correct @user or @group should be loaded in
+      # by the dispatcher. However, there might arise cases where the
+      # url does not actually contain the correct entity for the
+      # current context. In these cases, we ensure @group or @user is
+      # set, as appropriate.
+
+      if context
+        if @user.nil? and context.is_a?(Context::User)
+          @user = context.entity
+        elsif @group.nil? and context.is_a?(Context::Group)
+          @group = context.entity
+        end
+      end
+      context
+    end
   end
 
   #
@@ -41,17 +55,19 @@ module Common::Application::ContextNavigation
   # I don't see any reason why a controller would want to override this, but they
   # could if they really wanted to.
   #
-  def get_navigation
-    navigation = {}
-    navigation[:global] = current_theme.navigation.root
-    if navigation[:global]
-      navigation[:context] = navigation[:global].currently_active_item
-      if navigation[:context]
-        navigation[:local] = navigation[:context].currently_active_item
+  def current_navigation
+    @navigation ||= begin
+      navigation = {}
+      navigation[:global] = current_theme.navigation.root
+      if navigation[:global]
+        navigation[:context] = navigation[:global].currently_active_item
+        if navigation[:context]
+          navigation[:local] = navigation[:context].currently_active_item
+        end
       end
+      navigation = setup_navigation(navigation) # allow controller change to modify @navigation
+      navigation
     end
-    navigation = setup_navigation(navigation) # allow controller change to modify @navigation
-    return navigation
   end
 
   ##
