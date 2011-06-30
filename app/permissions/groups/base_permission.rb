@@ -87,15 +87,18 @@ module Groups::BasePermission
   ##
 
   def may_show_subcommittees_of_group?(group = @group)
+    return false if !Conf.committees
     return false if group.parent_id
     current_user.may? :see_committees, group
   end
 
   def may_create_subcommittees?(group = @group)
+    return false if !Conf.committees
     current_user.may?(:admin, group) and group.parent_id.nil?
   end
 
   def may_show_networks_of_group?(group = @group)
+    return false if !Conf.networks
     return false if group.parent_id
     current_user.may? :see_networks, group
   end

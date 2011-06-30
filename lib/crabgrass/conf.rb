@@ -70,6 +70,9 @@ class Conf
   cattr_accessor :text_editor
   cattr_accessor :use_full_geonames_data
   cattr_accessor :remote_processing
+  cattr_accessor :committees
+  cattr_accessor :councils
+  cattr_accessor :networks
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -129,6 +132,9 @@ class Conf
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
     self.remote_processing = false
+    self.committees = true
+    self.councils = true
+    self.networks = true
   end
 
   def self.load(filename)
