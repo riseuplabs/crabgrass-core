@@ -75,6 +75,14 @@ define_navigation do
 
     end
 
+    context_section :calendar do
+      label  "Calendar"
+      url    { events_path }
+      active { controller?('events') }
+      icon   :date
+    end
+
+
     context_section :messages do
       label  "Messages"
       url    { me_discussions_path }
@@ -198,6 +206,13 @@ define_navigation do
       icon   :page_white_copy
       url    { group_pages_path(@group) }
       active { page_controller? }
+    end
+
+    context_section :calendar do
+      label  "Calendar"
+      url    { events_path }
+      active { controller?('events') }
+      icon   :date
     end
 
     context_section :members do
