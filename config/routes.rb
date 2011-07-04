@@ -48,6 +48,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
     me.resources :requests
+    me.resources :events
     me.resources :avatars
   end
 
@@ -110,6 +111,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :committees
     groups.resources :invites
     groups.resources :requests
+    groups.resources :events
     groups.resources :permissions
     groups.resources :activities
     groups.resource  :profile, :controller => 'profile'
@@ -151,11 +153,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
   map.connect '/pages/:controller/:page_id/:action', :controller => /.*_page/ # /pages\/[^\/]+/
-
-  ## 
-  ## EVENTS
-  ## 
-  map.resources :events
 
   ##
   ## DEFAULT ROUTE
