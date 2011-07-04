@@ -77,8 +77,8 @@ define_navigation do
 
     context_section :calendar do
       label  "Calendar"
-      url    { events_path }
-      active { controller?('events') }
+      url    { me_events_path }
+      active { controller?('me/events') }
       icon   :date
     end
 
@@ -210,8 +210,8 @@ define_navigation do
 
     context_section :calendar do
       label  "Calendar"
-      url    { events_path }
-      active { controller?('events') }
+      url    { group_events_path(@group) }
+      active { controller?('groups/events') }
       icon   :date
     end
 

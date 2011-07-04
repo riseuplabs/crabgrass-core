@@ -1,0 +1,3 @@
+module Common::Events
+
+end
