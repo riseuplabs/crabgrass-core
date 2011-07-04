@@ -11,11 +11,10 @@ class PageHistoryTest < ActiveSupport::TestCase
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    
+
     @user = User.make :login => "pepe"
     User.current = @user
-    @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host")
-    @page = Page.make_owned_by(:site => @site, :user => @user, :owner => @user, :access => 1)
+    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1)
   end
 
   def teardown
@@ -43,7 +42,7 @@ class PageHistoryTest < ActiveSupport::TestCase
 
     page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago
     PageHistory.create!(:user => @user, :page => page)
-    assert_not_change_updated_at page 
+    assert_not_change_updated_at page
 
     page = Page.make
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
@@ -126,10 +125,10 @@ class PageHistoryTest < ActiveSupport::TestCase
 
     assert_equal 2, PageHistory.recipients_for_digest_notifications(@page).count
 
-    # this should not receive notifications because he has it disabled 
+    # this should not receive notifications because he has it disabled
     assert !PageHistory.recipients_for_digest_notifications(@page).include?(user)
 
-    # this should not receive notifications because he has Single enabled 
+    # this should not receive notifications because he has Single enabled
     assert !PageHistory.recipients_for_digest_notifications(@page).include?(user_a)
 
     # this should receibe notifications because he has it enabled
@@ -139,9 +138,9 @@ class PageHistoryTest < ActiveSupport::TestCase
 
   def test_send_digest_pending_notifications
     PageHistory.delete_all
-    user_a = User.make :receive_notifications => "Digest" 
-    user_b = User.make :receive_notifications => "Digest" 
-    user_c = User.make :receive_notifications => "Single" 
+    user_a = User.make :receive_notifications => "Digest"
+    user_b = User.make :receive_notifications => "Digest"
+    user_c = User.make :receive_notifications => "Single"
 
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
     UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
@@ -157,7 +156,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
 
     last_state = Conf.paranoid_emails
-    Conf.paranoid_emails = true 
+    Conf.paranoid_emails = true
     PageHistory.send_digest_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
@@ -177,20 +176,20 @@ class PageHistoryTest < ActiveSupport::TestCase
     user_a = User.make :login => "user_a", :receive_notifications => "Digest"
     user_b = User.make :login => "user_b", :receive_notifications => "Single"
     user_c = User.make :login => "user_c", :receive_notifications => "Single"
-    
+
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
     UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
     UserParticipation.make_unsaved(:page => @page, :user => user_c, :watch => true).save!
 
     assert_equal 2, PageHistory.recipients_for_single_notification(PageHistory.last).count
-    
+
     PageHistory.last.update_attribute(:user, user_c)
     assert_equal 1, PageHistory.recipients_for_single_notification(PageHistory.last).count
 
-    # this should not receive notifications because he has it disabled 
+    # this should not receive notifications because he has it disabled
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user)
 
-    # this should not receive notifications because he has Digest enabled 
+    # this should not receive notifications because he has Digest enabled
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_a)
 
     # this should receibe notifications because he has it enabled
@@ -198,20 +197,20 @@ class PageHistoryTest < ActiveSupport::TestCase
 
     # this should not receive_notifications because he was the performer
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_c)
-  end  
+  end
 
   def test_send_pending_notifications
-    user_a = User.make :receive_notifications => "Single" 
+    user_a = User.make :receive_notifications => "Single"
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
 
     last_state = Conf.paranoid_emails
-    Conf.paranoid_emails = false 
+    Conf.paranoid_emails = false
     PageHistory.send_single_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
 
-    Conf.paranoid_emails = last_state 
+    Conf.paranoid_emails = last_state
     PageHistory.send_single_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
@@ -232,6 +231,6 @@ class PageHistoryTest < ActiveSupport::TestCase
   def assert_not_change_updated_at(page)
     last_updated_at = page.updated_at
     page.reload
-    assert_equal page.updated_at, last_updated_at 
+    assert_equal page.updated_at, last_updated_at
   end
 end

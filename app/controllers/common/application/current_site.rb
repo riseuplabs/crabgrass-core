@@ -18,8 +18,7 @@ module Common::Application::CurrentSite
         site ||= Site.default
         site ||= Site.new(:domain => host, :name => 'custom')
         Site.current = site
-        # ^^ not so nice, but required for now. used by i18n and
-        # by acts_as_site_limited
+        # ^^ not so nice, but required for now. used by i18n
       end
     else
       Site.new()

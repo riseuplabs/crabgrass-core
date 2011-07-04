@@ -60,8 +60,6 @@ class Site < ActiveRecord::Base
 
   # this is evil, but used in several important places:
   # (1) for i18n, to be able to customize the strings on a per site basis
-  # (2) acts_as_site_limited, to be able to automatically limit all queries
-  #     to the current site.
   def self.current; Thread.current[:site]; end
   def self.current=(site); Thread.current[:site] = site; end
 

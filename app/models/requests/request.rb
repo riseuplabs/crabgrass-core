@@ -30,8 +30,6 @@
 #
 class Request < ActiveRecord::Base
 
-  acts_as_site_limited
-
   belongs_to :created_by, :class_name => 'User'
   belongs_to :approved_by, :class_name => 'User'
 
@@ -113,7 +111,7 @@ class Request < ActiveRecord::Base
   }
 
   # maybe we should add an "invite?" column?
-  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']} 
+  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']}
 
   before_validation_on_create :set_default_state
   def set_default_state
