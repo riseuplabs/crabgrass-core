@@ -183,13 +183,13 @@ define_navigation do
 
       local_section :all do
         label "All"
-        url { group_directory_path }
+        url { groups_directory_path }
         active { params[:path].empty? }
       end
 
       local_section :mygroups do
         label "My Groups"
-        url { group_directory_path(:path => ['my']) }
+        url { groups_directory_path(:path => ['my']) }
         active { params[:path].try.include?('my') }
       end
     end
