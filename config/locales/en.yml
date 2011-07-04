@@ -1385,8 +1385,8 @@ en:
   task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
   task_list_page_display: "Task List"
 
-  #event_page_description: "I wish that this worked."
-  #event_page_display: "Event"
+  event_page_description: "A calendar event."
+  event_page_display: "Event"
 
   ##
   ## PAGE TYPE GROUPINGS

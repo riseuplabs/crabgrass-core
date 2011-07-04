@@ -36,6 +36,7 @@ available_page_types:
   - AssetPage
   - DiscussionPage
   - WikiPage
+  - EventPage
 
 theme: blueberry
 
