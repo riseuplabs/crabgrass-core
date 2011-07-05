@@ -4,10 +4,10 @@ class Event < ActiveRecord::Base
   format_attribute :description
 
   #validates_presence_of :location
-  validates_presence_of :starts_at
-  validates_presence_of :ends_at
+  #  validates_presence_of :starts_at # only commented out to test
+ ##  validates_presence_of :ends_at # only commented out to test
 
-  delegate :owner_name, :to => :page
+  #delegate :owner_name, :to => :page # only commented out to test
 
   #def page
   #  pages.first || parent_page
