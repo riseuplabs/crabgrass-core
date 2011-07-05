@@ -22,6 +22,7 @@ class Me::PagesController < Me::BaseController
       {:active => true,  :visible => true, :html => {:partial => 'common/pages/search/controls_active'}},
       {:active => false, :visible => true, :html => {:partial => 'common/pages/search/controls_possible'}}
     ]
+    return nav
   end
 
   # 

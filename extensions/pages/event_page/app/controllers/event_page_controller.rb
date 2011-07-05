@@ -9,6 +9,9 @@ class EventPageController < Pages::BaseController
   end
 
   def update
+    @event.update_attributes params[:event]
+    success if @event.valid?
+    redirect_to page_url(@page, :action => 'edit')
   end
 
 
