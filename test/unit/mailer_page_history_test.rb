@@ -10,8 +10,13 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
     @user_a = User.make :login => "miguel", :display_name => "Miguel Bakunin"
     @user_b = User.make :login => "anselme", :display_name => "Anselme Belgarin"
     User.current = @user
-    @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host")
-    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1, :site => @site)
+    @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host", :default => true)
+    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1)
+    enable_site_testing
+  end
+
+  def teardown
+    disable_site_testing
   end
 
   def test_send_single_notification

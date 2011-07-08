@@ -15,6 +15,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     @user = User.make :login => "pepe"
     User.current = @user
     @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1)
+    @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host", :default => true)
   end
 
   def teardown
