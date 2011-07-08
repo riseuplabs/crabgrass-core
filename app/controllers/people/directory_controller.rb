@@ -3,7 +3,9 @@ class People::DirectoryController < ApplicationController
 # will need permissions, pagination, improved display
 
   def index
-    if friends?
+    if !logged_in?
+      @users = User.access_by(:public).allows(:view).paginate(pagination_params)
+    elsif friends?
       @users = current_user.friends.paginate(pagination_params)
     elsif peers?
       @users = current_user.peers.paginate(pagination_params)
