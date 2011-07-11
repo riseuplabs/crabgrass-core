@@ -286,13 +286,6 @@ define_navigation do
         url    { group_profile_path(@group) }
         active { controller?('groups/profile') }
       end
-
-      local_section :requests do
-        visible { may_admin_requests? }
-        label  { :requests.t }
-        url    { group_requests_path(@group) }
-        active { controller?('groups/requests') }
-      end
     end
   end
 
