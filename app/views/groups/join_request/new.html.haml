@@ -1,0 +1,7 @@
+%div 
+You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: 
+= link_to 'my requests', me_requests_path
+
+- form_tag(:controller => 'groups/join_request', :action => 'create', :id => @group, :method => :post) do
+    = submit_tag I18n.t(:send_request_button), :name => 'send'
+    = submit_tag I18n.t(:cancel), :name => 'cancel'

@@ -5,7 +5,9 @@ module Groups::RequestsPermission
   def may_create_join_request?(group=@group)
     logged_in? and
     group and
-    group.has_access? :request_membership
+    current_user.may?(:request_membership, group) and
+    !current_user.member_of?(group)
+    # and ensure request doesn't already exist? no, just show difft link then
   end
 
   def may_create_invite_request?(group=@group)

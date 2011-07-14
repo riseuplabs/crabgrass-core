@@ -11,7 +11,9 @@ module Groups::MembershipsPermission
 
   def may_join_memberships?(group=@group)
     logged_in? and
-    (current_user.may?(:admin, group) or group.open_membership?)
+    group and
+    (current_user.may?(:admin, group) or group.open_membership?) and
+    !current_user.member_of?(group)
   end
 
   # for now, there is only an edit ui for committees

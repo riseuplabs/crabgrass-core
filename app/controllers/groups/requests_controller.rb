@@ -1,6 +1,7 @@
 
 class Groups::RequestsController < Groups::BaseController
 
+  before_filter :login_required # we want this
   permissions 'requests'
   include_controllers 'common/requests'
 

@@ -876,6 +876,7 @@ en:
   request_join_group_link: "Request to Join %{group_type}"
   send_join_request: "Send request to join %{group_name}"
   group_destroyed_message: "%{group_type} Destroyed"
+  request_exists: "%{request_type} membership request already exists"
 
   remove_group_link: "Remove Group"
 

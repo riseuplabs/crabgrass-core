@@ -1,0 +1,6 @@
+%div 
+Join this group!
+
+- form_tag(:controller => 'groups/join', :action => 'create', :id => @group, :method => :post) do
+    = submit_tag I18n.t(:send_request_button), :name => 'send'
+    = submit_tag I18n.t(:cancel), :name => 'cancel'

@@ -13,9 +13,18 @@ module Groups::LinksHelper
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
     if may_join_memberships?
-      link_to(:join_group_link.t(:group_type => @group.group_type), '#')
+#      link_to(:request_join_group_link.t(:group_type => @group.group_type), new_group_join_path(@group))
+     # link_to(:join_group_link.t(:group_type => @group.group_type), '/groups/join/create/'+@group.id.to_s, :method => :post)
+      #link_to(:join_group_link.t(:group_type => @group.group_type), '/groups/'+@group.id.to_s+'/join', :action=> 'creat', :method => :post)
+      link_to(:join_group_link.t(:group_type => @group.group_type), new_group_join_path(@group))
+      #link_to(:join_group_link.t(:group_type => @group.group_type), create_group_join_path(@group), :method => :post)
+
     elsif may_create_join_request?
-      link_to(:request_join_group_link.t(:group_type => @group.group_type), '#')
+      if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
+        :request_exists.t(:request_type => :pending)
+      else
+        link_to(:request_join_group_link.t(:group_type => @group.group_type), new_group_join_request_path(@group))
+      end
     end
   end
 
