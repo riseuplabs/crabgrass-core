@@ -1,4 +1,4 @@
-class Groups::JoinRequestController < Groups::BaseController
+class Groups::JoinRequestsController < Groups::BaseController
 
   #before_filter :login_required # hmm, not sure. this doesn't work
   permissions 'requests'
@@ -8,6 +8,11 @@ class Groups::JoinRequestController < Groups::BaseController
   end
 
   def create
+    if params[:cancel]
+      redirect_to entity_url(@group)
+      return
+    end
+
     req = RequestToJoinYou.create! :recipient => @group, :created_by => current_user # create! ?
     if req.valid?
       success(:now, I18n.t(:invite_sent, :recipient => req.recipient.display_name))

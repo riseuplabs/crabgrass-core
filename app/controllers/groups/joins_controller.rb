@@ -1,4 +1,4 @@
-class Groups::JoinController < Groups::BaseController
+class Groups::JoinsController < Groups::BaseController
 
   #before_filter :login_required
   permissions 'requests'  
@@ -8,8 +8,7 @@ class Groups::JoinController < Groups::BaseController
   end
   
   def create
-    #return unless may_join_memberships?  #? 
-    @group.add_user!(current_user) # commented to test
+    @group.add_user!(current_user)
     redirect_to entity_url(@group)
   end
 

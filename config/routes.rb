@@ -111,8 +111,8 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :committees
     groups.resources :invites
     groups.resources :requests
-    groups.resources :join_request ##???
-    groups.resources :join ##???
+    groups.resources :join_requests
+    groups.resources :joins
     groups.resources :events
     groups.resources :permissions
     groups.resources :activities
