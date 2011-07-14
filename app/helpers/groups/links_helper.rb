@@ -15,9 +15,10 @@ module Groups::LinksHelper
     if may_join_memberships?
 #      link_to(:request_join_group_link.t(:group_type => @group.group_type), new_group_join_path(@group))
      # link_to(:join_group_link.t(:group_type => @group.group_type), '/groups/join/create/'+@group.id.to_s, :method => :post)
-      #link_to(:join_group_link.t(:group_type => @group.group_type), '/groups/'+@group.id.to_s+'/join', :action=> 'creat', :method => :post)
-      link_to(:join_group_link.t(:group_type => @group.group_type), new_group_join_path(@group))
-      #link_to(:join_group_link.t(:group_type => @group.group_type), create_group_join_path(@group), :method => :post)
+      link_to(:join_group_link.t(:group_type => @group.group_type), '/groups/'+@group.name+'/join', :method => :post) #pass :action => :create ??
+      #link_to(:join_group_link.t(:group_type => @group.group_type), new_group_join_path(@group)) #works
+      #link_to(:join_group_link.t(:group_type => @group.group_type), group_join_path(@group), :method => :post)
+
 
     elsif may_create_join_request?
       if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
@@ -30,7 +31,7 @@ module Groups::LinksHelper
 
   def leave_group_link
     if may_leave_memberships?
-      link_to( :leave_group_link.t(:group_type => @group.group_type), '#')
+      link_to( :leave_group_link.t(:group_type => @group.group_type), '/groups/'+@group.name+'/join', :method => :delete) # will want a confirm
     end
   end
 
