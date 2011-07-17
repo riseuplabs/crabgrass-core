@@ -3,6 +3,15 @@
 //
 
 //
+// in general, horizontal resizing messes up the layout. 
+// so, if you want that, enable it explicitly.
+//
+
+textarea {
+  resize: vertical;
+}
+
+//
 // this seems to make form elements line up better, 
 // especially in chrome:
 //

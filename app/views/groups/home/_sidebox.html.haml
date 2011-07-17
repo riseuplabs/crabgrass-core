@@ -1,14 +1,25 @@
--# this is just a stub for now
+- #
+- # Currently, this assumes the sidebox has padding on the left and right (for picture).
+- # If the theme ever supports sidebox without padding, this may need to take that into account.
+- # 
 
-%i
-  = @group.profiles.public.summary_html
+- if @group.profiles.public.picture
+  - sidebox_inside_width = current_theme.columns_width(current_theme.local_sidecolumn_width) - 2 * current_theme.resolve_width(current_theme.local_content_padding)
+  = picture_tag(@group.profiles.public.picture, :max_width => sidebox_inside_width, :min_width => sidebox_inside_width)
+
+- if @group.profiles.public.summary.any?
+  .p
+    = @group.profiles.public.summary_html
 
 .p
-  Created on 
-  = friendly_date @group.created_at
-  %br
-  = :group_membership_count.t(:count => @group.users.count)
+  - if @group.profiles.public.place.any?
+    %div
+      %b= h @group.profiles.public.place
+  %div= :group_membership_count.t(:count => @group.users.count)
+
+-# Created on 
+-# = friendly_date @group.created_at
 
 %div
-  = link_span(:bullet, more_info_link, join_group_link, leave_group_link)
-
+  -# link_span(:bullet, more_info_link, join_group_link, leave_group_link)
+  = link_span(:bullet, join_group_link, leave_group_link)

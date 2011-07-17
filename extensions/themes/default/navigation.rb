@@ -283,7 +283,7 @@ define_navigation do
       local_section :profile do
         visible { may_edit_profile? }
         label  { :profile.t }
-        url    { group_profile_path(@group) }
+        url    { edit_group_profile_path(@group) }
         active { controller?('groups/profile') }
       end
 
