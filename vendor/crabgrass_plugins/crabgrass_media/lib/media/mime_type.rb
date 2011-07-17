@@ -54,6 +54,22 @@ module Media
       return mimetype
     end
 
+    #
+    # perhaps use http://code.google.com/p/mimetype-fu/
+    # for all this?
+    def self.type_for(filename)
+      self.mime_type_from_extension(filename)
+      # todo: add type_from_file_command if ext doesn't pan out.
+    end
+
+    #def type_from_file_command(filename)
+    #  #  On BSDs, `file` doesn't give a result code of 1 if the file doesn't exist.
+    #  type = (filename.match(/\.(\w+)$/)[1] rescue "octet-stream").downcase
+    #  mime_type = (Paperclip.run("file", "-b --mime-type :file", :file => filename).split(':').last.strip rescue "application/x-#{type}")
+    #  mime_type = "application/x-#{type}" if mime_type.match(/\(.*?\)/)
+    #  mime_type
+    #end
+
     def self.description_from_mime_type(mime_type)
       lookup(mime_type,DESCRIPTION) || lookup(mime_group(mime_type),DESCRIPTION) || lookup('default',DESCRIPTION)
     end

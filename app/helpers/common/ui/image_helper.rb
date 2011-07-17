@@ -5,6 +5,12 @@
 
 module Common::Ui::ImageHelper
 
+  IMAGE_SIZES = Hash.new(200).merge({
+    :small  => 64,
+    :medium => 200,
+    :large  => 500
+  }).freeze
+
   ##
   ## ICON
   ##
@@ -262,6 +268,31 @@ module Common::Ui::ImageHelper
     elsif media.respond_to?(:is_video?) and media.is_video?
       media.build_embed
     end
+  end
+
+  ##
+  ## PICTURES
+  ##
+
+  #
+  # Displays a Picture object as the background image of an empty div.
+  #
+  # 'size' can be either a Symbol :small, :medium, :large, or a Hash
+  # of the format used by Picture geometry (see picture.rb)
+  #
+  def picture_tag(picture, size=:medium)
+    if size.is_a? Symbol
+      pixels = IMAGE_SIZES[size];
+      geometry = {:max_width => pixels, :min_width => pixels, :max_height => pixels*4}
+    else
+      geometry = size
+    end
+    picture.add_geometry!(geometry)
+    width, height = picture.size(geometry)
+    style = "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [
+      width, height, picture.url(geometry)
+    ]
+    content_tag :div, '', :style => style
   end
 
 end

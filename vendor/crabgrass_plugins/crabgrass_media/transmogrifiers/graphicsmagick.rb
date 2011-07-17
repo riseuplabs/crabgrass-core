@@ -7,8 +7,12 @@ unless defined?(GRAPHICSMAGICK_COMMAND)
   GRAPHICSMAGICK_COMMAND = `which gm`.chomp
 end
 
+#
+# this is a little bit brittle, but I am not sure how else to do it.
+#
 unless defined?(GRAPHICSMAGICK_VERSION)
-   GRAPHICSMAGICK_VERSION = `#{GRAPHICSMAGICK_COMMAND} -version | head -1 | sed 's/GraphicsMagick \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/'`
+   version = `#{GRAPHICSMAGICK_COMMAND} -version | head -1`.strip.sub(/GraphicsMagick ([0-9]+\.[0-9]+\.[0-9]+).*/,'\1').split('.')
+   GRAPHICSMAGICK_VERSION = [version[0].to_i, version[1].to_i, version[2].to_i]
 end
 
 class GraphicsMagickTransmogrifier < Media::Transmogrifier
@@ -42,10 +46,14 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     # space (sometimes) and are not useful for thumbnails
     arguments = [gm_command, 'convert', '+profile', "'*'"]
     if options[:size]
-      if version_less_than('1.3.6')
-        options[:size] = options[:size].sub('^','!')
+      # handle multiple size options, if it is an array.
+      sizes = options[:size].is_a?(Array) ? options[:size] : [options[:size]]
+      sizes.each do |size|
+        if version_less_than?(1,3,6)
+          size = size.sub('^','!')
+        end
+        arguments << '-geometry' << size
       end
-      arguments << '-geometry' << options[:size]
     end
     if options[:crop]
       # we add '+0+0' because we don't want tiles, just a single image
@@ -76,15 +84,14 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     GRAPHICSMAGICK_COMMAND
   end
 
-  def version_less_than(version)
-    major, minor, tiny = version.split('.')
-    installed_major, installed_minor, installed_tiny = GRAPHICSMAGICK_VERSION.split('.')
-    if installed_major > major
+  def version_less_than?(major,minor,tiny)
+    installed_major, installed_minor, installed_tiny = GRAPHICSMAGICK_VERSION
+    if installed_major < major
       true
     elsif (installed_major == major) 
-      if (installed_minor > minor)
+      if (installed_minor < minor)
         true
-      elsif (installed_minor == minor) && (installed_tiny >= version)
+      elsif (installed_minor == minor) && (installed_tiny < tiny)
         true
       else
         false

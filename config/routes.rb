@@ -1,5 +1,9 @@
 unless defined?(FORBIDDEN_NAMES)
-  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues session static stats stylesheets theme)
+  FORBIDDEN_NAMES = %w{
+    account admin assets avatars chat code debug do groups
+    javascripts me networks page pages people pictures places issues
+    session static stats stylesheets theme
+  }
 end
 
 #
@@ -30,7 +34,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
-
+  map.pictures 'pictures/:id1/:id2/:geometry.:format', :controller => 'pictures', :action => 'show'
+  
   ##
   ## ME
   ##
