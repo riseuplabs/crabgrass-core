@@ -8,13 +8,21 @@ module Common::Application::Paths
   def self.included(base)
     base.class_eval do
       helper_method :entity_path
+      helper_method :entity_url
+      helper_method :user_path
+      helper_method :user_url
+      helper_method :group_path
+      helper_method :group_url
+
       helper_method :page_path
       helper_method :page_url
       helper_method :page_xpath
       helper_method :page_xurl
       helper_method :new_page_path
+
       helper_method :me_path
       helper_method :me_url
+
       helper_method :user_avatar_path
       helper_method :build_query_string
     end
@@ -33,10 +41,14 @@ module Common::Application::Paths
       "/"+entity.name
     end
   end
+  alias_method :user_path, :entity_path
+  alias_method :group_path, :entity_path
 
   def entity_url(entity)
     urlize entity_path(entity)
   end
+  alias_method :user_url, :entity_url
+  alias_method :group_url, :entity_url
 
   ##
   ## PAGE PATHS
