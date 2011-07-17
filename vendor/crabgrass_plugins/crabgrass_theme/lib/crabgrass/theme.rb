@@ -24,6 +24,7 @@ module Crabgrass
     include Crabgrass::Theme::Renderer
     include Crabgrass::Theme::Cache
     include Crabgrass::Theme::Loader
+    include Crabgrass::Theme::ColumnCalculator
 
     THEME_ROOT = RAILS_ROOT + '/extensions/themes'  # where theme configs live
     SASS_ROOT  = RAILS_ROOT + '/app/stylesheets'    # where the sass source files live
