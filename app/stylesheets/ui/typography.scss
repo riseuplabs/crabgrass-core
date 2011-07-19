@@ -14,6 +14,11 @@ p, ol, ul, td, div {
 .p {
   margin-top: 1em;
   margin-bottom: 1em;
+  &.first {
+    // if class .first is added, remove the top margin
+    // because it will create an extra undesired leading space.
+    margin-top: 0;
+  }
 }
 
 // simulate a blockquote.

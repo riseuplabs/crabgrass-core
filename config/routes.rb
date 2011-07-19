@@ -97,8 +97,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people, :namespace => 'people/' do |people|
     people.resource  :home, :only => [:show]
     people.pages     'pages/*path', :controller => 'pages'
-    people.resources :messsages
+    people.resources :messages
     people.resources :activities
+    people.resource :friend_request, :only => [:new, :create, :destroy]
   end
 
   ##

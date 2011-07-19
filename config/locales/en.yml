@@ -51,6 +51,7 @@ en:
   created_by_entity: "Created by %{entity}"
   approved_by_entity: "Approved by %{entity}"
   rejected_by_entity: "Rejected by %{entity}"
+  total: "%{count} total"
   #created_when_by: "Created by %{user} on %{when}."
   #approved_when_by: "Approved by %{user} on %{when}."
 
@@ -98,15 +99,15 @@ en:
   profile: "Profile"
   all_content: "All Content"
   more_information: "More Information"
-  required: "(required)"
   more: "more"
   about: "about"
-  total: "%{count} total"
   affiliations: "Affiliations"
   pages: "Pages"
   comments: "Comments"
   browse: "Browse"
   discover: "Discover"
+  optional: "Optional"
+  required: "Required"
 
   recent_activity: "Recent Activity"
   activity: "Activity"
@@ -951,32 +952,42 @@ en:
   ## REQUESTS
   ##
 
-  contact_request_message_label: "Tell %{user} why you want to be their friend."
-  add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  #
+  # general
+  #
 
-  network_invite_info: "Enter the names of the groups you would like to invite to join this network."
-
-  approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
-  approve_contact_request: "Approve contact request"
-  recipient_tip: "Separate recipients with commas, spaces, or new lines."
-
-  destroy: "destroy"
-  approve: "approve"
-  reject: "reject"
-  ignore: "ignore"
-  pending: "pending"
-  rejected: "rejected"
-  approved: "approved"
-
-  my_requests_link: "my requests"
+  destroy: "Destroy"
+  approve: "Approve"
+  reject: "Reject"
+  ignore: "Ignore"
+  pending: "Pending"
+  rejected: "Rejected"
+  approved: "Approved"
+  my_requests_link: "My requests"
   all_requests: "All Requests"
   requests_to_me: "Requests to me"
   requests_from_me: "Requests from me"
   incoming: "Incoming"
   outgoing: "Outgoing"
-  state: "state"
-  action: "action"
+  state: "State"
+  action: "Action"
+  request_pending: "%{request} is pending approval"
+
+  #
+  # friends
+  #
+
+  friend_request_message_label: "Tell %{user} why you want to be their friend."
+  friend_request_sent: "Friend request has been sent"
+  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
+
+  #
+  # group membership
+  #
+
+  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  network_invite_info: "Enter the names of the groups you would like to invite to join this network."
+  recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
   #
   # request types:
@@ -1047,15 +1058,11 @@ en:
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
   invite_sent: "Invitation sent to %{recipient}"
   invites_sent: "%{count} invitations sent"
-  contact_request_sent: "Friend request has been sent"
+
   request_to_join_sent: "Request to join has been sent"
   request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   removal_requested: "Removal Requested"
-  remove_contact_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
-  contact_removed: "%{user} has been removed from your contact list."
-  not_contact_of: "You are not the contact of %{user}."
-  already_contacts_info: "You are already the friend of this person."
   try_again: "Try Again"
   invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
   invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
@@ -1070,8 +1077,6 @@ en:
   invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for %{recipient}"
   not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
-
-
 
   ##
   ## PAGES
@@ -1867,33 +1872,3 @@ en:
   page_make_public_link: "make public"
   page_make_public_pending_link: "make public (pending)"
 
-  # COPIED FROM activerecord-2.3.5 gem
-  activerecord:
-    errors:
-      # The values :model, :attribute and :value are always available for interpolation
-      # The value :count is available when applicable. Can be used for pluralization.
-      messages:
-        inclusion: "is not included in the list"
-        exclusion: "is reserved"
-        invalid: "is invalid"
-        confirmation: "doesn't match confirmation"
-        accepted: "must be accepted"
-        empty: "can't be empty"
-        blank: "can't be blank"
-        too_long: "is too long (maximum is %{count} characters)"
-        too_short: "is too short (minimum is %{count} characters)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "has already been taken"
-        not_a_number: "is not a number"
-        greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"
-        record_invalid: "Validation failed: %{errors}"
-        # Append your own errors here or at the model/attributes scope.
-
-      full_messages:
-        format: "%{attribute} %{message}"

@@ -10,10 +10,10 @@
 #  end
 
 class Post < ActiveRecord::Base
-  extend PathFinder::FindByPath
+  #extend PathFinder::FindByPath
 
   ##
-  ## associations
+  ## ASSOCIATIONS
   ##
 
   acts_as_rateable
@@ -25,7 +25,7 @@ class Post < ActiveRecord::Base
   after_destroy :post_destroyed
 
   ##
-  ## named scopes
+  ## FINDERS
   ##
 
   named_scope :visible, :conditions => 'deleted_at IS NULL'
@@ -33,11 +33,12 @@ class Post < ActiveRecord::Base
   named_scope :by_created_at, :order => 'created_at DESC'
 
   ##
-  ## attributes
+  ## ATTIBUTES
   ##
 
   format_attribute :body
-  validates_presence_of :discussion, :user, :body
+  validates_presence_of :user, :body
+
   alias :created_by :user
 
   attr_accessor :in_reply_to    # the post this post was in reply to.
@@ -47,7 +48,7 @@ class Post < ActiveRecord::Base
                                 # this post is being sent to. used by activities.
 
   ##
-  ## methods
+  ## METHODS
   ##
 
   # build a new post in memory, setting up the associations which need to be in
@@ -169,7 +170,7 @@ class Post < ActiveRecord::Base
   def post_destroyed(force_decrement=false)
     # don't decrement if post is already marked deleted.
     decrement = force_decrement || self.deleted_at.nil?
-    discussion.post_destroyed(self, decrement)
+    discussion.post_destroyed(self, decrement) if discussion
   end
 
 end

@@ -7,7 +7,7 @@
 
 - @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_user(@user), pagination_params)
 
-%h2= :recent_pages.t
+%h2.p.first= :recent_pages.t
 = render :partial => 'common/pages/list'
 
 

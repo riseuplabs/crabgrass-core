@@ -2,16 +2,20 @@
 - # Currently, this assumes the sidebox has padding on the left and right (for picture).
 - # If the theme ever supports sidebox without padding, this may need to take that into account.
 - # 
+- anything = false
 
 - if @profile.picture
+  - anything = true
   - sidebox_inside_width = current_theme.columns_width(current_theme.local_sidecolumn_width) - 2 * current_theme.resolve_width(current_theme.local_content_padding)
   = picture_tag(@profile.picture, :max_width => sidebox_inside_width, :min_width => sidebox_inside_width)
 
 - if @profile.summary.any?
+  - anything = true
   .p
     = @profile.summary_html
 
 - if @profile.organization.any?
+  - anything = true
   .p
     =h @profile.organization
     - if @profile.role
@@ -19,8 +23,18 @@
       %i=h @profile.role
 
 - if @profile.place.any?
+  - anything = true
   .p
     %b= h @profile.place
 
+- unless anything
+  .p.first= "(private profile)"
+
 %div
-  = link_to 'Add to friends', '#', :confirm => 'fix me'
+  - if current_user.friend_of?(@user)
+    = link_to :remove_friend_link.t, person_friend_request_path(@user), :method => :delete
+  - elsif pending_friend_request(:from => current_user, :to => @user)
+    = link_to :request_pending.t(:request => :request_to_friend.t), me_requests_path, :icon => 'clock'
+  - elsif may_request_contact?
+    = link_to_modal :request_friend_link.t, :url => new_person_friend_request_path(@user), :icon => 'plus'
+

@@ -30,7 +30,9 @@
 #
 class Request < ActiveRecord::Base
 
-  acts_as_site_limited
+  ##
+  ## ASSOCIATIONS
+  ##
 
   belongs_to :created_by, :class_name => 'User'
   belongs_to :approved_by, :class_name => 'User'
@@ -38,8 +40,8 @@ class Request < ActiveRecord::Base
   belongs_to :recipient, :polymorphic => true
   belongs_to :requestable, :polymorphic => true
 
-  belongs_to :shared_discussion, :class_name => 'Discussion'
-  belongs_to :private_discussion, :class_name => 'Discussion'
+  belongs_to :shared_discussion, :class_name => 'Discussion', :dependent => :destroy
+  belongs_to :private_discussion, :class_name => 'Discussion', :dependent => :destroy
 
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
@@ -53,6 +55,10 @@ class Request < ActiveRecord::Base
   validates_presence_of :created_by_id
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
+
+  ##
+  ## FINDERS
+  ##
 
   named_scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state.to_s]}
@@ -115,6 +121,10 @@ class Request < ActiveRecord::Base
   # maybe we should add an "invite?" column?
   named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']} 
 
+  ##
+  ## VALIDATIONS
+  ##
+
   before_validation_on_create :set_default_state
   def set_default_state
     self.state = "pending" # needed despite FSM so that validations on create will work.
@@ -125,6 +135,32 @@ class Request < ActiveRecord::Base
       errors.add_to_base(I18n.t(:permission_denied))
     end
   end
+
+  ##
+  ## ATTRIBUTES
+  ##
+
+  def name
+    self.class.name.underscore
+  end
+
+  #
+  # Allows Request.create(..., :message => 'hi')
+  #
+  def message=(msg)
+    @initial_post = msg   # see build_discussion
+  end
+
+  before_save :build_discussion
+  def build_discussion
+    if @initial_post.any?
+      self.build_shared_discussion(:post => {:body => @initial_post, :user => created_by})
+    end
+  end
+
+  ##
+  ## ACTIONS
+  ##
 
   # state one of 'approved' or 'rejected'
   # user the person doing the change
@@ -174,12 +210,8 @@ class Request < ActiveRecord::Base
     may_approve?(approved_by)
   end
 
-  def name
-    self.class.name.underscore
-  end
-
   ##
-  ## to be overridden by subclasses
+  ## TO OVERRIDE
   ##
 
   def description() end
