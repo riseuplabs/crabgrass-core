@@ -69,5 +69,12 @@ module Common::Ui::PaginationHelper
     will_paginate(things, defaults.merge(options))
   end
 
+  #
+  # returns true if the array of things is actually paginated
+  #
+  def paginated?(things)
+    things.is_a?(WillPaginate::Collection) and things.total_entries > things.per_page
+  end
+
 end
 
