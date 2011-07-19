@@ -78,73 +78,9 @@ label}</a></span>)
     end
   end
 
-
   ##
-  ## LINKS WITH ICONS
+  ## WIDGET LINKS
   ##
-
-  # makes a cool link with an icon. if you click the link, some ajax
-  # thing happens, and the icon is set to a spinner. The icon is
-  # restored when the ajax request completes.
-  def link_to_remote_with_icon(label, options, html_options={})
-    id = html_options[:id] || 'link%s'%rand(1000000)
-    icon = options.delete(:icon) || html_options.delete(:icon)
-    if html_options[:class] and html_options[:class] =~ /small_icon_button/
-      html_options[:class] = ["#{icon}_16", html_options[:class]].combine
-    else
-      html_options[:class] = ["icon", "#{icon}_16", html_options[:class]].combine
-    end
-    html_options[:id] ||= id
-
-    # don't bother with spinner for confirm links:
-    icon_options = {}
-    unless options[:confirm]
-      icon_options[:loading] = [spinner_icon_on(icon, id), options[:loading]].combine(';')
-      # i am not sure the best way to handle this. we don't want to do :complete for
-      # certain icons. For example, checkboxes change the icon, so replacing the old
-      # icon on the :complete action is a bad idea.
-      unless icon =~ /check/
-        icon_options[:complete] = [spinner_icon_off(icon, id), options[:complete]].combine(';')
-      end
-    end
-
-    link_to_remote(
-      label,
-      options.merge(icon_options),
-      html_options
-    )
-  end
-
-  def link_to_function_with_icon(label, function, html_options={})
-    icon = html_options.delete(:icon)
-    html_options[:class] = ['icon', "#{icon}_16", html_options[:class]].combine
-    link_to_function(label, function, html_options)
-  end
-
-  def link_to_remote_icon(icon, options={}, html_options={})
-    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
-    html_options[:icon] = icon
-    link_to_remote_with_icon('', options, html_options)
-  end
-
-  def link_to_function_icon(icon, function, html_options={})
-    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
-    html_options[:icon] = icon
-    link_to_function_with_icon('', function, html_options)
-  end
-
-  def link_to_with_icon(icon, label, url, options={})
-    options=options.merge(:class => "icon #{icon}_16 #{options[:class]}")
-    if url
-      link_to label, url, options
-    else
-      content_tag :a, label, options
-    end
-  end
-
-  def link_to_icon(icon, url, options={})
-    link_to_with_icon(icon, '', url, options)
-  end
 
   # 
   # Creates a link to hide and show an html element.
