@@ -66,6 +66,7 @@ module ActsAsLocked
         end
 
         def has_access?(lock, holder = User.current)
+          holder = :public if holder.is_a? UnauthenticatedUser
           if holder == User.current
             # these might be cached through AR.
             current_user_keys.open?(lock)
