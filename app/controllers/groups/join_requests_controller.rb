@@ -1,25 +1,21 @@
 class Groups::JoinRequestsController < Groups::BaseController
 
-  #before_filter :login_required # hmm, not sure. this doesn't work
-  permissions 'requests'
-
-
   def new
   end
 
   def create
     if params[:cancel]
       redirect_to entity_url(@group)
-      return
-    end
-
-    req = RequestToJoinYou.create! :recipient => @group, :created_by => current_user # create! ?
-    if req.valid?
-      success(:now, I18n.t(:invite_sent, :recipient => req.recipient.display_name))
     else
-      error(:now, "Invalid request for "+req.recipient.display_name)
+      req = RequestToJoinYou.create :recipient => @group, :created_by => current_user
+      if req.valid?
+        success(I18n.t(:invite_sent, :recipient => req.recipient.display_name))
+        redirect_to me_requests_url
+      else
+        error("Invalid request for "+req.recipient.display_name)
+        redirect_to entity_url(@group)
+      end
     end
-    redirect_to :controller=> 'me/requests', :action => :index
   end
 
   def index

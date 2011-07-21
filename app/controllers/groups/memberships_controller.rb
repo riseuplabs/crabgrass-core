@@ -1,9 +1,7 @@
-class Groups::JoinsController < Groups::BaseController
+class Groups::MembershipsController < Groups::BaseController
 
-  #before_filter :login_required
-  permissions 'requests'  
-  #include_controllers 'common/requests' #???
-   
+  permissions 'requests'
+
   def new
   end
   
@@ -14,7 +12,11 @@ class Groups::JoinsController < Groups::BaseController
 
   def destroy
     @group.remove_user!(current_user)
-    redirect_to me_home_path
+    if current_user.may?(:view, @group)
+      redirect_to entity_url(@group)
+    else
+      redirect_to me_home_url
+    end
   end
 
   protected
