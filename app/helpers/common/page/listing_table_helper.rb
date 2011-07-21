@@ -21,7 +21,7 @@ module Common::Page::ListingTableHelper
   private
 
   def row_updated_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td>#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
   end
 
   def cell_title(page)
