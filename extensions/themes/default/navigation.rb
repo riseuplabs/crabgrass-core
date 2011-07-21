@@ -238,7 +238,7 @@ define_navigation do
 
       local_section :invites do
         visible { may_create_invite_request? }
-        label   { "Send Invite Request" }
+        label   { "Send Invites" }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') && action?('new') }
       end
@@ -250,12 +250,12 @@ define_navigation do
         active  { controller?('groups/invites') && !action?('new') }
       end
 
-      local_section :membership_settings do
-        visible { may_edit_group? }
-        label   { 'Membership Settings' }
-        url     { group_permissions_path(@group, :view => 'membership') }
-        active  false
-      end
+      #local_section :membership_settings do
+      #  visible { may_edit_group? }
+      #  label   { 'Membership Settings' }
+      #  url     { group_permissions_path(@group, :view => 'membership') }
+      #  active  false
+      #end
 
     end
 
