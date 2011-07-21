@@ -48,7 +48,7 @@ module UserExtension::Users
         end
 
         def display_name
-          "Peers of #{proxy_owner.display_name}"
+          "Peers of #{proxy_owner.name}"
         end
 
         def to_sym

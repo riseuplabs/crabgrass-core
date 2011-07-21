@@ -10,8 +10,8 @@ require "#{File.dirname(__FILE__)}/../init"
 ActiveRecord::Base.establish_connection(
   :adapter  => "mysql",
   :host     => "localhost",
-  :username => "user",
-  :password => "password",
+  :username => "root",
+  :password => "",
   :database => "test_acts_as_locked"
 )
 

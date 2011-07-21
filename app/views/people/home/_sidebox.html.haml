@@ -31,10 +31,5 @@
   .p.first= "(private profile)"
 
 %div
-  - if current_user.friend_of?(@user)
-    = link_to :remove_friend_link.t, person_friend_request_path(@user), :method => :delete
-  - elsif pending_friend_request(:from => current_user, :to => @user)
-    = link_to :request_pending.t(:request => :request_to_friend.t), me_requests_path, :icon => 'clock'
-  - elsif may_request_contact?
-    = link_to_modal :request_friend_link.t, :url => new_person_friend_request_path(@user), :icon => 'plus'
+  = profile_contact_link
 

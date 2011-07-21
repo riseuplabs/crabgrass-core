@@ -745,6 +745,10 @@ en:
   may_request_contact: "May request to be friends"
   may_pester: "May pester me"
   may_view: "Profile is visible"
+  may_edit: "May edit"
+  may_admin: "May admin"
+  may_burden: "May burden"
+  may_spy: "May spy"
 
   user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
   user_profile_description_may_see_contacts: "Allow people to see your list of friends."
@@ -759,6 +763,8 @@ en:
   group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
   group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
   group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
+  group_profile_description_may_edit: "I am not sure what this does."
+
 
   ##
   ## GROUPS

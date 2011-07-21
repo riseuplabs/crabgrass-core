@@ -47,30 +47,50 @@ module ActsAsLocked
       self
     end
 
-
     def bits_for_locks(locks)
       self.locked.class.bits_for_locks(locks)
     end
 
+    #
+    # this appears to be only used for testing
+    #
     def locks(options={})
       klass = self.locked.class
-      if options[:disabled]
-        locks = klass.locks_for_bits(~self.mask)
-      else
-        locks = klass.locks_for_bits(self.mask)
-      end
       postfix = klass.name.underscore
-      if options[:with_class]
-        locks.map{|l| (l.to_s + '_' + postfix).to_sym}
-      elsif options[:select_options]
-        locks.map{|l| [(l.to_s + '_' + postfix).to_sym, klass.bits_for_locks(l)]}
+      current_locks = nil
+
+      if options[:disabled]
+        current_locks = klass.locks_for_bits(~self.mask)
       else
-        locks
+        current_locks = klass.locks_for_bits(self.mask)
+      end
+
+      if options[:with_class]
+        current_locks.map{|l| (l.to_s + '_' + postfix).to_sym}
+      elsif options[:select_options]
+        current_locks.map{|l| [(l.to_s + '_' + postfix).to_sym, klass.bits_for_locks(l)]}
+      else
+        current_locks
       end
     end
 
+    def locks=(new_locks)
+      self.mask |= bits_for_locks(new_locks)
+    end
+
     def holder
-      ActsAsLocked::Key.holder_for(self.keyring_code)
+      @holder ||= self.class.holder_for(self.keyring_code)
+    end
+
+    def holder=(value)
+      self.keyring_code = self.class.code_for_holder(value)
+    end
+
+    #
+    # returns true if +key_holder+ is the holder of this key
+    #
+    def holder?(key_holder)
+     self.keyring_code == self.class.code_for_holder(key_holder).to_i
     end
 
     def self.code_for_holder(holder)
