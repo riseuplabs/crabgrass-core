@@ -33,6 +33,10 @@ p, ol, ul, td, div {
   margin-bottom: 1em;
 }
 
+//
+// LINKS
+//
+
 a {
   @if $link_underline == false {
     @include hover-link;
@@ -45,3 +49,13 @@ a {
   //  background-color: $link_visited_color;
   //}
 }
+
+//
+// WORD WRAPPING
+//
+
+.nowrap {
+  white-space: nowrap;
+}
+
+
