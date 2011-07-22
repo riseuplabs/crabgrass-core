@@ -32,7 +32,7 @@ module Common::Ui::ImageHelper
 
   def avatar_link(viewable, size='medium')
     if viewable
-      link_to avatar_for(viewable, size), url_for_entity(viewable)
+      link_to avatar_for(viewable, size), entity_path(viewable)
     end
   end
 
