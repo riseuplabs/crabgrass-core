@@ -92,7 +92,7 @@ module Groups::BasePermission
     current_user.may? :see_committees, group
   end
 
-  def may_create_subcommittees?(group = @group)
+  def may_create_committees?(group = @group)
     return false if !Conf.committees
     current_user.may?(:admin, group) and group.parent_id.nil?
   end
