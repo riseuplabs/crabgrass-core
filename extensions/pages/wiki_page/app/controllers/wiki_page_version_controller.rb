@@ -1,5 +1,5 @@
-class WikiPageVersionController < BasePageController
-  include ControllerExtension::WikiRenderer
+class WikiPageVersionController < Pages::BaseController 
+  include Common::Application::WikiRenderer 
 
   stylesheet 'wiki_edit'
   #javascript 'wiki_edit'
@@ -43,7 +43,7 @@ class WikiPageVersionController < BasePageController
     if @old and @new
       @old_markup = @old.body_html || ''
       @new_markup = @new.body_html || ''
-      @difftext = HTMLDiff.diff( @old_markup , @new_markup)
+      @difftext = Crabgrass::Wiki::HTMLDiff.diff( @old_markup , @new_markup)
 
       # output diff html only for ajax requests
       render :text => @difftext if request.xhr?
