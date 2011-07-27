@@ -1,5 +1,5 @@
 <% content_for :right_sidebar do %>
-  <%= render :partial => 'base_page/sidebar' %>
+  <%= render :partial => 'pages/sidebar/sidebar' %>
 <% end %>
 
 <%
@@ -76,17 +76,17 @@ end %>
 <%= hidden_field 'wiki', 'version' %>
 <% locked_error_message -%>
 
-% if Conf.allow_greencloth_editor?
+<% if Conf.allow_greencloth_editor? -%>
 <div id="tab-edit-greencloth" class="tab_content" style="<%= 'display:none' if preferred_editor_tab != :greencloth %>">
   <%= render :partial => "wiki_page/edit_greencloth", :locals => {:load_content => preferred_editor_tab == :greencloth} %>
 </div>
-% end
+<% end %>
 
-% if Conf.allow_html_editor?
+<% if Conf.allow_html_editor? -%>
 <div id="tab-edit-html" class="tab_content" style="<%= 'display:none' if preferred_editor_tab != :html %>">
   <%= render :partial => "wiki_page/edit_wysiwyg", :locals => {:load_content => preferred_editor_tab == :html} %>
 </div>
-% end
+<% end -%>
 
 <div id="tab-edit-preview" class="tab_content" style="display:none">
   <div class="wiki" id="<%= wiki_preview_id @wiki %>"></div>
