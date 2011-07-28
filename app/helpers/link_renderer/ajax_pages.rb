@@ -22,10 +22,11 @@ class LinkRenderer::AjaxPages < WillPaginate::LinkRenderer
   end
 
   def to_html
+    super_instance = super # for ruby 1.8.7 patchlevel 249, per http://www.datatravels.com/technotes/2010/02/24/ruby-187-patchlevel-inconsistency-super-called-out/
     # we want the spinner inside the pagination container div, so we override the
     # default container and define one here:
     @template.content_tag :div, :class => 'pagination' do
-      super + ' ' + @template.spinner(spinner_id)
+      super_instance + ' ' + @template.spinner(spinner_id)
     end
   end
 
