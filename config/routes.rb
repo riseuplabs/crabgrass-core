@@ -160,7 +160,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:page_id/:action', :controller => /.*_page/ # /pages\/[^\/]+/
+  map.connect '/pages/:controller/:page_id/:action', :constraints => {:controller => /.*_page/ } 
 
   ##
   ## DEFAULT ROUTE
