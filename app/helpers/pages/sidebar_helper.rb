@@ -34,7 +34,7 @@ module Pages::SidebarHelper
 
   def sidebar_checkbox(text, checked, url, options = {})
     icon = checked ? 'check_on' : 'check_off'
-    link_to_remote_with_icon(
+    link_to_remote(
       text,
       {:url => url, :method => options[:method], :complete => ''},
       {:icon => icon, :id => options[:id], :title => options[:title]}
@@ -109,7 +109,7 @@ module Pages::SidebarHelper
       end
       url = page_participations_path(@page, :star => add.inspect)
       content_tag :li, :id => 'star_li' do
-        link_to_remote_with_icon(label, :url => url, :icon => icon, :method => 'post')
+        link_to_remote(label, {:url => url, :method => 'post'}, {:icon => icon})
       end
     end
   end
