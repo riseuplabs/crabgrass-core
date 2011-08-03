@@ -6,9 +6,9 @@ class Me::PermissionsController < Me::BaseController
   end
 
   def update
-    @keys = current_user.keys
-    @key = @keys.find_by_keyring_code params.delete(:id)
+    @key = current_user.keys.find_by_keyring_code params.delete(:id)
     @locks = @key.update!(params)
+    @keys = current_user.keys
     success
   end
 
