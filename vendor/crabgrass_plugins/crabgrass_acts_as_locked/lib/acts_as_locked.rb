@@ -6,6 +6,7 @@ module ActsAsLocked
   class LockError < StandardError; end;
 
   def self.included(base)
+
     base.class_eval do
 
       #
@@ -28,7 +29,7 @@ module ActsAsLocked
             self.find_or_initialize_by_keyring_code(code)
           end
 
-          # 
+          #
           # filter the list of keys, including certain holders and
           # excluding others. this happens in-memory, and does not change the db.
           #
@@ -111,6 +112,10 @@ module ActsAsLocked
           ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
             key = keys.find_or_initialize_by_holder(holder)
             key.grant! locks, options
+            if self.respond_to? :grant_dependencies
+              self.grant_dependencies key
+            end
+            key
           end
         end
 
@@ -119,6 +124,10 @@ module ActsAsLocked
           ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
             key = keys.find_or_initialize_by_holder(holder)
             key.revoke! locks
+            if self.respond_to? :revoke_dependencies
+              self.revoke_dependencies key
+            end
+            key
           end
         end
 
@@ -136,7 +145,6 @@ module ActsAsLocked
         def self.locks
           self.locks_for_bits ~0
         end
-
 
         protected
 

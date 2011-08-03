@@ -195,36 +195,45 @@ class ActsAsLockedTest < Test::Unit::TestCase
 
 
   def test_locks_with_symbolic_holders
-    ActsAsLocked::Key.symbol_codes = {
-      :public => 500,
-      :all => 500,
-      :admin => 501,
-      :other => 502
-    }
-    ActsAsLocked::Key.resolve_holder do |code|
-      case code
-      when 1...100
-        Style.find(code)
-      when 100...200
-        Artist.find(code -100)
-      when 500...510
-        ActsAsLocked::Key.symbol_for(code)
+    with_symbol_codes do
+      admin_key = @jazz.grant! :admin, [:see, :dance]
+      soul_key = @jazz.grant! @soul, :see
+      miles_key = @jazz.grant! @miles, :hear
+
+      expected = {
+        :see => [admin_key, soul_key],
+        :dance => [admin_key],
+        :hear => [miles_key]}
+
+      assert_equal expected, @jazz.keys_by_lock
+    end
+  end
+
+  def test_invalid_symbolic_holder
+    with_symbol_codes do
+      assert_raises ActsAsLocked::LockError do
+        @jazz.grant! :foo, [:see, :dance]
       end
     end
-    admin_key = @jazz.grant! :admin, [:see, :dance]
-    assert_raises ActsAsLocked::LockError do
-      @jazz.grant! :foo, [:see, :dance]
-    end
-    soul_key = @jazz.grant! @soul, :see
-    miles_key = @jazz.grant! @miles, :hear
-    expected = {
-      :see => [admin_key, soul_key],
-      :dance => [admin_key],
-      :hear => [miles_key]}
-    assert_equal expected, @jazz.keys_by_lock
-    ActsAsLocked::Key.resolve_holder :style
-    ActsAsLocked::Key.symbol_codes = {}
   end
+
+  def test_dependencies
+    with_symbol_codes do
+      with_dependencies do
+        admin_key = @jazz.grant! :admin, [:hear]
+        public_key = @jazz.grant! :all, [:see, :dance]
+        expected = {
+          :see => [admin_key, public_key],
+          :dance => [admin_key, public_key],
+          :hear => [admin_key]}
+        assert_equal expected, @jazz.keys_by_lock
+
+        admin_key = @jazz.revoke! :admin, [:see, :hear]
+        assert_equal expected.slice(:dance), @jazz.reload.keys_by_lock
+      end
+    end
+  end
+
 
   def test_query_caching
     # all @jazz users may see @jazz
@@ -267,6 +276,59 @@ class ActsAsLockedTest < Test::Unit::TestCase
     p = @fusion.grant! @jazz, [:see, :dance, :do_crazy_things]
     p = @fusion.keys.find_by_keyring_code(@jazz.keyring_code)
     assert_equal 13, p.mask
+  end
+
+
+  ## HELPER FUNCTIONS
+  #
+  # factored out of the tests for sake of simple tests
+  #
+
+  def with_symbol_codes
+    ActsAsLocked::Key.symbol_codes = {
+      :public => 500,
+      :all => 500,
+      :admin => 501,
+      :other => 502
+    }
+    ActsAsLocked::Key.resolve_holder do |code|
+      case code
+      when 1...100
+        Style.find(code)
+      when 100...200
+        Artist.find(code -100)
+      when 500...510
+        ActsAsLocked::Key.symbol_for(code)
+      end
+    end
+
+    yield
+
+    ActsAsLocked::Key.resolve_holder :style
+    ActsAsLocked::Key.symbol_codes = {}
+  end
+
+  def with_dependencies
+    Style.class_eval do
+      def grant_dependencies(key)
+        if key.holder == :all
+          self.grant! :admin, key.locks
+        end
+      end
+
+      def revoke_dependencies(key)
+        if key.holder == :admin
+          self.revoke! :all, key.locks(:disabled => :true)
+        end
+      end
+    end
+
+    yield
+
+    Style.class_eval do
+      undef grant_dependencies
+      undef revoke_dependencies
+    end
   end
 
 end
