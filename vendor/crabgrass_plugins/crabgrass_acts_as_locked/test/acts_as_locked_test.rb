@@ -8,11 +8,8 @@ require 'logger'
 require "#{File.dirname(__FILE__)}/../init"
 
 ActiveRecord::Base.establish_connection(
-  :adapter  => "mysql",
-  :host     => "localhost",
-  :username => "root",
-  :password => "",
-  :database => "test_acts_as_locked"
+  :adapter  => "sqlite3",
+  :database => "#{File.dirname(__FILE__)}/tests.sqlite"
 )
 
 # log db activity:
@@ -81,6 +78,10 @@ class User < ActiveRecord::Base
   def access_codes
     self.styles.map(&:id)
   end
+end
+
+class UnauthenticatedUser < User
+  # we test for this in has_access? and use :public just in case
 end
 
 class Artist < ActiveRecord::Base
