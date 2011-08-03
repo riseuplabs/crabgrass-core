@@ -13,6 +13,14 @@ class DiscussionTest < ActiveSupport::TestCase
     assert 2, discussion.reload.posts_count
   end
 
+  def test_creation_in_memory
+    disc = Discussion.new(:post => {:body => 'x', :user => users(:blue)})
+    assert_equal 'x', disc.posts.first.body
+    disc.save!
+    disc.reload
+    assert_equal 'x', disc.posts.first.body
+  end
+
   def test_with_page
     page = Page.find 1
     user = users(:red)

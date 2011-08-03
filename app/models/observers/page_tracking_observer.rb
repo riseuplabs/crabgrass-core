@@ -71,7 +71,7 @@ class PageTrackingObserver < ActiveRecord::Observer
         PageHistory::RevokedGroupAccess.create!(:user => User.current, :page => gp.page, :object => gp.group)
       end
 
-      if model.is_a? Post and model.discussion.page
+      if model.is_a? Post and model.try(:discussion) and model.discussion.page
         post = model
         PageHistory::DestroyComment.create!(:user => User.current, :page => post.discussion.page, :object => post)
       end

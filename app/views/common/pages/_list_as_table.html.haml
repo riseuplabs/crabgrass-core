@@ -18,8 +18,8 @@
       = page_table_header_row(style)
     - pages.each do |page|
       = page_table_row(page, style)
-    %tr
-      %td{:colspan => colspan}
-        = pagination_links(@pages)
-
+    - if paginated?(@pages)
+      %tr
+        %td{:colspan => colspan}
+          = pagination_links(@pages)
 

@@ -35,8 +35,9 @@ module Common::Ui::EntityDisplayHelper
   # creates a link to a group. see display_entity for options
   #
   def link_to_group(group, options={})
+    options ||= {}
     unless options[:url] or options[:remote] or options[:function]
-      options[:url] = url_for_group(group)
+      options = options.merge :url => group_path(group)
     end
     display_entity(group, options)
   end
@@ -50,8 +51,9 @@ module Common::Ui::EntityDisplayHelper
   # creates a link to a user. see display entity for options
   #
   def link_to_user(user, options={})
+    options ||= {}
     unless options[:url] or options[:remote] or options[:function]
-      options[:url] = url_for_user(user)
+      options = options.merge :url => user_path(user)
     end
     display_entity(user, options)
   end
@@ -108,7 +110,7 @@ module Common::Ui::EntityDisplayHelper
   #   :style => added to the element's style
   #
   def display_entity(entity, options={})
-
+    options  ||= {}
     format   = options[:format] || :full
     styles   = [options[:style]]
     classes  = [options[:class], 'entity']
@@ -182,7 +184,7 @@ module Common::Ui::EntityDisplayHelper
       if options[:entities].any?
         html << content_tag(:ul, :class => 'entities') do
           options[:entities].collect do |entity|
-            content_tag(:li, link_to_entity(entity, options))
+            content_tag(:li, link_to_entity(entity, options[:link_options]))
           end
         end
       end

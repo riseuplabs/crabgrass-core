@@ -10,6 +10,7 @@ class People::HomeController < People::BaseController
   end
 
   def show
+    @profile = @user.profiles.public
   end
 
 end

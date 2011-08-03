@@ -14,6 +14,11 @@ p, ol, ul, td, div {
 .p {
   margin-top: 1em;
   margin-bottom: 1em;
+  &.first {
+    // if class .first is added, remove the top margin
+    // because it will create an extra undesired leading space.
+    margin-top: 0;
+  }
 }
 
 // simulate a blockquote.
@@ -28,6 +33,10 @@ p, ol, ul, td, div {
   margin-bottom: 1em;
 }
 
+//
+// LINKS
+//
+
 a {
   @if $link_underline == false {
     @include hover-link;
@@ -40,3 +49,13 @@ a {
   //  background-color: $link_visited_color;
   //}
 }
+
+//
+// WORD WRAPPING
+//
+
+.nowrap {
+  white-space: nowrap;
+}
+
+

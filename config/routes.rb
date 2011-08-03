@@ -1,5 +1,9 @@
 unless defined?(FORBIDDEN_NAMES)
-  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues session static stats stylesheets theme)
+  FORBIDDEN_NAMES = %w{
+    account admin assets avatars chat code debug do groups
+    javascripts me networks page pages people pictures places issues
+    session static stats stylesheets theme
+  }
 end
 
 #
@@ -30,7 +34,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
-
+  map.pictures 'pictures/:id1/:id2/:geometry.:format', :controller => 'pictures', :action => 'show'
+  
   ##
   ## ME
   ##
@@ -48,6 +53,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
     me.resources :requests
+    me.resources :events
     me.resources :avatars
   end
 
@@ -91,8 +97,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people, :namespace => 'people/' do |people|
     people.resource  :home, :only => [:show]
     people.pages     'pages/*path', :controller => 'pages'
-    people.resources :messsages
+    people.resources :messages
     people.resources :activities
+    people.resource :friend_request, :only => [:new, :create, :destroy]
   end
 
   ##
@@ -107,9 +114,12 @@ ActionController::Routing::Routes.draw do |map|
     groups.resource  :page, :only => [:new, :create]
     groups.pages     'pages/*path', :controller => 'pages'
     groups.resources :members
+    groups.resources :memberships
     groups.resources :committees
     groups.resources :invites
     groups.resources :requests
+    groups.resources :join_requests
+    groups.resources :events
     groups.resources :permissions
     groups.resources :activities
     groups.resource  :profile, :controller => 'profile'
@@ -150,7 +160,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:page_id/:action', :controller => /.*_page/ # /pages\/[^\/]+/
+  map.connect '/pages/:controller/:page_id/:action', :constraints => {:controller => /.*_page/ } 
 
   ##
   ## DEFAULT ROUTE

@@ -10,4 +10,8 @@ module PeoplePermission
     current_user.may?(:see_groups, @user)
   end
 
+  def may_request_contact?
+    current_user.may?(:request_contact, @user)
+  end
+
 end

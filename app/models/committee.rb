@@ -55,7 +55,7 @@ class Committee < Group
   # This saves us a lot of syncing of committee permissions when a groups
   # council changes.
 
-  def has_access?(access, user)
+  def has_access?(access, user=User.current)
     if access == :admin and parent.real_council
       parent.has_access?(:admin, user)
     else

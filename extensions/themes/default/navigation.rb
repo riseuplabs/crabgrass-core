@@ -75,6 +75,14 @@ define_navigation do
 
     end
 
+    context_section :calendar do
+      label  "Calendar"
+      url    { me_events_path }
+      active { controller?('me/events') }
+      icon   :date
+    end
+
+
     context_section :messages do
       label  "Messages"
       url    { me_discussions_path }
@@ -175,13 +183,13 @@ define_navigation do
 
       local_section :all do
         label "All"
-        url { group_directory_path }
+        url { groups_directory_path }
         active { params[:path].empty? }
       end
 
       local_section :mygroups do
         label "My Groups"
-        url { group_directory_path(:path => ['my']) }
+        url { groups_directory_path(:path => ['my']) }
         active { params[:path].try.include?('my') }
       end
     end
@@ -198,6 +206,13 @@ define_navigation do
       icon   :page_white_copy
       url    { group_pages_path(@group) }
       active { page_controller? }
+    end
+
+    context_section :calendar do
+      label  "Calendar"
+      url    { group_events_path(@group) }
+      active { controller?('groups/events') }
+      icon   :date
     end
 
     context_section :members do
@@ -223,7 +238,7 @@ define_navigation do
 
       local_section :invites do
         visible { may_create_invite_request? }
-        label   { "Send Invite Request" }
+        label   { "Send Invites" }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') && action?('new') }
       end
@@ -235,12 +250,12 @@ define_navigation do
         active  { controller?('groups/invites') && !action?('new') }
       end
 
-      local_section :membership_settings do
-        visible { may_edit_group? }
-        label   { 'Membership Settings' }
-        url     { group_permissions_path(@group, :view => 'membership') }
-        active  false
-      end
+      #local_section :membership_settings do
+      #  visible { may_edit_group? }
+      #  label   { 'Membership Settings' }
+      #  url     { group_permissions_path(@group, :view => 'membership') }
+      #  active  false
+      #end
 
     end
 
@@ -268,16 +283,17 @@ define_navigation do
       local_section :profile do
         visible { may_edit_profile? }
         label  { :profile.t }
-        url    { group_profile_path(@group) }
+        url    { edit_group_profile_path(@group) }
         active { controller?('groups/profile') }
       end
 
-      local_section :requests do
-        visible { may_admin_requests? }
-        label  { :requests.t }
-        url    { group_requests_path(@group) }
-        active { controller?('groups/requests') }
-      end
+      # uncomment this when Settings -> Requests is needed
+      #local_section :requests do
+      #  visible { may_admin_requests? }
+      #  label  { :requests.t }
+      #  url    { group_requests_path(@group) }
+      #  active { controller?('groups/requests') }
+      #end
     end
   end
 

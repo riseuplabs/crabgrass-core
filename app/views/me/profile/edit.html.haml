@@ -1,3 +1,55 @@
-= render :partial => 'simple_form' 
+- form_tag(me_profile_path(@group), :method => 'put', :multipart => true) do
+  = formy(:table_form) do |f|
+
+    - f.heading I18n.t(:information)
+    - f.row do |r|
+      - r.label :place.tcap
+      - r.input text_field(:profile, :place)
+    - f.row do |r|
+      - r.label :organization.tcap
+      - r.input text_field(:profile, :organization)
+    - f.row do |r|
+      - r.label :organizational_role.tcap
+      - r.input text_field(:profile, :role)
+    - f.row do |r|
+      - r.label :summary.tcap
+      - r.input text_area(:profile, :summary, :rows => 5)
+    - if @profile.summary_html.any?
+      - f.row do |r|
+        - r.label "%s (%s)" % [:summary.tcap, :preview.t]
+        - r.input @profile.summary_html
+
+    - f.heading :photo.t
+    - if @profile.picture
+      - f.row do |r|
+        - r.input [picture_tag(@profile.picture, :medium), submit_tag("Clear", :name => 'clear_photo')].join('<br/>')
+    - else
+      - f.row do |r|
+        - r.label I18n.t(:file)
+        - r.label_for 'profile_picture_upload'
+        - r.input file_field_tag('profile[picture][upload]', :id => 'profile_picture_upload')
+      - f.row do |r|
+        - r.label I18n.t(:caption)
+        - r.label_for 'profile_picture_caption'
+        - r.input text_field_tag('profile[picture][caption]', '', :id => 'profile_picture_caption')
+      - f.row do |r|
+        - r.label I18n.t(:photo_credit)
+        - r.label_for 'profile_picture_picture'
+        - r.input text_field_tag('profile[picture][credit]', '', :id => 'profile_picture_credit')
+
+    - f.buttons submit_tag(:save_button.t, :name => 'save')
+
 
 .p= link_to 'View my profile page', entity_path(@current_user)
+
+
+-# graveyard
+-#    - f.row do |r|
+-#      - r.label :phone_number.tcap
+-#      - r.input text_field_tag("profile[phone_numbers][0][phone_number]", @profile.phone_numbers[0].try.phone_number)
+-#      - r.input text_field_tag("profile[phone_numbers][0][phone_number_type]", 'Home', :hidden => true)
+-#    - f.row do |r|
+-#      - r.label :email_addresses.tcap
+-#      - r.input text_field_tag("profile[email_addresses][0][email_address]", @profile.email_addresses[0].try.email_address)
+-#      - r.input text_field_tag("profile[email_addresses][0][email_type]", 'Home', :hidden => true)
+

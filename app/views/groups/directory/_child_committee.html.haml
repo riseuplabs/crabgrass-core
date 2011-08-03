@@ -1,0 +1,5 @@
+- if current_user.direct_member_of?(child_committee) && my_groups?
+  %p
+    = 'child committee' #obviously we won't keep this
+    = avatar_link(child_committee, 'small')
+    = link_to_user child_committee, :class => 'single'

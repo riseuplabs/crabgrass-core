@@ -13,15 +13,26 @@ module Groups::LinksHelper
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
     if may_join_memberships?
-      link_to(:join_group_link.t(:group_type => @group.group_type), '#')
+      link_to :join_group_link.t(:group_type => @group.group_type),
+        group_memberships_path(@group),
+        :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
+        :method => :post
     elsif may_create_join_request?
-      link_to(:request_join_group_link.t(:group_type => @group.group_type), '#')
+      if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
+        :request_exists.t(:request_type => :pending)
+      else
+        link_to :request_join_group_link.t(:group_type => @group.group_type),
+          new_group_join_request_path(@group)
+      end
     end
   end
 
   def leave_group_link
     if may_leave_memberships?
-      link_to( :leave_group_link.t(:group_type => @group.group_type), '#')
+      link_to :leave_group_link.t(:group_type => @group.group_type),
+        group_membership_path(@group, current_user),
+        :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
+        :method => :delete
     end
   end
 
@@ -70,7 +81,7 @@ module Groups::LinksHelper
   #end
 
   def create_committee_link
-    if may_create_subcommittees?
+    if may_create_committees?
       link_to :create_button.t, new_group_committee_path(@group)
     end
   end

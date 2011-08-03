@@ -21,7 +21,7 @@
   %header#context_banner{:class => @context.size}
     %div#banner_content
       - if @context.avatar
-        %a{:href => url_for_entity(@context.entity), :class => 'avatar'}><
+        %a{:href => entity_path(@context.entity), :class => 'avatar'}><
           = avatar_for(@context.entity, @context.size)
       = link_to_entity(@context.entity, :class => 'title')
     = render :partial => '/layouts/context/nav/banner_menu'

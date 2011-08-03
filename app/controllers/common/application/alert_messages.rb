@@ -119,16 +119,17 @@ module Common::Application::AlertMessages
   # generates the html for the floating alert messages
   #
   def display_alert_messages
-    if alert_messages?
-      # the id alert_messages is required by the
-      # showAlertMessage javascript function.
-      content_tag(:div, :class => 'alert_message_container') do
-        content_tag(:div, :id => 'alert_messages') do
+    # the id alert_messages is required by the showAlertMessage
+    # javascript function. it is important to include this html
+    # even if ther are not currently any messages to display.
+    content_tag(:div, :class => 'alert_message_container') do
+      content_tag(:div, :id => 'alert_messages') do
+        if alert_messages?
           flash[:messages].collect {|message| message_html(message)}.join
+        else
+          ""
         end
       end
-    else
-      ""
     end
   end
 

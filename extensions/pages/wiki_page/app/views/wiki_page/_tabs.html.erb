@@ -1,5 +1,4 @@
 <%- @info_box_class = 'tabs' -%>
-<%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label I18n.t(:show)
@@ -61,4 +60,3 @@
     t.class 'page_url'
   end
 end -%>
-<%- end -%>

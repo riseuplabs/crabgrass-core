@@ -18,13 +18,13 @@ module Formy
 #
 #  def self.form(options={},&block); self.create(options,&block); end
 #
-#  def self.tabs(options={})
-#    @@base = f = Tabset.new(options)
-#    f.open
-#    yield f
-#    f.close
-#    f.to_s
-#  end
+  def self.tabs(options={})
+    @@base = f = Tabset.new(options)
+    f.open
+    yield f
+    f.close
+    f.to_s
+  end
 #
 #  def self.sidebar(options={})
 #    @@base = f = Sidebar.new(options)

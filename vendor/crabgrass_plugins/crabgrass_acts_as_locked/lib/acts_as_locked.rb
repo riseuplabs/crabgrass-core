@@ -28,6 +28,27 @@ module ActsAsLocked
             self.find_or_initialize_by_keyring_code(code)
           end
 
+          # 
+          # filter the list of keys, including certain holders and
+          # excluding others. this happens in-memory, and does not change the db.
+          #
+          # options is a hash with keys :include and/or :exclude, which consist
+          # of arrays of holder objects.
+          #
+          def filter_by_holder(options)
+            inc = options[:include]
+            exc = options[:exclude]
+            keys = self.all
+            inc.each do |holder|
+              unless keys.detect {|key| key.holder?(holder)}
+                keys << Key.new(:locked => proxy_owner, :holder => holder)
+              end
+            end
+            exc.each do |holder|
+              keys.delete_if {|key| key.holder?(holder)}
+            end
+            return keys
+          end
         end
 
         # let's use AR magic to cache keys from the controller like this...
@@ -66,6 +87,7 @@ module ActsAsLocked
         end
 
         def has_access?(lock, holder = User.current)
+          holder = :public if holder.is_a? UnauthenticatedUser
           if holder == User.current
             # these might be cached through AR.
             current_user_keys.open?(lock)
@@ -100,6 +122,7 @@ module ActsAsLocked
           end
         end
 
+        # this appears to be only used for testing.
         def keys_by_lock
           keys.inject({}) do |hash, key|
             key.locks.each do |lock|

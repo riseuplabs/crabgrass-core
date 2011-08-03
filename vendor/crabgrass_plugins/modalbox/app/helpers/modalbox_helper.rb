@@ -17,6 +17,7 @@ module ModalboxHelper
   ## Modalbox dialog popup helpers
   ##
 
+  #
   # creates a popup-link using modalbox
   #
   # contents of the modalbox may be specified in options hash:
@@ -29,6 +30,7 @@ module ModalboxHelper
   # for example:
   #
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
+  #
   #
   def link_to_modal(label, options={}, html_options={})
     options[:title] ||= label
@@ -63,15 +65,11 @@ module ModalboxHelper
         )
       end
       function = modalbox_function(contents, options)
-      if label
-        html_options[:icon] = icon
-        link_to_function_with_icon(label, function, html_options)
-      else
-        link_to_function_icon(icon, function, html_options)
-      end
+      html_options[:icon] = icon
+      link_to_function_with_icon(label, function, html_options)
     else
       function = modalbox_function(contents, options)
-      link_to_function(label, function, html_options)
+      link_to_function_without_icon(label, function, html_options)
     end
   end
 

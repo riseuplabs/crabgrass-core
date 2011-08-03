@@ -2,7 +2,7 @@ class People::BaseController < ApplicationController
 
   before_filter :fetch_person
   permissions 'people'
-  #helper 'people'
+  helper 'people/base'
 
   protected
 
@@ -14,6 +14,13 @@ class People::BaseController < ApplicationController
   def setup_context
     Context.find(@user)
   end
+
+  def pending_friend_request(options)
+    from = options[:from]
+    to   = options[:to]
+    RequestToFriend.created_by(from).to_user(to).having_state('pending').find(:first)
+  end
+  helper_method :pending_friend_request
 
 end
 

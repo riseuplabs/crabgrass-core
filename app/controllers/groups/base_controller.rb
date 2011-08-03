@@ -12,7 +12,9 @@ class Groups::BaseController < ApplicationController
   end
 
   def setup_context
-    Context.find(@group)
+    if @group and !@group.new_record?
+      Context.find(@group)
+    end
   end
 
 end

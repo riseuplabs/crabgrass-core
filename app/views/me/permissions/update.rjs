@@ -1,3 +1,0 @@
-@locks.each do |lock|
-  page.replace "keys_for_#{lock}", permission_lock_tag(:me, lock, @keys)
-end

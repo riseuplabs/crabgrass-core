@@ -90,14 +90,15 @@ class ProfileTest < ActiveSupport::TestCase
     user = users(:blue)
     profile = user.profiles.create :stranger => true, :first_name => user.name
 
-    assert_difference 'Asset.count' do
-      profile.save_from_params(:photo => {
-        :uploaded_data => upload_data('image.png'), :caption => 'pigeon point'
+    # i don't think we're allowing more than one avatar now?
+    assert_difference 'Picture.count' do
+      profile.save_from_params(:picture => {
+        :upload => upload_data('image.png'), :caption => 'pigeon point'
       })
     end
 
-    assert_equal 'image.png', profile.photo(true).filename
-    assert_equal 'pigeon point', profile.photo.caption
+    assert_not_nil profile.picture(true).public_file_path
+    assert_equal 'pigeon point', profile.picture.caption
 
     if defined?(ExternalVideo)
       assert_difference 'ExternalVideo.count' do
@@ -109,7 +110,7 @@ class ProfileTest < ActiveSupport::TestCase
       skip 'ExternalVideo not defined'
     end
 
-    assert_difference 'Asset.count', -1 do
+    assert_difference 'Picture.count', -1 do
       profile.destroy
     end
   end

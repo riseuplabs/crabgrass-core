@@ -2,13 +2,21 @@ class Groups::ProfileController < Groups::BaseController
 
   before_filter :fetch_profile, :login_required
 
-  def show 
+  def edit 
   end
 
   def update
-    @profile.update_attributes!(params[:profile])
-    success
-    redirect_to group_profile_url(@group)
+    if params[:clear_photo]
+      @profile.picture.destroy
+      success :profile_saved.t
+      redirect_to edit_group_profile_url(@group)
+    else
+      @profile.save_from_params params['profile']
+      if @profile.valid?
+        success :profile_saved.t
+        redirect_to edit_group_profile_url(@group)
+      end
+    end
   end
 
   private
