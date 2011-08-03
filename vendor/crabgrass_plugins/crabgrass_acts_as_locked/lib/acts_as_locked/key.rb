@@ -52,7 +52,8 @@ module ActsAsLocked
     end
 
     #
-    # this appears to be only used for testing
+    # This is used in the {grant,revoke}_dependencies functions
+    # and in the tests
     #
     def locks(options={})
       klass = self.locked.class
