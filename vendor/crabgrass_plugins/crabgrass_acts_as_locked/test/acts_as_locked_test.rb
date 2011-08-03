@@ -221,7 +221,7 @@ class ActsAsLockedTest < Test::Unit::TestCase
     with_symbol_codes do
       with_dependencies do
         admin_key = @jazz.grant! :admin, [:hear]
-        public_key = @jazz.grant! :all, [:see, :dance]
+        public_key = @jazz.grant! :public, [:see, :dance]
         expected = {
           :see => [admin_key, public_key],
           :dance => [admin_key, public_key],
@@ -238,7 +238,7 @@ class ActsAsLockedTest < Test::Unit::TestCase
   def test_query_caching
     # all @jazz users may see @jazz
     @jazz.grant! @jazz, :see
-    artists = Artist.find :all, :include => {:main_style => :current_user_keys}
+    artists = Artist.find :public, :include => {:main_style => :current_user_keys}
     # we remove the permission but it has already been cached...
     assert @jazz.has_access?(:see), ":see should be allowed to current_user."
     @jazz.revoke!(@jazz, :see)
@@ -287,7 +287,6 @@ class ActsAsLockedTest < Test::Unit::TestCase
   def with_symbol_codes
     ActsAsLocked::Key.symbol_codes = {
       :public => 500,
-      :all => 500,
       :admin => 501,
       :other => 502
     }
@@ -311,14 +310,14 @@ class ActsAsLockedTest < Test::Unit::TestCase
   def with_dependencies
     Style.class_eval do
       def grant_dependencies(key)
-        if key.holder == :all
+        if key.holder == :public
           self.grant! :admin, key.locks
         end
       end
 
       def revoke_dependencies(key)
         if key.holder == :admin
-          self.revoke! :all, key.locks(:disabled => :true)
+          self.revoke! :public, key.locks(:disabled => :true)
         end
       end
     end
