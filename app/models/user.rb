@@ -233,6 +233,26 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
+  # Key Dependencies
+  #
+  # Some keys imply others.
+  # If a setting is public friends and peers have access too.
+  # They would have anyway. This is rather for UI consistency than for the
+  # real permission checks.
+
+  def grant_dependencies(key)
+    if key.holder == :public
+      self.grant! self.friends, key.locks
+      self.grant! self.peers, key.locks
+    end
+  end
+
+  def revoke_dependencies(key)
+    if [self.friends, self.peers].include? key.holder
+      self.revoke! :public, key.locks(:disabled => true)
+    end
+  end
+
   # keyring_code used by acts_as_locked and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
