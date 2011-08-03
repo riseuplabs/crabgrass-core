@@ -112,9 +112,6 @@ module ActsAsLocked
           ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
             key = keys.find_or_initialize_by_holder(holder)
             key.grant! locks, options
-            if self.respond_to? :grant_dependencies
-              self.grant_dependencies key
-            end
             key
           end
         end
@@ -124,9 +121,6 @@ module ActsAsLocked
           ActsAsLocked::Locks.each_holder_with_locks(*args) do |holder, locks|
             key = keys.find_or_initialize_by_holder(holder)
             key.revoke! locks
-            if self.respond_to? :revoke_dependencies
-              self.revoke_dependencies key
-            end
             key
           end
         end
