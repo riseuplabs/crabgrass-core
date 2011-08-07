@@ -17,7 +17,7 @@ module ActsAsLockedHelper
 
   def permission_key_tag(lock, key)
     name    = "#{key.holder.to_sym}_#{lock}"
-    label   = label_for_holder(key.holder)
+    label   = permission_holder_label(key.holder)
     url     = key_holder_path(key.keyring_code)
     options = checkbox_options(key, lock)
     spinbox_tag(name, label, url, options)
@@ -32,9 +32,7 @@ module ActsAsLockedHelper
    #"user_profile_description_may_#{lock}".to_sym.t
   end
 
-  private
-
-  def label_for_holder(holder)
+  def permission_holder_label(holder)
     case holder
     when Symbol, String
       holder.tcap
@@ -42,6 +40,17 @@ module ActsAsLockedHelper
       holder.to_sym.tcap
     end
   end
+
+  def permission_holder_info(holder)
+    case holder
+    when Symbol, String
+      I18n.t(holder.to_s + '_description')
+    else
+      I18n.t(holder.to_sym.to_s + '_description')
+    end
+  end
+
+  private
 
   def checkbox_options(key, lock)
     checked = key.opens? lock
