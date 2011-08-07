@@ -33,22 +33,30 @@ module ActsAsLocked
           # filter the list of keys, including certain holders and
           # excluding others. this happens in-memory, and does not change the db.
           #
-          # options is a hash with keys :include and/or :exclude, which consist
-          # of arrays of holder objects.
+          # options is a hash with keys :include and/or :exclude and/or :order
+          # , which consist of arrays of holder objects.
+          #
+          # we preserve the order of the includes.
           #
           def filter_by_holder(options)
             inc = options[:include]
             exc = options[:exclude]
+            ord = options[:order] || inc
             keys = self.all
-            inc.each do |holder|
-              unless keys.detect {|key| key.holder?(holder)}
-                keys << Key.new(:locked => proxy_owner, :holder => holder)
+            sorted = []
+            ord.each do |holder|
+              if key = keys.detect {|key| key.holder?(holder)}
+                sorted << key
+                keys.delete key
+              elsif inc.include? holder
+                sorted << Key.new(:locked => proxy_owner, :holder => holder)
               end
             end
+            sorted.concat keys
             exc.each do |holder|
-              keys.delete_if {|key| key.holder?(holder)}
+              sorted.delete_if {|key| key.holder?(holder)}
             end
-            return keys
+            return sorted
           end
         end
 
