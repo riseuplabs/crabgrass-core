@@ -3,14 +3,14 @@
 # this method should return a path to a controller that responds to 'update'
 # and takes holder_id as params[:id]. the remainder of the params are attributes
 # for the key (that belongs to holder and castle).
-# 
+#
 
 module ActsAsLockedHelper
 
   def permission_lock_tag(lock, keys)
     content_tag :ul, :class => '', :id => "keys_for_#{lock}" do
       keys.collect do |key|
-        permission_key_tag(lock, key)
+        permission_key_tag(lock, key) if key.allowed_for?(lock)
       end
     end
   end
@@ -18,7 +18,7 @@ module ActsAsLockedHelper
   def permission_key_tag(lock, key)
     name    = "#{key.holder.to_sym}_#{lock}"
     label   = label_for_holder(key.holder)
-    url     = key_holder_path(ActsAsLocked::Key.code_for_holder(key.holder))
+    url     = key_holder_path(key.keyring_code)
     options = checkbox_options(key, lock)
     spinbox_tag(name, label, url, options)
   end

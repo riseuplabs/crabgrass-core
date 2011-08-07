@@ -180,9 +180,43 @@ module ActsAsLocked
           ActsAsLocked::Locks.bit_for(self, lock)
         end
 
-        def self.add_locks(*locks)
-          locks = locks.first if locks.first.is_a? Enumerable
+        def self.key_allowed?(lock, holder)
+          options = ActsAsLocked::Locks.options_for(self, lock)
+          return true unless without = options[:without]
+          sym = holder.to_sym
+          without.respond_to?(:include?) ?
+            !without.include?(sym) :
+            without != sym
+        end
+
+        #
+        # Used to add locks to a class
+        #
+        # Arguments:
+        # * either a list of lock symbols
+        # * or an array and an options hash
+        # * or a locks hash and an options hash
+        #
+        # The locks hash has lock symbols as keys and bit indexes as values
+        #
+        # Options:
+        # * without: This lock does not apply for the given key
+        #
+        # Examples:
+        #
+        # User.add_locks :view, :pester
+        # User.add_locks :see_contacts => 4
+        # User.add_locks({:request_contact => 5}, :without => :friends)
+        #
+        def self.add_locks(*args)
+          if args.first.is_a? Enumerable
+            locks = args.first
+            options = args.second
+          else
+            locks = args
+          end
           ActsAsLocked::Locks.add_bits(self.name, locks)
+          ActsAsLocked::Locks.add_options(self.name, locks, options) if options
         end
 
         if locks_to_define.any?
@@ -202,8 +236,14 @@ module ActsAsLocked
       class_hash.merge! build_bit_hash(locks, @@hash[class_name].count)
     end
 
+    def self.add_options(class_name, locks, options)
+      @@options ||= {}
+      class_options = @@options[class_name] ||= {}
+      class_options.merge! build_options(locks, options)
+    end
+
     def self.bit_for(klass, lock)
-      bit = @@hash[lock_for_class(klass)][lock.to_s.downcase.to_sym]
+      bit = @@hash[class_or_super(klass)][lock.to_s.downcase.to_sym]
       if bit.nil?
         raise ActsAsLocked::LockError.new("Lock '#{lock}' is unknown to class '#{klass.name}'")
       else
@@ -211,8 +251,13 @@ module ActsAsLocked
       end
     end
 
+    def self.options_for(klass, lock)
+      @@options[class_or_super(klass)][lock.to_s.downcase.to_sym] || {}
+    end
+
     def self.locks_for(klass, bits)
-      hash = @@hash[lock_for_class(klass)]
+      hash = @@hash[class_or_super(klass)]
+
       # keep the order of the bits here
       locks = hash.inject([]) do |rev, (l,b)|
         rev[bits & b] = l
@@ -252,7 +297,6 @@ module ActsAsLocked
       end
     end
 
-
     def self.build_bit_hash(locks, offset)
       bitwise_hash = {}
       if locks.is_a? Hash
@@ -269,7 +313,14 @@ module ActsAsLocked
       raise ActsAsLocked::LockError.new("Lock bits must be integers or longs.")
     end
 
-    def self.lock_for_class(klass)
+    def self.build_options(locks, options)
+      symbols = locks.is_a?(Hash) ? locks.keys : locks
+      symbols.inject({}) do |hash, sym|
+        hash.merge(sym => options)
+      end
+    end
+
+    def self.class_or_super(klass)
       current=klass
       until @@hash.keys.include?(current.name) do
         current = current.superclass

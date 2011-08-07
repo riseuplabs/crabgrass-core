@@ -57,6 +57,11 @@ module ActsAsLocked
       locked.class.bits_for_locks(locks)
     end
 
+    def allowed_for?(lock)
+      locked.class.key_allowed?(lock, self.holder)
+    end
+
+
     #
     # This is used in the {grant,revoke}_dependencies functions
     # and in the tests
