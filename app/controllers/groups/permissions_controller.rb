@@ -6,7 +6,6 @@ class Groups::PermissionsController < Groups::BaseController
   def index
     @keys  = @group.keys.filter_by_holder(:include => [:public], :exclude => [@group])
     @locks = locks
-    render :template => 'common/permissions/index'
   end
 
   def update

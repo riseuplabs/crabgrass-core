@@ -252,7 +252,9 @@ module ActsAsLocked
     end
 
     def self.options_for(klass, lock)
-      @@options[class_or_super(klass)][lock.to_s.downcase.to_sym] || {}
+      @@options ||= {}
+      class_options = @@options[class_or_super(klass)] || {}
+      class_options[lock.to_s.downcase.to_sym] || {}
     end
 
     def self.locks_for(klass, bits)
