@@ -123,7 +123,7 @@ module Common::Page::SearchHelper
   end
 
   #
-  # a link used in the page search popup. 
+  # a link used in the page search popup.
   # it creates a form element to match params, then submits the form.
   # this only accepts a single param, but it is in the form {:key => value}
   #
@@ -133,14 +133,14 @@ module Common::Page::SearchHelper
     link_to_function(label, function)
   end
 
-  
+
   #
   # the toggle bug that allows you to change the view of the page search
-  # results (compact, detailed, grid). 
+  # results (compact, detailed, grid).
   #
   # this uses the special queued ajax request, so that there are no race conditions
   # in modifying the page search.
-  # 
+  #
   # this is used in _top_controls partial
   #
   def search_view_toggle_links(url)
@@ -160,7 +160,7 @@ module Common::Page::SearchHelper
     grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
 
     toggle_bug_links(compact_link, detailed_link, grid_link)
-  end 
+  end
 
   def spinbox_tag(name, label, url, options = {})
     id = "#{name}_check_link"
@@ -175,7 +175,8 @@ module Common::Page::SearchHelper
       :url => url,
       :before  => spinner_icon_on(icon, id),
       :with => options[:with],
-      :method => options[:method]
+      :method => options[:method],
+      :success => options[:success]
     )
     content_tag(:li) do
       link_to_function_with_icon(label, function, :url => url, :icon => icon, :id => id)

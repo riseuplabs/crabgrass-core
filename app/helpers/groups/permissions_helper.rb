@@ -3,17 +3,27 @@ module Groups::PermissionsHelper
   def publicly_visible_checkbox(list)
     list.checkbox do |cb|
       cb.label I18n.t(:group_publicly_visible, :group => @group.group_type)
-      cb.input permission_lock_tag(:view, @keys)
-      #, :onclick => 'setClassVisibility(".details", this.checked)')
+      cb.input permission_lock_tag(:view, @keys,
+        :success => 'setClassVisibility(".details", $("public_view_check_link").hasClassName("check_on_16"))')
       cb.info I18n.t(:group_publicly_visible_description, :domain => current_site.domain)
     end
   end
 
   def committee_publicly_visible_checkbox(list)
+    return unless Conf.committees and @group.parent_id.nil?
     list.checkbox(:class => 'details', :hide => hidden?) do |cb|
       cb.label I18n.t(:committee_publicly_visible)
       cb.input permission_lock_tag(:see_committees, @keys)
       cb.info I18n.t(:committee_publicly_visible_description, :domain => current_site.domain)
+    end
+  end
+
+  def networks_publicly_visible_checkbox(list)
+    return unless Conf.networks
+    list.checkbox(:class => 'details', :hide => hidden?) do |cb|
+      cb.label I18n.t(:networks_publicly_visible)
+      cb.input permission_lock_tag(:see_networks, @keys)
+      cb.info I18n.t(:networks_publicly_visible_description, :domain => current_site.domain)
     end
   end
 
