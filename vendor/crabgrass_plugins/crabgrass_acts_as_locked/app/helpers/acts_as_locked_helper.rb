@@ -18,10 +18,10 @@ module ActsAsLockedHelper
 
   def permission_key_tag(lock, key, options = {})
     name    = "#{key.holder.to_sym}_#{lock}"
-    label   = options.delete(:no_label) ? "" : permission_holder_label(key.holder)
     url     = key_holder_path(key.keyring_code)
+    options[:label] = options.delete(:no_label) ? "" : permission_holder_label(key.holder)
     options.merge! checkbox_options(key, lock)
-    spinbox_tag(name, label, url, options)
+    spinbox_tag(name, url, options)
   end
 
   def permission_lock_label(lock)
