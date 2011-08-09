@@ -11,7 +11,7 @@
         = theme_render(tab.html)
   - if logged_in?
     %li.tab.account.last
-      = link_to(:menu_link_logout.t, logout_path, :class => 'tab', :method => 'post')
+      = link_to(:menu_link_logout.t(:user => current_user.display_name), logout_path, :class => 'tab', :method => 'post')
     -# = call_hook :top_right_links
   - elsif !@login_form_already_rendered
     %li.tab.account.last

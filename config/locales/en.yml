@@ -250,7 +250,7 @@ en:
   menu_chat: "Chat"
   menu_people: "People"
   menu_networks: "Networks"
-  menu_link_logout: "Logout"
+  menu_link_logout: "Logout %{user}"
   menu_link_account: "Account"
   menu_admin: "Admin"
   menu_moderation: "Moderation"
