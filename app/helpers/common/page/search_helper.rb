@@ -179,7 +179,9 @@ module Common::Page::SearchHelper
       :success => options[:success]
     )
     content_tag(:li) do
-      link_to_function_with_icon(label, function, :url => url, :icon => icon, :id => id)
+      label.blank? ?
+        link_to_function_icon(icon, function, :url => url, :id => id) :
+        link_to_function_with_icon(label, function, :url => url, :icon => icon, :id => id)
     end
   end
 

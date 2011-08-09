@@ -8,6 +8,7 @@
 module ActsAsLockedHelper
 
   def permission_lock_tag(lock, keys, options = {})
+    options[:no_label] = (keys.count == 1)
     content_tag :ul, :class => '', :id => "keys_for_#{lock}" do
       keys.collect do |key|
         permission_key_tag(lock, key, options) if key.allowed_for?(lock)
@@ -17,7 +18,7 @@ module ActsAsLockedHelper
 
   def permission_key_tag(lock, key, options = {})
     name    = "#{key.holder.to_sym}_#{lock}"
-    label   = permission_holder_label(key.holder)
+    label   = options.delete(:no_label) ? "" : permission_holder_label(key.holder)
     url     = key_holder_path(key.keyring_code)
     options.merge! checkbox_options(key, lock)
     spinbox_tag(name, label, url, options)
