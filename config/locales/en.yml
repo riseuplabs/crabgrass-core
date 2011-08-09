@@ -780,6 +780,7 @@ en:
   group_privacy_settings: '%{group} Privacy Settings'
   group_publicly_visible: 'Make %{group} Publicly Visible'
   committee_publicly_visible: 'Make Committees Publicly Visible'
+  networks_publicly_visible: 'Make Networks Publicly Visible'
   allow_membership_requests: 'Allow Membership Requests'
   group_home_headline: "%{group_type} Home"
   group_home_welcome: "Welcome"
@@ -795,6 +796,7 @@ en:
   dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
   committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
+  networks_publicly_visible_description: Networks are viewable by non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
   group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
   page_list: Page list
