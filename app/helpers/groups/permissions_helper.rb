@@ -3,8 +3,7 @@ module Groups::PermissionsHelper
   def publicly_visible_checkbox(list)
     list.checkbox do |cb|
       cb.label I18n.t(:group_publicly_visible, :group => @group.group_type)
-      cb.input permission_lock_tag(:view, @keys,
-        :success => 'setClassVisibility(".details", $("public_view_check_link").hasClassName("check_on_16"))')
+      cb.input permission_lock_tag(:view, @keys)
       cb.info I18n.t(:group_publicly_visible_description, :domain => current_site.domain)
     end
   end
