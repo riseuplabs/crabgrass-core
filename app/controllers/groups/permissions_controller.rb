@@ -4,7 +4,8 @@ class Groups::PermissionsController < Groups::BaseController
   helper 'acts_as_locked'
 
   def index
-    @keys  = @group.keys.filter_by_holder(:include => [:public], :exclude => [@group])
+    @key  = @group.keys.find_or_create_by_holder(:public)
+    @keys = [@key]
   end
 
   def update

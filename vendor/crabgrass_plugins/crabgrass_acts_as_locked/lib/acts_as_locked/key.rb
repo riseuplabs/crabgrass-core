@@ -6,8 +6,6 @@ module ActsAsLocked
       { :conditions => access_conditions_for(holder) }
     }
 
-    named_scope :for_public, :conditions => "keyring_code IS NULL"
-
     cattr_accessor :symbol_codes
     cattr_accessor :holder_klass
     cattr_accessor :holder_block

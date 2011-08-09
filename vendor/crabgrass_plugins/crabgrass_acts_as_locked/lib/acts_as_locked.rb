@@ -29,6 +29,11 @@ module ActsAsLocked
             self.find_or_initialize_by_keyring_code(code)
           end
 
+          def find_or_create_by_holder(holder)
+            code = Key.code_for_holder(holder)
+            self.find_or_create_by_keyring_code(code)
+          end
+
           #
           # filter the list of keys, including certain holders and
           # excluding others. this happens in-memory, and does not change the db.
