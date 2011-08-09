@@ -46,7 +46,7 @@ module Groups::PermissionsHelper
   def open_membership_policy_checkbox(list)
     list.checkbox do |cb|
       cb.label I18n.t(:open_group)
-      cb.input check_box(:profile, :membership_policy, {:onclick => ''}, Profile::MEMBERSHIP_POLICY[:open], Profile::MEMBERSHIP_POLICY[:approval])
+      cb.input permission_lock_tag(:join, @keys)
       cb.info I18n.t(:open_group_description)
     end
   end

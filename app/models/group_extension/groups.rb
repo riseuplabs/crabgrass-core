@@ -11,7 +11,7 @@ module GroupExtension::Groups
 
     base.instance_eval do
 
-      add_locks :see_committees => 8, :see_networks => 9
+      add_locks :see_committees => 9, :see_networks => 10
 
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
