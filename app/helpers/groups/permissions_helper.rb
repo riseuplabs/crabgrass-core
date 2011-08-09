@@ -63,7 +63,7 @@ module Groups::PermissionsHelper
     if @group.council_id
       row.input link_to_group(@group.council, :avatar => :small)
     else
-#      row.input link_to(I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), councils_url(:action => 'new'))
+      row.input link_to(I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), new_group_council_path(@group))
       row.info I18n.t(:create_a_new_council_caption)
     end
   end
