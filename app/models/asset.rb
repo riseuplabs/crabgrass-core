@@ -164,7 +164,12 @@ class Asset < ActiveRecord::Base
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
       base.belongs_to :user
-      base.has_many :thumbnails, :class_name => '::Thumbnail', :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT
+      base.has_many :thumbnails, :class_name => '::Thumbnail',
+        :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT do
+        def preview_images
+          self.select{|tn| %(small medium large).include?(tn.name)}.sort_by{|tn| tn.size.to_i}
+        end
+      end
       base.define_thumbnails( {} ) # root Asset class has no thumbnails
     end
 

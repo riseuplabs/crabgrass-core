@@ -1,0 +1,106 @@
+  def destroy_version
+    asset_version = @page.data.versions.find_by_version(params[:id])
+    asset_version.destroy
+    respond_to do |format|
+      format.html do
+        flash_message(:success => I18n.t(:file_version_deleted))
+        redirect_to(page_url(@page))
+      end
+      format.js do
+        render(:update) {|page| page.hide "asset_#{asset_version.asset_id}_version_#{asset_version.version}"}
+      end
+    end
+  end
+
+  # xhr request
+  def generate_preview
+    @asset.generate_thumbnails
+    render :update do |page|
+      page.replace_html 'preview_area', asset_link_with_preview(@asset)
+    end
+  end
+
+  # xhr request
+  def add_file_field
+    render :update do |page|
+      page.insert_html :before, 'add_file_field', render(:partial => 'file_field')
+    end
+  end
+
+  def regenerate
+    @asset.thumbnails.each do |tn|
+      tn.generate(true)
+    end
+    @asset.versions.latest.clone_files_from(@asset)
+    redirect_to page_url(@page, :action => 'show')
+  end
+
+  # temp code, probably will be replaced by something else later.
+  def add_to_gallery
+    gallery = Gallery.find_by_id(params[:gallery_id])
+    if gallery
+      current_user.may!(:edit,gallery)
+      gallery.add_image!(@asset)
+    end
+    redirect_to page_url(@page)
+  rescue Exception => exc
+    flash_message_now :exception => exc
+  end
+
+======================
+
+
+      <h2 class='section'><%= I18n.t(:history) %></h2>
+      <%= render :partial => 'version_history' %>
+      <br/>
+      <h2 class='section'><%= I18n.t(:other_formats) %></h2>
+      <%= render :partial => 'thumbnails' %>
+    </div> <!-- end left -->
+
+
+==================
+
+      <table>
+        <tr>
+          <td align='right'><b><%= I18n.t(:created_by) %>:</b></td>
+          <td>&nbsp;</td>
+          <td><%= link_to_user(@page.created_by, :avatar => 'xsmall') if @page.created_by %></td>
+        </tr>
+        <tr>
+          <td align='right'><b><%= I18n.t(:created_on) %>:</b></td>
+          <td>&nbsp;</td>
+          <td><%= friendly_date(@page.created_at) %></td>
+        </tr>
+        <tr>
+          <td align='right'><b><%= I18n.t(:file_size) %>:</b></td>
+          <td>&nbsp;</td>
+          <td><%= friendly_size(@asset.size) %></td>
+        </tr>
+        <tr>
+          <td align='right'><b><%= I18n.t(:format) %>:</b></td>
+          <td>&nbsp;</td>
+          <td>
+            <%= I18n.t(@asset.format_description.to_sym, :default => @asset.format_description) %>
+            (<%= @asset.ext %>)
+          </td>
+        </tr>
+      </table>
+
+
+======================
+
+
+<table class='pretty'>
+  <%- @asset.thumbnails.select{|tn|tn.thumbdef}.sort_by{|tn|tn.thumbdef.ext}.each do |tn| -%>
+    <%- next if tn.thumbdef.proxy and tn.content_type == @asset.content_type -%>
+    <tr>
+      <td><%= image_tag tn.small_icon %></td>
+      <td><%= link_to tn.title, tn.url %></td>
+      <td><%= link_to tn.thumbdef.ext, tn.url %></td>
+    </tr>
+  <%- end -%>
+</table>
+<%- if logged_in? and current_user.may?(:admin, @page) -%>
+<p style='text-align:center'><%= link_to I18n.t(:regenerate), page_url(@page, :action => 'regenerate'), :method => :post %></p>
+<%- end -%>
+
