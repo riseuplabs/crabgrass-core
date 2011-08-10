@@ -10,7 +10,7 @@ module Groups::PermissionsHelper
 
   def committee_publicly_visible_checkbox(list)
     return unless Conf.committees and @group.parent_id.nil?
-    list.checkbox(:class => 'details', :hide => hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
       cb.label I18n.t(:committee_publicly_visible)
       cb.input permission_lock_tag(:see_committees, @keys)
       cb.info I18n.t(:committee_publicly_visible_description, :domain => current_site.domain)
@@ -19,7 +19,7 @@ module Groups::PermissionsHelper
 
   def networks_publicly_visible_checkbox(list)
     return unless Conf.networks
-    list.checkbox(:class => 'details', :hide => hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
       cb.label I18n.t(:networks_publicly_visible)
       cb.input permission_lock_tag(:see_networks, @keys)
       cb.info I18n.t(:networks_publicly_visible_description, :domain => current_site.domain)
@@ -27,7 +27,7 @@ module Groups::PermissionsHelper
   end
 
   def group_members_publicly_visible_checkbox(list)
-    list.checkbox(:class => 'details', :hide => hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
       cb.label I18n.t(:group_members_publicly_visible)
       cb.input permission_lock_tag(:see_members, @keys)
       cb.info I18n.t(:group_members_publicly_visible_description, :domain => current_site.domain)
@@ -67,9 +67,7 @@ module Groups::PermissionsHelper
     end
   end
 
-  private
-
-  def hidden?
+  def group_hidden?
     !@group.has_access?(:view, :public)
   end
 
