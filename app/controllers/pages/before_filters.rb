@@ -41,7 +41,11 @@ module Pages::BeforeFilters
   end
  
   def default_setup_options
-    @options = new_options()
+    @options = Pages::BaseController::Options.new
+    @options.show_assets  = true
+    @options.show_tags    = true
+    @options.show_sidebar = true
+    @options.show_tabs    = false
     if request.get?
       @options.show_posts = action?(:show) || action?(:print)
       @options.show_reply = @options.show_posts
@@ -51,10 +55,13 @@ module Pages::BeforeFilters
     true
   end
 
-  def choose_layout
-    return 'application' if action?(:create, :new)
-    return 'page'
-  end
+  #def choose_layout
+  #  if action?(:create, :new)
+  #    return 'application'
+  #  else
+  #    return 'page'
+  #  end
+  #end
 
   # don't require a login for public pages
   def login_or_public_page_required
