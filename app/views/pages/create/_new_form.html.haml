@@ -14,7 +14,7 @@
 - multipart = sections.grep 'file'
 
 .create_page
-  - form_tag(new_page_path(:type => @page_class.url), :multipart => multipart) do
+  - form_tag(create_page_path(:type => @page_class.url), :multipart => multipart) do
     = hidden_field_tag 'page_class', @page_class
     = hidden_field_tag('group', params[:group]) if params[:group]
     = formy(:table_form) do |form|
@@ -23,10 +23,10 @@
         - sections.each do |section|
           = render :partial => "pages/create/#{section}", :locals => {:form => form}
       = render :partial => 'pages/create/sharing', :locals => {:form => form}
-    .form_buttons
-      = submit_tag "hidden", :name => 'create', :style => 'display:none'
-      = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'
+    .buttons.reverse
       = submit_tag I18n.t(:create_page_button, :page_class => I18n.t(:page)) + ' &raquo;', :name => 'create'
+      =# submit_tag "hidden", :name => 'create', :style => 'display:none'
+      = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'
 
 = javascript_tag %( $("page_title").focus() )
 
