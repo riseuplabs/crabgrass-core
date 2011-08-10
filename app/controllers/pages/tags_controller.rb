@@ -1,4 +1,4 @@
-class Pages::TagsController < Pages::SidebarController
+class Pages::TagsController < Pages::SidebarsController
 
   before_filter :login_required
   helper 'pages/tags'
@@ -18,8 +18,7 @@ class Pages::TagsController < Pages::SidebarController
     @page.tag_list.remove(params[:id])
     @page.updated_by = current_user
     @page.save!
-    close_popup # we don't actually want this. we want to keep the box open and to update the tags on the page when the box is closed, no matter how it is closed
-    #render :nothing => true
+    render :nothing => true
   end  
 
 end

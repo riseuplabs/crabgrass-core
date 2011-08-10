@@ -1,6 +1,6 @@
 
 
-class Pages::DetailsController < Pages::SidebarController
+class Pages::DetailsController < Pages::SidebarsController
 
   before_filter :login_required
 

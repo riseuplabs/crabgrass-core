@@ -5,7 +5,7 @@
 #  update:  page_participation_path   /pages/:page_id/participations/:id
 #
 
-class Pages::ParticipationsController < Pages::SidebarController
+class Pages::ParticipationsController < Pages::SidebarsController
 
   before_filter :login_required
   helper 'pages/participation', 'pages/share'

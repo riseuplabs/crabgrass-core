@@ -153,6 +153,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:
+    pages.resource :sidebar,    :only => [:show]
     pages.resource :share,      :only => [:show, :update]
     pages.resource :details,    :only => [:show]
     pages.resource :attributes, :only => [:update]

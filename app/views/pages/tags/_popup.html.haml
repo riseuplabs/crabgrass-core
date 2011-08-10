@@ -1,17 +1,22 @@
+= refresh_sidebar_on_close
+
 - form_remote_tag(*options_for_edit_tag_form) do
-  %h2.first= I18n.t(:current_tags)
+
+  %h2.first= :current_tags.t
   - if( @page.tags.any? )
-    .edit_tags.selfclear
+    .two_column_float
       - @page.tags.sort_by{|t|t.name}.each do |tag|
-        = remove_tag_link( tag )
+        .column_item
+          = remove_tag_link( tag )
   - else
-    %p
-      (#{I18n.t(:no_tags)})
-  %h2= I18n.t(:add_tags)
-  = I18n.t(:add_one_or_more_tags) + ':'
-  %p
+    .p= :no_tags.t
+
+  %h2= :add_tags.t
+  = :add_one_or_more_tags.t + ':'
+  .p
     = text_field_tag( 'add', '', { :size => 20, :tabindex => 1 } )
-    = submit_tag I18n.t(:add_button)
+    = submit_tag :add_button.t
   .buttons
     = spinner('tag')
-    - close_modal_button
+    = close_modal_button
+
