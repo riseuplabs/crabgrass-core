@@ -42,7 +42,7 @@
 #
 # You can alter the default verb or object by appending a hash:
 #
-#   permissions :robots, :object => :cyborgs
+#   permissions :robots, :object => 'cyborgs'
 #
 # You can also do this dynamically by defining the methods permission_verb or
 # permission_object:
@@ -137,6 +137,11 @@ module Common::Application::Permissions
         add_template_helper(permission_class)
       end
     end
+
+    def permission_options
+      @permission_options
+    end
+
   end
 
   module InstanceMethods
@@ -184,11 +189,11 @@ module Common::Application::Permissions
     end
 
     def permission_verb
-      nil
+      self.class.permission_options[:verb] if self.class.permission_options
     end
 
     def permission_object
-      nil
+      self.class.permission_options[:object] if self.class.permission_options
     end
 
     def check_permissions
@@ -268,10 +273,15 @@ module Common::Application::Permissions
     def possible_objects
       # the possibilities are tried *in order*
       objects = []
-      objects << permission_object
-      objects << params[:controller].sub('/','_')      # eg 'me/requests' -> 'me_requests'
-      objects << params[:controller].sub(/^.*\//, '')  # eg 'me/requests' -> 'requests'
-      objects << params[:controller].sub(/\/.*$/, '')  # eg 'me/requests' -> 'me'
+      if permission_object 
+        objects << permission_object
+      elsif params[:controller] =~ /\//
+        objects << params[:controller].sub('/','_')      # eg 'me/requests' -> 'me_requests'
+        objects << params[:controller].sub(/^.*\//, '')  # eg 'me/requests' -> 'requests'
+        objects << params[:controller].sub(/\/.*$/, '')  # eg 'me/requests' -> 'me'
+      else
+        objects << params[:controller]
+      end
       return objects
     end
 
