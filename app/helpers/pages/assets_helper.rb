@@ -23,13 +23,15 @@ module Pages::AssetsHelper
   end
 
   def remove_asset_link(asset)
-    link = link_to_remote_with_icon("remove",
-      :url => {:controller => 'base_page/assets', :action => 'destroy', :id => asset.id, :page_id => @page.id},
+    link = link_to_remote(
+       "remove",
+       { :url => page_asset_path(@page, asset.id),
+          :method => :delete,
+          :complete => hide(dom_id(asset)) },
 #      :html => {:style => 'display:inline; padding:0;'},
-      :confirm => 'Are you sure you want to delete this attachment?',
+      { :confirm => :destroy_confirmation.t(:thing => 'attachment'),
 #      :loading  => show_spinner('popup'),
-      :icon => 'minus',
-      :complete => hide(dom_id(asset))
+        :icon => 'minus'}
     )
   end
 
