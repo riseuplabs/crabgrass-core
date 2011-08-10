@@ -198,9 +198,9 @@ module Common::Ui::ImageHelper
     style   = "height:#{target_height}px;width:#{target_width}px"
     klass   = options[:class] || 'thumbnail'
     url     = options[:url] || asset.url
-    method  = options[:method] || 'get'
-    span = content_tag(:span, asset.filename)
-    link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+    # method  = options[:method] || 'get'
+    # span = content_tag(:span, asset.filename)
+    link_to img, url, :class => klass, :title => asset.filename, :style => style
   end
 
   # links to an asset with a thumbnail preview
