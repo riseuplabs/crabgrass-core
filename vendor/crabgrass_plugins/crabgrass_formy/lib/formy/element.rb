@@ -15,6 +15,7 @@ module Formy
         @options[:style] = ['display:none;', @options[:style]].combine
       end
       @elements = []                     # sub elements held by this element
+      @element_count = 0
       @buffer = Buffer.new
     end
 
@@ -79,11 +80,12 @@ module Formy
         method_name = class_name.to_s.gsub(/^.*::/,'').downcase
         module_eval <<-"end_eval"
         def #{method_name}(options={})
-          element = #{class_name}.new(@base,options)
+          element = #{class_name}.new(@base,{:index => @element_count}.merge(options))
           element.open
           yield element
           element.close
           @elements << element
+          @element_count += 1
         end
         end_eval
       end
