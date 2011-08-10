@@ -1,2 +1,2 @@
-- form_tag(groups_path, :method => 'post', :multipart => 'true') do
-  = render :partial => "groups/new_group"
+- form_for @group do |form|
+  = render :partial => "groups/new_group", :locals => {:form => form}

@@ -5,8 +5,8 @@ class Groups::CouncilsController < Groups::CommitteesController
   end
 
   def create
-    @council = Council.create! params[:group].merge(:created_by => current_user)
-    @parent.add_committee!(@council) #?
+    @council = Council.create params[:council].merge(:created_by => current_user)
+    @group.add_committee!(@council)
     redirect_to group_url(@council)
     success
   end
