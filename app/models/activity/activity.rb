@@ -37,8 +37,6 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, :polymorphic => true
   belongs_to :object, :polymorphic => true
 
-  acts_as_site_limited
-
   before_create :set_defaults
   def set_defaults # :nodoc:
     # the key is used to filter out twin activities so that we don't show

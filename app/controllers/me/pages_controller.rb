@@ -19,6 +19,7 @@ class Me::PagesController < Me::BaseController
 
   def setup_navigation(nav)
     nav[:local] = [
+      {:active => false, :visible => true, :html => {:partial => 'common/pages/search/create'}},
       {:active => true,  :visible => true, :html => {:partial => 'common/pages/search/controls_active'}},
       {:active => false, :visible => true, :html => {:partial => 'common/pages/search/controls_possible'}}
     ]

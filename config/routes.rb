@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
   map.pictures 'pictures/:id1/:id2/:geometry.:format', :controller => 'pictures', :action => 'show'
-  
+
   ##
   ## ME
   ##
@@ -116,6 +116,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :members
     groups.resources :memberships
     groups.resources :committees
+    groups.resources :councils
     groups.resources :invites
     groups.resources :requests
     groups.resources :join_requests
@@ -152,6 +153,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:
+    pages.resource :sidebar,    :only => [:show]
     pages.resource :share,      :only => [:show, :update]
     pages.resource :details,    :only => [:show]
     pages.resource :attributes, :only => [:update]
@@ -160,7 +162,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:action/:page_id', :page_id => nil, :action => 'index' 
+  map.connect '/pages/:controller/:page_id/:action', :constraints => {:controller => /.*_page/ }
 
   ##
   ## DEFAULT ROUTE

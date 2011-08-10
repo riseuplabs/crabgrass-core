@@ -37,8 +37,6 @@ class Group < ActiveRecord::Base
   include GroupExtension::Featured   # this makes this group's pages featureable
   include GroupExtension::Pages      # group <--> page behavior
 
-  acts_as_site_limited
-
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
   # not saved to database, just used by activity feed:

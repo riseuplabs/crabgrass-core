@@ -6,8 +6,6 @@ module ActsAsLocked
       { :conditions => access_conditions_for(holder) }
     }
 
-    named_scope :for_public, :conditions => "keyring_code IS NULL"
-
     cattr_accessor :symbol_codes
     cattr_accessor :holder_klass
     cattr_accessor :holder_block
@@ -23,7 +21,7 @@ module ActsAsLocked
     # returns an array of the locks set.
     def update!(locks_hash = {})
       # make sure we only have valid keys
-      locks_hash.slice self.locked.class.locks_for_bits(~0)
+      locks_hash.slice locked.class.locks_for_bits(~0)
       grants = locks_hash.map{|k,v|k if v == 'true'}.compact
       revokes = locks_hash.map{|k,v|k if v == 'false'}.compact
       self.grant! grants
@@ -38,24 +36,36 @@ module ActsAsLocked
         self.mask |= bits_for_locks(locks)
       end
       save
+      if locked.respond_to? :grant_dependencies
+        locked.grant_dependencies self
+      end
       self
     end
 
     def revoke!(locks)
       self.mask &= ~bits_for_locks(locks)
       save
+      if locked.respond_to? :revoke_dependencies
+        locked.revoke_dependencies self
+      end
       self
     end
 
     def bits_for_locks(locks)
-      self.locked.class.bits_for_locks(locks)
+      locked.class.bits_for_locks(locks)
     end
 
+    def allowed_for?(lock)
+      locked.class.key_allowed?(lock, self.holder)
+    end
+
+
     #
-    # this appears to be only used for testing
+    # This is used in the {grant,revoke}_dependencies functions
+    # and in the tests
     #
     def locks(options={})
-      klass = self.locked.class
+      klass = locked.class
       postfix = klass.name.underscore
       current_locks = nil
 

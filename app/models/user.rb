@@ -233,6 +233,26 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
+  # Key Dependencies
+  #
+  # Some keys imply others.
+  # If a setting is public friends and peers have access too.
+  # They would have anyway. This is rather for UI consistency than for the
+  # real permission checks.
+
+  def grant_dependencies(key)
+    if key.holder == :public
+      self.grant! self.friends, key.locks
+      self.grant! self.peers, key.locks
+    end
+  end
+
+  def revoke_dependencies(key)
+    if [self.friends, self.peers].include? key.holder
+      self.revoke! :public, key.locks(:disabled => true)
+    end
+  end
+
   # keyring_code used by acts_as_locked and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
@@ -300,31 +320,6 @@ class User < ActiveRecord::Base
       false
     end
   end
-
-  ##
-  ## SITES
-  ##
-
-  # DEPRECATED
-  USER_SITES_SQL = 'SELECT sites.* FROM sites JOIN (groups, memberships) ON (sites.network_id = groups.id AND groups.id = memberships.group_id) WHERE memberships.user_id = #{self.id}'
-
-  # DEPRECATED
-  def site_id; self.site_ids.first; end
-
-  # DEPRECATED
-  has_many :sites, :finder_sql => USER_SITES_SQL
-
-  # DEPRECATED
-  named_scope(:on, lambda do |site|
-    if site.limited?
-      { :select => "users.*",
-        :joins => :memberships,
-        :conditions => ["memberships.group_id = ?", site.network.id]
-      }
-    else
-      {}
-    end
-  end)
 
   ##
   ## DEPRECATED

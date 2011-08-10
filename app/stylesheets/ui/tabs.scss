@@ -50,10 +50,16 @@ ul.tabset.top {
   }
 }
 
-// .sub_tabs a
-//  font-size: 0.85em
 //
-// ul.tabset.simple {
-//  margin-top: 0;
-// }
+// TODO: switch to cutout_menu style tabs...
+//
+// See mixins.scss cutout_menu for detailed comments on how
+// these tabs work. It would be better to reuse that mixin,
+// but at the moment I am not sure how, since it is designed 
+// for special case where the tabs are absolutely positioned
+// on the bottom of an enclosing block. 
+//
+// These tabs work the same, but are not positioned on the bottom.
+// These tabs are class based, and so can be reused in many places.
+//
 

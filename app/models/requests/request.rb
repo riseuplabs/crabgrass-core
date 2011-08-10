@@ -119,7 +119,7 @@ class Request < ActiveRecord::Base
   }
 
   # maybe we should add an "invite?" column?
-  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']} 
+  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']}
 
   ##
   ## VALIDATIONS

@@ -24,7 +24,7 @@
   -# 
   -# TAGS
   -#
-  - if false and !(tag_content = page_tags).nil? || may_update_tags?
+  - if !(tag_content = page_tags).nil? || may_update_tags?
     %h3= I18n.t(:tags)
     %div.tags
       = tag_content

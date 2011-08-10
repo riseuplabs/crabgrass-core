@@ -54,3 +54,35 @@
   }
 }
 
+//
+// TWO COLUMN FLOATED ITEMS
+// 
+// this allows us to display a bunch of items in two columns, but in a way such
+// that if the window gets too small to display the two columns it will collapse
+// gracefully to a single column.
+//
+// used like so:
+// 
+//   .two_column_float 
+//     .column_item= 'hi'
+//     .column_item= 'there'
+//     .column_item= 'stranger'
+//
+
+.two_column_float {
+  // self clear the containing div:
+  overflow: auto;
+
+  // make the items at least 50% width and float them
+  .column_item {
+    min-width: 50%;
+    float: left;
+
+    // when a .p is floated, the margin gets doubled, so we put half margins here.
+    .p {
+       margin-top: 0.5em;
+       margin-bottom: 0.5em;
+    }
+  }
+}
+

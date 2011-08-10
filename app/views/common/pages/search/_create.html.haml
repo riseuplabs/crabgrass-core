@@ -1,0 +1,6 @@
+.p.first
+  - if @group
+    = link_to :create_page.t, new_page_path(:owner => @group), :icon => 'plus'
+  - else
+    = link_to :create_page.t, new_page_path, :icon => 'plus'
+

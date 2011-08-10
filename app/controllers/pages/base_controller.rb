@@ -6,7 +6,7 @@ class Pages::BaseController < ApplicationController
 
   public
 
-  layout :choose_layout
+  layout 'page'
   permissions :pages, :object => 'page'
   permissions :posts, :object => 'post'
   permissions 'groups/memberships', 'groups/base'    # required to show the banner if page is owned by a group.
@@ -69,31 +69,20 @@ class Pages::BaseController < ApplicationController
   def setup_options; end
 
   ##
-  ## AUTHORIZATION
-  ##
-
-  def authorized
-    true
-  end
-
-  ##
   ## PAGE OPTIONS
   ## subclasses can control how a page is displayed by changing these values.
-  ## they should do so by defining setup_options()
+  ## they should do so by defining setup_options() and modifying @options member
+  ## variable (which is of type Pages::BaseController::Options)
   ##
 
-  OPTIONS = {
-    :show_posts  => false,  # show comments for this page?
-    :show_reply  => false, # show form to post new comment?
-    :show_assets => true,  # show assets for this page?
-    :show_tags   => true,  # show tags for this page?
-    :show_sidebar => true, # show the page sidebar?
-    :title => nil
-  }
-  PageOptions = Struct.new("PageOptions", *OPTIONS.keys)
-
-  def new_options
-    PageOptions.new(*OPTIONS.values)
+  class Options
+    attr_accessor :show_posts     # show comments for this page?
+    attr_accessor :show_reply     # show form to post new comment?
+    attr_accessor :show_assets    # show assets for this page?
+    attr_accessor :show_tags      # show tags for this page?
+    attr_accessor :show_sidebar   # show the page sidebar?
+    attr_accessor :show_tabs      # load 'tabs' partial?
+    attr_accessor :title          # html title
   end
 
   ##

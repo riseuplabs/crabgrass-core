@@ -250,7 +250,7 @@ en:
   menu_chat: "Chat"
   menu_people: "People"
   menu_networks: "Networks"
-  menu_link_logout: "Logout"
+  menu_link_logout: "Logout %{user}"
   menu_link_account: "Account"
   menu_admin: "Admin"
   menu_moderation: "Moderation"
@@ -736,15 +736,21 @@ en:
   ## PERMISSIONS
   ##
 
+  permissions_key: "Key"
+  public_description: "Everyone on the internet"
+  peers_description: "Members of your groups"
+  friends_description: "Your friends"
+
+  may_view: "Who can see my profile?"
+  may_pester: "Who can share content with me and send me messages?"
+  may_see_contacts: "Who can see my friends?"
+  may_request_contact: "Who can request to be my friend?"
+  may_see_groups: "Who can see which groups I'm in?"
+
   may_see_committees: "Show committees"
   may_see_networks: "Show networks"
   may_see_members: "Show group members"
   may_request_membership: "Allow membership requests"
-  may_see_groups: "Show group memberships"
-  may_see_contacts: "Show your friends"
-  may_request_contact: "May request to be friends"
-  may_pester: "May pester me"
-  may_view: "Profile is visible"
   may_edit: "May edit"
   may_admin: "May admin"
   may_burden: "May burden"
@@ -774,6 +780,7 @@ en:
   group_privacy_settings: '%{group} Privacy Settings'
   group_publicly_visible: 'Make %{group} Publicly Visible'
   committee_publicly_visible: 'Make Committees Publicly Visible'
+  networks_publicly_visible: 'Make Networks Publicly Visible'
   allow_membership_requests: 'Allow Membership Requests'
   group_home_headline: "%{group_type} Home"
   group_home_welcome: "Welcome"
@@ -789,6 +796,7 @@ en:
   dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
   committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
+  networks_publicly_visible_description: Networks are viewable by non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
   group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
   page_list: Page list

@@ -1,3 +1,9 @@
+# TODO: We currently use Site.default to originate from.
+# Based on real live site scenarios we might want to make
+# this the site where the user actually watched the page
+# or the user last visited or the notification was send from.
+
+
 module Mailers::PageHistory
   def self.included(base)
     base.instance_eval do
@@ -12,7 +18,7 @@ module Mailers::PageHistory
   def page_history_single_notification(user, page_history)
     @page_history         = page_history
     @user                 = user
-    @site                 = page_history.page.site
+    @site                 = Site.default
     @subject              = "#{@site.title} : #{@page_history.page.title}"
     @body[:page_history]  = @page_history
     setup_watched_notification_email
@@ -21,7 +27,7 @@ module Mailers::PageHistory
   def page_history_single_notification_paranoid(user, page_history)
     @page_history         = page_history
     @user                 = user
-    @site                 = page_history.page.site
+    @site                 = Site.default
     @subject              = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
     @body[:page_history]  = @page_history
 
@@ -31,7 +37,7 @@ module Mailers::PageHistory
   end
 
   def page_history_digest_notification(user, page, page_histories)
-    @site                   = page.site
+    @site                 = Site.default
     @user                   = user
     @subject                = "#{@site.title} : #{page.title}"
     @body[:page]            = page
@@ -40,7 +46,7 @@ module Mailers::PageHistory
   end
 
   def page_history_digest_notification_paranoid(user, page, page_histories)
-    @site                   = page.site
+    @site                 = Site.default
     @user                   = user
     @subject                = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
     @body[:page]            = page

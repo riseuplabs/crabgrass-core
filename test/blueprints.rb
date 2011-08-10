@@ -68,7 +68,6 @@ end
 Group.blueprint do
   full_name       { Sham.display_name }
   name            { full_name.gsub(/[^a-z]/,"") }
-  site            { Site.first || Site.make }
 end
 
 Committee.blueprint do

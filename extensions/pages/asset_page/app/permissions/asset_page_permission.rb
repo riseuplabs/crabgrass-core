@@ -1,4 +1,7 @@
 module AssetPagePermission
+
+  protected
+
   def authorized?
     if @page.nil?
       true
@@ -10,4 +13,5 @@ module AssetPagePermission
       current_user.may?(:admin, @page)
     end
   end
+
 end
