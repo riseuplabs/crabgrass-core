@@ -234,8 +234,12 @@ module Pages::SidebarHelper
 
   def edit_tags_line
     if may_update_tags?
-      popup_line(:name => 'tags', :label => I18n.t(:edit_tags_link),
-        :title => I18n.t(:edit_tags), :icon => 'tag')
+      popup_line(
+        :id => 'tag_li',
+        :icon => 'tag',
+        :label => I18n.t(:edit_tags_link),
+        :url => page_tags_path(@page)
+      )
     end
   end
 
