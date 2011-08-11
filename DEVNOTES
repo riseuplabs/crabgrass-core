@@ -198,3 +198,35 @@ backgrounding code snippets:
 
 On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/
+
+
+
+Profile
+=================================
+
+Type A List
+
+* summary about myself - hmmm... i would like to have different summaries to display to my friends, my peers and people of that group. then this is not type A.
+* place
+* avatar
+* display name
+* login
+* online status 
+* you friend/ groups / networks 
+
+Type B List
+
+Only visible on the profile page of a user, but there can be Multiple or non at all.
+
+* pictures, may be multiple.
+* contact info
+** email 
+** phone
+** instant message
+** snail mail address
+* pages
+* status updates
+* homepage
+* social change interests and the like...
+
+
