@@ -10,8 +10,6 @@ class Groups::GroupsController < Groups::BaseController
     if @group.valid?
       redirect_to group_url(@group)
       success
-    else
-      redirect_to(params[:redirect])
     end
   end
 

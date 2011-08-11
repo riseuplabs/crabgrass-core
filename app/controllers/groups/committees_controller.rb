@@ -11,8 +11,6 @@ class Groups::CommitteesController < Groups::BaseController
       @group.add_committee!(@committee)
       redirect_to group_url(@committee)
       success
-    else
-      redirect_to(params[:redirect])
     end
   end
 
