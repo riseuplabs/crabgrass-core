@@ -16,7 +16,7 @@ textarea {
 // especially in chrome:
 //
 
-textarea, input[type=submit] {margin: 0;}
+textarea, input[type=submit], input[type=button] {margin: 0;}
 
 //
 // form elements are often really misaligned because in the w3c box
@@ -65,7 +65,7 @@ textarea, input, select {
     }
   }
 
-  input[type=submit] {
+  input[type=submit], input[type=button] {
     font-size: 1.15em;
     margin-right: 1em;
   }
@@ -82,10 +82,12 @@ textarea, input, select {
   // it appear first, which is more the standard.
   // TODO: add RTL support.
   //
-  &.reverse input[type=submit] {
-    float: right;
-    margin-right: 0;
-    margin-left: 1em;
+  &.reverse {
+    input[type=submit], input[type=button], img {
+      float: right;
+      margin-right: 0;
+      margin-left: 1em;
+    }
   }
 }
 
