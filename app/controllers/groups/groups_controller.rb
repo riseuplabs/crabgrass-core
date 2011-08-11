@@ -5,9 +5,14 @@ class Groups::GroupsController < Groups::BaseController
   end
 
   def create
-    @group = Group.create! params[:group]
-    redirect_to group_url(@group)    
-    success
+    @group = Group.new params[:group]
+    @group.save!
+    if @group.valid?
+      redirect_to group_url(@group)
+      success
+    else
+      redirect_to(params[:redirect])
+    end
   end
 
   def destroy

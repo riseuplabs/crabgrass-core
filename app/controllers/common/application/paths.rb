@@ -54,10 +54,12 @@ module Common::Application::Paths
   ## PAGE PATHS
   ##
 
+  #
   # for a couple reasons, page creation is handled by a separate controller. 
-  # using 'new_page_create_path' is just awkward, so we alias it here.
+  # this is not a resource route, but we create the paths as if it was for consistency.
+  #
   def new_page_path(options={})
-    create_page_path(options)
+    create_page_path(options.merge(:action => 'new'))
   end
 
   # The default url helpers based on the routes will not create correct links.

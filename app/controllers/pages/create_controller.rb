@@ -6,11 +6,11 @@
 #
 #  GET new
 #     new_page_path
-#     /pages/create/new
+#     /pages/new/:type
 # 
-#  POST new
-#     new_page_path
-#     /pages/create/new
+#  POST create
+#     create_page_path
+#     /pages/create/:type
 #
 
 class Pages::CreateController < ApplicationController
@@ -20,35 +20,37 @@ class Pages::CreateController < ApplicationController
   permissions 'pages'
 
   def new
-    if request.post?
-      if params[:cancel]
-        redirect_to(new_page_path(:group => params[:group], :type => nil))
-      else
-        create_page
-      end
+    new_page
+  end
+
+  def create
+    if params[:cancel]
+      redirect_to new_page_url(:group => params[:group], :type => nil)
     else
-      new_page
+      create_page
     end
   end
 
   protected
 
+  #
+  # returns a class object for the page type, or a page class proxy object.
+  # can be overwritten by subclasses
+  #
+  def page_class
+    param_to_page_class(params[:type]) 
+  end
+  helper_method :page_class
+
   def new_page
-    if params[:type]
-      @page_class = param_to_page_class(params[:type])
-      #@page = @page_class.build!({})
-      #@page.id = 0
-    end
+    @page_class = page_class
+    render :template => 'pages/create/new'
   end
 
   def create_page
     begin
       # create basic page instance
-      @page_class = param_to_page_class(params[:type])
-      @page = build_new_page(
-        @page_class,  params[:page],
-        params[:recipients],  params[:access]
-      )
+      @page = build_new_page(params[:page], params[:recipients], params[:access])
 
       # setup the data (done by subclasses)
       @data = build_page_data
@@ -59,7 +61,7 @@ class Pages::CreateController < ApplicationController
       @page.save!
 
       # success!
-      redirect_to(page_url(@page))
+      return redirect_to(page_url(@page))
 
     rescue Exception => exc
       # failure!
@@ -74,10 +76,7 @@ class Pages::CreateController < ApplicationController
   ## PAGE CREATION HELPERS
   ##
 
-  def build_new_page(page_class, page_params, recipients, access)
-    raise 'page type required' unless page_class
-    #page_class = param_to_page_class(page_type)
-
+  def build_new_page(page_params, recipients, access)
     page_params = page_params.dup
     page_params[:share_with] = recipients
     page_params[:access] = case access
@@ -91,7 +90,9 @@ class Pages::CreateController < ApplicationController
   end
 
   def param_to_page_class(param)
-    Page.param_id_to_class(param)
+    if param
+      Page.param_id_to_class(param)
+    end
   end
 
   # returns a new data object for page initialization.
@@ -114,7 +115,9 @@ class Pages::CreateController < ApplicationController
   ##
 
   def setup_context
-    @group = Group.find_by_name(params[:group]) if params[:group]
+    if params[:owner] and params[:owner] != 'me'
+      @group = Group.find_by_name(params[:owner])
+    end
     if @group
       Context::Group.new(@group)
     else

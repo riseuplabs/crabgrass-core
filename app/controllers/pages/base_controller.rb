@@ -91,7 +91,11 @@ class Pages::BaseController < ApplicationController
 
   def setup_context
     if @page and @page.owner
-      return Context.find(@page.owner)
+      if @page.owner == current_user
+        Context::Me.new(current_user)
+      else
+        Context.find(@page.owner)
+      end
     end
   end
 

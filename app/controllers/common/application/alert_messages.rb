@@ -180,8 +180,8 @@ module Common::Application::AlertMessages
     raise ErrorMessage.new(message)
   end
 
-  def raise_not_found(message)
-    raise ErrorNotFound.new(message)
+  def raise_not_found(thing)
+    raise ErrorNotFound.new(thing)
   end
 
   def raise_denied(message=nil)

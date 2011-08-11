@@ -142,7 +142,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   # default page creator
-  map.create_page '/pages/create/:type', :controller => 'pages/create', :action => 'new', :type => nil
+  map.create_page '/pages/:action/:owner/:type', :controller => 'pages/create', :action => 'create', :owner => 'me', :type => nil, :requirements => {:action => /new|create/}
 
   # base page
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
@@ -175,11 +175,7 @@ ActionController::Routing::Routes.draw do |map|
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-
-  #map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
-  #map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-
-  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
-
+  map.connect ':_context/:_page/*path', :controller => 'dispatch', :action => 'dispatch'
+  map.connect ':_context',              :controller => 'dispatch', :action => 'dispatch'
 end
+

@@ -47,9 +47,10 @@ class DispatchController < ApplicationController
         redirect_to create_page_url(:type => 'wiki', :group => @group, 'page[title]' => params[:_page])
         warning :thing_not_found.t(:thing => :page.t)
       else
-        set_language do
-          raise_not_found(:thing_not_found.t(:thing => :page.t))
-        end
+        #set_language do
+          # is it required to set the language here?
+          raise_not_found(:page.t)
+        #end
       end
     end
   end
@@ -105,7 +106,8 @@ class DispatchController < ApplicationController
       if @pages.size == 1
         @page = @pages.first
       elsif @pages.size > 1
-        return controller_for_list_of_pages(page_handle)
+        # for now, we don't support this.
+        # return controller_for_list_of_pages(page_handle)
       end
     end
 
@@ -202,29 +204,30 @@ class DispatchController < ApplicationController
     Page.paginate_by_path ["name",name], options.merge(pagination_params)
   end
 
-  def controller_for_list_of_pages(name)
-    params[:action] = 'index'
-    #params[:path] = ['name', name] 
-    params[:search] = {:text => name}
-    params[:controller] = 'search'
-    SearchController.new()
-    #new_controller("SearchController")
-  end
+  #def controller_for_list_of_pages(name)
+  #  params[:action] = 'index' 
+  #  params[:search] = {:text => name}
+  #  params[:controller] = 'search'
+  #  SearchController.new()
+  #end
 
   def controller_for_page(page)
-    if params[:_page_action] =~ /-/
-      # decontruct action into controller-action
-      controller, action = params[:_page_action].split('-')
-      params[:action] = action
-      controller = page.controller + '_' + controller
-      params[:controller] = controller
-      new_controller("#{controller.camelcase}Controller")
+    if params[:path].empty?
+      params[:controller] = page.controller      
+      params[:action]     = 'show'
+      params[:id]         = nil
     else
-      # use the main controller for this response
-      params[:action] = params[:_page_action] || 'show'
-      params[:controller] = page.controller
-      new_controller("#{page.controller.camelcase}Controller")
+      if page.controllers.include?("#{page.controller}_#{params[:path][0]}")
+        params[:controller] = "#{page.controller}_#{params[:path][0]}"
+        params[:action]     = params[:path][1]
+        params[:id]         = params[:path][2]
+      else
+        params[:controller] = page.controller
+        params[:action]     = params[:path][0]
+        params[:id]         = params[:path][1]
+      end
     end
+    new_controller("#{params[:controller].camelcase}Controller")
   end
 
   def controller_for_group(group)

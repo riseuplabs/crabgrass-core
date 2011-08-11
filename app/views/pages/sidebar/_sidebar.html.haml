@@ -34,7 +34,7 @@
   -# 
   -# ATTACHMENTS
   -#
-  - if false and @page.supports_attachments and !(attachment_content = page_attachments).nil?
+  - if @page.supports_attachments and !(attachment_content = page_attachments).nil?
     %section#attachments
       %h3= I18n.t(:attachments)
       .attachments

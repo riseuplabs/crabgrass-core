@@ -185,7 +185,7 @@ module Pages::SidebarHelper
 
   def edit_attachments_line
     if may_show_page?
-      popup_line(:name => 'assets', :label => I18n.t(:edit_attachments_link), :icon => 'attach', :title => I18n.t(:edit_attachments))
+      popup_line(:name => 'assets', :label => :edit_attachments_link.t, :icon => 'attach', :title => :edit_attachments.t, :url => page_assets_path(@page))
     end
   end
 
