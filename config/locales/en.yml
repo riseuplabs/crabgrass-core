@@ -751,6 +751,8 @@ en:
   may_see_networks: "Show networks"
   may_see_members: "Show group members"
   may_request_membership: "Allow membership requests"
+  members_may_edit_wiki: "All members may edit the wiki"
+  members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
   may_edit: "May edit"
   may_admin: "May admin"
   may_burden: "May burden"

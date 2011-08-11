@@ -6,12 +6,13 @@ class Groups::PermissionsController < Groups::BaseController
   def index
     @key  = @group.keys.find_or_create_by_holder(:public)
     @keys = [@key]
+    @member_key = @group.keys.find_or_create_by_holder(@group)
   end
 
   def update
     @key   = @group.keys.find_or_create_by_keyring_code params.delete(:id)
     @locks = @key.update!(params)
-    @keys  = @group.keys.filter_by_holder(:include => [:public], :exclude => [@group])
+    @keys  = [@key]
     render :template => 'common/permissions/update'
   end
 

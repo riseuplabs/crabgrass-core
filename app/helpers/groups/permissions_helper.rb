@@ -53,7 +53,7 @@ module Groups::PermissionsHelper
   def members_may_edit_wiki_checkbox(list)
     list.checkbox do |cb|
       cb.label I18n.t(:members_may_edit_wiki)
-      cb.input check_box(:profile, :members_may_edit_wiki, :onclick => '')
+      cb.input permission_lock_tag(:edit, [@member_key])
       cb.info I18n.t(:members_may_edit_wiki_description)
     end
   end
