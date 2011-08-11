@@ -1,5 +1,4 @@
-<%- @info_box_class = 'tabs' -%>
-<%= Formy.tabs do |f|
+<%= formy(:tabs, :id => 'page_tabs') do |f|
   f.tab do |t|
     t.label I18n.t(:show)
     if action?(:edit)
@@ -29,7 +28,7 @@
   end
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|
-    t.label I18n.t(:versions)
+    t.label I18n.t(:history)
     if action?(:edit)
       t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
     else
@@ -38,25 +37,25 @@
     t.selected controller?(:wiki_page_version) && !(action?(:diff) && params[:id] == last_change_id)
     t.class 'page_url'
   end
-  if @wiki.version > 1
-    f.tab do |t|
-      t.label I18n.t(:last_change)
-      if action?(:edit)
-        t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-      else
-        t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
-      end
-      t.selected controller?(:wiki_page_version) && action?(:diff) && params[:id] == last_change_id
-      t.class 'page_url'
-    end
-  end
-  f.tab do |t|
-    t.label I18n.t(:print)
-    if action?(:edit)
-      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-    else
-      t.url page_url(@page,:action=>'print')
-    end
-    t.class 'page_url'
-  end
+  #if @wiki.version > 1
+  #  f.tab do |t|
+  #    t.label I18n.t(:last_change)
+  #    if action?(:edit)
+  #      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+  #    else
+  #      t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
+  #    end
+  #    t.selected controller?(:wiki_page_version) && action?(:diff) && params[:id] == last_change_id
+  #    t.class 'page_url'
+  #  end
+  #end
+  #f.tab do |t|
+  #  t.label I18n.t(:print)
+  #  if action?(:edit)
+  #    t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+  #  else
+  #    t.url page_url(@page,:action=>'print')
+  #  end
+  #  t.class 'page_url'
+  #end
 end -%>

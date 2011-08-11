@@ -13,11 +13,7 @@ module WikiPageHelper
       user_id = @wiki.locker_of(:document).id
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
-      msgs = [
-        I18n.t(:wiki_is_locked, :user => display_name),
-        I18n.t(:wont_be_able_to_save)
-      ]
-      flash_message_now :title => I18n.t(:page_locked_header), :error => msgs
+      error :page_locked_header.t, :wiki_is_locked.t(:user => display_name), :wont_be_able_to_save.t
     end
   end
 
@@ -43,19 +39,19 @@ module WikiPageHelper
     return html unless logged_in? and current_user.may?(:edit, wiki.page)
 
     doc = Hpricot(html)
-    doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |heading_el|
-      section = heading_el['href'].sub(/^.*#/, '')
+    doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |anchor|
+      section = anchor['href'].sub(/^.*#/, '')
       next unless wiki.all_sections.include? section
-
 
       link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
       if show_inline_editor?
         link_opts[:confirm] = I18n.t(:wiki_lost_text_confirmation)
       end
-      link = link_to_remote_icon('pencil', link_opts, :class => 'edit',
-                        :title => I18n.t(:wiki_section_edit),
-                        :id => "#{section}_edit_link")
-      heading_el.parent.insert_after(Hpricot(link), heading_el)
+      link = link_to_remote(:edit.t, link_opts, :title => I18n.t(:wiki_section_edit), :id => "#{section}_edit_link", :icon => 'pencil', :class => 'edit shy')
+      
+      heading = anchor.parent
+      heading.insert_after(Hpricot(link), anchor)
+      heading.attributes['class'] += " shy_parent"
     end
     doc.to_html
   end

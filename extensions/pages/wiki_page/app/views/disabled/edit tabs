@@ -1,14 +1,6 @@
-<% content_for :right_sidebar do %>
-  <%= render :partial => 'pages/sidebar/sidebar' %>
-<% end %>
-
-<%
-  @show_posts = false
   separator = Conf.text_editor_sym == :html_preferred ? '' : '|'
-%>
-<%= render :partial => 'wiki_page/tabs' %>
 
-<%= Formy.tabs(:type => :simple, :separator => separator) do |f|
+<%= formy(:tabs, :type => :simple, :separator => separator) do |f|
   if Conf.allow_greencloth_editor?
     f.tab do |t|
       t.id       "link-tab-greencloth"
@@ -72,10 +64,6 @@
 end %>
 
 
-<% form_tag(page_url(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do -%>
-<%= hidden_field 'wiki', 'version' %>
-<% locked_error_message -%>
-
 <% if Conf.allow_greencloth_editor? -%>
 <div id="tab-edit-greencloth" class="tab_content" style="<%= 'display:none' if preferred_editor_tab != :greencloth %>">
   <%= render :partial => "wiki_page/edit_greencloth", :locals => {:load_content => preferred_editor_tab == :greencloth} %>
@@ -96,15 +84,3 @@ end %>
   <%= big_spinner %>
 </div>
 
-<div class="wiki_buttons">
-  <% if locked_for_me? -%>
-    <%= submit_tag I18n.t(:break_lock_button), :name => 'break_lock' %>
-  <% else -%>
-    <%= submit_tag I18n.t(:save_button), :name => 'save' %>
-  <% end %>
-  <% unless @wiki_is_blank %>
-    <%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %>
-  <% end %>
-</div>
-
-<% end %>

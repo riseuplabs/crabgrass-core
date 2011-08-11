@@ -1,0 +1,16 @@
+- @options.show_posts = false
+
+- form_tag(page_xpath(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do
+  = hidden_field 'wiki', 'version'
+  - locked_error_message
+
+  = render :partial => "wiki_page/edit_greencloth"
+
+  .buttons.reverse
+    - if locked_for_me?
+      = submit_tag :break_lock_button.t, :name => 'break_lock'
+    - else
+      = submit_tag :save_button.t, :name => 'save'
+    - unless @wiki_is_blank
+      = submit_tag I18n.t(:cancel_button), :name => 'cancel'
+

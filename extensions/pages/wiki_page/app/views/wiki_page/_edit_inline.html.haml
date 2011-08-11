@@ -1,0 +1,13 @@
+- rows = [word_wrap((markup||""), 80).count("\n")+10, 30].min
+- loading = show_spinner('save')
+- url = page_path(@page, :action => 'update', :section => section)
+- form_remote_tag(:loading => loading, :url => url, :method => 'put') do
+  = text_area_tag('wiki[body]', h(markup), :rows => rows, :class => 'full_width', :id => wiki_body_id(@wiki))
+  .p.float_left
+    = formatting_reference_link
+  .buttons.reverse
+    = submit_tag(:save_button.t, :name => 'save') unless alert_messages?
+    = button_to_remote :cancel_button.t, {:loading => show_spinner('save'), :url => page_path(@page, :action => 'update', :section => section, :cancel => true), :method => 'put'}, {:name => 'ajax_cancel'}
+    = spinner('save')
+    = javascript_tag(confirm_discarding_wiki_edit_text_area)
+
