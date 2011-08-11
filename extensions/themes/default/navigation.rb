@@ -33,12 +33,14 @@ define_navigation do
       visible { @drop_down_menu }
     end
 
+=begin
     context_section :notices do
       label  "Notices"
       url    { me_home_path }
       active { controller?('me/notices') }
       icon   :info
     end
+=end
 
     context_section :pages do
       label  "Pages"
@@ -47,6 +49,7 @@ define_navigation do
       icon   :page_white_copy
     end
 
+=begin
     context_section :activities do
       label  "Activities"
       url    { me_activities_path }
@@ -74,14 +77,16 @@ define_navigation do
       end
 
     end
+=end
 
+=begin
     context_section :calendar do
       label  "Calendar"
       url    { me_events_path }
       active { controller?('me/events') }
       icon   :date
     end
-
+=end
 
     context_section :messages do
       label  "Messages"
