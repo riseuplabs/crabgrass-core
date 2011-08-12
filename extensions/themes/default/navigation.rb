@@ -213,12 +213,14 @@ define_navigation do
       active { page_controller? }
     end
 
+=begin
     context_section :calendar do
       label  "Calendar"
       url    { group_events_path(@group) }
       active { controller?('groups/events') }
       icon   :date
     end
+=end
 
     context_section :members do
       visible { may_list_memberships? }
