@@ -7,7 +7,7 @@ class Me::ProfileController < Me::BaseController
 
   def update
     if params[:clear_photo]
-      @profile.photo.destroy
+      @profile.picture.destroy
       success :profile_saved.t
       redirect_to edit_me_profile_path 
     else
