@@ -60,6 +60,16 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
+
+  # using mocks to test permissions
+  # see MockableTestHelper for implementation of
+  # expect and verify
+  def assert_permission(permission, ret = true)
+    @controller.expect permission, ret
+    yield
+    @controller.verify
+  end
+
   ##
   ## ROUTE HELPERS
   ##
