@@ -11,20 +11,13 @@ module Groups::BasePermission
   ## BASIC GROUP CRUD
   ##
 
+  def may_create_group?(parent = @group)
+    logged_in? and (parent.nil? || current_user.may?(:admin, parent))
+  end
+
   def may_show_group?(group = @group)
     current_user.may? :view, group
   end
-
-  def may_people_group?(group=@group)
-    may_list_memberships?(group)
-  end
-  alias_method :may_list_groups_group?, :may_people_group?
-
-
-  def may_update_group?(group = @group)
-    logged_in? and current_user.may?(:admin, group)
-  end
-  alias_method :may_edit_group?, :may_update_group?
 
   def may_destroy_group?(group = @group)
     # has a council
@@ -39,10 +32,17 @@ module Groups::BasePermission
     end
   end
 
-  def may_create_group?(parent = @group)
-    logged_in? and (parent.nil? || current_user.may?(:admin, parent))
+  def may_people_group?(group=@group)
+    may_list_memberships?(group)
   end
-  alias_method :may_new_group?, :may_create_group?
+  alias_method :may_list_groups_group?, :may_people_group?
+
+
+  def may_update_group?(group = @group)
+    logged_in? and current_user.may?(:admin, group)
+  end
+  alias_method :may_edit_group?, :may_update_group?
+
 
   def may_create_council?(group = @group)
     Conf.councils and
