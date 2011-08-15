@@ -65,7 +65,7 @@ module FunctionalTestHelper
   # see MockableTestHelper for implementation of
   # expect and verify
   def assert_permission(permission, ret = true)
-    @controller.expect permission, ret
+    @controller.expect_or_raise permission, ret
     yield
     @controller.verify
   end
