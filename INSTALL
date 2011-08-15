@@ -65,6 +65,18 @@ connect to the web application from your browser:
 
 See doc/development_tips for information on the arguments to script/server
 
+production
+============================
+
+get the suggested crontab, and copy it:
+  
+  rake cron:suggest_crontab
+
+open crontab for editing:
+
+  crontab -e
+
+paste the suggested crontab lines into the crontab file. save.
 
 development
 ============================
