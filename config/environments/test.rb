@@ -41,5 +41,6 @@ end
 ## DEBUGGING
 ## See doc/DEBUGGING for tips.
 ##
-
 require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
+
+Spawn::method :yield

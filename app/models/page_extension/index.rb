@@ -95,23 +95,11 @@ module PageExtension::Index
   module InstanceMethods
 
     def update_page_terms_in_background
-      if false # backgroundrb_running?
-        ## ^^^ I have disabled background updating of page terms for two reasons:
-        ## (1) it doesn't seem to be working right now, and i have no idea why
-        ## (2) the delta index is fast enough without running in the background.
-        begin
-          # first, immediately update access, because that needs to always be up to date.
-          Page.with_deltas_disabled do
-            terms = (self.page_terms || self.create_page_terms)
-            PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
-          end
-          # fire off background task
-          MiddleMan.worker(:indexing_worker).async_update_page_terms(:arg => self.id)
-        rescue BackgrounDRb::NoServerAvailable => err
-          logger.error "Warning: #{err}; performing synchronous update of page index"
+      begin
+        spawn do
           update_page_terms
         end
-      else
+      rescue NoMethodError
         update_page_terms
       end
     end
