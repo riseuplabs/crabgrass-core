@@ -8,6 +8,22 @@ namespace :cron do
     end
   end
 
+  desc "prints suggested crontab"
+  task :suggest_crontab do
+    cd = 'cd ' + RAILS_ROOT
+    find = `which find`.chomp
+    crontab = %Q|
+# Crabgrass tasks
+0 * * * * #{cd}; rake cron:hourly_tasks
+0 2 * * * #{cd}; rake cron:daily_tasks
+# reindex sphinx
+0 * * * * #{cd}; rake ts:index RAILS_ENV=production
+# clean up session and cache files
+0 3 * * * #{find} #{RAILS_ROOT}/tmp/sessions -ctime +3 -exec rm {} \;
+0 3 * * * #{find} #{RAILS_ROOT}/tmp/cache -ctime +3 -exec rm {} \;|
+    puts crontab
+  end
+
   desc "hourly tasks"
   task :hourly_tasks do
     run("Tracking") { Tracking.process }
