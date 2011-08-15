@@ -50,8 +50,8 @@ module MockableTestHelper
             expected = self.mock.#{orig}(*args)
             run = #{no_mock}(*args)
             unless expected == run
-              message = "Expected #{orig} to return " + expected + ".\n"
-              message += "Instead it returned " + run + "."
+              message = "Expected #{orig} to return " + expected.to_s + ".\n"
+              message += "Instead it returned " + run.to_s + "."
               raise ReturnValueError.new(message)
             end
             return run

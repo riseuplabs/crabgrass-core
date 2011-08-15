@@ -109,7 +109,9 @@ ActionController::Routing::Routes.draw do |map|
   map.networks_directory 'networks/directory/*path', :controller => 'groups/directory'
   map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
 
-  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+  map.resources :groups, :networks,
+    :namespace => 'groups/',
+    :only => [:new, :create, :destroy] do |groups|
     groups.resource  :home, :only => [:show]
     groups.resource  :page, :only => [:new, :create]
     groups.pages     'pages/*path', :controller => 'pages'

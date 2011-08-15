@@ -12,7 +12,7 @@ module Groups::BasePermission
   ##
 
   def may_create_group?(parent = @group)
-    logged_in? and (parent.nil? || current_user.may?(:admin, parent))
+    (parent.nil? || current_user.may?(:admin, parent))
   end
 
   def may_show_group?(group = @group)
@@ -41,8 +41,6 @@ module Groups::BasePermission
   def may_update_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
-  alias_method :may_edit_group?, :may_update_group?
-
 
   def may_create_council?(group = @group)
     Conf.councils and
