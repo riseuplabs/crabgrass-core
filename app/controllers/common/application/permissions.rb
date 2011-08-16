@@ -131,7 +131,11 @@ module Common::Application::Permissions
         begin
           permission_class = "#{class_name}_permission".camelize.constantize
         rescue NameError # permissions 'groups' => Groups::BasePermission
-          permission_class = "#{class_name}/base_permission".camelize.constantize
+          begin
+            permission_class = "#{class_name}/base_permission".camelize.constantize
+          rescue NameError
+            raise 'could find find permission file for %s' % class_name
+          end
         end
         include(permission_class)
         add_template_helper(permission_class)
