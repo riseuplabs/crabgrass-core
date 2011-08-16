@@ -20,12 +20,6 @@ module Groups::BasePermission
   end
 
   def may_edit_group?(group = @group)
-    logged_in? and current_user.may?(:admin, group)
-  end
-
-  def may_create_council?(group = @group)
-    Conf.councils and
-    group.parent_id.nil? and
     current_user.may?(:admin, group)
   end
 

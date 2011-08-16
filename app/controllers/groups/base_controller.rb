@@ -1,7 +1,7 @@
 class Groups::BaseController < ApplicationController
 
   before_filter :fetch_group
-  permissions 'groups/base', 'groups/members', 'groups/memberships', 'groups/requests', 'groups/profiles', 'groups/settings', 'groups/home', 'groups/committees'
+  permissions 'groups/base', 'groups/members', 'groups/memberships', 'groups/requests', 'groups/profiles', 'groups/settings', 'groups/home', 'groups/committees', 'groups/councils'
   helper 'groups/links'
 
   protected
