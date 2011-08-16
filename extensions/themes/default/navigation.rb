@@ -133,7 +133,7 @@ define_navigation do
   ## PEOPLE
   ##
 
-  global_section :people do 
+  global_section :people do
     label  "People"
     url    :controller => 'people/directory'
     active { controller?('people/') or context?(:user) }
@@ -175,7 +175,7 @@ define_navigation do
   ##
   ## GROUPS
   ##
- 
+
   global_section :group do
     label  "Groups"
     url    { groups_directory_path }
@@ -223,14 +223,14 @@ define_navigation do
 =end
 
     context_section :members do
-      visible { may_list_memberships? }
+      visible { may_list_groups_members? }
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
       active  { controller?('groups/members', 'groups/invites') }
 
       local_section :people do
-        visible { may_list_memberships? }
+        visible { may_list_groups_members? }
         label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }

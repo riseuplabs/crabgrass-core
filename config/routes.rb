@@ -117,7 +117,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.pages     'pages/*path', :controller => 'pages'
     groups.resources :members, :only => [:index, :destroy]
     groups.resources :memberships, :only => [:new, :create, :destroy]
-    groups.resources :committees
+    groups.resources :committees, :only => [:new, :create]
     groups.resources :councils
     groups.resources :invites
     groups.resources :requests

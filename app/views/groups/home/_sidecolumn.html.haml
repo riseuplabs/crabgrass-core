@@ -3,7 +3,7 @@
 
 .entity_list.on_background
 
-  - if may_list_memberships?
+  - if may_list_groups_members?
     = render :partial => 'memberships'
 
   - if may_show_affiliations?

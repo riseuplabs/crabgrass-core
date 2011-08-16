@@ -1,5 +1,7 @@
 class Groups::CommitteesController < Groups::BaseController
 
+  before_filter :login_required
+
   def new
     @committee = Committee.new
   end

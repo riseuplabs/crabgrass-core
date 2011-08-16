@@ -55,36 +55,26 @@ module Groups::BasePermission
   ## ORGANIZATIONAL PERMISSIONS
   ##
 
-  def may_show_subcommittees_of_group?(group = @group)
+  def may_list_groups_committees?(group = @group)
     return false if !Conf.committees
     return false if group.parent_id
     current_user.may? :see_committees, group
   end
 
-  def may_create_committees?(group = @group)
-    return false if !Conf.committees
-    current_user.may?(:admin, group) and group.parent_id.nil?
-  end
-
-  def may_show_networks_of_group?(group = @group)
+  def may_list_groups_networks?(group = @group)
     return false if !Conf.networks
-    return false if group.parent_id
     current_user.may? :see_networks, group
   end
 
   def may_show_affiliations?(group = @group)
-    may_show_networks_of_group?(group) or
-    may_show_subcommittees_of_group?(group) or
+    may_list_groups_networks?(group) or
+    may_list_groups_committees?(group) or
     group.real_council
   end
 
   ##
   ## EXTRA
   ##
-
-  def may_join_chat?(group=@group)
-    current_site.chat? and current_user.member_of?(group) and !group.committee?
-  end
 
   def may_create_group_page?(group=@group)
     logged_in? and group and current_user.member_of?(group)
