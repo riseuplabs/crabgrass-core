@@ -1,22 +1,9 @@
-#
-# this is shared by all the Groups::XxxController classes
-# in addition to their individual permission helpers
-#
-
 module Groups::BasePermission
 
   protected
 
-  ##
-  ## BASIC GROUP CRUD
-  ##
-
   def may_create_group?(parent = @group)
     (parent.nil? || current_user.may?(:admin, parent))
-  end
-
-  def may_show_group?(group = @group)
-    current_user.may? :view, group
   end
 
   def may_destroy_group?(group = @group)
@@ -32,13 +19,7 @@ module Groups::BasePermission
     end
   end
 
-  def may_people_group?(group=@group)
-    may_list_memberships?(group)
-  end
-  alias_method :may_list_groups_group?, :may_people_group?
-
-
-  def may_update_group?(group = @group)
+  def may_edit_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
 
@@ -51,18 +32,6 @@ module Groups::BasePermission
   def may_create_network?
     Conf.networks and
     logged_in?
-  end
-
-  ##
-  ## Group Settings
-  ##
-
-  def may_show_groups_settings?(group = @group)
-    current_user.may? :admin, group
-  end
-
-  def may_update_groups_settings?(group = @group)
-    current_user.may? :admin, group
   end
 
 
@@ -125,21 +94,5 @@ module Groups::BasePermission
     current_user.may?(:admin,group)
   end
 
-  ##
-  ## SEARCHING
-  ##
-
-  alias_method :may_search_group?, :may_show_group?
-  alias_method :may_archive_group?, :may_show_group?
-  alias_method :may_tags_group?, :may_show_group?
-  alias_method :may_discussions_group?, :may_show_group?
-  alias_method :may_tasks_group?, :may_show_group?
-  alias_method :may_trash_group?, :may_create_group_page?
-
-  # no listing of contributions of group members
-  def may_contributions_group?(group=@group)
-    false
-  end
 
 end
-
