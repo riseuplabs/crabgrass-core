@@ -1,33 +1,31 @@
 -#
--# requires: @page_class
--# takes: sections
+-# requires: page_type()
+-# optional:
+-#   @form_sections -- array of sections to include in the form
+-#   @multipart     -- if true, make form multipart
 -#
 
 - content_for :title do
-  %div.icon.multi.medium{ :class => "#{@page_class.icon}_48"}
+  %div.icon.multi.medium{:class => "#{page_type.icon}_48"}
     %h3= :create_a_new_thing.t(:thing => :page.t.downcase)
-    %h1= content_tag(:i, @page_class.class_display_name)
+    %h1= content_tag(:i, page_type.class_display_name)
   - if @group
     = :page_added_to_group.t(:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
 
-- sections = @page_class.definition.form_sections || []
-- multipart = sections.grep 'file'
-
 .create_page
-  - form_tag(create_page_path(:type => @page_class.url), :multipart => multipart) do
-    = hidden_field_tag 'page_class', @page_class
+  - form_tag(create_page_path(:page_type => page_type), :multipart => @multipart) do
+    = hidden_field_tag 'page_type', page_type
     = hidden_field_tag('group', params[:group]) if params[:group]
     = formy(:table_form) do |form|
-      = render :partial => 'pages/create/information', :locals => {:form => form}
-      - if sections.any_in? ['file','files','external_video','body', 'image', 'event']
-        - sections.each do |section|
+      - @form_sections.each do |section|
+        - if section =~ /\//
+          = render :partial => section, :locals => {:form => form}
+        - else
           = render :partial => "pages/create/#{section}", :locals => {:form => form}
       = render :partial => 'pages/create/sharing', :locals => {:form => form}
     .buttons.reverse
-      = submit_tag I18n.t(:create_page_button, :page_class => I18n.t(:page)) + ' &raquo;', :name => 'create'
-      =# submit_tag "hidden", :name => 'create', :style => 'display:none'
+      = submit_tag :create_button.t + ' &raquo;', :name => 'create'
       = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'
 
 = javascript_tag %( $("page_title").focus() )
-
 

@@ -20,7 +20,7 @@ module Pages::BeforeFilters
     return true if action?(:new)
 
     unless @page
-      id = params[:page_id] || params[:id]
+      id = params[:page_id]
       if id and id != "0"
         @page = Page.find_by_id(id)
         unless @page

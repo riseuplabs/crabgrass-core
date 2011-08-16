@@ -213,17 +213,17 @@ class DispatchController < ApplicationController
 
   def controller_for_page(page)
     if params[:path].empty?
-      params[:controller] = page.controller      
+      params[:controller] = page.controller
       params[:action]     = 'show'
       params[:id]         = nil
     else
       if page.controllers.include?("#{page.controller}_#{params[:path][0]}")
         params[:controller] = "#{page.controller}_#{params[:path][0]}"
-        params[:action]     = params[:path][1]
+        params[:action]     = params[:path][1] || 'index'
         params[:id]         = params[:path][2]
       else
         params[:controller] = page.controller
-        params[:action]     = params[:path][0]
+        params[:action]     = params[:path][0] || 'index'
         params[:id]         = params[:path][1]
       end
     end

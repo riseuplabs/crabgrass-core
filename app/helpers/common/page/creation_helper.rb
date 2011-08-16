@@ -4,33 +4,33 @@
 
 module Common::Page::CreationHelper
 
-  protected
+#  protected
 
-  #
-  # new_page_path is used for showing the selection of page types.
-  #
-  # page_creation_path is used for linking to the actual controller that handles creation
-  # for a particular page type. It might be the default page creation controller (pages/create), 
-  # or it could be a custom controller.
-  #
-  def page_creation_path(page_class)
-    controller = page_class.definition.creation_controller || 'pages/create'
-    url_for(:controller => controller, :action => 'new', :type => page_class.url, :group => params[:group_id])
-  end
+#  #
+#  # new_page_path is used for showing the selection of page types.
+#  #
+#  # page_creation_path is used for linking to the actual controller that handles creation
+#  # for a particular page type. It might be the default page creation controller (pages/create), 
+#  # or it could be a custom controller.
+#  #
+#  def page_creation_path(page_class)
+#    controller = page_class.definition.creation_controller || 'pages/create'
+#    url_for(:controller => controller, :action => 'new', :type => page_class.url, :group => params[:group_id])
+#  end
 
-  #
-  # generates the links used to choose a page type when creating a page
-  #
-  def page_creation_links
-    tree_of_page_types(:simple => true).collect do |grouping|
-      content_tag(:h2, grouping[:display]) + content_tag(:div, :class => 'hover') do
-        grouping[:pages].collect do |page_class|
-          link_text = "<b>#{page_class.class_display_name}</b><br/>#{page_class.class_description}"
-          link_to(link_text, page_creation_path(page_class), {:class => "p icon top #{page_class.icon}_16"})
-        end
-      end
-    end
-  end
+#  #
+#  # generates the links used to choose a page type when creating a page
+#  #
+#  def page_creation_links
+#    tree_of_page_types(:simple => true).collect do |grouping|
+#      content_tag(:h2, grouping[:display]) + content_tag(:div, :class => 'hover') do
+#        grouping[:pages].collect do |page_class|
+#          link_text = "<b>#{page_class.class_display_name}</b><br/>#{page_class.class_description}"
+#          link_to(link_text, page_creation_path(page_class), {:class => "p icon top #{page_class.icon}_16"})
+#        end
+#      end
+#    end
+#  end
 
 #  # TODO: wtf? seems like a ton duplication here.
 

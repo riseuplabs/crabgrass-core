@@ -1,6 +1,6 @@
 #
 # Here lies some path helpers that are not defined by routes and should
-# be available to all views and controllers. 
+# be available to all views and controllers.
 #
 
 module Common::Application::Paths
@@ -19,6 +19,7 @@ module Common::Application::Paths
       helper_method :page_xpath
       helper_method :page_xurl
       helper_method :new_page_path
+      helper_method :create_page_path
 
       helper_method :me_path
       helper_method :me_url
@@ -55,35 +56,66 @@ module Common::Application::Paths
   ##
 
   #
-  # for a couple reasons, page creation is handled by a separate controller. 
-  # this is not a resource route, but we create the paths as if it was for consistency.
+  # for a couple reasons, page creation is handled by a separate controller.
+  # this is not a resource route, but we create paths methods as if it was for consistency.
   #
+
   def new_page_path(options={})
-    create_page_path(options.merge(:action => 'new'))
+    options[:action] = 'new'
+    options[:owner] ||= params[:owner]
+    custom_create_path(options) || page_creation_path(options)
   end
 
+  def create_page_path(options={})
+    options[:action] = 'create'
+    options[:owner] ||= params[:owner]
+    custom_create_path(options) || page_creation_path(options)
+  end
+
+  #
+  # if page definition has a custom constroller, return a path for it.
+  # otherwise, returns nil and modifies options hash as needed.
+  #
+  def custom_create_path(options={})
+    if (page_type = options.delete(:page_type)).any?
+      if (controller = page_type.definition.creation_controller).any?
+        return "/pages/#{controller}/#{options[:action]}/#{options[:owner]}"
+      else
+        options[:type] = page_type.url
+        return nil
+      end
+    end
+  end
+
+  #
   # The default url helpers based on the routes will not create correct links.
-  # They link to the super class Pages::BaseController, ie /pages/:id. 
+  # They link to the super class Pages::BaseController, ie /pages/:id.
   # That is no good. We want page paths in these forms:
   #
-  # (1) pretty -- /:context/:page_name_or_id/:action/:id
-  # (2) direct -- /pages/:controller/:action/:page_id
+  # (1) pretty -- page_path and page_url
+  #               /:context/:page/:action/:id
+  #               /:context/:page/:controller/:action/:id
+  #
+  # (2) direct -- page_xpath and page_xurl
+  #               /pages/:controller/:action/:page_id
   #
   # We use the direct form when pretty doesn't matter, like ajax. The direct
-  # form bypasses the dispatcher.
+  # form bypasses the dispatcher and so is slightly faster and less prone to errors.
+  #
+  # :controller can be passed in options arg in one of two ways:
+  #
+  #   as a symbol -- e.g. giving :history as the controller will correspond to
+  #                  AssetPageHistoryController if @page is an Asset.
+  #
+  #   as a string -- the full name of the controller, ie 'asset_page_history'
   #
 
-  # PRETTY PAGE PATHS
-
+  #
+  # pretty page path
+  #
   def page_path(page, options={})
-    if options[:action] == 'show' and not options[:id]
-      options.delete(:action)
-    end
 
-    # if a controller is set, encode it with the action (this allows our context
-    # routes to still work but allows pages to have multiple controllers). 
-    action = [options.delete(:controller), options.delete(:action)].compact.join('-')
-
+    # (1) context
     if page.owner_name
       path = [page.owner_name, page.name_url]
     elsif page.created_by_login
@@ -94,21 +126,47 @@ module Common::Application::Paths
       # there is some data corruption. not sure what to do.
       path = ['page', page.friendly_url]
     end
+
+    # (2) controller
+    controller = options.delete(:controller)
+    if controller and Rails.env == 'development' and controller.is_a?(Symbol)
+       cntr = page.controller + '_' + controller.to_s
+       unless page.controllers.include?(cntr)
+        raise 'controller %s not defined for page type %s' % [cntr, page.class.name]
+      end
+    end
+    path << controller
+
+    # (3) action
+    action = options.delete(:action)
+    if action == 'show' and !options[:id]
+      action = nil
+    end
     path << action
+
+    # (4) id
     path << options.delete(:id)
-    '/' + path.select(&:any?).join('/') + build_query_string(options)
+
+    return ('/' + path.select(&:any?).join('/') + build_query_string(options))
   end
 
   def page_url(page, options={})
     urlize page_path(page, options)
   end
 
-  # DIRECT PAGE PATHS
-
+  #
+  # direct page path
+  #
   def page_xpath(page, options={})
-    controller = '/' + [page.controller, options.delete(:controller)].compact.join('_')
+    controller = options.delete(:controller) || page.controller
+    if controller.is_a?(Symbol)
+       controller = page.controller + '_' + controller.to_s
+       if Rails.env == 'development' and !page.controllers.include?(controller)
+        raise 'controller %s not defined for page type %s' % [controller, page.class.name]
+      end
+    end
     options[:action] ||= 'index'
-    '/pages' + [controller,page.id,options.delete(:action)].join('/') + build_query_string(options)
+    '/pages/' + [controller, options.delete(:action), page.id].join('/') + build_query_string(options)
   end
 
   def page_xurl(page, options={})
@@ -126,7 +184,7 @@ module Common::Application::Paths
   def me_url(*args)
     me_home_url(*args)
   end
-  
+
   def user_avatar_path(*args)
     me_avatar_path(*args)
   end

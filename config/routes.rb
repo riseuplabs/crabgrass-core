@@ -142,7 +142,9 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   # default page creator
-  map.create_page '/pages/:action/:owner/:type', :controller => 'pages/create', :action => 'create', :owner => 'me', :type => nil, :requirements => {:action => /new|create/}
+  map.page_creation '/pages/:action/:owner/:type', :controller => 'pages/create',
+    :action => 'create', :owner => 'me', :type => nil,
+    :requirements => {:action => /new|create/}
 
   # base page
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
@@ -162,7 +164,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:page_id/:action', :constraints => {:controller => /.*_page/ }
+  map.connect '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
 
   ##
   ## DEFAULT ROUTE
