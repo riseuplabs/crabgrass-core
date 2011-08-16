@@ -8,10 +8,9 @@
 
 class Groups::InvitesController < Groups::BaseController
 
-  before_filter :login_required
-  permissions :invites #, :requests
-
   include_controllers 'common/requests'
+  before_filter :login_required
+
 
   #
   # list the invites
@@ -72,7 +71,7 @@ class Groups::InvitesController < Groups::BaseController
       success(:now, I18n.t(:invites_sent, :count => reqs.size.to_s))
       params[:recipients] = ""
     end
-    redirect_to :action => :index 
+    redirect_to :action => :index
   end
 
   protected
@@ -83,6 +82,10 @@ class Groups::InvitesController < Groups::BaseController
       when "outgoing" then :from_group;
       else :regarding_group;
     end
+  end
+
+  def fetch_request
+    @request = @group.invites.find(params[:id])
   end
 
 end

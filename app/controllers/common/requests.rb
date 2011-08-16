@@ -36,10 +36,6 @@ module Common::Requests
 
   protected
 
-  def fetch_request
-    @request = Request.find(params[:id])
-  end
-
   def current_state
     case params[:state]
       when 'approved' then :approved;

@@ -119,7 +119,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :memberships, :only => [:new, :create, :destroy]
     groups.resources :committees, :only => [:new, :create]
     groups.resources :councils, :only => [:new, :create]
-    groups.resources :invites, :except => :edit
+    groups.resources :invites, :except => [:edit, :show]
     groups.resources :requests
     groups.resources :join_requests
     groups.resources :events

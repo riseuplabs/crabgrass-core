@@ -27,6 +27,9 @@ module GroupExtension::Users
         end
       end
 
+      has_many :invites, :class_name => "Request", :as => :requestable
+      has_many :requests, :as => :recipient
+
       # tmp hack until we have a better viewing system in place.
       named_scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}
 
