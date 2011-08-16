@@ -1,6 +1,6 @@
 class AssetPageController < Pages::BaseController
-  before_filter :fetch_asset
-  stylesheet    'asset'
+  #before_filter :fetch_asset
+  #stylesheet    'asset'
   permissions   'asset_page'
 
   def show
@@ -12,28 +12,16 @@ class AssetPageController < Pages::BaseController
   def new
   end
 
-  def create
-    unless params[:asset][:uploaded_data].any?
-      @page.errors.add_to_base I18n.t(:no_data_uploaded)
-      raise ActiveRecord::RecordInvalid.new(@page)
-    end
-    asset = Asset.build params[:asset]
-    @page.data = asset
-    current_user.updated(@page)
-    @page.save!
-    redirect_to page_url(@page)
-  end
-
   def edit
   end
 
   def update
-    @asset.update_attributes params[:asset]
-    if @asset.valid?
-      current_user.updated(@page)
-      redirect_to(page_url(@page))
+    unless params[:asset]
+      raise_error :no_data_uploaded_label.t
     else
-      flash_message_now :object => @page
+      @asset.update_attributes! params[:asset].merge(:user => current_user)
+      current_user.updated(@page)
+      redirect_to page_url(@page)
     end
   end
 
@@ -47,7 +35,7 @@ class AssetPageController < Pages::BaseController
 
   protected
 
-  def fetch_asset
+  def fetch_data
     @asset = @page.data if @page
   end
 
@@ -58,14 +46,4 @@ class AssetPageController < Pages::BaseController
     end
   end
 
-  #def build_page_data
-  #  unless params[:asset][:uploaded_data].any?
-  #    @page.errors.add_to_base I18n.t(:no_data_uploaded)
-  #    raise ActiveRecord::RecordInvalid.new(@page)
-  #  end
-  #
-  #  asset = Asset.build params[:asset]
-  #  @page[:title] = asset.basename unless @page[:title].any?
-  #  asset
-  #end
 end

@@ -1,5 +1,6 @@
 define_page_type :AssetPage, {
-  :controller => 'asset_page',
+  :controller => ['asset_page', 'asset_page_history'],
+  :creation_controller => 'create_asset_page',
   :model => 'Asset',
   :form_sections => ['file'],
   :icon => 'page_package',

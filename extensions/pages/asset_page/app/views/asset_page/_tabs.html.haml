@@ -9,6 +9,6 @@
     - t.selected action?(:edit)
   - f.tab do |t|
     - t.label :history.t
-    - t.url page_path(@page,:action=>'index')
+    - t.url page_path(@page, :controller => :history)
     - t.selected action?(:index)
 
