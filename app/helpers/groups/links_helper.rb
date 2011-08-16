@@ -123,7 +123,7 @@ module Groups::LinksHelper
   # for now, it allows you to immediately remove the user.
   #
   def destroy_membership_link(membership)
-    if may_destroy_memberships?(membership)
+    if may_destroy_groups_members?(membership)
       link_to_remote :remove.t, :url => group_member_path(@group, membership), :method => 'delete', :confirm => :membership_destroy_confirm_message.t(:user => content_tag(:b,membership.user.name), :group_type => content_tag(:b,@group.name))
       # i think name is more appropriate than group_type, but the keys are already defined with group_type
     end
