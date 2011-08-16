@@ -45,6 +45,7 @@ create the database:
 
   sudo mysqladmin create crabgrass_development
   cd crabgrass-core
+  cp config/database.yml.example config/database.yml
   rake db:schema:load
   rake db:fixtures:load
 
