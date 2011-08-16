@@ -81,7 +81,7 @@ module Groups::LinksHelper
   #end
 
   def create_committee_link
-    if may_create_committees?
+    if may_create_groups_committee?
       link_to :create_button.t, new_group_committee_path(@group)
     end
   end
