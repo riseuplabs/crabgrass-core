@@ -37,6 +37,11 @@ class ActiveSupport::TestCase
   #    # Sham.reset
   #   }
 
+  setup {
+    # make sure we don't have any login from the last test
+    User.current = nil
+  }
+
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
 
