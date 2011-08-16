@@ -1,7 +1,5 @@
 class Groups::MembershipsController < Groups::BaseController
 
-  permissions 'requests'
-
   before_filter :login_required
 
   def new

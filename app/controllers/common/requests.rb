@@ -2,7 +2,7 @@ module Common::Requests
 
   def self.included(base)
     base.class_eval do
-      prepend_before_filter :fetch_request, :only => [:update, :destroy]
+      before_filter :fetch_request, :only => [:update, :destroy]
       helper_method :current_state
       helper_method :left_id
       helper_method :right_id

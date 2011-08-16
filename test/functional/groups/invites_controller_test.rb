@@ -9,14 +9,6 @@ class Groups::InvitesControllerTest < ActionController::TestCase
   end
 
 
-  def test_index
-    login_as @user
-    assert_permission :may_list_groups_invites? do
-      get :index, :group_id => @group.to_param
-    end
-    assert_response :success
-  end
-
   def test_new
     login_as @user
     assert_permission :may_create_groups_invite? do
@@ -36,17 +28,6 @@ class Groups::InvitesControllerTest < ActionController::TestCase
     end
     assert_response :redirect
     assert_redirected_to :action => :index
-  end
-
-  def test_update
-    login_as @user
-    recipient = User.make
-    invite = RequestToJoinUs.create :created_by => @user,
-      :recipient => recipient, :requestable => @group
-    assert_permission :may_edit_groups_invite? do
-      get :update, :group_id => @group.to_param,
-        :id => invite.id
-    end
   end
 
   def test_destroy

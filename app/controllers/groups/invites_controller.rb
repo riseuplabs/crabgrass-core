@@ -11,19 +11,6 @@ class Groups::InvitesController < Groups::BaseController
   include_controllers 'common/requests'
   before_filter :login_required
 
-
-  #
-  # list the invites
-  #
-  def index
-    @requests = Request.invites.
-      having_state(current_state).
-      send(current_view, @group).
-      by_updated_at.
-      paginate(pagination_params)
-    render :template => 'common/requests/index'
-  end
-
   def new
   end
 
@@ -75,14 +62,6 @@ class Groups::InvitesController < Groups::BaseController
   end
 
   protected
-
-  def current_view
-    case params[:view]
-      when "incoming" then :to_group;
-      when "outgoing" then :from_group;
-      else :regarding_group;
-    end
-  end
 
   def fetch_request
     @request = @group.invites.find(params[:id])

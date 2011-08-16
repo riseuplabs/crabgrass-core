@@ -227,7 +227,7 @@ define_navigation do
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
-      active  { controller?('groups/members', 'groups/invites') }
+      active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
 
       local_section :people do
         visible { may_list_groups_members? }
@@ -244,17 +244,17 @@ define_navigation do
       end
 
       local_section :invites do
-        visible { may_create_invite_request? }
+        visible { may_create_groups_invite? }
         label   { "Send Invites" }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') && action?('new') }
       end
 
       local_section :requests do
-        visible { may_create_invite_request? }
+        visible { may_list_groups_requests? }
         label   { 'Membership Requests' }
-        url     { group_invites_path(@group) }
-        active  { controller?('groups/invites') && !action?('new') }
+        url     { group_requests_path(@group) }
+        active  { controller?('groups/requests') }
       end
 
       #local_section :membership_settings do
