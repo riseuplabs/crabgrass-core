@@ -55,6 +55,7 @@ textarea, input, select {
 
 .form_buttons, .buttons {
   margin-top: 0.75em;
+  text-align: right;
 
   // button_to makes its own form+div, but we want it to dispaly inline
   // despite this.
@@ -67,7 +68,7 @@ textarea, input, select {
 
   input[type=submit], input[type=button] {
     font-size: 1.15em;
-    margin-right: 1em;
+    margin-left: 1em;
   }
   //&.right  {text-align: right;}
   //&.left   {text-align: left;}
