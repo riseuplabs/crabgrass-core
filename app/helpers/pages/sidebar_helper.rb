@@ -237,7 +237,7 @@ module Pages::SidebarHelper
     if may_show_page?
       popup_line(
         :id => 'details_li',
-        :icon => 'table',
+        :icon => 'page_admin',
         :label => I18n.t(:page_details_link, :page_class => :page.t),
         :url => page_details_path(@page)
       )
