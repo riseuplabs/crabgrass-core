@@ -1,9 +1,8 @@
-
 class Groups::RequestsController < Groups::BaseController
 
   before_filter :login_required # we want this
-  permissions 'requests'
   include_controllers 'common/requests'
+  helper 'request'
 
   def index
     @requests = Request.
@@ -14,6 +13,22 @@ class Groups::RequestsController < Groups::BaseController
     render :template => 'common/requests/index'
   end
 
+  def new
+  end
+
+  def create
+    if !params[:cancel]
+      req = RequestToJoinYou.create :recipient => @group, :created_by => current_user
+      if req.valid?
+        success(I18n.t(:invite_sent, :recipient => req.recipient.display_name))
+      else
+        error("Invalid request for "+req.recipient.display_name)
+      end
+    end
+    redirect_to entity_url(@group)
+  end
+
+
   protected
 
   def current_view
@@ -22,6 +37,10 @@ class Groups::RequestsController < Groups::BaseController
       when "outgoing" then :from_group;
       else :regarding_group;
     end
+  end
+
+  def fetch_request
+    @request = @group.requests.find(params[:id])
   end
 
 end

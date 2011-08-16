@@ -12,7 +12,7 @@ module Groups::LinksHelper
 
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
-    if may_join_memberships?
+    if may_create_groups_membership?
       link_to :join_group_link.t(:group_type => @group.group_type),
         group_memberships_path(@group),
         :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
@@ -28,7 +28,7 @@ module Groups::LinksHelper
   end
 
   def leave_group_link
-    if may_leave_memberships?
+    if may_destroy_groups_membership?
       link_to :leave_group_link.t(:group_type => @group.group_type),
         group_membership_path(@group, current_user),
         :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
@@ -43,28 +43,28 @@ module Groups::LinksHelper
   # members
 
   def list_membership_link
-    if may_edit_memberships?
+    if may_edit_groups_members?
       link_to(:edit.t, group_members_path(@group))
-    elsif may_list_memberships?
+    elsif may_list_groups_members?
       link_to(:see_all_link.t, group_members_path(@group))
     end
   end
 
   def list_group_membership_link
-    if may_list_memberships?
+    if may_list_group_members?
       link_to :see_all_link.t, group_members_path(@group, :view => 'groups')
     end
   end
 
 
   def invite_link
-    if may_create_invite_request?
+    if may_admin_requests?
       link_to(:send_invites.t, new_group_invite_path(@group))
     end
   end
 
   def requests_link
-    if may_create_invite_request?
+    if may_admin_requests?
       link_to(:view_requests.t, group_requests_path(@group))
     end
   end
@@ -81,7 +81,7 @@ module Groups::LinksHelper
   #end
 
   def create_committee_link
-    if may_create_committees?
+    if may_create_groups_committee?
       link_to :create_button.t, new_group_committee_path(@group)
     end
   end
@@ -123,7 +123,7 @@ module Groups::LinksHelper
   # for now, it allows you to immediately remove the user.
   #
   def destroy_membership_link(membership)
-    if may_destroy_memberships?(membership)
+    if may_destroy_groups_members?(membership)
       link_to_remote :remove.t, :url => group_member_path(@group, membership), :method => 'delete', :confirm => :membership_destroy_confirm_message.t(:user => content_tag(:b,membership.user.name), :group_type => content_tag(:b,@group.name))
       # i think name is more appropriate than group_type, but the keys are already defined with group_type
     end

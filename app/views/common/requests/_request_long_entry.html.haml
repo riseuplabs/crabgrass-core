@@ -1,7 +1,7 @@
 - spinner_id = request.dom_id
-- url = me_request_path(request, :state => current_state)
-- approve_url = me_request_path(request, :state => current_state, :mark => 'approve')
-- reject_url = me_request_path(request, :state => current_state, :mark => 'reject')
+- url = context_request_path(request, :state => current_state)
+- approve_url = context_request_path(request, :state => current_state, :mark => 'approve')
+- reject_url = context_request_path(request, :state => current_state, :mark => 'reject')
 
 %h2= I18n.t request.name
 
@@ -36,7 +36,7 @@
 
   - # DESTRUCTION
   - if request.may_destroy?(current_user)
-    = button_to_remote(:destroy.tcap, :url => me_request_path(request),
+    = button_to_remote(:destroy.tcap, :url => context_request_path(request),
       :method => :delete, :loading => show_spinner(spinner_id))
 
   - # VOTING

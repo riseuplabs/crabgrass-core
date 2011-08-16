@@ -1,19 +1,19 @@
 -# note: the cache needs to go within the permission check
 -# otherwise we are caching stuff for people who shouldn't see it.
-- if may_show_subcommittees_of_group?
+- if may_list_groups_committees?
   - cache(group_cache_key(@group, :what => 'committees', :expires_in => hours(3))) do
     = entity_list(:entities => @group.committees, :link_options => {:avatar => 'small'}, :before => content_tag(:h3, :committees.t), :after => link_line(create_committee_link))
 
     - if @group.real_council
       = entity_list(:entities => [@group.real_council], :link_options => {:avatar => 'small'}, :before => content_tag(:h3, :council.t))
 
-- if @group.network? and may_list_memberships?
+- if @group.network? and may_list_groups_members?
   - cache(group_cache_key(@group, :what => 'group_members', :expires_in => hours(3))) do
     = entity_list(:entities => @group.groups, :link_options => {:avatar => 'small'},
       :before => content_tag(:h3, :member_groups_of_network.t),
       :after => link_line(:bullet, list_group_membership_link, invite_link, requests_link))
 
-- if may_show_networks_of_group?
+- if may_list_groups_networks?
   - cache(group_cache_key(@group, :what => 'networks', :expires_in => hours(3))) do
     = entity_list(:entities => @group.networks, :link_options => {:avatar => 'small'}, :before => content_tag(:h3, :networks.t))
 

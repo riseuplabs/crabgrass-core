@@ -8,22 +8,8 @@
 
 class Groups::InvitesController < Groups::BaseController
 
-  before_filter :login_required
-  permissions :invites #, :requests
-
   include_controllers 'common/requests'
-
-  #
-  # list the invites
-  #
-  def index
-    @requests = Request.invites.
-      having_state(current_state).
-      send(current_view, @group).
-      by_updated_at.
-      paginate(pagination_params)
-    render :template => 'common/requests/index'
-  end
+  before_filter :login_required
 
   def new
   end
@@ -72,17 +58,13 @@ class Groups::InvitesController < Groups::BaseController
       success(:now, I18n.t(:invites_sent, :count => reqs.size.to_s))
       params[:recipients] = ""
     end
-    redirect_to :action => :index 
+    redirect_to :action => :index
   end
 
   protected
 
-  def current_view
-    case params[:view]
-      when "incoming" then :to_group;
-      when "outgoing" then :from_group;
-      else :regarding_group;
-    end
+  def fetch_request
+    @request = @group.invites.find(params[:id])
   end
 
 end

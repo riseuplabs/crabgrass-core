@@ -1,10 +1,10 @@
 class Groups::MembershipsController < Groups::BaseController
 
-  permissions 'requests'
+  before_filter :login_required
 
   def new
   end
-  
+
   def create
     @group.add_user!(current_user)
     redirect_to entity_url(@group)
@@ -19,14 +19,4 @@ class Groups::MembershipsController < Groups::BaseController
     end
   end
 
-  protected
-  
-  def authorized?
-    if action?('create', 'new')
-      may_join_memberships?
-    elsif action == 'destroy'
-      may_leave_memberships?
-    end
-  end
-  
 end

@@ -1,7 +1,3 @@
-##
-## GROUP SETTINGS
-##
-
 module Groups::SettingsPermission
 
   protected

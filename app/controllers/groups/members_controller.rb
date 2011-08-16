@@ -1,16 +1,12 @@
 #
 #     group_members GET    /groups/:group_id/members          {:action=>"index"}
-#                   POST   /groups/:group_id/members          {:action=>"create"}
-#  new_group_member GET    /groups/:group_id/members/new      {:action=>"new"}
-# edit_group_member GET    /groups/:group_id/members/:id/edit {:action=>"edit"}
-#      group_member GET    /groups/:group_id/members/:id      {:action=>"show"}
-#                   PUT    /groups/:group_id/members/:id      {:action=>"update"}
 #                   DELETE /groups/:group_id/members/:id      {:action=>"destroy"}
 #
 
 class Groups::MembersController < Groups::BaseController
 
-  before_filter :fetch_membership
+  before_filter :fetch_membership, :only => :destroy
+  before_filter :login_required
 
   def index
     @memberships = @group.memberships.paginate(pagination_params)

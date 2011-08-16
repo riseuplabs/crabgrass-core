@@ -1,6 +1,6 @@
 #
 # Permissions
-# 
+#
 # Helpers and Controller code for handling permissions.
 #
 # There are three parts to the crabgrass permission system:
@@ -11,13 +11,13 @@
 #
 # (1) Permission Definition
 # ---------------------------------
-# 
+#
 # Most permission methods have a standard form:
 #
 #  def may_{verb}_{object}?
 #    ...
 #  end
-# 
+#
 # This form is not required, but is highly recommended in most cases.
 #
 # When attempting to match the current request to the appropriate permission,
@@ -30,14 +30,14 @@
 #
 # A permission method should return true or false. It may take optional arguments,
 # but no arguments should be required.
-# 
+#
 # (2) Controllers include permissions
 # -------------------------------------------
-# 
+#
 # class RobotsController < Common::Application
 #   permissions :robots
 # end
-# 
+#
 # This will load /app/permissions/robots_permissions.rb
 #
 # You can alter the default verb or object by appending a hash:
@@ -59,8 +59,8 @@
 # the user is not allowed to do.
 #
 # However, permission methods, in order to be useful, are usually called
-# by the controller in a before filter. 
-# 
+# by the controller in a before filter.
+#
 # Common::Application has this before_filter:
 #
 #  def authorized?
@@ -104,7 +104,7 @@ module Common::Application::Permissions
       helper_method :permission_log
     end
   end
-  
+
   #SINGULARIZE_ACTIONS = ['update', 'edit', 'show', 'create', 'new']
   #PLURALIZE_ACTIONS = ['index']
 
@@ -113,8 +113,8 @@ module Common::Application::Permissions
     # Specifies a list of permission mixins to be included in the controller
     # and related views.
     #
-    # If the last argument is a hash, this will define various options for 
-    # permissions. 
+    # If the last argument is a hash, this will define various options for
+    # permissions.
     #
     # for example:
     #
@@ -174,7 +174,7 @@ module Common::Application::Permissions
 
     #
     # This method will raise PermissionDenied if the current user cannot
-    # perform the action. 
+    # perform the action.
     #
     # It should only be used in places where you are going to catch the exception,
     # or you want permission denied displayed to the user.
@@ -258,7 +258,7 @@ module Common::Application::Permissions
       end
       return nil # sadly, nothing found
     end
-    
+
     # returns the string for the method if it is defined, false otherwise.
     def permission_method_exists(verb, object)
       return false unless verb and object
@@ -277,7 +277,7 @@ module Common::Application::Permissions
     def possible_objects
       # the possibilities are tried *in order*
       objects = []
-      if permission_object 
+      if permission_object
         objects << permission_object
       elsif params[:controller] =~ /\//
         objects << params[:controller].sub('/','_')      # eg 'me/requests' -> 'me_requests'
@@ -471,7 +471,7 @@ end # end module
 
 #  private
 
-  
+
 #  # the first one that makes sense in this order: object.name, object.id, nil
 #  def params_object_id(object)
 #    object_id = if object.respond_to?(:name)

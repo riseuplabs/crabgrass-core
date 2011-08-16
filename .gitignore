@@ -35,3 +35,4 @@ webrat-*.html
 #*
 vendor/crabgrass_plugins/crabgrass_acts_as_locked/test/tests.sqlite
 *.swp
+config/database.yml

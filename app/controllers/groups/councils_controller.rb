@@ -1,5 +1,7 @@
 class Groups::CouncilsController < Groups::CommitteesController
 
+  before_filter :login_required
+
   def new
     @council = Council.new
   end

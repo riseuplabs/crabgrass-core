@@ -1,5 +1,7 @@
 class Groups::GroupsController < Groups::BaseController
 
+  before_filter :login_required
+
   def new
     @group = Group.new
   end
