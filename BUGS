@@ -1,0 +1,7 @@
+
+
+when notices are rendered as pages, they still fade.
+
+i18n blows up if the session language is set to swedish.
+
+alert messages don't stack for modalbox
