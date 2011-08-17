@@ -7,7 +7,9 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_destroy
     login_as users(:blue)
     request = Request.created_by(users(:blue)).find(:first)
-    xhr :delete, :destroy, :id => request.id
+    assert_permission :may_destroy_request? do
+      xhr :delete, :destroy, :id => request.id
+    end
     assert_message /destroyed/i
   end
 

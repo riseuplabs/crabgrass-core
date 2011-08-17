@@ -34,7 +34,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     requesting = User.make
     request = RequestToJoinYou.create :created_by => requesting,
       :recipient => @group
-    assert_permission :may_edit_groups_request? do
+    assert_permission :may_update_request? do
       get :update, :group_id => @group.to_param,
         :id => request.id
     end
@@ -46,7 +46,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     requesting = User.make
     request = RequestToJoinYou.create :created_by => requesting,
       :recipient => @group
-    assert_permission :may_destroy_groups_request? do
+    assert_permission :may_destroy_request? do
       assert_difference 'RequestToJoinYou.count', -1 do
         delete :destroy, :group_id => @group.to_param,
          :id => request.id

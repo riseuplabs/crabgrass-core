@@ -1,7 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
-  permissions 'requests'
   include_controllers 'common/requests'
+  before_filter :check_permissions!, :only => [:destroy, :update]
 
   def index
     @requests = Request.
@@ -13,12 +13,6 @@ class Me::RequestsController < Me::BaseController
   end
 
   protected
-
-  # unlike other me controllers, we actually want to check
-  # permissions for requests
-  def authorized?
-    true # check_permissions!
-  end
 
   def current_view
     case params[:view]

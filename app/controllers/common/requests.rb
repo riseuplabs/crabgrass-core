@@ -1,14 +1,18 @@
 #
 # Controllers that include this must define:
-# 
+#
 # request_path(*args) -- returns a path for the args. First arg is a request object.
 #
- 
+
 module Common::Requests
 
   def self.included(base)
     base.class_eval do
       before_filter :fetch_request, :only => [:update, :destroy]
+
+      permissions 'requests'
+      guard :update => :may_update_request?, :destroy => :may_destroy_request?
+
       helper_method :current_state
       helper_method :left_id
       helper_method :right_id
@@ -36,11 +40,9 @@ module Common::Requests
   # destroy a request
   #
   def destroy
-    if @request.may_destroy?(current_user)
-      @request.destroy
-      notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
-      render :template => 'common/requests/destroy'
-    end
+    @request.destroy
+    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
+    render :template => 'common/requests/destroy'
   end
 
   protected

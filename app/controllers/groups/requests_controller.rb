@@ -1,7 +1,7 @@
 class Groups::RequestsController < Groups::BaseController
 
-  before_filter :login_required # we want this
   include_controllers 'common/requests'
+  before_filter :login_required
 
   def index
     @requests = Request.
