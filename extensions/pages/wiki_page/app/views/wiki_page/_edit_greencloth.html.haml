@@ -1,10 +1,14 @@
-- content_for :script do
-  document.observe('dom:loaded', function() {
-  = create_wiki_toolbar(@wiki)
-  });
+-# content_for :script do
+-#  document.observe('dom:loaded', function() {
+-#  = create_wiki_toolbar(@wiki)
+-#  });
 
-.fieldset
-  = text_area_tag 'wiki[body]', (h(@wiki.body) if load_content), :rows => 30, :cols => 64, :id => wiki_body_id(@wiki)
+-# load_content is a local passed in when using wysiwyg editor.
+-# currently disabled.
+- load_content = true
+
+= text_area_tag 'wiki[body]', (h(@wiki.body) if load_content), :rows => 30, :id => wiki_body_id(@wiki), :class => 'full_width'
 
 = dom_loaded_javascript_tag(confirm_discarding_wiki_edit_text_area)
-= formatting_reference_link
+
+.p.float_left= formatting_reference_link

@@ -22,12 +22,12 @@
 # you cannot share to users/groups that you cannot pester, unless
 # the page is private and they already have access.
 #
-class Pages::SharesController < Pages::SidebarController
+class Pages::SharesController < Pages::SidebarsController
 
   before_filter :login_required
   verify :xhr => true
 
-  helper 'pages/share' #, 'autocomplete'
+  helper 'pages/share', 'pages/participation'
 
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
@@ -121,7 +121,7 @@ class Pages::SharesController < Pages::SidebarController
   def find_recipient(recipient_name, action=:share)
     recipient_name.strip!
     return nil unless recipient_name.any?
-    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)
+    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
       error(:thing_not_found.t(:thing => h(recipient_name)))
       return nil

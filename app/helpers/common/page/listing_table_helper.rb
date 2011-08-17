@@ -15,17 +15,17 @@ module Common::Page::ListingTableHelper
   end
 
   def page_table_header_row(style)
-    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th>#{:updated_by.tcap}</th><th>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
   end
 
   private
 
   def row_updated_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td>#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
   end
 
   def cell_title(page)
-    link_to(h(page.title), page_url(page))
+    link_to(h(page.title), page_path(page))
   end
 
   ##

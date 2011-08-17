@@ -5,13 +5,19 @@
 
 module Common::Ui::ImageHelper
 
+  IMAGE_SIZES = Hash.new(200).merge({
+    :small  => 64,
+    :medium => 200,
+    :large  => 500
+  }).freeze
+
   ##
   ## ICON
   ##
 
   # for example icon_tag('pencil')
   def icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
+    content_tag :button, '', :class => "small_icon #{icon}_#{size}"
   end
 
 #  def pushable_icon_tag(icon, size = 16, id = nil)
@@ -26,7 +32,7 @@ module Common::Ui::ImageHelper
 
   def avatar_link(viewable, size='medium')
     if viewable
-      link_to avatar_for(viewable, size), url_for_entity(viewable)
+      link_to avatar_for(viewable, size), entity_path(viewable)
     end
   end
 
@@ -192,9 +198,9 @@ module Common::Ui::ImageHelper
     style   = "height:#{target_height}px;width:#{target_width}px"
     klass   = options[:class] || 'thumbnail'
     url     = options[:url] || asset.url
-    method  = options[:method] || 'get'
-    span = content_tag(:span, asset.filename)
-    link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+    # method  = options[:method] || 'get'
+    # span = content_tag(:span, asset.filename)
+    link_to img, url, :class => klass, :title => asset.filename, :style => style
   end
 
   # links to an asset with a thumbnail preview
@@ -262,6 +268,31 @@ module Common::Ui::ImageHelper
     elsif media.respond_to?(:is_video?) and media.is_video?
       media.build_embed
     end
+  end
+
+  ##
+  ## PICTURES
+  ##
+
+  #
+  # Displays a Picture object as the background image of an empty div.
+  #
+  # 'size' can be either a Symbol :small, :medium, :large, or a Hash
+  # of the format used by Picture geometry (see picture.rb)
+  #
+  def picture_tag(picture, size=:medium)
+    if size.is_a? Symbol
+      pixels = IMAGE_SIZES[size];
+      geometry = {:max_width => pixels, :min_width => pixels, :max_height => pixels*4}
+    else
+      geometry = size
+    end
+    picture.add_geometry!(geometry)
+    width, height = picture.size(geometry)
+    style = "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [
+      width, height, picture.url(geometry)
+    ]
+    content_tag :div, '', :style => style
   end
 
 end

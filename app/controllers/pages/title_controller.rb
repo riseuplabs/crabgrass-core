@@ -4,7 +4,7 @@
 #  page_title_path       PUT /pages/:page_id/title       {:controller=>"pages/title", :action=>"update"}
 #
 
-class Pages::TitleController < Pages::SidebarController
+class Pages::TitleController < Pages::SidebarsController
 
   before_filter :login_required
   

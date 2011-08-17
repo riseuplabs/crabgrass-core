@@ -39,6 +39,10 @@ end
 
 class Object
 
+  def any?
+    true
+  end
+
   # just like any?() but instead of true returns the actual string.
   # useful like:
   #  str = str_a.any or atr_b.any

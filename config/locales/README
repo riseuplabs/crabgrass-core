@@ -1,4 +1,25 @@
+KEY CHANGES
+-----------------
+
+  user_profile_description_may_see -> user_profile_description_may_view
+
+  contact_request_message_label -> friend_request_message_label
+  contact_request_sent -> friend_request_sent
+  remove_contact_confirmation -> friend_remove_confirmation
+
+  approve_contact_info -> destroy
+  approve_contact_request -> destroy
+  add_contact_info -> destroy
+  contact_removed -> destroy
+  not_contact_of -> destroy
+  already_contacts_info -> destroy
+
+ADDITIONS
+------------------------
+
 added in crabgrass-core, not translated:
+
+  optional: "Optional"
 
   date_this_year: "This Year"
 
@@ -15,6 +36,8 @@ added in crabgrass-core, not translated:
   rejected_by_entity: "Rejected by %{entity}"
 
   request: "Request"
+
+  request_pending: "%{thing} is pending approval"
 
   request_to_friend: "Friend Request"
   request_to_join_our_network: "Network Join Invite"

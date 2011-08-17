@@ -42,6 +42,7 @@ en:
   ##
 
   create_a_new_thing: "Create a new %{thing}"
+  create_thing: "Create %{thing}"
   thing_not_found: "%{thing} not found"
   no_things_found: "No %{things} found."
   thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
@@ -51,6 +52,7 @@ en:
   created_by_entity: "Created by %{entity}"
   approved_by_entity: "Approved by %{entity}"
   rejected_by_entity: "Rejected by %{entity}"
+  total: "%{count} total"
   #created_when_by: "Created by %{user} on %{when}."
   #approved_when_by: "Approved by %{user} on %{when}."
 
@@ -75,14 +77,6 @@ en:
   contributions: "Contributions"
   contributors: "Contributors"
   users: "Users"
-  groups: "Groups"
-  networks: "Networks"
-  committees: "Committees"
-  councils: "Councils"
-  group: "Group"
-  network: "Network"
-  committee: "Committee"
-  council: "Council"
   contact: "Friend"
   member_groups_of_network: "Member Groups"
   peers: "Peers"
@@ -93,20 +87,17 @@ en:
   friends: "Friends"
   people: "People"
   person: "Person"
-  members: "Members"
-  new_members: "New members"
   profile: "Profile"
   all_content: "All Content"
   more_information: "More Information"
-  required: "(required)"
   more: "more"
   about: "about"
-  total: "%{count} total"
-  affiliations: "Affiliations"
   pages: "Pages"
   comments: "Comments"
   browse: "Browse"
   discover: "Discover"
+  optional: "Optional"
+  required: "Required"
 
   recent_activity: "Recent Activity"
   activity: "Activity"
@@ -249,7 +240,7 @@ en:
   menu_chat: "Chat"
   menu_people: "People"
   menu_networks: "Networks"
-  menu_link_logout: "Logout"
+  menu_link_logout: "Logout %{user}"
   menu_link_account: "Account"
   menu_admin: "Admin"
   menu_moderation: "Moderation"
@@ -338,11 +329,11 @@ en:
   invalid_email: "Invalid Email"
   invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
-  reset_password_email_sent: "An email has been sent containing instructions for resetting your password."
+  reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
   invalid_token: "Invalid Token"
   invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
   password_reset: "Password Reset"
-  password_reset_ok_text: "Your password has been successfully reset. You an now sign in with your newly changed password."
+  password_reset_ok_text: "Your password has been successfully reset. You can now sign in with your newly changed password."
   requested_forgot_password: "You have requested a change of password"
   password_was_reset: "Your password has been reset"
   forgotten_email_address: "What email address did you give us when you created your account?"
@@ -731,246 +722,80 @@ en:
   edit_profile_link: "Edit Profile"
   profile_saved: "Your profile has been saved."
 
-  profile_option_may_see_committees: "Show committees"
-  profile_option_may_see_networks: "Show networks"
-  profile_option_may_see_members: "Show group members"
-  profile_option_may_request_membership: "Allow membership requests"
-  profile_option_may_see_groups: "Show group memberships"
-  profile_option_may_see_contacts: "Show your friends"
-  profile_option_may_request_contact: "May request to be friends"
-  profile_option_may_pester: "May pester me"
-  profile_option_allow_peers: "Visible to peers"
-  profile_option_may_see: "Profile is visible"
+  ##
+  ## PERMISSIONS
+  ##
+
+  permissions_key: "Key"
+  public_description: "Everyone on the internet"
+  peers_description: "Members of your groups"
+  friends_description: "Your friends"
+
+  may_view: "Who can see my profile?"
+  may_pester: "Who can share content with me and send me messages?"
+  may_see_contacts: "Who can see my friends?"
+  may_request_contact: "Who can request to be my friend?"
+  may_see_groups: "Who can see which groups I'm in?"
+
+  may_see_committees: "Show committees"
+  may_see_networks: "Show networks"
+  may_see_members: "Show group members"
+  may_request_membership: "Allow membership requests"
+  members_may_edit_wiki: "All members may edit the wiki"
+  members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
+  may_edit: "May edit"
+  may_admin: "May admin"
+  may_burden: "May burden"
+  may_spy: "May spy"
 
   user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
   user_profile_description_may_see_contacts: "Allow people to see your list of friends."
   user_profile_description_may_request_contact: "Allow people to request to be your friend."
   user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
   user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
-  user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
-
-  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
-  group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
-  group_profile_description_may_see_networks: "Allow people to see what networks this %{group_type} is part of."
-  group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
-  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
-  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
-
-
-  ##
-  ## GROUPS
-  ##
-
-  group_join_chat: "Join Chat"
-  group_privacy_settings: '%{group} Privacy Settings'
-  group_publicly_visible: 'Make %{group} Publicly Visible'
-  committee_publicly_visible: 'Make Committees Publicly Visible'
-  allow_membership_requests: 'Allow Membership Requests'
-  group_home_headline: "%{group_type} Home"
-  group_home_welcome: "Welcome"
-  group_administration_not_allowed: "You cannot administer this group."
-  page_not_part_of_group: "Page not part of this group"
-  group_successfully_updated: "Group was successfully updated."
-  only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
-  group_successfully_created: "Group was successfully created."
-  group_successfully_created_details: "Now make sure to configure your group"
-  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
-
-  dont_understand_group_type: "Could not understand group type %{type}"
-  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
-  group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
-  committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
-  group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
-  page_list: Page list
-  recent_network_pages: "Recent Network Pages"
-  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"
-  create_group_link: "create group"
-  typing: typing
-  away: away
-  you_are_not_member_of_any_group: You are not a member of any group.
-  back_to_group: back_to %{group_name}
-  when_does_feature_expire: When does this feature expire?
-  unfeature_button: Unfeature!
-  feature_button: Feature!
-  reactivate_button: Reactivate!
-  no_group_named: there is no group named <b>%{name}</b>.
-  group_wiki: Group Wiki
-  rss_feed: RSS Feed
-  group_has_no_public_profile: This group does not have a public profile.
-  pending_tasks: 'pending tasks'
-  completed_tasks: 'completed tasks'
-  no_committees: no committees
-  category: Category
-  founded: Founded
-  not_set: not set
-  no_members: (no members)
-  new_group: "New group"
-  group_language: "The main language of this %{group}."
-  group_location: "The main location of this %{group}."
-  group_summary: "Brief information regarding this %{group}."
-  new_network: "New network"
-  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='%{new_group_url}'>create a group</a>?"
-  group_membership_count: "%{count} Members"
-  membership_exists_error: "Membership already exists for %{member}"
-  you_are_a_member_already_error: "You are a member already"
-  membership_leave_message: "You have been removed from %{group}"
-  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
-  membership_destroy_confirm_message: "Are you sure you want to remove '%{user}' from the %{group_type}?"
-  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
-
-
-  # featured
-
-  featured_content_header: "Featured"
-  edit_featured_content_for_group: Edit Featured Content For %{group_name}
-  edit_featured_content_link: "edit featured content"
-  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
-  current_featured_content: Current Featured Content
-  not_featured_content: Not yet Featured Content
-  expired_featured_content: Expired Featured Content
-  featured_content: Featured Content
-  featured_pages: "Featured Pages"
-  enter_page_title: "enter page title"
-  updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
-
-
-  # directory
-
-  my_networks: "My Networks"
-  my_networks_link: "my networks"
-  network_directory_link: "network directory"
-
-  my_groups: "My Groups"
-  group_directory: "Group Directory"
-  directory_of_networks: "Directory of Networks"
-  directory_of_groups: "Directory of Groups"
-
-  my_groups_link: "My Groups"
-  group_directory_link: "Group Directory"
-
-  new_people_in_weeks: "new people in last 2 weeks"
-
-  discover_groups: "Discover %{groups_type}"
-  browse_groups: "Browse %{groups_type}"
-
-  browse_groups_desc: "Below is an alphabetized list of all %{groups_type}. You can filter this list by location to find %{groups_type} near you."
-  discover_groups_desc: "Below is a list of recently created %{groups_type}. You can filter this list by location to find %{groups_type} near you."
-
-  # commands
-
-  edit_settings: "Edit Settings"
-  basic_settings: "Basic Settings"
-  basic_info: "Basic Information"
-  view_all: "View All"
-  send_invites: "Send Invites"
-  view_requests: "View Requests"
-  destroy_group_link: "Destroy %{group_type}"
-  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
-  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
-
-  join_group_link: "Join %{group_type}"
-  leave_group_link: "Leave %{group_type}"
-  request_join_group_link: "Request to Join %{group_type}"
-  send_join_request: "Send request to join %{group_name}"
-  group_destroyed_message: "%{group_type} Destroyed"
-
-  remove_group_link: "Remove Group"
-
-  # results
-
-  page_is_not_static: "Page is not static"
-
-  archive_headline: "Archive"
-  archive_filter_created_link: "Date Created"
-  archive_filter_updated_link: "Last Date Updated"
-
-  # create/edit forms
-
-  link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
-  fullname: "Full Name"
-  descriptive_name_for_display: "A descriptive name used for display"
-  link_name: "Link Name"
-  language: "Language"
-
-  # council
-
-  coordinating_council: "Coordinating Council"
-  this_is_coordinating: "This is the <strong>coordinating council</strong> for %{parent_group}."
-  new_council: "New council for group %{group_name}"
-  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-  create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
-  # committee
-
-  this_is_committee: "This committee is part of %{parent_group}."
-  new_committee: "New committee for group %{group_name}"
-  dual_memberships: "Dual memberships"
-  dual_membership_info: "Members of %{group_type} %{group_name} who should also be in committee %{committee_name}"
-  edit_committe: "Edit Committee"
-  create_committee: "Create Committee"
-
-  # networks
-
-  network_initial_member: "Choose a group to be an initial member of this network."
-
-  # menu items
-
-  menu_items: "Navigation Bar"
-  external_link_menu_item: "external link"
-  local_link_menu_item: "local link"
-  page_menu_item: "page"
-  search_menu_item: "search"
-  tag_menu_item: "tag"
-  add_menu_item: "Add Item"
-
-  updating_this_list_will_update_menu_items: "Adding, removing and reordering menu items on this list will immediately update what menu items users see."
-
-  # appearance
-
-  edit_layout_heading: "Edit Layout"
-  group_icon: "Group Icon"
-  select_page_types: "Select Page Types"
-  select_visible_group_widgets: "Select the widgets visible on your group's front page"
-
-  widget_index: "Widget %{index}"
-
-  # profiles
-
-  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
-  open_group: "Open Group"
-  open_group_description: "Users are immediately added to the group - request don't have to be approved"
+  user_profile_description_may_view: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
 
   ##
   ## REQUESTS
   ##
 
-  contact_request_message_label: "Tell %{user} why you want to be their friend."
-  add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  #
+  # general
+  #
 
-  network_invite_info: "Enter the names of the groups you would like to invite to join this network."
-
-  approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
-  approve_contact_request: "Approve contact request"
-  recipient_tip: "Separate recipients with commas, spaces, or new lines."
-
-  destroy: "destroy"
-  approve: "approve"
-  reject: "reject"
-  ignore: "ignore"
-  pending: "pending"
-  rejected: "rejected"
-  approved: "approved"
-
-  my_requests_link: "my requests"
+  destroy: "Destroy"
+  approve: "Approve"
+  reject: "Reject"
+  ignore: "Ignore"
+  pending: "Pending"
+  rejected: "Rejected"
+  approved: "Approved"
+  my_requests_link: "My requests"
   all_requests: "All Requests"
   requests_to_me: "Requests to me"
   requests_from_me: "Requests from me"
   incoming: "Incoming"
   outgoing: "Outgoing"
-  state: "state"
-  action: "action"
+  state: "State"
+  action: "Action"
+  request_pending: "%{request} is pending approval"
+
+  #
+  # friends
+  #
+
+  friend_request_message_label: "Tell %{user} why you want to be their friend."
+  friend_request_sent: "Friend request has been sent"
+  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
+
+  #
+  # group membership
+  #
+
+  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  network_invite_info: "Enter the names of the groups you would like to invite to join this network."
+  recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
   #
   # request types:
@@ -1041,15 +866,11 @@ en:
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
   invite_sent: "Invitation sent to %{recipient}"
   invites_sent: "%{count} invitations sent"
-  contact_request_sent: "Friend request has been sent"
+
   request_to_join_sent: "Request to join has been sent"
   request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   removal_requested: "Removal Requested"
-  remove_contact_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
-  contact_removed: "%{user} has been removed from your contact list."
-  not_contact_of: "You are not the contact of %{user}."
-  already_contacts_info: "You are already the friend of this person."
   try_again: "Try Again"
   invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
   invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
@@ -1064,8 +885,6 @@ en:
   invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for %{recipient}"
   not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
-
-
 
   ##
   ## PAGES
@@ -1383,8 +1202,8 @@ en:
   task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
   task_list_page_display: "Task List"
 
-  #event_page_description: "I wish that this worked."
-  #event_page_display: "Event"
+  event_page_description: "A calendar event."
+  event_page_display: "Event"
 
   ##
   ## PAGE TYPE GROUPINGS
@@ -1861,33 +1680,3 @@ en:
   page_make_public_link: "make public"
   page_make_public_pending_link: "make public (pending)"
 
-  # COPIED FROM activerecord-2.3.5 gem
-  activerecord:
-    errors:
-      # The values :model, :attribute and :value are always available for interpolation
-      # The value :count is available when applicable. Can be used for pluralization.
-      messages:
-        inclusion: "is not included in the list"
-        exclusion: "is reserved"
-        invalid: "is invalid"
-        confirmation: "doesn't match confirmation"
-        accepted: "must be accepted"
-        empty: "can't be empty"
-        blank: "can't be blank"
-        too_long: "is too long (maximum is %{count} characters)"
-        too_short: "is too short (minimum is %{count} characters)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "has already been taken"
-        not_a_number: "is not a number"
-        greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"
-        record_invalid: "Validation failed: %{errors}"
-        # Append your own errors here or at the model/attributes scope.
-
-      full_messages:
-        format: "%{attribute} %{message}"

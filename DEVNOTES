@@ -1,5 +1,50 @@
 crabgrass-core is a basic, paired down crabgrass.
 
+things to work on
+============================
+
+directory
+. group
+. person
+
+account
+. reset lost password
+. cracklib
+
+sphinx
+. new sphinx
+. better fields for sphinx
+. get rid of page_terms
+
+pages
+. history
+. text page
+. poll page
+. asset page
+. folder page
+
+plugins
+. write new plugin system
+
+themes
+. add more themes
+
+tests
+. minitest
+. write more tests
+
+i18n
+. identify used and unused keys
+. a system to translate
+. better en.yml organization
+
+misc
+. replace backgroundrb - kclair
+
+new features
+. issues
+. notices
+
 internet explorer
 ============================
 
@@ -86,15 +131,17 @@ it would make more sense to give requests just a column for user and a column fo
 jabber integration
 ==========================
 
-openfire as a REST integration module:
+openfire has a REST integration module:
 https://we.riseup.net/cgdev/openfire-integration
 
 
 calendars
 ======================================
 
-http://tenderapp.com/tour/
+https://github.com/vinsol/fullcalendar_rails
+https://github.com/elevation/event_calendar
 
+http://tenderapp.com/tour/ (not sure what this is)
 
 documentation
 =================================
@@ -102,19 +149,36 @@ documentation
 http://yardoc.org/
 
 
+delayed database updates
+================================
+
+Most of the database updates that are slow for the user are things that don't
+need to be done right away. For example, you change one tiny thing about a page
+and it kicks of tons and tons of database updates, but these are just for searching 
+and could be delayed.
+
+A huge speed improvement can be acheived by running these, and the sphinx indexing,
+in background tasks.
+
 background tasks
 =====================
 
 There is an incredible number of background processing options in rails.
 
-a list: http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+lists:
 
+* http://www.tobinharris.com/past/2009/3/9/6-ways-to-run-background-jobs-in-rubyonrails/
+* http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+
+This one looks good: https://github.com/stympy/delayed_job
+It is a fork of delayed_job but with autoscaling.
+
+Other links:
 
 http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
 http://codeforpeople.rubyforge.org/svn/bj/trunk/README
 https://github.com/barttenbrinke/worker_queue/
 https://github.com/starling/active_queue
-
 
 message/work processing queues:
   http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
@@ -126,6 +190,37 @@ backgrounding code snippets:
   http://code.google.com/p/asynchronous/
   https://github.com/imedo/background_lite
 
-
 On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/
+
+
+
+Profile
+=================================
+
+Type A List
+
+* summary about myself - hmmm... i would like to have different summaries to display to my friends, my peers and people of that group. then this is not type A.
+* place
+* avatar
+* display name
+* login
+* online status 
+* you friend/ groups / networks 
+
+Type B List
+
+Only visible on the profile page of a user, but there can be Multiple or non at all.
+
+* pictures, may be multiple.
+* contact info
+** email 
+** phone
+** instant message
+** snail mail address
+* pages
+* status updates
+* homepage
+* social change interests and the like...
+
+

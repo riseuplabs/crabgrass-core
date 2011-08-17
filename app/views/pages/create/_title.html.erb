@@ -1,0 +1,8 @@
+<%
+  form.row do |r|
+    r.label :title.t
+    r.label_for 'page_title'
+    r.input text_field('page', 'title')
+    r.info help(:title)
+  end
+%>

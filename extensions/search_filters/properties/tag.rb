@@ -13,9 +13,14 @@ SearchFilter.new('/tag/:tag_name/') do
   self.singleton = false
 
   html(:delayed => true, :submit_button => false) do 
-    tag_cloud(current_user.tags) do |tag, css_class|
+    tags = tag_cloud(current_user.tags) do |tag, css_class|
       link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
-    end.join(' ')
+    end
+    if tags
+      tags.join(' ')
+    else
+      :no_things_found.t :things => :tags.t
+    end
   end
 
   label do |tag_name|

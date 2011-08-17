@@ -6,10 +6,10 @@
 locale_paths = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
 
 # select only enabled locales unless no enabled locales are set
-unless Conf.enabled_languages.blank?
+if Conf.enabled_languages.any?
   locale_paths = locale_paths.select do |path|
     Conf.enabled_languages.detect do |enabled_lang_code|
-      path.include?("#{enabled_lang_code}.yml")
+      path.include?('/en/') or path.include?("#{enabled_lang_code}.yml")
     end
   end
 end
@@ -23,4 +23,22 @@ end
 I18n.load_path << locale_paths
 I18n.default_locale = Conf.default_language
 I18n.exception_handler = :crabgrass_i18n_exception_handler
+
+##
+## Turn off reloading of .yml files after every request if in BOOST mode.
+##
+
+if ENV['BOOST']
+  module SkipReloading
+    def skip_reload!
+    end
+    def self.included(backend)
+      backend.class_eval do
+        alias_method :reload_for_real!, :reload!
+        alias_method :reload!, :skip_reload!
+      end
+    end
+  end
+  I18n::Backend::Simple.send(:include, SkipReloading)
+end
 

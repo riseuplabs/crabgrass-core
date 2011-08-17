@@ -119,7 +119,8 @@ class Profile < ActiveRecord::Base
    :foreign_key => 'discussion_id',
    :dependent => :destroy
 
-  belongs_to :photo, :class_name => "Asset", :dependent => :destroy
+  # belongs_to :photo, :class_name => "Asset", :dependent => :destroy
+  belongs_to :picture, :dependent => :destroy
   belongs_to :video, :class_name => "ExternalVideo", :dependent => :destroy
 
   has_many :locations,
@@ -158,7 +159,7 @@ class Profile < ActiveRecord::Base
 
     valid_params = ["first_name", "middle_name", "last_name", "role",
       "organization", "place", "membership_policy",
-      "peer", "photo", "video", "summary", "admins_may_moderate",
+      "peer", "picture", "video", "summary", "admins_may_moderate",
       "country_id","state_id","city_id"]
 
     collections = {
@@ -186,7 +187,7 @@ class Profile < ActiveRecord::Base
       end || [] rescue []
     end
 
-    params['photo'] = Asset.build(params.delete('photo')) if params['photo']
+    params['picture'] = (params['picture']['upload']? Picture.new(params.delete('picture')): nil)
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
     geo_location_options = {
@@ -211,7 +212,7 @@ class Profile < ActiveRecord::Base
   end
 
   def cover
-    self.photo || self.video
+    self.picture || self.video
   end
 
   def country_id

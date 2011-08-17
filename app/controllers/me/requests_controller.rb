@@ -1,7 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
   permissions 'requests'
-  include_controllers 'common/controllers/request'
+  include_controllers 'common/requests'
 
   def index
     @requests = Request.
@@ -9,7 +9,7 @@ class Me::RequestsController < Me::BaseController
       send(current_view, current_user).
       by_updated_at.
       paginate(pagination_params)
-    render :template => 'requests/index'
+    render :template => 'common/requests/index'
   end
 
   protected
@@ -18,6 +18,14 @@ class Me::RequestsController < Me::BaseController
   # permissions for requests
   def authorized?
     true # check_permissions!
+  end
+
+  def current_view
+    case params[:view]
+      when "incoming" then :to_user;
+      when "outgoing" then :created_by;
+      else :to_or_created_by_user;
+    end
   end
 
 end

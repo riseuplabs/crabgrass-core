@@ -4,6 +4,7 @@ draft install instructions
 install basic ruby environment:
 
   sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server git
+(depending on what you are running, you might need to install git-core instead of git. you might also need libopenssl-ruby1.8)
 
 install rubygems from rubygems.org:
 
@@ -11,23 +12,40 @@ install rubygems from rubygems.org:
   extract the tarball, and cd to the directory
   sudo ruby setup.rb --no-format-executable
 
+  TEMPORARY NOTE: due to a bug in rails 2.3.11, you currently must get rubygems <= 1.7.2.
+  You can download old versions here: https://github.com/rubygems/rubygems/downloads
+
 prevent rubygems from installing rdoc (optional):
 
   edit ~/.gemrc and add this:
   gem: --no-rdoc --no-ri
 
+checkout the codebase:
+
+  git clone git://labs.riseup.net/crabgrass-core.git
+  cd crabgrass-core
+  rake create_a_secret
+
+  Alternate ways of getting the codebase:
+
+  * do a shallow clone:
+    git clone --depth 1 git://labs.riseup.net/crabgrass-core.git
+    this will only check out a copy of the most recent version
+  * use gitosis:
+    git clone gitosis@labs.riseup.net:crabgrass-core.git
+    use this if you have gitosis access to crabgrass-core.git
+
 install required gems:
 
-  cd crabgrass-core
   sudo gem install rails --version='2.3.11'
-  mkdir log
-  touch log/development.log
-  rake create_a_secret
+  cd crabgrass-core
   sudo rake gems:install
 
 create the database:
 
   sudo mysqladmin create dismod_development
+  cd crabgrass-core
+  cp config/database.yml.example config/database.yml
   rake db:schema:load
   rake db:fixtures:load
 
@@ -45,6 +63,7 @@ install helper applications:
 
 run server:
 
+  cd crabgrass-core
   INFO=1 BOOST=1 script/server
 
 connect to the web application from your browser:
@@ -66,6 +85,7 @@ additional gems needed for testing:
 testing database:
 
   sudo mysqladmin create crabgrass_test
+  cd crabgrass-core
   rake db:test:prepare
 
 run tests:

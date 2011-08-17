@@ -28,6 +28,22 @@ p, ol, ul, td, div {
   margin-bottom: 1em;
 }
 
+//
+// MARGINS
+//
+
+.p, .section, .h1, .h2, .h3 {
+  &.first {
+    // if class .first is added, remove the top margin.
+    // this is often use with .p.first or .h1.first, etc.
+    margin-top: 0 !important;
+  }
+}
+
+//
+// LINKS
+//
+
 a {
   @if $link_underline == false {
     @include hover-link;
@@ -35,4 +51,18 @@ a {
   color: $link_standard_color;
   &:visited { color: $link_visited_color;}
   &:active { color: $link_active_color;}
+  //&.hilight {
+  //  color: white;
+  //  background-color: $link_visited_color;
+  //}
 }
+
+//
+// WORD WRAPPING
+//
+
+.nowrap {
+  white-space: nowrap;
+}
+
+

@@ -24,6 +24,7 @@ module Crabgrass
     include Crabgrass::Theme::Renderer
     include Crabgrass::Theme::Cache
     include Crabgrass::Theme::Loader
+    include Crabgrass::Theme::ColumnCalculator
 
     THEME_ROOT = RAILS_ROOT + '/extensions/themes'  # where theme configs live
     SASS_ROOT  = RAILS_ROOT + '/app/stylesheets'    # where the sass source files live
@@ -31,6 +32,10 @@ module Crabgrass
     CORE_CSS_SHEET = 'screen'
 
     attr_reader :directory, :public_directory, :name, :data
+    attr_reader :navigation
+    attr_reader :parent             # the parent of the theme data
+    attr_reader :navigation_parent  # the parent of the navigation data
+
     @@themes = {}
 
     # for the theme to work, this controller must be set.
@@ -46,6 +51,10 @@ module Crabgrass
       @style      = nil
       @controller = nil
     end
+
+    ##
+    ## PUBLIC CLASS METHODS
+    ##
 
     #
     # grabs a theme by name, loading if necessary. In production mode, theme is
@@ -69,6 +78,10 @@ module Crabgrass
       File.directory? Theme::theme_directory(theme_name)
     end
 
+    ##
+    ## PUBLIC INSTANCE METHODS
+    ##
+
     # access the values stored in the theme. eg current_theme[:border_width]
     def [](key)
       @data[key.to_sym]
@@ -77,6 +90,13 @@ module Crabgrass
     # alternate method of accessing the configuration. eg current_theme.border_width
     def method_missing(key)
       @data[key.to_sym]
+    end
+
+    # used for theme inheritance.
+    # a deep clone is not needed, because @data is just a shallow hash, even
+    # though the theme definition files seem all nesty.
+    def data_copy
+      @data.dup
     end
 
     ##
@@ -103,43 +123,6 @@ module Crabgrass
     def url(image_name)
       filename = @data[image_name.to_sym] || image_name
       File.join('','theme', @name, 'images', filename)
-    end
-
-    ##
-    ## THEME DEFINITION
-    ##
-
-    # used for defining the theme's options.
-    # allows this in a theme's init.rb:
-    # options do 
-    #   ... theme options code ...
-    # end
-
-    def options(args={}, &block)
-      @data = load_data(args, &block)
-    end
-
-    # used to define or fetch the navigation
-    def navigation(args={}, &block)
-      if block
-        @navigation = load_navigation(args, &block)
-      elsif @navigation.nil?
-        # hopefully, we should never get here...
-        @navigation = NavigationDefinition.new(self)
-      end
-      return @navigation
-    end
-
-    # used in init.rb to define custom theme styles
-    def style(str)
-      @style = str
-    end
-
-    # used for theme inheritance.
-    # a deep clone is not needed, because @data is just a shallow hash, even
-    # though the theme definition files seem all nesty.
-    def data_copy
-      @data.dup
     end
 
     private

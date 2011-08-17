@@ -14,6 +14,10 @@ classes as needed. Unfortunately, for crabgrass page types, rails always gets
 it wrong. To get around this, we create static proxy representation of the
 classes of each page type and load the actually class only when we have to.
 
+TODO: clean this up using:
+
+  delegate :x, :y, :z, :to => :definition
+
 =end
 
 module PageExtension::Subclass
@@ -35,9 +39,9 @@ module PageExtension::Subclass
     def controller
       definition.controller
     end
-    #def controller_class_name
-    #  definition.controller_class_name
-    #end
+    def controllers
+      definition.controllers
+    end
   end
 
   module ClassMethods
@@ -127,9 +131,9 @@ module PageExtension::Subclass
     def controller
       definition.controller
     end
-    #def controller_class_name
-    #  definition.controller_class_name
-    #end
+    def controllers
+      definition.controllers
+    end
     def class_display_name
       definition.class_display_name
     end
@@ -144,6 +148,11 @@ module PageExtension::Subclass
     def param_id
       definition.url
     end
+
+    def url
+      definition.url
+    end
+
   end
 
 end

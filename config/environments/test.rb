@@ -23,6 +23,7 @@ config.action_mailer.default_url_options = { :host => "localhost" }
 
 config.gem 'machinist', :version => '~> 1.0' # switch to v2 when stable.
 config.gem 'faker'
+config.gem 'minitest', :lib => 'minitest/autorun'
 
 #config.gem 'webrat'
 
@@ -38,8 +39,7 @@ end
 
 ##
 ## DEBUGGING
-## See doc/DEBUGGING for tips. 
+## See doc/DEBUGGING for tips.
 ##
 
 require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
-

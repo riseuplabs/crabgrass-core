@@ -9,7 +9,7 @@ ActionController::Base.class_eval do
 
   def self.include_controllers(include_path)
     root = File.dirname(__FILE__) + '/../..'
-    prefix = "#{root}/app/"
+    prefix = "#{root}/app/controllers/"
     full_path = "#{prefix}#{include_path}"
     if File.directory?(full_path)
       file_paths = Dir.glob(full_path + '/*.rb').collect{|f|f.chomp('.rb')}
@@ -18,8 +18,9 @@ ActionController::Base.class_eval do
     end
     file_paths.each do |file_path|
       relative_path = file_path.sub(/^#{Regexp.escape(prefix)}/, "")
-      require(relative_path)
+      #require(relative_path)
       include(relative_path.camelize.constantize)
+      ActiveSupport::Dependencies.explicitly_unloadable_constants << relative_path.camelize
     end
   end
 

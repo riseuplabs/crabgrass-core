@@ -1,8 +1,8 @@
 //
 // styles for displaying entities (groups or users).
 //
-// the difficult styling for entities is handled by icons.scss. everything else
-// is in here.
+// The difficult styling for entities is handled by icons.scss.
+// Everything else is in here.
 //
 
 //
@@ -20,11 +20,36 @@
     font-size: 0.85em;
     color: #666;
   }
+  //ul.entities {
+  //  border-bottom: 1px solid #ccc;
+  //  li {
+  //    border-top: 1px solid #ccc;
+  //    padding: 3px 0;
+  //  }
+  //}
+}
+
+//
+// A vertical 1-column list of entities displayed against the
+// theme's background. 
+//
+
+.on_background {
   ul.entities {
-    border-bottom: 1px solid #ccc;
+    li:first-child {
+      border-top: 0;
+    }
     li {
-      border-top: 1px solid #ccc;
-      padding: 3px 0;
+      padding: 3px;
+      border-top: 1px solid $background_color;
+      background-color: rgba(255,255,255,0.5);
+      span {
+        background-position: 100% 0;
+        background-repeat: no-repeat;
+        padding-right: 20px;
+        margin-right: -20px;
+      }
     }
   }
 }
+

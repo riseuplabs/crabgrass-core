@@ -16,11 +16,11 @@ module Pages::BaseHelper
     end
   end
 
-  def header_for_page_create(page_class)
-    style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
-    text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
-    content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
-  end
+  #def header_for_page_create(page_class)
+  #  style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
+  #  text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
+  #  content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
+  #end
 
   def recipient_checkbox_line(recipient, options={})
     name = CGI.escape(recipient.name) # so that '+' does show up as ' '

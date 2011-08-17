@@ -1,0 +1,21 @@
+
+//
+// thumbnail for the page sidebar.
+// this might be page specific, and should perhaps be moved to pages/images.scss
+// 
+
+a.thumbnail {
+  display: block;
+  overflow: hidden;
+  float: left;
+  background: white;
+  border: 1px solid white;
+  outline: 1px solid #999;
+  // the 1px margin is needed because float doesn't take outline
+  // into consideration:
+  margin: 1px 8px 8px 1px;
+  &:hover {
+    border: 1px solid #cdf;
+    outline: 1px solid black;
+  }
+}

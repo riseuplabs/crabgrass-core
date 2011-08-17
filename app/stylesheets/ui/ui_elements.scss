@@ -1,5 +1,5 @@
 //
-// MISC UI ELEMENTS
+// ALIGNMENT
 //
 
 .float_right {
@@ -7,6 +7,13 @@
   text-align: right;
 }
 
+.float_left {
+  float: left;
+}
+
+.full_width {
+  width: 100%;
+}
 
 //
 // SHY LINKS
@@ -32,5 +39,54 @@
 // to know that the request is pending, even when they move the mouse away.
 .shy.spinner_icon {
   opacity: 1;
+}
+
+//
+// PAGINATION
+//
+
+.pagination {
+  a, span {
+    padding: 0px 4px 2px 4px;
+  }
+  span.prev_page {
+    padding-left: 0;
+  }
+  span.current {
+    background-color: $link_standard_color;
+    color: white;
+  }
+}
+
+//
+// TWO COLUMN FLOATED ITEMS
+// 
+// this allows us to display a bunch of items in two columns, but in a way such
+// that if the window gets too small to display the two columns it will collapse
+// gracefully to a single column.
+//
+// used like so:
+// 
+//   .two_column_float 
+//     .column_item= 'hi'
+//     .column_item= 'there'
+//     .column_item= 'stranger'
+//
+
+.two_column_float {
+  // self clear the containing div:
+  overflow: auto;
+
+  // make the items at least 50% width and float them
+  .column_item {
+    min-width: 50%;
+    float: left;
+
+    // when a .p is floated, the margin gets doubled, so we put half margins here.
+    .p {
+       margin-top: 0.5em;
+       margin-bottom: 0.5em;
+    }
+  }
 }
 

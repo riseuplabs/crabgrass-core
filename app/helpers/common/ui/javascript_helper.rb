@@ -65,7 +65,12 @@ module Common::Ui::JavascriptHelper
       parameters << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
     end
 
-    javascript_options = options_for_javascript(build_callbacks(options))
+    js_options = build_callbacks(options)
+    if method = options[:method] 
+      method = "'#{method}'" unless (method.is_a?(String) and !method.index("'").nil?)
+      js_options['method'] = method
+    end
+    javascript_options = options_for_javascript(js_options)
     function = "RequestQueue.add("
     url_options = options[:url]
     url_options = url_options.merge(:escape => false) if url_options.is_a?(Hash)

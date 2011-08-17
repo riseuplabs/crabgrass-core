@@ -9,15 +9,14 @@ class ProfileTest < ActiveSupport::TestCase
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
-    FileUtils.mkdir_p(@@private)
-    FileUtils.mkdir_p(@@public)
-    #Media::Process::Base.log_to_stdout_when = :always
-    Media::Process::Base.log_to_stdout_when = :on_error
+    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
+    FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
 
   def teardown
-    FileUtils.rm_rf(@@private)
-    FileUtils.rm_rf(@@public)
+    FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
+    FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
   end
 
   def test_adding_profile
@@ -91,14 +90,15 @@ class ProfileTest < ActiveSupport::TestCase
     user = users(:blue)
     profile = user.profiles.create :stranger => true, :first_name => user.name
 
-    assert_difference 'Asset.count' do
-      profile.save_from_params(:photo => {
-        :uploaded_data => upload_data('image.png'), :caption => 'pigeon point'
+    # i don't think we're allowing more than one avatar now?
+    assert_difference 'Picture.count' do
+      profile.save_from_params(:picture => {
+        :upload => upload_data('image.png'), :caption => 'pigeon point'
       })
     end
 
-    assert_equal 'image.png', profile.photo(true).filename
-    assert_equal 'pigeon point', profile.photo.caption
+    assert_not_nil profile.picture(true).public_file_path
+    assert_equal 'pigeon point', profile.picture.caption
 
     if defined?(ExternalVideo)
       assert_difference 'ExternalVideo.count' do
@@ -110,7 +110,7 @@ class ProfileTest < ActiveSupport::TestCase
       skip 'ExternalVideo not defined'
     end
 
-    assert_difference 'Asset.count', -1 do
+    assert_difference 'Picture.count', -1 do
       profile.destroy
     end
   end

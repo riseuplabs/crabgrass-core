@@ -1,0 +1,14 @@
+= formy(:tabs, :id => 'page_tabs') do |f|
+  - f.tab do |t|
+    - t.label :show.t
+    - t.url page_path(@page,:action=>'show')
+    - t.selected action?(:show)
+  - f.tab do |t|
+    - t.label :edit.t
+    - t.url page_path(@page,:action=>'edit')
+    - t.selected action?(:edit)
+  - f.tab do |t|
+    - t.label :history.t
+    - t.url page_path(@page, :controller => :history)
+    - t.selected action?(:index)
+

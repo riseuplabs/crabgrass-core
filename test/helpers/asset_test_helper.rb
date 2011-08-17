@@ -1,5 +1,6 @@
 module AssetTestHelper
   include ActionController::TestProcess # fixture_file_upload
+
   ##
   ## ASSET HELPERS
   ##
@@ -20,4 +21,17 @@ module AssetTestHelper
   def read_file(file)
     File.read( RAILS_ROOT + '/test/fixtures/files/' + file )
   end
+
+  def setup_assets
+    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
+    FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
+    #Conf.disable_site_testing
+  end
+
+  def teardown_assets
+    FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
+    FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
+  end
+
 end

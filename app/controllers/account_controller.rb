@@ -1,14 +1,14 @@
 #
-# basic account management, for unauthenticated users.
-# authenticated user stuff is in me/settings
+# Basic account management, for unauthenticated users.
+#
+# Authenticated user stuff is in Me::SettingsController. 
+#
+# Login and logout are in SessionController.
 #
 
 class AccountController < ApplicationController
 
-  #stylesheet 'account'
   layout 'notice'
-
-  skip_before_filter :redirect_unverified_user, :only => [:unverified, :new, :create, :verify_email]
 
   verify :method => :post, :only => [:create]
 
@@ -27,8 +27,6 @@ class AccountController < ApplicationController
   def new
     if current_site.signup_redirect_url.any?
       redirect_to current_site.signup_redirect_url
-    elsif !may_signup?
-      raise_denied('new user registration is closed at this time')
     end
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
   end
@@ -44,8 +42,9 @@ class AccountController < ApplicationController
     #  error :usage_agreement_required.t
     #  render :template => 'account/new'
     #else
+      @user.language   = session[:language_code].to_s
       @user.avatar     = Avatar.new
-      @user.unverified = current_site.needs_email_verification?
+#      @user.unverified = current_site.needs_email_verification?
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
@@ -53,7 +52,7 @@ class AccountController < ApplicationController
       # replace with hook(:new_user_registered)
       #current_site.add_user!(current_user)
 
-      send_email_verification if current_site.needs_email_verification?
+#      send_email_verification if current_site.needs_email_verification?
 
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
       success :signup_success.t, :signup_success_message.t
@@ -64,30 +63,10 @@ class AccountController < ApplicationController
   ## VERIFICATION
   ##
 
-  # verify the users email
-  def verify_email
-    @token = Token.find_by_value_and_action(params[:token], 'verify')
-    @token.destroy if @token
-    if @token.nil? or @token.user.nil? or !@token.user.unverified?
-      flash_message :title => I18n.t(:already_verified), :success => I18n.t(:already_verified_text)
-    else
-      @token.user.update_attribute(:unverified, false)
-      flash_message :title => I18n.t(:successfully_verified_email_message),
-        :success => I18n.t(:signup_success_message)
-    end
+  # removed
 
-    redirect_to '/'
-  end
 
-  def unverified
-  end
 
-  protected
-
-  def send_email_verification
-    @token = Token.create!(:user => current_user, :action => 'verify')
-    Mailer.deliver_email_verification(@token, mailer_options)
-  end
 
   ##
   ## PASSWORD RESET
@@ -126,10 +105,10 @@ class AccountController < ApplicationController
   def send_reset_token
     unless RFC822::EmailAddress.match(params[:email])
       error :invalid_email_text.t
-      render_alert and return
+      return
     end
 
-    sleep(rand*3) # prevent timing attacks
+    sleep(rand*3) # an attempt to make timing attacks harder
 
     user = User.find_for_forget(params[:email])
     if user
@@ -138,6 +117,7 @@ class AccountController < ApplicationController
       Mailer.deliver_forgot_password(token, mailer_options)
     end
 
+    # this gives success even if there is no user, to not confirm that an email is in db
     success :reset_password.t, :reset_password_email_sent.t
     render_alert
   end
@@ -155,7 +135,7 @@ class AccountController < ApplicationController
     if @user.save
       Mailer.deliver_reset_password(@user, mailer_options)
       @token.destroy
-      success :password_reset.t, :password_reset_ok_text.t
+      success :password_reset.t, :password_reset_ok_text.t, :nofade
       redirect_to login_path
     else
       error @user

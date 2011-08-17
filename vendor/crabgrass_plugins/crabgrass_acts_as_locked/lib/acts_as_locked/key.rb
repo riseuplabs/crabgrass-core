@@ -6,49 +6,111 @@ module ActsAsLocked
       { :conditions => access_conditions_for(holder) }
     }
 
-    named_scope :for_public, :conditions => "keyring_code IS NULL"
-
     cattr_accessor :symbol_codes
     cattr_accessor :holder_klass
     cattr_accessor :holder_block
 
-    def open!(locks, options = {})
-      if options[:reset]
+    def opens?(locks)
+      locked.class.keys_open_locks?(self, locks)
+    end
+
+    # update! takes a hash with locks as keys.
+    # all locks with true values can be opened
+    # all locks with false values can not be opened
+    # locks that are not specified are left untouched
+    # returns an array of the locks set.
+    def update!(locks_hash = {})
+      # make sure we only have valid keys
+      locks_hash.slice locked.class.locks_for_bits(~0)
+      grants = locks_hash.map{|k,v|k if v == 'true'}.compact
+      revokes = locks_hash.map{|k,v|k if v == 'false'}.compact
+      self.grant! grants
+      self.revoke! revokes
+      return grants + revokes
+    end
+
+    def grant!(locks, options = {})
+      if !options.nil? and options[:reset]
         self.mask = bits_for_locks(locks)
       else
         self.mask |= bits_for_locks(locks)
       end
       save
+      if locked.respond_to? :grant_dependencies
+        locked.grant_dependencies self
+      end
+      self
     end
 
     def revoke!(locks)
       self.mask &= ~bits_for_locks(locks)
       save
+      if locked.respond_to? :revoke_dependencies
+        locked.revoke_dependencies self
+      end
+      self
     end
 
     def bits_for_locks(locks)
-      self.locked.class.bits_for_locks(locks)
+      locked.class.bits_for_locks(locks)
     end
 
+    def allowed_for?(lock)
+      locked.class.key_allowed?(lock, self.holder)
+    end
+
+
+    #
+    # This is used in the {grant,revoke}_dependencies functions
+    # and in the tests
+    #
     def locks(options={})
-      klass = self.locked.class
-      if options[:disabled]
-        locks = klass.locks_for_bits(~self.mask)
-      else
-        locks = klass.locks_for_bits(self.mask)
-      end
+      klass = locked.class
       postfix = klass.name.underscore
-      if options[:with_class]
-        locks.map{|l| (l.to_s + '_' + postfix).to_sym}
-      elsif options[:select_options]
-        locks.map{|l| [(l.to_s + '_' + postfix).to_sym, klass.bits_for_locks(l)]}
+      current_locks = nil
+
+      if options[:disabled]
+        current_locks = klass.locks_for_bits(~self.mask)
       else
-        locks
+        current_locks = klass.locks_for_bits(self.mask)
       end
+
+      if options[:with_class]
+        current_locks.map{|l| (l.to_s + '_' + postfix).to_sym}
+      elsif options[:select_options]
+        current_locks.map{|l| [(l.to_s + '_' + postfix).to_sym, klass.bits_for_locks(l)]}
+      else
+        current_locks
+      end
+    end
+
+    def locks=(new_locks)
+      self.mask |= bits_for_locks(new_locks)
     end
 
     def holder
-      ActsAsLocked::Key.holder_for(self.keyring_code)
+      @holder ||= self.class.holder_for(self.keyring_code)
+    end
+
+    def holder=(value)
+      self.keyring_code = self.class.code_for_holder(value)
+    end
+
+    #
+    # returns true if +key_holder+ is the holder of this key
+    #
+    def holder?(key_holder)
+     self.keyring_code == self.class.code_for_holder(key_holder).to_i
+    end
+
+    def self.code_for_holder(holder)
+      holder = holder.to_sym if holder.is_a? String
+      if holder.is_a? Symbol
+        symbol_codes[holder] or
+        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
+      else
+        holder.keyring_code
+      end
     end
 
     def self.access_conditions_for(holder)
@@ -93,14 +155,5 @@ module ActsAsLocked
       symbol_codes.detect{|k,v| v == code}.first
     end
 
-    def self.code_for_holder(holder)
-      holder = holder.to_sym if holder.is_a? String
-      if holder.is_a? Symbol
-        symbol_codes[holder] or
-        raise ActsAsLocked::LockError.new("ActsAsLocked: Entity alias '#{holder}' is unknown.")
-      else
-        holder.keyring_code
-      end
-    end
   end
 end

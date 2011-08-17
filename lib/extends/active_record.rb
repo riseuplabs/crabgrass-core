@@ -1,9 +1,18 @@
-#serialize_to and initialized_by were moved to lib/social_user.rb
-
 require 'rubygems'
 require 'active_record'
 
 ActiveRecord::Base.class_eval do
+
+  #
+  # Crabgrass uses exceptions in most places to display error messages.
+  # This method adds an easy way to generate RecordInvalid exceptions
+  # without attempting to save the record (e.g. save!)
+  #
+  def validate!
+    unless valid?
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+  end
 
   # used to automatically apply greencloth to a field and store it in another field.
   # for example:

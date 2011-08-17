@@ -14,7 +14,7 @@
     %td.post_author
       %div.author{:style => author_style}
         %div.username= link_to_user post.user
-        %div.date= created_modified_date(post.created_at, post.updated_at)
+        %div.nowrap.date= created_modified_date(post.created_at, post.updated_at)
     %td{:class => "post_body"}
       = render :partial => 'common/posts/table/body', :locals => local_assigns
   %tr{:class => "post_spacer_bottom #{color}"}

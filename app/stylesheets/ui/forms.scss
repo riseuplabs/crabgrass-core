@@ -3,11 +3,20 @@
 //
 
 //
+// in general, horizontal resizing messes up the layout. 
+// so, if you want that, enable it explicitly.
+//
+
+textarea {
+  resize: vertical;
+}
+
+//
 // this seems to make form elements line up better, 
 // especially in chrome:
 //
 
-textarea, input[type=submit] {margin: 0;}
+textarea, input[type=submit], input[type=button] {margin: 0;}
 
 //
 // form elements are often really misaligned because in the w3c box
@@ -41,9 +50,12 @@ textarea, input, select {
 //
 // the button row of a form
 //
+// .form_buttons is deprecated.
+//
 
-.form_buttons {
+.form_buttons, .buttons {
   margin-top: 0.75em;
+  text-align: right;
 
   // button_to makes its own form+div, but we want it to dispaly inline
   // despite this.
@@ -54,13 +66,30 @@ textarea, input, select {
     }
   }
 
-  input[type=submit] {
-    // font-size: 1.15em;
-    // margin-right: 0.5em;
+  input[type=submit], input[type=button] {
+    font-size: 1.15em;
+    margin-left: 1em;
   }
   //&.right  {text-align: right;}
   //&.left   {text-align: left;}
   //&.center {text-align: center;}
+
+  //
+  // the order of submit tags matters. although there is no requirement in html
+  // for this to be the case, and so it might be a bad idea, we often rely on
+  // the fact that all browsers will use the first submit tag when the user
+  // hits return. we often want the first submit tag to be a cancel button.
+  // the class reverse will allow us to put the cancel button last, but have
+  // it appear first, which is more the standard.
+  // TODO: add RTL support.
+  //
+  &.reverse {
+    input[type=submit], input[type=button], img {
+      float: right;
+      margin-right: 0;
+      margin-left: 1em;
+    }
+  }
 }
 
 //

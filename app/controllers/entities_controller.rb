@@ -37,7 +37,7 @@ class EntitiesController < ApplicationController
     if preload?
       User.friends_or_peers_of(current_user).access_by(current_user).allows(:pester)
     elsif filter.any?
-      recipients = User.on(current_site).strangers_to(current_user)
+      recipients = User.strangers_to(current_user)
       recipients = recipients.access_by(:public).allows(:pester)
       recipients.named_like(filter).find(:all, :limit => LIMIT)
     end
@@ -64,7 +64,7 @@ class EntitiesController < ApplicationController
       # preload user's groups
       User.friends_or_peers_of(current_user).access_by(current_user).allows(:view)
     elsif filter.any?
-      strangers = User.on(current_site).strangers_to(current_user)
+      strangers = User.strangers_to(current_user)
       strangers = strangers.access_by(:public).allows(:view)
       strangers.named_like(filter).find(:all, :limit => LIMIT)
     end

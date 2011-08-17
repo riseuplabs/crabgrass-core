@@ -1,6 +1,6 @@
 
 
-navigation do
+define_navigation do
 
   ##
   ## HOME
@@ -22,23 +22,25 @@ navigation do
     label "Me"
     visible { logged_in? }
     url     { me_home_path }
-    active  { controller?('me/') or context?(:me) }
+    active  { context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do
-      label  "Create Page"
+      label   { :create_thing.t(:thing => :page.t) }
       url     { new_page_path }
       active  false
       icon    :plus
       visible { @drop_down_menu }
     end
 
+=begin
     context_section :notices do
       label  "Notices"
       url    { me_home_path }
       active { controller?('me/notices') }
       icon   :info
     end
+=end
 
     context_section :pages do
       label  "Pages"
@@ -47,6 +49,7 @@ navigation do
       icon   :page_white_copy
     end
 
+=begin
     context_section :activities do
       label  "Activities"
       url    { me_activities_path }
@@ -74,6 +77,16 @@ navigation do
       end
 
     end
+=end
+
+=begin
+    context_section :calendar do
+      label  "Calendar"
+      url    { me_events_path }
+      active { controller?('me/events') }
+      icon   :date
+    end
+=end
 
     context_section :messages do
       label  "Messages"
@@ -102,7 +115,7 @@ navigation do
 
       local_section :profile do
         label  "Profile"
-        url    { me_profile_path }
+        url    { edit_me_profile_path }
         active { controller?('me/profile') }
       end
 
@@ -120,23 +133,82 @@ navigation do
   ## PEOPLE
   ##
 
-#  global_section :people do 
-#    label  "People"
-#    url    :controller => 'people/directory'
-#    active { controller?('people/') }
-#    html    :partial => '/layouts/global/nav/people_menu'
-#  end
+  global_section :people do
+    label  "People"
+    url    :controller => 'people/directory'
+    active { controller?('people/') or context?(:user) }
+    html    :partial => '/layouts/global/nav/people_menu'
+
+    context_section :no_context do
+      visible { context?(:none) }
+      active  { context?(:none) }
+
+      local_section :all do
+        label "All"
+        url { people_directory_path }
+        active { params[:path].empty? }
+      end
+
+      local_section :friends do
+        label "Friends"
+        url { people_directory_path(:path => ['friends']) }
+        active { params[:path].try.include?('friends') }
+      end
+    end
+
+    context_section :home do
+      label  "Home"
+      icon   :house
+      url    { entity_path(@user) }
+      active { controller?('people/home') }
+    end
+
+    context_section :pages do
+      label  "Pages"
+      icon   :page_white_copy
+      url    { person_pages_path(@user) }
+      active { page_controller? }
+    end
+
+  end
 
   ##
   ## GROUPS
   ##
- 
+
   global_section :group do
-    visible { @group }
     label  "Groups"
     url    { groups_directory_path }
     active { controller?('groups/') or @group or context?(:group) }
     html    :partial => '/layouts/global/nav/groups_menu'
+
+    context_section :directory do
+      #visible { context?(:none) and controller?('groups/directory') }
+      #active  { context?(:none) and controller?('groups/directory') }
+
+      visible { context?(:none) }
+      active  { context?(:none) }
+
+      local_section :all do
+        label "All"
+        url { groups_directory_path }
+        active { controller?('groups/directory') and params[:path].empty? }
+      end
+
+      local_section :mygroups do
+        label "My Groups"
+        url { groups_directory_path(:path => ['my']) }
+        active { controller?('groups/directory') and params[:path].try.include?('my') }
+      end
+
+      local_section :create do
+        label  { :create_thing.t(:thing => :group.t) }
+        url    { new_group_path }
+        active { controller?('groups/groups') }
+        icon   :plus
+      end
+
+    end
 
     context_section :home do
       label  "Home"
@@ -152,15 +224,24 @@ navigation do
       active { page_controller? }
     end
 
+=begin
+    context_section :calendar do
+      label  "Calendar"
+      url    { group_events_path(@group) }
+      active { controller?('groups/events') }
+      icon   :date
+    end
+=end
+
     context_section :members do
-      visible { may_list_memberships? }
+      visible { may_list_groups_members? }
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
-      active  { controller?('groups/members', 'groups/invites') }
+      active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
 
       local_section :people do
-        visible { may_list_memberships? }
+        visible { may_list_groups_members? }
         label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }
@@ -173,26 +254,26 @@ navigation do
         active  { controller?('groups/members') and params[:view] == 'groups' }
       end
 
-      local_section :send_invites do
-        visible { may_create_invite_request? }
-        label   { :send_invites.t }
-        url     { new_group_invite_path(@group) }
-        active  { controller?('groups/invites') and action?('new') }
-      end
-
       local_section :invites do
-        visible { may_list_requests? }
-        label   { 'Review Membership Invites and Requests' }
-        url     { group_invites_path(@group) }
-        active  { controller?('groups/invites') and !action?('new') }
+        visible { may_create_groups_invite? }
+        label   { "Send Invites" }
+        url     { new_group_invite_path(@group) }
+        active  { controller?('groups/invites') && action?('new') }
       end
 
-      local_section :membership_settings do
-        visible { may_edit_group? }
-        label   { 'Membership Settings' }
-        url     { group_permissions_path(@group, :view => 'membership') }
-        active  false
+      local_section :requests do
+        visible { may_list_groups_requests? }
+        label   { 'Membership Requests' }
+        url     { group_requests_path(@group) }
+        active  { controller?('groups/requests') }
       end
+
+      #local_section :membership_settings do
+      #  visible { may_edit_group? }
+      #  label   { 'Membership Settings' }
+      #  url     { group_permissions_path(@group, :view => 'membership') }
+      #  active  false
+      #end
 
     end
 
@@ -218,18 +299,19 @@ navigation do
       end
 
       local_section :profile do
-        visible { may_edit_group? }
+        visible { may_edit_profile? }
         label  { :profile.t }
-        url    { group_profile_path(@group) }
+        url    { edit_group_profile_path(@group) }
         active { controller?('groups/profile') }
       end
 
-      local_section :requests do
-        visible { may_admin_requests? }
-        label  { :requests.t }
-        url    { group_requests_path(@group) }
-        active { controller?('groups/requests') }
-      end
+      # uncomment this when Settings -> Requests is needed
+      #local_section :requests do
+      #  visible { may_admin_requests? }
+      #  label  { :requests.t }
+      #  url    { group_requests_path(@group) }
+      #  active { controller?('groups/requests') }
+      #end
     end
   end
 
@@ -237,17 +319,17 @@ navigation do
   ## GROUPS DIRECTORY
   ##
 
-  global_section :group_directory do
-    visible { @group.nil? }
-    label  "Groups"
-    url    { groups_directory_path }
-    active { controller?('groups/') }
-    html   :partial => '/layouts/global/nav/groups_menu'
+#  global_section :group_directory do
+#    visible { @group.nil? }
+#    label  "Groups"
+#    url    { groups_directory_path }
+#    active { controller?('groups/') }
+#    html   :partial => '/layouts/global/nav/groups_menu'
 ##    section :place do
 ##    end
 ##    section :location do
 ##    end
-  end
+#  end
 
 end
 

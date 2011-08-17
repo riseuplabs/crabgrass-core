@@ -6,23 +6,97 @@ require 'fileutils'
 require 'pathname'
 
 module Crabgrass::Theme::Loader
- 
+
+  ##
+  ## CALLED BY THEME DEFINITION
+  ##
+
+  #
+  #  step 0) theme.load
+  #
+  #  step 1)
+  #    in theme.load():
+  #      evaluate_ruby_file('init.rb')
+  #
+  #  step 2)
+  #    in theme's init.rb: 
+  #      define_theme { ... }
+  #    this calls loader.rb:
+  #      def define_theme(&block)
+  #      end
+  #
+
+  #
+  # Parses the specified block and turns it into theme data.
+  #
+  # Called by the theme's init.rb.
+  #
+  def define_theme(args={}, &block)
+    if args[:parent]
+      @parent = Crabgrass::Theme[args[:parent]]
+      if @parent.nil?
+        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
+      else
+        starting_data = @parent.data_copy
+      end
+    end
+    starting_data ||= {}
+    @data = Crabgrass::Theme::Options.parse(starting_data, &block)
+  end
+  
+  #
+  # Parses the specified block and turns it into navigation definition.
+  # (or returns the existing navigation)
+  #
+  # Called by the theme's navigation.rb
+  #
+  def define_navigation(args={}, &block)
+    if args[:parent]
+      @navigation_parent = Crabgrass::Theme[args[:parent]]
+      if @navigation_parent.nil?
+        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
+      else
+        starting_data = @navigation_parent.navigation
+      end
+    end
+    starting_data ||= nil
+    @navigation = Crabgrass::Theme::NavigationDefinition.parse(self, starting_data, &block)
+  end
+
+  # 
+  # used in init.rb to define custom theme styles
+  # DEPRECATED
+  #
+  def style(str)
+    @style = str
+  end
+
+  ##
+  ## PUBLIC METHODS
+  ##
+
   public
 
+  #
+  # loads the data and navigation for this theme.
+  #
   def load
     start_time = Time.now
 
-    # load and eval theme
-    init_paths.each do |file|
-      evaluate_theme_definition(file)
+    # load @data
+    if data_path
+      evaluate_ruby_file(data_path)
+      # (the file pointed to by data_path must call 'define_theme')
+    else
+      define_theme(:parent => 'default')
     end
 
-    if @navigation.nil?
-      @navigation = default_navigation
-    end
-
-    if @data.nil?
-      @data = default_data
+    # load @navigation
+    if navigation_path
+      evaluate_ruby_file(navigation_path)
+      # (the file pointed to by navigation_path must call 'define_navigation')
+    else
+      define_navigation(:parent => 'default')
     end
 
     # in production, clear the cache once at startup.
@@ -48,6 +122,47 @@ module Crabgrass::Theme::Loader
     load()
   end
 
+  #
+  # returns all the file paths that have theme definition data in them.
+  #
+  #def init_paths
+  #  paths = []
+  #  paths << @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
+  #  paths << @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+  #  raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
+  #  return paths
+  #end
+
+  def data_path
+    @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
+  end
+
+  def navigation_path
+    @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+  end
+
+  #
+  # includes ancestors
+  #
+  def all_data_paths
+    if parent
+      [data_path] + parent.all_data_paths
+    else
+      [data_path]
+    end
+  end
+
+  #
+  # includes ancestors
+  #
+  def all_navigation_paths
+    if navigation_parent
+      [navigation_path] + navigation_parent.all_navigation_paths
+    else
+      [navigation_path]
+    end
+  end
+
   private
 
   def self.create_and_load(theme_name)
@@ -57,63 +172,11 @@ module Crabgrass::Theme::Loader
   end
 
   #
-  # this method does the work of actually evaluating the theme definition .rb files.
+  # evals a file with the current binding
   #
-  def evaluate_theme_definition(file)
+  def evaluate_ruby_file(file)
     eval(IO.read(file), binding, file)
   end
-
-  def init_paths
-    paths = []
-    paths << @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
-    paths << @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
-    raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
-    return paths
-  end
-
-  #
-  # triggered when navigation.rb calls 'navigation()'
-  #
-  def load_navigation(args, &block)
-    if args[:parent]
-      # load the parent navigation first, hopefully, we don't have circular dependencies!
-      parent = Crabgrass::Theme[args[:parent]]
-      if parent.nil?
-        puts "ERROR: no such parent theme '%s' available for theme '%s' (navigation)" % [args[:parent], @name]
-      else
-        base_nav = parent.navigation
-      end
-    else
-      base_nav = nil
-    end
-    return Crabgrass::Theme::NavigationDefinition.parse(self, base_nav, &block)
-  end
-
-  #
-  # triggered when init.rb calls 'options()'
-  #
-  def load_data(args, &block)
-    if args[:parent]
-      # load the parent theme first, hopefully, we don't have circular dependencies!
-      @parent = Crabgrass::Theme[args[:parent]]
-      if @parent.nil?
-        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
-      else
-        starting_data = @parent.data_copy
-      end
-    end
-    starting_data ||= {}
-    Crabgrass::Theme::Options.parse(starting_data, &block)
-  end
-
-  def default_navigation
-    load_navigation(:parent => 'default')
-  end
-
-  def default_data
-    load_data(:parent => 'default')
-  end
-
 
   #
   # symlink, ensuring RELATIVE paths.

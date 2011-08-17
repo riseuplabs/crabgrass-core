@@ -60,8 +60,6 @@ class Site < ActiveRecord::Base
 
   # this is evil, but used in several important places:
   # (1) for i18n, to be able to customize the strings on a per site basis
-  # (2) acts_as_site_limited, to be able to automatically limit all queries
-  #     to the current site.
   def self.current; Thread.current[:site]; end
   def self.current=(site); Thread.current[:site] = site; end
 
@@ -127,10 +125,6 @@ class Site < ActiveRecord::Base
     end
   end
 
-  def needs_email_verification?
-    self.signup_mode == Conf::SIGNUP_MODE[:verify_email]
-  end
-
   ##
   ## RELATIONS
   ##
@@ -193,7 +187,7 @@ class Site < ActiveRecord::Base
     elsif self.network
       '/'
     else
-      '/me'
+      '/me/pages' #changed per https://labs.riseup.net/code/issues/3349, but maybe we want to tweak login_redirect_url in conf.rb?
      end
   end
 

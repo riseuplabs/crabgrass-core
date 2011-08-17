@@ -1,0 +1,5 @@
+- form.row do |r|
+  - r.label 'date'
+  - r.input calendar_date_select_tag("starts_at", "", :time => 'mixed', :embedded => true)
+  - r.info 'info about start date'
+

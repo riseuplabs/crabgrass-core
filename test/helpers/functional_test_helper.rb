@@ -20,31 +20,29 @@ module FunctionalTestHelper
     end
   end
 
-  def assert_login_required(message='missing "login required" message')
-    if block_given?
-      assert_raise PermissionDenied, message do
-        yield
-      end
-    else
-      assert_equal 'info', flash[:type], message
-      assert_equal 'Login Required', flash[:title], message
-      assert_response :redirect
-      assert_redirected_to url_for(:controller => '/account', :action => :login, :only_path => true)
-    end
+  def assert_login_required
+    assert_response :redirect
+    assert_redirected_to '/session/login'
   end
 
-  def assert_error_message(regexp=nil)
-    assert_equal 'error', flash[:type], flash.inspect
-    if regexp
-      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, flash[:text]]
+  # can pass either a regexp of the flash error string,
+  # or the error symbol
+  def assert_error_message(arg=nil)
+    errors = flash_messages :error
+    assert errors.any?, 'there should have been flash errors'
+    if arg
+      if arg.is_a?(Regexp)
+        assert message_text(errors).grep(arg).any?, 'error message did not match %s. it was %s.'%[arg.inspect, message_text(errors).inspect]
+      elsif arg.is_a?(Symbol)
+        assert message_text(errors).detect { |text| text == arg.t }, 'error message did not match %s. it was %s'%[arg.inspect, message_text(errors).inspect]
+      end
     end
   end
 
   def assert_message(regexp=nil)
-    assert ['error','info','success'].include?(flash[:type]), 'no flash message (%s)'%flash.inspect
+    assert flash_messages.any?, 'no flash messages'
     if regexp
-      str = flash[:text].any || flash[:title]
-      assert(str =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, str])
+      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect]
     end
   end
 
@@ -62,17 +60,29 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
-  def assert_no_select(*args)
-    if args.count == 4
-      message = args.pop
-    elsif args.count == 3
-      message = args.pop unless args.first.is_a?(HTML::Node)
-    end
-    message ||= "Selector '#{selector}' was not expected but found."
-    assert_raise Test::Unit::AssertionFailedError, message do
-      assert_select *args
+
+  # using mocks to test permissions
+  # see MockableTestHelper for implementation of
+  # expect and verify
+  def assert_permission(permission, ret = true)
+    @controller.expect_or_raise permission, ret
+    yield
+    begin
+      @controller.verify
+    rescue MockExpectationError => e
+      message = "Asserted Permission was not called.\n"
+      message += "  Params used were: #{@controller.params.inspect}.\n"
+      key = [@controller.params[:controller], @controller.params[:action]]
+      message += "  Key used was: #{key.inspect}.\n"
+      method = @controller.send :cache_permission, key do
+        nil
+      end
+      message += method ? "  Method used was: #{method}.\n" :
+       "  No method was cached. Are you using login_required?\n"
+      raise MockExpectationError.new(message)
     end
   end
+
   ##
   ## ROUTE HELPERS
   ##
@@ -82,6 +92,7 @@ module FunctionalTestHelper
     url.rewrite(options)
   end
 
+=begin
   # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
   def assert_redirected_to_with_partial_hash(options={ }, message=nil)
     clean_backtrace do
@@ -123,5 +134,30 @@ module FunctionalTestHelper
       alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
     end
   end
+=end
 
+  private
+
+  def flash_messages(type=nil)
+    messages = flash[:messages] || flash[:hidden_messages]
+    if type
+      messages.select{|message| message[:type] == type}
+    else
+      messages
+    end
+  end
+
+  def message_text(messages)
+    texts = []
+    messages.each do |message|
+      # assumes message[:text] and message[:list] are both arrays
+      if message[:text].is_a?(Array)
+        texts += message[:text]
+      elsif message[:text]
+        texts << message[:text]
+      end
+      texts += message[:list] if message[:list]
+    end
+    texts
+  end
 end

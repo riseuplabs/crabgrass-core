@@ -10,11 +10,7 @@ class MembershipObserver < ActiveRecord::Observer
   def after_destroy(membership)
     unless membership.skip_destroy_notification
       key = rand(Time.now)
-      if membership.group.site
-        UserLeftSiteActivity.create!(:user => membership.user, :group => membership.group, :key => key)
-      else
-        UserLeftGroupActivity.create!(:user => membership.user, :group => membership.group, :key => key)
-      end
+      UserLeftGroupActivity.create!(:user => membership.user, :group => membership.group, :key => key)
       GroupLostUserActivity.create!(:user => membership.user, :group => membership.group, :key => key)
     end
   end

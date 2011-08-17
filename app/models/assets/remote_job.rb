@@ -17,7 +17,6 @@ class RemoteJob < ActiveResource::Base
       end
     end
     begin
-p attrs
       self.create(attrs)
     end
   end

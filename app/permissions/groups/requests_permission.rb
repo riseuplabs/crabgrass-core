@@ -2,14 +2,12 @@ module Groups::RequestsPermission
 
   protected
 
-  def may_create_join_request?(group=@group)
+  def may_create_groups_request?(group=@group)
     logged_in? and
     group and
-    group.has_access? :request_membership
-  end
-
-  def may_create_invite_request?(group=@group)
-    current_user.may?(:admin, group)
+    current_user.may?(:request_membership, group) and
+    !current_user.member_of?(group)
+    # and ensure request doesn't already exist? no, just show difft link then
   end
 
   def may_create_destroy_request?(group=@group)
@@ -30,8 +28,8 @@ module Groups::RequestsPermission
     current_user.may?(:admin, group)
   end
 
-  alias_method :may_list_requests?, :may_admin_requests?
-  alias_method :may_index_requests?, :may_admin_requests?
-  alias_method :may_update_requests?, :may_admin_requests?
+  alias_method :may_list_groups_requests?, :may_admin_requests?
+  alias_method :may_edit_groups_request?, :may_admin_requests?
+  alias_method :may_destroy_groups_request?, :may_admin_requests?
 
 end

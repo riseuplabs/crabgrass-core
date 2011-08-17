@@ -8,11 +8,8 @@ require 'logger'
 require "#{File.dirname(__FILE__)}/../init"
 
 ActiveRecord::Base.establish_connection(
-  :adapter  => "mysql",
-  :host     => "localhost",
-  :username => "user",
-  :password => "password",
-  :database => "test_acts_as_locked"
+  :adapter  => "sqlite3",
+  :database => "#{File.dirname(__FILE__)}/tests.sqlite"
 )
 
 # log db activity:
@@ -83,6 +80,10 @@ class User < ActiveRecord::Base
   end
 end
 
+class UnauthenticatedUser < User
+  # we test for this in has_access? and use :public just in case
+end
+
 class Artist < ActiveRecord::Base
   belongs_to :main_style, :class_name => "Style"
   has_and_belongs_to_many :styles
@@ -142,22 +143,22 @@ class ActsAsLockedTest < Test::Unit::TestCase
     assert @fusion.has_access?([:dance, :hear, :see]), "combining access from different holders should work."
   end
 
-  def test_getting_holders_per_lock
-    @fusion.grant! @soul, [:dance, :hear]
-    @fusion.grant! @jazz, [:hear, :see]
+  def test_getting_keys_per_lock
+    soul_key = @fusion.grant! @soul, [:dance, :hear]
+    jazz_key = @fusion.grant! @jazz, [:hear, :see]
     expected = {
-      :hear => [@soul, @jazz],
-      :see => [@jazz],
-      :dance => [@soul]}
-    assert_equal expected, @fusion.holders_by_lock
+      :hear => [soul_key, jazz_key],
+      :see => [jazz_key],
+      :dance => [soul_key]}
+    assert_equal expected, @fusion.keys_by_lock
   end
 
   def test_setting_holders_per_lock
     @fusion.grant! @soul, :dance
     @fusion.grant! :hear => [@soul, @jazz],
       :see => @jazz
-    assert @fusion.has_access?(:hear), "fusion should allow me to pester as I am a jazz user."
-    assert !@fusion.has_access?(:dance), "fusion should not allow me to spy as I am not a soul user."
+    assert @fusion.has_access?(:hear), "fusion should allow me to hear as I am a jazz user."
+    assert !@fusion.has_access?(:dance), "fusion should not allow me to dance as I am not a soul user."
     # I'm a soul user now
     @soul.users << @me
     @me.reload
@@ -183,52 +184,61 @@ class ActsAsLockedTest < Test::Unit::TestCase
         Artist.find(code -100) :
         Style.find(code)
     end
-    @jazz.grant! @soul, :see
-    @jazz.grant! @miles, [:see, :dance]
+    soul_key = @jazz.grant! @soul, :see
+    miles_key = @jazz.grant! @miles, [:see, :dance]
     expected = {
-      :see => [@soul, @miles],
-      :dance => [@miles]}
-    assert_equal expected, @jazz.holders_by_lock
+      :see => [soul_key, miles_key],
+      :dance => [miles_key]}
+    assert_equal expected, @jazz.keys_by_lock
     ActsAsLocked::Key.resolve_holder :style
   end
 
 
   def test_locks_with_symbolic_holders
-    ActsAsLocked::Key.symbol_codes = {
-      :public => 500,
-      :all => 500,
-      :admin => 501,
-      :other => 502
-    }
-    ActsAsLocked::Key.resolve_holder do |code|
-      case code
-      when 1...100
-        Style.find(code)
-      when 100...200
-        Artist.find(code -100)
-      when 500...510
-        ActsAsLocked::Key.symbol_for(code)
+    with_symbol_codes do
+      admin_key = @jazz.grant! :admin, [:see, :dance]
+      soul_key = @jazz.grant! @soul, :see
+      miles_key = @jazz.grant! @miles, :hear
+
+      expected = {
+        :see => [admin_key, soul_key],
+        :dance => [admin_key],
+        :hear => [miles_key]}
+
+      assert_equal expected, @jazz.keys_by_lock
+    end
+  end
+
+  def test_invalid_symbolic_holder
+    with_symbol_codes do
+      assert_raises ActsAsLocked::LockError do
+        @jazz.grant! :foo, [:see, :dance]
       end
     end
-    @jazz.grant! :admin, [:see, :dance]
-    assert_raises ActsAsLocked::LockError do
-      @jazz.grant! :foo, [:see, :dance]
-    end
-    @jazz.grant! @soul, :see
-    @jazz.grant! @miles, :hear
-    expected = {
-      :see => [:admin, @soul],
-      :dance => [:admin],
-      :hear => [@miles]}
-    assert_equal expected, @jazz.holders_by_lock
-    ActsAsLocked::Key.resolve_holder :style
-    ActsAsLocked::Key.symbol_codes = {}
   end
+
+  def test_dependencies
+    with_symbol_codes do
+      with_dependencies do
+        admin_key = @jazz.grant! :admin, [:hear]
+        public_key = @jazz.grant! :public, [:see, :dance]
+        expected = {
+          :see => [admin_key, public_key],
+          :dance => [admin_key, public_key],
+          :hear => [admin_key]}
+        assert_equal expected, @jazz.keys_by_lock
+
+        admin_key = @jazz.revoke! :admin, [:see, :hear]
+        assert_equal expected.slice(:dance), @jazz.reload.keys_by_lock
+      end
+    end
+  end
+
 
   def test_query_caching
     # all @jazz users may see @jazz
     @jazz.grant! @jazz, :see
-    artists = Artist.find :all, :include => {:main_style => :current_user_keys}
+    artists = Artist.find :public, :include => {:main_style => :current_user_keys}
     # we remove the permission but it has already been cached...
     assert @jazz.has_access?(:see), ":see should be allowed to current_user."
     @jazz.revoke!(@jazz, :see)
@@ -266,6 +276,58 @@ class ActsAsLockedTest < Test::Unit::TestCase
     p = @fusion.grant! @jazz, [:see, :dance, :do_crazy_things]
     p = @fusion.keys.find_by_keyring_code(@jazz.keyring_code)
     assert_equal 13, p.mask
+  end
+
+
+  ## HELPER FUNCTIONS
+  #
+  # factored out of the tests for sake of simple tests
+  #
+
+  def with_symbol_codes
+    ActsAsLocked::Key.symbol_codes = {
+      :public => 500,
+      :admin => 501,
+      :other => 502
+    }
+    ActsAsLocked::Key.resolve_holder do |code|
+      case code
+      when 1...100
+        Style.find(code)
+      when 100...200
+        Artist.find(code -100)
+      when 500...510
+        ActsAsLocked::Key.symbol_for(code)
+      end
+    end
+
+    yield
+
+    ActsAsLocked::Key.resolve_holder :style
+    ActsAsLocked::Key.symbol_codes = {}
+  end
+
+  def with_dependencies
+    Style.class_eval do
+      def grant_dependencies(key)
+        if key.holder == :public
+          self.grant! :admin, key.locks
+        end
+      end
+
+      def revoke_dependencies(key)
+        if key.holder == :admin
+          self.revoke! :public, key.locks(:disabled => :true)
+        end
+      end
+    end
+
+    yield
+
+    Style.class_eval do
+      undef grant_dependencies
+      undef revoke_dependencies
+    end
   end
 
 end

@@ -79,7 +79,6 @@ class Page < ActiveRecord::Base
   before_save :save_timestamps
 
   acts_as_taggable_on :tags
-  acts_as_site_limited
   attr_protected :owner
   acts_as_path_findable
 
@@ -257,7 +256,7 @@ class Page < ActiveRecord::Base
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
 
-  # this should be in the database, for now hardwired as "true". 
+  # this should be in the database, for now hardwired as "true".
   # if true, then anyone who can view a page can comment on it.
   def public_comments?
     true

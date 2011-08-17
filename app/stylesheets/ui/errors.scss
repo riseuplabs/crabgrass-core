@@ -29,7 +29,6 @@ $alert_margin: gutter()/2;
 .message {
   .text {
     @extend .icon;
-    line-height: 1em !important;
   }
 }
 
@@ -111,9 +110,6 @@ $alert_margin: gutter()/2;
 
 .inline_message_list {
   .close {display:none}
-  .message .text {
-    background-position: 0px 10px !important;
-  }
   p.first {
     font-size: 1.5em;
     line-height: 1.5em;

@@ -37,6 +37,11 @@ class ActiveSupport::TestCase
   #    # Sham.reset
   #   }
 
+  setup {
+    # make sure we don't have any login from the last test
+    User.current = nil
+  }
+
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
 
@@ -46,10 +51,16 @@ class ActiveSupport::TestCase
   include SiteTestHelper
   include LoginTestHelper
   include FixtureTestHelper
+  include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
 
   fixtures :all
+end
+
+# we want to be able to mock our application controller
+class ApplicationController
+  include MockableTestHelper
 end
 
 ##

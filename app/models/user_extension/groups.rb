@@ -48,8 +48,9 @@ module UserExtension::Groups
         def councils
           self.select{|group|group.council?}
         end
-        def recently_active
-          find(:all, :limit => 10, :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
+        def recently_active(options={})
+          options[:limit] ||= 13
+          find(:all, :limit => options[:limit], :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
         end
       end
 
@@ -89,7 +90,7 @@ module UserExtension::Groups
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group',
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql}) AND /*SITE_LIMITED*/' do
+        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
         def normals
           self.select{|group|group.normal?}
         end
@@ -100,18 +101,6 @@ module UserExtension::Groups
           self.select{|group|group.committee?}
         end
       end
-
-      ## DEPRECATED!!
-      #named_scope :on, lambda { |site|
-      #  if site.network.nil?
-      #    {}
-      #  else
-      #    { :select => "users.*",
-      #      :joins => :memberships,
-      #      :conditions => ["memberships.group_id = ?", site.network.id]
-      #    }
-      #  end
-      #}
 
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache

@@ -11,10 +11,6 @@ class Conf
   ## CONSTANTS
   ##
 
-  SIGNUP_MODE = Hash.new(0).merge({
-    :default => 0, :closed => 1, :invite_only => 2, :verify_email => 3
-  }).freeze
-
   TEXT_EDITOR = Hash.new(0).merge({
     :greencloth_only => 0,        :html_only => 1,
     :greencloth_preferred => 2,   :html_preferred => 3
@@ -46,7 +42,6 @@ class Conf
   cattr_accessor :domain
   cattr_accessor :translation_group
   cattr_accessor :chat
-  cattr_accessor :signup_mode
   cattr_accessor :dev_email
   cattr_accessor :login_redirect_url
   cattr_accessor :theme
@@ -65,6 +60,7 @@ class Conf
   cattr_accessor :enabled_tools # deprecated
   cattr_accessor :enabled_pages 
   cattr_accessor :enabled_languages
+  cattr_accessor :enabled_languages_hash # (private)
   cattr_accessor :email
   cattr_accessor :sites
   cattr_accessor :secret
@@ -74,6 +70,9 @@ class Conf
   cattr_accessor :text_editor
   cattr_accessor :use_full_geonames_data
   cattr_accessor :remote_processing
+  cattr_accessor :committees
+  cattr_accessor :councils
+  cattr_accessor :networks
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -116,7 +115,6 @@ class Conf
     self.show_exceptions   = true
     self.domain            = 'localhost'
     self.chat              = true
-    self.signup_mode       = SIGNUP_MODE[:default]
     self.dev_email         = ''
     self.login_redirect_url = '/me'
     self.theme             = 'default'
@@ -134,6 +132,9 @@ class Conf
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
     self.remote_processing = false
+    self.committees = true
+    self.councils = true
+    self.networks = true
   end
 
   def self.load(filename)
@@ -150,21 +151,22 @@ class Conf
     end
 
     ## convert strings in config to numeric constants.
-    ['SIGNUP_MODE', 'TEXT_EDITOR'].each do |const_string|
-      const = ("Conf::"+const_string).constantize
-      attr = const_string.downcase
-      if self.send(attr).is_a? String
-        unless const.has_key? self.send(attr).to_sym
-          raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
-        end
-        self.send(attr+'=', const[self.send(attr).to_sym])
+    const = ("Conf::TEXT_EDITOR").constantize
+    attr = ("TEXT_EDITOR").downcase
+    if self.send(attr).is_a? String
+      unless const.has_key? self.send(attr).to_sym
+        raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
       end
+      self.send(attr+'=', const[self.send(attr).to_sym])
     end
 
     ## convert some strings in config to symbols
     ['default_page_access'].each do |conf_var|
       self.send(conf_var+'=', self.send(conf_var).to_sym)
     end
+
+    ## convert enabled_languages into a hash
+    self.enabled_languages_hash = self.enabled_languages.to_h {|i| [i, true]}
 
     return true
   end
@@ -198,6 +200,14 @@ class Conf
     else
       true
     end
+  end
+
+  ##
+  ## LANGUAGE
+  ##
+
+  def self.language_enabled?(lang_code)
+    self.enabled_languages_hash[lang_code]
   end
 
   private

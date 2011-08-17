@@ -1,0 +1,53 @@
+CORE MODELS
+and how they relate to each other.
+
+User
+=======
+
+class User
+  has_many :friends, :through => 'contacts', :class => 'User'
+  has_many :groups, :through => 'memberships'
+end
+
+
+Group
+=======
+
+class Group
+  has_many :users, :through => 'memberships'
+end
+
+Page
+======
+
+class Page
+  has_many :users, :through => 'user_participations'
+  has_many :groups, :through => 'group_participations'
+  has_one :discussion
+  has_many :tags
+  has_many :assets
+end
+
+A 'page' is the basic model for all content in crabgrass. examples are a wiki page, an uploaded file/image/audio/video, a poll, a task list.
+
+these specific page types are subclasses of Page and they have their own controller and views. In effect, every page is its own rails application.
+
+the page controller is subclass from BasePageController. it defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override.
+
+all pages are actually implemented as plugins, but plugins that live in a special folder called 'extensions/pages'
+
+Discussions and Posts
+=====================
+
+class Discussion
+  has_many :posts
+end
+
+class Posts
+  belongs_to :discussion
+  belongs_to :user
+end
+
+
+
+

@@ -38,9 +38,18 @@ available_page_types:
   - WikiPage
   - DismodPage
 
+
 theme: dismod
 
+# pagination_size: 3
+
 remote_processing: "http://localhost:3002"
+
+enabled_languages: ['en', 'es', 'pt', 'ar', 'de']
+
+committees: false
+councils: false
+networks: false
 
 ##
 ## SITES

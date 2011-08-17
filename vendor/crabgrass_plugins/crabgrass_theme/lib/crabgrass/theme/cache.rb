@@ -26,9 +26,15 @@ module Crabgrass::Theme::Cache
   # the timestamp given.
   #
   def config_changed_since?(updated_at)
-    init_paths.inject(100.years.ago) {|previous,current| [previous,File.mtime(current)].max} > updated_at
+    max_age = (all_data_paths + all_navigation_paths).inject(100.years.ago) do |previous,current|
+      if current.nil?
+        previous
+      else
+        [previous, File.mtime(current)].max
+      end
+    end
+    max_age > updated_at
   end
-
 
   def clear_cache_if_needed(sheet_name)
     if Rails.env == 'development'

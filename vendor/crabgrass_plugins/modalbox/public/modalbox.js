@@ -154,7 +154,7 @@ Modalbox.Methods = {
     }
     var html = '<div class="MB_confirm">' +
       '<p>#{message}</p>' +
-      '<form #{form_attrs}>' +
+      '<form #{form_attrs} class="buttons">' +
         '<img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> ' +
         '<input type="button" onclick="Modalbox.back()" value="#{cancel}" />' +
         '<input type="button" onclick="#{ok_function}" value="#{ok}" />' +

@@ -14,6 +14,9 @@
       - if item[:html]
         %div{:class => [active, 'nav']}
           = theme_render(item[:html])
+      - elsif item[:icon]
+        = link_to_active(content_tag(:span, item[:label], :class => "icon inline #{item[:icon]}_16"), item[:url], item[:active], :class => 'nav')
       - else
         = link_to_active(item[:label], item[:url], item[:active], :class => 'nav')
+ 
 

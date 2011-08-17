@@ -1,6 +1,6 @@
 
 
-class Pages::TrashController < Pages::SidebarController
+class Pages::TrashController < Pages::SidebarsController
 
   before_filter :login_required
   helper 'pages/trash'

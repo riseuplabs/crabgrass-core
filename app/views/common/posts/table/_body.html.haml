@@ -6,7 +6,7 @@
   %div.float_right
     - if local_assigns[:edit_url]
       - url = safe_call(edit_url, post)
-      = link_to_remote_with_icon :edit.t, {:icon => 'pencil', :url => url}, {:class => 'shy'}
+      = link_to_remote :edit.t, {:url => url}, {:class => 'shy', :icon => 'pencil'}
     = #edit_post_action(post)
     = #star_post_action(post)
     = # call_hook :post_actions, {:post => post}

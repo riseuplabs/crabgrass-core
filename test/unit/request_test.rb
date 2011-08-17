@@ -10,7 +10,7 @@ class RequestTest < ActiveSupport::TestCase
     assert !u1.friend_of?(u2)
     assert !u2.friend_of?(u1)
 
-    req = RequestToFriend.create!(:created_by => u1, :recipient => u2)
+    req = RequestToFriend.create!(:created_by => u1, :recipient => u2, :message => 'hi, lets be friends')
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
       RequestToFriend.create!(:created_by => u1, :recipient => u2)
@@ -23,6 +23,9 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal 'approved', req.state
     assert u1.friend_of?(u2), 'users should be friends'
     assert u2.friend_of?(u1), 'users should be friends'
+
+    assert_not_nil req.shared_discussion
+    assert_equal 'hi, lets be friends', req.shared_discussion.posts.first.body
 
     req.destroy
     assert_raises ActiveRecord::RecordInvalid, "contact already exists" do

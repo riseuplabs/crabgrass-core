@@ -165,16 +165,29 @@
 }
 
 //
-// for use with icon stand alone without any text
+// for creating a clickable link that has no text but just
+// the icon. see link_helper.rb
 //
 
-.small_icon_button {
+a.small_icon_button {
   height: 16px;
   width: 16px;
   display: block;
   padding: 0;
+  background-repeat: no-repeat;
+  background-position: 0 0;
 }
 
+//
+// for displaying xsmall icons inline. no link or text.
+//
+
+button.small_icon {
+  width: 16px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
 
 //
 // mobi icons are used to transform some text into icons when the

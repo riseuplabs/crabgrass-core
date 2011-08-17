@@ -4,7 +4,7 @@
 #  update:  page_attributes_path      /pages/:page_id/attributes
 #
 
-class Pages::AttributesController < Pages::SidebarController
+class Pages::AttributesController < Pages::SidebarsController
 
   before_filter :login_required
 

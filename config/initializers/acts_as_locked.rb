@@ -16,9 +16,9 @@ ActsAsLocked::Key.resolve_holder do |code|
     ActsAsLocked::Key.symbol_for(code)
   else
     string = code.to_s
-    prefix = string[0]
+    prefix = string.first
     id = string[1..-1].to_i
-    case prefix
+    case prefix.to_i
     when 1
       User.find(id)
     when 5

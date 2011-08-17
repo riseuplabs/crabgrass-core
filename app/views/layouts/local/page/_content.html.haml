@@ -1,5 +1,7 @@
-#title_box
+#title_box{:class => (@options.show_tabs ? 'with_tabs' : '')}
   = render :partial => 'layouts/local/page/title'
+  - if @options.show_tabs
+    = render :partial => "#{@page.controller}/tabs"
 %article#content
   = yield
   - if @options.show_posts

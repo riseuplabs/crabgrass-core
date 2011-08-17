@@ -1,15 +1,14 @@
-class WikiPageController < BasePageController
-  include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiPopup
+class WikiPageController < Pages::BaseController 
+  include Common::Application::WikiRenderer
+  include Common::Application::WikiPopup
 
   helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?,
                   :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?
 
+  #stylesheet 'wiki_edit'
+  #javascript :wiki, :action => :edit
 
-  stylesheet 'wiki_edit'
-  javascript :wiki, :action => :edit
-
-  helper :wiki # for wiki toolbar stuff
+  helper :wiki_page, :wiki
   helper_method :save_or_cancel_edit_lock_wiki_error_text
 
   permissions 'wiki_page'
@@ -46,20 +45,20 @@ class WikiPageController < BasePageController
   # XHR - clicked pencil, section = 'someheading'. replace #wiki_html with inline editor
   def edit
     @editing_section = desired_locked_section
-
     @wiki.unlock!(desired_locked_section, current_user, :break => true) if params[:break_lock]
     acquire_desired_locked_section!
+
   rescue WikiLockError => exc
     # we couldn't acquire a lock. do nothing here for document edit. user will see 'break lock' button
     if show_inline_editor?
       @locker = @wiki.locker_of(@editing_section)
       @locker ||= User.new :login => 'unknown'
-      @wiki_inline_error = I18n.t(:wiki_is_locked, :user => @locker.display_name)
+      error :wiki_is_locked.t(:user => @locker.display_name)
     end
   rescue ActiveRecord::StaleObjectError => exc
      # this exception is created by optimistic locking.
      # it means that wiki or wiki locks has change since we fetched it from the database
-     flash_message_now :error => I18n.t(:locking_error)
+     error :locking_error.t
   ensure
     render :action => 'update_wiki_html' if show_inline_editor?
   end
@@ -111,9 +110,7 @@ class WikiPageController < BasePageController
   rescue ActiveRecord::StaleObjectError => exc
     # this exception is created by optimistic locking.
     # it means that wiki or wiki locks has change since we fetched it from the database
-    flash_message_now :error => I18n.t(:locking_error)
-  rescue ErrorMessage => exc
-    flash_message_now :error => exc.to_s
+    error :locking_error.t
   ensure
     render_update_outcome unless request.get?
   end
@@ -196,8 +193,8 @@ class WikiPageController < BasePageController
     end
   end
 
-  def setup_view
-    @show_attach = true
+  def setup_options
+    @options.show_tabs = true
   end
 
   def setup_title_box
@@ -209,7 +206,7 @@ class WikiPageController < BasePageController
   # if the user has a section locked, redirect them to edit
   def force_save_or_cancel
     if current_locked_section == :document
-      flash_message :info => save_or_cancel_edit_lock_wiki_error_text
+      info save_or_cancel_edit_lock_wiki_error_text
       redirect_to_edit
     end
   end
@@ -218,8 +215,7 @@ class WikiPageController < BasePageController
     begin
       @wiki.get_body_for_section(desired_locked_section)
     rescue Exception => exc
-      flash_message_now :error => exc.to_s
-      @wiki_inline_error = exc.to_s
+      error exc.to_s
       @editing_section = nil
       @update_completed = true
       render_or_redirect_to_updated_wiki_html

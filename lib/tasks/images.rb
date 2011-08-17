@@ -13,6 +13,10 @@ def images_dir
   Pathname.new(File.dirname(__FILE__) + '/../../public/images').realpath.to_s
 end
 
+def svg_dir
+  Pathname.new(File.dirname(__FILE__) + '/../../doc/image-sources').realpath.to_s
+end
+
 namespace :cg do
   namespace :images do 
 
@@ -43,7 +47,7 @@ namespace :cg do
       end
     end
 
-    desc "update the gif icons by converting the png icons"
+    desc "update the gif icons by converting the png icons (require graphicsmagick)"
     task :update_gif do
       white_png = images_dir + '/png/white.png'
       Dir.chdir(images_dir) do 
@@ -64,17 +68,21 @@ namespace :cg do
       end
     end
 
+    desc "render doc/image-sources/*.svg to public/images/png (requires inkscape)"
+    task :render_svg do
+      Dir.chdir(svg_dir) do
+        size = '48'
+        Dir.chdir(size) do
+          Dir.glob('*.svg') do |svg_file|
+            dest_file = File.join(images_dir, 'png', size, svg_file.sub('.svg','.png'))
+            putc '.'; STDOUT.flush 
+            `inkscape -e #{dest_file} -w #{size} -h #{size} --file #{svg_file}`
+          end
+        end
+      end
+    end
+
+
   end
 end
-
-  #File.open('../../mods/design_tester/app/views/design/reference/Images/icons.html','w') do |file|
-  #  images.each do |image|
-  #    if image[0] == '16'
-  #      klass = 'small_icon'
-  #    else
-  #      klass = 'big_icon'
-  #    end
-  #    file.write %(<div class="#{klass} #{image[1]}_#{image[0]}">#{image[1]}_#{image[0]}</div>\n)
-  #  end
-  #end
 

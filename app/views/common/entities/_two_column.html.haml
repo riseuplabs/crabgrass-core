@@ -1,0 +1,12 @@
+- cutoff = (entities.count + 1) / 2
+
+.directory.split_panel
+  .panel_left
+    - for entity in entities[0..cutoff-1]
+      = render :partial => entity_partial, :locals => {:entity => entity}
+
+  .panel_right
+    - for entity in entities[cutoff..-1]
+      = render :partial => entity_partial, :locals => {:entity => entity}
+.p
+  = pagination_links(entities)     

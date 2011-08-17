@@ -56,8 +56,8 @@ class SocialUserTest < ActiveSupport::TestCase
     assert users(:red).peer_of?(users(:green)), 'must be peers'
     assert users(:red).may_pester?(users(:green)), 'peers should always be able to pester'
 
-    users(:green).profiles.public.may_pester = true
-    users(:green).allow! :public, :pester
+    #users(:green).profiles.public.may_pester = true
+    users(:green).grant! :public, :pester
     assert users(:kangaroo).may_pester?(users(:green)), 'should be able to pester if set in profile'
   end
 

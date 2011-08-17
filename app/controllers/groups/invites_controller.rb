@@ -1,35 +1,22 @@
-#          group_invites GET    /groups/:group_id/invites(.:format)                  {:action=>"index", :controller=>"groups/invites"}
-#                        POST   /groups/:group_id/invites(.:format)                  {:action=>"create", :controller=>"groups/invites"}
-#       new_group_invite GET    /groups/:group_id/invites/new(.:format)              {:action=>"new", :controller=>"groups/invites"}
-#      edit_group_invite GET    /groups/:group_id/invites/:id/edit(.:format)         {:action=>"edit", :controller=>"groups/invites"}
-#           group_invite GET    /groups/:group_id/invites/:id(.:format)              {:action=>"show", :controller=>"groups/invites"}
-#                        PUT    /groups/:group_id/invites/:id(.:format)              {:action=>"update", :controller=>"groups/invites"}
-#                        DELETE /groups/:group_id/invites/:id(.:format)              {:action=>"destroy", :controller=>"groups/invites"}
-
-# invites are just a type of request, so it might make sense to use
-# the requests controller for this...
+#
+# group_invites  GET    /groups/:group_id/invites action=>"index"
+#                POST   /groups/:group_id/invites action=>"create"
+#
+# group_invite   PUT    /groups/:group_id/invites/:id action=>"update"
+#                DELETE /groups/:group_id/invites/:id action=>"destroy"
+#
 
 class Groups::InvitesController < Groups::BaseController
+
+  include_controllers 'common/requests'
   before_filter :login_required
-
-  permissions :invites
-
-  include Common::Controllers::Request
-
-  def index
-    scope = case params[:view]
-      when 'incoming': :to_group
-      when 'outgoing': :from_group
-      else :regarding_group
-      end
-    @requests = Request.send(scope, @group).
-      having_state(params[:state] || 'pending').by_created_at.paginate(pagination_params(:page => params[:out_page]))
-    render :template => 'requests/index.html.haml'
-  end
 
   def new
   end
 
+  #
+  # create some new invites
+  #
   def create
     users, groups, emails = Page.parse_recipients!(params[:recipients])
     groups = [] unless @group.network?
@@ -71,7 +58,13 @@ class Groups::InvitesController < Groups::BaseController
       success(:now, I18n.t(:invites_sent, :count => reqs.size.to_s))
       params[:recipients] = ""
     end
-    redirect_to :action => :index 
+    redirect_to :action => :index
+  end
+
+  protected
+
+  def fetch_request
+    @request = @group.invites.find(params[:id])
   end
 
 end

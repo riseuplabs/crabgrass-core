@@ -1,19 +1,19 @@
-=begin
-
-In development mode, rails is very aggressive about unloading and reloading
-classes as needed. Unfortunately, for crabgrass page types, rails always gets
-it wrong. To get around this, we create static proxy representation of the
-classes of each page type and load the actually class only when we have to.
-
-=end
+# 
+# In development mode, rails is very aggressive about unloading and reloading
+# classes as needed. Unfortunately, for crabgrass page types, rails always gets
+# it wrong. To get around this, we create static proxy representation of the
+# classes of each page type and load the actually class only when we have to.
+# 
 
 module Crabgrass::Page
   class ClassProxy
 
-    attr_accessor :controller, :creation_controller, :model, :icon, :class_group,
-      :form_sections, :class_name, :full_class_name, :internal, :order, :short_class_name
+    attr_accessor :creation_controller, :model, :icon, :class_group, :form_sections,
+      :class_name, :full_class_name, :internal, :order, :short_class_name
 
-    ORDER = ['text', 'media', 'vote', 'planning']
+    attr_writer :controller
+
+    ORDER = ['text', 'media', 'vote', 'calendar']
 
     def initialize(arg=nil)
       raise 'error' unless arg.is_a? Hash
@@ -73,6 +73,37 @@ module Crabgrass::Page
     # eg RateManyPage => "rate-many"
     def url
       @url ||= short_class_name.underscore.gsub('_','-').nameize
+    end
+
+    #
+    # return an array of all the controllers
+    #
+    def controllers
+      @controllers ||= begin
+        ary = []
+        if @controller.is_a? Array
+          ary += @controller
+        elsif @controller.is_a? String
+          ary << @controller
+        end
+        if @creation_controller
+          ary << @creation_controller
+        end
+        ary
+      end
+    end
+
+    #
+    # returns the primary controller
+    #
+    def controller
+      @first_controller ||= begin
+        if @controller.is_a? Array
+          @controller.first
+        elsif @controller.is_a? String
+          @controller
+        end
+      end
     end
 
   end

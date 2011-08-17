@@ -10,10 +10,11 @@
 #  end
 #  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
 #
+
 class Discussion < ActiveRecord::Base
 
   ##
-  ## associations
+  ## ASSOCIATIONS
   ##
 
   belongs_to :page
@@ -23,9 +24,11 @@ class Discussion < ActiveRecord::Base
   # i think this is currently unused?
   has_one :profile, :foreign_key => 'discussion_id'
 
-  has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
+  has_many :posts, :order => 'posts.created_at',
+    :dependent => :destroy, :class_name => 'Post'
 
-  has_many :visible_posts, :order => 'posts.created_at', :class_name => 'Post', :conditions => {:deleted_at => nil}
+  has_many :visible_posts, :order => 'posts.created_at',
+    :class_name => 'Post', :conditions => {:deleted_at => nil}
 
   belongs_to :commentable, :polymorphic => true
 
@@ -41,7 +44,6 @@ class Discussion < ActiveRecord::Base
   ##
 
   named_scope :with_some_posts, :conditions => ['discussions.posts_count > ?', 0]
-
 
   # used when relationships are joined in
   # ex: current_user.discussions.from_user(User.first)
@@ -103,17 +105,20 @@ class Discussion < ActiveRecord::Base
   end
 
   ##
-  ## attributes
+  ## ATTRIBUTES
   ##
 
-  # to help with the create form
-  #attr_accessor :body
-
-  #before_create { |r| r.replied_at = Time.now.utc }
-  #after_save    { |r| Post.update_all ['forum_id = ?', r.forum_id], ['topic_id = ?', r.id] }
+  #
+  # for use in creating a new post with discussion creation:
+  #
+  #  Discussion.create(:post => {:body => x, :user => current_user})
+  #
+  def post=(post_attributes)
+    self.posts.build(post_attributes)
+  end
 
   ##
-  ## methods
+  ## METHODS
   ##
 
   # 

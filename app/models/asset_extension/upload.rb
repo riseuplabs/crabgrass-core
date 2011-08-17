@@ -23,6 +23,7 @@ module AssetExtension
 
     def self.included(base)
 
+      base.validate :validate_upload_data
       base.before_validation :process_attachment
       base.after_update :finalize_attachment  #  \  both are
       base.after_create :finalize_attachment  #  /  needed
@@ -81,6 +82,14 @@ module AssetExtension
     end
 
     module InstanceMethods
+
+      def validate_upload_data
+        if new_record?
+          unless uploaded_data_changed?
+            errors.add(:uploaded_data, I18n.t('errors.messages.empty'))
+          end
+        end
+      end
 
       #
       # html forms for assets have a field called 'uploaded_data'. This setter

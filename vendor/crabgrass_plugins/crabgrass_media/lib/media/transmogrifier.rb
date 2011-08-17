@@ -22,7 +22,9 @@ module Media
     attr_accessor :options
 
     attr_accessor :command_output # output of last command run
+
     @@verbose = true
+    @@suppress_errors = false
 
     #
     # takes a has of options, some of which are required:
@@ -145,6 +147,13 @@ module Media
       @@verbose
     end
 
+    def self.suppress_errors=(bool)
+      @@suppress_errors = bool
+    end
+    def self.suppress_errors?
+      @@suppress_errors
+    end
+
     #
     # removes leading x- from mime-types
     #
@@ -167,7 +176,6 @@ module Media
 
       # run the command
       cmdstr = command_string(*args)
-      log_command cmdstr
       self.command_output = ""
       IO.popen(cmdstr + ' 2>&1', 'r') do |pipe|
         while line = pipe.gets
@@ -185,13 +193,23 @@ module Media
         when 127 then :not_found
         else :error
       end
-      unless status == :success
-        yield('ERROR: command returned exitstatus %s' % $?.exitstatus) if block_given?
+      if status == :success
+        log_command cmdstr
+      else
+        log_error cmdstr
+        msg = 'exited with "%s"' % $?.exitstatus
+        log_error msg
+        if command_output
+          log_error command_output
+        end
+        yield(msg) if block_given?
       end
 
       # restore the original output_file name
       unless restore_temporary_outfile
-        yield('ERROR: could not restore temporary outfile') if block_given?
+        msg = 'could not restore temporary outfile'
+        log_error msg
+        yield(msg) if block_given?
         status = :failure
       end
       return status
@@ -215,11 +233,17 @@ module Media
       if defined?(ActiveRecord)
         ActiveRecord::Base.logger.info "Transmogrifier --- " + args.join(' ')
       end
-      puts args.join(' ')
+      info args.join(' '), 2
     end
 
     def self.log_error(*args)
-      log('ERROR:', *args)
+      unless suppress_errors?
+        msg = ['ERROR:'] + args
+        if defined?(ActiveRecord)
+          ActiveRecord::Base.logger.info "Transmogrifier --- " + msg.join(' ')
+        end
+        info msg.join(' '), 0
+      end
     end
    
     def log_error(*args)

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :activities, :memberships, :federatings, :sites
+  fixtures :users, :groups, :activities, :memberships, :federatings
 
   def test_contact
     u1 = users(:kangaroo)
@@ -36,7 +36,7 @@ class ActivityTest < ActiveSupport::TestCase
     groupname = group.name
     group.destroy_by(user)
 
-    acts = Activity.for_all.find(:all)
+    acts = Activity.for_all(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
     assert_equal groupname, act.groupname
     assert_in_description(act, group)
@@ -59,23 +59,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal user.id, act.user.id
     assert_in_description(act, group)
     assert_in_description(act, user)
-  end
-
-  def test_sites
-    group = groups(:animals)
-    user = users(:green)
-    notified_user = users(:kangaroo)
-
-    enable_site_testing(:unlimited)
-    group.add_user!(user)
-    act = GroupGainedUserActivity.for_all(notified_user).last
-    assert_equal group.id, act.group.id, 'the notified user should get this activity'
-
-    enable_site_testing(:limited)
-    act = GroupGainedUserActivity.for_all(notified_user).last
-    assert_equal nil, act, 'not visible from another site'
-
-    disable_site_testing
   end
 
   def test_membership

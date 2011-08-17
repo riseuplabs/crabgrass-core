@@ -1,6 +1,6 @@
 class Groups::AvatarsController < Groups::BaseController
 
-  include_controllers 'common/controllers/avatars'
+  include_controllers 'common/avatars'
   before_filter :setup
 
   protected
@@ -11,7 +11,7 @@ class Groups::AvatarsController < Groups::BaseController
 
   def setup
     @entity = @group
-    @success_url = groups_settings_url(@group)
+    @success_url = group_settings_path(@group)
   end
 
 end

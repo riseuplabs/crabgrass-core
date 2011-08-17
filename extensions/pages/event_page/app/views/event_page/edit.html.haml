@@ -1,0 +1,9 @@
+- form_tag page_path(@page, :action => 'update') do
+  .p Description 
+  .p= text_area 'event', :description
+  .p= text_field 'event', :location
+  .p= check_box 'event', :is_all_day
+  .p= check_box 'event', :is_cancelled
+  .p= check_box 'event', :is_tentative
+  
+  .p= submit_tag 

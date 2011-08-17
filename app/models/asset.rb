@@ -91,7 +91,7 @@ class Asset < ActiveRecord::Base
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include AssetExtension::Upload
-  validates_presence_of :filename
+  validates_presence_of :filename, :unless => 'new_record?'
 
 
   ##
@@ -164,7 +164,24 @@ class Asset < ActiveRecord::Base
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
       base.belongs_to :user
-      base.has_many :thumbnails, :class_name => '::Thumbnail', :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT
+      base.has_many :thumbnails, :class_name => '::Thumbnail',
+        :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT do
+        def preview_images
+          small, medium, large = nil
+          self.each do |tn|
+            if tn.name == 'small'
+              small = tn
+            elsif tn.name == 'medium'
+              medium = tn
+            elsif tn.name == 'large'
+              large = tn
+            end
+          end
+          large = nil if medium && large && large.size == medium.size
+          medium = nil if small && medium && medium.size == small.size
+          [small, medium, large].compact
+        end
+      end
       base.define_thumbnails( {} ) # root Asset class has no thumbnails
     end
 
@@ -299,7 +316,11 @@ class Asset < ActiveRecord::Base
     asset_class(attributes).create!(attributes, &block)
   end
 
-  # like create_from_attributes(), but builds the asset in memory and does not save it.
+  #
+  # Like create_from_params(), but builds the asset in memory and does not save it.
+  # In order for fields like 'filename' to get set, the validations must run. So
+  # if you want to access filename after Asset.build(), try valid?() or validate!()
+  #
   def self.build(attributes = nil, &block)
     asset_class(attributes).new(attributes, &block)
   end
@@ -315,12 +336,16 @@ class Asset < ActiveRecord::Base
   # returns the appropriate asset class, ie ImageAsset, for the attributes passed in.
   #
   def self.asset_class(attributes)
-    content_type = if attributes[:uploaded_data]
-      mime_type_from_data(attributes[:uploaded_data])
-    elsif attributes[:data]
-      attributes[:content_type]
+    if attributes
+      content_type = if attributes[:uploaded_data]
+        mime_type_from_data(attributes[:uploaded_data])
+      elsif attributes[:data]
+        attributes[:content_type]
+      end
+      return class_for_mime_type( content_type )
+    else
+      self
     end
-    return class_for_mime_type( content_type )
   end
 
   #

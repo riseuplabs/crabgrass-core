@@ -84,20 +84,6 @@ class Thumbnail < ActiveRecord::Base
     end
   end
 
-  #
-  # by the time we figure out what the thumbnail dimensions are,
-  # the duplicate thumbnails for the version have already been created.
-  # so, when our dimensions change, update the versioned thumb as well.
-  #
-  def set_dimensions(dims)
-    self.width, self.height = dims
-    self.failure = false
-    if vthumb = versioned()
-      vthumb.width, vthumb.height = dims
-      vthumb.save
-    end
-  end
-
   def versioned
     if !parent.is_version?
       asset = parent.versions.detect{|v|v.version == parent.version}
@@ -157,13 +143,6 @@ class Thumbnail < ActiveRecord::Base
     thumbdef.proxy and parent.content_type == thumbdef.mime_type
   end
 
-  def size
-    if attributes['size'].nil? && exists?
-      update_attribute('size', File.size(private_filename))
-    end
-    attributes['size']
-  end
-
   private
 
   def queue_remote_job(options)
@@ -197,15 +176,30 @@ class Thumbnail < ActiveRecord::Base
   def generate_now(options)
     trans = Media.transmogrifier(options)
     if trans.run() == :success
-      if Media.has_dimensions?(options[:output_type]) and thumbdef.size.present?
-        set_dimensions Media.dimensions(options[:output_file])
-      end
+      update_metadata(options)
       self.failure = false
     else
       # failure
       self.failure = true
     end
     save if changed?
+  end
+
+  def update_metadata(options)
+    # dimensions
+    if Media.has_dimensions?(options[:output_type]) and thumbdef.size.present?
+      self.width, self.height = Media.dimensions(options[:output_file])
+    end
+    # size
+    self.size = File.size(options[:output_file])
+
+    # by the time we figure out what the thumbnail dimensions are,
+    # the duplicate thumbnails for the version have already been created.
+    # so, when our dimensions change, update the versioned thumb as well.
+    if (vthumb = versioned()).any?
+      vthumb.width, vthumb.height = [self.width, self.height]
+      vthumb.save
+    end
   end
 
 end

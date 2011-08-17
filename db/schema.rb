@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110506033152) do
+ActiveRecord::Schema.define(:version => 20110610090208) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20110506033152) do
     t.string   "versioned_type"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.text     "comment"
+    t.text     "comment",        :limit => 16777215
   end
 
   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20110506033152) do
     t.integer  "version"
     t.string   "type"
     t.integer  "page_terms_id"
-    t.boolean  "is_attachment", :default => false
+    t.boolean  "is_attachment",                     :default => false
     t.boolean  "is_image"
     t.boolean  "is_audio"
     t.boolean  "is_video"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20110506033152) do
     t.datetime "taken_at"
     t.string   "credit"
     t.integer  "user_id"
-    t.text     "comment"
+    t.text     "comment",       :limit => 16777215
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -327,16 +327,6 @@ ActiveRecord::Schema.define(:version => 20110506033152) do
   end
 
   add_index "keys", ["locked_id", "locked_type", "keyring_code"], :name => "index_keys_on_locked_id_and_locked_type_and_keyring_code"
-
-  create_table "languages", :force => true do |t|
-    t.string   "name"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "rtl",        :default => false
-  end
-
-  add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"

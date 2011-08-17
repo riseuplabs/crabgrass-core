@@ -28,6 +28,7 @@
 .flag_orange_16 {background-image: url(/images/png/16/flag_orange.png)}
 .flag_red_16 {background-image: url(/images/png/16/flag_red.png)}
 .folder_picture_16 {background-image: url(/images/png/16/folder_picture.png)}
+.gears_16 {background-image: url(/images/png/16/gears.png)}
 .group_16 {background-image: url(/images/png/16/group.png)}
 .group_contributions_16 {background-image: url(/images/png/16/group_contributions.png)}
 .heart_16 {background-image: url(/images/png/16/heart.png)}
@@ -122,6 +123,7 @@
 .table_16 {background-image: url(/images/png/16/table.png)}
 .tag_16 {background-image: url(/images/png/16/tag.png)}
 .tags_16 {background-image: url(/images/png/16/tags.png)}
+.tiny_clear_16 {background-image: url(/images/png/16/tiny_clear.png)}
 .tiny_minus_16 {background-image: url(/images/png/16/tiny_minus.png)}
 .tiny_no_pencil_16 {background-image: url(/images/png/16/tiny_no_pencil.png)}
 .tiny_pencil_16 {background-image: url(/images/png/16/tiny_pencil.png)}
@@ -145,10 +147,14 @@
 .beehive_48 {background-image: url(/images/png/48/beehive.png)}
 .clock_48 {background-image: url(/images/png/48/clock.png)}
 .collection_48 {background-image: url(/images/png/48/collection.png)}
+.committee_48 {background-image: url(/images/png/48/committee.png)}
+.council_48 {background-image: url(/images/png/48/council.png)}
 .date_48 {background-image: url(/images/png/48/date.png)}
 .error_48 {background-image: url(/images/png/48/error.png)}
+.group_48 {background-image: url(/images/png/48/group.png)}
 .info_48 {background-image: url(/images/png/48/info.png)}
 .lock_48 {background-image: url(/images/png/48/lock.png)}
+.network_48 {background-image: url(/images/png/48/network.png)}
 .page_approval_48 {background-image: url(/images/png/48/page_approval.png)}
 .page_article_48 {background-image: url(/images/png/48/page_article.png)}
 .page_discussion_48 {background-image: url(/images/png/48/page_discussion.png)}

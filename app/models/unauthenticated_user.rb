@@ -6,15 +6,18 @@ class UnauthenticatedUser
   alias :display_name :login
 
   def may?(access,thing)
-    if thing.is_a? Page
-      if access == :view
-        thing.public?
-      else
-        false
-      end
+    case thing
+    when Page
+      access == :view and thing.public?
+    when Group
+      thing.has_access?(access, self)
     else
       false
     end
+  end
+
+  def access_codes
+    [0]
   end
 
   def current_status
@@ -26,7 +29,7 @@ class UnauthenticatedUser
   end
 
   def method_missing(method)
-    raise PermissionDenied
+    raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
   end
 
   # authenticated users are real, we are not.

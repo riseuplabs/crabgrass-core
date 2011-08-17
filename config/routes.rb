@@ -1,9 +1,22 @@
 unless defined?(FORBIDDEN_NAMES)
-  FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues session static stats stylesheets theme)
+  FORBIDDEN_NAMES = %w{
+    account admin assets avatars chat code debug do groups
+    javascripts me networks page pages people pictures places issues
+    session static stats stylesheets theme
+  }
 end
 
 #
-# :conditions => {:method => :post}
+# useful options:
+#
+#   for normal routes
+#
+#     :conditions => {:method => :post}
+#
+#   for resources
+#
+#     :only => [:new, :show]
+#     :member => {:edit => :any, :update => :get}
 #
 
 ActionController::Routing::Routes.draw do |map|
@@ -21,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
+  map.pictures 'pictures/:id1/:id2/:geometry.:format', :controller => 'pictures', :action => 'show'
 
   ##
   ## ME
@@ -37,34 +51,15 @@ ActionController::Routing::Routes.draw do |map|
     end
     me.resource  :settings, :only => [:show, :update]
     me.resources :permissions
-    me.resource  :profile, :controller => 'profile'
+    me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
     me.resources :requests
+    me.resources :events
     me.resources :avatars
   end
 
   ##
-  ## ENTITIES
+  ## EMAIL
   ##
-
-  map.resources :entities, :only => [:index]
-
-#  ##
-#  ## PEOPLE
-#  ##
-
-#  map.people_directory 'people/directory/*path', :controller => 'people/directory'
-
-#  map.resources :people, :namespace => 'people/' do |people|
-#    people.resource  :page, :only => [:new, :create]
-#    people.pages     'pages/*path', :controller => 'pages'
-#    people.resources :messsages
-#    people.resources :activities
-#    people.resources :pages
-#  end
-
-#  ##
-#  ## EMAIL
-#  ##
 
 #  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
 #  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
@@ -81,27 +76,52 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.with_options(:controller => 'session') do |session|
+    session.language 'session/language', :action => 'language'
     session.login    'session/login',  :action => 'login'
     session.logout   'session/logout', :action => 'logout'
-    session.language 'session/logout', :action => 'language'
     session.session  'session/:action/:id'
   end
 
-#  ##
-#  ## GROUP
-#  ##
+  ##
+  ## ENTITIES
+  ##
+
+  map.resources :entities, :only => [:index]
+
+  ##
+  ## PEOPLE
+  ##
+
+  map.people_directory 'people/directory/*path', :controller => 'people/directory'
+
+  map.resources :people, :namespace => 'people/' do |people|
+    people.resource  :home, :only => [:show]
+    people.pages     'pages/*path', :controller => 'pages'
+    people.resources :messages
+    people.resources :activities
+    people.resource :friend_request, :only => [:new, :create, :destroy]
+  end
+
+  ##
+  ## GROUP
+  ##
 
   map.networks_directory 'networks/directory/*path', :controller => 'groups/directory'
   map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
 
-  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+  map.resources :groups, :networks,
+    :namespace => 'groups/',
+    :only => [:new, :create, :destroy] do |groups|
     groups.resource  :home, :only => [:show]
     groups.resource  :page, :only => [:new, :create]
-    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
-    groups.resources :members
-    groups.resources :committees
-    groups.resources :invites
-    groups.resources :requests
+    groups.pages     'pages/*path', :controller => 'pages'
+    groups.resources :members, :only => [:index, :destroy]
+    groups.resources :memberships, :only => [:new, :create, :destroy]
+    groups.resources :committees, :only => [:new, :create]
+    groups.resources :councils, :only => [:new, :create]
+    groups.resources :invites, :only => [:new, :create, :destroy]
+    groups.resources :requests, :except => [:edit, :show]
+    groups.resources :events
     groups.resources :permissions
     groups.resources :activities
     groups.resource  :profile, :controller => 'profile'
@@ -109,12 +129,11 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :avatars
   end
 
-#  ##
-#  ## DEBUGGING
-#  ##
+  ##
+  ## DEBUGGING
+  ##
 
   if RAILS_ENV == "development"
-    ## DEBUG ROUTE
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
   end
   map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
@@ -124,17 +143,20 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   # default page creator
-  map.create_page '/pages/create/:type', :controller => 'pages/create', :action => 'new', :type => nil
+  map.page_creation '/pages/:action/:owner/:type', :controller => 'pages/create',
+    :action => 'create', :owner => 'me', :type => nil,
+    :requirements => {:action => /new|create/}
 
   # base page
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
-    pages.resources :participations, :only => [:update, :create]
+    pages.resources :participations, :only => [:index, :update, :create]
     pages.resources :changes
     pages.resources :assets
     pages.resources :tags
     pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:
+    pages.resource :sidebar,    :only => [:show]
     pages.resource :share,      :only => [:show, :update]
     pages.resource :details,    :only => [:show]
     pages.resource :attributes, :only => [:update]
@@ -143,7 +165,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:page_id/:action', :controller => /.*_page/ # /pages\/[^\/]+/
+  map.connect '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
 
   ##
   ## DEFAULT ROUTE
@@ -156,11 +178,7 @@ ActionController::Routing::Routes.draw do |map|
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-
-  #map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
-  #map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-
-  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
-
+  map.connect ':_context/:_page/*path', :controller => 'dispatch', :action => 'dispatch'
+  map.connect ':_context',              :controller => 'dispatch', :action => 'dispatch'
 end
+

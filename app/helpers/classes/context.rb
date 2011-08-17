@@ -62,11 +62,7 @@ class Context
 
   # returns the correct context for the given entity.
   def self.find(entity)
-    if entity == ::User.current
-      Context::Me.new(entity)
-    else
-      "Context::#{entity.class}".constantize.new(entity)
-    end
+    "Context::#{entity.class}".constantize.new(entity)
   end
 
   protected

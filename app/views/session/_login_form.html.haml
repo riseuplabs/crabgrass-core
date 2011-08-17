@@ -12,8 +12,7 @@
   - form_tag(login_path, :id => "entry") do
     %div
       %label(for = 'login')= :login_name.t
-      - if may_signup?
-        %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
+      %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
       = text_field_tag 'login', params['login'], :id => 'login', :tabindex => 1
     %div.password
       %label(for = 'password')= :login_password.t

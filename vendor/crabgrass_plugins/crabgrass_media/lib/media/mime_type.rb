@@ -54,6 +54,22 @@ module Media
       return mimetype
     end
 
+    #
+    # perhaps use http://code.google.com/p/mimetype-fu/
+    # for all this?
+    def self.type_for(filename)
+      self.mime_type_from_extension(filename)
+      # todo: add type_from_file_command if ext doesn't pan out.
+    end
+
+    #def type_from_file_command(filename)
+    #  #  On BSDs, `file` doesn't give a result code of 1 if the file doesn't exist.
+    #  type = (filename.match(/\.(\w+)$/)[1] rescue "octet-stream").downcase
+    #  mime_type = (Paperclip.run("file", "-b --mime-type :file", :file => filename).split(':').last.strip rescue "application/x-#{type}")
+    #  mime_type = "application/x-#{type}" if mime_type.match(/\(.*?\)/)
+    #  mime_type
+    #end
+
     def self.description_from_mime_type(mime_type)
       lookup(mime_type,DESCRIPTION) || lookup(mime_group(mime_type),DESCRIPTION) || lookup('default',DESCRIPTION)
     end
@@ -181,17 +197,17 @@ module Media
       'audio/' => [nil,:audio,:audio_asset,'Audio'],
 
       'image/'                   => [nil,:image,:image_asset,'Image'],
-      'image/jpeg'               => [:jpg,:image,:image_asset],
-      'image/jpg'                => [:jpg,:image,:image_asset],
-      'image/png'                => [:png,:image,:png_asset],
-      'image/gif'                => [:png,:image,:gif_asset],
+      'image/jpeg'               => [:jpg,:image,:image_asset, 'JPEG Image'],
+      'image/jpg'                => [:jpg,:image,:image_asset, 'JPEG Image'],
+      'image/png'                => [:png,:image,:png_asset, 'PNG Image'],
+      'image/gif'                => [:png,:image,:gif_asset, 'GIF Image'],
 
-      'image/svg+xml'            => [:svg,:vector,:svg_asset,'Vector Image'],
-      'image/svg+xml-compressed' => [:svg,:vector,:svg_asset,'Vector Image'],
-      'application/illustrator'  => [:ai,:vector,:image_asset,'Vector Image'],
-      'image/bzeps'              => [:bzeps,:vector,:image_asset,'Vector Image'],
-      'image/eps'                => [:eps,:vector,:image_asset,'Vector Image'],
-      'image/gzeps'              => [:gzeps,:vector,:image_asset,'Vector Image'],
+      'image/svg+xml'            => [:svg,:vector,:svg_asset,'Vector Graphic'],
+      'image/svg+xml-compressed' => [:svg,:vector,:svg_asset,'Vector Graphic'],
+      'application/illustrator'  => [:ai,:vector,:image_asset,'Vector Graphic'],
+      'image/bzeps'              => [:bzeps,:vector,:image_asset,'Vector Graphic'],
+      'image/eps'                => [:eps,:vector,:image_asset,'Vector Graphic'],
+      'image/gzeps'              => [:gzeps,:vector,:image_asset,'Vector Graphic'],
 
       'application/pgp-encrypted' => [nil,:lock,nil,'Crypt'],
       'application/pgp-signature' => [nil,:lock,nil,'Crypt'],

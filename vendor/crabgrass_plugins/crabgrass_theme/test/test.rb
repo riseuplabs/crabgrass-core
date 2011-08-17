@@ -1,7 +1,14 @@
 
-
 RAILS_ENV = 'development'
 RAILS_ROOT = File.dirname(__FILE__) + '/../../../..'
+module Rails
+  def self.env
+    RAILS_ENV
+  end
+  def self.root
+    RAILS_ROOT
+  end
+end
 
 $: << 'lib/crabgrass'
 $: << RAILS_ROOT
@@ -17,15 +24,15 @@ require 'lib/crabgrass/theme'
 
 # test navigation
 
-theme = Crabgrass::Theme['default']
+#theme = Crabgrass::Theme['default']
 #theme.navigation.root.each do |nav_element|
 #  puts nav_element.visible
 #end
-p theme.navigation.root
+#theme.navigation.root
 
 # test inheritance
 
 theme = Crabgrass::Theme['blueberry']
-p theme.background_color
+#p theme.background_color
 p theme.navigation.root
 

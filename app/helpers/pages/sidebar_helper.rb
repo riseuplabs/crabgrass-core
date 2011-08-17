@@ -1,12 +1,15 @@
 #
 # Helpers for displaying the page sidebar.
-#
-# available to all page controllers derived from base. 
+# Available in all page views.
 #
 
 module Pages::SidebarHelper
 
   protected
+
+  ##
+  ## ENTITY LINKS
+  ##
 
   def link_to_user_participation(upart)
     icon = case upart.access_sym
@@ -34,21 +37,20 @@ module Pages::SidebarHelper
 
   def sidebar_checkbox(text, checked, url, options = {})
     icon = checked ? 'check_on' : 'check_off'
-    link_to_remote_with_icon(
+    link_to_remote(
       text,
       {:url => url, :method => options[:method], :complete => ''},
       {:icon => icon, :id => options[:id], :title => options[:title]}
     )
   end
 
-  def popup(title, options = {}, &block)
-    style = [options.delete(:style), "width:%s" % options.delete(:width)].compact.join("; ")
-    block_to_partial('base_page/popup_template', {:style=>style, :id=>''}.merge(options).merge(:title => title), &block)
-  end
+  ##
+  ## SIDEBAR CHECKBOXES
+  ##
 
-  ##
-  ## SIDEBAR LINES
-  ##
+  #
+  # checkbox to add/remove watched status
+  #
 
   def watch_line
     if may_watch_page?
@@ -62,22 +64,9 @@ module Pages::SidebarHelper
     end
   end
 
-#  def share_all_line
-#    li_id = 'share_all_li'
-#    if may_share_with_all?
-#      checkbox_id = 'share_all_checkbox'
-#      url = {:controller => 'base_page/participation',
-#        :action => 'update_share_all',
-#        :page_id => @page.id,
-#        :add => !@page.shared_with_all?
-#      }
-#      checkbox_line = sidebar_checkbox(I18n.t(:share_all_checkbox), @page.shared_with_all?, url, :id => checkbox_id, :title => I18n.t(:share_all_checkbox_help))
-#      content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
-#    elsif Site.current.network
-      # content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, I18n.t(:share_all_checkbox), :class => 'a'), :id => li_id, :class => 'small_icon'
-#    end
-#  end
-
+  #
+  # checkbox to add/remove public
+  #
   def public_line
     if may_public_page?
       url = page_attributes_path(@page, :public => (!@page.public?).inspect)
@@ -96,6 +85,9 @@ module Pages::SidebarHelper
     end
   end
 
+  #
+  # checkbox to add/remove star
+  #
   def star_line
     if may_star_page?
       if @upart and @upart.star?
@@ -109,12 +101,14 @@ module Pages::SidebarHelper
       end
       url = page_participations_path(@page, :star => add.inspect)
       content_tag :li, :id => 'star_li' do
-        link_to_remote_with_icon(label, :url => url, :icon => icon, :method => 'post')
+        link_to_remote(label, {:url => url, :method => 'post'}, {:icon => icon})
       end
     end
   end
 
+  #
   # used in the sidebar of deleted pages
+  #
   def undelete_line
     if may_undelete_page?
       content_tag :li do
@@ -123,7 +117,9 @@ module Pages::SidebarHelper
     end
   end
 
+  #
   # used in the sidebar of deleted pages
+  #
   def destroy_line
     if may_destroy_page?
       content_tag :li do
@@ -164,78 +160,43 @@ module Pages::SidebarHelper
   ## SIDEBAR POPUP LINES
   ##
 
-  # used by ajax show_popup.rjs templates
   #
-  # for the popup to display in the right spot, we actually offset it by
-  # top: -32px, right: 43px from the natural position of the clicked element.
+  # to be included in the popup view for any popup that should refresh the sidebar when it closes.
+  # the function, when called, will remove itself.
   #
-#  def popup_holder_style
-#    page_width, page_height = params[:page].split('x')
-#    object_x, object_y      = params[:position].split('x')
-#    right = page_width.to_i - object_x.to_i
-#    top   = object_y.to_i
-#    right += 17
-#    top -= 32
-#    "display: block; right: #{right}px; top: #{top}px;"
-#  end
+  def refresh_sidebar_on_close
+    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(:url => page_sidebar_path(@page), :method => :get))
+  end
 
-  # creates a <a> tag with an ajax link to show a sidebar popup
-  # and change the icon of the enclosing <li> to be spinning
-  # required options:
-  #  :label -- the text to show
-  #  :icon  -- class of the icon for the <li>
-  #  :name  -- the name of the popup
-  # optional:
-  #  :controller -- controller to call show_popup on
   #
-
-#  def show_popup_link(options)
-#    options[:controller] ||= options[:name]
-#    show_popup = options[:show_popup] || 'show'
-#    popup_url = url_for({
-#      :controller => "base_page/#{options.delete(:controller)}",
-#      :action => show_popup,# 'show',
-#      :popup => true,
-#      :page_id => @page.id,
-#      :name => options.delete(:name)
-#    })
-#    #options.merge!(:after_hide => 'afterHide()')
-#    title = options.delete(:title) || options[:label]
-#    link_to_modal(options.delete(:label), {:url => popup_url, :title => title}, options)
-#  end
-
-  # to be included in the popup result for any popup that should refresh the sidebar when it closes.
-  # also, set refresh_sidebar to true one the popup_line call
-  #def refresh_sidebar_on_close
-  #  javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
-  #end
-
   # create the <li></li> for a sidebar line that will open a popup when clicked
-  # required: 
-  # - id
-  # - url
-  # - label
-  # - icon
+  # required options -- :id, :url, :label, :icon
+  #
   def popup_line(options)
-    #id = options.delete(:id) || options[:name]
-    #li_id     = "#{id}_li"
-    #link = show_popup_link(options)
-    #content_tag :li, link, :id => li_id
+    after_hide = "if (typeof(afterHide) != 'undefined' || afterHide != null) {afterHide()}"
     content_tag :li, :id => options[:id] do
-      link_to_modal(options[:label], {:url => options[:url]}, {:icon => options[:icon]})
+      link_to_modal(
+        options[:label],
+        {:url => options[:url], :after_hide => after_hide},
+        {:icon => options[:icon]}
+      )
     end
   end
 
   def edit_attachments_line
     if may_show_page?
-      popup_line(:name => 'assets', :label => I18n.t(:edit_attachments_link), :icon => 'attach', :title => I18n.t(:edit_attachments))
+      popup_line(:name => 'assets', :label => :edit_attachments_link.t, :icon => 'attach', :title => :edit_attachments.t, :url => page_assets_path(@page))
     end
   end
 
   def edit_tags_line
     if may_update_tags?
-      popup_line(:name => 'tags', :label => I18n.t(:edit_tags_link),
-        :title => I18n.t(:edit_tags), :icon => 'tag')
+      popup_line(
+        :id => 'tag_li',
+        :icon => 'tag',
+        :label => I18n.t(:edit_tags_link),
+        :url => page_tags_path(@page)
+      )
     end
   end
 
@@ -276,7 +237,7 @@ module Pages::SidebarHelper
     if may_show_page?
       popup_line(
         :id => 'details_li',
-        :icon => 'table',
+        :icon => 'page_admin',
         :label => I18n.t(:page_details_link, :page_class => :page.t),
         :url => page_details_path(@page)
       )

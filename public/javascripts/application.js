@@ -41,7 +41,7 @@ function hideAlertMessage(target, fade_seconds) {
 // opens the greencloth editing reference.
 function quickRedReference() {
   window.open(
-    "/static/greencloth",
+    "/do/static/greencloth",
     "redRef",
     "height=600,width=750/inv,channelmode=0,dependent=0," +
     "directories=0,fullscreen=0,location=0,menubar=0," +
@@ -539,8 +539,7 @@ function loginDialog(txt,options) {
   '  <label>#{password}</label><input type="password" name="password" id="password" tabindex="2"/>' +
   '  <input type="submit" value="#{login}" tabindex="3"/>' +
   '  <span class="small">'
-  if (options['may_signup'])
-     form += '<a href="/account/signup">#{create_account}</a> | '
+  form += '<a href="/account/signup">#{create_account}</a> | '
   form += '<a href="/account/forgot_password">#{forgot_password}</a></span>' +
   '</form>'
   form = form.interpolate(txt);

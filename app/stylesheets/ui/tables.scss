@@ -27,7 +27,23 @@ table.styled {
   }
 }
 
-th.styled {
-  padding: 0.5em;
-  font-weight: bold;
+//
+// like the styled table, but a bit more styled. supports alternating rows,
+// for example.
+//
+
+table.fancy {
+  border-collapse: collapse;
+  th {
+    font-weight: bold;
+    background-color: $color_light;
+  }
+  td, th {
+    border-top: $local_title_border;
+    border-bottom: $local_title_border;
+    padding: 0.5em;
+  }
+  tr.even td {
+    background-color: $color_lighter;
+  }
 }

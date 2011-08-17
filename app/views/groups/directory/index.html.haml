@@ -1,4 +1,5 @@
-.directory
-  = render :partial => 'group', :collection => @groups
+
+= render :partial => "common/entities/two_column", :locals => {:entities => @groups, :entity_partial => 'group'}
+
 
 

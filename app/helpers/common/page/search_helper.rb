@@ -2,6 +2,8 @@
 #
 # Here lie all the helpers for the fancy search form for pages.
 #
+# For many of the methods in this helper to work, 'page_search_path()' must be defined.
+# Typically, this will call me_pages_path or group_pages_path.
 #
 
 require 'cgi'
@@ -28,12 +30,24 @@ module Common::Page::SearchHelper
     active_filters[filter]
   end
 
-  # returns true if the filter is excluded by a currently active filter
+  #
+  # Returns true if the specified filter should not be shown.
+  #
+  # There are two reasons to hide a filter:
+  #
+  # (1) some filters are incompatible with other filters. The filter definition
+  #     for these filters will include filter.exclude. This will be a symbol
+  #     that defines a set of mutually exclusive filters (e.g. :popular_pages).
+  # (2) the current controller can define 'include_filter?(filter)'. If it returns
+  #     false, then the filter is excluded.
+  #
   def filter_excluded?(filter)
     @excluded_filters ||= begin
       @path.filters.to_h {|f| [f[0].exclude, true]}
     end
-    if filter.exclude
+    if !show_filter?(filter)
+      true
+    elsif filter.exclude
       @excluded_filters[filter.exclude]
     else
       false
@@ -72,9 +86,11 @@ module Common::Page::SearchHelper
 
   # for filters with no args
   def filter_singlevalue_li_tag(mode, filter)
-    spinbox_tag(filter.path_keyword, filter.label.t,
-      me_pages_path(mode => filter.path_definition),
-      :with => 'FilterPath.encode()', :checked => (mode == :remove) )
+    spinbox_tag(filter.path_keyword,
+      page_search_path(mode => filter.path_definition),
+      :label => filter.label.t,
+      :with => 'FilterPath.encode()',
+      :checked => (mode == :remove) )
   end
 
   # for filters with one or more args
@@ -82,14 +98,17 @@ module Common::Page::SearchHelper
     if mode == :add
       label = filter.label
       html = render(:partial => 'common/pages/search/popup',
-        :locals => {:url => me_pages_path(:add => filter.path_definition), :filter => filter})
+        :locals => {:url => page_search_path(:add => filter.path_definition), :filter => filter})
       link_to_modal(label, :html => html, :icon => 'check_off')
     else
       label = filter.label(args)
       if label
         path = filter.path(args)
         name = filter.name(args)
-        spinbox_tag(name, h(label), me_pages_path(:remove => path), :with => 'FilterPath.encode()', :checked => true)
+        spinbox_tag(name, page_search_path(:remove => path),
+          :label => label,
+          :with => 'FilterPath.encode()',
+          :checked => true)
       end
     end
   end
@@ -109,7 +128,7 @@ module Common::Page::SearchHelper
   end
 
   #
-  # a link used in the page search popup. 
+  # a link used in the page search popup.
   # it creates a form element to match params, then submits the form.
   # this only accepts a single param, but it is in the form {:key => value}
   #
@@ -119,14 +138,14 @@ module Common::Page::SearchHelper
     link_to_function(label, function)
   end
 
-  
+
   #
   # the toggle bug that allows you to change the view of the page search
-  # results (compact, detailed, grid). 
+  # results (compact, detailed, grid).
   #
   # this uses the special queued ajax request, so that there are no race conditions
   # in modifying the page search.
-  # 
+  #
   # this is used in _top_controls partial
   #
   def search_view_toggle_links(url)
@@ -146,28 +165,37 @@ module Common::Page::SearchHelper
     grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
 
     toggle_bug_links(compact_link, detailed_link, grid_link)
-  end 
+  end
 
-  private
-
-  def spinbox_tag(name, label, url, options = {})
-    id = "#{name}_check_link"
-    if options[:checked]
-      icon = 'check_on'
-    else
-      icon = 'check_off'
-    end
+  #
+  # Options:
+  #  :id, :label, :checked, :with, :method, :success
+  def spinbox_tag(name, url, options = {})
+    options[:url]  = url
+    options[:id] ||= "#{name}_check_link"
+    options[:icon] = options[:checked] ? 'check_on' : 'check_off'
     # we create a queued request because we don't want any race conditions
     # with the requests -- they must be resolved one at a time.
-    function = queued_remote_function(
-      :url => url,
-      :before  => spinner_icon_on(icon, id),
-      :with => options[:with]
-    )
+    function = queued_remote_function(spinbox_function_options(options))
     content_tag(:li) do
-      link_to_function_with_icon(label, function, :url => url, :icon => icon, :id => id)
+      spinbox_link_to_function(function, options)
     end
   end
 
+  private
+
+  def spinbox_function_options(options)
+    options.merge!(
+      :before  => spinner_icon_on(options[:icon], options[:id])
+    )
+    options.slice(:url, :before, :with, :method, :success)
+  end
+
+  def spinbox_link_to_function(function, options)
+    options[:label].blank? ?
+      link_to_function_icon(options[:icon], function, options.slice(:url, :id)) :
+      link_to_function_with_icon(options[:label], function,
+        options.slice(:url, :id, :icon))
+  end
 end
 

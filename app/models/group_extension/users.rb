@@ -7,7 +7,7 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
-      add_locks :see_members => 6, :request_membership => 7
+      add_locks :see_members => 6, :request_membership => 7, :join => 8
 
       attr :users_before_destroy
       before_destroy :destroy_memberships
@@ -26,6 +26,9 @@ module GroupExtension::Users
           find(:all, {:order => 'memberships.visited_at DESC', :limit => 10}.merge(options))
         end
       end
+
+      has_many :invites, :class_name => "Request", :as => :requestable
+      has_many :requests, :as => :recipient
 
       # tmp hack until we have a better viewing system in place.
       named_scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}

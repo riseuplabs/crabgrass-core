@@ -103,6 +103,18 @@ class UserTest < ActiveSupport::TestCase
     assert !u.reload.wall_discussion.new_record?
   end
 
+  def test_friends_or_peers_with_access
+    u = users(:blue)
+    accessible = User.friends_or_peers_of(u).access_by(u).allows(:view)
+    assert accessible.first
+  end
+
+  def test_user_creation_adds_keys
+    assert_difference 'Key.count', 3 do
+      user = User.make
+    end
+  end
+
   protected
 
   def create_user(options = {})
