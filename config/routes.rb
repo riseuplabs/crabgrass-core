@@ -120,14 +120,14 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :committees, :only => [:new, :create]
     groups.resources :councils, :only => [:new, :create]
     groups.resources :invites, :only => [:new, :create, :destroy]
-    groups.resources :requests, :except => [:edit, :show, :new]
+    groups.resources :requests, :except => [:edit, :show]
     groups.resources :events
-    groups.resources :permissions
+    groups.resources :permissions, :only => [:index, :update]
     groups.resources :activities
-    groups.resource  :profile, :controller => 'profile'
+    groups.resource  :profile, :only => [:edit, :update]
     groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
-  end
+ end
 
   ##
   ## DEBUGGING

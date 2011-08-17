@@ -1,6 +1,6 @@
-
 class Groups::PermissionsController < Groups::BaseController
 
+  before_filter :login_required
   helper 'acts_as_locked'
 
   def index

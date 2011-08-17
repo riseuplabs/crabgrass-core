@@ -13,7 +13,7 @@
     - r.checkboxes do |list|
       - allow_membership_requests_checkbox(list)
       - open_membership_policy_checkbox(list)
-  - if may_create_council?
+  - if may_create_groups_council?
     - f.row do |row|
       - row.label I18n.t(:administration)
       - council_field(row)
