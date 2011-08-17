@@ -39,13 +39,18 @@ class Crabgrass::Theme::Options
     nil
   end
 
+  # this conflicts with a rake dsl otherwise
+  def link(*args, &block)
+    self.method_missing :link, *args, &block
+  end
+
   def html(*args, &block)
     key = (@namespace + ['html']).join('_').to_sym
     value = args.first || block
     @data[key] = value
     nil
   end
-  
+
   def var(variable_name)
     @data[variable_name]
   end
