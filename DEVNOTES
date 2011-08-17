@@ -7,11 +7,6 @@ directory
 . group
 . person
 
-profiles
-. me profile
-. group profile
-. profile in directory
-
 account
 . reset lost password
 . cracklib
@@ -23,9 +18,6 @@ sphinx
 
 pages
 . history
-. attachments
-. tags
-. group search
 . text page
 . poll page
 . asset page
@@ -47,7 +39,7 @@ i18n
 . better en.yml organization
 
 misc
-. replace backgroundrb
+. replace backgroundrb - kclair
 
 new features
 . issues
