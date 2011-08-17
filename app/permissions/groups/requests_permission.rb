@@ -29,7 +29,5 @@ module Groups::RequestsPermission
   end
 
   alias_method :may_list_groups_requests?, :may_admin_requests?
-  alias_method :may_edit_groups_request?, :may_admin_requests?
-  alias_method :may_destroy_groups_request?, :may_admin_requests?
 
 end
