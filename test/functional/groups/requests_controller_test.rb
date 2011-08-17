@@ -17,20 +17,21 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_new
-    login_as @user
-    @group.grant! :public, :request_membership
-    assert_permission :may_create_groups_request? do
-      get :new, :group_id => @group.to_param
-    end
-    assert_response :success
-  end
+  # this action does not exist
+  #def test_new
+  #  login_as @user
+  #  @group.grant! :public, :request_membership
+  #  assert_permission :may_create_groups_request? do
+  #    get :new, :group_id => @group.to_param
+  #  end
+  #  assert_response :success
+  #end
 
   def test_create
     login_as @user
     @group.grant! :public, :request_membership
     assert_permission :may_create_groups_request? do
-      assert_difference '@group.requests.count' do
+      assert_difference 'RequestToJoinYou.count' do
         get :create, :group_id => @group.to_param
       end
     end
@@ -56,7 +57,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     request = RequestToJoinYou.create :created_by => requesting,
       :recipient => @group
     assert_permission :may_destroy_groups_request? do
-      assert_difference '@group.requests.count', -1 do
+      assert_difference 'RequestToJoinYou.count', -1 do
         delete :destroy, :group_id => @group.to_param,
          :id => request.id
       end

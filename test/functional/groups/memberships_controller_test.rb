@@ -7,14 +7,15 @@ class Groups::MembershipsControllerTest < ActionController::TestCase
     @group = Group.make
   end
 
-  def test_new
-    @group.grant! :public, :join
-    login_as @user
-    assert_permission :may_create_groups_membership? do
-      get :new, :group_id => @group.to_param
-    end
-    assert_response :success
-  end
+  # this action does not exist
+  #def test_new
+  #  @group.grant! :public, :join
+  #  login_as @user
+  #  assert_permission :may_create_groups_membership? do
+  #    get :new, :group_id => @group.to_param
+  #  end
+  #  assert_response :success
+  #end
 
   def test_create
     @group.grant! :public, :join

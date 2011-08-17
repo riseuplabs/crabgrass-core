@@ -26,7 +26,7 @@ class Groups::MembersControllerTest < ActionController::TestCase
     assert_permission :may_destroy_groups_members? do
       delete :destroy, :group_id => @group.to_param, :id => membership.id
     end
-    assert_response :redirect
+    assert_response :success
   end
 
 end
