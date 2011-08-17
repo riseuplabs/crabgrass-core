@@ -11,4 +11,10 @@ class Me::RequestsControllerTest < ActionController::TestCase
     assert_message /destroyed/i
   end
 
+  def test_index
+    login_as users(:blue)
+    get :index
+    assert_response :success
+  end
+
 end
