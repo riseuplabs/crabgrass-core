@@ -7,7 +7,6 @@ module Formy
     end
 
     def open
-      debugger
       super
       title(@options[:title]) if @options[:title]
       puts '<dl class="list_key">'
