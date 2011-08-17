@@ -12,6 +12,11 @@ class Groups::MembersController < Groups::BaseController
     @memberships = @group.memberships.paginate(pagination_params)
   end
 
+  #
+  # this is a little odd. we use MembersController#destroy for
+  # removing other people, but MembershipsController#destroy for
+  # removing ourselves.
+  #
   def destroy
     @membership.destroy
     render :update do |page|

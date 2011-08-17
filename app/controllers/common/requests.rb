@@ -1,3 +1,9 @@
+#
+# Controllers that include this must define:
+# 
+# request_path(*args) -- returns a path for the args. First arg is a request object.
+#
+ 
 module Common::Requests
 
   def self.included(base)
@@ -6,6 +12,7 @@ module Common::Requests
       helper_method :current_state
       helper_method :left_id
       helper_method :right_id
+      helper_method :request_path
     end
   end
 
@@ -29,9 +36,11 @@ module Common::Requests
   # destroy a request
   #
   def destroy
-    @request.destroy
-    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
-    render :template => 'common/requests/destroy'
+    if @request.may_destroy?(current_user)
+      @request.destroy
+      notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
+      render :template => 'common/requests/destroy'
+    end
   end
 
   protected
@@ -57,6 +66,18 @@ module Common::Requests
 
   def right_id(request)
     "panel_right_#{request.dom_id}"
+  end
+
+  #
+  # this looks dangerous, but is not, because requests
+  # have their own permission system.
+  #
+  def fetch_request
+    @request = Request.find(params[:id])
+  end
+
+  def request_path(*args)
+    raise 'you forgot to override this method'
   end
 
 end

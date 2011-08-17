@@ -2,9 +2,6 @@ class Groups::MembershipsController < Groups::BaseController
 
   before_filter :login_required
 
-  def new
-  end
-
   def create
     @group.add_user!(current_user)
     redirect_to entity_url(@group)

@@ -2,7 +2,6 @@ class Groups::RequestsController < Groups::BaseController
 
   before_filter :login_required # we want this
   include_controllers 'common/requests'
-  helper 'request'
 
   def index
     @requests = Request.
@@ -11,9 +10,6 @@ class Groups::RequestsController < Groups::BaseController
       by_updated_at.
       paginate(pagination_params)
     render :template => 'common/requests/index'
-  end
-
-  def new
   end
 
   def create
@@ -28,7 +24,6 @@ class Groups::RequestsController < Groups::BaseController
     redirect_to entity_url(@group)
   end
 
-
   protected
 
   def current_view
@@ -39,8 +34,8 @@ class Groups::RequestsController < Groups::BaseController
     end
   end
 
-  def fetch_request
-    @request = @group.requests.find(params[:id])
+  def requests_path(*args)
+    group_request_path(@group, *args)
   end
 
 end

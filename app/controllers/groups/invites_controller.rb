@@ -61,10 +61,4 @@ class Groups::InvitesController < Groups::BaseController
     redirect_to :action => :index
   end
 
-  protected
-
-  def fetch_request
-    @request = @group.invites.find(params[:id])
-  end
-
 end

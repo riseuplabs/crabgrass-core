@@ -28,4 +28,9 @@ class Me::RequestsController < Me::BaseController
     end
   end
 
+  def request_path(*args)
+    me_request_path(*args)
+  end
+
+
 end
