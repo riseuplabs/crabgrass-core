@@ -19,6 +19,11 @@ class Pages::CreateController < ApplicationController
   helper 'pages/share', 'pages/owner', 'pages/creation'
   permissions :pages, :object => 'page'
 
+  permissions 'groups/members', 'groups/base'
+  # ^^ this is a temporary hack until we figure out something better.
+  # the problem is that this controller might be in a group context
+  # and the group context needs these permissions
+
   # 
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.
@@ -68,6 +73,11 @@ class Pages::CreateController < ApplicationController
   def set_owner
     unless params[:owner]
       params[:owner] = params[:page_id]
+    end
+    if params[:owner] == 'me'
+      @owner = current_user
+    elsif params[:owner].any?
+      @owner = Group.find_by_name(params[:owner])
     end
   end
 
