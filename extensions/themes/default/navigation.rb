@@ -282,7 +282,7 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/requests', 'groups/permissions', 'groups/profile') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profile') }
 
       local_section :settings do
         visible { may_edit_group? }
