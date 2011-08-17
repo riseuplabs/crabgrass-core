@@ -187,8 +187,8 @@ class Site < ActiveRecord::Base
     elsif self.network
       '/'
     else
-      '/me/pages' #changed per https://labs.riseup.net/code/issues/3349, but maybe we want to tweak login_redirect_url in conf.rb?
-     end
+      Conf.login_redirect_url
+    end
   end
 
   # if user has +access+ to site, return true.
