@@ -17,16 +17,6 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  # this action does not exist
-  #def test_new
-  #  login_as @user
-  #  @group.grant! :public, :request_membership
-  #  assert_permission :may_create_groups_request? do
-  #    get :new, :group_id => @group.to_param
-  #  end
-  #  assert_response :success
-  #end
-
   def test_create
     login_as @user
     @group.grant! :public, :request_membership
