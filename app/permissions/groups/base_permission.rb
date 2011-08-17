@@ -23,11 +23,14 @@ module Groups::BasePermission
     current_user.may?(:admin, group)
   end
 
-  def may_create_network?
-    Conf.networks and
-    logged_in?
+  # for now, same as edit, but might not be in the future.
+  def may_admin_group?
+    current_user.may?(:admin, @group)
   end
 
+  def may_create_network?
+    Conf.networks and logged_in?
+  end
 
   ##
   ## GROUP FEATURED PAGES
@@ -65,6 +68,13 @@ module Groups::BasePermission
     may_list_groups_committees?(group) or
     group.real_council
   end
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  alias_method :may_list_permissions?, :may_admin_group?
+  alias_method :may_edit_permissions?, :may_admin_group?
 
   ##
   ## EXTRA
