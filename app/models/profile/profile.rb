@@ -187,7 +187,9 @@ class Profile < ActiveRecord::Base
       end || [] rescue []
     end
 
-    params['picture'] = (params['picture']['upload']? Picture.new(params.delete('picture')): nil)
+    if params[:picture] and params[:picture][:upload]
+      params['picture'] = Picture.new(params.delete('picture'))
+    end
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
     geo_location_options = {
