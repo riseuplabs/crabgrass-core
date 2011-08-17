@@ -249,8 +249,8 @@ module Common::Application::Permissions
     def find_permission_method
       objects = possible_objects
       verbs = possible_verbs
-      for verb in verbs
-        for object in objects
+      for object in objects
+        for verb in verbs
           if method = permission_method_exists(verb,object)
             return method
           end
