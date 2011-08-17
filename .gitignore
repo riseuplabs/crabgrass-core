@@ -14,19 +14,20 @@ doc/app
 doc/coverage
 doc/guides
 *~
-public/plugin_assets/*
 db/*.sqlite3
 db/*.sql
 db/sphinx
 db/development_structure.sql
 /assets
+public/plugin_assets/*
 public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/compiled
 public/theme
+public/picture/*
+public/assets/*
 .sass-cache
 .sass-cache/*
-public/assets/*
 lang/la_US.yml
 tmp/webrat-*
 webrat-*.png
@@ -37,4 +38,3 @@ vendor/crabgrass_plugins/crabgrass_acts_as_locked/test/tests.sqlite
 *.swp
 config/database.yml
 vendor/plugins/haml/init.rb
-
