@@ -90,10 +90,9 @@ class ProfileTest < ActiveSupport::TestCase
     user = users(:blue)
     profile = user.profiles.create :stranger => true, :first_name => user.name
 
-    # i don't think we're allowing more than one avatar now?
     assert_difference 'Picture.count' do
-      profile.save_from_params(:picture => {
-        :upload => upload_data('image.png'), :caption => 'pigeon point'
+      profile.save_from_params('picture' => {
+        'upload' => upload_data('image.png'), 'caption' => 'pigeon point'
       })
     end
 
