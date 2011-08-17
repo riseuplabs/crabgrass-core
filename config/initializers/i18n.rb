@@ -9,7 +9,7 @@ locale_paths = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}'
 if Conf.enabled_languages.any?
   locale_paths = locale_paths.select do |path|
     Conf.enabled_languages.detect do |enabled_lang_code|
-      path.include?("#{enabled_lang_code}.yml")
+      path.include?('/en/') or path.include?("#{enabled_lang_code}.yml")
     end
   end
 end

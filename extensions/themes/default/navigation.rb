@@ -26,7 +26,7 @@ define_navigation do
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do
-      label  "Create Page"
+      label   { :create_thing.t(:thing => :page.t) }
       url     { new_page_path }
       active  false
       icon    :plus
@@ -182,21 +182,32 @@ define_navigation do
     active { controller?('groups/') or @group or context?(:group) }
     html    :partial => '/layouts/global/nav/groups_menu'
 
-    context_section :no_context do
+    context_section :directory do
+      #visible { context?(:none) and controller?('groups/directory') }
+      #active  { context?(:none) and controller?('groups/directory') }
+
       visible { context?(:none) }
       active  { context?(:none) }
 
       local_section :all do
         label "All"
         url { groups_directory_path }
-        active { params[:path].empty? }
+        active { controller?('groups/directory') and params[:path].empty? }
       end
 
       local_section :mygroups do
         label "My Groups"
         url { groups_directory_path(:path => ['my']) }
-        active { params[:path].try.include?('my') }
+        active { controller?('groups/directory') and params[:path].try.include?('my') }
       end
+
+      local_section :create do
+        label  { :create_thing.t(:thing => :group.t) }
+        url    { new_group_path }
+        active { controller?('groups/groups') }
+        icon   :plus
+      end
+
     end
 
     context_section :home do

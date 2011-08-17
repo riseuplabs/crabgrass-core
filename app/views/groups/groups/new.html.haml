@@ -1,2 +1,6 @@
-- form_for @group do |form|
-  = render :partial => "groups/new_group", :locals => {:form => form}
+
+
+- unless params[:type]
+  = render :partial => 'choose_group_type'
+- else
+  = render :partial => 'new_group_form'

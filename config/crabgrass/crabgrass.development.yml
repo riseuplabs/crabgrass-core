@@ -44,16 +44,11 @@ theme: blueberry
 
 remote_processing: "http://localhost:3002"
 
-enabled_languages:
-  - en
-  - es
-  - pt
-  - ar
-  - de
+enabled_languages: ['en', 'es', 'pt', 'ar', 'de']
 
-committees: false
-councils: false
-networks: false
+committees: true
+councils: true
+networks: true
 
 ##
 ## SITES

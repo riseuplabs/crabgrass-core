@@ -1,0 +1,27 @@
+
+.p.icon.medium.group_48
+  %b= link_to :group.t, new_group_path(:type => 'group')
+  %br
+  = :group_description.t
+  = link_to :create_a_new_thing.t(:thing => :group.t) + ' &raquo;', new_group_path(:type => 'group')
+
+- if Conf.networks
+  .p.icon.medium.network_48
+    %b= link_to :network.t, new_group_path(:type => 'network')
+    %br
+    = :network_description.t
+    = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network')
+
+- if Conf.committees
+  .p.icon.medium.committee_48
+    %b= link_to :committee.t, new_group_path(:type => 'committee')
+    %br
+    = :committee_description.t
+    = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee')
+
+- if Conf.councils
+  .p.icon.medium.council_48
+    %b= link_to :council.t, new_group_path(:type => 'council')
+    %br
+    = :council_description.t
+    = link_to :create_a_new_thing.t(:thing => :council.t) + ' &raquo;', new_group_path(:type => 'council')
