@@ -1,14 +1,18 @@
 <%
   ## PAGE OWNER
-  if params[:group].any?
-    form.hidden hidden_field_tag('page[owner]', params[:group])
+  if @owner and @owner != current_user
+    form.hidden hidden_field_tag('page[owner]', @owner.name)
+    form.row do |r|
+      r.label :page_create_owner.t
+      r.input display_entity(@owner, :avatar => 'tiny')
+    end
   else
     # if :selected is set to nil, then 'none' will be added as an option.
     # so, we only specify :selected if there is a owner to select.
     options = {:include_me => true}
     options[:selected] = @page.owner if @page
     form.row do |r|
-      r.label I18n.t(:page_create_owner)
+      r.label :page_create_owner.t
       r.label_for 'page_owner'
       r.input select_tag('page[owner]', options_for_page_owner(options), :id => 'page_owner')
       r.info help(:page_owner)

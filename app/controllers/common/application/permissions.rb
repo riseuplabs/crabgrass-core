@@ -3,14 +3,22 @@
 #
 # Helpers and Controller code for handling permissions.
 #
-# There are three parts to the crabgrass permission system:
+# There are four parts to the crabgrass permission system:
 #
 # (1) permission definition modules in app/permissions.
 # (2) controllers specify which permission modules to include.
-# (3) controllers test for permissions in a before filter.
+# (3) access is restricted to controller's actions, either by...
+#     (a) manually guarding some actions
+#     (b) defining the authorized?() method.
+#     (c) using permission auto-guessing.
+# (4) views use permission definitions in order to display the right thing
+# 
 #
 # (1) Permission Definition
 # ---------------------------------
+#
+# A 'permission' is just a method available to controllers and views
+# that returns true or false.
 #
 # Most permission methods have a standard form:
 #
@@ -51,47 +59,72 @@
 #     half_human? ? :cyborgs : :robots
 #   end
 #
-# (3) Testing for permission
+# (3) Restricting access to actions
 # -------------------------------------------------
+#
+# There are three ways to apply a permission to a controller action:
+#
+#   (a) manually guarding actions
+#   (b) define the authorized?() method
+#   (c) use permission auto-guessing
+#
+# (a) manually guarding actions
+#
+#   At the top of your controller definition, do this:
+#
+#     guard :show => :may_show_robots?, 
+#           :update => :may_edit_robots?
+#
+#   This will ensure the may_show_robots? returns true before 'show()' will run.
+#
+# (b) define the authorized?() method
+#
+#   In your controller, you can define this protected method:
+#
+#     def authorized?
+#       if params[:action] == 'update' and @robot.sleeping?
+#         may_update_robot?
+#       else
+#         false
+#       end
+#     end
+#
+#   Basically, if authorized?() returns false, the user will get a permission
+#   denied message.
+#
+#   NOTE: The 'authorized?' before filter is only called if filter
+#         :login_required is active. This should change eventually.
+#
+# (c) permission auto-guessing
+#
+#   Common::Application has this default definition of authorized?()
+#
+#     def authorized?
+#       check_permissions!
+#     end
+#
+#   This will attempt to find a permission method that corresponds to the current
+#   verb and object. If none are found, then it returns true. If a permission method
+#   is found and the test passes, then check_permissions! returns true. If the test
+#   failed, then a PermissionDenied exception is raised.
+#
+#
+# (4) Permissions in views
+# ------------------------------------------------------------
 #
 # The permission methods can be called anywhere. It is useful to call them
 # before displaying a link, because you don't want to link to something that
 # the user is not allowed to do.
 #
-# However, permission methods, in order to be useful, are usually called
-# by the controller in a before filter.
-#
-# Common::Application has this before_filter:
-#
-#  def authorized?
-#    check_permissions!
-#  end
-#
-# This will attempt to find a permission method that corresponds to the current
-# verb and object. If none are found, then it returns true. If a permission method
-# is found and the test passes, then check_permissions! returns true. If the test
-# failed, then a PermissionDenied exception is raised.
-#
-# Alternately, you can do this manually:
-#
-# def authorized?
-#   if params[:blah]
-#     may_blah_blah?
-#   else
-#     false
-#   end
-# end
-#
-# NOTE: The 'authorized?' before filter is only called if filter
-#       :login_required is active.
-#
 
-# NOTE:
+#
+# DEV NOTE:
 # The code here relies on this:
 #   class Common::Application
 #     def controller(); self; end
 #   end
 # ...and will not work without it.
+#
 
 module Common::Application::Permissions
 
@@ -134,12 +167,28 @@ module Common::Application::Permissions
           begin
             permission_class = "#{class_name}/base_permission".camelize.constantize
           rescue NameError
-            raise 'could find find permission file for %s' % class_name
+            raise 'could find permission file for "%s"' % class_name
           end
         end
         include(permission_class)
         add_template_helper(permission_class)
       end
+    end
+
+    #
+    # specifies what permission method to use for particular actions.
+    # action_map is a hash in the form {:action => :permission_method}
+    #
+    # e.g.
+    #
+    #   guard :show => :may_show_this?, :update => :may_update_this?
+    #
+    def guard(action_map)
+      @action_map = HashWithIndifferentAccess.new action_map
+    end
+
+    def permission_action_map
+      @action_map || {}
     end
 
     def permission_options
@@ -203,7 +252,7 @@ module Common::Application::Permissions
     def check_permissions
       key = [params[:controller],params[:action]]
       method = cache_permission(key) do
-        find_permission_method
+        self.class.permission_action_map[params[:action]] or find_permission_method
       end
       if method
         self.send(method)
@@ -298,86 +347,6 @@ module Common::Application::Permissions
       verbs << 'access'
       return verbs
     end
-
-    # searches for an appropriate permission definition for +controller+.
-    #
-    # permissions are generally in the form may_{action}_{controller}?
-    #
-    # Both the plural and the singular are checked (ie GroupsController#edit will
-    # check may_edit_groups? and may_edit_group?). Whichever one is first defined
-    # will be used.
-    #
-    # For the 'controller' part, many different possibilities are tried,
-    # in the following order:
-    #
-    # 1) the controller name:
-    #    asset_controller -> asset
-    # 2) the name of the controller's parent namespace:
-    #    me/trash_controller -> me
-    #    base_page/share_controller -> page ("base_" is stripped off)
-    # 3) the name of the controller's super class:
-    #    event_page_controller -> page ("base_" is stripped off)
-    # 4) ensure "page" is in there somewhere if controller descends from
-    #    BasePageController (the controller might be a subclass of a subclass
-    #    of base page)
-    #
-    # Note: 'base_xxx' is always converted into 'xxx'
-    #
-    # Alternately, if controller is a string:
-    #
-    # 1) the string
-    #    'groups' -> groups
-    # 2) the postfix
-    #    'groups/memberships' -> memberships
-    # 3) the prefix
-    #    'groups/memberships' -> 'groups'
-    #
-    # Alternately, if controller is a symbol:
-    #
-    # 1) the symbol
-    #
-    # Lastly, if the action consists of two words (ie 'eat_soup'), the
-    # the permissions without a controller name is attempted (ie 'may_eat_soup?)
-    #
-#    def permission_for_controller(controller, action, *args)
-#      permission_log_setup(controller, action, args)
-#      names=[]
-#      if controller.is_a? Common::Application
-#        names << controller.controller_name
-#        names << controller.controller_path.split("/")[-2]
-#        names << controller.class.superclass.controller_name
-#        names << 'page' if controller.is_a? BasePageController
-#        target = controller
-#      elsif controller.is_a? String
-#        if controller =~ /\//
-#          names = controller.split('/').reverse
-#        else
-#          names << controller
-#        end
-#        target = self
-#      elsif controller.is_a? Symbol
-#        names << controller.to_s
-#        target = self
-#      end
-#      names.compact.each do |name|
-#        name.sub!(/^base_/, '')
-#        methods = ["may_#{action}_#{name}?"]
-#        methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
-#        methods << "may_#{action}?" if action =~ /_/
-#        methods.each do |method|
-#          add_permission_log(:attempted => method)
-#          if target.respond_to?(method)
-#            add_permission_log(:decided => method)
-#            return target.send(method, *args)
-#          end
-#        end
-#      end
-#      #if target.respond_to?('default_permission')
-#      #  add_permission_log(:attempted => 'default_permission', :decided => 'default_permission')
-#      #  return target.send('default_permission', *args)
-#      #end
-#      return nil
-#    end
 
     # setup what combination we are logging
     def permission_log_setup(key)
