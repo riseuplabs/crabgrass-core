@@ -5,7 +5,11 @@
 ENV["RAILS_ENV"] = "test"
 #$: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
+if UNIT_TESTING
+  require File.expand_path(File.dirname(__FILE__) + "/unit_test_help")
+else
+  require 'test_help'
+end
 
 ##
 ## load all the test helpers
@@ -41,9 +45,6 @@ class ActiveSupport::TestCase
     # make sure we don't have any login from the last test
     User.current = nil
   }
-
-  self.use_transactional_fixtures = true
-  self.use_instantiated_fixtures  = false
 
   include AuthenticatedTestHelper
   include AssetTestHelper

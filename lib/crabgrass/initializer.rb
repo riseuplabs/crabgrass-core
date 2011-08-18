@@ -33,7 +33,6 @@ class Crabgrass::Initializer < Rails::Initializer
 
   def load_view_paths
     info 'LOAD VIEW PATHS'
-    debugger
     super
   end
 
