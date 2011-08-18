@@ -5,17 +5,16 @@ module AssetPageHelper
     if thumbnail.nil?
       link_to( image_tag(asset.big_icon), asset.url )
     elsif !thumbnail.exists?
-      #if false and thumbnail.width
-      #  width = thumbnail.width
-      #  height = thumbnail.height
-      #else
-      #  width, height = thumbnail.thumbdef.size.split /[x><]/
-      #end
+      if thumbnail.remote?
+        javascript = periodically_call_remote(:url => page_xpath(@page, :action => 'poll_remote_asset'), :frequency => 4)
+#                 :condition => 'stop_ajax_calls == false')
+      else
+        javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
+      end
       width, height = [300,300]
       style = "height:#{height}px; width:#{width}px;"
       style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
-      javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
-      content_tag(:div, '', :id=>'preview-loading', :style => style) + javascript
+      content_tag(:div, javascript, :id=>'preview-loading', :style => style)
     else
       link_to_asset(asset, :large, :class => '')
     end

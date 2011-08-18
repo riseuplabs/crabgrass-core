@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110610090208) do
+ActiveRecord::Schema.define(:version => 20110817205511) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -44,7 +44,8 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.string   "versioned_type"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.text     "comment",        :limit => 16777215
+    t.text     "comment",        :limit => 2147483647
+    t.string   "code"
   end
 
   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.integer  "version"
     t.string   "type"
     t.integer  "page_terms_id"
-    t.boolean  "is_attachment",                     :default => false
+    t.boolean  "is_attachment",                       :default => false
     t.boolean  "is_image"
     t.boolean  "is_audio"
     t.boolean  "is_video"
@@ -72,7 +73,8 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.datetime "taken_at"
     t.string   "credit"
     t.integer  "user_id"
-    t.text     "comment",       :limit => 16777215
+    t.text     "comment",       :limit => 2147483647
+    t.string   "code"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -197,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.string   "location"
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.integer  "owner_code"
   end
 
   add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
@@ -486,6 +489,14 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
 
   add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
 
+  create_table "pictures", :force => true do |t|
+    t.string  "content_type"
+    t.string  "caption"
+    t.string  "credit"
+    t.string  "dimensions"
+    t.boolean "public"
+  end
+
   create_table "polls", :force => true do |t|
     t.string "type"
   end
@@ -546,7 +557,6 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.boolean  "fof",                                          :default => false, :null => false
     t.text     "summary",                :limit => 2147483647
     t.integer  "wiki_id"
-    t.integer  "photo_id"
     t.integer  "layout_id"
     t.boolean  "may_see",                                      :default => true
     t.boolean  "may_see_committees"
@@ -566,6 +576,7 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.integer  "video_id"
     t.text     "summary_html",           :limit => 2147483647
     t.integer  "geo_location_id"
+    t.integer  "picture_id"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -774,6 +785,7 @@ ActiveRecord::Schema.define(:version => 20110610090208) do
     t.integer "width"
     t.integer "height"
     t.boolean "failure"
+    t.integer "remote_job_id"
   end
 
   create_table "tokens", :force => true do |t|

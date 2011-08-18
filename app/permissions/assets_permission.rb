@@ -14,16 +14,21 @@ module AssetsPermission
 
   protected
 
-  def may_read_assets?(asset=@asset)
-    asset and current_user.may?(:view, @asset)
+  def may_show_asset?
+    if @asset
+      if params[:code]
+        params[:code] == @asset.code
+      else
+        current_user.may?(:view, @asset)
+      end
+    else
+      false
+    end
   end
 
-  alias_method :may_show_assets?, :may_read_assets?
-  alias_method :may_version_assets?, :may_read_assets?
-
-  def may_create_assets?(asset=@asset)
-    asset and current_user.may?(:edit, asset.page)
+  def may_create_asset?
+    @asset and current_user.may?(:edit, @asset.page)
   end
 
-  alias_method :may_destroy_assets?, :may_create_assets?
+  alias_method :may_destroy_asset?, :may_create_asset?
 end

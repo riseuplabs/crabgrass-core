@@ -5,6 +5,9 @@
 class AssetsController < ApplicationController
 
   permissions 'assets'
+  guard :show => :may_show_asset?,
+    :destroy => :may_destroy_asset?,
+    :create => :may_create_asset?
 
   before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
@@ -14,26 +17,27 @@ class AssetsController < ApplicationController
       # update access and redirect iff asset is public AND the public
       # file is not yet in place.
       @asset.update_access
-      @asset.generate_thumbnails
-      if @asset.thumbnails.any?
-        redirect_to # redirect to the same url again, but next time they will get the symlinks
-      else
-        return not_found
-      end
+      #@asset.generate_thumbnails
+      #if @asset.thumbnails.any?
+      #  redirect_to # redirect to the same url again, but next time they will get the symlinks
+      #else
+      #  return not_found
+      #end
+    end
+
+    path = params[:path].first
+    if thumb_name_from_path(path)
+      thumb = @asset.thumbnail( thumb_name_from_path(path) )
+      raise_not_found unless thumb
+      thumb.generate
+      send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
     else
-      path = params[:path].first
-      if thumb_name_from_path(path)
-        thumb = @asset.thumbnail( thumb_name_from_path(path) )
-        raise_not_found unless thumb
-        thumb.generate
-        send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
-      else
-        send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
-      end
+      send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
     end
   end
 
   def destroy
+    raise 'hey'
     @asset.destroy
     respond_to do |format|
       format.js { render :nothing => true }
@@ -45,6 +49,7 @@ class AssetsController < ApplicationController
   end
 
   def create
+    raise 'wow'
     @asset = Asset.new params[:asset]
     if params[:asset_title].any?
       @asset.filename = params[:asset_title] + @asset.suffix

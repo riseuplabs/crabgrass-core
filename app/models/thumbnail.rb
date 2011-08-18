@@ -12,6 +12,9 @@
 #    t.boolean "failure"
 #  end
 #
+
+require 'open-uri'
+
 class Thumbnail < ActiveRecord::Base
 
   #
@@ -25,6 +28,8 @@ class Thumbnail < ActiveRecord::Base
   #   self.parent_type = "Asset::Version"
   #
   belongs_to :parent, :polymorphic => true
+
+  belongs_to :remote_job, :dependent => :destroy
 
   after_destroy :rm_file
   def rm_file
@@ -60,19 +65,21 @@ class Thumbnail < ActiveRecord::Base
     else
       if depends_on
         depends_on.generate(force)
-        input_type  = depends_on.content_type
-        input_file  = depends_on.private_filename
+        source = depends_on.parent
       else
-        input_type  = parent.content_type
-        input_file  = parent.private_filename
+        source = parent
       end
+
+      input_type  = source.content_type
+      input_file  = source.private_filename
       output_type = thumbdef.mime_type
       output_file = private_filename
 
       options = {
         :size => thumbdef.size,
         :input_file  => input_file,  :input_type => input_type, 
-        :output_file => output_file, :output_type => output_type
+        :output_file => output_file, :output_type => output_type,
+        :source_asset => source
       }
 
       if thumbdef.remote and RemoteJob.site
@@ -124,6 +131,13 @@ class Thumbnail < ActiveRecord::Base
     not failure?
   end
 
+  def set_data_from_url(url)
+    data = open(@job.data_url).read
+    File.open(private_filename, "wb") do |f|
+      f.write(data)
+    end
+  end
+
   #
   # returns true if this thumbnail is a proxy AND
   # the main asset file is the same content type as
@@ -147,30 +161,22 @@ class Thumbnail < ActiveRecord::Base
 
   def queue_remote_job(options)
     if !RemoteJob.local?
-      # the remote processor is on another server, so we don't pass it file paths
-      if !thumbdef.binary
+      if thumbdef.binary
+        options[:input_url] = options[:source].url_with_code
+      else
         # if we don't have binary data, then we might as well pass it along
         options[:input_data] = File.read(options[:input_file])
       end
+      # the remote processor is on another server, so we don't pass it file paths
       options[:input_file] = nil
       options[:output_file] = nil
     end
-    job = RemoteJob.create!(options)
-    if job
-      #self.job_id = job.id
-      #self.state  = 'processing'
-    else
+    options[:success_callback_url] = self.success_url
+    self.remote_job = RemoteJob.create!(options)
+    unless remote_job
       self.failure = true
     end
     save
-    if !RemoteJob.local? and thumbdef.binary
-      # the remote job is on another server, and wants binary data. 
-      # we can't push this binary data via the ActiveResource api, 
-      # so we push it using a multipart binary encoded POST,
-      # after the RemoteJob has been created. 
-      
-      # TODO: implement me....
-    end
   end
 
   def generate_now(options)
@@ -200,6 +206,10 @@ class Thumbnail < ActiveRecord::Base
       vthumb.width, vthumb.height = [self.width, self.height]
       vthumb.save
     end
+  end
+
+  def success_url
+    "/thumbnails/#{id}?status=success"
   end
 
 end

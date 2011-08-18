@@ -206,6 +206,19 @@ class Asset < ActiveRecord::Base
     def content_type
       read_attribute('content_type') || 'application/octet-stream'
     end
+
+    def url_with_code
+      unless self.code
+        update_attribute(:code => Password.random(10))
+      end
+      # sorry about this, but here is a route in a model:
+      if is_version?
+        "/assets/#{self.id}/versions/#{self.version}?code=#{self.code}"
+      else
+        "/assets/#{self.id}?code=#{self.code}"
+      end
+    end
+
   end
   self.non_versioned_columns.concat NON_VERSIONED
 
