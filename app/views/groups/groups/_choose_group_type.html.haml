@@ -12,14 +12,14 @@
     = :network_description.t
     = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network')
 
-- if Conf.committees
+- if Conf.committees and current_user.groups_and_networks.any?
   .p.icon.medium.committee_48
     %b= link_to :committee.t, new_group_path(:type => 'committee')
     %br
     = :committee_description.t
     = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee')
 
-- if Conf.councils
+- if Conf.councils and current_user.groups_and_networks.any?
   .p.icon.medium.council_48
     %b= link_to :council.t, new_group_path(:type => 'council')
     %br
