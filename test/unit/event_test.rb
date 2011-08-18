@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../unit_test_helper'
 
 class EventTest < ActiveSupport::TestCase
 
@@ -10,7 +10,7 @@ class EventTest < ActiveSupport::TestCase
       Event.create!(:starts_at => start.to_s, :ends_at => end_at.to_s)
     end
 
-    @next_month = Time.new.advance(:months => 1) 
+    @next_month = Time.new.advance(:months => 1)
     start = Time.utc(@next_month.year, @next_month.month, @next_month.day, Time.new.hour, Time.new.min, Time.new.sec)
     end_at = Time.at(start.to_i + 200)
     4.times do
