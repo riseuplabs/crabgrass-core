@@ -13,9 +13,14 @@ Crabgrass::Initializer.run do |config|
   info "LOAD CONFIG BLOCK"
 
   config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
-  config.autoload_paths << "#{RAILS_ROOT}/app/permissions"
-  config.autoload_paths << "#{RAILS_ROOT}/app/sweepers"
-  config.autoload_paths << "#{RAILS_ROOT}/app/helpers/classes"
+  if UNIT_TESTING
+    config.eager_load_paths = [] # ["#{RAILS_ROOT}/app/models"]
+    config.frameworks=[:active_record, :active_resource, :action_mailer]
+  else
+    config.autoload_paths << "#{RAILS_ROOT}/app/permissions"
+    config.autoload_paths << "#{RAILS_ROOT}/app/sweepers"
+    config.autoload_paths << "#{RAILS_ROOT}/app/helpers/classes"
+  end
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
@@ -53,10 +58,14 @@ Crabgrass::Initializer.run do |config|
   config.gem 'i18n', :version => '~> 0.5'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3'
   config.gem 'will_paginate', :version => '~> 2.3'
-  config.gem 'compass', :version => '~> 0.10'
-  
+  unless UNIT_TESTING
+    config.gem 'compass', :version => '~> 0.10'
+  end
+
   # required, and compilation is required to install
-  config.gem 'haml', :version => '~> 3.0'
+  unless UNIT_TESTING
+    config.gem 'haml', :version => '~> 3.0'
+  end
   config.gem 'RedCloth', :version => '~> 4.2'
   config.gem 'hpricot', :version => '~> 0.8'
 
@@ -64,7 +73,9 @@ Crabgrass::Initializer.run do |config|
   config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
-  config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
+  unless UNIT_TESTING
+    config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
+  end
 
   # not required, but a really good idea
   config.gem 'mime-types', :lib => 'mime/types'

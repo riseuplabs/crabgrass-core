@@ -1,11 +1,11 @@
-# 
+#
 # This is an unnecessary class that allows us to see what is
 # being loaded when.
 #
 # I found this useful and interesting for understanding the
 # order of initialization.
 #
-# Rails::Initializer is defined in 
+# Rails::Initializer is defined in
 # /var/lib/gems/1.8/gems/rails-x/lib/initializer.rb
 #
 
@@ -33,6 +33,7 @@ class Crabgrass::Initializer < Rails::Initializer
 
   def load_view_paths
     info 'LOAD VIEW PATHS'
+    debugger
     super
   end
 
@@ -43,6 +44,11 @@ class Crabgrass::Initializer < Rails::Initializer
 
   def disable_dependency_loading
     info 'DONE LOADING'
+    super
+  end
+
+  def load(file)
+    info "loading #{file}"
     super
   end
 end
