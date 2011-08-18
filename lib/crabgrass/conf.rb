@@ -116,7 +116,7 @@ class Conf
     self.domain            = 'localhost'
     self.chat              = true
     self.dev_email         = ''
-    self.login_redirect_url = '/me'
+    self.login_redirect_url = '/me/pages'
     self.theme             = 'default'
 
     # global configuration
