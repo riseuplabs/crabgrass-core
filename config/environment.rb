@@ -15,7 +15,7 @@ Crabgrass::Initializer.run do |config|
   config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
   if UNIT_TESTING
     config.eager_load_paths = [] # ["#{RAILS_ROOT}/app/models"]
-    config.frameworks=[:active_record, :active_resource, :action_mailer]
+    config.frameworks=[:active_record]
   else
     config.autoload_paths << "#{RAILS_ROOT}/app/permissions"
     config.autoload_paths << "#{RAILS_ROOT}/app/sweepers"
