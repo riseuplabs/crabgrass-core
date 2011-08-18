@@ -109,11 +109,9 @@ ActionController::Routing::Routes.draw do |map|
   map.networks_directory 'networks/directory/*path', :controller => 'groups/directory'
   map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
 
-  map.resources :groups, :networks,
-    :namespace => 'groups/',
-    :only => [:new, :create, :destroy] do |groups|
+  map.resources :groups, :namespace => 'groups/', :only => [:new, :create, :destroy] do |groups|
     groups.resource  :home, :only => [:show]
-    groups.resource  :page, :only => [:new, :create]
+    #groups.resource  :page, :only => [:new, :create]
     groups.pages     'pages/*path', :controller => 'pages'
     groups.resources :members, :only => [:index, :destroy]
     groups.resources :memberships, :only => [:create, :destroy]
@@ -121,9 +119,9 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :councils, :only => [:new, :create]
     groups.resources :invites, :only => [:new, :create, :destroy]
     groups.resources :requests, :except => [:edit, :show]
-    groups.resources :events
+    #groups.resources :events
     groups.resources :permissions, :only => [:index, :update]
-    groups.resources :activities
+    #groups.resources :activities
     groups.resource  :profile, :only => [:edit, :update]
     groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
