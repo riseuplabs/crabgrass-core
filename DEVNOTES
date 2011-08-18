@@ -10,6 +10,9 @@ what happens when we do remote_job.destroy?
 things to work on
 ============================
 
+groups
+. destroying group
+
 directory
 . group
 . person
