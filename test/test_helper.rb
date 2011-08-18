@@ -3,7 +3,6 @@
 #                     # if test/unit is not included early on.
 
 ENV["RAILS_ENV"] = "test"
-#$: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 if UNIT_TESTING
   require File.expand_path(File.dirname(__FILE__) + "/unit_test_help")
