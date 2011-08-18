@@ -22,3 +22,10 @@ if defined?(ActiveRecord)
   end
 end
 
+unless defined?(FORBIDDEN_NAMES)
+  FORBIDDEN_NAMES = %w{
+    account admin assets avatars chat code debug do groups
+    javascripts me networks page pages people pictures places issues
+    session static stats stylesheets theme
+  }
+end
