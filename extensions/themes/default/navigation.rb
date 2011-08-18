@@ -234,14 +234,14 @@ define_navigation do
 =end
 
     context_section :members do
-      visible { may_list_groups_members? }
+      visible { may_list_group_members? }
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
       active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
 
       local_section :people do
-        visible { may_list_groups_members? }
+        visible { may_list_group_members? }
         label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }

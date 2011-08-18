@@ -7,7 +7,7 @@
     - if @group.real_council
       = entity_list(:entities => [@group.real_council], :link_options => {:avatar => 'small'}, :before => content_tag(:h3, :council.t))
 
-- if @group.network? and may_list_groups_members?
+- if @group.network? and may_list_group_members?
   - cache(group_cache_key(@group, :what => 'group_members', :expires_in => hours(3))) do
     = entity_list(:entities => @group.groups, :link_options => {:avatar => 'small'},
       :before => content_tag(:h3, :member_groups_of_network.t),

@@ -45,7 +45,7 @@ module Groups::LinksHelper
   def list_membership_link
     if may_edit_groups_members?
       link_to(:edit.t, group_members_path(@group))
-    elsif may_list_groups_members?
+    elsif may_list_group_members?
       link_to(:see_all_link.t, group_members_path(@group))
     end
   end

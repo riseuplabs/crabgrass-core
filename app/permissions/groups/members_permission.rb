@@ -2,8 +2,8 @@ module Groups::MembersPermission
 
   protected
 
-  def may_list_groups_members?(group = @group)
-    current_user.may? :see_members, group
+  def may_list_group_members?
+    current_user.may? :see_members, @group
   end
 
   def may_destroy_groups_members?(membership = @membership)
