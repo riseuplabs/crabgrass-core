@@ -1,4 +1,4 @@
-class Groups::ProfileController < Groups::BaseController
+class Groups::ProfilesController < Groups::BaseController
 
   before_filter :fetch_profile, :login_required
 
