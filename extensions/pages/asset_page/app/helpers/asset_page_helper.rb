@@ -4,10 +4,15 @@ module AssetPageHelper
     thumbnail = asset.thumbnail(:large)
     if thumbnail.nil?
       link_to( image_tag(asset.big_icon), asset.url )
+    elsif thumbnail.failure?
+      if thumbnail.remote_job.nil?
+        'failed in the past:   ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'poll_remote_asset', :retry => true))
+      else
+        'remote job failed:   ' + link_to_modal('click here to view error', :url => page_xpath(@page, :action => 'view_remote_asset'))
+      end
     elsif !thumbnail.exists?
       if thumbnail.remote?
-        javascript = periodically_call_remote(:url => page_xpath(@page, :action => 'poll_remote_asset'), :frequency => 4)
-#                 :condition => 'stop_ajax_calls == false')
+        javascript = start_polling
       else
         javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
       end
@@ -43,5 +48,17 @@ module AssetPageHelper
   def preview_area_class(asset)
     'checkerboard' if asset.thumbnail(:large)
   end
+
+  def start_polling
+    frequency = 4
+    options = {:url => page_xpath(@page, :action => 'poll_remote_asset')}
+    code = "var assetTimer = new PeriodicalExecuter(function() {#{remote_function(options)}}, #{frequency})"
+    javascript_tag(code)
+  end
+
+  def stop_polling
+    'if (typeof assetTimer != "undefined") {assetTimer.stop();}'
+  end
+
 end
 

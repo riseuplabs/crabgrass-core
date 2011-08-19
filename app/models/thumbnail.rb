@@ -29,8 +29,6 @@ class Thumbnail < ActiveRecord::Base
   #
   belongs_to :parent, :polymorphic => true
 
-  belongs_to :remote_job, :dependent => :destroy
-
   after_destroy :rm_file
   def rm_file
     unless proxy?
@@ -41,7 +39,7 @@ class Thumbnail < ActiveRecord::Base
 
   # returns the thumbnail object that we depend on, if any.
   def depends_on
-    @depends ||= parent.thumbnail(thumbdef.depends, true)
+    @depends ||= parent.thumbnail(thumbdef.depends)
   end
 
   # finds or initializes a Thumbnail
@@ -127,6 +125,10 @@ class Thumbnail < ActiveRecord::Base
     parent.thumbdefs[self.name.to_sym]
   end
 
+  def remote?
+    thumbdef.remote
+  end
+
   def ok?
     not failure?
   end
@@ -157,10 +159,18 @@ class Thumbnail < ActiveRecord::Base
     thumbdef.proxy and parent.content_type == thumbdef.mime_type
   end
 
+  def remote_job
+    begin
+      RemoteJob.find(remote_job_id)
+    rescue
+      nil
+    end
+  end
+
   private
 
   def queue_remote_job(options)
-    if !RemoteJob.local?
+    if !RemoteJob.localhost?
       if thumbdef.binary
         options[:input_url] = options[:source].url_with_code
       else
@@ -171,8 +181,15 @@ class Thumbnail < ActiveRecord::Base
       options[:input_file] = nil
       options[:output_file] = nil
     end
-    options[:success_callback_url] = self.success_url
-    self.remote_job = RemoteJob.create!(options)
+    options[:success_callback_url] = success_url
+    begin
+      self.remote_job_id = RemoteJob.create!(options).id
+    rescue Exception => exc #Errno::ECONNREFUSED
+      raise ErrorMessage.new(exc.to_s)
+      puts 'x'*80
+      puts 'cant connect'
+    end
+
     unless remote_job
       self.failure = true
     end

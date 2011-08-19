@@ -163,7 +163,7 @@ module ModalboxHelper
     #
     # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
     #
-    def link_to_remote_with_confirm(name, options = {}, html_options = nil)
+    def link_to_remote_with_confirm(name, options = {}, html_options = {})
       if options.is_a?(Hash) and options[:confirm]
         message = options.delete(:confirm)
       elsif html_options.is_a?(Hash) and html_options[:confirm]
@@ -192,7 +192,7 @@ module ModalboxHelper
     # If cancel is pressed, then nothing happens.
     # If OK is pressed, then a form submit happens, using the action and method specified.
     #
-    def link_to_with_confirm(name, options = {}, html_options = nil)
+    def link_to_with_confirm(name, options = {}, html_options = {})
       if options.is_a?(Hash) and options[:confirm]
         # this seems like a bad form. the confirm should be in html_options.
         # is this really used anywhere?

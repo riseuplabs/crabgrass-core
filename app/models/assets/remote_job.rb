@@ -27,10 +27,12 @@ class RemoteJob < ActiveResource::Base
   self.format = :xml
   self.element_name = "job"
 
+  #
   # returns true if the remote processing server is run on the same
   # machine as this process.
-  def self.local?
-    self.site =~ /localhost/
+  #
+  def self.localhost?
+    self.site.to_s =~ /localhost/
   end
 
 end

@@ -77,10 +77,16 @@ module AssetExtension
       end
 
       # returns the thumbnail with 'name'
-      def thumbnail(name, include_failures=false)
+#      def thumbnail(name, include_failures=false)
+#        return unless name
+#        name = name.to_s
+#        thumbnails.detect{|thumb|thumb.name == name and (thumb.ok? or include_failures)}
+#      end
+
+      def thumbnail(name)
         return unless name
         name = name.to_s
-        thumbnails.detect{|thumb|thumb.name == name and (thumb.ok? or include_failures)}
+        thumbnails.detect{|thumb|thumb.name == name}
       end
 
       # returns the relative filename of a thumbnail given its name
