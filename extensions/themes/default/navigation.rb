@@ -21,7 +21,7 @@ define_navigation do
   global_section :me do
     label "Me"
     visible { logged_in? }
-    url     { me_home_path }
+    url     { me_pages_path }
     active  { context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
