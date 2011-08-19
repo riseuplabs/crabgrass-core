@@ -55,7 +55,7 @@ class ActiveSupport::TestCase
   include DebugTestHelper
   include CrabgrassTestHelper
 
-  fixtures :all
+  # fixtures :all
 end
 
 # we want to be able to mock our application controller

@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class PermissionsTest < ActiveSupport::TestCase
 
+  fixtures :all
 
   def test_group_permissions_with_committees
     user = User.make
