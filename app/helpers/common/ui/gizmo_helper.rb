@@ -1,16 +1,19 @@
 #
 # Here lives little miscellaneous reusable UI elements.
-# This is like FormTagHelper, but they might not be forms.
 #
-# We call the gizmos. 
+# We call them gizmos. 
 #
 # Current gizmos:
 # * toggle_bug
-# * spinner_checkbox
+# * spinbox
 #
 
 module Common::Ui::GizmoHelper
 
+
+  ##
+  ## TOGGLE_BUG
+  ##
 
   #
   # a toggle bug is a set of grouped links, only one of which may be active at a
@@ -55,42 +58,56 @@ module Common::Ui::GizmoHelper
     deactivate_toggle_bugs + "$('#{id}').addClassName('active');" 
   end
 
+  ##
+  ## SPINBOX
+  ##
+
   # 
+  #
   # A checkbox used for ajax or functions. The checkbox turns into a spinner
-  # until the action is complete.
-  # 
-  # options:
-  #  checked: true or false
+  # until the action is complete. The requests are queued, so that you can
+  # click a lot of spinboxes all at once -- there will not be any race condition.
   #
-  # args:
-  #  name, label, url
+  # Options:
   #
-#  def spinbox_tag(name, label, url, options = {})
-#    li_id        = options[:id] || "#{name}_spinbox_li"
-#    checkbox_id  = "#{name}_spinbox_checkbox"
-#    checked      = options[:checked]
+  #  :id, :label, :checked, :with, :method, :success
+  #
+  # TODO: make this actually work with functions, not just remote ajax calls.
+  #
+  # Requires:
+  #  - link_to_function_with_icon
+  #  - queued_remote_function
+  #
+  def spinbox_tag(name, url, options = {})
+    icon = options[:checked] ? 'check_on' : 'check_off'
+    options = options.merge(:url => url, :id => "#{name}_spinbox", :icon => icon)
 
-#    onclick_function = queued_remote_function(
-#      :url => url,
-#      :before  => checkbox_spin(li_id, checkbox_id),
-#      :complete => checkbox_unspin(li_id, checkbox_id),
-#      :with => options[:with]
-#    )
+    function = queued_remote_function(spinbox_function_options(options))
+    content_tag(:li) do
+      spinbox_link_to_function(function, options)
+    end
+  end
 
-#    content_tag(:li, :class => "spinbox small_icon #{li_id}", :id => li_id) do
-#      check_box_tag(checkbox_id, '1', checked, :onclick => onclick_function, :class => checkbox_id) +
-#      link_to_function(label, "$('#{checkbox_id}').click()")
-#    end
-#  end
+  private
 
-#  def checkbox_spin(li_class, checkbox_class)
-#    set_style(".#{li_class}", "background-image: url(/images/spinner.gif)") + 
-#    set_style(".#{checkbox_class}", "display:none")
-#  end
+  def spinbox_function_options(options)
+    options.merge!(
+      :before  => spinner_icon_on(options[:icon], options[:id])
+      # no :complete option, because in cases where this is used, so 
+      # far we end up replacing the spinbox itself. but maybe this could be
+      # necessary someday:
+      # :complete => spinner_icon_off(options[:icon], options[:id])
+    )
+    options.slice(:url, :before, :with, :method, :success)
+  end
 
-#  def checkbox_unspin(li_class, checkbox_class)
-#    clear_style(".#{li_class}") + clear_style(".#{checkbox_class}")
-#  end
+  def spinbox_link_to_function(function, options)
+    if options[:label].blank?
+      link_to_function_icon(options[:icon], function, options.slice(:url, :id))
+    else
+      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon))
+    end
+  end
 
 end
 
