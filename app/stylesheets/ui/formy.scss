@@ -1,0 +1,100 @@
+//
+// FORMY STYLE: SIMPLE FORM
+// 
+
+.simple_form {
+  // add a gap between each row
+  .row {
+    margin-top: 1em;
+    &.first {
+      margin-top: 0;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+    }
+  }
+
+  // by setting a max width, and then making the form elements
+  // be 100%, we create a form that is not too wide, but also will scale
+  // nicely when the screen gets smaller. only ie6 doesn't support max-width.
+  max-width: 30em;
+  input[type=text], input[type=password], textarea, select {
+    width: 100%;
+  }
+}
+
+//
+// FORMY STYLE: TABLE FORM
+//
+
+table.form {
+  border-collapse: collapse;
+  tr.first > td {
+    border-top: 0;
+  }
+  & > tbody > tr > td {
+    vertical-align: top;
+    border-top: 1px dotted #ccc;
+  }
+  td.heading {
+    padding: 0.5em 0;
+    h2 {
+      color: #666;
+      font-size: 1.5em;
+      margin: 0;
+    }
+  }
+  td.label {
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: right;
+    padding: 1em;
+    padding-right: 0;
+    .not_label {
+      // silly way to put stuff in td.label that doesn't look like a label:
+      text-align: left;
+      float: right;
+      font-weight: normal;
+    }
+  }
+  td.input {
+    padding: 1em;
+  }
+  .info {
+    font-size: 0.9em;
+    font-style: italic;
+    color: #777;
+  }
+  // see above for note as to why this makes nice forms.
+  div.input {
+    max-width: 30em;
+    input[type=text], input[type=password], textarea, select {
+      width: 100%;
+    }
+  }
+  td.buttons .form_buttons {
+    float: right;
+  }
+}
+
+//
+// not sure what this is for
+//
+#center table.form {
+  margin: 0 auto;
+}
+
+//
+// FORMY: dictionary
+//
+
+.dictionary {
+  dt {
+    font-weight: bold;
+  }
+  dd {
+    margin-bottom: 0.5em;
+  }
+}
+
