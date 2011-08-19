@@ -10,8 +10,14 @@ namespace :db do
     ActiveRecord::Base.establish_connection
   end
 
-  Rake::Task["db:abort_if_pending_migrations"].clear_prerequisites
-  task :abort_if_pending_migrations => :establish_connection
+  # we don't need the whole environment but just a database connection
+  # for these tasks:
+  [ :abort_if_pending_migrations, "test:purge", "schema:load" ].each do |db_task|
+    Rake::Task["db:#{db_task}"].clear_prerequisites
+    task db_task => :establish_connection
+  end
+
+
 end
 
 
