@@ -15,9 +15,13 @@ class Pages::AttributesController < Pages::SidebarsController
       @page.save!
       render(:update) {|page| page.replace 'public_li', public_line}
     elsif params[:owner]
-      group = Group.find_by_name params[:owner]
-      raise_not_found unless group
-      @page.owner = group
+      if params[:owner] == current_user.name
+        owner = current_user
+      else
+        owner = Group.find_by_name params[:owner]
+      end
+      raise_not_found('owner') unless owner
+      @page.owner = owner
       @page.save!
       redirect_to page_path(@page)
       success

@@ -77,18 +77,19 @@ en:
   contributions: "Contributions"
   contributors: "Contributors"
   users: "Users"
-  contact: "Friend"
+  contact: "Contact"
+  contacts: "Contacts"
+  friends: "Contacts"
+  my_contacts: "My Contacts"
   member_groups_of_network: "Member Groups"
   peers: "Peers"
   all: "All"
   none: "None"
-  contacts: "Friends"
-  my_contacts: "My Friends"
-  friends: "Friends"
   people: "People"
   person: "Person"
   profile: "Profile"
   all_content: "All Content"
+  content: "Content"
   more_information: "More Information"
   more: "more"
   about: "about"
@@ -721,40 +722,6 @@ en:
   user_preferences: "User Preferences"
   edit_profile_link: "Edit Profile"
   profile_saved: "Your profile has been saved."
-
-  ##
-  ## PERMISSIONS
-  ##
-
-  permissions_key: "Key"
-  public_description: "Everyone on the internet"
-  peers_description: "Members of your groups"
-  friends_description: "Your friends"
-
-  may_view: "Who can see my profile?"
-  may_pester: "Who can share content with me and send me messages?"
-  may_see_contacts: "Who can see my friends?"
-  may_request_contact: "Who can request to be my friend?"
-  may_see_groups: "Who can see which groups I'm in?"
-
-  may_see_committees: "Show committees"
-  may_see_networks: "Show networks"
-  may_see_members: "Show group members"
-  may_request_membership: "Allow membership requests"
-  members_may_edit_wiki: "All members may edit the wiki"
-  members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
-  may_edit: "May edit"
-  may_admin: "May admin"
-  may_burden: "May burden"
-  may_spy: "May spy"
-
-  user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
-  user_profile_description_may_see_contacts: "Allow people to see your list of friends."
-  user_profile_description_may_request_contact: "Allow people to request to be your friend."
-  user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
-  user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
-  user_profile_description_may_view: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
-
 
   ##
   ## REQUESTS

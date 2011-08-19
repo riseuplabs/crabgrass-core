@@ -25,12 +25,11 @@ module ActsAsLockedHelper
   end
 
   def permission_lock_label(lock)
-    "may_#{lock}".to_sym.t
+    "may_#{lock}_label".to_sym.t
   end
 
   def permission_lock_info(lock)
-   ""
-   #"user_profile_description_may_#{lock}".to_sym.t
+    "may_#{lock}_description".to_sym.t
   end
 
   def permission_holder_label(holder)

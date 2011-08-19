@@ -49,10 +49,6 @@ module Common::Ui::FormHelper
     end
   end
 
-  def options_for_my_groups(selected=nil)
-    options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
-  end
-
   #
   # add some radio buttons, using a similar api to select and select_tag
   #
