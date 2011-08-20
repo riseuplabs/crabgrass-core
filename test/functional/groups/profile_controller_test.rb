@@ -10,7 +10,7 @@ class Groups::ProfileControllerTest < ActionController::TestCase
 
   def test_edit
     login_as @user
-    assert_permission :may_edit_groups_profile? do
+    assert_permission :may_edit_group_profile? do
       get :edit, :group_id => @group.to_param
     end
     assert_response :success
@@ -18,7 +18,7 @@ class Groups::ProfileControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    assert_permission :may_edit_groups_profile? do
+    assert_permission :may_edit_group_profile? do
       post :update, :group_id => @group.to_param,
         :profile => {}
     end

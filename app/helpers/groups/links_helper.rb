@@ -40,6 +40,12 @@ module Groups::LinksHelper
     link_to("More Info", '#')
   end
 
+  def edit_group_profile_link
+    if may_edit_group_profile?
+      link_to :edit_profile_link.t, edit_group_profile_path(@group), :icon => 'pencil'
+    end
+  end
+
   # members
 
   def list_membership_link
