@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class Groups::ProfileControllerTest < ActionController::TestCase
+class Groups::ProfilesControllerTest < ActionController::TestCase
 
   def setup
     @user = User.make

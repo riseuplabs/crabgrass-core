@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AssetTest < ActiveSupport::TestCase
   # fixes fixture_file_upload for Rails 2.3
   include ActionController::TestProcess
+  fixtures :all
 
   def setup
     setup_assets
@@ -264,7 +265,7 @@ class AssetTest < ActiveSupport::TestCase
 
     asset = Asset.create!(:data => '<b>this is some very interesting data</b>', :content_type => 'text/html', :filename => 'data')
     assert_equal data1, File.read(asset.private_filename)
-    
+
     asset.data = data2
     asset.save
 

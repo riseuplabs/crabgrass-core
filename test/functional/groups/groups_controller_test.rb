@@ -2,13 +2,17 @@ require File.dirname(__FILE__) + '/../../test_helper'
 
 class Groups::GroupsControllerTest < ActionController::TestCase
 
+  def setup
+    @user = User.make
+  end
+
   def test_new_group_requires_login
     get :new
     assert_login_required
   end
 
   def test_new_group
-    login_as :gerrard
+    login_as @user
     assert_permission :may_create_group? do
       get :new
     end
@@ -16,7 +20,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_group
-    login_as :gerrard
+    login_as @user
     assert_difference 'Group.count' do
       assert_permission :may_create_group? do
         post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!"}
@@ -28,7 +32,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_group_without_name
-    login_as :gerrard
+    login_as @user
     assert_no_difference 'Group.count' do
       post :create, :group => {:name => ''}
       assert_error_message
@@ -36,9 +40,10 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_group_with_duplicate_name
-    login_as :gerrard
+    Group.make(:name => 'flowers')
+    login_as @user
     assert_no_difference 'Group.count' do
-      post :create, :group => {:name => 'animals'}
+      post :create, :group => {:name => 'flowers'}
       assert_error_message
     end
   end
