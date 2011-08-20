@@ -3,7 +3,13 @@
 // css. this actually works in recent browsers, and is super cool.
 // 
 
+.big_screen   {display: inherit;}
+.small_screen {display: none;}
+
 @media only screen and (max-width: 590px), only screen and (max-height: 400px) {
+
+  .big_screen   {display: none;}
+  .small_screen {display: inherit;}
 
   .mobi_icon {
     background-repeat: no-repeat;
