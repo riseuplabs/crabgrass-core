@@ -34,7 +34,7 @@ class Groups::RequestsController < Groups::BaseController
     end
   end
 
-  def requests_path(*args)
+  def request_path(*args)
     group_request_path(@group, *args)
   end
 
