@@ -68,4 +68,10 @@ a {
   white-space: nowrap;
 }
 
+//
+// AUTO CLEARING BLOCKS
+//
 
+.autoclear {
+  overflow: auto; // hack to make a container auto-clear child floated elements.
+}
