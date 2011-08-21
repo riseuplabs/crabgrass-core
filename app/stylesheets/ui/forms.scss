@@ -84,6 +84,7 @@ textarea, input, select {
   // TODO: add RTL support.
   //
   &.reverse {
+    overflow: auto; // self clear
     input[type=submit], input[type=button], img {
       float: right;
       margin-right: 0;
