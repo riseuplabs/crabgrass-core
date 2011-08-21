@@ -8,14 +8,20 @@
 
 - parent = @context.entity.parent
 - child  = @context.entity
-
 - parent_size   = 'medium'
 - child_size    = 'small'
 - full_height   = Avatar.pixel_width('large')
-- child_height  = Avatar.pixel_width(child_size)
-- margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
-- parent_style  = ' position: absolute;'
-- child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+
+- if child.committee?
+  - child_height  = Avatar.pixel_width(child_size)
+  - margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
+  - parent_style  = ' position: absolute;'
+  - child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+- elsif child.council?
+  - parent_height = Avatar.pixel_width(parent_size)
+  - margin        = full_height - parent_height - border_width(current_theme.banner_avatar_spacer)
+  - child_style   = ' position: absolute;'
+  - parent_style  = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
 
 .big_screen
   .nested_avatars
@@ -26,10 +32,17 @@
 - parent_size   = 'xsmall'
 - child_size    = 'tiny'
 - full_height   = Avatar.pixel_width('small')
-- child_height  = Avatar.pixel_width(child_size)
-- margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
-- parent_style  = ' position: absolute;'
-- child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+
+- if child.committee?
+  - child_height  = Avatar.pixel_width(child_size)
+  - margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
+  - parent_style  = ' position: absolute;'
+  - child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+- elsif child.council?
+  - parent_height = Avatar.pixel_width(parent_size)
+  - margin        = full_height - parent_height - border_width(current_theme.banner_avatar_spacer)
+  - child_style   = ' position: absolute;'
+  - parent_style  = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
 
 .small_screen
   - if @context.avatar
