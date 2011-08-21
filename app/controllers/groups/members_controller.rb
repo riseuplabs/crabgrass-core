@@ -8,6 +8,9 @@ class Groups::MembersController < Groups::BaseController
   before_filter :fetch_membership, :only => :destroy
   before_filter :login_required
 
+  guard :index => :may_list_group_members?,
+        :destroy => :may_destroy_group_members?
+
   def index
     @memberships = @group.memberships.paginate(pagination_params)
   end
