@@ -17,13 +17,19 @@
   eventually, we want the user to be able to personally customize the appearance
   of their context banner, as well as the navigation and links.
 
+  NOTES
+
+  #context_banner can have one of three classes: large, medium, or small.
+  This is used to determine the position of the first tab.
+
 - if @context
-  %header#context_banner{:class => @context.size}
+  %header#context_banner.large
     %div#banner_content
-      - if @context.avatar
-        %a{:href => entity_path(@context.entity), :class => 'avatar'}><
-          = avatar_for(@context.entity, @context.size)
-      = link_to_entity(@context.entity, :class => 'title')
+      - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)
+        = render :partial => '/layouts/context/nested_banner_content'
+      - else
+        = render :partial => '/layouts/context/normal_banner_content'
+
     = render :partial => '/layouts/context/nav/banner_menu'
 
 

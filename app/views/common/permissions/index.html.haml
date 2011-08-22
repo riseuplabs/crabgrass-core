@@ -6,8 +6,8 @@
       - r.info  permission_lock_info(lock)
 
 .key
-  - title = :permissions_key.tcap + ':'
-  = formy(:list_key, :title => title) do |f|
+  = formy(:dictionary) do |f|
+    - f.title :permissions_key.tcap + ':'
     - @keys.each do |key|
       - f.row do |r|
         - r.label permission_holder_label(key.holder)

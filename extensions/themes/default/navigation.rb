@@ -21,7 +21,7 @@ define_navigation do
   global_section :me do
     label "Me"
     visible { logged_in? }
-    url     { me_home_path }
+    url     { me_pages_path }
     active  { context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
@@ -234,14 +234,14 @@ define_navigation do
 =end
 
     context_section :members do
-      visible { may_list_groups_members? }
+      visible { may_list_group_members? }
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
       active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
 
       local_section :people do
-        visible { may_list_groups_members? }
+        visible { may_list_group_members? }
         label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }
@@ -282,7 +282,7 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profile') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles') }
 
       local_section :settings do
         visible { may_edit_group? }
@@ -299,10 +299,10 @@ define_navigation do
       end
 
       local_section :profile do
-        visible { may_edit_groups_profile? }
+        visible { may_edit_group_profile? }
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
-        active { controller?('groups/profile') }
+        active { controller?('groups/profiles') }
       end
 
       # uncomment this when Settings -> Requests is needed

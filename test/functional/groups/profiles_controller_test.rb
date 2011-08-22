@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class Groups::ProfileControllerTest < ActionController::TestCase
+class Groups::ProfilesControllerTest < ActionController::TestCase
 
   def setup
     @user = User.make
@@ -10,7 +10,7 @@ class Groups::ProfileControllerTest < ActionController::TestCase
 
   def test_edit
     login_as @user
-    assert_permission :may_edit_groups_profile? do
+    assert_permission :may_edit_group? do
       get :edit, :group_id => @group.to_param
     end
     assert_response :success
@@ -18,7 +18,7 @@ class Groups::ProfileControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    assert_permission :may_edit_groups_profile? do
+    assert_permission :may_edit_group? do
       post :update, :group_id => @group.to_param,
         :profile => {}
     end

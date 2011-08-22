@@ -232,18 +232,25 @@ class DispatchController < ApplicationController
 
   def controller_for_group(group)
     params[:action] = 'show'
-    if group.instance_of? Network
-      if current_site.network and current_site.network == group
-        params[:controller] = 'site_network'
-        new_controller('SiteNetworkController')
-      else
-        params[:controller] = 'groups/networks'
-        new_controller('Groups::NetworksController')
-      end
-    else
-      params[:controller] = 'groups/home'
-      new_controller('Groups::HomeController')
-    end
+    params[:controller] = 'groups/home'
+    new_controller('Groups::HomeController')
+
+    #
+    # we used to have different controllers for groups and networks.
+    # we might again someday.
+    #
+    #if group.instance_of? Network
+    #  if current_site.network and current_site.network == group
+    #    params[:controller] = 'site_network'
+    #    new_controller('SiteNetworkController')
+    #  else
+    #    params[:controller] = 'groups/networks'
+    #    new_controller('Groups::NetworksController')
+    #  end
+    #else
+    #  params[:controller] = 'groups/home'
+    #  new_controller('Groups::HomeController')
+    #end
   end
 
   def controller_for_people

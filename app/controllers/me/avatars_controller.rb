@@ -14,5 +14,10 @@ class Me::AvatarsController < Me::BaseController
     @success_url = me_settings_url
   end
 
+  def user_avatars_path(user)
+    me_avatars_path
+  end
+  helper_method :user_avatars_path
+
 end
 

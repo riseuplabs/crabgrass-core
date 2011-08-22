@@ -1,10 +1,10 @@
-class RateManyPageController < BasePageController
+class RateManyPageController < Pages::BaseController
   before_filter :fetch_poll
   javascript :extra, 'page'
   permissions 'rate_many_page'
 
   def show
-    @possibles = @poll.possibles.sort_by{|p| p.position||0 }
+    @possibles = @poll ? @poll.possibles.sort_by{|p| p.position||0 } : []
   end
 
   # ajax or post

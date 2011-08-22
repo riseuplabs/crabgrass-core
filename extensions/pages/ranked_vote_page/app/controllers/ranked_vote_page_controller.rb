@@ -1,4 +1,4 @@
-class RankedVotePageController < BasePageController
+class RankedVotePageController < Pages::BaseController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit]
   stylesheet 'vote'

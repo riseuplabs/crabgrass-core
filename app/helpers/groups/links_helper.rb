@@ -40,12 +40,18 @@ module Groups::LinksHelper
     link_to("More Info", '#')
   end
 
+  def edit_group_profile_link
+    if may_edit_group_profile?
+      link_to :edit_profile_link.t, edit_group_profile_path(@group)
+    end
+  end
+
   # members
 
   def list_membership_link
-    if may_edit_groups_members?
+    if may_edit_group_members?
       link_to(:edit.t, group_members_path(@group))
-    elsif may_list_groups_members?
+    elsif may_list_group_members?
       link_to(:see_all_link.t, group_members_path(@group))
     end
   end
@@ -123,11 +129,25 @@ module Groups::LinksHelper
   # for now, it allows you to immediately remove the user.
   #
   def destroy_membership_link(membership)
-    if may_destroy_groups_members?(membership)
-      link_to_remote :remove.t, :url => group_member_path(@group, membership), :method => 'delete', :confirm => :membership_destroy_confirm_message.t(:user => content_tag(:b,membership.user.name), :group_type => content_tag(:b,@group.name))
-      # i think name is more appropriate than group_type, but the keys are already defined with group_type
+    if may_destroy_group_members?(membership)
+      link_to_remote :remove.t, :url => group_member_path(@group, membership),
+        :method => 'delete',
+        :confirm => :membership_destroy_confirm_message.t(:user => content_tag(:b,membership.user.name),
+        :group_type => content_tag(:b,@group.name))
+
+      # i think name is more appropriate than group_type, but the i18n keys are already defined with group_type
     end
   end
+
+  ##
+  ## AVATARS
+  ##
+
+  def edit_avatar_link
+    url = @group.avatar ? edit_group_avatar_path(@group, @group.avatar) : new_group_avatar_path(@group)
+    link_to_modal(:upload_image_link.tcap, :url => url, :icon => 'picture_edit')
+  end
+
 
   ##
   ## CREATION

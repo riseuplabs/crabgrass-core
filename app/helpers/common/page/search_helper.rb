@@ -167,35 +167,5 @@ module Common::Page::SearchHelper
     toggle_bug_links(compact_link, detailed_link, grid_link)
   end
 
-  #
-  # Options:
-  #  :id, :label, :checked, :with, :method, :success
-  def spinbox_tag(name, url, options = {})
-    options[:url]  = url
-    options[:id] ||= "#{name}_check_link"
-    options[:icon] = options[:checked] ? 'check_on' : 'check_off'
-    # we create a queued request because we don't want any race conditions
-    # with the requests -- they must be resolved one at a time.
-    function = queued_remote_function(spinbox_function_options(options))
-    content_tag(:li) do
-      spinbox_link_to_function(function, options)
-    end
-  end
-
-  private
-
-  def spinbox_function_options(options)
-    options.merge!(
-      :before  => spinner_icon_on(options[:icon], options[:id])
-    )
-    options.slice(:url, :before, :with, :method, :success)
-  end
-
-  def spinbox_link_to_function(function, options)
-    options[:label].blank? ?
-      link_to_function_icon(options[:icon], function, options.slice(:url, :id)) :
-      link_to_function_with_icon(options[:label], function,
-        options.slice(:url, :id, :icon))
-  end
 end
 

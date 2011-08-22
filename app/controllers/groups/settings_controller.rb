@@ -11,4 +11,11 @@ class Groups::SettingsController < Groups::BaseController
     redirect_to group_settings_url(@group)
   end
 
+  protected
+
+  def group_type
+    @group.class.name.downcase.to_sym
+  end
+  helper_method :group_type
+
 end

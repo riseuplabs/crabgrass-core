@@ -11,7 +11,7 @@ module Common::Avatars
 
   def new
     @avatar = Avatar.new
-    render :action => 'edit'
+    render :template => 'common/avatars/edit'
   end
 
   def create
@@ -30,7 +30,7 @@ module Common::Avatars
   def update
     expire_avatar(@entity.avatar)
     @entity.avatar.update_attributes! params[:avatar]
-    @entity.save! # ensure new updated_at. not sure why?
+    @entity.increment!(:version)
   ensure
     redirect_to @success_url
   end

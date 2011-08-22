@@ -1,0 +1,52 @@
+-#
+-# This is the partial for the content of a nested banner.
+-# 
+-# This is used for nested things, like committees and councils.
+-#
+-# a lot of this should probably be moved to the stylesheet.
+-#
+
+- parent = @context.entity.parent
+- child  = @context.entity
+- parent_size   = 'medium'
+- child_size    = 'small'
+- full_height   = Avatar.pixel_width('large')
+
+- if child.committee?
+  - child_height  = Avatar.pixel_width(child_size)
+  - margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
+  - parent_style  = ' position: absolute;'
+  - child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+- elsif child.council?
+  - parent_height = Avatar.pixel_width(parent_size)
+  - margin        = full_height - parent_height - border_width(current_theme.banner_avatar_spacer)
+  - child_style   = ' position: absolute;'
+  - parent_style  = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+
+.big_screen
+  .nested_avatars
+    %a.avatar{:href => entity_path(parent), :style => square_avatar_style(parent, parent_size) + parent_style}
+    %a.avatar{:href => entity_path(child),  :style => square_avatar_style(child,  child_size)  + child_style}
+  = link_to_banner_title(child, @context.size)
+
+- parent_size   = 'xsmall'
+- child_size    = 'tiny'
+- full_height   = Avatar.pixel_width('small')
+
+- if child.committee?
+  - child_height  = Avatar.pixel_width(child_size)
+  - margin        = full_height - child_height - border_width(current_theme.banner_avatar_spacer)
+  - parent_style  = ' position: absolute;'
+  - child_style   = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+- elsif child.council?
+  - parent_height = Avatar.pixel_width(parent_size)
+  - margin        = full_height - parent_height - border_width(current_theme.banner_avatar_spacer)
+  - child_style   = ' position: absolute;'
+  - parent_style  = " position: relative; margin-left: #{margin}px; margin-top: #{margin}px;"
+
+.small_screen
+  - if @context.avatar
+    %a.avatar{:href => entity_path(parent), :style => square_avatar_style(parent, parent_size) + parent_style}
+    %a.avatar{:href => entity_path(child),  :style => square_avatar_style(child,  child_size)  + child_style}
+  = link_to_banner_title(child)
+  
