@@ -6,25 +6,22 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   def setup
     # 6 in total users in rainbow:
     # ["blue", "orange", "purple", "yellow", "red", "green"]
-    @request = RequestToRemoveUser.create! :created_by => users(:red), :recipient => groups(:rainbow), :requestable => users(:orange)
-    @group = groups(:rainbow)
+    @group     = groups(:rainbow)
+    @user      = users(:orange)
+    @requester = users(:red)
+    @request   = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
   end
 
   def test_voting_on_request
     @request.approve_by!(users(:green))
-
-    # shouldn't affect the state
-    assert_equal 'pending', @request.state
+    assert_equal 'pending', @request.state, 'state should not change'
   end
 
-  def test_instant_approval
+  def test_single_approval
     @request.approve_by!(users(:green))
-
     pretend_we_are_in_the_future!
-    @request.tally!
-
-    assert_equal 'approved', @request.state
-    assert !@group.reload.users.include?(users(:orange))
+      @request.tally!
+      assert_approved
     reset_time_to_present!
   end
 
@@ -36,69 +33,68 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
     @request.reject_by!(users(:orange))
     @request.reject_by!(users(:purple))
 
-    assert_equal 'rejected', @request.state
-    assert @group.reload.users.include?(users(:orange))
+    assert_rejected
   end
 
   def test_delayed_approval
-    # 2/3 or more of total votes cast must approve
     @request.approve_by!(users(:green))
     @request.approve_by!(users(:blue))
     @request.reject_by!(users(:purple))
 
     pretend_we_are_in_the_future!
-    @request.tally!
-
-    assert_equal 'approved', @request.state
-    assert !@group.reload.users.include?(users(:orange))
+      @request.tally!
+      assert_approved
     reset_time_to_present!
   end
 
   def test_delayed_rejection
-    # 2/3 or more of total votes cast must approve
-    # there is only 1/2 in this case
-    @request.approve_by!(users(:green))
-    @request.reject_by!(users(:purple))
+    @request.approve_by!(users(:green)) # tie
+    @request.reject_by!(users(:purple)) #
 
     pretend_we_are_in_the_future!
-    @request.tally!
-
-    assert_equal 'rejected', @request.state
-    assert @group.users.include?(users(:orange))
+      @request.tally!
+      assert_rejected
     reset_time_to_present!
   end
 
+  #
+  # this is an awefully slow test
+  #
   def test_voting_scenarios
     voting_scenarios.each do |scenario|
       request = RequestToRemoveUser.create! :created_by => users(:red), :recipient => groups(:rainbow), :requestable => users(:blue)
+
       # blue should never vote, because vote by user proposed for deletion is treated differently
       users = @group.users.clone.select {|u| u.id != users(:blue).id}
 
       # do the votes
+      scenario[:reject].times do
+        user = users.shift
+        request.reject_by!(user)
+      end
       scenario[:approve].times do
         user = users.shift
         request.approve_by!(user)
       end
 
-      scenario[:reject].times do
-        user = users.shift
-        request.reject_by!(user)
-      end
-
       # check that the specified outcome happened
       if scenario[:instant]
-        assert_equal scenario[:instant], request.state, "On scenario: #{scenario}"
+        assert_equal scenario[:instant], request.state, "On scenario: #{scenario.inspect}"
+        if request.state == 'approved'
+          @group.add_user!(users(:blue))
+        end
       else
-        assert_equal 'pending', request.state, "On scenario: #{scenario}"
-
+        assert_equal 'pending', request.state, "On scenario: #{scenario.inspect}"
         pretend_we_are_in_the_future!
-        request.tally!
-        assert_equal scenario[:delayed], request.state, "On scenario: #{scenario}"
+          request.tally!
+          assert_equal scenario[:delayed], request.state, "On scenario: #{scenario.inspect}"
+          if request.state == 'approved'
+            @group.add_user!(users(:blue))
+          end
         reset_time_to_present!
       end
 
       request.destroy
-      @group.add_user!(users(:blue)) if !@group.reload.users.include?(users(:blue))
     end
 
   end
@@ -138,8 +134,8 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       {:approve => 0, :reject => 0, :delayed => 'approved'},
       {:approve => 1, :reject => 0, :delayed => 'approved'},
       {:approve => 2, :reject => 0, :delayed => 'approved'},
-      {:approve => 3, :reject => 0, :delayed => 'approved'},
 
+      {:approve => 3, :reject => 0, :instant => 'approved'},
       {:approve => 4, :reject => 0, :instant => 'approved'},
       {:approve => 5, :reject => 0, :instant => 'approved'},
 
@@ -155,8 +151,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       {:approve => 0, :reject => 2, :delayed => 'rejected'},
       {:approve => 1, :reject => 2, :delayed => 'rejected'},
       {:approve => 2, :reject => 2, :delayed => 'rejected'},
-      {:approve => 3, :reject => 2, :delayed => 'rejected'},
-
+      {:approve => 3, :reject => 2, :delayed => 'approved'},
 
       # 3 rejections
       {:approve => 0, :reject => 3, :instant => 'rejected'},
@@ -170,6 +165,16 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       # 5 rejections
       {:approve => 0, :reject => 5, :instant => 'rejected'}
     ]
+  end
+
+  def assert_rejected
+    assert_equal 'rejected', @request.state, 'should be rejected'
+    assert @group.users(true).include?(@user), 'group should NOT have orange'
+  end
+
+  def assert_approved
+    assert_equal 'approved', @request.state, 'should be approved'
+    assert !@group.users(true).include?(@user), 'group should still have orange'
   end
 
 end
