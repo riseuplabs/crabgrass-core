@@ -45,10 +45,5 @@ class Crabgrass::Initializer < Rails::Initializer
     info 'DONE LOADING'
     super
   end
-
-  def load(file)
-    info "loading #{file}"
-    super
-  end
 end
 

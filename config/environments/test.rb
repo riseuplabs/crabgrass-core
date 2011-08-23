@@ -2,12 +2,6 @@
 ## Unit tests can run in a stripped down environment.
 ##
 
-if ENV["UNIT_TESTING"]
-  UNIT_TESTING = true
-else
-  UNIT_TESTING = false
-end
-
 if UNIT_TESTING
   config.eager_load_paths = ["#{RAILS_ROOT}/app/models"]
   config.frameworks=[:active_record, :action_mailer, :action_view]
