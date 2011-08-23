@@ -2,7 +2,6 @@
 #require 'test/unit'  # I don't know why, but a bunch of tests fail
 #                     # if test/unit is not included early on.
 
-require "mocha"
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 if UNIT_TESTING
@@ -23,11 +22,6 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
-
-if UNIT_TESTING
-  require "unit_record"
-  ActiveRecord::Base.disconnect! :strategy => :raise, :stub_associations => true
-end
 
 ##
 ## misc.

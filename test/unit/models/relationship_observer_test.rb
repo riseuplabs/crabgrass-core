@@ -1,6 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '/test_helper')
+# require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 class RelationshipObserverTest < MiniTest::Unit::TestCase
+
   def setup
+    ActiveRecord::Base.disconnect! :stub_associations => true, :strategy => :noop
   end
 
   def test_after_create_callback
@@ -12,7 +14,6 @@ class RelationshipObserverTest < MiniTest::Unit::TestCase
     rel = Relationship.new :user => me, :contact => you
     rel.type = 'Friendship'
     rel.save!
-    assert true
   end
 end
 
