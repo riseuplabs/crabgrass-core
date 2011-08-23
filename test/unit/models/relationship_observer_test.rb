@@ -1,8 +1,16 @@
 # require File.expand_path(File.dirname(__FILE__) + '/test_helper')
-class RelationshipObserverTest < MiniTest::Unit::TestCase
+require File.expand_path(File.dirname(__FILE__) + '/../../test_helper')
+require 'unit_record'
+class RelationshipObserverTest < ActiveSupport::TestCase
 
   def setup
+    @old_configurations = ActiveRecord::Base.configurations
     ActiveRecord::Base.disconnect! :stub_associations => true, :strategy => :noop
+  end
+
+  def teardown
+    ActiveRecord::Base.configurations = @old_configurations
+    ActiveRecord::Base.establish_connection
   end
 
   def test_after_create_callback

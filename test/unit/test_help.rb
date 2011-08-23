@@ -15,8 +15,6 @@ if defined?(ActiveRecord)
     self.use_transactional_fixtures = true
   end
 
-  ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
-
   def create_fixtures(*table_names, &block)
     Fixtures.create_fixtures(ActiveSupport::TestCase.fixture_path, table_names, {}, &block)
   end
