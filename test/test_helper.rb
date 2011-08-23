@@ -2,10 +2,11 @@
 #require 'test/unit'  # I don't know why, but a bunch of tests fail
 #                     # if test/unit is not included early on.
 
+require "mocha"
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 if UNIT_TESTING
-  require File.expand_path(File.dirname(__FILE__) + "/unit_test_help")
+  require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
 else
   require 'test_help'
 end
@@ -22,6 +23,12 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
+
+if UNIT_TESTING
+  require "unit_record"
+  ActiveRecord::Base.disconnect! :strategy => :raise, :stub_associations => true
+end
+
 ##
 ## misc.
 ##
@@ -30,7 +37,6 @@ require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-
   # only for Machinist v2
   # setup { Machinist.reset_before_test }
 

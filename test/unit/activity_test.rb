@@ -2,23 +2,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
 
+
   def setup
-    @joe = User.make
-    @ann = User.make
-    @group = Group.make
-    @group.add_user! @joe
-    @group.add_user! @ann
-    @joe.reload
-    @ann.reload
   end
 
   def test_contact
-    @joe.add_contact!(@ann, :friend)
-
-    act = FriendActivity.for_all(@joe).find(:first)
-    assert act, 'there should be a friend activity created'
-    assert_equal @joe, act.user
-    assert_equal @ann, act.other_user
+    me = stub("user")
+    you = stub("user")
+    FriendActivity.expects(:create).with(:user => me, :other_user => you)
+    Relationship.create! :user => me, :contact => you,
+      :type => 'Friendship'
   end
 
   def test_user_destroyed
