@@ -1,4 +1,4 @@
-unless UNIT_TESTING
+unless defined?(UNIT_TESTING)
 
   # If you have any compass plugins, require them here.
   require 'compass'

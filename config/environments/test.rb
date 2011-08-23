@@ -2,7 +2,7 @@
 ## Unit tests can run in a stripped down environment.
 ##
 
-if UNIT_TESTING
+if defined? UNIT_TESTING
   config.eager_load_paths = ["#{RAILS_ROOT}/app/models"]
   config.frameworks=[:active_record, :action_mailer, :action_view]
   config.autoload_paths = ["#{RAILS_ROOT}/app/models/"]
@@ -13,7 +13,7 @@ end
 ## STANDARD RAILS OPTIONS
 ##
 
-config.cache_classes = !UNIT_TESTING
+config.cache_classes = !defined?(UNIT_TESTING)
 config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
@@ -40,7 +40,7 @@ config.gem 'minitest', :lib => 'minitest/autorun'
 ## GEMS REQUIRED FOR FUNCTIONAL TESTS
 ##
 
-unless UNIT_TESTING
+unless defined?(UNIT_TESTING)
   config.gem 'compass', :version => '~> 0.10'
   config.gem 'haml', :version => '~> 3.0'
   config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'

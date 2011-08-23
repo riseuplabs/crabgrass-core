@@ -2,7 +2,7 @@
 # load special libraries that won't get magically loaded otherwise.
 #
 
-unless UNIT_TESTING
+unless defined? UNIT_TESTING
   require "#{RAILS_ROOT}/app/stylesheets/sass_extension.rb"
 end
 
