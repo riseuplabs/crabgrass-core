@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 class RelationshipsTest < ActiveSupport::TestCase
   fixtures :users
