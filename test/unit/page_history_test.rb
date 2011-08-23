@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 # WARNING:
 # this test are not isolated since their are using instance objects that for example create a page

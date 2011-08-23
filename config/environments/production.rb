@@ -23,16 +23,24 @@ begin
   end
 rescue LoadError => exc
   # try gem 'SyslogLogger'
-  # i am not sure how to turn down the verbosity with syslog. 
+  # i am not sure how to turn down the verbosity with syslog.
   # even with config.log_level = :warn, it does debug logging.
   begin
-    require 'syslog_logger' 
+    require 'syslog_logger'
     config.logger = SyslogLogger.new('crabgrass')
   rescue LoadError => exc
   end
 end
 
 ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
+
+##
+## GEMS
+##
+
+config.gem 'compass', :version => '~> 0.10'
+config.gem 'haml', :version => '~> 3.0'
+config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
 
 ##
 ## CRABGRASS OPTIONS

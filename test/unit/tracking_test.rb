@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 class TrackingTest < ActiveSupport::TestCase
   # otherwise transactions fail because UNLOCK TABLES implicitly commits the transaction
