@@ -11,4 +11,11 @@ class ActionView::Base
   def me_settings_url(options = {})
     "#{options[:host] || "host://"}me/settings_url"
   end
+
+end
+
+module ActionController::UrlWriter
+  def url_for(options = {})
+    "url://#{options.values.join('/')}"
+  end
 end
