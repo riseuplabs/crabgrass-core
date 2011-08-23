@@ -45,10 +45,6 @@ class ActiveSupport::TestCase
     User.current = nil
   }
 
-  setup do |test|
-    puts test.method_name
-  end
-
   include AuthenticatedTestHelper
   include AssetTestHelper
   include SphinxTestHelper
