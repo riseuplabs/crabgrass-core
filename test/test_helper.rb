@@ -4,7 +4,7 @@
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-if UNIT_TESTING
+if defined?(UNIT_TESTING)
   require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
 else
   require 'test_help'
@@ -44,6 +44,10 @@ class ActiveSupport::TestCase
     # make sure we don't have any login from the last test
     User.current = nil
   }
+
+  setup do |test|
+    puts test.method_name
+  end
 
   include AuthenticatedTestHelper
   include AssetTestHelper
