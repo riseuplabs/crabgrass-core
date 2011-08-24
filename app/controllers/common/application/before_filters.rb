@@ -26,7 +26,7 @@ module Common::Application::BeforeFilters
   private
 
   def enforce_ssl_if_needed
-    request.session_options[:secure] = current_site.enforce_ssl
+    request.session_options[:secure] = nil #current_site.enforce_ssl #needs to be fixed
   end
 
   def essential_initialization
