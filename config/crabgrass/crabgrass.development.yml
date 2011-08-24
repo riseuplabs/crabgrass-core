@@ -37,6 +37,7 @@ available_page_types:
   - DiscussionPage
   - WikiPage
   - EventPage
+  - RateManyPage
 
 theme: blueberry
 
