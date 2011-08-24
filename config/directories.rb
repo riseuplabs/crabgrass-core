@@ -15,6 +15,8 @@ dirs << EXTENSION_DIRECTORY       = "#{Rails.root}/extensions"
 dirs << THEMES_DIRECTORY          = "#{EXTENSION_DIRECTORY}/themes"
 dirs << SEARCH_FILTERS_DIRECTORY  = "#{EXTENSION_DIRECTORY}/search_filters"
 dirs << LOCALE_OVERRIDE_DIRECTORY = "#{EXTENSION_DIRECTORY}/locales"
+dirs << WIDGETS_DIRECTORY         = "#{EXTENSION_DIRECTORY}/widgets"
+
 
 # plugins
 

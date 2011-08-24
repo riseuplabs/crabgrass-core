@@ -34,7 +34,7 @@ Crabgrass::Initializer.run do |config|
   config.active_record.default_timezone = :utc
 
   # allow plugins in more places
-  [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY].each do |path|
+  [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
     config.plugin_paths << path
   end
 

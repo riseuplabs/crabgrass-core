@@ -177,32 +177,20 @@ module WikiHelper
      label
   end
 
-  def wiki_action(action, hash={})
+  def pppwiki_action(action, hash={}) # test moved to widget directory
     {:controller => 'wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
   end
 
-  def wiki_edit_link(wiki_id=nil)
-    return unless may_edit_wiki?(@group, wiki_id)
+  def ppppwiki_edit_link(wiki_id=nil) # test moved to widget directory
+    return unless may_edit_wiki?(@group, wiki_id) #2nd paramater?
     # note: firefox uses layerY, ie uses offsetY
-    link_to_remote_with_icon(I18n.t(:edit), :icon => 'pencil',
-      :url => wiki_action('edit', :wiki_id => wiki_id),
-      :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
-    )
+    link_to_remote(:edit.t,
+                   {:url => wiki_action('edit', :wiki_id => wiki_id), :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"},
+                   {:icon => 'pencil'}
+                   )
   end
 
-  def wiki_more_link(wiki_id=nil)
-    wiki=Wiki.find(wiki_id)
-    return unless wiki.try.body and wiki.body.length > 500
-    link_to_remote_with_icon(I18n.t(:more), :icon => 'plus',
-      :url => wiki_action('show', :wiki_id => wiki_id))
-  end
-
-  def wiki_less_link(wiki_id=nil)
-    wiki=Wiki.find(wiki_id)
-    return unless wiki.try.body and wiki.body.length > 500
-    link_to_remote_with_icon(I18n.t(:close_link), :icon => 'minus',
-      :url => wiki_action('teaser', :wiki_id => wiki_id))
-  end
+  #moved wiki_more_link and wiki_less_link to wiki_helper in widget directory
 
   ##
   ## WIKI EDITORS

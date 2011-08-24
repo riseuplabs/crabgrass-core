@@ -1,0 +1,30 @@
+<%# locals: wiki %>
+<div style='position:relative'> <!-- so params[height] will work -->
+  <div class='wiki'>
+    <%= wiki.body_html %>
+  </div>
+  <% spinner_id = 'preview-spinner-%s' % rand(1000000) -%>
+  <div class='formbox'>
+    <% form_remote_tag(
+         :url => wiki_action('edit_area', :wiki_id => wiki.id),
+         :loading => show_spinner(spinner_id),
+         :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # BUG: NOT USED!
+     ) do -%>
+     <div>
+       <%= submit_to_remote('edit', 'Edit', 
+         :url => wiki_action('edit_area', :wiki_id => wiki.id),
+         :loading => show_spinner(spinner_id),
+         :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # firefox=>layerY, ie=>offsetY
+       ) %>
+       <%# submit_tag 'Edit', :name => 'edit'
+         #   ^^ this is replaced by a submit_to_remote because of bug in form_remote_tag
+         #      where it doesn't pick up :with -%>
+       <%# submit_tag 'Close', :name => 'close' %>
+       <%= submit_to_remote('close', 'Close', 
+         :url => wiki_action('done', :wiki_id => wiki.id) ) %>
+       <%= spinner(spinner_id) %>
+     </div>
+    <% end -%>
+  </div>
+</div>
+
