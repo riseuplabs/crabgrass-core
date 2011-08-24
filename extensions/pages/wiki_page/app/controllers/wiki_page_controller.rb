@@ -8,7 +8,7 @@ class WikiPageController < Pages::BaseController
   #stylesheet 'wiki_edit'
   #javascript :wiki, :action => :edit
 
-  helper :wiki_page, :wiki
+  helper :wiki_page, :wiki #??
   helper_method :save_or_cancel_edit_lock_wiki_error_text
 
   permissions 'wiki_page'

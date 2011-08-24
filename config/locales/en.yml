@@ -53,7 +53,7 @@ en:
   approved_by_entity: "Approved by %{entity}"
   rejected_by_entity: "Rejected by %{entity}"
   total: "%{count} total"
-  #created_when_by: "Created by %{user} on %{when}."
+  created_when_by: "Created by %{user} on %{when}."
   #approved_when_by: "Approved by %{user} on %{when}."
 
   ##
