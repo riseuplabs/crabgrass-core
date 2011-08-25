@@ -8,8 +8,6 @@
     <%= text_field 'task', 'name', :class => 'task_name' %><br/>
   detail:<br/>
     <%= text_area 'task', 'description', :size => '50x4', :class => 'task_description' %><br/>
-  <!--   due:<br/>
-    <%= calendar_date_select_tag 'task[due_at]' %><br/> -->
   assign to:<br/>
     <%= checkboxes_for_assign_people_to_task(@task, [current_user.id], page) %>
     <br style='clear:left'/>
