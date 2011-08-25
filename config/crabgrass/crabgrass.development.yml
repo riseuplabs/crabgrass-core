@@ -38,6 +38,7 @@ available_page_types:
   - WikiPage
   - EventPage
   - RateManyPage
+  - RankedVotePage
 
 theme: blueberry
 
