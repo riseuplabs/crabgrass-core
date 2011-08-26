@@ -12,7 +12,7 @@
 class Widget::WikiController < ApplicationController
 
   helper 'widget/wiki' #:wiki
-  #permissions 'widget/wiki' #'wiki'
+  permissions 'widget/wiki' #'wiki'
 
   #include ControllerExtension::WikiRenderer
   #include ControllerExtension::WikiPopup

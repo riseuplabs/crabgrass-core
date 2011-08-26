@@ -8,10 +8,7 @@ module WikiHelper
   # that the id number are in the format listed here. if you change these, also
   # change the javascript.
 
-  # used to mark private and public tabs
-  def area_id(wiki)
-    'edit_area-%s' % wiki.id
-  end
+  #moved area_id to widget/wiki
 
   # this is the textarea were wiki is written
   def wiki_body_id(wiki)
@@ -177,20 +174,7 @@ module WikiHelper
      label
   end
 
-  def pppwiki_action(action, hash={}) # test moved to widget directory
-    {:controller => 'wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
-  end
-
-  def ppppwiki_edit_link(wiki_id=nil) # test moved to widget directory
-    return unless may_edit_wiki?(@group, wiki_id) #2nd paramater?
-    # note: firefox uses layerY, ie uses offsetY
-    link_to_remote(:edit.t,
-                   {:url => wiki_action('edit', :wiki_id => wiki_id), :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"},
-                   {:icon => 'pencil'}
-                   )
-  end
-
-  #moved wiki_more_link and wiki_less_link to wiki_helper in widget directory
+  #moved wiki_more_link, wiki_less_link, wiki_action and wiki_edit_link to wiki_helper in widget directory
 
   ##
   ## WIKI EDITORS
