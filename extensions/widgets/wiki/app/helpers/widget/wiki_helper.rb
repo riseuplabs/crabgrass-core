@@ -1,16 +1,21 @@
 module Widget::WikiHelper
 
+  # used to mark private and public tabs
+  def area_id(wiki)
+    'edit_area-%s' % wiki.id
+  end
+
   def wiki_edit_link(wiki_id=nil)
     return unless may_edit_wiki?(@group) #, wiki_id) #2nd paramater?
     # note: firefox uses layerY, ie uses offsetY
-    link_to_remote(:edit.t,
+    link_to_remote('blah',#:edit.t,
                    {:url => wiki_action('edit', :wiki_id => wiki_id), :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"},
                    {:icon => 'pencil'}
                    )
   end
 
-  def wiki_action(action, hash={}) # test moved to widget directory
-    {:controller => 'wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+  def wiki_action(action, hash={})
+    {:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
   end
 
   def wiki_more_link(wiki_id=nil)
