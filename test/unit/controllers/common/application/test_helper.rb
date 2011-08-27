@@ -5,7 +5,7 @@ require 'active_support/inflector'
 require 'active_support/hash_with_indifferent_access' unless defined? HashWithIndifferentAccess
 require 'test/unit'
 
-RAILS_ENV='test'
+RAILS_ENV='test' unless defined? RAILS_ENV
 
 module Common
   module Application

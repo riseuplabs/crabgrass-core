@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class PermissionsTest < ActiveSupport::TestCase
+class PermissionTest < ActiveSupport::TestCase
 
   fixtures :all
 
