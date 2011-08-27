@@ -164,7 +164,7 @@ class Request < ActiveRecord::Base
 
   #
   # change the state of the request, testing to see if the user is allowed to.
-  # 
+  #
   def set_state!(newstate, user=nil)
     if new_record?
       raise Exception.new('record must be saved first')
@@ -192,12 +192,13 @@ class Request < ActiveRecord::Base
   # (todo: add support for :ignore)
   #
   def mark!(as, user)
-    if as == :approve
+    case as
+    when :approve
       approve_by!(user)
-    elsif as == :reject
+    when :reject
       reject_by!(user)
-    elsif as == :destroy and created_by == user
-      destroy
+    when :destroy
+      destroy_by!(user)
     end
   end
 
@@ -207,6 +208,14 @@ class Request < ActiveRecord::Base
 
   def reject_by!(user)
     set_state!('rejected',user)
+  end
+
+  def destroy_by!(user)
+    if may_destroy?(user)
+      destroy
+    else
+      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => 'destroy'))
+    end
   end
 
   # triggered by FSM
