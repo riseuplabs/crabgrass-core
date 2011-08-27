@@ -12,7 +12,7 @@
 #     (b) defining the authorized?() method.
 #     (c) using permission auto-guessing.
 # (4) views use permission definitions in order to display the right thing
-# 
+#
 #
 # (1) Permission Definition
 # ---------------------------------
@@ -72,7 +72,7 @@
 #
 #   At the top of your controller definition, do this:
 #
-#     guard :show => :may_show_robots?, 
+#     guard :show => :may_show_robots?,
 #           :update => :may_edit_robots?
 #
 #   This will ensure the may_show_robots? returns true before 'show()' will run.
@@ -205,21 +205,11 @@ module Common::Application::Permissions
     #
     # permissions are resolved in this order:
     #
-    # (1) check to see if a method is defined that matches may_action_controller?()
-    # (2) check the class hierarchy for such a method (replacing controller name
-    #     with the appropriate controller).
-    # (3) fall back to default_permission
+    # (1) check for a method as specified with guard for the given action
+    # (2) check to see if a method is defined that matches may_action_controller?()
+    # (3) check to see if a method with aliased actions
     # (4) return false if we had no success so far.
     #
-    #def may?(controller, action, *args)
-    #  permission = permission_for_controller(controller, action, *args)
-    #  if permission and block_given?
-    #    # return nil, if yield returns false
-    #    yield
-    #  else
-    #    permission
-    #  end
-    #end
 
     #
     # This method will raise PermissionDenied if the current user cannot
@@ -296,13 +286,10 @@ module Common::Application::Permissions
     end
 
     def find_permission_method
-      objects = possible_objects
       verbs = possible_verbs
-      for object in objects
-        for verb in verbs
-          if method = permission_method_exists(verb,object)
-            return method
-          end
+      for verb in verbs
+        if method = permission_method_exists(verb,method_object)
+          return method
         end
       end
       return nil # sadly, nothing found
@@ -312,7 +299,6 @@ module Common::Application::Permissions
     def permission_method_exists(verb, object)
       return false unless verb and object
       methods = ["may_#{verb}_#{object}?"]
-      methods << "may_#{verb}_#{object.singularize}?" if object != object.singularize
       methods << "may_#{verb}_#{object.pluralize}?" if object != object.pluralize
       methods.each do |method|
         add_permission_log(:attempted => method)
@@ -323,27 +309,24 @@ module Common::Application::Permissions
       return false
     end
 
-    def possible_objects
-      # the possibilities are tried *in order*
-      objects = []
-      if permission_object
-        objects << permission_object
-      elsif params[:controller] =~ /\//
-        objects << params[:controller].sub('/','_')      # eg 'me/requests' -> 'me_requests'
-        objects << params[:controller].sub(/^.*\//, '')  # eg 'me/requests' -> 'requests'
-        objects << params[:controller].sub(/\/.*$/, '')  # eg 'me/requests' -> 'me'
-      else
-        objects << params[:controller]
-      end
-      return objects
+    #
+    # returns the object specified with permissions
+    # or a singularized version of the controller param
+    # eg 'groups/requests' -> 'group_request'
+    #
+    def method_object
+      permission_object ||
+      params[:controller].
+        split('/').
+        map{|o| o.singularize}.
+        join('_')
     end
 
     def possible_verbs
       # the possibilities are tried *in order*
-      verbs = []
-      verbs << permission_verb
-      verbs << params[:action]
-      verbs += ACTION_ALIASES[params[:action]] if ACTION_ALIASES[params[:action]].any?
+      return [permission_verb] if permission_verb
+      verbs = [params[:action]]
+      verbs += ACTION_ALIASES[params[:action]] if ACTION_ALIASES[params[:action]]
       verbs << 'access'
       return verbs
     end
