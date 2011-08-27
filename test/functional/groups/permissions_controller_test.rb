@@ -24,7 +24,7 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    assert_permission :may_edit_permissions? do
+    assert_permission :may_edit_group_permissions? do
       post :update, :group_id => @group.to_param, :view => true, :id => 0
     end
     assert_response :success

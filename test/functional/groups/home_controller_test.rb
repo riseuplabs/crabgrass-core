@@ -10,7 +10,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_show
     login_as @user
-    assert_permission :may_show_groups_home? do
+    assert_permission :may_show_group_home? do
       get :show, :id => @group.to_param
     end
     assert_response :success
@@ -18,14 +18,14 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_show_public
     @group.grant! :public, :view
-    assert_permission :may_show_groups_home? do
+    assert_permission :may_show_group_home? do
       get :show, :id => @group.to_param
     end
     assert_response :success
   end
 
   def test_may_not_show
-    assert_permission :may_show_groups_home?, false do
+    assert_permission :may_show_group_home?, false do
       get :show, :id => @group.to_param
     end
   end

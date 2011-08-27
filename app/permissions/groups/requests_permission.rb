@@ -2,7 +2,7 @@ module Groups::RequestsPermission
 
   protected
 
-  def may_create_groups_request?(group=@group)
+  def may_create_group_request?(group=@group)
     logged_in? and
     group and
     current_user.may?(:request_membership, group) and
@@ -28,6 +28,6 @@ module Groups::RequestsPermission
     current_user.may?(:admin, group)
   end
 
-  alias_method :may_list_groups_requests?, :may_admin_requests?
+  alias_method :may_list_group_requests?, :may_admin_requests?
 
 end

@@ -255,14 +255,14 @@ define_navigation do
       end
 
       local_section :invites do
-        visible { may_create_groups_invite? }
+        visible { may_create_group_invite? }
         label   { "Send Invites" }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') && action?('new') }
       end
 
       local_section :requests do
-        visible { may_list_groups_requests? }
+        visible { may_list_group_requests? }
         label   { 'Membership Requests' }
         url     { group_requests_path(@group) }
         active  { controller?('groups/requests') }
@@ -278,21 +278,23 @@ define_navigation do
     end
 
     context_section :settings do
-      visible { may_edit_group? }
+      visible { may_edit_group_settings? ||
+        may_edit_group_permissions? ||
+        may_edit_group_profile? }
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
       active { controller?('groups/settings', 'groups/permissions', 'groups/profiles') }
 
       local_section :settings do
-        visible { may_edit_group? }
+        visible { may_edit_group_settings? }
         label  { :basic_settings.t }
         url    { group_settings_path(@group) }
         active { controller?('groups/settings') }
       end
 
       local_section :permissions do
-        visible { may_edit_group? }
+        visible { may_edit_group_permissions? }
         label  { :permissions.t }
         url    { group_permissions_path(@group) }
         active { controller?('groups/permissions') }

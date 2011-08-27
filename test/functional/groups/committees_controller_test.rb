@@ -11,7 +11,7 @@ class Groups::CommitteesControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_create_groups_committee? do
+    assert_permission :may_create_group_committee? do
       get :new, :group_id => @group.to_param
     end
     assert_response :success
@@ -19,7 +19,7 @@ class Groups::CommitteesControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    assert_permission :may_create_groups_committee? do
+    assert_permission :may_create_group_committee? do
       assert_difference '@group.committees.count' do
         get :create, :group_id => @group.to_param,
          :committee => Committee.plan

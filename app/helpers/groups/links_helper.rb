@@ -12,7 +12,7 @@ module Groups::LinksHelper
 
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
-    if may_create_groups_membership?
+    if may_create_group_membership?
       link_to :join_group_link.t(:group_type => @group.group_type),
         group_memberships_path(@group),
         :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
@@ -28,7 +28,7 @@ module Groups::LinksHelper
   end
 
   def leave_group_link
-    if may_destroy_groups_membership?
+    if may_destroy_group_membership?
       link_to :leave_group_link.t(:group_type => @group.group_type),
         group_membership_path(@group, current_user),
         :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
@@ -87,7 +87,7 @@ module Groups::LinksHelper
   #end
 
   def create_committee_link
-    if may_create_groups_committee?
+    if may_create_group_committee?
       link_to :create_button.t, new_group_committee_path(@group)
     end
   end

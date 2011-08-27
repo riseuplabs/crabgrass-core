@@ -11,7 +11,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   def test_index
     @group.add_user! @user
     login_as @user
-    assert_permission :may_list_groups_requests? do
+    assert_permission :may_list_group_requests? do
       get :index, :group_id => @group.to_param
     end
     assert_response :success
@@ -20,7 +20,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   def test_create
     login_as @user
     @group.grant! :public, :request_membership
-    assert_permission :may_create_groups_request? do
+    assert_permission :may_create_group_request? do
       assert_difference 'RequestToJoinYou.count' do
         get :create, :group_id => @group.to_param
       end
