@@ -1,3 +1,8 @@
+#
+# this is for current_user's memberships.
+# it should perhaps be called 'my_memberships'
+#
+
 module Groups::MembershipsPermission
 
   protected
