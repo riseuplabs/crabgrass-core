@@ -27,31 +27,4 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     end
     assert_response :redirect
   end
-
-  def test_update
-    @group.add_user! @user
-    login_as @user
-    requesting = User.make
-    request = RequestToJoinYou.create :created_by => requesting,
-      :recipient => @group
-    assert_permission :may_update_request? do
-      get :update, :group_id => @group.to_param,
-        :id => request.id
-    end
-  end
-
-  def test_destroy
-    @group.add_user! @user
-    login_as @user
-    requesting = User.make
-    request = RequestToJoinYou.create :created_by => requesting,
-      :recipient => @group
-    assert_permission :may_destroy_request? do
-      assert_difference 'RequestToJoinYou.count', -1 do
-        delete :destroy, :group_id => @group.to_param,
-         :id => request.id
-      end
-    end
-    assert_response :success
-  end
 end

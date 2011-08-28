@@ -30,17 +30,4 @@ class Groups::InvitesControllerTest < ActionController::TestCase
     assert_redirected_to :action => :index
   end
 
-  def test_destroy
-    login_as @user
-    recipient = User.make
-    invite = RequestToJoinUs.create :created_by => @user,
-      :recipient => recipient, :requestable => @group
-    assert_permission :may_destroy_request? do
-      assert_difference 'RequestToJoinUs.count', -1 do
-        delete :destroy, :group_id => @group.to_param,
-         :id => invite.id
-      end
-    end
-    assert_response :success
-  end
 end

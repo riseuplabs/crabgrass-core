@@ -64,13 +64,13 @@ module Groups::LinksHelper
 
 
   def invite_link
-    if may_admin_requests?
+    if may_create_group_invite?
       link_to(:send_invites.t, new_group_invite_path(@group))
     end
   end
 
   def requests_link
-    if may_admin_requests?
+    if may_list_group_requests?
       link_to(:view_requests.t, group_requests_path(@group))
     end
   end
