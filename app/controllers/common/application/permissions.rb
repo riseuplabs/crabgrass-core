@@ -132,8 +132,6 @@ module Common::Application::Permissions
     base.extend ClassMethods
     base.send :include, InstanceMethods
     base.class_eval do
-      #helper_method :may?
-      #helper_method :may_action?
       helper_method :permission_log
     end
   end
@@ -161,15 +159,7 @@ module Common::Application::Permissions
         @permission_options = HashWithIndifferentAccess.new(class_names.pop)
       end
       for class_name in class_names
-        begin
-          permission_class = "#{class_name}_permission".camelize.constantize
-        rescue NameError # permissions 'groups' => Groups::BasePermission
-          begin
-            permission_class = "#{class_name}/base_permission".camelize.constantize
-          rescue NameError
-            raise 'could find permission file for "%s"' % class_name
-          end
-        end
+        permission_class = "#{class_name}_permission".camelize.constantize
         include(permission_class)
         add_template_helper(permission_class)
       end
@@ -359,79 +349,4 @@ module Common::Application::Permissions
   end # end instance methods
 
 end # end module
-
-
-##
-## DISABLED STUFF
-##
-
-#  # Generate a link to the specific action if the user is allowed to do
-#  # so, skipping it otherwise.
-#  #
-#  # Examples:
-#  #   <%= link_if_may("Create a Group", :group, :create) %>
-#  #   <%= link_if_may("Edit this Group", :group, :edit, @group) %>
-#  #   <%= link_if_may("Delete this Group", :group, :delete, @group, :confirm => "Are you sure?") %>
-#  #   <%= link_if_may("Boldly go", :warp_drive, :enable, nil, {}, {:style => "font-weight: bold;"} %>
-#  def link_if_may(link_text, controller, action, object = nil, link_opts = {}, html_opts = nil)
-#    if may?(controller, action, object)
-#      object_id = params_object_id(object)
-#      link_to(link_text, {:controller => controller, :action => action, :id => object_id}.merge(link_opts), html_opts)
-#    end
-#  end
-
-#  def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
-#    if may?(controller, action, object)
-#      object_id = params_object_id(object)
-#      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object_id}.merge(link_opts), active)
-#    end
-#  end
-
-#  # matches may_x?
-#  PERMISSION_METHOD_RE = /^may_([_a-zA-Z]\w*)\?$/
-
-#  # Call may?() if the missing method is in the form of a permission test (may_x?)
-#  # and call super() otherwise.
-#  #
-#  # There are two exceptions to this rule:
-#  #
-#  # (1) We do not call super() if we are a controller. Instead, just throw an error.
-#  # this forces every controller to explictly define all its actions. It is just too
-#  # difficult to try to support anything else.
-#  #
-#  # (2) We do not call super() if the superclass does not have method_missing
-#  # defined, since this will cause an error.
-#  #
-#  def method_missing(method_id, *args)
-#    method_id = method_id.to_s
-#    match = PERMISSION_METHOD_RE.match(method_id)
-#    if match
-#      result = may?(controller, match[1], *args)
-#      if result.nil?
-#        raise Exception.new('could not find permission definition for %s' % method_id)
-#      else
-#        result
-#      end
-#    elsif self.is_a? ActionController::Base
-#      raise NameError, "No method #{method_id}. (NOTE: due to the way permissions work, you must explicitly define each action in a controller).", caller
-#    elsif self.class.superclass.method_defined?(:method_missing)
-#      super
-#    else
-#      raise NameError, "No method #{method_id}", caller
-#    end
-#  end
-
-#  private
-
-
-#  # the first one that makes sense in this order: object.name, object.id, nil
-#  def params_object_id(object)
-#    object_id = if object.respond_to?(:name)
-#      object.name
-#    elsif !object.blank?
-#      object.id
-#    end
-#  end
-
-
 
