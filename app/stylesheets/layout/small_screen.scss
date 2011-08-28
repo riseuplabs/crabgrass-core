@@ -6,6 +6,10 @@
 .big_screen   {display: inherit;}
 .small_screen {display: none;}
 
+//
+// if HEIGHT or WIDTH is small
+//
+
 @media only screen and (max-width: 590px), only screen and (max-height: 400px) {
 
   .big_screen   {display: none;}
@@ -23,10 +27,15 @@
   #center {
     margin: 2%;
   }
+
 }
 
 
-//@media only screen and (max-height: 400px) {
+//
+// if HEIGHT is small
+//
+
+@media only screen and (max-height: 400px) {
 //  #context_banner {
 //    a.avatar img {
 //      // it would be better to instead make visible a version with 32px size.
@@ -37,5 +46,29 @@
 //      font-size: 1.1em;
 //    }
 //  }
-//}
+}
+
+//
+// if WIDTH is small
+//
+
+@media only screen and (max-width: 590px) {
+
+  //
+  // split panel
+  //
+  .split_panel {
+    .panel_left {
+      width: 100% !important;
+      float: none;
+    }
+    .panel_right {
+      width: 100% !important;
+      margin-left: 0 !important;
+      float: none;
+    }
+  }
+
+}
+
 

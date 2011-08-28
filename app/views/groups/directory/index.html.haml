@@ -1,5 +1,18 @@
+-# .directory.two_column_float
+-#   - for group in @groups
+-#     .column_item
+-#       = render :partial => 'group', :locals => {:group => group}
 
-= render :partial => "common/entities/two_column", :locals => {:entities => @groups, :entity_partial => 'group'}
+- groups_a, groups_b = even_split(@groups)
+.directory.split_panel
+  .panel_left
+    = render :partial => 'group', :collection => groups_a
+  .panel_right
+    = render :partial => 'group', :collection => groups_b
+
+
+.p
+  = pagination_links(@groups)
 
 
 

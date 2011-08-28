@@ -1,9 +1,5 @@
-.entity
-  - if !entity.committee?
-    = avatar_link(entity, 'small')
-    = link_to_user entity, :class => 'single'
-    = render :partial => 'child_committee', :collection => entity.committees
-  - else # this will only show committees if they are a primary group
-    = 'committee' # obviously we won't keep this
-    = avatar_link(entity, 'small')
-    = link_to_user entity, :class => 'single'
+.entry
+  .avatar= avatar_link(group, 'medium')
+  .text
+    = group_entry(group)
+

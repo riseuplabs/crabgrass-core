@@ -79,7 +79,7 @@
 
   // make the items at least 50% width and float them
   .column_item {
-    min-width: 50%;
+    width: 50%;
     float: left;
 
     // when a .p is floated, the margin gets doubled, so we put half margins here.
