@@ -17,7 +17,8 @@
   .panel_left
     - for item in @items
       - id = item.dom_id
-      .panel_arrow{:id => "panel_arrow_#{id}"}
+      .big_screen
+        .panel_arrow{:id => "panel_arrow_#{id}"}
       .row{:id => "panel_left_#{id}", :onmousedown=>"activatePanelRow('#{id}')"}
         .content
           = render :partial => left_panel, :locals => {item_name => item}

@@ -95,11 +95,8 @@ class RateManyPageController < Pages::BaseController
     @poll = @page.data
   end
 
-  def setup_view
-    @show_print = true
+  def setup_options
+    # @options.show_print = true
   end
 
-  def build_page_data
-    RatingPoll.new
-  end
 end

@@ -12,6 +12,7 @@ things to work on
 
 groups
 . destroying group
+. request to expell
 
 directory
 . group
@@ -238,6 +239,10 @@ Javascript Applications
 
 http://sheetster.com/ -- GPL java server for web spreadsheets, REST API.
 
+Rails Applications
+===============================
+
+http://noosfero.org
 
 
 
