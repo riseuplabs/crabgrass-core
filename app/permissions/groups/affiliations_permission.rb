@@ -20,8 +20,8 @@ module Groups::AffiliationsPermission
   end
 
   def may_show_affiliations?(group = @group)
-    may_list_groups_networks?(group) or
-    may_list_groups_committees?(group) or
+    may_list_group_networks?(group) or
+    may_list_group_committees?(group) or
     group.real_council
   end
 
