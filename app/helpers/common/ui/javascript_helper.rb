@@ -31,15 +31,15 @@ module Common::Ui::JavascriptHelper
   # 
   # requires crabgrass's javascript class 'Style'
   #
-  def set_style(selector, css)
-    id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-    "Style.set('%s','%s {%s}');" % [id, selector, css]
-  end
-
-  def clear_style(selector)
-    id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-    "Style.clear('%s');" % id
-  end
+  #def set_style(selector, css)
+  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
+  #  "Style.set('%s','%s {%s}');" % [id, selector, css]
+  #end
+  #
+  #def clear_style(selector)
+  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
+  #  "Style.clear('%s');" % id
+  #end
 
   ##
   ## request queueing
