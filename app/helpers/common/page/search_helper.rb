@@ -70,12 +70,16 @@ module Common::Page::SearchHelper
     SearchFilter['all']
   end
 
+  #
   # if we should show the 'all' filter, return true.
+  #
   def show_all?
-    @show_all ||= !(@path.filters.detect {|filter,x| filter.has_control_ui?})
+    @show_all ||= !(@path.filters.detect {|filter,x| filter.has_label?})
   end
 
-  # mode -- :add | :remove
+  #
+  # mode: must be :add or :remove
+  #
   def filter_checkbox_li_tag(mode, filter, args=nil)
     if filter.has_args?
       filter_multivalue_li_tag(mode, filter, args)
@@ -84,24 +88,27 @@ module Common::Page::SearchHelper
     end
   end
 
+  #
   # for filters with no args
+  #
   def filter_singlevalue_li_tag(mode, filter)
     spinbox_tag(filter.path_keyword,
       page_search_path(mode => filter.path_definition),
-      :label => filter.label.t,
+      :label => filter.label(nil, {mode => true, :current_user => current_user}),
       :with => 'FilterPath.encode()',
       :checked => (mode == :remove) )
   end
 
+  #
   # for filters with one or more args
+  #
   def filter_multivalue_li_tag(mode, filter, args)
+    label = filter.label(args, {mode => true, :current_user => current_user})
     if mode == :add
-      label = filter.label
       html = render(:partial => 'common/pages/search/popup',
         :locals => {:url => page_search_path(:add => filter.path_definition), :filter => filter})
       link_to_modal(label, :html => html, :icon => 'check_off')
-    else
-      label = filter.label(args)
+    elsif mode == :remove
       if label
         path = filter.path(args)
         name = filter.name(args)
@@ -165,6 +172,20 @@ module Common::Page::SearchHelper
     grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
 
     toggle_bug_links(compact_link, detailed_link, grid_link)
+  end
+
+  #
+  # javascript code that creates an ajax call to the server to update the list of
+  # pages if the window.location.hash changes (and it was not changed by the page
+  # search code, e.g. the user hit the back button in the browser).
+  #
+  def fire_page_search_on_location_hash_change
+    function = queued_remote_function(
+      :url => page_search_path,
+      :with => 'FilterPath.encode()',
+      :condition => 'FilterPath.shouldUpdateServer()'
+    )
+    "LocationHash.onChange = function(){#{function}};"
   end
 
 end

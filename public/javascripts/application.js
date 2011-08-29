@@ -89,7 +89,9 @@ Element.addMethods(CgUtils);
 // CSS UTILITY
 //
 
-function replaceClassName(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
+function replaceClassName(element, old_class, new_class) {
+  element.removeClassName(old_class); element.addClassName(new_class)
+}
 
 //
 // FORM UTILITY
@@ -291,7 +293,7 @@ var DropMenu = Class.create({
   },
 
   showMenuEvent: function(event) {
-    evalOnclickOnce(this.menu);
+    evalAttributeOnce(this.menu, 'onClick');
     this.clearEvents(event);
     if (this.menuIsOpen()) {
       DropMenu.instances.invoke('hideMenu');
@@ -339,7 +341,7 @@ var LocationHash = {
   poll: function() {
     if (window.location.hash != this.current) {
       this.current = window.location.hash;
-      onChange();
+      this.onChange();
     }
   }
 }
@@ -374,22 +376,59 @@ function activatePanelRow(row_id) {
 
 
 //
-// ajaxy page search filter path
+// FilterPath is a class for managing the path used in ajax page search.
 //
+// The path is stored in the window.location.hash. Additionally, we keep a
+// separate copy in this.location_hash, so we can determine if changes to
+// window.location.hash were caused by FilterPath or by some other
+// means (e.g. the user hit the back button).
+//
+
 var FilterPath = {
+
+  //
+  // returns a string snippet suitable for adding to a url.
+  // for example: remote_function(:url => me_pages_path, :with => 'FilterPath.encode()')
+  //
   encode: function() {
     return "filter=" + window.location.hash.sub("#","");
   },
+
+  //
+  // sets the current path by replacing the old
+  //
   set: function(path) {
     window.location.hash = path;
+    this.location_hash = window.location.hash;
   },
+
+  //
+  // add a single segment to the path
+  //
   add: function(segment) {
     if (window.location.hash.indexOf(segment) == -1) {
       window.location.hash = (window.location.hash + segment).gsub('//','/');
+      this.location_hash = window.location.hash;
     }
   },
+
+  //
+  // remove a single segment from the path
+  //
   remove: function(segment) {
     window.location.hash = window.location.hash.gsub(segment,'/');
+    this.location_hash = window.location.hash;
+  },
+
+  //
+  // returns true if we need to send a request to the server
+  // to update the search based on the window.location.hash.
+  // we only do this if the window.location.hash was changed by 
+  // means other than FilterPath
+  //
+  shouldUpdateServer: function() {
+    console.log('shouldUpdateServer ' + (Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash));
+    return(Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash);
   }
 }
 
@@ -398,13 +437,22 @@ var FilterPath = {
 // others start. Parameters are eval'ed when the request is fired off,
 // not when it is queued.
 //
+
 var RequestQueue = {
+
+  //
+  // adds a new request to the queue.
+  //
   add: function(url, options, parameters) {
     this.queue = this.queue || []
     this.queue.push({url:url, options:options, parameters:parameters});
     if (!this.timer)
       this.timer = setInterval("RequestQueue.poll()", 100)
   },
+
+  //
+  // If there are no current pending requests, send the next one on the stack.
+  //
   poll: function() {
     if (Ajax.activeRequestCount == 0) {
       var req = this.queue.pop();

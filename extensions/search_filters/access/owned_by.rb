@@ -1,3 +1,7 @@
+#
+# not yet working
+#
+
 SearchFilter.new('/owned-by/:type/:id/') do
 
   mysql do |query, type, id|

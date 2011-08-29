@@ -12,9 +12,9 @@ SearchFilter.new('/group/:group_id/') do
   self.section = :access
   self.singleton = false
 
-  label do |id|
-    if id
-      "#{:group.t}: #{group_name(id)}"
+  label do |opts|
+    if opts[:group_id]
+      "#{:group.t}: #{group_name(opts[:group_id])}"
     else
       :group.t + '...'
     end

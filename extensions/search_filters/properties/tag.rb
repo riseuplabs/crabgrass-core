@@ -23,13 +23,14 @@ SearchFilter.new('/tag/:tag_name/') do
     end
   end
 
-  label do |tag_name|
+  label do |opts|
+    tag_name = opts[:tag_name]
     if tag_name.empty?
       :tag.t + '...'
     elsif tag_name.length > 15
-      "#{:tag.t}: #{tag_name[0..14]}..."
+      "#{:tag.t}: #{h tag_name[0..14]}..."
     else
-      "#{:tag.t}: #{tag_name}"
+      "#{:tag.t}: #{h tag_name}"
     end
   end
 

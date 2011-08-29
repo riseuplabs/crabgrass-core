@@ -1,3 +1,7 @@
+#
+# NOT CURRENTLY WORKING
+#
+
 SearchFilter.new('/modified-by/:user_id/') do
 
   mysql do |query, id|

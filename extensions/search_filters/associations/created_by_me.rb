@@ -11,7 +11,14 @@ SearchFilter.new('/created-by-me/') do
   self.exclude = :created
   self.singleton = true
   self.section = :my_pages
-  self.label   = :created_by_me
+
+  label do |opts|
+    if opts[:remove]
+      :created_by_user.t(:user => :me.t)
+    else
+      :created_by_me.t
+    end
+  end
 
 end
 

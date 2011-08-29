@@ -63,6 +63,7 @@ module Common::Application::AlertMessages
 
       # display
       helper_method :alert_messages?
+      helper_method :alert_messages_have_errors?
       helper_method :display_alert_messages
       helper_method :inline_alert_messages
       helper_method :clear_alert_messages
@@ -150,6 +151,10 @@ module Common::Application::AlertMessages
 
   def alert_messages?
     flash[:messages].any?
+  end
+
+  def alert_messages_have_errors?
+    flash[:messages].any? and flash[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
   end
 
   def clear_alert_messages

@@ -26,8 +26,8 @@ SearchFilter.new('/most-stars-in/:time/:unit/') do
     end 
   end
 
-  label do |time,unit|
-    if time
+  label do |opts|
+    if opts[:time]
       :most_stars.t
     else
       :most_stars.t + '...'

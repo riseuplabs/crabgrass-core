@@ -18,7 +18,14 @@ SearchFilter.new('/starred-by-me/') do
  
   self.singleton = true
   self.section = :my_pages
-  self.label   = :starred_by_me
+
+  label do |opts|
+    if opts[:remove]
+      :starred_by_user.t(:user => :me.t)
+    else
+      :starred_by_me.t
+    end
+  end
 
 end
 

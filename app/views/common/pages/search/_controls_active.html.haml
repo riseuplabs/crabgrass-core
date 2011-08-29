@@ -1,5 +1,5 @@
 %ul#search_controls_active.page_search_controls
-  .section.first Active Filters
+  .section.first= :active_filters.t
   - if show_all?
     = filter_checkbox_li_tag :remove, filter_all
   - else

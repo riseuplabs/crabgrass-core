@@ -108,10 +108,12 @@ class SearchFilter
     end
   end
 
+  #
   # return a unique name that can be given to ui elements for this filter
   # bound to these particular args.
+  #
   def name(args=nil)
-    path(args).gsub('/','_')
+    path(args).gsub(/[^0-9a-zA-Z]/,'')
   end
   
   ##
@@ -205,23 +207,16 @@ class SearchFilter
   # label is. The args are the actual current args for the filter, if it is
   # active. Otherwise, the args will be empty.
   #
-  def label(args=[], &block)
-    if block # setter
-      @label_block = block
-    else # getter
-      if @label_block
-        if has_args?
-          while args.size < @path_argument_count
-            args << nil
-          end
-          @label_block.call(*args).t
-        else
-          @label_block.call().t
-        end
-      elsif @label
-        @label.t
-      end
+  def label(args=[], options={}, &block)
+    if block
+      set_label(&block)
+    else
+      get_label(args, options)
     end
+  end
+
+  def has_label?
+    @label_block.any? or @label.any?
   end
 
   # returns the label for this filter, given a particular path.
@@ -252,4 +247,46 @@ class SearchFilter
   #  return @path_definition.gsub(/\/:\w+/) {|segment| "/#{args.pop}/"}
   #end
 
+  private
+
+  def get_label(args, options)
+    if @label_block
+      if has_args?
+        options = options.merge(path_args_to_hash(args))
+      end
+      @label_block.call(options).t
+    elsif @label
+      @label.t
+    end
+  end
+
+  def set_label(&block)
+    @label_block = block
+  end
+
+  #
+  # takes an array of path arguments and converts this to a hash.
+  #
+  # for example:
+  #
+  #  given this:
+  #    path_definition - '/most-stars-in/:time/:unit/'
+  #    args - ['1','week']
+  #
+  #  returns: 
+  #    {:time => '1', :unit => 'week'}
+  #
+  def path_args_to_hash(args)
+    hsh = {}
+    if args.any?
+      @path_definition.split('/').each do |segment|
+        if segment.starts_with?(':')
+          hsh[segment[1..-1].to_sym] = args.shift  # pop off the front
+        end
+      end
+    end
+    return hsh
+  end
+
 end
+

@@ -26,8 +26,8 @@ SearchFilter.new('/most-views-in/:time/:unit/') do
     end 
   end
 
-  label do |time,unit|
-    if time
+  label do |opts|
+    if opts[:time]
       :most_viewed.t
     else
       :most_viewed.t + '...'

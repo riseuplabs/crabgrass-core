@@ -25,11 +25,12 @@ SearchFilter.new('/text/:text/') do
   self.path_order = 100
   self.singleton = true
   
-  label do |text|
+  label do |opts|
+    text = opts[:text]
     if text.length > 15
-      "#{:search.t}: #{text[0..14]}..."
+      "#{:search.t}: #{h(text[0..14])}..."
     else
-      "#{:search.t}: #{text}"
+      "#{:search.t}: #{h(text)}"
     end
   end
 

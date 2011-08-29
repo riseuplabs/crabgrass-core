@@ -61,8 +61,9 @@ class ParsedPath < Array
       new_from_hash(path)
     end
     # special post processing for some keywords
+    # well, this is sure hacky.
     self.each do |element|
-      if element[0] == 'type'
+      if element[0] == 'type' and element[1].any?
         element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
       end
     end
@@ -182,9 +183,8 @@ class ParsedPath < Array
   # returns the search text, if any
   # ie returns "glorious revolution" if path == "/text/glorious+revolution"
   def search_text
-    element = keyword? 'text'
-    return nil unless element
-    return element[1].gsub('+', ' ')
+    search_string = arg_for 'text'
+    search_string and search_string.gsub('+', ' ')
   end
 
   # returns true if arg is the value for a sort keyword
