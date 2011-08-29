@@ -2,13 +2,10 @@
 # group_invites  GET    /groups/:group_id/invites action=>"index"
 #                POST   /groups/:group_id/invites action=>"create"
 #
-# group_invite   PUT    /groups/:group_id/invites/:id action=>"update"
-#                DELETE /groups/:group_id/invites/:id action=>"destroy"
-#
+# update and destroy are handled by Me::RequestsController
 
 class Groups::InvitesController < Groups::BaseController
 
-  include_controllers 'common/requests'
   before_filter :login_required
 
   def new

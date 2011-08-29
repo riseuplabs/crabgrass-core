@@ -10,7 +10,7 @@ class Groups::CouncilsControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_new_council? do
+    assert_permission :may_create_group_council? do
       get :new, :group_id => @group.to_param
     end
     assert_response :success
@@ -18,7 +18,7 @@ class Groups::CouncilsControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    assert_permission :may_create_council? do
+    assert_permission :may_create_group_council? do
       assert_difference '@group.committees.count' do
         get :create, :group_id => @group.to_param,
          :council => Council.plan

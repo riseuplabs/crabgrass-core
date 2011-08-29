@@ -11,20 +11,22 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
 
   def test_index
     login_as @user
-    get :index, :group_id => @group.id
+    assert_permission :may_list_group_permissions? do
+      get :index, :group_id => @group.to_param
+    end
     assert_response :success
   end
 
   def test_index_no_access
     login_as @other_user
     assert_permission_denied do
-      get :index, :group_id => @group.id
+      get :index, :group_id => @group.to_param
     end
   end
 
   def test_update
     login_as @user
-    assert_permission :may_edit_permissions? do
+    assert_permission :may_edit_group_permissions? do
       post :update, :group_id => @group.to_param, :view => true, :id => 0
     end
     assert_response :success

@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resource  :settings, :only => [:show, :update]
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
-    me.resources :requests
+    me.resources :requests, :only => [:index, :update, :destroy]
     me.resources :events
     me.resources :avatars
   end
@@ -117,8 +117,8 @@ ActionController::Routing::Routes.draw do |map|
     groups.resources :memberships, :only => [:create, :destroy]
     groups.resources :committees, :only => [:new, :create]
     groups.resources :councils, :only => [:new, :create]
-    groups.resources :invites, :only => [:new, :create, :destroy]
-    groups.resources :requests, :except => [:edit, :show]
+    groups.resources :invites, :only => [:new, :create]
+    groups.resources :requests, :only => [:index, :create]
     #groups.resources :events
     groups.resources :permissions, :only => [:index, :update]
     #groups.resources :activities

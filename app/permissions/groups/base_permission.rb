@@ -52,8 +52,8 @@ module Groups::BasePermission
   ## PERMISSIONS
   ##
 
-  alias_method :may_list_permissions?, :may_admin_group?
-  alias_method :may_edit_permissions?, :may_admin_group?
+  alias_method :may_list_group_permissions?, :may_admin_group?
+  alias_method :may_edit_group_permissions?, :may_admin_group?
 
   ##
   ## EXTRA

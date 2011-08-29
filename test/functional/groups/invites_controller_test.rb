@@ -11,7 +11,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_create_groups_invite? do
+    assert_permission :may_create_group_invite? do
       get :new, :group_id => @group.to_param
     end
     assert_response :success
@@ -20,7 +20,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
   def test_create
     login_as @user
     recipient = User.make
-    assert_permission :may_create_groups_invite? do
+    assert_permission :may_create_group_invite? do
       assert_difference 'RequestToJoinUs.count' do
         get :create, :group_id => @group.to_param,
          :recipients => recipient.name
@@ -30,17 +30,4 @@ class Groups::InvitesControllerTest < ActionController::TestCase
     assert_redirected_to :action => :index
   end
 
-  def test_destroy
-    login_as @user
-    recipient = User.make
-    invite = RequestToJoinUs.create :created_by => @user,
-      :recipient => recipient, :requestable => @group
-    assert_permission :may_destroy_request? do
-      assert_difference 'RequestToJoinUs.count', -1 do
-        delete :destroy, :group_id => @group.to_param,
-         :id => invite.id
-      end
-    end
-    assert_response :success
-  end
 end
