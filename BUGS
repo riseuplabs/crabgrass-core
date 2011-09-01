@@ -11,6 +11,15 @@ confirmation before destroy contact
 page search:
   should be 'watching' instead of 'watched'
   once active, needs to indicate i clicked on 'my pages -> own'.
+  need ajaxy history
 
 the split panel is not something that we should keep, unless it can
   be made to work when the screen gets small. 
+
+wiki:
+  need history
+
+pages:
+  need 'show print' option.
+
+

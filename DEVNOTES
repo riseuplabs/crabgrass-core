@@ -145,6 +145,14 @@ jabber integration
 openfire has a REST integration module:
 https://we.riseup.net/cgdev/openfire-integration
 
+here is a way to send jabber IMs via rails:
+https://github.com/cheald/jabberish
+
+VOIP
+===========================
+
+a library to control murmer (mumble server) via ruby through ice:
+https://github.com/cheald/murmur-manager
 
 calendars
 ======================================
@@ -245,4 +253,8 @@ Rails Applications
 http://noosfero.org
 
 
+Uploading
+=========================
 
+This library has a method of remembering the uploaded file between views of the form:
+https://github.com/cheald/carrierwave
