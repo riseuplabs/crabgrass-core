@@ -1,17 +1,22 @@
+#
+# for now, this controller is just used by remote processing to 
+# report back to us that the file is finished processing.
+#
+# TODO: ensure that only the remote processor can hit these actions
+#
 
 class ThumbnailController < ApplicationController
 
   def show
     @thumbnail = Thumbnail.find(params[:id])
     if params[:status] == 'success'
-      @job       = @thumbnail.remote_job
-      @thumbnail.set_data_from_url open(@job.data_url).read
-      @job.update_attribute(:status => 'finished')
-
-      render :text => 'success', :status => 200
+      @thumbnail.fetch_data_from_remote_job
     elsif params[:status] == 'failure'
       @thumbnail.update_attribute(:failure, true)
     end
+
+    # acknowledge that we received the callback
+    render :text => 'success', :status => 200
 
 #    if binary request
 #      thumbnail.set_data read_binary_data

@@ -33,12 +33,14 @@ class AssetPageController < Pages::BaseController
     end
   end
 
+  #
   # xhr request
+  #
   def poll_remote_asset
     large_thumb = @asset.thumbnail(:large)
     if large_thumb.failure
       if params[:retry]
-        large_thumb.generate(true)
+        large_thumb.generate(:force => true)
         render :nothing => true # keep polling
       elsif !large_thumb.remote_job.nil?
         render :update do |page|

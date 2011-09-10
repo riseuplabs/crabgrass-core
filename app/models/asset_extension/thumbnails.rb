@@ -115,7 +115,7 @@ module AssetExtension
       def generate_thumbnails(force = false)
         thumb_done = {}
         thumbnails.each do |thumb|
-          thumb.generate(force)
+          thumb.generate(:force => true)
         end
         if versions.latest
           # might as well update the thumbnails of our corresponding version

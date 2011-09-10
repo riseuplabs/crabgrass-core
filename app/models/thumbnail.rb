@@ -50,19 +50,23 @@ class Thumbnail < ActiveRecord::Base
   end
 
   #
-  # generates the thumbnail file for this thumbnail object.
+  # generates the thumbnail image file for this thumbnail object.
   #
-  # if force is true, then generate the thumbnail even if it already
-  # exists.
-  # 
-  def generate(force=false)
+  # options:
+  #   
+  #   :force -- if true, then generate the thumbnail even if it already
+  #            exists.
+  #
+  #   :host  -- the host name and port of this server, used to construct the callbacks urls.
+  #
+  def generate(options={})
     if proxy?
       return
     elsif !force and File.exists?(private_filename) and File.size(private_filename) > 0
       return
     else
       if depends_on
-        depends_on.generate(force)
+        depends_on.generate(options)
         source = depends_on.parent
       else
         source = parent
@@ -133,10 +137,38 @@ class Thumbnail < ActiveRecord::Base
     not failure?
   end
 
-  def set_data_from_url(url)
-    data = open(@job.data_url).read
-    File.open(private_filename, "wb") do |f|
-      f.write(data)
+  #
+  # grabs the output from a remote job and saves it locally to the storage
+  # location of this thumbnail.
+  #
+  def fetch_data_from_remote_job
+    begin
+      if remote_job.output_file
+        if File.exists?(remote_job.output_file)
+          File.cp(remote_job.output_file, private_filename)
+          File.chmod(0644, private_filename)
+        else
+          raise Exception.new('no file at %s' % remote_job.output_file)
+        end
+      elsif remote_job.output_url
+        #
+        # this is not currently used, but will be some day
+        # 
+        data = open(remote_job.data_url).read
+        File.open(private_filename, "wb") do |f|
+          f.write(data)
+        end
+      elsif remote_job.output_data
+        File.open(private_filename, "w") do |f|
+          f.write(remote_job.output_data)
+        end
+      else
+        raise Exception.new
+      end
+      # if we get here, everything should have gone well.
+      remote_job.update_attribute(:status => 'finished')
+    #rescue Exception => exc
+      # do something here
     end
   end
 
@@ -160,7 +192,7 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def remote_job
-    begin
+    @remote_job ||= begin
       RemoteJob.find(remote_job_id)
     rescue
       nil
@@ -174,26 +206,31 @@ class Thumbnail < ActiveRecord::Base
       if thumbdef.binary
         options[:input_url] = options[:source].url_with_code
       else
-        # if we don't have binary data, then we might as well pass it along
+        # if we don't have binary data, then we might as well pass the data along along
         options[:input_data] = File.read(options[:input_file])
       end
       # the remote processor is on another server, so we don't pass it file paths
       options[:input_file] = nil
       options[:output_file] = nil
     end
-    options[:success_callback_url] = success_url
+    options[:success_callback_url] = self.success_url(options[:host])
+    options[:failed_callback_url] = self.failure_url(options[:host])
     begin
       self.remote_job_id = RemoteJob.create!(options).id
     rescue Exception => exc #Errno::ECONNREFUSED
-      raise ErrorMessage.new(exc.to_s)
       puts 'x'*80
       puts 'cant connect'
+      self.update_attribute(:failure, true)
+      raise ErrorMessage.new(exc.to_s)
     end
 
+    # 
+    # query the remote job processor and confirm that it actually has the job
+    # not sure if we need this double check.
+    #
     unless remote_job
-      self.failure = true
+      self.update_attribute(:failure, true)
     end
-    save
   end
 
   def generate_now(options)
@@ -225,8 +262,18 @@ class Thumbnail < ActiveRecord::Base
     end
   end
 
-  def success_url
-    "/thumbnails/#{id}?status=success"
+  #
+  # this is not pretty, but is easy.
+  #
+  def success_url(host)
+    host + "/thumbnails/#{id}?status=success"
+  end
+  def failure_url(host)
+    host + "/thumbnails/#{id}?status=failure"
+  end
+
+  def save_file_to_storage
+    
   end
 
 end

@@ -11,6 +11,7 @@ class RemoteJob < ActiveResource::Base
     :options, :failed_callback_url, :success_callback_url]
 
   def self.create!(attrs)
+    attrs = attrs.dup
     attrs.each do |key, value|
       unless ALLOWED_FIELDS.include? key
         attrs.delete(key)
