@@ -3,25 +3,13 @@ module AssetPageHelper
   def asset_link_with_preview(asset)
     thumbnail = asset.thumbnail(:large)
     if thumbnail.nil?
-      link_to( image_tag(asset.big_icon), asset.url )
+      show_generic_asset(asset)
     elsif thumbnail.failure?
-      if thumbnail.remote_job.nil?
-        'failed in the past:   ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'poll_remote_asset', :retry => true))
-      else
-        'remote job failed:   ' + link_to_modal('click here to view error', :url => page_xpath(@page, :action => 'view_remote_asset'))
-      end
+      show_failed_thumbnail(thumbnail)
     elsif !thumbnail.exists?
-      if thumbnail.remote?
-        javascript = start_polling
-      else
-        javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
-      end
-      width, height = [300,300]
-      style = "height:#{height}px; width:#{width}px;"
-      style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
-      content_tag(:div, javascript, :id=>'preview-loading', :style => style)
+      show_missing_thumbnail(thumbnail)
     else
-      link_to_asset(asset, :large, :class => '')
+      show_large_thumbnail(asset)
     end
   end
 
@@ -47,6 +35,44 @@ module AssetPageHelper
 
   def preview_area_class(asset)
     'checkerboard' if asset.thumbnail(:large)
+  end
+
+  private
+
+  ##
+  ## SHOW THE THUMBNAIL
+  ## 
+
+  def show_failed_thumbnail(thumbnail)
+    if thumbnail.remote_job.nil?
+      'failed in the past:   ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'poll_remote_asset', :retry => true))
+    else
+      'remote job failed:   ' + link_to_modal('click here to view error', :url => page_xpath(@page, :action => 'view_remote_asset'))
+    end
+  end
+
+  def show_missing_thumbnail(thumbnail)
+    if thumbnail.remote?
+      # poll until we get a valid thumbnail, or a failure.
+      javascript = start_polling
+    else
+      # do a blocking call to show the thumbnail.
+      javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
+    end
+
+    # no thumbnail yet, so show a spinner.
+    width, height = [300,300]
+    style = "height:#{height}px; width:#{width}px;"
+    style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
+    content_tag(:div, javascript, :id=>'preview-loading', :style => style)
+  end
+
+  def show_generic_asset(asset)
+    link_to( image_tag(asset.big_icon), asset.url )
+  end
+
+  def show_large_thumbnail(asset)
+    link_to_asset(asset, :large, :class => '')
   end
 
   def start_polling

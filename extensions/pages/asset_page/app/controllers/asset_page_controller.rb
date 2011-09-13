@@ -25,12 +25,12 @@ class AssetPageController < Pages::BaseController
     end
   end
 
+  #
   # xhr request
+  #
   def generate_preview
     @asset.generate_thumbnails
-    render :update do |page|
-      page.replace_html 'preview_area', asset_link_with_preview(@asset)
-    end
+    update_preview(@asset)
   end
 
   #
@@ -38,44 +38,20 @@ class AssetPageController < Pages::BaseController
   #
   def poll_remote_asset
     large_thumb = @asset.thumbnail(:large)
-    if large_thumb.failure
-      if params[:retry]
-        large_thumb.generate(:force => true)
-        render :nothing => true # keep polling
-      elsif !large_thumb.remote_job.nil?
-        render :update do |page|
-          # this is repeated from asset_page_helper == bad
-          page.replace_html 'preview_area', 'remote job failed:   ' + link_to_remote('click here to view error', :url => page_xpath(@page, :action => 'view_remote_asset'))
-        end
-      else
-        render :update do |page|
-          page << stop_polling #'assetTimer.stop'
-          page.replace_html 'preview_area', 'error'
-          # TODO: replace 'error' with a link to get more info on the error.
-        end
-      end
-    elsif large_thumb.exists?
-      render :update do |page|
-        page.replace_html 'preview_area', asset_link_with_preview(@asset)
-      end
-    elsif large_thumb.remote_job.nil?
-      large_thumb.generate
-      render :nothing => true # keep polling
-    #elsif large_thumb.remote_job.status == 'finished'
-    #  large_thumb.fetch_data_from_remote_job
-    #     #suck_down_binary(remote_job.fetchy_url)
-    #     self.private_filename = copy(remote_job.output_file)
-    #  render :update do |page|
-    #    page.replace_html 'preview_area', asset_link_with_preview(@asset)
-    #  end
-    elsif large_thumb.remote_job.status == 'failure'
-      render :update do |page|
-        page.replace_html 'preview_area', "remote FAILURE!!!!"
-      end
+    if large_thumb.processing?
+      keep_polling
+    elsif params[:retry]
+      large_thumb.generate(:force => true)
+      keep_polling
+    els
+    else
+      update_preview(@asset, :stop_polling => true)
     end
   end
 
+  #
   # xhr
+  #
   def view_remote_asset
     thumb = @asset.thumbnail(:large)
     return unless thumb
@@ -97,6 +73,23 @@ class AssetPageController < Pages::BaseController
     if action?(:show, :edit, :history)
       @options.show_tabs   = true
     end
+  end
+
+  #
+  # creates an rjs response to update the preview area
+  #
+  def update_preview(asset, options={})
+    render :update do |page|
+      if options[:stop_polling]
+        page << stop_polling
+      end
+      page.replace_html 'preview_area', asset_link_with_preview(asset)
+    end
+  end
+
+  # a dummy response to keep the timer still polling
+  def keep_polling
+    render :nothing => true
   end
 
 end
