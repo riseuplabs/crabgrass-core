@@ -4,11 +4,11 @@
   - if @asset.ext
     = "(" + @asset.ext + ")"
 
-  - previews = @asset.thumbnails.preview_images
-  - if previews.any?
-    %br
-      = :preview.t + ':'
-      = previews.collect{|preview| link_to preview.name, preview.url}.join(', ')
+-#  - previews = @asset.thumbnails.preview_images
+-#  - if previews.any?
+-#    %br
+-#      = :preview.t + ':'
+-#      = previews.collect{|preview| link_to preview.name, preview.url}.join(', ')
 
 - if @page.updated_by
   .p

@@ -62,7 +62,7 @@ class Thumbnail < ActiveRecord::Base
   def generate(options={})
     if proxy?
       return
-    elsif !force and File.exists?(private_filename) and File.size(private_filename) > 0
+    elsif !options[:force] and File.exists?(private_filename) and File.size(private_filename) > 0
       return
     else
       if depends_on
@@ -76,12 +76,14 @@ class Thumbnail < ActiveRecord::Base
       input_file  = source.private_filename
       output_type = thumbdef.mime_type
       output_file = private_filename
+      host        = options[:host]
 
       options = {
         :size => thumbdef.size,
         :input_file  => input_file,  :input_type => input_type, 
         :output_file => output_file, :output_type => output_type,
-        :source_asset => source
+        :source_asset => source,
+        :host => host
       }
 
       if thumbdef.remote and RemoteJob.site
@@ -121,16 +123,46 @@ class Thumbnail < ActiveRecord::Base
     parent.thumbnail_url(self.name)
   end
 
-  def exists?
-    parent.thumbnail_exists?(self.name)
-  end
-
   def thumbdef
     parent.thumbdefs[self.name.to_sym]
   end
 
+  #
+  # flags
+  #
+
   def remote?
     thumbdef.remote
+  end
+
+  # true if file exists
+  def exists?
+    parent.thumbnail_exists?(self.name)
+  end
+
+  # true if file doesn't exist
+  def missing?
+    !exists?
+  end
+
+  # 
+  # a thumbnail is in a new state if it has not yet attempted to generate
+  # the thumbnail file. 
+  #
+  def new?
+    !exists? and !failure?
+  end
+
+  #
+  # this thumbnail is in the process of getting generated, and there
+  # have not yet been any errors.
+  #
+  # true in two cases:
+  # * for local thumbnails that don't yet have files, but have not failed (like new?())
+  # * for remote thumbnails where the remote job is still in progress
+  #
+  def processing?
+    (!remote? and missing? and !failure?) or (remote? and remote_job and remote_job.state == 'processing')
   end
 
   def ok?
@@ -202,6 +234,8 @@ class Thumbnail < ActiveRecord::Base
   private
 
   def queue_remote_job(options)
+    raise 'host required' unless options[:host]
+
     if !RemoteJob.localhost?
       if thumbdef.binary
         options[:input_url] = options[:source].url_with_code
@@ -213,15 +247,13 @@ class Thumbnail < ActiveRecord::Base
       options[:input_file] = nil
       options[:output_file] = nil
     end
-    options[:success_callback_url] = self.success_url(options[:host])
-    options[:failed_callback_url] = self.failure_url(options[:host])
+    options[:success_callback_url] = success_url(options[:host])
+    options[:failure_callback_url] = failure_url(options[:host])
     begin
       self.remote_job_id = RemoteJob.create!(options).id
     rescue Exception => exc #Errno::ECONNREFUSED
-      puts 'x'*80
-      puts 'cant connect'
       self.update_attribute(:failure, true)
-      raise ErrorMessage.new(exc.to_s)
+      raise ErrorMessage.new('remote job failed: ' + exc.to_s)
     end
 
     # 

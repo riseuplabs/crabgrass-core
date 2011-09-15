@@ -10,6 +10,24 @@ class RemoteJob < ActiveResource::Base
     :output_type, :output_url, :output_file, :output_data,
     :options, :failed_callback_url, :success_callback_url]
 
+  ##
+  ## methods
+  ##
+
+  #
+  # queues the job if it is not in a running state
+  #
+  def run
+    if state == 'new' or state == 'failure' or state == 'success'
+      self.state = 'queued'
+      save
+    end
+  end
+
+  ##
+  ## class methods
+  ##
+
   def self.create!(attrs)
     attrs = attrs.dup
     attrs.each do |key, value|
@@ -36,6 +54,7 @@ class RemoteJob < ActiveResource::Base
     self.site.to_s =~ /localhost/
   end
 
+  
 end
 
 

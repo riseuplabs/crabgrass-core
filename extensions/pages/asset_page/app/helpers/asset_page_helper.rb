@@ -1,12 +1,19 @@
 module AssetPageHelper
 
-  def asset_link_with_preview(asset)
-    thumbnail = asset.thumbnail(:large)
+  #
+  # displays a preview of the asset, with a link to the full thing.
+  # if the preview does not yet exist, or has failed, then we show
+  # appropriate controls for this.
+  #
+  def thumbnail_link_to_asset(asset, size)
+    thumbnail = asset.thumbnail(size)
     if thumbnail.nil?
-      show_generic_asset(asset)
+      show_generic_asset(asscet)
     elsif thumbnail.failure?
       show_failed_thumbnail(thumbnail)
-    elsif !thumbnail.exists?
+    elsif thumbnail.new? or thumbnail.processing?
+      show_processing_thumbnail(thumbnail)
+    elsif thumbnail.missing?
       show_missing_thumbnail(thumbnail)
     else
       show_large_thumbnail(asset)
@@ -37,6 +44,16 @@ module AssetPageHelper
     'checkerboard' if asset.thumbnail(:large)
   end
 
+  def display_logs(logs)
+    haml do
+      haml('ol.bullets') do
+        logs.each do |l|
+          haml(:li, h(l.text))
+        end
+      end
+    end
+  end
+
   private
 
   ##
@@ -45,26 +62,23 @@ module AssetPageHelper
 
   def show_failed_thumbnail(thumbnail)
     if thumbnail.remote_job.nil?
-      'failed in the past:   ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'poll_remote_asset', :retry => true))
+      'failed to create remote job: ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'show_thumbnail', :retry => true))
     else
-      'remote job failed:   ' + link_to_modal('click here to view error', :url => page_xpath(@page, :action => 'view_remote_asset'))
+      'remote job failed: ' + link_to_modal('click here to view details', :url => page_xpath(@page, :action => 'show_job'), :title => 'Remote Job')
     end
   end
 
-  def show_missing_thumbnail(thumbnail)
+  def show_processing_thumbnail(thumbnail)
     if thumbnail.remote?
-      # poll until we get a valid thumbnail, or a failure.
       javascript = start_polling
     else
-      # do a blocking call to show the thumbnail.
-      javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'generate_preview')))
+      javascript = javascript_tag(remote_function(:url => page_xpath(@page, :action => 'show_thumbnail')))
     end
+     preview_area(javascript)
+  end
 
-    # no thumbnail yet, so show a spinner.
-    width, height = [300,300]
-    style = "height:#{height}px; width:#{width}px;"
-    style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
-    content_tag(:div, javascript, :id=>'preview-loading', :style => style)
+  def show_missing_thumbnail(thumbnail)
+    "missing"
   end
 
   def show_generic_asset(asset)
@@ -77,13 +91,19 @@ module AssetPageHelper
 
   def start_polling
     frequency = 4
-    options = {:url => page_xpath(@page, :action => 'poll_remote_asset')}
+    options = {:url => page_xpath(@page, :action => 'show_thumbnail')}
     code = "var assetTimer = new PeriodicalExecuter(function() {#{remote_function(options)}}, #{frequency})"
     javascript_tag(code)
   end
 
   def stop_polling
     'if (typeof assetTimer != "undefined") {assetTimer.stop();}'
+  end
+
+  def preview_area(javascript)
+    width, height = [300,300]
+    style = "height:#{height}px; width:#{width}px; background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
+    content_tag(:div, javascript, :id => 'preview-loading', :style => style)
   end
 
 end

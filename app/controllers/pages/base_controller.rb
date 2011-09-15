@@ -6,7 +6,8 @@ class Pages::BaseController < ApplicationController
 
   public
 
-  layout 'page'
+  layout      proc{ |ctrl| ctrl.request.xhr? ? false : 'page' } # skip layout for ajax
+
   permissions :pages, :object => 'page'
   permissions :posts, :object => 'post'
   permissions 'groups/members', 'groups/base'    # required to show the banner if page is owned by a group.

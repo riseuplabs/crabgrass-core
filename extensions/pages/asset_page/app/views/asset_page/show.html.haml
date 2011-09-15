@@ -3,7 +3,7 @@
     - if @asset.embedding_partial.any?
       = render :partial => @asset.embedding_partial
     - else
-      = asset_link_with_preview(@asset) 
+      = thumbnail_link_to_asset(@asset, :large)
 
 = render :partial => 'information'
 

@@ -28,38 +28,41 @@ class AssetPageController < Pages::BaseController
   #
   # xhr request
   #
-  def generate_preview
-    @asset.generate_thumbnails
-    update_preview(@asset)
-  end
+  #def generate_preview
+  #  @asset.generate_thumbnails
+  #  update_preview(@asset)
+  #end
 
   #
-  # xhr request
+  # Show the large thumbnail preview of this asset. If it doesn't exist yet, 
+  # we fire off the request to have it generated, either locally or remotely.
+  # xhr request only.
   #
-  def poll_remote_asset
-    large_thumb = @asset.thumbnail(:large)
-    if large_thumb.processing?
+  def show_thumbnail
+    thumb = @asset.thumbnail(:large)
+
+    if thumb.new? or params[:retry]
+      thumb.generate(:force => true, :host => request.protocol + request.host)
+    end
+
+    if thumb.processing?
       keep_polling
-    elsif params[:retry]
-      large_thumb.generate(:force => true)
-      keep_polling
-    els
     else
       update_preview(@asset, :stop_polling => true)
     end
   end
 
   #
-  # xhr
+  # Show details about the remote job. Shown in a popup if there were any failures.
   #
-  def view_remote_asset
-    thumb = @asset.thumbnail(:large)
-    return unless thumb
-    ret = 'no remote job found!'
-    if thumb.remote_job
-      ret = thumb.remote_job.inspect
-    end
-    render :text => ret
+  def show_job
+    @thumbnail = @asset.thumbnail(:large)
+  end
+
+  def requeue_job
+    job = @asset.thumbnail(:large).remote_job
+    job.run
+    redirect_to page_url(@page)
   end
 
   protected
@@ -83,7 +86,7 @@ class AssetPageController < Pages::BaseController
       if options[:stop_polling]
         page << stop_polling
       end
-      page.replace_html 'preview_area', asset_link_with_preview(asset)
+      page.replace_html 'preview_area', thumbnail_link_to_asset(asset, :large)
     end
   end
 

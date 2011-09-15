@@ -84,3 +84,16 @@ ul.list_as_cols {
     width: 100px;
   }
 }
+
+//
+// WITH BULLETS, please
+//
+
+ul.bullets {
+  list-style-type: circle;
+}
+
+ol.bullets {
+  list-style-type: decimal;
+}
+
