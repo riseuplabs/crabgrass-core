@@ -17,12 +17,13 @@ module Groups::LinksHelper
         group_memberships_path(@group),
         :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
         :method => :post
-    elsif may_create_join_request?
+    elsif may_create_group_request?
       if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
         :request_exists.t(:request_type => :pending)
       else
         link_to :request_join_group_link.t(:group_type => @group.group_type),
-          new_group_join_request_path(@group)
+          group_requests_path(@group),
+          :method => 'post'
       end
     end
   end
