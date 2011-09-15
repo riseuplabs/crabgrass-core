@@ -26,8 +26,8 @@ SearchFilter.new('/most-active-in/:time/:unit/') do
     end 
   end
 
-  label do |time,unit|
-    if time
+  label do |opts|
+    if opts[:time]
       :most_active.t
     else
       :most_active.t + '...'

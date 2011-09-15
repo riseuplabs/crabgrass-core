@@ -33,15 +33,21 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 
 #banner_content {
   padding: $banner_padding;
+  overflow: auto; // to catch floated a.avatar
 
   a.avatar {
     margin-right: $banner_padding;
-    img {
-      border: $banner_avatar_spacer;
-      outline: $banner_border;
-      // this is necessary for the img to not have a gap under it
-      vertical-align: middle;
-    }
+    border: $banner_avatar_spacer;
+    outline: $banner_border;
+    display: block;
+    float: left;
+
+    //img {
+    //  border: $banner_avatar_spacer;
+    //  outline: $banner_border;
+    //  // this is necessary for the img to not have a gap under it
+    //  vertical-align: middle;
+    // }
   }
 
   a.title {
@@ -51,6 +57,8 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   }
 }
 
+//
+// UGH, we have a better way to do this now. we just set the line-height equal to the avatar size.
 //
 // vertically centered banner
 //
@@ -64,31 +72,31 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 // This is another example of where tables would be 10x easier.
 // 
 
-@if $banner_vertical_align == 'center' {
-  #banner_content {
-    // this prevents the enclosed floated divs from extending outside the banner
-    // (any value of overflow will do the trick)
-    overflow: hidden;
-
-    // required for center-vertically on a.title
-    position: relative;
-
-    // both the title and the avatar are floated left so that the title can be
-    // a block. why do we want the title to be a block? that is the only way to 
-    // vertically align it.
-    a.title, a.avatar {
-      display: block;
-      float: left;
-    }
-
-    a.title {
-      font-size: $banner_font_size;
-      @include center-line-vertically($banner_font_size);
-      @include center-vertically($banner_font_size);
-      left: $banner_padding + 64px + $banner_padding;
-    }
-  }
-}
+//@if $banner_vertical_align == 'center' {
+//  #banner_content {
+//    // this prevents the enclosed floated divs from extending outside the banner
+//    // (any value of overflow will do the trick)
+//    overflow: hidden;
+//
+//    // required for center-vertically on a.title
+//    position: relative;
+//
+//    // both the title and the avatar are floated left so that the title can be
+//    // a block. why do we want the title to be a block? that is the only way to 
+//    // vertically align it.
+//    a.title, a.avatar {
+//      display: block;
+//      float: left;
+//    }
+//
+//    a.title {
+//      font-size: $banner_font_size;
+//      @include center-line-vertically($banner_font_size);
+//      @include center-vertically($banner_font_size);
+//      left: $banner_padding + 64px + $banner_padding;
+//    }
+//  }
+//}
 
 //
 // vertically aligned top
@@ -121,11 +129,11 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   // look very nice on small screen. this is a hacky attempt to squish them.
   //
   #context_banner {
-    a.avatar img {
-      // it would be better to instead make visible a version with 32px size.
-      height: 32px;
-      width: 32px;
-    }
+    //a.avatar img {
+    //  // it would be better to instead make visible a version with 32px size.
+    //  height: 32px;
+    //  width: 32px;
+    //}
     a.title {font-size: 1.1em;}
 
     // the avatar icon is always small

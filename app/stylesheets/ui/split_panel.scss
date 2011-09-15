@@ -24,9 +24,9 @@
 // article#content padding.
 //
 
-.split_panel {
-  overflow:auto;	     
-}
+// .split_panel {
+//   overflow: auto; (not sure what this was for, seems unnecessary
+// }
 
 // full width
 
@@ -52,13 +52,23 @@ $split_panel_gutter_padding: resolve_width($local_content_padding, $center_colum
 $content_width: 100%;
 $panel_width: ($content_width - $split_panel_gutter) / 2;
 
+//#local.sidebar.on_left {
+//  .panel_left {
+//    width: $panel_width;
+//  }
+//  .panel_right {
+//    width: $panel_width + $split_panel_gutter;
+//    margin-left: $panel_width;
+//  }
+//}
+
 #local.sidebar.on_left {
   .panel_left {
     width: $panel_width;
   }
   .panel_right {
-    width: $panel_width + $split_panel_gutter;
-    margin-left: $panel_width;
+    width: $panel_width;
+    margin-left: $panel_width + $split_panel_gutter;
   }
 }
 
@@ -82,7 +92,7 @@ $row_active_background: #d9d9d9;
 $row_active_color: #000;
 $row_hover_background: #eef;
 $row_img_border: 1px solid white;
-$row_right_active_background: #efefef;
+$row_right_active_background: white;
 $row_right_border: none;
 // $row_right_border: 1px solid $row_active_background;
 
@@ -111,7 +121,7 @@ $row_right_border: none;
       &:hover  { background: $row_hover_background; }
       border-top: $row_separator;
       // border-bottom: $row_separator;
-      margin-right: $split_panel_gutter_padding;
+      //margin-right: $split_panel_gutter_padding;
       overflow: hidden;
       padding: $row_padding 0;
     }
@@ -134,7 +144,7 @@ $row_right_border: none;
 }
 
 //
-// right panel
+// right panel decoration
 //
 
 .panel_right .row h2 {
@@ -142,7 +152,7 @@ $row_right_border: none;
 }
 .panel_right .row {
   background: $row_right_active_background;
-  padding: 1em;
+  // padding: 1em;
   border: $row_right_border;
 }
 

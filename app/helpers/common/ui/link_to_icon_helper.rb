@@ -30,10 +30,10 @@ module Common::Ui::LinkToIconHelper
     # restored when the ajax request completes.
     #
     def link_to_remote_with_icon(name, options, html_options={})
-      if html_options[:icon].nil?
+      icon = html_options[:icon] || html_options[:button_icon]
+      if icon.nil?
         link_to_remote_without_icon(name, options, html_options)
       else
-        icon = html_options[:icon]
         add_icon_class(html_options)
         id = html_options[:id] || 'link%s'%rand(1000000)
         html_options[:id] ||= id

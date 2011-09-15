@@ -82,6 +82,8 @@ class Group < ActiveRecord::Base
     end
   end)
 
+  named_scope :groups_and_networks, :conditions => "groups.type IS NULL OR groups.type = 'Network'"
+
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }

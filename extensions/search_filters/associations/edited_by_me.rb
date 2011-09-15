@@ -22,7 +22,14 @@ SearchFilter.new('/edited-by-me/') do
  
   self.singleton = true
   self.section = :my_pages
-  self.label   = :edited_by_me
+
+  label do |opts|
+    if opts[:remove]
+      :edited_by_user.t(:user => :me.t)
+    else
+      :edited_by_me.t
+    end
+  end
 
 end
 

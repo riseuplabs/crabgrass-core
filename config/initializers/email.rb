@@ -18,4 +18,3 @@ end
 if (ActionMailer::Base.delivery_method == :smtp and ActionMailer::Base.smtp_settings[:port] and [587,465].include?(ActionMailer::Base.smtp_settings[:port].to_i))
   require "smtp_tls"
 end
-

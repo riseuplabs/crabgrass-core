@@ -3,9 +3,12 @@
 #                     # if test/unit is not included early on.
 
 ENV["RAILS_ENV"] = "test"
-#$: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
+if defined?(UNIT_TESTING)
+  require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
+else
+  require 'test_help'
+end
 
 ##
 ## load all the test helpers
@@ -19,6 +22,7 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
+
 ##
 ## misc.
 ##
@@ -27,7 +31,6 @@ require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-
   # only for Machinist v2
   # setup { Machinist.reset_before_test }
 
@@ -42,9 +45,6 @@ class ActiveSupport::TestCase
     User.current = nil
   }
 
-  self.use_transactional_fixtures = true
-  self.use_instantiated_fixtures  = false
-
   include AuthenticatedTestHelper
   include AssetTestHelper
   include SphinxTestHelper
@@ -55,7 +55,7 @@ class ActiveSupport::TestCase
   include DebugTestHelper
   include CrabgrassTestHelper
 
-  fixtures :all
+  # fixtures :all
 end
 
 # we want to be able to mock our application controller

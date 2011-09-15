@@ -1,12 +1,15 @@
 class Groups::DirectoryController < ApplicationController
+  stylesheet 'directory'
+  helper 'groups/directory'
+  permissions 'groups/affiliations'
 
   def index
     if !logged_in?
-      @groups = Group.access_by(:public).allows(:view).find_all_by_type(nil).paginate(pagination_params) # won't show committees or networks
+      @groups = Group.access_by(:public).allows(:view).groups_and_networks.paginate(pagination_params)
     elsif my_groups?
-      @groups = current_user.primary_groups.paginate(pagination_params) #this just paginates on primary groups. we will still show committees underneath. primary_groups are groups, or committees when we don't belong to the parent group
+      @groups = current_user.primary_groups_and_networks.paginate(pagination_params)
     else
-      @groups = Group.access_by(current_user).allows(:view).find_all_by_type(nil).paginate(pagination_params) # find_all_by_type will exclude committees or networks
+      @groups = Group.access_by(current_user).allows(:view).groups_and_networks.paginate(pagination_params)
     end
   end
 

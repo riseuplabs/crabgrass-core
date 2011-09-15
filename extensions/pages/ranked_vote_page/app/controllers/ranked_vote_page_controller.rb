@@ -1,4 +1,4 @@
-class RankedVotePageController < BasePageController
+class RankedVotePageController < Pages::BaseController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit]
   stylesheet 'vote'
@@ -115,12 +115,9 @@ class RankedVotePageController < BasePageController
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.votes.by_user(current_user).first.try.value || -1 }
   end
 
-  def setup_view
-    @show_print = true
+  def setup_options
+    # @options.show_print = true
   end
 
-  def build_page_data
-    RankingPoll.new
-  end
 end
 

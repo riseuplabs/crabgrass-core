@@ -49,32 +49,11 @@ module Groups::BasePermission
   end
 
   ##
-  ## ORGANIZATIONAL PERMISSIONS
-  ##
-
-  def may_list_groups_committees?(group = @group)
-    return false if !Conf.committees
-    return false if group.parent_id
-    current_user.may? :see_committees, group
-  end
-
-  def may_list_groups_networks?(group = @group)
-    return false if !Conf.networks
-    current_user.may? :see_networks, group
-  end
-
-  def may_show_affiliations?(group = @group)
-    may_list_groups_networks?(group) or
-    may_list_groups_committees?(group) or
-    group.real_council
-  end
-
-  ##
   ## PERMISSIONS
   ##
 
-  alias_method :may_list_permissions?, :may_admin_group?
-  alias_method :may_edit_permissions?, :may_admin_group?
+  alias_method :may_list_group_permissions?, :may_admin_group?
+  alias_method :may_edit_group_permissions?, :may_admin_group?
 
   ##
   ## EXTRA

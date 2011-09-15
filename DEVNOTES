@@ -1,7 +1,18 @@
 crabgrass-core is a basic, paired down crabgrass.
 
+remote processing
+==============================
+
+what happens when we do remote_job.destroy?
+  what happens to the background thread on the cg-processor doing the work?
+  what happens to the files it spits out?
+
 things to work on
 ============================
+
+groups
+. destroying group
+. request to expell
 
 directory
 . group
@@ -134,6 +145,14 @@ jabber integration
 openfire has a REST integration module:
 https://we.riseup.net/cgdev/openfire-integration
 
+here is a way to send jabber IMs via rails:
+https://github.com/cheald/jabberish
+
+VOIP
+===========================
+
+a library to control murmer (mumble server) via ruby through ice:
+https://github.com/cheald/murmur-manager
 
 calendars
 ======================================
@@ -223,4 +242,19 @@ Only visible on the profile page of a user, but there can be Multiple or non at 
 * homepage
 * social change interests and the like...
 
+Javascript Applications
+=============================
 
+http://sheetster.com/ -- GPL java server for web spreadsheets, REST API.
+
+Rails Applications
+===============================
+
+http://noosfero.org
+
+
+Uploading
+=========================
+
+This library has a method of remembering the uploaded file between views of the form:
+https://github.com/cheald/carrierwave

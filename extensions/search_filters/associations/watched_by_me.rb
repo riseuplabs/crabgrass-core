@@ -18,7 +18,14 @@ SearchFilter.new('/watched-by-me/') do
  
   self.singleton = true
   self.section = :my_pages
-  self.label   = :watched_by_me
+
+  label do |opts|
+    if opts[:remove]
+      :watched_by_user.t(:user => :me.t)
+    else
+      :watched_by_me.t
+    end
+  end
 
 end
 

@@ -5,7 +5,6 @@ class Me::PermissionsController < Me::BaseController
   def index
     @keys  = current_user.keys.filter_by_holder(:include => [:public, current_user.peers, current_user.friends])
     @locks = User.locks
-    render :template => 'common/permissions/index'
   end
 
   def update

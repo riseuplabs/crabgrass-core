@@ -14,9 +14,9 @@ SearchFilter.new('/created-by/:user_id/') do
   self.section = :advanced
   self.exclude = :created
 
-  label do |id|
-    if id
-      :created_by_user.t(:user => user_login(id).capitalize)
+  label do |opts|
+    if opts[:user_id]
+      :created_by_user.t(:user => user_login(opts[:user_id]).capitalize)
     else
       :created_by_dotdotdot.t
     end

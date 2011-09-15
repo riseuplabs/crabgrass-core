@@ -162,38 +162,43 @@ class Request < ActiveRecord::Base
   ## ACTIONS
   ##
 
-  # state one of 'approved' or 'rejected'
-  # user the person doing the change
-  def set_state!(newstate, user)
-    # reject unless we know the state
-    commands = Hash.new('reject')
-    commands['approved'] = 'approve'
-
-    command = commands[newstate]
-
+  #
+  # change the state of the request, testing to see if the user is allowed to.
+  #
+  def set_state!(newstate, user=nil)
     if new_record?
       raise Exception.new('record must be saved first')
     end
 
-    self.approved_by = user
-    self.send(command + '!') # FSM call, eg approve!()
+    command = case newstate
+      when 'approved' then 'approve!'
+      when 'rejected' then 'reject!'
+      else raise Exception.new('state must be approved or rejected')
+    end
+
+    self.approved_by = user  # optional
+    self.send(command)       # FSM call, eg approve!()
 
     unless self.state == newstate
       raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => command))
     end
+
     save!
   end
 
-  # alias for approve_by!, reject_by!
-  # same interface as Discussion#mark!
+  #
+  # an easy method to record a user's response to this request.
+  # one of :approve, :reject, :destroy
+  # (todo: add support for :ignore)
+  #
   def mark!(as, user)
-    # TODO: support :ignore
-    if as == :approve
+    case as
+    when :approve
       approve_by!(user)
-    elsif as == :reject
+    when :reject
       reject_by!(user)
-    elsif as == :destroy and created_by == user
-      destroy
+    when :destroy
+      destroy_by!(user)
     end
   end
 
@@ -203,6 +208,14 @@ class Request < ActiveRecord::Base
 
   def reject_by!(user)
     set_state!('rejected',user)
+  end
+
+  def destroy_by!(user)
+    if may_destroy?(user)
+      destroy
+    else
+      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => 'destroy'))
+    end
   end
 
   # triggered by FSM
@@ -222,10 +235,6 @@ class Request < ActiveRecord::Base
   def may_destroy?(user) false end
   def may_approve?(user) false end
   def may_view?(user)    false end
-
-  def may_vote?(user)
-    may_approve?(user)
-  end
 
   def after_approval() end
 
@@ -293,17 +302,6 @@ class Request < ActiveRecord::Base
       when 'ignore' then 2;
     end
   end
-
-  #def self.vote_value_for_state(vote_state)
-  #  response_map = {
-  #    'rejected' => 0,
-  #    'approved' => 1,
-  #    'ignored' => 2
-  #  }
-  #
-  #  return response_map[vote_state.to_s]
-  #end
-
 
   def add_vote!(response, user)
     value = self.class.vote_value_for_action(response)

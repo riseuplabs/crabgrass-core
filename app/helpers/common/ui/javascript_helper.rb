@@ -9,7 +9,9 @@ module Common::Ui::JavascriptHelper
   
   def standard_update(page)
     update_alert_messages(page)
-    hide_spinners(page)
+    if alert_messages_have_errors?
+      hide_spinners(page)
+    end
   end
 
   def hide_spinners(page)
@@ -31,15 +33,15 @@ module Common::Ui::JavascriptHelper
   # 
   # requires crabgrass's javascript class 'Style'
   #
-  def set_style(selector, css)
-    id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-    "Style.set('%s','%s {%s}');" % [id, selector, css]
-  end
-
-  def clear_style(selector)
-    id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
-    "Style.clear('%s');" % id
-  end
+  #def set_style(selector, css)
+  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
+  #  "Style.set('%s','%s {%s}');" % [id, selector, css]
+  #end
+  #
+  #def clear_style(selector)
+  #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
+  #  "Style.clear('%s');" % id
+  #end
 
   ##
   ## request queueing
@@ -55,6 +57,24 @@ module Common::Ui::JavascriptHelper
   # requires crabgrass's javascript class 'RequestQueue'
   #
   def queued_remote_function(options)
+    # open function call
+    function = "RequestQueue.add("
+
+    # argument 1: url
+    url_options = options[:url]
+    url_options = url_options.merge(:escape => false) if url_options.is_a?(Hash)
+    function << "'#{escape_javascript(url_for(url_options))}'"
+
+    # argument 2: options
+    js_options = build_callbacks(options)
+    if method = options[:method] 
+      method = "'#{method}'" unless (method.is_a?(String) and !method.index("'").nil?)
+      js_options['method'] = method
+    end
+    javascript_options = options_for_javascript(js_options)
+    function << ", #{javascript_options}"
+
+    # argument 3: parameters
     parameters = options.delete(:with)
     if protect_against_forgery?
       if parameters
@@ -64,25 +84,18 @@ module Common::Ui::JavascriptHelper
       end
       parameters << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
     end
-
-    js_options = build_callbacks(options)
-    if method = options[:method] 
-      method = "'#{method}'" unless (method.is_a?(String) and !method.index("'").nil?)
-      js_options['method'] = method
-    end
-    javascript_options = options_for_javascript(js_options)
-    function = "RequestQueue.add("
-    url_options = options[:url]
-    url_options = url_options.merge(:escape => false) if url_options.is_a?(Hash)
-    function << "'#{escape_javascript(url_for(url_options))}'"
-    function << ", #{javascript_options}"
     if parameters
       function << ", '#{escape_javascript(parameters)}'"
     end
+
+    # close function call
     function << ")"
+
+    # after or before
     function = "#{options[:before]}; #{function}" if options[:before]
     function = "#{function}; #{options[:after]}"  if options[:after]
     function = "if (#{options[:condition]}) { #{function}; }" if options[:condition]
+
     return function
   end
 

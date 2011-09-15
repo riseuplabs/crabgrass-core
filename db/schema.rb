@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817205511) do
+ActiveRecord::Schema.define(:version => 20110714001628) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -44,8 +44,7 @@ ActiveRecord::Schema.define(:version => 20110817205511) do
     t.string   "versioned_type"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.text     "comment",        :limit => 2147483647
-    t.string   "code"
+    t.text     "comment"
   end
 
   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
@@ -63,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20110817205511) do
     t.integer  "version"
     t.string   "type"
     t.integer  "page_terms_id"
-    t.boolean  "is_attachment",                       :default => false
+    t.boolean  "is_attachment", :default => false
     t.boolean  "is_image"
     t.boolean  "is_audio"
     t.boolean  "is_video"
@@ -73,8 +72,7 @@ ActiveRecord::Schema.define(:version => 20110817205511) do
     t.datetime "taken_at"
     t.string   "credit"
     t.integer  "user_id"
-    t.text     "comment",       :limit => 2147483647
-    t.string   "code"
+    t.text     "comment"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -785,7 +783,6 @@ ActiveRecord::Schema.define(:version => 20110817205511) do
     t.integer "width"
     t.integer "height"
     t.boolean "failure"
-    t.integer "remote_job_id"
   end
 
   create_table "tokens", :force => true do |t|

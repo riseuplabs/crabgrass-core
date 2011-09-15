@@ -12,7 +12,7 @@
 #     (b) defining the authorized?() method.
 #     (c) using permission auto-guessing.
 # (4) views use permission definitions in order to display the right thing
-# 
+#
 #
 # (1) Permission Definition
 # ---------------------------------
@@ -72,7 +72,7 @@
 #
 #   At the top of your controller definition, do this:
 #
-#     guard :show => :may_show_robots?, 
+#     guard :show => :may_show_robots?,
 #           :update => :may_edit_robots?
 #
 #   This will ensure the may_show_robots? returns true before 'show()' will run.
@@ -132,8 +132,6 @@ module Common::Application::Permissions
     base.extend ClassMethods
     base.send :include, InstanceMethods
     base.class_eval do
-      #helper_method :may?
-      #helper_method :may_action?
       helper_method :permission_log
     end
   end
@@ -161,15 +159,7 @@ module Common::Application::Permissions
         @permission_options = HashWithIndifferentAccess.new(class_names.pop)
       end
       for class_name in class_names
-        begin
-          permission_class = "#{class_name}_permission".camelize.constantize
-        rescue NameError # permissions 'groups' => Groups::BasePermission
-          begin
-            permission_class = "#{class_name}/base_permission".camelize.constantize
-          rescue NameError
-            raise 'could find permission file for "%s"' % class_name
-          end
-        end
+        permission_class = "#{class_name}_permission".camelize.constantize
         include(permission_class)
         add_template_helper(permission_class)
       end
@@ -205,21 +195,11 @@ module Common::Application::Permissions
     #
     # permissions are resolved in this order:
     #
-    # (1) check to see if a method is defined that matches may_action_controller?()
-    # (2) check the class hierarchy for such a method (replacing controller name
-    #     with the appropriate controller).
-    # (3) fall back to default_permission
+    # (1) check for a method as specified with guard for the given action
+    # (2) check to see if a method is defined that matches may_action_controller?()
+    # (3) check to see if a method with aliased actions
     # (4) return false if we had no success so far.
     #
-    #def may?(controller, action, *args)
-    #  permission = permission_for_controller(controller, action, *args)
-    #  if permission and block_given?
-    #    # return nil, if yield returns false
-    #    yield
-    #  else
-    #    permission
-    #  end
-    #end
 
     #
     # This method will raise PermissionDenied if the current user cannot
@@ -296,13 +276,10 @@ module Common::Application::Permissions
     end
 
     def find_permission_method
-      objects = possible_objects
       verbs = possible_verbs
-      for object in objects
-        for verb in verbs
-          if method = permission_method_exists(verb,object)
-            return method
-          end
+      for verb in verbs
+        if method = permission_method_exists(verb,method_object)
+          return method
         end
       end
       return nil # sadly, nothing found
@@ -312,7 +289,6 @@ module Common::Application::Permissions
     def permission_method_exists(verb, object)
       return false unless verb and object
       methods = ["may_#{verb}_#{object}?"]
-      methods << "may_#{verb}_#{object.singularize}?" if object != object.singularize
       methods << "may_#{verb}_#{object.pluralize}?" if object != object.pluralize
       methods.each do |method|
         add_permission_log(:attempted => method)
@@ -323,27 +299,24 @@ module Common::Application::Permissions
       return false
     end
 
-    def possible_objects
-      # the possibilities are tried *in order*
-      objects = []
-      if permission_object
-        objects << permission_object
-      elsif params[:controller] =~ /\//
-        objects << params[:controller].sub('/','_')      # eg 'me/requests' -> 'me_requests'
-        objects << params[:controller].sub(/^.*\//, '')  # eg 'me/requests' -> 'requests'
-        objects << params[:controller].sub(/\/.*$/, '')  # eg 'me/requests' -> 'me'
-      else
-        objects << params[:controller]
-      end
-      return objects
+    #
+    # returns the object specified with permissions
+    # or a singularized version of the controller param
+    # eg 'groups/requests' -> 'group_request'
+    #
+    def method_object
+      permission_object ||
+      params[:controller].
+        split('/').
+        map{|o| o.singularize}.
+        join('_')
     end
 
     def possible_verbs
       # the possibilities are tried *in order*
-      verbs = []
-      verbs << permission_verb
-      verbs << params[:action]
-      verbs += ACTION_ALIASES[params[:action]] if ACTION_ALIASES[params[:action]].any?
+      return [permission_verb] if permission_verb
+      verbs = [params[:action]]
+      verbs += ACTION_ALIASES[params[:action]] if ACTION_ALIASES[params[:action]]
       verbs << 'access'
       return verbs
     end
@@ -376,79 +349,4 @@ module Common::Application::Permissions
   end # end instance methods
 
 end # end module
-
-
-##
-## DISABLED STUFF
-##
-
-#  # Generate a link to the specific action if the user is allowed to do
-#  # so, skipping it otherwise.
-#  #
-#  # Examples:
-#  #   <%= link_if_may("Create a Group", :group, :create) %>
-#  #   <%= link_if_may("Edit this Group", :group, :edit, @group) %>
-#  #   <%= link_if_may("Delete this Group", :group, :delete, @group, :confirm => "Are you sure?") %>
-#  #   <%= link_if_may("Boldly go", :warp_drive, :enable, nil, {}, {:style => "font-weight: bold;"} %>
-#  def link_if_may(link_text, controller, action, object = nil, link_opts = {}, html_opts = nil)
-#    if may?(controller, action, object)
-#      object_id = params_object_id(object)
-#      link_to(link_text, {:controller => controller, :action => action, :id => object_id}.merge(link_opts), html_opts)
-#    end
-#  end
-
-#  def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
-#    if may?(controller, action, object)
-#      object_id = params_object_id(object)
-#      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object_id}.merge(link_opts), active)
-#    end
-#  end
-
-#  # matches may_x?
-#  PERMISSION_METHOD_RE = /^may_([_a-zA-Z]\w*)\?$/
-
-#  # Call may?() if the missing method is in the form of a permission test (may_x?)
-#  # and call super() otherwise.
-#  #
-#  # There are two exceptions to this rule:
-#  #
-#  # (1) We do not call super() if we are a controller. Instead, just throw an error.
-#  # this forces every controller to explictly define all its actions. It is just too
-#  # difficult to try to support anything else.
-#  #
-#  # (2) We do not call super() if the superclass does not have method_missing
-#  # defined, since this will cause an error.
-#  #
-#  def method_missing(method_id, *args)
-#    method_id = method_id.to_s
-#    match = PERMISSION_METHOD_RE.match(method_id)
-#    if match
-#      result = may?(controller, match[1], *args)
-#      if result.nil?
-#        raise Exception.new('could not find permission definition for %s' % method_id)
-#      else
-#        result
-#      end
-#    elsif self.is_a? ActionController::Base
-#      raise NameError, "No method #{method_id}. (NOTE: due to the way permissions work, you must explicitly define each action in a controller).", caller
-#    elsif self.class.superclass.method_defined?(:method_missing)
-#      super
-#    else
-#      raise NameError, "No method #{method_id}", caller
-#    end
-#  end
-
-#  private
-
-
-#  # the first one that makes sense in this order: object.name, object.id, nil
-#  def params_object_id(object)
-#    object_id = if object.respond_to?(:name)
-#      object.name
-#    elsif !object.blank?
-#      object.id
-#    end
-#  end
-
-
 

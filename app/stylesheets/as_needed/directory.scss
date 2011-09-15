@@ -1,0 +1,35 @@
+
+
+.directory {
+  .entry {
+    margin-bottom: 20px;
+    overflow: auto;
+
+    .avatar {
+      float: left;
+     }
+    .text {
+      margin-left: $icon_medium + 7px
+     }
+    .info {
+      font-style: italic;
+      margin-top: 4px;
+    }
+    .name {
+      font-size: 1.2em;
+      overflow: hidden;
+      font-weight: bold;
+    }
+    .summary {
+      margin-top: 4px;
+      &, & p {
+        font-size: 11px;
+        line-height: 13px;
+      }
+    }
+    .committees .avatar {
+      margin-top: 4px;
+      margin-right: 5px;
+    }
+  }
+}

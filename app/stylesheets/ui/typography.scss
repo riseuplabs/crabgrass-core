@@ -38,6 +38,9 @@ p, ol, ul, td, div {
     // this is often use with .p.first or .h1.first, etc.
     margin-top: 0 !important;
   }
+  &.last {
+    margin-bottom: 0 !important;
+  }
 }
 
 //
@@ -65,4 +68,10 @@ a {
   white-space: nowrap;
 }
 
+//
+// AUTO CLEARING BLOCKS
+//
 
+.autoclear {
+  overflow: auto; // hack to make a container auto-clear child floated elements.
+}

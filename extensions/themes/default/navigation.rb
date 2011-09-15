@@ -21,7 +21,7 @@ define_navigation do
   global_section :me do
     label "Me"
     visible { logged_in? }
-    url     { me_home_path }
+    url     { me_pages_path }
     active  { context?(:me) }
     html    :partial => '/layouts/global/nav/me_menu'
 
@@ -234,14 +234,14 @@ define_navigation do
 =end
 
     context_section :members do
-      visible { may_list_groups_members? }
+      visible { may_list_group_members? }
       label   "Members"
       icon    :user
       url     { group_members_path(@group) }
       active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
 
       local_section :people do
-        visible { may_list_groups_members? }
+        visible { may_list_group_members? }
         label   { :people.t }
         url     { group_members_path(@group) }
         active  { controller?('groups/members') }
@@ -255,14 +255,14 @@ define_navigation do
       end
 
       local_section :invites do
-        visible { may_create_groups_invite? }
+        visible { may_create_group_invite? }
         label   { "Send Invites" }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') && action?('new') }
       end
 
       local_section :requests do
-        visible { may_list_groups_requests? }
+        visible { may_list_group_requests? }
         label   { 'Membership Requests' }
         url     { group_requests_path(@group) }
         active  { controller?('groups/requests') }
@@ -278,31 +278,33 @@ define_navigation do
     end
 
     context_section :settings do
-      visible { may_edit_group? }
+      visible { may_edit_group_settings? ||
+        may_edit_group_permissions? ||
+        may_edit_group_profile? }
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profile') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles') }
 
       local_section :settings do
-        visible { may_edit_group? }
+        visible { may_edit_group_settings? }
         label  { :basic_settings.t }
         url    { group_settings_path(@group) }
         active { controller?('groups/settings') }
       end
 
       local_section :permissions do
-        visible { may_edit_group? }
+        visible { may_edit_group_permissions? }
         label  { :permissions.t }
         url    { group_permissions_path(@group) }
         active { controller?('groups/permissions') }
       end
 
       local_section :profile do
-        visible { may_edit_groups_profile? }
+        visible { may_edit_group_profile? }
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
-        active { controller?('groups/profile') }
+        active { controller?('groups/profiles') }
       end
 
       # uncomment this when Settings -> Requests is needed

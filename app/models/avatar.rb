@@ -37,6 +37,10 @@ class Avatar < ActiveRecord::Base
     "#{size}x#{size}"
   end
 
+  def self.pixel_width(size)
+    SIZES[size.to_s]
+  end
+
   #
   # return binary data of the image at the specified size
   #

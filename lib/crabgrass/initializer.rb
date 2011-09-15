@@ -1,11 +1,11 @@
-# 
+#
 # This is an unnecessary class that allows us to see what is
 # being loaded when.
 #
 # I found this useful and interesting for understanding the
 # order of initialization.
 #
-# Rails::Initializer is defined in 
+# Rails::Initializer is defined in
 # /var/lib/gems/1.8/gems/rails-x/lib/initializer.rb
 #
 

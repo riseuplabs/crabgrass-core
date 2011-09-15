@@ -3,9 +3,6 @@ class Groups::PermissionsController < Groups::BaseController
   before_filter :login_required
   helper 'acts_as_locked'
 
-  guard :index  => :may_list_permissions?,
-        :update => :may_edit_permissions?
-
   def index
     @key  = @group.keys.find_or_create_by_holder(:public)
     @keys = [@key]

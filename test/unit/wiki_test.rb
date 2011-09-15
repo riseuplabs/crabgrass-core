@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 if try_to_load('shoulda')
   require File.dirname(__FILE__) + '/wiki/locking_test.rb'

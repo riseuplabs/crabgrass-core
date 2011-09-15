@@ -1,8 +1,19 @@
 ##
+## Unit tests can run in a stripped down environment.
+##
+
+if defined? UNIT_TESTING
+  config.eager_load_paths = ["#{RAILS_ROOT}/app/models"]
+  config.frameworks=[:active_record, :action_mailer, :action_view]
+  config.autoload_paths = ["#{RAILS_ROOT}/app/models/"]
+  config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+end
+
+##
 ## STANDARD RAILS OPTIONS
 ##
 
-config.cache_classes = true
+config.cache_classes = !defined?(UNIT_TESTING)
 config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
@@ -24,6 +35,16 @@ config.action_mailer.default_url_options = { :host => "localhost" }
 config.gem 'machinist', :version => '~> 1.0' # switch to v2 when stable.
 config.gem 'faker'
 config.gem 'minitest', :lib => 'minitest/autorun'
+
+##
+## GEMS REQUIRED FOR FUNCTIONAL TESTS
+##
+
+unless defined?(UNIT_TESTING)
+  config.gem 'compass', :version => '~> 0.10'
+  config.gem 'haml', :version => '~> 3.0'
+  config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
+end
 
 #config.gem 'webrat'
 

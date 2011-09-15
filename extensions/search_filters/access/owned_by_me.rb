@@ -18,5 +18,13 @@ SearchFilter.new('/owned-by-me/') do
   self.section = :my_pages
   self.label   = :owned_by_me
 
+  label do |opts|
+    if opts[:add]
+      :owned_by_me.t
+    else
+      :owned_by_user.t(:user => :me.t)
+    end
+  end
+
 end
 

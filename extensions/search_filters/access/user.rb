@@ -12,9 +12,9 @@ SearchFilter.new('/user/:user_id/') do
   self.section = :access
   self.singleton = false
 
-  label do |id|
-    if id
-      "#{:user.t}: #{user_login(id)}"
+  label do |opts|
+    if opts[:user_id]
+      "#{:user.t}: #{user_login(opts[:user_id])}"
     else
       :user.t + '...'
     end

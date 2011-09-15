@@ -1,16 +1,19 @@
 -#
 -# this form is loaded in a modalbox
 -#
+-# require: @entity
+-#
 
 - form_for [@entity, @avatar], :html => {:multipart => true} do |f|
   .tip.info_16
-    = I18n.t(:uploaded_image_cropped)
+    = :uploaded_image_cropped.t
   .p
-    %label= I18n.t(:select_image_file)
+    %label= :select_image_file.t
     .bq= f.file_field :image_file
   .p
-    %label= I18n.t(:or_image_url)
+    %label= :or_image_url.t
     .bq= f.text_field :image_file_url
-  = close_modal_button :cancel
-  = submit_tag :upload_image.t
+  .buttons.reverse
+    = submit_tag :upload_image.t
+    = close_modal_button :cancel
 

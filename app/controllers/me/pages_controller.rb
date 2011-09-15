@@ -9,9 +9,12 @@ class Me::PagesController < Me::BaseController
   # see controller/common/page_search.rb
   #
   def index
-    @path  = apply_path_modifiers( parsed_path() )
-    @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
-    # note: pagination_params is used just for defaults, pagination is done through @path.
+    @path = apply_path_modifiers( parsed_path() )
+    if request.xhr?
+      # note: pagination_params is used just for defaults, 
+      #       normal pagination is done through @path.
+      @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
+    end
     render :template => 'common/pages/search/index'
   end
 

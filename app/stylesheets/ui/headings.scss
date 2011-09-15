@@ -23,4 +23,18 @@ h2, .h2 {font-size: $font_heading_h2_size;}
 h3, .h3 {font-size: $font_heading_h3_size;}
 h4, .h4 {font-size: $font_heading_h4_size;}
 
+//
+// plain makes everything the default font. used in places where you want to eliminate
+// the html formatting of some user supplied text.
+//
+// currently, this is used in the directories. I am not sure this is the best long term
+// method for dealing with this situation.
+//
+
+.plain {
+  h1, .h1 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
+  h2, .h2 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
+  h3, .h3 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
+  h4, .h4 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
+}
 

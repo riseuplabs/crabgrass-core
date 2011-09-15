@@ -87,6 +87,9 @@ module UserExtension::Groups
 
       has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_G_AND_N_CONDITION
 
+      # just groups and networks the user is a member of, no committees.
+      has_many :groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => GROUPS_AND_NETWORKS_CONDITION
+
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group',
@@ -147,9 +150,10 @@ module UserExtension::Groups
 
   private
 
-  PRIMARY_GROUPS_CONDITION   = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
-  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\')'
-  PRIMARY_G_AND_N_CONDITION  = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_GROUPS_CONDITION      = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_NETWORKS_CONDITION    = '(type = \'Network\')'
+  PRIMARY_G_AND_N_CONDITION     = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 
 end

@@ -18,7 +18,8 @@ SearchFilter.new('/type/:type_name/') do
     end
   end
 
-  label do |type_name|
+  label do |opts|
+    type_name = opts[:type_name]
     if type_name
       "#{:type.t}: #{I18n.t(type_name, :default => type_name)}"
     else

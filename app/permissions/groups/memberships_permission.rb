@@ -1,15 +1,20 @@
+#
+# this is for current_user's memberships.
+# it should perhaps be called 'my_memberships'
+#
+
 module Groups::MembershipsPermission
 
   protected
 
-  def may_create_groups_membership?(group=@group)
+  def may_create_group_membership?(group=@group)
     logged_in? and
     group and
     (current_user.may?(:admin, group) or current_user.may?(:join, group)) and
     !current_user.member_of?(group)
   end
 
-  def may_destroy_groups_membership?(group = @group)
+  def may_destroy_group_membership?(group = @group)
     logged_in? and
     current_user.direct_member_of?(group) and
     (group.network? or group.users.uniq.size > 1)

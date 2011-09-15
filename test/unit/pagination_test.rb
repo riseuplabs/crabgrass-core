@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 class PaginationTest < ActiveSupport::TestCase
   fixtures :users, :groups, :memberships, :relationships, :pages, :sites, :page_terms
