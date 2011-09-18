@@ -2,7 +2,8 @@
 # Some media processing jobs take a long time and are better handled by
 # another server. A RemoteJob lets us create these remote processing jobs.
 #
-
+# see initializers/remote_job.rb
+#
 
 class RemoteJob < ActiveResource::Base
   ALLOWED_FIELDS = [
@@ -21,9 +22,6 @@ class RemoteJob < ActiveResource::Base
     end
   end
 
-  if Conf.remote_processing
-    self.site = Conf.remote_processing
-  end
   self.format = :xml
   self.element_name = "job"
 
