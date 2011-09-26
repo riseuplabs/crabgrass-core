@@ -8,7 +8,7 @@ module AssetPageHelper
   def thumbnail_link_to_asset(asset, size)
     thumbnail = asset.thumbnail(size)
     if thumbnail.nil?
-      show_generic_asset(asscet)
+      show_generic_asset(asset)
     elsif thumbnail.failure?
       show_failed_thumbnail(thumbnail)
     elsif thumbnail.new? or thumbnail.processing?
@@ -61,10 +61,14 @@ module AssetPageHelper
   ## 
 
   def show_failed_thumbnail(thumbnail)
-    if thumbnail.remote_job.nil?
-      'failed to create remote job: ' + link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'show_thumbnail', :retry => true))
+    if thumbnail.remote?
+      if thumbnail.remote_job.nil?
+        'failed to create remote job. ' + link_to_job_reset
+      else
+        'remote job failed. ' + link_to_job_details
+      end
     else
-      'remote job failed: ' + link_to_modal('click here to view details', :url => page_xpath(@page, :action => 'show_job'), :title => 'Remote Job')
+      'thumbnail generation failed'
     end
   end
 
@@ -78,7 +82,15 @@ module AssetPageHelper
   end
 
   def show_missing_thumbnail(thumbnail)
-    "missing"
+    if thumbnail.remote?
+      if thumbnail.remote_job.nil?
+        'missing remote job'
+      else
+        "remote job stalled. #{h thumbnail.inspect}" + link_to_job_details
+      end
+    else
+      "missing thumbnail"
+    end
   end
 
   def show_generic_asset(asset)
@@ -104,6 +116,14 @@ module AssetPageHelper
     width, height = [300,300]
     style = "height:#{height}px; width:#{width}px; background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
     content_tag(:div, javascript, :id => 'preview-loading', :style => style)
+  end
+
+  def link_to_job_details
+    link_to_modal('click here to view details', :url => page_xpath(@page, :action => 'show_job'), :title => 'Remote Job')
+  end
+
+  def link_to_job_reset
+    link_to_remote('click here to try again', :url => page_xpath(@page, :action => 'show_thumbnail', :retry => true))
   end
 
 end

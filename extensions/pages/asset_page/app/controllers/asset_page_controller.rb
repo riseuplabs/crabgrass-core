@@ -1,12 +1,16 @@
 class AssetPageController < Pages::BaseController
-  #before_filter :fetch_asset
-  #stylesheet    'asset'
   permissions   'asset_page'
 
   def show
     if @asset.nil?
       redirect_to page_url(@page, :action => 'new')
+      return
     end
+
+    #thumb = @asset.thumbnail(:large)
+    #if thumb and thumb.remote? and thumb.new?
+    #  thumb.generate(:host => host)
+    #end
   end
 
   def new
@@ -26,14 +30,6 @@ class AssetPageController < Pages::BaseController
   end
 
   #
-  # xhr request
-  #
-  #def generate_preview
-  #  @asset.generate_thumbnails
-  #  update_preview(@asset)
-  #end
-
-  #
   # Show the large thumbnail preview of this asset. If it doesn't exist yet, 
   # we fire off the request to have it generated, either locally or remotely.
   # xhr request only.
@@ -42,7 +38,7 @@ class AssetPageController < Pages::BaseController
     thumb = @asset.thumbnail(:large)
 
     if thumb.new? or params[:retry]
-      thumb.generate(:force => true, :host => request.protocol + request.host)
+      thumb.generate(:force => true, :host => host)
     end
 
     if thumb.processing?
@@ -59,9 +55,14 @@ class AssetPageController < Pages::BaseController
     @thumbnail = @asset.thumbnail(:large)
   end
 
+  #
+  # post action to requeue the job.
+  #
   def requeue_job
     job = @asset.thumbnail(:large).remote_job
-    job.run
+    unless job.state == 'processing'
+      job.run
+    end
     redirect_to page_url(@page)
   end
 
@@ -93,6 +94,10 @@ class AssetPageController < Pages::BaseController
   # a dummy response to keep the timer still polling
   def keep_polling
     render :nothing => true
+  end
+
+  def host
+    request.protocol + request.host_with_port
   end
 
 end

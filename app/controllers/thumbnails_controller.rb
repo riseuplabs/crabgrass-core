@@ -5,7 +5,7 @@
 # TODO: ensure that only the remote processor can hit these actions
 #
 
-class ThumbnailController < ApplicationController
+class ThumbnailsController < ApplicationController
 
   def show
     @thumbnail = Thumbnail.find(params[:id])

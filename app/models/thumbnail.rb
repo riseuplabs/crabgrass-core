@@ -29,20 +29,26 @@ class Thumbnail < ActiveRecord::Base
   #
   belongs_to :parent, :polymorphic => true
 
+  #
+  # ensure the files used for storage are destroyed when the thumbnail is
+  # 
   after_destroy :rm_file
   def rm_file
-    unless proxy?
-      fname = parent.private_thumbnail_filename(filename)
-      FileUtils.rm(fname) if File.exists?(fname) and File.file?(fname)
+    if !proxy? and File.exists?(private_filename) and File.file?(private_filename)
+      FileUtils.rm(private_filename)
     end
   end
 
+  #
   # returns the thumbnail object that we depend on, if any.
+  #
   def depends_on
     @depends ||= parent.thumbnail(thumbdef.depends)
   end
 
+  #
   # finds or initializes a Thumbnail
+  #
   def self.find_or_init(thumbnail_name, parent_id, asset_class)
     self.find_or_initialize_by_name_and_parent_id_and_parent_type(
       thumbnail_name.to_s, parent_id, asset_class
@@ -86,7 +92,7 @@ class Thumbnail < ActiveRecord::Base
         :host => host
       }
 
-      if thumbdef.remote and RemoteJob.site
+      if remote?
         queue_remote_job(options)
       else
         generate_now(options)
@@ -132,7 +138,7 @@ class Thumbnail < ActiveRecord::Base
   #
 
   def remote?
-    thumbdef.remote
+    thumbdef.remote.any? and RemoteJob.site.any?
   end
 
   # true if file exists
@@ -150,7 +156,8 @@ class Thumbnail < ActiveRecord::Base
   # the thumbnail file. 
   #
   def new?
-    !exists? and !failure?
+    (!remote? and missing? and !failure?) or
+    (remote? and remote_job_id.nil?)
   end
 
   #
@@ -162,7 +169,8 @@ class Thumbnail < ActiveRecord::Base
   # * for remote thumbnails where the remote job is still in progress
   #
   def processing?
-    (!remote? and missing? and !failure?) or (remote? and remote_job and remote_job.state == 'processing')
+    (!remote? and missing? and !failure?) or
+    (remote? and remote_job and remote_job.processing?)
   end
 
   def ok?
@@ -174,13 +182,16 @@ class Thumbnail < ActiveRecord::Base
   # location of this thumbnail.
   #
   def fetch_data_from_remote_job
+p '1'*100
     begin
       if remote_job.output_file
-        if File.exists?(remote_job.output_file)
-          File.cp(remote_job.output_file, private_filename)
-          File.chmod(0644, private_filename)
-        else
-          raise Exception.new('no file at %s' % remote_job.output_file)
+        if private_filename != remote_job.output_file
+          if File.exists?(remote_job.output_file)
+            File.cp(remote_job.output_file, private_filename)
+            File.chmod(0644, private_filename)
+          else
+            raise Exception.new('no file at %s' % remote_job.output_file)
+          end
         end
       elsif remote_job.output_url
         #
@@ -197,10 +208,11 @@ class Thumbnail < ActiveRecord::Base
       else
         raise Exception.new
       end
-      # if we get here, everything should have gone well.
-      remote_job.update_attribute(:status => 'finished')
-    #rescue Exception => exc
-      # do something here
+      update_metadata(private_filename, content_type)
+      self.failure = false
+      save
+    rescue Exception => exc
+      update_attribute(:failure, true)
     end
   end
 
@@ -235,6 +247,7 @@ class Thumbnail < ActiveRecord::Base
 
   def queue_remote_job(options)
     raise 'host required' unless options[:host]
+    raise 'remote job already exists' if remote_job_id
 
     if !RemoteJob.localhost?
       if thumbdef.binary
@@ -256,19 +269,26 @@ class Thumbnail < ActiveRecord::Base
       raise ErrorMessage.new('remote job failed: ' + exc.to_s)
     end
 
-    # 
-    # query the remote job processor and confirm that it actually has the job
-    # not sure if we need this double check.
     #
-    unless remote_job
-      self.update_attribute(:failure, true)
+    # this does a couple things:
+    #
+    # (1) when remote_job is referenced, the remote processor is accessed.
+    #     this helps confirm that the job was actually created.
+    #
+    # (2) puts the job in a queued state, so that it will start processing. 
+    #
+    if remote_job
+      remote_job.run
+    else
+      failure = true
     end
+    save!
   end
 
   def generate_now(options)
     trans = Media.transmogrifier(options)
     if trans.run() == :success
-      update_metadata(options)
+      update_metadata(private_filename, content_type)
       self.failure = false
     else
       # failure
@@ -277,14 +297,19 @@ class Thumbnail < ActiveRecord::Base
     save if changed?
   end
 
-  def update_metadata(options)
+  #
+  # file - the file path of image to get metadata from
+  # content_type - the type of the file
+  #
+  def update_metadata(file, content_type)
+p '2'*100
     # dimensions
-    if Media.has_dimensions?(options[:output_type]) and thumbdef.size.present?
-      self.width, self.height = Media.dimensions(options[:output_file])
+    if Media.has_dimensions?(content_type) and thumbdef.size.present?
+      self.width, self.height = Media.dimensions(file)
     end
     # size
-    self.size = File.size(options[:output_file])
-
+    self.size = File.size(file)
+p size.inspect
     # by the time we figure out what the thumbnail dimensions are,
     # the duplicate thumbnails for the version have already been created.
     # so, when our dimensions change, update the versioned thumb as well.

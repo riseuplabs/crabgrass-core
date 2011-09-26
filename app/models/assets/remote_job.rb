@@ -25,6 +25,10 @@ class RemoteJob < ActiveResource::Base
     end
   end
 
+  def processing?
+    state == 'processing'
+  end
+
   ##
   ## class methods
   ##
