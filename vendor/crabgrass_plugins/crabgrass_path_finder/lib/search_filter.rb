@@ -211,6 +211,7 @@ class SearchFilter
     if block
       set_label(&block)
     else
+      # Send a dup of args, so path_args_to_hash won't remove values from args.
       get_label(args ? args.dup : [], options)
     end
   end
