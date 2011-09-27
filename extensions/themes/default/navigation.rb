@@ -278,16 +278,14 @@ define_navigation do
     end
 
     context_section :settings do
-      visible { may_edit_group_settings? ||
-        may_edit_group_permissions? ||
-        may_edit_group_profile? }
+      visible { may_admin_group? } #there were a few disjuncts here, but all were equivalent to may_admin_group?
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
       active { controller?('groups/settings', 'groups/permissions', 'groups/profiles') }
 
       local_section :settings do
-        visible { may_edit_group_settings? }
+        visible { may_admin_group? }
         label  { :basic_settings.t }
         url    { group_settings_path(@group) }
         active { controller?('groups/settings') }
