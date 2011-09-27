@@ -211,7 +211,7 @@ class SearchFilter
     if block
       set_label(&block)
     else
-      get_label(args, options)
+      get_label(args ? args.dup : [], options)
     end
   end
 
