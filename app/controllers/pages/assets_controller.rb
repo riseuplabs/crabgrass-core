@@ -1,5 +1,6 @@
 class Pages::AssetsController < Pages::SidebarsController
 
+  permissions 'pages', :verb => :edit # the assets_permission file is for the assets controller not under pages.
   before_filter :login_required
   helper 'pages/assets'
 

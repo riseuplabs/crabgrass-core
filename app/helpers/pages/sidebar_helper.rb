@@ -150,7 +150,7 @@ module Pages::SidebarHelper
         link_to_asset(asset, :small, :crop! => '36x36')
       end
       #content_tag :div, column_layout(3, items), :class => 'side_indent'
-    elsif may_create_assets?
+    elsif may_edit_page_asset?
       ''
     end
   end
@@ -190,7 +190,7 @@ module Pages::SidebarHelper
   end
 
   def edit_tags_line
-    if may_update_tags?
+    if may_edit_page_tags?
       popup_line(
         :id => 'tag_li',
         :icon => 'tag',

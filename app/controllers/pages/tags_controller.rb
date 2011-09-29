@@ -1,5 +1,6 @@
 class Pages::TagsController < Pages::SidebarsController
 
+  permissions 'pages', :verb => :edit
   before_filter :login_required
   helper 'pages/tags'
 

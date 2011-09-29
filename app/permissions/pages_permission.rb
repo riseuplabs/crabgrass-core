@@ -60,17 +60,20 @@ module PagesPermission
   ## TAGS
   ##
 
-  alias_method :may_update_tags?, :may_edit_page?
-  alias_method :may_show_tags?, :may_update_tags?
+  alias_method :may_edit_page_tags?, :may_edit_page?
 
   ##
   ## ASSETS
   ##
 
-  alias_method :may_create_assets?, :may_edit_page?
-  alias_method :may_destroy_assets?, :may_create_assets?
-  alias_method :may_show_assets?, :may_create_assets?
-  alias_method :may_update_assets?, :may_create_assets?
+  alias_method :may_edit_page_asset?, :may_edit_page?
+  #alias_method :may_create_assets?, :may_edit_page? #this is definited in assets_permission.rb too
+
+
+  ##
+  ## DETAILS
+  ##
+  alias_method :may_show_page_detail?, :may_edit_page?
 
   ##
   ## SHARING
@@ -135,7 +138,7 @@ module PagesPermission
   ## TITLE
   ##
 
-  alias_method :may_update_title?, :may_edit_page?
+  alias_method :may_update_title?, :may_edit_page? # should be may_update_page_title? ? Or maybe not needed?
   alias_method :may_edit_title?, :may_update_title?
 
 end
