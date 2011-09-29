@@ -168,10 +168,11 @@ module Common::Page::SearchHelper
     function = queued_remote_function options.merge(:url => url+'?add=/view/detailed/')
     detailed_link = {:label => 'detailed', :function => function, :active => current_view == 'detailed', :id => 'toggle_view_detailed'}
     # grid
-    function = queued_remote_function options.merge(:url => url+'?add=/view/grid/')
-    grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
+    #function = queued_remote_function options.merge(:url => url+'?add=/view/grid/')
+    #grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
 
-    toggle_bug_links(compact_link, detailed_link, grid_link)
+    # toggle_bug_links(compact_link, detailed_link, grid_link)
+    toggle_bug_links(compact_link, detailed_link)
   end
 
   #
