@@ -24,10 +24,10 @@
   -# 
   -# TAGS
   -#
-  - if !(tag_content = page_tags).nil? || may_edit_page_tags?
+  - if @page.tags.any? || may_edit_page_tags?
     %h3= I18n.t(:tags)
     %div.tags
-      = tag_content
+      = page_tags
     %ul
       = edit_tags_line
 
