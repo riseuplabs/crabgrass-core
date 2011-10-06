@@ -1,0 +1,16 @@
+/ locals: wiki, no_title
+- if local_assigns[:no_title]
+  %span.right
+    = edit_wiki_link
+- else
+  %h3#underlined
+    = I18n.t(:wiki)
+    %span.right
+      = edit_wiki_link
+%div.wiki
+  - if local_assigns[:preview]
+    = @wiki.render_preview(preview)
+    = wiki_more_link
+  - else
+    = @wiki.body_html
+    = wiki_less_link

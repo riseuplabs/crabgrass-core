@@ -1,3 +1,3 @@
-- wiki ||= @wiki
-%div#wiki-area
-  = render :partial => 'widget/wiki/show_wiki', :locals => local_assigns.merge(:wiki => wiki)
+#wiki-area
+  = link_to "Public Wiki", group_wiki_path(@group, @group.public_wiki)
+  = link_to "Members Wiki", group_wiki_path(@group, @group.private_wiki)

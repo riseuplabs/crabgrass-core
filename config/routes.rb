@@ -125,6 +125,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resource  :profile, :only => [:edit, :update]
     groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
+    groups.resources :wikis, :except => [:index, :destroy]
  end
 
   ##
@@ -160,6 +161,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resource :attributes, :only => [:update]
     pages.resource :title,      :only => [:edit, :update], :controller => 'title'
     pages.resource :trash,      :only => [:edit, :update], :controller => 'trash'
+    pages.resource :wiki
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController

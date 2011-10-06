@@ -8,7 +8,7 @@
     %span.right
       = wiki_edit_link(wiki.id)
 %div.wiki
-  = 'TEST PRINT LINE wiki id:' + wiki.id.to_s
+  - #TODO: use formy.tabs instead
   - if local_assigns[:preview]
     = wiki.render_preview(preview)
     = wiki_more_link(wiki.id)

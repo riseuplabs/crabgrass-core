@@ -9,18 +9,11 @@
 # See doc/CONFIGURATION for more details.
 #
 
-#
-# development tips:
-#
-#  * to work with super_admin, enable super_admin mod and site 'site1'.
-#
-
 title: "Crabgrass Development"
 
 enabled_mods:
   - view_examples
-  #- super_admin
-  #- moderation
+  - mini_wiki
   #- translator
 
 email:
