@@ -42,7 +42,7 @@ module Common::Wiki
       unlock_for_current_user
     rescue Exception => exc
       @message = exc.to_s
-      return render(:action => 'error') # TODO: this should not be an action
+      return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
     end
     render :template => '/common/wiki/update'
   end
