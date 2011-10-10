@@ -14,6 +14,7 @@
       = f.submit :break_lock_button.t, :name => 'break_lock'
     = f.submit :cancel_button.t, :name => 'cancel'
     = :revert_to_previous_version.t
-    -# = old_version_select_tag(@wiki, spinner_id)
+    = old_version_select_tag(@wiki, spinner_id)
+    -# above should pass f to helper.  and don't need to pass @wiki to helper. need to rewrite helper for this.
     = spinner(spinner_id)
--# = javascript_tag(create_wiki_toolbar(@wiki))
+= javascript_tag(create_wiki_toolbar(@wiki))

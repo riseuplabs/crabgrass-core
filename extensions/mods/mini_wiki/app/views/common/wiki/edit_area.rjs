@@ -1,0 +1,2 @@
+page.replace_html area_id(@wiki),
+  :partial => 'common/wiki/edit_area'
