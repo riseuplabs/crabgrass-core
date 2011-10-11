@@ -7,8 +7,8 @@ module Groups::WikiPermission
   end
 
   def may_show_group_wiki?(group=@group)
-    @group.public_wiki or
-      current_user.member_of?(group)
+    current_user.member_of?(group) or
+      @group.public_wiki
   end
 
 end
