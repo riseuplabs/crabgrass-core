@@ -1,7 +1,8 @@
 / locals: wiki, no_title
+#wiki-area
 - if local_assigns[:no_title]
   %span.right
-    = edit_wiki_link
+    = edit_wiki_link #uses from wikis_helper
 - else
   %h3#underlined
     = I18n.t(:wiki)
