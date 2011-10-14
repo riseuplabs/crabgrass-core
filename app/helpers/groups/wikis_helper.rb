@@ -18,7 +18,8 @@ module Groups::WikisHelper
   end
 
   def wiki_action(action, hash={}) #not clear if we actually want this
-    {:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+    #{:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+    {:controller => 'common/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
   end
 
   def wiki_more_link
@@ -109,13 +110,13 @@ module Groups::WikisHelper
   end
 
   # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial
-  def create_wiki_toolbar(wiki)
-    body_id = wiki_body_id(wiki)
-    toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => I18n.t(:insert_image))
+  #def create_wiki_toolbar(wiki)
+  #  body_id = wiki_body_id(wiki)
+  #  toolbar_id = wiki_toolbar_id(wiki)
+  #  image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => I18n.t(:insert_image))#
 
-    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
-  end
+#    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
+#  end
 
 end
 

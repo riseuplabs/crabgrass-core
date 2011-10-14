@@ -36,15 +36,23 @@ module Common::Wiki
     render :template => '/common/wiki/edit'
   end
 
+  #def cancel #test but did not work
+   # render :template => '/common/wiki/show'
+  #end
+
   def update
-    begin
-      @wiki.update_document!(current_user, params[:version], params[:body])
-      unlock_for_current_user
-    rescue Exception => exc
-      @message = exc.to_s
-      return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
+    #begin
+    if !params[:cancel] #super hacky to have this if condition, but test for now
+      @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     end
-    render :template => '/common/wiki/update'
+    #unlock_for_current_user
+    #rescue Exception => exc
+    #  @message = exc.to_s
+    #  return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
+    #end
+    #render :template => '/common/wiki/update'
+    #redirect_to :action => :show # should be right ***
+    render :template => '/common/wiki/show' #probably not ideal but works for now.
   end
 
   protected
