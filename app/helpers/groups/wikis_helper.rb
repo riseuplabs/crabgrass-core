@@ -17,10 +17,10 @@ module Groups::WikisHelper
       :icon => 'pencil'
   end
 
-  def wiki_action(action, hash={}) #not clear if we actually want this
-    #{:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
-    {:controller => 'common/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
-  end
+  #def wiki_action(action, hash={}) #not clear if we actually want this
+    # {:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+    # {:controller => 'common/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+  #end
 
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > 500
@@ -56,44 +56,6 @@ module Groups::WikisHelper
 
   def wiki_toolbar_id(wiki)
     'markdown_toolbar-%s' % wiki.id
-  end
-
-  # from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, copied as a trial
-  def image_popup_show_url(wiki)
-    # this method is used both by WikiPageController and WikiPage to show the
-    # image insert popup
-    if @page and @page.data and @page.data == wiki
-      page_xurl(@page, :action => 'image_popup_show', :wiki_id => wiki.id)
-    else
-      url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
-    end
-  end
-
-  # from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, copied as a trial
-  # want to change to not take wiki parameter, but to take the form
-  def old_version_select_tag(wiki, spinner_id)
-    version_labels_values = []
-    # [['Version 1', '1'], ['Version 2', '2'],...]
-    wiki.versions.each do |version|
-      version_labels_values << [wiki_version_label(version), version.version]
-    end
-
-    # if we have an old version loaded, we should have that one as the selected one
-    # in the options tag. but since we're working with two wikis at once (public and private)
-    # the version we're showing is only for one tab and we have to be sure it's for the right wiki
-    if @showing_old_version && wiki.versions.include?(@showing_old_version)
-      selected_version = @showing_old_version
-    else
-      selected_version = wiki.versions.last
-    end
-
-    select_tag_options = options_for_select(version_labels_values, selected_version.version)
-    select_tag_name = 'old_version_select-' + wiki.id.to_s
-    select_tag select_tag_name, select_tag_options,
-      :onchange => (remote_function(:url => wiki_action('old_version', :wiki_id => wiki.id),
-                                      :loading => show_spinner(spinner_id),
-                                      :with => "'old_version=' + $('#{select_tag_name}').value",
-                                      :confirm => I18n.t(:wiki_lost_text_confirmation)))
   end
 
   # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial

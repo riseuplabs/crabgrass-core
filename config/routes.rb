@@ -2,7 +2,7 @@ unless defined?(FORBIDDEN_NAMES)
   FORBIDDEN_NAMES = %w{
     account admin assets avatars chat code debug do groups
     javascripts me networks page pages people pictures places issues
-    session static stats stylesheets theme
+    session static stats stylesheets theme wiki
   }
 end
 
@@ -166,6 +166,16 @@ ActionController::Routing::Routes.draw do |map|
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
   map.connect '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
+
+  ##
+  ## WIKI
+  ##
+
+  map.resources :wikis, :only => [] do |wikis|
+    wikis.resources :locks, :only  => [:create, :destroy]
+    wikis.resources :images, :only => :show
+    wikis.resources :versions, :only  => [:show, :index]
+  end
 
   ##
   ## DEFAULT ROUTE
