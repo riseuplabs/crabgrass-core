@@ -163,13 +163,11 @@ module ModalboxHelper
     #
     # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
     #
-    def link_to_remote_with_confirm(name, options = {}, html_options = nil)
+    def link_to_remote_with_confirm(name, options = {}, html_options = {})
       if options.is_a?(Hash) and options[:confirm]
         message = options.delete(:confirm)
-      elsif html_options.is_a?(Hash) and html_options[:confirm]
-        message = html_options.delete(:confirm)
       else
-        message = nil
+        message = html_options.delete(:confirm)
       end
 
       if message
