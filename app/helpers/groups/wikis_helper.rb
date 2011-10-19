@@ -5,11 +5,6 @@ module Groups::WikisHelper
     toggle_bug_links(*wiki_or_create_links)
   end
 
-  def group_wiki_tabs
-    return unless current_user.member_of?(@group)
-    wikis_or_create_link(@group.private_wiki, @group.public_wiki)
-  end
-
   def group_wiki_content
     if @wiki
       render :partial => '/common/wiki/show'
@@ -51,63 +46,6 @@ module Groups::WikisHelper
             end
     { :remote => remote,
       :lable => label }
-  end
-
-  def wikis_or_create_link(*wikis)
-    wikis.compact!
-    case wikis.compact.count
-    when 0
-      create_link
-    when 1
-      wiki_and_create_tabs(wikis.first)
-    when 2
-      wiki_tabs(*wikis)
-    end
-  end
-
-  def create_link
-    link_to :create_group_wiki.t, new_group_wiki_path(@group)
-  end
-
-  def wiki_and_create_tabs(wiki)
-    formy :tabs do |f|
-      wiki_tab(f, wiki)
-      create_wiki_tab(f, wiki.profile.private?)
-    end
-  end
-
-  def wiki_tabs(*wikis)
-    formy :tabs do |f|
-      wikis.each_with_index do |wiki, i|
-        wiki_tab(f, wiki, i)
-      end
-    end
-  end
-
-  def wiki_tab(f, wiki, index = 0)
-    label = wiki.profile.private? ?
-      :private_group_wiki.t :
-      :public_group_wiki.t
-    function = remote_function :url => group_wiki_path(@group, wiki),
-      :method => :get
-    f.tab do |t|
-      t.label label
-      t.function function
-      t.selected(index == 0)
-    end
-  end
-
-  def create_wiki_tab(f, is_public = true)
-    label = is_public ?
-      :create_public_group_wiki.t :
-      :create_private_group_wiki.t
-    function = remote_function :url => new_group_wiki_path(@group),
-      :method => :get
-    f.tab do |t|
-      t.label label
-      t.function function
-      t.selected false
-    end
   end
 
   # used to mark private and public tabs
@@ -158,7 +96,7 @@ module Groups::WikisHelper
 # maybe we dont' want them
   def image_popup_id(wiki)
     'image_popup-%s' % wiki.id
-  end  
+  end
 
   def wiki_body_id(wiki)
     'wiki_body-%s' % wiki.id
