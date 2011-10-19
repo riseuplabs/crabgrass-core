@@ -970,6 +970,13 @@ en:
   insert_image: "Insert Image"
   add_link: "Add Link"
 
+  # group wiki
+  
+  create_group_wiki: "Create Group Wiki"
+  create_public_group_wiki: "Create Public Wiki"
+  create_private_group_wiki: "Create Members Wiki"
+  public_group_wiki: "Public Wiki"
+  private_group_wiki: "Members Wiki"
 
   # editor
   # advanded editor is what plain editor is called when visual editor is enabled
