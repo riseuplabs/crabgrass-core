@@ -2,7 +2,7 @@ unless defined?(FORBIDDEN_NAMES)
   FORBIDDEN_NAMES = %w{
     account admin assets avatars chat code debug do groups
     javascripts me networks page pages people pictures places issues
-    session static stats stylesheets theme wiki
+    session static stats stylesheets theme wikis
   }
 end
 
@@ -134,6 +134,7 @@ ActionController::Routing::Routes.draw do |map|
 
   if RAILS_ENV == "development"
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
+    map.debug_break 'debug/break', :controller => 'debug', :action => 'break'
   end
   map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
 

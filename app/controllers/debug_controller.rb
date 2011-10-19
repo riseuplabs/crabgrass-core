@@ -7,6 +7,12 @@ if RAILS_ENV == "development"
       redirect_to (params[:url] || "/")
     end
 
+    # call the debugger so we can set breakpoints
+    def break
+      debugger
+      redirect_to (params[:url] || "/")
+    end
+
     def authorized?
       RAILS_ENV == "development"
     end
