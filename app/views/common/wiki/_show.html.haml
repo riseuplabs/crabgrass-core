@@ -1,13 +1,7 @@
 / locals: no_title
 #wiki-area
-  - if local_assigns[:no_title]
-    %span.right
-      = edit_wiki_link #uses from wikis_helper
-  - else
-    %h3#underlined
-    = I18n.t(:wiki)
-    %span.right
-      = edit_wiki_link
+  %span.right
+    = edit_wiki_link
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.render_preview(preview)
