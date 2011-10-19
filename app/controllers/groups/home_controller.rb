@@ -1,7 +1,7 @@
 class Groups::HomeController < Groups::BaseController
 
   layout 'sidecolumn'
-  helper 'groups/wiki'
+  helper 'groups/wikis'
 
   def initialize(options = {})
     @group = options[:group]
