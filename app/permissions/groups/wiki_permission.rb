@@ -11,4 +11,6 @@ module Groups::WikiPermission
       @group.public_wiki
   end
 
+  alias_method :may_create_group_wiki?, :may_edit_group_wiki?
+
 end
