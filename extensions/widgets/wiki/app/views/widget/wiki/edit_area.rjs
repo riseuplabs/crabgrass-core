@@ -1,4 +1,0 @@
-page.replace_html area_id(@wiki),
-  :partial => 'widget/wiki/edit_area',
-  :locals => {:wiki => @wiki}
-

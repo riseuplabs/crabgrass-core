@@ -1,3 +1,0 @@
-page.replace_html area_id(@wiki),
-  :partial => 'preview',
-  :locals => {:wiki => @wiki}
