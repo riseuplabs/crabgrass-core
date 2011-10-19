@@ -18,7 +18,7 @@ module Groups::WikisHelper
     links = wikis.map{|wiki| wiki_toggle_link(wiki)}
     links.first[:active] = true if wikis.any?
     unless wikis.count == 2
-      links += wiki_create_link
+      links << wiki_create_link
     end
     links
   end
@@ -45,7 +45,7 @@ module Groups::WikisHelper
               :create_private_group_wiki.t
             end
     { :remote => remote,
-      :lable => label }
+      :label => label }
   end
 
   # used to mark private and public tabs

@@ -51,7 +51,7 @@ module Common::Wiki
     #  return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
     #end
     #render :template => '/common/wiki/update'
-    #redirect_to :action => :show # should be right ***
+    #redirect_to :action => :show # should be right but doesn't work***
     render :template => '/common/wiki/show' #probably not ideal but works for now.
   end
 
