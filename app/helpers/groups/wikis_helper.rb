@@ -35,9 +35,9 @@ module Groups::WikisHelper
     id = if @wiki.nil?
               :create_group_wiki
             elsif @wiki.profile.public?
-              :create_public_group_wiki
-            else
               :create_private_group_wiki
+            else
+              :create_public_group_wiki
             end
     remote = { :url => new_group_wiki_path(@group),
       :update => 'wiki-area',
@@ -48,6 +48,14 @@ module Groups::WikisHelper
       :fallback => new_group_wiki_path(@group),
       :label => id.t,
       :id => id }
+  end
+
+  def wiki_is_public_field(form)
+    if @wiki.public.nil?
+      form.checkbox 'public', :value => true
+    else
+      form.hidden_field 'public'
+    end
   end
 
   # used to mark private and public tabs

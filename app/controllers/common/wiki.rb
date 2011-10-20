@@ -24,11 +24,14 @@ module Common::Wiki
   end
 
   def new
+    @wiki = Wiki.new
     render :template => '/common/wiki/new'
   end
 
   def create
-    render :template => '/common/wiki/create'
+    @profile = @group.profiles.public
+    @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
+    redirect_to :action => :show, :id => @wiki.to_param
   end
 
   def edit
