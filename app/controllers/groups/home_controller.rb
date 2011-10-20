@@ -9,8 +9,8 @@ class Groups::HomeController < Groups::BaseController
 
   before_filter :authorized?
 
-  def show #redo
-    @profile = @group.profiles.public
+  def show
+    @profile = @group.profile
     @wiki = @profile.wiki
   end
 

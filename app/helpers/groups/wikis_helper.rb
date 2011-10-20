@@ -24,28 +24,34 @@ module Groups::WikisHelper
   end
 
   def wiki_toggle_link(wiki)
-    label = wiki.profile.private? ?
-      :private_group_wiki.t :
-      :public_group_wiki.t
+    id = wiki.profile.private? ?
+      :private_group_wiki :
+      :public_group_wiki
     remote = {
       :url => group_wiki_path(@group, wiki),
-      :method => :get }
-    { :label => label,
-      :remote => remote }
+      :method => :get,
+      :before => show_spinner('view_toggle'),
+      :success => hide_spinner('view_toggle') + activate_toggle_bug(id) }
+    { :label => id.t,
+      :remote => remote,
+      :id => id }
   end
 
   def wiki_create_link
-    remote = { :url => new_group_wiki_path(@group),
-        :method => :get }
-    label = if @wiki.nil?
-              :create_group_wiki.t
+    id = if @wiki.nil?
+              :create_group_wiki
             elsif @wiki.profile.public?
-              :create_public_group_wiki.t
+              :create_public_group_wiki
             else
-              :create_private_group_wiki.t
+              :create_private_group_wiki
             end
+    remote = { :url => new_group_wiki_path(@group),
+      :before => show_spinner('view_toggle'),
+      :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
+      :method => :get }
     { :remote => remote,
-      :label => label }
+      :label => id.t,
+      :id => id }
   end
 
   # used to mark private and public tabs
