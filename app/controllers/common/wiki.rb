@@ -31,7 +31,7 @@ module Common::Wiki
   def create
     @profile = @group.profiles.public
     @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
-    redirect_to :action => :show, :id => @wiki.to_param
+    render :template => '/common/wiki/show' #redirect doesn't work correctly in firefox 3.6.23 (and maybe other versions), so we will render template
   end
 
   def edit
