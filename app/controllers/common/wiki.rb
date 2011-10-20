@@ -53,7 +53,8 @@ module Common::Wiki
     #  @message = exc.to_s
     #  return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
     #end
-    redirect_to :action => :show
+    #redirect_to :action => :show
+    render :template => '/common/wiki/show' #redirect doesn't work on firefox 3.6.23 (and maybe others)
   end
 
   protected

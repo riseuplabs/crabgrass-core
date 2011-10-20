@@ -81,15 +81,17 @@ module Groups::WikisHelper
 
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > 500
-    link_to_remote I18n.t(:see_more_link) ,
-      { :url => group_wiki_path(@group, @wiki) },
+    link_to_remote :see_more_link.t,
+    { :url => group_wiki_path(@group, @wiki),
+      :method => :get},
       :icon => 'plus'
   end
 
   def wiki_less_link
     return unless @wiki.try.body and @wiki.body.length > 500
-    link_to_remote I18n.t(:see_more_link) ,
-      { :url => group_wiki_path(@group, @wiki) },
+    link_to_remote :see_less_link.t,
+    { :url => group_wiki_path(@group, @wiki),
+      :method => :get},
       :icon => 'minus'
   end
 
