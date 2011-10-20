@@ -33,6 +33,7 @@ module Groups::WikisHelper
       :before => show_spinner('view_toggle'),
       :success => hide_spinner('view_toggle') + activate_toggle_bug(id) }
     { :label => id.t,
+      :fallback => group_wiki_path(@group, wiki),
       :remote => remote,
       :id => id }
   end
@@ -50,6 +51,7 @@ module Groups::WikisHelper
       :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
       :method => :get }
     { :remote => remote,
+      :fallback => new_group_wiki_path(@group),
       :label => id.t,
       :id => id }
   end
