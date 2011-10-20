@@ -5,14 +5,6 @@ module Groups::WikisHelper
     toggle_bug_links(*wiki_or_create_links)
   end
 
-  def group_wiki_content
-    if @wiki
-      render :partial => '/common/wiki/show'
-    else
-      render :partial => '/common/wiki/blank'
-    end
-  end
-
   def wiki_or_create_links
     wikis = [@group.private_wiki, @group.public_wiki].compact
     links = wikis.map{|wiki| wiki_toggle_link(wiki)}
@@ -30,6 +22,7 @@ module Groups::WikisHelper
     remote = {
       :url => group_wiki_path(@group, wiki),
       :method => :get,
+      :update => 'wiki-area',
       :before => show_spinner('view_toggle'),
       :success => hide_spinner('view_toggle') + activate_toggle_bug(id) }
     { :label => id.t,
@@ -47,6 +40,7 @@ module Groups::WikisHelper
               :create_private_group_wiki
             end
     remote = { :url => new_group_wiki_path(@group),
+      :update => 'wiki-area',
       :before => show_spinner('view_toggle'),
       :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
       :method => :get }
@@ -67,6 +61,7 @@ module Groups::WikisHelper
     # note: firefox uses layerY, ie uses offsetY
     link_to_remote :edit.t,
       { :url => edit_group_wiki_path(@group, @wiki),
+        :update => 'wiki-area',
         :method => :get
      #  :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
       },
