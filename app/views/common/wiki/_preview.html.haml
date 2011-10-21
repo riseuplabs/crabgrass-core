@@ -1,0 +1,6 @@
+-# We don't need preview views, and could instead have show check for local variables indicating whether to show a preview or the full wiki
+%span.right
+  = edit_wiki_link
+%div.wiki
+  = @wiki.render_preview(500) #shouldn't hardcode number
+  = wiki_more_link

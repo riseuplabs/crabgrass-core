@@ -20,6 +20,7 @@ module Common::Wiki
   end
 
   def show
+    #check to see if preview is set and if so could do: render :template => '/common/wiki/preview'
     render :template => '/common/wiki/show'
   end
 

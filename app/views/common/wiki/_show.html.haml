@@ -1,9 +1,6 @@
+-# we could have locals sent here telling us if it is preview, rather than having separate view(s) for preview
 %span.right
   = edit_wiki_link
 %div.wiki
-  - if local_assigns[:preview]
-    = @wiki.render_preview(preview)
-    = wiki_more_link
-  - else
-    = @wiki.body_html
-    = wiki_less_link
+  = @wiki.body_html
+  =# wiki_less_link #hiding, partially as this isn't working now.

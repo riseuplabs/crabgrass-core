@@ -83,16 +83,20 @@ module Groups::WikisHelper
     return unless @wiki.try.body and @wiki.body.length > 500
     link_to_remote :see_more_link.t,
     { :url => group_wiki_path(@group, @wiki),
+      :update => 'wiki-area',
       :method => :get},
       :icon => 'plus'
   end
 
-  def wiki_less_link
+  # For this to work, we need a way to pass that we want this to only display a preview
+  def wiki_less_link #NOT WORKING NOW
     return unless @wiki.try.body and @wiki.body.length > 500
     link_to_remote :see_less_link.t,
     { :url => group_wiki_path(@group, @wiki),
-      :method => :get},
-      :icon => 'minus'
+      :update => 'wiki-area',
+      :method => :get,
+    },
+    :icon => 'minus'
   end
 
   #from extensions/pages/wiki_page/app/helpers/wiki_helper.rb

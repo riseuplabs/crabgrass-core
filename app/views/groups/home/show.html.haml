@@ -4,7 +4,7 @@
 = group_wiki_toggle
 = spinner('view_toggle')
 #wiki-area
-  = render :partial => 'common/wiki/show' if @wiki
+  = render :partial => 'common/wiki/preview' if @wiki
 %hr
 
 - @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_group(@group), pagination_params)
