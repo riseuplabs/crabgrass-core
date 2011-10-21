@@ -74,12 +74,9 @@ module Groups::WikisHelper
       :icon => 'pencil'
   end
 
-  #def wiki_action(action, hash={}) #not clear if we actually want this
-    # {:controller => 'widget/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
-    # {:controller => 'common/wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
-  #end
-
   def wiki_more_link
+    # the 500 should not be hardcoded. instead we should have sth. like
+    # @wiki.body_exceeds_preview?
     return unless @wiki.try.body and @wiki.body.length > 500
     link_to_remote :see_more_link.t,
     { :url => group_wiki_path(@group, @wiki),
@@ -88,11 +85,12 @@ module Groups::WikisHelper
       :icon => 'plus'
   end
 
-  # For this to work, we need a way to pass that we want this to only display a preview
-  def wiki_less_link #NOT WORKING NOW
+  def wiki_less_link
+    # the 500 should not be hardcoded. instead we should have sth. like
+    # @wiki.body_exceeds_preview?
     return unless @wiki.try.body and @wiki.body.length > 500
     link_to_remote :see_less_link.t,
-    { :url => group_wiki_path(@group, @wiki),
+    { :url => preview_group_wiki_path(@group, @wiki),
       :update => 'wiki-area',
       :method => :get,
     },

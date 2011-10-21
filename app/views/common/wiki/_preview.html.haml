@@ -2,5 +2,6 @@
 %span.right
   = edit_wiki_link
 %div.wiki
-  = @wiki.render_preview(500) #shouldn't hardcode number
+  -# number 500 is hardcoded in preview_html and we should not do this
+  = @wiki.preview_html
   = wiki_more_link
