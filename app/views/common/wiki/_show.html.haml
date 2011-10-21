@@ -2,5 +2,9 @@
 %span.right
   = edit_wiki_link
 %div.wiki
-  = @wiki.body_html
-  = wiki_less_link
+  - if local_assigns[:preview]
+    = @wiki.preview_html
+    = wiki_more_link
+  - else
+    = @wiki.body_html
+    = wiki_less_link

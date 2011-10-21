@@ -24,7 +24,7 @@ module Common::Wiki
   end
 
   def preview
-    render :template => '/common/wiki/preview'
+    render :template => '/common/wiki/show', :locals => {:preview => true}
   end
 
   def new
