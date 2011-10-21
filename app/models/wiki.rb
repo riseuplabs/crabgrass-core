@@ -52,6 +52,8 @@ class Wiki < ActiveRecord::Base
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
+  # constant for length to show preview rather than full wiki
+  PREVIEW_CHARS = 500
 
   # section locks should never be nil
   alias_method :existing_section_locks, :section_locks
@@ -161,7 +163,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def preview_html
-    render_preview(500)
+    render_preview(PREVIEW_CHARS)
   end
 
   # will calculate structure if not up to date

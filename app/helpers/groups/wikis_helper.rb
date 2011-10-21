@@ -77,7 +77,7 @@ module Groups::WikisHelper
   def wiki_more_link
     # the 500 should not be hardcoded. instead we should have sth. like
     # @wiki.body_exceeds_preview?
-    return unless @wiki.try.body and @wiki.body.length > 500
+    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_more_link.t,
     { :url => group_wiki_path(@group, @wiki),
       :update => 'wiki-area',
@@ -88,7 +88,7 @@ module Groups::WikisHelper
   def wiki_less_link
     # the 500 should not be hardcoded. instead we should have sth. like
     # @wiki.body_exceeds_preview?
-    return unless @wiki.try.body and @wiki.body.length > 500
+    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_less_link.t,
     { :url => preview_group_wiki_path(@group, @wiki),
       :update => 'wiki-area',
