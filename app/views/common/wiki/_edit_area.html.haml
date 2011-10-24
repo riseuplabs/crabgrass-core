@@ -4,6 +4,7 @@
 .image_popup{:id => image_popup_id(@wiki), :style => "display:none"}
 - form_remote_for ([@group || @page, @wiki], :loading => show_spinner(spinner_id), :update => 'wiki-area') do |f|
   = f.hidden_field 'version'
+  = f.hidden_field :private, :value => params[:private] if params[:private]
   -# = f.fieldset do
   = f.text_area ('body', :rows => rows, :cols => 64)
   %div

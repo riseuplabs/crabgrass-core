@@ -80,7 +80,7 @@ module Groups::WikisHelper
       :id => id }
   end
 
-  def wiki_is_public_field(form)
+  def wiki_is_public_field(form) ## not used
     if @wiki.public.nil?
       form.checkbox 'public', :value => true
     else
