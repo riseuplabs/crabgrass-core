@@ -2,10 +2,11 @@ module Groups::WikisHelper
 
   def group_wiki_toggle
     return unless current_user.member_of?(@group)
-    toggle_bug_links(*wiki_or_create_links)
+    toggle_bug_links(public_wiki_link, private_wiki_link)
   end
 
-  def wiki_or_create_links
+
+  def wiki_or_create_links #replacing with wiki_links
     wikis = [@group.private_wiki, @group.public_wiki].compact
     links = wikis.map{|wiki| wiki_toggle_link(wiki)}
     links.first[:active] = true if wikis.any?
@@ -15,7 +16,38 @@ module Groups::WikisHelper
     links
   end
 
-  def wiki_toggle_link(wiki)
+  def public_wiki_link
+    wiki_link(@group.public_wiki, :public_group_wiki)
+  end
+
+  def private_wiki_link
+    wiki_link(@group.private_wiki, :private_group_wiki)
+  end
+
+
+  def wiki_link(wiki, wiki_type)
+    id = wiki_type
+    remote = { :url => wiki_link_url(wiki, wiki_type),
+      :update => 'wiki-area',
+      :before => show_spinner('view_toggle'),
+      :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
+      :method => :get }
+    { :remote => remote,
+      :label => id.t,
+      :id => id }
+    end
+
+  def wiki_link_url(wiki, wiki_type)
+    if wiki.nil?
+      new_group_wiki_path @group,
+      :private => (wiki_type == :private_group_wiki)
+    else
+      group_wiki_path(@group, wiki)
+    end
+  end
+
+
+  def wiki_toggle_link(wiki) # not used anymore
     id = wiki.profile.private? ?
       :private_group_wiki :
       :public_group_wiki
@@ -30,7 +62,7 @@ module Groups::WikisHelper
       :id => id }
   end
 
-  def wiki_create_link
+  def wiki_create_link #not used anymore
     id = if @wiki.nil?
               :create_group_wiki
             elsif @wiki.profile.public?
