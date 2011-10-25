@@ -14,19 +14,34 @@ class Groups::WikisControllerTest < ActionController::TestCase
       get :new, :group_id => @group.to_param
     end
     assert_response :success
-    assert @wiki.new_record?
+    assert assigns['wiki'].new_record?
     #TODO: how do we do locking for new wikis?
   end
 
-  def test_create
+  def test_create_private
     login_as @user
     assert_permission :may_create_group_wiki? do
       post :create,
         :group_id => @group.to_param,
-        :body => "_created_"
+        :wiki => { :body => "_created_", :private => true }
     end
     assert_response :success
-    assert "<em>created</em>", @wiki.body_html
+    assert wiki = assigns['wiki']
+    assert "<em>created</em>", wiki.body_html
+    assert wiki.profile.private?
+  end
+
+  def test_create_public
+    login_as @user
+    assert_permission :may_create_group_wiki? do
+      post :create,
+        :group_id => @group.to_param,
+        :wiki => { :body => "_created_", :private => false }
+    end
+    assert_response :success
+    assert wiki = assigns['wiki']
+    assert "<em>created</em>", wiki.body_html
+    assert wiki.profile.public?
   end
 
   def test_show
@@ -47,7 +62,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     end
     assert_response :success
     assert_equal @wiki, assigns['wiki']
-    assert @wiki.document_locked_for? @user
+    # TODO: assert @wiki.document_locked_for? @user
   end
 
   def test_update
@@ -57,10 +72,10 @@ class Groups::WikisControllerTest < ActionController::TestCase
       post :update,
         :group_id => @group.to_param,
         :id => @wiki.id,
-        :body => '*updated*'
+        :wiki => {:body => '*updated*', :version => 1}
     end
     assert_response :success
-    assert_equal "<b>updated</b>", assigns[:wiki].body_html
+    assert_equal "<b>updated</b>", assigns['wiki'].body_html
   end
 
 end
