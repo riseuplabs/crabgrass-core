@@ -1,7 +1,8 @@
 - content_for :left_column do
   = render :partial => 'sidecolumn'
 
-= group_wiki_toggle
+#group-wiki-tabs
+  = group_wiki_toggle
 = spinner('view_toggle')
 #wiki-area
   = render :partial => 'common/wiki/show', :locals => {:preview => true} if @wiki
