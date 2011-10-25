@@ -35,7 +35,7 @@ module Common::Wiki
   def create
     @profile = params[:wiki][:private] ? @group.profiles.private : @group.profiles.public
     @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
-    render :template => '/common/wiki/show' #redirect doesn't work correctly in firefox 3.6.23 (and maybe other versions), so we will render template
+    #render :template => '/common/wiki/show' #redirect doesn't work correctly in firefox 3.6.23 (and maybe other versions), so we will render template
   end
 
   def edit
@@ -58,7 +58,7 @@ module Common::Wiki
     #  return render :partial => 'common/wiki/error'#(:action => 'error') # TODO: this should not be an action
     #end
     #redirect_to :action => :show
-    render :template => '/common/wiki/show' #redirect doesn't work on firefox 3.6.23 (and maybe others)
+    #render :template => '/common/wiki/show' #redirect doesn't work on firefox 3.6.23 (and maybe others)
   end
 
   protected
