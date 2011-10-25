@@ -34,6 +34,7 @@ module Groups::WikisHelper
       :method => :get }
     { :remote => remote,
       :label => id.t,
+      :active => @wiki && (@wiki == wiki),
       :id => id }
     end
 
