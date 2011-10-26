@@ -37,6 +37,7 @@ module Common::Wiki
       @profile = params[:wiki][:private] ? @group.profiles.private : @group.profiles.public
       @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
     end
+    #TODO: need to unlock when cancelling, as will still be locked
     #todo--i would think create.rjs would not work right when cancelling but it seems okay. specifically, i would think it would always toggle the public wiki, but it doesn't seem to.
 
     #render :template => '/common/wiki/show' #redirect doesn't work correctly in firefox 3.6.23 (and maybe other versions), so we will render template
@@ -55,6 +56,7 @@ module Common::Wiki
     #begin
     if !params[:cancel] #super hacky to have this if condition, but test for now
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
+      #TODO: need to unlock when cancelling, as will still be locked
     end
     #unlock_for_current_user
     #rescue Exception => exc
