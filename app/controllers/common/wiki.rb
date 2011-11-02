@@ -58,9 +58,11 @@ module Common::Wiki
       @wiki.unlock!(:document, current_user, :break => true ) #1st parameter is just a test
       render :partial => '/common/wiki/edit_area' #not ideal way to do this.
       return
-    elsif !params[:cancel] #super hacky to have this if condition, but test for now
+    elsif params[:cancel] #super hacky to have this if condition, but test for now
+      @wiki.unlock!(:document, current_user, :break => true )
+      # unlock if cancelled
+    else
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
-      #TODO: need to unlock when cancelling, as will still be locked
     end
     #unlock_for_current_user
     #rescue Exception => exc
