@@ -2,8 +2,7 @@
 - if locked_check_response
   #wiki-area
     = locked_check_response
-    - form_remote_for ([@group || @page, @wiki], :update => 'wiki-area') do |f| # TODO: redundant w/below form
-      = submit_tag :break_lock_button.t, :name => 'break_lock'
+    = break_lock_link
 - else
   - spinner_id = 'save-spinner-%s' % rand(1000000)
   - rows = [ 20, (params[:height]||0).to_i/16 ].max  # 16 here is a magic number. it might have to change if the font size of the wiki text changes.

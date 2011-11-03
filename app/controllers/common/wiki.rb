@@ -44,6 +44,9 @@ module Common::Wiki
   end
 
   def edit
+    if params[:break_lock]
+      @wiki.unlock!(:document, current_user, :break => true ) #seems funny to unlock then to lock?
+    end
     @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
     render :template => '/common/wiki/edit'
   end
@@ -54,15 +57,15 @@ module Common::Wiki
 
   def update
     #begin
-    if params[:break_lock]
-      @wiki.unlock!(:document, current_user, :break => true ) #1st parameter is just a test
-      render :partial => '/common/wiki/edit_area' #not ideal way to do this.
-      return
-    elsif params[:cancel] #super hacky to have this if condition, but test for now
-      @wiki.unlock!(:document, current_user, :break => true )
-      # unlock if cancelled
-    else
+    #if params[:break_lock]
+     # @wiki.unlock!(:document, current_user, :break => true ) #1st parameter is just a test
+     # render :partial => '/common/wiki/edit_area' #not ideal way to do this.
+     # return
+    #els
+    if !params[:cancel] #super hacky to have this if condition, but test for now
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
+    else
+      @wiki.unlock!(:document, current_user, :break => true )
     end
     #unlock_for_current_user
     #rescue Exception => exc
