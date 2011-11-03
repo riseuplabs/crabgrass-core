@@ -9,7 +9,6 @@ class Groups::WikisController < Groups::BaseController
   end
 
   def fetch_wiki
-    # TODO: this will require group has_many :wikis :through => :profiles
     @wiki = @group.wikis.find(params[:id])
   end
 

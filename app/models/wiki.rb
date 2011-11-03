@@ -41,6 +41,7 @@ class Wiki < ActiveRecord::Base
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
   has_one :profile
+  has_one :group, :through => :profile, :source => :entity, :source_type => 'Group'
 
   has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
 
@@ -319,5 +320,17 @@ class Wiki < ActiveRecord::Base
 
   private
 
+  class Version < ActiveRecord::Base
+
+    def to_s
+      to_param
+    end
+
+    def to_param
+      self.version.to_s
+    end
+
+  end
 
 end
+
