@@ -16,13 +16,13 @@ class String
     self
   end
 
-  # 
+  #
   # translates a string, but capitalizes the first letter of the result.
-  # 
+  #
   # this differs from String.capitalize (which lowers subsequent characters),
   # and from String.titlecase (which makes the first letter of each word
   # a capital letter).
-  # 
+  #
   def tcap(options={})
     self
     #result = I18n.t(self, options).mb_chars # get multibyte proxy
@@ -31,7 +31,7 @@ class String
 end
 
 module I18n
-  
+
   Lang = Struct.new("Lang", :name, :code, :order, :rtl)
 
   class << self
@@ -86,7 +86,9 @@ module I18n
       scope_name == :default ? nil : scope_name
     end
 
-    def translate_with_site_scope(key, options = {})
+    def translate_with_site_scope(*args)
+      key = args.first
+      options = args[1]
       if site_scope
         site_options = options.dup
         site_options[:scope] = [site_scope] | (options[:scope] || [])
@@ -95,7 +97,7 @@ module I18n
       end
     ensure
       return site_specific_translation unless site_specific_translation.blank?
-      return translate_without_site_scope(key, options)
+      return translate_without_site_scope(*args)
     end
 
     alias_method_chain :translate, :site_scope
