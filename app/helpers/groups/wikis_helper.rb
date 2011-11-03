@@ -107,6 +107,14 @@ module Groups::WikisHelper
       :icon => 'pencil'
   end
 
+  def wiki_versions_link
+    return unless may_edit_group_wiki?(@group)
+    link_to_remote :versions.t,
+      { :url => wiki_versions_path(@wiki),
+        :update => 'wiki-area',
+        :method => :get }
+  end
+
   def wiki_more_link
     # the 500 should not be hardcoded. instead we should have sth. like
     # @wiki.body_exceeds_preview?
