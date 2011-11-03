@@ -10,4 +10,4 @@
   -# f.tab do |t|
     -# t.link link_to_remote(:close_editor.t, {:url=>wiki_action('done', :wiki_id => @wiki)}, {:icon => 'close'})
 .tab_content.tab_area{:id => area_id(@wiki)}
-  = render :partial => 'common/wiki/edit_area'
+  = render :partial => edit_or_locked_partial

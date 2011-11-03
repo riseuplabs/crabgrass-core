@@ -183,6 +183,10 @@ module Groups::WikisHelper
 #    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
 #  end
 
+  # This, and other methods in this file, should not only be accessible to group wikis, as we'll want them accessible to page wikis too.
+  def edit_or_locked_partial
+    (@wiki.document_open_for? current_user) ? 'common/wiki/edit_area' : 'common/wiki/locked_area' # should we confirm @wiki is set?
+  end
 
   def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
     text_area_id ||= wiki_body_id(@wiki)
