@@ -29,6 +29,7 @@ module Common::Wiki
 
   def new
     @wiki = Wiki.new
+    # @wiki.lock!(:document, current_user) #this won't work, as @wiki isn't properly set at this point, and even @wiki.save! doesn't do it correctly
     render :template => '/common/wiki/new'
   end
 
@@ -65,7 +66,7 @@ module Common::Wiki
     if !params[:cancel] #super hacky to have this if condition, but test for now
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     else
-      @wiki.unlock!(:document, current_user, :break => true )
+      @wiki.unlock!(:document, current_user, :break => true ) if @wiki
     end
     #unlock_for_current_user
     #rescue Exception => exc

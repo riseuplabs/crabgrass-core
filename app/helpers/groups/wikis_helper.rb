@@ -141,7 +141,7 @@ module Groups::WikisHelper
 
   #from extensions/pages/wiki_page/app/helpers/wiki_helper.rb
   def wiki_locked_notice(wiki)
-    return if wiki.document_open_for? current_user # wiki.document_open_for? doesn't always seem to return correctly as the locks is not being broken if somebody cancels when editing
+    return if wiki.document_open_for? current_user
 
     error_text = I18n.t(:wiki_is_locked, :user => wiki.locker_of(:document).try.name || I18n.t(:unknown))
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
