@@ -2,6 +2,8 @@ class Wikis::DiffsController < Wikis::BaseController
 
   permissions 'wiki'
 
+  helper 'wikis/versions'
+
   def show
     old_id, new_id = params[:id].split('-')
     @old = @wiki.find_version(old_id)
