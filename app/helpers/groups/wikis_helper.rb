@@ -5,17 +5,6 @@ module Groups::WikisHelper
     toggle_bug_links(public_wiki_link, private_wiki_link)
   end
 
-
-  def wiki_or_create_links #replacing with wiki_links
-    wikis = [@group.private_wiki, @group.public_wiki].compact
-    links = wikis.map{|wiki| wiki_toggle_link(wiki)}
-    links.first[:active] = true if wikis.any?
-    unless wikis.count == 2
-      links << wiki_create_link
-    end
-    links
-  end
-
   def public_wiki_link
     wiki_link(@group.public_wiki, :public_group_wiki)
   end
@@ -23,7 +12,6 @@ module Groups::WikisHelper
   def private_wiki_link
     wiki_link(@group.private_wiki, :private_group_wiki)
   end
-
 
   def wiki_link(wiki, wiki_type)
     id = wiki_type
@@ -47,54 +35,12 @@ module Groups::WikisHelper
     end
   end
 
-
-  def wiki_toggle_link(wiki) # not used anymore
-    id = wiki.profile.private? ?
-      :private_group_wiki :
-      :public_group_wiki
-    remote = {
-      :url => group_wiki_path(@group, wiki),
-      :method => :get,
-      :update => 'wiki-area',
-      :before => show_spinner('view_toggle'),
-      :success => hide_spinner('view_toggle') + activate_toggle_bug(id) }
-    { :label => id.t,
-      :remote => remote,
-      :id => id }
-  end
-
-  def wiki_create_link #not used anymore
-    id = if @wiki.nil?
-              :create_group_wiki
-            elsif @wiki.profile.public?
-              :create_private_group_wiki
-            else
-              :create_public_group_wiki
-            end
-    remote = { :url => new_group_wiki_path(@group),
-      :update => 'wiki-area',
-      :before => show_spinner('view_toggle'),
-      :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
-      :method => :get }
-    { :remote => remote,
-      :label => id.t,
-      :id => id }
-  end
-
-  def wiki_is_public_field(form) ## not used
-    if @wiki.public.nil?
-      form.checkbox 'public', :value => true
-    else
-      form.hidden_field 'public'
-    end
-  end
-
   # used to mark private and public tabs
   def area_id(wiki)
     'edit_area-%s' % wiki.id
   end
 
-  def edit_wiki_link
+  def wiki_edit_link
     return unless may_edit_group_wiki?(@group)
     # TODO: was this used for section editing?
     # note: firefox uses layerY, ie uses offsetY

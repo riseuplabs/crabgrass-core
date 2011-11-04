@@ -2,7 +2,7 @@
 - if @wiki # this is now sometimes called when cancelling when there is no wiki to show
   %span.right
     = wiki_versions_link
-    = edit_wiki_link
+    = wiki_edit_link
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
