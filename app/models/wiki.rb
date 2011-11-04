@@ -2,18 +2,6 @@
 #  but also used directly sometimes by other classes (like for Group's
 #  landing page wiki's).
 #
-#     create_table "wiki_versions", :force => true do |t|
-#       t.integer  "wiki_id",    :limit => 11
-#       t.integer  "version",    :limit => 11
-#       t.text     "body"
-#       t.text     "body_html"
-#       t.text     "raw_structure"
-#       t.datetime "updated_at"
-#       t.integer  "user_id",    :limit => 11
-#     end
-#
-#     add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
-#     add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
 #
 #     create_table "wikis", :force => true do |t|
 #       t.text     "body"
@@ -37,6 +25,7 @@
 class Wiki < ActiveRecord::Base
   include WikiExtension::Locking
   include WikiExtension::Sections
+  include WikiExtension::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
@@ -47,6 +36,19 @@ class Wiki < ActiveRecord::Base
 
   serialize :raw_structure, Hash
 
+  acts_as_versioned :if => :create_new_version? do
+    def self.included(base)
+      base.belongs_to :user
+      base.serialize :raw_structure, Hash
+    end
+  end
+  # versions are so tightly coupled that wiki.versions should always be up to date
+  # this must be declared after acts_as_versioned, since AAV declares its own after_save
+  # callback that create versions
+  # locks should reloaded too, since some locks may become invalid (because of section heading changes)
+  after_save :reload_versions_and_locks
+
+  # only save a new version if the body has changed
   # need more control than composed of
   attr_reader :structure
 
@@ -65,54 +67,6 @@ class Wiki < ActiveRecord::Base
     # in case self.body is updated (and section names get changed)
     locks.wiki = self
     locks
-  end
-
-  acts_as_versioned :if => :create_new_version? do
-    def self.included(base)
-      base.belongs_to :user
-      base.serialize :raw_structure, Hash
-    end
-  end
-  # versions are so tightly coupled that wiki.versions should always be up to date
-  # this must be declared after acts_as_versioned, since AAV declares its own after_save
-  # callback that create versions
-  # locks should reloaded too, since some locks may become invalid (because of section heading changes)
-  after_save :reload_versions_and_locks
-
-  # only save a new version if the body has changed
-  def create_new_version? #:nodoc:
-    body_updated = body_changed?
-    recently_edited_by_same_user = !user_id_changed? && (updated_at and (updated_at > 30.minutes.ago))
-
-    latest_version_has_blank_body = self.versions.last && self.versions.last.body.blank?
-
-    # always create a new version if we have no versions at all
-    # don't create a new version if
-    #   * a new version would be on top of an old blank version (we don't want to store blank versions)
-    #   * the same user is making several edits in sequence
-    #   * the body hasn't changed
-    return (versions.empty? or (body_updated and !recently_edited_by_same_user and !latest_version_has_blank_body))
-  end
-
-  # returns first version since +time+
-  def first_version_since(time)
-    return nil unless time
-    versions.first :conditions => ["updated_at <= :time", {:time => time}],
-      :order => "updated_at DESC"
-  end
-
-  # reverts and keeps all the old versions
-  def revert_to_version(version_number, user)
-    version = versions.find_by_version(version_number)
-    self.body = version.body
-    self.user = user
-    save!
-  end
-
-  # reverts and deletes all versions after the reverted version.
-  def revert_to_version!(version_number, user=nil)
-    revert_to(version_number)
-    destroy_versions_after(version_number)
   end
 
   # calls update_section! with :document section
@@ -202,22 +156,6 @@ class Wiki < ActiveRecord::Base
     (html.blank? != body.blank?) or rs.blank?
   end
 
-  # update the latest Wiki::Version object with the newest attributes
-  # when wiki changes, but a new version is not being created
-  def update_latest_version_record
-    # only need to update the latest version when not creating a new one
-    return if create_new_version?
-    versions.find_by_version(self.version).update_attributes(
-              :body => body,
-              # read_attributes for body_html and raw_structure
-              # because we don't want to trigger another rendering
-              # by calling our own body_html method
-              :body_html => read_attribute(:body_html),
-              :raw_structure => read_attribute(:raw_structure),
-              :user => user,
-              :updated_at => Time.now)
-  end
-
   # reload the association
   def reload_versions_and_locks
     self.versions(true)
@@ -289,12 +227,6 @@ class Wiki < ActiveRecord::Base
     end
   end
 
-  def destroy_versions_after(version_number)
-    versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
-      version.destroy
-    end
-  end
-
   # returns html for wiki body
   # user render_body_html_proc if available
   # or default GreenCloth rendering otherwise
@@ -316,21 +248,6 @@ class Wiki < ActiveRecord::Base
     cut = body.to_s[0...length-3] + '...'
     cut.gsub! /^\[\[toc\]\]$/, ''
     cut
-  end
-
-  class Version < ActiveRecord::Base
-
-    def to_s
-      to_param
-    end
-
-    def to_param
-      self.version.to_s
-    end
-
-    def diff_id
-      "#{self.to_param}-#{previous.to_param}"
-    end
   end
 
 end
