@@ -28,15 +28,24 @@ module Common::Wiki
   end
 
   def new
-    @wiki = Wiki.new
-    # @wiki.lock!(:document, current_user) #this won't work, as @wiki isn't properly set at this point, and even @wiki.save! doesn't do it correctly
-    render :template => '/common/wiki/new'
+    @profile = params[:private] ? @group.profiles.private : @group.profiles.public
+    if @wiki = @profile.wiki # this is in case the wiki has been saved by another user since the link to new was created
+      render :template => '/common/wiki/show'
+    else
+      @wiki = Wiki.new
+      render :template => '/common/wiki/new'
+    end
   end
 
   def create
     if !params[:cancel]
       @profile = params[:wiki][:private] ? @group.profiles.private : @group.profiles.public
-      @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
+      if @wiki = @profile.wiki
+        # if another user has since saved this group wiki, then we will save this one as a newer version
+        @wiki.update_document!(current_user, nil, params[:wiki][:body])
+      else
+        @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
+      end
     end
     #TODO: need to unlock when cancelling, as will still be locked
     #TODO: i would think create.rjs would not work right when cancelling but it seems okay. specifically, i would think it would always toggle the public wiki, but it doesn't seem to.
