@@ -318,8 +318,6 @@ class Wiki < ActiveRecord::Base
     cut
   end
 
-  private
-
   class Version < ActiveRecord::Base
 
     def to_s
@@ -330,6 +328,9 @@ class Wiki < ActiveRecord::Base
       self.version.to_s
     end
 
+    def diff_id
+      "#{self.to_param}-#{previous.to_param}"
+    end
   end
 
 end

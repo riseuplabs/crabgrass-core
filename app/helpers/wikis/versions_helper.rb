@@ -33,4 +33,28 @@ module Wikis::VersionsHelper
   def version_user_link(version)
     link_to_user(version.user, :avatar => :xsmall) if version.user
   end
+
+  def version_action_links(version)
+    link_line version_diff_link(version),
+      version_revert_link(version),
+      version_delete_link(version)
+  end
+
+  def version_diff_link(version)
+    return unless version.previous
+    link_to :diff_link.t,
+      wiki_diff_path(@wiki, version.diff_id)
+  end
+
+  def version_revert_link(version)
+    return unless may_revert_wiki_version?
+    link_to :wiki_version_revert_link.t,
+      revert_wiki_version_path(@wiki, version)
+  end
+
+  def version_delete_link(version)
+    return unless may_destroy_wiki_version?
+    link_to :wiki_version_destroy_link.t,
+      wiki_version_path(@wiki, version), :method => :delete
+  end
 end

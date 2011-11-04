@@ -6,13 +6,17 @@ module WikiPermission
 
   protected
 
-  def may_edit_wiki?(group=@group)
-    logged_in? and current_user.member_of?(group)
+  def may_edit_wiki?(wiki = @wiki)
+    if group = wiki.group
+      logged_in? and current_user.member_of?(group)
+    elsif page = wiki.pages.first
+      logged_in? and current_user.may?(:edit, page)
+    end
   end
 
-  alias_method :may_old_version_wiki?, :may_edit_wiki?
-  alias_method :may_edit_area_wiki?, :may_edit_wiki?
-  alias_method :may_save_wiki?, :may_edit_wiki?
-  alias_method :may_done_wiki?, :may_edit_wiki?
+  def may_admin_wiki?(wiki = @wiki)
+    logged_in? and current_user.may?(:admin, wiki.group || wiki.pages.first)
+  end
+
 end
 
