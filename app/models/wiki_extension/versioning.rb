@@ -14,19 +14,7 @@
 module WikiExtension
   module Versioning
 
-    class Version < ActiveRecord::Base
-
-      def to_s
-        to_param
-      end
-
-      def to_param
-        self.version.to_s
-      end
-
-      def diff_id
-        "#{previous.to_param}-#{self.to_param}"
-      end
+    class VersionNotFoundException < ArgumentError
     end
 
     def create_new_version? #:nodoc:
@@ -48,6 +36,12 @@ module WikiExtension
       return nil unless time
       versions.first :conditions => ["updated_at <= :time", {:time => time}],
         :order => "updated_at DESC"
+    end
+
+    def find_version(number)
+      self.versions.find_by_version(number) or
+      raise VersionNotFoundException.new(
+        :version_doesnt_exist.t(:version => number))
     end
 
     # reverts and keeps all the old versions

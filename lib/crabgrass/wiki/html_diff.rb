@@ -8,6 +8,8 @@ module Crabgrass::Wiki
     cattr_accessor :log_to_stdout
 
     def self.diff(a, b)
+      a ||= ''
+      b ||= ''
       f1 = Tempfile.new("crabgrass-diff-a")
       f1.write a
       f1.close

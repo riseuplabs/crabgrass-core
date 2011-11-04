@@ -250,5 +250,19 @@ class Wiki < ActiveRecord::Base
     cut
   end
 
+  class Version < ActiveRecord::Base
+
+    def to_s
+      to_param
+    end
+
+    def to_param
+      self.version.to_s
+    end
+
+    def diff_id
+      "#{previous.to_param}-#{self.to_param}"
+    end
+  end
 end
 
