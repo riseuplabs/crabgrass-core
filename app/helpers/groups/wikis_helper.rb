@@ -107,6 +107,14 @@ module Groups::WikisHelper
       :icon => 'pencil'
   end
 
+  def break_lock_link
+    url = edit_group_wiki_path(@group, @wiki, :break_lock => true)
+    link_to_remote :break_lock.t,
+    { :url => url,
+      :update => 'wiki-area',
+      :method => :get }
+  end
+
   def wiki_versions_link
     return unless may_edit_group_wiki?(@group)
     link_to_remote :versions.t,
@@ -140,7 +148,7 @@ module Groups::WikisHelper
 
   #from extensions/pages/wiki_page/app/helpers/wiki_helper.rb
   def wiki_locked_notice(wiki)
-    return if wiki.document_open_for? current_user # wiki.document_open_for? doesn't always seem to return correctly as the locks is not being broken if somebody cancels when editing
+    return if wiki.document_open_for? current_user
 
     error_text = I18n.t(:wiki_is_locked, :user => wiki.locker_of(:document).try.name || I18n.t(:unknown))
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
@@ -181,6 +189,23 @@ module Groups::WikisHelper
 
 #    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
 #  end
+
+  # This, and other methods in this file, should not only be accessible to group wikis, as we'll want them accessible to page wikis too.
+  def edit_or_locked_partial
+    (@wiki.document_open_for? current_user) ? 'common/wiki/edit_area' : 'common/wiki/locked_area' # should we confirm @wiki is set?
+  end
+
+  def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
+    text_area_id ||= wiki_body_id(@wiki)
+    confirm_discarding_text_area(text_area_id,
+          ["input[name=break_lock]",
+          "input[name=save]",
+          "input[name=cancel]",
+          "input[name=ajax_cancel]"],
+          I18n.t(:leave_editing_wiki_page_warning)
+          )
+
+  end
 
 end
 

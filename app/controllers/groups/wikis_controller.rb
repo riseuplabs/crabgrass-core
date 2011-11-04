@@ -9,7 +9,7 @@ class Groups::WikisController < Groups::BaseController
   end
 
   def fetch_wiki
-    @wiki = @group.wikis.find(params[:id])
+    @wiki = @group.wikis.find(params[:id]) # this could be nil
   end
 
 end
