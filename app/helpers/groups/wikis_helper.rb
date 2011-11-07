@@ -103,15 +103,15 @@ module Groups::WikisHelper
   #next 3 methods from extensions/pages/wiki_page/app/helpers/wiki_helper.rb
 # maybe we dont' want them
   def image_popup_id(wiki)
-    'image_popup-%s' % wiki.id
+    'image_popup'
   end
 
   def wiki_body_id(wiki)
-    'wiki_body-%s' % wiki.id
+    'wiki_body'
   end
 
   def wiki_toolbar_id(wiki)
-    'markdown_toolbar-%s' % wiki.id
+    'markdown_toolbar'
   end
 
   # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial
@@ -128,13 +128,13 @@ module Groups::WikisHelper
   end
 
   # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial
-  #def create_wiki_toolbar(wiki)
-  #  body_id = wiki_body_id(wiki)
-  #  toolbar_id = wiki_toolbar_id(wiki)
-  #  image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => I18n.t(:insert_image))#
+  def create_wiki_toolbar(wiki)
+    body_id = wiki_body_id(wiki)
+    toolbar_id = wiki_toolbar_id(wiki)
+    image_popup_code = modalbox_function(new_wiki_image_path(wiki), :title => I18n.t(:insert_image))
 
-#    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
-#  end
+   "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
+  end
 
   # This, and other methods in this file, should not only be accessible to group wikis, as we'll want them accessible to page wikis too.
   def edit_or_locked_partial
