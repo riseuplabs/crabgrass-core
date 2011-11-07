@@ -87,7 +87,10 @@ module Common::Ui::LayoutHelper
   EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
 
   # needed whenever we want controls for editing a wiki
-  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
+  # we currently only ship textile editing
+  WIKI_JS = {:wiki => ['wiki/textile_editor']}
+
+  # WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
 
   JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
 
@@ -171,7 +174,7 @@ module Common::Ui::LayoutHelper
     #  lines << "<script type='text/javascript' src='http://getfirebug.com/firebug-lite-beta.js'></script>"
     #  lines << '<![endif]-->'
     #end
-    
+
     lines.join("\n")
   end
 
@@ -266,7 +269,7 @@ module Common::Ui::LayoutHelper
   #
   # takes an array of objects and splits it into two even halves. If the count
   # is odd, the first half has one more than the second.
-  # 
+  #
   def even_split(arry)
     cutoff = (arry.count + 1) / 2
     return [arry[0..cutoff-1], arry[cutoff..-1]]
@@ -279,7 +282,7 @@ module Common::Ui::LayoutHelper
   # one arg and a block          --> like haml_tag
   # zero args and a block        --> like capture_haml
   # one arg and no block         --> like haml_concat
-  # 
+  #
   # additionally, we allow the use of more than one class.
   #
   # some examples of these usages:
@@ -293,7 +296,7 @@ module Common::Ui::LayoutHelper
   #   end
   #
   # wrapping the helper in a capture_haml call is very useful, because then
-  # the helper can be used wherever a normal helper would be. 
+  # the helper can be used wherever a normal helper would be.
   #
   def haml(name=nil, *args, &block)
     if name.any?
@@ -411,7 +414,7 @@ module Common::Ui::LayoutHelper
 
   # for susy to work, we need to add class 'webkit' to body when the browser
   # is a webkit browser. I am not sure if this should be done on dom:loaded or
-  # before. 
+  # before.
   def detect_browser_js
     # "document.observe('dom:loaded',function(){if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}});"
     "if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}"

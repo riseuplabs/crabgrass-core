@@ -72,7 +72,7 @@ task :minify do
   else
 
     # grab definitions for MAIN_JS, EXTRA_JS, and WIKI_JS
-    script_file_constants = `grep '_JS = ' ../../app/helpers/layout_helper.rb`
+    script_file_constants = `grep '_JS = ' ../../app/helpers/common/ui/layout_helper.rb`
     eval(script_file_constants)
 
     join_files(MAIN_JS)
