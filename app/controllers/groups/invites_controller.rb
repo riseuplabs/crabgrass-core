@@ -55,7 +55,7 @@ class Groups::InvitesController < Groups::BaseController
       success(:now, I18n.t(:invites_sent, :count => reqs.size.to_s))
       params[:recipients] = ""
     end
-    redirect_to :action => :index
+    redirect_to :action => :new
   end
 
 end
