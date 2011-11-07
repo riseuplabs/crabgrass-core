@@ -15,7 +15,32 @@ class Groups::WikisControllerTest < ActionController::TestCase
     end
     assert_response :success
     assert assigns['wiki'].new_record?
-    #TODO: how do we do locking for new wikis?
+  end
+
+  def test_new_private_wiki
+    login_as @user
+    xhr :get, :new, :group_id => @group.to_param, :private => true
+    assert_response :success
+    assert assigns['wiki'].new_record?
+    assert_select 'input#wiki_private[type="hidden"][value="true"]'
+  end
+
+  def test_new_with_existing_wiki
+    login_as @user
+    @wiki = @group.profiles.public.create_wiki :body => 'init'
+    xhr :get, :new, :group_id => @group.to_param
+    assert_response :success
+    assert !assigns['wiki'].new_record?
+    assert_equal @wiki, assigns['wiki']
+  end
+
+  def test_new_with_existing_private_wiki
+    login_as @user
+    @wiki = @group.profiles.private.create_wiki :body => 'init'
+    xhr :get, :new, :group_id => @group.to_param, :private => true
+    assert_response :success
+    assert !assigns['wiki'].new_record?
+    assert_equal @wiki, assigns['wiki']
   end
 
   def test_create_private
@@ -42,6 +67,19 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert wiki = assigns['wiki']
     assert "<em>created</em>", wiki.body_html
     assert wiki.profile.public?
+  end
+
+  def test_create_with_existing_wiki
+    @wiki = @group.profiles.public.create_wiki :body => 'init'
+    login_as @user
+    assert_difference '@wiki.versions.count' do
+      xhr :post, :create,
+        :group_id => @group.to_param,
+        :wiki => { :body => "_created_", :private => false }
+    end
+    assert_response :success
+    assert_equal @wiki.reload, assigns['wiki']
+    assert "<em>created</em>", @wiki.body_html
   end
 
   def test_show
