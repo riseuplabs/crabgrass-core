@@ -1,13 +1,13 @@
 - upload_image_form = capture do
-  - form_for([@wiki, @asset], :html => {:multipart => true, :target => 'upload_frame'}) do |f|
+  - form_for([@wiki, Asset.new], :url => wiki_images_path(@wiki), :html => {:multipart => true, :target => 'upload_frame'}) do |f|
     = f.file_field 'uploaded_data', :size => '12'
-    = f.submit_tag 'Upload' # TODO: translate me!
+    = f.submit 'Upload' # TODO: translate me!
     = spinner 'upload'
-  %iframe#upload_frame{:name => upload_frame, :src=>'about:blank'}
+  %iframe#upload_frame{:name => :upload_frame, :src=>'about:blank'}
 
 #image_popup.image_popup
   -# :insert_image_instructrions.t
-  = formy(:form) do |f|
+  = formy(:simple_form) do |f|
     - f.row do |r|
       - r.label 'Size'
       - r.input image_size_buttons

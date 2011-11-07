@@ -271,13 +271,13 @@ class Asset < ActiveRecord::Base
 
   def create_page
     page_params = {
-      :title => asset.basename,
-      :summary =>"Asset Page for #{asset.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
+      :title => self.basename,
+      :summary =>"Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
       :tag_list => "",
       :user => current_user,
       :share_with => {@group.name => {:access =>  "1"}},
       :access => "admin",
-      :data => asset
+      :data => self
     }
     self.parent_page = AssetPage.create!(asset_page_params)
   end

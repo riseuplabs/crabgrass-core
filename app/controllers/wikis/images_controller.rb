@@ -1,13 +1,14 @@
-class Wiki::ImagesController < Wiki::BaseController
+class Wikis::ImagesController < Wikis::BaseController
 
   before_filter :fetch_images
 
   def new
+    # @asset = Asset.new  # TODO: do we want to create this from our context?
   end
 
   # response goes to an iframe, so requires responds_to_parent
   def create
-    asset = Asset.build params[:asset]
+    asset = Asset.build params[:asset] # TODO: protect params, put into context
     @page ||= asset.create_page
     asset.save
     responds_to_parent do
