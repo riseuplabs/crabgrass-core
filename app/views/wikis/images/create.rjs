@@ -1,0 +1,1 @@
+page.replace 'image_popup', :partial => '/wikis/images/new'

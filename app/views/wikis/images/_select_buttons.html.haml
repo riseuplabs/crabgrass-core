@@ -1,0 +1,4 @@
+.swatch_list
+  - @image.each do |image|
+    = data_tag_for_image(image)
+  = radio_buttons_tag :image, image_tags_and_ids(@images)

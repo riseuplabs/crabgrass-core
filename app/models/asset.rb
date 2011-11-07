@@ -269,6 +269,19 @@ class Asset < ActiveRecord::Base
     return page
   end
 
+  def create_page
+    page_params = {
+      :title => asset.basename,
+      :summary =>"Asset Page for #{asset.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
+      :tag_list => "",
+      :user => current_user,
+      :share_with => {@group.name => {:access =>  "1"}},
+      :access => "admin",
+      :data => asset
+    }
+    self.parent_page = AssetPage.create!(asset_page_params)
+  end
+
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
@@ -299,9 +312,9 @@ class Asset < ActiveRecord::Base
   ## ASSET CREATION
   ##
 
-  # 
-  # creates an Asset of the appropriate subclass (ie ImageAsset). 
-  # 
+  #
+  # creates an Asset of the appropriate subclass (ie ImageAsset).
+  #
   def self.create_from_params(attributes = nil, &block)
     begin
       return self.create_from_params!(attributes, &block)
@@ -332,7 +345,7 @@ class Asset < ActiveRecord::Base
 
   private
 
-  # 
+  #
   # returns the appropriate asset class, ie ImageAsset, for the attributes passed in.
   #
   def self.asset_class(attributes)
@@ -370,7 +383,7 @@ class Asset < ActiveRecord::Base
     end
   end
 
-  public 
+  public
 
   ##
   ## MEDIA TYPES
