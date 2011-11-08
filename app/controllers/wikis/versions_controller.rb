@@ -1,8 +1,9 @@
 class Wikis::VersionsController < Wikis::BaseController
 
   before_filter :fetch_version, :only => [:show, :destroy, :revert]
+  before_filter :login_required
 
-  permissions 'wikis/versions', 'wiki'
+  permissions 'wikis/versions'
 
   def show
   end
@@ -11,11 +12,13 @@ class Wikis::VersionsController < Wikis::BaseController
   end
 
   def destroy
+    # TODO
     # @version.destroy
     # redirect_to wiki_path(@wiki)
   end
 
   def revert
+    # TODO
     ## we still lack this in the model:
     ## @wiki.revert_to(version, current_user)
     ## old_way (TM):
@@ -27,10 +30,10 @@ class Wikis::VersionsController < Wikis::BaseController
   protected
 
   def fetch_version
-    unless @version = @wiki.versions.find_by_version(params[:id])
-      flash.now :version_doesnt_exist.t
-      return false
-    end
+    @version = @wiki.find_version(params[:id])
+  rescue Wiki::VersionNotFoundException => ex
+    flash.now[:error] =  ex.message
+    return false
   end
 
 end
