@@ -42,7 +42,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    assert_permission :may_admin_group? do
+    assert_permission :may_edit_group_settings? do
       post :update, :group => {:full_name => 'full name'}, :group_id => @group.to_param
     end
     assert_response 302

@@ -27,7 +27,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
       end
     end
     assert_response :redirect
-    assert_redirected_to :action => :index
+    assert_redirected_to :action => :new
     assert req = RequestToJoinUs.last
     assert_equal @group, req.requestable
     assert_equal recipient, req.recipient
