@@ -80,8 +80,7 @@ module FunctionalTestHelper
   ##
 
   def url_for(options)
-    url = ActionController::UrlRewriter.new(@request, nil)
-    url.rewrite(options)
+    @controller.url_for(options)
   end
 
 =begin

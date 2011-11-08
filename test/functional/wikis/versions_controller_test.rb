@@ -13,8 +13,9 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
       :next => stub,
       :diff_id => '1-2',
       :body_html => 'stub body'
-    @group = stub
+    @group = stub :class => Group
     @wiki = stub :group => @group,
+      :class => Wiki,
       :pages => []
     Wiki.stubs(:find).with('3').returns(@wiki)
     login_as @user
@@ -57,7 +58,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
       delete :destroy, :wiki_id => '3', :id => '2'
     end
     assert_response :redirect
-    assert_redirected_to wiki_path(@wiki)
+    assert_redirected_to url_for([@group, @wiki])
   end
 
   def test_revert
@@ -68,7 +69,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
       post :revert, :wiki_id => '3', :id => '2'
     end
     assert_response :redirect
-    assert_redirected_to wiki_path(@wiki)
+    assert_redirected_to url_for([@group, @wiki])
   end
 
 end

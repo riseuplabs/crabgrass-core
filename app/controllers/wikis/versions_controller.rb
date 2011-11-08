@@ -12,19 +12,16 @@ class Wikis::VersionsController < Wikis::BaseController
   end
 
   def destroy
-    # TODO
-    # @version.destroy
-    # redirect_to wiki_path(@wiki)
+    @version.destroy
+    redirect_to wiki_path(@wiki)
   end
 
   def revert
-    # TODO
-    ## we still lack this in the model:
-    ## @wiki.revert_to(version, current_user)
+    @wiki.revert_to(@version, current_user)
     ## old_way (TM):
     # @wiki.revert_to_version(version.version, current_user)
     # @wiki.unlock! :document, current_user, :break => true
-    # redirect_to wiki_path(@wiki)
+    redirect_to wiki_path(@wiki)
   end
 
   protected
