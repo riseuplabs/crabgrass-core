@@ -88,7 +88,7 @@ module Common::Ui::LayoutHelper
 
   # needed whenever we want controls for editing a wiki
   # we currently only ship textile editing
-  WIKI_JS = {:wiki => ['wiki/textile_editor']}
+  WIKI_JS = {:wiki => ['wiki/textile_editor', 'wiki/wiki_editing' ]}
 
   # WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
 
