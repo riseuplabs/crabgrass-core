@@ -269,17 +269,21 @@ class Asset < ActiveRecord::Base
     return page
   end
 
-  def create_page
+  def create_page(user, group)
+    # run validations so filname gets set
+    self.valid?
     page_params = {
       :title => self.basename,
       :summary =>"Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
       :tag_list => "",
-      :user => current_user,
-      :share_with => {@group.name => {:access =>  "1"}},
+      :user => user,
       :access => "admin",
       :data => self
     }
-    self.parent_page = AssetPage.create!(asset_page_params)
+    if group
+      page_params.merge! :share_with => {group.name => {:access =>  "1"}}
+    end
+    self.parent_page = AssetPage.create!(page_params)
   end
 
   # some asset subclasses (like AudioAsset) will display using flash

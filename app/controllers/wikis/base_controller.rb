@@ -16,11 +16,8 @@ class Wikis::BaseController < ApplicationController
   # TODO  We might want to clean this up by mowing the logic into the model like
   #   @context = @wiki.context
   def fetch_context
-    if @wiki.pages.any?
-      @page = @wiki.pages.first
-    else
-      @group = @wiki.group
-    end
+    @page = @wiki.page
+    @group = @wiki.group
   end
 
 end

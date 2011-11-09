@@ -31,6 +31,13 @@ module Wikis::ImagesHelper
       :type => 'hidden'
   end
 
+  def thumbnail_urls_to_json(asset)
+    { :small  => asset.thumbnail(:small).try.url || asset.url,
+      :medium => asset.thumbnail(:medium).try.url || asset.url,
+      :large  => asset.thumbnail(:large).try.url || asset.url,
+      :full   => asset.url }.to_json
+  end
+
   def insert_image_button
     button_to_function :insert_image.t,
       insert_image_function + close_modal_function

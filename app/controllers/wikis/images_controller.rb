@@ -9,7 +9,7 @@ class Wikis::ImagesController < Wikis::BaseController
   # response goes to an iframe, so requires responds_to_parent
   def create
     asset = Asset.build params[:asset] # TODO: protect params, put into context
-    @page ||= asset.create_page
+    @page ||= asset.create_page(current_user, @group)
     asset.save
     responds_to_parent do
       render

@@ -2,7 +2,7 @@ class Groups::HomeController < Groups::BaseController
 
   layout 'sidecolumn'
   helper 'groups/wikis'
-  javascript 'wiki/textile_editor'
+  javascript :wiki
   stylesheet 'wiki_edit'
 
   def initialize(options = {})
