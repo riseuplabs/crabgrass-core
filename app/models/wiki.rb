@@ -252,6 +252,12 @@ class Wiki < ActiveRecord::Base
 
   class Version < ActiveRecord::Base
 
+    before_destroy :confirm_existance_of_other_version
+
+    def confirm_existance_of_other_version
+      self.previous || self.next || false
+    end
+
     def to_s
       to_param
     end

@@ -47,7 +47,7 @@ module Wikis::VersionsHelper
   end
 
   def version_revert_link(version)
-    return unless may_revert_wiki_version?
+    return unless may_revert_wiki_version?(version)
     link_to :wiki_version_revert_link.t,
       revert_wiki_version_path(@wiki, version)
   end

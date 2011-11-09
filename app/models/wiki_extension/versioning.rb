@@ -45,8 +45,7 @@ module WikiExtension
     end
 
     # reverts and keeps all the old versions
-    def revert_to_version(version_number, user)
-      version = versions.find_by_version(version_number)
+    def revert_to(version, user)
       self.body = version.body
       self.user = user
       save!
@@ -63,7 +62,7 @@ module WikiExtension
     def update_latest_version_record
       # only need to update the latest version when not creating a new one
       return if create_new_version?
-      versions.find_by_version(self.version).update_attributes(
+      versions.last.update_attributes(
         :body => body,
         # read_attributes for body_html and raw_structure
         # because we don't want to trigger another rendering

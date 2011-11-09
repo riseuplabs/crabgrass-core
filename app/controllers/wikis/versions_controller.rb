@@ -13,14 +13,16 @@ class Wikis::VersionsController < Wikis::BaseController
 
   def destroy
     @version.destroy
+    if @version.destroyed?
+      success :wiki_version_destroy_success.t
+    else # last version
+      warning :wiki_version_destroy_failed.t
+    end
     redirect_to wiki_path(@wiki)
   end
 
   def revert
     @wiki.revert_to(@version, current_user)
-    ## old_way (TM):
-    # @wiki.revert_to_version(version.version, current_user)
-    # @wiki.unlock! :document, current_user, :break => true
     redirect_to wiki_path(@wiki)
   end
 
