@@ -72,6 +72,26 @@ module Common::Wiki
     else
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     end
+  rescue ErrorMessage => exc
+    # here should get a mesage like: 'XX has saved new changes first. You can still save your changes as the newest version.
+    # then they should see the edit screen, with their changes. if they hit save, they will save as an incremented version
+
+    # render_error exc # This displays, but cannot render twice
+    error 'TESST'#exc # this doesn't not display
+    @wiki.body = params[:wiki][:body]
+    @wiki.version = @wiki.versions.last.version + 1
+    render :template => 'common/wiki/edit'
+  rescue WikiLockError => wlexc
+
+    # here you should get message like: "XX now has the lock on this wiki.you can still save your changes"
+    # they should still see the edit_area (w/their changes) and the ability to hit save.
+    # Then if the person who broken their lock goes to save, we will be in the case above, where somebody else has saved newer changes first.
+
+    error 'wlec error test'#wlexc #this does not display
+    # flash.now[:error] = 'wlTEST' #this doesn't not display either
+    @wiki.unlock!(:document, current_user, :break => true ) # this won't unlock if they don't hit save
+    @wiki.body = params[:wiki][:body]
+    render :template =>  'common/wiki/edit'
   end
 
   protected
