@@ -148,35 +148,36 @@ function submitForm(form_element, name, value) {
   }
 }
 
-// submit a form which updates a nested resource where the parent resource can be selected by the user
-// since the parent resource is part of the form action path, the form action attribute has to be dynamically updated
+// submit a form which updates a nested resource where the parent resource can
+// be selected by the user since the parent resource is part of the form action
+// path, the form action attribute has to be dynamically updated
 //
-// resource_url_template looks like /message/__ID__/posts
-// resource_id_field is the DOM id for the input element which has the value for the resource id (the __ID__ value)
-// (for example resource_id_field with DOM id 'user_name' has value 'gerrard'. 'gerrard' is the resource id)
-// if ignore_default_value is true, then form will not get submited unless resource_id_field was changed by the user
-// from the time the page was loaded
-// dont_submit_default_value is useful for putting help messages into the field. if the user does not edit the field
-// the help message should not be submitted as the resource id
-function submitNestedResourceForm(resource_id_field, resource_url_template, dont_submit_default_value) {
-  var input = $(resource_id_field);
-  // we can submit the default value
-  // or the value has changed and isn't blank
-  if(dont_submit_default_value == false || (input.value != '' && input.value != input.defaultValue)) {
-    var form = input.form;
-    var resource_id = input.value;
-    form.action = resource_url_template.gsub('__ID__', resource_id);
-    form.submit();
-  }
-}
+// resource_url_template looks like /message/__ID__/posts resource_id_field is
+// the DOM id for the input element which has the value for the resource id
+// (the __ID__ value) (for example resource_id_field with DOM id 'user_name'
+// has value 'gerrard'. 'gerrard' is the resource id) if ignore_default_value
+// is true, then form will not get submited unless resource_id_field was
+// changed by the user from the time the page was loaded
+// dont_submit_default_value is useful for putting help messages into the
+// field. if the user does not edit the field the help message should not be
+// submitted as the resource id
+function submitNestedResourceForm(resource_id_field, resource_url_template,
+    dont_submit_default_value) { var input = $(resource_id_field);
+  // we can submit the default value or the value has changed and isn't blank
+  if(dont_submit_default_value == false || (input.value != '' && input.value !=
+        input.defaultValue)) { var form = input.form; var resource_id =
+    input.value; form.action = resource_url_template.gsub('__ID__',
+        resource_id); form.submit(); } }
 
 
-// starts watching the textarea
-// when window.onbeforeunload event happens it will ask the user if they want to leave the unsaved form
-// everything that matches savingSelectors will permenantly disable the confirm message when clicked
-// this a way to exclude "Save" and "Cancel" buttons from raising the "Do you want to discard this?" dialog
-function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelectors) {
-  var confirmActive = true;
+// starts watching the textarea when window.onbeforeunload event happens it
+// will ask the user if they want to leave the unsaved form everything that
+// matches savingSelectors will permenantly disable the confirm message when
+// clicked this a way to exclude "Save" and "Cancel" buttons from raising the
+// "Do you want to discard this?" dialog
+
+function confirmDiscardingTextArea(textAreaId, discardingMessage,
+    savingSelectors) { var confirmActive = true;
 
   // setup confirmation
   // Event.observe(window, 'beforeunload', function(ev) {
@@ -191,7 +192,8 @@ function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelector
     }
   };
 
-  // toggle off the confirmation when saving or explicitly discarding the text area (clicking 'cancel' for example)
+  // toggle off the confirmation when saving or explicitly discarding the text
+  // area (clicking 'cancel' for example)
   savingSelectors.each(function(savingSelector) {
     var savingElements = $$(savingSelector);
     savingElements.each(function(savingElement) {
@@ -223,7 +225,10 @@ function eventTarget(event) {
 
 //
 // DYNAMIC TABS
-// naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
+// naming scheme: 
+//   location.hash => '#most-viewed', 
+//   tablink.id => 'most_viewed_link', 
+//   tabcontent.id => 'most_viewed_panel'
 //
 
 function evalAttributeOnce(element, attribute) {
@@ -388,7 +393,8 @@ var FilterPath = {
 
   //
   // returns a string snippet suitable for adding to a url.
-  // for example: remote_function(:url => me_pages_path, :with => 'FilterPath.encode()')
+  // for example: 
+  //   remote_function(:url => me_pages_path, :with => 'FilterPath.encode()')
   //
   encode: function() {
     return "filter=" + window.location.hash.sub("#","");
