@@ -66,13 +66,19 @@ function insertAtCursor(textarea, text) {
 function liftLockOrConfirmDiscardingTextArea(textAreaId, discardingMessage,
     savingSelectors, wiki_id) { 
   
+  var textArea = $(textAreaId);
   var confirmActive = true;
-  
+  var originalValue = textArea.value;
+
+
   window.onbeforeunload = function(ev) {
     if(confirmActive) {
-      return discardingMessage;
-    } else {
-      liftLock(wiki_id)
+      var newValue = textArea.value;
+      if(newValue != originalValue) {
+        return discardingMessage;
+      } else {
+        liftLock(wiki_id)
+      }
     }
   };
 
