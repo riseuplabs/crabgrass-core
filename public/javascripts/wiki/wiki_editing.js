@@ -64,7 +64,7 @@ function insertAtCursor(textarea, text) {
 // the user decides.
 // You can pass savingSelectors that will not trigger this.
 function liftLockOrConfirmDiscardingTextArea(textAreaId, discardingMessage,
-    savingSelectors, wiki_id) { 
+    savingSelectors, wiki_id, auth) { 
   
   var textArea = $(textAreaId);
   var confirmActive = true;
@@ -77,7 +77,7 @@ function liftLockOrConfirmDiscardingTextArea(textAreaId, discardingMessage,
       if(newValue != originalValue) {
         return discardingMessage;
       } else {
-        liftLock(wiki_id)
+        liftLock(wiki_id, auth)
       }
     }
   };
@@ -96,11 +96,15 @@ function liftLockOrConfirmDiscardingTextArea(textAreaId, discardingMessage,
   });
 }
 
-function liftLock(wiki_id) {
+function liftLock(wiki_id, auth) {
   var url = '/wikis/' + wiki_id + '/lock';
 
   new Ajax.Request(url, {
-    method: 'delete'
+    method: 'delete',
+    asynchronous: false,
+    parameters: {
+      authenticity_token: auth
+    }
   });
 
 }

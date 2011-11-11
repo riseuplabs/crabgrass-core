@@ -174,7 +174,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.resources :wikis, :namespace => 'wikis/', :only => [] do |wikis|
-    # wikis.resources :locks, :only  => [:create, :destroy]
+    wikis.resource :lock, :only  => :destroy
     wikis.resources :images, :only => [:new, :create]
     wikis.resources :versions, :only  => [:show, :index, :destroy],
       :member => {:revert => :post}
