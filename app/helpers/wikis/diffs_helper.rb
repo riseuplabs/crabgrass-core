@@ -21,7 +21,7 @@ module Wikis::DiffsHelper
     if previous = @old.previous
       link_to_remote LARROW + :prev_change.t,
         :url => wiki_diff_path(@wiki, @old.diff_id),
-        :update => 'wiki-area',
+        :update => dom_id(@wiki),
         :method => :get
     else
       content_tag :span, LARROW + :prev_change.t, :class => 'disabled'
@@ -32,7 +32,7 @@ module Wikis::DiffsHelper
     if next_version = @new.next
       link_to_remote :next_change.t + RARROW,
         :url => wiki_diff_path(@wiki, next_version.diff_id),
-        :update => 'wiki-area',
+        :update => dom_id(@wiki),
         :method => :get
     else
       content_tag :span, :next_change.t + RARROW, :class => 'disabled'

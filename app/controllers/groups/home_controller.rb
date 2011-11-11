@@ -14,6 +14,7 @@ class Groups::HomeController < Groups::BaseController
   def show
     @profile = @group.profile
     @wiki = @profile.wiki
+    @public_wiki = @group.profiles.public.wiki
   end
 
 end

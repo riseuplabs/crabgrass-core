@@ -1,10 +1,15 @@
 - content_for :left_column do
   = render :partial => 'sidecolumn'
 
-#group-wiki-tabs
-  = group_wiki_toggle
-= spinner('view_toggle')
-#wiki-area
+- if @profile.private?
+  = toggle_bug_links(private_wiki_link)
+  = spinner(@wiki)
+  %div[@wiki]
+    = render :partial => 'common/wiki/show', :locals => {:preview => true}
+  = toggle_bug_links(public_wiki_link)
+  = spinner(@public_wiki)
+  %div[@public_wiki]
+- else
   = render :partial => 'common/wiki/show', :locals => {:preview => true} if @wiki
 %hr
 

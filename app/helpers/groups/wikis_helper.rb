@@ -16,8 +16,8 @@ module Groups::WikisHelper
   def wiki_link(wiki, wiki_type)
     id = wiki_type
     remote = { :url => wiki_link_url(wiki, wiki_type),
-      :before => show_spinner('view_toggle'),
-      :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
+      :before => show_spinner(wiki),
+      :success => hide_spinner(wiki) + activate_toggle_bug(id),
       :method => :get }
     { :remote => remote,
       :label => id.t,
@@ -62,7 +62,7 @@ module Groups::WikisHelper
     return unless may_edit_group_wiki?(@group)
     link_to_remote :versions.t,
       { :url => wiki_versions_path(@wiki),
-        :update => 'wiki-area',
+        :update => dom_id(@wiki),
         :method => :get }
   end
 
@@ -72,7 +72,7 @@ module Groups::WikisHelper
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_more_link.t,
     { :url => group_wiki_path(@group, @wiki),
-      :update => 'wiki-area',
+      :update => dom_id(@wiki),
       :method => :get},
       :icon => 'plus'
   end
@@ -83,7 +83,7 @@ module Groups::WikisHelper
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_less_link.t,
     { :url => preview_group_wiki_path(@group, @wiki),
-      :update => 'wiki-area',
+      :update => dom_id(@wiki),
       :method => :get,
     },
     :icon => 'minus'
