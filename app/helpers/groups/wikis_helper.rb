@@ -142,14 +142,13 @@ module Groups::WikisHelper
   end
 
   def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
-    text_area_id ||= wiki_body_id(@wiki)
-    confirm_discarding_text_area(text_area_id,
-          ["input[name=break_lock]",
+    text_area_id ||= 'wiki_body'
+    saving_selectors = ["input[name=break_lock]",
           "input[name=save]",
           "input[name=cancel]",
-          "input[name=ajax_cancel]"],
-          I18n.t(:leave_editing_wiki_page_warning)
-          )
+          "input[name=ajax_cancel]"]
+    message = I18n.t(:leave_editing_wiki_page_warning)
+    %Q[liftLockOrConfirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect}, #{@wiki.id})]
 
   end
 
