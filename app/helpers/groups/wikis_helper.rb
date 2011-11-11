@@ -4,7 +4,6 @@ module Groups::WikisHelper
     return unless current_user.member_of?(@group)
     toggle_bug_links(public_wiki_link, private_wiki_link)
   end
-
   def public_wiki_link
     wiki_link(@group.public_wiki, :public_group_wiki)
   end
@@ -16,7 +15,6 @@ module Groups::WikisHelper
   def wiki_link(wiki, wiki_type)
     id = wiki_type
     remote = { :url => wiki_link_url(wiki, wiki_type),
-      :update => 'wiki-area',
       :before => show_spinner('view_toggle'),
       :success => hide_spinner('view_toggle') + activate_toggle_bug(id),
       :method => :get }
@@ -56,7 +54,6 @@ module Groups::WikisHelper
     url = edit_group_wiki_path(@group, @wiki, :break_lock => true)
     link_to_remote :break_lock.t,
     { :url => url,
-      :update => 'wiki-area',
       :method => :get }
   end
 
@@ -133,11 +130,6 @@ module Groups::WikisHelper
     image_popup_code = modalbox_function(new_wiki_image_path(wiki), :title => I18n.t(:insert_image))
 
    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
-  end
-
-  # This, and other methods in this file, should not only be accessible to group wikis, as we'll want them accessible to page wikis too.
-  def edit_or_locked_partial
-    (@wiki.document_open_for? current_user) ? 'common/wiki/edit_area' : 'common/wiki/locked_area' # should we confirm @wiki is set?
   end
 
   def confirm_discarding_wiki_edit_text_area(text_area_id = nil)

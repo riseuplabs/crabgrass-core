@@ -1,13 +1,4 @@
--# based loosely on ./extensions/widgets/wiki/app/views/widget/wiki/_edit.rhtml
--# THIS NEEDS A LOT OF WORK---likely complete rewrite
 #wiki-error-area
--#=# formy(:tabs, :type => 'top') do |f| # maybe we don't need any of this???
-  -# f.tab do |t|
-    -# t.label :edit.t
-    -## t.icon 'house'
-    -# t.show_tab area_id(@wiki)
-    -# t.selected true
-  -# f.tab do |t|
-    -# t.link link_to_remote(:close_editor.t, {:url=>wiki_action('done', :wiki_id => @wiki)}, {:icon => 'close'})
 .tab_content.tab_area{:id => area_id(@wiki)}
-  = render :partial => edit_or_locked_partial
+  - # TODO: maybe we can merge these two at some point
+  = render :partial => '/common/wiki/edit_area'

@@ -33,7 +33,7 @@ module Common::Wiki
       render :template => '/common/wiki/show'
     else
       @wiki = Wiki.new
-      render :template => '/common/wiki/new'
+      render :template => '/common/wiki/edit'
     end
   end
 
@@ -58,8 +58,12 @@ module Common::Wiki
       # remove other peoples lock if it exists
       @wiki.unlock!(:document, current_user, :break => true )
     end
-    @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
-    render :template => '/common/wiki/edit'
+    if @wiki.document_open_for?(current_user)
+      @wiki.lock!(:document, current_user)
+      render :template => '/common/wiki/edit'
+    else
+      render :template => '/common/wiki/locked'
+    end
   end
 
   def update
