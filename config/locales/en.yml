@@ -932,7 +932,7 @@ en:
 
   wiki_is_locked: "This wiki is currently locked by %{user}"
   wont_be_able_to_save: "You will not be able to save this page"
-  leave_editing_wiki_page_warning: "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."
+  leave_editing_wiki_page_warning: "If you don't save the wiki, you will lose your changes."
   page_locked_header: "Page Locked"
   locked_by_user: "Locked by %{user}"
   locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."

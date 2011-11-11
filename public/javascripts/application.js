@@ -177,18 +177,18 @@ function submitNestedResourceForm(resource_id_field, resource_url_template,
 // "Do you want to discard this?" dialog
 
 function confirmDiscardingTextArea(textAreaId, discardingMessage,
-    savingSelectors) { var confirmActive = true;
+    savingSelectors) { 
 
-  // setup confirmation
-  // Event.observe(window, 'beforeunload', function(ev) {
-  //   if(confirmActive) {
-  //     ev.returnValue = discardingMessage;
-  //   }
-  // })
+  var textArea = $(textAreaId);
+  var confirmActive = true;
+  var originalValue = textArea.value;
 
   window.onbeforeunload = function(ev) {
     if(confirmActive) {
-      return discardingMessage;
+      var newValue = textArea.value;
+      if(newValue != originalValue) {
+        return discardingMessage;
+      }
     }
   };
 

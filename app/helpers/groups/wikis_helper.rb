@@ -147,8 +147,11 @@ module Groups::WikisHelper
           "input[name=cancel]",
           "input[name=ajax_cancel]"]
     message = I18n.t(:leave_editing_wiki_page_warning)
-    %Q[liftLockOrConfirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect}, #{@wiki.id}, "#{form_authenticity_token}")]
+    %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect});]
+  end
 
+  def release_lock_on_unload
+    %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
   end
 
 end

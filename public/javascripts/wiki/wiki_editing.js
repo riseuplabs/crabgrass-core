@@ -54,57 +54,17 @@ function insertAtCursor(textarea, text) {
   element.focus();
 }
 
-
-// liftLockOrConfirmDiscardingTextArea
-// 
-// When leaving the page we check if the wiki has been changed.
-// If not we release the lock
-// If it has been changed we issue a warning to the user.
-// We can't release the lock in the latter case as we don't know how
-// the user decides.
-// You can pass savingSelectors that will not trigger this.
-function liftLockOrConfirmDiscardingTextArea(textAreaId, discardingMessage,
-    savingSelectors, wiki_id, auth) { 
-  
-  var textArea = $(textAreaId);
-  var confirmActive = true;
-  var originalValue = textArea.value;
-
-
-  window.onbeforeunload = function(ev) {
-    if(confirmActive) {
-      var newValue = textArea.value;
-      if(newValue != originalValue) {
-        return discardingMessage;
-      } else {
-        liftLock(wiki_id, auth)
-      }
-    }
-  };
-
-  // toggle off the confirmation when saving or explicitly discarding the text
-  // area (clicking 'cancel' for example)
-  savingSelectors.each(function(savingSelector) {
-    var savingElements = $$(savingSelector);
-    savingElements.each(function(savingElement) {
-      savingElement.observe('click', function() {
-        // user clicked 'save', 'cancel' or something similar
-        // we should no longer display confirmation when leaving page
-        confirmActive = false;
-      })
-    });
-  });
-}
-
-function liftLock(wiki_id, auth) {
+// we don't want to keep the wiki locked after leaving the page
+function releaseLockOnUnload(wiki_id, auth) {
   var url = '/wikis/' + wiki_id + '/lock';
 
-  new Ajax.Request(url, {
-    method: 'delete',
-    asynchronous: false,
-    parameters: {
-      authenticity_token: auth
-    }
-  });
-
+  window.onunload = function(ev) {
+    new Ajax.Request(url, {
+      method: 'delete',
+      asynchronous: false,
+      parameters: {
+        authenticity_token: auth
+      }
+    });
+  }
 }
