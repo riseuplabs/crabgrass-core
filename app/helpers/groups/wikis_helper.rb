@@ -46,7 +46,6 @@ module Groups::WikisHelper
     # note: firefox uses layerY, ie uses offsetY
     link_to_remote :edit.t,
       { :url => edit_group_wiki_path(@group, @wiki),
-        :update => 'wiki-area',
         :method => :get
      #  :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
       },
