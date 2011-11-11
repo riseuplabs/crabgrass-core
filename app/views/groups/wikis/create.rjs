@@ -1,4 +1,3 @@
 page << hide_spinner('view_toggle')
-page << activate_toggle_bug(@wiki && @wiki.profile.private? ?  :private_group_wiki : :public_group_wiki)
 page.replace_html 'group-wiki-tabs', :text => group_wiki_toggle
 page.replace_html 'wiki-area', :partial => '/common/wiki/show'

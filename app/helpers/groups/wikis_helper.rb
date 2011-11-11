@@ -4,6 +4,7 @@ module Groups::WikisHelper
     return unless current_user.member_of?(@group)
     toggle_bug_links(public_wiki_link, private_wiki_link)
   end
+
   def public_wiki_link
     wiki_link(@group.public_wiki, :public_group_wiki)
   end
