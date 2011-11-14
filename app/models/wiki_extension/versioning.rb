@@ -14,7 +14,22 @@
 module WikiExtension
   module Versioning
 
-    class VersionNotFoundException < ArgumentError
+    class VersionNotFoundError < CrabgrassException
+      def initialize(version_or_message = '', options = {})
+        message = version_or_message.is_a? Integer ?
+          :version_doesnt_exist.t(:version => version_or_message.to_s) :
+          version_or_message.to_s
+        super(message, options)
+      end
+    end
+
+    class VersionExistsError < CrabgrassException
+      def initialize(version_or_message = '', options = {})
+        message = version_or_message.respond_to?(:user) ?
+          :version_exists_error.t(:user => version_or_message.user.display_name) :
+          version_or_message.to_s
+        super(message, options)
+      end
     end
 
     def create_new_version?
@@ -35,8 +50,7 @@ module WikiExtension
 
     def find_version(number)
       self.versions.find_by_version(number) or
-      raise VersionNotFoundException.new(
-        :version_doesnt_exist.t(:version => number))
+      raise VersionNotFoundError.new(number)
     end
 
     # reverts and keeps all the old versions

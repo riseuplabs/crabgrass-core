@@ -49,10 +49,6 @@ class ErrorMessages < ErrorMessage
   end
 end
 
-class WikiLockError < CrabgrassException; end
-
-class WikiSectionError < CrabgrassException; end
-
 # extend base Exception class to have record() method.
 # this is useful like so:
 #

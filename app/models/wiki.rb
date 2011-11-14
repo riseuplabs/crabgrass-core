@@ -79,12 +79,13 @@ class Wiki < ActiveRecord::Base
   # it will skip version_checking if current_version is nil (useful for section editing)
   def update_section!(section, user, current_version, text)
     if current_version and self.version > current_version.to_i
-      raise ErrorMessage.new(:locking_error.t) #Locking error. Can't saveyour data, someone else has saved new changes first
-      #this is really a versioning error not a locking error
+      raise VersionExistsError.new(self.versions.last)
     end
 
     if sections_locked_for(user).include? section
-      raise WikiLockError.new("Can't save '#{section}' since someone has locked it.") # should use translation
+      message = :section_locked_on_save_error.t(:section => section,
+        :user => locker_of(section).display_name)
+      raise SectionLockedOnSaveError.new(message)
     end
 
     unlock!(section, user)
