@@ -14,21 +14,31 @@
 module WikiExtension
   module Versioning
 
-    class VersionNotFoundException < ArgumentError
+    class VersionNotFoundError < CrabgrassException
+      def initialize(version_or_message = '', options = {})
+        message = version_or_message.is_a? Integer ?
+          :version_doesnt_exist.t(:version => version_or_message.to_s) :
+          version_or_message.to_s
+        super(message, options)
+      end
     end
 
-    def create_new_version? #:nodoc:
-      body_updated = body_changed?
-      recently_edited_by_same_user = !user_id_changed? && (updated_at and (updated_at > 30.minutes.ago))
+    class VersionExistsError < CrabgrassException
+      def initialize(version_or_message = '', options = {})
+        message = version_or_message.respond_to?(:user) ?
+          :version_exists_error.t(:user => version_or_message.user.display_name) :
+          version_or_message.to_s
+        super(message, options)
+      end
+    end
 
-      latest_version_has_blank_body = self.versions.last && self.versions.last.body.blank?
-
+    def create_new_version?
       # always create a new version if we have no versions at all
+      return true if versions.empty?
       # don't create a new version if
       #   * a new version would be on top of an old blank version (we don't want to store blank versions)
-      #   * the same user is making several edits in sequence
       #   * the body hasn't changed
-      return (versions.empty? or (body_updated and !recently_edited_by_same_user and !latest_version_has_blank_body))
+      body_changed? and !versions.last.body.blank?
     end
 
     # returns first version since +time+
@@ -40,8 +50,7 @@ module WikiExtension
 
     def find_version(number)
       self.versions.find_by_version(number) or
-      raise VersionNotFoundException.new(
-        :version_doesnt_exist.t(:version => number))
+      raise VersionNotFoundError.new(number)
     end
 
     # reverts and keeps all the old versions

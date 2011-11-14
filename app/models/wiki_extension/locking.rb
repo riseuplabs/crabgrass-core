@@ -4,33 +4,44 @@
 module WikiExtension
   module Locking
 
+    class SectionLockedError < CrabgrassException
+    end
+
+    class SectionLockedOnSaveError < SectionLockedError
+    end
+
     def lock!(section, user)
       unless section_exists? section
-        raise WikiLockError, I18n.t(:cant_lock_nonexistant_section)
+        raise SectionNotFoundError.new(section)
       end
 
       if section_edited_by?(user) and section_edited_by(user) != section
-        raise WikiLockError, I18n.t(:cant_lock_another_section)
+        raise OtherSectionLockedError.new(section_edited_by(user))
       end
 
       if may_modify_lock?(section, user)
         section_locks.lock!(section, user)
       else
-        raise WikiLockError, "can't lock an already locked section"
+        debugger
+        message = :section_locked_error.t(:section => section,
+          :user => locker_of(section).display_name)
+        raise SectionLockedError.new(message)
       end
     end
 
     # opts can be :force => true :: won't throw a WikiLockException if user doesn't own the lock
     def unlock!(section, user, opts = {})
       unless section_exists? section
-        raise WikiLockError, I18n.t(:cant_unlock_nonexistant_section)
+        raise SectionNotFoundError.new(section)
       end
 
       # don't let other people unlock this unless :break option is given
       if may_modify_lock?(section, user) or opts[:break]
         section_locks.unlock!(section, user, opts)
       else
-        raise WikiLockError, "can't unlock a section this user hasn't locked"
+        message = :section_locked_error.t(:section => section,
+          :user => locker_of(section).full_name)
+        raise SectionLockedError.new(message)
       end
     end
 

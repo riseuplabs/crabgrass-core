@@ -72,6 +72,13 @@ module Common::Wiki
     else
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     end
+  rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
+    warning exc
+    @wiki.body = params[:wiki][:body]
+    @wiki.version = @wiki.versions.last.version + 1
+    # this won't unlock if they don't hit save:
+    @wiki.unlock!(:document, current_user, :break => true )
+    render :template => 'common/wiki/edit'
   end
 
   protected

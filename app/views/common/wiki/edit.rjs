@@ -1,3 +1,4 @@
+standard_update(page)
 page.replace_html dom_id(@wiki), :partial => '/common/wiki/edit'
 page << create_wiki_toolbar(@wiki)
 page << confirm_discarding_wiki_edit_text_area

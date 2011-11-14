@@ -1,6 +1,20 @@
 module WikiExtension
   module Sections
 
+    class SectionNotFoundError
+      def initialize(section = 'document', options = {})
+        message = :section_not_found_error.t :section => section
+        super(message, options)
+      end
+    end
+
+    class OtherSectionLockedError
+      def initialize(section, options = {})
+        message = :other_section_locked_error.t :section => section
+        super(message, options)
+      end
+    end
+
     def all_sections
       structure.all_sections
     end
