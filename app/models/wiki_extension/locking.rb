@@ -22,7 +22,6 @@ module WikiExtension
       if may_modify_lock?(section, user)
         section_locks.lock!(section, user)
       else
-        debugger
         message = :section_locked_error.t(:section => section,
           :user => locker_of(section).display_name)
         raise SectionLockedError.new(message)
