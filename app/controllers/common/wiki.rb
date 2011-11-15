@@ -20,11 +20,7 @@ module Common::Wiki
   end
 
   def show
-    render :template => '/common/wiki/show'
-  end
-
-  def preview
-    render :template => '/common/wiki/show', :locals => {:preview => true}
+    render :template => '/common/wiki/show', :locals => {:preview => params[:preview]}
   end
 
   def new

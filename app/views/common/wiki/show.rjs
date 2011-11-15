@@ -1,1 +1,1 @@
-page.replace_html 'wiki-area', :partial => '/common/wiki/show'
+page.replace_html 'wiki-area', :partial => '/common/wiki/show', :locals => local_assigns

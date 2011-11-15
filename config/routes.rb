@@ -125,8 +125,7 @@ ActionController::Routing::Routes.draw do |map|
     groups.resource  :profile, :only => [:edit, :update]
     groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
-    groups.resources :wikis, :except => [:index, :destroy],
-      :member => { :preview => :get }
+    groups.resources :wikis, :except => [:index, :destroy]
  end
 
   ##
