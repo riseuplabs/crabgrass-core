@@ -1,14 +1,16 @@
 class Wikis::ImagesController < Wikis::BaseController
 
+  permissions 'wikis/images'
+
   before_filter :fetch_images
+  before_filter :login_required
 
   def new
-    # @asset = Asset.new  # TODO: do we want to create this from our context?
   end
 
   # response goes to an iframe, so requires responds_to_parent
   def create
-    asset = Asset.build params[:asset] # TODO: protect params, put into context
+    asset = Asset.build :uploaded_data => params[:asset][:uploaded_data]
     @page ||= asset.create_page(current_user, @group)
     asset.save
     responds_to_parent do
