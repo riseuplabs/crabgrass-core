@@ -13,8 +13,6 @@ class Wikis::BaseController < ApplicationController
     @wiki = Wiki.find(params[:wiki_id])
   end
 
-  # TODO  We might want to clean this up by mowing the logic into the model like
-  #   @context = @wiki.context
   def fetch_context
     @page = @wiki.page
     @group = @wiki.group
