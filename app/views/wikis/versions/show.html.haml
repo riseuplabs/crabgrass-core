@@ -1,8 +1,8 @@
-.todo TODO: revert to version link
 .version
   = I18n.t :you_are_viewing_version, :version => @version.version, :user => link_to_user(@version.user)
   %i= full_time(@version.updated_at)
-
+.action
+  = version_action_links(@version)
 .pagination
   = previous_version_link
   = next_version_link
