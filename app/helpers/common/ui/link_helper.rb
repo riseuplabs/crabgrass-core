@@ -82,7 +82,7 @@ label}</a></span>)
   ## WIDGET LINKS
   ##
 
-  # 
+  #
   # Creates a link to hide and show an html element.
   # Requires javascript.
   #
@@ -97,37 +97,37 @@ label}</a></span>)
   # options:
   # * :icon -- replace the default icon
   # * :open -- if true, the toggle area will start opened instead of closed.
+  # * :onvisible -- javascript to execute when opening the element.
   #
   def link_to_toggle(label, *args, &block)
+    options = args.last.try.is_a?(Hash) ? args.pop : {}
+    id = args.pop || label.nameize + '-toggle-area'
+
+    if options[:open]
+      options[:icon] ||= 'sort_down'
+      style = ''
+    else
+      options[:icon] ||= 'right'
+      style = 'display:none'
+    end
+
     if block_given?
-      options = args.first || {}
-      if options[:open]
-        options[:icon] ||= 'sort_down'
-        style = ''
-      else
-        options[:icon] ||= 'right'
-        style = 'display:none'
-      end
-      id = label.nameize + '-toggle-area'
-      if options[:onvisible]
-        function = "fn = function(){%s}; " % options[:onvisible]
-      else
-        function = "fn = null; "
-      end
-      function += "linkToggle(eventTarget(event), '#{id}', fn)"
-      concat( link_to_function_with_icon(label, function, options) )
+      concat( link_to_toggle_without_block(label, id, options) )
       concat( content_tag(:div, capture(&block), :id => id, :style => style) )
     else
-      id = args.first
-      options = args[1] || {}
-      if options[:open]
-        options[:icon] ||= 'sort_down'
-      else
-        options[:icon] ||= 'right'
-      end
-      function = "linkToggle(eventTarget(event), '#{id}')"
-      link_to_function_with_icon label, function, options
+      link_to_toggle_without_block(label, id, options)
     end
+  end
+
+
+  def link_to_toggle_without_block(label, id, options={})
+    if options[:onvisible]
+      function = "fn = function(){%s}; " % options[:onvisible]
+    else
+      function = "fn = null; "
+    end
+    function += "linkToggle(eventTarget(event), '#{id}', fn)"
+    link_to_function_with_icon label, function, options
   end
 
 #  # makes an icon button to a remote action. when you click on the icon, it turns

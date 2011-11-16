@@ -1,29 +1,29 @@
 module Groups::WikisHelper
 
-  def group_wiki_toggle
-    return unless current_user.member_of?(@group)
-    toggle_bug_links(public_wiki_link, private_wiki_link)
+  def private_wiki_toggle
+    wiki_toggle @group.private_wiki, :private_group_wiki
   end
 
-  def public_wiki_link
-    wiki_link(@group.public_wiki, :public_group_wiki)
+  def public_wiki_toggle
+    wiki_toggle @group.public_wiki, :public_group_wiki
   end
 
-  def private_wiki_link
-    wiki_link(@group.private_wiki, :private_group_wiki)
-  end
-
-  def wiki_link(wiki, wiki_type)
-    id = wiki_type
-    remote = { :url => wiki_link_url(wiki, wiki_type),
-      :before => show_spinner(wiki),
-      :success => hide_spinner(wiki) + activate_toggle_bug(id),
-      :method => :get }
-    { :remote => remote,
-      :label => id.t,
-      :active => @wiki && (@wiki == wiki),
-      :id => id }
+  def wiki_toggle(wiki, wiki_type)
+    open = @wiki && (@wiki == wiki)
+    link_to_toggle wiki_type.t, dom_id(wiki),
+      :onvisible => wiki_remote_function(wiki, wiki_type),
+      :open => open do
+      if open
+        render :partial => 'common/wiki/show', :locals => {:preview => true}
+      end
     end
+  end
+
+  def wiki_remote_function(wiki, wiki_type)
+    remote_function :url => wiki_link_url(wiki, wiki_type),
+      :before => show_spinner(wiki),
+      :method => :get
+  end
 
   def wiki_link_url(wiki, wiki_type)
     if wiki.nil?
@@ -34,19 +34,14 @@ module Groups::WikisHelper
     end
   end
 
-  # used to mark private and public tabs
-  def area_id(wiki)
-    'edit_area-%s' % wiki.id
-  end
-
   def wiki_edit_link
     return unless may_edit_group_wiki?(@group)
-    # TODO: was this used for section editing?
-    # note: firefox uses layerY, ie uses offsetY
     link_to_remote :edit.t,
       { :url => edit_group_wiki_path(@group, @wiki),
         :method => :get
-     #  :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
+        # This probably was used for section editing
+        # note: firefox uses layerY, ie uses offsetY
+        # :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
       },
       :icon => 'pencil'
   end

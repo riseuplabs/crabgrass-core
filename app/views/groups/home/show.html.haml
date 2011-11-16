@@ -2,13 +2,10 @@
   = render :partial => 'sidecolumn'
 
 - if @profile.private?
-  = toggle_bug_links(private_wiki_link)
+  - private_wiki_toggle
   = spinner(@wiki)
-  %div[@wiki]
-    = render :partial => 'common/wiki/show', :locals => {:preview => true}
-  = toggle_bug_links(public_wiki_link)
+  - public_wiki_toggle
   = spinner(@public_wiki)
-  %div[@public_wiki]
 - else
   = render :partial => 'common/wiki/show', :locals => {:preview => true} if @wiki
 %hr
