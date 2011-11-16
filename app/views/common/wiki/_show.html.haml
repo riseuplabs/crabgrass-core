@@ -1,8 +1,6 @@
--# we could have locals sent here telling us if it is preview, rather than having separate view(s) for preview
 - if @wiki # this is now sometimes called when cancelling when there is no wiki to show
-  %span.right
-    = wiki_versions_link
-    = wiki_edit_link
+  %span.float_right
+    = link_span(wiki_edit_link, wiki_versions_link)
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
