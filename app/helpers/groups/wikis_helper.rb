@@ -12,6 +12,7 @@ module Groups::WikisHelper
     open = @wiki && (@wiki == wiki)
     link_to_toggle wiki_type.t, dom_id(wiki),
       :onvisible => wiki_remote_function(wiki, wiki_type),
+      :class => 'section_toggle',
       :open => open do
       if open
         render :partial => 'common/wiki/show', :locals => {:preview => true}
@@ -20,17 +21,17 @@ module Groups::WikisHelper
   end
 
   def wiki_remote_function(wiki, wiki_type)
-    remote_function :url => wiki_link_url(wiki, wiki_type),
+    remote_function :url => wiki_link_url(wiki, wiki_type, :preview => true),
       :before => show_spinner(wiki),
       :method => :get
   end
 
-  def wiki_link_url(wiki, wiki_type)
+  def wiki_link_url(wiki, wiki_type, options = {})
     if wiki.nil?
       new_group_wiki_path @group,
       :private => (wiki_type == :private_group_wiki)
     else
-      group_wiki_path(@group, wiki)
+      group_wiki_path(@group, wiki, options)
     end
   end
 

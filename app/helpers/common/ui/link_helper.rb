@@ -100,7 +100,7 @@ label}</a></span>)
   # * :onvisible -- javascript to execute when opening the element.
   #
   def link_to_toggle(label, *args, &block)
-    options = args.last.try.is_a?(Hash) ? args.pop : {}
+    options = args.extract_options!
     id = args.pop || label.nameize + '-toggle-area'
 
     if options[:open]
@@ -127,7 +127,7 @@ label}</a></span>)
       function = "fn = null; "
     end
     function += "linkToggle(eventTarget(event), '#{id}', fn)"
-    link_to_function_with_icon label, function, options
+    link_to_function label, function, options
   end
 
 #  # makes an icon button to a remote action. when you click on the icon, it turns

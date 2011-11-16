@@ -1,4 +1,20 @@
 #wiki-error-area
-.tab_content.tab_area{:id => area_id(@wiki)}
-  - # TODO: maybe we can merge these two at some point
-  = render :partial => '/common/wiki/edit_area'
+- spinner_id = 'save-spinner-%s' % rand(1000000)
+- rows = [ 20, (params[:height]||0).to_i/16 ].max  # 16 here is a magic number. it might have to change if the font size of the wiki text changes.
+.image_popup{:id => image_popup_id(@wiki), :style => "display:none"}
+- form_remote_for([@group || @page, @wiki], :loading => show_spinner(spinner_id)) do |f|
+  = f.hidden_field 'version'
+  = f.hidden_field :private, :value => params[:private] if params[:private]
+  -# = f.fieldset do
+  = f.text_area('body', :rows => rows, :cols => 64)
+  %div
+    = formatting_reference_link
+    - if @wiki.document_open_for?(current_user)
+      = f.submit :save_button.t, :name => 'save'
+    - else
+      = f.submit :break_lock_button.t, :name => 'break_lock'
+    = f.submit :cancel_button.t, :name => 'cancel' #this is broken, and calls action update
+    =# :revert_to_previous_version.t
+    =# old_version_select_tag(@wiki, spinner_id)
+    -# above should pass f to helper.  and don't need to pass @wiki to helper. need to rewrite helper for this.
+    = spinner(spinner_id)
