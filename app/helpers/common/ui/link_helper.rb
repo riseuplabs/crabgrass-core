@@ -112,8 +112,8 @@ label}</a></span>)
     end
 
     if block_given?
-      concat( link_to_toggle_without_block(label, id, options) )
-      concat( content_tag(:div, capture(&block), :id => id, :style => style) )
+      link_to_toggle_without_block(label, id, options) +
+        content_tag(:div, capture(&block), :id => id, :style => style)
     else
       link_to_toggle_without_block(label, id, options)
     end
