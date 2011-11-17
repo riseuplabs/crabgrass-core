@@ -9,6 +9,7 @@ module Groups::WikisHelper
   end
 
   def wiki_toggle(wiki, wiki_type)
+    return wiki_new_link(wiki_type) if wiki.nil? or wiki.new_record?
     open = @wiki && (@wiki == wiki)
     link_to_toggle wiki_type.t, dom_id(wiki),
       :onvisible => wiki_remote_function(wiki, wiki_type),
@@ -20,30 +21,22 @@ module Groups::WikisHelper
     end
   end
 
+  def wiki_new_link(wiki_type)
+    priv = (wiki_type == :private_group_wiki)
+    key = ('create_' + wiki_type.to_s).to_sym
+    link_to key.t, new_group_wiki_path(@group, :private => priv),
+      :icon => 'plus'
+  end
+
   def wiki_remote_function(wiki, wiki_type)
-    remote_function :url => wiki_link_url(wiki, wiki_type, :preview => true),
+    remote_function :url => group_wiki_path(@group, wiki, :preview => true),
       :before => show_spinner(wiki),
       :method => :get
   end
 
-  def wiki_link_url(wiki, wiki_type, options = {})
-    if wiki.nil?
-      new_group_wiki_path @group,
-      :private => (wiki_type == :private_group_wiki)
-    else
-      group_wiki_path(@group, wiki, options)
-    end
-  end
-
   def wiki_edit_link
     return unless may_edit_group_wiki?(@group)
-    link_to_remote :edit.t,
-      { :url => edit_group_wiki_path(@group, @wiki),
-        :method => :get
-        # This probably was used for section editing
-        # note: firefox uses layerY, ie uses offsetY
-        # :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
-      },
+    link_to :edit.t, edit_group_wiki_path(@group, @wiki),
       :icon => 'pencil'
   end
 
@@ -56,10 +49,7 @@ module Groups::WikisHelper
 
   def wiki_versions_link
     return unless may_edit_group_wiki?(@group)
-    link_to_remote :versions.t,
-      { :url => wiki_versions_path(@wiki),
-        :update => dom_id(@wiki),
-        :method => :get }
+    link_to :versions.t, wiki_versions_path(@wiki)
   end
 
   def wiki_more_link

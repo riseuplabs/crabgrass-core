@@ -979,10 +979,10 @@ en:
   # group wiki
   
   create_group_wiki: "Create Group Wiki"
-  create_public_group_wiki: "Create Public Wiki"
-  create_private_group_wiki: "Create Members Wiki"
-  public_group_wiki: "Public Wiki"
-  private_group_wiki: "Members Wiki"
+  create_public_group_wiki: "Add Public Information"
+  create_private_group_wiki: "Add Private Group Wiki"
+  public_group_wiki: "Public Information"
+  private_group_wiki: "Private Group Wiki"
 
   # editor
   # advanded editor is what plain editor is called when visual editor is enabled

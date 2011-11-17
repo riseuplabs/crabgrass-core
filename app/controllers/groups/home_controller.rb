@@ -2,8 +2,6 @@ class Groups::HomeController < Groups::BaseController
 
   layout 'sidecolumn'
   helper 'groups/wikis'
-  javascript :wiki
-  stylesheet 'wiki_edit'
 
   def initialize(options = {})
     @group = options[:group]

@@ -16,6 +16,10 @@ module Common::Wiki
       before_filter :login_required # will use the permissions from the controller
       before_filter :fetch_wiki, :only => [:show, :preview, :edit, :update]
       before_filter :setup_wiki_rendering
+
+      javascript :wiki
+      stylesheet 'wiki_edit'
+
     end
   end
 

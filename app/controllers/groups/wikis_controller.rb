@@ -1,6 +1,7 @@
 class Groups::WikisController < Groups::BaseController
 
   include_controllers 'common/wiki'
+  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
 
   protected
 

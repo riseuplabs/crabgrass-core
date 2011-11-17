@@ -2,10 +2,10 @@
   = render :partial => 'sidecolumn'
 
 - if @profile.private?
-  - private_wiki_toggle
-  = spinner(@wiki)
-  - public_wiki_toggle
-  = spinner(@public_wiki)
+  = private_wiki_toggle
+  = spinner(@wiki) if @wiki
+  = public_wiki_toggle
+  = spinner(@public_wiki) if @public_wiki
 - else
   = render :partial => 'common/wiki/show', :locals => {:preview => true} if @wiki
 %hr
