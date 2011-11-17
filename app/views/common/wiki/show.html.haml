@@ -1,1 +1,3 @@
-= render :partial => 'common/wiki/show', :locals => local_assigns
+%div[@wiki]
+  = render :partial => 'common/wiki/show', :locals => local_assigns
+= spinner(@wiki)
