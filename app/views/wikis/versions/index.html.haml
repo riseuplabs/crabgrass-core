@@ -1,8 +1,13 @@
-%table.pretty
-  %tr
-    %th
-    %th=:created.t
-    %th=:person.t
-    %th
-      &nbsp;
-  = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions
+%h2
+  = @wiki.label.t 
+  &dash;
+  = :versions.t
+%div[@wiki]
+  %table.pretty
+    %tr
+      %th=:versions.tcap
+      %th=:created.tcap
+      %th=:person.tcap
+      %th
+        &nbsp;
+    = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions
