@@ -15,7 +15,7 @@ module Wikis::AssetsHelper
 
   def image_select_buttons
     return unless @images.any?
-    render :partial => '/wikis/images/select_buttons'
+    render :partial => 'select_buttons'
   end
 
   def image_tags_and_ids(images)

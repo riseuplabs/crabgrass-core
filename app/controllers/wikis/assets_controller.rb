@@ -2,7 +2,7 @@ class Wikis::AssetsController < Wikis::BaseController
 
   permissions 'wikis/assets'
 
-  before_filter :fetch_assets
+  before_filter :fetch_assets, :only => :new
   before_filter :login_required
 
   def new
@@ -13,6 +13,7 @@ class Wikis::AssetsController < Wikis::BaseController
     asset = Asset.build :uploaded_data => params[:asset][:uploaded_data]
     @page ||= asset.create_page(current_user, @group)
     asset.save
+    fetch_assets # now the new one should be included
     responds_to_parent do
       render
     end

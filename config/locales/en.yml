@@ -198,6 +198,7 @@ en:
   video_embed: "Embed"
   height: "Height"
   width: "Width"
+  size: "Size"
 
   ##
   ## COMMON BUTTONS AND LINKS
