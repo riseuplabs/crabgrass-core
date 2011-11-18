@@ -1003,6 +1003,27 @@ en:
   cant_lock_nonexistant_section: "can't lock a nonexistant section"
   cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
+  wiki_formating_intro: "You can use any of the following to format your wiki:"
+  wiki_formating_code: |
+    Big Caption
+    ===========
+
+    Smaller Caption
+    ---------------
+
+    h3. Even smaller caption
+
+    * stars create
+    * lists without numbers
+
+    # hashes create
+    # numbered lists
+
+  wiki_formating_end: |
+    You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
+    Use the toolbar for inserting images and links.</br>
+
+  bla: "blub"
 
   ##
   ## WALL

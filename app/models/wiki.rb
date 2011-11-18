@@ -69,6 +69,15 @@ class Wiki < ActiveRecord::Base
     locks
   end
 
+  def label
+    return :new_wiki if self.new_record?
+    if self.profile
+      self.profile.public? ? :public_group_wiki : :private_group_wiki
+    else
+      :page_wiki
+    end
+  end
+
   # calls update_section! with :document section
   def update_document!(user, current_version, text)
     update_section!(:document, user, current_version, text)
