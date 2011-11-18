@@ -1,4 +1,4 @@
-module Wikis::ImagesHelper
+module Wikis::AssetsHelper
 
   def image_size_buttons
     sizes = [:small, :medium, :large, :full]

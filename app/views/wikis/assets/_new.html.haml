@@ -1,5 +1,5 @@
 - upload_image_form = capture do
-  - form_for([@wiki, Asset.new], :url => wiki_images_path(@wiki), :html => {:multipart => true, :target => 'upload_frame'}) do |f|
+  - form_for([@wiki, Asset.new], :html => {:multipart => true, :target => 'upload_frame'}) do |f|
     = f.file_field 'uploaded_data', :size => '12'
     = f.submit :upload.t
     = spinner 'upload'

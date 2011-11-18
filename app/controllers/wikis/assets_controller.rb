@@ -1,8 +1,8 @@
-class Wikis::ImagesController < Wikis::BaseController
+class Wikis::AssetsController < Wikis::BaseController
 
-  permissions 'wikis/images'
+  permissions 'wikis/assets'
 
-  before_filter :fetch_images
+  before_filter :fetch_assets
   before_filter :login_required
 
   def new
@@ -20,7 +20,7 @@ class Wikis::ImagesController < Wikis::BaseController
 
   protected
 
-  def fetch_images
+  def fetch_assets
     @images = Asset.visible_to(current_user, @group || @page.group).
       media_type(:image).
       most_recent.

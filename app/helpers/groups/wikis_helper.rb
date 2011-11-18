@@ -107,7 +107,7 @@ module Groups::WikisHelper
   def create_wiki_toolbar(wiki)
     body_id = wiki_body_id(wiki)
     toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = modalbox_function(new_wiki_image_path(wiki), :title => I18n.t(:insert_image))
+    image_popup_code = modalbox_function(new_wiki_asset_path(wiki), :title => I18n.t(:insert_image))
 
    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
