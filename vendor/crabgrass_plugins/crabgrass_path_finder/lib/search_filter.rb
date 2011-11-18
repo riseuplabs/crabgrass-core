@@ -255,7 +255,7 @@ class SearchFilter
       if has_args?
         options = options.merge(path_args_to_hash(args))
       end
-      @label_block.call(options).t
+      @label_block.call(options)
     elsif @label
       @label.t
     end

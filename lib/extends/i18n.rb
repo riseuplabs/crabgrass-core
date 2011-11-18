@@ -126,6 +126,7 @@ end
 # for the default I18n exception_handler
 #
 def crabgrass_i18n_exception_handler(exception, locale, key, options)
+  exception = exception.to_exception if exception.respond_to? :to_exception
   if exception.is_a? I18n::MissingTranslationData
     # key was not found
     if I18n.site_scope && options[:scope].try.first == I18n.site_scope
