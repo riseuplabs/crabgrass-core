@@ -70,7 +70,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def label
-    return :new_wiki if self.new_record?
+    return :create_a_new_thing.t(:thing => 'Wiki') if self.new_record?
     if self.profile
       self.profile.public? ? :public_group_wiki : :private_group_wiki
     else
