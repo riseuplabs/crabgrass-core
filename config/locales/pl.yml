@@ -129,7 +129,7 @@ pl:
   current_tags: "Aktualne Tagi"
   current_video_sources: "obecnie obsługiwane: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Brakuje treści tej strony"
-  date: data
+  date_date: data
   date_all_time: "Cały Czas"
   date_centuries: wieki
   date_days: dni

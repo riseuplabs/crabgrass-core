@@ -114,7 +114,7 @@ tr:
   current_tags: "En Son Etiketler"
   current_video_sources: "Desteklenenler: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Bu sayfanın verileri eksik."
-  date: tarih
+  date_date: tarih
   date_centuries: Yüzyıllar
   date_days: Günler
   date_hours: Saatler

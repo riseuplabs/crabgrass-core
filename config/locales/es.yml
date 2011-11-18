@@ -196,7 +196,7 @@ es:
   current_tags: "Etiquetas actuales"
   current_video_sources: "Actualmente soportados: youtube, blip.tv, Google Video, vimeo\n"
   data_for_page_missing: "Los datos de esta página no están disponibles."
-  date: fecha
+  date_date: fecha
   date_all_time: "Todo el Tiempo"
   date_centuries: siglos
   date_days: días

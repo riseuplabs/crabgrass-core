@@ -266,7 +266,7 @@ en:
   subject: subject
   from: from
   to: To
-  # date: date <<< this conflicts with time formats. don't do it.
+  date_date: date
   request_status: "This request is: %{status}."
   status_resolved: resolved
   status_pending: pending

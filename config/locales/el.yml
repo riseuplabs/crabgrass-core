@@ -128,7 +128,7 @@ el:
   current_tags: "Τρέχουσες Ετικέτες"
   current_video_sources: "Προς το παρόν υποστηρίζονται: youtube, blip.tv, google video, vimeo."
   data_for_page_missing: "Τα δεδομένα για αυτή τη σελίδα λείπουν."
-  date: ημερομηνία
+  date_date: ημερομηνία
   date_all_time: "Όλος ο Χρόνος"
   date_centuries: αιώνες
   date_days: μέρες

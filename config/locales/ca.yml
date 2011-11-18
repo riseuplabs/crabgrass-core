@@ -128,7 +128,7 @@ ca:
   current_tags: "Etiquetes Actuals"
   current_video_sources: "Actualment suportats: youtube, blip.tv, google video, vimeo."
   data_for_page_missing: "Falten les dades per aquesta aquesta pàgina."
-  date: data
+  date_date: data
   date_all_time: "Per totes les dates"
   date_centuries: segles
   date_days: dies

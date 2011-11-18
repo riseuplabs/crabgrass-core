@@ -127,7 +127,7 @@ ru:
   current_tags: "Текущие метки"
   current_video_sources: "В настоящий момент поддерживаются: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Данные для этой страницы отсутствуют."
-  date: дата
+  date_date: дата
   date_all_time: "Любое время"
   date_centuries: века
   date_days: дни

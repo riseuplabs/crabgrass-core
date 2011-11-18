@@ -95,7 +95,7 @@ he:
   created_when_by: "נוצר ב %{when} ע\"י %{user}"
   current_attachments: "צרופות נוכחיות"
   current_tags: "תגיות נוכחיות"
-  date: תאריך
+  date_date: תאריך
   date_centuries: מאות
   date_days: ימים
   date_hours: שעות

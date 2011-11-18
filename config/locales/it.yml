@@ -123,7 +123,7 @@ it:
   current_tags: "Etichette Correnti"
   current_video_sources: "al momento sono supportati: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Dati mancanti per questa pagina."
-  date: data
+  date_date: data
   date_all_time: "Tutti gli Orari"
   date_centuries: secoli
   date_days: giorni

@@ -127,7 +127,7 @@ pt:
   current_tags: "Marcadores Atuais"
   current_video_sources: "atualmente suporta: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Os dados desta página não estão disponíveis."
-  date: data
+  date_date: data
   date_all_time: "Todo o tempo"
   date_centuries: séculos
   date_days: dias

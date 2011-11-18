@@ -75,7 +75,7 @@ sv:
   csrf_error_message: "Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:\n"
   current_video_sources: "stöds för närvarande: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Datan för den här sidan saknas."
-  date: datum
+  date_date: datum
   date_centuries: århundraden
   date_days: dagar
   date_hours: timmar

@@ -194,7 +194,7 @@ fr:
   current_tags: "Étiquettes actuelles"
   current_video_sources: "Actuellement supportés: youtube, blip.tv, google video et vimeo."
   data_for_page_missing: "Le contenu pour cette page est manquant."
-  date: date
+  date_date: date
   date_all_time: "Toutes les Heures"
   date_centuries: siècles
   date_days: jours

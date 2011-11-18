@@ -129,7 +129,7 @@ bg:
   current_tags: "Текущ етикет"
   current_video_sources: "В момента се поддържат: youtube, blip.tv, google video, vimeo."
   data_for_page_missing: "Данните за тази страница липсват."
-  date: дата
+  date_date: дата
   date_all_time: "All Time"
   date_centuries: векове
   date_days: дни
