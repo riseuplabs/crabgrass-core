@@ -3,7 +3,7 @@
 - # the wiki text changes.
 - rows = [ 20, (params[:height]||0).to_i/16 ].max
 .image_popup{:id => image_popup_id(@wiki), :style => "display:none"}
-- form_remote_for([@group || @page, @wiki], :loading => show_spinner(@wiki)) do |f|
+- form_for([@group || @page, @wiki]) do |f|
   = f.hidden_field 'version'
   = f.hidden_field :private, :value => params[:private] if params[:private]
   = f.text_area('body', :rows => rows, :cols => 64)

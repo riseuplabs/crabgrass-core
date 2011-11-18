@@ -72,6 +72,8 @@ module Common::Wiki
     else
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     end
+    redirect_to entity_path(@group || @page)
+
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
     @wiki.body = params[:wiki][:body]
