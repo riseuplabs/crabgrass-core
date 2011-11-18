@@ -74,7 +74,9 @@ module Common::Utility::TimeHelper
   # formats a time, in full detail
   # for example: Sunday 2007/July/3 2:13PM PST
   def full_time(time)
-    time.strftime('%A %Y/%b/%d %I:%M%p')
+    (I18n.locale == :en) ?
+      time.strftime('%A %Y/%b/%d %I:%M%p') :
+      I18n.l(time)
   end
 
   def full_date(date)
