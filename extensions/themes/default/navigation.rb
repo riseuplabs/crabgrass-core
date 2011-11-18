@@ -214,7 +214,7 @@ define_navigation do
       label  "Home"
       icon   :house
       url    { entity_path(@group) }
-      active { controller?('groups/home') }
+      active { controller?('groups/home', 'groups/wikis', 'wikis/versions', 'wikis/diffs') }
     end
 
     context_section :pages do
