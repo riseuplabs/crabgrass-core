@@ -10,7 +10,7 @@ class FixUnsanitizedActivityMessages < ActiveRecord::Migration
       if post = Post.find_by_id(activity.related_id)
         activity.update_attribute(:extra, GreenCloth.new(post.body[0..140], 'page', [:lite_mode]).to_html)
       end
-    end    
+    end
   end
 
   def self.down

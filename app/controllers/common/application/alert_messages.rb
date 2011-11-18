@@ -8,14 +8,14 @@
 #  success() -- yeah, confirmation that something went right. GREEN.
 #
 # If message is empty, these standard messages are shown:
-# 
+#
 #  error: "Changes could not be saved"
 #  warning: "Changes could not be saved"
 #  notice: no default
 #  success: "Changes saved"
 #
 # The alert methods accept arguments, in any order, that are Strings, Exceptions,
-# Arrays or Symbols. 
+# Arrays or Symbols.
 #
 # Exception    -- display an alert appropriate to the exception.
 # String       -- displays the content of the string.
@@ -104,7 +104,7 @@ module Common::Application::AlertMessages
     end
   end
 
-  # 
+  #
   # forces the alert messages to come later, even if we previously said :now.
   # this is used in case we did :now but then redirected later.
   #
@@ -257,9 +257,9 @@ module Common::Application::AlertMessages
     end
   end
 
-  # 
+  #
   # make a good guess as to what kind of flash we want, and allow an overide
-  # 
+  #
   def determine_flash(type, options)
     if options[:now]
       flash.now
@@ -280,7 +280,7 @@ module Common::Application::AlertMessages
     if options[:error];      :error
     elsif options[:warning]; :warning
     elsif options[:notice];  :notice
-    elsif options[:success]; :success 
+    elsif options[:success]; :success
     end
   end
 

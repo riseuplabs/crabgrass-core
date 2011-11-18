@@ -19,7 +19,7 @@ class Groups::BaseController < ApplicationController
 
   ##
   ## PATH ALIASES
-  ## 
+  ##
   ## sometimes it is nice to rely on the way rails will guess resource
   ## routes based on the class. so, we alias some of the group routes to be
   ## also supported by networks, councils, and committees.

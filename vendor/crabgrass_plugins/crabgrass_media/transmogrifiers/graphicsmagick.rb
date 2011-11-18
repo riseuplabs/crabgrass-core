@@ -37,7 +37,7 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   end
 
   #
-  # gm has an option -monitor that will spit out the progress. 
+  # gm has an option -monitor that will spit out the progress.
   # this could be interesting. we would need to use getc instead of gets
   # on the pipe, since the progress is updated on a single line.
   #
@@ -88,7 +88,7 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     installed_major, installed_minor, installed_tiny = GRAPHICSMAGICK_VERSION
     if installed_major < major
       true
-    elsif (installed_major == major) 
+    elsif (installed_major == major)
       if (installed_minor < minor)
         true
       elsif (installed_minor == minor) && (installed_tiny < tiny)

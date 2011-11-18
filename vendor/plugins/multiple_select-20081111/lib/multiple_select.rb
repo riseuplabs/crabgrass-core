@@ -1,50 +1,50 @@
 module FightTheMelons #:nodoc:
   module Helpers #:nodoc:
-    
+
   	# Some of the most used variables so you can setup them per application or
     # per controller instead of everytime you use one of the helpers.
-    module FormMultipleSelectHelperConfiguration      
+    module FormMultipleSelectHelperConfiguration
       # Class used in the ul tag that wraps all the checkboxes.
       attr_accessor :outer_class
       module_function :outer_class, :outer_class=
-      
+
       # Class used in the li tag that wraps each checkbox.
       attr_accessor :inner_class
       module_function :inner_class, :inner_class=
-      
+
       # Prefix of the level class added to the inner class in the tree methods.
       attr_accessor :level_class
       module_function :level_class, :level_class=
-      
+
       # Class for the alternate elements. Added to inner class.
       attr_accessor :alternate_class
       module_function :alternate_class, :alternate_class=
-      
+
       # Determines if the methods will alternate the classes of the checkboxes.
       attr_accessor :alternate
       module_function :alternate, :alternate=
-      
+
       # Establish the position of the checkbox with respect the label.
       attr_accessor :position
       module_function :position, :position=
-            
+
       # Establish the name of the tags used to wrap the elements.
       attr_accessor :list_tags
       module_function :list_tags, :list_tags=
-      
+
       # Default value for alternate is false.
       self.alternate = false
-      
+
       # Default value for alternate_class is 'alt'.
       self.alternate_class = 'alt'
-      
+
       # Default value for position is ':right'
       self.position = :right
-            
+
       # Default value for list_tags is ['ul', 'li']
       self.list_tags = ['ul', 'li']
     end
-    
+
     # Provides a number of methods for turning different kinds of containers
     # into checkboxes lists.
     module FormMultipleSelectHelper
@@ -52,11 +52,11 @@ module FightTheMelons #:nodoc:
       include ActionView::Helpers::FormTagHelper
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers
-      
+
       # There is another content_tag in ActionView::Helpers::InstanceTag, but
       # we want the one in ActionView::Helpers::TagHelper.
       alias av_content_tag content_tag
-            
+
       # Returns a list of checkboxes using
       # checkboxes_from_collection_for_multiple_select to generate the list of
       # checkboxes.
@@ -76,7 +76,7 @@ module FightTheMelons #:nodoc:
           "#{object}[#{method}]", collection, value_method, text_method, options
         )
       end
-      
+
       # Same as collection_multiple_select but without an associated object.
       def collection_multiple_select_tag(
         name, collection, value_method, text_method, options = {}
@@ -87,7 +87,7 @@ module FightTheMelons #:nodoc:
           )
         end
       end
-      
+
       # Create a list of checkboxes. See checkboxes_for_multiple_select for the
       # required format of the choices parameter.
       #
@@ -102,7 +102,7 @@ module FightTheMelons #:nodoc:
           object, method, self, options.delete(:object)
         ).to_multiple_select_tag("#{object}[#{method}]", container, options)
       end
-      
+
       # Same as multiple_select but without an associated object.
       def multiple_select_tag(name, container, options = {})
         multiple_select_with_path(name, options) do |selected_items|
@@ -111,7 +111,7 @@ module FightTheMelons #:nodoc:
           )
         end
       end
-      
+
       # Create a list of hierarchical checkboxes for the provides object and
       # method.
       # The hierarchy must respond to <tt>:child_method</tt> to get the direct
@@ -130,7 +130,7 @@ module FightTheMelons #:nodoc:
           "#{object}[#{method}]", nodes, value_method, text_method, options
         )
       end
-      
+
       # Same as tree_multiple_select but without an associated object.
       def tree_multiple_select_tag(
         name, nodes, value_method, text_method, options = {}
@@ -141,7 +141,7 @@ module FightTheMelons #:nodoc:
           )
         end
       end
-      
+
       # Returns a string of checkboxes that have been compiled iterating over
       # the <tt>collection</tt> and assigning the result of a call to the
       # <tt>value_method</tt> as the option value and the <tt>text_method</tt>
@@ -154,14 +154,14 @@ module FightTheMelons #:nodoc:
         options = {}
       )
         coll = (collection or [])
-        
+
         checkboxes_for_multiple_select(
           name,
           coll.map { |item| [item.send(text_method), item.send(value_method)] },
           selected_items, options
         )
       end
-      
+
       # Returns a string of checkboxes that have been compiling descending the
       # <tt>node</tt> and assigning the result of a call to the
       # <tt>value_method</tt> as the option value and the <tt>text_method</tt>
@@ -180,7 +180,7 @@ module FightTheMelons #:nodoc:
       #
       # The option <tt>:child_method</tt> allows access to an array of direct
       # children of the actual method. It defaults to "children".
-      # 
+      #
       # See checkboxes_for_multiple_select for more allowed options.
       def checkboxes_from_tree_for_multiple_select(
         name, nodes, value_method, text_method, selected_items = [],
@@ -197,14 +197,14 @@ module FightTheMelons #:nodoc:
           FormMultipleSelectHelperConfiguration.alternate :
           options[:alternate]
         alt = (options[:initial_alternate] or false) if alternate
-        
+
         root_options = options.dup
         if level_class
           root_options[:inner_class] =
             "#{inner_class} #{level_class}#{initial_level}".strip
         end
         root_options[:initial_alternate] = alt if alternate
-        
+
         child_options = {
           :depth => depth - 1,
           :initial_level => initial_level + 1,
@@ -212,7 +212,7 @@ module FightTheMelons #:nodoc:
         }
         child_options = options.merge(child_options)
         child_options[:initial_alternate] = !alt if alternate
-        
+
         checkboxes = nodes.map do |node|
           parent = checkbox_for_multiple_select(
             name,
@@ -231,20 +231,20 @@ module FightTheMelons #:nodoc:
               else
                 ''
               end
-            
+
             if alternate
               alt = alt ? (not children.size%2 == 0) : (children.size%2 == 0)
               root_options[:initial_alternate] = alt
               child_options[:initial_alternate] = !alt
             end
-            
+
             branch
           end
         end
-        
+
         checkboxes.join("\n")
       end
-      
+
       # Accepts a container (hash, array, enumerable, your type) and returns a
       # string of checkbox tags. Given a container where the elements respond to
       # first and last (such a two-element array), the "last" serve as checkbox
@@ -280,7 +280,7 @@ module FightTheMelons #:nodoc:
           FormMultipleSelectHelperConfiguration.alternate :
           options[:alternate]
         alt = (options[:initial_alternate] or false)
-        
+
         checkboxes = container.map do |item|
           cbfms = checkbox_for_multiple_select(
             name, item, selected_items, alt, options
@@ -288,12 +288,12 @@ module FightTheMelons #:nodoc:
           alt = !alt if ialternate
           cbfms
         end
-        
+
         checkboxes.join("\n")
       end
-    
+
     protected
-      
+
       # Common body for multiple_select, collection_multiple_select and
       # tree_multiple_select.
       def multiple_select_with_path(name, options, &block)
@@ -302,18 +302,18 @@ module FightTheMelons #:nodoc:
         selected_items ||= []
         outer_class = (options[:outer_class] or
           FormMultipleSelectHelperConfiguration.outer_class)
-        
+
         checkboxes = yield(selected_items)
-                
+
         av_content_tag(
           FormMultipleSelectHelperConfiguration.list_tags[0],
           checkboxes,
           :class => outer_class
         ) << "\n" << hidden_field_tag("#{name}[]", '', :id => nil)
       end
-      
+
     private
-      
+
       # Accepts an item and returns a checkbox tag. If the item respond to first
       # and last (such a two element array), the "last" serve as checkbox value
       # and the "first" as label text. If the item is included in the
@@ -346,7 +346,7 @@ module FightTheMelons #:nodoc:
         alternate_class = (options[:alternate_class] or
           FormMultipleSelectHelperConfiguration.alternate_class)
         is_disabled = (options[:disabled] or false)
-        
+
         if !item.is_a?(String) and item.respond_to?(:first) and item.respond_to?(:last)
           is_selected = selected_items.include?(item.last)
           is_disabled = is_disabled.include?(item.last) if is_disabled.respond_to?(:include?)
@@ -360,18 +360,18 @@ module FightTheMelons #:nodoc:
           cbt = check_box_tag("#{name}[]", html_escape(item.to_s), is_selected, :id => item_id, :disabled => is_disabled)
           lbt = av_content_tag('label', html_escape(item.to_s), :for => item_id)
         end
-        
+
         item_class = is_alternate ? "#{inner_class} #{alternate_class}".strip : inner_class
-        
+
         extra = block_given? ? yield : ''
-        
+
         av_content_tag(
           FormMultipleSelectHelperConfiguration.list_tags[1],
           position == :left ? lbt + cbt + extra : cbt + lbt + extra,
           :class => item_class
         )
       end
-      
+
       # Convert the string <tt>name</tt> provided into a HTML 4.01 valid
       # identifier. If <tt>name</tt> does not start with a letter it will be
       # prepend an 'x' character. All characters outside the posible characters
@@ -392,7 +392,7 @@ module ActionView #:nodoc:
     class InstanceTag #:nodoc:
       include FightTheMelons::Helpers::FormMultipleSelectHelper
       include FightTheMelons::Helpers
-      
+
       def to_multiple_select_tag(name, container, options)
         multiple_select_with_path(name, options) do |selected_items|
           checkboxes_for_multiple_select(
@@ -400,7 +400,7 @@ module ActionView #:nodoc:
           )
         end
       end
-      
+
       def to_collection_multiple_select_tag(name, collection, value_method, text_method, options)
         multiple_select_with_path(name, options) do |selected_items|
           checkboxes_from_collection_for_multiple_select(
@@ -408,7 +408,7 @@ module ActionView #:nodoc:
           )
         end
       end
-      
+
       def to_tree_multiple_select_tag(name, nodes, value_method, text_method, options)
         multiple_select_with_path(name, options) do |selected_items|
           checkboxes_from_tree_for_multiple_select(

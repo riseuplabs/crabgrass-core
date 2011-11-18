@@ -41,10 +41,10 @@ module Undress
     rule_for(:ins)     {|e| complete_word?(e) ? "+#{attributes(e)}#{content_of(e)}+" : "[+#{attributes(e)}#{content_of(e)}+]"}
     rule_for(:del)     {|e| complete_word?(e) ? "-#{attributes(e)}#{content_of(e)}-" : "[-#{attributes(e)}#{content_of(e)}-]"}
     rule_for(:acronym) {|e| e.has_attribute?("title") ? "#{content_of(e)}(#{e["title"]})" : content_of(e) }
-    
+
 
     # text formatting and layout
-    rule_for(:p) do |e| 
+    rule_for(:p) do |e|
       at = attributes(e) != "" ? "p#{at}#{attributes(e)}. " : ""
       e.parent && e.parent.name == "blockquote" ? "#{at}#{content_of(e)}\n\n" : "\n\n#{at}#{content_of(e)}\n\n"
     end

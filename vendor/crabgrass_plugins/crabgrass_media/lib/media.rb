@@ -4,8 +4,8 @@ require 'media/temp_file'
 
 module Media
 
-  # 
-  # creates a new instance of transmogrifier suitable for turning 
+  #
+  # creates a new instance of transmogrifier suitable for turning
   # input into output.
   #
   def self.transmogrifier(options)
@@ -40,7 +40,7 @@ module Media
   end
 
   #
-  # special graphicsmagick hooks. 
+  # special graphicsmagick hooks.
   # we use graphicsmagick in order to parse the dimensions of image files.
   #
 

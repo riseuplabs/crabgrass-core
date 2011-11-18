@@ -10,7 +10,7 @@ class Me::SettingsControllerTest < ActionController::TestCase
     get :show
     assert_login_required
   end
-  
+
   def test_show
     login_as @user
     get :show
@@ -22,7 +22,7 @@ class Me::SettingsControllerTest < ActionController::TestCase
     post :update, :user => {:login => 'new_login'}
     assert_equal 'new_login', @user.reload.login, "login should have changed"
   end
-  
+
   def test_password_fail
     login_as @user
     post :update, :user => {:password => 'sdofi33si', :password_confirmation => 'xxxxxxx'}

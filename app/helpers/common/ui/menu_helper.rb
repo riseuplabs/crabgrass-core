@@ -192,7 +192,7 @@ module Common::Ui::MenuHelper
 #  def link_to_more_social_activities(toggle='more', count_diff='10')
 #    return unless count_diff > 0
 #    link_s = (toggle == 'more') ? I18n.t(:see_count_more_link, :count => count_diff) : I18n.t(:see_count_less_link, :count => count_diff)
-#    link_to_remote link_s, 
+#    link_to_remote link_s,
 #      :url => {:controller => '/me/social_activities', :see => toggle},
 #      :loading => show_spinner('more_socials'),
 #      :complete => hide_spinner('more_socials'),

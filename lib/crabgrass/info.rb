@@ -35,7 +35,7 @@ def info(str,level=0)
     if INFO_PAD_CHARACTER.any?
       prefix = (INFO_PAD_CHARACTER * 2 * (level+1)) + ' ' + str + ' '
       postfix = INFO_PAD_CHARACTER * ([80 - prefix.length, 0].max)
-      print prefix 
+      print prefix
       puts postfix
     else
       puts(('  '*level) + str)

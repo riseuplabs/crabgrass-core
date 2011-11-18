@@ -11,7 +11,7 @@ class AddMediaFlagsAndPageTermsToAssets < ActiveRecord::Migration
     add_column :assets, :updated_at, :datetime
 
     add_index :assets, ["page_terms_id"], :name => "pterms"
-    
+
     ThinkingSphinx.updates_enabled = false
     ActiveRecord::Base.record_timestamps = false
     Asset.reset_column_information

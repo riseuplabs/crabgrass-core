@@ -5,7 +5,7 @@ class CreateTrackings < ActiveRecord::Migration
     add_column :trackings, :group_id, :integer, :default => nil
     add_column :trackings, :tracked_at, :datetime
     change_column :trackings, :page_id, :integer, :null => true
-    
+
     add_column :memberships, :visited_at, :datetime, :default => nil
     add_column :memberships, :total_visits, :int, :default => 0
     add_column :memberships, :join_method, :string
@@ -16,7 +16,7 @@ class CreateTrackings < ActiveRecord::Migration
     drop_column :trackings, :user_id
     drop_column :trackings, :group_id
     change_column :page_views, :page_id, :integer, :null => false
-    
+
     remove_column :memberships, :last_visit
     remove_column :memberships, :total_visits
     remove_column :memberships, :join_method

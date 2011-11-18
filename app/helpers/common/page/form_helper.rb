@@ -17,7 +17,7 @@ module Common::Page::FormHelper
   # produces a structure that looks like this:
   # [{:pages => [classproxy, classproxy], :display => "Multimedia", :name => "media", :url => "media"},{..}]
   #
-  # 
+  #
   def tree_of_page_types(options={})
     if @group
       available_page_classes = current_site.tools_for(@group)

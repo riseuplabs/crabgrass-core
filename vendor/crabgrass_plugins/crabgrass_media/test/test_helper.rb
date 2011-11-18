@@ -6,7 +6,7 @@ $: << pluginroot + '/lib'
 require pluginroot + '/init.rb'
 
 def test_file(name)
-  File.dirname(__FILE__) + '/files/' + name  
+  File.dirname(__FILE__) + '/files/' + name
 end
 
 def file_info_matches?(file, regex)

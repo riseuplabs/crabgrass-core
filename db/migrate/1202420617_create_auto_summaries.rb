@@ -6,7 +6,7 @@ class CreateAutoSummaries < ActiveRecord::Migration
       t.column "body_html",     :text
       t.column "delta",         :boolean
     end
-    
+
     add_column :pages, :delta, :boolean
 
 # WE'RE NOT USING THIS NEXT BIT, WE'LL DO IT MANUALLY

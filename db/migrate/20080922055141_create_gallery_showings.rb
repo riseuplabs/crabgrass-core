@@ -7,7 +7,7 @@ class CreateGalleryShowings < ActiveRecord::Migration
       t.references :gallery
       t.integer :position, :default => 0
     end
-    
+
     add_index :showings, [:gallery_id, :asset_id], :name => :ga
     add_index :showings, [:asset_id, :gallery_id], :name => :ag
   end

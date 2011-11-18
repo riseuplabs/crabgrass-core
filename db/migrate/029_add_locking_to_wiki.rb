@@ -1,23 +1,23 @@
 #
 # we will use two kinds of locking: rails' built in optimistic locking
-# and our own informal locking. 
-# 
+# and our own informal locking.
+#
 # optimistic locking makes it so that if we try to save and our model data
 # is out of date (because the database was updated since when we read our data)
-# rails will throw an exception. 
-# 
+# rails will throw an exception.
+#
 # our own informal locking is so that if 'blue' is editing the wiki, other users
 # will see that the wiki is currently being edited by someone else.
-# 
+#
 # for optimistic locking in rails, we require a column named 'lock_version'
 # acts_as_versioned will use this, too. so, we are going to rename our
 # column 'version' to 'lock_version' and add a default (which is required)
-# 
+#
 # also, reports are that this will only work if we manually specify
 # lock_version like so:
-#   
+#
 #   acts_as_versioned :version_column => :lock_version
-# 
+#
 
 class AddLockingToWiki < ActiveRecord::Migration
   def self.up

@@ -2,7 +2,7 @@
 # denormalizing bad! but impossibly complex queries are worse!
 # we denormalized created_by_login so that we can sort by it
 # without loosing our minds from an overly complex query.
-# 
+#
 
 class MoreDenormalizePages < ActiveRecord::Migration
   def self.up

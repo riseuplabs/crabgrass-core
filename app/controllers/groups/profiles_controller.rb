@@ -2,7 +2,7 @@ class Groups::ProfilesController < Groups::BaseController
 
   before_filter :fetch_profile, :login_required
 
-  def edit 
+  def edit
   end
 
   def update

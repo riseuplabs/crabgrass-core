@@ -33,7 +33,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   protected
-  
+
   def remote_available?
     begin
       RemoteJob.find(:all)

@@ -10,7 +10,7 @@ module Mods
 
   private
 
-  # used for mods to register a new model mixin. 
+  # used for mods to register a new model mixin.
   mattr_accessor :model_mixins
   self.model_mixins = {}
 
@@ -21,7 +21,7 @@ module Mods
 
   # used by the application to determine which plugins to auto-reload in
   # development mode. With mods enabled, a plugin can call 'reloadable()' in
-  # its init.rb. Otherwise, the application can set a callback here to 
+  # its init.rb. Otherwise, the application can set a callback here to
   # globally decide based on the path of the plugin. The callback, given the
   # plugin path, should return true if the plugin should be reloadable.
   mattr_accessor :plugin_reloadable_callback
@@ -39,6 +39,6 @@ module Mods
     Mods.model_mixins[model_name]
   end
 
- 
+
 end
 

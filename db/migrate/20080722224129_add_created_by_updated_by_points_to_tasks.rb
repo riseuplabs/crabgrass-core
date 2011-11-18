@@ -12,6 +12,6 @@ class AddCreatedByUpdatedByPointsToTasks < ActiveRecord::Migration
       t.remove :created_by_id
       t.remove :updated_by_id
       t.remove :points
-    end    
+    end
   end
 end

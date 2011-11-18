@@ -9,7 +9,7 @@ class CreateTaskParticipationsAndCopyDataFromTaskUsers < ActiveRecord::Migration
       t.boolean :watching
       t.boolean :waiting
       t.boolean :assigned
-      
+
       t.references :user
       t.references :task
     end
@@ -20,7 +20,7 @@ class CreateTaskParticipationsAndCopyDataFromTaskUsers < ActiveRecord::Migration
       tpart = TaskParticipation.create( :assigned => true, :user_id => tuser.user_id, :task_id => tuser.task_id )
       tpart.save!
     end
-    
+
     drop_table :tasks_users
   end
 
@@ -29,7 +29,7 @@ class CreateTaskParticipationsAndCopyDataFromTaskUsers < ActiveRecord::Migration
       t.references :user
       t.references :task
     end
-    
+
     ActiveRecord::Base.record_timestamps = false
     TasksUser.reset_column_information
     TaskParticipation.find(:all).each do |tpart|

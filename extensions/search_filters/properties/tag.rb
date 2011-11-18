@@ -7,12 +7,12 @@ SearchFilter.new('/tag/:tag_name/') do
   #
   # ui
   #
- 
+
   self.path_order = 100
   self.section = :properties
   self.singleton = false
 
-  html(:delayed => true, :submit_button => false) do 
+  html(:delayed => true, :submit_button => false) do
     tags = tag_cloud(current_user.tags) do |tag, css_class|
       link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
     end

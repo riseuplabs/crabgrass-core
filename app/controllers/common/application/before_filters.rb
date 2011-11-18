@@ -57,7 +57,7 @@ module Common::Application::BeforeFilters
     check_permissions!
   end
 
-  # 
+  #
   # sets the current locale
   #
   def set_session_locale

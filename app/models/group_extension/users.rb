@@ -41,7 +41,7 @@ module GroupExtension::Users
 
   # commented out... removing a council member from a group is no big deal,
   # they can still just add themselves back. -e
-  # 
+  #
   #def users_allowed_to_vote_on_removing(user)
   #  # only council members can vote on removing council members
   #  if self.has_a_council? and user.may?(:admin, self)

@@ -16,13 +16,13 @@ module Common::Application::ContextNavigation
 
   ##
   ## HELPERS
-  ## 
+  ##
   ## These are called by the layout if they want navigation or context.
   ## Controllers can override context() to define their own.
   ##
 
   #
-  # get access to the current context. 
+  # get access to the current context.
   #
   def current_context
     @context ||= begin

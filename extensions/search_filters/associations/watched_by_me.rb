@@ -15,7 +15,7 @@ SearchFilter.new('/watched-by-me/') do
   #
   # ui
   #
- 
+
   self.singleton = true
   self.section = :my_pages
 

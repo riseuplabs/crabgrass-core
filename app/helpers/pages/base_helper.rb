@@ -1,5 +1,5 @@
 #
-# available to all page controllers derived from base. 
+# available to all page controllers derived from base.
 #
 module Pages::BaseHelper
 

@@ -1,5 +1,5 @@
 #
-# in order to build a fulltext index of access_ids, the table must be MyISAM 
+# in order to build a fulltext index of access_ids, the table must be MyISAM
 #
 
 class ConvertPageTermsToMyIsam < ActiveRecord::Migration

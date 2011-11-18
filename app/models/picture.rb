@@ -14,7 +14,7 @@
 #
 #
 # GEOMETRY
-# 
+#
 # A "geometry", for the purposes of Pictures, is an object with the
 # following attributes:
 #
@@ -36,7 +36,7 @@
 # Picture.dimensions stores, in a hash, the height and width of all
 # the resized copies of the image, keyed on the geometry constraints
 # that produced the resized copy.
-# 
+#
 # For example:
 #
 #  { [a,b,c,d] => [width, height],
@@ -54,7 +54,7 @@
 #
 #  0000/0004/full.jpg
 #  0000/0004/100-100-0-400.jpg
-#  
+#
 # The values are integers, and not strings.
 #
 # TODO: in some cases, we probably don't want to store the source
@@ -78,7 +78,7 @@ class Picture < ActiveRecord::Base
   #
   # the private filesystem path of this picture
   # e.g. rails_root/assets/pictures/0000/0004/full.jpg
-  # 
+  #
   def private_file_path(geometry=nil)
     geometry = to_geometry(geometry)
     File.join(private_directory, file_name(geometry))
@@ -131,9 +131,9 @@ class Picture < ActiveRecord::Base
   # (1) Adds the geometry to this picture's list of dimensions
   # (2) Creates the public and private storage directories for this picture.
   # (3) Renders the image matching geometry
-  # 
+  #
   # If any of those things exists or are already set up, this method
-  # skips it. 
+  # skips it.
   #
   def render!(geometry)
     geometry = to_geometry(geometry)
@@ -148,7 +148,7 @@ class Picture < ActiveRecord::Base
   end
 
   #
-  # for uploading the image. 
+  # for uploading the image.
   #
   # The uploaded_file may be one of three types:
   #
@@ -165,7 +165,7 @@ class Picture < ActiveRecord::Base
       Media::MimeType.mime_type_from_extension(uploaded_file.original_filename)
   end
 
-  # 
+  #
   # Convert geometry specified as Hash, Array, or String into Geometry.
   #
   def to_geometry(geometry)

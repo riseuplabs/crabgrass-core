@@ -20,7 +20,7 @@ class CreateChat < ActiveRecord::Migration
       t.column :level, :string
     end
     add_index :messages, :channel_id
-  end 
+  end
   def self.down
     drop_table :channels
     drop_table :channels_users

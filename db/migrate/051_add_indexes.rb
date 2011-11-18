@@ -5,58 +5,58 @@ class AddIndexes < ActiveRecord::Migration
     add_index "asset_versions", ["parent_id"], :name => "index_asset_versions_parent_id"
     add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
     add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
-    
+
     add_index "assets", ["parent_id"], :name => "index_assets_parent_id"
     add_index "assets", ["version"], :name => "index_assets_version"
     add_index "assets", ["page_id"], :name => "index_assets_page_id"
-    
+
     add_index "channels", ["group_id"], :name => "index_channels_group_id"
-    
+
     add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
-    
+
     add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
-    
+
     add_index "discussions", ["page_id"], :name => 'index_discussions_page_id'
-    
+
     add_index "group_participations", ["group_id", "page_id"], :name => 'index_group_participations'
-    
+
     add_index "groups", ["parent_id"], :name => 'index_groups_parent_id'
     add_index "groups", ['avatar_id'], :name => 'index_groups_avatar_id'
     add_index "groups", ['admin_group_id'], :name => 'index_groups_admin_group_id'
-    
+
     add_index "links", ['page_id', 'other_page_id'], :name => 'index_links_page_and_other_page'
-    
+
     add_index "memberships", ['group_id', 'user_id', 'page_id'], :name => 'index_memberships'
-    
+
     add_index "messages", ['sender_id'], :name => 'index_messages_channel'
-    
+
     add_index "page_tools", ['page_id', 'tool_id'], :name => "index_page_tools"
-    
+
     add_index "pages", ['created_by_id'], :name => 'index_page_created_by_id'
     add_index "pages", ['updated_by_id'], :name => 'index_page_updated_by_id'
     add_index "pages", ['group_id'], :name => 'index_page_group_id'
-    
+
     add_index "pictures", ['created_by_id'], :name => 'index_pictures_created_by_id'
-    
+
     add_index "possibles", ['poll_id'], :name => 'index_possibles_poll_id'
     add_index "votes", ['possible_id'], :name => 'index_votes_possible'
     add_index "votes", ['possible_id', 'user_id'], :name => 'index_votes_possible_and_user'
-    
+
     add_index "tasks", ['task_list_id'], :name => 'index_tasks_task_list_id'
     add_index "tasks", ['task_list_id','completed', 'position'], :name => 'index_tasks_completed_positions'
     add_index 'tasks_users', ['user_id', 'task_id'], :name => 'index_tasks_users_ids'
-    
+
     add_index 'user_participations', ['page_id'], :name => 'index_user_participations_page'
     add_index 'user_participations', ['user_id'], :name => 'index_user_participations_user'
     add_index 'user_participations', ['page_id','user_id'], :name => 'index_user_participations_page_user'
-    
+
     add_index 'wikis', ['user_id'], :name => 'index_wikis_user_id'
     add_index 'wikis', ['locked_by_id'], :name => 'index_wikis_locked_by_id'
-    
+
     add_index 'wiki_versions', ['wiki_id'], :name => 'index_wiki_versions'
     add_index 'wiki_versions', ['wiki_id', 'updated_at'], :name => 'index_wiki_versions_with_updated_at'
-        
-    
+
+
   end
 
   def self.down

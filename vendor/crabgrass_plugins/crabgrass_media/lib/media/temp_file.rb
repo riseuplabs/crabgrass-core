@@ -46,9 +46,9 @@ module Media
 
     public
 
-    # 
+    #
     # data may be one of:
-    # 
+    #
     #  - FileUpload object: like the kind returned in multibyte encoded file upload forms.
     #  - Pathname object: then load data from the file pointed to by the pathname.
     #  - IO object: read the contents of the io object, copy to tmp file.
@@ -148,7 +148,7 @@ module Media
       tf
     end
 
-    # 
+    #
     # create a filename with a file extension from the content_type
     #
     def self.content_type_basename(content_type)

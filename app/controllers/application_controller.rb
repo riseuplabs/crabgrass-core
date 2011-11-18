@@ -16,13 +16,13 @@ class ApplicationController < ActionController::Base
   protected
 
   # this is used by the code that is included for both controllers and helpers.
-  # this way, they don't need to know if they are in a view or a controller, 
+  # this way, they don't need to know if they are in a view or a controller,
   # they can always just reference controller().
   def controller(); self; end
 
   def current_theme
     @theme ||= if Rails.env == 'development'
-      # in dev mode, allow switching themes. maybe allow anyone to switch themes... 
+      # in dev mode, allow switching themes. maybe allow anyone to switch themes...
       session[:theme] = params[:theme] || session[:theme] || current_site.theme
       unless Crabgrass::Theme.exists?(session[:theme])
         session[:theme] = current_site.theme

@@ -1,7 +1,7 @@
 module Pages::OwnerHelper
 
   protected
-  
+
   def change_page_owner
     if may_move_page?
       html = render(:partial => 'pages/details/change_owner')
@@ -11,7 +11,7 @@ module Pages::OwnerHelper
 
   #
   # returns option tags usable in a select menu to choose a page owner.
-  # 
+  #
   # There are four types of entries:
   #
   #  (1) groups the user is a (direct or indirect) member of

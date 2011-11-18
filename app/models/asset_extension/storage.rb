@@ -14,9 +14,9 @@
 #
 # Lets suppose you have an asset called 'myfile.jpg' and have defined two thumbnails,
 # one called :minithumb and one called :bigthumb.
-# 
+#
 # This is what the directory structure will look like:
-# 
+#
 #   RAILS_ROOT/
 #     assets/
 #       0000/

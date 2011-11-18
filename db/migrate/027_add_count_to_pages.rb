@@ -7,7 +7,7 @@ class AddCountToPages < ActiveRecord::Migration
       page.contributors_count = page.contributors.size
       page.save
     end
-    
+
   end
 
   def self.down

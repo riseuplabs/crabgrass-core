@@ -205,7 +205,7 @@ class DispatchController < ApplicationController
   end
 
   #def controller_for_list_of_pages(name)
-  #  params[:action] = 'index' 
+  #  params[:action] = 'index'
   #  params[:search] = {:text => name}
   #  params[:controller] = 'search'
   #  SearchController.new()

@@ -1,4 +1,4 @@
-# 
+#
 # Page definitions can define their own custom creation controllers.
 # Here is the default one.
 #
@@ -7,7 +7,7 @@
 #  GET new
 #     new_page_path
 #     /pages/new/:owner/:type
-# 
+#
 #  POST create
 #     create_page_path
 #     /pages/create/:owner/:type
@@ -24,7 +24,7 @@ class Pages::CreateController < ApplicationController
   # the problem is that this controller might be in a group context
   # and the group context needs these permissions
 
-  # 
+  #
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.
   #
@@ -83,7 +83,7 @@ class Pages::CreateController < ApplicationController
 
   #
   # helper methods
-  # 
+  #
 
   #
   # returns a class object for the page type, or a page class proxy object.
@@ -91,7 +91,7 @@ class Pages::CreateController < ApplicationController
   # but haml already defines a helper with that name.
   #
   def page_type
-    @page_type ||= param_to_page_class(params[:type]) 
+    @page_type ||= param_to_page_class(params[:type])
   end
   helper_method :page_type
 
@@ -125,7 +125,7 @@ class Pages::CreateController < ApplicationController
 #  end
 
   #
-  # method to build the unsaved page object, with correct access. 
+  # method to build the unsaved page object, with correct access.
   # used by this controller and subclasses.
   #
   # we may be able to remove the options arg, not sure it is ever used.

@@ -115,12 +115,12 @@ class SearchFilter
   def name(args=nil)
     path(args).gsub(/[^0-9a-zA-Z]/,'')
   end
-  
+
   ##
   ## FILTER DEFINITION METHODS
   ##
 
-  protected 
+  protected
 
   # for sphinx specific query code
   def sphinx(&block)
@@ -234,7 +234,7 @@ class SearchFilter
 #    lbl = @label || @label_block.call(*args)
 #    return lbl.t
 #  end
-  
+
   #
   # resolves the path definition of this filter based on the content of the
   # current path.
@@ -274,7 +274,7 @@ class SearchFilter
   #    path_definition - '/most-stars-in/:time/:unit/'
   #    args - ['1','week']
   #
-  #  returns: 
+  #  returns:
   #    {:time => '1', :unit => 'week'}
   #
   def path_args_to_hash(args)

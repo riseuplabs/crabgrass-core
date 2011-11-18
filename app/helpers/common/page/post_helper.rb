@@ -2,7 +2,7 @@ module Common::Page::PostHelper
 
   protected
 
-  # for now, no ajax pagination, even in responses from ajax requests. 
+  # for now, no ajax pagination, even in responses from ajax requests.
   def post_pagination_links(posts)
     if posts.any? and posts.is_a?(WillPaginate::Collection)
       color = cycle('shade_odd', 'shade_even')

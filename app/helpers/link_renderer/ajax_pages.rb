@@ -1,6 +1,6 @@
 #
 # This is a link renderer for page lists that are ajax based.
-# 
+#
 # For example:
 #   with url: me/pages#/public/page/3
 #   then: the link to 'next' will submit an ajax request with {:add => '/page/4'}

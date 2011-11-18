@@ -41,7 +41,7 @@ class Crabgrass::Theme::NavigationDefinition
     end
   end
 
-  
+
   # creates a new section to the navigation. anything defined in the section
   # definition block is put under this section. if the named section already
   # exists, then we redefine it.
@@ -71,7 +71,7 @@ class Crabgrass::Theme::NavigationDefinition
     @tree
   end
 
-  # 
+  #
   # section stack is a FILO stack of the sections.
   # we push a new section context onto the stack whenever 'section()' is called.
   #

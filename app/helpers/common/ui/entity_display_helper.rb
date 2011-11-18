@@ -8,7 +8,7 @@ module Common::Ui::EntityDisplayHelper
 
   # linking to users and groups takes a lot of time if we have to fetch the
   # record to get the display name or avatar. if we already have the login or
-  # group name, this method is much faster (saves about 150ms per request). 
+  # group name, this method is much faster (saves about 150ms per request).
   def link_to_name(name)
     "<a href=\"/#{name}\">#{name}</a>"
   end
@@ -31,7 +31,7 @@ module Common::Ui::EntityDisplayHelper
   ## GROUPS
   ##
 
-  # 
+  #
   # creates a link to a group. see display_entity for options
   #
   def link_to_group(group, options={})
@@ -129,7 +129,7 @@ module Common::Ui::EntityDisplayHelper
       styles  << avatar_style(entity, options[:avatar])
     end
 
-    # label 
+    # label
 
     display, title = if entity.nil?
       [:unknown.t, nil]
@@ -173,7 +173,7 @@ module Common::Ui::EntityDisplayHelper
   def entity_autocomplete_line(entity)
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
-  
+
   #
   # used to display a list of entities
   #
@@ -182,7 +182,7 @@ module Common::Ui::EntityDisplayHelper
   #   :entities -- the entity objects to list. if empty, nothing is displayed.
   #   :before   -- text to put before the list, if enitities is non-empty.
   #   :after    -- text to put after the list. if set, entity list is always treated as non-empty.
-  # 
+  #
   # other options are passed on through to display_entity
   #
   def entity_list(options)

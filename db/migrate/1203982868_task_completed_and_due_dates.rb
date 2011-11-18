@@ -3,7 +3,7 @@ class TaskCompletedAndDueDates < ActiveRecord::Migration
     add_column    :tasks,     :completed_at,     :datetime
     Task.reset_column_information
     Task.update_all "completed_at = '#{Time.now.to_s :db}'", "completed"
-    remove_column :tasks,     :completed  
+    remove_column :tasks,     :completed
     add_column    :tasks,     :due_at,            :datetime
   end
 

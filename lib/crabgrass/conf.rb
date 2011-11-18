@@ -58,7 +58,7 @@ class Conf
   # global options
   cattr_accessor :enabled_mods
   cattr_accessor :enabled_tools # deprecated
-  cattr_accessor :enabled_pages 
+  cattr_accessor :enabled_pages
   cattr_accessor :enabled_languages
   cattr_accessor :enabled_languages_hash # (private)
   cattr_accessor :email

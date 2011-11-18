@@ -26,7 +26,7 @@ class GeoPlace < ActiveRecord::Base
     return @places unless (@places.empty? or params[:search_alternates])
     ### search for LIKE in name and alternatenames
     admin_codes.each do |ac|
-      @places << find(:all, 
+      @places << find(:all,
         :conditions=>['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"]
       )
     end

@@ -53,7 +53,7 @@ class SessionController < ApplicationController
       # i think the remember me stuff is a security flaw, so it is commented out for now:
       #self.current_user.forget_me if logged_in?
       #cookies.delete :auth_token
-      
+
       language = session[:language_code]
       reset_session
       session[:language_code] = language

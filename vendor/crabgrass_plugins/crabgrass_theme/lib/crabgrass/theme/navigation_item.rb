@@ -17,7 +17,7 @@ class Crabgrass::Theme::NavigationItem < Array
     @visible = true
   end
 
-  # allow reassignment of theme object. 
+  # allow reassignment of theme object.
   # recursively descends the tree, reassigning theme.
   # this is necessary when we duplicate a tree for theme inheritance.
   def theme=(new_theme)
@@ -49,11 +49,11 @@ class Crabgrass::Theme::NavigationItem < Array
     self_clone = self.clone
 
     # remove all the array entries. they point to the wrong nav items.
-    self_clone.clear 
+    self_clone.clear
 
     # clone each nav item in turn
     each {|item| self_clone << item.deep_clone }
-    
+
     return self_clone
   end
 
@@ -114,7 +114,7 @@ class Crabgrass::Theme::NavigationItem < Array
       instance_variable_set("@#{name}", value)
     end
   end
-  
+
   #
   # define the getters for our attributes.
   # if the value of an attribute is a Proc, then we eval it in the context

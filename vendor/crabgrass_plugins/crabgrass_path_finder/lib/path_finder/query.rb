@@ -94,7 +94,7 @@ module PathFinder
         end
       end
       [page_group, page_type, media_type]
-    end 
+    end
 
   end
 end

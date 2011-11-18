@@ -51,7 +51,7 @@ module Formy
 
     end
 
-   
+
     sub_element Row
     sub_element Buttons
 

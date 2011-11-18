@@ -15,7 +15,7 @@
 #
 # NOTE: @conditions is a hash, @with is an array.
 #
-# in sphinx, attributes are numeric only. 
+# in sphinx, attributes are numeric only.
 #
 
 module PathFinder::Sphinx::BuilderFilters

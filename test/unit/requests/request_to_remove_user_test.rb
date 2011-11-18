@@ -108,7 +108,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
         def now_with_stubbing
           now_without_stubbing + 2.months
         end
-      
+
         alias_method_chain :now, :stubbing
       end
     end

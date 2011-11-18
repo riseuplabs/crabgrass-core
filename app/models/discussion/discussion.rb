@@ -121,7 +121,7 @@ class Discussion < ActiveRecord::Base
   ## METHODS
   ##
 
-  # 
+  #
   # returns the total number of pagination pages, given the pagination size.
   #
   def last_page(pagination_size=nil)
@@ -141,7 +141,7 @@ class Discussion < ActiveRecord::Base
     page.update_attribute(:posts_count, posts_count) if page
     update_attributes!(
       :posts_count => posts_count,
-      :last_post => post, 
+      :last_post => post,
       :replied_by_id => post.user_id,
       :replied_at => post.updated_at )
   end
@@ -156,7 +156,7 @@ class Discussion < ActiveRecord::Base
     end
     update_attributes!(
       :posts_count => posts_count,
-      :last_post => visible_posts.last, 
+      :last_post => visible_posts.last,
       :replied_by_id => visible_posts.last.try.user_id,
       :replied_at => visible_posts.last.try.updated_at )
   end

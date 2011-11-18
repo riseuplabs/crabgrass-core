@@ -59,14 +59,14 @@ module Crabgrass
     #
     # grabs a theme by name, loading if necessary. In production mode, theme is
     # kept loaded in the memory until the app is restarted. In development mode,
-    # the theme is reloaded each time the theme configuration changes. 
+    # the theme is reloaded each time the theme configuration changes.
     #
-    # This auto-reloading of stale theme configs is triggered by a call to 
-    # Theme.stylesheet_url(), which is typically called in the view. 
+    # This auto-reloading of stale theme configs is triggered by a call to
+    # Theme.stylesheet_url(), which is typically called in the view.
     # Someday, this might be a problem and we might need to trigger manually
     # a reload if needed.
     #
-    # usage: 
+    # usage:
     #   Theme['default'] => <theme>
     #
     def self.[](theme_name)
@@ -104,7 +104,7 @@ module Crabgrass
     ##
 
     # returns an absolute url path, specific to this theme, given a sheet name
-    # e.g. 
+    # e.g.
     #   stylesheet_url('screen') => /theme/default/screen.css
 
     def stylesheet_url(sheet_name)
@@ -126,7 +126,7 @@ module Crabgrass
     end
 
     private
-   
+
     def self.theme_directory(theme_name)
       File.join(THEME_ROOT,theme_name)
     end

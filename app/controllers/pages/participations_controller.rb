@@ -1,4 +1,4 @@
-# 
+#
 # Routes:
 #
 #  create:  page_participations_path  /pages/:page_id/participations

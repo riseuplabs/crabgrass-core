@@ -14,7 +14,7 @@ class CreateTasklist < ActiveRecord::Migration
       t.column :user_id, :integer
       t.column :task_id, :integer
     end
-  end 
+  end
 
   def self.down
     drop_table :task_lists

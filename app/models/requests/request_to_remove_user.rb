@@ -32,13 +32,13 @@ class RequestToRemoveUser < VotableRequest
   end
 
   def description
-    :request_to_remove_user_description.t(:user => user_span(created_by), 
+    :request_to_remove_user_description.t(:user => user_span(created_by),
       :member => user_span(user), :group_type => group.group_type.downcase,
       :group => group_span(group))
   end
 
   def short_description
-    :request_to_remove_user_short.t(:user => user_span(created_by), 
+    :request_to_remove_user_short.t(:user => user_span(created_by),
       :member => user_span(user), :group_type => group.group_type.downcase,
       :group => group_span(group))
   end

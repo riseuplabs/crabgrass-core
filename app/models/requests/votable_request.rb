@@ -9,7 +9,7 @@
 #
 # (a) first n votes are all 'yes' (where n = quick_approval_threshold)
 # (b) yes votes outnumber no votes within vote_duration
-# 
+#
 
 class VotableRequest < Request
 
@@ -32,12 +32,12 @@ class VotableRequest < Request
     true
   end
 
-  # 
+  #
   # this creates a nice blending function for quick approval, starting at 50%
   # and asymptotically reaching 5% as the population gets very large.
   #
   # for example:
-  # 
+  #
   #   users:   4    5   10   100   1000
   # percent:  50%  40%  30%   10%     5%
   #

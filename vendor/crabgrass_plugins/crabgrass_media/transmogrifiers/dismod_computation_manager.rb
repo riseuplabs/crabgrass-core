@@ -1,6 +1,6 @@
 #
 # transform data for dismod
-# requires /usr/local/sbin/computation_manager_stub.py 
+# requires /usr/local/sbin/computation_manager_stub.py
 #
 
 unless defined?(DISMOD_COMMAND)

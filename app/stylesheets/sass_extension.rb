@@ -1,4 +1,4 @@
-# define here new extensions you want available in sass 
+# define here new extensions you want available in sass
 # stylesheets.
 
 module Sass::Script::Functions

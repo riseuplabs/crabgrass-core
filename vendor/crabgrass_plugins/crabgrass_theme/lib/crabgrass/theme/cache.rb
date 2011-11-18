@@ -12,7 +12,7 @@ module Crabgrass::Theme::Cache
   end
 
   private
-  
+
   #
   # returns true if any of the ruby files in the directory have been modified since
   # the timestamp given.

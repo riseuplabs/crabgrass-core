@@ -31,7 +31,7 @@ module Crabgrass::Theme::ColumnCalculator
 
   #
   # return the width in pixels of taken up by n 'context_columns'
-  # 
+  #
   # if 'context_columns' is not set, return the the full width
   # (including extra page padding)
   #
@@ -95,14 +95,14 @@ module Crabgrass::Theme::ColumnCalculator
 
   #
   # return the width in pixels of a single column
-  # 
+  #
   def column_width
     @column_width
   end
 
   #
   # return the width in pixels of a single column, as percent of context
-  # 
+  #
   def column_width_percent(context_columns = nil)
     percent( column_width / context_width(context_columns) )
   end

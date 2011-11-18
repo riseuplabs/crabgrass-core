@@ -1,7 +1,7 @@
 #
 # Basic account management, for unauthenticated users.
 #
-# Authenticated user stuff is in Me::SettingsController. 
+# Authenticated user stuff is in Me::SettingsController.
 #
 # Login and logout are in SessionController.
 #
@@ -48,7 +48,7 @@ class AccountController < ApplicationController
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
-      
+
       # replace with hook(:new_user_registered)
       #current_site.add_user!(current_user)
 
@@ -100,7 +100,7 @@ class AccountController < ApplicationController
   # send the reset password token via email to the user.
   # it's an information leak to tell the user that the email address couldn't be
   # found, so we always report success. this is a problem, but there is no good
-  # solution. 
+  # solution.
   #
   def send_reset_token
     unless RFC822::EmailAddress.match(params[:email])
@@ -123,7 +123,7 @@ class AccountController < ApplicationController
   end
 
   def reset_password_confirmation
-    confirm_token or return 
+    confirm_token or return
     render :template => 'account/reset_password_confirmation'
   end
 

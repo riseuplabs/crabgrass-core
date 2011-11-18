@@ -51,7 +51,7 @@ class Thumbnail < ActiveRecord::Base
   #
   # if force is true, then generate the thumbnail even if it already
   # exists.
-  # 
+  #
   def generate(force=false)
     if proxy?
       return
@@ -71,7 +71,7 @@ class Thumbnail < ActiveRecord::Base
 
       options = {
         :size => thumbdef.size,
-        :input_file  => input_file,  :input_type => input_type, 
+        :input_file  => input_file,  :input_type => input_type,
         :output_file => output_file, :output_type => output_type
       }
 
@@ -164,11 +164,11 @@ class Thumbnail < ActiveRecord::Base
     end
     save
     if !RemoteJob.local? and thumbdef.binary
-      # the remote job is on another server, and wants binary data. 
-      # we can't push this binary data via the ActiveResource api, 
+      # the remote job is on another server, and wants binary data.
+      # we can't push this binary data via the ActiveResource api,
       # so we push it using a multipart binary encoded POST,
-      # after the RemoteJob has been created. 
-      
+      # after the RemoteJob has been created.
+
       # TODO: implement me....
     end
   end

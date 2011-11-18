@@ -2,7 +2,7 @@
 # It is about time, but pages are finally getting an explicit owner.
 # I know, I know, it is very propertarian!
 # But it is just too confusing to try to always guess who
-# should be treated as the owner of a page. 
+# should be treated as the owner of a page.
 #
 
 class AddOwnerToPages < ActiveRecord::Migration

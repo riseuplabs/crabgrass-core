@@ -1,5 +1,5 @@
 #
-# contributors_count was busted before. this migration will make sure that 
+# contributors_count was busted before. this migration will make sure that
 # the database uses good data from here on out.
 #
 class UpdatePageContributorsCount < ActiveRecord::Migration

@@ -1,6 +1,6 @@
 module Common::Ui::AvatarHelper
 
-  # 
+  #
   # creates an avatar that links to the entity, but with no text.
   #
   def avatar_link(entity, size='medium')
@@ -30,7 +30,7 @@ module Common::Ui::AvatarHelper
   # we do not need to query the avatar object in order to show the avatar,
   # and we key the URL on the version of the entity (ie user or group).
   # This will keep most browsers from caching the avatar when it changes.
-  # 
+  #
   def avatar_url_for(entity, size='medium')
     if entity
       '/avatars/%s/%s.jpg?%s' % [entity.avatar_id||0, size, entity.version]

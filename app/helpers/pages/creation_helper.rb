@@ -6,7 +6,7 @@ module Pages::CreationHelper
   # new_page_path is used for showing the selection of page types.
   #
   # page_creation_path is used for linking to the actual controller that handles creation
-  # for a particular page type. It might be the default page creation controller (pages/create), 
+  # for a particular page type. It might be the default page creation controller (pages/create),
   # or it could be a custom controller.
   #
   #def page_creation_path(page_class)

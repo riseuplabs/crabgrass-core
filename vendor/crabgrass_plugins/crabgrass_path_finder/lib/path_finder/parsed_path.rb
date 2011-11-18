@@ -15,7 +15,7 @@
 #
 # This class has grown over time. It would have been much cleaner to implement
 # as a hash.
-# 
+#
 #:include:FILTERS
 #
 
@@ -96,7 +96,7 @@ class ParsedPath < Array
   #  # path used for the window.location.hash
   #  # [['public'],['created_by','blue']] --> /public/created_by.blue/
   #  def to_hash_path
-  #    path = collect{|segment| 
+  #    path = collect{|segment|
   #      segment.collect{|part|
   #        CGI.escape(part).
   #        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
@@ -340,7 +340,7 @@ class ParsedPath < Array
   # unique_union(path)
   #
   # adds two paths together, removing duplicates of search filters
-  # defined as singletons. 
+  # defined as singletons.
   #
   def unique_union(path_b)
     seen = {}

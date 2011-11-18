@@ -1,5 +1,5 @@
-class WikiPageVersionController < Pages::BaseController 
-  include Common::Application::WikiRenderer 
+class WikiPageVersionController < Pages::BaseController
+  include Common::Application::WikiRenderer
 
   stylesheet 'wiki_edit'
   #javascript 'wiki_edit'

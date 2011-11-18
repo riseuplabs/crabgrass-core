@@ -1,8 +1,8 @@
 #
 # A class to transmogrify a media asset from one form to another.
-# 
+#
 # All such media transformations are handled by instances of this class.
-# 
+#
 
 require 'fileutils'
 
@@ -28,7 +28,7 @@ module Media
 
     #
     # takes a has of options, some of which are required:
-    # 
+    #
     # - :input_file  or (:input and :input_type)
     # - :output_file or :output_type
     #
@@ -112,7 +112,7 @@ module Media
     end
 
     #
-    # this needs to be called once before anything will work. 
+    # this needs to be called once before anything will work.
     #
     def self.prepare
       # remove unavailable
@@ -125,11 +125,11 @@ module Media
 
       # set up mime type input and output maps
       @@list.each do |name, trans|
-        for input_type in trans.input_types 
+        for input_type in trans.input_types
           self.input_map[input_type] ||= []
           self.input_map[input_type] << trans
         end
-        for output_type in trans.output_types 
+        for output_type in trans.output_types
           self.output_map[output_type] ||= []
           self.output_map[output_type] << trans
         end
@@ -245,7 +245,7 @@ module Media
         info msg.join(' '), 0
       end
     end
-   
+
     def log_error(*args)
       self.class.log_error(*args)
     end
@@ -306,7 +306,7 @@ module Media
     ##
 
     private
-    
+
     def command_string(*args)
       args.collect {|arg| shell_escape(arg.to_s)}.join(' ')
     end

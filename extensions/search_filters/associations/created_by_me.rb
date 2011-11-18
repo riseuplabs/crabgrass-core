@@ -7,7 +7,7 @@ SearchFilter.new('/created-by-me/') do
   #
   # ui
   #
- 
+
   self.exclude = :created
   self.singleton = true
   self.section = :my_pages

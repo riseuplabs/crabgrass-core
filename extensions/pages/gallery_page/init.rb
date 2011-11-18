@@ -9,7 +9,7 @@ extend_model :Asset do
 
   has_many :showings
   has_many :galleries, :through => :showings
-  
+
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
   # download_gallery action to find out if it's cached zips are up to date.
@@ -17,7 +17,7 @@ extend_model :Asset do
   # hmm... i don't think this is a good idea. it will result in the Gallery page
   # being marked as updated in the recent pages feed, even when it has not been.
   # -elijah
-  
+
   after_save :update_galleries
   def update_galleries
     if galleries.any?

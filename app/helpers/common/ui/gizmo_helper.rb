@@ -1,7 +1,7 @@
 #
 # Here lives little miscellaneous reusable UI elements.
 #
-# We call them gizmos. 
+# We call them gizmos.
 #
 # Current gizmos:
 # * toggle_bug
@@ -28,9 +28,9 @@ module Common::Ui::GizmoHelper
   #   (1) :url    -- creates a normal link_to
   #   (2) :remote -- creates a link_to_remote
   #   (3) :function -- creates a link_to_function
-  # 
+  #
   def toggle_bug_links(*links)
-    content_tag(:ul, :class => 'toggle_bug') do 
+    content_tag(:ul, :class => 'toggle_bug') do
       links.collect do |link|
         classes = [
           link[:active] ? 'active' : '',
@@ -55,14 +55,14 @@ module Common::Ui::GizmoHelper
     "$$('.toggle_bug li').invoke('removeClassName', 'active');"
   end
   def activate_toggle_bug(id)
-    deactivate_toggle_bugs + "$('#{id}').addClassName('active');" 
+    deactivate_toggle_bugs + "$('#{id}').addClassName('active');"
   end
 
   ##
   ## SPINBOX
   ##
 
-  # 
+  #
   #
   # A checkbox used for ajax or functions. The checkbox turns into a spinner
   # until the action is complete. The requests are queued, so that you can
@@ -93,7 +93,7 @@ module Common::Ui::GizmoHelper
   def spinbox_function_options(options)
     options.merge!(
       :before  => spinner_icon_on(options[:icon], options[:id])
-      # no :complete option, because in cases where this is used, so 
+      # no :complete option, because in cases where this is used, so
       # far we end up replacing the spinbox itself. but maybe this could be
       # necessary someday:
       # :complete => spinner_icon_off(options[:icon], options[:id])

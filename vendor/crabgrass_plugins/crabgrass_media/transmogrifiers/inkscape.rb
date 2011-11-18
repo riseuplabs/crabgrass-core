@@ -15,7 +15,7 @@ class InkscapeTransmogrifier < Media::Transmogrifier
   def input_types
     %w(image/svg+xml image/svg+xml-compressed application/illustrator image/bzeps image/eps image/gzeps)
   end
-  
+
   def available?
     command_available?(INKSCAPE_COMMAND) and magick and magick.available?
   end

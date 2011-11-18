@@ -59,7 +59,7 @@ module Common::PageSearch
     true
   end
 
-  # 
+  #
   # the page search code relies on this being defined by controllers that
   # include this mixin.
   #

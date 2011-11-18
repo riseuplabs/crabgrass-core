@@ -8,7 +8,7 @@
 #  <% end %>
 #
 # alternately:
-# 
+#
 #  <%= tag_cloud(tags) {|tag, klass| link_to(...) }.join(', ') %>
 #
 # CSS:

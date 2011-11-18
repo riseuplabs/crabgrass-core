@@ -10,7 +10,7 @@ class UglifyHtml
   def make_ugly
     (@doc/"*").each do |e|
       next if @options[:pass_through].include? e.name
-  
+
       if @options[:rename_tag] and @options[:rename_tag].has_key? e.name
         e.change_tag! @options[:rename_tag][e.name]
         next
@@ -22,14 +22,14 @@ class UglifyHtml
       when 'u', 'ins'       then process_with_style(e, "text-decoration",  "underline")
       when 'del', 'strike'  then process_with_style(e, "text-decoration",  "line-through")
       when 'ul', 'ol'       then process_list(e)
-      end 
+      end
     end
 
     (@doc/"li ul | li ol").remove
 
     html = @doc.to_html
 
-    html = html + "<br/>" if html.match(/<\/table>$/) 
+    html = html + "<br/>" if html.match(/<\/table>$/)
 
     html
   end

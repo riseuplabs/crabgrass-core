@@ -11,7 +11,7 @@ class CreatePosts < ActiveRecord::Migration
     add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
     add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
   end
-  
+
   def self.down
     drop_table "posts"
   end

@@ -12,7 +12,7 @@ class AddPrivacyFlagsToGroups < ActiveRecord::Migration
     remove_column :groups, :publicly_visable_group
     remove_column :groups, :publicly_visable_committees
     remove_column :groups, :publicly_visable_members
-    
+
     remove_column :groups, :accept_new_membership_requests
   end
 end

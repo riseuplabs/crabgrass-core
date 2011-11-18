@@ -33,12 +33,12 @@ class Pages::BaseController < ApplicationController
   after_filter :save_if_needed, :except => :create
   after_filter :update_view_count, :only => [:show, :edit, :create]
 
-  include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work? 
+  include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work?
 
   ##
   ## CONSTRUCTOR
   ##
- 
+
   # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
@@ -58,7 +58,7 @@ class Pages::BaseController < ApplicationController
 
   def edit
   end
-  
+
   def update
   end
 

@@ -2,8 +2,8 @@
 # it might be bad to be denormalizing the page table so soon.
 # however, there is some stuff that we want to display for every page
 # when we show a long list of pages, and we don't want to have to piggyback it
-# or eager load it. 
-# 
+# or eager load it.
+#
 
 class DenormalizePages < ActiveRecord::Migration
   def self.up

@@ -7,7 +7,7 @@ def self.up
   remove_column :events, :time_end
 end
 
-def self.down		
+def self.down
   remove_column :pages, :starts_at
   remove_column :pages, :ends_at
   add_column :pages, :happens_at, :datetime

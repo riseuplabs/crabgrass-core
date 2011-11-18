@@ -3,7 +3,7 @@ class CreateGeoData < ActiveRecord::Migration
     create_table :geo_countries,
       :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
       t.column :name, :string, :null => false
-      t.column :code, :string, :limit => 3, :null => false 
+      t.column :code, :string, :limit => 3, :null => false
     end
     create_table :geo_admin_codes,
       :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|

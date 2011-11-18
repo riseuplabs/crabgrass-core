@@ -167,12 +167,12 @@ define_theme {
     }
   }
 
-  # all the various z-index values are defined here. 
-  # these should not ever need to be changed. 
+  # all the various z-index values are defined here.
+  # these should not ever need to be changed.
   zindex {
     menu 99            # masthead navigation menus
     modalbox 200       # modal dialog boxes
-    tooltip 300        # 
+    tooltip 300        #
     autocomplete 400   # autocomplete popups
   }
 

@@ -3,7 +3,7 @@
 # has a lot of relationships to other entities that might be expensive
 # to discover. For example, a list of all your peers or a list of all groups
 # you have direct or indirect access to. So, we cache it.
-# 
+#
 # Perhaps there is a better place to put this stuff, such as memcached.
 #
 # I see some advantages of keeping it in the database, particularly if
@@ -15,7 +15,7 @@
 #
 # The astute observer will note that this is complete insanity!
 # You can't just cache all the ids for these join tables, you will quickly
-# run out of bit width in your columns. 
+# run out of bit width in your columns.
 #
 # Some sketch estimation of when we will run out of space in these columns:
 #
@@ -59,6 +59,6 @@ class AddIdCachesToUser < ActiveRecord::Migration
     remove_column :users, 'peer_id_cache'
     remove_column :users, 'tag_id_cache'
   end
-  
+
 end
 

@@ -128,6 +128,6 @@ module Formy
       sub_element TableForm::Row::Checkboxes
     end
     sub_element TableForm::Row
-    
+
   end
 end

@@ -9,7 +9,7 @@ module Pages::AssetsHelper
       link_to_asset(asset, :small), :style => 'width: 1%'
     ) +
     content_tag(:td,
-      link_to( h(asset.filename), asset.url) 
+      link_to( h(asset.filename), asset.url)
     ) +
     content_tag(:td,
       remove_asset_link(asset)

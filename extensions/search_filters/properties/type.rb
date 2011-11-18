@@ -7,7 +7,7 @@ SearchFilter.new('/type/:type_name/') do
   #
   # ui
   #
- 
+
   self.section = :properties
   self.path_order = 100
   self.singleton = true

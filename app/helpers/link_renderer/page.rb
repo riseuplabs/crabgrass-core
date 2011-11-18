@@ -1,5 +1,5 @@
 #
-# This is a link renderer that makes nice URLs for the pagination links on 
+# This is a link renderer that makes nice URLs for the pagination links on
 # a Page, regardless of what kind of funky action in the current params.
 #
 # for example, suppose the request was for /pages/25/posts/create, we still

@@ -19,7 +19,7 @@ class Pages::TrashController < Pages::SidebarsController
     end
   end
 
-  protected 
+  protected
 
   def undelete
     @page.undelete

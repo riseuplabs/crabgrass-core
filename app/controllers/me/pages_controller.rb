@@ -11,7 +11,7 @@ class Me::PagesController < Me::BaseController
   def index
     @path = apply_path_modifiers( parsed_path() )
     if request.xhr?
-      # note: pagination_params is used just for defaults, 
+      # note: pagination_params is used just for defaults,
       #       normal pagination is done through @path.
       @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
     end
@@ -29,7 +29,7 @@ class Me::PagesController < Me::BaseController
     return nav
   end
 
-  # 
+  #
   # the common page search code relies on this being defined
   #
   def page_search_path(*args)

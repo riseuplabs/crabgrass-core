@@ -6,7 +6,7 @@ class ModifyFeaturedPages < ActiveRecord::Migration
 
     add_column :group_participations, :featured_position, :integer
 
-    # UPDATE `group_participations` SET featured_position = id WHERE (static = 1) 
+    # UPDATE `group_participations` SET featured_position = id WHERE (static = 1)
     GroupParticipation.update_all 'featured_position = id', 'static = 1'
   end
 

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class ModelTest < Test::Unit::TestCase
 
   load_schema
- 
+
   def test_schema_loaded
     assert_equal [], Crow.all
   end

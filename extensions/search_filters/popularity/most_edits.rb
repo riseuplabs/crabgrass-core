@@ -23,7 +23,7 @@ SearchFilter.new('/most-active-in/:time/:unit/') do
         filter_submit_button(:date_this_month.t, {:time => 30, :unit=>'days'}),
         filter_submit_button(:date_this_year.t, {:time => 1, :unit=>'years'})
       ].join(' ')
-    end 
+    end
   end
 
   label do |opts|

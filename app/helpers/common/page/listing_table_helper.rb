@@ -82,7 +82,7 @@ module Common::Page::ListingTableHelper
 #  ##
 #  ## PRIVATE
 #  ##
-# 
+#
 #  private
 
 #  #

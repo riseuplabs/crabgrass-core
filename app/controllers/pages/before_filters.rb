@@ -12,7 +12,7 @@ module Pages::BeforeFilters
   ##
 
   #
-  # a before filter that comes before all the others. 
+  # a before filter that comes before all the others.
   # allows us to grab the @page before the permissions need to be resolved.
   # subclasses should define 'fetch_data', which this method calls.
   #
@@ -39,7 +39,7 @@ module Pages::BeforeFilters
 
     true
   end
- 
+
   def default_setup_options
     @options = Pages::BaseController::Options.new
     @options.show_assets  = true
@@ -71,7 +71,7 @@ module Pages::BeforeFilters
       return login_required
     end
   end
-  
+
   def load_posts
     if @options.show_posts and request.get? and !@page.nil?
       @posts = @page.posts(:page => params[:posts]) # use params[:posts] for pagination

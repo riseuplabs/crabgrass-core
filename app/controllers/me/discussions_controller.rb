@@ -2,7 +2,7 @@
 # Every user to user relationship potentially has a discussion record associated
 # with it. This controller is for that discussion.
 #
-# In this controller, the :id of a discussion is the login name of the other user. 
+# In this controller, the :id of a discussion is the login name of the other user.
 #
 # note: the route for this shows up at /me/messages, not /me/discussions
 #
@@ -26,7 +26,7 @@ class Me::DiscussionsController < Me::BaseController
   #  @discussion.mark!(:read, current_user)
   #  @posts = @discussion.posts.paginate(post_pagination_params)
   #rescue Exception => exc
-  #  render_error exc  
+  #  render_error exc
   #end
 
   # PUT /me/messages/penguin
@@ -49,7 +49,7 @@ class Me::DiscussionsController < Me::BaseController
       :all
     end
   end
-  
+
   def post_pagination_params
     default_page = params[:page].blank? ? @discussion.last_page : nil
     pagination_params(:page => default_page)

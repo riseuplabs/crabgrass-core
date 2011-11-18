@@ -15,5 +15,5 @@ class Pages::SidebarsController < Pages::BaseController
   def close_popup
     render :template => 'pages/sidebar/reset'
   end
-  
+
 end

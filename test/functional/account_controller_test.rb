@@ -115,7 +115,7 @@ class AccountControllerTest < ActionController::TestCase
     get :reset_password, :token => tokens(:strange).value
     assert_error_message(:invalid_token)
 
-    get :reset_password, :token => "invalid" 
+    get :reset_password, :token => "invalid"
     assert_error_message(:invalid_token)
 
     get :reset_password, :token => tokens(:tokens_003).value

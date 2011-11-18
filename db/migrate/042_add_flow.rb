@@ -1,6 +1,6 @@
-# 
+#
 # add flow to pages
-# flow is used to restrict some pages to be visible only when 
+# flow is used to restrict some pages to be visible only when
 # doing a particular activity, like :membership
 #
 

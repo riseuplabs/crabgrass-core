@@ -6,11 +6,11 @@ module DebugTestHelper
 
   # prints a notice that we are skipping a particular test
   #
-  # normally, the skip is indicated with a single 'S', but if the env var 
+  # normally, the skip is indicated with a single 'S', but if the env var
   # INFO is set, then it prints out where the skip happened, with a message.
   #
   def skip(msg)
-    if ENV['INFO'] 
+    if ENV['INFO']
       info "<< skip -- #{caller.first} -- #{msg} >>"
     else
       putc 'S'

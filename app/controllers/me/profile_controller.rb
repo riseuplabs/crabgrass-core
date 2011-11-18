@@ -9,7 +9,7 @@ class Me::ProfileController < Me::BaseController
     if params[:clear_photo]
       @profile.picture.destroy
       success :profile_saved.t
-      redirect_to edit_me_profile_path 
+      redirect_to edit_me_profile_path
     else
       @profile.save_from_params params['profile']
       if @profile.valid?

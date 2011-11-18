@@ -5,7 +5,7 @@
 #
 # So, the daemon stuff is commented out. Maybe some day it will be useful if doing high
 # volume document processing.
-# 
+#
 
 require 'tmpdir'
 

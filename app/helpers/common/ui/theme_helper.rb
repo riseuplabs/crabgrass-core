@@ -50,7 +50,7 @@ module Common::Ui::ThemeHelper
   # return 'first' if this is the first time it has been called for +key+
   #
   # for example:
-  # 
+  #
   #   .p{:class => first(:list)}   --->   <p class="first"></p>
   #   .p{:class => first(:list)}   --->   <p></p>
   #   .p{:class => first(:list)}   --->   <p></p>

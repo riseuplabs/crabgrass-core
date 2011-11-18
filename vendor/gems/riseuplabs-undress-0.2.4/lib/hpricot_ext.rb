@@ -35,7 +35,7 @@ module ::Hpricot #:nodoc:
       properties[key]
     end
 
-    def []= k, v 
+    def []= k, v
       s = properties.map {|pty,val| "#{pty}:#{val}"}.join(";")
       @element.set_attribute("style", "#{s.chomp(";")};#{k}:#{v}".sub(/^\;/, ""))
     end
@@ -74,7 +74,7 @@ module ::Hpricot #:nodoc:
       end
       ancestors
     end
-    
+
     def change_tag!(new_tag, preserve_attr = true)
       return if not etag
       self.name = new_tag

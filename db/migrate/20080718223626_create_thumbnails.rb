@@ -1,11 +1,11 @@
 class CreateThumbnails < ActiveRecord::Migration
-  def self.up 
+  def self.up
     # destroy previous thumbnails
     Asset.delete_all('thumbnail IS NOT NULL')
 
     # create new thumbnail table
     create_table "thumbnails", :force => true do |t|
-      t.integer  "parent_id",    :limit => 11 
+      t.integer  "parent_id",    :limit => 11
       t.string   "parent_type"
       t.string   "content_type"
       t.string   "filename"

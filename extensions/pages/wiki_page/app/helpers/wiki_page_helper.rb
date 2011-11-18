@@ -48,7 +48,7 @@ module WikiPageHelper
         link_opts[:confirm] = I18n.t(:wiki_lost_text_confirmation)
       end
       link = link_to_remote(:edit.t, link_opts, :title => I18n.t(:wiki_section_edit), :id => "#{section}_edit_link", :icon => 'pencil', :class => 'edit shy')
-      
+
       heading = anchor.parent
       heading.insert_after(Hpricot(link), anchor)
       heading.attributes['class'] += " shy_parent"

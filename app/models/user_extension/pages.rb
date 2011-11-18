@@ -136,7 +136,7 @@ module UserExtension::Pages
     return part
   end
 
-  public 
+  public
 
   # remove self from the page.
   # only call by page.remove(user)

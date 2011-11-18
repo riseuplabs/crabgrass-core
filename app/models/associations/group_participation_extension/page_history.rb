@@ -1,4 +1,4 @@
-module GroupParticipationExtension::PageHistory 
+module GroupParticipationExtension::PageHistory
   def self.included(base)
     base.class_eval do
     end

@@ -6,7 +6,7 @@ module Common::Ui::JavascriptHelper
   ##
   ## rjs page updates
   ##
-  
+
   def standard_update(page)
     update_alert_messages(page)
     if alert_messages_have_errors?
@@ -27,10 +27,10 @@ module Common::Ui::JavascriptHelper
   #
   # most of the time it makes sense to alter the class or style of a particular
   # element when you want it to change. however, there are cases where you to
-  # create or alter a global css rule dynamically via javascript. 
-  # 
+  # create or alter a global css rule dynamically via javascript.
+  #
   # this is currently used by the page searching system.
-  # 
+  #
   # requires crabgrass's javascript class 'Style'
   #
   #def set_style(selector, css)
@@ -67,7 +67,7 @@ module Common::Ui::JavascriptHelper
 
     # argument 2: options
     js_options = build_callbacks(options)
-    if method = options[:method] 
+    if method = options[:method]
       method = "'#{method}'" unless (method.is_a?(String) and !method.index("'").nil?)
       js_options['method'] = method
     end

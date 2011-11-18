@@ -17,7 +17,7 @@ module PathFinder
       def add_attribute_constraint(attribute, value)
         @with << [attribute, value]
       end
-   
+
       def add_access_contraint(access_hash)
         @with << [:access_ids, Page.access_ids_for(access_hash)]
       end

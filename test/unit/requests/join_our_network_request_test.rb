@@ -11,18 +11,18 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
   def test_valid_request
     @network.add_user! @user
     assert_difference 'Request.count' do
-      RequestToJoinOurNetwork.create! :created_by => @user, 
-        :recipient => @group, 
+      RequestToJoinOurNetwork.create! :created_by => @user,
+        :recipient => @group,
         :requestable => @network
     end
   end
 
   def test_no_duplicate_membership
     @network.add_user! @user
-    @network.add_group! @group 
+    @network.add_group! @group
     assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do
-      RequestToJoinOurNetwork.create! :created_by => @user, 
-        :recipient => @group, 
+      RequestToJoinOurNetwork.create! :created_by => @user,
+        :recipient => @group,
         :requestable => @network
     end
   end
@@ -31,18 +31,18 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
   def test_only_member_may_invite
     @group.add_user! @user
     assert_raises ActiveRecord::RecordInvalid, 'PERMISSIONS DISABLED: non member is able to invite to network' do
-      RequestToJoinOurNetwork.create! :created_by => @user, 
-        :recipient => @group, 
+      RequestToJoinOurNetwork.create! :created_by => @user,
+        :recipient => @group,
         :requestable => @network
     end
   end
- 
+
   def test_valid_approval
     @group.add_user! @user
     inviter = User.make
     @network.add_user! inviter
-    req = RequestToJoinOurNetwork.create! :created_by => inviter, 
-      :recipient => @group, 
+    req = RequestToJoinOurNetwork.create! :created_by => inviter,
+      :recipient => @group,
       :requestable => @network
     assert_nothing_raised do
       req.approve_by!(@user)

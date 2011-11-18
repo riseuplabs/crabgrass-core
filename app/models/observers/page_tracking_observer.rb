@@ -35,7 +35,7 @@ class PageTrackingObserver < ActiveRecord::Observer
         PageHistory::AddComment.create!(:user => User.current, :page => post.discussion.page, :object => post) if post.created_at == post.updated_at
       end
     end
-  end  
+  end
 
   def after_update(model)
     if User.current
@@ -60,7 +60,7 @@ class PageTrackingObserver < ActiveRecord::Observer
   end
 
   def after_destroy(model)
-    if User.current    
+    if User.current
       if model.is_a? UserParticipation
         up = model
         PageHistory::RevokedUserAccess.create!(:user => User.current, :page => up.page, :object => up.user)

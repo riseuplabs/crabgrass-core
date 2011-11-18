@@ -21,7 +21,7 @@ class AvatarsController < ApplicationController
       send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
     else
       content_type = 'image/jpeg'
-      data = @image.resize(params[:size], content_type); 
+      data = @image.resize(params[:size], content_type);
       response.headers['Cache-Control'] = 'public, max-age=86400'
       send_data data, :type => content_type, :disposition => 'inline'
     end

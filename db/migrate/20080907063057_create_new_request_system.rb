@@ -13,7 +13,7 @@ class CreateNewRequestSystem < ActiveRecord::Migration
 
     # run 'rake ts:index' after this is done
     ThinkingSphinx.updates_enabled = false
-   
+
     # destroy page-based request system
     RequestPage.destroy_all
     RequestDiscussionPage.destroy_all

@@ -2,7 +2,7 @@
 # AssetExtension::Upload
 #
 # Code that handles the creation of new assets from uploaded data.
-# 
+#
 
 require 'fileutils'
 
@@ -93,7 +93,7 @@ module AssetExtension
 
       #
       # html forms for assets have a field called 'uploaded_data'. This setter
-      # will grab the uploaded file from that field. There is not actually a 
+      # will grab the uploaded file from that field. There is not actually a
       # column in the db called 'uploaded_data'. the actual work is done in
       # finalize_attachment
       #
@@ -102,7 +102,7 @@ module AssetExtension
         @file_data = file_data
       end
 
-      # 
+      #
       # some POSTs may encode the data in the params directly as a blob, instead of
       # as an uploaded file. This setter will grab the raw blob and create a file
       # from it (the file is actually created later in finalize_attachment).
@@ -115,7 +115,7 @@ module AssetExtension
       #
       # called before validation in order to create @temp_file from the data and
       # to extract meta-data. @temp_file is turned into permanent storage later on
-      # in finalize_attachment(). 
+      # in finalize_attachment().
       #
       def process_attachment
         if @file_data or @raw_data
@@ -144,7 +144,7 @@ module AssetExtension
         true
       end
 
-      # 
+      #
       # copies the temporary files or raw data to permanent storage.
       # called after creation and every update.
       #

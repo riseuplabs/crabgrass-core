@@ -1,4 +1,4 @@
-class WikiPageController < Pages::BaseController 
+class WikiPageController < Pages::BaseController
   include Common::Application::WikiRenderer
   include Common::Application::WikiPopup
 

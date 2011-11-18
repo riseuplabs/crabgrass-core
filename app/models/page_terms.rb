@@ -70,7 +70,7 @@ class PageTerms < ActiveRecord::Base
       # has :updated_by_ids, :type => :multi
       # has :watched_by_ids, :type => :multi
       # has :owner_id (encoded)
-      
+
       # counts
       has :views_count
       has :stars_count

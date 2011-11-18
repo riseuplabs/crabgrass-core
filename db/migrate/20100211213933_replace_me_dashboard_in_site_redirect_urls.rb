@@ -4,7 +4,7 @@ class ReplaceMeDashboardInSiteRedirectUrls < ActiveRecord::Migration
 
   def self.up
     Site.find(:all).each do |site|
-      @@redirects.each do |redirect| 
+      @@redirects.each do |redirect|
         if site.read_attribute(redirect) =~ /\/me\/dashboard\/?/
           site.update_attribute(redirect, '/me/pages/my_work')
         end

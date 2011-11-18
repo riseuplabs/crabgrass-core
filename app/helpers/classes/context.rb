@@ -1,6 +1,6 @@
 =begin
 
-Context: a class to represent the current context. 
+Context: a class to represent the current context.
 
 Eventually, Context may become an ActiveRecord, to allow users to
 customize the appearance and behavior of their context.
@@ -15,7 +15,7 @@ identify of the person or group whose space we are in.
 Context Banner
 -----------------------
 
-The banner is the main display that shows the current context. 
+The banner is the main display that shows the current context.
 
 Available options:
 
@@ -73,7 +73,7 @@ class Context
 end
 
 class Context::Group < Context
-  
+
   def define_crumbs
     push_crumb :groups
     if self.entity and !self.entity.new_record?

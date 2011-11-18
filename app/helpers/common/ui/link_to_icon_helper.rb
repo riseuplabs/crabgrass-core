@@ -23,7 +23,7 @@ module Common::Ui::LinkToIconHelper
         alias_method_chain :link_to_function, :icon
       end
     end
-  
+
     #
     # makes a cool link with an icon. if you click the link, some ajax
     # thing happens, and the icon is set to a spinner. The icon is
@@ -43,7 +43,7 @@ module Common::Ui::LinkToIconHelper
         unless options[:confirm]
           icon_options[:loading] = [spinner_icon_on(icon, id), options[:loading]].combine(';')
           # i am not sure the best way to handle this. we don't want to do :complete for
-          # certain icons. For example, checkboxes change the icon after a complete, so 
+          # certain icons. For example, checkboxes change the icon after a complete, so
           # replacing the old icon for checkboxes would be a bad idea.
           unless icon =~ /check/
             icon_options[:complete] = [spinner_icon_off(icon, id), options[:complete]].combine(';')

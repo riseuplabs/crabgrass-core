@@ -8,7 +8,7 @@ module Pages::TagsHelper
         :complete => hide("tag_#{tag.id}") },
       { :class => 'shy inline', :icon => 'tiny_trash'}
     )
-    content_tag(:div, :id => "tag_#{tag.id}", :class => 'shy_parent p') do 
+    content_tag(:div, :id => "tag_#{tag.id}", :class => 'shy_parent p') do
       content_tag(:span, h(tag.name), :class => 'icon tag_16 inline') + ' ' +
       link
     end

@@ -81,7 +81,7 @@ module Crabgrass::Theme::Renderer
   #
   # this method determines if we should puts quotes or not.
   #
-  # For CSS, when generally don't ever need quotes. However, 
+  # For CSS, when generally don't ever need quotes. However,
   # because all theme variables get defined as sass variables, even
   # ones that are not used for CSS, we need to make sure we quote
   # anything that would require quotes in CSS.

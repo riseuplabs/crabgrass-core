@@ -61,7 +61,7 @@ ActiveRecord::Base.class_eval do
   def self.quote_sql(condition)
     sanitize_sql_array(condition)
   end
-  
+
   def quote_sql(condition)
     self.class.quote_sql(condition)
   end
@@ -136,11 +136,11 @@ ActiveRecord::Base.class_eval do
   # don't cause rails to bomb out. Rather, it should just instantiate a generic
   # page.
   #
-  # The method 'compute_type(type_name)' is a protected class method called by 
+  # The method 'compute_type(type_name)' is a protected class method called by
   # ActiveRecord#instantiate(record) in order to create a ActiveRecord object
   # from a database record using STI if needed. compute_type() should raise
   # NameError if the type can't be found.
-  # 
+  #
   # The variable type_name comes from the 'type' column of the record.
   #
   # rails notes:

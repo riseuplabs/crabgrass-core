@@ -17,7 +17,7 @@ class People::FriendRequestsController < People::BaseController
       end
     end
   end
-  
+
   def destroy
     current_user.remove_contact!(@user)
     success

@@ -1,7 +1,7 @@
 #
 # When I upgraded a couple old databases, the assets did not have page terms. This migration
 # will fix this problem when migrating from older schema.
-# 
+#
 class EnsureAssetsHavePageTerms < ActiveRecord::Migration
   def self.up
     Asset.all.each do |asset|

@@ -70,7 +70,7 @@ class Post < ActiveRecord::Base
 
   #
   # this is like a normal create, except that it optionally accepts multiple arguments:
-  # 
+  #
   # page -- the page that this post belongs to (optional)
   # user -- the user creating the post (optional)
   # discussion -- the discussion holding this post (optional)
@@ -78,8 +78,8 @@ class Post < ActiveRecord::Base
   #
   # You should have at least page or discussion.
   #
-  # for example: 
-  # 
+  # for example:
+  #
   #   Post.create! @page, current_user, params[:post]
   #
   def self.create!(*args, &block)

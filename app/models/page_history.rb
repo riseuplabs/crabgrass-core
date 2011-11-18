@@ -7,7 +7,7 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  def self.send_single_pending_notifications 
+  def self.send_single_pending_notifications
     pending_notifications.each do |page_history|
       if page_history.page.nil?
         page_history.destroy
@@ -54,14 +54,14 @@ class PageHistory < ActiveRecord::Base
   def self.recipients_for_page(page)
     UserParticipation.find(:all, :conditions => {:page_id => page.id, :watch => true}).map(&:user_id)
   end
-  
+
   def self.recipients_for_digest_notifications(page)
     User.find :all, :conditions => ["receive_notifications = 'Digest' and id in (?)", recipients_for_page(page)]
   end
 
   def self.recipients_for_single_notification(page_history)
-    users_watching_ids = recipients_for_page(page_history.page) 
-    users_watching_ids.delete(page_history.user.id) 
+    users_watching_ids = recipients_for_page(page_history.page)
+    users_watching_ids.delete(page_history.user.id)
     User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
   end
 
@@ -85,97 +85,97 @@ end
 
 class PageHistory::ChangeTitle < PageHistory
   before_save :add_details
-  after_save :page_updated_at  
+  after_save :page_updated_at
 
   def add_details
     self.details = {
       :from => self.page.title_was,
       :to   => self.page.title
     }
-  end  
+  end
 end
 
 class PageHistory::Deleted < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 end
 
 class PageHistory::UpdatedContent < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 end
 
 class PageHistory::GrantGroupFullAccess < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantGroupWriteAccess < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantGroupReadAccess < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::RevokedGroupAccess < PageHistory
-  after_save :page_updated_at  
+  after_save :page_updated_at
 
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserFullAccess < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserWriteAccess < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserReadAccess < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::RevokedUserAccess < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::AddComment < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end
 
 class PageHistory::UpdateComment < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end
 
 class PageHistory::DestroyComment < PageHistory
-  after_save :page_updated_at  
-  
+  after_save :page_updated_at
+
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end

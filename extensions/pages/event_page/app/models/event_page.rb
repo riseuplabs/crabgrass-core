@@ -1,12 +1,12 @@
 class EventPage < Page #:nodoc:
-  
+
   before_create :create_event
 
   def event
     data
   end
 
- 
+
   # indexing hooks
 
   #def body_terms
@@ -14,7 +14,7 @@ class EventPage < Page #:nodoc:
   #end
 
   protected
-  
+
   def create_event
     self.data = Event.create
   end

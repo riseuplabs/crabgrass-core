@@ -3,7 +3,7 @@ module RailsDevelopmentBoost
     def self.apply!
       [ActionController, ActionMailer].each {|mod| mod::Helpers::ClassMethods.send(:include, self)}
     end
-    
+
     # we need to explicitly associate helpers to their including controllers/mailers
     def add_template_helper_with_const_association_tracking(helper_module)
       ActiveSupport::Dependencies.add_explicit_dependency(helper_module, self)

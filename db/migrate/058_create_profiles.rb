@@ -1,13 +1,13 @@
 class CreateProfiles < ActiveRecord::Migration
 
-  def self.up  
+  def self.up
     create_table "profiles", :force => true do |t|
       # entity is a user or a group
       t.column "entity_id",   :integer
       t.column "entity_type", :string
-            
+
       t.column :language, :string,  :limit => 5
-      
+
       # access:
       t.column :all,      :boolean
       t.column :stranger, :boolean
@@ -15,7 +15,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.column :friend,   :boolean
       t.column :foe,      :boolean
 
-      # people only      
+      # people only
       t.column "name_prefix",     :string
       t.column "first_name",      :string
       t.column "middle_name",     :string
@@ -23,7 +23,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.column "name_suffix",     :string
       t.column "nickname",        :string
       t.column "role",            :string
-            
+
       # people and groups
       t.column "organization",    :string
       t.column "created_at",      :datetime
@@ -32,7 +32,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.column "layout_type",     :string
       t.column "layout_data",     :text
     end
-    
+
     add_index "profiles", ["entity_id", "entity_type", "language", "all", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
     create_table "websites", :force => true do |t|
@@ -43,7 +43,7 @@ class CreateProfiles < ActiveRecord::Migration
     end
 
     add_index "websites", ["profile_id"], :name => "websites_profile_id_index"
-    
+
     create_table "email_addresses", :force => true do |t|
       t.column "profile_id",    :integer
       t.column "preferred",     :boolean, :default => false
@@ -52,7 +52,7 @@ class CreateProfiles < ActiveRecord::Migration
     end
 
     add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
-        
+
     create_table "im_addresses", :force => true do |t|
       t.column "profile_id",  :integer
       t.column "preferred",  :boolean, :default => false
@@ -61,7 +61,7 @@ class CreateProfiles < ActiveRecord::Migration
     end
 
     add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
-  
+
     create_table "locations", :force => true do |t|
       t.column "profile_id",    :integer
       t.column "preferred",     :boolean, :default => false
@@ -73,19 +73,19 @@ class CreateProfiles < ActiveRecord::Migration
       t.column "geocode",       :string
       t.column "country_name",  :string
     end
-  
+
     add_index "locations", ["profile_id"], :name => "locations_profile_id_index"
-        
+
     create_table "phone_numbers", :force => true do |t|
       t.column "profile_id",        :integer
       t.column "preferred",         :boolean, :default => false
       t.column "provider",          :string
-      t.column "phone_number_type", :string  
-      t.column "phone_number",      :string  
+      t.column "phone_number_type", :string
+      t.column "phone_number",      :string
     end
 
     add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
-  
+
     create_table "profile_notes", :force => true do |t|
       t.column "profile_id",        :integer
       t.column "preferred",         :boolean, :default => false
@@ -95,7 +95,7 @@ class CreateProfiles < ActiveRecord::Migration
 
     add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
   end
-  
+
   def self.down
     drop_table :profiles
     drop_table :websites

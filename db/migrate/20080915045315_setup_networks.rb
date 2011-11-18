@@ -1,6 +1,6 @@
 #
 # the schema for networks already exists, but now we are going to actually use it
-# 
+#
 class SetupNetworks < ActiveRecord::Migration
   def self.up
     rename_table "federations", "federatings"

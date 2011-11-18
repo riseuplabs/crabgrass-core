@@ -19,7 +19,7 @@ module Crabgrass::Theme::Loader
   #      evaluate_ruby_file('init.rb')
   #
   #  step 2)
-  #    in theme's init.rb: 
+  #    in theme's init.rb:
   #      define_theme { ... }
   #    this calls loader.rb:
   #      def define_theme(&block)
@@ -43,7 +43,7 @@ module Crabgrass::Theme::Loader
     starting_data ||= {}
     @data = Crabgrass::Theme::Options.parse(starting_data, &block)
   end
-  
+
   #
   # Parses the specified block and turns it into navigation definition.
   # (or returns the existing navigation)
@@ -63,7 +63,7 @@ module Crabgrass::Theme::Loader
     @navigation = Crabgrass::Theme::NavigationDefinition.parse(self, starting_data, &block)
   end
 
-  # 
+  #
   # used in init.rb to define custom theme styles
   # DEPRECATED
   #
@@ -184,9 +184,9 @@ module Crabgrass::Theme::Loader
   def symlink(src, dst)
     # these sanity checks are necessary to prevent Pathname from throwing
     # exceptions... Pathname does not act gracefully if it references bad symlinks
-    # or missing files. 
+    # or missing files.
     if !File.exists?(src)
-      return    
+      return
     elsif File.symlink?(dst)
       FileUtils.rm(dst)
     elsif File.exists?(dst)
@@ -216,7 +216,7 @@ module Crabgrass::Theme::Loader
       end
     end
   end
- 
+
   # ensures the directory exists
   def ensure_dir(dir)
     unless File.exists?(dir)
@@ -225,7 +225,7 @@ module Crabgrass::Theme::Loader
     unless File.directory?(dir)
       raise 'For the theme to work, "%s" must be a directory.' % dir
     end
-  end  
-  
+  end
+
 end
 

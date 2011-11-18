@@ -18,7 +18,7 @@ module ::Hpricot
       @element = e
     end
 
-    def []= k, v 
+    def []= k, v
       s = properties.map {|pty,val| "#{pty}:#{val}"}.join(";")
       @element.set_attribute("style", "#{s.chomp(";")};#{k}:#{v}".sub(/^\;/, ""))
     end

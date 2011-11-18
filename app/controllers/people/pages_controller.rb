@@ -18,7 +18,7 @@ class People::PagesController < People::BaseController
     return nav
   end
 
-  # 
+  #
   # the common page search code relies on this being defined
   #
   def page_search_path(*args)

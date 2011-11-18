@@ -10,7 +10,7 @@ module RailsDevelopmentBoost
         include patch
       end
     end
-    
+
     # Overridden
     def cleanup_application
       # Cleanup the application before processing the current request.

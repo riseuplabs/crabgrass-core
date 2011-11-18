@@ -99,7 +99,7 @@ module Formy
     #
     # if a block is given to the attribute setter, the result is
     # used as the value argument.
-    # 
+    #
     def self.element_attr(*attr_names)
       for a in attr_names
         a = a.id2name

@@ -1,4 +1,4 @@
-module UserParticipationExtension::PageHistory 
+module UserParticipationExtension::PageHistory
   def self.included(base)
     base.class_eval do
     end
@@ -15,7 +15,7 @@ module UserParticipationExtension::PageHistory
   def star_added?
     self.star_changed? && self.star == true
   end
-  
+
   def star_removed?
     self.star_changed? && self.star != true
   end

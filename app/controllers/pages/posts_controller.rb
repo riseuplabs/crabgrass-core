@@ -3,7 +3,7 @@ class Pages::PostsController < ApplicationController
   permissions 'posts'
   prepend_before_filter :fetch_data
   before_filter :login_required
-  
+
   # if something goes wrong with create, redirect to the page url.
   rescue_render :create => lambda {redirect_to(page_url(@page))}
 

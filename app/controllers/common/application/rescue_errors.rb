@@ -135,8 +135,8 @@ module Common::Application::RescueErrors
     render_permission_denied(exception)
   end
 
-  # 
-  # tries to automatically render the most appropriate thing. 
+  #
+  # tries to automatically render the most appropriate thing.
   # for ajax, no problem, we render some rjs.
   # for html, we try to to figure out the best template to render.
   #
@@ -219,7 +219,7 @@ module Common::Application::RescueErrors
         render :action => 'new'
       elsif params[:action]
         render :action => params[:action]  # this is generally a bad idea. it probably means
-                                           # that a GET request resulted in an error. 
+                                           # that a GET request resulted in an error.
       end
     end
 
@@ -252,7 +252,7 @@ module Common::Application::RescueErrors
       update_alert_messages(page)
     end
   end
- 
+
   #def flash_auth_error(mode)
   #  if mode == :now
   #    flsh = flash.now

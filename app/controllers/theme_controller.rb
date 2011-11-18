@@ -8,7 +8,7 @@
 # here. I am not sure which method is better, but this seems to work.
 #
 # This does not work, however, for destroying the cache. For this, we do
-# use the first method: Theme.stylesheet_url(..) will destroy the cached 
+# use the first method: Theme.stylesheet_url(..) will destroy the cached
 # sheets in development mode if they need to be re-rendered. It might
 # make more sense to combine both the rendering and the destroying in the
 # same place. One advantage of the method here is that we can display

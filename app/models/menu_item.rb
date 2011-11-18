@@ -5,7 +5,7 @@ class MenuItem < ActiveRecord::Base
 
   # this doesn't make any sense, because this is only run once at startup
   # so the values will always be english:
- 
+
   #TYPES={
   #  I18n.t(:external_link_menu_item)=>:external,
   #  I18n.t(:local_link_menu_item)=>:local,

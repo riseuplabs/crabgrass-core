@@ -35,7 +35,7 @@ module Sass::Script::Functions
     context
   end
 
-  # return the width of 'n' columns plus 'n - 1' gutters 
+  # return the width of 'n' columns plus 'n - 1' gutters
   # plus page padding in non-nested contexts
   def context(n = false)
     raise Sass::SyntaxError, "container() must be called before context() - should be called in susy/susy.sass" unless defined?(@@susy_total_columns)

@@ -14,12 +14,12 @@ class Pages::TagsController < Pages::SidebarsController
     @page.save!
     close_popup
   end
-  
+
   def destroy
     @page.tag_list.remove(params[:id])
     @page.updated_by = current_user
     @page.save!
     render :nothing => true
-  end  
+  end
 
 end

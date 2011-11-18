@@ -2,9 +2,9 @@ require 'greencloth'
 
 class DropSummaryFromGroups < ActiveRecord::Migration
   def self.up
-   
-    # I have decided that using activerecord in migrations should be avoided. 
-    # It causes more trouble than it is worth: when migrating a database, 
+
+    # I have decided that using activerecord in migrations should be avoided.
+    # It causes more trouble than it is worth: when migrating a database,
     # the model code that is used is based on the very newest database, and if
     # you try to use these models on the old database while it is getting migrated
     # then all sorts of things will likely break.

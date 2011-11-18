@@ -1,4 +1,4 @@
-# 
+#
 # Routes:
 #  edit_page_title_path  GET /pages/:page_id/title/edit  {:controller=>"pages/title", :action=>"edit"}
 #  page_title_path       PUT /pages/:page_id/title       {:controller=>"pages/title", :action=>"update"}
@@ -7,7 +7,7 @@
 class Pages::TitleController < Pages::SidebarsController
 
   before_filter :login_required
-  
+
   # Return the edit title form. This is called by modalbox to load the popup contents.
   def edit
   end

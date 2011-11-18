@@ -6,6 +6,6 @@ class AddTypeToPageIndex < ActiveRecord::Migration
 
   def self.down
     remove_column :page_indices, :type
-    add_column :page_indices, :class_display_name, :string    
+    add_column :page_indices, :class_display_name, :string
   end
 end

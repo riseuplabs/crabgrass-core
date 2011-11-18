@@ -49,8 +49,8 @@ module PagesPermission
   ##
 
   # ability to move to trash
-  # you can change this to be different than destroy, 
-  # if you can destroy, you should also be able to delete. 
+  # you can change this to be different than destroy,
+  # if you can destroy, you should also be able to delete.
   alias_method :may_delete_page?, :may_destroy_page?
 
   # ability to remove from trash
@@ -103,7 +103,7 @@ module PagesPermission
 
   # if true, then you can choose access permissions when sharing
   # pages. this is used by cc.net. Not sure if this is a hack
-  # or a useful general feature. 
+  # or a useful general feature.
   def may_select_access_participation?(page=@page)
     page.nil? or current_user.may? :admin, page
   end
@@ -111,7 +111,7 @@ module PagesPermission
   # this does not really test permissions, rather, it lets us know if something horrible would
   # happen if we removed this participation. may_admin_page_without is an expensive call,
   # so this should be used sparingly. this method helps prevent removing yourself
-  # from page access, although it is clumsy. 
+  # from page access, although it is clumsy.
   def may_remove_participation?(part)
     if part.is_a?(UserParticipation)
       if part.user_id != current_user.id

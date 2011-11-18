@@ -12,7 +12,7 @@ class CreatePageTerms < ActiveRecord::Migration
       t.text     "comments"
       t.string   "tags"
       t.string   "title"
- 
+
       t.boolean  "resolved"
       t.integer  "rating"
       t.integer  "contributors_count"

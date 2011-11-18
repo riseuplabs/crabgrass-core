@@ -68,7 +68,7 @@ class AssetsController < ApplicationController
   #
   # guess if we are viewing a thumbnail or the actual asset
   #
-  # TODO: i really don't like how this works. there should be a better way of 
+  # TODO: i really don't like how this works. there should be a better way of
   # designating thumbnails, like adding thumb to the prefix path instead of the filename.
   #
   def thumbnail_filename?(filename)

@@ -2,7 +2,7 @@ module Common::Utility::TimeHelper
 
   protected
 
-  # 
+  #
   # friendly_date()
   #
   # Our goal here it to automatically display the date in the way that

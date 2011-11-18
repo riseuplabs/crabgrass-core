@@ -18,6 +18,6 @@ class DropPictures < ActiveRecord::Migration
     end
     add_index "pictures", ["created_by_id"], :name => "index_pictures_created_by_id"
   end
-  
+
 end
 

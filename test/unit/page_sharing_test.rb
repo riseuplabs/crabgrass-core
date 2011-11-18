@@ -89,7 +89,7 @@ class PageSharingTest < ActiveSupport::TestCase
 
   def test_add_page
     user = User.make
-  
+
     page = nil
     assert_nothing_raised do
       page = Page.make(:title => 'fun fun')

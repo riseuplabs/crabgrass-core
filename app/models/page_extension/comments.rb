@@ -5,7 +5,7 @@
 # Page owns a single Discussion.
 #
 # TODO: give page a discussion_id instead of putting the page_id in discussions table.
-# 
+#
 module PageExtension::Comments
 
   def self.included(base)

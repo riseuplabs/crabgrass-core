@@ -1,7 +1,7 @@
-## 
+##
 ## Here in lies all the helpers for displaying icons, avatars, spinners,
 ## and various images.
-## 
+##
 
 module Common::Ui::ImageHelper
 

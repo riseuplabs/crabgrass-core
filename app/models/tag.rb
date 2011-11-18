@@ -23,7 +23,7 @@ class Tag < ActiveRecord::Base
       :joins => "INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page' INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id",
       :conditions => "MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{Page.access_filter(options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL",
       :group => 'name',
-      :order => 'name' 
+      :order => 'name'
     }
   }
 
