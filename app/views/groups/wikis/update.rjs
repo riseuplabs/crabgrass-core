@@ -1,3 +1,0 @@
-standard_update(page)
-page.replace_html dom_id(@wiki), :partial => '/common/wiki/show'
-page << hide_spinner(@wiki)
