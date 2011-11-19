@@ -14,7 +14,7 @@ module Common::Wiki
     base.class_eval do
       before_filter :fetch_context # needs to be defined in the controller itself
       before_filter :login_required # will use the permissions from the controller
-      before_filter :fetch_wiki, :only => [:show, :preview, :edit, :update]
+      before_filter :fetch_wiki, :only => [:show, :edit, :update]
       before_filter :setup_wiki_rendering
 
       javascript :wiki
@@ -46,7 +46,7 @@ module Common::Wiki
     else
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
     end
-    redirect_to entity_path(@group || @page)
+    redirect_to entity_path(@group || @page)  #entity_path probably won't work for @page. should we use group_path for group?
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
