@@ -20,8 +20,14 @@ module Wikis::AssetsHelper
 
   def image_tags_and_ids(images)
     images.map do |image|
-      [thumbnail_img_tag(image, :small, :scale => '64x64'), image.id]
+      [img_selector_tag(image), image.id]
     end
+  end
+
+  def img_selector_tag(image)
+    content_tag(:div,
+      thumbnail_img_tag(image, :medium, :scale => '120x120'),
+      :class => 'image_selector')
   end
 
   def data_tag_for_image(image)

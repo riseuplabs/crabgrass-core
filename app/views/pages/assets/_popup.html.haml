@@ -18,13 +18,7 @@
         %td
           (#{I18n.t(:none)})
   %h2= :add_new_attachment.t
-  - form_for( :asset, Asset.new(), :url => {:controller => 'pages/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f|
-    = f.file_field 'uploaded_data', :size => '20'
-    \ #{submit_tag :upload.t}
-    %br/
-    %label
-      = check_box_tag('use_as_cover', "1")
-      = :use_as_cover.t
+  = asset_upload_form_for(@page)
   .buttons
     - form_remote_tag( :url => page_assets_path(@path), :page_id => @page.id, :loading => show_spinner('popup')) do
       = spinner 'popup'

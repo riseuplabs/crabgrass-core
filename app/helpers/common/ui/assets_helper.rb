@@ -1,25 +1,8 @@
-module Pages::AssetsHelper
-
-  # TODO: fix styles so that we don't have to force no padding here
-  def asset_row(asset)
-    content_tag(:td,
-      update_cover_asset_checkbox(asset)
-    ) +
-    content_tag(:td,
-      link_to_asset(asset, :small), :style => 'width: 1%'
-    ) +
-    content_tag(:td,
-      link_to( h(asset.filename), asset.url)
-    ) +
-    content_tag(:td,
-      remove_asset_link(asset)
-    )
-  end
+module Common::Ui::AssetsHelper
 
   def asset_rows
-    @page.assets.collect do |asset|
-      content_tag(:tr, asset_row(asset), :id => dom_id(asset), :class => cycle('even','odd'))
-    end.join("\n")
+    render :partial => 'common/assets/asset_as_row',
+      :collection => (@assets || @page.assets)
   end
 
   def remove_asset_link(asset)

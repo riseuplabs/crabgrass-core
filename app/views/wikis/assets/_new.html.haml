@@ -1,10 +1,3 @@
-- upload_image_form = capture do
-  - form_for([@wiki, Asset.new], :html => {:multipart => true, :target => 'upload_frame'}) do |f|
-    = f.file_field 'uploaded_data', :size => '12'
-    = f.submit :upload.t
-    = spinner 'upload'
-  %iframe#upload_frame{:name => :upload_frame, :src=>'about:blank'}
-
 #image_popup.image_popup
   -# :insert_image_instructrions.t
   = formy(:simple_form) do |f|
@@ -19,7 +12,7 @@
       - r.input image_select_buttons # used to be popup_image_list
     - f.row do |r|
       - r.label :upload_new_image.t
-      - r.input upload_image_form # see capture above
+      - r.input asset_upload_form_for(@wiki)
 
   .buttons
     = close_modal_button(:cancel)

@@ -111,6 +111,26 @@ input.checkbox, input.radio {
 // in webkit and gecko, checkboxes and radio buttons seem to look better this way
 input[type=radio], input[type=checkbox] {
   vertical-align: top;
+  float: left;
 }
 
+div.image_selector {
+  float: left;
+  padding: .5em;
+  margin: .2em;
+  border: 1px solid lightgray;
+}
 
+.image_select_list{
+  input[type=radio] {
+    display: none;
+  }
+  input:checked + label {
+    background: blue
+  }
+}
+
+iframe#upload_frame {
+  width: 1px;
+  height: 1px;
+}

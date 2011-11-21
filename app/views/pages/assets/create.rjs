@@ -1,0 +1,2 @@
+page.replace_html 'MB_content', :partial => 'popup'
+page << "Modalbox.updatePosition();"
