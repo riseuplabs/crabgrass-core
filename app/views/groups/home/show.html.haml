@@ -2,12 +2,13 @@
   = render :partial => 'sidecolumn'
 
 - if @profile.private?
-  = private_wiki_toggle
-  = spinner(@wiki) if @wiki
   = public_wiki_toggle
   = spinner(@public_wiki) if @public_wiki
+  = private_wiki_toggle
+  = spinner(@wiki) if @wiki
 - else
-  = render :partial => 'common/wiki/show', :locals => {:preview => true} if @wiki
+  -# show full wiki not preview:
+  = render :partial => 'common/wiki/show' if @wiki
 %hr
 
 - @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_group(@group), pagination_params)
