@@ -25,7 +25,8 @@ module Formy
           @label, @label_for = @label
         end
         html = []
-        html << '<div class="row" id="%s">' % @id
+        classes = ['row', @options[:class]].compact
+        html << '<div class="%s" id="%s">' % [classes.join(' '), @id]
         html << '<label for="%s">%s</label>' % [@label_for, @label]
         html << @input
         html << '</div>'

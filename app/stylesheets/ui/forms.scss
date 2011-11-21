@@ -114,6 +114,12 @@ input[type=radio], input[type=checkbox] {
   float: left;
 }
 
+div.image_preview {
+  max-width: 250px;
+  max-height: 200px;
+  overflow: auto;
+}
+
 div.image_selector {
   float: left;
   padding: .5em;

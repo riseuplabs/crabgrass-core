@@ -1,4 +1,4 @@
 .image_select_list
   - @images.each do |image|
     = data_tag_for_image(image)
-  = radio_buttons_tag :image, image_tags_and_ids(@images)
+  = radio_buttons_tag :image, image_tags_and_ids(@images), :onchange => "updatePreview();"

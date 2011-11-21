@@ -26,7 +26,7 @@ class Wikis::AssetsController < Wikis::BaseController
       media_type(:image).
       most_recent.
       # with_url. #TODO: make sure images have url set.
-      all(:limit=>20)
+      all(:limit=>8)
   end
 
 end
