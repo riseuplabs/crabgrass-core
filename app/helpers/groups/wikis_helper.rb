@@ -11,12 +11,14 @@ module Groups::WikisHelper
   def wiki_toggle(wiki, wiki_type)
     return wiki_new_link(wiki_type) if wiki.nil? or wiki.new_record?
     open = @wiki && (@wiki == wiki)
+    # show full wiki if we were just editing this wiki:
+    preview = (request.referer && @wiki && (request.referer == edit_group_wiki_url(@group, @wiki))) ? false : true
     link_to_toggle wiki_type.t, dom_id(wiki),
       :onvisible => wiki_remote_function(wiki, wiki_type),
       :class => 'section_toggle',
       :open => open do
       if open
-        render :partial => 'common/wiki/show', :locals => {:preview => true}
+        render :partial => 'common/wiki/show', :locals => {:preview => preview}
       end
     end
   end

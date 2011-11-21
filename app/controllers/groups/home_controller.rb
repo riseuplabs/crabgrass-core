@@ -11,8 +11,11 @@ class Groups::HomeController < Groups::BaseController
 
   def show
     @profile = @group.profile
-    @wiki = @profile.wiki
+    @private_wiki = @profile.wiki
     @public_wiki = @group.profiles.public.wiki
+    # have public wiki displayed if that was just edited; otherwise private wiki
+    @wiki = (request.referer && (request.referer == edit_group_wiki_url(@group, @public_wiki))) ? @public_wiki : @private_wiki
+    # should we also show a particular wiki if we just viewed the versions of that wiki? seems reasonable
   end
 
 end
