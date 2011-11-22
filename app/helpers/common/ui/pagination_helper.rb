@@ -61,7 +61,9 @@ module Common::Ui::PaginationHelper
         defaults[:renderer] = LinkRenderer::Pages
       end
     elsif request.xhr?
-      defaults[:renderer] = LinkRenderer::Ajax
+      defaults[:renderer] = (template.format == 'html') ?
+       LinkRenderer::ModalAjax :
+       LinkRenderer::Ajax
       defaults[:container] = false  # LinkRenderer::Ajax uses its own container
     else
       defaults[:renderer] = LinkRenderer::Dispatch

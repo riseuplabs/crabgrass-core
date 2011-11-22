@@ -5,9 +5,6 @@
 #
 class LinkRenderer::Ajax < LinkRenderer::Dispatch
   def page_link(page, text, attributes = {})
-    # ajax pagination will always use :get as the method
-    # because the action should be index (or possibly show)
-    options = {:url => url_for(page), :method => :get, :loading => @template.show_spinner(spinner_id)}
 
     # set up arrows
     # if attributes[:class] =~ /prev_page/
@@ -21,7 +18,7 @@ class LinkRenderer::Ajax < LinkRenderer::Dispatch
     #  attributes[:icon] = 'none'
     # end
 
-    @template.link_to_remote(text, options, attributes)
+    @template.link_to_remote(text, link_options(page), attributes)
   end
 
   def page_span(page, text, attributes = {})
@@ -47,6 +44,16 @@ class LinkRenderer::Ajax < LinkRenderer::Dispatch
     # eg, if we are paginating user_participations, results in spinners with
     # id => 'pagination_user_participation_spinner'
     'pagination_' + @collection.first.class.name.underscore
+  end
+
+  protected
+
+  def link_options(page)
+    # ajax pagination will always use :get as the method
+    # because the action should be index (or possibly show)
+    options = { :url => url_for(page),
+      :method => :get,
+      :loading => @template.show_spinner(spinner_id) }
   end
 
 end

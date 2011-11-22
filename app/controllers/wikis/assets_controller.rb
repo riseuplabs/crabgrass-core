@@ -25,8 +25,7 @@ class Wikis::AssetsController < Wikis::BaseController
     @images = Asset.visible_to(current_user, @group || @page.group).
       media_type(:image).
       most_recent.
-      # with_url. #TODO: make sure images have url set.
-      all(:limit=>8)
+      paginate(pagination_params(:per_page => 8))
   end
 
 end
