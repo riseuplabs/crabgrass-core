@@ -7,11 +7,11 @@ module Groups::WikiPermission
   end
 
   def may_show_group_wiki?(group=@group)
-    current_user.member_of?(group) or
-      @group.public_wiki
+    @wiki.nil? && group.public_wiki or
+    @wiki == group.public_wiki or
+    current_user.member_of?(group)
   end
 
   alias_method :may_create_group_wiki?, :may_edit_group_wiki?
-  alias_method :may_preview_group_wiki?, :may_show_group_wiki?
 
 end
