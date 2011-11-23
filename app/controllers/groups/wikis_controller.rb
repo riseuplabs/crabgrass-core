@@ -37,9 +37,14 @@ class Groups::WikisController < Groups::BaseController
 
   def fetch_context
     @group = Group.find_by_name(params[:group_id])
-    @profile = params[:wiki] && params[:wiki][:private] ?
-        @group.profiles.private :
-        @group.profiles.public
+    @profile = fetch_private? ?
+      @group.profiles.private :
+      @group.profiles.public
+  end
+
+  def fetch_private?
+    params[:wiki] && params[:wiki][:private] or
+    params[:private]
   end
 
   def fetch_wiki

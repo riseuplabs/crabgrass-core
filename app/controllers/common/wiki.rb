@@ -13,7 +13,6 @@ module Common::Wiki
   def self.included(base)
     base.class_eval do
       before_filter :fetch_context # needs to be defined in the controller itself
-      before_filter :login_required # will use the permissions from the controller
       before_filter :fetch_wiki, :only => [:show, :edit, :update]
       before_filter :setup_wiki_rendering
 
