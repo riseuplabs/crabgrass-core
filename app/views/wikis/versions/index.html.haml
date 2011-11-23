@@ -8,6 +8,7 @@
       %th=:versions.tcap
       %th=:created.tcap
       %th=:person.tcap
-      %th
-        &nbsp;
+      - if @wiki.versions.count > 1
+        %th
+          &nbsp;
     = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions

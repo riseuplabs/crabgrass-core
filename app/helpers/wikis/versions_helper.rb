@@ -24,7 +24,7 @@ module Wikis::VersionsHelper
   end
 
   def version_time_link(version)
-    link_to_remote full_time(version.updated_at),
+    link_to_remote friendly_date(version.updated_at),
       :url => wiki_version_path(@wiki, version),
       :update => dom_id(@wiki),
       :method => :get

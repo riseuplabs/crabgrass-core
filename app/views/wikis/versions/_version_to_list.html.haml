@@ -3,4 +3,5 @@
   %td=version_number_link(version)
   %td=version_time_link(version)
   %td=version_user_link(version)
-  %td=version_diff_link(version)
+  - if @wiki.versions.count > 1
+    %td=version_diff_link(version)
