@@ -931,6 +931,7 @@ en:
   ## WIKI
   ##
 
+  wiki_existed_new_version_created: "This wiki had already been created by another user. Your changes have been saved as a new version."
   wiki_is_locked: "This wiki is currently locked by %{user}"
   wont_be_able_to_save: "You will not be able to save this page"
   leave_editing_wiki_page_warning: "If you don't save the wiki, you will lose your changes."
@@ -1004,7 +1005,6 @@ en:
   cant_lock_nonexistant_section: "can't lock a nonexistant section"
   cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
-  wiki_formating_intro: "You can use any of the following to format your wiki:"
   wiki_formating_code: |
     Big Caption
     ===========
@@ -1024,7 +1024,7 @@ en:
     You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
     Use the toolbar for inserting images and links.</br>
 
-  bla: "blub"
+  wiki_formating_intro: "You can use any of the following to format your wiki:"
 
   ##
   ## WALL

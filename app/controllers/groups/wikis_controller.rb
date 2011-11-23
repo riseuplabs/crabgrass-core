@@ -10,8 +10,8 @@ class Groups::WikisController < Groups::BaseController
 
   def new
     if @wiki = @profile.wiki
-      # the wiki has been saved by another user since the link to
-      # new was displayed
+      # the wiki has been created by another user since the link to
+      # new was displayed - so we just display it.
       render :template => '/common/wiki/show'
     else
       @wiki = Wiki.new
@@ -25,8 +25,12 @@ class Groups::WikisController < Groups::BaseController
         # another user has created this group wiki
         # we will save this one as a newer version
         @wiki.update_document!(current_user, nil, params[:wiki][:body])
+        notice :wiki_existed_new_version_created.t
       else
-        @wiki = @profile.create_wiki(:version => 0, :body => params[:wiki][:body])
+        @wiki = @profile.create_wiki :version => 0,
+          :body => params[:wiki][:body],
+          :user => current_user
+        success
       end
     end
     redirect_to entity_path(@group || @page)

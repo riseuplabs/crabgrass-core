@@ -62,6 +62,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     wiki = Wiki.last
     assert "<em>created</em>", wiki.body_html
     assert wiki.profile.private?
+    assert_equal @user, wiki.versions.last.user
     assert_response :redirect
     assert_redirected_to group_url(@group)
   end
