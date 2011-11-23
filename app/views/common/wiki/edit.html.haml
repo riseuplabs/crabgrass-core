@@ -2,4 +2,7 @@
   = render :partial => 'common/wiki/sidehelp'
 %div[@wiki]
   = render :partial => 'common/wiki/edit'
+  = javascript_tag create_wiki_toolbar(@wiki)
+  = javascript_tag confirm_discarding_wiki_edit_text_area
+  = javascript_tag release_lock_on_unload unless @wiki.new_record?
 = spinner(@wiki)
