@@ -10,14 +10,16 @@ module Groups::WikisHelper
 
   def wiki_toggle(wiki, wiki_type)
     return wiki_new_link(wiki_type) if wiki.nil? or wiki.new_record?
+
     open = @wiki && (@wiki == wiki)
-    # show full wiki if we were just editing this wiki:
-    preview = (request.referer && @wiki && (request.referer == edit_group_wiki_url(@group, @wiki))) ? false : true
+
     link_to_toggle wiki_type.t, dom_id(wiki),
       :onvisible => wiki_remote_function(wiki, wiki_type),
       :class => 'section_toggle',
       :open => open do
       if open
+        # show full wiki if we just focussed on this wiki:
+        preview = !coming_from_wiki?(@wiki)
         render :partial => 'common/wiki/show', :locals => {:preview => preview}
       end
     end
@@ -57,61 +59,45 @@ module Groups::WikisHelper
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_more_link.t,
-    { :url => group_wiki_path(@group, @wiki),
-      :method => :get},
+      { :url => group_wiki_path(@group, @wiki),
+        :method => :get},
       :icon => 'plus'
   end
 
   def wiki_less_link
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_less_link.t,
-    { :url => group_wiki_path(@group, @wiki, :preview => true),
-      :method => :get},
-    :icon => 'minus'
+      { :url => group_wiki_path(@group, @wiki, :preview => true),
+        :method => :get},
+      :icon => 'minus'
   end
 
-  #from extensions/pages/wiki_page/app/helpers/wiki_helper.rb
   def wiki_locked_notice(wiki)
     return if wiki.document_open_for? current_user
 
-    error_text = I18n.t(:wiki_is_locked, :user => wiki.locker_of(:document).try.name || I18n.t(:unknown))
+    user = wiki.locker_of(:document).try.name || I18n.t(:unknown)
+    error_text = :wiki_is_locked.t(:user => user)
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
   end
 
-  #next 3 methods from extensions/pages/wiki_page/app/helpers/wiki_helper.rb
-# maybe we dont' want them
-  def image_popup_id(wiki)
-    'image_popup'
-  end
-
-  def wiki_body_id(wiki)
-    'wiki_body'
-  end
-
-  def wiki_toolbar_id(wiki)
-    'markdown_toolbar'
-  end
-
-  # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial
-  # returns something like 'Version 3 created Fri May 08 12:22:03 UTC 2009 by Blue!'
+  # returns something like
+  # 'Version 3 created Fri May 08 12:22:03 UTC 2009 by Blue!'
   def wiki_version_label(version)
-    label = I18n.t(:version_number, :version => version.version)
-     # add users name
-     if version.user_id
-       user_name = User.find_by_id(version.user_id).try.name || I18n.t(:unknown)
-       label << ' ' << I18n.t(:created_when_by, :when => full_time(version.updated_at), :user => user_name)
-     end
-
-     label
+    label = :version_number.t(:version => version.version)
+    user_name = version.try.user.name || :unknown.t
+    label << ' '
+    label << :created_when_by.t(:when => full_time(version.updated_at),
+      :user => user_name)
+    label
   end
 
-  # also from extensions/pages/wiki_page/app/helpers/wiki_helper.rb, also copied as a trial
   def create_wiki_toolbar(wiki)
-    body_id = wiki_body_id(wiki)
-    toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = modalbox_function(new_wiki_asset_path(wiki), :title => I18n.t(:insert_image))
+   "wikiEditAddToolbar('#{wiki.id.to_s}', function() {#{image_popup_function(wiki)}});"
+  end
 
-   "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
+  def image_popup_function(wiki)
+    modalbox_function new_wiki_asset_path(wiki),
+      :title => I18n.t(:insert_image)
   end
 
   def confirm_discarding_wiki_edit_text_area(text_area_id = nil)

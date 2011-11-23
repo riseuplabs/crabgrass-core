@@ -14,7 +14,7 @@ class Groups::WikisController < Groups::BaseController
       # new was displayed - so we just display it.
       render :template => '/common/wiki/show'
     else
-      @wiki = Wiki.new
+      @wiki = Wiki.new :private => fetch_private?
       render :template => '/common/wiki/edit'
     end
   end
@@ -47,8 +47,8 @@ class Groups::WikisController < Groups::BaseController
   end
 
   def fetch_private?
-    params[:wiki] && params[:wiki][:private] or
-    params[:private]
+    priv = params[:wiki] ? params[:wiki][:private] : params[:private]
+    priv && priv.any?
   end
 
   def fetch_wiki

@@ -2,10 +2,10 @@
 - # 16 here is a magic number. it might have to change if the font size of
 - # the wiki text changes.
 - rows = [ 20, (params[:height]||0).to_i/16 ].max
-.image_popup{:id => image_popup_id(@wiki), :style => "display:none"}
+.image_popup#image_popup
 - form_for([@base, @wiki]) do |f|
   = f.hidden_field 'version'
-  = f.hidden_field :private, :value => params[:private] if params[:private] # is this still used?
+  = f.hidden_field :private # marks private group wikis during creation
   = f.text_area('body', :rows => rows, :cols => 64)
   %div
     = formatting_reference_link

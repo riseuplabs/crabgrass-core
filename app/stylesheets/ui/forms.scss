@@ -114,6 +114,10 @@ input[type=radio], input[type=checkbox] {
   float: left;
 }
 
+.image_popup {
+  display:none;
+}
+
 div.image_preview {
   width: 250px;
   height: 200px;

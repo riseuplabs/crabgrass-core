@@ -31,6 +31,7 @@ class Wiki < ActiveRecord::Base
   has_many :pages, :as => :data
   has_one :profile
   has_one :group, :through => :profile, :source => :entity, :source_type => 'Group'
+  attr_accessor :private # marks private group wikis during creation
 
   has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
 

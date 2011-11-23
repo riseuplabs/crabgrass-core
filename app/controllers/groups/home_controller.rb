@@ -21,18 +21,18 @@ class Groups::HomeController < Groups::BaseController
     if current_user.member_of? @group
       @private_wiki = @group.profiles.private.wiki
       @public_wiki = @group.profiles.public.wiki
-      @wiki = just_edited_public_wiki? ? @public_wiki : @private_wiki
-      # should we also show a particular wiki if we just viewed the versions of
-      # that wiki? seems reasonable
+      @wiki = coming_from_wiki?(@public_wiki) ? @public_wiki : @private_wiki
     else
       @wiki = @group.profiles.public.wiki
     end
   end
 
-  def just_edited_public_wiki?
-    @public_wiki and
-    request.referer and
-    request.referer == edit_group_wiki_url(@group, @public_wiki)
+  helper_method :coming_from_wiki?
+  # will return true if we came from the wiki editor, versions or diffs
+  def coming_from_wiki?(wiki)
+    return unless wiki
+    request.referer == edit_group_wiki_url(@group, wiki) or
+    request.referer.index(root_url + 'wikis')
   end
 
 end

@@ -484,16 +484,17 @@ Control.TextArea.ToolBar = Class.create(	{
 // --- ACTUAL CUSTOM CODE BEGINS HERE ---
 
 // add the toolbar controlling wiki body
-// each id used by the toolbar has a prefix, so that multiple toolbars
-// can be used on the same page
-function wikiEditAddToolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
+// This will add a toolbar to #wiki_body
+// - which is the default name for the body in wiki forms.
+// Only one wiki editor can be used per screen.
+function wikiEditAddToolbar(button_id_suffix, image_popup_func)
 {
   //setup
-  var textarea = new Control.TextArea(wiki_body_id);
+  var textarea = new Control.TextArea('wiki_body');
   var toolbar = new Control.TextArea.ToolBar(textarea);
 
   toolbar.container.addClassName('markdown_toolbar'); //for css styles
-  toolbar.container.id = toolbar_id; //for css styles
+  toolbar.container.id = 'markdown_toolbar'
 
   //buttons
   toolbar.addButton('Emphasis',function(){
