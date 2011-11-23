@@ -3,7 +3,7 @@
 - # the wiki text changes.
 - rows = [ 20, (params[:height]||0).to_i/16 ].max
 .image_popup{:id => image_popup_id(@wiki), :style => "display:none"}
-- form_for([@group || @page, @wiki]) do |f|
+- form_for([@base, @wiki]) do |f|
   = f.hidden_field 'version'
   = f.hidden_field :private, :value => params[:private] if params[:private] # is this still used?
   = f.text_area('body', :rows => rows, :cols => 64)

@@ -39,8 +39,8 @@ class Groups::WikisController < Groups::BaseController
 
   protected
 
+  # @group is fetched in Groups::BaseController
   def fetch_context
-    @group = Group.find_by_name(params[:group_id])
     @profile = fetch_private? ?
       @group.profiles.private :
       @group.profiles.public
