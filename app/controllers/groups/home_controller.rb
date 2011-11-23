@@ -30,7 +30,7 @@ class Groups::HomeController < Groups::BaseController
   helper_method :coming_from_wiki?
   # will return true if we came from the wiki editor, versions or diffs
   def coming_from_wiki?(wiki)
-    return unless wiki
+    return unless wiki and request.referer
     request.referer == edit_group_wiki_url(@group, wiki) or
     request.referer.index(root_url + 'wikis')
   end
