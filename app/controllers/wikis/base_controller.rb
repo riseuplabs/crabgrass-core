@@ -1,6 +1,7 @@
 class Wikis::BaseController < ApplicationController
 
-  permissions 'groups/members', 'groups/base'  # required to show the banner if wiki is owned by a group.
+  # required to show the banner if wiki is owned by a group.
+  permissions 'groups/members', 'groups/base'
 
   before_filter :fetch_wiki
   before_filter :fetch_context
@@ -17,7 +18,7 @@ class Wikis::BaseController < ApplicationController
   def fetch_context
     @page = @wiki.page
     @group = @wiki.group
-    @context = Context.find(@group || @page)
+    @context = Context.find(@wiki.context)
   end
 
 end
