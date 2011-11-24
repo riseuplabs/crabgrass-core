@@ -1,3 +1,4 @@
 standard_update(page)
 page << hide_spinner(@wiki)
-page.replace_html dom_id(@wiki), :partial => '/common/wiki/show', :locals => local_assigns
+page.replace_html dom_id(@wiki),
+  :partial => '/common/wiki/show', :locals => local_assigns
