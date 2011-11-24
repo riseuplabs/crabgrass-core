@@ -12,7 +12,7 @@ module Wikis::AssetsHelper
   end
 
   def image_full_size_link_checkbox
-      check_box_tag('link_to_image', 'true', false) + :include_full_checkbox.t
+    check_box_tag('link_to_image', 'true', false) + :include_full_checkbox.t
   end
 
   def image_preview_box

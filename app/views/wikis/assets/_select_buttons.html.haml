@@ -3,4 +3,4 @@
     = data_tag_for_image(image)
   = radio_buttons_tag :image, image_tags_and_ids(@images), :onchange => "updatePreview();"
   .clear
-    = pagination_links(@images, :update => 'MB_content')
+    = pagination_links(@images)
