@@ -2,6 +2,10 @@
 %tr{:class => cycle('odd', 'even')}
   %td=version_number_link(version)
   %td=version_time_link(version)
-  %td=version_user_link(version)
+  %td
+    .big_screen
+      =version_user_link(version)
+    .small_screen
+      =version_user_link_small(version)
   - if @wiki.versions.count > 1
     %td=version_diff_link(version)

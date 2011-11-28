@@ -34,6 +34,10 @@ module Wikis::VersionsHelper
     link_to_user(version.user, :avatar => :xsmall) if version.user
   end
 
+ def version_user_link_small(version)
+   link_to avatar_for(version.user, :xsmall, {:title => version.user.name}), entity_path(version.user) if version.user
+ end
+
   def version_action_links(version)
     link_line version_diff_link(version),
       version_revert_link(version),
