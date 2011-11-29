@@ -180,11 +180,10 @@ class Wiki < ActiveRecord::Base
   ##
 
   # A wiki can be used in different contexts. For now the context is either
-  # a group or a page. The contexts should share a common interface so
-  # wiki controllers can build on top of that.
+  # a group or the wikis pages context.
 
   def context
-    self.page || self.group
+    self.group || self.page.try.owner
   end
 
   ##
