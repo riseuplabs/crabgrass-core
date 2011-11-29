@@ -16,10 +16,15 @@ module Wikis::VersionsHelper
       :method => :get
   end
 
-  #TODO: if we have versions in main place with version table in the left column, then we don't want to display a full page (with headers, etc..)----we would just want the version itself.
+  def classes_for_versions_list(version)
+    version == @version ?
+      cycle('odd', 'even') + ' active' :
+      cycle('odd', 'even')
+  end
+
   def version_number_link(version)
     label = I18n.t :version_number, :version => version.version
-    link_to_remote label, :url => wiki_version_path(@wiki, version),
+    link_to_remote version.version, :url => wiki_version_path(@wiki, version),
       :update => dom_id(@wiki),
       :method => :get
   end

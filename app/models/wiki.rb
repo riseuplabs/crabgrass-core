@@ -293,6 +293,8 @@ class Wiki < ActiveRecord::Base
     def diff_id
       "#{previous.to_param}-#{self.to_param}"
     end
+
+    named_scope :most_recent, :order => 'updated_at DESC'
   end
 end
 

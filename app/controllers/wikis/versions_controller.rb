@@ -4,12 +4,14 @@ class Wikis::VersionsController < Wikis::BaseController
   before_filter :login_required
 
   permissions 'wikis/versions'
-  layout 'sidecolumn'
+  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
 
   def show
   end
 
   def index
+    @versions = @wiki.versions.most_recent.paginate(pagination_params(:per_page => 3))
+    @version = @versions.first
   end
 
   def destroy

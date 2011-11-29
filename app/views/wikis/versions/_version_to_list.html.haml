@@ -1,5 +1,5 @@
 - version = version_to_list
-%tr{:class => cycle('odd', 'even')}
+%tr[version, :list]{:class => classes_for_versions_list(version)}
   %td=version_number_link(version)
   %td=version_time_link(version)
   %td

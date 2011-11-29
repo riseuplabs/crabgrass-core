@@ -46,4 +46,10 @@ table.fancy {
   tr.even td {
     background-color: $color_lighter;
   }
+  tr.active {
+    border: $local_title_border;
+    td {
+    background-color: $local_content_background;
+    }
+  }
 }
