@@ -34,7 +34,7 @@ function insertImage(wikiId) {
 function updatePreview() {
   var preview_area = $$('.image_preview').first();
   var assetId = activeRadioValue('image');
-  var size = activeRadioValue('image_size');
+  var size = 'medium' //activeRadioValue('image_size');
   var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
   var url = thumbnails[size];
   preview_area.update("<img src='" + url + "'></img>")

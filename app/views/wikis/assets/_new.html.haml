@@ -2,7 +2,7 @@
   -# :insert_image_instructrions.t
   = formy(:simple_form) do |f|
     - f.row(:class => 'float_left') do |r|
-      - r.label :preview.t
+      - r.label :preview_selected_image.t
       - r.input image_preview_box
     - f.row do |r|
       - r.label :size.t
@@ -12,9 +12,11 @@
       - r.input image_full_size_link_checkbox
     - f.row(:class => 'clear') do |r|
       - r.label :media_images.t
+      - r.info :image_select_info.t
       - r.input image_select_buttons
     - f.row(:class => 'clear') do |r|
       - r.label :upload_new_image.t
+      - r.info :image_upload_info.t
       - r.input asset_upload_form_for(@wiki)
 
   .buttons

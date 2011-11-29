@@ -28,6 +28,7 @@ module Formy
         classes = ['row', @options[:class]].compact
         html << '<div class="%s" id="%s">' % [classes.join(' '), @id]
         html << '<label for="%s">%s</label>' % [@label_for, @label]
+        html << '<div class="info">%s</div>' % [@info]
         html << @input
         html << '</div>'
         puts html.join
