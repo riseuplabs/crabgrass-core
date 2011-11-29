@@ -52,8 +52,10 @@ module Wikis::VersionsHelper
 
   def version_diff_link(version)
     return unless version.previous
-    link_to :diff_link.t,
-      wiki_diff_path(@wiki, version.diff_id)
+    link_to_remote :diff_link.t,
+      :update => dom_id(@wiki),
+      :url => wiki_diff_path(@wiki, version.diff_id),
+      :method => :get
   end
 
   def version_revert_link(version)
