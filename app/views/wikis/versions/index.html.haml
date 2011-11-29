@@ -4,7 +4,8 @@
     &dash;
     = :versions.t
   = link_to_group @group, :label => :back.t
-  %div[@wiki]
+  %div
+    - # need to figure out what to call div above. Now CSS is broken/lacking
     %table.pretty
       %tr
         %th=:versions.tcap
@@ -14,5 +15,5 @@
           %th
             &nbsp;
       = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions
-%div
+%div[@wiki]
   = 'test'
