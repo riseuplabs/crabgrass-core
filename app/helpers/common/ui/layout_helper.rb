@@ -60,18 +60,6 @@ module Common::Ui::LayoutHelper
     end
   end
 
-  def type_of_column_layout
-    @layout_type ||= if @left_column.any? and @right_column.any?
-      'three'
-    elsif !@left_column.any? and !@right_column.any?
-      'one'
-    elsif @left_column.any?
-      'left'
-    elsif @right_column.any?
-      'right'
-    end
-  end
-
   ##
   ## JAVASCRIPT
   ##
