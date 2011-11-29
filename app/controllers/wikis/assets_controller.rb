@@ -11,7 +11,7 @@ class Wikis::AssetsController < Wikis::BaseController
   # response goes to an iframe, so requires responds_to_parent
   def create
     asset = Asset.build :uploaded_data => params[:asset][:uploaded_data]
-    @page ||= asset.create_page(current_user, @group)
+    @page ||= asset.create_page(current_user, @context.entity)
     asset.save
     fetch_assets # now the new one should be included
     responds_to_parent do
