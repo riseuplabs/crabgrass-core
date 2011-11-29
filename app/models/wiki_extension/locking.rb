@@ -39,7 +39,7 @@ module WikiExtension
         section_locks.unlock!(section, user, opts)
       else
         message = :section_locked_error.t(:section => section,
-          :user => locker_of(section).full_name)
+          :user => locker_of(section).display_name)
         raise SectionLockedError.new(message)
       end
     end

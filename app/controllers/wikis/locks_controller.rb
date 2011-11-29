@@ -7,5 +7,8 @@ class Wikis::LocksController < Wikis::BaseController
   def destroy
     @wiki.unlock!(:document, current_user)
     render :text => nil
+  rescue Wiki::SectionLockedError
+    render :text => 'permission denied'
   end
+
 end
