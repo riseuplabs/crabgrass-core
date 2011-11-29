@@ -4,6 +4,7 @@ class Wikis::VersionsController < Wikis::BaseController
   before_filter :login_required
 
   permissions 'wikis/versions'
+  layout 'sidecolumn'
 
   def show
   end

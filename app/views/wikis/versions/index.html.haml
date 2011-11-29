@@ -1,15 +1,18 @@
-%h2
-  = @wiki.label.t 
-  &dash;
-  = :versions.t
-= link_to_group @group, :label => :back.t
-%div[@wiki]
-  %table.pretty
-    %tr
-      %th=:versions.tcap
-      %th=:created.tcap
-      %th=:person.tcap
-      - if @wiki.versions.count > 1
-        %th
-          &nbsp;
-    = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions
+- content_for :left_column do
+  %h2
+    = @wiki.label.t
+    &dash;
+    = :versions.t
+  = link_to_group @group, :label => :back.t
+  %div[@wiki]
+    %table.pretty
+      %tr
+        %th=:versions.tcap
+        %th=:created.tcap
+        %th=:person.tcap
+        - if @wiki.versions.count > 1
+          %th
+            &nbsp;
+      = render :partial => '/wikis/versions/version_to_list', :collection => @wiki.versions
+%div
+  = 'test'
