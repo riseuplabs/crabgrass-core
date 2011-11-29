@@ -11,7 +11,10 @@
       %tr
         %th #
         %th=:created.tcap
-        %th=:person.tcap
+        %th
+          .big_screen=:person.tcap
+          .small_screen
+            %span.user_16
         - if @wiki.versions.count > 1
           %th
             &nbsp;
