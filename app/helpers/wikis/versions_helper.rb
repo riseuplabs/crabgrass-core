@@ -23,7 +23,6 @@ module Wikis::VersionsHelper
   end
 
   def version_number_link(version)
-    label = I18n.t :version_number, :version => version.version
     link_to_remote version.version, :url => wiki_version_path(@wiki, version),
       :update => dom_id(@wiki),
       :method => :get
