@@ -1,14 +1,9 @@
 class Wikis::VersionsController < Wikis::BaseController
 
-  before_filter :fetch_version, :only => [:show, :destroy, :revert]
+  before_filter :fetch_version, :only => [:destroy, :revert]
   before_filter :login_required
 
   permissions 'wikis/versions'
-  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
-  javascript :wiki
-
-  def show
-  end
 
   def index
     @versions = @wiki.versions.most_recent.

@@ -78,17 +78,3 @@ function releaseLockOnUnload(wiki_id, auth) {
     });
   }
 }
-
-// updating the active row in versions display
-function highlightVersionRow(version_id, klass) {
-  clearHighlight('tr.' + klass, klass);
-  var new_active = $(version_id);
-  new_active.addClassName(klass);
-}
-
-function clearHighlight(selector, klass) {
-  var old_active = $$(selector);
-  old_active.each( function(el) {
-    el.removeClassName(klass);
-  });
-}
