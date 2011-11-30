@@ -1,24 +1,5 @@
-- content_for :left_column do
-  %h2
-    = @wiki.label.t
-  %h3
-    = :versions.t
-  = link_to_group @group, :label => :back.t
-  %hr/
-  %div
-    %table.fancy
-      %tr
-        %th #
-        %th=:created.tcap
-        %th
-          .big_screen=:person.tcap
-          .small_screen
-            %span.user_16
-        - if @wiki.versions.count > 1
-          %th
-            &nbsp;
-      = render :partial => '/wikis/versions/version_to_list', :collection => @versions
-    = pagination_links(@versions)
-
-%div[@wiki]
-  = render :partial=>'show'
+= render :partial => 'common/split_panel',
+  :locals => { :items => '@versions',
+    :left_panel => 'wikis/versions/version_short_entry',
+    :right_panel => 'wikis/versions/show',
+    :right_url => 'wiki_version_path' }
