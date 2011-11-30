@@ -5,12 +5,14 @@ class Wikis::VersionsController < Wikis::BaseController
 
   permissions 'wikis/versions'
   layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
+  javascript :wiki
 
   def show
   end
 
   def index
-    @versions = @wiki.versions.most_recent.paginate(pagination_params(:per_page => 3))
+    @versions = @wiki.versions.most_recent.
+      paginate(pagination_params(:per_page => 10))
     @version = @versions.first
   end
 

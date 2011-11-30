@@ -3,6 +3,7 @@ class Wikis::DiffsController < Wikis::BaseController
   permissions 'wiki'
 
   helper 'wikis/versions'
+  javascript :wiki
 
   def show
     old_id, new_id = params[:id].split('-')

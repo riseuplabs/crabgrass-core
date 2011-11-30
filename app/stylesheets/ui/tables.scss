@@ -52,4 +52,18 @@ table.fancy {
     background-color: $local_content_background;
     }
   }
+  tr.ins {
+    border: $local_title_border;
+    td {
+    background-color: #ccffcc;
+    }
+  }
+  tr.del {
+    border: $local_title_border;
+    td {
+    background-color: #dddddd;
+    color: #999999;
+    text-decoration: line-through;
+    }
+  }
 }

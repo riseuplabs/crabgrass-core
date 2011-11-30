@@ -1,0 +1,5 @@
+standard_update(page)
+page.replace_html dom_id(@wiki), :partial => '/wikis/diffs/show'
+page << "clearHighlight('tr.active', 'active');"
+page << "highlightVersionRow('#{dom_id(@new, :list)}', 'ins');"
+page << "highlightVersionRow('#{dom_id(@old, :list)}', 'del');"

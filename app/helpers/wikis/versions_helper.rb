@@ -1,37 +1,30 @@
 module Wikis::VersionsHelper
 
-  def previous_version_link
-    return unless target = @version.previous
-    link_to_remote LARROW + :pagination_previous.t,
-      :url => wiki_version_path(@wiki, target),
-      :update => dom_id(@wiki),
-      :method => :get
-  end
-
-  def next_version_link
-    return unless target = @version.next
-    link_to_remote :pagination_next.t + RARROW,
-      :url => wiki_version_path(@wiki, target),
-      :update => dom_id(@wiki),
-      :method => :get
-  end
-
   def classes_for_versions_list(version)
     version == @version ?
       cycle('odd', 'even') + ' active' :
       cycle('odd', 'even')
   end
 
+  def previous_version_link
+    link_to_version LARROW + :pagination_previous.t, @version.previous
+  end
+
+  def next_version_link
+    link_to_version :pagination_next.t + RARROW, @version.next
+  end
+
   def version_number_link(version)
-    link_to_remote version.version, :url => wiki_version_path(@wiki, version),
-      :update => dom_id(@wiki),
-      :method => :get
+    link_to_version version.version, version
   end
 
   def version_time_link(version)
-    link_to_remote friendly_date(version.updated_at),
-      :url => wiki_version_path(@wiki, version),
-      :update => dom_id(@wiki),
+    link_to_version friendly_date(version.updated_at), version
+  end
+
+  def link_to_version(content, version)
+    return unless version
+    link_to_remote content, :url => wiki_version_path(@wiki, version),
       :method => :get
   end
 
@@ -52,7 +45,6 @@ module Wikis::VersionsHelper
   def version_diff_link(version)
     return unless version.previous
     link_to_remote :diff_link.t,
-      :update => dom_id(@wiki),
       :url => wiki_diff_path(@wiki, version.diff_id),
       :method => :get
   end
