@@ -12,21 +12,24 @@
 - item_name = items_name.singularize.to_sym
 - @items = eval(items)
 - right_panel = local_assigns[:right_panel]
+- load_url = local_assigns[:load_url]
 
 .split_panel
   .panel_left
     - for item in @items
-      - id = item.dom_id
       .big_screen
-        .panel_arrow{:id => "panel_arrow_#{id}"}
-      .row{:id => "panel_left_#{id}", :onmousedown=>"activatePanelRow('#{id}')"}
+        .panel_arrow[item, :panel_arrow]
+      .row[item, :panel_left]{:onmousedown=>activate_panel_row(item, load_url)}
         .content
           = render :partial => left_panel, :locals => {item_name => item}
   .panel_right
     - for item in @items
-      .row{:id => "panel_right_#{item.dom_id}", :style => 'display:none'}
+      .row[item, :panel_right]{ :style => 'display:none'}
         - if right_panel
           = render :partial => right_panel, :locals => {item_name => item}
+        - else
+          = big_spinner
 
 - content_for :script do
-  = "document.observe('dom:loaded',function(){activatePanelRow('#{@items.first.dom_id}')});"
+  - dom_loaded do
+    = activate_panel_row(@items.first, load_url)

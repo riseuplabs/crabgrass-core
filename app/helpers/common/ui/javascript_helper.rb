@@ -100,6 +100,16 @@ module Common::Ui::JavascriptHelper
   end
 
   ##
+  ## dom basics
+  ##
+
+  def dom_loaded
+    concat "document.observe('dom:loaded',function(){"
+    yield
+    concat "});"
+  end
+
+  ##
   ## visibility
   ##
 
@@ -120,6 +130,19 @@ module Common::Ui::JavascriptHelper
   end
   def show_spinner(id)
     "$('%s').show();" % spinner_id(id)
+  end
+
+  def activate_panel_row(item, load_url_function)
+    loader = case load_url_function
+             when String
+               load_url_function
+             when Proc
+               url = load_url_function.call(item)
+               remote_function(:url => url, :method => :get) + ";\n"
+             else
+               ''
+             end
+    loader + "activatePanelRow('#{dom_id(item)}');"
   end
 
   ##

@@ -1,5 +1,3 @@
 standard_update(page)
-page.replace_html dom_id(@wiki), :partial => '/wikis/versions/show'
-page << "clearHighlight('tr.active', 'ins');"
-page << "clearHighlight('tr.active', 'del');"
-page << "highlightVersionRow('#{dom_id(@version, :list)}', 'active');"
+page.replace_html dom_id(@version, :panel_right), :partial => '/wikis/versions/show'
+page << "activatePanelRow('#{dom_id(@version)}')"
