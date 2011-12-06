@@ -5,7 +5,7 @@
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
-      = wiki_more_link
+      = wiki_more_link # TODO only want this link for group wikis
     - else
       = @wiki.body_html
-      = wiki_less_link
+      = wiki_less_link # TODO only want this link for group wikis

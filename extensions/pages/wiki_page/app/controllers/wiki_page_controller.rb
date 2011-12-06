@@ -9,24 +9,26 @@ class WikiPageController < Pages::BaseController
   #javascript :wiki, :action => :edit
 
   helper :wiki_page, :wiki #??
-  helper_method :save_or_cancel_edit_lock_wiki_error_text
+  #helper_method :save_or_cancel_edit_lock_wiki_error_text
 
   permissions 'wiki_page'
 
-  before_filter :setup_wiki_rendering
+  include_controllers 'common/wiki'
+  #before_filter :setup_wiki_rendering
   before_filter :find_last_seen, :only => :show
-  before_filter :force_save_or_cancel, :only => [:show, :print]
+  #before_filter :force_save_or_cancel, :only => [:show, :print]
 
-  before_filter :ensure_desired_locked_section_exists, :only => [:edit, :update]
+  #before_filter :ensure_desired_locked_section_exists, :only => [:edit, :update]
   # if we have some section locked, but we don't need it. we should drop the lock
-  before_filter :release_old_locked_section!, :only => [:edit, :update]
+  #before_filter :release_old_locked_section!, :only => [:edit, :update]
 
-  before_render :setup_title_box
+  #before_render :setup_title_box
 
   ##
   ## ACCESS: public or :view
   ##
 
+=begin
   def show
     if @wiki.body.empty?
       # we have no body to show, edit instead
@@ -35,11 +37,13 @@ class WikiPageController < Pages::BaseController
       @editing_section = current_locked_section
     end
   end
+=end
 
   def print
     render :layout => "printer-friendly"
   end
 
+=begin
   # GET
   # plain - clicked edit tab, section = nil.  render edit ui with tabs and full markup
   # XHR - clicked pencil, section = 'someheading'. replace #wiki_html with inline editor
@@ -62,7 +66,10 @@ class WikiPageController < Pages::BaseController
   ensure
     render :action => 'update_wiki_html' if show_inline_editor?
   end
+=end
 
+=begin
+# we want to use the update method from app/controllers/common/wiki.rb
   # PUT
   # plain - clicked save/cancel/break lock on edit tab, section = nil. redirect to show on save, render edit on break lock
   # xhr - clicked save/cancel on inline editor, section = 'somesection'.  rjs replace #wiki_html with wiki.body_html
@@ -114,7 +121,7 @@ class WikiPageController < Pages::BaseController
   ensure
     render_update_outcome unless request.get?
   end
-
+=end
 
   # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
   def update_editors
@@ -149,6 +156,7 @@ class WikiPageController < Pages::BaseController
     Wiki.new(:user => current_user, :body => "")
   end
 
+=begin
   ### REDIRECTS
   def redirect_to_edit
     redirect_to page_url(@page, :action => 'edit')
@@ -157,6 +165,7 @@ class WikiPageController < Pages::BaseController
   def redirect_to_show
     redirect_to page_url(@page, :action => 'show')
   end
+=end
 
   ### RENDERS
   def render_or_redirect_to_updated_wiki_html
@@ -170,11 +179,12 @@ class WikiPageController < Pages::BaseController
   end
 
   ### FILTERS
-  def prepare_wiki_body_html
-    if current_locked_section and current_locked_section != :document
-      @wiki.body_html = body_html_with_form(current_locked_section)
-    end
-  end
+#  def prepare_wiki_body_html
+#    if current_locked_section and current_locked_section != :document
+#      @wiki.body_html = body_html_with_form(current_locked_section)
+#    end
+#  end
+
   # called early in filter chain
   def fetch_data
     return true unless @page
@@ -182,9 +192,8 @@ class WikiPageController < Pages::BaseController
     @wiki_is_blank = @wiki.body.blank?
   end
 
-  def setup_wiki_rendering
-    return unless @wiki
-    @wiki.render_body_html_proc {|body| render_wiki_html(body, @page.owner_name)}
+  def fetch_context
+    'test' ## TODO
   end
 
   def find_last_seen
@@ -197,12 +206,13 @@ class WikiPageController < Pages::BaseController
     @options.show_tabs = true
   end
 
-  def setup_title_box
-    unless @wiki.nil? or @wiki.document_open_for?(current_user)
-      @title_addendum = render_to_string(:partial => 'locked_notice')
-    end
-  end
+#  def setup_title_box
+#    unless @wiki.nil? or @wiki.document_open_for?(current_user)
+#      @title_addendum = render_to_string(:partial => 'locked_notice')
+#    end
+#  end
 
+=begin
   # if the user has a section locked, redirect them to edit
   def force_save_or_cancel
     if current_locked_section == :document
@@ -271,4 +281,6 @@ class WikiPageController < Pages::BaseController
   def save_or_cancel_edit_lock_wiki_error_text
     I18n.t(:save_or_cancel_edit_lock_wiki_error, {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)})
   end
+=end
+
 end

@@ -176,6 +176,20 @@ module WikiHelper
 
   #moved wiki_more_link, wiki_less_link, wiki_action and wiki_edit_link to wiki_helper in widget directory
 
+  #this also exists in app/helpers/groups/wikis_helper.rb
+  def wiki_edit_link
+    return unless true ##may_edit_group_wiki?(@group) ## TODO add permission function
+    link_to :edit.t, edit_page_wiki_path(@wiki),
+      :icon => 'pencil'
+  end
+
+  #also in app/helpers/groups/wikis_helper.rb. probably could use same function
+  def wiki_versions_link
+    return unless true # may_edit_group_wiki?(@group) #TODO add permission function
+    link_to :versions.t, wiki_versions_path(@wiki)
+  end
+
+
   ##
   ## WIKI EDITORS
   ##
