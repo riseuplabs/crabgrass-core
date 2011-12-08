@@ -1,5 +1,7 @@
 module Wikis::DiffsHelper
 
+  # some translations still have the %{user} and %{when} key.
+  # TODO clean them up and remove params here.
   def comparing_changes_header
     :comparing_changes_header.t :old_version => old_version_tag,
       :new_version => new_version_tag,
@@ -8,12 +10,12 @@ module Wikis::DiffsHelper
   end
 
   def old_version_tag
-    content_tag :del, version_number_link(@old),
+    content_tag :del, short_description(@old, true),
       :class => 'diffmod', :style => 'padding: 1px 4px;'
   end
 
   def new_version_tag
-    content_tag :ins, version_number_link(@new),
+    content_tag :ins, short_description(@new, true),
       :class => 'diffins', :style => 'padding: 1px 4px;'
   end
 

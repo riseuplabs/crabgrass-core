@@ -82,7 +82,16 @@ module WikiExtension
         :updated_at => Time.now)
     end
 
+    def page_for_version(version, per_page)
+      page_index = versions_since(version) / per_page
+      page_index + 1
+    end
+
     protected
+
+    def versions_since(version)
+      self.versions.count(:conditions => "version > #{version.version}")
+    end
 
     def destroy_versions_after(version_number)
       versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|

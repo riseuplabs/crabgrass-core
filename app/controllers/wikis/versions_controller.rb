@@ -10,7 +10,7 @@ class Wikis::VersionsController < Wikis::BaseController
 
   def index
     @versions = @wiki.versions.most_recent.
-      paginate(pagination_params(:per_page => 10))
+      paginate(pagination_params(:per_page => VERSIONS_PER_PAGE))
     @version = @versions.first
   end
 
