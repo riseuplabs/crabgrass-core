@@ -1,7 +1,7 @@
 module Wikis::VersionsHelper
 
   def short_description(version, link_to_version = false)
-    version_text = "Version " + version.version.to_s
+    version_text = "Version&nbsp;" + version.version.to_s
     if link_to_version
       version_text = link_to(version_text, wiki_version_path(@wiki, version))
     end

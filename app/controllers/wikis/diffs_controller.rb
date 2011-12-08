@@ -1,6 +1,6 @@
 class Wikis::DiffsController < Wikis::BaseController
 
-  permissions 'wiki'
+  permissions 'wikis/versions'
 
   helper 'wikis/versions'
   javascript :wiki
