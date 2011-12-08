@@ -203,7 +203,7 @@ class WikiPageController < Pages::BaseController
   end
 
   def setup_options
-    @options.show_tabs = true
+    @options.show_tabs = false #true # not sure what we really want here
   end
 
 #  def setup_title_box

@@ -1,5 +1,5 @@
 - content_for :left_column do
-  = render :partial => 'common/wiki/sidehelp'
+  = render :partial => 'common/wiki/sidehelp' # not what we will want for page wikis
 %div[@wiki]
   = render :partial => 'common/wiki/edit'
   = javascript_tag create_wiki_toolbar(@wiki)
