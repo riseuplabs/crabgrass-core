@@ -2,4 +2,5 @@
   :locals => { :items => '@versions',
     :left_panel => 'wikis/versions/version_short_entry',
     :right_panel => 'wikis/diffs/show',
+    :current => @new,
     :load_url => proc {|version| wiki_diff_path(@wiki, version.diff_id)}}

@@ -16,7 +16,7 @@ module WikiExtension
 
     class VersionNotFoundError < CrabgrassException
       def initialize(version_or_message = '', options = {})
-        message = version_or_message.is_a? Integer ?
+        message = version_or_message.is_a?(Integer) ?
           :version_doesnt_exist.t(:version => version_or_message.to_s) :
           version_or_message.to_s
         super(message, options)
@@ -54,7 +54,7 @@ module WikiExtension
     end
 
     # reverts and keeps all the old versions
-    def revert_to(version, user)
+    def revert_to_version(version, user)
       self.body = version.body
       self.user = user
       save!
