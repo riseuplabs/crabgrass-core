@@ -109,8 +109,11 @@ module WikiPageHelper
   end
 
   # also defined in app/helpers/wikis/base_helper.rb
-  def wiki_path(page = @page)
-    page_xpath(@page)
+  # we might want to combine the two and make them depend on
+  # whether it's a page or a group wiki.
+  # this is the page wiki case:
+  def wiki_path(wiki = @wiki, options = {})
+    page_xpath(wiki.page, options)
   end
 
   protected
