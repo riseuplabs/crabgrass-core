@@ -1,6 +1,6 @@
 class WikiPageController < Pages::BaseController
-  include Common::Application::WikiRenderer
-  include Common::Application::WikiPopup
+  include Common::Application::WikiRenderer # can probably remove as pages inherit from applicationcontroller
+  include Common::Application::WikiPopup # can probably remove
 
   helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?,
                   :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?

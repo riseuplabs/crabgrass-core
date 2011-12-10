@@ -108,6 +108,11 @@ module WikiPageHelper
 
   end
 
+  # also defined in app/helpers/wikis/base_helper.rb
+  def wiki_path(page = @page)
+    page_xpath(@page)
+  end
+
   protected
 
   def find_heading_node(doc, section)

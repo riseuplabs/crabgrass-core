@@ -119,6 +119,7 @@ class Post < ActiveRecord::Base
     "#{user} #{body}"
   end
 
+  # not used anymore
   def editable_by?(user)
     user.id == self.user_id
   end

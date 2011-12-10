@@ -179,8 +179,12 @@ module WikiHelper
   #this also exists in app/helpers/groups/wikis_helper.rb
   def wiki_edit_link
     return unless true ##may_edit_group_wiki?(@group) ## TODO add permission function
-    link_to :edit.t, edit_page_wiki_path(@wiki),
-      :icon => 'pencil'
+    link_to_remote :edit.t,
+    {:url => #edit_page_wiki_path(@wiki), #see paths.rb page_xpath app/controllers/common/application/paths.rb
+      page_xpath(@page, :action => :edit),
+      :method => 'get'},
+    {:icon => 'pencil'}
+
   end
 
   #also in app/helpers/groups/wikis_helper.rb. probably could use same function

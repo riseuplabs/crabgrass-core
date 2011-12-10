@@ -16,6 +16,6 @@
   - for post in posts do
     = render :partial => 'common/posts/table/row', :locals => local_assigns.merge(:post => post, :last => (post.id == last_id))
   = post_pagination_links(posts)
-  - if may_create_posts?
+  - if may_create_page_post?
     = render :partial => 'common/posts/table/reply', :locals => local_assigns.merge(:last_id => last_id)
 
