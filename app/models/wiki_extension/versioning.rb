@@ -50,7 +50,7 @@ module WikiExtension
 
     def find_version(number)
       self.versions.find_by_version(number) or
-      raise VersionNotFoundError.new(number)
+      raise VersionNotFoundError.new(number.to_i)
     end
 
     # reverts and keeps all the old versions

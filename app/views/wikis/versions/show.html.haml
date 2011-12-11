@@ -1,0 +1,5 @@
+= render :partial => 'common/split_panel',
+  :locals => { :items => '@versions',
+    :left_panel => 'wikis/versions/version_short_entry',
+    :current => @version,
+    :load_url => proc {|version| wiki_version_path(@wiki, version)}}

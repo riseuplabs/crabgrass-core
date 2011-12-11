@@ -296,5 +296,6 @@ class Wiki < ActiveRecord::Base
 
     named_scope :most_recent, :order => 'version DESC'
   end
+
 end
 

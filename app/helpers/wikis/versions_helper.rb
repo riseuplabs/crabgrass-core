@@ -22,6 +22,11 @@ module Wikis::VersionsHelper
       version_delete_link(version)
   end
 
+  def version_show_link(version)
+    return unless may_show_wiki_version?(version)
+    link_to :version_link.t, wiki_version_path(@wiki, version)
+  end
+
   def version_diff_link(version, remote = false)
     return unless may_show_wiki_diff?(version)
     if remote
