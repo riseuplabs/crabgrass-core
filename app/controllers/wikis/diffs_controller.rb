@@ -18,6 +18,17 @@ class Wikis::DiffsController < Wikis::BaseController
   protected
 
   def fetch_versions
+    if params[:page]
+      fetch_versions_with_pagination
+    else
+      fetch_versions_without_pagination
+    end
+  rescue Wiki::VersionNotFoundError => err
+    error err
+    redirect_to wiki_versions_path(@wiki)
+  end
+
+  def fetch_params_without_pagination
     old_id, new_id = params[:id].split('-')
     @old = @wiki.find_version(old_id) unless old_id.blank?
     @version = @new = @wiki.find_version(new_id)
@@ -25,9 +36,12 @@ class Wikis::DiffsController < Wikis::BaseController
       :page => @wiki.page_for_version(@new, VERSIONS_PER_PAGE)
     }
     @versions = @wiki.versions.most_recent.paginate(pagination)
-  rescue Wiki::VersionNotFoundError => err
-    error err
-    redirect_to wiki_versions_path(@wiki)
   end
 
+  def fetch_versions_with_pagination
+    pagination = pagination_params :per_page => VERSIONS_PER_PAGE
+    @versions = @wiki.versions.most_recent.paginate(pagination)
+    @version = @new = @versions[0]
+    @old = @versions[1]
+  end
 end
