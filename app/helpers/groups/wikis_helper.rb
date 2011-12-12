@@ -110,9 +110,10 @@ module Groups::WikisHelper
     %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect});]
   end
 
-  def release_lock_on_unload
-    %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
-  end
+  #move to app/helpers/wikis/base_helper.rb ?
+  #def release_lock_on_unload
+  #  %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+  #end
 
 end
 

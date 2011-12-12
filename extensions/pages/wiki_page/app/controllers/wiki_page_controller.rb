@@ -2,12 +2,14 @@ class WikiPageController < Pages::BaseController
   include Common::Application::WikiRenderer # can probably remove as pages inherit from applicationcontroller
   include Common::Application::WikiPopup # can probably remove
 
+
   helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?,
                   :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?
 
   #stylesheet 'wiki_edit'
   #javascript :wiki, :action => :edit
 
+  helper 'wikis/base'
   helper :wiki_page, :wiki #??
   #helper_method :save_or_cancel_edit_lock_wiki_error_text
 

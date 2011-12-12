@@ -26,6 +26,8 @@ module Common::Application::Paths
 
       helper_method :user_avatar_path
       helper_method :build_query_string
+
+      helper_method :wiki_path
     end
   end
 
@@ -219,6 +221,15 @@ module Common::Application::Paths
 
     query_string = "?#{elements.join("&")}" unless elements.empty?
     query_string || ""
+  end
+
+  # For both page and group wikis
+  def wiki_path(wiki = @wiki, options = {})
+    if wiki.page
+      page_xpath wiki.page, options
+    else
+      url_for [wiki.context, wiki], options
+    end
   end
 
   private

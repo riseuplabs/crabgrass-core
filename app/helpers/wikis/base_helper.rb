@@ -10,8 +10,9 @@ module Wikis::BaseHelper
 # does something like  wiki_path(@wiki, page_id => @base.id)
 # for page wikis, we will instead use a version of this defined in
 # extensions/pages/wiki_page/app/helpers/wiki_page_helper.rb
-  def wiki_path(wiki = @wiki)
-    url_for [wiki.context, wiki] #will not work for page
+  def release_lock_on_unload
+    %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
   end
+
 
 end

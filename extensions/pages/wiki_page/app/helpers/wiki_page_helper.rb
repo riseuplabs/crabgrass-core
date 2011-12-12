@@ -112,9 +112,9 @@ module WikiPageHelper
   # we might want to combine the two and make them depend on
   # whether it's a page or a group wiki.
   # this is the page wiki case:
-  def wiki_path(wiki = @wiki, options = {})
-    page_xpath(wiki.page, options)
-  end
+#  def wiki_path(wiki = @wiki, options = {})
+#    page_xpath(wiki.page, options)
+#  end
 
   protected
 
