@@ -1,1 +1,4 @@
-= render :partial => '/wikis/assets/new'
+- if @images.any?
+  = render :partial => '/wikis/assets/new'
+- else
+  = render :partial => '/wikis/assets/first'

@@ -53,9 +53,10 @@ module Wikis::AssetsHelper
       :full   => asset.url }.to_json
   end
 
-  def insert_image_button
+  def insert_image_button(options = {})
     button_to_function :insert_image.t,
-      insert_image_function + close_modal_function
+      insert_image_function + close_modal_function,
+      options
   end
 
   def insert_image_function
