@@ -32,7 +32,7 @@ class Groups::HomeController < Groups::BaseController
   def coming_from_wiki?(wiki)
     return unless wiki and request.referer
     request.referer == edit_group_wiki_url(@group, wiki) or
-    request.referer.index(root_url + 'wikis')
+    request.referer.index(root_url + 'wikis/' + wiki.to_param )
   end
 
 end

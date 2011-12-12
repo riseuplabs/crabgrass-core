@@ -274,6 +274,8 @@ en:
   approve_or_reject_link: approve or reject this request
   request_status: This request was %{status} by %{user} on %{time}
   discuss_request_link: discuss this request with %{person_or_group}
+
+  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
   preview_selected_image: "Preview of selected image"
   image_size_info: "Select the size of the image to insert"
   small: small
@@ -953,7 +955,8 @@ en:
   last_change: "Last Change"
   print_underlined_p: "<u>p</u>rint"
   edit_underlined_e: "<u>e</u>dit"
-  comparing_changes_header: "Comparing changes by %{user} at %{when} from %{old_version} to %{new_version}"
+  comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
+  changes_made: "Changes made %{when}."
   prev_change: "Previous Change"
   next_change: "Next Change"
   formatting_reference_link: "Editing Help"
@@ -961,6 +964,7 @@ en:
   version_exists_error: "%{user} has saved new changes first. You can still save your changes as the newest version."
   you_are_viewing_version: "You are viewing version %{version} by %{user}"
   diff_link: "view changes"
+  version_link: "view version"
   insert_image_heading: "Insert Image"
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
