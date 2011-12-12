@@ -9,6 +9,8 @@ class Groups::WikisController < Groups::BaseController
 
   layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
 
+  helper 'wikis/base'
+
   def new
     if @wiki = @profile.wiki
       # the wiki has been created by another user since the link to
