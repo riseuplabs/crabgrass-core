@@ -1,7 +1,8 @@
 .info
   = comparing_changes_header
+  %br/
+  %i= :changes_made.t :when => full_time(@new.updated_at)
 
-= link_to :back.t, wiki_versions_path(@wiki)
 .pagination
   = diff_previous_link
   = diff_next_link

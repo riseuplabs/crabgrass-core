@@ -96,8 +96,12 @@ module Groups::WikisHelper
   end
 
   def image_popup_function(wiki)
-    modalbox_function new_wiki_asset_path(wiki),
-      :title => I18n.t(:insert_image)
+    if wiki.new_record?
+      "alert('%s');" % :save_wiki_before_adding_image.t
+    else
+      modalbox_function new_wiki_asset_path(wiki),
+        :title => I18n.t(:insert_image)
+    end
   end
 
   def confirm_discarding_wiki_edit_text_area(text_area_id = nil)

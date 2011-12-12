@@ -13,6 +13,7 @@
 - @items = eval(items)
 - right_panel = local_assigns[:right_panel]
 - load_url = local_assigns[:load_url]
+- current = local_assigns[:current] || @items.first
 
 .split_panel
   .panel_left
@@ -32,4 +33,4 @@
 
 - content_for :script do
   - dom_loaded do
-    = activate_panel_row(@items.first, load_url)
+    = activate_panel_row(current, load_url)

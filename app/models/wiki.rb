@@ -294,7 +294,8 @@ class Wiki < ActiveRecord::Base
       "#{previous.to_param}-#{self.to_param}"
     end
 
-    named_scope :most_recent, :order => 'updated_at DESC'
+    named_scope :most_recent, :order => 'version DESC'
   end
+
 end
 

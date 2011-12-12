@@ -32,6 +32,7 @@ class I18nTest < ActiveSupport::TestCase
 
   def teardown
     I18n.backend = nil
+    I18n.locale = :en
   end
 
   #def add_translation(locale, dictionary)

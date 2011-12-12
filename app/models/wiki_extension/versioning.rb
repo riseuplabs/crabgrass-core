@@ -16,7 +16,7 @@ module WikiExtension
 
     class VersionNotFoundError < CrabgrassException
       def initialize(version_or_message = '', options = {})
-        message = version_or_message.is_a? Integer ?
+        message = version_or_message.is_a?(Integer) ?
           :version_doesnt_exist.t(:version => version_or_message.to_s) :
           version_or_message.to_s
         super(message, options)
@@ -50,11 +50,11 @@ module WikiExtension
 
     def find_version(number)
       self.versions.find_by_version(number) or
-      raise VersionNotFoundError.new(number)
+      raise VersionNotFoundError.new(number.to_i)
     end
 
     # reverts and keeps all the old versions
-    def revert_to(version, user)
+    def revert_to_version(version, user)
       self.body = version.body
       self.user = user
       save!
@@ -82,7 +82,16 @@ module WikiExtension
         :updated_at => Time.now)
     end
 
+    def page_for_version(version, per_page)
+      page_index = versions_since(version) / per_page
+      page_index + 1
+    end
+
     protected
+
+    def versions_since(version)
+      self.versions.count(:conditions => "version > #{version.version}")
+    end
 
     def destroy_versions_after(version_number)
       versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
