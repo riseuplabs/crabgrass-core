@@ -13,7 +13,7 @@ class WikiPageController < Pages::BaseController
   helper :wiki_page, :wiki #??
   #helper_method :save_or_cancel_edit_lock_wiki_error_text
 
-  permissions 'wiki_page'
+  permissions 'wiki_page', 'wiki'
 
   include_controllers 'common/wiki'
   #before_filter :setup_wiki_rendering

@@ -7,11 +7,11 @@ module WikiPermission
   protected
 
   def may_edit_wiki?(wiki = @wiki)
-    logged_in? and current_user.may?(:edit, wiki.context)
+    logged_in? and current_user.may?(:edit,(wiki.page || wiki.group))
   end
 
   def may_admin_wiki?(wiki = @wiki)
-    logged_in? and current_user.may?(:admin, wiki.context)
+    logged_in? and current_user.may?(:admin,(wiki.page || wiki.group))
   end
 
 end

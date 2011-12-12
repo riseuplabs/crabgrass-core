@@ -51,10 +51,6 @@ module Groups::WikisHelper
       :method => :get }
   end
 
-  def wiki_versions_link
-    return unless may_edit_group_wiki?(@group)
-    link_to :versions.t, wiki_versions_path(@wiki)
-  end
 
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
