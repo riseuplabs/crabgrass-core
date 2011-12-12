@@ -8,7 +8,7 @@ module Wikis::VersionsPermission
   end
 
   def may_show_wiki_diff?(version = @version)
-    version.previous? and may_show_wiki_version?(version)
+    version.previous and may_show_wiki_version?(version)
   end
 
   def may_show_wiki_version?(version = @version)
