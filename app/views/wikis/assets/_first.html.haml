@@ -1,0 +1,12 @@
+#image_popup.image_popup
+  -# :insert_image_instructrions.t
+  = formy(:simple_form) do |f|
+    - f.row(:class => 'clear') do |r|
+      - r.label :upload_new_image.t
+      - r.info :image_upload_info.t
+      - r.input asset_upload_form_for(@wiki)
+
+  .buttons
+    = close_modal_button(:cancel)
+    = insert_image_button(:disabled => true)
+

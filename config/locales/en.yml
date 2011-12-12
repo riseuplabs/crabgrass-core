@@ -274,6 +274,8 @@ en:
   approve_or_reject_link: approve or reject this request
   request_status: This request was %{status} by %{user} on %{time}
   discuss_request_link: discuss this request with %{person_or_group}
+
+  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
   preview_selected_image: "Preview of selected image"
   image_size_info: "Select the size of the image to insert"
   small: small
