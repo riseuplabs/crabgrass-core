@@ -228,7 +228,7 @@ module Common::Application::Paths
     if wiki.page
       page_xpath wiki.page, options
     else
-      url_for [wiki.context, wiki], options
+      url_for [wiki.context, wiki]
     end
   end
 
