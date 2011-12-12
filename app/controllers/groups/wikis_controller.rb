@@ -2,7 +2,7 @@ class Groups::WikisController < Groups::BaseController
 
   include_controllers 'common/wiki'
 
-  before_filter :fetch_wiki, :only => [:show, :edit, :update]
+  before_filter :fetch_wiki, :only => :show
   # show might be allowed when not logged in
   before_filter :login_required, :except => :show
   before_filter :authorized?, :only => :show
