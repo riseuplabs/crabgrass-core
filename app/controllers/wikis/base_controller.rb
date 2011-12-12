@@ -8,8 +8,6 @@ class Wikis::BaseController < ApplicationController
 
   helper 'wikis/base'
 
-  include Wikis::BaseHelper # for the wiki_path
-
   VERSIONS_PER_PAGE = 10 # pagination for versions and diffs
 
   protected
