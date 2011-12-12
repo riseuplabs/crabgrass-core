@@ -1,55 +1,6 @@
 module WikiHelper
 
   ##
-  ## ELEMENT IDS
-  ##
-
-  # change these with caution: unfortunately, the javascript for wikis assumes
-  # that the id number are in the format listed here. if you change these, also
-  # change the javascript.
-
-  #moved area_id to widget/wiki
-
-  # this is the textarea were wiki is written
-  def wiki_body_id(wiki)
-    'wiki_body-%s' % wiki.id
-  end
-
-  # this is the div id for the html editor
-  def wiki_editor_id(wiki)
-    'wiki_editor-%s' % wiki.id
-  end
-
-  # this is the div id for the html preview
-  def wiki_preview_id(wiki)
-    'wiki_preview-%s' % wiki.id
-  end
-
-  # nicedit has all kinds of bugs when run using a textarea as the instance.
-  # so, we use a div instead, but we still need a textarea so that the post
-  # to save will get data.
-  def wiki_body_html_id(wiki)
-    'wiki_body_html-%s' % wiki.id
-  end
-
-  # this is the panel id for the html editor
-  def wiki_panel_id(wiki)
-    'wiki_panel-%s' % wiki.id
-  end
-
-  def wiki_toolbar_id(wiki)
-    'markdown_toolbar-%s' % wiki.id
-  end
-
-  def image_popup_id(wiki)
-    'image_popup-%s' % wiki.id
-  end
-
-  def wiki_form_id(wiki)
-    'wiki_form-%s' % wiki.id
-  end
-
-  ##
   ## WIKI EDITING POPUPS
   ##
 
@@ -229,21 +180,6 @@ module WikiHelper
         I18n.t(:wiki_visual_editor)
       end
     end
-  end
-
-  def create_wiki_toolbar(wiki)
-    body_id = wiki_body_id(wiki)
-    toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => I18n.t(:insert_image))
-
-    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
-  end
-
-  def wiki_locked_notice(wiki)
-    return if wiki.document_open_for? current_user
-
-    error_text = I18n.t(:wiki_is_locked, :user => wiki.locker_of(:document).try.name || I18n.t(:unknown))
-    %Q[<blockquote class="error">#{h error_text}</blockquote>]
   end
 
   # takes some nice and clean xhtml, and produces some ugly html that is well suited for

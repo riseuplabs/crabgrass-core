@@ -96,18 +96,6 @@ module WikiPageHelper
   end
 
 
-  def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
-    text_area_id ||= wiki_body_id(@wiki)
-    confirm_discarding_text_area(text_area_id,
-          ["input[name=break_lock]",
-          "input[name=save]",
-          "input[name=cancel]",
-          "input[name=ajax_cancel]"],
-          I18n.t(:leave_editing_wiki_page_warning)
-          )
-
-  end
-
   # also defined in app/helpers/wikis/base_helper.rb
   # we might want to combine the two and make them depend on
   # whether it's a page or a group wiki.
