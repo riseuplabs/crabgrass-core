@@ -1,5 +1,5 @@
 standard_update(page)
-page.replace_html dom_id(@wiki), :partial => '/common/wiki/edit'
+page.replace_html dom_id(@wiki), :partial => 'edit'
 page << create_wiki_toolbar(@wiki)
 page << confirm_discarding_wiki_edit_text_area
 page << release_lock_on_unload unless @wiki.new_record?

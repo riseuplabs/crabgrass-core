@@ -8,6 +8,12 @@ module Wikis::BaseHelper
   #moved wiki_path method to app/controllers/common/application/paths.rb
 
   # moved following methods from app/helpers/groups/wikis_helper.rb
+
+  def wiki_versions_link
+    return unless may_edit_wiki?(@wiki)
+    link_to :versions.t, wiki_versions_path(@wiki)
+  end
+
   def wiki_locked_notice(wiki)
     return if wiki.document_open_for? current_user
 

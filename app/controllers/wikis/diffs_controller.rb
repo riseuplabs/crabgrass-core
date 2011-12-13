@@ -28,7 +28,7 @@ class Wikis::DiffsController < Wikis::BaseController
     redirect_to wiki_versions_path(@wiki)
   end
 
-  def fetch_params_without_pagination
+  def fetch_versions_without_pagination
     old_id, new_id = params[:id].split('-')
     @old = @wiki.find_version(old_id) unless old_id.blank?
     @version = @new = @wiki.find_version(new_id)

@@ -12,12 +12,13 @@ class Wikis::BaseController < ApplicationController
 
   protected
   def fetch_wiki
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.find(params[:wiki_id] || params[:id])
   end
 
   def fetch_context
     @page = @wiki.page
-    @group = @wiki.group
+    @group = @wiki.context if @wiki.context.is_a?(Group)
+    @user = @wiki.context if @wiki.context.is_a?(User)
     @context = Context.find(@wiki.context)
   end
 

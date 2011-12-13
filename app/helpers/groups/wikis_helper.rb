@@ -39,8 +39,8 @@ module Groups::WikisHelper
   end
 
   def wiki_edit_link
-    return unless may_edit_group_wiki?(@group)
-    link_to :edit.t, edit_group_wiki_path(@group, @wiki),
+    return unless may_edit_wiki?(@wiki)
+    link_to :edit.t, edit_wiki_path(@wiki),
       :icon => 'pencil'
   end
 
@@ -51,10 +51,6 @@ module Groups::WikisHelper
       :method => :get }
   end
 
-  def wiki_versions_link
-    return unless may_edit_group_wiki?(@group)
-    link_to :versions.t, wiki_versions_path(@wiki)
-  end
 
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS

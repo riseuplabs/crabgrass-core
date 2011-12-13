@@ -1,9 +1,13 @@
 class Wikis::WikisController < Wikis::BaseController
 
+  permissions :wikis
   before_filter :login_required, :except => :show
 
   javascript :wiki
   stylesheet 'wiki_edit'
+
+  guard :edit => :may_edit_wiki?,
+        :update => :may_edit_wiki?
 
   def edit
     if params[:break_lock]

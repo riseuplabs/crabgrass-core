@@ -128,20 +128,14 @@ module WikiHelper
   #moved wiki_more_link, wiki_less_link, wiki_action and wiki_edit_link to wiki_helper in widget directory
 
   #this also exists in app/helpers/groups/wikis_helper.rb
+  #probably should combine in app/helpers/wikis/base_helper.rb
   def wiki_edit_link
-    return unless true ##may_edit_group_wiki?(@group) ## TODO add permission function
+    return unless may_edit_wiki?(@wiki)
     link_to_remote :edit.t,
-    {:url => #edit_page_wiki_path(@wiki), #see paths.rb page_xpath app/controllers/common/application/paths.rb
-      wiki_path(@wiki, :action => :edit),
+    {:url => edit_wiki_path(@wiki),
       :method => 'get'},
     {:icon => 'pencil'}
 
-  end
-
-  #also in app/helpers/groups/wikis_helper.rb. probably could use same function
-  def wiki_versions_link
-    return unless true # may_edit_group_wiki?(@group) #TODO add permission function
-    link_to :versions.t, wiki_versions_path(@wiki)
   end
 
 
