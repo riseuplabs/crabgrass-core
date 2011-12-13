@@ -1,90 +1,6 @@
 module WikiHelper
 
   ##
-  ## WIKI EDITING POPUPS
-  ##
-
-  ## the actions for these popups are defined in ControllerExtension::WikiPopup
-  ## because they may be in the wiki_controller or the wiki_page_controller. I am not
-  ## sure why we do it that way, but that is how it is.
-
-  def popup_image_list(wiki)
-    style = "height:64px;width:64px"
-    if @images.any?
-      images = @images.select{|img| img.url.any? }
-      items = radio_buttons_tag(:image, images.collect do |asset|
-        [thumbnail_img_tag(asset, :small, :scale => '64x64'), asset.id]
-      end)
-      data = images.collect do |asset|
-        content_tag(:input, '', :id => "#{asset.id}_thumbnail_data", :value => thumbnail_urls_to_json(asset), :type => 'hidden')
-      end.join
-      content_tag :div, data + items, :class => 'swatch_list'
-    end
-  end
-
-  def thumbnail_urls_to_json(asset)
-    { :small  => asset.thumbnail(:small).try.url || asset.url,
-      :medium => asset.thumbnail(:medium).try.url || asset.url,
-      :large  => asset.thumbnail(:large).try.url || asset.url,
-      :full   => asset.url }.to_json
-  end
-
-  def insert_image_function(wiki)
-    "insertImage('%s');" % wiki.id
-  end
-
-  def image_popup_upload_url(wiki)
-    # this method is used both by WikiPageController and WikiPage to
-    # upload files to the image insert popup
-    if @page and @page.data and @page.data == wiki
-      page_xurl(@page, :action => 'image_popup_upload', :wiki_id => wiki.id)
-    else
-      url_for(wiki_action('image_popup_upload', :wiki_id => wiki.id).merge({:escape => false}))
-    end
-  end
-
-  def image_popup_show_url(wiki)
-    # this method is used both by WikiPageController and WikiPage to show the
-    # image insert popup
-    if @page and @page.data and @page.data == wiki
-      page_xurl(@page, :action => 'image_popup_show', :wiki_id => wiki.id)
-    else
-      url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
-    end
-  end
-
-  def link_popup_show_url(wiki)
-    if @page and @page.data and @page.data == wiki
-      page_xurl(@page, :action => 'link_popup_show', :wiki_id => wiki.id)
-    else
-      url_for(wiki_action('link_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
-    end
-  end
-
-  def update_link_function(wiki,action)
-    "updateLink('%s','%s');" % [wiki.id,action]
-  end
-
-  #
-  # these functions are used by the toolbar plugins to show the modalbox popups.
-  #
-  def toolbar_insert_image_function(wiki)
-    %(insertImageFunction = function() {
-      var editor = new HtmlEditor(#{wiki.id});
-      editor.saveSelection();
-      #{modalbox_function(image_popup_show_url(@wiki), :title => I18n.t(:insert_image))};
-    })
-  end
-
-  def toolbar_create_link_function(wiki)
-    %(createLinkFunction = function() {
-      var editor = new HtmlEditor(#{wiki.id});
-      editor.saveSelection();
-      #{modalbox_function(link_popup_show_url(@wiki), :title => I18n.t(:add_link))};
-    })
-  end
-
-  ##
   ## VERSIONING
   ##
 
@@ -123,19 +39,6 @@ module WikiHelper
      end
 
      label
-  end
-
-  #moved wiki_more_link, wiki_less_link, wiki_action and wiki_edit_link to wiki_helper in widget directory
-
-  #this also exists in app/helpers/groups/wikis_helper.rb
-  #probably should combine in app/helpers/wikis/base_helper.rb
-  def wiki_edit_link
-    return unless may_edit_wiki?(@wiki)
-    link_to_remote :edit.t,
-    {:url => edit_wiki_path(@wiki),
-      :method => 'get'},
-    {:icon => 'pencil'}
-
   end
 
 

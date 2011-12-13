@@ -1,11 +1,28 @@
 module Wikis::BaseHelper
 
-  protected
 
-  # this will eventually go away once we move the group/wiki and page/wiki
-  # controllers over
+  def wiki_action_links
+    link_span(wiki_edit_link(:remote => !@wiki.page.nil?),
+      wiki_versions_link)
+  end
 
-  #moved wiki_path method to app/controllers/common/application/paths.rb
+  def wiki_edit_link(options = {})
+    return unless may_edit_wiki?(@wiki)
+    if options[:remote]
+      link_to_remote :edit.t,
+        { :url => edit_wiki_path(@wiki), :method => 'get' },
+          { :icon => 'pencil' }
+    else
+      link_to :edit.t, edit_wiki_path(@wiki), :icon => 'pencil'
+    end
+  end
+
+  def break_lock_link
+    url = edit_wiki_path(@wiki, :break_lock => true)
+    link_to_remote :break_lock.t,
+    { :url => url,
+      :method => :get }
+  end
 
   # moved following methods from app/helpers/groups/wikis_helper.rb
 

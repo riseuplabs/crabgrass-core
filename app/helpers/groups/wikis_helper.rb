@@ -1,5 +1,9 @@
 module Groups::WikisHelper
 
+  # The group wiki specific functions live here.
+  # The more generic ones live in
+  # app/helpers/wikis/base_helper.rb
+
   def private_wiki_toggle
     wiki_toggle @group.private_wiki, :private_group_wiki
   end
@@ -38,20 +42,6 @@ module Groups::WikisHelper
       :method => :get
   end
 
-  def wiki_edit_link
-    return unless may_edit_wiki?(@wiki)
-    link_to :edit.t, edit_wiki_path(@wiki),
-      :icon => 'pencil'
-  end
-
-  def break_lock_link
-    url = edit_group_wiki_path(@group, @wiki, :break_lock => true)
-    link_to_remote :break_lock.t,
-    { :url => url,
-      :method => :get }
-  end
-
-
   def wiki_more_link
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_more_link.t,
@@ -68,8 +58,4 @@ module Groups::WikisHelper
       :icon => 'minus'
   end
 
-  #moved a bunch of methods to app/helpers/wikis/base_helper.rb
-
 end
-
-

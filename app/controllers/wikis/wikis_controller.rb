@@ -17,7 +17,7 @@ class Wikis::WikisController < Wikis::BaseController
     if @wiki.document_open_for?(current_user)
       @wiki.lock!(:document, current_user)
     else
-      render :template => 'locked'
+      render :template => '/wikis/wikis/locked'
     end
   end
 
@@ -36,7 +36,7 @@ class Wikis::WikisController < Wikis::BaseController
     @wiki.version = @wiki.versions.last.version + 1
     # this won't unlock if they don't hit save:
     @wiki.unlock!(:document, current_user, :break => true )
-    render :template => 'edit'
+    render :template => '/wikis/wikis/edit'
   end
 
 end
