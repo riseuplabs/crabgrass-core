@@ -2,8 +2,7 @@ module Wikis::BaseHelper
 
 
   def wiki_action_links
-    link_span(wiki_edit_link(:remote => !@wiki.page.nil?),
-      wiki_versions_link)
+    link_span(wiki_edit_link, wiki_versions_link)
   end
 
   def wiki_edit_link(options = {})

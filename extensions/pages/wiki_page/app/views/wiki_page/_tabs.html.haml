@@ -1,13 +1,15 @@
-= formy(:tabs, :id => 'page_tabs') do |f|
+= formy(:tabs, :id => 'page_tabs', :class => 'tabset') do |f|
   - f.tab do |t|
     - t.label :show.t
     - t.url page_path(@page,:action=>'show')
-    - t.selected action?(:show) #this doesnt' seem to be unsetting properly
+    - t.selected action?(:show)
   - f.tab do |t|
     - t.label :edit.t
-    - t.function remote_function( :url => edit_wiki_path(@wiki), :method => :get )
-    - t.selected action?(:edit) # This isn't working right. action?(:edit) is returning true but the tabs aren't switching properly
+    - t.function remote_function(:url => edit_wiki_path(@wiki), :method => 'get')
+    - t.show_tab dom_id(@wiki)
+    - t.selected action?(:edit)
   - f.tab do |t|
     - t.label :versions.t
-    - t.function remote_function(:url => wiki_versions_path(@wiki), :method => 'get') #this url is right but we need to set this up so it replaces the appropriate part of the screen
-    - t.selected action?(:index) #this is true but probably won't work right as is.
+    - t.function remote_function(:url => wiki_versions_path(@wiki), :method => 'get')
+    - t.show_tab dom_id(@wiki)
+    - t.selected controller?('wikis/versions')

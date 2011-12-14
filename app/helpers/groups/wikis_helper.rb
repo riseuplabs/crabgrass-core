@@ -17,15 +17,14 @@ module Groups::WikisHelper
 
     open = @wiki && (@wiki == wiki)
 
-    link_to_toggle wiki_type.t, dom_id(wiki),
+    link_to_toggle wiki_type.t, dom_id(wiki, :wrap),
       :onvisible => wiki_remote_function(wiki, wiki_type),
-      :class => 'section_toggle',
-      :open => open do
-      if open
-        # show full wiki if we just focussed on this wiki:
-        preview = !coming_from_wiki?(@wiki)
-        render :partial => '/group/home/wiki', :locals => {:preview => preview}
-      end
+      :open => open,
+      :class => 'section_toggle' do
+      # show full wiki if we just focussed on this wiki:
+      preview = !coming_from_wiki?(@wiki)
+      render :partial => '/groups/home/wiki',
+        :locals => {:preview => preview, :open => open, :wiki => wiki}
     end
   end
 
