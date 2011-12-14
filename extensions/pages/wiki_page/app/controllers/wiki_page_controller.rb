@@ -7,7 +7,7 @@ class WikiPageController < Pages::BaseController
   #javascript :wiki, :action => :edit
 
   helper 'wikis/base'
-  helper :wiki_page, :wiki #??
+  helper :wiki
   #helper_method :save_or_cancel_edit_lock_wiki_error_text
 
   permissions 'wiki_page', 'wikis'
@@ -142,7 +142,7 @@ class WikiPageController < Pages::BaseController
   end
 
   def setup_options
-    @options.show_tabs = false #true # not sure what we really want here
+    @options.show_tabs = true
   end
 
 #  def setup_title_box
