@@ -24,7 +24,7 @@ module Groups::WikisHelper
       if open
         # show full wiki if we just focussed on this wiki:
         preview = !coming_from_wiki?(@wiki)
-        render :partial => 'common/wiki/show', :locals => {:preview => preview}
+        render :partial => '/group/home/wiki', :locals => {:preview => preview}
       end
     end
   end

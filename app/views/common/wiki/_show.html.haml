@@ -1,7 +1,5 @@
 -# This is also used after cancelling when there is no wiki to show
 - if @wiki
-  %span.float_right
-    = wiki_action_links
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
