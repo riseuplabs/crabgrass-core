@@ -6,6 +6,8 @@ class Wikis::WikisController < Wikis::BaseController
   javascript :wiki
   stylesheet 'wiki_edit'
 
+  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
+
   guard :edit => :may_edit_wiki?,
         :update => :may_edit_wiki?
 

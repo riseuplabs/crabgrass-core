@@ -1,5 +1,5 @@
 - content_for :left_column do
-  = render :partial => 'sidehelp' if params[:group_id] # only want sidehelp for group wikis
+  = render :partial => 'sidehelp' if @wiki.group # only want sidehelp for group wikis
 %div[@wiki]
   = render :partial => 'edit'
   = javascript_tag create_wiki_toolbar(@wiki)

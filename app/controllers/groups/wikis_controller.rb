@@ -7,8 +7,6 @@ class Groups::WikisController < Groups::BaseController
   before_filter :login_required, :except => :show
   before_filter :authorized?, :only => :show
 
-  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
-
   helper 'wikis/base'
 
   def new
