@@ -177,6 +177,7 @@ ActionController::Routing::Routes.draw do |map|
     wikis.resources :versions, :only  => [:index, :show, :destroy],
       :member => {:revert => :post}
     wikis.resources :diffs, :only => [:show]
+    wikis.resources :sections, :only => [:edit, :update]
   end
 
   ##

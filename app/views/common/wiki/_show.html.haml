@@ -5,5 +5,5 @@
       = @wiki.preview_html
       = wiki_more_link if @wiki.page.nil? # only show for group wikis
     - else
-      = @wiki.body_html
+      = wiki_body_html
       = wiki_less_link if @wiki.page.nil? # only show for group wikis

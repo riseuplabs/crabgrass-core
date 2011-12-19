@@ -1,7 +1,6 @@
 class Wikis::SectionsController < Wikis::BaseController
 
-  helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?,
-                  :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?
+  #  helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?, :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?
 
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit
@@ -12,30 +11,40 @@ class Wikis::SectionsController < Wikis::BaseController
   # if we have some section locked, but we don't need it. we should drop the lock
   #before_filter :release_old_locked_section!, :only => [:edit, :update]
 
-=begin
-  # GET
-  # plain - clicked edit tab, section = nil.  render edit ui with tabs and full markup
-  # XHR - clicked pencil, section = 'someheading'. replace #wiki_html with inline editor
   def edit
-    @editing_section = desired_locked_section
-    @wiki.unlock!(desired_locked_section, current_user, :break => true) if params[:break_lock]
-    acquire_desired_locked_section!
-
-  rescue WikiLockError => exc
-    # we couldn't acquire a lock. do nothing here for document edit. user will see 'break lock' button
-    if show_inline_editor?
-      @locker = @wiki.locker_of(@editing_section)
-      @locker ||= User.new :login => 'unknown'
-      error :wiki_is_locked.t(:user => @locker.display_name)
+    @section = params[:id]
+    @markup = @wiki.get_body_for_section(@section)
+    if params[:break_lock]
+      # remove other peoples lock if it exists
+      @wiki.unlock!(@section, current_user, :break => true )
     end
-  rescue ActiveRecord::StaleObjectError => exc
-     # this exception is created by optimistic locking.
-     # it means that wiki or wiki locks has change since we fetched it from the database
-     error :locking_error.t
-  ensure
-    render :action => 'update_wiki_html' if show_inline_editor?
+    if @wiki.section_open_for?(@section, current_user)
+      @wiki.lock!(@section, current_user)
+    else
+      render :template => '/wikis/sections/locked'
+    end
   end
-=end
+
+# TODO: versioning for sections
+  def update
+    @section = params[:id]
+    if params[:cancel]
+      @wiki.unlock!(@section, current_user, :break => true ) if @wiki
+    else
+      @wiki.update_section!(@section, current_user, nil, params[:wiki][:body])
+      success
+    end
+    redirect_to @page ? page_url(@page) : entity_path(@group)
+
+  rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
+    warning exc
+    @wiki.body = params[:wiki][:body]
+    # @wiki.version = @wiki.versions.last.version + 1
+    # this won't unlock if they don't hit save:
+    @wiki.unlock!(:document, current_user, :break => true )
+    render :template => '/wikis/sections/edit'
+  end
+
 
 =begin
   # we want to use the update method from app/controllers/common/wiki.rb PUT
@@ -44,14 +53,6 @@ class Wikis::SectionsController < Wikis::BaseController
   # xhr - clicked save/cancel on inline editor, section = 'somesection'.  rjs
   # replace #wiki_html with wiki.body_html
   def update
-    # no RESTful routing for now unfortunately
-    if request.get?
-      redirect_to_show
-      return
-    end
-
-    @editing_section = desired_locked_section
-
     # setup the updated data from visual editor if needed
     if params[:wiki]
       params[:wiki][:body] = html_to_greencloth(params[:wiki][:body_html]) if params[:wiki][:body_html].any?
