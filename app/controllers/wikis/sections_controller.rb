@@ -3,6 +3,13 @@ class Wikis::SectionsController < Wikis::BaseController
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit
 
+  permissions 'wikis'
+
+  guard :edit => :may_edit_wiki?,
+        :update => :may_edit_wiki?
+
+  before_filter :login_required
+
   def edit
     @section = params[:id]
     @markup = @wiki.get_body_for_section(@section)

@@ -6,11 +6,11 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     @user = User.make
     @group = Group.make
     @group.add_user!(@user)
+    @wiki = @group.profiles.public.create_wiki :body => 'init'
   end
 
 
   def test_edit
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :get, :edit, :id => @wiki.id
@@ -24,7 +24,6 @@ class Wikis::WikisControllerTest < ActionController::TestCase
   end
 
   def test_edit_locked
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
     other_user = User.make
     @wiki.lock! :document, other_user
     login_as @user
@@ -38,7 +37,6 @@ class Wikis::WikisControllerTest < ActionController::TestCase
   end
 
   def test_update
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
