@@ -3,10 +3,6 @@ class Wikis::SectionsController < Wikis::BaseController
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit
 
-  #before_filter :ensure_desired_locked_section_exists, :only => [:edit, :update]
-  # if we have some section locked, but we don't need it. we should drop the lock
-  #before_filter :release_old_locked_section!, :only => [:edit, :update]
-
   def edit
     @section = params[:id]
     @markup = @wiki.get_body_for_section(@section)
@@ -19,7 +15,6 @@ class Wikis::SectionsController < Wikis::BaseController
     render :template => 'wikis/sections/locked', :locals => {:err => exc}
   end
 
-# TODO: versioning for sections
   def update
     @section = params[:id]
     if params[:cancel]
