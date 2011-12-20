@@ -25,15 +25,16 @@ class Wikis::SectionsController < Wikis::BaseController
     if params[:cancel]
       @wiki.unlock(@section, current_user ) if @wiki
     else
-      @wiki.update_section!(@section, current_user, nil, params[:wiki][:body])
+      @wiki.update_section! @section, current_user,
+        params[:wiki][:version], params[:wiki][:body]
       success
     end
     redirect_to @page ? page_url(@page) : group_wiki_path(@group, @wiki)
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
-    @wiki.body = params[:wiki][:body]
-    # @wiki.version = @wiki.versions.last.version + 1
+    @markup = params[:wiki][:body]
+    @wiki.version = @wiki.versions.last.version + 1
     # this won't unlock if they don't hit save:
     @wiki.unlock! :document, current_user,
       :break => true,

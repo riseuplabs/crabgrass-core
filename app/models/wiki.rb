@@ -88,12 +88,17 @@ class Wiki < ActiveRecord::Base
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
   def update_section!(section, user, current_version, text)
-    if current_version and self.version > current_version.to_i
-      raise VersionExistsError.new(self.versions.last)
-    end
-
     if sections_locked_for(user).include? section
       raise SectionLockedOnSaveError.new(section)
+    end
+
+    if current_version and self.version > current_version.to_i
+      # our version might be outdated but if the last edit
+      # was in a different section we still have the lock
+      # and we can still save.
+      unless user == locker_of(section)
+        raise VersionExistsError.new(self.versions.last)
+      end
     end
 
     unlock!(section, user)

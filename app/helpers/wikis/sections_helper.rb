@@ -1,5 +1,14 @@
 module Wikis::SectionsHelper
 
+  def wiki_section_text_area
+    rows = [word_wrap((@markup||""), 80).count("\n")+4, 30].min
+    text_area_tag 'wiki[body]', h(@markup),
+      :rows => rows,
+      :cols => 60,
+      :style => 'width:99%;',
+      :id => 'wiki_body'
+  end
+
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
     return html unless logged_in? and may_edit_wiki?(wiki)
