@@ -65,9 +65,11 @@ function insertAtCursor(textarea, text) {
 }
 
 // we don't want to keep the wiki locked after leaving the page
-function releaseLockOnUnload(wiki_id, auth) {
+function releaseLockOnUnload(wiki_id, auth, section) {
   var url = '/wikis/' + wiki_id + '/lock';
-
+  if(section) {
+    url = url + '?section=' + section;
+  }
   window.onunload = function(ev) {
     new Ajax.Request(url, {
       method: 'delete',

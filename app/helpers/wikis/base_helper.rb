@@ -74,7 +74,11 @@ module Wikis::BaseHelper
 
 
   def release_lock_on_unload
-    %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+    if @section
+      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}", "#{@section}");]
+    else
+      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+    end
   end
 
 
