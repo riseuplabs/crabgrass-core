@@ -1,2 +1,2 @@
-= wiki_locked_notice(@wiki)
+= local_assigns[:err] || wiki_locked_notice(@wiki)
 = break_lock_link

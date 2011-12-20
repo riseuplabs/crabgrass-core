@@ -10,7 +10,14 @@ module WikiExtension
     class OtherSectionLockedError < SectionLockedError
     end
 
-    class SectionLockedOnSaveError < SectionLockedError
+    class SectionLockedOnSaveError < CrabgrassException
+      def initialize(section, options = {})
+        message = :user_locked_section.t  :section => section,
+          :user => locker_of(section).display_name
+        message += :can_still_save.t
+        message += :changes_might_be_overwritten.t
+        super(message, options)
+      end
     end
 
     def lock!(section, user)
@@ -31,20 +38,43 @@ module WikiExtension
       end
     end
 
-    # opts can be :force => true :: won't throw a WikiLockException if user doesn't own the lock
-    def unlock!(section, user, opts = {})
+    # options can be
+    #   :break          :: will break the lock and won't throw a
+    #                      WikiLockException if user doesn't own the lock
+    #   :with_structure :: will unlock all sections that lock the given
+    #                      section including children and anchestors
+    def unlock!(section, user, options = {})
       unless section_exists? section
         raise SectionNotFoundError.new(section)
       end
 
-      # don't let other people unlock this unless :break option is given
-      if may_modify_lock?(section, user) or opts[:break]
-        section_locks.unlock!(section, user, opts)
+      if options.delete(:with_structure)
+        sections = structure.genealogy_for_section(section)
+        sections &= section_locks.sections_locked_for(user)
+        # there should only be one lock in a genealogy anyway...
+        # if there is none we're done.
+        return unless unlock = sections.first
       else
-        message = :section_locked_error.t(:section => section,
-          :user => locker_of(section).display_name)
+        unlock = section
+      end
+
+      # don't let other people unlock this unless :break option is given
+      if may_modify_lock?(unlock, user) or options[:break]
+        section_locks.unlock!(unlock, user, options)
+      else
+        message = :cant_edit_section.t(:section => section)
+        message += :section_locked_error.t(:section => unlock,
+          :user => locker_of(section).try.display_name)
         raise SectionLockedError.new(message)
       end
+    end
+
+    # release a lock without raising an error if the section was
+    # locked by someone else
+    def unlock(section, user, options = {})
+      self.unlock!(section, user, options)
+    rescue SectionLockedError => exc
+      return
     end
 
     # get a list of sections that the +user+ may not edit

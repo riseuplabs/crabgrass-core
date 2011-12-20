@@ -10,22 +10,20 @@ class Wikis::SectionsController < Wikis::BaseController
   def edit
     @section = params[:id]
     @markup = @wiki.get_body_for_section(@section)
-    if params[:break_lock]
-      # remove other peoples lock if it exists
-      @wiki.unlock!(@section, current_user, :break => true )
-    end
-    if @wiki.section_open_for?(@section, current_user)
-      @wiki.lock!(@section, current_user)
-    else
-      render :template => '/wikis/sections/locked'
-    end
+    # remove other peoples lock if it exists
+    @wiki.unlock! @section, current_user,
+      :break => params[:break_lock],
+      :with_structure => true
+    @wiki.lock!(@section, current_user)
+  rescue Wiki::SectionLockedError => exc
+    render :template => 'wikis/sections/locked', :locals => {:err => exc}
   end
 
 # TODO: versioning for sections
   def update
     @section = params[:id]
     if params[:cancel]
-      @wiki.unlock!(@section, current_user, :break => true ) if @wiki
+      @wiki.unlock(@section, current_user ) if @wiki
     else
       @wiki.update_section!(@section, current_user, nil, params[:wiki][:body])
       success
@@ -37,7 +35,9 @@ class Wikis::SectionsController < Wikis::BaseController
     @wiki.body = params[:wiki][:body]
     # @wiki.version = @wiki.versions.last.version + 1
     # this won't unlock if they don't hit save:
-    @wiki.unlock!(:document, current_user, :break => true )
+    @wiki.unlock! :document, current_user,
+      :break => true,
+      :with_structure => true
     render :template => '/wikis/sections/edit'
   end
 

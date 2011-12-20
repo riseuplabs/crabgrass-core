@@ -93,9 +93,7 @@ class Wiki < ActiveRecord::Base
     end
 
     if sections_locked_for(user).include? section
-      message = :section_locked_on_save_error.t(:section => section,
-        :user => locker_of(section).display_name)
-      raise SectionLockedOnSaveError.new(message)
+      raise SectionLockedOnSaveError.new(section)
     end
 
     unlock!(section, user)

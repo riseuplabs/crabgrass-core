@@ -17,7 +17,9 @@ module Wikis::BaseHelper
   end
 
   def break_lock_link
-    url = edit_wiki_path(@wiki, :break_lock => true)
+    url = @section ?
+      edit_wiki_section_path(@wiki, @section, :break_lock => true) :
+      edit_wiki_path(@wiki, :break_lock => true)
     link_to_remote :break_lock.t,
     { :url => url,
       :method => :get }
