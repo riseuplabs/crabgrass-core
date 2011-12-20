@@ -35,9 +35,10 @@ class LinkRenderer::Ajax < LinkRenderer::Dispatch
   def to_html
     # we want the spinner inside the pagination container div, so we override the
     # default container and define one here:
-    @template.content_tag :div, :class => 'pagination' do
-      super + ' ' + @template.spinner(spinner_id)
-    end
+
+    pagination = super + ' ' + @template.spinner(spinner_id)
+    @template.content_tag :div, pagination, :class => 'pagination'
+
   end
 
   def spinner_id
