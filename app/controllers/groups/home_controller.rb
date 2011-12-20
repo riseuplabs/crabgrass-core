@@ -1,7 +1,7 @@
 class Groups::HomeController < Groups::BaseController
 
   layout 'sidecolumn'
-  helper 'groups/wikis', 'wikis/base'
+  helper 'groups/wikis', 'wikis/base', 'wikis/sections'
   permissions 'wikis'
   before_filter 'fetch_wikis'
 

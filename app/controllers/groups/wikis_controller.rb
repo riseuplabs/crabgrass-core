@@ -7,7 +7,8 @@ class Groups::WikisController < Groups::BaseController
   before_filter :login_required, :except => :show
   before_filter :authorized?, :only => :show
 
-  helper 'wikis/base'
+  helper 'wikis/base', 'wikis/sections'
+  permissions 'wikis'
 
   def new
     if @wiki = @profile.wiki

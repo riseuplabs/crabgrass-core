@@ -2,7 +2,7 @@ module Wikis::SectionsHelper
 
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
-    return html unless logged_in? and current_user.may?(:edit, wiki.page)
+    return html unless logged_in? and may_edit_wiki?(wiki)
 
     doc = Hpricot(html)
     doc.search('h4 a.anchor, h3 a.anchor, h2 a.anchor, h1 a.anchor').each do |anchor|

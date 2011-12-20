@@ -7,6 +7,9 @@ module WikiExtension
     class SectionLockedError < CrabgrassException
     end
 
+    class OtherSectionLockedError < SectionLockedError
+    end
+
     class SectionLockedOnSaveError < SectionLockedError
     end
 

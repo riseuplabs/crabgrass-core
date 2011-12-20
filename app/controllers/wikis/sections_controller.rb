@@ -34,7 +34,7 @@ class Wikis::SectionsController < Wikis::BaseController
       @wiki.update_section!(@section, current_user, nil, params[:wiki][:body])
       success
     end
-    redirect_to @page ? page_url(@page) : entity_path(@group)
+    redirect_to @page ? page_url(@page) : group_wiki_path(@group, @wiki)
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
