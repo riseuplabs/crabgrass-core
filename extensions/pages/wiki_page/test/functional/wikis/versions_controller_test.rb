@@ -26,37 +26,22 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
 
     # find versions
     (1..5).each do |i|
-      get :show, :page_id => pages(:wiki).id, :id => i
+      get :show, :wiki_id => pages(:wiki).data_id, :id => i
       assert_response :success
       assert_equal i, assigns(:version).version
     end
 
     # should fail gracefully for non-existant version
-    get :show, :page_id => pages(:wiki).id, :id => 6
+    get :show, :wiki_id => pages(:wiki).data_id, :id => 6
     assert_response :success
     assert_nil assigns(:version)
-  end
-
-  def test_diff
-    login_as :orange
-
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" % i)
-    end
-
-    post :diff, :page_id => pages(:wiki).id, :id => "4-5"
-    assert_response :success
-
-    assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
-    assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
-    assert assigns(:difftext).length > 10, "difftext should contain something substantial"
   end
 
   def test_revert
     login_as :orange
     pages(:wiki).data.update_document!(users(:blue), 1, "version 1")
     pages(:wiki).data.update_document!(users(:yellow), 2, "version 2")
-    post :revert, :page_id => pages(:wiki).id, :id => 1
+    post :revert, :wiki_id => pages(:wiki).data_id, :id => 1
 
     wiki = Wiki.find(pages(:wiki).data.id)
 

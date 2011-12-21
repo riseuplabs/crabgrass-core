@@ -19,7 +19,7 @@ class Wikis::BaseController < ApplicationController
     @page = @wiki.page
     @group = @wiki.context if @wiki.context.is_a?(Group)
     @user = @wiki.context if @wiki.context.is_a?(User)
-    @context = Context.find(@wiki.context)
+    @context = Context.find(@wiki.context) if @wiki.context
   end
 
 end

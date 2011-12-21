@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
 
-class Wikis::WikisControllerTest < ActionController::TestCase
+class Wikis::SectionsControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :wikis
 
   def test_edit_inline
     login_as :blue
-    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "second-oversection"
+    xhr :get, :edit, :wiki_id => pages(:multi_section_wiki).data_id, :id => "second-oversection"
 
     assert_response :success
 
@@ -34,10 +34,10 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     page = WikiPage.create! :title => 'problem text', :owner => 'blue' do |page|
       page.data = Wiki.new(:body => "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
     end
-    get :show, :page_id => page.id
+    get :show, :wiki_id => page.data_id
     page = assigns(:page)
     assert_nothing_raised do
-      xhr :get, :edit, :page_id => page.id, :section => "hello"
+      xhr :get, :edit, :wiki_id => page.data_id, :id => "hello"
     end
 
     assert_response :success
@@ -47,9 +47,9 @@ class Wikis::WikisControllerTest < ActionController::TestCase
   def test_save_inline
     starting_all_sections = pages(:multi_section_wiki).wiki.all_sections
     login_as :blue
-    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "section-three"
+    xhr :get, :edit, :wiki_id => pages(:multi_section_wiki).data_id, :id => "section-three"
     # save the new (without a header)
-    xhr :put, :update, :page_id => pages(:multi_section_wiki).id, :section => "section-three",
+    xhr :put, :update, :wiki_id => pages(:multi_section_wiki).data_id, :id => "section-three",
                   :wiki => {:body => "a line"}
 
     assert_response :success
