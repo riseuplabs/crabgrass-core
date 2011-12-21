@@ -122,44 +122,4 @@ class Groups::WikisControllerTest < ActionController::TestCase
     end
   end
 
-  def test_edit
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
-    login_as @user
-    assert_permission :may_edit_group_wiki? do
-      xhr :get, :edit, :group_id => @group.to_param, :id => @wiki.id
-    end
-    assert_response :success
-    assert_template 'common/wiki/edit.rjs'
-    assert_equal @wiki, assigns['wiki']
-    assert_equal @user, @wiki.reload.locker_of(:document)
-  end
-
-  def test_edit_locked
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
-    other_user = User.make
-    @wiki.lock! :document, other_user
-    login_as @user
-    assert_permission :may_edit_group_wiki? do
-      xhr :get, :edit, :group_id => @group.to_param, :id => @wiki.id
-    end
-    assert_response :success
-    assert_template 'common/wiki/locked.rjs'
-    assert_equal other_user, @wiki.locker_of(:document)
-    assert_equal @wiki, assigns['wiki']
-  end
-
-  def test_update
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
-    login_as @user
-    assert_permission :may_edit_group_wiki? do
-      xhr :post, :update,
-        :group_id => @group.to_param,
-        :id => @wiki.id,
-        :wiki => {:body => '*updated*', :version => 1}
-    end
-    assert_response :redirect
-    assert_redirected_to group_url(@group)
-    assert_equal "<p><strong>updated</strong></p>", @wiki.reload.body_html
-  end
-
 end

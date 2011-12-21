@@ -18,6 +18,7 @@ module Common::Wiki
       javascript :wiki
       stylesheet 'wiki_edit'
 
+      helper 'wikis/sections'
     end
   end
 

@@ -17,7 +17,9 @@ module Wikis::BaseHelper
   end
 
   def break_lock_link
-    url = edit_wiki_path(@wiki, :break_lock => true)
+    url = @section ?
+      edit_wiki_section_path(@wiki, @section, :break_lock => true) :
+      edit_wiki_path(@wiki, :break_lock => true)
     link_to_remote :break_lock.t,
     { :url => url,
       :method => :get }
@@ -74,7 +76,11 @@ module Wikis::BaseHelper
 
 
   def release_lock_on_unload
-    %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+    if @section
+      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}", "#{@section}");]
+    else
+      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+    end
   end
 
 
