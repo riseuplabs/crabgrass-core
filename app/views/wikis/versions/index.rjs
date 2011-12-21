@@ -1,0 +1,4 @@
+standard_update(page)
+page.replace_html dom_id(@wiki), :partial => 'index_and_show'
+load_url = proc {|version| wiki_version_path(@wiki, version)}
+page << activate_panel_row(@version, load_url)

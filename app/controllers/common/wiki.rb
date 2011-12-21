@@ -10,9 +10,10 @@ module Common::Wiki
 
   def self.included(base)
     base.class_eval do
+      #will we need a context for page wikis?
       before_filter :fetch_context # needs to be defined in the controller itself
-      before_filter :fetch_wiki, :only => [:show, :edit, :update]
-      before_filter :setup_wiki_rendering
+#      before_filter :fetch_wiki, :only => [:show, :edit, :update]
+#      before_filter :setup_wiki_rendering
 
       javascript :wiki
       stylesheet 'wiki_edit'
@@ -24,43 +25,12 @@ module Common::Wiki
     render :template => '/common/wiki/show', :locals => {:preview => params['preview']}
   end
 
-  def edit
-    if params[:break_lock]
-      # remove other peoples lock if it exists
-      @wiki.unlock!(:document, current_user, :break => true )
-    end
-    if @wiki.document_open_for?(current_user)
-      @wiki.lock!(:document, current_user)
-      render :template => '/common/wiki/edit'
-    else
-      render :template => '/common/wiki/locked'
-    end
-  end
-
-  def update
-    if params[:cancel]
-      @wiki.unlock!(:document, current_user, :break => true ) if @wiki
-    else
-      @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
-      success
-    end
-    redirect_to @page ? page_url(@page) : entity_path(@group)
-
-  rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
-    warning exc
-    @wiki.body = params[:wiki][:body]
-    @wiki.version = @wiki.versions.last.version + 1
-    # this won't unlock if they don't hit save:
-    @wiki.unlock!(:document, current_user, :break => true )
-    render :template => 'common/wiki/edit'
-  end
-
   protected
 
   # I'm not sure we still need this. I wonder if we could include it in the
   # wiki model as we know the context from the wikis profile / page owner.
-  def setup_wiki_rendering
-    return unless @wiki
-    @wiki.render_body_html_proc {|body| render_wiki_html(body, @group.name)}
-  end
+#  def setup_wiki_rendering
+#    return unless @wiki
+#    @wiki.render_body_html_proc {|body| render_wiki_html(body, @group.name)}
+#  end
 end

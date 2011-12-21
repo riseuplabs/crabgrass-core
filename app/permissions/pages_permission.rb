@@ -138,8 +138,7 @@ module PagesPermission
   ## TITLE
   ##
 
-  alias_method :may_update_title?, :may_edit_page? # should be may_update_page_title? ? Or maybe not needed?
-  alias_method :may_edit_title?, :may_update_title?
+  alias_method :may_edit_page_title?, :may_edit_page?
 
 end
 

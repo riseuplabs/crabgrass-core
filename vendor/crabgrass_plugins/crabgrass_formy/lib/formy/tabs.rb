@@ -57,7 +57,7 @@ module Formy
             onclick = "showTab(this, $('%s'));" % @show_tab
           end
           if @function
-            @function += ';' unless @function.ends_with(';')
+            @function += ';' unless @function[-1].chr == ';'
             onclick = @function + onclick
           end
           a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id

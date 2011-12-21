@@ -1,7 +1,8 @@
 class Groups::HomeController < Groups::BaseController
 
   layout 'sidecolumn'
-  helper 'groups/wikis'
+  helper 'groups/wikis', 'wikis/base'
+  permissions 'wikis'
   before_filter 'fetch_wikis'
 
   def initialize(options = {})

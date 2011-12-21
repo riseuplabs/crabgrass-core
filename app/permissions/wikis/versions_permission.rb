@@ -1,6 +1,6 @@
 module Wikis::VersionsPermission
 
-  include WikiPermission
+  include WikisPermission
   protected
 
   def may_revert_wiki_version?(version = @version)

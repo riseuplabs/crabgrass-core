@@ -1,38 +1,4 @@
-module WikiPageHelper
-
-  def may_destroy_wiki_version?
-    current_user.may?(:admin, @page)
-  end
-
-  def may_revert_wiki_version?
-    current_user.may?(:edit, @page)
-  end
-
-  def locked_error_message
-    if locked_for_me?
-      user_id = @wiki.locker_of(:document).id
-      user = User.find_by_id user_id
-      display_name = user ? user.display_name : 'unknown'
-      error :page_locked_header.t, :wiki_is_locked.t(:user => display_name), :wont_be_able_to_save.t
-    end
-  end
-
-  def load_lasted_change_diff
-   javascript_tag(
-     remote_function(
-       :update => 'wiki_html',
-       :url => page_xurl(@page, :action => 'diff', :controller => 'version', :id => ("%d-%d" % [@last_seen.version, @wiki.version]))
-     )
-   )
-  end
-
-  def locked_for_me?(section = :document)
-    if @wiki and logged_in?
-      @wiki.section_locked_for?(section, current_user)
-    else
-      false
-    end
-  end
+module Wikis::SectionsHelper
 
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
@@ -96,17 +62,13 @@ module WikiPageHelper
   end
 
 
-  def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
-    text_area_id ||= wiki_body_id(@wiki)
-    confirm_discarding_text_area(text_area_id,
-          ["input[name=break_lock]",
-          "input[name=save]",
-          "input[name=cancel]",
-          "input[name=ajax_cancel]"],
-          I18n.t(:leave_editing_wiki_page_warning)
-          )
-
-  end
+  # also defined in app/helpers/wikis/base_helper.rb
+  # we might want to combine the two and make them depend on
+  # whether it's a page or a group wiki.
+  # this is the page wiki case:
+#  def wiki_path(wiki = @wiki, options = {})
+#    page_xpath(wiki.page, options)
+#  end
 
   protected
 

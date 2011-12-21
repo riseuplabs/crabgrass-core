@@ -6,6 +6,7 @@
 
 class Pages::TitleController < Pages::SidebarsController
 
+  permissions 'pages'
   before_filter :login_required
 
   # Return the edit title form. This is called by modalbox to load the popup contents.

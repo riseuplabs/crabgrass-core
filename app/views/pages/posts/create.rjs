@@ -4,7 +4,7 @@
 #
 
 @post = Post.new # for the reply form
-@posts = @page.posts
+@posts = @page.posts # this is throwing a nil error
 
 page.replace('posts',
   :partial => 'common/posts/list',

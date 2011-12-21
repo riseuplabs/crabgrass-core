@@ -1,11 +1,9 @@
 -# This is also used after cancelling when there is no wiki to show
 - if @wiki
-  %span.float_right
-    = link_span(wiki_edit_link, wiki_versions_link)
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
-      = wiki_more_link
+      = wiki_more_link if @wiki.page.nil? # only show for group wikis
     - else
       = @wiki.body_html
-      = wiki_less_link
+      = wiki_less_link if @wiki.page.nil? # only show for group wikis

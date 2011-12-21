@@ -162,7 +162,6 @@ ActionController::Routing::Routes.draw do |map|
     pages.resource :attributes, :only => [:update]
     pages.resource :title,      :only => [:edit, :update], :controller => 'title'
     pages.resource :trash,      :only => [:edit, :update], :controller => 'trash'
-    pages.resource :wiki
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
@@ -172,7 +171,7 @@ ActionController::Routing::Routes.draw do |map|
   ## WIKI
   ##
 
-  map.resources :wikis, :namespace => 'wikis/', :only => [] do |wikis|
+  map.resources :wikis, :namespace => 'wikis/', :only => [:edit, :update] do |wikis|
     wikis.resource :lock, :only  => :destroy
     wikis.resources :assets, :only => [:new, :create]
     wikis.resources :versions, :only  => [:index, :show, :destroy],
