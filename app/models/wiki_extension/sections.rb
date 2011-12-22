@@ -35,6 +35,10 @@ module WikiExtension
     def successor_for_section(section)
       structure.get_successor(section)
     end
+
+    def get_body_html_for_section(section)
+      GreenCloth.new(get_body_for_section(section), link_context, [:outline]).to_html
+    end
   end
 end
 
