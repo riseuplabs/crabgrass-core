@@ -31,7 +31,7 @@ class Wikis::SectionsController < Wikis::BaseController
         params[:wiki][:version], params[:wiki][:body]
       success
     end
-    redirect_to @page ? page_url(@page) : group_wiki_path(@group, @wiki)
+    render :template => 'common/wiki/show'
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
