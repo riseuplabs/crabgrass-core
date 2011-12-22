@@ -56,55 +56,6 @@ module Wikis::SectionsHelper
     wrap.html(to_wrap)
   end
 
-
-  def wiki_body_html_with_edit_form(wiki = @wiki, section = @editing_section)
-    html = wiki_body_html(wiki).dup
-
-    return html unless show_inline_editor?
-    markup_to_edit = wiki.get_body_for_section(section)
-
-    inline_form = render_inline_form(markup_to_edit, section)
-    inline_form << "\n"
-
-    # replace section html with the form
-
-    doc = Hpricot(html)
-
-    # this is the heading node we want replace with the forms
-    replace_node = find_heading_node(doc, section)
-    # everything between replace_node and next_good_node should be deleted
-
-    next_good_node = find_heading_node(doc, wiki.successor_for_section(section).try.name)
-
-    # these nodes should be deleted
-    delete_nodes = []
-
-    delete_node = replace_node.next_sibling
-    while delete_node != next_good_node and !delete_node.nil?
-      delete_nodes << delete_node
-      delete_node = delete_node.next_sibling if delete_node
-    end
-
-    replace_node.swap(inline_form)
-    delete_nodes.each {|node| node.swap('<span></span>')}
-
-    # return the modified html
-    doc.to_html
-  end
-
-  def render_inline_form(markup, section)
-    render :partial => 'edit_inline', :locals => {:markup => markup, :section => section}
-  end
-
-
-  # also defined in app/helpers/wikis/base_helper.rb
-  # we might want to combine the two and make them depend on
-  # whether it's a page or a group wiki.
-  # this is the page wiki case:
-#  def wiki_path(wiki = @wiki, options = {})
-#    page_xpath(wiki.page, options)
-#  end
-
   protected
 
   def find_heading_node(doc, section)
