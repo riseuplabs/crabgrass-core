@@ -1,1 +1,5 @@
-= wiki_section_html(@section)
+- current_section = @section
+- if @wiki.all_sections.include? current_section # to make sure section wasn't removed when editing #TODO: this fails if you rename section
+  - while current_section != @successor.try.name
+    = wiki_section_html(current_section)
+    - current_section = @wiki.successor_for_section(current_section).try.name rescue nil
