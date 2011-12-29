@@ -79,29 +79,18 @@ class Wiki < ActiveRecord::Base
     end
   end
 
-  # calls update_section! with :document section
   def update_document!(user, current_version, text)
-    update_section!(:document, user, current_version, text)
+    check_and_unlock_section!(:document, user, current_version)
+    self.user = user
+    self.body = text
+    self.save!
   end
 
   # similar to update_attributes!, but only for text
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
   def update_section!(section, user, current_version, text)
-    if sections_locked_for(user).include? section
-      raise SectionLockedOnSaveError.new(section)
-    end
-
-    if current_version and self.version > current_version.to_i
-      # our version might be outdated but if the last edit
-      # was in a different section we still have the lock
-      # and we can still save.
-      unless user == locker_of(section)
-        raise VersionExistsError.new(self.versions.last)
-      end
-    end
-
-    unlock!(section, user)
+    check_and_unlock_section!(section, user, current_version)
     self.user = user
     save_section!(section, text)
   end
@@ -197,7 +186,7 @@ class Wiki < ActiveRecord::Base
   def self.clear_all_html(owner)
     # for wiki's owned by pages
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ?",
+      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ? ",
       owner.id,
       owner.class.base_class.name
     ]))
@@ -230,6 +219,23 @@ class Wiki < ActiveRecord::Base
   ##
 
   protected
+
+  def check_and_unlock_section!(section, user, current_version)
+    if sections_locked_for(user).include? section
+      raise SectionLockedOnSaveError.new(section)
+    end
+
+    if current_version and self.version > current_version.to_i
+      # our version might be outdated but if the last edit
+      # was in a different section we still have the lock
+      # and we can still save.
+      unless user == locker_of(section)
+        raise VersionExistsError.new(self.versions.last)
+      end
+    end
+
+    unlock!(section, user)
+  end
 
   def render_preview(length)
     return unless content = truncated_body(length)
