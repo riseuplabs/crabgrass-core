@@ -102,10 +102,8 @@ class Wiki < ActiveRecord::Base
     end
 
     unlock!(section, user)
-    set_body_for_section(section, text)
-
     self.user = user
-    self.save!
+    save_section!(section, text)
   end
 
   # updating body will invalidate body_html
