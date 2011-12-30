@@ -43,27 +43,11 @@ class Wikis::WikisControllerTest < ActionController::TestCase
 
     assert_equal [], wiki.sections_open_for(user)
 
-    put :update, :id => pages(:wiki).data_id, :break_lock => true
+    get :edit, :id => pages(:wiki).data_id, :break_lock => true
 
     assert_equal [:document], wiki.reload.sections_open_for(user)
+    assert_equal [], wiki.sections_open_for(different_user)
     assert_response :success
-    assert_equal wiki.body, assigns(:wiki).body
-    assert_rendered_full_page_edit_form(wiki.body)
   end
-
-  protected
-
-  def assert_rendered_full_page_edit_form(body)
-    assert_select '#tab-edit-greencloth' do
-      assert_select 'textarea', :text => body
-    end
-
-    assert_select ".wiki_buttons" do
-      assert_select 'input' do
-        assert_select '[name=save]'
-      end
-    end
-  end
-
 
 end
