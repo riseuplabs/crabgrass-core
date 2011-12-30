@@ -21,13 +21,9 @@ module WikiExtension
 
     def save_section!(section, text)
       section = structure.find_section(section) unless section.is_a? GreenTree
-      parent = section.parent
-      index = parent.index(section)
       updated_body = section.sub_markup(text)
       self.body = updated_body
       self.save!
-      parent = structure.find_section(parent.name || :document)
-      parent[index].name
     end
 
     def get_body_for_section(section)

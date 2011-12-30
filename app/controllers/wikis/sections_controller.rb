@@ -21,12 +21,10 @@ class Wikis::SectionsController < Wikis::BaseController
   end
 
   def update
-    @old_section = @section
     if params[:cancel]
       @wiki.unlock(@section, current_user ) if @wiki
     else
-      @successor = @wiki.successor_for_section(@section)
-      @section = @wiki.update_section! @section, current_user,
+      @wiki.update_section! @section, current_user,
         params[:wiki][:version], params[:wiki][:body]
       success
     end
