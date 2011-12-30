@@ -2,12 +2,12 @@
 %html{:dir=>language_direction}
   %head
     %title
-      =h title_from_context
+      =h html_title
     %style
       a.anchor {display:none;}
   %body{:class=>language_direction}
     %h1
-      =h title_from_context
+      =h html_title
     %article#content
       = yield
     %div.comments
