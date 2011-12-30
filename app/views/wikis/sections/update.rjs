@@ -1,2 +1,0 @@
-standard_update(page)
-page.replace_html @old_section.underscore, :partial => 'show'

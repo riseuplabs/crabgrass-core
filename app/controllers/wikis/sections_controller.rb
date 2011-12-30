@@ -30,6 +30,7 @@ class Wikis::SectionsController < Wikis::BaseController
         params[:wiki][:version], params[:wiki][:body]
       success
     end
+    render :template => '/common/wiki/show'
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
