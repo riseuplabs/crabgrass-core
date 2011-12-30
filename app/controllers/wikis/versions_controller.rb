@@ -39,7 +39,7 @@ class Wikis::VersionsController < Wikis::BaseController
   def fetch_version
     @version = @wiki.find_version(params[:id])
   rescue Wiki::VersionNotFoundError => ex
-    flash.now[:error] =  ex.message
+    error ex
     return false
   end
 
