@@ -7,8 +7,10 @@ class Wikis::VersionsController < Wikis::BaseController
 
   def show
     unless request.xhr?
-      @versions = @wiki.versions.most_recent.
-        paginate(pagination_params(:per_page => VERSIONS_PER_PAGE))
+      pagination = { :per_page => VERSIONS_PER_PAGE,
+        :page => @wiki.page_for_version(@version, VERSIONS_PER_PAGE)
+      }
+      @versions = @wiki.versions.most_recent.paginate(pagination)
     end
   end
 
