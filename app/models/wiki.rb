@@ -283,7 +283,12 @@ class Wiki < ActiveRecord::Base
 
   class Version < ActiveRecord::Base
 
+
     before_destroy :confirm_existance_of_other_version
+
+    named_scope :most_recent, :order => 'version DESC'
+
+    self.per_page = 10
 
     def confirm_existance_of_other_version
       self.previous || self.next || false
@@ -301,7 +306,6 @@ class Wiki < ActiveRecord::Base
       "#{previous.to_param}-#{self.to_param}"
     end
 
-    named_scope :most_recent, :order => 'version DESC'
   end
 
 end

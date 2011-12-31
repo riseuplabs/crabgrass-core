@@ -8,8 +8,6 @@ class Wikis::BaseController < ApplicationController
 
   helper 'wikis/base'
 
-  VERSIONS_PER_PAGE = 10 # pagination for versions and diffs
-
   protected
   def fetch_wiki
     @wiki = Wiki.find(params[:wiki_id] || params[:id])
