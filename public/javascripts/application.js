@@ -433,7 +433,9 @@ var FilterPath = {
   // means other than FilterPath
   //
   shouldUpdateServer: function() {
-    console.log('shouldUpdateServer ' + (Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash));
+    if (window.console) { //Only log to console if there is a window.console to log to
+      console.log('shouldUpdateServer ' + (Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash));
+    }
     return(Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash);
   }
 }
