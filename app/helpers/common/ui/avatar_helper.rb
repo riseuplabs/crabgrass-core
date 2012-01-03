@@ -5,7 +5,7 @@ module Common::Ui::AvatarHelper
   #
   def avatar_link(entity, size='medium')
     if entity
-      link_to avatar_for(entity, size), entity_path(entity)
+      link_to avatar_for(entity, size), entity_path(entity), {:title => entity.display_name }
     end
   end
 

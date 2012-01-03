@@ -8,20 +8,22 @@ module Common::Page::ListingTableHelper
 
   protected
 
-  def page_table_row(page, style)
+  def page_table_row(page, style, hide_owner = false)
     case style
-      when :updated then row_updated_style(page)
+      when :updated then row_updated_style(page, hide_owner)
     end
   end
 
-  def page_table_header_row(style)
-    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+  def page_table_header_row(style, hide_owner = false)
+    owner_header = hide_owner ? "" : "<th>#{:owner.tcap}</th>"
+    "<tr><th>&nbsp;</th>#{owner_header}<th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
   end
 
   private
 
-  def row_updated_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+  def row_updated_style(page, hide_owner)
+    owner_row = hide_owner ? "" : "<td>#{avatar_link(page.owner, 'tiny')}</td>"
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td>#{owner_row}<td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
   end
 
   def cell_title(page)

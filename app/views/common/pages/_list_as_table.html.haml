@@ -4,7 +4,7 @@
 -
 -  style = :updated
 -  # local_assigns[:columns] ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
--  colspan = 5
+-  colspan = local_assigns[:hide_owner] ? 5 : 6
 -  heading = true if heading.nil?
 -  sortable = false
 
@@ -15,9 +15,9 @@
         = I18n.t(:no_search_results)
   - else
     - if heading
-      = page_table_header_row(style)
+      = page_table_header_row(style, local_assigns[:hide_owner])
     - pages.each do |page|
-      = page_table_row(page, style)
+      = page_table_row(page, style, local_assigns[:hide_owner])
     - if paginated?(@pages)
       %tr
         %td{:colspan => colspan}

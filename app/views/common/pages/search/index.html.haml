@@ -2,7 +2,7 @@
 
 #search_results
   - if @path.any?
-    = render :partial => 'common/pages/list'
+    = render :partial => 'common/pages/list', :locals => local_assigns
   - else
     = big_spinner
 

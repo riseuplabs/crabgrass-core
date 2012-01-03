@@ -160,6 +160,7 @@ en:
   text_message: "Text Message"
   print: "Print"
   show: "Show"
+  owner: "Owner"
 
   coordinator: "Coordinator"
   participant: "Participant"

@@ -5,7 +5,7 @@ class Groups::PagesController < Groups::BaseController
   def index
     @path  = apply_path_modifiers( parsed_path() )
     @pages = Page.paginate_by_path(@path, options_for_group(@group), pagination_params)
-    render :template => 'common/pages/search/index'
+    render :template => 'common/pages/search/index', :locals => {:hide_owner => true}
   end
 
   protected
