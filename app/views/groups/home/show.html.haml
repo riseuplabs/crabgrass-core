@@ -5,5 +5,5 @@
 %hr
 
 %h2.p.first= :recent_pages.t
-= render :partial => 'common/pages/list'
+= render :partial => 'common/pages/list', :locals => {:hide_owner => true}
 
