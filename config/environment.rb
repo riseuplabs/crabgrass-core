@@ -51,7 +51,7 @@ Crabgrass::Initializer.run do |config|
   # required, but not included with crabgrass:
   config.gem 'i18n', :version => '~> 0.5'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3.0'
-  config.gem 'will_paginate', :version => '~> 2.3'
+  config.gem 'will_paginate', :version => '= 2.3.16'
 
   # required, and compilation is required to install
   config.gem 'RedCloth', :version => '~> 4.2'
