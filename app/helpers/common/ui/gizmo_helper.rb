@@ -70,20 +70,22 @@ module Common::Ui::GizmoHelper
   #
   # Options:
   #
-  #  :id, :label, :checked, :with, :method, :success
+  #  :label, :checked, :with, :method, :success, :tag
   #
   # TODO: make this actually work with functions, not just remote ajax calls.
   #
+  # for the :tag option, it defaults to li, but you might instead want a span, for example
   # Requires:
   #  - link_to_function_with_icon
   #  - queued_remote_function
   #
   def spinbox_tag(name, url, options = {})
     icon = options[:checked] ? 'check_on' : 'check_off'
+    options[:tag] ||= :li
     options = options.merge(:url => url, :id => "#{name}_spinbox", :icon => icon)
 
     function = queued_remote_function(spinbox_function_options(options))
-    content_tag(:li) do
+    content_tag(options[:tag]) do
       spinbox_link_to_function(function, options)
     end
   end
