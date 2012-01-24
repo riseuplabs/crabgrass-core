@@ -8,11 +8,9 @@ class Wikis::SectionsController < Wikis::BaseController
   guard :edit => :may_edit_wiki?,
         :update => :may_edit_wiki?
 
-  before_filter :login_required
+  before_filter :login_required, :get_section_markup
 
   def edit
-    @section = params[:id]
-    @markup = @wiki.get_body_for_section(@section)
     # remove other peoples lock if it exists
     @wiki.unlock! @section, current_user,
       :break => params[:break_lock],
@@ -23,7 +21,6 @@ class Wikis::SectionsController < Wikis::BaseController
   end
 
   def update
-    @section = params[:id]
     if params[:cancel]
       @wiki.unlock(@section, current_user ) if @wiki
     else
@@ -31,7 +28,7 @@ class Wikis::SectionsController < Wikis::BaseController
         params[:wiki][:version], params[:wiki][:body]
       success
     end
-    redirect_to @page ? page_url(@page) : group_wiki_path(@group, @wiki)
+    render :template => '/common/wiki/show'
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc
@@ -47,12 +44,16 @@ class Wikis::SectionsController < Wikis::BaseController
 
 protected
 
+  def get_section_markup
+    @section = params[:id]
+    @markup = @wiki.get_body_for_section(@section)
+  end
+
   ### FILTERS
 #  def prepare_wiki_body_html
 #    if current_locked_section and current_locked_section != :document
 #      @wiki.body_html = body_html_with_form(current_locked_section)
 #    end
 #  end
-
 
 end

@@ -82,8 +82,8 @@ module WikiExtension
         :updated_at => Time.now)
     end
 
-    def page_for_version(version, per_page)
-      page_index = versions_since(version) / per_page
+    def page_for_version(version)
+      page_index = versions_since(version) / Version.per_page
       page_index + 1
     end
 

@@ -4,6 +4,8 @@ class Groups::HomeController < Groups::BaseController
   helper 'groups/wikis', 'wikis/base', 'wikis/sections'
   permissions 'wikis'
   before_filter 'fetch_wikis'
+  javascript :wiki
+  stylesheet 'wiki_edit'
 
   def initialize(options = {})
     @group = options[:group]
