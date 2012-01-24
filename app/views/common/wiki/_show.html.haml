@@ -3,7 +3,7 @@
   %div.wiki
     - if local_assigns[:preview]
       = @wiki.preview_html
-      = wiki_more_link if @wiki.page.nil? # only show for group wikis
+      = wiki_more_link if @wiki.group # only show for group wikis
     - else
       = wiki_body_html
-      = wiki_less_link if @wiki.page.nil? # only show for group wikis
+      = wiki_less_link if @wiki.group # only show for group wikis

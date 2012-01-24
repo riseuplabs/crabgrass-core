@@ -1,0 +1,53 @@
+require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
+
+class Wikis::WikisControllerTest < ActionController::TestCase
+  fixtures :pages, :users, :user_participations, :wikis
+
+  def test_edit
+    login_as :orange
+    pages(:wiki).add users(:orange), :access => :edit
+    pages(:wiki).add users(:blue), :access => :edit
+
+    get :edit, :id => pages(:wiki).data_id
+    assert_equal [], assigns(:wiki).sections_open_for(users(:blue)), "editing a wiki should lock it"
+
+    assert_equal users(:orange), assigns(:wiki).locker_of(:document), "should be locked by orange"
+
+    assert_no_difference 'pages(:wiki).updated_at' do
+      put :update, :id => pages(:wiki).data_id, :cancel => 'true'
+      assert_equal [:document], assigns(:wiki).sections_open_for(users(:blue)), "cancelling the edit should unlock wiki"
+    end
+
+    # save twice, since the behavior is different if current_user has recently saved the wiki
+    (1..2).each do |i|
+      str = "text %d for the wiki" % i
+      put :update, :id => pages(:wiki).data_id, :save => true, :wiki => {:body => str, :version => i}
+      assert_equal str, assigns(:wiki).body
+      assert_equal [:document], assigns(:wiki).sections_open_for(users(:blue)), "saving the edit should unlock wiki"
+    end
+  end
+
+  def test_break_lock
+    login_as :blue
+
+    page = pages(:wiki)
+    wiki = page.data
+
+    user = users(:blue)
+    different_user = users(:orange)
+
+    page.add(user, :access => :admin)
+    page.add(different_user, :access => :admin)
+
+    wiki.lock!(:document, different_user)
+
+    assert_equal [], wiki.sections_open_for(user)
+
+    get :edit, :id => pages(:wiki).data_id, :break_lock => true
+
+    assert_equal [:document], wiki.reload.sections_open_for(user)
+    assert_equal [], wiki.sections_open_for(different_user)
+    assert_response :success
+  end
+
+end

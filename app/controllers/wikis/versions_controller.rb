@@ -7,15 +7,14 @@ class Wikis::VersionsController < Wikis::BaseController
 
   def show
     unless request.xhr?
-      @versions = @wiki.versions.most_recent.
-        paginate(pagination_params(:per_page => VERSIONS_PER_PAGE))
+      params[:page] = @wiki.page_for_version(@version)
+      @versions = @wiki.versions.most_recent.paginate(pagination_params)
     end
   end
 
   def index
     flash.keep
-    @versions = @wiki.versions.most_recent.
-      paginate(pagination_params(:per_page => VERSIONS_PER_PAGE))
+    @versions = @wiki.versions.most_recent.paginate(pagination_params)
     @version = @versions.first
   end
 
@@ -39,7 +38,7 @@ class Wikis::VersionsController < Wikis::BaseController
   def fetch_version
     @version = @wiki.find_version(params[:id])
   rescue Wiki::VersionNotFoundError => ex
-    flash.now[:error] =  ex.message
+    error ex
     return false
   end
 

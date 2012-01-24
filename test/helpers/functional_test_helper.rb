@@ -25,7 +25,7 @@ module FunctionalTestHelper
     if arg
       if arg.is_a?(Regexp)
         assert message_text(errors).grep(arg).any?, 'error message did not match %s. it was %s.'%[arg.inspect, message_text(errors).inspect]
-      elsif arg.is_a?(Symbol)
+      elsif arg.is_a?(Symbol) or arg.is_a?(String)
         assert message_text(errors).detect { |text| text == arg.t }, 'error message did not match %s. it was %s'%[arg.inspect, message_text(errors).inspect]
       end
     end

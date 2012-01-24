@@ -28,9 +28,9 @@ class WikiPageController < Pages::BaseController
   end
 =end
 
-# TODO
   def print
-    render :layout => "printer-friendly"
+    render :template => 'common/wiki/show',
+      :layout => "printer_friendly"
   end
 
 

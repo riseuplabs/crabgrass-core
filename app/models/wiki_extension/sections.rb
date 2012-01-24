@@ -19,9 +19,11 @@ module WikiExtension
       structure.all_sections
     end
 
-    def set_body_for_section(section, text)
-      updated_body = structure.update_body(section, text)
+    def save_section!(section, text)
+      section = structure.find_section(section) unless section.is_a? GreenTree
+      updated_body = section.sub_markup(text)
       self.body = updated_body
+      self.save!
     end
 
     def get_body_for_section(section)
@@ -34,6 +36,10 @@ module WikiExtension
 
     def successor_for_section(section)
       structure.get_successor(section)
+    end
+
+    def get_body_html_for_section(section)
+      GreenCloth.new(get_body_for_section(section), link_context, [:outline]).to_html
     end
   end
 end
