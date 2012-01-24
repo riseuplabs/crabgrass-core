@@ -1,0 +1,5 @@
+- size = local_assigns[:size] ? size : 'large'
+- if local_assigns[:no_link]
+  = thumbnail_img_tag(@image, size)
+- else
+  = link_to thumbnail_img_tag(@image, size), @image.url

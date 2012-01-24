@@ -1,0 +1,27 @@
+<%-
+
+#submit_action = "$('change_title_form_submit').disabled=true;this.value='Saving...';$('change_title_spinner').show();$('change_title_form_cancel').hide();"
+
+
+#form_options = {
+#  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+#  :update => 'detail_image_title',
+#	:complete => "$('detail_image_title').show()",
+#  :pending => "$('change_title_spinner').show()"
+#}
+
+form_options = page_url(@page, :action => 'image-update', :id => image.id)
+
+cancel_action = "$('change_title_form').hide();$('detail_image_title').show();"
+
+-%>
+
+<div id="change_title_form" style='display:none' class='p'>
+<% form_tag(form_options) do -%>
+  <%= text_field_tag 'image[caption]', h(image.caption) %>
+  <input type="submit", value="<%= I18n.t(:save_button) %>" />
+  <%= button_to_function I18n.t(:cancel), cancel_action %>
+  <%# spinner('change_title') %>
+<% end -%>
+</div>
+
