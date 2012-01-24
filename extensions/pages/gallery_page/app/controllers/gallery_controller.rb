@@ -8,11 +8,6 @@ class GalleryController < Pages::BaseController
   javascript :audio, :only => [:edit, :show]
   permissions 'gallery'
 
-  include GalleryHelper
-  include BasePageHelper
-  include ActionView::Helpers::JavascriptHelper
-
-
   def show
     @images = @page.images.paginate(:page => params[:page])
     #@cover = @page.cover

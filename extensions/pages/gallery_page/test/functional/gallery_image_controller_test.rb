@@ -119,7 +119,7 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_show
     login_as :blue
-    image = @gallery.assets.first
+    assert @asset.id, "image should not be nil"
     xhr :get, :show, :id => @asset.id, :page_id => @gallery.id
     assert_response :success
     assert assigns(:showing)

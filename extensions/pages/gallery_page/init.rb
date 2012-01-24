@@ -1,5 +1,5 @@
 define_page_type :Gallery, {
-  :controller => 'gallery',
+  :controller => ['gallery', 'gallery_image', 'gallery_audio'],
   :icon => 'page_gallery',
   :class_group => ['media', 'media:image', 'collection'],
   :order => 30
