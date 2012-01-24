@@ -1,4 +1,4 @@
-class GalleryAudioController < BasePageController
+class GalleryAudioController < Pages::BaseController
 
   permissions 'gallery'
   helper 'gallery'

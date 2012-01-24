@@ -1,4 +1,4 @@
-class GalleryController < BasePageController
+class GalleryController < Pages::BaseController
 
   stylesheet 'gallery'
   stylesheet 'upload', :only => :edit

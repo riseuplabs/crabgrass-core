@@ -1,4 +1,4 @@
-class GalleryImageController < BasePageController
+class GalleryImageController < Pages::BaseController
 
   permissions 'gallery'
   helper 'gallery', 'progress_bar'
