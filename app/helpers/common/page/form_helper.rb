@@ -27,7 +27,7 @@ module Common::Page::FormHelper
     page_groupings = []
     available_page_classes.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      next if page_class.nil? or page_class.internal
+      next if page_class.nil? or page_class.internal or page_class.forbid_new
       if options[:simple]
         page_groupings << page_class.class_group.to_a.first
       else
