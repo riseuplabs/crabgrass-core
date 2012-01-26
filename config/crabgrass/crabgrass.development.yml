@@ -33,6 +33,7 @@ available_page_types:
   - RateManyPage
   - TaskListPage
   - RankedVotePage
+  - SurveyPage
 
 theme: blueberry
 
