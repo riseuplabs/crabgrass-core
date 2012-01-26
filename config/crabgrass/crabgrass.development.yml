@@ -33,6 +33,7 @@ available_page_types:
   - RateManyPage
   - TaskListPage
   - RankedVotePage
+  - SurveyPage # we will make available here, but set in its init file that new surveys cannot be added.
 
 theme: blueberry
 

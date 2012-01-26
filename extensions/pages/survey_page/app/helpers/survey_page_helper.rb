@@ -101,4 +101,10 @@ module SurveyPageHelper
   def js_next_response(rating)
     remote_function(js_next_response_options(rating))
   end
+
+  # from suvery_user_extension.rb
+  def response_for_survey(survey)
+    @response ||= (survey.responses.find_by_user_id(self.id) || false)
+  end
+
 end

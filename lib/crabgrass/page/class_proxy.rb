@@ -9,7 +9,7 @@ module Crabgrass::Page
   class ClassProxy
 
     attr_accessor :creation_controller, :model, :icon, :class_group, :form_sections,
-      :class_name, :full_class_name, :internal, :order, :short_class_name
+      :class_name, :full_class_name, :internal, :order, :short_class_name, :forbid_new
 
     attr_writer :controller
 

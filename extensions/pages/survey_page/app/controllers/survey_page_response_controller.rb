@@ -2,7 +2,7 @@
 ## Handles the CRUD for survey responses
 ##
 
-class SurveyPageResponseController < BasePageController
+class SurveyPageResponseController < Pages::BaseController
   stylesheet 'survey'
   javascript :extra
   javascript 'survey'

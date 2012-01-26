@@ -96,7 +96,8 @@ class Page < ActiveRecord::Base
 
   def validate
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
-      errors.add 'name', 'is already taken'
+      context = self.owner || self.created_by
+      errors.add 'name', "is already used for another page by #{context.display_name}"
     elsif name_changed? and name.any?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
@@ -143,19 +144,15 @@ class Page < ActiveRecord::Base
     owner_name.any? ? [owner_name, name_url].path : ['page', friendly_url].path
   end
 
-  # returns true if self's unique page name is already in use.
-  # what pages are in the namespace? all pages connected to all
-  # groups connected to this page (include the group's committees too).
-  # it also includes the user owner of this page
+  # returns true if self's unique page name is already in use by the same owner.
   def name_taken?
     return false unless self.name.any?
-    p = Page.find(:first,
-      :conditions => ['pages.name = ? and group_participations.group_id IN (?)', self.name, self.namespace_group_ids],
-      :include => :group_participations
-    )
-    p ||= Page.find_by_name_and_owner_id(self.name, self.owner.id) if self.owner_type == 'User'
-    return false if p.nil?
-    return self != p
+    if self.owner
+      pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
+    else
+      pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
+    end
+    pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
   end
 
   ##

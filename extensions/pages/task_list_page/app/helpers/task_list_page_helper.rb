@@ -32,15 +32,15 @@ module TaskListPageHelper
 
   # creates a checkbox tag for a task
   def task_checkbox(task)
-    checkbox_id  = dom_id(task, 'check')
-    checked = task.completed?
-    next_state = checked ? 'pending' : 'complete'
     disabled = !current_user.may?(:edit, task.task_list.page)
-    click = remote_function(
-      :url => page_xurl(task.task_list.page, :action => 'mark_task_'+next_state, :id => task.id),
-      :loading => hide(checkbox_id) + add_class_name(task, 'spinning')
-    )
-    check_box_tag(checkbox_id, '1', checked, :class => 'task_check', :onclick => click, :disabled => disabled)
+    if (disabled)
+      content_tag :li, task.name, :class => 'icon checkoff'
+    else
+      next_state = task.completed? ? 'pending' : 'complete'
+      url =  page_xurl(task.task_list.page, :action => 'mark_task_'+next_state, :id => task.id)
+      name = "#{task.id}_task"
+      spinbox_tag name, url, :checked => task.completed?, :tag => :span
+    end
   end
 
   # creates a link that expands to display the task details.
@@ -66,7 +66,7 @@ module TaskListPageHelper
 
   # a button to hide the task detail
   def close_task_details_button(task)
-    button_to_function "Close", hide(task, 'details')
+    button_to_function "Hide", hide(task, 'details')
   end
 
   # a button to delete the task
@@ -127,7 +127,7 @@ module TaskListPageHelper
   end
 
   def close_task_edit_button(task)
-    button_to_function "Close", hide(task, 'details')
+    button_to_function "Cancel", hide(task, 'details')
   end
 
   def delete_task_edit_button(task)

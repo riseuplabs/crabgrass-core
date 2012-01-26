@@ -10,8 +10,6 @@
 module PathFinder
   class Query
 
-    PAGINATION_PER_PAGE = 30 # used as a last resort if no other definition found.
-
     ##
     ## must be overridden by sub classes
     ##
