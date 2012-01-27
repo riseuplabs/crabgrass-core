@@ -144,5 +144,10 @@ class SurveyPageResponseController < Pages::BaseController
       return @survey.response_ids[index-1]
     end
   end
+
+  def setup_options
+    @options.show_tabs   = true
+  end
+
 end
 

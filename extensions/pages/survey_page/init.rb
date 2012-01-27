@@ -1,5 +1,5 @@
 define_page_type :SurveyPage, {
-  :controller => 'survey_page',
+  :controller => ['survey_page', 'survey_page_response'],
   :icon => 'page_survey',
   :class_group => 'vote',
   :order => 4,
