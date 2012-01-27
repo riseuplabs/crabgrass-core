@@ -1,6 +1,5 @@
 - content_for :right_sidebar do
   = render :partial => 'pages/sidebar/sidebar'
-= render :partial => 'tabs'
 = h @survey.description
 %h3
   Questions (#{@survey.questions.size})
