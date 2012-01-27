@@ -8,23 +8,53 @@ module Common::Page::ListingTableHelper
 
   protected
 
-  def page_table_row(page, style, hide_owner = false)
+  def page_table_row(page, style)
     case style
-      when :updated then row_updated_style(page, hide_owner)
+      when :updated then row_updated_style(page)
+      when :updated_with_owner then row_owner_style(page)
     end
   end
 
-  def page_table_header_row(style, hide_owner = false)
-    owner_header = hide_owner ? "" : "<th>#{:owner.tcap}</th>"
-    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th>#{owner_header}<th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+  def page_table_header_row(style)
+    case style
+      when :updated then header_updated_style()
+      when :updated_with_owner then header_owner_style()
+    end
+  end
+
+  def page_table_colspan(style)
+    case style
+      when :updated then 5
+      when :updated_with_owner then 6
+    end
   end
 
   private
 
-  def row_updated_style(page, hide_owner)
-    owner_row = hide_owner ? "" : "<td>#{avatar_link(page.owner, 'tiny')}</td>"
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td>#{owner_row}<td>#{avatar_link(page.updated_by, 'tiny')}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+  ##
+  ## STYLE :updated
+  ##
+
+  def row_updated_style(page)
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
   end
+
+  def header_updated_style()
+    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+  end
+
+  ##
+  ## STYLE :updated_with_owner
+  ##
+
+  def row_owner_style(page)
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{link_to_name(page.owner_name, page.owner_id)}</td><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+  end
+
+  def header_owner_style()
+    "<tr><th>#{:owner.tcap}</th><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+  end
+
 
   def cell_title(page)
     link_to(h(page.title), page_path(page))

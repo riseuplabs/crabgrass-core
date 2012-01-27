@@ -6,12 +6,31 @@ module Common::Ui::EntityDisplayHelper
 
   protected
 
+  #
   # linking to users and groups takes a lot of time if we have to fetch the
   # record to get the display name or avatar. if we already have the login or
   # group name, this method is much faster (saves about 150ms per request).
-  def link_to_name(name)
-    "<a href=\"/#{name}\">#{name}</a>"
+  #
+  # think of this as link_to_entity_fast()
+  #
+  # there are some problems with this code. in particular, it does not handle
+  # it very well when the user or group changes their avatar. also, this code
+  # duplicates some code in avatar_helper, in the interest of cutting out 
+  # a lot of logic and method calls.
+  #
+  def link_to_name(name, id=nil)
+    if name
+      name = truncate(name, :length => 10) if name.length > 10
+      if id.nil?
+        '<a href="/%s">%s</a>' % [name, name]
+      else
+        # with the id, we can also display the icon
+        icon_url = '/avatars/%s/xsmall.jpg' % id
+        '<a href="/%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, icon_url, name]
+      end
+    end
   end
+
 
   #
   # provides placeholder for when the user or group record has been destroyed.

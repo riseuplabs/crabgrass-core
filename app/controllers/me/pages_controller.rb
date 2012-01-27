@@ -15,7 +15,7 @@ class Me::PagesController < Me::BaseController
       #       normal pagination is done through @path.
       @pages = Page.paginate_by_path(@path, options_for_me, pagination_params)
     end
-    render :template => 'common/pages/search/index'
+    render :template => 'common/pages/search/index', :locals => {:columns => :updated_with_owner}
   end
 
   protected
