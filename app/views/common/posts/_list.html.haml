@@ -1,12 +1,16 @@
 -#
 -# Every time we show a list of posts, it should go through this partial.
--# 
+-#
 -# options:
 -#   style -- currently, only 'table'
 -#   posts -- the array of Post objects.
--# 
+-#
 -# requires:
--#   create_url -- if we are going to show the reply form.
+-#   create_url -- the url to post the create post form to.
+-#                 if missing or false, no reply is possible.
+-#
+-# optional:
+-#   edit_url -- url for editing an old post.
 -#
 
 - style = local_assigns[:style] ||= :table
