@@ -1,0 +1,20 @@
+- # used to display a detailed view of a particular response
+#respond_to_questions_container.survey_questions_container
+  - if @response.user_id != current_user.id
+    - if @response.user
+      %p= link_to_user @response.user, :avatar => 'medium', :block => true
+    - else
+      %p
+        %b= h @response.name
+        = h @response.email
+  #questions
+    - @survey.questions.each do |question|
+      - next unless may_view_survey_question?(@response, question)
+      .question
+        %h2.dim.question_label
+          = h question.label
+          - if question.private?
+            %span
+              &bull;&nbsp;#{:private.t}
+        %br/
+        = show_answers_for_question(@response, question)

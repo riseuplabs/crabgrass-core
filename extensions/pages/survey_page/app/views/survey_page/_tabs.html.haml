@@ -10,9 +10,9 @@
         - f.tab do |t|
           - t.label :survey_my_response_tab.t
           - t.url page_path(@page, :controller => :response, :action => :show, :id => my_response.id)
-          - t.selected controller?(:response) && action?(:show, :edit) && id?(my_response.id)
+          - t.selected controller?(:survey_page_response) && action?(:show, :edit) && id?(my_response.id)
       - if may_view_survey_response?
         - f.tab do |t|
           - t.label :survey_list_all_tab.t
           - t.url page_path(@page, :controller => :response, :action => :list)
-          - t.selected controller?(:response) && action?(:list, :edit, :show) && !id?(my_response)
+          - t.selected controller?(:survey_page_response) && action?(:list, :edit, :show) && !id?(my_response)
