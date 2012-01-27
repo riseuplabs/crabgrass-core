@@ -20,13 +20,13 @@ module Common::Ui::EntityDisplayHelper
   #
   def link_to_name(name, id=nil)
     if name
-      name = truncate(name, :length => 10) if name.length > 10
+      display_name = name.length > 17 ? name[0..16] + '&hellip;' : name
       if id.nil?
-        '<a href="/%s">%s</a>' % [name, name]
+        '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
       else
         # with the id, we can also display the icon
         icon_url = '/avatars/%s/xsmall.jpg' % id
-        '<a href="/%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, icon_url, name]
+        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
       end
     end
   end
