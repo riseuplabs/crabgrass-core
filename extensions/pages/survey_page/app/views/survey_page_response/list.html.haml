@@ -3,7 +3,6 @@
   %tr
     %th user
     %th created
-    / <th>modified</th>
     %th rating
     - (questions=@survey.questions[0..0]).each do |question|
       %th= truncate(question.label)
@@ -12,7 +11,6 @@
     %tr{:class => cycle("odd","even")}
       %td= resp.user.login if resp.user_id
       %td= friendly_date resp.created_at
-      / <td></haml:block><haml:silent></haml:silent><haml:block></td>
       - if may_view_survey_response_ratings?(resp)
         %td= resp.rating.round(2)
       - else
