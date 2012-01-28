@@ -117,6 +117,7 @@ class RankedVotePageController < Pages::BaseController
 
   def setup_options
     # @options.show_print = true
+    @options.show_tabs = true
   end
 
 end
