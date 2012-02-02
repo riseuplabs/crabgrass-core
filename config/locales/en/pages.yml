@@ -95,6 +95,8 @@ en:
   all_states: "All States"
   page_name_description: "Optional unique name (used to create the URL for this page)"
 
+  filter_tag_description: "Search for pages with a particular tag."
+
   # page list
 
   #page_list_heading_updated_by: "updated by"

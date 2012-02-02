@@ -21,6 +21,7 @@
 
 module Common::Ui::TaggingHelper
 
+  # Not using this currently:
   def tag_cloud(tags, options={})
     options = {:classes => ['tag1','tag2','tag3','tag4'], :max => false}.merge(options)
     return if tags.empty?

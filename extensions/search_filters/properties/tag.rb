@@ -12,6 +12,7 @@ SearchFilter.new('/tag/:tag_name/') do
   self.section = :properties
   self.singleton = false
 
+=begin
   html(:delayed => true, :submit_button => false) do
     tags = tag_cloud(current_user.tags) do |tag, css_class|
       link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
@@ -20,6 +21,15 @@ SearchFilter.new('/tag/:tag_name/') do
       tags.join(' ')
     else
       :no_things_found.t :things => :tags.t
+    end
+  end
+=end
+
+  self.description = :filter_tag_description
+  html do
+    content_tag(:p) do
+      content_tag(:strong, :tag.tcap) + " " +
+      text_field_tag('tag_name')
     end
   end
 
