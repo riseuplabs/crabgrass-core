@@ -69,6 +69,7 @@ en:
   most_stars: "Most Stars"
   most_viewed: "Most Viewed"
 
+  filter_user_description: "Search for pages with access by a particular user."
   filter_group_description: "Search for pages with access by a particular group."
 
   starred: "Starred"
