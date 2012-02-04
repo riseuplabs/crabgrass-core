@@ -20,7 +20,7 @@ module Common::Ui::EntityDisplayHelper
   #
   def link_to_name(name, id=nil)
     if name
-      display_name = name.length > 17 ? name[0..16] + '&hellip;' : name
+      display_name = name.length > 16 ? force_wrap(name,16) : name
       if id.nil?
         '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
       else

@@ -81,8 +81,14 @@ a {
 // WORD WRAPPING
 //
 
+// force no wrapping
 .nowrap {
   white-space: nowrap;
+}
+
+// force wrapping, even when there is no white space
+.wrap {
+  word-wrap: break-word;
 }
 
 //

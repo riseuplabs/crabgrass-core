@@ -4,6 +4,25 @@ module Common::Utility::GeneralHelper
   ## GENERAL UTILITY
   ##
 
+  #
+  # words that are very long with no spaces can break the layout badly.
+  #
+  # normally, it seems to work pretty good to add the css "word-wrap: break-word;"
+  # to elements that might have really long words.
+  #
+  # i can't get this working for tables. instead, this method is used to manually
+  # add in hidden hyphenation to the long word.
+  #
+  # see http://www.quirksmode.org/oddsandends/wbr.html
+  #
+  def force_wrap(text,max_length=20)
+    text.gsub(/(\w{#{max_length},})/) do |word|
+      split_up_word = word.scan(/.{#{max_length}}/)
+      word_remainder = word.split(/.{#{max_length}}/).select{|str| str.any?}
+      (split_up_word + word_remainder).join('&shy;')
+    end
+  end
+
   # returns the first of the args where any? returns true
   # if none has any, return last
   def first_with_any(*args)

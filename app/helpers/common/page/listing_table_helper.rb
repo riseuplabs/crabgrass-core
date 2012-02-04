@@ -57,7 +57,7 @@ module Common::Page::ListingTableHelper
 
 
   def cell_title(page)
-    link_to(h(page.title), page_path(page))
+    link_to(force_wrap(h(page.title)), page_path(page))
   end
 
   ##
