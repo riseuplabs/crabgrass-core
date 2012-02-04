@@ -110,6 +110,28 @@ module PageExtension::Groups
       Page.connection.select_all(sql)
     end
 
+    # 
+    # tags are potentially sensitive information. we don't want to show visitors to a group
+    # all the tags from all the pages for that group.
+    # 
+    # we ONLY want to show them tags for pages that the group owns and that the user has access to see.
+    #
+    # So, in order to do that, we need to use page_terms. Currently, this query includes pages the group
+    # has access to but is not the owner of. It would be slower to limit it to owned pages, so we don't yet.
+    #
+    def tags_for_group(group, current_user)
+      filter = access_filter(:group => group, :current_user => current_user)
+      Tag.find_by_sql(%Q[
+        SELECT tags.*, count(name) as count
+        FROM tags
+        INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
+        INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
+        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{access_filter(access_options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
+        GROUP BY name
+        ORDER BY name
+      ])
+    end
+
     def access_filter(options)
       group = options[:group]
       current_user = options[:current_user]

@@ -222,6 +222,10 @@ module UserExtension
       update_attributes :version => version+1, :tag_id_cache => ids
     end
 
+    def clear_tag_cache
+      self.class.clear_tag_cache([self.id])
+    end
+
     module ClassMethods
 
       # takes an array of user ids and NULLs out the membership cache
@@ -234,6 +238,14 @@ module UserExtension
           admin_for_group_id_cache = NULL
           WHERE id IN (#{ ids.join(',') })
         ])
+      end
+
+      #
+      # should be called whenever a user partipation is added or 
+      # the tags have changed.
+      #
+      def clear_tag_cache(user_ids)
+        self.connection.execute("UPDATE users SET tag_id_cache = NULL WHERE id IN (#{user_ids.join(',')})")
       end
 
       # Takes an array of user ids and increments the version of all these

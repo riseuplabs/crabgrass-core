@@ -11,26 +11,36 @@ SearchFilter.new('/tag/:tag_name/') do
   self.path_order = 100
   self.section = :properties
   self.singleton = false
+  self.description = :filter_tag_description
 
-=begin
+  #
+  # this gets invoked in the view with instance_eval, so it has the view's variables.
+  #
   html(:delayed => true, :submit_button => false) do
-    tags = tag_cloud(current_user.tags) do |tag, css_class|
+    ret = content_tag(:p) do
+      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name')
+    end
+    ret += "\n"
+
+    tags_to_show = begin
+      if @user == current_user
+        current_user.tags
+      elsif @group
+        Page.tags_for_group(current_context, current_user)
+      else
+        # Page.tags_for_user(current_context, current_user)
+      end
+    end
+
+    tags = tag_cloud(tags_to_show) do |tag, css_class|
       link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
     end
     if tags
-      tags.join(' ')
+      ret += tags.join(' ')
     else
-      :no_things_found.t :things => :tags.t
+      ret += :no_things_found.t :things => :tags.t
     end
-  end
-=end
-
-  self.description = :filter_tag_description
-  html do
-    content_tag(:p) do
-      content_tag(:strong, :tag.tcap) + " " +
-      text_field_tag('tag_name')
-    end
+    ret
   end
 
   label do |opts|
