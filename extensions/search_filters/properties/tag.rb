@@ -22,11 +22,12 @@ SearchFilter.new('/tag/:tag_name/') do
     end
     ret += "\n"
 
+    # TODO---This means that we get the tags when loading the group or user page list. Instead, could we only figure out/load the tags if the user does a search by tag? It would be quicker, but maybe not enough to matter?
     tags_to_show = begin
       if @user == current_user
         current_user.tags
       elsif @group
-        Page.tags_for_group(current_context, current_user)
+        Page.tags_for_group(@group, current_user)
       else
         # Page.tags_for_user(current_context, current_user)
       end

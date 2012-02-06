@@ -126,7 +126,7 @@ module PageExtension::Groups
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
         INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
-        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{access_filter(access_options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
+        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{filter}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
         GROUP BY name
         ORDER BY name
       ])
