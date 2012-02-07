@@ -1,18 +1,18 @@
 module Wikis::BaseHelper
 
 
-  def wiki_action_links
-    link_span(wiki_edit_link, wiki_versions_link)
+  def wiki_action_links(wiki = @wiki)
+    link_span(wiki_edit_link(wiki), wiki_versions_link(wiki))
   end
 
-  def wiki_edit_link(options = {})
-    return unless may_edit_wiki?(@wiki)
+  def wiki_edit_link(wiki, options = {})
+    return unless may_edit_wiki?(wiki)
     if options[:remote]
       link_to_remote :edit.t,
-        { :url => edit_wiki_path(@wiki), :method => 'get' },
+        { :url => edit_wiki_path(wiki), :method => 'get' },
           { :icon => 'pencil' }
     else
-      link_to :edit.t, edit_wiki_path(@wiki), :icon => 'pencil'
+      link_to :edit.t, edit_wiki_path(wiki), :icon => 'pencil'
     end
   end
 
@@ -27,9 +27,9 @@ module Wikis::BaseHelper
 
   # moved following methods from app/helpers/groups/wikis_helper.rb
 
-  def wiki_versions_link
-    return unless may_edit_wiki?(@wiki)
-    link_to :versions.t, wiki_versions_path(@wiki)
+  def wiki_versions_link(wiki)
+    return unless may_edit_wiki?(wiki)
+    link_to :versions.t, wiki_versions_path(wiki)
   end
 
   def wiki_locked_notice(wiki)

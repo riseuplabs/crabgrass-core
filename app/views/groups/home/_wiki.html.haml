@@ -1,5 +1,5 @@
 %span.float_right
-  = wiki_action_links
+  = wiki_action_links wiki
 %div[wiki]
   - if local_assigns.delete(:open)
     = render :partial => 'common/wiki/show', :locals => local_assigns
