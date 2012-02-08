@@ -6,3 +6,11 @@
       %th
     = render :partial => '/groups/members/membership', :collection => @memberships
   .p= pagination_links(@memberships)
+  - if @group.network?
+    %table.fancy{:width => '100%'}
+      %tr
+        %th= :member_groups_of_network.t
+        %th= :profile_member_since.t
+        %th
+      = render :partial => '/groups/members/membership', :collection => @membergroups
+    .p= pagination_links(@membergroups)

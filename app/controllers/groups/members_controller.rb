@@ -10,6 +10,7 @@ class Groups::MembersController < Groups::BaseController
 
   def index
     @memberships = @group.memberships.paginate(pagination_params)
+    @membergroups = @group.federatings.paginate(pagination_params) if @group.network?
   end
 
   #
