@@ -25,6 +25,7 @@ en:
   committee_description: "Committees are groups within another group. A committee is entirely subordinate to its parent group."
   council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
   network_description: "Networks are special groups that can have other groups as members. A network can be used as an association of multiple groups, or a place for two autonomous groups to collaborate."
+  committee_choose_group: 'Choose a group for this committee:'
 
   ##
   ## PERMISSIONS
