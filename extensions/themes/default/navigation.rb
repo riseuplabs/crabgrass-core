@@ -89,7 +89,7 @@ define_navigation do
     end
 
     context_section :settings do
-      label  { :settings.t
+      label  { :settings.t }
       url    { me_settings_path }
       active { controller?('me/settings', 'me/permissions', 'me/profile', 'me/requests') }
       icon   :control

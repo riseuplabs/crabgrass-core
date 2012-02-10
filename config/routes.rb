@@ -44,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :notices
     me.home      '', :controller => 'notices', :action => 'index'
     me.resource  :page, :only => [:new, :create]
+    me.resources :recent_pages, :only => [:index]
     me.pages     'pages/*path', :controller => 'pages'
     me.resources :activities
     me.resources(:discussions, :as => 'messages') do |discussion|

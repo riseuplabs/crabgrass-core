@@ -247,7 +247,7 @@ function showTab(tabLink, tabContent, hash) {
     $$('.tab_content').invoke('hide');
     tabLink.addClassName('active');
     tabContent.show();
-    evalAttributeOnce(tabContent, 'onclick');
+    evalAttributeOnce(tabContent, 'data-onvisible');
     tabLink.blur();
     if (hash) {
       window.location.hash = hash;
@@ -298,7 +298,7 @@ var DropMenu = Class.create({
   },
 
   showMenuEvent: function(event) {
-    evalAttributeOnce(this.menu, 'onClick');
+    evalAttributeOnce(this.menu, 'data-onvisible');
     this.clearEvents(event);
     if (this.menuIsOpen()) {
       DropMenu.instances.invoke('hideMenu');
