@@ -1,5 +1,10 @@
 require 'yaml'
+
+# we will want to change this, as the english keys will get moved
+# into different files, and we will have a script that dumps them in 
+# one big file, and this should look at that big file:
 en = YAML.load_file 'config/locales/en.yml'
+
 
 def extract_keys()
   keys = {}
@@ -22,21 +27,25 @@ def extract_keys()
 
 end
 
-desc "extract translation keys"
-task :extract_translation_keys do
+namespace :cg do
+  namespace :i18n do
 
-  keys = extract_keys
+    desc "translation keys report"
+    task :translation_report do
 
-  p 'Never-used language keys:'
-  p  (en['en'].keys - keys.keys)
-  p 'There are '+ (en['en'].keys - keys.keys).count.to_s + ' never-used language keys'
-  p 'Used in code but not in yaml:'
-  p (keys.keys - en['en'].keys)
+      keys = extract_keys
 
-  p 'Yaml key count:'
-  p en['en'].keys.count
-  p 'Language keys in code count:'
-  p  keys.keys.count
+      p 'Never-used language keys:'
+      p  (en['en'].keys - keys.keys)
+      p 'There are '+ (en['en'].keys - keys.keys).count.to_s + ' never-used language keys'
+      p 'Used in code but not in yaml:'
+      p (keys.keys - en['en'].keys)
 
+      p 'Yaml key count:'
+      p en['en'].keys.count
+      p 'Language keys in code count:'
+      p  keys.keys.count
+    end
+  end
 end
 
