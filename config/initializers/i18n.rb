@@ -1,33 +1,60 @@
-# The internationalization framework can be changed
-# to have another default locale (standard is :en) or more load paths.
-# All files from config/locales/*.rb,yml are added automatically.
+#
+# Set the load paths for locale translations files.
+#
 
+#
 # glob all locales in the config/locales folder
-locale_paths = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
+#
+load_path = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
 
-# select only enabled locales unless no enabled locales are set
+#
+# trim load_path #1:
+#
+#   select only locales enabled in crabgrass conf
+#   (if there are any configured)
+# 
 if Conf.enabled_languages.any?
-  locale_paths = locale_paths.select do |path|
+  load_path = load_path.select do |path|
     Conf.enabled_languages.detect do |enabled_lang_code|
       path.include?('/en/') or path.include?("#{enabled_lang_code}.yml")
     end
   end
 end
 
-# put override paths last
-Dir[File.join(LOCALE_OVERRIDE_DIRECTORY, '*.yml')].each do |path|
-  locale_paths << path
+#
+# trim load_path #2
+#
+#   in production mode, load only en.yml and not locales/en/*.yml.
+#   in other modes, do the opposite. (rake cg:i18n:bundle to generate en.yml)
+#
+if Rails.env == 'production'
+  load_path = load_path.select do |path|
+    !path.include?('/en/')
+  end
+else
+  load_path = load_path.select do |path|
+    !path.include?('en.yml')
+  end
 end
 
+#
+# put override paths last
+#
+Dir[File.join(LOCALE_OVERRIDE_DIRECTORY, '*.yml')].each do |path|
+  load_path << path
+end
+
+#
 # set the load paths
-I18n.load_path << locale_paths
+#
+I18n.load_path << load_path
 I18n.default_locale = Conf.default_language
 I18n.exception_handler = :crabgrass_i18n_exception_handler
 
-##
-## Turn off reloading of .yml files after every request if in BOOST mode.
-##
-
+#
+# Turn off reloading of .yml files after every request if in BOOST mode.
+# Makes everything much much faster!!
+#
 if ENV['BOOST']
   module SkipReloading
     def skip_reload!

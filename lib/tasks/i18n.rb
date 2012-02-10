@@ -1,10 +1,5 @@
 require 'yaml'
-
-# we will want to change this, as the english keys will get moved
-# into different files, and we will have a script that dumps them in 
-# one big file, and this should look at that big file:
-en = YAML.load_file 'config/locales/en.yml'
-
+require 'fileutils'
 
 def extract_keys()
   keys = {}
@@ -32,7 +27,11 @@ namespace :cg do
 
     desc "translation keys report"
     task :translation_report do
-
+      unless File.exists?('en.yml')
+        puts "skipping, no en.yml"
+        exit
+      end
+      en = YAML.load_file 'config/locales/en.yml'
       keys = extract_keys
 
       p 'Never-used language keys:'
@@ -46,6 +45,24 @@ namespace :cg do
       p 'Language keys in code count:'
       p  keys.keys.count
     end
+
+    #
+    # for coding, it helps to have the english strings in separate files.
+    # for translating, it helps to have a single file. This action will combine
+    # the small files into one big one.
+    #
+    desc "combine locales/en/*.yml to locales/en.yml"
+    task :bundle do
+      Dir.chdir('config/locales/') do
+        File.unlink('en.yml') if File.exists?('en.yml')
+        File.open('en.yml', 'w') {|f| f.write("en:\n")}
+        Dir.glob('en/*.yml').sort.each do |file|
+           File.open('en.yml', 'a') {|f| f.write("\n\n" + '#' * 40 + "\n" + '### ' + file + "\n")}
+          `cat #{file} | tail -n +2 >> en.yml`
+        end
+      end
+    end
+
   end
 end
 
