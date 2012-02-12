@@ -1,0 +1,11 @@
+In keeping with the new Rails 3 system, this folder is for
+javascript and stylesheets.
+
+Javascript are served using the Sprockets gem for asset pipelining.
+
+See ./javascripts/README
+
+Stylesheets use an entirely custom system in order to support theming.
+
+See ./stylesheets/README
+
