@@ -88,7 +88,7 @@ module I18n
 
     def translate_with_site_scope(*args)
       key = args.first
-      options = args[1]
+      options = args[1] || {}
       if site_scope
         site_options = options.dup
         site_options[:scope] = [site_scope] | (options[:scope] || [])
