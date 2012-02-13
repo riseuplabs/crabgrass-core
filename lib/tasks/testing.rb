@@ -6,20 +6,56 @@ rescue LoadError
   # ^^ I don't want to get this error every time.
 end
 
-def plugins_with_allowed_fixtures
-  # skip plugins that load fixtures we don't have a schema for
-  Engines.plugins.by_precedence.reject do |p|
-     %w(
-     multiple_select
-     will_paginate
-     acts_as_versioned
-     acts_as_list
-     better_acts_as_tree
-     acts_as_state_machine
-     ).include? p.name
+# def plugins_with_allowed_fixtures
+#   # skip plugins that load fixtures we don't have a schema for
+#   Engines.plugins.by_precedence.reject do |p|
+#      %w(
+#      multiple_select
+#      will_paginate
+#      acts_as_versioned
+#      acts_as_list
+#      better_acts_as_tree
+#      acts_as_state_machine
+#      ).include? p.name
+#   end
+# end
+
+#
+# Faster tests
+#
+# Normally, "rake test:x" will invoke db:test:prepare. This is really slow.
+# This is only needed when we have changed the database.
+#
+# The rake tasks listed here are copies of the ones in Rails, but with db:test:prepare removed.
+#
+namespace :test do
+  namespace :fast do
+    Rake::TestTask.new(:units) do |t|
+      t.libs << "test"
+      t.pattern = 'test/unit/**/*_test.rb'
+      t.verbose = true
+    end
+    Rake::Task['test:fast:units'].comment = "Run test:units without db:test:prepare"
+
+    Rake::TestTask.new(:functionals) do |t|
+      t.libs << "test"
+      t.pattern = 'test/functional/**/*_test.rb'
+      t.verbose = true
+    end
+    Rake::Task['test:fast:functionals'].comment = "Run test:functionals without db:test:prepare"
+
+    Rake::TestTask.new(:integration) do |t|
+      t.libs << "test"
+      t.pattern = 'test/integration/**/*_test.rb'
+      t.verbose = true
+    end
+    Rake::Task['test:fast:integration'].comment = "Run test:integration without db:test:prepare"
   end
 end
 
+#
+# Testing mods
+#
 namespace :test do
   namespace :mods do
 
@@ -61,6 +97,9 @@ namespace :test do
   end
 end
 
+#
+# Testing pages
+#
 namespace :test do
   namespace :pages do
 
