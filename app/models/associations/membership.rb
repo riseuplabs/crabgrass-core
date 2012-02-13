@@ -39,5 +39,6 @@ class Membership < ActiveRecord::Base
 
   named_scope :with_users, :include => :user
 
+  alias :entity :user
 end
 
