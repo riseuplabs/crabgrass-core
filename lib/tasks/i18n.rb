@@ -90,6 +90,42 @@ namespace :cg do
       end
     end
 
+
+
+# OR:
+# find the orphaned keys.
+# find each line that starts with an even number of spaces then orphaned key then a colon, and stick a !# at the beginning.
+# this would break with multi-line translations
+# or we could manually deal with multiline keys?
+# if it has pipe, print out
+# only find each key once.
+
+    desc "comment out orphaned keys"
+    task :disable do
+      en, keys, orphaned, missing, dups = load_data
+      Dir.chdir('config/locales/') do
+        Dir.glob('en/*.yml').sort.each do |file|
+        File.rename(file, "#{file}bak")
+          File.open("#{file}bak", 'r') do |f_bak|
+            File.open(file, 'w') do |f|
+              while line = f_bak.gets
+                orph = false
+                orphaned.each do |orphan| #these are just top-level keys
+                  if /^(\s\s)#{orphan}:/ =~ line  #orphans only have top-level keys so we are only looking for keys indented by 2
+                    f.write('####!' + line)
+                    orph = true
+                    #break
+                  end
+                end
+                f.write(line) if !orph
+              end
+            end
+          end
+          File.unlink("#{file}bak")
+        end
+      end
+    end
+
   end
 end
 
