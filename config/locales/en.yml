@@ -9,226 +9,226 @@ en:
   ##
 
   groups: "Groups"
-  networks: "Networks"
-  committees: "Committees"
-  councils: "Councils"
+  ##!  networks: "Networks"
+  ##!  committees: "Committees"
+  ##!  councils: "Councils"
   group: "Group"
-  network: "Network"
-  committee: "Committee"
-  council: "Council"
+  ##!  network: "Network"
+  ##!  committee: "Committee"
+  ##!  council: "Council"
   members: "Members"
-  new_members: "New members"
-  affiliations: "Affiliations"
+  ##!  new_members: "New members"
+  ##!  affiliations: "Affiliations"
 
   ##
   ## GROUP CREATION
   ##
 
-  regular_group: "Regular Group"
-  group_description: "Groups are autonomous associations of people. You can control who has access to join the group."
-  committee_description: "Committees are groups within another group. A committee is entirely subordinate to its parent group."
-  council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
-  network_description: "Networks are special groups that can have other groups as members. A network can be used as an association of multiple groups, or a place for two autonomous groups to collaborate."
-  committee_choose_group: 'Choose a group for this committee:'
+  ##!  regular_group: "Regular Group"
+  ##!  group_description: "Groups are autonomous associations of people. You can control who has access to join the group."
+  ##!  committee_description: "Committees are groups within another group. A committee is entirely subordinate to its parent group."
+  ##!  council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
+  ##!  network_description: "Networks are special groups that can have other groups as members. A network can be used as an association of multiple groups, or a place for two autonomous groups to collaborate."
+  ##!  committee_choose_group: 'Choose a group for this committee:'
 
   ##
   ## PERMISSIONS
   ##
 
 
-  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
-  group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
-  group_profile_description_may_see_networks: "Allow people to see what networks this %{group_type} is part of."
-  group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
-  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
-  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
-  group_profile_description_may_edit: "I am not sure what this does."
+  ##!  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
+  ##!  group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
+  ##!  group_profile_description_may_see_networks: "Allow people to see what networks this %{group_type} is part of."
+  ##!  group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
+  ##!  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
+  ##!  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
+  ##!  group_profile_description_may_edit: "I am not sure what this does."
 
   ##
   ## UNSORTED
   ##
 
 
-  group_join_chat: "Join Chat"
-  group_privacy_settings: '%{group} Privacy Settings'
+  ##!  group_join_chat: "Join Chat"
+  ##!  group_privacy_settings: '%{group} Privacy Settings'
   group_publicly_visible: 'Make %{group} Publicly Visible'
   committee_publicly_visible: 'Make Committees Publicly Visible'
   networks_publicly_visible: 'Make Networks Publicly Visible'
   allow_membership_requests: 'Allow Membership Requests'
-  group_home_headline: "%{group_type} Home"
-  group_home_welcome: "Welcome"
-  group_administration_not_allowed: "You cannot administer this group."
-  page_not_part_of_group: "Page not part of this group"
-  group_successfully_updated: "Group was successfully updated."
-  only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
-  group_successfully_created: "Group was successfully created."
-  group_successfully_created_details: "Now make sure to configure your group"
-  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
+  ##!  group_home_headline: "%{group_type} Home"
+  ##!  group_home_welcome: "Welcome"
+  ##!  group_administration_not_allowed: "You cannot administer this group."
+  ##!  page_not_part_of_group: "Page not part of this group"
+  ##!  group_successfully_updated: "Group was successfully updated."
+  ##!  only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
+  ##!  group_successfully_created: "Group was successfully created."
+  ##!  group_successfully_created_details: "Now make sure to configure your group"
+  ##!  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
 
 
 
-  dont_understand_group_type: "Could not understand group type %{type}"
-  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
+  ##!  dont_understand_group_type: "Could not understand group type %{type}"
+  ##!  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
   committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
   networks_publicly_visible_description: Networks are viewable by non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
   group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
-  page_list: Page list
-  recent_network_pages: "Recent Network Pages"
-  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"
-  create_group_link: "create group"
-  typing: typing
-  away: away
-  you_are_not_member_of_any_group: You are not a member of any group.
-  back_to_group: back_to %{group_name}
-  when_does_feature_expire: When does this feature expire?
-  unfeature_button: Unfeature!
-  feature_button: Feature!
-  reactivate_button: Reactivate!
-  no_group_named: there is no group named <b>%{name}</b>.
+  ##!  page_list: Page list
+  ##!  recent_network_pages: "Recent Network Pages"
+  ##!  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"
+  ##!  create_group_link: "create group"
+  ##!  typing: typing
+  ##!  away: away
+  ##!  you_are_not_member_of_any_group: You are not a member of any group.
+  ##!  back_to_group: back_to %{group_name}
+  ##!  when_does_feature_expire: When does this feature expire?
+  ##!  unfeature_button: Unfeature!
+  ##!  feature_button: Feature!
+  ##!  reactivate_button: Reactivate!
+  ##!  no_group_named: there is no group named <b>%{name}</b>.
   group_wiki: Group Wiki
   rss_feed: RSS Feed
-  group_has_no_public_profile: This group does not have a public profile.
+  ##!  group_has_no_public_profile: This group does not have a public profile.
   pending_tasks: 'pending tasks'
   completed_tasks: 'completed tasks'
-  no_committees: no committees
-  category: Category
-  founded: Founded
-  not_set: not set
-  no_members: (no members)
-  new_group: "New group"
+  ##!  no_committees: no committees
+  ##!  category: Category
+  ##!  founded: Founded
+  ##!  not_set: not set
+  ##!  no_members: (no members)
+  ##!  new_group: "New group"
   group_language: "The main language of this %{group}."
-  group_location: "The main location of this %{group}."
-  group_summary: "Brief information regarding this %{group}."
-  new_network: "New network"
-  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='%{new_group_url}'>create a group</a>?"
+  ##!  group_location: "The main location of this %{group}."
+  ##!  group_summary: "Brief information regarding this %{group}."
+  ##!  new_network: "New network"
+  ##!  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='%{new_group_url}'>create a group</a>?"
   group_membership_count: "%{count} Members"
   membership_exists_error: "Membership already exists for %{member}"
   you_are_a_member_already_error: "You are a member already"
-  membership_leave_message: "You have been removed from %{group}"
-  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
+  ##!  membership_leave_message: "You have been removed from %{group}"
+  ##!  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
   membership_destroy_confirm_message: "Are you sure you want to remove %{user} from %{group_type}?"
-  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
+  ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
 
 
   # featured
 
-  featured_content_header: "Featured"
-  edit_featured_content_for_group: Edit Featured Content For %{group_name}
-  edit_featured_content_link: "edit featured content"
-  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
-  current_featured_content: Current Featured Content
-  not_featured_content: Not yet Featured Content
-  expired_featured_content: Expired Featured Content
-  featured_content: Featured Content
-  featured_pages: "Featured Pages"
-  enter_page_title: "enter page title"
-  updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
+  ##!  featured_content_header: "Featured"
+  ##!  edit_featured_content_for_group: Edit Featured Content For %{group_name}
+  ##!  edit_featured_content_link: "edit featured content"
+  ##!  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
+  ##!  current_featured_content: Current Featured Content
+  ##!  not_featured_content: Not yet Featured Content
+  ##!  expired_featured_content: Expired Featured Content
+  ##!  featured_content: Featured Content
+  ##!  featured_pages: "Featured Pages"
+  ##!  enter_page_title: "enter page title"
+  ##!  updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
 
 
   # directory
 
   my_networks: "My Networks"
-  my_networks_link: "my networks"
-  network_directory_link: "network directory"
+  ##!  my_networks_link: "my networks"
+  ##!  network_directory_link: "network directory"
 
   my_groups: "My Groups"
-  group_directory: "Group Directory"
-  directory_of_networks: "Directory of Networks"
-  directory_of_groups: "Directory of Groups"
+  ##!  group_directory: "Group Directory"
+  ##!  directory_of_networks: "Directory of Networks"
+  ##!  directory_of_groups: "Directory of Groups"
 
-  my_groups_link: "My Groups"
-  group_directory_link: "Group Directory"
+  ##!  my_groups_link: "My Groups"
+  ##!  group_directory_link: "Group Directory"
 
-  new_people_in_weeks: "new people in last 2 weeks"
+  ##!  new_people_in_weeks: "new people in last 2 weeks"
 
-  discover_groups: "Discover %{groups_type}"
-  browse_groups: "Browse %{groups_type}"
+  ##!  discover_groups: "Discover %{groups_type}"
+  ##!  browse_groups: "Browse %{groups_type}"
 
-  browse_groups_desc: "Below is an alphabetized list of all %{groups_type}. You can filter this list by location to find %{groups_type} near you."
-  discover_groups_desc: "Below is a list of recently created %{groups_type}. You can filter this list by location to find %{groups_type} near you."
+  ##!  browse_groups_desc: "Below is an alphabetized list of all %{groups_type}. You can filter this list by location to find %{groups_type} near you."
+  ##!  discover_groups_desc: "Below is a list of recently created %{groups_type}. You can filter this list by location to find %{groups_type} near you."
 
   # commands
 
-  edit_settings: "Edit Settings"
+  ##!  edit_settings: "Edit Settings"
   basic_settings: "Basic Settings"
-  basic_info: "Basic Information"
-  view_all: "View All"
+  ##!  basic_info: "Basic Information"
+  ##!  view_all: "View All"
   send_invites: "Send Invites"
-  view_requests: "View Requests"
-  destroy_group_link: "Destroy %{group_type}"
-  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
-  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
+  ##!  view_requests: "View Requests"
+  ##!  destroy_group_link: "Destroy %{group_type}"
+  ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
+  ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
 
   join_group_link: "Join %{group_type}"
   leave_group_link: "Leave %{group_type}"
   leave_group_confirmation: "Are you sure you want to leave this %{group_type}?"
   request_join_group_link: "Request to Join %{group_type}"
-  send_join_request: "Send request to join %{group_name}"
-  group_destroyed_message: "%{group_type} Destroyed"
+  ##!  send_join_request: "Send request to join %{group_name}"
+  ##!  group_destroyed_message: "%{group_type} Destroyed"
   request_exists: "%{request_type} membership request already exists"
   join_group_confirmation: "Are you sure you want to join this %{group_type}?"
 
-  remove_group_link: "Remove Group"
+  ##!  remove_group_link: "Remove Group"
 
 
   # results
 
-  page_is_not_static: "Page is not static"
+  ##!  page_is_not_static: "Page is not static"
 
-  archive_headline: "Archive"
-  archive_filter_created_link: "Date Created"
-  archive_filter_updated_link: "Last Date Updated"
+  ##!  archive_headline: "Archive"
+  ##!  archive_filter_created_link: "Date Created"
+  ##!  archive_filter_updated_link: "Last Date Updated"
 
   # create/edit forms
 
-  link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
-  fullname: "Full Name"
+  ##!  link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
+  ##!  fullname: "Full Name"
   descriptive_name_for_display: "A descriptive name used for display"
-  link_name: "Link Name"
+  ##!  link_name: "Link Name"
   language: "Language"
 
   # council
 
-  coordinating_council: "Coordinating Council"
-  this_is_coordinating: "This is the <strong>coordinating council</strong> for %{parent_group}."
-  new_council: "New council for group %{group_name}"
-  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+  ##!  coordinating_council: "Coordinating Council"
+  ##!  this_is_coordinating: "This is the <strong>coordinating council</strong> for %{parent_group}."
+  ##!  new_council: "New council for group %{group_name}"
+  ##!  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
   create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
   # committee
 
-  this_is_committee: "This committee is part of %{parent_group}."
-  new_committee: "New committee for group %{group_name}"
-  dual_memberships: "Dual memberships"
-  dual_membership_info: "Members of %{group_type} %{group_name} who should also be in committee %{committee_name}"
-  edit_committe: "Edit Committee"
-  create_committee: "Create Committee"
+  ##!  this_is_committee: "This committee is part of %{parent_group}."
+  ##!  new_committee: "New committee for group %{group_name}"
+  ##!  dual_memberships: "Dual memberships"
+  ##!  dual_membership_info: "Members of %{group_type} %{group_name} who should also be in committee %{committee_name}"
+  ##!  edit_committe: "Edit Committee"
+  ##!  create_committee: "Create Committee"
 
   # networks
 
-  network_initial_member: "Choose a group to be an initial member of this network."
+  ##!  network_initial_member: "Choose a group to be an initial member of this network."
 
   # menu items
 
-  menu_items: "Navigation Bar"
-  external_link_menu_item: "external link"
-  local_link_menu_item: "local link"
-  page_menu_item: "page"
-  search_menu_item: "search"
-  tag_menu_item: "tag"
-  add_menu_item: "Add Item"
+  ##!  menu_items: "Navigation Bar"
+  ##!  external_link_menu_item: "external link"
+  ##!  local_link_menu_item: "local link"
+  ##!  page_menu_item: "page"
+  ##!  search_menu_item: "search"
+  ##!  tag_menu_item: "tag"
+  ##!  add_menu_item: "Add Item"
 
-  updating_this_list_will_update_menu_items: "Adding, removing and reordering menu items on this list will immediately update what menu items users see."
+  ##!  updating_this_list_will_update_menu_items: "Adding, removing and reordering menu items on this list will immediately update what menu items users see."
 
   # appearance
 
-  edit_layout_heading: "Edit Layout"
-  group_icon: "Group Icon"
-  select_page_types: "Select Page Types"
-  select_visible_group_widgets: "Select the widgets visible on your group's front page"
+  ##!  edit_layout_heading: "Edit Layout"
+  ##!  group_icon: "Group Icon"
+  ##!  select_page_types: "Select Page Types"
+  ##!  select_visible_group_widgets: "Select the widgets visible on your group's front page"
 
-  widget_index: "Widget %{index}"
+  ##!  widget_index: "Widget %{index}"
 
   # profiles
 
@@ -242,82 +242,82 @@ en:
 ########################################
 ### en/me.yml
 
-  me_dashboard_link: "Dashboard"
+  ##!  me_dashboard_link: "Dashboard"
 
   me_inbox_link: "Inbox"
-  my_inbox_headline: "My Inbox"
+  ##!  my_inbox_headline: "My Inbox"
 
-  me_trash_link: "Trash"
-  me_tasks_link: "Tasks"
-  my_world_heading: "My World"
+  ##!  me_trash_link: "Trash"
+  ##!  me_tasks_link: "Tasks"
+  ##!  my_world_heading: "My World"
 
-  my_dashboard: "My Dashboard"
-  my_work_headline: "My Work"
+  ##!  my_dashboard: "My Dashboard"
+  ##!  my_work_headline: "My Work"
 
-  my_tasks: "Tasks"
-  my_tasks_headline: "My Tasks"
-  my_tasks_description: Task lists I have access to
-  my_pending_tasks_link: "Pending"
-  my_completed_tasks_link: "Completed"
+  ##!  my_tasks: "Tasks"
+  ##!  my_tasks_headline: "My Tasks"
+  ##!  my_tasks_description: Task lists I have access to
+  ##!  my_pending_tasks_link: "Pending"
+  ##!  my_completed_tasks_link: "Completed"
 
-  my_messages_headline: "My Messages"
+  ##!  my_messages_headline: "My Messages"
 
-  my_social_activity_friends_tab: "Friend Activity"
-  my_social_activity_peers_tab: "Peer Activity"
+  ##!  my_social_activity_friends_tab: "Friend Activity"
+  ##!  my_social_activity_peers_tab: "Peer Activity"
 
-  my_requests_headline: "My Requests"
+  ##!  my_requests_headline: "My Requests"
 
-  private_profile: "Private Profile"
-  public_profile: "Public Profile"
+  ##!  private_profile: "Private Profile"
+  ##!  public_profile: "Public Profile"
 
-  create_task_list: create new task list
+  ##!  create_task_list: create new task list
   #inbox_description: Inbox of pages I am actively participating in or watching for changes
-  toggle_selection: Toggle Selection
+  ##!  toggle_selection: Toggle Selection
   #remove_from_inbox: Remove from inbox
-  my_settings: Settings for %{user}
-  uploaded_image_cropped: "Uploaded image will be cropped and stretched to 202 pixels square."
-  select_image_file: "select image file"
-  or_image_url: "or image URL"
+  ##!  my_settings: Settings for %{user}
+  ##!  uploaded_image_cropped: "Uploaded image will be cropped and stretched to 202 pixels square."
+  ##!  select_image_file: "select image file"
+  ##!  or_image_url: "or image URL"
   upload_image_link: "upload image"
-  remove_image_link: "remove image"
-  copy_paste_option_name: "Copy and paste the name of the option(s) to be customized into the box below (one option per line)."
-  click_on: "Click on"
-  view_custom_names: "to view the custom appearance option names."
-  add_colon_after_name: "Add a colon (:) after each name and change the default value to a similar value type. (Note: If the default value is a hexidecimal number, be sure to include the (#) symbol and wrap it in double quotes.)"
-  click_update_below: "Click the 'Update' button below to activate the custom value(s)."
+  ##!  remove_image_link: "remove image"
+  ##!  copy_paste_option_name: "Copy and paste the name of the option(s) to be customized into the box below (one option per line)."
+  ##!  click_on: "Click on"
+  ##!  view_custom_names: "to view the custom appearance option names."
+  ##!  add_colon_after_name: "Add a colon (:) after each name and change the default value to a similar value type. (Note: If the default value is a hexidecimal number, be sure to include the (#) symbol and wrap it in double quotes.)"
+  ##!  click_update_below: "Click the 'Update' button below to activate the custom value(s)."
 
 
   save_changes: Save Changes
   username: Username
-  display_name: Display name
-  email: Email
-  phone: Phone
+  ##!  display_name: Display name
+  ##!  email: Email
+  ##!  phone: Phone
   language: Language
-  time_zone: Time Zone
-  set_status_messsage: What are you doing right now?
-  status_post_sent: "Your message has been successfully posted to your profile. Your friends will see it in 'Social Activity'."
+  ##!  time_zone: Time Zone
+  ##!  set_status_messsage: What are you doing right now?
+  ##!  status_post_sent: "Your message has been successfully posted to your profile. Your friends will see it in 'Social Activity'."
 
-  me_recent_messages: "Recent"
-  do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
+  ##!  me_recent_messages: "Recent"
+  ##!  do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
-  send_message_link: "Send Message"
+  ##!  send_message_link: "Send Message"
   messages_with: "Conversation with %{other_user}"
-  messages_back_to_all: "Back to Messages"
-  messages_from_label: "Only view messages from:"
-  messages_mark_as_label: "Mark as:"
-  messages_view_label: "View:"
+  ##!  messages_back_to_all: "Back to Messages"
+  ##!  messages_from_label: "Only view messages from:"
+  ##!  messages_mark_as_label: "Mark as:"
+  ##!  messages_view_label: "View:"
 
-  messages_select_all_link: "All"
-  messages_select_none_link: "None"
-  messages_select_unread_link: "Unread"
+  ##!  messages_select_all_link: "All"
+  ##!  messages_select_none_link: "None"
+  ##!  messages_select_unread_link: "Unread"
 
-  messages_mark_as_read_link: "Read"
-  messages_mark_as_unread_link: "Unread"
+  ##!  messages_mark_as_read_link: "Read"
+  ##!  messages_mark_as_unread_link: "Unread"
 
-  message_recipient_name_input_caption: 'To: Friends and Peers'
-  message_recipient_name_caption: 'To: %{user}'
-  message_to_self_error: "Can't talk to yourself"
-  message_cant_perster_error: "Only friends may send messages to %{user}"
+  ##!  message_recipient_name_input_caption: 'To: Friends and Peers'
+  ##!  message_recipient_name_caption: 'To: %{user}'
+  ##!  message_to_self_error: "Can't talk to yourself"
+  ##!  message_cant_perster_error: "Only friends may send messages to %{user}"
 
   message_you_wrote_caption: "You wrote:"
   message_user_wrote_caption: "%{user} wrote:"
@@ -335,18 +335,18 @@ en:
   menu_people: "People"
   menu_networks: "Networks"
   menu_link_logout: "Logout %{user}"
-  menu_link_account: "Account"
+  ##!  menu_link_account: "Account"
   menu_admin: "Admin"
-  menu_moderation: "Moderation"
+  ##!  menu_moderation: "Moderation"
 
-  pages_tab: "Pages"
-  social_activities_tab: "Social Activity"
-  messages_tab: "Messages"
-  requests_tab: "Requests"
+  ##!  pages_tab: "Pages"
+  ##!  social_activities_tab: "Social Activity"
+  ##!  messages_tab: "Messages"
+  ##!  requests_tab: "Requests"
 
-  my_work_tab: "My Work"
-  all_pages_tab: "All Pages"
-  notification_tab: "Notifications"
+  ##!  my_work_tab: "My Work"
+  ##!  all_pages_tab: "All Pages"
+  ##!  notification_tab: "Notifications"
 
   account_settings: "Account Settings"
 
@@ -357,7 +357,7 @@ en:
 ### en/pages.yml
 
   pages: "Pages"
-  recent_pages: "Recent Pages"
+  ##!  recent_pages: "Recent Pages"
   #group_pages: "Group Pages"
   #search_input_caption: "Search for pages"
   #search_description: "Search through all pages you have access to"
@@ -382,77 +382,77 @@ en:
   #view_groups_pages_description: "All pages of your groups and your own pages."
 
   # search filter sections
-  my_pages: "My Pages"
-  properties: "Properties"
-  popular_pages: "Popular Pages"
-  advanced: "Advanced"
-  access: "Access"
+  ##!  my_pages: "My Pages"
+  ##!  properties: "Properties"
+  ##!  popular_pages: "Popular Pages"
+  ##!  advanced: "Advanced"
+  ##!  access: "Access"
 
   ##
   ## PAGE SEARCH
   ##
 
-  active_filters: "Active Filters"
+  ##!  active_filters: "Active Filters"
 
-  all_pages: "All Pages"
+  ##!  all_pages: "All Pages"
 
-  created_by_me: "Created"
+  ##!  created_by_me: "Created"
   created_by_user: "Created By %{user}"
-  created_by_user_description: "Search for pages created by a particular person."
-  created_by_dotdotdot: "Created By..."
+  ##!  created_by_user_description: "Search for pages created by a particular person."
+  ##!  created_by_dotdotdot: "Created By..."
 
-  starred_by_me: "Starred"
+  ##!  starred_by_me: "Starred"
   starred_by_user: "Starred By %{user}"
-  starred_by_user_description: "Search for pages starred by a particular person."
-  starred_by_dotdotdot: "Starred By..."
+  ##!  starred_by_user_description: "Search for pages starred by a particular person."
+  ##!  starred_by_dotdotdot: "Starred By..."
 
-  watched_by_me: "Watching"
+  ##!  watched_by_me: "Watching"
   watched_by_user: "Watched By %{user}"
-  watched_by_user_description: "Search for pages watched by a particular person."
-  watched_by_dotdotdot: "Watched By..."
+  ##!  watched_by_user_description: "Search for pages watched by a particular person."
+  ##!  watched_by_dotdotdot: "Watched By..."
 
-  edited_by_me: "Edited"
+  ##!  edited_by_me: "Edited"
   edited_by_user: "Edited By %{user}"
-  edited_by_user_description: "Search for pages edited by a particular person."
-  edited_by_dotdotdot: "Edited By..."
+  ##!  edited_by_user_description: "Search for pages edited by a particular person."
+  ##!  edited_by_dotdotdot: "Edited By..."
 
-  owned_by_me: "Own"
+  ##!  owned_by_me: "Own"
   owned_by_user: "Owned By %{user}"
-  owned_by_user_description: "Search for pages owned by a particular person."
-  owned_by_dotdotdot: "Owned By..."
+  ##!  owned_by_user_description: "Search for pages owned by a particular person."
+  ##!  owned_by_dotdotdot: "Owned By..."
 
   most_active: "Most Active"
   most_stars: "Most Stars"
   most_viewed: "Most Viewed"
 
-  filter_user_description: "Search for pages with access by a particular user."
-  filter_group_description: "Search for pages with access by a particular group."
+  ##!  filter_user_description: "Search for pages with access by a particular user."
+  ##!  filter_group_description: "Search for pages with access by a particular group."
 
   starred: "Starred"
   viewed: "Viewed"
   edited: "Edited"
 
-  watched: "Watched"
-  unwatched: "Unwatched"
+  ##!  watched: "Watched"
+  ##!  unwatched: "Unwatched"
 
   type: "Type"
 
   all_page_types: "all page types"
-  edit_title: "edit title"
+  ##!  edit_title: "edit title"
   data_for_page_missing: "The data for this page is missing."
   no_change: "no change"
   updated: "updated"
   created: "created"
-  unread: "unread"
+  ##!  unread: "unread"
   read: "read"
-  all_people: "All People"
-  all_groups: "All Groups"
-  all_networks: "All Networks"
+  ##!  all_people: "All People"
+  ##!  all_groups: "All Groups"
+  ##!  all_networks: "All Networks"
   # ^^ i think this should go away soon, as soon as we have a better group directory.
-  all_states: "All States"
-  page_name_description: "Optional unique name (used to create the URL for this page)"
+  ##!  all_states: "All States"
+  ##!  page_name_description: "Optional unique name (used to create the URL for this page)"
 
-  filter_tag_description: "Search for pages with a particular tag."
+  ##!  filter_tag_description: "Search for pages with a particular tag."
 
   # page list
 
@@ -475,35 +475,35 @@ en:
   #page_list_heading_views: "views"
   #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
 
-  page_notice_message: "%{user} notified you about this page on %{date}"
-  page_with_message: "with message"
+  ##!  page_notice_message: "%{user} notified you about this page on %{date}"
+  ##!  page_with_message: "with message"
   pagination_next: "Next"
   pagination_previous: "Previous"
 
-  pagination_older: "Older"
-  pagination_newer: "Newer"
+  ##!  pagination_older: "Older"
+  ##!  pagination_newer: "Newer"
 
-  view_posts_link: "view"
+  ##!  view_posts_link: "view"
 
   # sidebar
 
-  move_this_page: "Move This Page"
-  move_page_to_different_group: "Move this page to a different group"
+  ##!  move_this_page: "Move This Page"
+  ##!  move_page_to_different_group: "Move this page to a different group"
 
-  announcements: "Announcements"
+  ##!  announcements: "Announcements"
   watch_checkbox: "Watch For Updates"
   add_star_link: "Add Star (%{star_count})"
   remove_star_link: "Remove Star (%{star_count})"
   public_checkbox: "Public"
   public_checkbox_help: "If checked, anyone may view this page."
-  move_page_link: "Move %{page_class}"
+  ##!  move_page_link: "Move %{page_class}"
   page_details_link: "%{page_class} Details"
-  print_view_link: "Printable"
+  ##!  print_view_link: "Printable"
 
   # trash
 
-  trash: "Trash"
-  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking %{undelete} or permanently destroy a page by clicking %{destroy}."
+  ##!  trash: "Trash"
+  ##!  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking %{undelete} or permanently destroy a page by clicking %{destroy}."
 
   delete_page_link: "Delete %{page_class}"
 
@@ -514,35 +514,35 @@ en:
 
   undelete_from_trash: "Undelete"
 
-  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
-  destroy_page_link: "Shred %{page_class}"
-  trash_page_link: "Move %{page_class} to trash"
+  ##!  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
+  ##!  destroy_page_link: "Shred %{page_class}"
+  ##!  trash_page_link: "Move %{page_class} to trash"
 
 
 
   # details
 
-  page_details: "Page Details"
+  ##!  page_details: "Page Details"
   participation: "Participation"
-  user_or_group_name: "User or group name"
+  ##!  user_or_group_name: "User or group name"
   information: "Information"
-  remove_last_access_error: "You cannot remove your last remaining access to this page."
-  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
+  ##!  remove_last_access_error: "You cannot remove your last remaining access to this page."
+  ##!  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
 
   # tags
 
   edit_tags_link: "Edit"
-  separate_tags: "Separate tags using commas."
+  ##!  separate_tags: "Separate tags using commas."
 
   # attachments
 
-  edit_attachments_link: "Edit"
+  ##!  edit_attachments_link: "Edit"
   attachments: "Attachments"
-  edit_attachments: "Edit Attachments"
-  current_attachments: "Current Attachments"
-  add_new_attachment: "Add New Attachment"
-  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
-  use_as_cover: "Use as cover"
+  ##!  edit_attachments: "Edit Attachments"
+  ##!  current_attachments: "Current Attachments"
+  ##!  add_new_attachment: "Add New Attachment"
+  ##!  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
+  ##!  use_as_cover: "Use as cover"
 
   # share/notify
 
@@ -551,34 +551,34 @@ en:
   page_access_none: "No Access"
   page_access_view: "Read Only"
 
-  grant_access: "Grant Access"
-  share_page_email: "Send an email notification"
-  share_page_message: "Send a message (optional)"
+  ##!  grant_access: "Grant Access"
+  ##!  share_page_email: "Send an email notification"
+  ##!  share_page_message: "Send a message (optional)"
   share_page_link: "Share %{page_class}"
-  share_page_options: "Choose options"
+  ##!  share_page_options: "Choose options"
   share_page_recipients: "Share page with"
-  share_page_recipients_sections: "Choose from your groups or friends"
-  share_page_recipients_selection: "Make your selection"
-  share_page_recipients_results: "This %{page_class} will be shared with"
+  ##!  share_page_recipients_sections: "Choose from your groups or friends"
+  ##!  share_page_recipients_selection: "Make your selection"
+  ##!  share_page_recipients_results: "This %{page_class} will be shared with"
   notify_page_link: "Send Notification"
   notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
-  notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+  ##!  notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
   notification_message: "Notification Message"
 
   send_only_with_encryption: "Send only if encrypted distribution is possible"
-  share_additional_notification: "Send additional notification via"
+  ##!  share_additional_notification: "Send additional notification via"
   share_send_notification: "Send notification"
   send_email: "Send Email"
   share_include_message: "Include a custom message"
 
-  share_all_checkbox: "Shared with all users"
-  share_all_checkbox_help: "If checked, all Users can access this page."
+  ##!  share_all_checkbox: "Shared with all users"
+  ##!  share_all_checkbox_help: "If checked, all Users can access this page."
 
   shared_page_success: "You successfully shared this page."
   notify_success: "You successfully sent notifications."
 
-  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
+  ##!  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
   share_grant_required_error: "%{name} is not allowed to view this page. They must be granted greater access first."
   share_permission_denied_error: "You are not allowed to change the access permissions of this page"
   notify_no_access_error: 'Sorry, "%{name}" does not have access to this page.'
@@ -588,36 +588,36 @@ en:
 
   entity_autocomplete_tip: "Enter the name of a group or person."
 
-  notice_with_message: "with message %{message}"
+  ##!  notice_with_message: "with message %{message}"
 
   # creating
 
   contribute_content_link: "Create Page"
-  contribute_group_content_link: "Add Page To %{group}"
+  ##!  contribute_group_content_link: "Add Page To %{group}"
   page_create_owner: "Page Owner"
-  create_page_information: "%{page_class} Information"
-  create_page_data: "%{page_class} Data"
-  create_page: "Create Page"
+  ##!  create_page_information: "%{page_class} Information"
+  ##!  create_page_data: "%{page_class} Data"
+  ##!  create_page: "Create Page"
   only_me: "Me"
-  create_page_button: "Create %{page_class}"
+  ##!  create_page_button: "Create %{page_class}"
   page_added_to_group: "This page will be added to %{group_type} %{group_name}."
   additional_page_access: "Additional Access"
   page_owner_error: "Page owner cannot be empty."
 
   # help
 
-  title_help: "Required. The title is used to identify this page."
-  summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
-  tags_help: "Optional. For tags, use a few words that best describe this page."
-  page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
-  sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
-  coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
-  participant_help: "<b>Write Ability</b> will allow editing of this page."
-  viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
-  wiki_body_help: "Optional. Enter here the initial body text for the page."
-  upload_image_help: "Optional. Select an initial image file to upload to this page."
-  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
-  upload_file_help: "Required. Select a file to upload to this page."
+  ##!  title_help: "Required. The title is used to identify this page."
+  ##!  summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
+  ##!  tags_help: "Optional. For tags, use a few words that best describe this page."
+  ##!  page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
+  ##!  sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
+  ##!  coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
+  ##!  participant_help: "<b>Write Ability</b> will allow editing of this page."
+  ##!  viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
+  ##!  wiki_body_help: "Optional. Enter here the initial body text for the page."
+  ##!  upload_image_help: "Optional. Select an initial image file to upload to this page."
+  ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
+  ##!  upload_file_help: "Required. Select a file to upload to this page."
 
   # history
 
@@ -657,74 +657,74 @@ en:
   ## PAGE TYPES
   ##
 
-  announcement_page_description: "An announcement."
-  announcement_page_display: "Announcement"
-  announcements_page_display: "Announcement"
+  ##!  announcement_page_description: "An announcement."
+  ##!  announcement_page_display: "Announcement"
+  ##!  announcements_page_display: "Announcement"
 
-  article_page_description: "Create a blog post or news article."
-  article_page_display: "Article"
+  ##!  article_page_description: "Create a blog post or news article."
+  ##!  article_page_display: "Article"
 
-  wiki_page_description: "Create an editable free-form text document."
-  wiki_page_display: "Wiki Page"
-  wiki: "Wiki"
+  ##!  wiki_page_description: "Create an editable free-form text document."
+  ##!  wiki_page_display: "Wiki Page"
+  ##!  wiki: "Wiki"
 
   #collection_class_description: "Special pages that hold other pages."
   #collection_page_display: "collection"
 
-  folder_class_description: "Create a folder to organize other pages."
-  folder_display: "Folder"
+  ##!  folder_class_description: "Create a folder to organize other pages."
+  ##!  folder_display: "Folder"
 
-  gallery_description: "Upload multiple images or organize existing images into a set."
-  gallery_display: "Gallery"
+  ##!  gallery_description: "Upload multiple images or organize existing images into a set."
+  ##!  gallery_display: "Gallery"
 
-  asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
-  asset_page_display: "File"
+  ##!  asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
+  ##!  asset_page_display: "File"
 
-  external_video_page_description: "Show a video hosted on an external website."
-  external_video_page_display: "External Video"
+  ##!  external_video_page_description: "Show a video hosted on an external website."
+  ##!  external_video_page_display: "External Video"
 
-  discussion_page_description: "Discuss a particular topic with groups or other users."
-  discussion_page_display: "Group Discussion"
+  ##!  discussion_page_description: "Discuss a particular topic with groups or other users."
+  ##!  discussion_page_display: "Group Discussion"
 
-  message_page_description: "Send a personal message to individual recipients."
-  message_page_display: "Personal Message"
+  ##!  message_page_description: "Send a personal message to individual recipients."
+  ##!  message_page_display: "Personal Message"
 
-  ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
-  ranked_vote_page_display: "Ranked Vote"
+  ##!  ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
+  ##!  ranked_vote_page_display: "Ranked Vote"
 
-  survey_page_description: "Create a series of questions for people to answer."
-  survey_page_display: "Survey"
+  ##!  survey_page_description: "Create a series of questions for people to answer."
+  ##!  survey_page_display: "Survey"
 
-  rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
-  rate_many_page_display: "Approval Poll"
+  ##!  rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
+  ##!  rate_many_page_display: "Approval Poll"
 
-  task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
-  task_list_page_display: "Task List"
+  ##!  task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
+  ##!  task_list_page_display: "Task List"
 
-  event_page_description: "A calendar event."
-  event_page_display: "Event"
+  ##!  event_page_description: "A calendar event."
+  ##!  event_page_display: "Event"
 
   ##
   ## PAGE TYPE GROUPINGS
   ##
 
   # the main four
-  page_group_vote: Polls and Votes
-  page_group_text: Text and Discussions
-  page_group_media: Multimedia
-  page_group_planning: Planning Tools
+  ##!  page_group_vote: Polls and Votes
+  ##!  page_group_text: Text and Discussions
+  ##!  page_group_media: Multimedia
+  ##!  page_group_planning: Planning Tools
 
   # media types
-  page_group_media_image: Images
-  page_group_media_audio: Audio
-  page_group_media_video: Videos
-  page_group_media_document: Documents
+  ##!  page_group_media_image: Images
+  ##!  page_group_media_audio: Audio
+  ##!  page_group_media_video: Videos
+  ##!  page_group_media_document: Documents
 
   # alt ways of searching
-  page_group_discussion: Discussions
-  page_group_collection: Collections
-  page_group_event: Events
-  page_group_task: Tasks
+  ##!  page_group_discussion: Discussions
+  ##!  page_group_collection: Collections
+  ##!  page_group_event: Events
+  ##!  page_group_task: Tasks
 
 
 
@@ -732,35 +732,35 @@ en:
 ### en/permissions.yml
 
   permissions_key: "Key"
-  public_description: "Everyone on the internet"
-  peers_description: "Members of your groups"
-  friends_description: "Your friends"
+  ##!  public_description: "Everyone on the internet"
+  ##!  peers_description: "Members of your groups"
+  ##!  friends_description: "Your friends"
 
-  may_see_committees: "Show committees"
-  may_see_networks: "Show networks"
-  may_see_members: "Show group members"
-  may_request_membership: "Allow membership requests"
+  ##!  may_see_committees: "Show committees"
+  ##!  may_see_networks: "Show networks"
+  ##!  may_see_members: "Show group members"
+  ##!  may_request_membership: "Allow membership requests"
   members_may_edit_wiki: "All members may edit the wiki"
   members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
-  may_edit: "May edit"
-  may_admin: "May admin"
-  may_burden: "May burden"
-  may_spy: "May spy"
+  ##!  may_edit: "May edit"
+  ##!  may_admin: "May admin"
+  ##!  may_burden: "May burden"
+  ##!  may_spy: "May spy"
 
-  may_view_label: "See my profile?"
-  may_view_description: "If unchecked, your profile will be hidden entirely."
+  ##!  may_view_label: "See my profile?"
+  ##!  may_view_description: "If unchecked, your profile will be hidden entirely."
 
-  may_see_contacts_label: "See my contacts?"
-  may_see_contacts_description: "Allow people to see who your contacts are."
+  ##!  may_see_contacts_label: "See my contacts?"
+  ##!  may_see_contacts_description: "Allow people to see who your contacts are."
 
-  may_see_groups_label: "See my groups?"
-  may_see_groups_description: "Allow people to see what groups you are a member of."
+  ##!  may_see_groups_label: "See my groups?"
+  ##!  may_see_groups_description: "Allow people to see what groups you are a member of."
 
-  may_pester_label: "Share with me?"
-  may_pester_description: "Allow people to send you messages, pages, and invitations."
+  ##!  may_pester_label: "Share with me?"
+  ##!  may_pester_description: "Allow people to send you messages, pages, and invitations."
 
-  may_request_contact_label: "Request contact?"
-  may_request_contact_description: "Allow people to request to be your contact."
+  ##!  may_request_contact_label: "Request contact?"
+  ##!  may_request_contact_description: "Allow people to request to be your contact."
 
 
 
@@ -768,69 +768,69 @@ en:
 ########################################
 ### en/profiles.yml
 
-  profile_permissions: "Permissions"
-  profile_last_login: "Last Login"
-  profile_member_since: "Member Since"
+  ##!  profile_permissions: "Permissions"
+  ##!  profile_last_login: "Last Login"
+  ##!  profile_member_since: "Member Since"
   home: Home
-  work: Work
-  school: School
-  personal: Personal
-  other: Other
-  about_me: About Me
-  social_change_interests: Social Change Interests
-  personal_interests: Personal Interests
-  work_life: Work Life
-  fax: Fax
-  mobile: Mobile
-  pager: Pager
-  instant_messaging: "Instant Messaging"
-  general_info: General Information
-  first_name: first name
-  middle_name: middle
-  last_name: last name
+  ##!  work: Work
+  ##!  school: School
+  ##!  personal: Personal
+  ##!  other: Other
+  ##!  about_me: About Me
+  ##!  social_change_interests: Social Change Interests
+  ##!  personal_interests: Personal Interests
+  ##!  work_life: Work Life
+  ##!  fax: Fax
+  ##!  mobile: Mobile
+  ##!  pager: Pager
+  ##!  instant_messaging: "Instant Messaging"
+  ##!  general_info: General Information
+  ##!  first_name: first name
+  ##!  middle_name: middle
+  ##!  last_name: last name
   organization: organization
   organizational_role: organizational role
-  descriptions: Descriptions
-  add_description: Add Description
+  ##!  descriptions: Descriptions
+  ##!  add_description: Add Description
   phone_number: Phone Number
-  phone_numbers: Phone Numbers
-  add_phone_number: Add Phone Number
+  ##!  phone_numbers: Phone Numbers
+  ##!  add_phone_number: Add Phone Number
   email_addresses: Email Addresses
-  add_email_address: Add Email Address
-  locations: Locations
-  location: Location
-  add_location: Add Location
-  im_addresses: IM Addresses
-  add_im_address: Add IM Address
-  websites: Websites
-  website: Website
-  add_websites: Add Website
-  site_name: "site name"
-  url: "url"
-  add_encryption_key: Add Encryption Key
-  public_encryption_keys: "Public Encryption Keys"
-  public_key: Public Key
-  fingerprint: "fingerprint"
-  location_address: address
-  location_city: city
-  location_state: state/province
-  location_postal_code: postal code
-  location_country: country
+  ##!  add_email_address: Add Email Address
+  ##!  locations: Locations
+  ##!  location: Location
+  ##!  add_location: Add Location
+  ##!  im_addresses: IM Addresses
+  ##!  add_im_address: Add IM Address
+  ##!  websites: Websites
+  ##!  website: Website
+  ##!  add_websites: Add Website
+  ##!  site_name: "site name"
+  ##!  url: "url"
+  ##!  add_encryption_key: Add Encryption Key
+  ##!  public_encryption_keys: "Public Encryption Keys"
+  ##!  public_key: Public Key
+  ##!  fingerprint: "fingerprint"
+  ##!  location_address: address
+  ##!  location_city: city
+  ##!  location_state: state/province
+  ##!  location_postal_code: postal code
+  ##!  location_country: country
 
   #users_recent_activity: "%{user}'s Recent Activity"
   #users_recent_work: "%{user}'s Recent Work"
 
-  recent_contributions: "Recent Contributions"
-  delete_post: Delete Post
-  post_message: Post Message
-  top_rated: Top Rated
-  highest_contributors: Highest Contributors
-  users_world: "%{user}'s World"
-  request_friend_link: "Add To My Friends"
-  remove_friend_link: "Remove From My Friends"
-  user_preferences: "User Preferences"
-  edit_profile_link: "Edit Profile"
-  profile_saved: "Your profile has been saved."
+  ##!  recent_contributions: "Recent Contributions"
+  ##!  delete_post: Delete Post
+  ##!  post_message: Post Message
+  ##!  top_rated: Top Rated
+  ##!  highest_contributors: Highest Contributors
+  ##!  users_world: "%{user}'s World"
+  ##!  request_friend_link: "Add To My Friends"
+  ##!  remove_friend_link: "Remove From My Friends"
+  ##!  user_preferences: "User Preferences"
+  ##!  edit_profile_link: "Edit Profile"
+  ##!  profile_saved: "Your profile has been saved."
 
 
 
@@ -842,12 +842,12 @@ en:
   ## (override the defaults in locale/rails)
   ##
 
-  time:
-    formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      # change to am/pm...
-      short: "%d %b %I:%M %p"
-      long: "%B %d, %Y %I:%M %p"
+  ##!  time:
+  #  formats:
+  #    default: "%a, %d %b %Y %H:%M:%S %z"
+  #    # change to am/pm...
+  #    short: "%d %b %I:%M %p"
+  #    long: "%B %d, %Y %I:%M %p"
 
 
   ##
@@ -856,14 +856,14 @@ en:
 
   #upload_attachment: "Upload Attachment"
   #rename %{upload_images} -> %{upload}
-  create_committee: "create committee"
+  ##!  create_committee: "create committee"
   # used by page history
-  back_to_the_page: "Back to the page"
+  ##!  back_to_the_page: "Back to the page"
   # unsorted for events
-  all_day_event: "all day event"
-  update_event: "Update event"
-  starts_at: "starts at"
-  ends_at: "ends at"
+  ##!  all_day_event: "all day event"
+  ##!  update_event: "Update event"
+  ##!  starts_at: "starts at"
+  ##!  ends_at: "ends at"
   place: "place"
 
   ##
@@ -882,9 +882,9 @@ en:
   create_thing: "Create %{thing}"
   thing_not_found: "%{thing} not found"
   no_things_found: "No %{things} found."
-  thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
-  thing_settings: "%{thing} Settings"
-  update_thing: "Update %{thing}"
+  ##!  thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
+  ##!  thing_settings: "%{thing} Settings"
+  ##!  update_thing: "Update %{thing}"
   thing_destroyed: "%{thing} destroyed"
   created_by_entity: "Created by %{entity}"
   approved_by_entity: "Approved by %{entity}"
@@ -897,71 +897,71 @@ en:
   ## GENERIC TERMS
   ##
 
-  at: "at"
-  access: "Access"
-  name: "Name"
+  ##!  at: "at"
+  ##!  access: "Access"
+  ##!  name: "Name"
   user: "User"
   me: "Me"
-  to: "To"
+  ##!  to: "To"
   people: "People"
   delete: "Delete"
   deleted: "Deleted"
   remove: "Remove"
   cancel: "Cancel"
-  link: "Link"
-  back: "Back"
-  share: "Share"
-  contributed: "Contributed"
-  contributions: "Contributions"
-  contributors: "Contributors"
-  users: "Users"
-  contact: "Contact"
-  contacts: "Contacts"
+  ##!  link: "Link"
+  ##!  back: "Back"
+  ##!  share: "Share"
+  ##!  contributed: "Contributed"
+  ##!  contributions: "Contributions"
+  ##!  contributors: "Contributors"
+  ##!  users: "Users"
+  ##!  contact: "Contact"
+  ##!  contacts: "Contacts"
   friends: "Contacts"
   my_contacts: "My Contacts"
-  member_groups_of_network: "Member Groups"
-  peers: "Peers"
+  ##!  member_groups_of_network: "Member Groups"
+  ##!  peers: "Peers"
   all: "All"
   none: "None"
   people: "People"
   person: "Person"
   profile: "Profile"
-  all_content: "All Content"
-  content: "Content"
-  more_information: "More Information"
-  more: "more"
-  about: "about"
+  ##!  all_content: "All Content"
+  ##!  content: "Content"
+  ##!  more_information: "More Information"
+  ##!  more: "more"
+  ##!  about: "about"
 
-  comments: "Comments"
-  browse: "Browse"
-  discover: "Discover"
+  ##!  comments: "Comments"
+  ##!  browse: "Browse"
+  ##!  discover: "Discover"
   optional: "Optional"
-  required: "Required"
+  ##!  required: "Required"
 
-  recent_activity: "Recent Activity"
-  activity: "Activity"
-  recently_created: "Recently Created"
+  ##!  recent_activity: "Recent Activity"
+  ##!  activity: "Activity"
+  ##!  recently_created: "Recently Created"
   no_search_results: "No Results"
-  empty_results: "None"
+  ##!  empty_results: "None"
   not_found: "Not Found"
-  not_found_description: "Sorry, we could not find what you were looking for."
+  ##!  not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   loadingdotdotdot: "Loading..."
 
-  search_headline: "Search"
-  search_this_group: "this group only"
-  search_this_person: "this person only"
-  search_link: "Search"
+  ##!  search_headline: "Search"
+  ##!  search_this_group: "this group only"
+  ##!  search_this_person: "this person only"
+  ##!  search_link: "Search"
 
   see_more_link: "More"
-  see_less_link: "Less"
-  see_count_more_link: "See %{count} more"
-  see_count_less_link: "See %{count} less"
+  ##!  see_less_link: "Less"
+  ##!  see_count_more_link: "See %{count} more"
+  ##!  see_count_less_link: "See %{count} less"
   see_all_link: "See All"
-  details_link: "Details"
-  check_all: "Check All"
-  return_link: "Return"
-  statistics: "Statistics"
+  ##!  details_link: "Details"
+  ##!  check_all: "Check All"
+  ##!  return_link: "Return"
+  ##!  statistics: "Statistics"
   next: "Next"
   previous: "Previous"
 
@@ -969,173 +969,173 @@ en:
   edit: "Edit"
   upload: "Upload"
   preview: "Preview"
-  open: "Open"
+  ##!  open: "Open"
   private: "Private"
-  public: "Public"
-  options: "Options"
+  ##!  public: "Public"
+  ##!  options: "Options"
   permissions: "Permissions"
-  description: "Description"
+  ##!  description: "Description"
   requests: "Requests"
-  request: "Request"
+  ##!  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
   administration: "Administration"
   settings: "Settings"
   messages: "Messages"
-  popular: "Popular"
+  ##!  popular: "Popular"
 
   page: "Page"
-  discussions: "Discussions"
+  ##!  discussions: "Discussions"
   tags: "Tags"
-  search: "Search"
-  archive: "Archive"
-  tasks: "Tasks"
+  ##!  search: "Search"
+  ##!  archive: "Archive"
+  ##!  tasks: "Tasks"
   title: "Title"
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
-  print: "Print"
-  show: "Show"
+  ##!  print: "Print"
+  ##!  show: "Show"
   owner: "Owner"
 
-  coordinator: "Coordinator"
-  participant: "Participant"
-  viewer: "Viewer"
-  coordinators: "Coordinators"
-  participants: "Participants"
-  viewers: "Viewers"
+  ##!  coordinator: "Coordinator"
+  ##!  participant: "Participant"
+  ##!  viewer: "Viewer"
+  ##!  coordinators: "Coordinators"
+  ##!  participants: "Participants"
+  ##!  viewers: "Viewers"
   recipients: "Recipients"
-  recipient: "Recipient"
-  message: Message
+  ##!  recipient: "Recipient"
+  ##!  message: Message
 
   destroy_confirmation: "Are you sure you want to delete this %{thing}? This action cannot be undone."
-  confirmation: "Are you sure?"
+  ##!  confirmation: "Are you sure?"
 
-  success: "Success"
-  error: "Error"
-  status: "Status"
+  ##!  success: "Success"
+  ##!  error: "Error"
+  ##!  status: "Status"
 
   optional_message: "optional message"
 
   created_by: "Created by"
   created: "Created"
-  updated_by: "Updated by"
+  ##!  updated_by: "Updated by"
   updated: "Updated"
 
   ##
   ## MEDIA
   ##
 
-  icon: "Icon"
+  ##!  icon: "Icon"
   file: "File"
   files: "Files"
-  photo: "Photo"
+  ##!  photo: "Photo"
   caption: "Caption"
   photo_credit: "Photo Credit"
   video_embed: "Embed"
-  height: "Height"
-  width: "Width"
-  size: "Size"
+  ##!  height: "Height"
+  ##!  width: "Width"
+  ##!  size: "Size"
 
   ##
   ## COMMON BUTTONS AND LINKS
   ##
 
   back_button: "Back"
-  send_button: "Send"
-  approve_button: "Approve"
-  reject_button: "Reject"
-  close_button: "Close"
-  close_link: "close"
-  share_button: "Share"
+  ##!  send_button: "Send"
+  ##!  approve_button: "Approve"
+  ##!  reject_button: "Reject"
+  ##!  close_button: "Close"
+  ##!  close_link: "close"
+  ##!  share_button: "Share"
   save_button: "Save"
-  move_button: "Move"
-  add_button: "Add"
-  update_button: "Update"
+  ##!  move_button: "Move"
+  ##!  add_button: "Add"
+  ##!  update_button: "Update"
   cancel_button: "Cancel"
   create_button: "Create"
   ok_button: "OK"
-  done_button: "Done"
+  ##!  done_button: "Done"
   delete_button: "Delete"
   show_button : "Show"
-  confirm: "Confirm"
+  ##!  confirm: "Confirm"
   alert: "Alert"
-  loading_progress: "Loading..."
+  ##!  loading_progress: "Loading..."
 
   # labels
-  buttons_list_label: "Action"
+  ##!  buttons_list_label: "Action"
 
   ###
   ### TO BE SORTED
   ###
 
-  group_information: "%{group_type} Information"
+  ##!  group_information: "%{group_type} Information"
 
   illegal_redirect: "Illegal redirect"
-  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (%{url}) after your login. For security reasons we have removed this parameter from the URL."
+  ##!  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (%{url}) after your login. For security reasons we have removed this parameter from the URL."
 
-  subject_must_not_be_empty: subject must not be empty
-  at_least_one_recipient_is_required: at least one recipient is required
-  message_must_not_be_empty: message must not be empty
-  subject: subject
-  from: from
-  to: To
-  date_date: date
-  request_status: "This request is: %{status}."
-  status_resolved: resolved
-  status_pending: pending
-  approve_or_reject_link: approve or reject this request
-  request_status: This request was %{status} by %{user} on %{time}
-  discuss_request_link: discuss this request with %{person_or_group}
+  ##!  subject_must_not_be_empty: subject must not be empty
+  ##!  at_least_one_recipient_is_required: at least one recipient is required
+  ##!  message_must_not_be_empty: message must not be empty
+  ##!  subject: subject
+  ##!  from: from
+  ##!  to: To
+  ##!  date_date: date
+  ##!  request_status: "This request is: %{status}."
+  ##!  status_resolved: resolved
+  ##!  status_pending: pending
+  ##!  approve_or_reject_link: approve or reject this request
+  ##!  request_status: This request was %{status} by %{user} on %{time}
+  ##!  discuss_request_link: discuss this request with %{person_or_group}
 
-  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
-  preview_selected_image: "Preview of selected image"
-  image_size_info: "Select the size of the image to insert"
-  small: small
-  medium: medium
-  large: large
-  full: full
-  image_options_info: "Should the image included in the wiki link to the fullsize image?"
-  include_full_checkbox: include link to full image
-  image_select_info: "Pick an image to insert from the images uploaded to the group previously"
-  image_upload_info: "Upload a new image to the group so it can be used in the wiki"
+  ##!  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
+  ##!  preview_selected_image: "Preview of selected image"
+  ##!  image_size_info: "Select the size of the image to insert"
+  ##!  small: small
+  ##!  medium: medium
+  ##!  large: large
+  ##!  full: full
+  ##!  image_options_info: "Should the image included in the wiki link to the fullsize image?"
+  ##!  include_full_checkbox: include link to full image
+  ##!  image_select_info: "Pick an image to insert from the images uploaded to the group previously"
+  ##!  image_upload_info: "Upload a new image to the group so it can be used in the wiki"
   
 
   # private post activity links
-  a_message_link: "a message"
+  ##!  a_message_link: "a message"
   a_reply_link: "a reply"
 
   confirm_discarding_text_area: "All your unsaved work will be lost. Press %{cancel} to continue editing."
 
-  is_required: "is required"
+  ##!  is_required: "is required"
 
   ##
   ## ACCOUNT
   ##
 
   signup_link: "Create New User"
-  signup_email_info: "Optional: used if you forget your password"
+  ##!  signup_email_info: "Optional: used if you forget your password"
   forgot_password_link: "Forgot Password?"
   signup_info: Choose your login name and your password then click "%{sign_up}"
-  login_failure_reason: "Username or password is incorrect."
-  signup_success_message: "Thanks for signing up!"
-  login_name: "User name"
-  signup_success: "Registration successful"
-  logout_success: "Goodbye"
-  logout_success_message: "You have been logged out."
-  signup_button: "Sign up"
+  ##!  login_failure_reason: "Username or password is incorrect."
+  ##!  signup_success_message: "Thanks for signing up!"
+  ##!  login_name: "User name"
+  ##!  signup_success: "Registration successful"
+  ##!  logout_success: "Goodbye"
+  ##!  logout_success_message: "You have been logged out."
+  ##!  signup_button: "Sign up"
   login_failed: "Could not log in"
-  signup_login_name: "Your login name"
-  login_button: "Login"
+  ##!  signup_login_name: "Your login name"
+  ##!  login_button: "Login"
   login: "Login"
-  log_in: "Log in"
-  signup_title: "Create Your Account"
-  signup_email: "Your Email"
-  forgot_password_text: |
-    If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
+  ##!  log_in: "Log in"
+  ##!  signup_title: "Create Your Account"
+  ##!  signup_email: "Your Email"
+  ##!  forgot_password_text: |
+  #  If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
   reset_password_text: |
-    Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here.
+  #  Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here.
 
   forgot_password_mail_greeting: "%{user}, to reset your password, please visit"
   forgot_password_mail_expiry: |
@@ -1145,58 +1145,59 @@ en:
 
   reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
-  your_login: "Your login"
-  invalid_email: "Invalid Email"
-  invalid_email_text: "The email address you provided is invalid."
+  ##!  your_login: "Your login"
+  ##!  invalid_email: "Invalid Email"
+  ##!  invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
-  reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
-  invalid_token: "Invalid Token"
-  invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
-  password_reset: "Password Reset"
-  password_reset_ok_text: "Your password has been successfully reset. You can now sign in with your newly changed password."
+  ##!  reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
+  ##!  invalid_token: "Invalid Token"
+  ##!  invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
+  ##!  password_reset: "Password Reset"
+  ##!  password_reset_ok_text: "Your password has been successfully reset. You can now sign in with your newly changed password."
   requested_forgot_password: "You have requested a change of password"
   password_was_reset: "Your password has been reset"
-  forgotten_email_address: "What email address did you give us when you created your account?"
-  new_password: "New Password"
-  confirm_new_password: "Confirm New Password"
-  accept_usage_agreement: "I accept the terms of the usage agreement"
-  usage_agreement_required: "Acceptance of the usage agreement is required"
-  usage_agreement_heading: "Usage Agreement"
-  usage_agreement_text: |
-    The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
+  ##!  forgotten_email_address: "What email address did you give us when you created your account?"
+  ##!  new_password: "New Password"
+  ##!  confirm_new_password: "Confirm New Password"
+  ##!  accept_usage_agreement: "I accept the terms of the usage agreement"
+  ##!  usage_agreement_required: "Acceptance of the usage agreement is required"
+  ##!  usage_agreement_heading: "Usage Agreement"
+  ##!  usage_agreement_text: |
+  #  The services of this website are provided AS IS. You understand
+and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.#
 
-    In consideration for your use of this service you agree to the following conditions:
+  #  In consideration for your use of this service you agree to the following conditions:
 
-    You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
+  #  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
 
-    You also agree not to use our services to:
+  #  You also agree not to use our services to:
 
-    * harass other people;
-    * harm or exploit minors;
-    * impersonate or cause others to believe that you are another person;
-    * send unsolicited messages;
-    * collect personal data from users of this service without their express consent; and
-    * interfere with or disrupt our services, those of our users or any other person or service;
+  #  * harass other people;
+  #  * harm or exploit minors;
+  #  * impersonate or cause others to believe that you are another person;
+  #  * send unsolicited messages;
+  #  * collect personal data from users of this service without their express consent; and
+  #  * interfere with or disrupt our services, those of our users or any other person or service;
 
-    Further, you agree to:
+  #  Further, you agree to:
 
-    * avoid excessive use of our services;
-    * be responsible for maintaining the confidentiality of your accounts and passwords;
-    * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
-    * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
+  #  * avoid excessive use of our services;
+  #  * be responsible for maintaining the confidentiality of your accounts and passwords;
+  #  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
+  #  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
 
-    The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
+  #  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
 
-    If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+  #  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
 
   congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}."
 
   # verify email
 
   you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
-  successfully_verified_email_message: "Successfully Verified Email Address"
-  already_verified: "Already Verified."
-  already_verified_text: "You don't need to verify again."
+  ##!  successfully_verified_email_message: "Successfully Verified Email Address"
+  ##!  already_verified: "Already Verified."
+  ##!  already_verified_text: "You don't need to verify again."
   email_verification_body: |
     You have signed for %{site_title} (%{host})!
 
@@ -1214,23 +1215,23 @@ en:
 
   # seems like some duplication here!
   password: "Password"
-  password_confirmation: "Password Confirmation"
-  signup_confirm_password: "Confirm Password"
-  login_password: "Password"
-  signup_password: "Your Password"
+  ##!  password_confirmation: "Password Confirmation"
+  ##!  signup_confirm_password: "Confirm Password"
+  ##!  login_password: "Password"
+  ##!  signup_password: "Your Password"
 
   # password strength messages:
-  password_ok: "is OK."
-  password_error_default: "is not strong enough."
-  password_error_username: "is no good, it is based on your username."
-  password_error_too_short: "is no good, it is too short."
-  password_error_whitespace: "is no good, it is all whitespace."
-  password_error_too_similar: "is no good, it does not contain enough different characters."
-  password_error_too_simple: "is no good, it is too simplistic or predictable."
-  password_error_too_common: "is no good, it is based on a dictionary word."
-  password_error_confirmation: "does not match password confirmation."
+  ##!  password_ok: "is OK."
+  ##!  password_error_default: "is not strong enough."
+  ##!  password_error_username: "is no good, it is based on your username."
+  ##!  password_error_too_short: "is no good, it is too short."
+  ##!  password_error_whitespace: "is no good, it is all whitespace."
+  ##!  password_error_too_similar: "is no good, it does not contain enough different characters."
+  ##!  password_error_too_simple: "is no good, it is too simplistic or predictable."
+  ##!  password_error_too_common: "is no good, it is based on a dictionary word."
+  ##!  password_error_confirmation: "does not match password confirmation."
 
-  signup_time_to_crack_password: "(takes %{time} to crack)"
+  ##!  signup_time_to_crack_password: "(takes %{time} to crack)"
 
 
   ##
@@ -1238,7 +1239,7 @@ en:
   ##
 
   activity_contact_created: "%{user} added %{other_user} as a friend"
-  activity_user_status: "%{user} is now %{status}"
+  ##!  activity_user_status: "%{user} is now %{status}"
   activity_user_left_group: "%{user} has left %{group_type} %{group}"
   activity_user_joined_group: "%{user} has joined %{group_type} %{group}"
   activity_user_joined_site: "%{user} has joined %{group}"
@@ -1257,46 +1258,46 @@ en:
   ## ASSETS
   ##
 
-  media_audio: "Sound Recording"
-  media_audios: "Sound Recordings"
-  media_video: "Video"
-  media_videos: "Videos"
+  ##!  media_audio: "Sound Recording"
+  ##!  media_audios: "Sound Recordings"
+  ##!  media_video: "Video"
+  ##!  media_videos: "Videos"
   media_image: "Image"
-  media_images: "Images"
-  media_document: "Document"
-  media_documents: "Documents"
+  ##!  media_images: "Images"
+  ##!  media_document: "Document"
+  ##!  media_documents: "Documents"
   zip_file: "Zip File"
-  media_all: "Media"
-  media_alls: "Media"
-  media_for_group: "%{media_type} in %{group}"
-  media_without_group: "All %{media_type}"
+  ##!  media_all: "Media"
+  ##!  media_alls: "Media"
+  ##!  media_for_group: "%{media_type} in %{group}"
+  ##!  media_without_group: "All %{media_type}"
   history: "History"
   other_formats: "Other Formats"
   file_version_deleted: "file version deleted"
   delete_version_confirm: "Are you sure you want to delete this version?"
-  delete_this_version: "delete this version"
+  ##!  delete_this_version: "delete this version"
   galleries: "Galleries"
   created_on: "Created on"
   file_size: "File size"
   format: "Format"
   regenerate: "regenerate thumbnails"
   version_number: "version %{version}"
-  no_data_uploaded: "No data uploaded"
+  ##!  no_data_uploaded: "No data uploaded"
 
-  upload_image: "Upload Image"
-  remove_image: "Remove image"
+  ##!  upload_image: "Upload Image"
+  ##!  remove_image: "Remove image"
 
-  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
+  ##!  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
 
   # avatar
 
-  avatar_image_upload_success: "Successfully uploaded a new avatar image."
-  confirm_delete_avatar: "Do you really want to delete your user image?"
+  ##!  avatar_image_upload_success: "Successfully uploaded a new avatar image."
+  ##!  confirm_delete_avatar: "Do you really want to delete your user image?"
 
   # favicon
 
-  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
-  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
+  ##!  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
+  ##!  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
 
   asset_version_list_version_heading: "version"
 
@@ -1310,7 +1311,7 @@ en:
   image_count: Photo %{number} of %{count}
   image_count_total: "%{count} Photos"
   view_slideshow: View Slideshow
-  show_gallery: Show Gallery
+  ##!  show_gallery: Show Gallery
   edit_gallery: Edit Gallery
   back_to_gallery_link: "Back to Gallery"
   gallery_changing_cover_message: "Changing cover..."
@@ -1325,29 +1326,29 @@ en:
   successful_undelete_image: Successfully undeleted image.
   saved_new_order: Saved new order!
   error_saving_new_order: Error saving new order!
-  no_title_given: (no title given)
+  ##!  no_title_given: (no title given)
   saving_your_changes: Saving your changes...
   activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
   drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
   no_images_in_gallery: No images in Gallery
   add_existing_image: Add Photo
-  upload_new_image: "upload new image"
-  type_your_messages_here: "Type your messages here and press enter..."
+  ##!  upload_new_image: "upload new image"
+  ##!  type_your_messages_here: "Type your messages here and press enter..."
   add_photo_to_gallery: "Click on a Photo to add it"
   cancel_link: "cancel"
   file_must_be_image_error: "File must be an image to be part of a gallery."
-  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
+  ##!  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
   add_another_file: "Add another file"
   slideshow_delay_input: "Update every %{input_field} seconds"
-  add_comment: "Add Comment"
+  ##!  add_comment: "Add Comment"
   make_album_cover: "make this image the album cover"
   album_cover_changed: "Album Cover Changed"
-  image_title: "Image title: %{title}"
-  upload_zip_file_link: "Upload a ZIP-File"
+  ##!  image_title: "Image title: %{title}"
+  ##!  upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
-  too_tall_image_error: "Uploaded image is too tall (%{count} pixels is the max height)"
-  too_wide_image_error: "Uploaded image must be exactly  %{count} pixels wide"
-  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
+  ##!  too_tall_image_error: "Uploaded image is too tall (%{count} pixels is the max height)"
+  ##!  too_wide_image_error: "Uploaded image must be exactly  %{count} pixels wide"
+  ##!  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
@@ -1356,13 +1357,13 @@ en:
   ## ACTION BAR
   ##
 
-  select_filter_label: "Select:"
-  mark_as_label: "Mark as:"
+  ##!  select_filter_label: "Select:"
+  ##!  mark_as_label: "Mark as:"
   view_label: "View"
 
-  select_all: "All"
-  select_none: "None"
-  select_unread: "Unread"
+  ##!  select_all: "All"
+  ##!  select_none: "None"
+  ##!  select_unread: "Unread"
 
   ##
   ## REQUESTS
@@ -1375,18 +1376,18 @@ en:
   destroy: "Destroy"
   approve: "Approve"
   reject: "Reject"
-  ignore: "Ignore"
-  pending: "Pending"
-  rejected: "Rejected"
-  approved: "Approved"
-  my_requests_link: "My requests"
-  all_requests: "All Requests"
-  requests_to_me: "Requests to me"
-  requests_from_me: "Requests from me"
-  incoming: "Incoming"
-  outgoing: "Outgoing"
-  state: "State"
-  action: "Action"
+  ##!  ignore: "Ignore"
+  ##!  pending: "Pending"
+  ##!  rejected: "Rejected"
+  ##!  approved: "Approved"
+  ##!  my_requests_link: "My requests"
+  ##!  all_requests: "All Requests"
+  ##!  requests_to_me: "Requests to me"
+  ##!  requests_from_me: "Requests from me"
+  ##!  incoming: "Incoming"
+  ##!  outgoing: "Outgoing"
+  ##!  state: "State"
+  ##!  action: "Action"
   request_pending: "%{request} is pending approval"
 
   #
@@ -1394,14 +1395,14 @@ en:
   #
 
   friend_request_message_label: "Tell %{user} why you want to be their friend."
-  friend_request_sent: "Friend request has been sent"
-  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
+  ##!  friend_request_sent: "Friend request has been sent"
+  ##!  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
 
   #
   # group membership
   #
 
-  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  ##!  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
@@ -1409,50 +1410,50 @@ en:
   # request types:
   #
 
-  request_to_friend: "Friend Request"
+  ##!  request_to_friend: "Friend Request"
   request_to_friend_short: "%{user} friends %{other_user}?"
   request_to_friend_description: "%{user} would like to be the friend of %{other_user}"
 
-  request_to_join_our_network: "Network Join Invite"
+  ##!  request_to_join_our_network: "Network Join Invite"
   request_to_join_our_network_short: "%{network} joins %{group}?"
   request_to_join_our_network_description: "group %{group} was invited to join network %{network}"
 
-  request_to_join_us: "Join Invite"
+  ##!  request_to_join_us: "Join Invite"
   request_to_join_us_short: "%{user} joins %{group}?"
   request_to_join_us_description: "%{user} was invited to join %{group}"
 
-  request_to_join_us_via_email: "Join Invite"
+  ##!  request_to_join_us_via_email: "Join Invite"
   request_to_join_us_via_email_short: "%{email} joins %{group}?"
   request_to_join_us_via_email_description: "%{email} was invited to join %{group}"
 
-  request_to_join_you: "Join Request"
+  ##!  request_to_join_you: "Join Request"
   request_to_join_you_short: "%{user} joins %{group}?"
   request_to_join_you_description: "%{user} requested to join %{group}"
 
-  request_to_join_your_network: "Network Join Request"
+  ##!  request_to_join_your_network: "Network Join Request"
   request_to_join_your_network_short: "%{group} joins %{network}?"
   request_to_join_your_network_description: "%{group} requested to join network %{network}"
 
-  request_to_destroy_our_group: "Destroy Group Vote"
+  ##!  request_to_destroy_our_group: "Destroy Group Vote"
   request_to_destroy_our_group_short: "Destroy %{group}?"
   request_to_destroy_our_group_description: "%{user} has proposed to destroy %{group_type} %{group}"
 
-  request_to_remove_user: "Remove Member Vote"
+  ##!  request_to_remove_user: "Remove Member Vote"
   request_to_remove_user_short: "Expell %{member}?"
   request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
 
-  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
+  ##!  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
 
-  request_to_remove_coordinator_user_tooltip_description: |
-    <p>There is a running tally of the  votes.</p><br/>
+  ##!  request_to_remove_coordinator_user_tooltip_description: |
+  #  <p>There is a running tally of the  votes.</p><br/>
 
-    <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
+  #  <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
 
-    <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
+  #  <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
 
-    <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
+  #  <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
 
-  request_to_remove_coordinator_user_description: "%{user} has proposed to remove %{target_user} from %{group_type} %{group}. %{target_user} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. %{tooltip}"
+  ##!  request_to_remove_coordinator_user_description: "%{user} has proposed to remove %{target_user} from %{group_type} %{group}. %{target_user} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. %{tooltip}"
 
   request_to_destroy_our_group_email: |
     The %{group_type} '%{group}' will be destroyed enough members approve this proposal.
@@ -1468,29 +1469,29 @@ en:
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"
-  send_contact_button: "Send contact invitation"
-  send_contacts_title: "Send contact invitation to %{user}"
-  send_invites_headline: "Send invitations to join %{group}"
+  ##!  send_contact_button: "Send contact invitation"
+  ##!  send_contacts_title: "Send contact invitation to %{user}"
+  ##!  send_invites_headline: "Send invitations to join %{group}"
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
   invite_sent: "Invitation sent to %{recipient}"
   invites_sent: "%{count} invitations sent"
 
-  request_to_join_sent: "Request to join has been sent"
-  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
-  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
-  removal_requested: "Removal Requested"
+  ##!  request_to_join_sent: "Request to join has been sent"
+  ##!  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
+  ##!  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
+  ##!  removal_requested: "Removal Requested"
   try_again: "Try Again"
-  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
-  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
-  invite_accept_via_existing_account: "I already have an account"
-  invite_accept_via_register: "I need to register a new account"
-  join_group_success: "You have joined group %{group_name}"
+  ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
+  ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
+  ##!  invite_accept_via_existing_account: "I already have an account"
+  ##!  invite_accept_via_register: "I need to register a new account"
+  ##!  join_group_success: "You have joined group %{group_name}"
 
   # invite/request errors
 
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
-  invite_not_found: "Invite not found"
+  ##!  invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for %{recipient}"
   not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
 
@@ -1498,58 +1499,58 @@ en:
   ## DATES
   ##
 
-  sunday: Sunday
-  monday: Monday
-  tuesday: Tuesday
-  wednesday: Wednesday
-  thursday: Thursday
-  friday: Friday
-  saturday: Saturday
-  month_short_january: Jan
-  month_short_february: Feb
-  month_short_march: Mar
-  month_short_april: Apr
-  month_short_may: May
-  month_short_june: Jun
-  month_short_july: Jul
-  month_short_august: Aug
-  month_short_september: Sep
-  month_short_october: Oct
-  month_short_november: Nov
-  month_short_december: Dec
+  ##!  sunday: Sunday
+  ##!  monday: Monday
+  ##!  tuesday: Tuesday
+  ##!  wednesday: Wednesday
+  ##!  thursday: Thursday
+  ##!  friday: Friday
+  ##!  saturday: Saturday
+  ##!  month_short_january: Jan
+  ##!  month_short_february: Feb
+  ##!  month_short_march: Mar
+  ##!  month_short_april: Apr
+  ##!  month_short_may: May
+  ##!  month_short_june: Jun
+  ##!  month_short_july: Jul
+  ##!  month_short_august: Aug
+  ##!  month_short_september: Sep
+  ##!  month_short_october: Oct
+  ##!  month_short_november: Nov
+  ##!  month_short_december: Dec
   date_today: Today
-  date_yesterday: Yesterday
+  ##!  date_yesterday: Yesterday
   date_this_week: This Week
   date_this_month: This Month
-  date_this_year: This Year
+  ##!  date_this_year: This Year
   date_all_time: All Time
-  date_older: Older
-  date_centuries: centuries
-  date_years: years
-  date_months: months
-  date_weeks: weeks
-  date_days: days
-  date_hours: hours
-  date_minutes: minutes
-  date_seconds: seconds
+  ##!  date_older: Older
+  ##!  date_centuries: centuries
+  ##!  date_years: years
+  ##!  date_months: months
+  ##!  date_weeks: weeks
+  ##!  date_days: days
+  ##!  date_hours: hours
+  ##!  date_minutes: minutes
+  ##!  date_seconds: seconds
 
   ##
   ## ERRORS
   ##
 
-  alert_not_saved: "Changes could not be saved"
-  alert_field_errors: "There are problems with the following fields"
+  ##!  alert_not_saved: "Changes could not be saved"
+  ##!  alert_field_errors: "There are problems with the following fields"
   alert_saved: "Changes saved"
-  alert_permission_denied: "Permission Denied"
-  alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
-  alert_error: "Error"
+  ##!  alert_permission_denied: "Permission Denied"
+  ##!  alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
+  ##!  alert_error: "Error"
 
-  exception_title: "System Error"
-  exception_headline: "Oops! We experienced an error."
-  exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
-  exception_back_link: "Go Back"
-  exception_bug_report_link: "Submit Bug Report"
-  exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
+  ##!  exception_title: "System Error"
+  ##!  exception_headline: "Oops! We experienced an error."
+  ##!  exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
+  ##!  exception_back_link: "Go Back"
+  ##!  exception_bug_report_link: "Submit Bug Report"
+  ##!  exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
 
   csrf_error_message: "Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again."
 
@@ -1557,26 +1558,26 @@ en:
   ## RANKED VOTE & RATE MANY
   ##
 
-  ranked_vote_instructions: |
-    Drag and drop the items on the following list until they are in order from
-    most preferred at the top to least preferred at the bottom. When you are done,
-    press confirm to record your vote.
+  ##!  ranked_vote_instructions: |
+ #   Drag and drop the items on the following list until they are in order from
+ #   most preferred at the top to least preferred at the bottom. When you are done,
+  #  press confirm to record your vote.
 
   add_new_possibility_link: "Add new possibility"
   add_possibility_button: "Add Possibility"
   new_possibility_heading: "New Possibility"
 
-  confirm_vote_button: "Confirm Vote"
-  edit_my_vote_tab: "Edit my vote"
-  show_results_tab: "Show results"
+  ##!  confirm_vote_button: "Confirm Vote"
+  ##!  edit_my_vote_tab: "Edit my vote"
+  ##!  show_results_tab: "Show results"
   top_pick: "top pick"
   first_choice_of: "first choice of"
 
-  vote_good: "good"
-  vote_ok: "ok"
-  vote_bad: "bad"
-  vote_none: "none"
-  vote_no: "no"
+  ##!  vote_good: "good"
+  ##!  vote_ok: "ok"
+  ##!  vote_bad: "bad"
+  ##!  vote_none: "none"
+  ##!  vote_no: "no"
   ##
   ## SURVEY PAGE
   ##
@@ -1585,8 +1586,8 @@ en:
 
   save_survey_button: "Save Survey"
 
-  survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
-  survey_rating_enabled: "Enable the rating of responses?"
+  ##!  survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
+  ##!  survey_rating_enabled: "Enable the rating of responses?"
 
   survey_may_create_response: "May create response?"
   survey_may_see_responses: "May see responses?"
@@ -1604,10 +1605,10 @@ en:
 
   # responses
 
-  survey: "Survey"
+  ##!  survey: "Survey"
   survey_response_by: "Response by %{login}"
 
-  see_whole_response_link: "see whole response"
+  ##!  see_whole_response_link: "see whole response"
   survey_average_rating_heading: "Average Rating:"
   survey_previous_result: "Previously"
   survey_rated_by_1_person_caption: "Rated by one person."
@@ -1616,8 +1617,8 @@ en:
   survey_rate_this_response_heading: "Rate This Response"
   survey_select_a_rating_message: "Select a rating to see the next item."
   survey_skip_next_link: "Skip To Next"
-  survey_you_already_rated_response_with_rating_heading: "You already rated this response - You gave it a %{rating}."
-  survey_you_previousely_rated_message: "You previously rated this item with %{rating}."
+  ##!  survey_you_already_rated_response_with_rating_heading: "You already rated this response - You gave it a %{rating}."
+  ##!  survey_you_previousely_rated_message: "You previously rated this item with %{rating}."
   survey_your_rating_heading: "Your Rating:"
 
 
@@ -1636,13 +1637,13 @@ en:
 
   # tabs
 
-  survey_introduction_tab: "Introduction"
-  survey_create_tab: "Create Survey"
-  survey_edit_tab: "Edit Survey"
-  survey_list_all_tab: "List Responses"
-  survey_my_response_tab: "My Response"
-  survey_rate_responses_tab: "Rate Responses"
-  survey_take_tab: "Take Survey"
+  ##!  survey_introduction_tab: "Introduction"
+  ##!  survey_create_tab: "Create Survey"
+  ##!  survey_edit_tab: "Edit Survey"
+  ##!  survey_list_all_tab: "List Responses"
+  ##!  survey_my_response_tab: "My Response"
+  ##!  survey_rate_responses_tab: "Rate Responses"
+  ##!  survey_take_tab: "Take Survey"
 
   # unsorted
 
@@ -1659,7 +1660,7 @@ en:
   ## EXTERNAL VIDEO
   ##
 
-  video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
+  ##!  video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
   current_video_sources: "Currently supported: youtube, blip.tv, google video, vimeo."
   video_embed_code_prompt: "Embed code from external video source."
 
@@ -1668,122 +1669,122 @@ en:
   ## WIKI
   ##
 
-  wiki_existed_new_version_created: "This wiki had already been created by another user. Your changes have been saved as a new version."
+  ##!  wiki_existed_new_version_created: "This wiki had already been created by another user. Your changes have been saved as a new version."
   wiki_is_locked: "This wiki is currently locked by %{user}"
-  wont_be_able_to_save: "You will not be able to save this page"
+  ##!  wont_be_able_to_save: "You will not be able to save this page"
   leave_editing_wiki_page_warning: "If you don't save the wiki, you will lose your changes."
-  page_locked_header: "Page Locked"
-  locked_by_user: "Locked by %{user}"
-  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
+  ##!  page_locked_header: "Page Locked"
+  ##!  locked_by_user: "Locked by %{user}"
+  ##!  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
   cant_edit_section: "Can't edit %{section}."
   user_locked_section: "%{user} has locked %{section}."
-  can_still_save: "You can still save."
-  changes_might_be_overwritte: "Your changes might be overwritten."
+  ##!  can_still_save: "You can still save."
+  ##!  changes_might_be_overwritte: "Your changes might be overwritten."
   other_section_locked_error: "Can only lock one section at a time. You already locked '%{section}'."
-  break_lock: "Break Lock"
-  break_lock_button: "Break Lock"
-  versions: "Versions"
-  last_change: "Last Change"
-  print_underlined_p: "<u>p</u>rint"
-  edit_underlined_e: "<u>e</u>dit"
+  ##!  break_lock: "Break Lock"
+  ##!  break_lock_button: "Break Lock"
+  ##!  versions: "Versions"
+  ##!  last_change: "Last Change"
+  ##!  print_underlined_p: "<u>p</u>rint"
+  ##!  edit_underlined_e: "<u>e</u>dit"
   comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
   changes_made: "Changes made %{when}."
   prev_change: "Previous Change"
   next_change: "Next Change"
-  formatting_reference_link: "Editing Help"
+  ##!  formatting_reference_link: "Editing Help"
   version_doesnt_exist: "There is no version %{version}"
   version_exists_error: "%{user} has saved new changes first. You can still save your changes as the newest version."
   you_are_viewing_version: "You are viewing version %{version} by %{user}"
   diff_link: "view changes"
-  version_link: "view version"
-  insert_image_heading: "Insert Image"
-  wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
+  ##!  version_link: "view version"
+  ##!  insert_image_heading: "Insert Image"
+  ##!  wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
 
   wiki_revert_version: "Revert To Version %{version}"
-  revert_to_previous_version: "Revert to previous version:"
+  ##!  revert_to_previous_version: "Revert to previous version:"
   wiki_version_creator_heading: "person"
   wiki_version_revert_link: "revert"
   wiki_version_destroy_link: "destroy"
-  wiki_version_destroy_failed: "Version has not been destroyed. You can't remove the last version."
-  wiki_version_destroy_success: "Version has been destroyed."
-  private_homepage: "Private Homepage"
-  public_homepage: "Public Homepage"
+  ##!  wiki_version_destroy_failed: "Version has not been destroyed. You can't remove the last version."
+  ##!  wiki_version_destroy_success: "Version has been destroyed."
+  ##!  private_homepage: "Private Homepage"
+  ##!  public_homepage: "Public Homepage"
 
   # popup
 
-  clear_link_button: "Clear Link"
-  create_link_button: "Create Link"
-  update_link_button: "Update Link"
+  ##!  clear_link_button: "Clear Link"
+  ##!  create_link_button: "Create Link"
+  ##!  update_link_button: "Update Link"
 
   insert_image: "Insert Image"
-  add_link: "Add Link"
+  ##!  add_link: "Add Link"
 
   # group wiki
   
-  create_group_wiki: "Create Group Wiki"
-  create_public_group_wiki: "Add Public Information"
-  create_private_group_wiki: "Add Private Group Wiki"
-  public_group_wiki: "Public Information"
-  private_group_wiki: "Private Group Wiki"
+  ##!  create_group_wiki: "Create Group Wiki"
+  ##!  create_public_group_wiki: "Add Public Information"
+  ##!  create_private_group_wiki: "Add Private Group Wiki"
+  ##!  public_group_wiki: "Public Information"
+  ##!  private_group_wiki: "Private Group Wiki"
 
   # editor
   # advanded editor is what plain editor is called when visual editor is enabled
-  wiki_advanced_editor: "Advanced Editor"
-  wiki_plain_editor: "Plain Editor"
-  wiki_visual_editor: "Visual Editor"
-  wiki_editor: "Editor"
+  ##!  wiki_advanced_editor: "Advanced Editor"
+  ##!  wiki_plain_editor: "Plain Editor"
+  ##!  wiki_visual_editor: "Visual Editor"
+  ##!  wiki_editor: "Editor"
   preview: "Preview"
-  close_editor: "Close Editor"
+  ##!  close_editor: "Close Editor"
 
   # errors
 
-  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
+  ##!  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
   save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either %{save_button} or %{cancel_button} to stop editing."
 
   cant_find_wiki_section: "Can't find wiki section %{section}"
-  cant_lock_another_section: "you already have a section locked. Can't lock another."
-  cant_lock_nonexistant_section: "can't lock a nonexistant section"
-  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
+  ##!  cant_lock_another_section: "you already have a section locked. Can't lock another."
+  ##!  cant_lock_nonexistant_section: "can't lock a nonexistant section"
+  ##!  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
-  wiki_formating_code: |
-    Big Caption
-    ===========
+  ##!  wiki_formating_code: |
+  #  Big Caption
+  #  ===========
 
-    Smaller Caption
-    ---------------
+  #  Smaller Caption
+  #  ---------------
 
-    h3. Even smaller caption
+  #  h3. Even smaller caption
 
-    * stars create
-    * lists without numbers
+  #  * stars create
+  #  * lists without numbers
 
-    # hashes create
-    # numbered lists
+  #  # hashes create
+  #  # numbered lists
 
-  wiki_formating_end: |
-    You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
-    Use the toolbar for inserting images and links.</br>
+  ##!  wiki_formating_end: |
+  #  You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
+  #  Use the toolbar for inserting images and links.</br>
 
-  wiki_formating_intro: "You can use any of the following to format your wiki:"
+  ##!  wiki_formating_intro: "You can use any of the following to format your wiki:"
 
   ##
   ## WALL
   ##
 
-  set_status_button: "Update Status"
-  say_message_button: "Say"
-  wall_heading: "Public Message Wall"
-  wall_post_button: "Post New Message"
-  wall_say_form_submit_caption: "Post to %{user}'s activity feed"
+  ##!  set_status_button: "Update Status"
+  ##!  say_message_button: "Say"
+  ##!  wall_heading: "Public Message Wall"
+  ##!  wall_post_button: "Post New Message"
+  ##!  wall_say_form_submit_caption: "Post to %{user}'s activity feed"
 
-  my_status_heading: "Your Current Status"
+  ##!  my_status_heading: "Your Current Status"
   # ^^ no longer used
 
-  users_wall: "%{user}'s Wall"
+  ##!  users_wall: "%{user}'s Wall"
   ## ^^ no longer used
 
-  recent_wall_posts: "Recent Wall Posts"
+  ##!  recent_wall_posts: "Recent Wall Posts"
   ## ^^ no longer used
 
   ##
@@ -1819,50 +1820,50 @@ en:
   ## PEOPLE (i.e., PeopleController)
   ##
 
-  last_seen: "last seen"
+  ##!  last_seen: "last seen"
 
-  directory_of_people: Directory of People
-  directory_peers_description: "A list of your friends and all the people in your groups and networks."
-  no_contacts_msg: You have no friends.
-  my_peers_explain: users I share a common group with
-  no_peers_msg: You have no peers.
-  my_contacts_link: my friends
+  ##!  directory_of_people: Directory of People
+  ##!  directory_peers_description: "A list of your friends and all the people in your groups and networks."
+  ##!  no_contacts_msg: You have no friends.
+  ##!  my_peers_explain: users I share a common group with
+  ##!  no_peers_msg: You have no peers.
+  ##!  my_contacts_link: my friends
   my_contacts: My friends
-  new_people: New People
-  new_people_link: new people
-  no_public_profiles: No public profiles yet...
-  all_people_link: all people
-  all_people: All People
-  my_peers_link: my peers
-  my_peers: My Peers
-  my_peers_description: users I share a common group with
-  you_have_no_contacts: 'You have no friends'
-  you_have_no_peers: 'You have no peers'
+  ##!  new_people: New People
+  ##!  new_people_link: new people
+  ##!  no_public_profiles: No public profiles yet...
+  ##!  all_people_link: all people
+  ##!  all_people: All People
+  ##!  my_peers_link: my peers
+  ##!  my_peers: My Peers
+  ##!  my_peers_description: users I share a common group with
+  ##!  you_have_no_contacts: 'You have no friends'
+  ##!  you_have_no_peers: 'You have no peers'
 
-  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
-  remove_contact: "Remove contact %{user}"
-  remove_contact_button: "Remove Contact"
+  ##!  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
+  ##!  remove_contact: "Remove contact %{user}"
+  ##!  remove_contact_button: "Remove Contact"
 
   ##
   ## AUTHENTICATED SYSTEM
   ##
 
   anonymous: "anonymous"
-  login_required: 'Login Required'
-  login_required_description: 'Please login to perform that action.'
-  permission_denied_description: 'You do not have sufficient permission to perform that action.'
+  ##!  login_required: 'Login Required'
+  ##!  login_required_description: 'Please login to perform that action.'
+  ##!  permission_denied_description: 'You do not have sufficient permission to perform that action.'
   permission_denied: 'Permission Denied'
   ##
   ## CHAT
   ##
 
   chat: "Chat"
-  joins_the_chatroom: 'joins the chatroom'
+  ##!  joins_the_chatroom: 'joins the chatroom'
   left_the_chatroom: 'left the chatroom'
-  chat_archive_headline: "Chat Archive"
-  chat_archive_link: "view the chat room archive"
-  leave_channel: "Leave channel"
-  trash_chat_message: "move message to trash"
+  ##!  chat_archive_headline: "Chat Archive"
+  ##!  chat_archive_link: "view the chat room archive"
+  ##!  leave_channel: "Leave channel"
+  ##!  trash_chat_message: "move message to trash"
 
 
   ##
@@ -1871,117 +1872,117 @@ en:
 
   tag: "Tag"
   tags: "Tags"
-  edit_tags: "Edit Tags"
-  no_tags: "no tags"
+  ##!  edit_tags: "Edit Tags"
+  ##!  no_tags: "no tags"
   add_one_or_more_tags: "Add one or more tags, separated by commas"
-  separate_tags: "Separate tags using commas."
-  add_tags: "Add Tags"
-  current_tags: "Current Tags"
+  ##!  separate_tags: "Separate tags using commas."
+  ##!  add_tags: "Add Tags"
+  ##!  current_tags: "Current Tags"
 
 
   ##
   ## WELCOME
   ##
 
-  welcome_show_link: "Show Welcome"
-  welcome_hide_link: "Hide Welcome"
+  ##!  welcome_show_link: "Show Welcome"
+  ##!  welcome_hide_link: "Hide Welcome"
   welcome_title: "Welcome to %{site_title}"
-  welcome_heading: "Welcome to %{site_title}, %{user_name}!"
-  welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
-  welcome_login_message: ""
+  ##!  welcome_heading: "Welcome to %{site_title}, %{user_name}!"
+  ##!  welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
+  ##!  welcome_login_message: ""
 
-  welcome_edit_profile_link: "Edit your profile"
-  welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
+  ##!  welcome_edit_profile_link: "Edit your profile"
+  ##!  welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
 
-  welcome_upload_icon_link: "Upload a user icon"
-  welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
+  ##!  welcome_upload_icon_link: "Upload a user icon"
+  ##!  welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
 
-  welcome_find_people_link: "Find people"
-  welcome_find_people_text: "Browse the user directory for people you know."
+  ##!  welcome_find_people_link: "Find people"
+  ##!  welcome_find_people_text: "Browse the user directory for people you know."
 
-  welcome_find_groups_link: "Find groups"
-  welcome_find_groups_text: "Browse the group directory for groups to join."
+  ##!  welcome_find_groups_link: "Find groups"
+  ##!  welcome_find_groups_text: "Browse the group directory for groups to join."
 
-  welcome_create_group_link: "Create a new group"
-  welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
+  ##!  welcome_create_group_link: "Create a new group"
+  ##!  welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
 
-  welcome_create_page_link: "Create a new page"
-  welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
+  ##!  welcome_create_page_link: "Create a new page"
+  ##!  welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
 
   ##
   ## SITE HOME
   ##
 
-  have_your_say: "Have Your Say!"
-  contribute_to_site: "Contribute to Site"
-  create_a_group: "Create a Group"
-  create_a_network: "Create a Network"
-  see_tips_to_get_started: "See Tips to get started"
-  hide_tips: "Hide Tips"
-  most_active_members: "Most Active Members"
-  recently_active_members: "Recently Active Members"
-  most_active_groups: "Most Active Groups"
-  recently_active_groups: "Recently Active Groups"
-  network_settings: "Network Settings"
+  ##!  have_your_say: "Have Your Say!"
+  ##!  contribute_to_site: "Contribute to Site"
+  ##!  create_a_group: "Create a Group"
+  ##!  create_a_network: "Create a Network"
+  ##!  see_tips_to_get_started: "See Tips to get started"
+  ##!  hide_tips: "Hide Tips"
+  ##!  most_active_members: "Most Active Members"
+  ##!  recently_active_members: "Recently Active Members"
+  ##!  most_active_groups: "Most Active Groups"
+  ##!  recently_active_groups: "Recently Active Groups"
+  ##!  network_settings: "Network Settings"
 
-  administer_site: "Administer Site"
-  edit_appearance: "Edit Appearance"
+  ##!  administer_site: "Administer Site"
+  ##!  edit_appearance: "Edit Appearance"
 
   ##
   ## MODERATION
   ##
 
-  flag_button: "Flag"
-  flag_appropriate: "flag as appropriate"
-  flag_inappropriate: "flag as inappropriate"
-  confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
-  offensive_behavior: "Offensive Behavior"
-  off_topic: "Off Topic"
-  offensive_language: "Offensive Language"
-  other_reason: "Other Reason"
-  inappropriate_content: "Inappropriate content"
+  ##!  flag_button: "Flag"
+  ##!  flag_appropriate: "flag as appropriate"
+  ##!  flag_inappropriate: "flag as inappropriate"
+  ##!  confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+  ##!  confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+  ##!  chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
+  ##!  offensive_behavior: "Offensive Behavior"
+  ##!  off_topic: "Off Topic"
+  ##!  offensive_language: "Offensive Language"
+  ##!  other_reason: "Other Reason"
+  ##!  inappropriate_content: "Inappropriate content"
 
-  make_public_requested: "Make Public Requested"
-  moderation: "Moderation"
-  admins_may_moderate: "Allow council members to moderate the content of the group"
-  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
+  ##!  make_public_requested: "Make Public Requested"
+  ##!  moderation: "Moderation"
+  ##!  admins_may_moderate: "Allow council members to moderate the content of the group"
+  ##!  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
 
   ##
   ## ADMIN
   ##
 
-  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
-  signup_mode_closed_description: "Signup is closed."
-  signup_mode_invite_only_description: "Signup is allowed by invitation only."
-  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
+  ##!  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
+  ##!  signup_mode_closed_description: "Signup is closed."
+  ##!  signup_mode_invite_only_description: "Signup is allowed by invitation only."
+  ##!  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
 
-  sign_up_settings: "Sign Up Settings"
-  profile_settings: "Profile Settings"
-  email_blasts: "Email Blasts"
+  ##!  sign_up_settings: "Sign Up Settings"
+  ##!  profile_settings: "Profile Settings"
+  ##!  email_blasts: "Email Blasts"
 
 
   # custom appearances
 
-  succesfully_updated_custom_appearance: "Updated custom appearance #%{appearance_id} options!"
-  enable_masthead_question: "Enable masthead image?"
-  masthead: "Masthead"
-  select_masthead_background_color: "Select masthead background color."
-  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
+  ##!  succesfully_updated_custom_appearance: "Updated custom appearance #%{appearance_id} options!"
+  ##!  enable_masthead_question: "Enable masthead image?"
+  ##!  masthead: "Masthead"
+  ##!  select_masthead_background_color: "Select masthead background color."
+  ##!  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
+  ##!  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
 
-  masthead: "Masthead"
-  advanced: "Advanced"
-  favicon: "Browser Icon"
-  color_theme: "Color Theme"
+  ##!  masthead: "Masthead"
+  ##!  advanced: "Advanced"
+  ##!  favicon: "Browser Icon"
+  ##!  color_theme: "Color Theme"
 
-  update_color_theme: "Update Color Theme"
-  update_favicon: "Update Favicon"
-  update_masthead: "Update Masthead"
+  ##!  update_color_theme: "Update Color Theme"
+  ##!  update_favicon: "Update Favicon"
+  ##!  update_masthead: "Update Masthead"
 
   # other
 
-  page_make_public_link: "make public"
-  page_make_public_pending_link: "make public (pending)"
+  ##!  page_make_public_link: "make public"
+  ##!  page_make_public_pending_link: "make public (pending)"
 

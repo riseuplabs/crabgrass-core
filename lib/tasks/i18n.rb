@@ -112,7 +112,7 @@ namespace :cg do
                 orph = false
                 orphaned.each do |orphan| #these are just top-level keys
                   if /^(\s\s)#{orphan}:/ =~ line  #orphans only have top-level keys so we are only looking for keys indented by 2
-                    f.write('####!' + line)
+                    f.write('  ##!' + line)
                     orph = true
                     #break
                   end
@@ -125,7 +125,6 @@ namespace :cg do
         end
       end
     end
-
   end
 end
 
