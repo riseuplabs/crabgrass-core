@@ -11,13 +11,17 @@ module Groups::MembershipsPermission
     logged_in? and
     group and
     (current_user.may?(:admin, group) or current_user.may?(:join, group)) and
-    !current_user.member_of?(group)
+    !current_user.direct_member_of?(group)
   end
 
+  #
+  # you can leave a group if it has more than one member
+  # or it is a network or committee.
+  #
   def may_destroy_group_membership?(group = @group)
     logged_in? and
     current_user.direct_member_of?(group) and
-    (group.network? or group.users.uniq.size > 1)
+    (group.network? or group.committee? or group.users.uniq.size > 1)
   end
 
   def may_create_remove_user_requests?(membership = @membership)
