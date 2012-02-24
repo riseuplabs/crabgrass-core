@@ -5,6 +5,26 @@ module Common::Utility::GeneralHelper
   ##
 
   #
+  # just like content_tag, but skips the tag if passed empty content.
+  #
+  def content_tag_if_any(name, content_or_options_with_block = nil, options = nil, escape = true, &block)
+    content = nil
+    opts = nil
+    if block
+      opts = content_or_options_with_block
+      content = yield block
+    else
+      opts = options
+      content = content_or_options_with_block
+    end
+    if content.any?
+      return content_tag(name, content, opts, escape)
+    else
+      return ""
+    end
+  end
+
+  #
   # words that are very long with no spaces can break the layout badly.
   #
   # normally, it seems to work pretty good to add the css "word-wrap: break-word;"
