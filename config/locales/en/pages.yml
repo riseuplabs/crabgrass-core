@@ -1,7 +1,7 @@
 en:
 
   pages: "Pages"
-  ##!  recent_pages: "Recent Pages"
+  recent_pages: "Recent Pages"
   #group_pages: "Group Pages"
   #search_input_caption: "Search for pages"
   #search_description: "Search through all pages you have access to"
@@ -26,77 +26,77 @@ en:
   #view_groups_pages_description: "All pages of your groups and your own pages."
 
   # search filter sections
-  ##!  my_pages: "My Pages"
-  ##!  properties: "Properties"
-  ##!  popular_pages: "Popular Pages"
-  ##!  advanced: "Advanced"
-  ##!  access: "Access"
+  my_pages: "My Pages"
+  properties: "Properties"
+  popular_pages: "Popular Pages"
+  advanced: "Advanced"
+  access: "Access"
 
   ##
   ## PAGE SEARCH
   ##
 
-  ##!  active_filters: "Active Filters"
+  active_filters: "Active Filters"
 
-  ##!  all_pages: "All Pages"
+  all_pages: "All Pages"
 
-  ##!  created_by_me: "Created"
+  created_by_me: "Created"
   created_by_user: "Created By %{user}"
-  ##!  created_by_user_description: "Search for pages created by a particular person."
-  ##!  created_by_dotdotdot: "Created By..."
+  created_by_user_description: "Search for pages created by a particular person."
+  created_by_dotdotdot: "Created By..."
 
-  ##!  starred_by_me: "Starred"
+  starred_by_me: "Starred"
   starred_by_user: "Starred By %{user}"
-  ##!  starred_by_user_description: "Search for pages starred by a particular person."
-  ##!  starred_by_dotdotdot: "Starred By..."
+  starred_by_user_description: "Search for pages starred by a particular person."
+  starred_by_dotdotdot: "Starred By..."
 
-  ##!  watched_by_me: "Watching"
+  watched_by_me: "Watching"
   watched_by_user: "Watched By %{user}"
-  ##!  watched_by_user_description: "Search for pages watched by a particular person."
-  ##!  watched_by_dotdotdot: "Watched By..."
+  watched_by_user_description: "Search for pages watched by a particular person."
+  watched_by_dotdotdot: "Watched By..."
 
-  ##!  edited_by_me: "Edited"
+  edited_by_me: "Edited"
   edited_by_user: "Edited By %{user}"
-  ##!  edited_by_user_description: "Search for pages edited by a particular person."
-  ##!  edited_by_dotdotdot: "Edited By..."
+  edited_by_user_description: "Search for pages edited by a particular person."
+  edited_by_dotdotdot: "Edited By..."
 
-  ##!  owned_by_me: "Own"
+  owned_by_me: "Own"
   owned_by_user: "Owned By %{user}"
-  ##!  owned_by_user_description: "Search for pages owned by a particular person."
-  ##!  owned_by_dotdotdot: "Owned By..."
+  owned_by_user_description: "Search for pages owned by a particular person."
+  owned_by_dotdotdot: "Owned By..."
 
   most_active: "Most Active"
   most_stars: "Most Stars"
   most_viewed: "Most Viewed"
 
-  ##!  filter_user_description: "Search for pages with access by a particular user."
-  ##!  filter_group_description: "Search for pages with access by a particular group."
+  filter_user_description: "Search for pages with access by a particular user."
+  filter_group_description: "Search for pages with access by a particular group."
 
   starred: "Starred"
   viewed: "Viewed"
   edited: "Edited"
 
-  ##!  watched: "Watched"
-  ##!  unwatched: "Unwatched"
+  watched: "Watched"
+  unwatched: "Unwatched"
 
   type: "Type"
 
   all_page_types: "all page types"
-  ##!  edit_title: "edit title"
+  edit_title: "edit title"
   data_for_page_missing: "The data for this page is missing."
   no_change: "no change"
   updated: "updated"
   created: "created"
-  ##!  unread: "unread"
+  unread: "unread"
   read: "read"
-  ##!  all_people: "All People"
-  ##!  all_groups: "All Groups"
-  ##!  all_networks: "All Networks"
+  all_people: "All People"
+  all_groups: "All Groups"
+  all_networks: "All Networks"
   # ^^ i think this should go away soon, as soon as we have a better group directory.
-  ##!  all_states: "All States"
-  ##!  page_name_description: "Optional unique name (used to create the URL for this page)"
+  all_states: "All States"
+  page_name_description: "Optional unique name (used to create the URL for this page)"
 
-  ##!  filter_tag_description: "Search for pages with a particular tag."
+  filter_tag_description: "Search for pages with a particular tag."
 
   # page list
 
@@ -119,35 +119,35 @@ en:
   #page_list_heading_views: "views"
   #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
 
-  ##!  page_notice_message: "%{user} notified you about this page on %{date}"
-  ##!  page_with_message: "with message"
+  page_notice_message: "%{user} notified you about this page on %{date}"
+  page_with_message: "with message"
   pagination_next: "Next"
   pagination_previous: "Previous"
 
-  ##!  pagination_older: "Older"
-  ##!  pagination_newer: "Newer"
+  pagination_older: "Older"
+  pagination_newer: "Newer"
 
-  ##!  view_posts_link: "view"
+  view_posts_link: "view"
 
   # sidebar
 
-  ##!  move_this_page: "Move This Page"
-  ##!  move_page_to_different_group: "Move this page to a different group"
+  move_this_page: "Move This Page"
+  move_page_to_different_group: "Move this page to a different group"
 
-  ##!  announcements: "Announcements"
+  announcements: "Announcements"
   watch_checkbox: "Watch For Updates"
   add_star_link: "Add Star (%{star_count})"
   remove_star_link: "Remove Star (%{star_count})"
   public_checkbox: "Public"
   public_checkbox_help: "If checked, anyone may view this page."
-  ##!  move_page_link: "Move %{page_class}"
+  move_page_link: "Move %{page_class}"
   page_details_link: "%{page_class} Details"
-  ##!  print_view_link: "Printable"
+  print_view_link: "Printable"
 
   # trash
 
-  ##!  trash: "Trash"
-  ##!  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking %{undelete} or permanently destroy a page by clicking %{destroy}."
+  trash: "Trash"
+  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking %{undelete} or permanently destroy a page by clicking %{destroy}."
 
   delete_page_link: "Delete %{page_class}"
 
@@ -158,35 +158,35 @@ en:
 
   undelete_from_trash: "Undelete"
 
-  ##!  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
-  ##!  destroy_page_link: "Shred %{page_class}"
-  ##!  trash_page_link: "Move %{page_class} to trash"
+  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
+  destroy_page_link: "Shred %{page_class}"
+  trash_page_link: "Move %{page_class} to trash"
 
 
 
   # details
 
-  ##!  page_details: "Page Details"
+  page_details: "Page Details"
   participation: "Participation"
-  ##!  user_or_group_name: "User or group name"
+  user_or_group_name: "User or group name"
   information: "Information"
-  ##!  remove_last_access_error: "You cannot remove your last remaining access to this page."
-  ##!  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
+  remove_last_access_error: "You cannot remove your last remaining access to this page."
+  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
 
   # tags
 
   edit_tags_link: "Edit"
-  ##!  separate_tags: "Separate tags using commas."
+  separate_tags: "Separate tags using commas."
 
   # attachments
 
-  ##!  edit_attachments_link: "Edit"
+  edit_attachments_link: "Edit"
   attachments: "Attachments"
-  ##!  edit_attachments: "Edit Attachments"
-  ##!  current_attachments: "Current Attachments"
-  ##!  add_new_attachment: "Add New Attachment"
-  ##!  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
-  ##!  use_as_cover: "Use as cover"
+  edit_attachments: "Edit Attachments"
+  current_attachments: "Current Attachments"
+  add_new_attachment: "Add New Attachment"
+  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
+  use_as_cover: "Use as cover"
 
   # share/notify
 
@@ -195,34 +195,34 @@ en:
   page_access_none: "No Access"
   page_access_view: "Read Only"
 
-  ##!  grant_access: "Grant Access"
-  ##!  share_page_email: "Send an email notification"
-  ##!  share_page_message: "Send a message (optional)"
+  grant_access: "Grant Access"
+  share_page_email: "Send an email notification"
+  share_page_message: "Send a message (optional)"
   share_page_link: "Share %{page_class}"
-  ##!  share_page_options: "Choose options"
+  share_page_options: "Choose options"
   share_page_recipients: "Share page with"
-  ##!  share_page_recipients_sections: "Choose from your groups or friends"
-  ##!  share_page_recipients_selection: "Make your selection"
-  ##!  share_page_recipients_results: "This %{page_class} will be shared with"
+  share_page_recipients_sections: "Choose from your groups or friends"
+  share_page_recipients_selection: "Make your selection"
+  share_page_recipients_results: "This %{page_class} will be shared with"
   notify_page_link: "Send Notification"
   notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
-  ##!  notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+  notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
   notification_message: "Notification Message"
 
   send_only_with_encryption: "Send only if encrypted distribution is possible"
-  ##!  share_additional_notification: "Send additional notification via"
+  share_additional_notification: "Send additional notification via"
   share_send_notification: "Send notification"
   send_email: "Send Email"
   share_include_message: "Include a custom message"
 
-  ##!  share_all_checkbox: "Shared with all users"
-  ##!  share_all_checkbox_help: "If checked, all Users can access this page."
+  share_all_checkbox: "Shared with all users"
+  share_all_checkbox_help: "If checked, all Users can access this page."
 
   shared_page_success: "You successfully shared this page."
   notify_success: "You successfully sent notifications."
 
-  ##!  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
+  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
   share_grant_required_error: "%{name} is not allowed to view this page. They must be granted greater access first."
   share_permission_denied_error: "You are not allowed to change the access permissions of this page"
   notify_no_access_error: 'Sorry, "%{name}" does not have access to this page.'
@@ -232,36 +232,36 @@ en:
 
   entity_autocomplete_tip: "Enter the name of a group or person."
 
-  ##!  notice_with_message: "with message %{message}"
+  notice_with_message: "with message %{message}"
 
   # creating
 
   contribute_content_link: "Create Page"
-  ##!  contribute_group_content_link: "Add Page To %{group}"
+  contribute_group_content_link: "Add Page To %{group}"
   page_create_owner: "Page Owner"
-  ##!  create_page_information: "%{page_class} Information"
-  ##!  create_page_data: "%{page_class} Data"
-  ##!  create_page: "Create Page"
+  create_page_information: "%{page_class} Information"
+  create_page_data: "%{page_class} Data"
+  create_page: "Create Page"
   only_me: "Me"
-  ##!  create_page_button: "Create %{page_class}"
+  create_page_button: "Create %{page_class}"
   page_added_to_group: "This page will be added to %{group_type} %{group_name}."
   additional_page_access: "Additional Access"
   page_owner_error: "Page owner cannot be empty."
 
   # help
 
-  ##!  title_help: "Required. The title is used to identify this page."
-  ##!  summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
-  ##!  tags_help: "Optional. For tags, use a few words that best describe this page."
-  ##!  page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
-  ##!  sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
-  ##!  coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
-  ##!  participant_help: "<b>Write Ability</b> will allow editing of this page."
-  ##!  viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
-  ##!  wiki_body_help: "Optional. Enter here the initial body text for the page."
-  ##!  upload_image_help: "Optional. Select an initial image file to upload to this page."
-  ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
-  ##!  upload_file_help: "Required. Select a file to upload to this page."
+  title_help: "Required. The title is used to identify this page."
+  summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
+  tags_help: "Optional. For tags, use a few words that best describe this page."
+  page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
+  sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
+  coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
+  participant_help: "<b>Write Ability</b> will allow editing of this page."
+  viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
+  wiki_body_help: "Optional. Enter here the initial body text for the page."
+  upload_image_help: "Optional. Select an initial image file to upload to this page."
+  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
+  upload_file_help: "Required. Select a file to upload to this page."
 
   # history
 
@@ -301,72 +301,72 @@ en:
   ## PAGE TYPES
   ##
 
-  ##!  announcement_page_description: "An announcement."
-  ##!  announcement_page_display: "Announcement"
-  ##!  announcements_page_display: "Announcement"
+  announcement_page_description: "An announcement."
+  announcement_page_display: "Announcement"
+  announcements_page_display: "Announcement"
 
-  ##!  article_page_description: "Create a blog post or news article."
-  ##!  article_page_display: "Article"
+  article_page_description: "Create a blog post or news article."
+  article_page_display: "Article"
 
-  ##!  wiki_page_description: "Create an editable free-form text document."
-  ##!  wiki_page_display: "Wiki Page"
-  ##!  wiki: "Wiki"
+  wiki_page_description: "Create an editable free-form text document."
+  wiki_page_display: "Wiki Page"
+  wiki: "Wiki"
 
   #collection_class_description: "Special pages that hold other pages."
   #collection_page_display: "collection"
 
-  ##!  folder_class_description: "Create a folder to organize other pages."
-  ##!  folder_display: "Folder"
+  folder_class_description: "Create a folder to organize other pages."
+  folder_display: "Folder"
 
-  ##!  gallery_description: "Upload multiple images or organize existing images into a set."
-  ##!  gallery_display: "Gallery"
+  gallery_description: "Upload multiple images or organize existing images into a set."
+  gallery_display: "Gallery"
 
-  ##!  asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
-  ##!  asset_page_display: "File"
+  asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
+  asset_page_display: "File"
 
-  ##!  external_video_page_description: "Show a video hosted on an external website."
-  ##!  external_video_page_display: "External Video"
+  external_video_page_description: "Show a video hosted on an external website."
+  external_video_page_display: "External Video"
 
-  ##!  discussion_page_description: "Discuss a particular topic with groups or other users."
-  ##!  discussion_page_display: "Group Discussion"
+  discussion_page_description: "Discuss a particular topic with groups or other users."
+  discussion_page_display: "Group Discussion"
 
-  ##!  message_page_description: "Send a personal message to individual recipients."
-  ##!  message_page_display: "Personal Message"
+  message_page_description: "Send a personal message to individual recipients."
+  message_page_display: "Personal Message"
 
-  ##!  ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
-  ##!  ranked_vote_page_display: "Ranked Vote"
+  ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
+  ranked_vote_page_display: "Ranked Vote"
 
-  ##!  survey_page_description: "Create a series of questions for people to answer."
-  ##!  survey_page_display: "Survey"
+  survey_page_description: "Create a series of questions for people to answer."
+  survey_page_display: "Survey"
 
-  ##!  rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
-  ##!  rate_many_page_display: "Approval Poll"
+  rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
+  rate_many_page_display: "Approval Poll"
 
-  ##!  task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
-  ##!  task_list_page_display: "Task List"
+  task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
+  task_list_page_display: "Task List"
 
-  ##!  event_page_description: "A calendar event."
-  ##!  event_page_display: "Event"
+  event_page_description: "A calendar event."
+  event_page_display: "Event"
 
   ##
   ## PAGE TYPE GROUPINGS
   ##
 
   # the main four
-  ##!  page_group_vote: Polls and Votes
-  ##!  page_group_text: Text and Discussions
-  ##!  page_group_media: Multimedia
-  ##!  page_group_planning: Planning Tools
+  page_group_vote: Polls and Votes
+  page_group_text: Text and Discussions
+  page_group_media: Multimedia
+  page_group_planning: Planning Tools
 
   # media types
-  ##!  page_group_media_image: Images
-  ##!  page_group_media_audio: Audio
-  ##!  page_group_media_video: Videos
-  ##!  page_group_media_document: Documents
+  page_group_media_image: Images
+  page_group_media_audio: Audio
+  page_group_media_video: Videos
+  page_group_media_document: Documents
 
   # alt ways of searching
-  ##!  page_group_discussion: Discussions
-  ##!  page_group_collection: Collections
-  ##!  page_group_event: Events
-  ##!  page_group_task: Tasks
+  page_group_discussion: Discussions
+  page_group_collection: Collections
+  page_group_event: Events
+  page_group_task: Tasks
 

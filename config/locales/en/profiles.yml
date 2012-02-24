@@ -1,66 +1,66 @@
 en:
 
-  ##!  profile_permissions: "Permissions"
-  ##!  profile_last_login: "Last Login"
-  ##!  profile_member_since: "Member Since"
+  profile_permissions: "Permissions"
+  profile_last_login: "Last Login"
+  profile_member_since: "Member Since"
   home: Home
-  ##!  work: Work
-  ##!  school: School
-  ##!  personal: Personal
-  ##!  other: Other
-  ##!  about_me: About Me
-  ##!  social_change_interests: Social Change Interests
-  ##!  personal_interests: Personal Interests
-  ##!  work_life: Work Life
-  ##!  fax: Fax
-  ##!  mobile: Mobile
-  ##!  pager: Pager
-  ##!  instant_messaging: "Instant Messaging"
-  ##!  general_info: General Information
-  ##!  first_name: first name
-  ##!  middle_name: middle
-  ##!  last_name: last name
+  work: Work
+  school: School
+  personal: Personal
+  other: Other
+  about_me: About Me
+  social_change_interests: Social Change Interests
+  personal_interests: Personal Interests
+  work_life: Work Life
+  fax: Fax
+  mobile: Mobile
+  pager: Pager
+  instant_messaging: "Instant Messaging"
+  general_info: General Information
+  first_name: first name
+  middle_name: middle
+  last_name: last name
   organization: organization
   organizational_role: organizational role
-  ##!  descriptions: Descriptions
-  ##!  add_description: Add Description
+  descriptions: Descriptions
+  add_description: Add Description
   phone_number: Phone Number
-  ##!  phone_numbers: Phone Numbers
-  ##!  add_phone_number: Add Phone Number
+  phone_numbers: Phone Numbers
+  add_phone_number: Add Phone Number
   email_addresses: Email Addresses
-  ##!  add_email_address: Add Email Address
-  ##!  locations: Locations
-  ##!  location: Location
-  ##!  add_location: Add Location
-  ##!  im_addresses: IM Addresses
-  ##!  add_im_address: Add IM Address
-  ##!  websites: Websites
-  ##!  website: Website
-  ##!  add_websites: Add Website
-  ##!  site_name: "site name"
-  ##!  url: "url"
-  ##!  add_encryption_key: Add Encryption Key
-  ##!  public_encryption_keys: "Public Encryption Keys"
-  ##!  public_key: Public Key
-  ##!  fingerprint: "fingerprint"
-  ##!  location_address: address
-  ##!  location_city: city
-  ##!  location_state: state/province
-  ##!  location_postal_code: postal code
-  ##!  location_country: country
+  add_email_address: Add Email Address
+  locations: Locations
+  location: Location
+  add_location: Add Location
+  im_addresses: IM Addresses
+  add_im_address: Add IM Address
+  websites: Websites
+  website: Website
+  add_websites: Add Website
+  site_name: "site name"
+  url: "url"
+  add_encryption_key: Add Encryption Key
+  public_encryption_keys: "Public Encryption Keys"
+  public_key: Public Key
+  fingerprint: "fingerprint"
+  location_address: address
+  location_city: city
+  location_state: state/province
+  location_postal_code: postal code
+  location_country: country
 
   #users_recent_activity: "%{user}'s Recent Activity"
   #users_recent_work: "%{user}'s Recent Work"
 
-  ##!  recent_contributions: "Recent Contributions"
-  ##!  delete_post: Delete Post
-  ##!  post_message: Post Message
-  ##!  top_rated: Top Rated
-  ##!  highest_contributors: Highest Contributors
-  ##!  users_world: "%{user}'s World"
-  ##!  request_friend_link: "Add To My Friends"
-  ##!  remove_friend_link: "Remove From My Friends"
-  ##!  user_preferences: "User Preferences"
-  ##!  edit_profile_link: "Edit Profile"
-  ##!  profile_saved: "Your profile has been saved."
+  recent_contributions: "Recent Contributions"
+  delete_post: Delete Post
+  post_message: Post Message
+  top_rated: Top Rated
+  highest_contributors: Highest Contributors
+  users_world: "%{user}'s World"
+  request_friend_link: "Add To My Friends"
+  remove_friend_link: "Remove From My Friends"
+  user_preferences: "User Preferences"
+  edit_profile_link: "Edit Profile"
+  profile_saved: "Your profile has been saved."
 
