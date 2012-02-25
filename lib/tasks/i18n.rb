@@ -64,6 +64,7 @@ namespace :cg do
       puts 'run "rake cg:i18n:orphaned" for a list of orphaned keys'
       puts 'run "rake cg:i18n:missing" for a list of missing keys'
       puts 'run "rake cg:i18n:dups" for a list of duplicate values'
+      puts 'run "rake cg:i18n:bundle" to combine the keys in locales/en/*.yml to locales/en.yml'
     end
 
     desc "list keys not in code"
