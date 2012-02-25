@@ -4,20 +4,31 @@ require 'fileutils'
 def extract_keys()
   keys = {}
   ["app","lib","extensions","vendor/crabgrass_plugins"].each do |dir|
-    lines = `find #{dir} -type f -exec grep '\\.t\\( \\|cap\\|(\\)' \\{\\} \\; | grep -v '^ *#'`.split "\n"
-    # this way to exclude comments could grab a line like: some code # blah.t
-    # -h is so we will not output filename
+
+    # this will catch all non-commented-out lines that contain '.t'. It seems better to look at more lines and then distinguish $
+    lines = `find #{dir} -type f -exec grep '\\.t' \\{\\} \\; | grep -v '^ *#'`.split "\n"
 
     lines.each do |line|
-      match = line.match(/:([0-9a-zA-Z_]+)\.t?/)
-      # catches :standard.t and :standard.tcap
-      (keys[match[1]] = true) if match
 
-      match_i18n = line.match(/I18n\.t(\(| )(:|'|")([0-9a-zA-Z_]+)(,|\)|'|"| )/)
+      # there could be multiple matches per line
+      matches = line.scan(/:([0-9a-zA-Z_]+)\.t?/)
+      # catches :standard.t and :standard.tcap
+
+      matches.each do |match|
+        (keys[match[0]] = true) if match
+      end
+
+      # again, look for multiple matches in line
+      matches_i18n = line.scan(/I18n\.t(\(| )(:|'|")([0-9a-zA-Z_]+)(,|\)|'|"| )/)
       # catches I18n.t "less good", I18n.t("less good", blah), I18n.t 'less good', I18n.t('less good'), I18n.t :ok, I18n.t :ok, blah, I18n.t(:ok), etc..
-      (keys[match_i18n[3]] = true) if match_i18n
+
+      matches_i18n.each do |match_i18n|
+        (keys[match_i18n[2]] = true) if match_i18n
+      end
+
     end
   end
+
   keys
 end
 
