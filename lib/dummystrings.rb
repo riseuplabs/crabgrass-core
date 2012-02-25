@@ -41,3 +41,7 @@
 :may_see_groups_label.t
 :may_pester_label.t
 :may_request_contact_label.t
+
+:all_pages.t
+:my_pages.t
+:filter_user_description.t
