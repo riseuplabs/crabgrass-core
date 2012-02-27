@@ -186,7 +186,7 @@ module Common::Application::Paths
   end
 
   def user_avatar_path(*args)
-    me_avatar_path(*args)
+    me_avatar_path(args.last)
   end
 
   ##
