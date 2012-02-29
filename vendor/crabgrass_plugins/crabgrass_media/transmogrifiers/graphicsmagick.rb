@@ -44,7 +44,7 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   def run(&block)
     # +profile '*' will remove all the image profiles, which will save
     # space (sometimes) and are not useful for thumbnails
-    arguments = [gm_command, 'convert', '+profile', "'*'"]
+    arguments = [gm_command, 'convert', '+profile', "*"]
     if options[:size]
       # handle multiple size options, if it is an array.
       sizes = options[:size].is_a?(Array) ? options[:size] : [options[:size]]
