@@ -1722,8 +1722,8 @@ en:
   # group wiki
   
   ##!  create_group_wiki: "Create Group Wiki"
-  ##!  create_public_group_wiki: "Add Public Information"
-  ##!  create_private_group_wiki: "Add Private Group Wiki"
+  create_public_group_wiki: "Add Public Information"
+  create_private_group_wiki: "Add Private Group Wiki"
   public_group_wiki: "Public Information"
   private_group_wiki: "Private Group Wiki"
 

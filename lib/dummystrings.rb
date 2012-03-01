@@ -71,3 +71,5 @@
 :page_group_text.t
 :page_group_vote.t
 :page_group_planning.t
+:create_public_group_wiki.t
+:create_private_group_wiki.t
