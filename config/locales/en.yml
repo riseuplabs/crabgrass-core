@@ -198,7 +198,7 @@ en:
   create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
   # committee
 
-  ##!  this_is_committee: "This committee is part of %{parent_group}."
+  this_is_committee: "This committee is part of %{parent_group}."
   ##!  new_committee: "New committee for group %{group_name}"
   ##!  dual_memberships: "Dual memberships"
   ##!  dual_membership_info: "Members of %{group_type} %{group_name} who should also be in committee %{committee_name}"

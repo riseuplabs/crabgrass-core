@@ -7,6 +7,9 @@
   .p{:class => first(:sidebox)}
     = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
 
+- if @group.committee?
+  = :this_is_committee.t(:parent_group => link_to_group(@group.parent))
+
 - if @group.profiles.public.summary.any?
   .p{:class => first(:sidebox)}
     = @group.profiles.public.summary_html
