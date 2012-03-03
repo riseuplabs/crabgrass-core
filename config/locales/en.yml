@@ -732,9 +732,9 @@ en:
 ### en/permissions.yml
 
   permissions_key: "Key"
-  ##!  public_description: "Everyone on the internet"
-  ##!  peers_description: "Members of your groups"
-  ##!  friends_description: "Your friends"
+  public_description: "Everyone on the internet"
+  peers_description: "Members of your groups"
+  friends_description: "Your friends"
 
   ##!  may_see_committees: "Show committees"
   ##!  may_see_networks: "Show networks"
@@ -920,7 +920,7 @@ en:
   friends: "Contacts"
   my_contacts: "My Contacts"
   member_groups_of_network: "Member Groups"
-  ##!  peers: "Peers"
+  peers: "Peers"
   all: "All"
   none: "None"
   people: "People"
@@ -1498,13 +1498,13 @@ en:
   ## DATES
   ##
 
-  ##!  sunday: Sunday
-  ##!  monday: Monday
-  ##!  tuesday: Tuesday
-  ##!  wednesday: Wednesday
-  ##!  thursday: Thursday
-  ##!  friday: Friday
-  ##!  saturday: Saturday
+  sunday: Sunday
+  monday: Monday
+  tuesday: Tuesday
+  wednesday: Wednesday
+  thursday: Thursday
+  friday: Friday
+  saturday: Saturday
   ##!  month_short_january: Jan
   ##!  month_short_february: Feb
   ##!  month_short_march: Mar

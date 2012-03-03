@@ -73,3 +73,14 @@
 :page_group_planning.t
 :create_public_group_wiki.t
 :create_private_group_wiki.t
+:peers.t
+:public_description.t
+:peers_description.t
+:friends_description.t
+:sunday.t
+:monday.t
+:tuesday.t
+:wednesday.t
+:thursday.t
+:friday.t
+:saturday.t
