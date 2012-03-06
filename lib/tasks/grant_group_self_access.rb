@@ -19,7 +19,7 @@ namespace :cg do
 
       # if group is a council, only that council-group, not the parent-group,
       # should have admin access over the parent-group
-      if group.council?
+      if group.council? && group.parent #seem to be come cases where a council doesn't have a parent group.
         group.parent.grant! group, :all 
         group.parent.revoke! group.parent, :admin
       end
