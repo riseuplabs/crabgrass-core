@@ -76,12 +76,19 @@ module Groups::LinksHelper
     end
   end
 
-  #def destroy_group_link
-  #  # eventually, this should fire a request to destroy.
-  #  if may_destroy_group?
-  #    link_to_with_confirm("Destroy {group_type}"[:destroy_group_link, @group.group_type], {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase], :url => groups_url(:action => :destroy), :method => :post})
-  #  end
-  #end
+  def destroy_group_link
+    if RequestToDestroyOurGroup.exists?(group)
+      "" # i guess do nothing?
+    elsif may_destroy_group?
+      link_to_with_confirm(:destroy_thing.t(:thing => @group.group_type),
+        {:confirm => :destroy_confirmation.t(:thing => @group.group_type.downcase),
+         :url => direct_group_path(@group), :method => :delete })
+    elsif may_create_destroy_request?
+      link_to(:destroy_thing.t(:thing => @group.group_type),
+        group_requests_path(@group),
+        :method => 'post')
+    end
+  end
 
   #def more_committees_link
   #  ## link_to_iff may_view_committee?, 'view all'[:view_all], ''

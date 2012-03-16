@@ -13,6 +13,10 @@ class RequestToDestroyOurGroup < VotableRequest
 
   alias_attr :group, :recipient
 
+  def self.exists?(group)
+    pending.from_group(group).exists?
+  end
+  
   def validate_on_create
     if duplicate_exists?
       errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))

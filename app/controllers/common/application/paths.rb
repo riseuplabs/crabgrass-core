@@ -13,6 +13,7 @@ module Common::Application::Paths
       helper_method :user_url
       helper_method :group_path
       helper_method :group_url
+      helper_method :direct_group_path
 
       helper_method :page_path
       helper_method :page_url
@@ -34,7 +35,7 @@ module Common::Application::Paths
   ##
   ## ENTITY PATHS
   ##
-
+ 
   def entity_path(entity)
     if entity.is_a? String
       "/"+name
@@ -51,6 +52,13 @@ module Common::Application::Paths
   alias_method :user_url, :entity_url
   alias_method :group_url, :entity_url
 
+  #
+  # allow direct paths that bypass the dispatcher.
+  #
+  def direct_group_path(group,options={})
+    "/groups/" + group.name + build_query_string(options)
+  end
+  
   ##
   ## PAGE PATHS
   ##

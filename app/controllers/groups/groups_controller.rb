@@ -30,7 +30,14 @@ class Groups::GroupsController < Groups::BaseController
     redirect_to group_url(@group)
   end
 
+  #
+  # immediately destroy a group.
+  # for destruction that requires approval, see RequestToDestroyOurGroup
+  #
   def destroy
+    @group.destroy_by(current_user)
+    success :thing_destroyed.t(:thing => @group.name)
+    redirect_to me_url
   end
 
   protected

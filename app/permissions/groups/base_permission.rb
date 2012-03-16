@@ -6,18 +6,18 @@ module Groups::BasePermission
     (parent.nil? || current_user.may?(:admin, parent))
   end
 
+  #
+  # this is for immediately destroying the group.
+  # compare to: may_create_destroy_request?
+  #
   def may_destroy_group?(group = @group)
-    # has a council
-    if group.council != group and group.council.users.size == 1
-      current_user.may?(:admin, group)
-      # disabled until release 0.5.1
-      false
-    elsif group.council == group
-      # no council
-      group.users.size == 1 and
-        current_user.member_of?(group)
-    end
+    current_user.may?(:admin, group) and (
+      group.committee? or group.council? or group.users.count >= MAX_SIZE_FOR_QUICK_DESTROY_GROUP
+    )
   end
+
+  # allow immediate destruction for groups no larger than:
+  MAX_SIZE_FOR_QUICK_DESTROY_GROUP = 3
 
   def may_edit_group?(group = @group)
     current_user.may?(:admin, group)
