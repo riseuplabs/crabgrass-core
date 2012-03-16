@@ -5,12 +5,12 @@ en:
   ## (override the defaults in locale/rails)
   ##
 
-  time:
-    formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      # change to am/pm...
-      short: "%d %b %I:%M %p"
-      long: "%B %d, %Y %I:%M %p"
+  ##!  time:
+  ##  formats:
+  ##    default: "%a, %d %b %Y %H:%M:%S %z"
+  ##    # change to am/pm...
+  ##    short: "%d %b %I:%M %p"
+  ##    long: "%B %d, %Y %I:%M %p"
 
 
   ##
@@ -19,14 +19,14 @@ en:
 
   #upload_attachment: "Upload Attachment"
   #rename %{upload_images} -> %{upload}
-  create_committee: "create committee"
+  ##!  create_committee: "create committee"
   # used by page history
-  back_to_the_page: "Back to the page"
+  ##!  back_to_the_page: "Back to the page"
   # unsorted for events
-  all_day_event: "all day event"
-  update_event: "Update event"
-  starts_at: "starts at"
-  ends_at: "ends at"
+  ##!  all_day_event: "all day event"
+  ##!  update_event: "Update event"
+  ##!  starts_at: "starts at"
+  ##!  ends_at: "ends at"
   place: "place"
 
   ##
@@ -45,9 +45,9 @@ en:
   create_thing: "Create %{thing}"
   thing_not_found: "%{thing} not found"
   no_things_found: "No %{things} found."
-  thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
-  thing_settings: "%{thing} Settings"
-  update_thing: "Update %{thing}"
+  ##!  thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
+  ##!  thing_settings: "%{thing} Settings"
+  ##!  update_thing: "Update %{thing}"
   thing_destroyed: "%{thing} destroyed"
   created_by_entity: "Created by %{entity}"
   approved_by_entity: "Approved by %{entity}"
@@ -60,25 +60,25 @@ en:
   ## GENERIC TERMS
   ##
 
-  at: "at"
+  ##!  at: "at"
   access: "Access"
   name: "Name"
   user: "User"
   me: "Me"
-  to: "To"
+  ##!  to: "To"
   people: "People"
   delete: "Delete"
   deleted: "Deleted"
   remove: "Remove"
   cancel: "Cancel"
-  link: "Link"
+  ##!  link: "Link"
   back: "Back"
   share: "Share"
   contributed: "Contributed"
-  contributions: "Contributions"
-  contributors: "Contributors"
+  ##!  contributions: "Contributions"
+  ##!  contributors: "Contributors"
   users: "Users"
-  contact: "Contact"
+  ##!  contact: "Contact"
   contacts: "Contacts"
   friends: "Contacts"
   my_contacts: "My Contacts"
@@ -89,40 +89,40 @@ en:
   people: "People"
   person: "Person"
   profile: "Profile"
-  all_content: "All Content"
+  ##!  all_content: "All Content"
   content: "Content"
-  more_information: "More Information"
-  more: "more"
-  about: "about"
+  ##!  more_information: "More Information"
+  ##!  more: "more"
+  ##!  about: "about"
 
   comments: "Comments"
-  browse: "Browse"
-  discover: "Discover"
+  ##!  browse: "Browse"
+  ##!  discover: "Discover"
   optional: "Optional"
   required: "Required"
 
-  recent_activity: "Recent Activity"
-  activity: "Activity"
-  recently_created: "Recently Created"
+  ##!  recent_activity: "Recent Activity"
+  ##!  activity: "Activity"
+  ##!  recently_created: "Recently Created"
   no_search_results: "No Results"
-  empty_results: "None"
+  ##!  empty_results: "None"
   not_found: "Not Found"
-  not_found_description: "Sorry, we could not find what you were looking for."
+  ##!  not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   loadingdotdotdot: "Loading..."
 
-  search_headline: "Search"
-  search_this_group: "this group only"
-  search_this_person: "this person only"
-  search_link: "Search"
+  ##!  search_headline: "Search"
+  ##!  search_this_group: "this group only"
+  ##!  search_this_person: "this person only"
+  ##!  search_link: "Search"
 
   see_more_link: "More"
   see_less_link: "Less"
-  see_count_more_link: "See %{count} more"
-  see_count_less_link: "See %{count} less"
+  ##!  see_count_more_link: "See %{count} more"
+  ##!  see_count_less_link: "See %{count} less"
   see_all_link: "See All"
-  details_link: "Details"
-  check_all: "Check All"
+  ##!  details_link: "Details"
+  ##!  check_all: "Check All"
   return_link: "Return"
   statistics: "Statistics"
   next: "Next"
@@ -132,42 +132,42 @@ en:
   edit: "Edit"
   upload: "Upload"
   preview: "Preview"
-  open: "Open"
+  ##!  open: "Open"
   private: "Private"
   public: "Public"
   options: "Options"
   permissions: "Permissions"
-  description: "Description"
+  ##!  description: "Description"
   requests: "Requests"
-  request: "Request"
+  ##!  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
   administration: "Administration"
   settings: "Settings"
   messages: "Messages"
-  popular: "Popular"
+  ##!  popular: "Popular"
 
   page: "Page"
-  discussions: "Discussions"
+  ##!  discussions: "Discussions"
   tags: "Tags"
   search: "Search"
-  archive: "Archive"
-  tasks: "Tasks"
+  ##!  archive: "Archive"
+  ##!  tasks: "Tasks"
   title: "Title"
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
-  print: "Print"
+  ##!  print: "Print"
   show: "Show"
   owner: "Owner"
 
-  coordinator: "Coordinator"
-  participant: "Participant"
-  viewer: "Viewer"
-  coordinators: "Coordinators"
-  participants: "Participants"
-  viewers: "Viewers"
+  ##!  coordinator: "Coordinator"
+  ##!  participant: "Participant"
+  ##!  viewer: "Viewer"
+  ##!  coordinators: "Coordinators"
+  ##!  participants: "Participants"
+  ##!  viewers: "Viewers"
   recipients: "Recipients"
   recipient: "Recipient"
   message: Message
@@ -175,9 +175,9 @@ en:
   destroy_confirmation: "Are you sure you want to delete this %{thing}? This action cannot be undone."
   confirmation: "Are you sure?"
 
-  success: "Success"
-  error: "Error"
-  status: "Status"
+  ##!  success: "Success"
+  ##!  error: "Error"
+  ##!  status: "Status"
 
   optional_message: "optional message"
 
@@ -197,8 +197,8 @@ en:
   caption: "Caption"
   photo_credit: "Photo Credit"
   video_embed: "Embed"
-  height: "Height"
-  width: "Width"
+  ##!  height: "Height"
+  ##!  width: "Width"
   size: "Size"
 
   ##
@@ -207,19 +207,19 @@ en:
 
   back_button: "Back"
   send_button: "Send"
-  approve_button: "Approve"
-  reject_button: "Reject"
+  ##!  approve_button: "Approve"
+  ##!  reject_button: "Reject"
   close_button: "Close"
-  close_link: "close"
+  ##!  close_link: "close"
   share_button: "Share"
   save_button: "Save"
-  move_button: "Move"
+  ##!  move_button: "Move"
   add_button: "Add"
-  update_button: "Update"
+  ##!  update_button: "Update"
   cancel_button: "Cancel"
   create_button: "Create"
   ok_button: "OK"
-  done_button: "Done"
+  ##!  done_button: "Done"
   delete_button: "Delete"
   show_button : "Show"
   confirm: "Confirm"
@@ -227,39 +227,39 @@ en:
   loading_progress: "Loading..."
 
   # labels
-  buttons_list_label: "Action"
+  ##!  buttons_list_label: "Action"
 
   ###
   ### TO BE SORTED
   ###
 
-  group_information: "%{group_type} Information"
+  ##!  group_information: "%{group_type} Information"
 
   illegal_redirect: "Illegal redirect"
   redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (%{url}) after your login. For security reasons we have removed this parameter from the URL."
 
-  subject_must_not_be_empty: subject must not be empty
-  at_least_one_recipient_is_required: at least one recipient is required
-  message_must_not_be_empty: message must not be empty
-  subject: subject
-  from: from
-  to: To
-  date_date: date
-  request_status: "This request is: %{status}."
-  status_resolved: resolved
-  status_pending: pending
-  approve_or_reject_link: approve or reject this request
-  request_status: This request was %{status} by %{user} on %{time}
-  discuss_request_link: discuss this request with %{person_or_group}
+  ##!  subject_must_not_be_empty: subject must not be empty
+  ##!  at_least_one_recipient_is_required: at least one recipient is required
+  ##!  message_must_not_be_empty: message must not be empty
+  ##!  subject: subject
+  ##!  from: from
+  ##!  to: To
+  ##!  date_date: date
+  ##!  request_status: "This request is: %{status}."
+  ##!  status_resolved: resolved
+  ##!  status_pending: pending
+  ##!  approve_or_reject_link: approve or reject this request
+  ##!  request_status: This request was %{status} by %{user} on %{time}
+  ##!  discuss_request_link: discuss this request with %{person_or_group}
 
   save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
   preview_selected_image: "Preview of selected image"
-  image_size_info: "Select the size of the image to insert"
-  small: small
-  medium: medium
-  large: large
-  full: full
-  image_options_info: "Should the image included in the wiki link to the fullsize image?"
+  ##!  image_size_info: "Select the size of the image to insert"
+  ##!  small: small
+  ##!  medium: medium
+  ##!  large: large
+  ##!  full: full
+  ##!  image_options_info: "Should the image included in the wiki link to the fullsize image?"
   include_full_checkbox: include link to full image
   image_select_info: "Pick an image to insert from the images uploaded to the group previously"
   image_upload_info: "Upload a new image to the group so it can be used in the wiki"
@@ -271,7 +271,7 @@ en:
 
   confirm_discarding_text_area: "All your unsaved work will be lost. Press %{cancel} to continue editing."
 
-  is_required: "is required"
+  ##!  is_required: "is required"
 
   ##
   ## ACCOUNT
@@ -292,7 +292,7 @@ en:
   signup_login_name: "Your login name"
   login_button: "Login"
   login: "Login"
-  log_in: "Log in"
+  ##!  log_in: "Log in"
   signup_title: "Create Your Account"
   signup_email: "Your Email"
   forgot_password_text: |
@@ -309,7 +309,7 @@ en:
   reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
   your_login: "Your login"
-  invalid_email: "Invalid Email"
+  ##!  invalid_email: "Invalid Email"
   invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
   reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
@@ -322,44 +322,44 @@ en:
   forgotten_email_address: "What email address did you give us when you created your account?"
   new_password: "New Password"
   confirm_new_password: "Confirm New Password"
-  accept_usage_agreement: "I accept the terms of the usage agreement"
-  usage_agreement_required: "Acceptance of the usage agreement is required"
-  usage_agreement_heading: "Usage Agreement"
-  usage_agreement_text: |
-    The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
+  ##!  accept_usage_agreement: "I accept the terms of the usage agreement"
+  ##!  usage_agreement_required: "Acceptance of the usage agreement is required"
+  ##!  usage_agreement_heading: "Usage Agreement"
+  ##!  usage_agreement_text: |
+  ##  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
 
-    In consideration for your use of this service you agree to the following conditions:
+  ##  In consideration for your use of this service you agree to the following conditions:
 
-    You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
+  ##  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
 
-    You also agree not to use our services to:
+  ##  You also agree not to use our services to:
 
-    * harass other people;
-    * harm or exploit minors;
-    * impersonate or cause others to believe that you are another person;
-    * send unsolicited messages;
-    * collect personal data from users of this service without their express consent; and
-    * interfere with or disrupt our services, those of our users or any other person or service;
+  ##  * harass other people;
+  ##  * harm or exploit minors;
+  ##  * impersonate or cause others to believe that you are another person;
+  ##  * send unsolicited messages;
+  ##  * collect personal data from users of this service without their express consent; and
+  ##  * interfere with or disrupt our services, those of our users or any other person or service;
 
-    Further, you agree to:
+  ##  Further, you agree to:
 
-    * avoid excessive use of our services;
-    * be responsible for maintaining the confidentiality of your accounts and passwords;
-    * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
-    * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
+  ##  * avoid excessive use of our services;
+  ##  * be responsible for maintaining the confidentiality of your accounts and passwords;
+  ##  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
+  ##  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
 
-    The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
+  ##  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
 
-    If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+  ##  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
 
   congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}."
 
   # verify email
 
   you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
-  successfully_verified_email_message: "Successfully Verified Email Address"
-  already_verified: "Already Verified."
-  already_verified_text: "You don't need to verify again."
+  ##!  successfully_verified_email_message: "Successfully Verified Email Address"
+  ##!  already_verified: "Already Verified."
+  ##!  already_verified_text: "You don't need to verify again."
   email_verification_body: |
     You have signed for %{site_title} (%{host})!
 
@@ -383,17 +383,17 @@ en:
   signup_password: "Your Password"
 
   # password strength messages:
-  password_ok: "is OK."
-  password_error_default: "is not strong enough."
-  password_error_username: "is no good, it is based on your username."
-  password_error_too_short: "is no good, it is too short."
-  password_error_whitespace: "is no good, it is all whitespace."
-  password_error_too_similar: "is no good, it does not contain enough different characters."
-  password_error_too_simple: "is no good, it is too simplistic or predictable."
-  password_error_too_common: "is no good, it is based on a dictionary word."
-  password_error_confirmation: "does not match password confirmation."
+  ##!  password_ok: "is OK."
+  ##!  password_error_default: "is not strong enough."
+  ##!  password_error_username: "is no good, it is based on your username."
+  ##!  password_error_too_short: "is no good, it is too short."
+  ##!  password_error_whitespace: "is no good, it is all whitespace."
+  ##!  password_error_too_similar: "is no good, it does not contain enough different characters."
+  ##!  password_error_too_simple: "is no good, it is too simplistic or predictable."
+  ##!  password_error_too_common: "is no good, it is based on a dictionary word."
+  ##!  password_error_confirmation: "does not match password confirmation."
 
-  signup_time_to_crack_password: "(takes %{time} to crack)"
+  ##!  signup_time_to_crack_password: "(takes %{time} to crack)"
 
 
   ##
@@ -401,7 +401,7 @@ en:
   ##
 
   activity_contact_created: "%{user} added %{other_user} as a friend"
-  activity_user_status: "%{user} is now %{status}"
+  ##!  activity_user_status: "%{user} is now %{status}"
   activity_user_left_group: "%{user} has left %{group_type} %{group}"
   activity_user_joined_group: "%{user} has joined %{group_type} %{group}"
   activity_user_joined_site: "%{user} has joined %{group}"
@@ -420,46 +420,46 @@ en:
   ## ASSETS
   ##
 
-  media_audio: "Sound Recording"
-  media_audios: "Sound Recordings"
-  media_video: "Video"
-  media_videos: "Videos"
+  ##!  media_audio: "Sound Recording"
+  ##!  media_audios: "Sound Recordings"
+  ##!  media_video: "Video"
+  ##!  media_videos: "Videos"
   media_image: "Image"
   media_images: "Images"
-  media_document: "Document"
-  media_documents: "Documents"
+  ##!  media_document: "Document"
+  ##!  media_documents: "Documents"
   zip_file: "Zip File"
-  media_all: "Media"
-  media_alls: "Media"
-  media_for_group: "%{media_type} in %{group}"
-  media_without_group: "All %{media_type}"
+  ##!  media_all: "Media"
+  ##!  media_alls: "Media"
+  ##!  media_for_group: "%{media_type} in %{group}"
+  ##!  media_without_group: "All %{media_type}"
   history: "History"
   other_formats: "Other Formats"
   file_version_deleted: "file version deleted"
   delete_version_confirm: "Are you sure you want to delete this version?"
-  delete_this_version: "delete this version"
+  ##!  delete_this_version: "delete this version"
   galleries: "Galleries"
   created_on: "Created on"
   file_size: "File size"
   format: "Format"
   regenerate: "regenerate thumbnails"
   version_number: "version %{version}"
-  no_data_uploaded: "No data uploaded"
+  ##!  no_data_uploaded: "No data uploaded"
 
   upload_image: "Upload Image"
-  remove_image: "Remove image"
+  ##!  remove_image: "Remove image"
 
-  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
+  ##!  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
 
   # avatar
 
-  avatar_image_upload_success: "Successfully uploaded a new avatar image."
-  confirm_delete_avatar: "Do you really want to delete your user image?"
+  ##!  avatar_image_upload_success: "Successfully uploaded a new avatar image."
+  ##!  confirm_delete_avatar: "Do you really want to delete your user image?"
 
   # favicon
 
-  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
-  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
+  ##!  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
+  ##!  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
 
   asset_version_list_version_heading: "version"
 
@@ -473,7 +473,7 @@ en:
   image_count: Photo %{number} of %{count}
   image_count_total: "%{count} Photos"
   view_slideshow: View Slideshow
-  show_gallery: Show Gallery
+  ##!  show_gallery: Show Gallery
   edit_gallery: Edit Gallery
   back_to_gallery_link: "Back to Gallery"
   gallery_changing_cover_message: "Changing cover..."
@@ -488,29 +488,29 @@ en:
   successful_undelete_image: Successfully undeleted image.
   saved_new_order: Saved new order!
   error_saving_new_order: Error saving new order!
-  no_title_given: (no title given)
+  ##!  no_title_given: (no title given)
   saving_your_changes: Saving your changes...
   activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
   drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
   no_images_in_gallery: No images in Gallery
   add_existing_image: Add Photo
   upload_new_image: "upload new image"
-  type_your_messages_here: "Type your messages here and press enter..."
+  ##!  type_your_messages_here: "Type your messages here and press enter..."
   add_photo_to_gallery: "Click on a Photo to add it"
   cancel_link: "cancel"
   file_must_be_image_error: "File must be an image to be part of a gallery."
-  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
+  ##!  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
   add_another_file: "Add another file"
   slideshow_delay_input: "Update every %{input_field} seconds"
-  add_comment: "Add Comment"
+  ##!  add_comment: "Add Comment"
   make_album_cover: "make this image the album cover"
   album_cover_changed: "Album Cover Changed"
-  image_title: "Image title: %{title}"
-  upload_zip_file_link: "Upload a ZIP-File"
+  ##!  image_title: "Image title: %{title}"
+  ##!  upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
-  too_tall_image_error: "Uploaded image is too tall (%{count} pixels is the max height)"
-  too_wide_image_error: "Uploaded image must be exactly  %{count} pixels wide"
-  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
+  ##!  too_tall_image_error: "Uploaded image is too tall (%{count} pixels is the max height)"
+  ##!  too_wide_image_error: "Uploaded image must be exactly  %{count} pixels wide"
+  ##!  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
@@ -519,13 +519,13 @@ en:
   ## ACTION BAR
   ##
 
-  select_filter_label: "Select:"
-  mark_as_label: "Mark as:"
+  ##!  select_filter_label: "Select:"
+  ##!  mark_as_label: "Mark as:"
   view_label: "View"
 
-  select_all: "All"
-  select_none: "None"
-  select_unread: "Unread"
+  ##!  select_all: "All"
+  ##!  select_none: "None"
+  ##!  select_unread: "Unread"
 
   ##
   ## REQUESTS
@@ -538,18 +538,18 @@ en:
   destroy: "Destroy"
   approve: "Approve"
   reject: "Reject"
-  ignore: "Ignore"
+  ##!  ignore: "Ignore"
   pending: "Pending"
   rejected: "Rejected"
   approved: "Approved"
-  my_requests_link: "My requests"
-  all_requests: "All Requests"
-  requests_to_me: "Requests to me"
-  requests_from_me: "Requests from me"
+  ##!  my_requests_link: "My requests"
+  ##!  all_requests: "All Requests"
+  ##!  requests_to_me: "Requests to me"
+  ##!  requests_from_me: "Requests from me"
   incoming: "Incoming"
   outgoing: "Outgoing"
-  state: "State"
-  action: "Action"
+  ##!  state: "State"
+  ##!  action: "Action"
   request_pending: "%{request} is pending approval"
 
   #
@@ -558,13 +558,13 @@ en:
 
   friend_request_message_label: "Tell %{user} why you want to be their friend."
   friend_request_sent: "Friend request has been sent"
-  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
+  ##!  friend_remove_confirmation: "Are you sure you wish to no longer be friends with %{user}?"
 
   #
   # group membership
   #
 
-  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  ##!  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
@@ -604,18 +604,18 @@ en:
   request_to_remove_user_short: "Expell %{member}?"
   request_to_remove_user_description: "%{user} has proposed to remove %{member} from %{group_type} %{group}"
 
-  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
+  ##!  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
 
-  request_to_remove_coordinator_user_tooltip_description: |
-    <p>There is a running tally of the  votes.</p><br/>
+  ##!  request_to_remove_coordinator_user_tooltip_description: |
+  ##  <p>There is a running tally of the  votes.</p><br/>
 
-    <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
+  ##  <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
 
-    <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
+  ##  <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
 
-    <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
+  ##  <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
 
-  request_to_remove_coordinator_user_description: "%{user} has proposed to remove %{target_user} from %{group_type} %{group}. %{target_user} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. %{tooltip}"
+  ##!  request_to_remove_coordinator_user_description: "%{user} has proposed to remove %{target_user} from %{group_type} %{group}. %{target_user} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. %{tooltip}"
 
   request_to_destroy_our_group_email: |
     The %{group_type} '%{group}' will be destroyed enough members approve this proposal.
@@ -631,36 +631,36 @@ en:
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"
-  send_contact_button: "Send contact invitation"
-  send_contacts_title: "Send contact invitation to %{user}"
-  send_invites_headline: "Send invitations to join %{group}"
+  ##!  send_contact_button: "Send contact invitation"
+  ##!  send_contacts_title: "Send contact invitation to %{user}"
+  ##!  send_invites_headline: "Send invitations to join %{group}"
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
   invite_sent: "Invitation sent to %{recipient}"
   invites_sent: "%{count} invitations sent"
 
-  request_to_join_sent: "Request to join has been sent"
-  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
-  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
-  removal_requested: "Removal Requested"
+  ##!  request_to_join_sent: "Request to join has been sent"
+  ##!  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
+  ##!  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
+  ##!  removal_requested: "Removal Requested"
   try_again: "Try Again"
-  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
-  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
-  invite_accept_via_existing_account: "I already have an account"
-  invite_accept_via_register: "I need to register a new account"
-  join_group_success: "You have joined group %{group_name}"
+  ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
+  ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
+  ##!  invite_accept_via_existing_account: "I already have an account"
+  ##!  invite_accept_via_register: "I need to register a new account"
+  ##!  join_group_success: "You have joined group %{group_name}"
 
   # invite/request errors
 
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
-  invite_not_found: "Invite not found"
+  ##!  invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for %{recipient}"
   not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
 
   ##
   ## DATES
   ##
-
+  
   sunday: Sunday
   monday: Monday
   tuesday: Tuesday
@@ -668,33 +668,33 @@ en:
   thursday: Thursday
   friday: Friday
   saturday: Saturday
-  month_short_january: Jan
-  month_short_february: Feb
-  month_short_march: Mar
-  month_short_april: Apr
-  month_short_may: May
-  month_short_june: Jun
-  month_short_july: Jul
-  month_short_august: Aug
-  month_short_september: Sep
-  month_short_october: Oct
-  month_short_november: Nov
-  month_short_december: Dec
+  ##!  month_short_january: Jan
+  ##!  month_short_february: Feb
+  ##!  month_short_march: Mar
+  ##!  month_short_april: Apr
+  ##!  month_short_may: May
+  ##!  month_short_june: Jun
+  ##!  month_short_july: Jul
+  ##!  month_short_august: Aug
+  ##!  month_short_september: Sep
+  ##!  month_short_october: Oct
+  ##!  month_short_november: Nov
+  ##!  month_short_december: Dec
   date_today: Today
-  date_yesterday: Yesterday
+  ##!  date_yesterday: Yesterday
   date_this_week: This Week
   date_this_month: This Month
   date_this_year: This Year
   date_all_time: All Time
-  date_older: Older
-  date_centuries: centuries
-  date_years: years
-  date_months: months
-  date_weeks: weeks
-  date_days: days
-  date_hours: hours
-  date_minutes: minutes
-  date_seconds: seconds
+  ##!  date_older: Older
+  ##!  date_centuries: centuries
+  ##!  date_years: years
+  ##!  date_months: months
+  ##!  date_weeks: weeks
+  ##!  date_days: days
+  ##!  date_hours: hours
+  ##!  date_minutes: minutes
+  ##!  date_seconds: seconds
 
   ##
   ## ERRORS
@@ -704,15 +704,15 @@ en:
   alert_field_errors: "There are problems with the following fields"
   alert_saved: "Changes saved"
   alert_permission_denied: "Permission Denied"
-  alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
-  alert_error: "Error"
+  ##!  alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
+  ##!  alert_error: "Error"
 
-  exception_title: "System Error"
-  exception_headline: "Oops! We experienced an error."
-  exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
-  exception_back_link: "Go Back"
-  exception_bug_report_link: "Submit Bug Report"
-  exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
+  ##!  exception_title: "System Error"
+  ##!  exception_headline: "Oops! We experienced an error."
+  ##!  exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
+  ##!  exception_back_link: "Go Back"
+  ##!  exception_bug_report_link: "Submit Bug Report"
+  ##!  exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
 
   csrf_error_message: "Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again."
 
@@ -735,11 +735,11 @@ en:
   top_pick: "top pick"
   first_choice_of: "first choice of"
 
-  vote_good: "good"
-  vote_ok: "ok"
-  vote_bad: "bad"
-  vote_none: "none"
-  vote_no: "no"
+  ##!  vote_good: "good"
+  ##!  vote_ok: "ok"
+  ##!  vote_bad: "bad"
+  ##!  vote_none: "none"
+  ##!  vote_no: "no"
   ##
   ## SURVEY PAGE
   ##
@@ -748,8 +748,8 @@ en:
 
   save_survey_button: "Save Survey"
 
-  survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
-  survey_rating_enabled: "Enable the rating of responses?"
+  ##!  survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
+  ##!  survey_rating_enabled: "Enable the rating of responses?"
 
   survey_may_create_response: "May create response?"
   survey_may_see_responses: "May see responses?"
@@ -767,7 +767,7 @@ en:
 
   # responses
 
-  survey: "Survey"
+  ##!  survey: "Survey"
   survey_response_by: "Response by %{login}"
 
   see_whole_response_link: "see whole response"
@@ -800,12 +800,12 @@ en:
   # tabs
 
   survey_introduction_tab: "Introduction"
-  survey_create_tab: "Create Survey"
-  survey_edit_tab: "Edit Survey"
+  ##!  survey_create_tab: "Create Survey"
+  ##!  survey_edit_tab: "Edit Survey"
   survey_list_all_tab: "List Responses"
   survey_my_response_tab: "My Response"
-  survey_rate_responses_tab: "Rate Responses"
-  survey_take_tab: "Take Survey"
+  ##!  survey_rate_responses_tab: "Rate Responses"
+  ##!  survey_take_tab: "Take Survey"
 
   # unsorted
 
@@ -822,7 +822,7 @@ en:
   ## EXTERNAL VIDEO
   ##
 
-  video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
+  ##!  video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
   current_video_sources: "Currently supported: youtube, blip.tv, google video, vimeo."
   video_embed_code_prompt: "Embed code from external video source."
 
@@ -833,22 +833,22 @@ en:
 
   wiki_existed_new_version_created: "This wiki had already been created by another user. Your changes have been saved as a new version."
   wiki_is_locked: "This wiki is currently locked by %{user}"
-  wont_be_able_to_save: "You will not be able to save this page"
+  ##!  wont_be_able_to_save: "You will not be able to save this page"
   leave_editing_wiki_page_warning: "If you don't save the wiki, you will lose your changes."
-  page_locked_header: "Page Locked"
-  locked_by_user: "Locked by %{user}"
-  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
+  ##!  page_locked_header: "Page Locked"
+  ##!  locked_by_user: "Locked by %{user}"
+  ##!  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
   cant_edit_section: "Can't edit %{section}."
   user_locked_section: "%{user} has locked %{section}."
   can_still_save: "You can still save."
-  changes_might_be_overwritte: "Your changes might be overwritten."
+  ##!  changes_might_be_overwritte: "Your changes might be overwritten."
   other_section_locked_error: "Can only lock one section at a time. You already locked '%{section}'."
   break_lock: "Break Lock"
   break_lock_button: "Break Lock"
   versions: "Versions"
-  last_change: "Last Change"
-  print_underlined_p: "<u>p</u>rint"
-  edit_underlined_e: "<u>e</u>dit"
+  ##!  last_change: "Last Change"
+  ##!  print_underlined_p: "<u>p</u>rint"
+  ##!  edit_underlined_e: "<u>e</u>dit"
   comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
   changes_made: "Changes made %{when}."
   prev_change: "Previous Change"
@@ -859,32 +859,32 @@ en:
   you_are_viewing_version: "You are viewing version %{version} by %{user}"
   diff_link: "view changes"
   version_link: "view version"
-  insert_image_heading: "Insert Image"
-  wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
+  ##!  insert_image_heading: "Insert Image"
+  ##!  wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
 
   wiki_revert_version: "Revert To Version %{version}"
-  revert_to_previous_version: "Revert to previous version:"
+  ##!  revert_to_previous_version: "Revert to previous version:"
   wiki_version_creator_heading: "person"
   wiki_version_revert_link: "revert"
   wiki_version_destroy_link: "destroy"
   wiki_version_destroy_failed: "Version has not been destroyed. You can't remove the last version."
   wiki_version_destroy_success: "Version has been destroyed."
-  private_homepage: "Private Homepage"
-  public_homepage: "Public Homepage"
+  ##!  private_homepage: "Private Homepage"
+  ##!  public_homepage: "Public Homepage"
 
   # popup
 
-  clear_link_button: "Clear Link"
-  create_link_button: "Create Link"
-  update_link_button: "Update Link"
+  ##!  clear_link_button: "Clear Link"
+  ##!  create_link_button: "Create Link"
+  ##!  update_link_button: "Update Link"
 
   insert_image: "Insert Image"
-  add_link: "Add Link"
+  ##!  add_link: "Add Link"
 
   # group wiki
   
-  create_group_wiki: "Create Group Wiki"
+  ##!  create_group_wiki: "Create Group Wiki"
   create_public_group_wiki: "Add Public Information"
   create_private_group_wiki: "Add Private Group Wiki"
   public_group_wiki: "Public Information"
@@ -892,22 +892,22 @@ en:
 
   # editor
   # advanded editor is what plain editor is called when visual editor is enabled
-  wiki_advanced_editor: "Advanced Editor"
-  wiki_plain_editor: "Plain Editor"
-  wiki_visual_editor: "Visual Editor"
-  wiki_editor: "Editor"
+  ##!  wiki_advanced_editor: "Advanced Editor"
+  ##!  wiki_plain_editor: "Plain Editor"
+  ##!  wiki_visual_editor: "Visual Editor"
+  ##!  wiki_editor: "Editor"
   preview: "Preview"
-  close_editor: "Close Editor"
+  ##!  close_editor: "Close Editor"
 
   # errors
 
-  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
+  ##!  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
   save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either %{save_button} or %{cancel_button} to stop editing."
 
   cant_find_wiki_section: "Can't find wiki section %{section}"
-  cant_lock_another_section: "you already have a section locked. Can't lock another."
-  cant_lock_nonexistant_section: "can't lock a nonexistant section"
-  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
+  ##!  cant_lock_another_section: "you already have a section locked. Can't lock another."
+  ##!  cant_lock_nonexistant_section: "can't lock a nonexistant section"
+  ##!  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
   wiki_formating_code: |
     Big Caption
@@ -935,18 +935,18 @@ en:
   ##
 
   set_status_button: "Update Status"
-  say_message_button: "Say"
-  wall_heading: "Public Message Wall"
-  wall_post_button: "Post New Message"
-  wall_say_form_submit_caption: "Post to %{user}'s activity feed"
+  ##!  say_message_button: "Say"
+  ##!  wall_heading: "Public Message Wall"
+  ##!  wall_post_button: "Post New Message"
+  ##!  wall_say_form_submit_caption: "Post to %{user}'s activity feed"
 
-  my_status_heading: "Your Current Status"
+  ##!  my_status_heading: "Your Current Status"
   # ^^ no longer used
 
-  users_wall: "%{user}'s Wall"
+  ##!  users_wall: "%{user}'s Wall"
   ## ^^ no longer used
 
-  recent_wall_posts: "Recent Wall Posts"
+  ##!  recent_wall_posts: "Recent Wall Posts"
   ## ^^ no longer used
 
   ##
@@ -982,29 +982,29 @@ en:
   ## PEOPLE (i.e., PeopleController)
   ##
 
-  last_seen: "last seen"
+  ##!  last_seen: "last seen"
 
-  directory_of_people: Directory of People
-  directory_peers_description: "A list of your friends and all the people in your groups and networks."
-  no_contacts_msg: You have no friends.
-  my_peers_explain: users I share a common group with
-  no_peers_msg: You have no peers.
-  my_contacts_link: my friends
+  ##!  directory_of_people: Directory of People
+  ##!  directory_peers_description: "A list of your friends and all the people in your groups and networks."
+  ##!  no_contacts_msg: You have no friends.
+  ##!  my_peers_explain: users I share a common group with
+  ##!  no_peers_msg: You have no peers.
+  ##!  my_contacts_link: my friends
   my_contacts: My friends
-  new_people: New People
-  new_people_link: new people
-  no_public_profiles: No public profiles yet...
-  all_people_link: all people
-  all_people: All People
-  my_peers_link: my peers
-  my_peers: My Peers
-  my_peers_description: users I share a common group with
-  you_have_no_contacts: 'You have no friends'
-  you_have_no_peers: 'You have no peers'
+  ##!  new_people: New People
+  ##!  new_people_link: new people
+  ##!  no_public_profiles: No public profiles yet...
+  ##!  all_people_link: all people
+  ##!  all_people: All People
+  ##!  my_peers_link: my peers
+  ##!  my_peers: My Peers
+  ##!  my_peers_description: users I share a common group with
+  ##!  you_have_no_contacts: 'You have no friends'
+  ##!  you_have_no_peers: 'You have no peers'
 
-  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
-  remove_contact: "Remove contact %{user}"
-  remove_contact_button: "Remove Contact"
+  ##!  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
+  ##!  remove_contact: "Remove contact %{user}"
+  ##!  remove_contact_button: "Remove Contact"
 
   ##
   ## AUTHENTICATED SYSTEM
@@ -1020,12 +1020,12 @@ en:
   ##
 
   chat: "Chat"
-  joins_the_chatroom: 'joins the chatroom'
+  ##!  joins_the_chatroom: 'joins the chatroom'
   left_the_chatroom: 'left the chatroom'
-  chat_archive_headline: "Chat Archive"
-  chat_archive_link: "view the chat room archive"
-  leave_channel: "Leave channel"
-  trash_chat_message: "move message to trash"
+  ##!  chat_archive_headline: "Chat Archive"
+  ##!  chat_archive_link: "view the chat room archive"
+  ##!  leave_channel: "Leave channel"
+  ##!  trash_chat_message: "move message to trash"
 
 
   ##
@@ -1034,7 +1034,7 @@ en:
 
   tag: "Tag"
   tags: "Tags"
-  edit_tags: "Edit Tags"
+  ##!  edit_tags: "Edit Tags"
   no_tags: "no tags"
   add_one_or_more_tags: "Add one or more tags, separated by commas"
   separate_tags: "Separate tags using commas."
@@ -1046,105 +1046,105 @@ en:
   ## WELCOME
   ##
 
-  welcome_show_link: "Show Welcome"
-  welcome_hide_link: "Hide Welcome"
+  ##!  welcome_show_link: "Show Welcome"
+  ##!  welcome_hide_link: "Hide Welcome"
   welcome_title: "Welcome to %{site_title}"
-  welcome_heading: "Welcome to %{site_title}, %{user_name}!"
+  ##!  welcome_heading: "Welcome to %{site_title}, %{user_name}!"
   welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
   welcome_login_message: ""
 
-  welcome_edit_profile_link: "Edit your profile"
-  welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
+  ##!  welcome_edit_profile_link: "Edit your profile"
+  ##!  welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
 
-  welcome_upload_icon_link: "Upload a user icon"
-  welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
+  ##!  welcome_upload_icon_link: "Upload a user icon"
+  ##!  welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
 
-  welcome_find_people_link: "Find people"
-  welcome_find_people_text: "Browse the user directory for people you know."
+  ##!  welcome_find_people_link: "Find people"
+  ##!  welcome_find_people_text: "Browse the user directory for people you know."
 
-  welcome_find_groups_link: "Find groups"
-  welcome_find_groups_text: "Browse the group directory for groups to join."
+  ##!  welcome_find_groups_link: "Find groups"
+  ##!  welcome_find_groups_text: "Browse the group directory for groups to join."
 
-  welcome_create_group_link: "Create a new group"
-  welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
+  ##!  welcome_create_group_link: "Create a new group"
+  ##!  welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
 
-  welcome_create_page_link: "Create a new page"
-  welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
+  ##!  welcome_create_page_link: "Create a new page"
+  ##!  welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
 
   ##
   ## SITE HOME
   ##
 
-  have_your_say: "Have Your Say!"
-  contribute_to_site: "Contribute to Site"
-  create_a_group: "Create a Group"
-  create_a_network: "Create a Network"
-  see_tips_to_get_started: "See Tips to get started"
-  hide_tips: "Hide Tips"
-  most_active_members: "Most Active Members"
-  recently_active_members: "Recently Active Members"
-  most_active_groups: "Most Active Groups"
-  recently_active_groups: "Recently Active Groups"
-  network_settings: "Network Settings"
+  ##!  have_your_say: "Have Your Say!"
+  ##!  contribute_to_site: "Contribute to Site"
+  ##!  create_a_group: "Create a Group"
+  ##!  create_a_network: "Create a Network"
+  ##!  see_tips_to_get_started: "See Tips to get started"
+  ##!  hide_tips: "Hide Tips"
+  ##!  most_active_members: "Most Active Members"
+  ##!  recently_active_members: "Recently Active Members"
+  ##!  most_active_groups: "Most Active Groups"
+  ##!  recently_active_groups: "Recently Active Groups"
+  ##!  network_settings: "Network Settings"
 
-  administer_site: "Administer Site"
-  edit_appearance: "Edit Appearance"
+  ##!  administer_site: "Administer Site"
+  ##!  edit_appearance: "Edit Appearance"
 
   ##
   ## MODERATION
   ##
 
-  flag_button: "Flag"
-  flag_appropriate: "flag as appropriate"
-  flag_inappropriate: "flag as inappropriate"
-  confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
-  offensive_behavior: "Offensive Behavior"
-  off_topic: "Off Topic"
-  offensive_language: "Offensive Language"
-  other_reason: "Other Reason"
-  inappropriate_content: "Inappropriate content"
+  ##!  flag_button: "Flag"
+  ##!  flag_appropriate: "flag as appropriate"
+  ##!  flag_inappropriate: "flag as inappropriate"
+  ##!  confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+  ##!  confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+  ##!  chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
+  ##!  offensive_behavior: "Offensive Behavior"
+  ##!  off_topic: "Off Topic"
+  ##!  offensive_language: "Offensive Language"
+  ##!  other_reason: "Other Reason"
+  ##!  inappropriate_content: "Inappropriate content"
 
-  make_public_requested: "Make Public Requested"
-  moderation: "Moderation"
-  admins_may_moderate: "Allow council members to moderate the content of the group"
-  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
+  ##!  make_public_requested: "Make Public Requested"
+  ##!  moderation: "Moderation"
+  ##!  admins_may_moderate: "Allow council members to moderate the content of the group"
+  ##!  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
 
   ##
   ## ADMIN
   ##
 
-  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
-  signup_mode_closed_description: "Signup is closed."
-  signup_mode_invite_only_description: "Signup is allowed by invitation only."
-  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
+  ##!  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
+  ##!  signup_mode_closed_description: "Signup is closed."
+  ##!  signup_mode_invite_only_description: "Signup is allowed by invitation only."
+  ##!  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
 
-  sign_up_settings: "Sign Up Settings"
-  profile_settings: "Profile Settings"
-  email_blasts: "Email Blasts"
+  ##!  sign_up_settings: "Sign Up Settings"
+  ##!  profile_settings: "Profile Settings"
+  ##!  email_blasts: "Email Blasts"
 
 
   # custom appearances
 
-  succesfully_updated_custom_appearance: "Updated custom appearance #%{appearance_id} options!"
-  enable_masthead_question: "Enable masthead image?"
-  masthead: "Masthead"
-  select_masthead_background_color: "Select masthead background color."
-  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
+  ##!  succesfully_updated_custom_appearance: "Updated custom appearance #%{appearance_id} options!"
+  ##!  enable_masthead_question: "Enable masthead image?"
+  ##!  masthead: "Masthead"
+  ##!  select_masthead_background_color: "Select masthead background color."
+  ##!  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
+  ##!  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
 
-  masthead: "Masthead"
-  advanced: "Advanced"
-  favicon: "Browser Icon"
-  color_theme: "Color Theme"
+  ##!  masthead: "Masthead"
+  ##!  advanced: "Advanced"
+  ##!  favicon: "Browser Icon"
+  ##!  color_theme: "Color Theme"
 
-  update_color_theme: "Update Color Theme"
-  update_favicon: "Update Favicon"
-  update_masthead: "Update Masthead"
+  ##!  update_color_theme: "Update Color Theme"
+  ##!  update_favicon: "Update Favicon"
+  ##!  update_masthead: "Update Masthead"
 
   # other
 
-  page_make_public_link: "make public"
-  page_make_public_pending_link: "make public (pending)"
+  ##!  page_make_public_link: "make public"
+  ##!  page_make_public_pending_link: "make public (pending)"
 
