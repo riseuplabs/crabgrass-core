@@ -53,6 +53,8 @@ this environment variable:
 
   SHOWLOGS=1 ruby test/unit/person_test.rb
 
+This is also useful with script/console.
+
 == Debugging View Tests
 
 You can use the method "response_body" to get an easier to read version of the
