@@ -494,7 +494,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
   var toolbar = new Control.TextArea.ToolBar(textarea);
 
   toolbar.container.addClassName('markdown_toolbar'); //for css styles
-  toolbar.container.id = 'markdown_toolbar'
+  toolbar.container.id = 'markdown_toolbar';
 
   //buttons
   toolbar.addButton('Emphasis',function(){

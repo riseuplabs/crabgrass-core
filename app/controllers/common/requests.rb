@@ -27,11 +27,11 @@ module Common::Requests
   end
 
   def left_id(request)
-    "panel_left_#{request.dom_id}"
+    dom_id(request, :panel_left)
   end
 
   def right_id(request)
-    "panel_right_#{request.dom_id}"
+    dom_id(request, :panel_right)
   end
 
   def request_path(*args)
