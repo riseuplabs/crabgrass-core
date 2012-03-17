@@ -1,0 +1,13 @@
+= content_tag_if_any(:div, :class => 'p first float_right') { leave_group_link }
+
+%section{:class => 'table'}
+  %table.fancy{:width => '100%'}
+    %tr
+      %th= federation_view? ? :member_groups_of_network.t : :user.t
+      %th= :profile_member_since.t
+      - if !federation_view?
+        %th= :visits.t
+        %th
+    = render :partial => '/groups/memberships/membership', :collection => @memberships
+  .p= pagination_links(@memberships)
+

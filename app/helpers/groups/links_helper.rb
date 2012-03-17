@@ -10,14 +10,28 @@ module Groups::LinksHelper
   ## HOME LINKS
   ##
 
+  def more_info_link
+    link_to("More Info", '#')
+  end
+
+  def edit_group_profile_link
+    if may_edit_group_profile?
+      link_to :edit_profile_link.t, edit_group_profile_path(@group)
+    end
+  end
+
+  ##
+  ## MY MEMBERSHIP
+  ##
+
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
-    if may_create_group_membership?
+    if may_join_group?
       link_to :join_group_link.t(:group_type => @group.group_type),
-        group_memberships_path(@group),
+        group_my_memberships_path(@group),
         :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
         :method => :post
-    elsif may_create_group_request?
+    elsif may_create_join_request?
       if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
         :request_exists.t(:request_type => :pending)
       else
@@ -29,40 +43,25 @@ module Groups::LinksHelper
   end
 
   def leave_group_link
-    if may_destroy_group_membership?
+    if may_leave_group?
       link_to :leave_group_link.t(:group_type => @group.group_type),
-        group_membership_path(@group, current_user),
+        group_my_membership_path(@group, current_user),
         :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
         :method => :delete
     end
   end
 
-  def more_info_link
-    link_to("More Info", '#')
-  end
+  ##
+  ## MEMBERSHIPS
+  ##
 
-  def edit_group_profile_link
-    if may_edit_group_profile?
-      link_to :edit_profile_link.t, edit_group_profile_path(@group)
+  def list_memberships_link
+    if may_edit_memberships?
+      link_to(:edit.t, group_memberships_path(@group))
+    elsif may_list_memberships?
+      link_to(:see_all_link.t, group_memberships_path(@group))
     end
   end
-
-  # members
-
-  def list_membership_link
-    if may_edit_group_members?
-      link_to(:edit.t, group_members_path(@group))
-    elsif may_list_group_members?
-      link_to(:see_all_link.t, group_members_path(@group))
-    end
-  end
-
-  def list_group_membership_link
-    if may_list_group_members?
-      link_to :see_all_link.t, group_members_path(@group, :view => 'groups')
-    end
-  end
-
 
   def invite_link
     if may_create_group_invite?
@@ -77,16 +76,18 @@ module Groups::LinksHelper
   end
 
   def destroy_group_link
-    if RequestToDestroyOurGroup.exists?(group)
-      "" # i guess do nothing?
-    elsif may_destroy_group?
-      link_to_with_confirm(:destroy_thing.t(:thing => @group.group_type),
-        {:confirm => :destroy_confirmation.t(:thing => @group.group_type.downcase),
-         :url => direct_group_path(@group), :method => :delete })
-    elsif may_create_destroy_request?
-      link_to(:destroy_thing.t(:thing => @group.group_type),
-        group_requests_path(@group),
-        :method => 'post')
+    if logged_in?
+      if RequestToDestroyOurGroup.already_exists?(:group => @group)
+        "" # i guess do nothing?
+      elsif may_destroy_group?
+        link_to_with_confirm(:destroy_thing.t(:thing => @group.group_type),
+          {:confirm => :destroy_confirmation.t(:thing => @group.group_type.downcase),
+           :url => direct_group_path(@group), :method => :delete })
+      elsif may_create_destroy_request?
+        link_to(:destroy_thing.t(:thing => @group.group_type),
+          group_requests_path(@group),
+          :method => 'post')
+      end
     end
   end
 
@@ -137,13 +138,15 @@ module Groups::LinksHelper
   # for now, it allows you to immediately remove the user.
   #
   def destroy_membership_link(membership)
-    if may_destroy_group_members?(membership)
-      link_to_remote :remove.t, :url => group_member_path(@group, membership),
+    if may_destroy_membership?(membership)
+      link_to_remote :remove.t,
+        :url => group_member_path(@group, membership),
         :method => 'delete',
         :confirm => :membership_destroy_confirm_message.t(:user => content_tag(:b,membership.user.name),
         :group_type => content_tag(:b,@group.name))
-
-      # i think name is more appropriate than group_type, but the i18n keys are already defined with group_type
+        # ^^ i think name is more appropriate than group_type, but the i18n keys are already defined with group_type
+    elsif may_create_expell_request?(membership)
+      "" # TODO
     end
   end
 

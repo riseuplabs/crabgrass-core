@@ -143,10 +143,19 @@ define_navigation do
       end
 
       local_section :friends do
+        visible { logged_in? }
         label { :friends.t }
-        url { people_directory_path(:path => ['friends']) }
-        active { params[:path].try.include?('friends') }
+        url { people_directory_path(:path => ['contacts']) }
+        active { params[:path].try.include?('contacts') }
       end
+
+      local_section :peers do
+        visible { logged_in? }
+        label { :peers.t }
+        url { people_directory_path(:path => ['peers']) }
+        active { params[:path].try.include?('peers') }
+      end
+
     end
 
     context_section :home do
@@ -189,16 +198,17 @@ define_navigation do
       end
 
       local_section :mygroups do
+        visible { logged_in? }
         label { :my_groups.t }
         url { groups_directory_path(:path => ['my']) }
         active { controller?('groups/directory') and params[:path].try.include?('my') }
       end
 
       local_section :create do
-        label  { :create_thing.t(:thing => :group.t) }
-        url    { new_group_path }
-        active { controller?('groups/groups') }
-        icon   :plus
+        label   { :create_thing.t(:thing => :group.t) }
+        url     { new_group_path }
+        active  { controller?('groups/groups') }
+        icon    :plus
       end
 
     end
@@ -225,24 +235,24 @@ define_navigation do
 #    end
 
     context_section :members do
-      visible { may_list_group_members? }
+      visible { may_list_memberships? }
       label   { :members.t }
       icon    :user
-      url     { group_members_path(@group) }
-      active  { controller?('groups/members', 'groups/invites', 'groups/requests') }
+      url     { group_memberships_path(@group) }
+      active  { controller?('groups/memberships', 'groups/invites', 'groups/requests') }
 
       local_section :people do
-        visible { may_list_group_members? }
+        visible { may_list_memberships? }
         label   { :people.t }
-        url     { group_members_path(@group) }
-        active  { controller?('groups/members') }
+        url     { group_memberships_path(@group) }
+        active  { controller?('groups/memberships') and params[:view] != 'groups' }
       end
 
       local_section :groups do
-        visible { false }
+        visible { may_list_memberships? and @group.network? }
         label   { :groups.t }
-        url     { group_members_path(@group, :view => 'groups') }
-        active  { controller?('groups/members') and params[:view] == 'groups' }
+        url     { group_memberships_path(@group, :view => 'groups') }
+        active  { controller?('groups/memberships') and params[:view] == 'groups' }
       end
 
       local_section :invites do

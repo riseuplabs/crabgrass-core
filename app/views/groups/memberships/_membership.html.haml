@@ -1,4 +1,6 @@
 %tr{:class => cycle('odd', 'even'), :id => dom_id(membership)}
   %td= link_to_entity(membership.entity, :avatar => 'small')
   %td= friendly_date membership.created_at
-  %td= destroy_membership_link(membership) if membership.is_a?(Membership)
+  - if membership.is_a?(Membership)
+    %td= membership.total_visits
+    %td= destroy_membership_link(membership)

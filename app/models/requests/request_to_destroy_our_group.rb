@@ -13,8 +13,8 @@ class RequestToDestroyOurGroup < VotableRequest
 
   alias_attr :group, :recipient
 
-  def self.exists?(group)
-    pending.from_group(group).exists?
+  def self.already_exists?(options)
+    pending.from_group(options[:group]).exists?
   end
   
   def validate_on_create

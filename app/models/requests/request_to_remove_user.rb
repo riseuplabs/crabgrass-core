@@ -20,6 +20,10 @@ class RequestToRemoveUser < VotableRequest
     end
   end
 
+  def self.already_exists?(options)
+    pending.with_requestable(options[:user]).for_recipient(options[:group]).exists?
+  end
+  
   def may_create?(user)
     user.may?(:admin, group)
   end
