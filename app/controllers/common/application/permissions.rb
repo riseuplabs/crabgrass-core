@@ -234,7 +234,9 @@ module Common::Application::Permissions
       method = cache_permission(key) do
         self.class.permission_action_map[params[:action]] or find_permission_method
       end
-      if method
+      if method.is_a? Proc
+        method.call
+      elsif method
         self.send(method)
       else
         false
