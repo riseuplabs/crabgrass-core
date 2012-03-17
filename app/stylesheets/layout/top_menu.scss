@@ -40,6 +40,9 @@ $masthead_nav_dropdown_border_size: 1px;
   // custom theme css override for top menu links
   // most of the a.tab styling is done with "@include cutout_menu"
   a.tab {
+    @if $masthead_nav_tab_padding {
+      padding: $masthead_nav_tab_padding;
+    }
     @if $masthead_nav_tab_css { @include masthead_nav_tab_css; }
     &.active {@if $masthead_nav_tab_active_css { @include masthead_nav_tab_active_css; }}
     &:not(.active) {@if $masthead_nav_tab_inactive_css { @include masthead_nav_tab_inactive_css; }}

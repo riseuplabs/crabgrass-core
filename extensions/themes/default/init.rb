@@ -89,7 +89,7 @@ define_theme {
                      # cutout -- creates tabs cut out from masthead
                      # bar -- creates a separate menu nav bar
       tab {
-        padding '8px'   # must be in pixels
+        padding '1px 14px'
         css false
         active_css false
         inactive_css false

@@ -111,7 +111,7 @@
       a.tab {
         @include cg-hover-link;
         display: block;
-        padding: 0px 0.75em;
+        padding: 0px 0.75em; // a reasonable default.
 
         // using height and line-height makes for much more consistant rendering
         // than using vertical padding. essential to prevent tabs from looking
