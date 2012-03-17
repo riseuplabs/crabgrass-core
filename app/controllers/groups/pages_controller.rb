@@ -12,7 +12,7 @@ class Groups::PagesController < Groups::BaseController
 
   def setup_navigation(nav)
     nav[:local] = [
-      {:active => false, :visible => true, :html => {:partial => 'common/pages/search/create'}},
+      {:active => false, :visible => may_create_group_page?, :html => {:partial => 'common/pages/search/create'}},
       {:active => true,  :visible => true, :html => {:partial => 'common/pages/search/controls_active'}},
       {:active => false, :visible => true, :html => {:partial => 'common/pages/search/controls_possible'}}
     ]
