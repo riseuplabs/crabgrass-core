@@ -19,7 +19,7 @@ class People::DirectoryController < ApplicationController
 #  VIEW_KEYWORDS = ['friends', 'peers']
 
   def friends?
-    params[:path].try.include? 'friends'
+    params[:path].try.include? 'contacts'
   end
 
   def peers?
