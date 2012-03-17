@@ -2,8 +2,8 @@
   %h1
     = h :welcome_title.t(:site_title => current_site.title)
   = to_html first_with_any(:welcome_login_message.t, :welcome_message.t)
-
-= render :partial => 'session/login_form'
+- if !logged_in? 
+  = render :partial => 'session/login_form'
 
 
 
