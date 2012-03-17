@@ -1,9 +1,9 @@
 
 - form_tag(person_friend_request_path(@user), :method => :post) do
   .p
-    = :friend_request_message_label.t(:user => content_tag(:b,@user.name))
-    = "(" + :optional.t + ")"
-  .p= text_area_tag 'message', '', :rows => 4, :style => 'width:100%'
+    = #:friend_request_message_label.t(:user => content_tag(:b,@user.name))
+    = #"(" + :optional.t + ")" #is this saving right?
+  .p= #text_area_tag 'message', '', :rows => 4, :style => 'width:100%'
   .buttons
     = close_modal_button(:cancel)
     = submit_tag I18n.t(:send_request_button), :name => 'send'
