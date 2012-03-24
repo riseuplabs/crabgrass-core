@@ -2,6 +2,11 @@ module Groups::RequestsPermission
 
   protected
 
+  # TODO: remove
+  def may_create_group_request?
+    may_create_join_request
+  end
+
   #
   # list all the requests
   #

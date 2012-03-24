@@ -13,6 +13,8 @@ en:
   committee: "Committee"
   council: "Council"
   members: "Members"
+  structure: "Structure"
+  ##!  regular_group: "Regular Group" 
   ##!  new_members: "New members"
   ##!  affiliations: "Affiliations"
 
@@ -20,12 +22,13 @@ en:
   ## GROUP CREATION
   ##
 
-  ##!  regular_group: "Regular Group"
   group_description: "Groups are autonomous associations of people. You can control who has access to join the group."
   committee_description: "Committees are groups within another group. A committee is entirely subordinate to its parent group."
-  council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
   network_description: "Networks are special groups that can have other groups as members. A network can be used as an association of multiple groups, or a place for two autonomous groups to collaborate."
   committee_choose_group: 'Choose a group for this committee:'
+
+  council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
+  council_description_details: "By default, all members of a group have full permission to modify a group. If you want restrict administrative powers to certain users, create a council and add users to it."
 
   ##
   ## PERMISSIONS
@@ -163,7 +166,7 @@ en:
   request_join_group_link: "Request to Join %{group_type}"
   ##!  send_join_request: "Send request to join %{group_name}"
   ##!  group_destroyed_message: "%{group_type} Destroyed"
-  request_exists: "%{request_type} membership request already exists"
+  request_exists: "Your request to join is waiting for approval."
   join_group_confirmation: "Are you sure you want to join this %{group_type}?"
 
   ##!  remove_group_link: "Remove Group"
@@ -191,7 +194,6 @@ en:
   ##!  this_is_coordinating: "This is the <strong>coordinating council</strong> for %{parent_group}."
   ##!  new_council: "New council for group %{group_name}"
   ##!  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-  create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
   # committee
 
   this_is_committee: "This committee is part of %{parent_group}."

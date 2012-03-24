@@ -101,7 +101,7 @@ en:
   permissions: "Permissions"
   ##!  description: "Description"
   requests: "Requests"
-  ##!  request: "Request"
+  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
@@ -120,7 +120,8 @@ en:
   text_message: "Text Message"
   ##!  print: "Print"
   show: "Show"
-  message: Message
+  message: "Message"
   ##!  success: "Success"
   ##!  error: "Error"
   ##!  status: "Status"
+  visits: "Visits"

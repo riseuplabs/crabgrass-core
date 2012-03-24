@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resource  :settings, :only => [:show, :update]
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
-    me.resources :requests, :only => [:index, :update, :destroy]
+    me.resources :requests, :only => [:index, :update, :destroy, :show]
     me.resources :events
     me.resources :avatars
   end
@@ -116,14 +116,15 @@ ActionController::Routing::Routes.draw do |map|
     groups.pages     'pages/*path', :controller => 'pages'
     groups.resources :memberships, :only => [:index, :create, :destroy]
     groups.resources :my_memberships, :only => [:create, :destroy]
-    groups.resources :committees, :only => [:new, :create]
-    groups.resources :councils, :only => [:new, :create]
+    #groups.resources :committees, :only => [:new, :create]
+    #groups.resources :councils, :only => [:new, :create]
     groups.resources :invites, :only => [:new, :create]
     groups.resources :requests, :only => [:index, :create]
     #groups.resources :events
     groups.resources :permissions, :only => [:index, :update]
     #groups.resources :activities
     groups.resource  :profile, :only => [:edit, :update]
+    groups.resource  :structure
     groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
     groups.resources :wikis, :except => [:index, :destroy]

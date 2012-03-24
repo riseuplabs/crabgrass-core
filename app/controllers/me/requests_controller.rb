@@ -1,7 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
   include_controllers 'common/requests'
-  before_filter :fetch_request, :only => [:update, :destroy]
+  before_filter :fetch_request, :only => [:update, :destroy, :show]
 
   def index
     @requests = Request.
@@ -35,6 +35,16 @@ class Me::RequestsController < Me::BaseController
     @request.destroy
     notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
     render :template => 'common/requests/destroy'
+  end
+
+  # 
+  # show the details of a request
+  # 
+  # this is needed for the case when a user visits a person or group profile
+  # and sees that a request is pending and wants to click on a link for more information.
+  # 
+  def show
+    render :template => 'common/requests/show'
   end
 
   protected

@@ -3,12 +3,6 @@ module Common::Ui::TextHelper
 
   protected
 
-  def content_tag_if(tag, content, options={})
-    if content.any?
-      content_tag(tag, content, options)
-    end
-  end
-
   # convert greencloth marktup to html
   def to_html(str)
     str.any? ? GreenCloth.new(str).to_html() : ''

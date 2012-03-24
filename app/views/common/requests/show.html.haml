@@ -1,0 +1,6 @@
+-# .top_links
+-#  = link_to :see_all_link.t, me_requests_path
+
+= render :partial => 'common/requests/nav'
+
+= render :partial => 'common/requests/request_long_entry', :locals => {:request => @request}

@@ -53,3 +53,12 @@
   }
 }
 
+//
+// options for styling entities
+//
+
+.entity {
+  &.spaced {
+    margin-bottom: 4px;
+  }
+}

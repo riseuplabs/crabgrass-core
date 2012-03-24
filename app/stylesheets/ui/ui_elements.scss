@@ -94,3 +94,18 @@
   }
 }
 
+//
+// COMMON REUSABLE UI STYLING
+//
+
+
+//
+// top_links -- for links that go at the top of the content area.
+//              flush right, bottom margin. they are otherwise not decorated.
+//
+
+.top_links {
+  @extend .p;
+  @extend .first;
+  text-align: right;
+}

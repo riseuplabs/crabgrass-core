@@ -32,8 +32,9 @@ module Groups::LinksHelper
         :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
         :method => :post
     elsif may_create_join_request?
-      if RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
-        :request_exists.t(:request_type => :pending)
+      req = RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
+      if req
+        link_line :bullet, :request_exists.t, link_to(:show_thing.t(:thing => :request.t), me_request_path(req))
       else
         link_to :request_join_group_link.t(:group_type => @group.group_type),
           group_requests_path(@group),
@@ -96,7 +97,7 @@ module Groups::LinksHelper
   #end
 
   def create_committee_link
-    if may_create_group_committee?
+    if may_create_committee?
       link_to :create_button.t, new_group_committee_path(@group)
     end
   end

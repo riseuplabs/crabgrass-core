@@ -206,16 +206,19 @@ module Common::Ui::EntityDisplayHelper
   #
   def entity_list(options)
     html = []
-    if options[:entities].any? or options[:after]
-      html << options[:before]
-      if options[:entities].any?
+    before = options.delete(:before)
+    after = options.delete(:after)
+    entities = options.delete(:entities)
+    if entities or before or after
+      html << before
+      if entities.any?
         html << content_tag(:ul, :class => 'entities') do
-          options[:entities].collect do |entity|
-            content_tag(:li, link_to_entity(entity, options[:link_options]))
+          entities.collect do |entity|
+            content_tag(:li, link_to_entity(entity, options))
           end
         end
       end
-      html << options[:after]
+      html << after
     end
     return html.join
   end

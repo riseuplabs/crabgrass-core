@@ -63,7 +63,7 @@ module Groups::PermissionsHelper
       row.input link_to_group(@group.council, :avatar => :small)
     else
       row.input link_to(I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), new_group_council_path(@group))
-      row.info I18n.t(:create_a_new_council_caption)
+      row.info :council_description_details.t
     end
   end
 

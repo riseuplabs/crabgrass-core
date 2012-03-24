@@ -283,7 +283,7 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures') }
 
       local_section :settings do
         visible { may_admin_group? }
@@ -304,6 +304,13 @@ define_navigation do
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
         active { controller?('groups/profiles') }
+      end
+
+      local_section :structure do
+        visible { may_show_group_structure? }
+        label  { :structure.t }
+        url    { group_structure_path(@group) }
+        active { controller?('groups/structures') }
       end
 
       # uncomment this when Settings -> Requests is needed

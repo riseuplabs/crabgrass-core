@@ -1,13 +1,16 @@
 -#
+-# All groups of all types are created via this partial.
+-#
+-# This is used by the creation code in both groups/group_controller 
+-# and groups/structures_controller.
+-# 
 -# requires:
 -#
 -#   group_type -- symbol of :group, :network, :committee, :council
 -#
 
-- if group_type == :committee
-  - url = group_committees_path(@group)
-- elsif group_type == :council
-  - url = group_councils_path(@group)
+- if group_type == :committee || group_type == :council
+  - url = group_structure_path(@group)
 - else
   - url = groups_path
 
