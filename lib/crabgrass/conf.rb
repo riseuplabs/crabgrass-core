@@ -73,6 +73,9 @@ class Conf
   cattr_accessor :committees
   cattr_accessor :councils
   cattr_accessor :networks
+  cattr_accessor :transifex_user
+  cattr_accessor :transifex_password
+  
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id

@@ -1,5 +1,6 @@
 require 'yaml'
 require 'fileutils'
+require 'lib/crabgrass/boot'
 
 def extract_keys()
   keys = {}
@@ -138,6 +139,15 @@ namespace :cg do
         end
       end
     end
+
+    desc "pull translations from transifex"
+    task :download do
+      Conf.enabled_languages.each do |lang|
+        `curl -L --user #{Conf.transifex_user}:#{Conf.transifex_password} -X GET https://www.transifex.net/api/2/project/crabgrass/resource/master/translation/#{lang}/?file > config/locales/#{lang}.yml`
+      end
+    end
+
+
   end
 end
 
