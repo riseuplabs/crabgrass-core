@@ -145,6 +145,20 @@ module Common::Ui::JavascriptHelper
     loader + "activatePanelRow('#{dom_id(item)}');"
   end
 
+  #
+  # called when a user clicks on a row in a 'sliding list'
+  # 
+
+  def activate_sliding_row(url)
+    #left_domid = 'content'
+    #right_domid = 'sliding-item'
+    #right_path = url
+    #"activateSlidingRow({domid:'%s',path:window.location.pathname}, {domid:'%s',path:'%s'})" % 
+    #  [left_domid, right_domid, right_path]
+
+    "window.location.href = '%s'" % url
+  end
+
   ##
   ## classes
   ##
