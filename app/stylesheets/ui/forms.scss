@@ -9,6 +9,7 @@
 
 textarea {
   resize: vertical;
+  margin: 0;
 }
 
 //
@@ -16,7 +17,7 @@ textarea {
 // especially in chrome:
 //
 
-textarea, input[type=submit], input[type=button] {margin: 0;}
+// textarea, input[type=submit], input[type=button] {margin: 0;}
 
 //
 // form elements are often really misaligned because in the w3c box
@@ -66,10 +67,10 @@ textarea, input, select {
     }
   }
 
-  input[type=submit], input[type=button] {
-    font-size: 1.15em;
-    margin-left: 1em;
-  }
+  //input[type=submit], input[type=button] {
+  //  font-size: 1.15em;
+  //  margin-left: 1em;
+  //}
   //&.right  {text-align: right;}
   //&.left   {text-align: left;}
   //&.center {text-align: center;}
@@ -87,8 +88,8 @@ textarea, input, select {
     overflow: auto; // self clear
     input[type=submit], input[type=button], img {
       float: right;
-      margin-right: 0;
-      margin-left: 1em;
+      //margin-right: 0;
+      //margin-left: 1em;
     }
   }
 }

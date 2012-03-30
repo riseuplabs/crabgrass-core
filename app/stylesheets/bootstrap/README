@@ -1,0 +1,11 @@
+Eventually, we want to migrate more of the CSS over to using "Bootstrap"
+
+  http://twitter.github.com/bootstrap
+
+In this directories is a copy of bootstrap converted to SCSS:
+
+  https://github.com/jlong/sass-twitter-bootstrap
+
+To update the files in this directory, run this command (in this directory!)
+
+  curl https://nodeload.github.com/jlong/sass-twitter-bootstrap/tarball/master | tar -vxz --transform 's/.*lib\///' --overwrite --wildcards '*/lib/*.scss'

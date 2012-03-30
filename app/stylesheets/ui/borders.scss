@@ -1,0 +1,24 @@
+//
+// if ui_border_radius is set, then we apply rounding to many elements.
+//
+// if it is not set, then these classes will not be defined, 
+// and nothing will be rounded.
+//
+
+@if $ui_border_radius {
+  .round-top {
+    @include border-radius($ui_border_radius $ui_border_radius 0 0);
+  }
+  .round-bottom {
+    @include border-radius(0 0 $ui_border_radius $ui_border_radius);
+  }
+  .round-left {
+    @include border-radius($ui_border_radius 0 0 $ui_border_radius);
+  }
+  .round-right {
+    @include border-radius(0 $ui_border_radius $ui_border_radius 0);
+  }
+  .round {
+    @include border-radius($ui_border_radius);
+  }
+}

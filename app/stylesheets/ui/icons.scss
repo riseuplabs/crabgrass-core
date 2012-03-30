@@ -182,12 +182,27 @@ a.small_icon_button {
 // for displaying xsmall icons inline. no link or text.
 //
 
-button.small_icon {
+i.small_icon {
+  display: inline-block;
   width: 16px;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: text-top;
   padding: 0;
   border: 0;
-  background-color: transparent;
 }
+
+//
+// I changed this from 'button' to 'i' tag, since that is what bootstrap uses.
+// Here is the old CSS:
+// 
+// button.small_icon {
+//   width: 16px;
+//   padding: 0;
+//   border: 0;
+//   background-color: transparent;
+// }
+//
 
 //
 // mobi icons are used to transform some text into icons when the

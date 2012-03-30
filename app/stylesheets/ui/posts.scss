@@ -14,7 +14,7 @@
 .post_list.table {
   table.posts {
     width: 100%;
-    border-top: $posts_border;
+    border: $posts_border;
   }
   .shade_even {
     background: $posts_even_background;
@@ -32,10 +32,13 @@
   }
   tr.post_spacer_bottom td {
     line-height: $posts_padding;
-    border-bottom: $posts_border;
   }
   tr.post_spacer_top td {
     line-height: $posts_padding;
+    border-top: $posts_border;
+    &.first {
+      border-top: 0;
+    }
   }
   td.post_body {
     border-left: $posts_border;
@@ -43,7 +46,7 @@
     width: 100%;
     textarea {
       width: 100%;
-      resize: vertical;
+      // resize: vertical; (this is now the default in forms.scss)
     }
   }
   td.post_author {
@@ -67,4 +70,3 @@
     text-align: right;
   }
 }
-
