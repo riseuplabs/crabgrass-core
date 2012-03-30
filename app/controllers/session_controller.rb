@@ -94,24 +94,4 @@ class SessionController < ApplicationController
     end
   end
 
-  #
-  # returns the url of the HTTP Referrer (aka Referer).
-  #
-  def referrer
-    @referrer ||= begin
-      if request.env["HTTP_REFERER"].empty?
-        '/'
-      else
-        raw = request.env["HTTP_REFERER"]
-        server = request.host_with_port
-        prot = request.protocol
-        if raw.starts_with?("#{prot}#{server}/")
-          raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
-        else
-          '/'
-        end
-      end
-    end
-  end
-
 end
