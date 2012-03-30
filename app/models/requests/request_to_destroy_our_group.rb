@@ -6,7 +6,7 @@
 #  created_by: person in group who want their group to be destroyed
 #
 
-class RequestToDestroyOurGroup < VotableRequest
+class RequestToDestroyOurGroup < Request
 
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
@@ -27,8 +27,12 @@ class RequestToDestroyOurGroup < VotableRequest
     user.may?(:admin, group)
   end
 
+  def may_approve?(user)
+    user.may?(:admin, group) and user.id != created_by_id
+  end
+
   alias_method :may_view?, :may_create?
-  alias_method :may_approve?, :may_create?
+  alias_method :may_destroy?, :may_create?
 
   def after_approval
     group.destroy_by(created_by)
@@ -50,9 +54,17 @@ class RequestToDestroyOurGroup < VotableRequest
 
   protected
 
-  def voting_population_count
-    group.users.count
-  end
+  # 
+  # for votable, if we ever do that:
+  #
+  # def voting_population_count
+  #   group.users.count
+  # end
+  #
+  # def instant_approval(voter)
+  #   xxxx
+  # end
+  #
 
   private
 

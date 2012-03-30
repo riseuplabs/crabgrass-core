@@ -35,33 +35,9 @@ module Common::Ui::ThemeHelper
 
   def link_to_banner_title(entity, size=nil)
     if size
-      link_to_entity(entity, :class => 'title', :style => 'line-height: %spx' % Avatar.pixel_width(size))
+      link_to_entity(entity, :class => 'title', :format => :full, :style => 'line-height: %spx' % Avatar.pixel_width(size))
     else
-      link_to_entity(entity, :class => 'title')
-    end
-  end
-
-  ##
-  ## TYPOGRAPHY
-  ##
-
-  #
-  #
-  # return 'first' if this is the first time it has been called for +key+
-  #
-  # for example:
-  #
-  #   .p{:class => first(:list)}   --->   <p class="first"></p>
-  #   .p{:class => first(:list)}   --->   <p></p>
-  #   .p{:class => first(:list)}   --->   <p></p>
-  #
-  def first(key)
-    @first_keys ||= {}
-    if @first_keys[key]
-      return nil
-    else
-      @first_keys[key] = true
-      return 'first'
+      link_to_entity(entity, :class => 'title', :format => :full)
     end
   end
 

@@ -142,6 +142,19 @@ module UserExtension::Groups
     end
   end
 
+  #
+  # returns true if and only if the group has a council and the user is a member of it.
+  #
+  def council_member_of?(group)
+    if group.real_council.nil?
+      false
+    elsif self.direct_member_of?(group.real_council)
+      true
+    else
+      false
+    end
+  end
+
   def check_duplicate_memberships(membership)
     if self.group_ids.include?(membership.group_id)
       raise AssociationError.new(I18n.t(:invite_error_already_member))

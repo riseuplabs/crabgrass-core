@@ -31,7 +31,6 @@ module Common::Ui::EntityDisplayHelper
     end
   end
 
-
   #
   # provides placeholder for when the user or group record has been destroyed.
   #
@@ -44,7 +43,7 @@ module Common::Ui::EntityDisplayHelper
   #    styles  << avatar_style(nil, options[:avatar])
   #  end
   #  content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
-  #nd
+  #end
 
   ##
   ## GROUPS
@@ -103,6 +102,11 @@ module Common::Ui::EntityDisplayHelper
   def link_to_entity(entity, options={})
     return '' unless entity
 
+    if entity.is_a? String
+      # this is slow, and should be avoided when displaying lists of entities
+      entity = Group.find_by_name(entity) || User.find_by_login(entity)
+    end
+
     if entity.is_a? User
       link_to_user(entity, options)
     elsif entity.is_a? Group
@@ -136,7 +140,7 @@ module Common::Ui::EntityDisplayHelper
   #
   def display_entity(entity, options={})
     options  ||= {}
-    format   = options[:format] || :full
+    format   = options[:format] || :short
     styles   = [options[:style]]
     classes  = [options[:class], 'entity']
 

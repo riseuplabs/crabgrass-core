@@ -64,14 +64,29 @@ module Common::Utility::GeneralHelper
     end
   end
 
+  #
+  # returns true the first time it is called for 'key', and false otherwise.
+  #
   def once?(key)
     @called_before ||= {}
-    return false if @called_before[key]
-    @called_before[key]=true
+    if @called_before[key]
+      return false
+    else
+      @called_before[key] = true
+      return true
+    end
   end
 
+  #
   # used to set the class 'first' for lists of things, because css selector :first
   # is not very reliable.
+  #
+  # for example:
+  #
+  #   .p{:class => first(:list)}   --->   <p class="first"></p>
+  #   .p{:class => first(:list)}   --->   <p></p>
+  #   .p{:class => first(:list)}   --->   <p></p>
+  #
   def first(key)
     once?(key) ? 'first' : ''
   end

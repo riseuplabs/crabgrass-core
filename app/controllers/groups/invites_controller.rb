@@ -12,7 +12,11 @@ class Groups::InvitesController < Groups::BaseController
   end
 
   #
-  # create some new invites
+  # create some new invites, possibly of the type:
+  #
+  # RequestToJoinUs
+  # RequestToJoinOurNetwork
+  # RequestToJoinUsViaEmail
   #
   def create
     users, groups, emails = Page.parse_recipients!(params[:recipients])

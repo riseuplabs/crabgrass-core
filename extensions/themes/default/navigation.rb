@@ -239,7 +239,7 @@ define_navigation do
       label   { :members.t }
       icon    :user
       url     { group_memberships_path(@group) }
-      active  { controller?('groups/memberships', 'groups/invites', 'groups/requests') }
+      active  { controller?('groups/memberships', 'groups/invites', 'groups/membership_requests') }
 
       local_section :people do
         visible { may_list_memberships? }
@@ -259,14 +259,19 @@ define_navigation do
         visible { may_create_group_invite? }
         label   { :send_invites.t }
         url     { new_group_invite_path(@group) }
-        active  { controller?('groups/invites') && action?('new') }
+        active  { controller?('groups/invites') }
       end
 
       local_section :requests do
-        visible { may_list_group_requests? }
-        label   { :requests.t }
-        url     { group_requests_path(@group) }
-        active  { controller?('groups/requests') }
+        visible { may_list_membership_requests? }
+        label   { :membership_requests.t }
+        url     { group_membership_requests_path(@group) }
+        active  { controller?('groups/membership_requests') }
+      end
+
+      local_section :leave_group_link do
+        visible { may_leave_group? }
+        html    { leave_group_link }
       end
 
       #local_section :membership_settings do
@@ -283,7 +288,7 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures', 'groups/requests') }
 
       local_section :settings do
         visible { may_admin_group? }
@@ -313,13 +318,12 @@ define_navigation do
         active { controller?('groups/structures') }
       end
 
-      # uncomment this when Settings -> Requests is needed
-      #local_section :requests do
-      #  visible { may_admin_requests? }
-      #  label  { :requests.t }
-      #  url    { group_requests_path(@group) }
-      #  active { controller?('groups/requests') }
-      #end
+      local_section :requests do
+        visible { may_list_group_requests? }
+        label  { :requests.t }
+        url    { group_requests_path(@group) }
+        active { controller?('groups/requests') }
+      end
     end
   end
 

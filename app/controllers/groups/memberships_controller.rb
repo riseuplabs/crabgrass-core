@@ -35,7 +35,11 @@ class Groups::MembershipsController < Groups::BaseController
   protected
 
   def fetch_membership
-    @membership = @group.memberships.find(params[:id]) if params[:id]
+    if federation_view?
+      @membership = @group.federatings.find(params[:id])
+    else
+      @membership = @group.memberships.find(params[:id])
+    end
   end
 
   def federation_view?

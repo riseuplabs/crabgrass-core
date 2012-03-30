@@ -1,7 +1,20 @@
+#
+# controller for:
+# 
+# (1) listing all requests for this group, regardless of type.
+# (2) creating non-membership requests.
+#
+#
 class Groups::RequestsController < Groups::BaseController
 
   include_controllers 'common/requests'
-  before_filter :login_required
+
+  guard :index => :may_list_group_requests?,
+        :show => :may_list_group_requests?,
+        # permissions handled by model:
+        :create => :allow, :update => :allow, :destroy => :allow
+
+  rescue_render :create => :index
 
   def index
     @requests = Request.
@@ -12,30 +25,51 @@ class Groups::RequestsController < Groups::BaseController
     render :template => 'common/requests/index'
   end
 
+  #
+  # RequestToDestroyOurGroup
+  # RequestToCreateCouncil
+  #
   def create
-    if !params[:cancel]
-      req = RequestToJoinYou.create :recipient => @group, :created_by => current_user
-      if req.valid?
-        success(I18n.t(:invite_sent, :recipient => req.recipient.display_name))
-      else
-        error("Invalid request for "+req.recipient.display_name)
-      end
+    case request_type
+      when :destroy_group then create_destroy_group_request
+      when :create_council then create_create_council_request
     end
-    redirect_to entity_url(@group)
   end
 
   protected
 
+  def request_type
+    if params[:type] == 'destroy_group'
+      :destroy_group
+    elsif params[:type] == 'create_council'
+      :create_council
+    end
+  end
+
   def current_view
     case params[:view]
-      when "incoming" then :to_group;
-      when "outgoing" then :from_group;
-      else :regarding_group;
+      when "incoming" then :to_group
+      when "outgoing" then :from_group
+      else :regarding_group
     end
   end
 
   def request_path(*args)
-    me_request_path(*args)
+    group_request_path(@group, *args)
   end
 
+  def requests_path(*args)
+    group_requests_path(@group, *args)
+  end
+
+  def create_destroy_group_request
+    req = RequestToDestroyOurGroup.create! :recipient => @group, :requestable => @group, :created_by => current_user
+    success
+    redirect_to request_path(req)
+  end
+
+  def create_create_council_request
+    # not supported yet.
+  end
+  
 end

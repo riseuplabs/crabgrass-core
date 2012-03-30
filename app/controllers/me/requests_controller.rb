@@ -1,8 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
   include_controllers 'common/requests'
-  before_filter :fetch_request, :only => [:update, :destroy, :show]
-
+  
   def index
     @requests = Request.
       having_state(current_state).
@@ -10,41 +9,6 @@ class Me::RequestsController < Me::BaseController
       by_updated_at.
       paginate(pagination_params)
     render :template => 'common/requests/index'
-  end
-
-  #
-  # update action changes the state of the request
-  #
-  def update
-    if mark
-      @request.mark!(mark, current_user)
-      if mark == :approve
-        msg = :approved_by_entity.t(:entity => current_user.name)
-      elsif mark == :reject
-        msg = :rejected_by_entity.t(:entity => current_user.name)
-      end
-      success I18n.t(@request.name), msg
-    end
-    render :template => 'common/requests/update'
-  end
-
-  #
-  # destroy a request
-  #
-  def destroy
-    @request.destroy
-    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name))
-    render :template => 'common/requests/destroy'
-  end
-
-  # 
-  # show the details of a request
-  # 
-  # this is needed for the case when a user visits a person or group profile
-  # and sees that a request is pending and wants to click on a link for more information.
-  # 
-  def show
-    render :template => 'common/requests/show'
   end
 
   protected
@@ -57,23 +21,12 @@ class Me::RequestsController < Me::BaseController
     end
   end
 
-  def mark
-    case params[:mark]
-      when 'reject' then :reject;
-      when 'approve' then :approve;
-    end
-  end
-
-  #
-  # this looks dangerous, but is not, because requests
-  # have their own permission system.
-  #
-  def fetch_request
-    @request = Request.find(params[:id])
-  end
-
   def request_path(*args)
     me_request_path(*args)
   end
 
+  def requests_path(*args)
+    me_requests_path(*args)
+  end
+  
 end

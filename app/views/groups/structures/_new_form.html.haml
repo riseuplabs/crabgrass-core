@@ -14,8 +14,13 @@
 - else
   - url = groups_path
 
+- if group_type == :group
+  - thing = :organization
+- else
+  - thing = group_type
+
 - content_for :title do
-  %h1= :create_a_new_thing.t(:thing => group_type.t.downcase)
+  %h1= :create_a_new_thing.t(:thing => thing.t.downcase)
 
 - form_tag url do |form|
 
@@ -54,4 +59,4 @@
 
       -# adding avatar wasn't working, and seems okay for now to have it added under settings
 
-    - f.buttons submit_tag(:create_button.t)
+    - f.buttons submit_tag(:create_button.t, :class => 'btn btn-primary')

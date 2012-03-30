@@ -49,5 +49,9 @@ class RequestToJoinUs < Request
     I18n.t(:request_to_join_us_short, :user => user_span(recipient), :group => group_span(group))
   end
 
+  def icon_entity
+    self.recipient
+  end
+
 end
 

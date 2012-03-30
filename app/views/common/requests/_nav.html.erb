@@ -1,27 +1,27 @@
-<div class="toggle_bugs">
-<%- options = params.dup %>
-<%- none_active = options[:id].any? %>
-<%- options[:id] = nil; options[:action] = nil %>
+<div class="p first">
+<%- options = params.dup -%>
+<%- none_active = options[:id].any? -%>
+<%- options[:id] = nil; options[:action] = nil -%>
 <%= toggle_bug_links(
-  { :label => :pending.t.downcase,
+  { :label => :pending.t,
     :url => options.merge(:state=>'pending'),
     :active => !none_active && (options[:state] == 'pending' or options[:state].empty?) },
-  { :label => :approved.t.downcase,
+  { :label => :approved.t,
     :url => options.merge(:state => 'approved'),
     :active => !none_active && options[:state] == 'approved' },
-  { :label => :rejected.t.downcase,
+  { :label => :rejected.t,
     :url => options.merge(:state => 'rejected'),
     :active => !none_active && options[:state] == 'rejected' }
-)%>
+) -%>
 <%= toggle_bug_links(
-  { :label => :all.t.downcase,
+  { :label => :all.t,
     :url => options.merge(:view => 'all'),
     :active => !none_active && (options[:view] == 'all' or options[:view].empty?) },
-  { :label => :incoming.t.downcase,
+  { :label => :incoming.t,
     :url => options.merge(:view => 'incoming'),
     :active => !none_active && options[:view] == 'incoming' },
-  { :label => :outgoing.t.downcase,
+  { :label => :outgoing.t,
     :url => options.merge(:view => 'outgoing'),
     :active => !none_active && options[:view] == 'outgoing'}
-)%>
+) -%>
 </div>
