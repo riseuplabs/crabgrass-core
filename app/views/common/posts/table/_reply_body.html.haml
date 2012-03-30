@@ -16,10 +16,10 @@
   =# hidden_field_tag('page_id', @page.id) if @page
   =# hidden_field_tag('paging', @discussion.last_page if @discussion
 
-  = f.text_area :body, :rows => 8
-  .buttons.reverse
+  = f.text_area :body, :rows => 8, :class => 'input-xlarge'
+  .buttons
     .float_left= formatting_reference_link
-    = submit_tag :post_message.t, :name => 'post_message'
     - if remote
       = spinner('post')
+    = submit_tag :post_message.t, :name => 'post_message', :class => 'btn btn-primary'
 

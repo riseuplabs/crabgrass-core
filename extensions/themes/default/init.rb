@@ -29,15 +29,22 @@ define_theme {
     dim '#999'
     bright '#f33'
 
+    # used for borders, typically
+    grey '#ddd'
+
     # used for a subtle highlight (e.g. table headings)
     light '#eee'
 
     # used for barely visible highlight (e.g. table rows).
-    lighter '#f6f6f6'
+    lighter '#f5f5f5'
+
+    # used as :hover background for mouse-over clickable areas
+    hover '#ffd'
   }
 
   font {
     default {
+      color '#000'
       family "verdana, 'bitstream vera sans', helvetica, sans-serif"
       size '13px'
       line_height '18px'
@@ -52,14 +59,23 @@ define_theme {
   }
 
   link {
-    standard_color "#0000EE"
-    visited_color "#551A8B"
-    active_color "#EE0000"
+    standard_color "#00e"
+    visited_color "#551a8b"
+    active_color "#e00"
     underline false
   }
 
   background {
     color '#e6e6e6'
+  }
+
+  #
+  # for ui elements, like buttons and stuff.
+  #
+  ui {
+    border_radius '4px'
+    border_color var(:color_grey)
+    fade_color var(:color_lighter)
   }
 
   masthead {
@@ -98,7 +114,7 @@ define_theme {
         background_color 'white'
         border_color '#999'
         hover {
-          background_color '#ffc'
+          background_color var(:color_hover)
           border '1px solid #cc9'
         }
       }
@@ -107,7 +123,7 @@ define_theme {
 
   banner {
     # unfortunately, banner padding must be specified in pixels.
-    padding "12px"
+    padding "16px"
     border "1px solid #888"
     default_background '#999'
     default_foreground '#fff'
@@ -150,8 +166,8 @@ define_theme {
   }
 
   posts {
-    border "1px solid #ccc"
-    odd_background "#efefef"
+    border "1px solid #ddd"
+    odd_background var(:color_lighter)
     even_background var(:local_content_background)
     padding "10px"
   }

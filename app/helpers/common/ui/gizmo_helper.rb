@@ -29,22 +29,29 @@ module Common::Ui::GizmoHelper
   #   (2) :remote -- creates a link_to_remote
   #   (3) :function -- creates a link_to_function
   #
+  # example button group:
+  #
+  # <div class="btn-group" data-toggle="buttons-radio">
+  #  <button class="btn">Left</button>
+  #  <button class="btn">Middle</button>
+  #  <button class="btn">Right</button>
+  # </div>
+  #
   def toggle_bug_links(*links)
-    content_tag(:ul, :class => 'toggle_bug') do
+    content_tag(:div, :class => 'btn-group') do
       links.collect do |link|
         classes = [
+          'btn',
           link[:active] ? 'active' : '',
           link == links.first ? 'first' : '',
           link == links.last ? 'last' : ''
         ].combine
-        content_tag(:li, :class => classes, :id => link[:id]) do
-          if link[:remote]
-            link_to_remote(link[:label], link[:remote])
-          elsif link[:function]
-            link_to_function(link[:label], link[:function])
-          else
-            link_to(link[:label], link[:url])
-          end
+        if link[:remote]
+          link_to_remote(link[:label], link[:remote], :class => classes, :id => link[:id])
+        elsif link[:function]
+          link_to_function(link[:label], link[:function], :class => classes, :id => link[:id])
+        else
+          link_to(link[:label], link[:url], :class => classes, :id => link[:id])
         end
       end.join
     end

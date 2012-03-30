@@ -4,7 +4,7 @@
 # eg: /:context/:page
 #
 
-class LinkRenderer::Dispatch < WillPaginate::LinkRenderer
+class LinkRenderer::Dispatch < LinkRenderer::CrabgrassBase
   def url_for(page)
     if @template.params[:_context] or @template.params[:_page]
       url = ""

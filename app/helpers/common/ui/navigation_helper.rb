@@ -16,6 +16,10 @@ module Common::Ui::NavigationHelper
 
   protected
 
+  def breadcrumb_divider()
+    '<span class="divider">&raquo;</span>'
+  end
+
   ##
   ## deprecated
   ##

@@ -50,13 +50,13 @@ module Common::Ui::PaginationHelper
     defaults = {
      :previous_label => "&laquo; %s" % :pagination_previous.t,
      :next_label => "%s &raquo;" % :pagination_next.t,
-     :inner_window => 2
+     :inner_window => 2,
+     :outer_window => 0
     }
 
     if defined? page_search_path
       if xhr_page_search?
         defaults[:renderer] = LinkRenderer::AjaxPages
-        defaults[:container] = false  # LinkRenderer::Ajax uses its own container
       else
         defaults[:renderer] = LinkRenderer::Pages
       end
@@ -64,7 +64,6 @@ module Common::Ui::PaginationHelper
       defaults[:renderer] = (template.format == 'html') ?
        LinkRenderer::ModalAjax :
        LinkRenderer::Ajax
-      defaults[:container] = false  # LinkRenderer::Ajax uses its own container
     else
       defaults[:renderer] = LinkRenderer::Dispatch
     end

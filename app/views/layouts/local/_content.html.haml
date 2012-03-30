@@ -9,9 +9,10 @@
 -# 
 
 - if title_content = yield(:title)
-  #title_box
+  #title_box.round-top
     #title= title_content
-
-%article#content
-  = yield(:content) or yield
-
+  %article#content.round-bottom
+    = yield(:content) or yield
+- else
+  %article#content.round
+    = yield(:content) or yield

@@ -15,9 +15,13 @@ module Common::Ui::ImageHelper
   ## ICON
   ##
 
-  # for example icon_tag('pencil')
+  #
+  # for example: icon_tag('pencil')
+  # 
+  # currently, any 'size' argument other than the default will not display well.
+  #
   def icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "small_icon #{icon}_#{size}"
+    content_tag :i, ' ', :class => "small_icon #{icon}_#{size}"
   end
 
 #  def pushable_icon_tag(icon, size = 16, id = nil)

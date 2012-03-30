@@ -10,7 +10,7 @@
   - @navigation[:local].each do |item|
     - next unless item[:visible]
     - active = item[:active] ? 'active' : ''
-    %li{:class => [active, 'nav']}
+    %li{:class => [active, 'nav', 'round-left']}
       - if item[:html]
         %div{:class => [active, 'nav']}
           = theme_render(item[:html])
