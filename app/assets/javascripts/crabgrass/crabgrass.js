@@ -126,3 +126,16 @@ function activatePanelRow(row_id) {
     $('panel_right_'+row_id).show();
   }
 }
+
+//
+// sliding list
+//
+// left and right contain these keys:
+//   path  -- the url path of the panel. this is used both for history
+//           and loading content via ajax.
+//   domid -- dom id of the element to update
+//
+function activateSlidingRow(left, right) {
+  History.replaceState({slide_right:'sliding-list', update:left}, null, left.path);
+  History.pushState({slide_left:'sliding-list', update:right}, null, right.path);
+}

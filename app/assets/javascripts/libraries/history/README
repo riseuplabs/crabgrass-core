@@ -1,0 +1,35 @@
+A library to make HTML5 window.history work better, and also fallback
+gracefully for HTML4 browsers.
+
+  https://github.com/balupton/History.js/
+
+It is a little heavyweight, and includes a bunch of features we don't
+need -- like storing data with history. For this reason, I created
+json2-dummy.js, which tricks history.js into not storing data.
+
+To update the source files in this directory:
+
+  cd app/assets/javascripts/libraries/history
+  curl https://nodeload.github.com/balupton/History.js/tarball/master | tar -vxz --transform 's/.*\/scripts\/uncompressed\///' --overwrite --wildcards '*/uncompressed/*.js'
+  rm history.adapter.jquery.js
+  rm history.adapter.mootools.js
+  rm history.adapter.right.js
+  rm history.adapter.zepto.js
+
+There are two options we have for history.js support: html5 only or html5+html4.
+
+For html5 only support, bundle these files:
+
+  history/history.adapter.native.js
+  history/history.js
+
+For html4+html5 support, bundle these files (in this order):
+
+  history/json2.js
+  history/history.adapter.native.js
+  history/history.html4.js
+  history/history.js
+
+See https://github.com/balupton/history.js/blob/master/buildr.coffee for the build rules.
+
+NOTE: if/when we switch to jquery, replace native adapter with jquery adaptor.
