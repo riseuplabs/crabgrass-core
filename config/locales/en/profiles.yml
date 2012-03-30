@@ -20,8 +20,7 @@ en:
   ##!  first_name: first name
   ##!  middle_name: middle
   ##!  last_name: last name
-  organization: organization
-  organizational_role: organizational role
+  organizational_role: Organizational Role
   ##!  descriptions: Descriptions
   ##!  add_description: Add Description
   phone_number: Phone Number
@@ -58,8 +57,8 @@ en:
   ##!  top_rated: Top Rated
   ##!  highest_contributors: Highest Contributors
   ##!  users_world: "%{user}'s World"
-  request_friend_link: "Add To My Friends"
-  remove_friend_link: "Remove From My Friends"
+  request_friend_link: "Add To My Contacts"
+  remove_friend_link: "Remove From My Contacts"
   ##!  user_preferences: "User Preferences"
   edit_profile_link: "Edit Profile"
   profile_saved: "Your profile has been saved."

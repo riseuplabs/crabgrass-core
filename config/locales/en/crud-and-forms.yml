@@ -24,7 +24,6 @@ en:
   create_button: "Create"
   ok_button: "OK"
   ##!  done_button: "Done"
-  delete_button: "Delete"
   show_button: "Show"
   show_thing: "Show %{thing}"
   confirm: "Confirm"
@@ -33,14 +32,35 @@ en:
   loadingdotdotdot: "Loading..."
   create_a_new_thing: "Create a new %{thing}"
   create_thing: "Create %{thing}"
-  thing_destroyed: "%{thing} destroyed"
-  destroy_thing: "Destroy %{thing}"
-  delete: "Delete"
-  deleted: "Deleted"
-  remove: "Remove"
   created_by: "Created by"
   created: "Created"
   updated_by: "Updated by"
   updated: "Updated"
   ##!  update_thing: "Update %{thing}"
   created_by_user_on: "Created by %{user} on %{when}."
+
+  approve: "Approve"
+  reject: "Reject"
+  pending: "Pending"
+  rejected: "Rejected"
+  approved: "Approved"
+
+  #
+  # 'destroy' should be reserved for when the action has consequence,
+  # like destroying a group.
+  #
+  # 'delete' should be used otherwise, like deleting a request.
+  #
+  # 'remove' is different. You remove a user from a group, or a user from your contacts.
+  #
+  # alternately, maybe 'destroy' should be for actions that cannot be undone.
+  #
+  destroy: "Destroy"
+  thing_destroyed: "%{thing} destroyed"
+  destroy_thing: "Destroy %{thing}"
+  delete_thing: "Delete %{thing}"
+  delete: "Delete"
+  delete_button: "Delete"
+  deleted: "Deleted"
+  remove: "Remove"
+  

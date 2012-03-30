@@ -4,31 +4,31 @@ en:
   ## BASIC TERMS
   ##
 
-  groups: "Groups"
-  networks: "Networks"
-  committees: "Committees"
-  ##!  councils: "Councils"
   group: "Group"
+  groups: "Groups"
+  organization: "Organization"
+  organizations: "Organizations"
   network: "Network"
+  networks: "Networks"
   committee: "Committee"
+  committees: "Committees"
   council: "Council"
+  councils: "Councils"
   members: "Members"
   structure: "Structure"
-  ##!  regular_group: "Regular Group" 
-  ##!  new_members: "New members"
-  ##!  affiliations: "Affiliations"
 
   ##
   ## GROUP CREATION
   ##
 
-  group_description: "Groups are autonomous associations of people. You can control who has access to join the group."
-  committee_description: "Committees are groups within another group. A committee is entirely subordinate to its parent group."
-  network_description: "Networks are special groups that can have other groups as members. A network can be used as an association of multiple groups, or a place for two autonomous groups to collaborate."
-  committee_choose_group: 'Choose a group for this committee:'
-
-  council_description: "Councils are groups that have administrative control over another group. Any person in the council will be an administrator of the child group."
+  group_creation_info: "There are four types of groups:"
+  group_description: "Organizations are groups that are autonomous and have people as members."
+  network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
+  committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
+  council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members of a group have full permission to modify a group. If you want restrict administrative powers to certain users, create a council and add users to it."
+
+  committee_choose_group: 'Choose a group for this committee:'
 
   ##
   ## PERMISSIONS
@@ -42,6 +42,23 @@ en:
   ##!  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
   ##!  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
   ##!  group_profile_description_may_edit: "I am not sure what this does."
+
+  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
+  open_group: "Open Group"
+  open_group_description: "Users are immediately added to the group - request don't have to be approved"
+
+  ##
+  ## MEMBERSHIP
+  ##
+
+  membership_requests: "Membership Requests"
+  group_membership_count: "%{count} Members"
+  membership_exists_error: "Membership already exists for %{member}"
+  ## you_are_a_member_already_error: "You are a member already"
+  ##!  membership_leave_message: "You have been removed from %{group}"
+  ##!  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
+  membership_destroy_confirm_message: "Are you sure you want to remove %{entity} from %{group}?"
+  ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
 
   ##
   ## UNSORTED
@@ -102,14 +119,6 @@ en:
   ##!  group_summary: "Brief information regarding this %{group}."
   ##!  new_network: "New network"
   ##!  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='%{new_group_url}'>create a group</a>?"
-  group_membership_count: "%{count} Members"
-  membership_exists_error: "Membership already exists for %{member}"
-  you_are_a_member_already_error: "You are a member already"
-  ##!  membership_leave_message: "You have been removed from %{group}"
-  ##!  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
-  membership_destroy_confirm_message: "Are you sure you want to remove %{user} from %{group_type}?"
-  ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
-
 
   # featured
 
@@ -227,11 +236,5 @@ en:
   ##!  select_visible_group_widgets: "Select the widgets visible on your group's front page"
 
   ##!  widget_index: "Widget %{index}"
-
-  # profiles
-
-  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
-  open_group: "Open Group"
-  open_group_description: "Users are immediately added to the group - request don't have to be approved"
 
 
