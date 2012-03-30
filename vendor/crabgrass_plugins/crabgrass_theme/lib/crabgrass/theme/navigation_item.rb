@@ -116,11 +116,13 @@ class Crabgrass::Theme::NavigationItem < Array
   end
 
   #
-  # define the getters for our attributes.
-  # if the value of an attribute is a Proc, then we eval it in the context
-  # of the controller.
+  # Define the getter methods for our attributes.
+  #
+  # If the value of an attribute is a Proc, then we eval it in the context
+  # of the controller. Otherwise, we return an instance variable.
   #
   ATTRIBUTES.each do |attr_name|
+    next if attr_name == :html
     attr_name = attr_name.to_s
     if attr_name =~ /\?$/
       attr_name.chop!
@@ -137,6 +139,13 @@ class Crabgrass::Theme::NavigationItem < Array
         end
       end
     end
+  end
+
+  #
+  # the special attribute 'html' is passed through unprocessed
+  #
+  def html
+    @html
   end
 
   #
