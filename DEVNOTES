@@ -1,3 +1,8 @@
+upgrade to latest thinking sphinx
+
+deleting a page tag causes the discussions to get loaded for the ajax request.
+this should not be the case.
+
 crabgrass-core is a basic, paired down crabgrass.
 
 remote processing
@@ -6,6 +11,11 @@ remote processing
 what happens when we do remote_job.destroy?
   what happens to the background thread on the cg-processor doing the work?
   what happens to the files it spits out?
+
+assets & documents
+=======================
+
+integrate documentcloud.org for displaying pdfs and docs.
 
 things to work on
 ============================
@@ -55,6 +65,12 @@ misc
 new features
 . issues
 . notices
+
+rails 3
+============================
+
+to support dirty, include this:
+http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
 
 internet explorer
 ============================
@@ -203,6 +219,7 @@ message/work processing queues:
   http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
   https://github.com/starling/starling
   http://kr.github.com/beanstalkd/
+  http://mperham.github.com/sidekiq/ (ruby, much faster than resque, api compatible)
 
 backgrounding code snippets:
   spawn
@@ -247,6 +264,7 @@ Javascript Applications
 
 http://sheetster.com/ -- GPL java server for web spreadsheets, REST API.
 
+
 Rails Applications
 ===============================
 
@@ -258,3 +276,30 @@ Uploading
 
 This library has a method of remembering the uploaded file between views of the form:
 https://github.com/cheald/carrierwave
+
+Rails CMSs
+=================
+
+list: https://gist.github.com/244863
+
+full cms:
+  http://refinerycms.com
+  http://locomotivecms.com
+
+light weight:
+  http://nestacms.com/
+  http://www.caseincms.com/
+  https://github.com/desaperados/seed
+  https://github.com/comfy/comfortable-mexican-sofa
+
+static:
+  comparison - http://mindspill.net/computing/cross-platform-notes/review-of-ruby-static-site-generators/
+  https://github.com/mojombo/jekyll
+  http://nanoc.stoneship.org/
+
+
+Multi-user field editing
+==============================
+
+https://github.com/josephg/ShareJS
+
