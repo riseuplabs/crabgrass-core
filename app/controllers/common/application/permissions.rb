@@ -76,6 +76,10 @@
 #           :update => :may_edit_robots?
 #
 #   This will ensure the may_show_robots? returns true before 'show()' will run.
+#   Procs are also allowed, as well as the special symbol :allow. For example
+#
+#     guard :show => Proc.new { @robot.is_hungry? },
+#           :update => :allow
 #
 # (b) define the authorized?() method
 #
@@ -236,6 +240,8 @@ module Common::Application::Permissions
       end
       if method.is_a? Proc
         method.call
+      elsif method == :allow
+        true
       elsif method
         self.send(method)
       else
