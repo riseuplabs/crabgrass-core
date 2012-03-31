@@ -137,7 +137,8 @@ class Request < ActiveRecord::Base
     self.state = "pending" # needed despite FSM so that validations on create will work.
   end
 
-  def validate
+  validate_on_create :check_create_permission
+  def check_create_permission
     unless may_create?(created_by)
       errors.add_to_base(I18n.t(:permission_denied))
     end

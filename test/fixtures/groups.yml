@@ -32,7 +32,7 @@ rainbow:
   id: 3
   name: rainbow
   site_id: 1
-  created_at: <%= rand(30).days.ago.to_s :db %>
+  created_at: <%= 14.days.ago.to_s :db %>
 
 warm:
   id: 31

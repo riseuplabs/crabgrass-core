@@ -43,6 +43,10 @@ en:
   request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
   request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
 
+  request_to_create_council: "Request to Create Council"
+  request_to_create_council_short: "Shall %{group} have a council?"
+  request_to_create_council_description: "The user %{user} has proposed to create a council for %{group_type} %{group}."
+
   request_to_remove_user: "Request to Remove Member"
   request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
   request_to_remove_user_description: "The user %{user} has proposed to remove %{member} from %{group_type} %{group}."

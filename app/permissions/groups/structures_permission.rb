@@ -10,11 +10,16 @@ module Groups::StructuresPermission
     may_create_council? or may_create_committee? or may_federate?
   end
 
+  #
+  # A group member can create a council for a group during the group's first week, 
+  # but after that they can only create a request to create a council, which must be approved.
+  #
   def may_create_council?(group = @group)
     Conf.councils and
     group.parent_id.nil? and
     !group.real_council and
-    current_user.may?(:admin, group)
+    current_user.may?(:admin, group) and
+    group.created_at > 1.week.ago
   end
 
   def may_create_committee?(group = @group)

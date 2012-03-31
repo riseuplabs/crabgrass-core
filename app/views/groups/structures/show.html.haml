@@ -6,8 +6,8 @@
       - r.label :council.t
       - if @group.has_a_council?
         - r.input link_to_group(@group.council, :avatar => :small)
-      - elsif may_create_council?
-        - r.input link_line :bullet, :none.t, link_to(:create_a_new_thing.t(:thing => :council.t.downcase), new_group_council_path(@group))
+      - else
+        - r.input link_line :bullet, :none.t, create_council_link
       - r.info :council_description.t
       - if !@group.has_a_council?
         - r.info content_tag(:div, :council_description_details.t, :class => 'p')

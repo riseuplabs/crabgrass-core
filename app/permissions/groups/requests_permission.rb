@@ -18,7 +18,14 @@ module Groups::RequestsPermission
   # request to destroy the group
   #
   def may_create_destroy_request?(group=@group)
-    current_user.may?(:admin, group)
+    RequestToDestroyOurGroup.may_create?(:group => group, :current_user => current_user)
+  end
+
+  #
+  # request to create a council
+  #
+  def may_create_council_request?(group=@group)
+    RequestToCreateCouncil.may_create?(:group => group, :current_user => current_user)
   end
 
 end

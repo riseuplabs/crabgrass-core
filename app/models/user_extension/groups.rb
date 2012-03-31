@@ -155,6 +155,17 @@ module UserExtension::Groups
     end
   end
 
+  #
+  # sometimes we want to restrict some activities to long term members (like destroying the group!)
+  #
+  def longterm_member_of?(group)
+    if group.created_at > 1.week.ago
+      true
+    else
+      group.memberships.find_by_user_id(self.id).try(:created_at) < 1.week.ago
+    end
+  end
+  
   def check_duplicate_memberships(membership)
     if self.group_ids.include?(membership.group_id)
       raise AssociationError.new(I18n.t(:invite_error_already_member))

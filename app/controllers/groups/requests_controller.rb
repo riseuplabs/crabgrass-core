@@ -69,7 +69,9 @@ class Groups::RequestsController < Groups::BaseController
   end
 
   def create_create_council_request
-    # not supported yet.
+    req = RequestToCreateCouncil.create! :recipient => @group, :requestable => @group, :created_by => current_user
+    success
+    redirect_to request_path(req)
   end
   
 end

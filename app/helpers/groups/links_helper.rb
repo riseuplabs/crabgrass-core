@@ -99,6 +99,20 @@ module Groups::LinksHelper
     end
   end
 
+  def create_council_link
+    if logged_in?
+      if req = RequestToCreateCouncil.existing(:group => @group)
+        link_to(:request_pending.t(:request => :request_to_create_council.t.capitalize), group_request_path(@group, req))
+      elsif may_create_council?
+        link_to(:create_a_new_thing.t(:thing => :council.t.downcase), new_group_council_path(@group))
+      elsif may_create_council_request?
+        link_to(:create_a_new_thing.t(:thing => :council.t.downcase),
+          group_requests_path(@group, :type => 'create_council'),
+          :method => 'post')
+      end
+    end
+  end
+  
   #
   # remove a user from a group or a group from a network.
   #

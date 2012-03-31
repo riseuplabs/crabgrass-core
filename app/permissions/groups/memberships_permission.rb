@@ -99,7 +99,8 @@ module Groups::MembershipsPermission
     group = membership.group
     user = membership.user
     current_user.may?(:admin, group) and
-    not RequestToRemoveUser.existing(:user => user, :group => group)
+    not RequestToRemoveUser.existing(:user => user, :group => group) and
+      RequestToRemoveUser.may_create?(:current_user => current_user, :user => user, :group => group)
   end
 
 end
