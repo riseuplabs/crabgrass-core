@@ -26,16 +26,10 @@ en:
   ##!  log_in: "Log in"
   signup_title: "Create Your Account"
   signup_email: "Your Email"
-  forgot_password_text: |
-    If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
-  reset_password_text: |
-    Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here.
-
+  forgot_password_text: If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
+  reset_password_text: Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here.
   forgot_password_mail_greeting: "%{user}, to reset your password, please visit"
-  forgot_password_mail_expiry: |
-    This link will remain valid for 24 hours. If you need to reset your
-    password after that, you will have to visit the forgotten password page
-    again to request a new link.
+  forgot_password_mail_expiry: This link will remain valid for 24 hours. If you need to reset your password after that, you will have to visit the forgotten password page again to request a new link.
 
   reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
@@ -1208,6 +1202,10 @@ en:
   request_to_destroy_our_group: "Request to Destroy Group"
   request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
   request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
+
+  request_to_create_council: "Request to Create Council"
+  request_to_create_council_short: "Shall %{group} have a council?"
+  request_to_create_council_description: "The user %{user} has proposed to create a council for %{group_type} %{group}."
 
   request_to_remove_user: "Request to Remove Member"
   request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
