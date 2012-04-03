@@ -9,9 +9,40 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
     @group     = groups(:rainbow)
     @user      = users(:orange)
     @requester = users(:red)
-    @request   = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
   end
 
+  def test_remove_request_fails
+    @requester.expects(:longterm_member_of?).with(@group).returns(false)
+    assert_raises ActiveRecord::RecordInvalid, "Permission Denied" do
+      @request = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
+    end
+    assert_not_removed
+  end
+
+  def test_remove_succeeds
+    @requester.expects(:longterm_member_of?).with(@group).returns(true)
+    @request   = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
+    @approver = users(:green)
+    @approver.expects(:longterm_member_of?).with(@group).returns(true)
+    @request.approve_by!(@approver)
+    assert_equal 'approved', @request.state, 'state should change'
+    assert_removed
+  end
+
+  def test_remove_fails
+    @requester.expects(:longterm_member_of?).with(@group).returns(true)
+    @request   = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
+    @approver = users(:green)
+    @approver.expects(:longterm_member_of?).with(@group).returns(false)
+    assert_raises PermissionDenied do
+      @request.approve_by!(@approver)
+    end
+    assert_equal 'pending', @request.state, 'state should not change'
+    assert_not_removed
+  end
+
+
+=begin
   def test_voting_on_request
     @request.approve_by!(users(:green))
     assert_equal 'pending', @request.state, 'state should not change'
@@ -124,10 +155,11 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       end
     end
   end
-
+=end
 
   protected
 
+=begin
   def voting_scenarios
     [
       # 0 rejections
@@ -175,6 +207,15 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   def assert_approved
     assert_equal 'approved', @request.state, 'should be approved'
     assert !@group.users(true).include?(@user), 'group should still have orange'
+  end
+=end
+
+  def assert_removed
+    assert !@group.users(true).include?(@user), 'group should NOT have orange'
+  end
+
+  def assert_not_removed
+    assert @group.users(true).include?(@user), 'group should still have orange'
   end
 
 end
