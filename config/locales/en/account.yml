@@ -80,8 +80,7 @@ en:
   ##!  successfully_verified_email_message: "Successfully Verified Email Address"
   ##!  already_verified: "Already Verified."
   ##!  already_verified_text: "You don't need to verify again."
-  email_verification_body: |
-    You have signed for %{site_title} (%{host})!
+  email_verification_body: You have signed for %{site_title} (%{host})!
 
     Before you can login you must verify that this is your email.
 
