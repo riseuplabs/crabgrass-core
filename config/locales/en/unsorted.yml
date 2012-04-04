@@ -294,10 +294,7 @@ en:
   ## RANKED VOTE & RATE MANY
   ##
 
-  ranked_vote_instructions: |
-    Drag and drop the items on the following list until they are in order from
-    most preferred at the top to least preferred at the bottom. When you are done,
-    press confirm to record your vote.
+  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom. When you are done, press confirm to record your vote."
 
   add_new_possibility_link: "Add new possibility"
   add_possibility_button: "Add Possibility"
@@ -483,24 +480,9 @@ en:
   ##!  cant_lock_nonexistant_section: "can't lock a nonexistant section"
   ##!  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
-  wiki_formating_code: |
-    Big Caption
-    ===========
+  wiki_formating_code: "Big Caption \n===========\n\nSmaller Caption\n---------------\n\nh3. Even smaller caption\n* stars create\n* lists without numbers\n# hashes create\n# numbered lists"
 
-    Smaller Caption
-    ---------------
-
-    h3. Even smaller caption
-
-    * stars create
-    * lists without numbers
-
-    # hashes create
-    # numbered lists
-
-  wiki_formating_end: |
-    You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
-    Use the toolbar for inserting images and links.</br>
+  wiki_formating_end: "You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br> Use the toolbar for inserting images and links.</br>"
 
   wiki_formating_intro: "You can use any of the following to format your wiki:"
 
@@ -528,18 +510,7 @@ en:
   ##
 
   group_invite_subject: "Invitation to join group \"%{group}\""
-  group_invite_email: |
-    %{from_user} has invited you to join group "%{group}".
-
-    If you wish to join this group, click here:
-
-      %{accept_invite_link}
-
-    The home page of this group can be found here:
-
-      %{group_home_link}
-
-    If you do not wish to join this group, simply ignore this email.
+  group_invite_email: '%{from_user} has invited you to join group %{group}. If you wish to join this group, click here: %{accept_invite_link} The home page of this group can be found here: %{group_home_link} If you do not wish to join this group, simply ignore this email.'
 
   email_notice_subject: 'Check out page "%{title}"'
   email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the following message: %{message}"
@@ -548,8 +519,7 @@ en:
   email_link_expires: "This link will expire in %{days} days."
 
   group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
-  group_destroyed_email: |-
-    %{group_type} %{group} has been destroyed!
+  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
 
 
   ##
