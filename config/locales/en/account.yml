@@ -77,18 +77,12 @@ en:
   # verify email
 
   you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
+
   ##!  successfully_verified_email_message: "Successfully Verified Email Address"
   ##!  already_verified: "Already Verified."
   ##!  already_verified_text: "You don't need to verify again."
-  email_verification_body: You have signed for %{site_title} (%{host})!
 
-    Before you can login you must verify that this is your email.
-
-    Click the link below or copy and paste it into your browser:
-
-      %{verify_email_link}
-
-    If you do not wish to join, simply ignore this email.
+  email_verification_body: "You have signed up for %{site_title} (%{host}).\n\nBefore you can login you must verify that this is your email.\n\nClick the link below or copy and paste it into your browser:\n\n%{verify_email_link}\n\nIf you do not wish to join, simply ignore this email."
 
   ##
   ## PASSWORD
