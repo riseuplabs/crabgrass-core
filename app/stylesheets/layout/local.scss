@@ -135,12 +135,6 @@
   article#content { padding: $padding }
   .section_spacer   { height: $padding; }
 
-  .sidebox {
-    border: 1px solid #ccc;
-    background: #efefef;
-    padding: resolve_width($local_content_padding, $local_sidecolumn_width);
-  }
-
   &.on_left {
     #column_center {
       @include omega;

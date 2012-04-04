@@ -25,6 +25,30 @@ module Common::Utility::GeneralHelper
   end
 
   #
+  # create ul list by calling block repeatedly for each item.
+  #
+  def ul_list_tag(items, options={}, &block)
+
+    if (header = options.delete(:header))
+      header_tag = content_tag(:li, header, :class => 'header')
+    else
+      header_tag = ""
+    end
+
+    if (footer = options.delete(:footer))
+      footer_tag = content_tag(:li, footer, :class => 'footer')
+    else
+      footer_tag = ""
+    end
+
+    content_tag(:ul, options) do
+      header_tag +
+      items.collect {|item| content_tag(:li, yield(item))}.join +
+      footer_tag
+    end
+  end
+
+  #
   # words that are very long with no spaces can break the layout badly.
   #
   # normally, it seems to work pretty good to add the css "word-wrap: break-word;"

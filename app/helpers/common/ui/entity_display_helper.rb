@@ -197,6 +197,14 @@ module Common::Ui::EntityDisplayHelper
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
+  def entity_list(header, entities)
+    avatar_size = current_theme.local_sidecolumn_icon_size
+    ul_list_tag(entities, :header => header, :class => 'entities') do |entity|
+      link_to_entity(entity, :avatar => avatar_size)
+    end
+  end
+  
+
   #
   # used to display a list of entities
   #
@@ -208,23 +216,46 @@ module Common::Ui::EntityDisplayHelper
   #
   # other options are passed on through to display_entity
   #
-  def entity_list(options)
-    html = []
-    before = options.delete(:before)
-    after = options.delete(:after)
-    entities = options.delete(:entities)
-    if entities or before or after
-      html << before
-      if entities.any?
-        html << content_tag(:ul, :class => 'entities') do
-          entities.collect do |entity|
-            content_tag(:li, link_to_entity(entity, options))
-          end
-        end
-      end
-      html << after
-    end
-    return html.join
-  end
+  # def entity_list(options)
+  #   html = []
+  #   before = options.delete(:before)
+  #   after = options.delete(:after)
+  #   entities = options.delete(:entities)
+  #   if entities or before or after
+  #     html << before
+  #     if entities.any?
+  #       html << content_tag(:ul, :class => 'entities') do
+  #         entities.collect do |entity|
+  #           content_tag(:li, link_to_entity(entity, options))
+  #         end
+  #       end
+  #     end
+  #     html << after
+  #   end
+  #   return html.join
+  # end
+
+  # def entity_nav_list(options)
+  #   html = []
+  #   header = options.delete(:header)
+  #   footer = options.delete(:footer)
+  #   entities = options.delete(:entities)
+  #   if entities or header or footer
+  #     content_tag(:ul, :class => 'nav nav-list') do
+  #       html = ""
+  #       if header
+  #         html << content_tag(:li, header, :class => 'nav-header')
+  #       end
+  #       if entities.any?
+  #         entities.collect do |entity|
+  #           html << content_tag(:li, link_to_entity(entity, options))
+  #         end
+  #       end
+  #       html
+  #     end
+  #   else
+  #     ""
+  #   end
+  # end
 
 end

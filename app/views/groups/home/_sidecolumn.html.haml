@@ -1,11 +1,12 @@
 .sidebox
-  = render :partial => 'sidebox'
+  .padded
+    = render :partial => 'sidebox'
 
-.entity_list.on_background
+.sidebox
+  .padded
+    - if may_show_affiliations?
+      = render :partial => 'groups/structures/show_in_sidebar'
+    - if may_list_memberships?
+      = render :partial => 'memberships'
 
-  - if may_list_memberships?
-    = render :partial => 'memberships'
-
-  - if may_show_affiliations?
-    = render :partial => 'groups/structures/show_in_sidebar'
 

@@ -4,17 +4,15 @@
 -#
 - if may_list_group_committees?
   - cache(group_cache_key(@group, :what => 'committees', :expires_in => hours(3))) do
-    = entity_list(:entities => @group.real_committees, :avatar => 'small', :before => content_tag(:h3, :committees.t), :after => link_line(create_committee_link))
-
+    - if @group.real_committees.size > 0
+      = entity_list(:committees.t, @group.real_committees)
+      -# , :after => link_line(create_committee_link))
     - if @group.real_council
-      = entity_list(:entities => [@group.real_council], :avatar => 'small', :before => content_tag(:h3, :council.t))
-
+      = entity_list(:council.t, [@group.real_council])
 - if @group.network? and may_list_memberships?
   - cache(group_cache_key(@group, :what => 'group_members', :expires_in => hours(3))) do
-    = entity_list(:entities => @group.groups, :avatar => 'small',
-      :before => content_tag(:h3, :member_groups_of_network.t),
-      :after => link_line(:bullet, list_memberships_link, invite_link, requests_link))
-
+    = entity_list(:member_groups_of_network.t, @group.groups)
+    -#:after => link_line(:bullet, list_memberships_link, invite_link, requests_link))
 - if may_list_group_networks?
   - cache(group_cache_key(@group, :what => 'networks', :expires_in => hours(3))) do
-    = entity_list(:entities => @group.networks, :avatar => 'small', :before => content_tag(:h3, :networks.t))
+    = entity_list(:networks.t, @group.networks)

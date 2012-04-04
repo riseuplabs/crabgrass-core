@@ -55,5 +55,18 @@ class Crabgrass::Theme::Options
     @data[variable_name]
   end
 
+  #
+  # like var(), but the variable name is determined dynamically.
+  #
+  def var_eval(*args)
+    variable_name = args.collect { |arg|
+      if arg.is_a? String
+        arg
+      elsif arg.is_a? Symbol
+        var(arg)
+      end
+    }.join
+    var(variable_name.to_sym)
+  end
 end
 

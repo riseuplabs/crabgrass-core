@@ -8,8 +8,12 @@
 @import "layout/grid";
 @import "susy/susy";
 
-// import the mixins we wrote
+// import the mixins
 @import "mixins";
+@import "bootstrap/mixins";
+
+// define our colors
+@import "colors";
 
 // define our basic layout
 @import "layout/containers";
@@ -19,17 +23,18 @@
 @import "layout/banner";
 @import "layout/title";
 @import "layout/local";
+@import "layout/sidebox";
 @import "layout/footer";
 
 // bootstrap
 @import "bootstrap_var_override";
 @import "bootstrap/variables";
-@import "bootstrap/mixins";
 @import "bootstrap/forms";
 @import "bootstrap/breadcrumbs";
 @import "bootstrap/buttons";
 @import "bootstrap/button-groups";
 @import "bootstrap/pagination";
+// @import "bootstrap/navs";
 @import "bootstrap_css_override";
 
 // include ui elements

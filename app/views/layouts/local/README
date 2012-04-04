@@ -33,6 +33,8 @@ on the right side:
 option 3: with side column
 ------------------------------
 
+side column is wider than the sidebar
+
 a left side column:
 
 #local.sidecolumn.on_left

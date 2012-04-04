@@ -24,6 +24,13 @@ define_theme {
     }
   }
 
+  # avatar sizes
+  icon {
+    Avatar::SIZES.each do |size, pixels|
+      send(size, "#{pixels}px")
+    end
+  }
+
   # general color constants that are frequently reused
   color {
     dim '#999'
@@ -50,7 +57,7 @@ define_theme {
       line_height '18px'
     }
     heading {
-      family  'sans-serif'
+      family "verdana, 'bitstream vera sans', helvetica, sans-serif"
       h1_size '2.10em'
       h2_size '1.125em'
       h3_size '1em'
@@ -157,7 +164,9 @@ define_theme {
     sidecolumn {
       # for fun, make the side column width approximate a golden ratio.
       # width (0.3819660113 * var(:grid_column_count).to_i).round
-      width 8
+      width 7
+      icon_size 'xsmall'
+      icon_size_px var_eval('icon_', :local_sidecolumn_icon_size)
     }
     title {
       background var(:color_lighter)
@@ -190,12 +199,6 @@ define_theme {
     modalbox 200       # modal dialog boxes
     tooltip 300        #
     autocomplete 400   # autocomplete popups
-  }
-
-  icon {
-    Avatar::SIZES.each do |size, pixels|
-      send(size, "#{pixels}px")
-    end
   }
 
   modalbox {
