@@ -71,10 +71,14 @@ a {
   color: $link_standard_color;
   &:visited { color: $link_visited_color;}
   &:active { color: $link_active_color;}
-  //&.hilight {
-  //  color: white;
-  //  background-color: $link_visited_color;
-  //}
+
+  // this should be the default, but for some reason I need to specify it manually
+  // here in order to get the focus decoration to work. Maybe this should be made
+  // fancy like bootstrap.
+  &:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
 }
 
 //
