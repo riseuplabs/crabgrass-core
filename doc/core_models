@@ -1,46 +1,94 @@
 CORE MODELS
-and how they relate to each other.
+
+The core models and how they relate to each other. There are many other associations, but these are the only ones that really matter.
 
 User
-=======
+=========================
 
 class User
-  has_many :friends, :through => 'contacts', :class => 'User'
+  belongs_to :avatar
+
+  has_many :relationships
+  has_many :contacts, :through => 'relationships', :class => 'User'
+
+  has_many :memberships
   has_many :groups, :through => 'memberships'
 end
 
-
 Group
-=======
+=========================
 
 class Group
+  has_many :memberships
   has_many :users, :through => 'memberships'
+  
+  has_many :participations, :class => 'GroupParticipation'
+  has_many :pages, :through => :participations
+  
+  has_one  :group_setting
+
+  #
+  # for groups and networks only:
+  #
+
+  belongs_to :council, :class => 'Group'
+  has_many :children, :class => 'Committee'
+
+  #
+  # for councils and committees only:
+  #
+
+  belongs_to :parent, :class => 'Group'
+  
+  #
+  # for plain groups only:
+  #
+
+  has_many :federatings
+  has_many :networks, :through => :federatings
 end
 
+class Network < Group
+  has_many :federatings, :dependent => :destroy
+  has_many :groups, :through => :federatings
+end
+
+
 Page
-======
+=========================
 
 class Page
+  belongs_to :data, :polymorphic => true
+
+  has_many :user_participations
   has_many :users, :through => 'user_participations'
+
+  has_many :group_participations
   has_many :groups, :through => 'group_participations'
+
   has_one :discussion
   has_many :tags
   has_many :assets
+  has_many :page_histories
 end
 
 A 'page' is the basic model for all content in crabgrass. examples are a wiki page, an uploaded file/image/audio/video, a poll, a task list.
 
-these specific page types are subclasses of Page and they have their own controller and views. In effect, every page is its own rails application.
+Specific page types are subclasses of Page and they have their own controller and views. In effect, every page is its own rails application.
 
-the page controller is subclass from BasePageController. it defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override.
+The page controller is subclass from BasePageController. It defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override.
 
-all pages are actually implemented as plugins, but plugins that live in a special folder called 'extensions/pages'
+All pages are actually implemented as plugins, but plugins that live in a special folder called 'extensions/pages'
 
 Discussions and Posts
-=====================
+=========================
 
 class Discussion
   has_many :posts
+
+  # a discussion belongs to either a :page or :commentable
+  belongs_to :page
+  belongs_to :commentable, :polymorphic => true
 end
 
 class Posts
@@ -48,6 +96,33 @@ class Posts
   belongs_to :user
 end
 
+Assets
+==========================
 
+Assets are used for uploaded files and attachments to pages. Assets are different than Avatars and Pictures, which are used exclusively for decorating a user/group profile.
 
+The data for an asset is stored in the asset record. But, every asset record also keeps a list of all its versions. These are copied versions of the asset record.
+
+Every asset also has different thumbnails that are defined for that asset. These thumbnail records store info for a particular representation of the asset.
+
+Every version also has multiple thumbnails, just like the parent asset. There is no necessary correspondence between the version thumbnails and the asset thumbnails: version 1 could be a different Asset type than version 2, so it would have different thumbnails.
+
+class Asset
+  belongs_to :user
+  belongs_to :parent_page # optional
+
+  has_many :versions, :class_name => 'Asset::Version'
+  has_many :thumbnails, :class_name => 'Thumbnail'
+end
+
+class Asset::Version < Asset
+  belongs_to :user
+
+  has_many :thumbnails, :class_name => 'Thumbnail'
+end
+
+class Thumbnail
+  # parent may be an Asset, or Asset::Version
+  belongs_to :parent, :polymorphic => true
+end
 
