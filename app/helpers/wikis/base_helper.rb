@@ -74,7 +74,6 @@ module Wikis::BaseHelper
     %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect});]
   end
 
-
   def release_lock_on_unload
     if @section
       %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}", "#{@section}");]
@@ -83,5 +82,25 @@ module Wikis::BaseHelper
     end
   end
 
+  # These are group only but might be called from a generic place such as
+  # Wikis::SectionsController for a xhr update
+
+  def wiki_more_link
+    return unless @wiki.group
+    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
+    link_to_remote :see_more_link.t,
+      { :url => group_wiki_path(@group, @wiki),
+        :method => :get},
+      :icon => 'plus'
+  end
+
+  def wiki_less_link
+    return unless @wiki.group
+    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
+    link_to_remote :see_less_link.t,
+      { :url => group_wiki_path(@group, @wiki, :preview => true),
+        :method => :get},
+      :icon => 'minus'
+  end
 
 end

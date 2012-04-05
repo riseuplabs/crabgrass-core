@@ -40,5 +40,5 @@ require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
 
 
 ## needed for rake tasks:
-config.gem 'rdoc'
+config.gem 'rdoc', :version => '~> 3.0'
 

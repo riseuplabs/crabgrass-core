@@ -37,7 +37,7 @@ config.gem 'faker'
 config.gem 'minitest', :lib => 'minitest/autorun'
 config.gem 'mocha', :require => false
 #
-# mocha note: mocha must be loaded after the things it needs to patch. 
+# mocha note: mocha must be loaded after the things it needs to patch.
 #             so, we skip the 'require' here, and do it later.
 #
 
