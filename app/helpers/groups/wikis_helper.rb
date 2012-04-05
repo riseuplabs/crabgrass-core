@@ -41,20 +41,4 @@ module Groups::WikisHelper
       :method => :get
   end
 
-  def wiki_more_link
-    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
-    link_to_remote :see_more_link.t,
-      { :url => group_wiki_path(@group, @wiki),
-        :method => :get},
-      :icon => 'plus'
-  end
-
-  def wiki_less_link
-    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
-    link_to_remote :see_less_link.t,
-      { :url => group_wiki_path(@group, @wiki, :preview => true),
-        :method => :get},
-      :icon => 'minus'
-  end
-
 end

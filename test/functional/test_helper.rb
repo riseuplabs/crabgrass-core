@@ -23,6 +23,10 @@ class ActionController::TestCase
 
   # this should give us access to Flash.now flashes
   def flashed
-    @controller.send(:flash)
+    @controller.send(:flash)[:messages]
+  end
+
+  def flashed_errors
+    @controller.send(:flash)[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
   end
 end
