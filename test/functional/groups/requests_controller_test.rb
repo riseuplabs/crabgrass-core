@@ -19,12 +19,10 @@ class Groups::RequestsControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    @group.grant! :public, :request_membership
-    assert_permission :may_create_group_request? do
-      assert_difference 'RequestToJoinYou.count' do
-        get :create, :group_id => @group.to_param
+    @group.add_user! @user
+      assert_difference 'RequestToDestroyOurGroup.count' do
+        get :create, :group_id => @group.to_param, :type => 'destroy_group'
       end
-    end
     assert_response :redirect
   end
 end
