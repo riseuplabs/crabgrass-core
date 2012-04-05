@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 class RequestTest < ActiveSupport::TestCase
 
  def test_create_checks_permissions
-   user = stub
+   user = User.new
    request = Request.new
    request.stubs(:created_by).returns(user)
    request.expects(:may_create?).with(user).returns(false)
@@ -11,7 +11,7 @@ class RequestTest < ActiveSupport::TestCase
  end
 
  def test_mark_as_destroy_checks_permission
-   user = stub(:name => 'Dr. Stub')
+   user = User.new
    request = Request.new
    request.stubs(:new_record?).returns(false)
    assert_raises PermissionDenied do
@@ -32,6 +32,7 @@ class RequestTest < ActiveSupport::TestCase
 
  def test_mark_as_rejected_checks_permission
    user = User.new
+   request = Request.new :state => 'pending'
    request = Request.new :state => 'pending'
    request.stubs(:new_record?).returns(false)
    assert_raises PermissionDenied do
