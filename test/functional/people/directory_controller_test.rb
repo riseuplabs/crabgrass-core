@@ -12,7 +12,7 @@ class People::DirectoryControllerTest < ActionController::TestCase
 
   def test_friends
     login_as :blue
-    get :index, :path => 'friends'
+    get :index, :path => 'contacts'
     assert_response :success
     assert_equal 2, assigns(:users).count
   end
