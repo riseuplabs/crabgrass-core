@@ -11,7 +11,7 @@ class Groups::GroupsController < Groups::BaseController
   def new
     if group_type == :group
       @group = Group.new
-    elsif group_type = :network
+    elsif group_type == :network
       @network = Network.new
     end
   end
