@@ -1,3 +1,5 @@
+require "#{RAILS_ROOT}/config/directories"
+
 module Crabgrass
 end
 

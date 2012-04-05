@@ -38,7 +38,9 @@ config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
 
 require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
 
+##
+## needed for some rake tasks, but not generally.
+##
 
-## needed for rake tasks:
 config.gem 'rdoc', :version => '~> 3.0'
-
+config.gem 'jsmin'
