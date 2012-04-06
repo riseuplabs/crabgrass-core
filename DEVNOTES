@@ -200,34 +200,52 @@ background tasks
 
 There is an incredible number of background processing options in rails.
 
-lists:
+What we want:
 
-* http://www.tobinharris.com/past/2009/3/9/6-ways-to-run-background-jobs-in-rubyonrails/
-* http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+* ability to run maint tasks at regular intervals
+* ability to queue long running background tasks that we can guarentee will get run (some persistent data storage)
 
-This one looks good: https://github.com/stympy/delayed_job
-It is a fork of delayed_job but with autoscaling.
+api library
+  https://github.com/wireframe/backgrounded -- provides a common api to delayed_job and resque, etc.
 
-Other links:
+job/message queues
+  https://github.com/collectiveidea/delayed_job -- most popular
+    checks the database every five seconds for pending jobs
+    https://www.ruby-toolbox.com/projects/delayed_job
+    https://github.com/stympy/delayed_job -- a fork of delayed_job but with autoscaling.
 
-http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
-http://codeforpeople.rubyforge.org/svn/bj/trunk/README
-https://github.com/barttenbrinke/worker_queue/
-https://github.com/starling/active_queue
-
-message/work processing queues:
+  http://kr.github.com/beanstalkd/
   http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
   https://github.com/starling/starling
-  http://kr.github.com/beanstalkd/
-  http://mperham.github.com/sidekiq/ (ruby, much faster than resque, api compatible)
 
-backgrounding code snippets:
-  spawn
+networked job queues:
+  https://github.com/ivanvanderbyl/cloudist (rabbitmq)
+  https://github.com/defunkt/resque (reddit)
+  http://mperham.github.com/sidekiq/ (faster than resque, api compatible)
+  
+backgrounding long running code:
+  https://github.com/tra/spawn
+  https://github.com/Try2Code/jobQueue
   http://code.google.com/p/asynchronous/
   https://github.com/imedo/background_lite
 
+cron-like scheduling
+  http://github.com/javan/whenever -- ruby sugar around crontab
+  https://github.com/adamwiggins/clockwork-rails-dj
+  rufus-scheduler
+
+event driven programming
+  https://github.com/eventmachine/eventmachine (has a spawn ability too)
+
 On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/
+
+Unsorted links:
+  http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
+  http://codeforpeople.rubyforge.org/svn/bj/trunk/README
+  https://github.com/barttenbrinke/worker_queue/
+  https://github.com/starling/active_queue
+
 
 
 
