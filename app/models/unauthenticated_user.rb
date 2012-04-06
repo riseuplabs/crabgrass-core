@@ -1,6 +1,6 @@
 class UnauthenticatedUser
   def login
-   I18n.t(:anonymous)
+    :anonymous.t
   end
   alias :name :login
   alias :display_name :login
