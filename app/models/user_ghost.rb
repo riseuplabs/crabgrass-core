@@ -14,12 +14,12 @@ class UserGhost < User
     self.task_participations.destroy
     self.tasks.destroy
     strip_comments
-    remore_participations
+    remove_participations
     remove_memberships
     remove_relationships
     clear_cache
   end
-  handle_asynchronously :make_user_ghost # this will use delayed_job
+  handle_asynchronously :anonymize_user # this will use delayed_job
 
   private
 
