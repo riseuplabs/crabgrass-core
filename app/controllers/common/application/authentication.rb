@@ -33,7 +33,8 @@ module Common::Application::Authentication
 
   # Store the given user in the session.
   def current_user=(new_user)
-    session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
+    new_user = nil unless new_user.responds_to? :id
+    session[:user] = new_user.nil? ? nil : new_user.id
     session[:logged_in_since] = Time.now
     @current_user = new_user
   end
