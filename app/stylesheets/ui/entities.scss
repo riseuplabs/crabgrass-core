@@ -5,6 +5,18 @@
 // Everything else is in here.
 //
 
+.entity {
+  &.spaced {
+    margin-bottom: 4px;
+  }
+}
+
+
+
+
+
+
+
 //
 // i am not sure about this selector. 
 // currently, it is used for the entity list on the group home.
@@ -56,8 +68,3 @@
 // options for styling entities
 //
 
-.entity {
-  &.spaced {
-    margin-bottom: 4px;
-  }
-}

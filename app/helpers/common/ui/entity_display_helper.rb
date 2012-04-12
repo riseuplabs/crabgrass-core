@@ -197,10 +197,10 @@ module Common::Ui::EntityDisplayHelper
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
-  def entity_list(header, entities)
-    avatar_size = current_theme.local_sidecolumn_icon_size
-    ul_list_tag(entities, :header => header, :class => 'entities') do |entity|
-      link_to_entity(entity, :avatar => avatar_size)
+  def entity_list(entities, options={})
+    avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
+    ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
+      link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
     end
   end
   
