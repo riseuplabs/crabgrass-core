@@ -42,9 +42,6 @@ config.gem 'compass', :version => '~> 0.10'
 config.gem 'haml', :version => '~> 3.0'
 config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
 
-##
-## CRABGRASS OPTIONS
-##
+# only needed for production
 
-
-
+config.gem 'whenever'

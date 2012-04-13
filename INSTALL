@@ -1,62 +1,65 @@
-draft install instructions
+INSTALLING CRABGRASS
 ===============================
 
-install basic ruby environment:
+Install basic ruby environment
 
   sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server git
-(depending on what you are running, you might need to install git-core instead of git. you might also need libopenssl-ruby1.8)
 
-install rubygems from rubygems.org:
+  (Depending on what you are running, you might need to install git-core instead of git. 
+   You might also need libopenssl-ruby1.8)
 
-  download rubygems-x.x.x.tgz from http://rubygems.org
-  extract the tarball, and cd to the directory
-  sudo ruby setup.rb --no-format-executable
+Install rubygems from rubygems.org
 
-  In order to use the debian packaged rails you need to create a symlink to the rails files
+  1. Download latest rubygems-x.x.x.tgz from http://rubygems.org
+  2. Extract the tarball, and cd to the directory
+  3. Run `sudo ruby setup.rb --no-format-executable`
 
-prevent rubygems from installing rdoc (optional):
+Prevent rubygems from installing rdocs (optional)
 
-  edit ~/.gemrc and add this:
-  gem: --no-rdoc --no-ri
+  1. edit ~/.gemrc
+  2. add this "gem: --no-rdoc --no-ri"
 
-checkout the codebase:
+Checkout the codebase
 
   git clone git://labs.riseup.net/crabgrass-core.git
-  cd crabgrass-core
-  rake create_a_secret
 
-  Alternate ways of getting the codebase:
+  Alternately, do a shallow clone. This will only check out a copy of
+  the most recent version.
 
-  * do a shallow clone:
     git clone --depth 1 git://labs.riseup.net/crabgrass-core.git
-    this will only check out a copy of the most recent version
-  * use gitosis:
-    git clone gitosis@labs.riseup.net:crabgrass-core.git
-    use this if you have gitosis access to crabgrass-core.git
 
-install required gems:
+  Alternately, use gitosis. Use this if you have gitosis access
+  to crabgrass-core.git.
+
+    git clone gitosis@labs.riseup.net:crabgrass-core.git
+
+Create a secret
+
+   cd crabgrass-core
+   rake create_a_secret
+
+Install required gems
 
   sudo gem install rails --version='~>2.3.14'
-  cd crabgrass-core
   sudo rake gems:install
 
-create the database:
+Create the database:
 
   cp config/database.yml.example config/database.yml
   rake db:create
   rake db:schema:load
   rake db:fixtures:load
 
-install helper applications:
+Install helper applications:
 
   sudo apt-get install graphicsmagick
 
-run server:
+Run server:
 
   cd crabgrass-core
-  INFO=1 BOOST=1 script/server
+  BOOST=1 script/server
 
-connect to the web application from your browser:
+Connect to the web application from your browser:
 
   http://localhost:3000
   login: blue
@@ -65,24 +68,25 @@ connect to the web application from your browser:
 See doc/development_tips for information on the arguments to script/server
 
 
-development
+Development
 ============================
 
-additional gems needed for testing:
+Install additional gems needed for testing:
 
   sudo RAILS_ENV=test rake gems:install
 
-testing database:
+Create testing database:
 
   sudo mysqladmin create crabgrass_test
   cd crabgrass-core
   rake db:test:prepare
 
-run tests:
+Run tests:
 
   rake test
 
-database options
+
+Database options
 ===============================
 
 The simple instructions assume you have a mysql user 'root' with no password set. If you are a glutton for punishment, you can set a user and password for crabgrass development:
@@ -100,4 +104,10 @@ in crabgrass/config/database.yml:
   username: crabgrass
   password: your_password
 
+
+Troubleshooting
+==============================
+
+delayed_job -- Currently, it seems to fail if you have multiple 'daemons' gems install. 
+  If you encounter this problem, run `gem uninstall daemons; gem uninstall delayed_job; rake gems:install` as root.
 

@@ -15,7 +15,7 @@
     - f.row do |r|
       - r.label :committees.t
       - if @group.real_committees.any?
-        - r.input entity_list(:entities => @group.real_committees, :avatar => 'small', :class => 'spaced', :after => link_to(:create_a_new_thing.t(:thing => :committee.t.downcase), new_group_committee_path(@group)))
+        - r.input entity_list(@group.real_committees, :avatar => 'small', :class => 'spaced', :footer => link_to(:create_a_new_thing.t(:thing => :committee.t.downcase), new_group_committee_path(@group)))
       - elsif may_create_committee?
         - r.input link_line :bullet, :none.t, link_to(:create_a_new_thing.t(:thing => :committee.t.downcase), new_group_committee_path(@group))
       - r.info :committee_description.t
@@ -23,7 +23,7 @@
     - f.row do |r|
       - r.label :networks.t
       - if @group.networks.any?
-        - r.input entity_list(:entities => @group.networks, :avatar => 'small', :class => 'spaced')
+        - r.input entity_list(@group.networks, :avatar => 'small', :class => 'spaced')
       - else
         - r.input :none.t
       - r.info :network_description.t
