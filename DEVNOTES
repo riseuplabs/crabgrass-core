@@ -1,8 +1,3 @@
-upgrade to latest thinking sphinx
-
-deleting a page tag causes the discussions to get loaded for the ajax request.
-this should not be the case.
-
 crabgrass-core is a basic, paired down crabgrass.
 
 remote processing
@@ -220,6 +215,9 @@ message/work processing queues:
   https://github.com/starling/starling
   http://kr.github.com/beanstalkd/
   http://mperham.github.com/sidekiq/ (ruby, much faster than resque, api compatible)
+
+networked job queues:
+  https://github.com/ivanvanderbyl/cloudist (rabbitmq)
 
 backgrounding code snippets:
   spawn

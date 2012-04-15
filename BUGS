@@ -1,4 +1,7 @@
+upgrade to latest thinking sphinx
 
+deleting a page tag causes the discussions to get loaded for the ajax request.
+this should not be the case.
 
 destroying groups
   needs a lot of work
