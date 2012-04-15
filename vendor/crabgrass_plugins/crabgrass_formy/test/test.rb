@@ -15,18 +15,23 @@ class Testr
   include ActionView::Helpers
   include Formy::Helper
 
-  def run
-    simple_form = formy(:simple_form) do |f|
+  def horizontal
+    formy(:horizontal_form) do |f|
       f.row do |r|
         r.label 'display name', 'user_display_name'
         r.input text_field 'user', 'display_name'
+        r.info 'this little tip should help.'
       end
       f.row do |r|
         r.label 'email address', 'user_email'
         r.input text_field 'user', 'email'
       end
     end
-    tabset = formy(:tabset) do |f|
+  end
+
+
+  def tabs
+    formy(:tabs) do |f|
       f.tab do |t|
         t.label 'Tab One'
         t.show_tab 'tab-one-div'
@@ -38,12 +43,33 @@ class Testr
         t.selected false
       end
     end
-    simple_form + tabset
+  end
+
+  def simple
+    formy(:simple_form) do |f|
+      f.row do |r|
+        r.label 'display name', 'user_display_name'
+        r.input text_field 'user', 'display_name'
+      end
+      f.row do |r|
+        r.label 'email address', 'user_email'
+        r.input text_field 'user', 'email'
+      end
+    end
+  end
+
+  def run
+    ['simple', 'tabs', 'horizontal'].each do |method|
+      puts
+      puts '='*60
+      puts '== ' + method
+      puts
+      puts self.send(method)
+    end
   end
 
 end
 
 
-puts Testr.new.run
-
+Testr.new.run
 

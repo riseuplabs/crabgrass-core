@@ -74,23 +74,23 @@ textarea, input, select {
   //&.right  {text-align: right;}
   //&.left   {text-align: left;}
   //&.center {text-align: center;}
+}
 
-  //
-  // the order of submit tags matters. although there is no requirement in html
-  // for this to be the case, and so it might be a bad idea, we often rely on
-  // the fact that all browsers will use the first submit tag when the user
-  // hits return. we often want the first submit tag to be a cancel button.
-  // the class reverse will allow us to put the cancel button last, but have
-  // it appear first, which is more the standard.
-  // TODO: add RTL support.
-  //
-  &.reverse {
-    overflow: auto; // self clear
-    input[type=submit], input[type=button], img {
-      float: right;
-      //margin-right: 0;
-      //margin-left: 1em;
-    }
+//
+// the order of submit tags matters. although there is no requirement in html
+// for this to be the case, and so it might be a bad idea, we often rely on
+// the fact that all browsers will use the first submit tag when the user
+// hits return. we often want the first submit tag to be a cancel button.
+// the class reverse will allow us to put the cancel button last, but have
+// it appear first, which is more the standard.
+// TODO: add RTL support.
+//
+
+.reverse {
+  overflow: auto; // self clear
+  input[type=submit], input[type=button], img {
+    float: right;
+    margin-left: 1em;
   }
 }
 
