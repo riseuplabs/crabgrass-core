@@ -123,7 +123,7 @@ module PathFinder
 
     def default_options   # :nodoc:
       options = {
-        :controller => get_controller,
+        #:controller => get_controller,
         :public => false,
       }
       if logged_in?
@@ -135,12 +135,12 @@ module PathFinder
       end
 
       # limit pages to the current site.
-      if get_controller.current_site.limited?
+      #if get_controller.current_site.limited?
         # why site_ids instead of just site_id? perhaps in the future
         # we will enable a user to login and see a configurable subset of the
         # sites they have available to them.
-        options[:site_ids] = [current_site.id]
-      end
+      #  options[:site_ids] = [current_site.id]
+      #end
 
       options
     end

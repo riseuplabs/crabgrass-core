@@ -52,7 +52,7 @@ Crabgrass::Initializer.run do |config|
 
   # required, but not included with crabgrass:
   config.gem 'i18n', :version => '~> 0.5'
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3.0'
+  config.gem 'thinking-sphinx', :version => '~> 1.4'
   config.gem 'will_paginate', :version => '= 2.3.16'
   config.gem 'sprockets', "~> 2.1.0"
 

@@ -10,8 +10,16 @@ require 'rdoc/task'
 require 'tasks/rails'
 
 begin
-  gem 'delayed_job', '~>2.0.4'
+  gem 'delayed_job', '~> 2.0'
   require 'delayed/tasks'
 rescue LoadError
-  STDERR.puts "Run `rake gems:install` to install delayed_job"
+  STDERR.puts "(delayed_job tasks disabled)"
+end
+
+begin
+  gem 'thinking-sphinx', '~> 1.4'
+  require 'thinking-sphinx'
+  require 'thinking_sphinx/tasks'
+rescue LoadError
+  STDERR.puts "(sphinx tasks disabled)"
 end

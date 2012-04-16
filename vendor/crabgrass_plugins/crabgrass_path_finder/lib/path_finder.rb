@@ -1,5 +1,13 @@
+#
 # :include:path_finder/README
+#
 module PathFinder
+
+  #
+  # configure as you see fit
+  #
+  mattr_accessor :default_pagination_size
+  self.default_pagination_size = 25
 
   #  this works, but seems like overkill:
   #  "PathFind::#{sym.to_s.capitalize}::Options".split('::').inject(Object) {|x,y| x.const_get(y) }

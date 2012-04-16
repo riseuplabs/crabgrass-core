@@ -2,7 +2,7 @@
 SearchFilter.new('/public/') do
 
   query do |query|
-    query.add_access_constraint(:public => true)
+    query.add_public
   end
 
   #

@@ -1,3 +1,9 @@
+#
+#
+# THIS FILE IS NOT USED
+#
+#
+
 # = PathFinder::Sphinx::BuilderFilters
 #
 # This contains all the filters for the different path elements.

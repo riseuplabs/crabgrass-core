@@ -79,6 +79,7 @@ Media Plugins
 -------------
 
 fleximage
+  no longer used
   used for avatars. We use the plugin and not the gem because the gem has
   RMagick as a dependency.
 
@@ -114,36 +115,3 @@ rails-dev-boost
   http://github.com/thedarkone/rails-dev-boost
   amazing plugin that improves the class loading/unloading code for development
   mode. it makes running dev mode many times faster.
-
-Testing Plugins
----------------
-
-These are only needed when running tests.
-TODO: figure out which ones are still used.
-
-mocha
-  a library for mocking and stubbing
-
-rspec
-  a behaviour driven development framework
-
-spider_test
-  crawls the views.
-
-webrat
-  write acceptance tests for rails ui
-
-PLUGIN NOTES
-===========================================================
-
-nested_layouts
---------------
-
-Lets us have layouts that nest inside other layouts. Very useful.
-For example:
-
-<% inside_layout 'application' do -%>
-<div class='custom'>
-  <%= yield %>
-</div>
-<% end -%>

@@ -1,12 +1,11 @@
-=begin
-
-SPHINX FULLTEXT SEARCHING
-
-Here in lies the code for supporting full text indexing of pages, to be
-used by sphinx. See also lib/path_finder for how this is actually searched.
-
-=end
-
+#
+#
+# FULLTEXT SEARCHING and PERMISSIONS
+#
+# Here in lies the code for supporting full text indexing of pages, to be
+# used by sphinx and mysql fulltext index. See crabgrass_plugins/crabgrass_path_finder for how this is actually searched.
+#
+#
 module PageExtension::Index
 
   def self.included(base)

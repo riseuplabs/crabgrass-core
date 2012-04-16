@@ -79,9 +79,9 @@ author has said is an unintended byproduct of the
 implementation. I think it should be a feature, because it
 is cool.
 
-Here is the problem: you pass conditions to search() using
+Here is the problem: you pass attribute filters to search() using
 :with => {}. But what do you do if you want to have multiple
-conditions on the same field? You are stuck, because you can't
+contraints on the same field? You are stuck, because you can't
 have two keys that are the same. 
 
 So, instead, you can pass an array. Rather than:
