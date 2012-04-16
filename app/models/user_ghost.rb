@@ -19,7 +19,7 @@ class UserGhost < User
     remove_relationships
     clear_cache
   end
-  handle_asynchronously :anonymize_user # this will use delayed_job
+  #handle_asynchronously :anonymize_user # this will use delayed_job
 
   private
 
