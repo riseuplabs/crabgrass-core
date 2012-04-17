@@ -70,7 +70,7 @@ sites:
 
 default_permissions:
   groups:
-    members: 'all'
+    members: !ruby/sym all
     public:
       - view
       - request_membership

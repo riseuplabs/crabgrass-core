@@ -135,7 +135,7 @@ class Conf
     self.ensure_page_owner = true
     self.default_page_access = :admin
     self.default_group_permissions = {
-      'members' => 'all',
+      'members' => :all,
       'public' => ['view', 'request_membership']
     }
     self.default_user_permissions = {
