@@ -9,6 +9,7 @@ class PermissionTest < ActiveSupport::TestCase
     group = Group.make_owned_by(:user => user)
     group.add_user! user
     invisible = Group.make
+    invisible.revoke!(:public, :view)
 
     assert user.may?(:admin, group), "should admin group i'm in"
     assert !user.may?(:view, invisible), "should not view group i'm not in."
