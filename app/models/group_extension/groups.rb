@@ -154,7 +154,7 @@ module GroupExtension::Groups
     end
 
     def destroy_council
-      if self.normal? and self.council_id and self.council_id != self.id
+      if self.council_id and self.council_id != self.id
         self.council.destroy
         self.grant! self, :admin # give parent group back admin permissions if council is destroyed
         self.save!
