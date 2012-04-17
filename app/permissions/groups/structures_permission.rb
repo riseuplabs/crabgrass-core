@@ -17,7 +17,7 @@ module Groups::StructuresPermission
   def may_create_council?(group = @group)
     Conf.councils and
     group.parent_id.nil? and
-    !group.real_council and
+    !group.has_a_council? and
     current_user.may?(:admin, group) and
     group.created_at > 1.week.ago
   end
@@ -46,7 +46,7 @@ module Groups::StructuresPermission
   def may_show_affiliations?(group = @group)
     may_list_group_networks?(group) or
     may_list_group_committees?(group) or
-    group.real_council
+    group.has_a_council?
   end
 
 end
