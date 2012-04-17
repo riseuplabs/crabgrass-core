@@ -22,8 +22,6 @@ module UserExtension::Users
       initialized_by :update_contacts_cache,
         :friend_id_cache, :foe_id_cache
 
-      after_create :add_social_permissions
-
       ##
       ## PEERS
       ##
@@ -138,12 +136,6 @@ module UserExtension::Users
   end
 
   module InstanceMethods
-
-    def add_social_permissions
-      self.grant! self.friends, [:view, :pester]
-      self.grant! self.peers, [:view, :pester]
-      self.grant! :public, []
-    end
 
     ##
     ## STATUS / PUBLIC WALL

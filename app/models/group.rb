@@ -290,7 +290,8 @@ class Group < ActiveRecord::Base
 
   after_create :create_permissions
   def create_permissions
-    self.grant! self, :all
+    self.grant! self, Conf.default_group_permissions['members']
+    self.grant! :public, Conf.default_group_permissions['public']
   end
 
   ##

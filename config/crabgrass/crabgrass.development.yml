@@ -68,3 +68,22 @@ sites:
 #  - name: site2
 #    admin_group: superadmins
 
+default_permissions:
+  groups:
+    members: 'all'
+    public:
+      - view
+      - request_membership
+  users:
+    friends:
+      - view
+      - pester
+      - see_groups
+      - see_contacts
+    peers:
+      - view
+      - pester
+      - request_contact
+    public:
+      - view
+      - request_contact

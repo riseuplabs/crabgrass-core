@@ -93,7 +93,9 @@ class User < ActiveRecord::Base
 
   after_create :add_permissions
   def add_permissions
-    self.grant! :public, [:view, :pester]
+    self.grant! self.friends, Conf.default_user_permissions['friends']
+    self.grant! self.peers, Conf.default_user_permissions['peers']
+    self.grant! :public, Conf.default_user_permissions['public']
   end
 
   after_save :update_name
