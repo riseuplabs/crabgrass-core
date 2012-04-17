@@ -56,7 +56,7 @@ class Committee < Group
   # council changes.
 
   def has_access?(access, user=User.current)
-    if access == :admin and parent.real_council
+    if access == :admin and parent.has_a_council?
       parent.has_access?(:admin, user)
     else
       super
