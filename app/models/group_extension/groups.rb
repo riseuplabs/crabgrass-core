@@ -15,8 +15,7 @@ module GroupExtension::Groups
 
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
-      belongs_to :council, :class_name => 'Group'
-      before_destroy :destroy_council
+      belongs_to :council, :class_name => 'Group', :dependent => :destroy
 
       # Committees are children! They must respect their parent group.
       # This uses better_acts_as_tree, which allows callbacks.
@@ -32,10 +31,6 @@ module GroupExtension::Groups
         :class_name => 'Committee',
         :conditions => {:type => 'Committee'}
 
-      alias_method :real_council, :council
-      define_method :council do |*args|
-        real_council(*args) || self
-      end
     end
   end
 
@@ -99,7 +94,7 @@ module GroupExtension::Groups
       committee.parent_name_changed
       if make_council
         add_council(committee)
-      elsif self.real_council == committee
+      elsif self.council == committee
         committee.type = "Committee"
         self.council = nil
         self.grant! self, :all
@@ -150,22 +145,14 @@ module GroupExtension::Groups
     end
 
     def has_a_council?
-      self.council_id and self.council_id != self.id
-    end
-
-    def destroy_council
-      if self.council_id and self.council_id != self.id
-        self.council.destroy
-        self.grant! self, :admin # give parent group back admin permissions if council is destroyed
-        self.save!
-      end
+      self.council != nil
     end
 
     private
 
     def add_council(committee)
-      if real_council
-        real_council.update_attribute(:type, "Committee")
+      if has_a_council?
+        council.update_attribute(:type, "Committee")
       end
       self.council = committee
       committee.type = "Council"
