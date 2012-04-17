@@ -18,7 +18,7 @@ class RequestToCreateCouncil < Request
   end
 
   def validate_on_create
-    if self.existing(:group => group)
+    if RequestToCreateCouncil.existing(:group => group)
       errors.add_to_base(:request_exists_error.t(:recipient => group.name))
     end
   end

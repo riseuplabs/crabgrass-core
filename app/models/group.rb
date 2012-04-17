@@ -258,6 +258,9 @@ class Group < ActiveRecord::Base
     # needed for the activity
     self.destroyed_by = user
     self.council.destroyed_by = user if self.council
+    if self.council? # give parent group back admin permissions if council is destroyed
+      self.parent.grant! self.parent, :admin
+    end
     self.children.each {|committee| committee.destroyed_by = user}
     self.destroy
   end
