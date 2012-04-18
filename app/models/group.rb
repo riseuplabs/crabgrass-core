@@ -20,7 +20,7 @@ end
   associations:
   group.children   => groups
   group.parent     => group
-  group.council  => nil or group
+  group.council    => nil or group
   group.users      => users
 =end
 
@@ -257,7 +257,6 @@ class Group < ActiveRecord::Base
   def destroy_by(user)
     # needed for the activity
     self.destroyed_by = user
-    self.council.destroyed_by = user if self.council
     if self.council? # give parent group back admin permissions if council is destroyed
       self.parent.grant! self.parent, :admin
     end

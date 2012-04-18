@@ -105,11 +105,16 @@ module GroupExtension::Groups
       self.committees.reset
     end
 
+    protected
+
     # Removes a committee. No other method should be used.
+    # We use this when destroying the committee - do not
+    # use it on its own as you'll have a committee without
+    # a group afterwards.
     def remove_committee!(committee)
       committee.parent_id = nil
       if council_id == committee.id
-        self.council_id = nil
+        self.council = nil
         committee.type = "Committee"
       end
       committee.save!
@@ -117,6 +122,8 @@ module GroupExtension::Groups
       self.save!
       self.committees.reset
     end
+
+    public
 
     # returns an array of all children ids and self id (but not parents).
     # this is used to determine if a group has access to a page.
