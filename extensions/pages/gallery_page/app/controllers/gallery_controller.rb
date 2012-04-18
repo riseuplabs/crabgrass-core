@@ -59,6 +59,10 @@ class GalleryController < Pages::BaseController
     @show_right_column = true
   end
 
+  def setup_options
+    @options.show_tabs = true
+  end
+
   def build_page_data
     @assets ||= []
     params[:assets].each do |file|
