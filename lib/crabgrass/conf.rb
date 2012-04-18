@@ -140,8 +140,8 @@ class Conf
     }
     self.default_user_permissions = {
       'friends' => [:view, :pester, :see_groups, :see_contacts],
-      'peers' => [:view, :pester, :request_contact],
-      'public' => [:view, :request_contact]
+      'peers' => [:pester, :request_contact],
+      'public' => []
     }
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false

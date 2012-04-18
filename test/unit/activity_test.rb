@@ -14,8 +14,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_contact
     @joe.add_contact!(@ann, :friend)
-
-    act = FriendActivity.for_all(@joe).find(:first)
+    act = FriendActivity.for_me(@joe).find(:first)
     assert act, 'there should be a friend activity created'
     assert_equal @joe, act.user
     assert_equal @ann, act.other_user
@@ -96,11 +95,11 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_deleted_subject
     @joe.add_contact!(@ann, :friend)
-    act = FriendActivity.for_all(@joe).find(:first)
+    act = FriendActivity.for_me(@joe).find(:first)
     former_name = @ann.name
     @ann.destroy
 
-    assert act, 'there should be a friend activity created'
+    assert act.reload, 'there should still be a friend activity'
     assert_equal nil, act.other_user
     assert_equal former_name, act.other_user_name
     assert_equal "<span class=\"user\">#{former_name}</span>",
