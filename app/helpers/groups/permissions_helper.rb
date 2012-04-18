@@ -18,7 +18,7 @@ module Groups::PermissionsHelper
   end
 
   def networks_publicly_visible_checkbox(list)
-    return unless Conf.networks
+    return unless Conf.networks and !@group.council?
     list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
       cb.label I18n.t(:networks_publicly_visible)
       cb.input permission_lock_tag(:see_networks, @keys)
@@ -43,6 +43,7 @@ module Groups::PermissionsHelper
   end
 
   def open_membership_policy_checkbox(list)
+    return if @group.council?
     list.checkbox do |cb|
       cb.label I18n.t(:open_group)
       cb.input permission_lock_tag(:join, @keys)
