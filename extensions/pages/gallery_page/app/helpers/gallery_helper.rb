@@ -54,13 +54,13 @@ module GalleryHelper
 
   def upload_images_link
     link_to_modal(I18n.t(:add_images_to_gallery_link),
-      { :url => page_url(@page, :action => 'image-new'),
+      { :url => page_url(@page, :action => 'new', :controller => :image),
         :complete => 'styleUpload();'},
       :class => "small_icon plus_16")
   end
 
   def gallery_delete_image(image, position)
-    url = page_url(@page, :action => 'image-destroy', :id => image.id, :method => :delete)
+    url = page_url(@page, :controller => :image, :action => 'destroy', :id => image.id, :method => :delete)
     link_to_remote('&nbsp;', {
         :url => url,
         :confirm => I18n.t(:confirm_image_delete),
@@ -73,7 +73,8 @@ module GalleryHelper
 
   def gallery_edit_image(image)
     url = page_url @page,
-      :action => 'image-edit',
+      :controller => :image,
+      :action => 'edit',
       :id => image.id
     link_to_modal '&nbsp;',
       { :url => url,
@@ -111,7 +112,8 @@ module GalleryHelper
 
   def gallery_image_form_url
     page_url @page,
-      :action => 'image-update',
+      :controller => :image,
+      :action => 'update',
       'X-Progress-ID' => @image_upload_id,
       :id => @image.id
   end
@@ -205,7 +207,10 @@ module GalleryHelper
   #  :pending => "$('change_title_spinner').show()"
   #}
   def save_caption_form_options page, image
-    {:url => page_url(page, :action => 'image-update', :id => image.id),
+    {:url => page_url(page,
+                      :controller => :image,
+                      :action => 'update',
+                      :id => image.id),
      :update => 'detail_image_title',
      :complete => %Q{$('detail_image_title').show();
                     $('change_title_form').hide();
@@ -221,7 +226,10 @@ module GalleryHelper
     spinner = 'load_' + to.to_s + '_image_spinner'
     link_to_remote(
       image_tag(nav_image),
-      :url => page_url(page, :action => 'image-show', :id => image.asset_id),
+      :url => page_url(page,
+                      :controller => :image,
+                      :action => 'show',
+                      :id => image.asset_id),
       :html => {:class => button, :id => id},
       :loading => "$('#{id}').hide(); $('#{spinner}').show();")
   end
