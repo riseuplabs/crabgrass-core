@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class CommitteeTest < ActiveSupport::TestCase
+class CouncilTest < ActiveSupport::TestCase
   fixtures :groups, :users
 
   def test_add_council
