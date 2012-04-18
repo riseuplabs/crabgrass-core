@@ -113,9 +113,9 @@ module GalleryHelper
   def gallery_image_form_url
     page_url @page,
       :controller => :image,
-      :action => 'update',
+      :action => @image ? 'update' : 'create' ,
       'X-Progress-ID' => @image_upload_id,
-      :id => @image.id
+      :id => @image && @image.id
   end
 
   def render_audio_form_with_progress
