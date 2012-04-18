@@ -1,0 +1,6 @@
+- pages=[] if pages.nil?
+- ul_class='' if ul_class.nil?
+%ul{:class => ul_class}
+  - pages.each do |page|
+    %li{:class => "icon #{page.icon}_16"}= cell_title(page)
+      

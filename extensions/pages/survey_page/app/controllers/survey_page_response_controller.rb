@@ -2,7 +2,7 @@
 ## Handles the CRUD for survey responses
 ##
 
-class SurveyPageResponseController < BasePageController
+class SurveyPageResponseController < Pages::BaseController
   stylesheet 'survey'
   javascript :extra
   javascript 'survey'
@@ -64,7 +64,7 @@ class SurveyPageResponseController < BasePageController
   def show
     @response = @survey.responses.find_by_id params[:id]
     if params[:jump]
-      redirect_to page_url(@page, :action => 'response-show', :id => get_jump_id)
+      redirect_to page_url(@page,  :controller => :response, :action => :show, :id => get_jump_id)
     end
   end
 
@@ -144,5 +144,10 @@ class SurveyPageResponseController < BasePageController
       return @survey.response_ids[index-1]
     end
   end
+
+  def setup_options
+    @options.show_tabs   = true
+  end
+
 end
 

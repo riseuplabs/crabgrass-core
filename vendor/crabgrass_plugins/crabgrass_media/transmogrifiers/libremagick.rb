@@ -23,7 +23,7 @@ class LibreMagickTransmogrifier < Media::Transmogrifier
   end
 
   def available?
-    libre.available? and magick.available?
+    libre and magick and libre.available? and magick.available?
   end
 
   #

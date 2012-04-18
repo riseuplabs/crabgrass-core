@@ -19,6 +19,14 @@ class RequestToFriend < Request
     end
   end
 
+  #
+  # returns existing friend request, if any.
+  # requires: {:from => x, :to => y}
+  #
+  def self.existing(options)
+    pending.created_by(options[:from]).to_user(options[:to]).first
+  end
+
   def requestable_required?() false end
 
   def may_create?(user)

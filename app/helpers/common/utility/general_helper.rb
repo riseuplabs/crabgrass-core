@@ -4,6 +4,69 @@ module Common::Utility::GeneralHelper
   ## GENERAL UTILITY
   ##
 
+  #
+  # just like content_tag, but skips the tag if passed empty content.
+  #
+  def content_tag_if_any(name, content_or_options_with_block = nil, options = nil, escape = true, &block)
+    content = nil
+    opts = nil
+    if block
+      opts = content_or_options_with_block
+      content = yield block
+    else
+      opts = options
+      content = content_or_options_with_block
+    end
+    if content.any?
+      return content_tag(name, content, opts, escape)
+    else
+      return ""
+    end
+  end
+
+  #
+  # create ul list by calling block repeatedly for each item.
+  #
+  def ul_list_tag(items, options={}, &block)
+
+    if (header = options.delete(:header))
+      header_tag = content_tag(:li, header, :class => 'header')
+    else
+      header_tag = ""
+    end
+
+    if (footer = options.delete(:footer))
+      footer_tag = content_tag(:li, footer, :class => 'footer')
+    else
+      footer_tag = ""
+    end
+
+    content_tag(:ul, options) do
+      header_tag +
+      items.collect {|item| content_tag(:li, yield(item))}.join +
+      footer_tag
+    end
+  end
+
+  #
+  # words that are very long with no spaces can break the layout badly.
+  #
+  # normally, it seems to work pretty good to add the css "word-wrap: break-word;"
+  # to elements that might have really long words.
+  #
+  # i can't get this working for tables. instead, this method is used to manually
+  # add in hidden hyphenation to the long word.
+  #
+  # see http://www.quirksmode.org/oddsandends/wbr.html
+  #
+  def force_wrap(text,max_length=20)
+    text.gsub(/(\w{#{max_length},})/) do |word|
+      split_up_word = word.scan(/.{#{max_length}}/)
+      word_remainder = word.split(/.{#{max_length}}/).select{|str| str.any?}
+      (split_up_word + word_remainder).join('&shy;')
+    end
+  end
+
   # returns the first of the args where any? returns true
   # if none has any, return last
   def first_with_any(*args)
@@ -25,14 +88,29 @@ module Common::Utility::GeneralHelper
     end
   end
 
+  #
+  # returns true the first time it is called for 'key', and false otherwise.
+  #
   def once?(key)
     @called_before ||= {}
-    return false if @called_before[key]
-    @called_before[key]=true
+    if @called_before[key]
+      return false
+    else
+      @called_before[key] = true
+      return true
+    end
   end
 
+  #
   # used to set the class 'first' for lists of things, because css selector :first
   # is not very reliable.
+  #
+  # for example:
+  #
+  #   .p{:class => first(:list)}   --->   <p class="first"></p>
+  #   .p{:class => first(:list)}   --->   <p></p>
+  #   .p{:class => first(:list)}   --->   <p></p>
+  #
   def first(key)
     once?(key) ? 'first' : ''
   end

@@ -24,26 +24,40 @@ define_theme {
     }
   }
 
+  # avatar sizes
+  icon {
+    Avatar::SIZES.each do |size, pixels|
+      send(size, "#{pixels}px")
+    end
+  }
+
   # general color constants that are frequently reused
   color {
     dim '#999'
     bright '#f33'
 
+    # used for borders, typically
+    grey '#ddd'
+
     # used for a subtle highlight (e.g. table headings)
     light '#eee'
 
     # used for barely visible highlight (e.g. table rows).
-    lighter '#f6f6f6'
+    lighter '#f5f5f5'
+
+    # used as :hover background for mouse-over clickable areas
+    hover '#ffd'
   }
 
   font {
     default {
+      color '#000'
       family "verdana, 'bitstream vera sans', helvetica, sans-serif"
       size '13px'
       line_height '18px'
     }
     heading {
-      family  'sans-serif'
+      family "verdana, 'bitstream vera sans', helvetica, sans-serif"
       h1_size '2.10em'
       h2_size '1.125em'
       h3_size '1em'
@@ -52,14 +66,23 @@ define_theme {
   }
 
   link {
-    standard_color "#0000EE"
-    visited_color "#551A8B"
-    active_color "#EE0000"
+    standard_color "#00e"
+    visited_color "#551a8b"
+    active_color "#e00"
     underline false
   }
 
   background {
     color '#e6e6e6'
+  }
+
+  #
+  # for ui elements, like buttons and stuff.
+  #
+  ui {
+    border_radius '4px'
+    border_color var(:color_grey)
+    fade_color var(:color_lighter)
   }
 
   masthead {
@@ -89,7 +112,7 @@ define_theme {
                      # cutout -- creates tabs cut out from masthead
                      # bar -- creates a separate menu nav bar
       tab {
-        padding '8px'   # must be in pixels
+        padding '1px 14px'
         css false
         active_css false
         inactive_css false
@@ -98,7 +121,7 @@ define_theme {
         background_color 'white'
         border_color '#999'
         hover {
-          background_color '#ffc'
+          background_color var(:color_hover)
           border '1px solid #cc9'
         }
       }
@@ -107,7 +130,7 @@ define_theme {
 
   banner {
     # unfortunately, banner padding must be specified in pixels.
-    padding "12px"
+    padding "16px"
     border "1px solid #888"
     default_background '#999'
     default_foreground '#fff'
@@ -141,7 +164,9 @@ define_theme {
     sidecolumn {
       # for fun, make the side column width approximate a golden ratio.
       # width (0.3819660113 * var(:grid_column_count).to_i).round
-      width 8
+      width 7
+      icon_size 'xsmall'
+      icon_size_px var_eval('icon_', :local_sidecolumn_icon_size)
     }
     title {
       background var(:color_lighter)
@@ -150,8 +175,8 @@ define_theme {
   }
 
   posts {
-    border "1px solid #ccc"
-    odd_background "#efefef"
+    border "1px solid #ddd"
+    odd_background var(:color_lighter)
     even_background var(:local_content_background)
     padding "10px"
   }
@@ -174,12 +199,6 @@ define_theme {
     modalbox 200       # modal dialog boxes
     tooltip 300        #
     autocomplete 400   # autocomplete popups
-  }
-
-  icon {
-    Avatar::SIZES.each do |size, pixels|
-      send(size, "#{pixels}px")
-    end
   }
 
   modalbox {

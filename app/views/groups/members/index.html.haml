@@ -1,8 +1,0 @@
-%section{:class => 'table'}
-  %table.fancy{:width => '100%'}
-    %tr
-      %th= :user.t
-      %th= :profile_member_since.t
-      %th
-    = render :partial => '/groups/members/membership', :collection => @memberships
-  .p= pagination_links(@memberships)

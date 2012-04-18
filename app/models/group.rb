@@ -20,7 +20,7 @@ end
   associations:
   group.children   => groups
   group.parent     => group
-  group.council  => nil or group
+  group.council    => nil or group
   group.users      => users
 =end
 
@@ -257,7 +257,6 @@ class Group < ActiveRecord::Base
   def destroy_by(user)
     # needed for the activity
     self.destroyed_by = user
-    self.council.destroyed_by = user if self.council
     self.children.each {|committee| committee.destroyed_by = user}
     self.destroy
   end
@@ -290,7 +289,8 @@ class Group < ActiveRecord::Base
 
   after_create :create_permissions
   def create_permissions
-    self.grant! self, :all
+    self.grant! self, Conf.default_group_permissions['members']
+    self.grant! :public, Conf.default_group_permissions['public']
   end
 
   ##

@@ -1,0 +1,51 @@
+//
+// changes to the bootstrap css
+//
+
+form {
+  margin-bottom: 0;
+}
+
+.btn {
+  margin: 0;
+}
+
+.btn-group {
+  display: inline-block;
+}
+
+.btn-group + .btn-group {
+  margin-left: 1em;
+}
+
+.pagination {
+  margin: 0;
+  a:hover, .active a {
+    background-color: #eee;
+  }
+  .active a:hover, .disabled a:hover {
+    text-decoration: none;
+  }
+
+  //li:first-child a {
+  //  @include border-left-radius(3px);
+  //}
+  //li:last-child a {
+  //  @include border-right-radius(3px);
+  //}
+}
+
+
+input, textarea, select, .uneditable-input {
+  height: auto;
+}
+
+//
+// fields with errors:
+// I find the 1px red border way too subtle.
+//
+.control-group.error {
+  input, textarea, select {
+    border-width: 2px;
+  }
+}

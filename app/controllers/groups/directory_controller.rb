@@ -1,7 +1,7 @@
 class Groups::DirectoryController < ApplicationController
   stylesheet 'directory'
   helper 'groups/directory'
-  permissions 'groups/affiliations'
+  permissions 'groups/structures'
 
   def index
     if !logged_in?

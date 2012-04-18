@@ -19,7 +19,7 @@
       %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
       = password_field_tag 'password', '', {:id => 'password', :tabindex => 2}
     %div.buttons
-      %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3 }
+      %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
     %div
       = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"

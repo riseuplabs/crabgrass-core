@@ -1,0 +1,66 @@
+en:
+
+  destroy_confirmation: "Are you sure you want to delete this %{thing}? This action cannot be undone."
+  confirmation: "Are you sure?"
+  cancel: "Cancel"
+  optional: "Optional"
+  required: "Required"
+  edit: "Edit"
+  upload: "Upload"
+  preview: "Preview"
+  return_link: "Return"
+  back_button: "Back"
+  send_button: "Send"
+  ##!  approve_button: "Approve"
+  ##!  reject_button: "Reject"
+  close_button: "Close"
+  ##!  close_link: "close"
+  share_button: "Share"
+  save_button: "Save"
+  ##!  move_button: "Move"
+  add_button: "Add"
+  ##!  update_button: "Update"
+  cancel_button: "Cancel"
+  create_button: "Create"
+  ok_button: "OK"
+  ##!  done_button: "Done"
+  show_button: "Show"
+  show_thing: "Show %{thing}"
+  confirm: "Confirm"
+  alert: "Alert"
+  loading_progress: "Loading..."
+  loadingdotdotdot: "Loading..."
+  create_a_new_thing: "Create a new %{thing}"
+  create_thing: "Create %{thing}"
+  created_by: "Created by"
+  created: "Created"
+  updated_by: "Updated by"
+  updated: "Updated"
+  ##!  update_thing: "Update %{thing}"
+  created_by_user_on: "Created by %{user} on %{when}."
+
+  approve: "Approve"
+  reject: "Reject"
+  pending: "Pending"
+  rejected: "Rejected"
+  approved: "Approved"
+
+  #
+  # 'destroy' should be reserved for when the action has consequence,
+  # like destroying a group.
+  #
+  # 'delete' should be used otherwise, like deleting a request.
+  #
+  # 'remove' is different. You remove a user from a group, or a user from your contacts.
+  #
+  # alternately, maybe 'destroy' should be for actions that cannot be undone.
+  #
+  destroy: "Destroy"
+  thing_destroyed: "%{thing} destroyed"
+  destroy_thing: "Destroy %{thing}"
+  delete_thing: "Delete %{thing}"
+  delete: "Delete"
+  delete_button: "Delete"
+  deleted: "Deleted"
+  remove: "Remove"
+  

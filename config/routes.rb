@@ -44,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :notices
     me.home      '', :controller => 'notices', :action => 'index'
     me.resource  :page, :only => [:new, :create]
+    me.resources :recent_pages, :only => [:index]
     me.pages     'pages/*path', :controller => 'pages'
     me.resources :activities
     me.resources(:discussions, :as => 'messages') do |discussion|
@@ -52,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resource  :settings, :only => [:show, :update]
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
-    me.resources :requests, :only => [:index, :update, :destroy]
+    me.resources :requests, :only => [:index, :update, :destroy, :show]
     me.resources :events
     me.resources :avatars
   end
@@ -110,22 +111,24 @@ ActionController::Routing::Routes.draw do |map|
   map.groups_directory 'groups/directory/*path', :controller => 'groups/directory'
 
   map.resources :groups, :namespace => 'groups/', :only => [:new, :create, :destroy] do |groups|
+    # content related
     groups.resource  :home, :only => [:show], :controller => 'home'
-    #groups.resource  :page, :only => [:new, :create]
     groups.pages     'pages/*path', :controller => 'pages'
-    groups.resources :members, :only => [:index, :destroy]
-    groups.resources :memberships, :only => [:create, :destroy]
-    groups.resources :committees, :only => [:new, :create]
-    groups.resources :councils, :only => [:new, :create]
-    groups.resources :invites, :only => [:new, :create]
-    groups.resources :requests, :only => [:index, :create]
-    #groups.resources :events
-    groups.resources :permissions, :only => [:index, :update]
-    #groups.resources :activities
-    groups.resource  :profile, :only => [:edit, :update]
-    groups.resource  :settings, :only => [:show, :update]
     groups.resources :avatars
     groups.resources :wikis, :except => [:index, :destroy]
+
+    # membership related
+    groups.resources :memberships, :only => [:index, :create, :destroy]
+    groups.resources :my_memberships, :only => [:create, :destroy]
+    groups.resources :membership_requests #, :only => [:index, :create]
+    groups.resources :invites, :only => [:new, :create]
+
+    # settings related
+    groups.resource  :settings, :only => [:show, :update]
+    groups.resources :requests #, :only => [:index, :create]
+    groups.resources :permissions, :only => [:index, :update]
+    groups.resource  :profile, :only => [:edit, :update]
+    groups.resource  :structure
  end
 
   ##

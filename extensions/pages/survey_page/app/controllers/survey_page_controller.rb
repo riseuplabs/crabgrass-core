@@ -1,8 +1,9 @@
 
-class SurveyPageController < BasePageController
+class SurveyPageController < Pages::BaseController
   stylesheet 'survey'
   javascript :extra
   javascript 'survey'
+  helper 'survey_page'
 
   permissions 'survey_page'
 
@@ -50,8 +51,12 @@ class SurveyPageController < BasePageController
     @survey=@page.data || Survey.new
   end
 
-  def setup_view
+  def setup_view #maybe want to change
     @show_right_column = true
+  end
+
+  def setup_options
+    @options.show_tabs   = true
   end
 
 end

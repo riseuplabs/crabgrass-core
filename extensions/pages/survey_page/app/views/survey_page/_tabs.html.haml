@@ -1,0 +1,18 @@
+= formy(:tabs, :id => 'page_tabs', :class => 'tabset') do |f|
+  - f.tab do |t|
+    - t.label :survey_introduction_tab.t
+    - t.url page_url(@page, :action => 'show')
+    - t.selected controller?(:survey_page) && action?(:show)
+  - if logged_in?
+    - unless @survey.new_record?
+      - my_response = @survey.responses.for_user(current_user) # @survey.find_response_by_user(current_user)
+      - if my_response and may_view_survey_response?(my_response)
+        - f.tab do |t|
+          - t.label :survey_my_response_tab.t
+          - t.url page_path(@page, :controller => :response, :action => :show, :id => my_response.id)
+          - t.selected controller?(:survey_page_response) && action?(:show, :edit) && id?(my_response.id)
+      - if may_view_survey_response?
+        - f.tab do |t|
+          - t.label :survey_list_all_tab.t
+          - t.url page_path(@page, :controller => :response, :action => :list)
+          - t.selected controller?(:survey_page_response) && action?(:list, :edit, :show) && !id?(my_response)

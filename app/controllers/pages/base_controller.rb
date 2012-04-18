@@ -9,7 +9,10 @@ class Pages::BaseController < ApplicationController
   layout 'page'
   permissions :pages, :object => 'page'
   permissions :posts, :object => 'post'
-  permissions 'groups/members', 'groups/base'    # required to show the banner if page is owned by a group.
+  
+  # the page banner has links that the user cannot see when unauthorized, like membership.
+  # so, we must load the appropriate permissions from groups.
+  permissions 'groups/memberships', 'groups/base'
 
   #stylesheet 'page_creation', :action => :create
   #javascript 'page'

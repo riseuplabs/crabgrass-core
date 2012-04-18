@@ -1,0 +1,11 @@
+- links = []
+- if @response
+  - if @response.user_id != current_user.id
+    - links << link_to(:pagination_previous.t, page_url(@page, :controller => :response, :action => :show, :id => @response.id, :jump => 'prev'))
+    - links << link_to(:return_link.t, page_url(@page, :controller => :response, :action => :list))
+    - links << link_to(:pagination_next.t, page_url(@page, :controller => :response, :action => :show, :id => @response.id, :jump => 'next'))
+- if @response
+  = link_line(*links)
+  = render :partial => 'show_response'
+- else
+  = :no_search_results.t

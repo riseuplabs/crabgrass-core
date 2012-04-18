@@ -70,8 +70,8 @@ one A
         :wiki_id => @wiki.id, :id => 'section-one',
         :wiki => {:body => '*updated*', :version => 1}
     end
-    assert_response :redirect
-    assert_redirected_to group_wiki_url(@group, @wiki)
+    # this is an xhr so we just render the wiki in place
+    assert_response :success
     changed_body = <<-EOB
 *updated*
 

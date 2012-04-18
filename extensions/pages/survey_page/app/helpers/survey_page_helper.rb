@@ -101,4 +101,5 @@ module SurveyPageHelper
   def js_next_response(rating)
     remote_function(js_next_response_options(rating))
   end
+
 end

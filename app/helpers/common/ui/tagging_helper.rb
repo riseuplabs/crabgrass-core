@@ -21,6 +21,7 @@
 
 module Common::Ui::TaggingHelper
 
+  # Not using this currently:
   def tag_cloud(tags, options={})
     options = {:classes => ['tag1','tag2','tag3','tag4'], :max => false}.merge(options)
     return if tags.empty?
@@ -50,9 +51,11 @@ module Common::Ui::TaggingHelper
   def tag_link(tag, owner, css_class='tag2')
     name = CGI.escape tag.name
     if owner.try.name and owner.is_a? Group
-      link_path = "/groups/tags/#{owner.name}/#{name}"
+      # should probably use group_pages_path but wasn't able to get it to work yet:
+      link_path = "/groups/#{owner.name}/pages#/tag/#{name}"
     else
-      link_path = "/me/search/tag/#{name}"
+      # should use me_pages_path, but wasn't able to get it to work yet
+      link_path = "/me/pages#/tag/#{name}"
     end
     link_to h(tag.name), link_path, :class => css_class
   end

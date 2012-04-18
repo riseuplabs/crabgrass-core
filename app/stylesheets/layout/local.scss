@@ -1,6 +1,9 @@
 
 #column_center {
   @if $local_content_shadow { @include local_content_shadow; }
+  @if $ui_border_radius {
+    @include border-radius($ui_border_radius);
+  }
 }
 
 //
@@ -16,7 +19,7 @@
   #column_center {
     @include full;
     article#content, #title { padding: $padding }
-    section#posts { margin-top: $padding; }
+    .section_spacer { height: $padding; }
   }
 }
 
@@ -33,7 +36,7 @@
     padding: $padding;
   }
   article#content { padding: $padding; }
-  section#posts   { margin-top: $padding; }
+  .section_spacer   { height: $padding; }
 
   &.on_left {
     #column_center {
@@ -85,6 +88,12 @@
             }
           }
         }
+
+        // this is a funky edge case where we have a.nav inside div.nav.
+        // it is rare, but for now we need this hackishness.
+        div.nav > a.nav {
+           padding: 0;
+        }
       }
 
     } @else {
@@ -124,13 +133,7 @@
 
   #title { margin-bottom: $padding }
   article#content { padding: $padding }
-  section#posts   { margin-top: $padding; }
-
-  .sidebox {
-    border: 1px solid #ccc;
-    background: #efefef;
-    padding: resolve_width($local_content_padding, $local_sidecolumn_width);
-  }
+  .section_spacer   { height: $padding; }
 
   &.on_left {
     #column_center {

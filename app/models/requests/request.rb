@@ -36,6 +36,7 @@ class Request < ActiveRecord::Base
 
   belongs_to :created_by, :class_name => 'User'
   belongs_to :approved_by, :class_name => 'User'
+  alias_method :rejected_by, :approved_by
 
   belongs_to :recipient, :polymorphic => true
   belongs_to :requestable, :polymorphic => true
@@ -118,8 +119,14 @@ class Request < ActiveRecord::Base
     {:conditions => {:requestable_id => requestable.id}}
   }
 
-  # maybe we should add an "invite?" column?
-  named_scope :invites, :conditions => {:type => ['RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail', 'RequestToJoinYou', 'RequestToJoinYourNetwork']}
+  #
+  # find only requests related to remembership.
+  # maybe we should add a "membership?" column?
+  #
+  named_scope :membership_related, :conditions => {:type => [
+    'RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail',
+    'RequestToJoinYou', 'RequestToJoinYourNetwork', 'RequestToRemoveUser'
+  ]}
 
   ##
   ## VALIDATIONS
@@ -130,7 +137,8 @@ class Request < ActiveRecord::Base
     self.state = "pending" # needed despite FSM so that validations on create will work.
   end
 
-  def validate
+  validate_on_create :check_create_permission
+  def check_create_permission
     unless may_create?(created_by)
       errors.add_to_base(I18n.t(:permission_denied))
     end
@@ -158,6 +166,14 @@ class Request < ActiveRecord::Base
     end
   end
 
+  #
+  # Returns the entity that would make a good icon for this request.
+  # Can, and should, be overridden by subclasses when appropriate.
+  #
+  def icon_entity
+    self.created_by
+  end
+
   ##
   ## ACTIONS
   ##
@@ -176,14 +192,22 @@ class Request < ActiveRecord::Base
       else raise Exception.new('state must be approved or rejected')
     end
 
-    self.approved_by = user  # optional
+    if user.nil?
+      raise_denied(nil,newstate)
+    end
+    
+    self.approved_by = user  # approve or rejecte both use approved_by
     self.send(command)       # FSM call, eg approve!()
 
     unless self.state == newstate
-      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => command))
+      raise_denied(user, newstate)
     end
 
     save!
+  end
+
+  def raise_denied(user, state)
+    raise PermissionDenied.new(:not_allowed_to_respond_to_request.t(:user => user.try(:name), :command => I18n.t(state)))
   end
 
   #
@@ -211,10 +235,10 @@ class Request < ActiveRecord::Base
   end
 
   def destroy_by!(user)
-    if may_destroy?(user)
+    if user and may_destroy?(user)
       destroy
     else
-      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => 'destroy'))
+      raise_denied(user, :destroy)
     end
   end
 

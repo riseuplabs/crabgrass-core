@@ -1,6 +1,8 @@
 #require 'rubygems'
-#require 'test/unit'  # I don't know why, but a bunch of tests fail
-#                     # if test/unit is not included early on.
+# we need to require test/unit because ActiveSupport::TestCase
+# derives from it and mocha will not patch it if it is not loaded
+# so the Mocha::API would not be available in AS::TestCase
+require 'test/unit'
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
@@ -80,3 +82,9 @@ class ActionController::IntegrationTest
     subclass.fixtures :all
   end
 end
+
+#
+# mocha must be required last.
+# the libraries that it patches must be loaded before it is.
+#
+require 'mocha'

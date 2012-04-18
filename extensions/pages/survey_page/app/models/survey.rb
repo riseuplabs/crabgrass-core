@@ -23,6 +23,10 @@ class Survey < ActiveRecord::Base
     def rated_by(user, count)
       self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
     end
+    def for_user(user)
+      self.find(:first, :conditions => ['survey_responses.user_id = ?',user.id])
+    end
+
   end
 
   def self.define_boolean_serialized_attrs(*args)

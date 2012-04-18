@@ -26,8 +26,13 @@ dirs << CRABGRASS_PLUGINS_DIRECTORY = "#{Rails.root}/vendor/crabgrass_plugins"
 
 # tmp
 
-dirs << TMP_DIRECTORY = "#{Rails.root}/tmp"
+dirs << TMP_DIRECTORY   = "#{Rails.root}/tmp"
 dirs << CACHE_DIRECTORY = "#{TMP_DIRECTORY}/cache"
+
+# stylesheets and javascript
+
+dirs << STATIC_JS_SRC_DIR        = "#{Rails.root}/app/assets/javascripts"
+dirs << STATIC_JS_DEST_DIR       = "#{Rails.root}/public/static"
 
 # assets
 

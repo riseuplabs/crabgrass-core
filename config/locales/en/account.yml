@@ -1,0 +1,110 @@
+en:
+  ##
+  ## ACCOUNT
+  ##
+
+  signup_link: "Create New User"
+  signup_email_info: "Optional: used if you forget your password"
+  forgot_password_link: "Forgot Password?"
+  signup_info: "Choose your login name and your password then click %{sign_up}"
+  login_failure_reason: "Username or password is incorrect."
+  signup_success_message: "Thanks for signing up!"
+  login_name: "User name"
+  signup_success: "Registration successful"
+  logout_success: "Goodbye"
+  logout_success_message: "You have been logged out."
+  signup_button: "Sign up"
+  login_failed: "Could not log in"
+  signup_login_name: "Your login name"
+  login_button: "Login"
+  login: "Login"
+  ##!  log_in: "Log in"
+  signup_title: "Create Your Account"
+  signup_email: "Your Email"
+  forgot_password_text: If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
+  reset_password_text: Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here.
+  forgot_password_mail_greeting: "%{user}, to reset your password, please visit"
+  forgot_password_mail_expiry: This link will remain valid for 24 hours. If you need to reset your password after that, you will have to visit the forgotten password page again to request a new link.
+
+  reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
+  reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
+  your_login: "Your login"
+  ##!  invalid_email: "Invalid Email"
+  invalid_email_text: "The email address you provided is invalid."
+  reset_password: "Reset Password"
+  reset_password_email_sent: "If that email address is associated with a username, then an email has been sent containing instructions for resetting your password."
+  invalid_token: "Invalid Token"
+  invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
+  password_reset: "Password Reset"
+  password_reset_ok_text: "Your password has been successfully reset. You can now sign in with your newly changed password."
+  requested_forgot_password: "You have requested a change of password"
+  password_was_reset: "Your password has been reset"
+  forgotten_email_address: "What email address did you give us when you created your account?"
+  new_password: "New Password"
+  confirm_new_password: "Confirm New Password"
+  ##!  accept_usage_agreement: "I accept the terms of the usage agreement"
+  ##!  usage_agreement_required: "Acceptance of the usage agreement is required"
+  ##!  usage_agreement_heading: "Usage Agreement"
+  ##!  usage_agreement_text: |
+  ##  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
+
+  ##  In consideration for your use of this service you agree to the following conditions:
+
+  ##  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
+
+  ##  You also agree not to use our services to:
+
+  ##  * harass other people;
+  ##  * harm or exploit minors;
+  ##  * impersonate or cause others to believe that you are another person;
+  ##  * send unsolicited messages;
+  ##  * collect personal data from users of this service without their express consent; and
+  ##  * interfere with or disrupt our services, those of our users or any other person or service;
+
+  ##  Further, you agree to:
+
+  ##  * avoid excessive use of our services;
+  ##  * be responsible for maintaining the confidentiality of your accounts and passwords;
+  ##  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
+  ##  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
+
+  ##  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
+
+  ##  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+
+  congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}."
+
+  # verify email
+
+  you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
+
+  ##!  successfully_verified_email_message: "Successfully Verified Email Address"
+  ##!  already_verified: "Already Verified."
+  ##!  already_verified_text: "You don't need to verify again."
+
+  email_verification_body: "You have signed up for %{site_title} (%{host}).\n\nBefore you can login you must verify that this is your email.\n\nClick the link below or copy and paste it into your browser:\n\n%{verify_email_link}\n\nIf you do not wish to join, simply ignore this email."
+
+  ##
+  ## PASSWORD
+  ##
+
+  # seems like some duplication here!
+  password: "Password"
+  password_confirmation: "Password Confirmation"
+  signup_confirm_password: "Confirm Password"
+  login_password: "Password"
+  signup_password: "Your Password"
+
+  # password strength messages:
+  ##!  password_ok: "is OK."
+  ##!  password_error_default: "is not strong enough."
+  ##!  password_error_username: "is no good, it is based on your username."
+  ##!  password_error_too_short: "is no good, it is too short."
+  ##!  password_error_whitespace: "is no good, it is all whitespace."
+  ##!  password_error_too_similar: "is no good, it does not contain enough different characters."
+  ##!  password_error_too_simple: "is no good, it is too simplistic or predictable."
+  ##!  password_error_too_common: "is no good, it is based on a dictionary word."
+  ##!  password_error_confirmation: "does not match password confirmation."
+
+  ##!  signup_time_to_crack_password: "(takes %{time} to crack)"
+

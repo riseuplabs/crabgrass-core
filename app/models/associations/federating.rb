@@ -31,5 +31,5 @@ class Federating < ActiveRecord::Base
 
   named_scope :alphabetized_by_group, :joins => :group, :order => 'groups.full_name ASC, groups.name ASC'
 
-
+  alias :entity :group
 end

@@ -6,16 +6,18 @@
 -# regardless of which side is taller.
 -#  
 
+- local_assigns[:reply_body] ||= false
+- show_reply = local_assigns[:create_url] || local_assigns[:reply_body] || false
+
 - if posts.any?
   - last_id = posts.last.id
 - else
   - last_id = nil
 
-%table.posts
+%table.posts.round
   = post_pagination_links(posts)
   - for post in posts do
     = render :partial => 'common/posts/table/row', :locals => local_assigns.merge(:post => post, :last => (post.id == last_id))
   = post_pagination_links(posts)
-  - if may_create_page_post?
+  - if show_reply
     = render :partial => 'common/posts/table/reply', :locals => local_assigns.merge(:last_id => last_id)
-

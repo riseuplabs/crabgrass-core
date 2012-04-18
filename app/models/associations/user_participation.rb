@@ -18,6 +18,8 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :user
   serialize :notice
+  before_create :clear_tag_cache
+  after_destroy :clear_tag_cache
 
   # use this for counting stars :)
   include UserParticipationExtension::Starring
@@ -54,5 +56,12 @@ class UserParticipation < ActiveRecord::Base
     value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
     write_attribute(:access, value)
   end
+
+  protected
+
+  def clear_tag_cache
+    user.clear_tag_cache
+  end
+
 end
 

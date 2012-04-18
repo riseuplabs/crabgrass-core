@@ -17,7 +17,7 @@ class Groups::WikisController < Groups::BaseController
       render :template => '/common/wiki/show'
     else
       @wiki = Wiki.new :private => fetch_private?
-      render :template => '/common/wiki/edit'
+      render :template => '/wikis/wikis/edit'
     end
   end
 

@@ -6,11 +6,29 @@ module Common::Ui::EntityDisplayHelper
 
   protected
 
+  #
   # linking to users and groups takes a lot of time if we have to fetch the
   # record to get the display name or avatar. if we already have the login or
   # group name, this method is much faster (saves about 150ms per request).
-  def link_to_name(name)
-    "<a href=\"/#{name}\">#{name}</a>"
+  #
+  # think of this as link_to_entity_fast()
+  #
+  # there are some problems with this code. in particular, it does not handle
+  # it very well when the user or group changes their avatar. also, this code
+  # duplicates some code in avatar_helper, in the interest of cutting out 
+  # a lot of logic and method calls.
+  #
+  def link_to_name(name, id=nil)
+    if name
+      display_name = name.length > 16 ? force_wrap(name,16) : name
+      if id.nil?
+        '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
+      else
+        # with the id, we can also display the icon
+        icon_url = '/avatars/%s/xsmall.jpg' % id
+        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
+      end
+    end
   end
 
   #
@@ -25,7 +43,7 @@ module Common::Ui::EntityDisplayHelper
   #    styles  << avatar_style(nil, options[:avatar])
   #  end
   #  content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
-  #nd
+  #end
 
   ##
   ## GROUPS
@@ -84,6 +102,11 @@ module Common::Ui::EntityDisplayHelper
   def link_to_entity(entity, options={})
     return '' unless entity
 
+    if entity.is_a? String
+      # this is slow, and should be avoided when displaying lists of entities
+      entity = Group.find_by_name(entity) || User.find_by_login(entity)
+    end
+
     if entity.is_a? User
       link_to_user(entity, options)
     elsif entity.is_a? Group
@@ -117,7 +140,7 @@ module Common::Ui::EntityDisplayHelper
   #
   def display_entity(entity, options={})
     options  ||= {}
-    format   = options[:format] || :full
+    format   = options[:format] || :short
     styles   = [options[:style]]
     classes  = [options[:class], 'entity']
 
@@ -174,6 +197,14 @@ module Common::Ui::EntityDisplayHelper
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
+  def entity_list(entities, options={})
+    avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
+    ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
+      link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
+    end
+  end
+  
+
   #
   # used to display a list of entities
   #
@@ -185,20 +216,46 @@ module Common::Ui::EntityDisplayHelper
   #
   # other options are passed on through to display_entity
   #
-  def entity_list(options)
-    html = []
-    if options[:entities].any? or options[:after]
-      html << options[:before]
-      if options[:entities].any?
-        html << content_tag(:ul, :class => 'entities') do
-          options[:entities].collect do |entity|
-            content_tag(:li, link_to_entity(entity, options[:link_options]))
-          end
-        end
-      end
-      html << options[:after]
-    end
-    return html.join
-  end
+  # def entity_list(options)
+  #   html = []
+  #   before = options.delete(:before)
+  #   after = options.delete(:after)
+  #   entities = options.delete(:entities)
+  #   if entities or before or after
+  #     html << before
+  #     if entities.any?
+  #       html << content_tag(:ul, :class => 'entities') do
+  #         entities.collect do |entity|
+  #           content_tag(:li, link_to_entity(entity, options))
+  #         end
+  #       end
+  #     end
+  #     html << after
+  #   end
+  #   return html.join
+  # end
+
+  # def entity_nav_list(options)
+  #   html = []
+  #   header = options.delete(:header)
+  #   footer = options.delete(:footer)
+  #   entities = options.delete(:entities)
+  #   if entities or header or footer
+  #     content_tag(:ul, :class => 'nav nav-list') do
+  #       html = ""
+  #       if header
+  #         html << content_tag(:li, header, :class => 'nav-header')
+  #       end
+  #       if entities.any?
+  #         entities.collect do |entity|
+  #           html << content_tag(:li, link_to_entity(entity, options))
+  #         end
+  #       end
+  #       html
+  #     end
+  #   else
+  #     ""
+  #   end
+  # end
 
 end

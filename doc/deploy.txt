@@ -1,0 +1,13 @@
+
+Assets
+===========================
+
+There are two version of every javascript file, a .js and a .js.gz
+
+If you add the following to apache, then the .gz will get served:
+
+  AddEncoding gzip .gz
+  RewriteCond %{HTTP:Accept-encoding} gzip
+  RewriteCond %{HTTP_USER_AGENT} !Safari
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.*)$ $1.gz [QSA,L]

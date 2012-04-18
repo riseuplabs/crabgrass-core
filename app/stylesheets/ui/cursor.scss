@@ -1,0 +1,8 @@
+//
+// set a busy cursor when loading some ajax request
+// see cursor.js
+//
+
+html.busy, html.busy * {
+  cursor: wait !important;
+}

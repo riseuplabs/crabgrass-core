@@ -2,8 +2,10 @@ require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
 
-# Use any Rails in the 2.3.x series, greater than or equal to 2.3.14
-RAILS_GEM_VERSION = '~>2.3.14'
+# Use any Rails in the 2.3.x series, greater than or equal to 2.3.11
+# latest rubygems needs at least 2.3.14 - but we don't have that on
+# CI yet.
+RAILS_GEM_VERSION = '~>2.3.11'
 require File.join(File.dirname(__FILE__), 'boot')
 require "#{RAILS_ROOT}/config/directories.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
@@ -50,8 +52,9 @@ Crabgrass::Initializer.run do |config|
 
   # required, but not included with crabgrass:
   config.gem 'i18n', :version => '~> 0.5'
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '~> 1.3.0'
+  config.gem 'thinking-sphinx', :version => '~> 1.4'
   config.gem 'will_paginate', :version => '= 2.3.16'
+  config.gem 'sprockets', "~> 2.1.0"
 
   # required, and compilation is required to install
   config.gem 'RedCloth', :version => '~> 4.2'
@@ -64,6 +67,9 @@ Crabgrass::Initializer.run do |config|
 
   # not required, but a really good idea
   config.gem 'mime-types', :lib => 'mime/types'
+
+  # delayed job for rails 2.x:
+  config.gem 'delayed_job', :version => '~> 2.0'
 
   # See Rails::Configuration for more options
 end

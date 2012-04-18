@@ -1,0 +1,5 @@
+%div.icon.small{:style => avatar_style(request.icon_entity, 'small')}
+  = I18n.t request.name
+  %br
+  = embold_links request.description
+  %i=# friendly_date(request.created_at)

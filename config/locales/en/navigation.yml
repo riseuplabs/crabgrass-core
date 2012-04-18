@@ -1,0 +1,25 @@
+en:
+
+  menu_me: "Me"
+  menu_groups: "Groups"
+  menu_home: "Home"
+  menu_chat: "Chat"
+  menu_people: "People"
+  menu_networks: "Networks"
+  menu_link_logout: "Logout %{user}"
+  ##!  menu_link_account: "Account"
+  menu_admin: "Admin"
+  ##!  menu_moderation: "Moderation"
+
+  ##!  pages_tab: "Pages"
+  ##!  social_activities_tab: "Social Activity"
+  ##!  messages_tab: "Messages"
+  ##!  requests_tab: "Requests"
+
+  ##!  my_work_tab: "My Work"
+  ##!  all_pages_tab: "All Pages"
+  ##!  notification_tab: "Notifications"
+
+  account_settings: "Account Settings"
+
+

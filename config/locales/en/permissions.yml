@@ -5,16 +5,16 @@ en:
   peers_description: "Members of your groups"
   friends_description: "Your friends"
 
-  may_see_committees: "Show committees"
-  may_see_networks: "Show networks"
-  may_see_members: "Show group members"
-  may_request_membership: "Allow membership requests"
+  ##!  may_see_committees: "Show committees"
+  ##!  may_see_networks: "Show networks"
+  ##!  may_see_members: "Show group members"
+  ##!  may_request_membership: "Allow membership requests"
   members_may_edit_wiki: "All members may edit the wiki"
   members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
-  may_edit: "May edit"
-  may_admin: "May admin"
-  may_burden: "May burden"
-  may_spy: "May spy"
+  ##!  may_edit: "May edit"
+  ##!  may_admin: "May admin"
+  ##!  may_burden: "May burden"
+  ##!  may_spy: "May spy"
 
   may_view_label: "See my profile?"
   may_view_description: "If unchecked, your profile will be hidden entirely."
@@ -31,4 +31,4 @@ en:
   may_request_contact_label: "Request contact?"
   may_request_contact_description: "Allow people to request to be your contact."
 
-
+  sharing_and_requests: "Sharing and Requests"

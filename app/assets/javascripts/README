@@ -1,0 +1,56 @@
+About the scripts
+=======================
+
+history.js
+  A library to make HTML5 window.history work better, and also fallback
+  gracefully for HTML4 browsers. It is a little heavyweight, and includes
+  a bunch of features we don't need -- like storing data with history.
+  https://github.com/balupton/History.js/
+
+
+prototype.js
+  core additions to javascript. included in prototype directory are the
+  scriptaculous effects for prototype that we also use.
+
+
+IE9.js
+  makes all versions of IE behave pretty close to IE9
+
+
+Using scripts
+=========================
+
+The optional scripts are loaded like so:
+
+  class MyController < ApplicationController
+    javascript :tasks, :wiki
+    javascript :extra, :action => :index
+  end
+
+
+Production
+======================
+
+rake cg:compile_assets
+
+  compiles these javascript files and puts them in public/static
+
+
+About Rails 2 integration
+==============================
+
+We use the sprockets asset pipeline for javascript. Sprockets is included
+by default in rails 3, but some changes need to be made to make it work with
+rails 2. 
+
+In order to use sprockets with rails 2, we follow this:
+
+  http://pivotallabs.com/users/dwfrank/blog/articles/1972-giving-rails-2-the-asset-pipeline-
+
+With some changes:
+
+  * We don't use /assets/ for sprockets generated assets, because crabgrass already uses
+    that route for other things.
+  * We had to create a custome rake task to compile the assets.
+
+  

@@ -44,11 +44,19 @@ class TaggingTest < ActiveSupport::TestCase
 
     page.add(user)
     page.save!
-
-    user.update_tag_cache  ## TODO: make this work without calling this manually.
-    user.reload            ##
-
+    user.reload
     assert user.tags.include?(page.tags.first), user.tags.inspect
+
+    page.tag_list = 'aaaa,bbbb,cccc'
+    page.tags_will_change! # for now, manual dirty tracking
+    page.save!
+    user.reload
+    user_tags = user.tags.collect{|t| t.name}.sort
+    assert_equal ['aaaa','bbbb','cccc'], user_tags
+
+    page.destroy
+    user.reload
+    assert user.tags.empty?
   end
 
   def test_create_with_tags

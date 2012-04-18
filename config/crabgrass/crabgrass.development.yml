@@ -33,6 +33,7 @@ available_page_types:
   - RateManyPage
   - TaskListPage
   - RankedVotePage
+  - SurveyPage # we will make available here, but set in its init file that new surveys cannot be added.
 
 theme: blueberry
 
@@ -40,11 +41,16 @@ theme: blueberry
 
 remote_processing: "http://localhost:3002"
 
-enabled_languages: ['en', 'es', 'pt', 'ar', 'de']
+enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
 
 committees: true
 councils: true
 networks: true
+
+### TRANSLATIONS: 
+
+transifex_user: 'riseuplabs'
+transifex_password: 'SET_ME'
 
 ##
 ## SITES
@@ -62,3 +68,19 @@ sites:
 #  - name: site2
 #    admin_group: superadmins
 
+default_group_permissions:
+  members: !ruby/sym all
+  public:
+    - view
+    - request_membership
+
+default_user_permissions:
+  friends:
+    - view
+    - pester
+    - see_groups
+    - see_contacts
+  peers:
+    - pester
+    - request_contact
+  public: []

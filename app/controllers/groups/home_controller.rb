@@ -24,7 +24,7 @@ class Groups::HomeController < Groups::BaseController
     if current_user.member_of? @group
       @private_wiki = @group.private_wiki
       @public_wiki = @group.public_wiki
-      @wiki = coming_from_wiki?(@public_wiki) ? @public_wiki : @private_wiki
+      @wiki = coming_from_wiki?(@public_wiki) || !@private_wiki ? @public_wiki : @private_wiki
     else
       @wiki = @group.public_wiki
     end

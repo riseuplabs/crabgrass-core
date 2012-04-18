@@ -62,9 +62,14 @@ table.form {
     padding: 1em;
   }
   .info {
-    font-size: 0.9em;
     font-style: italic;
-    color: #777;
+    color: #666;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  td.info {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   // see above for note as to why this makes nice forms.
   div.input {

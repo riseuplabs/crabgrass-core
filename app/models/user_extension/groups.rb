@@ -142,6 +142,24 @@ module UserExtension::Groups
     end
   end
 
+  #
+  # returns true if and only if the group has a council and the user is a member of it.
+  #
+  def council_member_of?(group)
+    group.has_a_council? && self.direct_member_of?(group.council)
+  end
+
+  #
+  # sometimes we want to restrict some activities to long term members (like destroying the group!)
+  #
+  def longterm_member_of?(group)
+    if group.created_at > 1.week.ago
+      true
+    else
+      group.memberships.find_by_user_id(self.id).try(:created_at) < 1.week.ago
+    end
+  end
+
   def check_duplicate_memberships(membership)
     if self.group_ids.include?(membership.group_id)
       raise AssociationError.new(I18n.t(:invite_error_already_member))

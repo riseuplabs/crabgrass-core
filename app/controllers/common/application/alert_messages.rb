@@ -182,7 +182,11 @@ module Common::Application::AlertMessages
   end
 
   def raise_error(message)
-    raise ErrorMessage.new(message)
+    if message.is_a? ActiveRecord::Base
+      raise ActiveRecord::RecordInvalid.new(message)
+    else
+      raise ErrorMessage.new(message)
+    end
   end
 
   def raise_not_found(thing)

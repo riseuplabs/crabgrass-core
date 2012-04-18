@@ -78,7 +78,6 @@ class Page < ActiveRecord::Base
   self.record_timestamps = false
   before_save :save_timestamps
 
-  acts_as_taggable_on :tags
   attr_protected :owner
   acts_as_path_findable
 
@@ -153,6 +152,27 @@ class Page < ActiveRecord::Base
       pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
     end
     pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
+  end
+
+  ##
+  ## TAGGING
+  ##
+
+  acts_as_taggable_on :tags
+  before_save :clear_tag_cache
+
+  def clear_tag_cache
+    if @tags_changed
+      User.clear_tag_cache(self.user_ids)
+    end
+  end
+
+  #
+  # Simulate ActiveRecord::Dirty behavior for the tags
+  # This should be called whenever the page tags have been modified.
+  #
+  def tags_will_change!
+    @tags_changed = true
   end
 
   ##

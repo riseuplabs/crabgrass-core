@@ -3,12 +3,6 @@ module Common::Ui::TextHelper
 
   protected
 
-  def content_tag_if(tag, content, options={})
-    if content.any?
-      content_tag(tag, content, options)
-    end
-  end
-
   # convert greencloth marktup to html
   def to_html(str)
     str.any? ? GreenCloth.new(str).to_html() : ''
@@ -49,9 +43,13 @@ module Common::Ui::TextHelper
   #
   # used to convert the text produced by activities & requests into actual links
   #
-  def expand_links(description)
+  def expand_links(description, options=nil)
     description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
-      link_to_name($2)
+      if options
+        content_tag(:b, link_to_entity($2, options))
+      else
+        content_tag(:b, link_to_name($2))
+      end
       #case $1
       #  when "user": link_to_user($2)
       #  when "group": link_to_group($2)

@@ -5,10 +5,10 @@
 %div.post_body{:id => post.body_id}
   - remote_form_for(:post, post, :url => url, :method => :put, :loading => show_spinner('edit_post')) do |f|
     = f.text_area :body, :rows => 8
-    .buttons.reverse
-      = submit_tag :save_button.t, :name => 'save'
-      = submit_tag :cancel_button.t, :name => 'cancel'
-      = submit_tag :delete_button.t, :name => 'destroy'
+    .buttons
       = spinner('edit_post')
+      = submit_tag :delete_button.t, :name => 'destroy', :class => 'btn btn'
+      = submit_tag :cancel_button.t, :name => 'cancel', :class => 'btn btn'
+      = submit_tag :save_button.t, :name => 'save', :class => 'btn btn-primary'
       .float_left= formatting_reference_link
 

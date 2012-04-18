@@ -19,10 +19,9 @@ class Pages::CreateController < ApplicationController
   helper 'pages/share', 'pages/owner', 'pages/creation'
   permissions :pages, :object => 'page'
 
-  permissions 'groups/members', 'groups/base'
-  # ^^ this is a temporary hack until we figure out something better.
-  # the problem is that this controller might be in a group context
-  # and the group context needs these permissions
+  # the page banner has links that the user cannot see when unauthorized, like membership.
+  # so, we must load the appropriate permissions from groups.
+  permissions 'groups/memberships', 'groups/base'
 
   #
   # if there is any error in the 'create' action, call the 'new' action

@@ -4,9 +4,9 @@ module SphinxTestHelper
     unless @@sphinx_hints_printed
     # cg:update_page_terms
       puts "\nTo make thinking_sphinx tests not skip, try the following steps:
-  rake RAILS_ENV=test db:test:prepare db:fixtures:load  # (should not be necessary, but always a good first step)
-  rake RAILS_ENV=test ts:index ts:start                 # (needed to build the sphinx index and start searchd)
-  rake test:functionals
+  rake db:test:prepare                     # should not be necessary
+  rake RAILS_ENV=test db:fixtures:load     # frankly, I am not sure if this is still necessary
+  rake RAILS_ENV=test ts:index ts:start    # necessary! needed to build the sphinx index and start searchd.
 See also doc/SPHINX"
       @@sphinx_hints_printed = true
     end

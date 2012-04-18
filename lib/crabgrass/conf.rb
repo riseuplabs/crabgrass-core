@@ -67,12 +67,17 @@ class Conf
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
   cattr_accessor :default_page_access
+  cattr_accessor :default_group_permissions
+  cattr_accessor :default_user_permissions
   cattr_accessor :text_editor
   cattr_accessor :use_full_geonames_data
   cattr_accessor :remote_processing
   cattr_accessor :committees
   cattr_accessor :councils
   cattr_accessor :networks
+  cattr_accessor :transifex_user
+  cattr_accessor :transifex_password
+
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -129,6 +134,15 @@ class Conf
     self.secret        = nil
     self.ensure_page_owner = true
     self.default_page_access = :admin
+    self.default_group_permissions = {
+      'members' => :all,
+      'public' => ['view', 'request_membership']
+    }
+    self.default_user_permissions = {
+      'friends' => [:view, :pester, :see_groups, :see_contacts],
+      'peers' => [:pester, :request_contact],
+      'public' => []
+    }
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
     self.remote_processing = false

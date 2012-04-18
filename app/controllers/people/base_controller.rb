@@ -15,12 +15,5 @@ class People::BaseController < ApplicationController
     Context.find(@user)
   end
 
-  def pending_friend_request(options)
-    from = options[:from]
-    to   = options[:to]
-    RequestToFriend.created_by(from).to_user(to).having_state('pending').find(:first)
-  end
-  helper_method :pending_friend_request
-
 end
 

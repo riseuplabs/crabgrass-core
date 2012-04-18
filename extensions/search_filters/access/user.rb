@@ -20,7 +20,7 @@ SearchFilter.new('/user/:user_id/') do
     end
   end
 
-  self.description = :filter_group_description
+  self.description = :filter_user_description
   html do
     content_tag(:p) do
       content_tag(:strong, :user.tcap) + " " +

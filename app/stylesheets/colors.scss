@@ -1,0 +1,16 @@
+//
+// All the color definitions should live here, eventually. 
+// Except for colors defined in the theme.
+//
+
+
+//
+// colors derived from $background_color
+//
+
+// a faint border close to the background color.
+$background_slight_border: 1px solid darken($background_color, 4%);
+
+// a color that is a bit lighter than the background.
+$background_lighter_color: lighten($background_color, 8%);
+

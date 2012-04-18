@@ -21,6 +21,7 @@ db/development_structure.sql
 /assets
 public/plugin_assets/*
 public/avatars/*/*
+public/static/*
 !public/avatars/0/*
 public/stylesheets/compiled
 public/theme

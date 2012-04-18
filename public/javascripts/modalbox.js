@@ -1,1 +1,0 @@
-../../vendor/crabgrass_plugins/modalbox/public/modalbox.js

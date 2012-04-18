@@ -7,7 +7,7 @@
 #
 # CURRENTLY UNUSED
 #
-class LinkRenderer::Page < WillPaginate::LinkRenderer
+class LinkRenderer::Page < LinkRenderer::CrabgrassBase
   # page        --> the pagination page (integer)
   # page_object --> the object of class Page
   def url_for(page)

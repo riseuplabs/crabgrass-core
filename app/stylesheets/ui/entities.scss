@@ -5,6 +5,18 @@
 // Everything else is in here.
 //
 
+.entity {
+  &.spaced {
+    margin-bottom: 4px;
+  }
+}
+
+
+
+
+
+
+
 //
 // i am not sure about this selector. 
 // currently, it is used for the entity list on the group home.
@@ -12,37 +24,35 @@
 // todo: harmonize with pages/sidebar.scss 
 //
 
+/*
 .entity_list {
-  h3 {
-    padding-top: 2em;
-    padding-bottom: 0.5em;
-    text-transform: uppercase;
-    font-size: 0.85em;
-    color: #666;
+  ul.entities {
+    border-bottom: 1px solid #ccc;
+    li {
+      border-top: 1px solid #ccc;
+      padding: 3px 0;
+    }
   }
-  //ul.entities {
-  //  border-bottom: 1px solid #ccc;
-  //  li {
-  //    border-top: 1px solid #ccc;
-  //    padding: 3px 0;
-  //  }
-  //}
 }
+*/
 
 //
 // A vertical 1-column list of entities displayed against the
 // theme's background. 
 //
 
+/*
 .on_background {
   ul.entities {
     li:first-child {
       border-top: 0;
     }
     li {
-      padding: 3px;
+      padding: 6px;
+      //border-top: 1px dotted darken($background_color, 5%);
       border-top: 1px solid $background_color;
-      background-color: rgba(255,255,255,0.5);
+      //border-top: 2px solid white;
+      background-color: lighten($background_color, 7%);
       span {
         background-position: 100% 0;
         background-repeat: no-repeat;
@@ -52,4 +62,9 @@
     }
   }
 }
+*/
+
+//
+// options for styling entities
+//
 

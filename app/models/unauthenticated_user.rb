@@ -1,6 +1,6 @@
 class UnauthenticatedUser
   def login
-   I18n.t(:anonymous)
+    :anonymous.t
   end
   alias :name :login
   alias :display_name :login
@@ -28,6 +28,10 @@ class UnauthenticatedUser
     false
   end
 
+  def friend_of?(user)
+    false
+  end
+  
   def method_missing(method)
     raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
   end

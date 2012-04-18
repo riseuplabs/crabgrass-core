@@ -1,27 +1,42 @@
+.h2.first.p= :group_creation_info.t
 
-.p.icon.medium.group_48
-  %b= link_to :group.t, new_group_path(:type => 'group')
-  %br
-  = :group_description.t
-  = link_to :create_a_new_thing.t(:thing => :group.t) + ' &raquo;', new_group_path(:type => 'group')
+%table.fancy
+  %tr
+    %td
+      .p.icon.medium.group_48
+        %b= link_to :organizations.t, new_group_path(:type => 'group')
+        %br
+        = :group_description.t
+      .p.align_right
+        = link_to :create_a_new_thing.t(:thing => :organization.t) + ' &raquo;', new_group_path(:type => 'group'), :class => 'btn'
 
-- if Conf.networks
-  .p.icon.medium.network_48
-    %b= link_to :network.t, new_group_path(:type => 'network')
-    %br
-    = :network_description.t
-    = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network')
+  - if Conf.networks
+    %tr
+      %td
+        .p.icon.medium.network_48
+          %b= link_to :networks.t, new_group_path(:type => 'network')
+          %br
+          = :network_description.t
+        .p.align_right
+          = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network'), :class => 'btn'
 
-- if Conf.committees and current_user.groups_and_networks.any?
-  .p.icon.medium.committee_48
-    %b= link_to :committee.t, new_group_path(:type => 'committee')
-    %br
-    = :committee_description.t
-    = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee')
+  - if Conf.committees and current_user.groups_and_networks.any?
+    %tr
+      %td
+        .p.icon.medium.committee_48
+          %b= link_to :committees.t, new_group_path(:type => 'committee')
+          %br
+          = :committee_description.t
+        .p.align_right
+          = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee'), :class => 'btn'
 
-- if Conf.councils and current_user.groups_and_networks.any?
-  .p.icon.medium.council_48
-    %b= link_to :council.t, new_group_path(:type => 'council')
-    %br
-    = :council_description.t
-    = link_to :create_a_new_thing.t(:thing => :council.t) + ' &raquo;', new_group_path(:type => 'council')
+  - if Conf.councils and current_user.groups_and_networks.any?
+    %tr
+      %td
+        .p.icon.medium.council_48
+          %b= link_to :councils.t, new_group_path(:type => 'council')
+          %br
+          = :council_description.t
+        .p.align_right
+          = link_to :create_a_new_thing.t(:thing => :council.t) + ' &raquo;', new_group_path(:type => 'council'), :class => 'btn'
+

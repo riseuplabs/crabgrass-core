@@ -1,5 +1,9 @@
-standard_update(page)
-page.call 'activatePanelRow'
-page.hide left_id(@request)
-page.hide right_id(@request)
+# standard_update(page)
+# page.call 'activatePanelRow'
 
+# page << "if ($('%s')) {" % left_id(@request)
+#   page.hide left_id(@request)
+#   page.hide right_id(@request)
+# page << "} else {"
+#   page.redirect_to requests_path
+# page << "}"

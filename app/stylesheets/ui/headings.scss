@@ -3,12 +3,24 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
   font-weight: bold;
   font-family: $font_heading_family;
   line-height: 1.0em;
+
+  // if someone uses a title or heading somewhere that is one long
+  // unbroken word, the layout gets really messed up unless this is set.
+  word-wrap: break-word;
+
   // "more" links are commonly used to embed a small link inside a heading
-  //   to see more information.
+  // to see more information.
   .more {
     padding-left: 1em;
     font-size: 0.8em; // $grid_font_size;
   }
+
+  .plain {
+    font-size: $font_default_size;
+    font-family: $font_default_family;
+    font-weight: normal;
+  }
+
   a {
     @include cg-hover-link;
   }

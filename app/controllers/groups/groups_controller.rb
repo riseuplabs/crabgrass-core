@@ -9,13 +9,16 @@ class Groups::GroupsController < Groups::BaseController
         :destroy => :may_destroy_group?
 
   def new
-    @group = Group.new
+    if group_type == :group
+      @group = Group.new
+    elsif group_type == :network
+      @network = Network.new
+    end
   end
 
   #
   # responsible for creating groups and networks.
-  # councils and committees are created by groups/councils and
-  # groups/committees, for permissions reasons.
+  # councils and committees are created by groups/structures
   #
   def create
     @group = new_group_from_params
@@ -30,7 +33,20 @@ class Groups::GroupsController < Groups::BaseController
     redirect_to group_url(@group)
   end
 
+  #
+  # immediately destroy a group.
+  # for destruction that requires approval, see RequestToDestroyOurGroup.
+  # unlike creation, this all destruction of all group types is handled here.
+  #
   def destroy
+    parent = @group.parent
+    @group.destroy_by(current_user)
+    success :thing_destroyed.t(:thing => @group.name)
+    if parent
+      redirect_to group_url(parent)
+    else
+      redirect_to me_url
+    end
   end
 
   protected
@@ -39,8 +55,8 @@ class Groups::GroupsController < Groups::BaseController
     case params[:type]
       when 'group' then :group
       when 'network' then :network
-      when 'committee' then :committee
       when 'council' then :council
+      when 'committee' then :committee
       else :group
     end
   end

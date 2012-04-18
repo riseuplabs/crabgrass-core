@@ -74,3 +74,18 @@ blue_friend_3:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
+
+# test a request for blue to create a council for rainbow
+create_council_1:
+  id: <%= id+=1 %>
+  recipient_id: 3
+  recipient_type: Group
+  requestable_id: 3
+  requestable_type: Group
+  created_by_id: 4
+  state: "pending"
+  type: RequestToCreateCouncil
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+

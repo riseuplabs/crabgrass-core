@@ -19,6 +19,10 @@
   width: 100%;
 }
 
+.align_right {
+  text-align: right;
+}
+
 //
 // SHY LINKS
 //
@@ -49,18 +53,18 @@
 // PAGINATION
 //
 
-.pagination {
-  a, span {
-    padding: 0px 4px 2px 4px;
-  }
-  span.prev_page {
-    padding-left: 0;
-  }
-  span.current {
-    background-color: $link_standard_color;
-    color: white;
-  }
-}
+//.pagination {
+//  a, span {
+//    padding: 0px 4px 2px 4px;
+//  }
+//  span.prev_page {
+//    padding-left: 0;
+//  }
+//  span.current {
+//    background-color: $link_standard_color;
+//    color: white;
+//  }
+//}
 
 //
 // TWO COLUMN FLOATED ITEMS
@@ -94,3 +98,18 @@
   }
 }
 
+//
+// COMMON REUSABLE UI STYLING
+//
+
+
+//
+// top_links -- for links that go at the top of the content area.
+//              flush right, bottom margin. they are otherwise not decorated.
+//
+
+.top_links {
+  @extend .p;
+  @extend .first;
+  text-align: right;
+}

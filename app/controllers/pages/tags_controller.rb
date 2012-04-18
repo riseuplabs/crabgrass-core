@@ -11,6 +11,7 @@ class Pages::TagsController < Pages::SidebarsController
   def create
     @page.tag_list.add(params[:add], :parse => true)
     @page.updated_by = current_user
+    @page.tags_will_change!
     @page.save!
     close_popup
   end
@@ -18,6 +19,7 @@ class Pages::TagsController < Pages::SidebarsController
   def destroy
     @page.tag_list.remove(params[:id])
     @page.updated_by = current_user
+    @page.tags_will_change!
     @page.save!
     render :nothing => true
   end

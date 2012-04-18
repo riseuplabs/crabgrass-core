@@ -166,6 +166,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @access_filter_clause << "+(#{Page.access_ids_for(access_hash).join(' ')})"
   end
 
+  def add_public
+    add_access_constraint(:public => true)
+  end
+  
   def add_tag_constraint(tag)
     @tags << "+" + Page.searchable_tag_list([tag]).first
   end
@@ -178,6 +182,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
         @order << "#{@klass.table_name}.#{order_sql}"
       end
     end
+  end
+
+  def add_limit(limit_count)
+    @limit = limit_count
   end
 
   def cleanup_sort_column(column)

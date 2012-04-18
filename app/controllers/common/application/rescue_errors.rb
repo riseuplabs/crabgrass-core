@@ -34,6 +34,7 @@ module Common::Application::RescueErrors
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, :with => :render_error
       rescue_from CrabgrassException,          :with => :render_error
+      rescue_from ActiveRecord::RecordNotFound,:with => :render_not_found
       rescue_from ErrorNotFound,               :with => :render_not_found
       rescue_from AuthenticationRequired,      :with => :render_authentication_required
       rescue_from PermissionDenied,            :with => :render_permission_denied
@@ -96,8 +97,10 @@ module Common::Application::RescueErrors
     render :template => 'account/csrf_error', :layout => 'notice'
   end
 
+  #
   # shows a generic not found page or error message, customized
   # by any message in the exception.
+  #
   def render_not_found(exception=nil)
     respond_to do |format|
       format.html do
@@ -160,7 +163,8 @@ module Common::Application::RescueErrors
   #
   # used to render the alerts inline as the sole content of the page, useful
   # when you want to report an error but floating errors are no good because you
-  # don't want to disclose anything about the page.
+  # don't want to disclose anything about the page or because you don't have
+  # the data required to render the page.
   #
   def render_alert
     render :template => 'error/alert', :layout => 'notice'
@@ -201,26 +205,39 @@ module Common::Application::RescueErrors
     if options[:redirect]
       redirect_to options[:redirect]
     end
-    if !performed? and !@performed_render
-      if options[:template]
-        render :template => options[:template], :status => options[:status]
-      elsif options[:action]
-        render :action => options[:action], :status => options[:status]
-      elsif self.class.rescue_render && self.class.rescue_render[params[:action]]
-        action = self.class.rescue_render[params[:action]]
-        if action.is_a?(Symbol)
-          render :action => action
-        elsif action.is_a?(Proc)
-          self.instance_eval(&action)
+
+    #
+    # try to guess the best template to use for rendering the error.
+    #
+    begin
+      if !performed? and !@performed_render
+        if options[:template]
+          render :template => options[:template], :status => options[:status]
+        elsif options[:action]
+          render :action => options[:action], :status => options[:status]
+        elsif self.class.rescue_render && self.class.rescue_render[params[:action]]
+          action = self.class.rescue_render[params[:action]]
+          if action.is_a?(Symbol)
+            if action == :alert
+              render_alert
+            else
+              render :action => action
+            end
+          elsif action.is_a?(Proc)
+            self.instance_eval(&action)
+          end
+        elsif params[:action] == 'update'
+          render :action => 'edit'
+        elsif params[:action] == 'create'
+          render :action => 'new'
+        elsif params[:action]
+          render :action => params[:action]  # this is generally a bad idea. it probably means
+                                             # that a GET request resulted in an error.
         end
-      elsif params[:action] == 'update'
-        render :action => 'edit'
-      elsif params[:action] == 'create'
-        render :action => 'new'
-      elsif params[:action]
-        render :action => params[:action]  # this is generally a bad idea. it probably means
-                                           # that a GET request resulted in an error.
       end
+    rescue ActionView::MissingTemplate => exc
+      # well, we guess poorly.
+      render_alert
     end
 
     # if we ended up redirecting, then ensure that any :now flash is changed to :later

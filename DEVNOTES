@@ -7,6 +7,11 @@ what happens when we do remote_job.destroy?
   what happens to the background thread on the cg-processor doing the work?
   what happens to the files it spits out?
 
+assets & documents
+=======================
+
+integrate documentcloud.org for displaying pdfs and docs.
+
 things to work on
 ============================
 
@@ -55,6 +60,12 @@ misc
 new features
 . issues
 . notices
+
+rails 3
+============================
+
+to support dirty, include this:
+http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
 
 internet explorer
 ============================
@@ -184,33 +195,52 @@ background tasks
 
 There is an incredible number of background processing options in rails.
 
-lists:
+What we want:
 
-* http://www.tobinharris.com/past/2009/3/9/6-ways-to-run-background-jobs-in-rubyonrails/
-* http://oldwiki.rubyonrails.org/rails/pages/HowToRunBackgroundJobsInRails
+* ability to run maint tasks at regular intervals
+* ability to queue long running background tasks that we can guarentee will get run (some persistent data storage)
 
-This one looks good: https://github.com/stympy/delayed_job
-It is a fork of delayed_job but with autoscaling.
+api library
+  https://github.com/wireframe/backgrounded -- provides a common api to delayed_job and resque, etc.
 
-Other links:
+job/message queues
+  https://github.com/collectiveidea/delayed_job -- most popular
+    checks the database every five seconds for pending jobs
+    https://www.ruby-toolbox.com/projects/delayed_job
+    https://github.com/stympy/delayed_job -- a fork of delayed_job but with autoscaling.
 
-http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
-http://codeforpeople.rubyforge.org/svn/bj/trunk/README
-https://github.com/barttenbrinke/worker_queue/
-https://github.com/starling/active_queue
-
-message/work processing queues:
+  http://kr.github.com/beanstalkd/
   http://ap4r.rubyforge.org/wiki/wiki.pl?HomePage
   https://github.com/starling/starling
-  http://kr.github.com/beanstalkd/
 
-backgrounding code snippets:
-  spawn
+networked job queues:
+  https://github.com/ivanvanderbyl/cloudist (rabbitmq)
+  https://github.com/defunkt/resque (reddit)
+  http://mperham.github.com/sidekiq/ (faster than resque, api compatible)
+  
+backgrounding long running code:
+  https://github.com/tra/spawn
+  https://github.com/Try2Code/jobQueue
   http://code.google.com/p/asynchronous/
   https://github.com/imedo/background_lite
 
+cron-like scheduling
+  http://github.com/javan/whenever -- ruby sugar around crontab
+  https://github.com/adamwiggins/clockwork-rails-dj
+  rufus-scheduler
+
+event driven programming
+  https://github.com/eventmachine/eventmachine (has a spawn ability too)
+
 On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/
+
+Unsorted links:
+  http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
+  http://codeforpeople.rubyforge.org/svn/bj/trunk/README
+  https://github.com/barttenbrinke/worker_queue/
+  https://github.com/starling/active_queue
+
 
 
 
@@ -247,6 +277,7 @@ Javascript Applications
 
 http://sheetster.com/ -- GPL java server for web spreadsheets, REST API.
 
+
 Rails Applications
 ===============================
 
@@ -258,3 +289,30 @@ Uploading
 
 This library has a method of remembering the uploaded file between views of the form:
 https://github.com/cheald/carrierwave
+
+Rails CMSs
+=================
+
+list: https://gist.github.com/244863
+
+full cms:
+  http://refinerycms.com
+  http://locomotivecms.com
+
+light weight:
+  http://nestacms.com/
+  http://www.caseincms.com/
+  https://github.com/desaperados/seed
+  https://github.com/comfy/comfortable-mexican-sofa
+
+static:
+  comparison - http://mindspill.net/computing/cross-platform-notes/review-of-ruby-static-site-generators/
+  https://github.com/mojombo/jekyll
+  http://nanoc.stoneship.org/
+
+
+Multi-user field editing
+==============================
+
+https://github.com/josephg/ShareJS
+

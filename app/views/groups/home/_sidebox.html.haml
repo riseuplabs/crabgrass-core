@@ -7,6 +7,9 @@
   .p{:class => first(:sidebox)}
     = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
 
+- if @group.committee?
+  = :this_is_committee.t(:parent_group => link_to_group(@group.parent))
+
 - if @group.profiles.public.summary.any?
   .p{:class => first(:sidebox)}
     = @group.profiles.public.summary_html
@@ -22,8 +25,7 @@
 -# = friendly_date @group.created_at
 
 .p.last
-  -# link_span(:bullet, more_info_link, join_group_link, leave_group_link)
-  = link_span(:bullet, join_group_link, leave_group_link, edit_group_profile_link)
+  = link_span(:bullet, join_group_link, edit_group_profile_link)
 
 -# if (link = edit_group_profile_link).any?
 -#  .p.last.autoclear

@@ -1,3 +1,4 @@
+=begin
 module SurveyUserExtension
   def self.add_to_class_definition
     lambda {
@@ -10,4 +11,5 @@ module SurveyUserExtension
     end
   end
 end
+=end
 

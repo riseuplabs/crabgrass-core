@@ -1,0 +1,14 @@
+- content_for :title do
+  %h2= I18n.t(@request.name)
+
+.p.first
+  - if referrer =~ /\/requests[\/\?]/ # hackish
+    - return_path = requests_path(referrer_params)
+  - else
+    - return_path = requests_path
+
+  = link_to icon_tag('left') + :return_to_list.t, return_path, :class => 'btn'
+
+#request-comments
+  = render :partial => 'common/requests/comments'
+  

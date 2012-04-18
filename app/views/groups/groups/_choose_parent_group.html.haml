@@ -5,10 +5,14 @@
   = "#{group_type}_description".to_sym.t
 
 .p
-  %b= 'Choose a group for this committee'
+  %b= :committee_choose_group.t
 
 .two_column_float
   - current_user.groups_and_networks.each do |group|
+    - if group_type == :committee
+      - next unless may_create_committee? group
+    - elsif group_type == :council
+      - next unless may_create_council? group
     .column_item
       - if group_type == :committee
         - url = new_group_committee_path(group)

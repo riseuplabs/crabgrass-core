@@ -19,13 +19,12 @@ class Groups::BaseController < ApplicationController
   end
 
   ##
-  ## PATH ALIASES
-  ##
-  ## sometimes it is nice to rely on the way rails will guess resource
-  ## routes based on the class. so, we alias some of the group routes to be
-  ## also supported by networks, councils, and committees.
+  ## PATHS 
   ##
 
+  # sometimes it is nice to rely on the way rails will guess resource
+  # routes based on the class. so, we alias some of the group routes to be
+  # also supported by networks, councils, and committees.
   def self.path_alias(path_method)
     path_method = path_method.to_s
     for type in ['network', 'committee', 'council']
@@ -37,6 +36,16 @@ class Groups::BaseController < ApplicationController
 
   path_alias :group_avatars_path
   path_alias :group_avatar_path
+
+  def new_group_committee_path(group)
+    new_group_structure_path(group, :type => 'committee')
+  end
+  helper_method :new_group_committee_path
+
+  def new_group_council_path(group)
+    new_group_structure_path(group, :type => 'council')
+  end
+  helper_method :new_group_council_path
 
 end
 
