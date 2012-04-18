@@ -18,7 +18,7 @@ module GroupExtension::Groups
       belongs_to :council, :class_name => 'Group', :dependent => :destroy
 
       # Committees are children! They must respect their parent group.
-      # This uses better_acts_as_tree, which allows callbacks.
+      # This uses crabgrass_acts_as_tree, which allows callbacks.
       acts_as_tree(
         :order => 'name',
         :after_add => :org_structure_changed,

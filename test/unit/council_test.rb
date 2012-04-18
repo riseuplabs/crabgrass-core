@@ -64,22 +64,38 @@ class CommitteeTest < ActiveSupport::TestCase
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
-    g.destroy_council
+    council.destroy_by(users(:blue))
 
     g.reload
-    assert_equal g, g.council
+    assert_nil g.council
     assert users(:yellow).may?(:admin, g)
   end
 
   def test_remove_council_from_network
     network = groups(:cnt)
     council = Council.create!(:name => 'council')
+    council.add_user!(users(:blue))
     network.add_committee!(council)
-    network.destroy_council
+    council.destroy_by(users(:blue))
 
     network.reload
-    assert_equal network, network.council
+    assert_nil network.council
 
+  end
+
+  def test_destroying_group_destroys_council
+    g = Group.create :name => 'boosh'
+    g.add_user!(users(:blue))
+
+    council = Council.create!(:name => 'council')
+    g.add_committee!(council)
+
+    council.add_user!(users(:blue))
+    g.destroy_by(users(:blue))
+
+    assert_raises ActiveRecord::RecordNotFound do
+      council.reload
+    end
   end
 end
 
