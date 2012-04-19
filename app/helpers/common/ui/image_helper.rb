@@ -17,7 +17,7 @@ module Common::Ui::ImageHelper
 
   #
   # for example: icon_tag('pencil')
-  # 
+  #
   # currently, any 'size' argument other than the default will not display well.
   #
   def icon_tag(icon, size = 16)
@@ -165,12 +165,17 @@ module Common::Ui::ImageHelper
       target_width = 32;
       target_height = 32;
     end
-    style   = "height:#{target_height}px;width:#{target_width}px"
-    klass   = options[:class] || 'thumbnail'
+    options[:class] ||= 'thumbnail'
+    options[:title] ||= asset.filename
+    options[:style]   = "height:#{target_height}px;width:#{target_width}px"
     url     = options[:url] || asset.url
-    # method  = options[:method] || 'get'
+    # options[:method] ||= 'get'
     # span = content_tag(:span, asset.filename)
-    link_to img, url, :class => klass, :title => asset.filename, :style => style
+    if options[:xhr]
+      link_to_remote img, {:url => url}, options.slice(:class, :title, :style)
+    else
+      link_to img, url, options.slice(:class, :title, :style)
+    end
   end
 
   # links to an asset with a thumbnail preview

@@ -10,7 +10,6 @@ class GalleryImageController < Pages::BaseController
   verify :method => [:post, :delete], :only => [:destroy]
 
   def show
-    return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
