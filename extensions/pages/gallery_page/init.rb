@@ -1,3 +1,7 @@
+unless defined? Zip
+  require "#{RAILS_ROOT}/lib/zip/zip.rb"
+end
+
 define_page_type :Gallery, {
   :controller => ['gallery', 'gallery_image', 'gallery_audio'],
   :icon => 'page_gallery',
