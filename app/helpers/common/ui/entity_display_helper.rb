@@ -198,9 +198,11 @@ module Common::Ui::EntityDisplayHelper
   end
 
   def entity_list(entities, options={})
-    avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
-    ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
-      link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
+    if entities.any?
+      avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
+      ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
+        link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
+      end
     end
   end
   
