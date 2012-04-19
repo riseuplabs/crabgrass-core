@@ -1,6 +1,6 @@
 - cache(group_cache_key(@user, :what => 'friends', :expires_in => hours(3))) do
   = entity_list(@user.friends.most_active(:limit => 10),
-    {:avatar => 'small',
+    {:link_options => {:avatar => 'small'},
     :header => content_tag(:h3, :friends.t),
     :after => ''})
 
