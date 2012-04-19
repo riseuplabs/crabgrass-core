@@ -107,7 +107,7 @@ class GalleryToolTest < Test::Unit::TestCase
 
   def test_change_image
     gal = Gallery.create! :title => 'kittens', :user => users(:blue), :assets => [upload_data('image.png')]
-    assert gal.images.first.change_image_file(upload_data('image.png'))    
+    assert gal.images.first.change_image_file(upload_data('image.png'))
   end
 
   #def test_add_before_save

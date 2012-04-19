@@ -1,4 +1,2 @@
 page.replace_html 'gallery-container', :partial => 'show'
 page.hide 'posts'
-stream_url = CGI::escape(@track.secret_stream_url)
-page.call(:loadAudioPlayer, stream_url, "player", 500)

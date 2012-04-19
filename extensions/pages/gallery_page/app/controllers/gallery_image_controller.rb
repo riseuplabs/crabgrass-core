@@ -13,7 +13,6 @@ class GalleryImageController < Pages::BaseController
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @track = @showing.track
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
@@ -24,9 +23,7 @@ class GalleryImageController < Pages::BaseController
   def edit
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @track = @showing.track || @showing.build_track
     @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
-    @track_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
       render :layout => false
     end

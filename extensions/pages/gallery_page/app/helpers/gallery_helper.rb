@@ -118,24 +118,6 @@ module GalleryHelper
       :id => @image && @image.id
   end
 
-  def render_audio_form_with_progress
-    render_form_with_progress_for @track,
-      :url => gallery_audio_form_url,
-      :upload_id => @track_upload_id
-  end
-
-  def gallery_audio_form_url
-    page_url @page,
-      :action => @track.new_record? ? 'audio-create' : 'audio-update',
-      'X-Progress-ID' => @track_upload_id,
-      :id => @track.id
-  end
-
-  def gallery_audio_player
-    url = @track.secret_uri
-    "http://player.soundcloud.com/player.swf?&url=#{CGI::escape(url)}"
-  end
-
   def js_style var, style
     output = []
     style.split(';').each do |part|

@@ -3,7 +3,7 @@ unless defined? Zip
 end
 
 define_page_type :Gallery, {
-  :controller => ['gallery', 'gallery_image', 'gallery_audio'],
+  :controller => ['gallery', 'gallery_image'],
   :icon => 'page_gallery',
   :class_group => ['media', 'media:image', 'collection'],
   :order => 30
