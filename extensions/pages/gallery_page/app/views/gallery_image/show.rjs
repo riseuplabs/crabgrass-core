@@ -1,0 +1,2 @@
+page.replace_html 'gallery-container', :partial => 'show'
+page.hide 'posts'

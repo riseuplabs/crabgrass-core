@@ -1,24 +1,19 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
-class GalleryToolTest < ActiveSupport::TestCase
+class GalleryToolTest < Test::Unit::TestCase
   fixtures :users, :pages, :assets, :groups, :group_participations, :memberships
 
   def test_add_and_remove
-    user = users(:blue) # we need a user so we can check permissions.
-    wrong_user = users(:quentin) # we need a user so we can check permissions.
+    user = User.find 4 # we need a user so we can check permissions.
+    wrong_user = User.find 1 # we need a user so we can check permissions.
     gal = Gallery.create! :title => 'kites', :user => user
-    a1 = assets(:assets_001)
-    a2 = assets(:assets_002)
+    a1 = Asset.find 1
+    a2 = Asset.find 2
 
     assert_nothing_raised do
       gal.add_image!(a1, user)
       gal.add_image!(a2, user)
-    end
-
-    assert_permission_denied do
-      gal.add_image!(a1, wrong_user)
-      gal.add_image!(a2, wrong_user)
     end
 
     assert gal.images.include?(a1)
@@ -110,6 +105,10 @@ class GalleryToolTest < ActiveSupport::TestCase
     end
   end
 
+  def test_change_image
+    gal = Gallery.create! :title => 'kittens', :user => users(:blue), :assets => [upload_data('image.png')]
+    assert gal.images.first.change_image_file(upload_data('image.png'))
+  end
 
   #def test_add_before_save
   #  coll = Collection.create! :title => 'kites'

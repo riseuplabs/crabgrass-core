@@ -131,7 +131,7 @@ module FunctionalTestHelper
 
   def flash_messages(type=nil)
     messages = flash[:messages] || flash[:hidden_messages]
-    if type
+    if type && messages
       messages.select{|message| message[:type] == type}
     else
       messages
@@ -139,6 +139,7 @@ module FunctionalTestHelper
   end
 
   def message_text(messages)
+    return '' if messages.nil?
     texts = []
     messages.each do |message|
       # assumes message[:text] and message[:list] are both arrays

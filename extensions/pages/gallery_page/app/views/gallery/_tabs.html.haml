@@ -1,0 +1,12 @@
+= formy(:tabs, :id => 'page_tabs', :class => 'tabset') do |f|
+  - f.tab do |t|
+    - t.label :show.t
+    - t.url page_path(@page,:action=>'show')
+    - t.selected action?(:show)
+    - t.class 'page_url'
+  - if logged_in? and current_user.may?(:edit, @page)
+    - f.tab do |t|
+      - t.label :edit.t
+      - t.url page_path(@page,:action=>'edit')
+      - t.selected action?(:edit) || action?(:update)
+      - t.class 'page_url'

@@ -34,6 +34,7 @@ available_page_types:
   - TaskListPage
   - RankedVotePage
   - SurveyPage # we will make available here, but set in its init file that new surveys cannot be added.
+  - Gallery
 
 theme: blueberry
 

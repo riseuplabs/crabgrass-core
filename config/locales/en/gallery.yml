@@ -1,0 +1,68 @@
+
+en:
+  ##
+  ## GALLERY
+  ##
+
+  order_changed: Order changed.
+  error_saving_new_order_message: "Error saving new order: {{error_message}}"
+  successfully_removed_image: Successfully removed image!
+  image_count: Image {{number}} of {{count}}
+  image_count_total: "{{count}} Photos"
+  view_slideshow: View Slideshow
+  show_gallery: Show Gallery
+  edit_gallery: Edit Gallery
+  edit_gallery_explaination: "Add new images or drag images to rearrange their order."
+  edit_image: Edit Image
+  show_gallery_explaination: "Click thumbnail to see full image."
+  back_to_gallery_link: "Back to Gallery"
+  add_images_or_zips: "Add Images or Zip File"
+  add_images_or_zips_explaination: "Zip file will automatically be extracted and put into the gallery"
+  gallery_changing_cover_message: "Changing cover..."
+  download: Download
+  download_gallery: Download Gallery
+  gallery_slideshow_apply_settings_button: "apply"
+  confirm_image_delete: Do you really want to delete this image? This action can not be undone.
+  remove_from_gallery: Remove from gallery
+  removing_image: Removing Image...
+  move_image_left: Move image left
+  move_image_right: Move image right
+  saved_new_order: Saved new order!
+  error_saving_new_order: Error saving new order!
+  no_title_given: (no title given)
+  saving_your_changes: Saving your changes...
+  activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
+  drag_and_drop_to_rearrange_photos: Drag images to rearrange their order. Click pencil to edit image or audio.
+  no_images_in_gallery: No images in Gallery
+  add_existing_image: Add Photo
+  add_images: Add Images
+  edit_images: Edit Images
+  upload_new_image: "upload new image"
+  type_your_messages_here: "Type your messages here and press enter..."
+  add_photo_to_gallery: "Click on a Photo to add it"
+  cancel_link: "cancel"
+  file_must_be_image_error: "File must be an image to be part of a gallery."
+  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
+  add_another_file: "Add another file"
+  slideshow_delay_input: "Update every {{input_field}} seconds"
+  add_comment: "Add Comment"
+  make_album_cover: "make this image the album cover"
+  album_cover_changed: "Album Cover Changed"
+  image_title: "Image title: {{title}}"
+  upload_zip_file_link: "Upload a ZIP-File"
+  add_images_to_gallery_link: "Add Images to gallery"
+  too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
+  too_wide_image_error: "Uploaded image must be exactly  {{count}} pixels wide"
+  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
+  upload_a_zip_file_link: "Upload a ZIP-File"
+  upload_images_link: "Upload"
+  you_are_not_allowed_to_do_that: "You are not allowed to do that!"
+  edit_image_header: "Edit Image and Audio"
+  upload_images_and_zip_files_help: "Optional: Select image or zip files to upload."
+  close_and_reload_gallery: 'Close and reload gallery'
+  audio_updated: 'Updated the audio'
+  audio_selected: 'Selected audio for the image'
+  audio_updated_successfully: 'The audio for this image has been updated successfully.'
+  audio_selected_successfully:  'You picked a new audio track to go with this image.'
+  audio_attached: 'This image has an audio caption below, loading might take some time.'
+  

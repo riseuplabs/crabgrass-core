@@ -1,0 +1,18 @@
+<%= javascript_include_tag('as_needed/upload') %>
+
+<% upload_image_form = capture do %>
+  <% form_for(:image, :url => page_url(@page, :action => 'image-update', 'X-Progress-ID' => @upload_id, :id => @image.id), 
+         :html => {:multipart => true, :target => 'upload_frame'}) do |f| -%>
+     <%= hidden_field_tag 'X-Progress-ID', @upload_id %>
+     <div class='action'>
+       <%= render :partial => 'asset_page/file_field', :locals => {:size => 25} %>
+     </div>
+     <%= submit_tag 'Upload', :onClick => "startProgressBar(this);" %>
+     <%= spinner 'upload' %>
+  <% end -%>
+  <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+  <%= render :partial => 'common/upload_progress_bar' %>
+
+<% end %>
+
+<%= upload_image_form %>
