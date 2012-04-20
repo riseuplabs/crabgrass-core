@@ -46,7 +46,7 @@ class GalleryController < Pages::BaseController
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => I18n.t(:error_saving_new_order_message) %{ :error_message => exc.message}
+    render :text => I18n.t(:error_saving_new_order_message, :error_message => exc.message)
   end
 
   protected
