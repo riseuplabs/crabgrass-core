@@ -56,7 +56,7 @@ module GalleryHelper
     link_to_modal(I18n.t(:add_images_to_gallery_link),
       { :url => page_url(@page, :action => 'new', :controller => :image),
         :complete => 'styleUpload();'},
-      :class => "small_icon plus_16")
+      :class => "icon plus_16")
   end
 
   def gallery_delete_image(image, position)
