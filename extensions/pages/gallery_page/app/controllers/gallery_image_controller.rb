@@ -8,6 +8,9 @@ class GalleryImageController < Pages::BaseController
   verify :method => [:post, :put], :only => [:update]
   verify :method => [:post, :delete], :only => [:destroy]
 
+  # default_fetch_data is disabled for new in Pages::BaseController
+  prepend_before_filter :fetch_page_for_new, :only => :new
+
   def show
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
@@ -100,4 +103,7 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
+  # adding the same before filter with different conditions confuses
+  # rails 2.3 it seems. So we alias it.
+  alias_method :fetch_page_for_new, :default_fetch_data
 end
