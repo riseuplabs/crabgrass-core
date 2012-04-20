@@ -27,14 +27,13 @@ class GalleryImageControllerTest < ActionController::TestCase
     login_as :blue
     get :new, :page_id => @gallery.id
     assert_response :success
-    assert_not_nil assigns['upload_id'],
-      "new action should create upload-id"
-    assert_select '#progress[style="display: none;"]', 1,
-      "a hidden progress bar should be displayed" do
-      assert_select '#bar[style="width: 10%;"]', "0 %",
-        "the progress bar should contain a bar"
+    assert_not_nil upload_id = assigns['image_upload_id'],
+      "new action should create image_upload-id"
+    assert_select '.progress[style="display: none;"]', 1,
+        "a hidden progress bar should be included" do
+      assert_select '.bar[style="width: 10%;"]', "0 %",
+        "the progress bar should be 10% filled"
       end
-    upload_id = assigns['upload_id']
     assert_select 'form[action*="X-Progress-ID"]' do
       assert_select 'input[type="hidden"][value="' + upload_id + '"]'
     end
