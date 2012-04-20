@@ -1,0 +1,81 @@
+
+key
+  a think that allows owners to access 
+
+locked -> black box
+  locked_id and locked_type are columns of keys table.
+  blockbox.keys lists all the keys out there that can access the secrets.
+    should be .keys_to, imho.
+  thus far, blockbox is User or Group, but could be anything.
+
+holder -> owner
+  the owner of the key.
+  the owner's code is called the key.keyring_code
+  because the owner is encoded in a complicated manner.
+  this is to allow SELECT IN (..) queries.
+  owner.keys <=== doesn't exist
+  an owner can be an association, like user.friends, or network.groups.
+  or a user or group.
+
+lock -> secret
+  a bit in the 'mask' column of the keys table.
+  eg: :pester, :show_membership, etc...
+  each lock/secret gets a different bit position in the key.mask.
+
+
+keyring_code
+-------------
+
+  sometimes they are strings and sometimes they are numbers. this is confusing. 
+  i think they should all be numbers for as long as possible and converted
+  to strings just when needed as strings. (which i think is only when used
+  for fulltext searching).
+
+  i would like to see this field name changed to 'owner_code' or 'holder_code'
+
+
+key
+----------------
+
+key.holder is very inefficient
+
+  let say you are iterating over a set of locks and keys.
+  each time, you probably call key.holder, which re-fetches the holder each time.
+
+  ok, i made this a bunch better with @holder ||= xxx
+
+label_for_holder(key.holder) is inefficient
+  we want an object for key.holder so it can tell us its label
+  which may depend on data. 
+  the problem is with associations. in order to get the object
+  and call label on it, it fetches all the records in the association.
+
+  i guess in resolve_holder{|code| User.find(id).friends }
+
+make this go away
+---------------------
+
+ActsAsLocked::Key.resolve_holder do |code|
+  if code < 10
+    ActsAsLocked::Key.symbol_for(code)
+  else
+    string = code.to_s
+    prefix = string.first
+    id = string[1..-1].to_i
+    case prefix.to_i
+    when 1
+      User.find(id)
+    when 5
+      Site.find(id)
+    when 7
+      User.find(id).friends
+    when 8
+      Group.find(id)
+    when 9
+      User.find(id).peers
+    end
+  end
+end
+
+
+
