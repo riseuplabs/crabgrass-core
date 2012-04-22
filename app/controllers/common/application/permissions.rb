@@ -48,9 +48,11 @@
 #
 # This will load /app/permissions/robots_permissions.rb
 #
-# You can alter the default verb or object by appending a hash:
+# You can alter the default verb or object with guard_like:
 #
-#   permissions :robots, :object => 'cyborgs'
+#   guard_like 'cyborgs'
+#
+# NOTE: guard and guard_like settings will NOT be inherited by subclasses.
 #
 # You can also do this dynamically by defining the methods permission_verb or
 # permission_object:
@@ -73,8 +75,7 @@
 #   At the top of your controller definition, do this:
 #
 #     guard :show => :may_show_robots?,
-#           :update => :may_edit_robots?
-#
+#           :update => :may_edit_robots?  #
 #   This will ensure the may_show_robots? returns true before 'show()' will run.
 #   Procs are also allowed, as well as the special symbol :allow. For example
 #
@@ -96,8 +97,9 @@
 #   Basically, if authorized?() returns false, the user will get a permission
 #   denied message.
 #
-#   NOTE: The 'authorized?' before filter is only called if filter
-#         :login_required is active. This should change eventually.
+#   NOTE: The 'authorized?' before filter is called from the
+#         :login_required before filter or needs to be added to the controller.
+#         This should change eventually.
 #
 # (c) permission auto-guessing
 #
@@ -148,23 +150,23 @@ module Common::Application::Permissions
     # Specifies a list of permission mixins to be included in the controller
     # and related views.
     #
-    # If the last argument is a hash, this will define various options for
-    # permissions.
-    #
     # for example:
     #
-    #   permissions 'robot/swims', :sleeps, :object => 'robot'
+    #   permissions 'robot/swims', :sleeps
     #
     # Will attempt to load the +Robot::SwimsPermission+ and +SleepsPermission+
-    # and will set the default object to 'robot'
     #
     def permissions(*class_names)
-      if class_names.last.is_a?(Hash)
-        @permission_options = HashWithIndifferentAccess.new(class_names.pop)
-      end
       for class_name in class_names
         permission_class = "#{class_name}_permission".camelize.constantize
         include(permission_class)
+        add_template_helper(permission_class)
+      end
+    end
+
+    def permission_helper(*class_names)
+      for class_name in class_names
+        permission_class = "#{class_name}_permission".camelize.constantize
         add_template_helper(permission_class)
       end
     end
@@ -179,6 +181,24 @@ module Common::Application::Permissions
     #
     def guard(action_map)
       @action_map = HashWithIndifferentAccess.new action_map
+    end
+
+    # specifies what default objects and verbs to use for permissions
+    #
+    # for example:
+    #
+    #   guard_like :robot, :play
+    #
+    # Will set the default object to 'robot'
+    # and will set the default verb to 'play'
+    #
+    # So the default permission check would be may_play_robot?
+    #
+    def guard_like(object, verb = nil)
+      options = {}
+      options[:object] = object.to_s if object
+      options[:verb] = verb.to_s if verb
+      @permission_options = HashWithIndifferentAccess.new options
     end
 
     def permission_action_map
@@ -245,6 +265,9 @@ module Common::Application::Permissions
       elsif method
         self.send(method)
       else
+        if RAILS_ENV=='development'
+          raise StandartError.new "Could not find permission for params #{params.inspect}"
+        end
         false
       end
     end

@@ -7,12 +7,11 @@ class Pages::BaseController < ApplicationController
   public
 
   layout 'page'
-  permissions :pages, :object => 'page'
-  permissions :posts, :object => 'post'
+  permissions :pages
+  permission_helper :posts, 'groups/memberships', 'groups/base'
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
-  permissions 'groups/memberships', 'groups/base'
 
   #stylesheet 'page_creation', :action => :create
   #javascript 'page'
@@ -28,7 +27,7 @@ class Pages::BaseController < ApplicationController
 
   prepend_before_filter :default_fetch_data, :except => :new
 
-  #append_before_filter :login_or_public_page_required
+  append_before_filter :login_or_public_page_required
   append_before_filter :default_setup_options
   append_before_filter :load_posts
 

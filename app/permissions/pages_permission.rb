@@ -16,10 +16,6 @@ module PagesPermission
     current_user.may?(:edit, page)
   end
 
-  def may_update_page?
-    true
-  end
-
   def may_new_page?
     logged_in?
   end

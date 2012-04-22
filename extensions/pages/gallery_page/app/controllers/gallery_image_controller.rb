@@ -1,7 +1,10 @@
 class GalleryImageController < Pages::BaseController
 
-  permissions 'gallery'
   helper 'gallery', 'progress_bar'
+
+  # show and edit use base page permissions
+  guard_like :page, :edit
+  guard :show => :may_show_page?
 
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create]
