@@ -48,6 +48,13 @@ class Gallery < Page
     asset.destroy
   end
 
+  def sort_images(sorted_ids)
+    sorted_ids.each_with_index do |id, index|
+      showing = self.showings.find_by_asset_id(id)
+      showing.insert_at(index)
+    end
+  end
+
   private
 
   def check_type!(asset)

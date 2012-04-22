@@ -16,11 +16,9 @@ class GalleryController < Pages::BaseController
 
   # removed an non ajax fallback, azul
   def update
-    text =""
-    ids.each_with_index do |id, index|
-      showing = @page.showings.find_by_asset_id(id)
-      showing.insert_at(index)
-    end
+    @page.sort_images params[:sort_gallery]
+    current_user.updated(@page)
+    render :text => I18n.t(:order_changed), :layout => false
   rescue => exc
     render :text => I18n.t(:error_saving_new_order_message, :error_message => exc.message)
   end
