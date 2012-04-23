@@ -24,7 +24,7 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
 
   def teardown
     # clear the permission options:
-    @controller.class.send :permissions, {}
+    @controller.class.guard_like nil, nil
   end
 
   def test_default_function_name
@@ -49,25 +49,25 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
 
   def test_function_name_with_altered_object
     @controller.params.merge! :action => 'create', :controller => 'other'
-    @controller.class.send :permissions, :object => 'stub'
+    @controller.class.guard_like 'stub'
     assert_equal "may_create_stub?", @controller.send(:find_permission_method)
   end
 
   def test_function_name_with_altered_object_does_not_fall_back
     @controller.params.merge! :action => 'create'
-    @controller.class.send :permissions, :object => 'other'
+    @controller.class.guard_like 'other'
     assert_nil @controller.send(:find_permission_method)
   end
 
   def test_function_name_with_altered_verb
     @controller.params.merge! :action => 'other'
-    @controller.class.send :permissions, :verb => 'create'
+    @controller.class.guard_like nil, 'create'
     assert_equal "may_create_stub?", @controller.send(:find_permission_method)
   end
 
   def test_function_name_with_altered_verb_does_not_fall_back
     @controller.params.merge! :action => 'create'
-    @controller.class.send :permissions, :verb => 'other'
+    @controller.class.guard_like 'other'
     assert_nil @controller.send(:find_permission_method)
   end
 
