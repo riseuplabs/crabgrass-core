@@ -69,7 +69,7 @@ Crabgrass::Initializer.run do |config|
   config.gem 'mime-types', :lib => 'mime/types'
 
   # delayed job for rails 2.x:
-  config.gem 'delayed_job', :version => '~> 2.0'
+  config.gem 'delayed_job', :version => '~> 2.0.7'
 
   # See Rails::Configuration for more options
 end
