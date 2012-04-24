@@ -1,7 +1,7 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
-class GalleryToolTest < Test::Unit::TestCase
+class GalleryToolTest < ActiveSupport::TestCase
   fixtures :users, :pages, :assets, :groups, :group_participations, :memberships
 
   def test_add_and_remove

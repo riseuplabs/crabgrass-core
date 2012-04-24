@@ -1,48 +1,35 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class WikiPageTest < ActiveSupport::TestCase
   fixtures :users
 
-  context "Two WikiPages with the same title added to the same group" do
-    setup do
-      @wiki1 = WikiPage.create :title => 'x61'
-      @wiki2 = WikiPage.create :title => 'x61'
+  # Two WikiPages with the same title added to the same group
+  def test_duplicate_title_in_group
+    @wiki1 = WikiPage.create :title => 'x61'
+    @wiki2 = WikiPage.create :title => 'x61'
 
-      g = Group.create! :name => 'robots'
+    g = Group.create! :name => 'robots'
 
-      @wiki1.add g; @wiki1.save
-      @wiki2.add g; @wiki2.save
-    end
+    @wiki1.add g; @wiki1.save
+    @wiki2.add g; @wiki2.save
 
-    should "get the name set to title for the first" do
-      assert_equal 'x61', @wiki1.name
-    end
-
-    should "see that name is taken for the second" do
-      assert @wiki2.name_taken?
-    end
-
-    should "not be valid for the second" do
-      assert !@wiki2.valid?
-    end
+    assert_equal 'x61', @wiki1.name
+    assert @wiki2.name_taken?
+    assert !@wiki2.valid?
   end
 
-  context "Two WikiPages with the same title created for the same user" do
-    setup do
-      @wiki1 = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
-      @wiki2 = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
-    end
+  # Two WikiPages with the same title created for the same user
+  def test_duplicate_title_for_user
+    @wiki1 = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
+    @wiki2 = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
 
-    should "get the name set to title for the first" do
-      assert_equal 'x61', @wiki1.name
-    end
+    assert_equal 'x61', @wiki1.name,
+      'should get the name set to title for the first'
 
-    should "see that name is taken for the second" do
-      assert @wiki2.name_taken?
-    end
+    assert @wiki2.name_taken?,
+      "name is taken for the second"
 
-    should "not be valid for the second" do
-      assert !@wiki2.valid?
-    end
+    assert !@wiki2.valid?,
+      "wiki with duplicate name is invalid"
   end
 end
