@@ -26,7 +26,7 @@ en:
   network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
   committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
-  council_description_details: "By default, all members of a group have full permission to modify a group. If you want restrict administrative powers to certain users, create a council and add users to it."
+  council_description_details: "By default, all members of a group have full permission to modify a group. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
   committee_choose_group: 'Choose a group for this committee:'
 
