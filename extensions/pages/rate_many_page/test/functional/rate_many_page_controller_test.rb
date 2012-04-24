@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class RateManyPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
@@ -67,36 +67,23 @@ class RateManyPageControllerTest < ActionController::TestCase
     end
   end
 
-  context "a vote created by orange" do
-    setup { @page = RateManyPage.find(217) }
+  def test_vote_permissions
+    @page = RateManyPage.find(217)
 
-    should "allow orange to vote" do
-      vote(@page, :possible => 1, :value => 1, :as => :orange)
-      assert(@page.data.votes.find_by_user_id(User.find_by_login('orange').id))
-    end
+    vote(@page, :possible => 1, :value => 1, :as => :orange)
+    assert(@page.data.votes.find_by_user_id(User.find_by_login('orange').id))
 
-    should "not allow green to vote" do
-      vote(@page, :possible => 1, :value => -1, :as => :green)
-      assert(@page.data.votes.find_by_user_id(User.find_by_login('green').id).nil?)
-    end
+    vote(@page, :possible => 1, :value => -1, :as => :green)
+    assert(@page.data.votes.find_by_user_id(User.find_by_login('green').id).nil?)
 
-    context "shared with red (write access)" do
-      setup {
-        assert(User.find_by_login('red').may?(:edit, @page),
+    assert(User.find_by_login('red').may?(:edit, @page),
                "red should be allowed to edit #{@page.inspect}! check the fixtures.")
-      }
-      should("allow red to vote") {
-        vote(@page, :possible => 1, :value => 2, :as => :red)
-        assert(@page.data.votes.find_by_user_id(User.find_by_login('red').id))
-      }
-    end
+    vote(@page, :possible => 1, :value => 2, :as => :red)
+    assert(@page.data.votes.find_by_user_id(User.find_by_login('red').id))
 
-    context "where orange adds a possibility" do
-      setup {
-        login_as :orange
-        add_possibility @page
-      }
-      should_change("the count of possibles", :by => 1) { @page.data.possibles.count }
+    login_as :orange
+    assert_difference "@page.data.possibles.count" do
+      add_possibility @page
     end
   end
 
