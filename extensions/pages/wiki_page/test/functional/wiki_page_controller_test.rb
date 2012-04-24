@@ -15,11 +15,11 @@ class WikiPageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_failed_show_without_login
+  def test_deny_show_without_login
     # existing page
     get :show, :page_id => pages(:wiki).id
     assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    assert_redirected_to :controller => :session, :action => :login
   end
 
   def test_show_without_login
@@ -48,32 +48,6 @@ last seen date for this to work.
     assert_not_nil assigns(:last_seen), 'last_seen should be set, since the page has changed'
   end
 =end
-
-  # edit, save, done
-  # edit, lock stolen, try to save, see lock error, retake lock, save
-  # edit, lock stolen, thief saves, try save, see old version error, save (overwrites)
-  # test decorate with edit links
-  def test_create
-    login_as :quentin
-
-    assert_no_difference 'Page.count' do
-      post 'create', :id => WikiPage.param_id, :page => {:title => nil}
-      assert_equal 'error', flash[:type], "page title should be required"
-    end
-
-    assert_difference 'Page.count' do
-      post :create, :id => WikiPage.param_id, :group_id=> "", :create => "Create page", :tag_list => "",
-           :page => {:title => 'my title', :summary => ''}
-      assert_response :redirect
-      assert_not_nil assigns(:page)
-      assert_not_nil assigns(:page).data
-
-      assert_redirected_to @controller.page_url(assigns(:page), :action => 'show'), "create action should redirect to show"
-      get :show, :page_id => assigns(:page).id
-
-      assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit'), "showing empty wiki should redirect to edit"
-    end
-  end
 
   def test_print
     login_as :orange
