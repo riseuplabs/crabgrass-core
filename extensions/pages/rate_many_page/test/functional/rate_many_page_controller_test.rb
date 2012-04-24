@@ -1,109 +1,70 @@
 require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class RateManyPageControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup
-    @request.host = "localhost"
+    @user = User.make
+    @page = RateManyPage.create! :title => "Show this page!", :user => @user
   end
 
-  def test_all
-    login_as :orange
+  def test_show
+    login_as @user
 
-    assert_no_difference 'Page.count' do
-      get :create, :id => RateManyPage.param_id
-      assert_response :success
-    end
-
-    page_id = nil
-    assert_difference 'RateManyPage.count' do
-      post :create, :id => RateManyPage.param_id, :page => {:title => 'test title'}
-      page_id = assigns(:page).id
-      assert_response :redirect
-    end
-    page = Page.find(page_id)
-
-    get :show, :page_id => page_id
+    get :show, :page_id => @page.id
     assert_response :success
+  end
 
-    assert_difference 'page.data.possibles.count' do
-      post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
+  def test_adding_possibility
+    login_as @user
+
+    assert_difference '@page.data.possibles.count' do
+      post :add_possible, :page_id => @page.id, :possible => {:name => "new option", :description => ""}
     end
     assert_not_nil assigns(:possible)
-
-    assert_difference 'page.data.possibles.count', -1 do
-      post :destroy_possible, :page_id => page_id, :possible => assigns(:possible).id
-    end
-
-    post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
-    id = assigns(:possible).id
-    post :vote_one, :page_id => page_id, :id => id, :value => "2"
-    assert_equal 2, Possible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
   end
 
-  def test_create_same_name
-    login_as :gerrard
-
-    data_ids, page_ids, page_urls = [],[],[]
-    3.times do
-      post 'create', :page => {:title => "dupe", :summary => ""}, :id => RateManyPage.param_id
-      page = assigns(:page)
-
-      assert_equal "dupe", page.title
-      assert_not_nil page.id
-
-      # check that we have:
-      # a new poll
-      assert !data_ids.include?(page.data.id)
-      # a new page
-      assert !page_ids.include?(page.id)
-      # a new url
-      assert !page_urls.include?(page.name_url)
-
-      # remember the values we saw
-      data_ids << page.data.id
-      page_ids << page.id
-      page_urls << page.name_url
+  def test_destroying_possibility
+    login_as @user
+    poll = @page.data
+    possible = poll.possibles.create :name => "my option", :description => "undescribable"
+    assert_difference 'poll.possibles.count', -1 do
+      post :destroy_possible, :page_id => @page.id, :possible => possible.id
     end
   end
 
-  def test_vote_permissions
-    @page = RateManyPage.find(217)
+  def test_voting_on_possible
+    login_as @user
+    poll = @page.data
+    possible = poll.possibles.create :name => "my option", :description => "undescribable"
 
-    vote(@page, :possible => 1, :value => 1, :as => :orange)
-    assert(@page.data.votes.find_by_user_id(User.find_by_login('orange').id))
+    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
 
-    vote(@page, :possible => 1, :value => -1, :as => :green)
-    assert(@page.data.votes.find_by_user_id(User.find_by_login('green').id).nil?)
-
-    assert(User.find_by_login('red').may?(:edit, @page),
-               "red should be allowed to edit #{@page.inspect}! check the fixtures.")
-    vote(@page, :possible => 1, :value => 2, :as => :red)
-    assert(@page.data.votes.find_by_user_id(User.find_by_login('red').id))
-
-    login_as :orange
-    assert_difference "@page.data.possibles.count" do
-      add_possibility @page
-    end
+    assert_equal 1, poll.votes.by_user(@user).for_possible(possible).count
+    assert_equal 2, poll.votes.by_user(@user).for_possible(possible).first.value
   end
 
-  private
+  def test_stranger_may_not_vote
+    poll = @page.data
+    possible = poll.possibles.create :name => "my option", :description => "undescribable"
+    stranger = User.make
 
-  def vote(page, options)
-    login_as options.delete(:as) if options[:as]
-    options[:id] = @page.data.possibles[options.delete(:possible)].id
-    options[:page_id] = page.id
-    post :vote_one, options
+    login_as stranger
+    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
+
+    assert_equal 0, poll.votes.by_user(stranger).for_possible(possible).count
   end
 
-  def add_possibility(page, name=nil, description=nil)
-    assert_difference 'page.data.possibles.count' do
-      post :add_possible, :page_id => page.id, :possible => {
-        :name => (name || Faker::Lorem.words(2).join(' ')),
-        :description => (description || Faker::Lorem.paragraph)
-      }
-      assert_response :redirect
-    end
+  def test_participant_may_vote
+    poll = @page.data
+    possible = poll.possibles.create :name => "my option", :description => "undescribable"
+    participant = User.make
+    @page.add(participant, :access => :edit).save
+    assert participant.may?(:edit, @page)
+
+    login_as participant
+    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
+
+    assert_equal 1, poll.votes.by_user(participant).for_possible(possible).count
   end
 
   # TODO: tests for vote, clear votes, sort
