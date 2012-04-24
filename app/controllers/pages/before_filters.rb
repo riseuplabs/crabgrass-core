@@ -29,7 +29,7 @@ module Pages::BeforeFilters
 
     if logged_in?
       # grab the current user's participation from memory
-      @upart = @page.participation_for_user(current_user)
+      @upart = @page.participation_for_user(current_user) if @page
     end
 
     # hook for subclasses to define:
