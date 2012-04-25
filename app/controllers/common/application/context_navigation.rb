@@ -9,6 +9,7 @@ module Common::Application::ContextNavigation
     base.class_eval do
       helper_method :current_context
       helper_method :current_navigation
+      helper_method :context?
     end
   end
 
