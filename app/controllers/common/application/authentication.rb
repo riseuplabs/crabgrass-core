@@ -1,8 +1,14 @@
 module Common::Application::Authentication
 
+  def self.included(base)
+    base.send :helper_method, :current_user, :logged_in?
+  end
+
   protected
 
-  # Accesses the current user from the session.
+  #
+  # Accesses the current user for the session.
+  #
   def current_user
     @current_user ||= begin
       user = load_user(session[:user]) if session[:user]
@@ -12,31 +18,34 @@ module Common::Application::Authentication
     end
   end
 
-  def load_user(id)
-    user = User.find_by_id(id)
-    if user
-      user.seen!
-      #user.current_site = current_site
-    end
-    return user
-  end
-
-  # Returns true or false if the user is logged in.
-  # Preloads @current_user with the user model if they're logged in.
-  def logged_in?
-    current_user.is_a?(UserExtension::AuthenticatedUser)
-  end
-
-  def logged_in_since
-    session[:logged_in_since]
-  end
-
+  #
   # Store the given user in the session.
+  #
   def current_user=(new_user)
     new_user = nil unless new_user.respond_to? :id
     session[:user] = new_user.nil? ? nil : new_user.id
     session[:logged_in_since] = Time.now
     @current_user = new_user
+  end
+
+  #
+  # Returns true if the user is logged in.
+  #
+  def logged_in?
+    current_user.is_a?(UserExtension::AuthenticatedUser)
+  end
+
+  #
+  # destroys the current session, keeping the current language
+  #
+  def logout
+    language = session[:language_code]
+    reset_session
+    session[:language_code] = language
+  end
+
+  def logged_in_since
+    session[:logged_in_since]
   end
 
 
@@ -84,12 +93,6 @@ module Common::Application::Authentication
     session[:return_to] = nil
   end
 
-  # Inclusion hook to make #current_user and #logged_in?
-  # available as ActionView helper methods.
-  def self.included(base)
-    base.send :helper_method, :current_user, :logged_in?
-  end
-
   # When called with before_filter :login_from_cookie will check for an :auth_token
   # cookie and log the user back in if apropriate
   def login_from_cookie
@@ -127,6 +130,15 @@ module Common::Application::Authentication
     auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
     auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
     return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
+  end
+
+  def load_user(id)
+    user = User.find_by_id(id)
+    if user
+      user.seen!
+      #user.current_site = current_site
+    end
+    return user
   end
 
 end
