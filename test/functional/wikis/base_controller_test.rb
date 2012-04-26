@@ -8,7 +8,7 @@ class Wikis::BaseControllerTest < ActionController::TestCase
     Wiki.expects(:find).with(3).returns(wiki)
     run_before_filters nil, :wiki_id => 3
     assert_equal wiki, assigned(:wiki)
-    assert_equal group, assigned(:group)
+    assert_equal group, assigned(:wiki).context
   end
 
 end
