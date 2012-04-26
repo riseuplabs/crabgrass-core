@@ -29,7 +29,7 @@ SearchFilter.new('/tag/:tag_name/') do
       elsif @group
         Page.tags_for_group(@group, current_user)
       else
-        # Page.tags_for_user(current_context, current_user)
+        # Page.tags_for_user(@context, current_user)
       end
     end
 

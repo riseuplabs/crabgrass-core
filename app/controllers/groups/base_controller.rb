@@ -14,12 +14,13 @@ class Groups::BaseController < ApplicationController
 
   def setup_context
     if @group and !@group.new_record?
-      Context.find(@group)
+      @context = Context.find(@group)
     end
+    super
   end
 
   ##
-  ## PATHS 
+  ## PATHS
   ##
 
   # sometimes it is nice to rely on the way rails will guess resource

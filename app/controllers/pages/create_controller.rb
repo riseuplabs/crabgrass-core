@@ -183,10 +183,11 @@ class Pages::CreateController < ApplicationController
       @group = Group.find_by_name(params[:owner])
     end
     if @group
-      Context::Group.new(@group)
+      @context = Context::Group.new(@group)
     else
-      Context::Me.new(current_user)
+      @context = Context::Me.new(current_user)
     end
+    super
   end
 
 end
