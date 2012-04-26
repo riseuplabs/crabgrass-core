@@ -38,7 +38,7 @@ module Common::Application::Authentication
   #
   # destroys the current session, keeping the current language
   #
-  def logout
+  def logout!
     language = session[:language_code]
     reset_session
     session[:language_code] = language
