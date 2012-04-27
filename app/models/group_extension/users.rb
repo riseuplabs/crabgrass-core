@@ -119,6 +119,10 @@ module GroupExtension::Users
     self.profiles.public.membership_policy_is? :open
   end
 
+  def single_user?
+    self.users.count == 1
+  end
+
   protected
 
   def destroy_memberships

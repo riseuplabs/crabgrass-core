@@ -53,7 +53,7 @@ LARROW = " &laquo; "
 ## a time to use when displaying recent records
 ##
 
-RECENT_SINCE_TIME = 2.weeks.ago.freeze
+RECENT_TIME = 1.weeks
 
 ##
 ## caching constants

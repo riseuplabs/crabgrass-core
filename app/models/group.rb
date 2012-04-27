@@ -102,7 +102,7 @@ class Group < ActiveRecord::Base
     opts
   }
 
-  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
   named_scope :by_created_at, :order => 'groups.created_at DESC'
 
   named_scope :names_only, :select => 'full_name, name'
@@ -186,6 +186,11 @@ class Group < ActiveRecord::Base
   def council?;   instance_of? Council;   end
 
   def group_type; I18n.t(self.class.name.downcase.to_sym); end
+
+  # age of group
+  def recent?
+    self.created_at > RECENT_TIME.ago
+  end
 
   ##
   ## PROFILE
