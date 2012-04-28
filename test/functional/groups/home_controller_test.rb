@@ -46,6 +46,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
   end
 
   def test_may_not_show
+    @group.revoke! :public, :view
     assert_permission :may_show_group_home?, false do
       get :show, :id => @group.to_param
     end

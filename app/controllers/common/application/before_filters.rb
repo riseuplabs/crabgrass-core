@@ -11,6 +11,7 @@ module Common::Application::BeforeFilters
       before_filter :redirect_unverified_user
       before_filter :enforce_ssl_if_needed
       before_filter :setup_theme
+      before_render :setup_context
     end
   end
 
@@ -81,6 +82,27 @@ module Common::Application::BeforeFilters
   #
   def setup_theme
     current_theme.controller = self
+  end
+
+  #
+  # @context needs to be set in the current controller.
+  # This can be done by overwriting setup_context.
+  # Calling super in the end will make sure @group and @user get set.
+  #
+  def setup_context
+    # Typically, the correct @user or @group should be loaded in
+    # by the dispatcher. However, there might arise cases where the
+    # url does not actually contain the correct entity for the
+    # current context. In these cases, we ensure @group or @user is
+    # set, as appropriate.
+
+    if @context
+      if @user.nil? and @context.is_a?(Context::User)
+        @user = @context.entity
+      elsif @group.nil? and @context.is_a?(Context::Group)
+        @group = @context.entity
+      end
+    end
   end
 
   private

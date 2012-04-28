@@ -21,7 +21,7 @@ module ProgressBarHelper
          when Symbol, String
            object.to_s
          when ActiveRecord::Base
-           object.class.class_name
+           object.class.name
          end
     id += '_upload_form'
     { :id    => id,

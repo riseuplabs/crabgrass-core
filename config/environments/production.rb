@@ -33,15 +33,3 @@ rescue LoadError => exc
 end
 
 ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
-
-##
-## GEMS
-##
-
-config.gem 'compass', :version => '~> 0.10'
-config.gem 'haml', :version => '~> 3.0'
-config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
-
-# only needed for production
-
-config.gem 'whenever'

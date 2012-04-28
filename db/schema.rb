@@ -84,26 +84,6 @@ ActiveRecord::Schema.define(:version => 20120420202631) do
     t.boolean "public",                                :default => false
   end
 
-  create_table "bdrb_job_queues", :force => true do |t|
-    t.text     "args",           :limit => 2147483647
-    t.string   "worker_name"
-    t.string   "worker_method"
-    t.string   "job_key"
-    t.integer  "taken"
-    t.integer  "finished"
-    t.integer  "timeout"
-    t.integer  "priority"
-    t.datetime "submitted_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "archived_at"
-    t.string   "tag"
-    t.string   "submitter_info"
-    t.string   "runner_info"
-    t.string   "worker_key"
-    t.datetime "scheduled_at"
-  end
-
   create_table "categories", :force => true do |t|
   end
 

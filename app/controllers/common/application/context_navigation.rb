@@ -5,99 +5,22 @@
 
 module Common::Application::ContextNavigation
 
+
   def self.included(base)
     base.class_eval do
-      helper_method :current_context
-      helper_method :current_navigation
+      helper_method :setup_navigation
     end
   end
 
   protected
 
   ##
-  ## HELPERS
-  ##
-  ## These are called by the layout if they want navigation or context.
-  ## Controllers can override context() to define their own.
-  ##
-
-  #
-  # get access to the current context.
-  #
-  def current_context
-    @context ||= begin
-      context = setup_context() # should be defined by the current controller.
-
-      # Typically, the correct @user or @group should be loaded in
-      # by the dispatcher. However, there might arise cases where the
-      # url does not actually contain the correct entity for the
-      # current context. In these cases, we ensure @group or @user is
-      # set, as appropriate.
-
-      if context
-        if @user.nil? and context.is_a?(Context::User)
-          @user = context.entity
-        elsif @group.nil? and context.is_a?(Context::Group)
-          @group = context.entity
-        end
-      end
-      context
-    end
-  end
-
-  #
-  # sets up the navigation variables from the current theme.
-  #
-  # The 'active' blocks of the navigation definition are evaluated in this
-  # method, so any variables needed by those blocks must be set up before this
-  # is called.
-  #
-  # I don't see any reason why a controller would want to override this, but they
-  # could if they really wanted to.
-  #
-  def current_navigation
-    @navigation ||= begin
-      navigation = {}
-      navigation[:global] = current_theme.navigation.root
-      if navigation[:global]
-        navigation[:context] = navigation[:global].currently_active_item
-        if navigation[:context]
-          navigation[:local] = navigation[:context].currently_active_item
-        end
-      end
-      navigation = setup_navigation(navigation) # allow controller change to modify @navigation
-      navigation
-    end
-  end
-
-  ##
   ## OVERRIDE
   ##
-
-  def setup_context
-    # this can be implemented by controller subclasses
-  end
 
   def setup_navigation(nav)
     return nav
     # this can be implemented by controller subclasses
-  end
-
-  ##
-  ## DETECTION
-  ##
-
-  #
-  # returns true if the current display context matches the symbol.
-  # options are :none, :me, :group, or :user
-  #
-  def context?(symbol)
-    case symbol
-      when :none  then @context.nil?
-      when :me    then @context.is_a?(Context::Me)
-      when :group then @context.is_a?(Context::Group)
-      when :user  then @context.is_a?(Context::User)
-    end
   end
 
   #

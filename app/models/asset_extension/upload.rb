@@ -60,6 +60,7 @@ module AssetExtension
         Dir.mkdir(tmp_dir)
         zipfile.each do |entry|
           begin
+            next if entry.directory?
             tmp_file=File.join(tmp_dir, entry.name)
             FileUtils.mkdir_p(File.dirname(tmp_file))
             zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)

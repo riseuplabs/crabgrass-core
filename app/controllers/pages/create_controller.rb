@@ -17,7 +17,8 @@ class Pages::CreateController < ApplicationController
 
   before_filter :login_required, :init_options, :set_owner, :catch_cancel
   helper 'pages/share', 'pages/owner', 'pages/creation'
-  permissions :pages, :object => 'page'
+  permissions :pages
+  guard_like 'page'
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
@@ -182,10 +183,11 @@ class Pages::CreateController < ApplicationController
       @group = Group.find_by_name(params[:owner])
     end
     if @group
-      Context::Group.new(@group)
+      @context = Context::Group.new(@group)
     else
-      Context::Me.new(current_user)
+      @context = Context::Me.new(current_user)
     end
+    super
   end
 
 end

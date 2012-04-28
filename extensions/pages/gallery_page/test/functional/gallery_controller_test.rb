@@ -47,12 +47,13 @@ class GalleryControllerTest < ActionController::TestCase
     @gallery.add_image!(@asset2, users(:blue))
     @asset2.save!
     login_as :blue
-    post :update, :page_id => Gallery.find(:first).id,
+    xhr :post, :update, :page_id => Gallery.find(:first).id,
       :sort_gallery => [@asset2.id, @asset.id]
-    assert_response :redirect
-    assert_equal [@asset2, @asset], @gallery.images
+    assert_response :success
+    assert_equal [@asset2.id, @asset.id], @gallery.reload.images.map(&:id)
   end
 
+  # TODO: this should live in a different controller
   def test_update_cover
     login_as :blue
     post :update, :page_id => @gallery.id,

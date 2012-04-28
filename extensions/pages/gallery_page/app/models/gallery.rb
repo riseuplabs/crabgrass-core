@@ -29,7 +29,7 @@ class Gallery < Page
   # announce that this gallery was updated by her.
   #
   # This method always returns true. On failure an error is raised.
-  def add_image!(asset, user, position = nil)
+  def add_image!(asset, user = nil, position = nil)
     check_type!(asset)
     assure_page(asset)
 
@@ -46,6 +46,13 @@ class Gallery < Page
     showing = self.showings.detect{|showing| showing.asset_id == asset.id}
     showing.destroy
     asset.destroy
+  end
+
+  def sort_images(sorted_ids)
+    sorted_ids.each_with_index do |id, index|
+      showing = self.showings.find_by_asset_id(id)
+      showing.insert_at(index)
+    end
   end
 
   private

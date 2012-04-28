@@ -69,7 +69,14 @@ Crabgrass::Initializer.run do |config|
   config.gem 'mime-types', :lib => 'mime/types'
 
   # delayed job for rails 2.x:
-  config.gem 'delayed_job', :version => '~> 2.0'
+  config.gem 'delayed_job', :version => '~> 2.0.7'
+
+  if Rails.env == 'production' || Rails.env == 'development'
+    config.gem 'compass', :version => '0.10.6'
+    config.gem 'haml', :version => '~> 3.0'
+    config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
+    config.gem 'whenever'
+  end
 
   # See Rails::Configuration for more options
 end
