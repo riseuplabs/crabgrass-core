@@ -1,0 +1,18 @@
+= 'test'
+
+- form_tag(me_destroy_path, :method => :put) do
+  = formy(:table_form) do |f|
+    - f.row do |r|
+      - r.checkboxes do |cbs|
+        - cbs.checkbox do |cb|
+          - cb.label "Anonymize display name"
+          - cb.info "aaaaaaaaaaaaaaaaaaa"
+          - cb.input check_box_tag :scrub_name
+    - f.row do |r|
+      - r.checkboxes do |cbs|
+        - cbs.checkbox do |cb|
+          - cb.label "Destroy comments"
+          - cb.info "aaaaaaaaaaaaaaaaaaa"
+          - cb.input check_box_tag :scrub_comments
+    - f.buttons submit_tag(:destroy.t, :confirm => 'really?', :class => 'btn btn-danger')
+	  

@@ -1,6 +1,6 @@
 unless defined?(FORBIDDEN_NAMES)
   FORBIDDEN_NAMES = %w{
-    account admin assets avatars chat code debug do groups
+    account admin anonymous assets avatars chat code debug do groups
     javascripts me networks page pages people pictures places issues
     session static stats stylesheets theme wikis
   }
@@ -51,6 +51,8 @@ ActionController::Routing::Routes.draw do |map|
       discussion.resources :posts
     end
     me.resource  :settings, :only => [:show, :update]
+    me.resource  :destroy, :only => [:show, :update]
+    me.resource  :password, :only => [:edit, :update]
     me.resources :permissions
     me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
     me.resources :requests, :only => [:index, :update, :destroy, :show]
