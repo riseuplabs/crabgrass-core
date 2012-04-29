@@ -91,7 +91,7 @@ define_navigation do
     context_section :settings do
       label  { :settings.t }
       url    { me_settings_path }
-      active { controller?('me/settings', 'me/permissions', 'me/profile', 'me/requests') }
+      active { controller?('me/settings', 'me/permissions', 'me/profile', 'me/requests', 'me/passwords', 'me/destroys') }
       icon   :control
 
       local_section :settings do
@@ -116,6 +116,18 @@ define_navigation do
         label  { :requests.t }
         url    { me_requests_path }
         active { controller?('me/requests') }
+      end
+
+      local_section :password do
+        label  { :password.t }
+        url    { edit_me_password_path }
+        active { controller?('me/passwords') }
+      end
+
+      local_section :destroy do
+        label  { :destroy.t }
+        url    { me_destroy_path }
+        active { controller?('me/destroys') }
       end
 
     end

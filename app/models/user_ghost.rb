@@ -1,46 +1,65 @@
 class UserGhost < User
 
   def name
-    :anonymous.t
+    if read_attribute(:display_name).nil?
+      :anonymous.t
+    else
+      read_attribute(:display_name)
+    end
   end
   alias :login :name
   alias :display_name :login
 
-  # not clear if we want these all in one method, as we might want to have different levels of anonymizing
-  def anonymize_user
-    self.avatar.destroy
-    remove_profiles
-    self.setting.destroy
-    self.task_participations.destroy
-    self.tasks.destroy
-    strip_comments
-    remove_participations
-    remove_memberships
-    remove_relationships
+  #
+  # retire this user.
+  #
+  # 1. removes all group memberships
+  # 2. removes all user relationships
+  # 3. removes user data like profiles
+  #
+  def retire!
+    clean_attributes
+    avatar.destroy
+    profiles.destroy
+    setting.destroy
+    task_participations.destroy
+    participations.destroy
+    memberships.destroy
+    relationship.destroy
     clear_cache
   end
-  #handle_asynchronously :anonymize_user # this will use delayed_job
+  handle_asynchronously :retire!
+
+  #
+  # gets rid of the users name
+  #
+  def anonymize!
+    self.update_attribute(:display_name, nil)
+  end
+  handle_asynchronously :anonymize!
+
+  #
+  # gets rid of all comments
+  #
+  def destroy_comments!
+    self.posts.destroy
+  end
+  handle_asynchronously :destroy_comments!
 
   private
 
-  def remove_profiles
-    self.profiles.destroy
+  def clean_attributes
+    #
+    # use update_attribute to bypass the validations
+    #
+    attrs_to_nil_out = %q(
+      crypted_password salt time_zone email
+      login created_at updated_at version
+      last_seen_at language remember_token remember_token_expires_at
+    )
+    attrs_to_nil_out.each do |attr|
+      update_attribute(attr, nil)
+    end
   end
 
-  def strip_comments
-    self.posts.destroy
-  end
-
-  def remove_participations
-    self.participations.destroy
-  end
-
-  def remove_memberships
-    self.memberships.destroy
-  end  
-  
-  def remove_relationships
-    self.relationship.destroy
-  end
-  
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406223541) do
+ActiveRecord::Schema.define(:version => 20120420202631) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -876,6 +876,7 @@ ActiveRecord::Schema.define(:version => 20120406223541) do
     t.string   "receive_notifications"
     t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
+    t.string   "type"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

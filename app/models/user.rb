@@ -156,6 +156,14 @@ class User < ActiveRecord::Base
     read_attribute(:time_zone) || Time.zone_default
   end
 
+  #
+  # returns this user, as a ghost.
+  #
+  def ghostify!
+    self.update_attribute(:type, "UserGhost")
+    return User.find(self.id)
+  end
+
   ##
   ## PROFILE
   ##

@@ -5,6 +5,7 @@ en:
   cancel: "Cancel"
   optional: "Optional"
   required: "Required"
+  thing_required: "%{thing} Required"
   edit: "Edit"
   upload: "Upload"
   preview: "Preview"
