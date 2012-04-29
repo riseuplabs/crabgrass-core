@@ -101,13 +101,14 @@ module Common::Ui::GizmoHelper
 
   def spinbox_function_options(options)
     options.merge!(
-      :before  => spinner_icon_on(options[:icon], options[:id])
+      :before  => spinner_icon_on(options[:icon], options[:id]),
+      :condition => "isEnabled(this)"
       # no :complete option, because in cases where this is used, so
       # far we end up replacing the spinbox itself. but maybe this could be
       # necessary someday:
       # :complete => spinner_icon_off(options[:icon], options[:id])
     )
-    options.slice(:url, :before, :with, :method, :success)
+    options.slice(:url, :before, :with, :method, :success, :condition)
   end
 
   def spinbox_link_to_function(function, options)

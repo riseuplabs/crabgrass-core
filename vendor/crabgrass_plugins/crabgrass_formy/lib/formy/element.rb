@@ -14,6 +14,9 @@ module Formy
       if @options[:hide]
         @options[:style] = ['display:none;', @options[:style]].combine
       end
+      if @options[:disabled]
+        @options[:class] = ['disabled', @options[:class]].combine
+      end
       @elements = []                     # sub elements held by this element
       @element_count = 0
       @buffer = Buffer.new

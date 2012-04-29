@@ -10,7 +10,7 @@ module Groups::PermissionsHelper
 
   def committee_publicly_visible_checkbox(list)
     return unless Conf.committees and @group.parent_id.nil?
-    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :disabled => group_hidden?) do |cb|
       cb.label I18n.t(:committee_publicly_visible)
       cb.input permission_lock_tag(:see_committees, @keys)
       cb.info I18n.t(:committee_publicly_visible_description, :domain => current_site.domain)
@@ -19,7 +19,7 @@ module Groups::PermissionsHelper
 
   def networks_publicly_visible_checkbox(list)
     return unless Conf.networks and !@group.council?
-    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :disabled => group_hidden?) do |cb|
       cb.label I18n.t(:networks_publicly_visible)
       cb.input permission_lock_tag(:see_networks, @keys)
       cb.info I18n.t(:networks_publicly_visible_description, :domain => current_site.domain)
@@ -27,7 +27,7 @@ module Groups::PermissionsHelper
   end
 
   def group_members_publicly_visible_checkbox(list)
-    list.checkbox(:class => 'depends_on_view', :hide => group_hidden?) do |cb|
+    list.checkbox(:class => 'depends_on_view', :disabled => group_hidden?) do |cb|
       cb.label I18n.t(:group_members_publicly_visible)
       cb.input permission_lock_tag(:see_members, @keys)
       cb.info I18n.t(:group_members_publicly_visible_description, :domain => current_site.domain)
@@ -44,7 +44,7 @@ module Groups::PermissionsHelper
 
   def open_membership_policy_checkbox(list)
     return if @group.council?
-    list.checkbox do |cb|
+    list.checkbox(:class => 'depends_on_request_membership', :disabled => group_closed?) do |cb|
       cb.label I18n.t(:open_group)
       cb.input permission_lock_tag(:join, @keys)
       cb.info I18n.t(:open_group_description)
@@ -70,6 +70,10 @@ module Groups::PermissionsHelper
 
   def group_hidden?
     !@group.has_access?(:view, :public)
+  end
+
+  def group_closed?
+    !@group.has_access?(:request_membership, :public)
   end
 
 end

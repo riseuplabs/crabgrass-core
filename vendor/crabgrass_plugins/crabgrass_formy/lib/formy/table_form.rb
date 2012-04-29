@@ -66,6 +66,7 @@ module Formy
 
       def close
         @input ||= @elements.first.to_s
+        @classes = [@classes, @options[:class]].combine
         if @options[:style] == :hang
           @label ||= '&nbsp;'
           labelspan = inputspan = 1

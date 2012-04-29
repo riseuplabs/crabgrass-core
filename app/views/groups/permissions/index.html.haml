@@ -6,9 +6,8 @@
       - committee_publicly_visible_checkbox(list)
       - networks_publicly_visible_checkbox(list)
       - group_members_publicly_visible_checkbox(list)
-  - f.row do |r|
+  - f.row(:disabled => group_hidden?) do |r|
     - r.classes 'depends_on_view'
-    - r.style 'display:none' if group_hidden?
     - r.label I18n.t(:membership)
     - r.checkboxes do |list|
       - allow_membership_requests_checkbox(list)
