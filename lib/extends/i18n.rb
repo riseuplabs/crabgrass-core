@@ -91,7 +91,9 @@ module I18n
       options = args[1] || {}
       if site_scope
         site_options = options.dup
-        site_options[:scope] = [site_scope] | (options[:scope] || [])
+        site_options.delete(:default)
+        site_options[:scope] = options[:scope].dup || []
+        site_options[:scope].unshift(site_scope)
 
         site_specific_translation = translate_without_site_scope(key, site_options)
       end
