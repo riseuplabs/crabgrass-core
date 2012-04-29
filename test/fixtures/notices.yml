@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  type: MyString
+  user_id: 1
+  data: MyText
+  noticable_id: 1
+  noticable_type: MyString
+  dismissed: false
+  dismissed_at: 2012-04-28 23:10:13
+  created_at: 2012-04-28 23:10:13
+
+two:
+  type: MyString
+  user_id: 1
+  data: MyText
+  noticable_id: 1
+  noticable_type: MyString
+  dismissed: false
+  dismissed_at: 2012-04-28 23:10:13
+  created_at: 2012-04-28 23:10:13
