@@ -64,12 +64,7 @@ class I18nTest < ActiveSupport::TestCase
     assert_equal "Olleh World", I18n.translate(:test_title, :what => "World"), "Default language translations should be available"
   end
 
-  ##
-  ## Fallback tests
-  ##
-  #  the following assertions are in order of precedence
-
-  def test_fallback_to_same_language
+  def test_fallbacks_in_order_of_precendence
     with_site("thediggers") do
       I18n.locale = :bw
       assert_equal "tluafed name",
@@ -89,7 +84,6 @@ class I18nTest < ActiveSupport::TestCase
 
   def test_site_version_of_scoped_translation_works
     with_site("thediggers") do
-      debugger
       assert_equal "scope on site", I18n.translate(:me, :scope => :scope), "Translate scoped key specifically for the site"
     end
   end
