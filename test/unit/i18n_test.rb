@@ -11,9 +11,13 @@ class I18nTest < ActiveSupport::TestCase
       :test_title => "Hello %{what}",
       :test_name => "default %{what}",
       :say_hi => "OH HAI",
+      :say_oh_my_gosh => "only here",
+      :scope => { :me => 'scope off site' },
       :thediggers => {
         :test_title => "%{what} come to dig and sow.",
-        :say_hi => "hi diggers"},
+        :say_hi => "hi diggers",
+        :scope => { :me => 'scope on site' },
+      },
       :custom => {
        :test_title => "Custom Hello %{what}",
        :say_hi => "custom hi!"}
@@ -60,22 +64,43 @@ class I18nTest < ActiveSupport::TestCase
     assert_equal "Olleh World", I18n.translate(:test_title, :what => "World"), "Default language translations should be available"
   end
 
-  def test_fallback_to_default_language
+  ##
+  ## Fallback tests
+  ##
+  #  the following assertions are in order of precedence
+
+  def test_fallback_to_same_language
     with_site("thediggers") do
-      assert_equal "default name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to language translations"
-      assert_equal "default name", I18n.t(:test_name, :what => "name", :locale => :en), "Site specific translations should fall-back to language translations"
-
-      assert_equal "tluafed name", I18n.t(:test_name, :what => "name", :locale => :bw), "Site specific translations should fall-back to the right language translations"
-      assert_equal "hi diggers", I18n.t(:say_hi, :locale => :bw), "translations should fallback to english locale for site-specific translations"
-
       I18n.locale = :bw
-      assert_equal "tluafed name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to the right language translations"
-      assert_equal "hi diggers", I18n.t(:say_hi), "translations should fallback to english locale for site-specific translations"
+      assert_equal "tluafed name",
+        I18n.t(:test_name, :what => "name", :default => "don't use the default"),
+        "should fall-back to the right language translations"
+      assert_equal "the default",
+        I18n.t(:say_hi, :default => "the default"),
+        "should fallback to default given if no translation is available"
+      assert_equal "hi diggers",
+        I18n.t(:say_hi),
+        "should fallback to site-specific english translation if no default is given"
+      assert_equal "only here",
+        I18n.t(:say_oh_my_gosh),
+        "should fallback to english locale if nothing more specific is present"
     end
-
-    assert_equal "OH HAI", I18n.t(:say_hi), "translations should fallback to english locale for non-site-specific translations"
   end
 
+  def test_site_version_of_scoped_translation_works
+    with_site("thediggers") do
+      debugger
+      assert_equal "scope on site", I18n.translate(:me, :scope => :scope), "Translate scoped key specifically for the site"
+    end
+  end
+
+  def test_non_site_version_of_scoped_translation_works
+    assert_equal "scope off site", I18n.translate(:me, :scope => :scope), "Translate scoped key off the site"
+  end
+
+  #def test_custom_translations_without_site
+  #def test_custom_translations_without_site
+  #def test_custom_translations_without_site
   #def test_custom_translations_without_site
   #  Site.stubs(:current).returns(Site.new(:name => 'custom'))
   #  add_translation(:en, {

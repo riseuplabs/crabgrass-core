@@ -2,6 +2,13 @@ class Symbol
   def t(options={})
     I18n.t(self,options)
   end
+
+  # translates a string, but capitalizes the first letter of the result.
+  #
+  # this differs from String.capitalize (which lowers subsequent characters),
+  # and from String.titlecase (which makes the first letter of each word
+  # a capital letter).
+  #
   def tcap(options={})
     result = I18n.t(self, options).mb_chars
     result[0..0].upcase + result[1..-1]
@@ -12,21 +19,12 @@ class String
   # When called on a string t() returns self. One advantage of this, is you
   # can call t() on anything you are about to display, and if it is a symbol
   # it gets localized, but if it is a string then no harm done.
-  def t(options={})
+  def t
     self
   end
 
-  #
-  # translates a string, but capitalizes the first letter of the result.
-  #
-  # this differs from String.capitalize (which lowers subsequent characters),
-  # and from String.titlecase (which makes the first letter of each word
-  # a capital letter).
-  #
-  def tcap(options={})
+  def tcap
     self
-    #result = I18n.t(self, options).mb_chars # get multibyte proxy
-    #result[0..0].upcase + result[1..-1]
   end
 end
 
@@ -86,15 +84,37 @@ module I18n
       scope_name == :default ? nil : scope_name
     end
 
+    def scope_on_site(scope)
+      case scope
+      when Array
+        scope.dup.unshift(site_scope)
+      when nil
+        [site_scope]
+      else
+        [site_scope, scope]
+      end
+    end
+    private :scope_on_site
+
+    #
+    # We allow site specific translations.
+    #
+    # just create a scope for the site in your locales and put them there.
+    #
+    # If a site_scope is set translations are looked up like this:
+    # * site specific translation for current locale
+    # * translation for current locale
+    # * :default option specified
+    # * site specific english translation
+    # * english translation
+
     def translate_with_site_scope(*args)
       key = args.first
       options = args[1] || {}
       if site_scope
         site_options = options.dup
         site_options.delete(:default)
-        site_options[:scope] = options[:scope].dup || []
-        site_options[:scope].unshift(site_scope)
-
+        site_options[:scope] = scope_on_site(options[:scope])
         site_specific_translation = translate_without_site_scope(key, site_options)
       end
     ensure
