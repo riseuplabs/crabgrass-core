@@ -164,6 +164,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resource :sidebar,    :only => [:show]
     pages.resource :share,      :only => [:show, :update]
     pages.resource :details,    :only => [:show]
+    pages.resource :history,    :only => [:show], :controller => 'history'
     pages.resource :attributes, :only => [:update]
     pages.resource :title,      :only => [:edit, :update], :controller => 'title'
     pages.resource :trash,      :only => [:edit, :update], :controller => 'trash'
