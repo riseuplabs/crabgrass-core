@@ -20,8 +20,7 @@
         .p.align_right
           = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network'), :class => 'btn'
 
-  - # disabled for now as of #3864
-  - if false and Conf.committees and current_user.groups_and_networks.any?
+  - if Conf.committees and current_user.groups_and_networks.any?
     %tr
       %td
         .p.icon.medium.committee_48
@@ -31,8 +30,7 @@
         .p.align_right
           = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee'), :class => 'btn'
 
-  - # disabled for now as of #3864
-  - if false and Conf.councils and current_user.groups_and_networks.any?
+  - if Conf.councils and current_user.groups_and_networks.any?
     %tr
       %td
         .p.icon.medium.council_48
