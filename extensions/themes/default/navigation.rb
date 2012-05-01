@@ -5,9 +5,10 @@ define_navigation do
   ##
   ## HOME
 
+  # disabled for now
   global_section :home do
     label   { :home.t }
-    visible { !logged_in? || controller?(:account, :session, :root) }
+    visible { false } # !logged_in? || controller?(:account, :session, :root) }
     url     '/'
     active  { controller?(:account, :session, :root) }
   end
@@ -20,9 +21,9 @@ define_navigation do
 
   global_section :me do
     label   { :me.t }
-    visible { logged_in? }
-    url     { me_pages_path }
-    active  { context?(:me) }
+    # visible { logged_in? }
+    url     { logged_in? ? me_pages_path : '/' }
+    active  { context?(:me) || controller?(:account, :session, :root) }
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do

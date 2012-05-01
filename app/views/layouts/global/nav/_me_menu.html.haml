@@ -2,14 +2,15 @@
 - # Note: the data-onvisible remote function gets called once when this menu becomes visible
 - #
 
-- load_recent_function = (remote_function(:url => me_recent_pages_path, :method => 'get') unless browser_is_ie?)
-.menu_items{:style => "display: none", 'data-onvisible' => load_recent_function}  
-  %div{:class => "leftcol menu_me"}
-    -# cache(menu_cache_key(:submenu=>'me_sidebar'))
-    = render :partial => '/layouts/global/nav/me_menu_left_column'
-  - unless browser_is_ie?
-    %div{:class => "rightcol menu_me"}
-      %h3.dim= :recent_pages.t
-      #recent_pages_dropdown{:style => 'white-space:normal'}
-        = big_spinner
+- if logged_in?
+  - load_recent_function = (remote_function(:url => me_recent_pages_path, :method => 'get') unless browser_is_ie?)
+  .menu_items{:style => "display: none", 'data-onvisible' => load_recent_function}  
+    %div{:class => "leftcol menu_me"}
+      -# cache(menu_cache_key(:submenu=>'me_sidebar'))
+      = render :partial => '/layouts/global/nav/me_menu_left_column'
+    - unless browser_is_ie?
+      %div{:class => "rightcol menu_me"}
+        %h3.dim= :recent_pages.t
+        #recent_pages_dropdown{:style => 'white-space:normal'}
+          = big_spinner
 
