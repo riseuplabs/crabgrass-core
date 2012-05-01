@@ -211,7 +211,7 @@ module Common::Application::AlertMessages
     if exception = args.detect{|a|a.is_a? Exception}
       add_flash_exception(exception)
     elsif record = args.detect{|a|a.is_a? ActiveRecord::Base}
-      add_flash_record(record)
+      add_flash_record(record, args.extract_options!)
     elsif (messages = args.select{|a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars)}).any?
       add_flash_message(type, messages)
     elsif message_array = args.detect{|a| a.is_a?(Array)}
@@ -250,8 +250,11 @@ module Common::Application::AlertMessages
     end
   end
 
-  def add_flash_record(record)
-    if record.errors.any?
+  def add_flash_record(record, options)
+    if record.respond_to?(:flash_message) && record.flash_message
+      options[:count] ||= 1
+      [ record.flash_message(options) ]
+    elsif record.errors.any?
       [{ :type => :error,
          :text => [:alert_not_saved.t, :alert_field_errors.t],
          :list => record.errors.full_messages }]

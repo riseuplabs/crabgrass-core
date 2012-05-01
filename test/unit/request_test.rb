@@ -176,5 +176,10 @@ class RequestTest < ActiveSupport::TestCase
     assert check_associations(Request)
   end
 
+  def test_flash_messages
+    assert_equal "Invitation to Join was sent.", RequestToJoinUs.new.flash_message
+    assert_equal "3 Inviations to Join were sent.", RequestToJoinUs.new.flash_message(:count => 3)
+    assert_equal "0 Inviations to Join were sent.", RequestToJoinUs.new.flash_message(:count => 0)
+  end
 end
 

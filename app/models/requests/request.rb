@@ -195,7 +195,7 @@ class Request < ActiveRecord::Base
     if user.nil?
       raise_denied(nil,newstate)
     end
-    
+
     self.approved_by = user  # approve or rejecte both use approved_by
     self.send(command)       # FSM call, eg approve!()
 
@@ -264,6 +264,19 @@ class Request < ActiveRecord::Base
 
   def recipient_required?()   true end
   def requestable_required?() true end
+
+  def flash_message(options = {})
+    thing = self.class.human_name(options)
+    options.merge!(:thing => thing, :recipient => self.recipient.display_name)
+    if self.errors.any?
+      { :type => :error,
+        :text => :thing_was_not_sent.t(options),
+        :list => self.errors.full_messages }
+    else
+      { :type => :success,
+        :text => :thing_was_sent.t(options) }
+    end
+  end
 
   ##
   ## finite state machine
