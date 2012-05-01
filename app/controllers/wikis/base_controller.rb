@@ -1,6 +1,6 @@
 class Wikis::BaseController < ApplicationController
 
-  permission_helpers 'groups/memberships', 'groups/base'
+  permission_helper 'groups/memberships', 'groups/base'
 
   before_filter :fetch_wiki
 

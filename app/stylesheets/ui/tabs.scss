@@ -50,6 +50,11 @@ ul.tabset.top {
   }
 }
 
+li.tab {
+  a.tab {
+    cursor: pointer; // make sure we have a pointer even for ajaxy links
+  }
+}
 //
 // TODO: switch to cutout_menu style tabs...
 //
