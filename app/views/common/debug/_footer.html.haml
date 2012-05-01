@@ -47,7 +47,7 @@
   %br/
 
   %h3 All
-  - permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+  - permission_methods = @controller.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
   - permission_methods.each do |section|
     %ul
       %li.first

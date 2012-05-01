@@ -185,7 +185,7 @@ class Group < ActiveRecord::Base
   def normal?;    instance_of? Group;     end
   def council?;   instance_of? Council;   end
 
-  def group_type; I18n.t(self.class.name.downcase.to_sym); end
+  def group_type; self.class.human_name; end
 
   # age of group
   def recent?

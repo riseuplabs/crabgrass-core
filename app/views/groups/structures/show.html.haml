@@ -10,7 +10,7 @@
         - r.input link_line :bullet, :none.t, create_council_link
       - r.info :council_description.t
       - if !@group.has_a_council?
-        - r.info content_tag(:div, :council_description_details.t, :class => 'p')
+        - r.info content_tag(:div, :council_description_details.t(:group => @group.group_type), :class => 'p')
   - if may_list_group_committees?
     - f.row do |r|
       - r.label :committees.t

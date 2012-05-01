@@ -29,6 +29,18 @@ en:
   see_less_link: "Less"
 
   ##
+  ## Messaging
+  ##
+  
+  thing_was_sent: 
+    one: "%{thing} was sent to %{recipient}."
+    other: "%{count} %{thing} were sent."
+
+  thing_was_not_sent: 
+    one: "%{thing} could not be sent to %{recipient}."
+    other: "%{count} %{thing} could not be sent."
+
+  ##
   ## Entities
   ##
 

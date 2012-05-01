@@ -49,14 +49,10 @@ class Groups::InvitesController < Groups::BaseController
 
     if reqs.detect{|req|!req.valid?}
       reqs.each do |req|
-        if req.valid?
-          success(I18n.t(:invite_sent, :recipient => req.recipient.display_name))
-        else
-          error("Invalid request for "+req.recipient.display_name)
-        end
+        alert_message req
       end
     else
-      success(I18n.t(:invites_sent, :count => reqs.size.to_s))
+      success reqs.first, :count => reqs.size
       params[:recipients] = ""
     end
     redirect_to :action => :new

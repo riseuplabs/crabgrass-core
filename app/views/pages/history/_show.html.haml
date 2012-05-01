@@ -1,0 +1,10 @@
+%table.styled{:width=>'100%'}
+  %tr
+    %th &nbsp;
+    %th=:action.t
+  - @page.page_histories.each do |event|
+    %tr
+      %td= full_time(event.created_at)
+      %td= description_for(event)
+
+

@@ -81,6 +81,15 @@ table.form {
   td.buttons .form_buttons {
     float: right;
   }
+  .disabled {
+    opacity: 0.5;
+    a {
+      cursor: auto;
+    }
+    a.check_on_16 {
+      background-image: url(/images/png/16/check_off.png);
+    }
+  }
 }
 
 //

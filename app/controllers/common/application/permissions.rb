@@ -266,7 +266,7 @@ module Common::Application::Permissions
         self.send(method)
       else
         if RAILS_ENV=='development'
-          raise StandartError.new "Could not find permission for params #{params.inspect}"
+          raise StandardError.new "Could not find permission for params #{params.inspect}"
         end
         false
       end
