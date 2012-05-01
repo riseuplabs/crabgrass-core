@@ -250,7 +250,7 @@ module Common::Application::AlertMessages
     end
   end
 
-  def add_flash_record(record, options)
+  def add_flash_record(record, options = {})
     if record.respond_to?(:flash_message) && record.flash_message
       options[:count] ||= 1
       [ record.flash_message(options) ]

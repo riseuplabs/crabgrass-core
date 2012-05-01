@@ -179,7 +179,6 @@ class RequestTest < ActiveSupport::TestCase
   def test_success_flash_messages
     request = RequestToJoinUs.new
     request.stubs(:recipient).returns(stub(:display_name => "New Member"))
-    debugger
     assert_equal "Invitation to Join was sent to New Member.",
       request.flash_message(:count => 1)[:text]
     assert_equal "3 Inviations to Join were sent.",
