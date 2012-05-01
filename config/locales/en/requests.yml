@@ -65,7 +65,6 @@ en:
   ## 
 
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
-  join_request_sent: "Request to join sent to %{recipient}"
 
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
@@ -79,15 +78,12 @@ en:
   ##
 
   friend_request_message_label: "Tell %{user} why you want to be their contact."
-  friend_request_sent: "Contact request has been sent"
   friend_remove_confirmation: "Are you sure you wish to no longer be the contact of %{user}?"
 
   ##
   ## ATTIC
   ##
 
-  ##!  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
-  ##!  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   ##!  removal_requested: "Removal Requested"
   ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
   ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
