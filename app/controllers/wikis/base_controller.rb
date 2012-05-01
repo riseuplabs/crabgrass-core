@@ -1,7 +1,6 @@
 class Wikis::BaseController < ApplicationController
 
-  # required to show the banner if wiki is owned by a group.
-  permissions 'groups/memberships', 'groups/base'
+  permission_helpers 'groups/memberships', 'groups/base'
 
   before_filter :fetch_wiki
 

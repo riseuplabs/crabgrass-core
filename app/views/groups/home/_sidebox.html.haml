@@ -3,7 +3,7 @@
 - # If the theme ever supports sidebox without padding, this may need to take that into account.
 - # 
 
-- if @group.profiles.public.picture
+-# if @group.profiles.public.picture
   .p{:class => first(:sidebox)}
     = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
 
@@ -25,7 +25,7 @@
 -# = friendly_date @group.created_at
 
 .p.last
-  = link_span(:bullet, join_group_link, edit_group_profile_link)
+  = link_span :bullet, join_group_link  #, edit_group_profile_link
 
 -# if (link = edit_group_profile_link).any?
 -#  .p.last.autoclear

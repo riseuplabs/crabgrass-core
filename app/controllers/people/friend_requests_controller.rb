@@ -9,7 +9,7 @@ class People::FriendRequestsController < People::BaseController
     else
       req = RequestToFriend.create! :recipient => @user, :created_by => current_user, :message => params[:message]
       if req.valid?
-        success(:friend_request_sent.t)
+        success req
         redirect_to entity_url(@user)
       else
         error

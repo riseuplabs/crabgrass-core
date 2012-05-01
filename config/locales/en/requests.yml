@@ -15,39 +15,48 @@ en:
   ## these strings are all used in the request models. 
   ##
 
-  request_to_friend: "Request to Become Contacts"
+  activerecord:
+    models:
+      request_to_friend: "Request to Become Contacts"
+      request_to_join_our_network:
+        one: "Invitation to Join"
+        other: "Inviations to Join"
+      request_to_destroy_our_group: "Request to Destroy Group"
+      request_to_join_us: 
+        one: "Invitation to Join"
+        other: "Inviations to Join"
+      request_to_join_us_via_email:
+        one: "Invitation to Join"
+        other: "Inviations to Join"
+      request_to_join_you: "Request to Join"
+      request_to_join_your_network: "Request to Join"
+      request_to_create_council: "Request to Create Council"
+      request_to_remove_user: "Request to Remove Member"
+
   request_to_friend_short: "Shall %{user} become a contact of %{other_user}?"
   request_to_friend_description: "User %{user} has requested to become a contact of user %{other_user}."
 
-  request_to_join_our_network: "Invitation to Join"
   request_to_join_our_network_short: "Shall %{group} join %{network}?"
   request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
 
-  request_to_join_us: "Invitation to Join"
   request_to_join_us_short: "Shall %{user} join %{group}?"
   request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
 
-  request_to_join_us_via_email: "Invitation to Join"
   request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
   request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
 
-  request_to_join_you: "Request to Join"
   request_to_join_you_short: "Shall %{user} join %{group}?"
   request_to_join_you_description: "The user %{user} requested to join the group %{group}."
 
-  request_to_join_your_network: "Request to Join"
   request_to_join_your_network_short: "Shall %{group} join %{network}?"
   request_to_join_your_network_description: "The group %{group} requested to join the network %{network}."
 
-  request_to_destroy_our_group: "Request to Destroy Group"
   request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
   request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
 
-  request_to_create_council: "Request to Create Council"
   request_to_create_council_short: "Shall %{group} have a council?"
   request_to_create_council_description: "The user %{user} has proposed to create a council for %{group_type} %{group}."
 
-  request_to_remove_user: "Request to Remove Member"
   request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
   request_to_remove_user_description: "The user %{user} has proposed to remove %{member} from %{group_type} %{group}."
 
@@ -56,9 +65,6 @@ en:
   ## 
 
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
-  invite_sent: "Invitation sent to %{recipient}"
-  invites_sent: "%{count} invitations sent"
-  join_request_sent: "Request to join sent to %{recipient}"
 
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
@@ -72,15 +78,12 @@ en:
   ##
 
   friend_request_message_label: "Tell %{user} why you want to be their contact."
-  friend_request_sent: "Contact request has been sent"
   friend_remove_confirmation: "Are you sure you wish to no longer be the contact of %{user}?"
 
   ##
   ## ATTIC
   ##
 
-  ##!  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
-  ##!  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   ##!  removal_requested: "Removal Requested"
   ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
   ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'

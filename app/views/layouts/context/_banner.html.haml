@@ -23,13 +23,12 @@
   This is used to determine the position of the first tab.
 
 - if @context
-  %header#context_banner.large.round
-    %div#banner_content
+  - style = context_banner_style
+  %header#context_banner.large{:class => (style.any? ? 'dark_border' : 'light_border')}
+    %div#banner_content{:style => context_banner_style}
       - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)
         = render :partial => '/layouts/context/nested_banner_content'
       - else
         = render :partial => '/layouts/context/normal_banner_content'
 
     = render :partial => '/layouts/context/nav/banner_menu'
-
-

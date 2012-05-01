@@ -1,7 +1,8 @@
 #
-# This controller is only called for private Picture objects.
+# This controller is only called for private pictures or public pictures
+# that have not yet been cached publicly.
 #
-# For now, all pictures are public, so this is just a stub.
+# For now, all pictures are public.
 #
 
 class PicturesController < ApplicationController
@@ -12,7 +13,13 @@ class PicturesController < ApplicationController
   # for now, all pictures are public.
   #
   def show
-    @picture.render!(@geometry)
+    if Rails.env == 'development'
+      # allow generation of a new geometry, for testing purposes only
+      @picture.render!(@geometry)
+    else
+      # prevent generation of a new geometry
+      @picture.render(@geometry)
+    end
     send_file(@picture.private_file_path(@geometry), :type => @picture.content_type, :disposition => 'inline')
   end
 

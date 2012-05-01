@@ -1,5 +1,5 @@
 #
-# This controller deals with membership requests. 
+# This controller deals with membership requests.
 #
 # e.g. invite, expell, join.
 #
@@ -15,7 +15,7 @@ class Groups::MembershipRequestsController < Groups::BaseController
         :show => :may_list_membership_requests?,
         # permissions handled by model:
         :create => :allow, :update => :allow, :destroy => :allow
-  
+
   def index
     @requests = Request.
       membership_related.
@@ -67,11 +67,7 @@ class Groups::MembershipRequestsController < Groups::BaseController
   def create_join_request
     if !params[:cancel]
       req = RequestToJoinYou.create :recipient => @group, :created_by => current_user
-      if req.valid?
-        success(:join_request_sent.t(:recipient => req.recipient.display_name))
-      else
-        error("Invalid request for "+req.recipient.display_name)
-      end
+      alert_message req
     end
     redirect_to entity_url(@group)
   end
@@ -87,7 +83,7 @@ class Groups::MembershipRequestsController < Groups::BaseController
     else
       raise_error
     end
-    success
+    success req
     render :update do |page|
       standard_update(page)
       page.replace(dom_id(membership), :partial => "groups/memberships/membership", :locals => {:membership => membership})

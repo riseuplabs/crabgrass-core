@@ -1,9 +1,6 @@
 .sidebox
   .padded
     = render :partial => 'sidebox'
-
-.sidebox
-  .padded
     - if may_show_affiliations?
       = render :partial => 'groups/structures/show_in_sidebar'
     - if may_list_memberships?

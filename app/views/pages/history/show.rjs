@@ -1,0 +1,4 @@
+standard_update(page)
+# page << hide_spinner(@wiki)
+page.replace_html 'history_tab',
+  :partial => '/pages/history/show', :locals => local_assigns

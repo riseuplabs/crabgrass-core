@@ -11,4 +11,9 @@
     - t.label I18n.t(:participation)
     - t.show_tab 'participation_tab'
     - t.selected false
+  - f.tab do |t|
+    - t.label I18n.t(:history)
+    - t.function remote_function(:url => page_history_url(@page), :method => :get)
+    - t.show_tab 'history_tab'
+    - t.selected false
 

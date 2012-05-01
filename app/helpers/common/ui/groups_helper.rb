@@ -13,13 +13,20 @@ module Common::Ui::GroupsHelper
   #  :include_me   -- if true, include option for 'me'
   #  :include_none -- if true, include an option for 'none'
   #  :include_committees -- if true, inclue all the committees of each group
+  #  :as_admin     -- if true, only include groups current user is an admin for
   #
   #  no options are set by default.
   #
   def options_for_select_group(options={})
-    items = current_user.primary_groups_and_networks.sort { |a, b|
-       a.name <=> b.name
-    }.collect {|group| {:value => group.name, :label => group.name, :group => group} }
+
+    if options[:as_admin]
+      items = current_user.primary_groups_and_networks.with_admin(current_user)
+    else
+      items = current_user.primary_groups_and_networks
+    end
+
+    items.sort! { |a, b| a.name <=> b.name }
+    items.collect! {|group| {:value => group.name, :label => group.name, :group => group} }
 
     selected_item = nil
 
