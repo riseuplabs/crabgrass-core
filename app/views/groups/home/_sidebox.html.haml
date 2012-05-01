@@ -3,7 +3,7 @@
 - # If the theme ever supports sidebox without padding, this may need to take that into account.
 - # 
 
-- if @group.profiles.public.picture
+-# if @group.profiles.public.picture
   .p{:class => first(:sidebox)}
     = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
 

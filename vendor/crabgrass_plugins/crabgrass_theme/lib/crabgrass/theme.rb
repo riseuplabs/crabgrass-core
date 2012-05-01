@@ -82,14 +82,31 @@ module Crabgrass
     ## PUBLIC INSTANCE METHODS
     ##
 
-    # access the values stored in the theme. eg current_theme[:border_width]
+    #
+    # access theme configuration variable. 
+    # eg current_theme[:border_width]
+    #
     def [](key)
       @data[key.to_sym]
     end
 
-    # alternate method of accessing the configuration. eg current_theme.border_width
+    #
+    # alternate method of accessing a theme configuration variable.
+    # eg current_theme.border_width
+    #
     def method_missing(key)
       @data[key.to_sym]
+    end
+
+    #
+    # returns an integer representation of a theme configuration variable.
+    #
+    def int_var(key)
+      if self[key].any?
+        self[key].gsub(/[^0-9]/,'').to_i
+      else
+        0
+      end
     end
 
     # used for theme inheritance.

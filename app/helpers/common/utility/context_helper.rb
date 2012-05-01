@@ -22,6 +22,32 @@ module Common::Utility::ContextHelper
   end
 
   ##
+  ## TITLE
+  ##
+
+  def context_titles
+    return [] unless @context
+    @context.breadcrumbs.collect do |i|
+      truncate( crumb_to_s(i) )
+    end.reverse
+  end
+
+  ##
+  ## BANNER
+  ##
+
+  def context_banner_style
+    if picture = @context.entity.profiles.public.picture
+      banner_height = current_theme.int_var(:banner_padding) * 2 + current_theme.int_var(:icon_large) + 4
+      geometry = {:max_width => banner_width, :min_width => banner_width, :max_height => banner_height, :min_height => banner_height}
+      picture.add_geometry!(geometry)
+      "background-image: url(#{picture.url(geometry)})"
+    else
+      ""
+    end
+  end
+
+  ##
   ## DETECTION
   ##
 
@@ -35,6 +61,18 @@ module Common::Utility::ContextHelper
       when :me    then @context.is_a?(Context::Me)
       when :group then @context.is_a?(Context::Group)
       when :user  then @context.is_a?(Context::User)
+    end
+  end
+
+  private
+
+  def crumb_to_s(crumb)
+    if crumb.is_a? Array
+      crumb[0].to_s
+    elsif crumb.respond_to? :display_name
+      crumb.display_name
+    else
+      crumb.to_s
     end
   end
 
