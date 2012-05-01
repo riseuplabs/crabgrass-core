@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420202631) do
+ActiveRecord::Schema.define(:version => 20120429061013) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -378,6 +378,21 @@ ActiveRecord::Schema.define(:version => 20120420202631) do
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
   end
+
+  create_table "notices", :force => true do |t|
+    t.string   "type"
+    t.integer  "user_id"
+    t.integer  "avatar_id"
+    t.text     "data"
+    t.integer  "noticable_id"
+    t.string   "noticable_type"
+    t.boolean  "dismissed"
+    t.datetime "dismissed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notices", ["user_id"], :name => "index_notices_on_user_id"
 
   create_table "page_histories", :force => true do |t|
     t.integer  "user_id"
