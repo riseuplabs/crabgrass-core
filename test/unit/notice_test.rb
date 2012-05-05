@@ -1,8 +1,17 @@
 require 'test_helper'
 
 class NoticeTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  fixtures :users
+
+  test "request observers" do
+    req = nil
+    assert_difference 'RequestNotice.count' do
+      req = RequestToFriend.create! :recipient => users(:yellow), :created_by => users(:green)
+    end
+    assert_equal req, Notice.first.request
+    assert_difference 'RequestNotice.count', -1 do
+      req.set_state!('approved', users(:yellow))
+    end
   end
+
 end

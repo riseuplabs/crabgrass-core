@@ -4,14 +4,14 @@
 
 //
 // this is based on the susy mixin 'columns', but it eats the gutter.
-// in other words, the gutter is added to the width of the column, 
+// in other words, the gutter is added to the width of the column,
 // and no gutter is added on the outside of the column.
 //
 
 @mixin columns-eat-gutter($n, $context: false) {
   @include float(left);
   width: columns($n, $context) + gutter($context);
-  margin-right: 0; 
+  margin-right: 0;
   @if $webkit-selector {
     #{$webkit-selector} & {
       // nudging twice would be too much nudge
@@ -23,7 +23,7 @@
 
 //
 // vertical align an element within the center of an enclosing element
-// see: http://blog.themeforest.net/tutorials/vertical-centering-with-css/ 
+// see: http://blog.themeforest.net/tutorials/vertical-centering-with-css/
 // NOTE: this only works if the enclosing element is position:relative.
 //
 
@@ -60,8 +60,8 @@
 // the selector the ul is passed into this method.
 //
 // it is difficult to create cutout tabs with a border that look good
-// in all browsers and at different client font-sizes. 
-// 
+// in all browsers and at different client font-sizes.
+//
 // the problem is that the tab element needs to line up exactly with the
 // bottom of the enclosing block in order to make the cutout illusion work.
 // most methods of doing this create weird jitters in webkit
@@ -139,7 +139,7 @@
 
 
 //
-// by default, we include hover-link for all <a> tags. 
+// by default, we include hover-link for all <a> tags.
 // If you don't want this behavior, then you can enable hover-link here
 // and it will be included in appropriate places.
 //
@@ -150,6 +150,9 @@
 
 //
 // Border Radius
+//
+// Sometimes we need to specify border radius for a particular side
+// without globbering all the other dimensions.
 //
 
 @mixin border-left-radius($radius: 5px) {
@@ -168,4 +171,23 @@
 -webkit-border-bottom-right-radius: $radius;
    -moz-border-bottom-right-radius: $radius;
         border-bottom-right-radius: $radius;
+}
+
+@mixin border-top-radius($radius: 5px) {
+   -webkit-border-top-left-radius: $radius;
+      -moz-border-top-left-radius: $radius;
+           border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+     -moz-border-top-right-radius: $radius;
+          border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-radius($radius: 5px) {
+ -webkit-border-bottom-left-radius: $radius;
+    -moz-border-bottom-left-radius: $radius;
+         border-bottom-left-radius: $radius;
+-webkit-border-bottom-right-radius: $radius;
+   -moz-border-bottom-right-radius: $radius;
+        border-bottom-right-radius: $radius;
+
 }

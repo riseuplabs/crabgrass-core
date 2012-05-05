@@ -22,7 +22,7 @@ define_navigation do
   global_section :me do
     label   { :me.t }
     # visible { logged_in? }
-    url     { logged_in? ? me_pages_path : '/' }
+    url     { logged_in? ? me_home_path : '/' }
     active  { context?(:me) || controller?(:account, :session, :root) }
     html    :partial => '/layouts/global/nav/me_menu'
 
@@ -34,12 +34,12 @@ define_navigation do
       visible { @drop_down_menu }
     end
 
-#    context_section :notices do
-#      label  { :notices.t }
-#      url    { me_home_path }
-#      active { controller?('me/notices') }
-#      icon   :info
-#    end
+    context_section :notices do
+      label  { :notices.t }
+      url    { me_home_path }
+      active { controller?('me/notices') }
+      icon   :info
+    end
 
     context_section :pages do
       label  { :pages.t }

@@ -1,5 +1,7 @@
 en:
 
+  requests: "Requests"
+  request: "Request"
   incoming: "Incoming"
   outgoing: "Outgoing"
   request_pending: "%{request} is pending"
@@ -12,7 +14,7 @@ en:
   ##
   ## REQUEST TYPES
   ##
-  ## these strings are all used in the request models. 
+  ## these strings are all used in the request models.
   ##
 
   activerecord:
@@ -20,14 +22,14 @@ en:
       request_to_friend: "Request to Become Contacts"
       request_to_join_our_network:
         one: "Invitation to Join"
-        other: "Inviations to Join"
+        other: "Invitations to Join"
       request_to_destroy_our_group: "Request to Destroy Group"
-      request_to_join_us: 
+      request_to_join_us:
         one: "Invitation to Join"
-        other: "Inviations to Join"
+        other: "Invitations to Join"
       request_to_join_us_via_email:
         one: "Invitation to Join"
-        other: "Inviations to Join"
+        other: "Invitations to Join"
       request_to_join_you: "Request to Join"
       request_to_join_your_network: "Request to Join"
       request_to_create_council: "Request to Create Council"
@@ -62,7 +64,7 @@ en:
 
   ##
   ## MEMBERSHIP REQUESTS
-  ## 
+  ##
 
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
 

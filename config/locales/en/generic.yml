@@ -25,18 +25,23 @@ en:
   ##!  search_link: "Search"
   next: "Next"
   previous: "Previous"
+  pagination_next: "Next"
+  pagination_previous: "Previous"
+  ##!  pagination_older: "Older"
+  ##!  pagination_newer: "Newer"
   see_more_link: "More"
   see_less_link: "Less"
+  list_things: "List %{things}"
 
   ##
   ## Messaging
   ##
-  
-  thing_was_sent: 
+
+  thing_was_sent:
     one: "%{thing} was sent to %{recipient}."
     other: "%{count} %{thing} were sent."
 
-  thing_was_not_sent: 
+  thing_was_not_sent:
     one: "%{thing} could not be sent to %{recipient}."
     other: "%{count} %{thing} could not be sent."
 
@@ -76,7 +81,7 @@ en:
 
   ##
   ## Other
-  ## 
+  ##
 
   ##!  thing_settings: "%{thing} Settings"
   #approved_when_by: "Approved by %{user} on %{when}."
@@ -113,10 +118,10 @@ en:
   permissions: "Permissions"
   notification: "Notification"
   notice: "Notice"
+  notices: "Notices"
+  dismiss: "Dismiss"
   locale: "Locale"
   ##!  description: "Description"
-  requests: "Requests"
-  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
@@ -141,4 +146,4 @@ en:
   ##!  error: "Error"
   ##!  status: "Status"
   visits: "Visits"
-  return_to_list: "Return to List"
+  ##! return_to_list: "Return to List"

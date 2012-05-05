@@ -5,7 +5,7 @@
 - proxy = Struct.new(:id, :dom_id, :user, :created_at, :updated_at, :body_id, :body_html)
 
 -# first row
-- html1 = expand_links(@request.description, :avatar => 'tiny', :class => 'inline')
+- html1 = expand_links(@request.display_description, :avatar => 'tiny', :class => 'inline')
 - post1 = proxy.new(@request.id, 0, @request.created_by, @request.created_at, nil, 0, html1)
 
 -# second row

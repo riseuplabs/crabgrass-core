@@ -59,9 +59,17 @@ en:
   ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
 
   ##
+  ## EMAIL
+  ## 
+
+  group_invite_subject: 'Invitation to join group "%{group}"'
+  group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
+  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
+  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
+
+  ##
   ## UNSORTED
   ##
-
 
   ##!  group_join_chat: "Join Chat"
   ##!  group_privacy_settings: '%{group} Privacy Settings'

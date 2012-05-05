@@ -14,7 +14,8 @@ module Common::Utility::RssHelper
   end
 
   def me_rss
-    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
+    # TODO - fix rss
+    #'<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
   end
 
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...

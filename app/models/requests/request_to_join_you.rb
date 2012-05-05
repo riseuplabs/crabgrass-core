@@ -43,11 +43,11 @@ class RequestToJoinYou < Request
   end
 
   def description
-    :request_to_join_you_description.t(:user => user_span(created_by), :group => group_span(group))
+    [:request_to_join_you_description, {:user => user_span(created_by), :group => group_span(group)}]
   end
 
   def short_description
-    :request_to_join_you_short.t(:user => user_span(created_by), :group => group_span(group))
+    [:request_to_join_you_short, {:user => user_span(created_by), :group => group_span(group)}]
   end
 
 end

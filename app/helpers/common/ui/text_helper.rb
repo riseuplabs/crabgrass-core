@@ -40,32 +40,6 @@ module Common::Ui::TextHelper
     truncate(text, :length => length, :omission => omission + link)
   end
 
-  #
-  # used to convert the text produced by activities & requests into actual links
-  #
-  def expand_links(description, options=nil)
-    description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
-      if options
-        content_tag(:b, link_to_entity($2, options))
-      else
-        content_tag(:b, link_to_name($2))
-      end
-      #case $1
-      #  when "user": link_to_user($2)
-      #  when "group": link_to_group($2)
-      #end
-    end
-  end
-
-  #
-  # converts the link markers in the text of activies and requests in bolded text
-  #
-  def embold_links(description)
-    description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
-      content_tag(:b, $2)
-    end
-  end
-
 #  def linked_activity_description(activity)
 #    description = activity.try.safe_description(self)
 #    expand_links(description)

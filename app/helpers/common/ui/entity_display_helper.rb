@@ -260,4 +260,34 @@ module Common::Ui::EntityDisplayHelper
   #   end
   # end
 
+  ##
+  ## ENCODED ENTITY TEXT
+  ##
+  ## There are many places where we have some text with a user or group encoded in it like so:
+  ##
+  ## "hey, check out <group>animals</group>."
+  ##
+
+  #
+  # used to convert the text produced by activities & requests into actual links
+  #
+  def expand_links(text, options=nil)
+    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+      if options
+        content_tag(:b, link_to_entity($2, options))
+      else
+        content_tag(:b, link_to_name($2))
+      end
+    end
+  end
+
+  #
+  # converts the link markers in the text of activies and requests in bolded text
+  #
+  def embold_links(text)
+    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+      content_tag(:b, $2)
+    end
+  end
+
 end

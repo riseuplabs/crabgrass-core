@@ -21,10 +21,10 @@ Crabgrass::Initializer.run do |config|
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
 
-    # Activate observers that should always be running
+  # observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
     :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
-    :request_to_destroy_our_group_observer
+    :request_to_destroy_our_group_observer, :request_observer, :page_observer
 
   config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
 

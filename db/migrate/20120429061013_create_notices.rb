@@ -7,7 +7,7 @@ class CreateNotices < ActiveRecord::Migration
       t.text :data
       t.integer :noticable_id
       t.string :noticable_type
-      t.boolean :dismissed
+      t.boolean :dismissed, :default => false
       t.datetime :dismissed_at
       t.timestamps
     end

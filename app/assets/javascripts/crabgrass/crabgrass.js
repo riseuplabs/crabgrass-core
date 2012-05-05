@@ -55,13 +55,22 @@ var CgUtils = {
 Element.addMethods(CgUtils);
 
 //
-// CSS UTILITY
+// CSS/DOM UTILITY
 //
 
 function replaceClassName(element, old_class, new_class) {
   element.removeClassName(old_class); element.addClassName(new_class)
 }
 
+//
+// replaces an element with a new one if it is empty.
+//
+function replaceIfEmpty(selector, newElement) {
+  var el = $$(selector).first()
+  if (el && el.empty()) {
+    el.replace(newElement);
+  }
+}
 
 //
 // EVENTS

@@ -304,17 +304,35 @@ class Request < ActiveRecord::Base
   end
 
   ##
-  ## MISC
+  ## DISPLAY
   ##
 
+  #
   # used by subclass's description()
-  # if you change this to display_name, make sure to escape it!
+  # the text is not html escaped, so please don't change this to display_name
+  #
   def user_span(user)
-    '<span class="user">%s</span>' % user.name
+    '<user>%s</user>' % user.name
   end
   def group_span(group)
-    '<span class="group">%s</span>' % group.name
+    '<group>%s</group>' % group.name
   end
+
+  #
+  # all subclasses must defined 'description()' that returns a two element array:
+  # a symbol for i18n and a hash for macro expansion.
+  #
+  def display_description
+    I18n.t(*description)
+  end
+
+  def display_short_description
+    I18n.t(*short_description)
+  end
+
+  ##
+  ## DESTRUCTION
+  ##
 
   # destroy all requests relating to this user
   def self.destroy_for_user(user)

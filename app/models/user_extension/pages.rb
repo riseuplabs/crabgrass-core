@@ -75,9 +75,11 @@ module UserExtension::Pages
   ## USER PARTICIPATIONS
   ##
 
+  #
   # makes or updates a user_participation object for a page.
+  #
   # returns the user_participation, which must be saved for changed
-  # to take effect
+  # to take effect.
   #
   # this method is not called directly. instead, page.add(user)
   # should be used.
@@ -85,53 +87,27 @@ module UserExtension::Pages
   # TODO: delete the user_participation row if it is not really needed
   # anymore (ie, the user won't lose access by deleted it, and inbox,
   # watch, star are all false, and the user has not contributed.)
+  #
   def add_page(page, part_attrs)
     clear_access_cache
     part_attrs = part_attrs.dup
-    part_attrs[:notice] = [part_attrs[:notice]] if part_attrs[:notice]
     participation = page.participation_for_user(self)
     if participation
-      update_participation(participation, part_attrs)
+      participation.attributes = part_attrs
     else
-      participation = build_participation(page, part_attrs)
+      # user_participations.build doesn't update the pages.users
+      # until it is saved. If you need an updated users list, then
+      # use user_participations directly.
+      participation = page.user_participations.build(
+        part_attrs.merge(
+          :page_id => page.id, :user_id => id,
+          :resolved => page.resolved?
+        )
+      )
+      participation.page = page
     end
     page.association_will_change(:users)
     participation
-  end
-
-  private
-
-  ## called only by add_page
-  def update_participation(participation, part_attrs)
-    if part_attrs[:notice]
-      part_attrs[:viewed] = false
-      if participation.notice
-        if repeat_notice?(participation.notice, part_attrs[:notice])
-          part_attrs[:notice] = participation.notice # don't repeat
-        else
-          part_attrs[:notice] += participation.notice
-        end
-      end
-    end
-    participation.attributes = part_attrs
-  end
-  ## called only by update_participation
-  def repeat_notice?(current_notices, new_notice)
-    new_notice = new_notice.first
-    current_notices.detect do |notice|
-      notice[:message] == new_notice[:message] and notice[:user_login] == new_notice[:user_login]
-    end
-  end
-  ## called only by add_page
-  def build_participation(page, part_attrs)
-    # user_participations.build doesn't update the pages.users
-    # until it is saved. If you need an updated users list, then
-    # use user_participations directly.
-    part = page.user_participations.build(part_attrs.merge(
-      :page_id => page.id, :user_id => id,
-      :resolved => page.resolved?))
-    part.page = page
-    return part
   end
 
   public
@@ -175,9 +151,9 @@ module UserExtension::Pages
 
     # update everyone's participation
     if options[:all_resolved]
-      page.user_participations.update_all('viewed = 0, inbox = (watch | inbox), resolved = 1')
+      page.user_participations.update_all('viewed = 0, resolved = 1')
     else
-      page.user_participations.update_all('viewed = 0, inbox = (watch | inbox)')
+      page.user_participations.update_all('viewed = 0')
     end
 
     # create self's participation if it does not exist
@@ -223,8 +199,8 @@ module UserExtension::Pages
   #                   :view. (nil will remove access)
   #  :grant_access -- like :access, but is only used to improve access, not remove it.
   #
-  #  :send_notice  -- boolean. If true, then the page will end up in the recipient's
-  #                   inbox and the following additional flags are taken into account:
+  #  :send_notice  -- boolean. If true, then the page will end up in the recipient's notice list
+  #                   and the following additional flags are taken into account:
   #
   #       :send_email -- boolean, send a copy of notice via email?
   #         :send_sms -- boolean, send a copy of notice vis sms? (unsupported)
@@ -379,10 +355,8 @@ module UserExtension::Pages
     may_share!(page,user,options)
     attrs = {}
     if options[:send_notice]
-      attrs[:inbox] = true
-      if options[:send_message].any?
-        attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
-      end
+      attrs[:viewed] = false
+      PageNotice.create!(:user => user, :page => page, :from => self, :message => options[:send_message])
     end
 
     default_access_level = :none
@@ -413,17 +387,15 @@ module UserExtension::Pages
     attrs = {}
     users_to_pester = []
     if options[:send_notice]
-      attrs[:inbox] = true
+      attrs[:viewed] = false
       users_to_pester = group.users.select do |user|
         self.may_pester?(user)
-      end
-      if options[:send_message].any?
-        attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
       end
       users_to_pester.each do |user|
         upart = page.add(user, attrs)
         upart.save! unless page.changed?
       end
+      PageNotice.create!(:recipients => users_to_pester, :page => page, :from => self, :message => options[:send_message])
     end
 
     users_to_pester # returns users to pester so they can get an email, maybe.

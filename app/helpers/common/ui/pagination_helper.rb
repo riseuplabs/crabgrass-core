@@ -77,5 +77,27 @@ module Common::Ui::PaginationHelper
     things.is_a?(WillPaginate::Collection) and things.total_entries > things.per_page
   end
 
+  #
+  # used at the top of a page where you want a little space after the pagination links,
+  # but only if there are any pagination links.
+  #
+  def top_pagination_links(things, options={})
+    if paginated?(things)
+      content_tag(:div, :class => 'p first') do
+        pagination_links(things,options)
+      end
+    end
+  end
+
+  #
+  # useful for the bottom of the page.
+  #
+  def bottom_pagination_links(things, options={})
+    if paginated?(things)
+      content_tag(:div, :class => 'p last') do
+        pagination_links(things,options)
+      end
+    end
+  end
 end
 
