@@ -102,7 +102,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert act.reload, 'there should still be a friend activity'
     assert_equal nil, act.other_user
     assert_equal former_name, act.other_user_name
-    assert_equal "<span class=\"user\">#{former_name}</span>",
+    assert_equal "<user>#{former_name}</user>",
       act.user_span(:other_user)
   end
 

@@ -35,7 +35,7 @@ class Notice < ActiveRecord::Base
   #
   def self.dismiss_all(noticable)
     connection.execute(
-      "UPDATE notices SET dismissed = 0 WHERE noticable_type = '%s' AND noticable_id = %s" %
+      "UPDATE notices SET dismissed = 1 WHERE noticable_type = '%s' AND noticable_id = %s" %
       [type_field(noticable), noticable.id]
     )
   end
