@@ -1,136 +1,198 @@
-// if this is the iframe
-// reload the parent
-Event.observe(window, 'load',
-  function() {
-    try
-    {
-    if (self.parent.frames.length != 0)
-    self.parent.location=document.location;
+var files = [];
+var uploading = false;
+
+// Function that will allow us to know if Ajax uploads are supported
+function supportAjaxUploadWithProgress() {
+  return supportFileAPI() && supportAjaxUploadProgressEvents() && supportFormData();
+
+  // Is the File API supported?
+  function supportFileAPI() {
+    var fi = document.createElement('INPUT');
+    fi.type = 'file';
+    return 'files' in fi;
+  };
+
+  // Are progress events supported?
+  function supportAjaxUploadProgressEvents() {
+    var xhr = new XMLHttpRequest();
+    return !! (xhr && ('upload' in xhr) && ('onprogress' in xhr.upload));
+  };
+
+  // Is FormData supported?
+  function supportFormData() {
+    return !! window.FormData;
+  }
+}
+
+// Actually confirm support
+
+document.observe("dom:loaded", function() {
+  if (supportAjaxUploadWithProgress()) {
+    // Ajax uploads are supported!
+    // Change the support message and enable the upload button
+    var notice = document.getElementById('support-notice');
+    // var uploadBtn = document.getElementById('upload-button-id');
+    notice.innerHTML = "Your browser supports HTML uploads. Go try me! :-)";
+    // uploadBtn.removeAttribute('disabled');
+
+    // Init the single-field file upload
+    initFileOnlyAjaxUpload();
+  }
+});
+
+function initFullFormAjaxUpload() {
+  var form = document.getElementById('form-id');
+  form.onsubmit = function() {
+    // FormData receives the whole form
+    var formData = new FormData(form);
+
+    // FormData only has the file
+    var fileInput = document.getElementById('file-id');
+    var files = fileInput.files;
+    for (var i = 0; i < files.length; i++) {
+      file = files.item(i);
+      formData.append('asset' + i, file);
     }
-    catch (Exception) {}
-  }
-);
 
-function styleUpload() {
-  var styled = $('add_file_field').previous('.styled-upload');
-  var real = styled.down('.real-upload');
-  if (real == undefined) { return; }
-  styled.insert('<div class="fake-upload">' +
-//      '<input type="submit"></input>' +
-      '<input type="text" class="icon" name="fakeupload" readonly></input>' +
-    '</div>')
-  var fake = styled.down('.fake-upload');
-  var text = fake.down('.icon');
-  text.writeAttribute('size', real.readAttribute('size'));
-  real.observe('change', showFakeUpload);
-  fake.hide();
-}
+    // We send the data where the form wanted
+    var action = form.getAttribute('action');
 
-function showFakeUpload(event) {
-  var real = event.element();
-  var fake = real.next('.fake-upload')
-  var fake_text = fake.down('input.icon')
-  fake_text.value = real.value.split('\\').pop().split('/').pop();
-  fake_text.addClassName('filled');
-  fake_text.addClassName(classNameForFile(fake_text.value));
-  fake.show();
-  real.hide();
-}
+    // Code common to both variants
+    sendXHRequest(formData, action);
 
-function classNameForFile(filename) {
-  var ext = filename.split('.').pop().toLowerCase();
-  switch(ext) {
-    case 'tar': return 'mime_archive_16';
-    case 'zip': return 'mime_archive_16';
-    case 'gz': return 'mime_archive_16';
-    case 'gzip': return 'mime_archive_16';
-    case 'wav': return 'mime_audio_16';
-    case 'mp3': return 'mime_audio_16';
-    case 'ogg': return 'mime_audio_16';
-    case 'bin': return 'mime_binary_16';
-    case 'doc': return 'mime_doc_16';
-    case 'html': return 'mime_html_16';
-    case 'htm': return 'mime_html_16';
-    case 'jpg': return 'mime_image_16';
-    case 'jpeg': return 'mime_image_16';
-    case 'png': return 'mime_image_16';
-    case 'gif': return 'mime_image_16';
-    case 'xl': return 'mime_msexcel_16';
-    case 'ppt': return 'mime_mspowerpoint_16';
-    case 'pps': return 'mime_mspowerpoint_16';
-    case 'docx': return 'mime_msword_16';
-    case 'odt': return 'mime_oo_document_16';
-    case 'odp': return 'mime_oo_presentation_16';
-    case 'ods': return 'mime_oo_spreadsheet_16';
-    case 'pdf': return 'mime_pdf_16';
-    case 'rtf': return 'mime_rtf_16';
-    case 'svg': return 'mime_vector_16';
-    case 'avi': return 'mime_video_16';
-    case 'ogm': return 'mime_video_16';
-    case 'mpeg': return 'mime_video_16';
-    default: return 'mime_default_16';
+    // Avoid normal form submission
+    return false;
   }
 }
 
-function startProgressBar(button) {
-  var form = button.up('form')
-  var progress = form.down('.progress')
-  var bar = progress.down('.bar')
-  progress.show()
-  //add iframe and set form target to this iframe
-  $$("body").first().insert({bottom: "<iframe name='progressFrame' style='display:none; width:0; height:0; position: absolute; top:30000px;'></iframe>"});
-  form.writeAttribute("target", "progressFrame");
+function initFileOnlyAjaxUpload() {
+  var fileSelect = document.getElementById('file-select');
+  var fileInput = document.getElementById('file-id');
 
-  form.submit();
+  fileInput.onchange = function (evt) {
 
-  // need to make this more flexible - but we have multiple 
-  // progress bars in image and audio galleries so fixed_id does not work
-  var uuid = form.down('.uuid').value;
+    // FormData only has the file
+    var form = document.getElementById('form-id');
+    var fileInput = document.getElementById('file-id');
+    var addedFiles = fileInput.files;
+    for (var i = 0; i < addedFiles.length; i += 1) {
+      files.push(addedFiles[i]);
+    }
+    if(!uploading) startUpload(form.action);
+  }
+}
 
-  //update the progress bar
-  new PeriodicalExecuter(
-    function(pe){
-      if(Ajax.activeRequestCount == 0){
-        new Ajax.Request("/progress",{
-          method: 'get',
-          parameters: 'X-Progress-ID=' + uuid,
-          onSuccess: function(xhr){
-            // stop this thing if the response is blank 
-            // likely the upload failed or server doesn't support it
-            // and it goes on forever
-            if(xhr.responseText == "") {
-	            pe.stop();
-            }
-            var upload = xhr.responseText.evalJSON();
-            if(upload.state == 'uploading'){
-              upload.percent = Math.floor((upload.received / upload.size) * 100);
-							var processing = '';
-							if (upload.percent == 100) {
-							  processing = " - processing...";
-							}
-              bar.setStyle({width: upload.percent + "%"});
-              bar.update(upload.percent + "%" + processing);
-            }
-            if(upload.state == 'done'){
-              bar.setStyle({width: "100%"});
-              bar.update("100 % - done");
-              pe.stop();
-            }
-          }
-        })
+function startUpload(action) {
+  uploading = true;
+  forEachSeries(files, function(file, callback) {
+
+    onProcessingFile(file);
+    // Since this is the file only, we send it to a specific location
+    var formData = new FormData();
+    formData.append('asset',  file);
+    // Code common to both variants
+    sendXHRequest(formData, action, callback);
+  }, function() {uploading = false});
+}
+
+// Once the FormData instance is ready and we know
+// where to send the data, the code is the same
+// for both variants of this technique
+function sendXHRequest(formData, uri, callback) {
+  // Get an XMLHttpRequest instance
+  var xhr = new XMLHttpRequest();
+
+  // Set up events
+  xhr.upload.addEventListener('loadstart', onloadstartHandler, false);
+  xhr.upload.addEventListener('progress', onprogressHandler, false);
+  xhr.upload.addEventListener('load', onloadHandler, false);
+  xhr.upload.addEventListener('load', function(evt) { callback() }, false);
+  xhr.addEventListener('readystatechange', onreadystatechangeHandler, false);
+
+  // Set up request
+  xhr.open('POST', uri, true);
+
+  // Fire!
+  xhr.send(formData);
+}
+
+function showUploadState() {
+  var upload = document.getElementById('current-upload');
+  upload.setAttribute("class", "alert hook")
+}
+
+function updateUploadState(message, filename) {
+  if (message) document.getElementById('upload-message').innerHTML = message;
+  if (filename) document.getElementById('upload-filename').innerHTML = filename;
+}
+
+function onProcessingFile(file) {
+  showUploadState();
+  updateUploadState("starting upload...", file.name);
+}
+
+// Handle the start of the transmission
+function onloadstartHandler(evt) {
+  updateUploadState("upload started ...");
+}
+
+// Handle the end of the transmission
+function onloadHandler(evt) {
+  // TODO: make sure this is not hidden behind progress bar
+  updateUploadState("upload successful ...");
+  progress.innerHTML = '&nbsp;100&nbsp;%';
+  progress.setAttribute("style", "width: 100%");
+}
+
+// Handle the progress
+function onprogressHandler(evt) {
+  var percent = Math.round(evt.loaded/evt.total*100);
+  var progress = document.getElementById('upload-progress');
+  progress.innerHTML = '&nbsp;' + percent + '&nbsp;%';
+  progress.setAttribute("style", "width: " + percent + '%;');
+}
+
+// Handle the response from the server
+function onreadystatechangeHandler(evt) {
+  if (evt.target.readyState != 4) return;
+  var status = null;
+
+  try {
+    status = evt.target.status;
+  }
+  catch(e) {
+    return;
+  }
+
+  if (status == '200' && evt.target.responseText) {
+    var result = document.getElementById('result');
+    result.innerHTML = result.innerHTML + '<div class="span3"> <h3>Uploaded File:</h3><pre>' + evt.target.responseText + '</pre></div>';
+  }
+}
+
+// taken from the brilliant async.js
+function forEachSeries(arr, iterator, callback) {
+  if (!arr.length) {
+    return callback();
+  }
+  var completed = 0;
+  var iterate = function () {
+    iterator(arr[completed], function (err) {
+      if (err) {
+        callback(err);
+        callback = function () {};
       }
-    },1);
-
-  return false; 
-}
-
-function addFileField() {
-  var uploads = $$('.styled-upload');
-  var template = uploads.first();
-  var last = uploads.last();
-  Element.extend(last).insert({
-    after: template.clone(true)
-  });
-  styleUpload();
-}
+      else {
+        completed += 1;
+        if (completed === arr.length) {
+          callback();
+        }
+        else {
+          iterate();
+        }
+      }
+    });
+  };
+  iterate();
+};
 

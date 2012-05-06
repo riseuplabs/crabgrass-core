@@ -4,9 +4,9 @@
 .info-edit-gallery
   = I18n.t :edit_gallery_explaination
 
-.action
-  = upload_images_link
-
 = render :partial => 'gallery/notify_area'
+#support-notice
 
 = render :partial => 'gallery/draggable_images'
+
+= render :partial => 'common/asset_upload', :locals => { :target => @page }
