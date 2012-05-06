@@ -89,7 +89,7 @@ function startUpload(action) {
     onProcessingFile(file);
     // Since this is the file only, we send it to a specific location
     var formData = new FormData();
-    formData.append('asset',  file);
+    formData.append('asset[uploaded_data]', file);
     // Code common to both variants
     sendXHRequest(formData, action, callback);
   }, function() {uploading = false});
