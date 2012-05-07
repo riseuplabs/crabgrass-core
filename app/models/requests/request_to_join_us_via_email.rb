@@ -41,11 +41,11 @@ class RequestToJoinUsViaEmail < Request
   end
 
   def description
-    I18n.t(:request_to_join_us_via_email_description, :email => email, :group => group_span(group))
+    [:request_to_join_us_via_email_description, {:email => email, :group => group_span(group)}]
   end
 
   def short_description
-    I18n.t(:request_to_join_us_via_email_short, :email => email, :group => group_span(group))
+    [:request_to_join_us_via_email_short, {:email => email, :group => group_span(group)}]
   end
 
   ##

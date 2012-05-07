@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110714001628) do
+ActiveRecord::Schema.define(:version => 20120429061013) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -84,26 +84,6 @@ ActiveRecord::Schema.define(:version => 20110714001628) do
     t.boolean "public",                                :default => false
   end
 
-  create_table "bdrb_job_queues", :force => true do |t|
-    t.text     "args",           :limit => 2147483647
-    t.string   "worker_name"
-    t.string   "worker_method"
-    t.string   "job_key"
-    t.integer  "taken"
-    t.integer  "finished"
-    t.integer  "timeout"
-    t.integer  "priority"
-    t.datetime "submitted_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "archived_at"
-    t.string   "tag"
-    t.string   "submitter_info"
-    t.string   "runner_info"
-    t.string   "worker_key"
-    t.datetime "scheduled_at"
-  end
-
   create_table "categories", :force => true do |t|
   end
 
@@ -166,6 +146,21 @@ ActiveRecord::Schema.define(:version => 20110714001628) do
   end
 
   add_index "dailies", ["page_id"], :name => "index_dailies_on_page_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "discussions", :force => true do |t|
     t.integer  "posts_count",      :default => 0
@@ -383,6 +378,21 @@ ActiveRecord::Schema.define(:version => 20110714001628) do
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
   end
+
+  create_table "notices", :force => true do |t|
+    t.string   "type"
+    t.integer  "user_id"
+    t.integer  "avatar_id"
+    t.text     "data"
+    t.integer  "noticable_id"
+    t.string   "noticable_type"
+    t.boolean  "dismissed",      :default => false
+    t.datetime "dismissed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notices", ["user_id"], :name => "index_notices_on_user_id"
 
   create_table "page_histories", :force => true do |t|
     t.integer  "user_id"
@@ -881,6 +891,7 @@ ActiveRecord::Schema.define(:version => 20110714001628) do
     t.string   "receive_notifications"
     t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
+    t.string   "type"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

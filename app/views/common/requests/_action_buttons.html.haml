@@ -5,7 +5,7 @@
   - approve_url = request_path(request, :state => current_state, :mark => 'approve')
   - reject_url = request_path(request, :state => current_state, :mark => 'reject')
 
-  .p.first= expand_links(request.short_description, :avatar => 'tiny', :class => 'inline')
+  .p.first= expand_links(request.display_short_description, :avatar => 'tiny', :class => 'inline')
 
   .buttons
     = spinner(spin_id)

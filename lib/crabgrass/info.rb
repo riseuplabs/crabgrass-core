@@ -29,16 +29,19 @@ unless defined?(INFO_PAD_CHARACTER)
   INFO_PAD_CHARACTER = '-'
 end
 
+# make sure to use only prefixed methods like STDOUT.print in here.
+# otherwise they might conflict with methods in the current context
+# like a Controller#print action.
 def info(str,level=0)
   if (ENV['INFO'] and ENV['INFO'].to_i >= level) or (DEFAULT_INFO_LEVEL >= level)
     str = str.to_s
     if INFO_PAD_CHARACTER.any?
       prefix = (INFO_PAD_CHARACTER * 2 * (level+1)) + ' ' + str + ' '
       postfix = INFO_PAD_CHARACTER * ([80 - prefix.length, 0].max)
-      print prefix
-      puts postfix
+      STDOUT.print prefix
+      STDOUT.puts postfix
     else
-      puts(('  '*level) + str)
+      STDOUT.puts(('  '*level) + str)
     end
     STDOUT.flush
   end

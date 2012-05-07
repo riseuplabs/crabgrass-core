@@ -5,9 +5,10 @@ define_navigation do
   ##
   ## HOME
 
+  # disabled for now
   global_section :home do
     label   { :home.t }
-    visible { !logged_in? || controller?(:account, :session, :root) }
+    visible { false } # !logged_in? || controller?(:account, :session, :root) }
     url     '/'
     active  { controller?(:account, :session, :root) }
   end
@@ -20,9 +21,9 @@ define_navigation do
 
   global_section :me do
     label   { :me.t }
-    visible { logged_in? }
-    url     { me_pages_path }
-    active  { context?(:me) }
+    # visible { logged_in? }
+    url     { logged_in? ? me_home_path : '/' }
+    active  { context?(:me) || controller?(:account, :session, :root) }
     html    :partial => '/layouts/global/nav/me_menu'
 
     context_section :create_page do
@@ -33,12 +34,12 @@ define_navigation do
       visible { @drop_down_menu }
     end
 
-#    context_section :notices do
-#      label  { :notices.t }
-#      url    { me_home_path }
-#      active { controller?('me/notices') }
-#      icon   :info
-#    end
+    context_section :notices do
+      label  { :notices.t }
+      url    { me_home_path }
+      active { controller?('me/notices') }
+      icon   :info
+    end
 
     context_section :pages do
       label  { :pages.t }
@@ -91,7 +92,7 @@ define_navigation do
     context_section :settings do
       label  { :settings.t }
       url    { me_settings_path }
-      active { controller?('me/settings', 'me/permissions', 'me/profile', 'me/requests') }
+      active { controller?('me/settings', 'me/permissions', 'me/profile', 'me/requests', 'me/passwords', 'me/destroys') }
       icon   :control
 
       local_section :settings do
@@ -116,6 +117,18 @@ define_navigation do
         label  { :requests.t }
         url    { me_requests_path }
         active { controller?('me/requests') }
+      end
+
+      local_section :password do
+        label  { :password.t }
+        url    { edit_me_password_path }
+        active { controller?('me/passwords') }
+      end
+
+      local_section :destroy do
+        label  { :destroy.t }
+        url    { me_destroy_path }
+        active { controller?('me/destroys') }
       end
 
     end

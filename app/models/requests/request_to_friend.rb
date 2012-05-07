@@ -45,17 +45,16 @@ class RequestToFriend < Request
     user == recipient or may_approve?(user)
   end
 
-
   def after_approval
     recipient.add_contact!(created_by, :friend)
   end
 
   def description
-    I18n.t(:request_to_friend_description, :user => user_span(created_by), :other_user => user_span(recipient))
+    [:request_to_friend_description, {:user => user_span(created_by), :other_user => user_span(recipient)}]
   end
 
   def short_description
-    I18n.t(:request_to_friend_short, :user => user_span(created_by), :other_user => user_span(recipient))
+    [:request_to_friend_short, {:user => user_span(created_by), :other_user => user_span(recipient)}]
   end
 
 end

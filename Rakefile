@@ -5,9 +5,15 @@ require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
 require 'rake'
 require 'rake/testtask'
-require 'rdoc/task'
 
 require 'tasks/rails'
+
+begin
+  gem 'rdoc', '~> 3.0'
+  require 'rdoc/task'
+rescue LoadError
+  STDERR.puts "(rdoc tasks disabled)"
+end
 
 begin
   gem 'delayed_job', '~> 2.0'

@@ -156,6 +156,14 @@ class User < ActiveRecord::Base
     read_attribute(:time_zone) || Time.zone_default
   end
 
+  #
+  # returns this user, as a ghost.
+  #
+  def ghostify!
+    self.update_attribute(:type, "UserGhost")
+    return User.find(self.id)
+  end
+
   ##
   ## PROFILE
   ##
@@ -210,9 +218,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  # for now, destroy all of a user's posts if they are destroyed. unlike other software,
-  # we don't want to keep data on anyone after they have left.
   has_many :posts, :dependent => :destroy
+
+  has_many :notices, :dependent => :destroy
 
   after_destroy :destroy_requests
   def destroy_requests

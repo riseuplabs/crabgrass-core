@@ -77,6 +77,16 @@ module GroupExtension::Groups
         "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
       ).collect{|id|id.to_i}
     end
+
+    def can_have_committees?
+      Conf.committees
+    end
+
+    def can_have_council?
+      Conf.councils && self.can_have_committees?
+    end
+
+
   end
 
   ##

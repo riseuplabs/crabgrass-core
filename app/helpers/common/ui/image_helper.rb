@@ -256,18 +256,19 @@ module Common::Ui::ImageHelper
   # of the format used by Picture geometry (see picture.rb)
   #
   def picture_tag(picture, size=:medium)
+    content_tag :div, '', :style => picture_style(picture, size)
+  end
+
+  def picture_style(picture, size=:medium)
     if size.is_a? Symbol
       pixels = IMAGE_SIZES[size];
-      geometry = {:max_width => pixels, :min_width => pixels, :max_height => pixels*4}
+      geometry = {:max_width => pixels, :min_width => pixels, :max_height => pixels*2}
     else
       geometry = size
     end
     picture.add_geometry!(geometry)
     width, height = picture.size(geometry)
-    style = "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [
-      width, height, picture.url(geometry)
-    ]
-    content_tag :div, '', :style => style
+    "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [width, height, picture.url(geometry)]
   end
-
+  
 end

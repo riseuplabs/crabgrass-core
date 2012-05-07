@@ -1,6 +1,6 @@
 class CreateEventPageController < Pages::CreateController
 
-  permissions :pages, :object => 'page'
+  guard_like 'page'
 
   protected
 

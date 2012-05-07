@@ -11,13 +11,11 @@
 # resolved, :boolean    -- the user's involvement with this node has been resolved.
 # viewed, :boolean      -- the user has seen the lastest version
 # attend, :boolean      -- the user will attend event
-# notice, :text         -- serialized data sent with a notify command
 #
 
 class UserParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :user
-  serialize :notice
   before_create :clear_tag_cache
   after_destroy :clear_tag_cache
 

@@ -1,5 +1,5 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class SurveyTest < ActiveSupport::TestCase
   fixtures :surveys, :survey_questions
@@ -10,7 +10,6 @@ class SurveyTest < ActiveSupport::TestCase
   def setup
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
-    Media::Process::Base.log_to_stdout_when = :on_error
   end
 
   def test_reorder_and_append_complex_survey

@@ -22,7 +22,7 @@
 - content_for :title do
   %h1= :create_a_new_thing.t(:thing => thing.t.downcase)
 
-- form_tag url do |form|
+- form_tag url do
 
   = hidden_field_tag 'type', params[:type]
 
@@ -46,7 +46,7 @@
     - if group_type == :network
       - f.row do |r|
         - r.label :group.t
-        - r.input select_tag('member_group_name', options_for_select_group(), :class => 'full_width')
+        - r.input select_tag('member_group_name', options_for_select_group(:as_admin => true), :class => 'full_width')
         - r.info "(#{:optional.t}) "
         - r.info :network_initial_member.t
      

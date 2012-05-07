@@ -4,19 +4,19 @@ module Formy
     element_attr :buttons
 
     def title(value)
-      puts "<tr class='title #{first}'><td colspan='2'>#{value}</td></tr>"
+      puts "<tr class='#{TITLE_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>"
     end
 
     def label(value="&nbsp;")
-      @elements << indent("<tr class='label #{first}'><td colspan='2'>#{value}</td></tr>")
+      @elements << indent("<tr class='#{LABEL_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>")
     end
 
     def spacer
-      @elements << indent("<tr class='spacer'><td colspan='2'><div></div></td></tr>")
+      @elements << indent("<tr class='#{SPACER_CLASS}'><td colspan='2'><div></div></td></tr>")
     end
 
     def heading(text)
-      @elements << indent("<tr class='#{first}'><td colspan='2' class='heading'><h2>#{text}</h2></td></tr>")
+      @elements << indent("<tr class='#{first}'><td colspan='2' class='#{HEADING_CLASS}'><h2>#{text}</h2></td></tr>")
     end
 
     def hidden(text)
@@ -29,14 +29,14 @@ module Formy
 
     def open
       super
-      puts "<table class='form'>"
+      puts "<table class='#{FORM_CLASS}'>"
       title(@options[:title]) if @options[:title]
     end
 
     def close
       @elements.each {|e| raw_puts e}
       if @buttons
-        puts '<tr><td colspan="2" class="buttons"><div class="form_buttons">%s</div></td></tr>' % @buttons
+        puts "<tr><td colspan='2' class='#{BUTTONS_CLASS}'>#{@buttons}</td></tr>"
       end
       puts '</table>'
       super
@@ -66,29 +66,30 @@ module Formy
 
       def close
         @input ||= @elements.first.to_s
+        @classes = [@classes, @options[:class]].combine
         if @options[:style] == :hang
           @label ||= '&nbsp;'
           labelspan = inputspan = 1
           #labelspan = 2 if @label and not @input
           #inputspan = 2 if @input and not @label
           puts '<tr class="row %s %s" id="%s" style="%s">' % [parent.first, @classes, @id, @style]
-          puts '<td colspan="%s" class="label"><label for="%s">%s</label></td>' % [labelspan, @label_for, @label]
+          puts '<td colspan="%s" class="%s"><label for="%s">%s</label></td>' % [labelspan, LABEL_CLASS, @label_for, @label]
           if @input
-            puts '<td colspan="%s" class="input">' % inputspan
-            puts '<div class="input">%s</div>' % @input
+            puts '<td colspan="%s" class="%s">' % [inputspan, INPUT_CLASS]
+            puts '<div class="%s">%s</div>' % [INPUT_CLASS, @input]
             if @info
-              puts '<div class="info">%s</div>' % @info
+              puts '<div class="%s">%s</div>' % [INFO_CLASS, @info]
             end
             puts '</td>'
           end
           puts '</tr>'
         elsif @options[:style] == :stack
           if @label
-            puts '<tr><td class="label">%s</td></tr>' % @label
+            puts '<tr><td class="%s">%s</td></tr>' % [LABEL_CLASS, @label]
           end
           puts '<tr class="%s">' % @options[:class]
-          puts '<td class="input">%s</td>' % @input
-          puts '<td class="info">%s</td>' % @info
+          puts '<td class="%s">%s</td>' % [INPUT_CLASS, @input]
+          puts '<td class="%s">%s</td>' % [INFO_CLASS, @info]
           puts '</tr>'
         end
         super

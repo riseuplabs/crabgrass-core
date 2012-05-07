@@ -1,0 +1,19 @@
+
+%tr{:id => dom_id(notice)}
+  %td.nowrap
+    .big_screen
+      %span.label= notice.display_label
+      %br
+      %span{:style => 'font-size:85%'}= friendly_date notice.created_at
+  %td.icon.small{:style => avatar_style(notice.avatar_id, 'small')}
+    =h embold_links notice.display_title
+    %br
+    - if notice.display_body_as_quote?
+      %i=h truncate(embold_links(notice.display_body), :length => 512)
+    -else
+      =h truncate(embold_links(notice.display_body), :length => 512)
+  %td.nowrap.align_right.reflow
+    = spinner(notice)
+    = link_to_remote(notice.button_text, {:url => me_notice_path(notice), :method => 'get', :loading => show_spinner(notice)},{:href => me_notice_path(notice), :class => 'btn btn-mini'})
+    = link_to_remote(:dismiss.t, {:url => me_notice_path(notice), :method => 'delete', :loading => show_spinner(notice)}, {:class => 'btn btn-mini'})
+

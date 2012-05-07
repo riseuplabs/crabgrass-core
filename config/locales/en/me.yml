@@ -2,7 +2,7 @@ en:
 
   ##!  me_dashboard_link: "Dashboard"
 
-  me_inbox_link: "Inbox"
+  ##!  me_inbox_link: "Inbox"
   ##!  my_inbox_headline: "My Inbox"
 
   ##!  me_trash_link: "Trash"
@@ -47,7 +47,7 @@ en:
 
   save_changes: Save Changes
   username: Username
-  display_name: Display name
+  display_name: Display Name
   email: Email
   ##!  phone: Phone
   language: Language

@@ -1,6 +1,6 @@
 class CreateAssetPageController < Pages::CreateController
 
-  permissions 'pages', :object => 'page'
+  guard_like 'page'
 
   def new
     @form_sections.unshift('file')

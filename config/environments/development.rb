@@ -24,14 +24,6 @@ config.reload_plugins = true
 DEFAULT_INFO_LEVEL = 0
 
 ##
-## GEMS
-##
-
-config.gem 'compass', :version => '~> 0.10'
-config.gem 'haml', :version => '~> 3.0'
-config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
-
-##
 ## DEBUGGING
 ## See doc/DEBUGGING for tips.
 ##

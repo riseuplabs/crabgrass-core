@@ -45,6 +45,11 @@ class Committee < Group
     end
   end
 
+  # committees do not have committees themselves.
+  def self.can_have_committees?
+    false
+  end
+
   ##
   ## PERMISSIONS
   ##

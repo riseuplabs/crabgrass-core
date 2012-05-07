@@ -1,0 +1,3 @@
+standard_update(page)
+page.remove(dom_id(@notice))
+page << 'replaceIfEmpty("#notice_list tbody", "%s")' % "<tr><td>#{:none.t}</td></tr>"

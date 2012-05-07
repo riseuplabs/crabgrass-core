@@ -20,7 +20,6 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'rake/testtask'
-require 'rdoc/task'
 
 namespace :before_render do
   Rake::TestTask.new(:test) do |t|

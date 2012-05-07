@@ -48,17 +48,19 @@ class RequestToCreateCouncil < Request
   end
 
   def description
-    I18n.t(:request_to_create_council_description,
-              :group => group_span(group),
-              :group_type => group.group_type.downcase,
-              :user => user_span(created_by))
+    [:request_to_create_council_description, {
+      :group => group_span(group),
+      :group_type => group.group_type.downcase,
+      :user => user_span(created_by)
+    }]
   end
 
   def short_description
-    I18n.t(:request_to_create_council_short,
-              :group => group_span(group),
-              :group_type => group.group_type.downcase,
-              :user => user_span(created_by))
+    [:request_to_create_council_short, {
+      :group => group_span(group),
+      :group_type => group.group_type.downcase,
+      :user => user_span(created_by)
+    }]
   end
 
 end

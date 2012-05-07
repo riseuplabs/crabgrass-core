@@ -1,0 +1,63 @@
+
+##
+## request notices for user blue.
+##
+## atm, we don't bother creating notices for other users
+##
+
+friend_blue:
+  type: RequestNotice
+  user_id: 4
+  # user: blue
+  data: |-
+    --- 
+    :title: request_to_friend
+    :body: 
+    - :request_to_friend_description
+    - :user: <user>kangaroo</user>
+      :other_user: <user>blue</user>
+  noticable: friend_blue (Request)
+  dismissed: false
+  created_at: 2012-04-28
+
+join_animals:
+  type: RequestNotice
+  user_id: 4
+  data: |-
+    --- 
+    :title: request_to_join_you
+    :body: 
+    - :request_to_join_you_description
+    - :user: <user>red</user>
+      :group: <group>animals</group>
+  noticable: join_animals (Request)
+  dismissed: false
+  created_at: 2012-04-29
+
+create_council:
+  type: RequestNotice
+  user_id: 4
+  data: |-
+    --- 
+    :title: request_to_create_council
+    :body: 
+    - :request_to_create_council_description
+    - :user: <user>red</user>
+      :group: <group>rainbow</group>
+      :group_type: Group
+  noticable: create_council_1 (Request)
+  dismissed: false
+  created_at: 2012-05-01
+
+page_notice_1:
+  type: PageNotice
+  user_id: 4
+  noticable_id: 62
+  noticable_type: Page 
+  data: |-
+    --- 
+    :from: red
+    :page_title: rem et tincidunt fac
+    :message: hey, check out this page. <script>alert('hi')</script>
+  dismissed: false
+  created_at: 2012-05-2

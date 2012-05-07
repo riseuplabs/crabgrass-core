@@ -85,3 +85,44 @@ ul.list_as_cols {
     width: 100px;
   }
 }
+
+//
+// A LIST OF CLICKABLE ROWS
+//
+
+ul.clickable {
+  @extend ul.shaded;
+  & > li {
+    cursor: pointer;
+  }
+  & > li:hover {
+    background: $color_hover;
+  }
+}
+
+//
+// A PRETTY SHADED LIST
+//
+
+ul.shaded {
+  border: 1px solid $ui_border_color;
+  @if $ui_border_radius { @extend .round }
+  & > li {
+    border-top: 1px solid $ui_border_color;
+    padding: 8px;
+    @extend .ui_light_fade;
+  }
+  & > li:first-child {
+    border-top: 0;
+    @if $ui_border_radius { @extend .round-top }
+  }
+  & > li:last-child {
+    @if $ui_border_radius { @extend .round-bottom }
+  }
+  //& > li:hover .hover-btn-primary {
+  //  @extend .btn-primary
+  //}
+  //& > li:hover .hover-btn-inverse {
+  //  @extend .btn-inverse
+  //} 
+}

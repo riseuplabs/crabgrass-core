@@ -12,11 +12,14 @@ $avatar_border_width: border_width($banner_avatar_spacer) + border_width($banner
 // this base has the current avatar's width added to it to get the final offset.
 $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($banner_border)) * 2);
 
+//
+// BANNER
+//
+
 #context_banner {
   @include full;
   background: $banner_default_background;
-  border: $banner_border;
-
+  
   a.tab {
     color: $banner_default_foreground;
   }
@@ -31,9 +34,42 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   @if $banner_shadow { @include banner_shadow; }
 }
 
+//
+// BANNER BORDER
+//
+
+#context_banner {
+  border: $banner_border;
+  @if $ui_border_radius {
+    @include border-radius($ui_border_radius);
+  }
+  &.dark_border {
+    border: $banner_border_dark;
+    a.avatar {
+      outline: $banner_border_dark; 
+    }
+    //
+    // this way of setting border on tabs is hackish and may 
+    // need to change if the implementation of cutout_menu() changes
+    //
+    ul#banner_nav_ul li.tab a.tab.active {
+      border: $banner_border_dark;
+      border-bottom: 0;
+    }
+  }
+}
+
+//
+// BANNER CONTENT
+//
+
 #banner_content {
   padding: $banner_padding;
   overflow: auto; // to catch floated a.avatar
+
+  @if $ui_border_radius {
+    @include border-radius($ui_border_radius);
+  }
 
   a.avatar {
     margin-right: $banner_padding;

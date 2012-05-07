@@ -83,6 +83,7 @@ module WikiExtension
     end
 
     def page_for_version(version)
+      return 1 unless version
       page_index = versions_since(version) / Wiki.per_page #Version.per_page
       page_index + 1
     end

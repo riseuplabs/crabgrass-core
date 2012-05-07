@@ -1,6 +1,6 @@
 #
 # controller for:
-# 
+#
 # (1) listing all requests for this group, regardless of type.
 # (2) creating non-membership requests.
 #
@@ -30,19 +30,20 @@ class Groups::RequestsController < Groups::BaseController
   # RequestToCreateCouncil
   #
   def create
-    case request_type
-      when :destroy_group then create_destroy_group_request
-      when :create_council then create_create_council_request
-    end
+    req = requested_class.create! :recipient => @group,
+      :requestable => @group,
+      :created_by => current_user
+    success req
+    redirect_to request_path(req)
   end
 
   protected
 
-  def request_type
+  def requested_class
     if params[:type] == 'destroy_group'
-      :destroy_group
+      RequestToDestroyOurGroup
     elsif params[:type] == 'create_council'
-      :create_council
+      RequestToCreateCouncil
     end
   end
 
@@ -62,16 +63,4 @@ class Groups::RequestsController < Groups::BaseController
     group_requests_path(@group, *args)
   end
 
-  def create_destroy_group_request
-    req = RequestToDestroyOurGroup.create! :recipient => @group, :requestable => @group, :created_by => current_user
-    success
-    redirect_to request_path(req)
-  end
-
-  def create_create_council_request
-    req = RequestToCreateCouncil.create! :recipient => @group, :requestable => @group, :created_by => current_user
-    success
-    redirect_to request_path(req)
-  end
-  
 end

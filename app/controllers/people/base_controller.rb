@@ -12,7 +12,8 @@ class People::BaseController < ApplicationController
   end
 
   def setup_context
-    Context.find(@user)
+    @context = Context.find(@user)
+    super
   end
 
 end

@@ -56,7 +56,7 @@ class PageSharingTest < ActiveSupport::TestCase
     assert !group.may?(:admin, page), 'group must not have admin access'
   end
 
-  def test_share_inbox_rules
+  def test_share_rules
     user       = users(:kangaroo)
     other_user = users(:dolphin)
     group      = groups(:animals)
@@ -70,7 +70,7 @@ class PageSharingTest < ActiveSupport::TestCase
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
 
     user.share_page_with!(page, other_user, :access => :admin, :send_notice => true)
-    assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
+    #assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
     assert_equal true, other_user.may?(:admin, page), 'should have admin access'
 
@@ -83,7 +83,7 @@ class PageSharingTest < ActiveSupport::TestCase
     user.share_page_with!(page, other_group, :send_notice => true)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
-    assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
+    #assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
     assert_equal false, page.user_participations.find_by_user_id(user_in_other_group.id).viewed?, 'should be marked unread'
   end
 
@@ -193,9 +193,6 @@ class PageSharingTest < ActiveSupport::TestCase
     page.save!
     page.reload
     assert_equal groups(:animals).users.count, page.user_participations.count
-    page.user_participations.each do |upart|
-      assert upart.inbox
-    end
   end
 
   def test_only_send_notify_message_to_the_recipient
@@ -205,7 +202,7 @@ class PageSharingTest < ActiveSupport::TestCase
 
     page = Page.create!(:title => 'title', :user => creator, :share_with => users, :access => 'admin')
 
-    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 1, 'should only send to 1 user') do
+    assert_difference 'PageNotice.count' do
       creator.share_page_with!(page, additional_user, :send_notice => true, :send_message => 'hi')
       page.save!
     end
@@ -229,7 +226,7 @@ class PageSharingTest < ActiveSupport::TestCase
     page = Page.create!(:title => 'title', :user => owner, :share_with => userlist, :access => :edit)
 
     # send notice to participants
-    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 4) do
+    assert_difference('PageNotice.count', 4) do
       owner.share_page_with!(page, ':participants', :send_notice => true)
     end
 
@@ -238,11 +235,7 @@ class PageSharingTest < ActiveSupport::TestCase
     page.add(users(:kangaroo),:changed_at => Time.now)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
-    UserParticipation.update_all :inbox => false
-    page.reload # to force reload the inbox:false. otherwise, the following share page will not
-                # result in any changes to the database, since the copy in memory will appear to not
-                # changed at all.
-    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 2) do
+    assert_difference('PageNotice.count', 2) do
       owner.share_page_with!(page, ':contributors', :send_notice => true)
     end
   end

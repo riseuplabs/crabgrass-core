@@ -5,13 +5,15 @@
 # Picture. Why so many? They are each pretty different.
 #
 #   Asset   -- for when you need versioning and thumbnails
-#              of any content type. Permissions.
+#              of any content type.
+#              Permissions: YES
 #
-#   Avatar  -- for square icons of users and groups. No permissions.
+#   Avatar  -- for square icons of users and groups.
+#              Permissions: NO
 #
 #   Picture -- when you want a simple image and want to be able to
-#              display it with many sizing options. Permissions.
-#
+#              display it with many sizing options.
+#              Permissions: maybe eventually.
 #
 # GEOMETRY
 #
@@ -57,15 +59,15 @@
 #
 # The values are integers, and not strings.
 #
-# TODO: in some cases, we probably don't want to store the source
-# image if it is really really big.
-#
 # TODO: graceful handling of corrupted images
 #
 
 require 'open-uri'     # required for open(url).read
 require 'fileutils'    # required for mkdir and rmdir
 require 'pathname'     # required for relative paths
+
+MAX_HEIGHT = 1024
+MAX_WIDTH = 1024
 
 class Picture < ActiveRecord::Base
 
@@ -105,7 +107,7 @@ class Picture < ActiveRecord::Base
   #
   def size(geometry=nil)
     geometry = to_geometry(geometry)
-    dimensions[ geometry.to_a ]
+    dimensions[geometry.to_s] ||= file_dimensions(private_file_path(geometry))
   end
 
   #
@@ -117,12 +119,31 @@ class Picture < ActiveRecord::Base
   #
   def add_geometry!(geometry)
     geometry = to_geometry(geometry)
-    self.dimensions ||= {}
-    if dimensions[ geometry.to_a ].nil?
-      resize(geometry, private_file_path, private_file_path(geometry))
-      width, height = file_dimensions( private_file_path(geometry) )
-      self.dimensions[ geometry.to_a ] = [width,height]
-      save!
+    if geometry.any?
+      geo_key = geometry.to_s
+      self.dimensions ||= {}
+      if dimensions[geo_key].nil?
+        resize(geometry, private_file_path, private_file_path(geometry))
+        width, height = file_dimensions( private_file_path(geometry) )
+        self.dimensions[geo_key] = [width,height]
+        save!
+      end
+    end
+  end
+
+  #
+  # removes a geometry from this picture, and the associated image files
+  #
+  def remove_geometry!(geometry)
+    geometry = to_geometry(geometry)
+    if geometry.any?
+      geo_key = geometry.to_s
+      self.dimensions ||= {}
+      if dimensions[geo_key].any?
+        destroy_file(geometry)
+        dimensions.delete(geo_key)
+        save!
+      end
     end
   end
 
@@ -139,6 +160,14 @@ class Picture < ActiveRecord::Base
     geometry = to_geometry(geometry)
     # ensure dimension record exists
     add_geometry!(geometry)
+    render(geometry)
+  end
+
+  #
+  # like render!, but will not add a new geometry
+  #
+  def render(geometry)
+    geometry = to_geometry(geometry)
     # ensure the file has been rendered
     unless File.exists?(private_file_path(geometry))
       resize(geometry, private_file_path, private_file_path(geometry))
@@ -245,6 +274,8 @@ class Picture < ActiveRecord::Base
     File.open(private_file_path, "wb") do |f|
       f.write(@uploaded_file.read)
     end
+    # save the height & width for the 'full' image (indexed as 'full' in geometry hash)
+    add_geometry! nil
   end
 
   #
@@ -304,6 +335,14 @@ class Picture < ActiveRecord::Base
   end
 
   #
+  # Destroys a single rendered file
+  #
+  def destroy_file(geometry)
+    FileUtils.rm(public_file_path(geometry))
+    FileUtils.rm(private_file_path(geometry))
+  end
+
+  #
   # Ensures storage directory exists for this Picture
   #
   def allocate_storage_directory
@@ -358,30 +397,83 @@ class Picture < ActiveRecord::Base
   end
 
   #
-  # convert geometry definition into graphic magick compatible
-  # resize options.
+  # Convert geometry definition into graphic magick compatible
+  # resize options. The logic is complicated, but it tries
+  # to do the right thing.
   #
-  # for example, these options:
+  # summary from gm man page on -geometry:
   #
-  #   :min_width => 100, :max_width => 100, :max_height => 300
-  #
-  # should produce a gm command like this:
-  #
-  #   gm convert -geometry '100x' -geometry '100x^' \
-  #              -crop '100x300+0+0' input.jpg output.jpg
+  #   1. WxH  -- max dimensions, resize with aspect ratio intact
+  #   2. WxH^ -- min dimensions, resize with aspect ratio intact
+  #   3. WxH! -- force dimensions exactly
+  #   4. Wx   -- resize, maintain ratio, auto set height
+  #   5. xH   -- resize, maintain ratio, auto set width
+  #   6. WxH> -- shrink if bigger (W or H)
+  #   7. WxH< -- expand if smaller (W and H)
   #
   def geometry_to_size(geometry)
-    ary = []
-    if geometry.max_width or geometry.max_height
-      ary << "%sx%s" % [geometry.max_width, geometry.max_height]
+    width, height = size()
+    scale_width = nil
+    scale_height = nil
+    new_width = nil
+    new_height = nil
+
+    # scale width?
+    if geometry.min_width && width < geometry.min_width
+      scale_width = geometry.min_width.to_f / width   # scale bigger
+      new_width = geometry.min_width
+    elsif geometry.max_width && width > geometry.max_width
+      scale_width = geometry.max_width.to_f / width   # scale smaller
+      new_width = geometry.max_width
     end
-    if geometry.min_width or geometry.min_height
-      ary << "%sx%s^" % [geometry.min_width, geometry.min_height]
+
+    # scale height?
+    if geometry.min_height && height < geometry.min_height
+      scale_height = geometry.min_height.to_f / height  # scale bigger
+      new_height = geometry.min_height
+    elsif geometry.max_height && height > geometry.max_height
+      scale_height = geometry.max_height.to_f / height  # scale smaller
+      new_height = geometry.max_height
     end
-    if ary.size == 1
-      ary.first
-    else
-      ary
+
+    # scale in both dimensions
+    if scale_width && scale_height
+      # if scale both bigger
+      if scale_width > 1 && scale_height > 1
+        # scale by one that needs to grow more
+        if scale_width > scale_height
+          "%sx^" % new_width   # bigger
+        else
+          "x%s^" % new_height  # bigger
+        end
+      # if scale both smaller
+      elsif scale_width < 1 && scale_height < 1
+        # scale by one that needs to shrink the least
+        if scale_width > scale_height
+          "%sx" % new_width  # smaller
+        else
+          "x%s" % new_height # smaller
+        end
+      # if scale width bigger AND scale height smaller
+      elsif scale_width > 1
+        "%sx^" % new_width  # bigger
+      # if scale height bigger AND scale width smaller
+      elsif scale_height > 1
+        "x%s^" % new_height # bigger
+      end
+    # scale in one dimension
+    elsif scale_width
+      if scale_width > 1
+        "%sx^" % new_width # bigger
+      else
+        "%sx" % new_width  # smaller
+      end
+    elsif scale_height
+      if scale_height > 1
+        "x%s^" % new_height # bigger
+      else
+        "x%s" % new_height  # smaller
+      end
     end
   end
 

@@ -132,6 +132,7 @@ define_theme {
     # unfortunately, banner padding must be specified in pixels.
     padding "16px"
     border "1px solid #888"
+    border_dark "1px solid #000"
     default_background '#999'
     default_foreground '#fff'
     vertical_align 'default'  # [center | top | default]

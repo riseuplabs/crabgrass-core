@@ -11,7 +11,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
 
   def test_logged_in
     login_as @user
-    assert_permission :may_admin_group? do
+    assert_permission :may_show_group_settings? do
       get :show, :group_id => @group.to_param
     end
     assert_response :success
@@ -26,7 +26,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   def test_not_a_member
     stranger = User.make
     login_as stranger
-    assert_permission :may_admin_group?, false do
+    assert_permission :may_show_group_settings?, false do
       get :show, :group_id => @group.to_param
     end
     assert_select '.inline_message_list'

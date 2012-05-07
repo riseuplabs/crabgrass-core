@@ -248,7 +248,7 @@ class Activity < ActiveRecord::Base
       name = (self.object_type == 'Group') ? self.object.try.name : self.subject.try.name
     end
     name ||= self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
-    '<span class="%s">%s</span>' % [type, name]
+    '<%s>%s</%s>' % [type, name, type]
   end
 
 end

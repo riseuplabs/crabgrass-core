@@ -1,5 +1,12 @@
 en:
 
+  activerecord:
+    models:
+      group: "organization"
+      network: "network"
+      council: "council"
+      committee: "committee"
+
   ##
   ## BASIC TERMS
   ##
@@ -26,7 +33,7 @@ en:
   network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
   committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
-  council_description_details: "By default, all members of a group have full permission to modify a group. If you want restrict administrative powers to certain users, create a council and add users to it."
+  council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
   committee_choose_group: 'Choose a group for this committee:'
 
@@ -34,18 +41,9 @@ en:
   ## PERMISSIONS
   ##
 
-
-  ##!  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
-  ##!  group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
-  ##!  group_profile_description_may_see_networks: "Allow people to see what networks this %{group_type} is part of."
-  ##!  group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
-  ##!  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
-  ##!  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
-  ##!  group_profile_description_may_edit: "I am not sure what this does."
-
-  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
-  open_group: "Open Group"
-  open_group_description: "Users are immediately added to the group - request don't have to be approved"
+  may_request_membership_description: "A \"join %{group}\" link will appear on your %{group} page. This will send a request for membership that can be accepted or rejected."
+  open_group: "Open %{group}"
+  open_group_description: "Users are immediately added to the %{group} - no requests have to be approved"
 
   ##
   ## MEMBERSHIP
@@ -61,9 +59,17 @@ en:
   ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
 
   ##
+  ## EMAIL
+  ## 
+
+  group_invite_subject: 'Invitation to join group "%{group}"'
+  group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
+  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
+  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
+
+  ##
   ## UNSORTED
   ##
-
 
   ##!  group_join_chat: "Join Chat"
   ##!  group_privacy_settings: '%{group} Privacy Settings'
@@ -85,11 +91,13 @@ en:
 
   ##!  dont_understand_group_type: "Could not understand group type %{type}"
   ##!  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
-  group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
-  committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
-  networks_publicly_visible_description: Networks are viewable by non-members at %{domain}/yourgroupname
+  group_publicly_visible_description: %{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname.
+  committee_publicly_visible_description: Committees are visible to non-members at %{domain}/yourgroupname
+  networks_publicly_visible_description: Networks are visible to non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
+  group_members_publicly_visible_description: Members are visible to non-members at %{domain}/yourgroupname. %{group} can be listed on the profile page of members (%{domain}/username)
+  members_may_edit_wiki: "All members may edit the wiki"
+  members_may_edit_wiki_description: "If unchecked, only council members may edit the %{group} wiki."
   ##!  page_list: Page list
   ##!  recent_network_pages: "Recent Network Pages"
   ##!  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"

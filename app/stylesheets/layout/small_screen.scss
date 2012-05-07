@@ -69,6 +69,15 @@
     }
   }
 
+  //
+  // shaded table
+  //
+  table.shaded {
+    td.reflow {
+      display: block;
+      border-top: 0;
+    }
+  }
 }
 
 

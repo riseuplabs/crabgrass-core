@@ -119,17 +119,26 @@ en:
   #page_list_heading_views: "views"
   #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
 
+  ##
+  ## NOTIFICATION
+  ##
+
+  page_notice: "Page Notice"
+  email_notice_subject: 'Check out page "%{title}"'
+  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the message: %{message}"
+  email_notice_hello: "Hello, %{from} has sent you a web page."
+  email_notice_access: "You may access this page here:"
+  email_link_expires: "This link will expire in %{days} days."
+  page_notice_title: '<user>%{from}</user> sent you page "%{page_title}"'
+  page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}" with the message:'
+
   ##!  page_notice_message: "%{user} notified you about this page on %{date}"
   ##!  page_with_message: "with message"
-  pagination_next: "Next"
-  pagination_previous: "Previous"
-
-  ##!  pagination_older: "Older"
-  ##!  pagination_newer: "Newer"
-
   ##!  view_posts_link: "view"
 
-  # sidebar
+  ##
+  ## PAGE SIDEBAR
+  ##
 
   ##!  move_this_page: "Move This Page"
   ##!  move_page_to_different_group: "Move this page to a different group"
@@ -263,7 +272,9 @@ en:
   ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
   ##!  upload_file_help: "Required. Select a file to upload to this page."
 
-  # history
+  ##
+  ## PAGE HISTORY
+  ##
 
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"

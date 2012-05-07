@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class DiscussionPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class TaskListPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :task_lists, :tasks

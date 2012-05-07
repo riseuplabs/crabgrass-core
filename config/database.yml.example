@@ -1,7 +1,7 @@
 <%
   # use a database with the same name as the branch, if the branch is not master:
   db_name = 'crabgrass'
-  branch = `git branch`.split("\n").grep(/^\*/).first.sub('*','').strip
+  branch = `git branch`.split("\n").grep(/^\*/).first.try.sub('*','').strip
   if branch != 'master'
     db_name = branch
   end

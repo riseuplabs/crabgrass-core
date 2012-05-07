@@ -18,27 +18,3 @@
   }
 }
 
-//
-// A LIST OF CLICKABLE ROWS
-//
-
-ul.clickable {
-  border: 1px solid $ui_border_color;
-  & > li {
-    border-top: 1px solid $ui_border_color;
-    cursor: pointer;
-    padding: 8px;
-    @include gradient-vertical($white, $ui_fade_color);
-  }
-  & > li:first-child {
-    border-top: 0;
-    // @include border-radius(4px 4px 0 0);
-  }
-//  & > li:last-child {
-//    // border-bottom: 1px solid #ddd;
-//    // @include border-radius(0 0 4px 4px);
-//  }
-  & > li:hover {
-    background: $color_hover;
-  }
-}

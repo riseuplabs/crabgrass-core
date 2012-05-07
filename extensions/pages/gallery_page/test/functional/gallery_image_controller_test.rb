@@ -45,7 +45,7 @@ class GalleryImageControllerTest < ActionController::TestCase
       post :create, :page_id => @gallery.id,
        :assets => [upload_data('subdir.zip')]
     end
-    assert_equal Mime::JPG, Asset.last.content_type
+    assert_equal 'image/jpeg', Asset.last.content_type
     assert_equal @gallery.id, Asset.last.page_id
     assert_equal "fox", Asset.last.basename
   end

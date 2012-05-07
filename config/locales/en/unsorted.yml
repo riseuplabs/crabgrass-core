@@ -506,23 +506,6 @@ en:
   ## ^^ no longer used
 
   ##
-  ## EMAIL
-  ##
-
-  group_invite_subject: "Invitation to join group \"%{group}\""
-  group_invite_email: '%{from_user} has invited you to join group %{group}. If you wish to join this group, click here: %{accept_invite_link} The home page of this group can be found here: %{group_home_link} If you do not wish to join this group, simply ignore this email.'
-
-  email_notice_subject: 'Check out page "%{title}"'
-  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the following message: %{message}"
-  email_notice_hello: "Hello, %{from} has sent you a web page."
-  email_notice_access: "You may access this page here:"
-  email_link_expires: "This link will expire in %{days} days."
-
-  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
-  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
-
-
-  ##
   ## PEOPLE (i.e., PeopleController)
   ##
 
@@ -559,6 +542,7 @@ en:
   login_required_description: 'Please login to perform that action.'
   permission_denied_description: 'You do not have sufficient permission to perform that action.'
   permission_denied: 'Permission Denied'
+
   ##
   ## CHAT
   ##
@@ -570,7 +554,6 @@ en:
   ##!  chat_archive_link: "view the chat room archive"
   ##!  leave_channel: "Leave channel"
   ##!  trash_chat_message: "move message to trash"
-
 
   ##
   ## TAGS

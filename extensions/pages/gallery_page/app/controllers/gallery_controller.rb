@@ -1,9 +1,9 @@
 class GalleryController < Pages::BaseController
 
-  stylesheet 'gallery'
   stylesheet 'upload', :only => :edit
   javascript :upload, :only => :edit
-  permissions 'gallery'
+
+  guard_like :page
 
   def show
     @images = @page.images.paginate(:page => params[:page])
@@ -14,37 +14,11 @@ class GalleryController < Pages::BaseController
     @images = @page.images.paginate(:page => params[:page])
   end
 
-  # maybe call this update?
-  # TODO: this has not been tested or played with
-  # what exactly is this updating?
+  # removed an non ajax fallback, azul
   def update
-    # kclair: i think all of the sort functionality should really update the images directly and use the GalleryImageController
-    if ids = params[:sort_gallery]
-      text =""
-      ids.each_with_index do |id, index|
-        showing = @page.showings.find_by_asset_id(id)
-        showing.insert_at(index)
-      end
-    elsif params[:id]
-      # TODO: make sure the non ajax fallback still works
-      # This should most likely move into the GalleryImageController
-      showing = @page.showings.find_by_asset_id(params[:id])
-      new_pos = (params[:direction] == 'left') ? showing.position - 1 :
-        showing.position + 1
-      new_pos = @page.showings.size-1 if new_pos < 0
-      new_pos = 0 if new_pos > new_pos.size-1
-      showing.insert_at(new_pos)
-    end
-    @page.update_attributes!(params[:page])
+    @page.sort_images params[:sort_gallery]
     current_user.updated(@page)
-    if request.xhr?
-      render :text => I18n.t(:order_changed), :layout => false
-    else
-      flash_message_now I18n.t(:order_changed)
-      redirect_to(:controller => 'gallery',
-                  :action => 'edit',
-                  :page_id => @page.id)
-    end
+    render :text => I18n.t(:order_changed), :layout => false
   rescue => exc
     render :text => I18n.t(:error_saving_new_order_message, :error_message => exc.message)
   end
