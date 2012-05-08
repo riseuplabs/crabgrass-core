@@ -72,23 +72,24 @@ function initFileOnlyAjaxUpload() {
   fileInput.onchange = function (evt) {
 
     // FormData only has the file
-    var form = document.getElementById('form-id');
     var fileInput = document.getElementById('file-id');
     var addedFiles = fileInput.files;
     for (var i = 0; i < addedFiles.length; i += 1) {
       files.push(addedFiles[i]);
     }
-    if(!uploading) startUpload(form.action);
+    if(!uploading) startUpload();
   }
 }
 
 function startUpload(action) {
+	var form = document.getElementById('form-id');
+	var action = form.action;
   uploading = true;
   forEachSeries(files, function(file, callback) {
 
     onProcessingFile(file);
     // Since this is the file only, we send it to a specific location
-    var formData = new FormData();
+    var formData = new FormData(form);
     formData.append('asset[uploaded_data]', file);
     // Code common to both variants
     sendXHRequest(formData, action, callback);
@@ -138,6 +139,7 @@ function onloadstartHandler(evt) {
 
 // Handle the end of the transmission
 function onloadHandler(evt) {
+  var progress = document.getElementById('upload-progress');
   // TODO: make sure this is not hidden behind progress bar
   updateUploadState("upload successful ...");
   progress.innerHTML = '&nbsp;100&nbsp;%';
@@ -164,9 +166,8 @@ function onreadystatechangeHandler(evt) {
     return;
   }
 
-  if (status == '200' && evt.target.responseText) {
-    var result = document.getElementById('result');
-    result.innerHTML = result.innerHTML + '<div class="span3"> <h3>Uploaded File:</h3><pre>' + evt.target.responseText + '</pre></div>';
+	if (status == '200' && evt.target.responseText) {
+		// TODO: respond to successful upload
   }
 }
 

@@ -30,6 +30,7 @@ class Gallery < Page
   #
   # This method always returns true. On failure an error is raised.
   def add_attachment!(asset, options={})
+    asset = Asset.build(asset.merge(:parent_page => self))
     check_type!(asset)
     asset = super
     Showing.create! :gallery => self, :asset => asset
