@@ -10,9 +10,8 @@
   %span#upload-message.left
 
 - form_for([@page.becomes(Page), Asset.new], :html => {:enctype=>"multipart/form-data", :id=>'form-id'}) do |f|
-  #file-drop.drop.her-unit
-    %h2 Add assets to the page... </h2>
-    %p Drop them here or click the button
+  #file-drop.drop.hero-unit
+    %p Drop files here or click the button
     #file-sleect.upload.btn.btn-primary.btn-large.hook
       %input#file-id.file.handler(multiple="multiple" type="file" name="our-file")
         Select files

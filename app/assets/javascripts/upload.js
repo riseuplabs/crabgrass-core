@@ -32,7 +32,9 @@ document.observe("dom:loaded", function() {
     // Change the support message and enable the upload button
     var notice = document.getElementById('support-notice');
     // var uploadBtn = document.getElementById('upload-button-id');
-    notice.innerHTML = "Your browser supports HTML uploads. Go try me! :-)";
+    if (notice) {
+      notice.innerHTML = "Your browser supports HTML uploads. Go try me! :-)";
+    }
     // uploadBtn.removeAttribute('disabled');
 
     // Init the single-field file upload
@@ -66,8 +68,9 @@ function initFullFormAjaxUpload() {
 }
 
 function initFileOnlyAjaxUpload() {
-  var fileSelect = document.getElementById('file-select');
   var fileInput = document.getElementById('file-id');
+
+  if (!fileInput) return;
 
   fileInput.onchange = function (evt) {
 
