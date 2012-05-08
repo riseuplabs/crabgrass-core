@@ -17,7 +17,6 @@ userpage_<%=i%>_<%=j%>:
   access: <%= rand(2)+1 %>
   viewed: <%= rand(2) %>
   resolved: <%= rand(2) %>
-  inbox: <%= rand(5) == 0 %>
   <% rand(4) == 0 %>
   changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
   <% end %>
