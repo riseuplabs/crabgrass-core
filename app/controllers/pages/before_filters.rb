@@ -86,7 +86,6 @@ module Pages::BeforeFilters
   def update_viewed
     if @upart and @page
       @upart.viewed_at = Time.now
-      @upart.notice = nil
       @upart.viewed = true
     end
     true
