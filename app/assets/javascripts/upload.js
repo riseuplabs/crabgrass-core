@@ -86,7 +86,7 @@ function initFileOnlyAjaxUpload() {
 
 function startUpload(action) {
 	var form = document.getElementById('form-id');
-	var action = form.action;
+	var action = form.action + '.json';
   uploading = true;
   forEachSeries(files, function(file, callback) {
 
