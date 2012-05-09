@@ -9,4 +9,8 @@
 
 = render :partial => 'gallery/draggable_images'
 
+%h2.title
+  = I18n.t :add_images_or_zips
+%p.info
+  = I18n.t :add_images_or_zips_explaination
 = render :partial => 'common/asset_upload', :locals => { :target => @page }
