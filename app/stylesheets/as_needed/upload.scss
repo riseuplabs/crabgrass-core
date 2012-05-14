@@ -18,10 +18,15 @@
 }
 
 .drop {
-  border:lightgray dashed 5px; 
+  border:lightgray dotted 5px; 
   display:block; 
   border-radius: 20px;
   margin: 10px;
+}
+
+
+.drop.dragging {
+  border:gray dotted 5px; 
 }
 
 .file.handler {

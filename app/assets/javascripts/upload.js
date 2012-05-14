@@ -1,4 +1,4 @@
-var files = [];
+var pendingFiles = [];
 var uploading = false;
 
 // Function that will allow us to know if Ajax uploads are supported
@@ -42,46 +42,52 @@ document.observe("dom:loaded", function() {
   }
 });
 
-function initFullFormAjaxUpload() {
-  var form = document.getElementById('form-id');
-  form.onsubmit = function() {
-    // FormData receives the whole form
-    var formData = new FormData(form);
-
-    // FormData only has the file
-    var fileInput = document.getElementById('file-id');
-    var files = fileInput.files;
-    for (var i = 0; i < files.length; i++) {
-      file = files.item(i);
-      formData.append('asset' + i, file);
-    }
-
-    // We send the data where the form wanted
-    var action = form.getAttribute('action');
-
-    // Code common to both variants
-    sendXHRequest(formData, action);
-
-    // Avoid normal form submission
-    return false;
+function initFileOnlyAjaxUpload() {
+  var fileInput = document.getElementById('file-id');
+  var fileDrop = document.getElementById('file-drop');
+  if (fileInput) fileInput.onchange = onFileSelected;
+  if (fileDrop) {
+    fileDrop.addEventListener("drop", onFileDropped, true);
+    fileDrop.addEventListener("dragenter", onDragEnter, true);
+    fileDrop.addEventListener("dragover", onDragOver, true);
+    fileDrop.addEventListener("dragleave", onDragLeave, true);
   }
 }
 
-function initFileOnlyAjaxUpload() {
+function onDragEnter(e) {
+  e.currentTarget.classList.add("dragging");
+  e.stopPropagation();  
+  e.preventDefault(); 
+}
+
+function onDragOver(e) {
+  e.stopPropagation();  
+  e.preventDefault(); 
+}
+
+function onDragLeave(e) {
+  e.currentTarget.classList.remove("dragging");
+  e.stopPropagation();  
+  e.preventDefault(); 
+}
+
+function onFileSelected(e) {
+  // FormData only has the file
   var fileInput = document.getElementById('file-id');
+  addFiles(fileInput.files);
+}
 
-  if (!fileInput) return;
+function onFileDropped(e) {
+  addFiles(e.dataTransfer.files);
+  e.stopPropagation();  
+  e.preventDefault(); 
+}
 
-  fileInput.onchange = function (evt) {
-
-    // FormData only has the file
-    var fileInput = document.getElementById('file-id');
-    var addedFiles = fileInput.files;
-    for (var i = 0; i < addedFiles.length; i += 1) {
-      files.push(addedFiles[i]);
-    }
-    if(!uploading) startUpload();
+function addFiles(newFiles) {
+  for (var i = 0; i < newFiles.length; i += 1) {
+    pendingFiles.push(newFiles[i]);
   }
+  if(!uploading) startUpload();
 }
 
 function startUpload() {
@@ -93,7 +99,7 @@ function startUpload() {
   whilst(getNextFile, uploadFile, done);
 
   function getNextFile() {
-    return current = files.shift();
+    return current = pendingFiles.shift();
   }
 
   function uploadFile(callback) {

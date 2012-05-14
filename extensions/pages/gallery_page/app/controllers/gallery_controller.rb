@@ -2,7 +2,7 @@ class GalleryController < Pages::BaseController
 
   stylesheet 'upload', :only => :edit
   stylesheet 'gallery'
-  javascript :upload, :only => :edit
+# included in base for now  javascript :upload, :only => :edit
 
   guard_like :page
 
