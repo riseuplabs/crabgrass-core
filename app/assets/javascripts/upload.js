@@ -84,19 +84,28 @@ function initFileOnlyAjaxUpload() {
   }
 }
 
-function startUpload(action) {
-	var form = document.getElementById('form-id');
-	var action = form.action + '.json';
+function startUpload() {
+  var form = document.getElementById('form-id');
+  var action = form.action;
   uploading = true;
-  forEachSeries(files, function(file, callback) {
+  var current;
+  // TODO: we already have a request queue somewhere - combine!
+  whilst(getNextFile, uploadFile, done);
 
-    onProcessingFile(file);
+  function getNextFile() {
+    return current = files.shift();
+  }
+
+  function uploadFile(callback) {
+    onProcessingFile(current);
     // Since this is the file only, we send it to a specific location
     var formData = new FormData(form);
-    formData.append('asset[uploaded_data]', file);
+    formData.append('asset[uploaded_data]', current);
     // Code common to both variants
     sendXHRequest(formData, action, callback);
-  }, function() {uploading = false});
+  }
+
+  function done() {uploading = false};
 }
 
 // Once the FormData instance is ready and we know
@@ -115,6 +124,8 @@ function sendXHRequest(formData, uri, callback) {
 
   // Set up request
   xhr.open('POST', uri, true);
+  // make rails recognize this as xhr
+  xhr.setRequestHeader('X-Requested-With','XMLHttpRequest')
 
   // Fire!
   xhr.send(formData);
@@ -169,34 +180,25 @@ function onreadystatechangeHandler(evt) {
     return;
   }
 
-	if (status == '200' && evt.target.responseText) {
-		// TODO: respond to successful upload
+  if (status == '200' && evt.target.responseText) {
+    // TODO: is this the way to go?
+    var resp = evt.target.responseText;
+    eval(resp);
   }
 }
 
 // taken from the brilliant async.js
-function forEachSeries(arr, iterator, callback) {
-  if (!arr.length) {
-    return callback();
-  }
-  var completed = 0;
-  var iterate = function () {
-    iterator(arr[completed], function (err) {
+function whilst(test, iterator, callback) {
+  if (test()) {
+    iterator(function (err) {
       if (err) {
-        callback(err);
-        callback = function () {};
+        return callback(err);
       }
-      else {
-        completed += 1;
-        if (completed === arr.length) {
-          callback();
-        }
-        else {
-          iterate();
-        }
-      }
+      whilst(test, iterator, callback);
     });
-  };
-  iterate();
+  }
+  else {
+    callback();
+  }
 };
 

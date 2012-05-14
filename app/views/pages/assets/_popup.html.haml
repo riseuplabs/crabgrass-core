@@ -1,7 +1,7 @@
 = refresh_sidebar_on_close
 - assets = @page.assets
 %h2.first{:class => (:hidden if assets.blank?)}= :current_attachments.t
-%ul.assets_list
+%ul#assets_list
   = render :partial => '/common/assets/asset_as_li', :collection => assets
 %br.clear
 

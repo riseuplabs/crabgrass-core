@@ -15,16 +15,8 @@ class Pages::AssetsController < Pages::SidebarsController
   end
 
   def create
-    asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    @asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
     current_user.updated(@page)
-    respond_to do |format|
-      format.json { render :json => {:url => asset.url} }
-      format.html do
-        responds_to_parent do
-          render
-        end
-      end
-    end
   end
 
   def destroy
