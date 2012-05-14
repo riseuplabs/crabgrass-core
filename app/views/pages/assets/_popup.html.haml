@@ -1,25 +1,12 @@
 = refresh_sidebar_on_close
+- assets = @page.assets
+%h2.first{:class => (:hidden if assets.blank?)}= :current_attachments.t
+%ul.assets_list
+  = render :partial => '/common/assets/asset_as_li', :collection => assets
+%br.clear
 
-%h2.first= :current_attachments.t
-%p
-  = :use_radio_buttons_to_select_page_cover.t
-  %table.styled
-    - if @page.assets.any?
-      = asset_rows
-      %tr
-        %td
-          = remove_cover_asset_checkbox
-        %td
-          = :none.t
-          %td  
-          %td  
-    - else
-      %tr
-        %td
-          (#{I18n.t(:none)})
-  %h2= :add_new_attachment.t
-  = asset_upload_form_for(@page)
-  .buttons
-    - form_remote_tag( :url => page_assets_path(@path), :page_id => @page.id, :loading => show_spinner('popup')) do
-      = spinner 'popup'
-      = close_modal_button
+%h2= :add_new_attachment.t
+= asset_upload_form_for(@page)
+.buttons
+  - # this used to include some ajax form to change the page cover.
+  = close_modal_button

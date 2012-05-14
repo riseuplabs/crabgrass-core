@@ -1,0 +1,5 @@
+- asset = asset_as_li
+%li.asset.box[asset]
+  %h3= link_to h(asset.basename), asset.url
+  = link_to_asset asset, :small
+  = remove_asset_button asset

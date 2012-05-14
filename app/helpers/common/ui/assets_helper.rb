@@ -1,21 +1,26 @@
 module Common::Ui::AssetsHelper
 
+# this is currently unused - assets come in lists now.
   def asset_rows
     render :partial => 'common/assets/asset_as_row',
       :collection => (@assets || @page.assets)
   end
 
-  def remove_asset_link(asset)
-    link = link_to_remote(
-       "remove",
-       { :url => page_asset_path(@page, asset.id),
-          :method => :delete,
-          :complete => hide(dom_id(asset)) },
-#      :html => {:style => 'display:inline; padding:0;'},
-      { :confirm => :destroy_confirmation.t(:thing => 'attachment'),
-#      :loading  => show_spinner('popup'),
-        :icon => 'minus'}
-    )
+  def remove_asset_button(asset)
+    remove_asset_link(asset, {:icon => nil}, {:class => 'btn btn-danger btn-mini'})
+  end
+
+  def remove_asset_link(asset, options = {}, html_options = {})
+    options.reverse_merge!({
+      :url => page_asset_path(@page, asset.id),
+      :method => :delete,
+      :complete => hide(dom_id(asset)),
+      :icon => 'minus'
+    })
+    html_options.reverse_merge!({
+      :confirm => :destroy_confirmation.t(:thing => 'attachment')
+    })
+    link = link_to_remote("remove", options, html_options)
   end
 
   def update_cover_asset_checkbox(asset)
