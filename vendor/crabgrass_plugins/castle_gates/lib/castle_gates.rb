@@ -9,6 +9,8 @@ module CastleGates
 
 end
 
-['key', 'locks', 'gate', 'gate_set', 'acts_as_castle', 'holder', 'acts_as_holder'].each do |file|
+['key', 'locks', 'gate', 'gate_set', 'acts_as_castle',
+  'holder_definition', 'holder', 'acts_as_holder',
+  'associations'].each do |file|
   require "#{File.dirname(__FILE__)}/castle_gates/#{file}"
 end

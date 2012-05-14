@@ -6,108 +6,156 @@ module CastleGates
 module Castle
 module InstanceMethods
 
-  def has_access!(lock, holder)
-    if has_access?(lock, holder)
-      return true
-    else
-      raise CastleGates.exception_class.new
-    end
-  end
-
-  def has_access?(lock, holder = User.current)
-    holder = :public if holder.is_a? UnauthenticatedUser
-    if holder == User.current
-      # these might be cached through AR.
-      current_user_keys.open?(lock)
-    else
-      # the named scope might have changed so we need to reload.
-      keys.for_holder(holder).open?(lock, true)
-    end
-  end
-
   #
   # returns true if the gate is openable by the holder.
   #
   # for example:
-  # 
-  #   castle.access?(:to => :door, :for => current_user)
+  #
+  #   castle.access?(current_user => :door)
   #
   def access?(args)
-    holder = Holder.get(args[:for])
-    gate   = self.class.gate_set.get(args[:to])
-    gate.opened_by? keys.for_holder(holder)
-  end
+    holder, gate_symbol = args.first
 
-  # # for a single holder call
-  # # grant! user.friends, [:pester, :see]
-  # #
-  # # for multiple holders you can use a hash instead:
-  # # grant! :see => :public, :pester => [user.friends, user.peers]
-  # #
-  # # Options:
-  # # :reset => remove all other locks granted to the holders specified
-  # #           (defaults to false)
-  #def grant!(*args)
-  #   options = args.pop if args.count > 1 and args.last.is_a? Hash
-  #   Locks.each_holder_with_locks(*args) do |holder, locks|
-  #     key = keys.find_or_initialize_by_holder(holder)
-  #     key.grant! locks, options
-  #     key
-  #   end
-  # end
+    keys     = keys_for_holder(holder)
+    bitfield = gate_bitfield_for_keys(keys, holder)
+    gate     = gate_set.get(gate_symbol)
 
-  def grant_access!(args)
-    holders = args[:for]
-    gates = args[:to]
-    raise ArgumentError.new('argument must be in the form {:to => x, :for => y}') unless holders and gates
-
-    Holder.list(holders).each do |holder|
-      key = keys.find_or_initialize_by_holder_code(holder.code)
-      key.add_gates! gates
+    unless gate
+      raise ArgumentError.new "Gate '#{gate_symbol}' unknown"
     end
+
+    gate.opened_by? bitfield
   end
 
-  # no options so far
-  # def revoke!(*args)
-  #   Locks.each_holder_with_locks(*args) do |holder, locks|
-  #     key = keys.find_or_initialize_by_holder(holder)
-  #     key.revoke! locks
-  #     key
-  #   end
-  # end
+  #
+  # grant access to a gate
+  #
+  # adds the right bits to specified holder(s) keys so that they can open the specified gate(s)
+  #
+  # if the keys don't exist, they are created.
+  #
+  def grant_access!(args)
+    holders, gates = args.first
+
+    unless holders and gates
+      raise ArgumentError.new('argument must be in the form {holder => gate}')
+    end
+    unless gate_set.gates_exist?(gates)
+      raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
+    end
+
+    as_array(holders).each do |holder|
+      key = keys.find_by_holder(holder)
+      key.add_gates! gates
+      if self.respond_to? :after_grant_access
+        as_array(gates).each do |gate|
+          after_grant_access(holder, gate)
+        end
+      end
+    end
+    reset_key_cache
+  end
+
+  #
+  # remove access to a gate
+  #
+  # zeros out the right bits on the specified holder(s) keys so that they cannot open the specified gate(s)
+  #
+  # if the keys don't exist, they are created.
+  #
+  def revoke_access!(args)
+    holders, gates = args.first
+
+    unless holders and gates
+      raise ArgumentError.new('argument must be in the form {holder => gate}')
+    end
+    unless gate_set.gates_exist?(gates)
+      raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
+    end
+
+    as_array(holders).each do |holder|
+      key = keys.find_by_holder(holder)
+      key.remove_gates! gates
+      if self.respond_to? :after_revoke_access
+        as_array(gates).each do |gate|
+          after_revoke_access(holder, gate)
+        end
+      end
+    end
+    reset_key_cache
+  end
 
   # this appears to be only used for testing.
-  def keys_by_lock
-    keys.inject({}) do |hash, key|
-      key.locks.each do |lock|
-        hash[lock] ||= []
-        hash[lock].push key
-      end
-      hash
-    end
-  end
+  #def keys_by_lock
+  #  keys.inject({}) do |hash, key|
+  #    key.locks.each do |lock|
+  #      hash[lock] ||= []
+  #      hash[lock].push key
+  #    end
+  #    hash
+  #  end
+  #end
 
-  def gates
-    self.class.gates
+  def gate_set
+    self.class.gate_set
   end
 
   ##
   ## CALLBACKS
   ##
 
-  #
-  # implement as you will
-  #
-  def after_key_update(key)
-  end
-
   private
+
+  ##
+  ## UTILITIES
+  ##
 
   def as_array(obj)
     if obj.is_a? Array
       obj
     else
       [obj]
+    end
+  end
+
+  ##
+  ## CACHE
+  ##
+
+  #
+  # this does not really return the keys. it returns a named scope
+  # to find the keys that correspond to this castle and the holder
+  # (and all the associated holders)
+  #
+  # the result is cached.
+  #
+  def keys_for_holder(holder)
+    @key_cache ||= {}
+    @key_cache[Holder.code(holder)] ||= keys.for_holder(holder)
+  end
+
+  #
+  # just like keys.reset, but works with our manual caching.
+  #
+  def reset_key_cache
+    @key_cache = {}
+    @gate_bitfield_cache = {}
+  end
+
+  #
+  # returns the aggregated gate_bitfield for a set of keys.
+  # the result is cached on the holder.
+  #
+  def gate_bitfield_for_keys(keys, holder)
+    @gate_bitfield_cache ||= {}
+    @gate_bitfield_cache[Holder.code(holder)] ||= begin
+      bitfield = Key::gate_bitfield(keys)
+      if bitfield.nil?
+        # no actual keys, so lets fall back to the defaults
+        gate_set.default_bits(holder)
+      else
+        bitfield
+      end
     end
   end
 

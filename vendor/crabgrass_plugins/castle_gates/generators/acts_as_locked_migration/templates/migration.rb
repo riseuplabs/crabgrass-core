@@ -4,7 +4,7 @@ class InstallActsAsLocked < ActiveRecord::Migration
       p.integer :castle_id
       p.string  :castle_type
       p.integer :holder_code
-      p.integer :gate_bitfield, :default => 0
+      p.integer :gate_bitfield, :default => 1
     end
     add_index :keys, [:castle_id, :castle_type, :holder_code]
   end
