@@ -11,6 +11,8 @@
 
 - form_for([@page.becomes(Page), Asset.new], :html => {:enctype=>"multipart/form-data", :id=>'form-id'}) do |f|
   #file-drop.drop.hero-unit
+    -if local_assigns[:message]
+      %p=message
     %p Drop files here or click the button
     #file-select.upload.btn.btn-primary.btn-large.hook
       %input#file-id.file.handler(multiple="multiple" type="file" name="our-file")
