@@ -103,7 +103,11 @@ function startUpload() {
     sendXHRequest(formData, action, callback);
   }
 
-  function done() {uploading = false};
+  function done() {
+    uploading = false
+    var upload = document.getElementById('current-upload');
+    upload.setAttribute("class", "hidden")
+  };
 }
 
 // Once the FormData instance is ready and we know
