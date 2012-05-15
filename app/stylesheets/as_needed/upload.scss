@@ -40,27 +40,3 @@
   z-index: 1; 
   cursor: pointer;
 }
-
-.progress-container {
-  position: relative;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin-left: 200px;
-  height: 18px;
-  border: #D6E9C6 solid 1px;
-  border-radius: 4px;
-
-  .bar {
-    left: 0px;
-    top: 0px;
-    position: absolute;
-    margin-top: 0px;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-    border: #D6E9C6 solid 1px;
-    border-radius: 4px;
-    background: #DFF0D8;
-    color: #468847;
-    height: 16px;
-  }
-}

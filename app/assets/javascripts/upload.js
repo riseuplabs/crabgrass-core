@@ -29,14 +29,6 @@ function supportAjaxUploadWithProgress() {
 document.observe("dom:loaded", function() {
   if (supportAjaxUploadWithProgress()) {
     // Ajax uploads are supported!
-    // Change the support message and enable the upload button
-    var notice = document.getElementById('support-notice');
-    // var uploadBtn = document.getElementById('upload-button-id');
-    if (notice) {
-      notice.innerHTML = "Your browser supports HTML uploads. Go try me! :-)";
-    }
-    // uploadBtn.removeAttribute('disabled');
-
     // Init the single-field file upload
     initFileOnlyAjaxUpload();
   }
