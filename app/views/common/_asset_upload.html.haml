@@ -1,13 +1,5 @@
--# This is a file upload that uses an iframe.
--#
--# Options:
--# * target -> Object to add the asset to, currently we support Wiki and Page
-
-#current-upload.hidden.alert
-  %span#upload-filename.left
-  .progress.progress-striped
-    #upload-progress.bar(style="width: 0%")
-  %span#upload-message.left
+- # target for the status messages and progress bar
+#current-upload.hidden
 
 - form_for([@page.becomes(Page), Asset.new], :html => {:enctype=>"multipart/form-data", :id=>'form-id'}) do |f|
   #file-drop.drop.hero-unit
