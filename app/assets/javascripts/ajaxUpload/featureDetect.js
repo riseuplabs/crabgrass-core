@@ -1,5 +1,5 @@
 // Function that will allow us to know if Ajax uploads are supported
-function supportAjaxUploadWithProgress() {
+ajaxUpload.isSupported = function() {
   return supportFileAPI() && supportAjaxUploadProgressEvents() && supportFormData();
 
   // Is the File API supported?
