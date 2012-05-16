@@ -1,4 +1,4 @@
-var uploadFile = (function(){
+ajaxUpload.upload = (function(){
   var file, action, percent, message, form, processing;
 
   function init(_form) {
@@ -12,7 +12,7 @@ var uploadFile = (function(){
     formData.append('asset[uploaded_data]', file);
     // Code common to both variants
     sendXHRequest(formData, callback);
-    uploadFile.changed();
+    ajaxUpload.upload.changed();
   }
 
   function sendXHRequest(formData, callback) {
@@ -37,7 +37,7 @@ var uploadFile = (function(){
     // Handle the start of the transmission
     function onloadstartHandler(evt) {
       message = "upload started ...";
-      uploadFile.changed();
+      ajaxUpload.upload.changed();
     }
 
     // Handle the end of the transmission
@@ -45,12 +45,12 @@ var uploadFile = (function(){
       message = "processing upload ...";
       percent = 100;
       processing = true;
-      uploadFile.changed();
+      ajaxUpload.upload.changed();
     }
 
     function onprogressHandler(evt) {
       percent = Math.round(evt.loaded/evt.total*100);
-      uploadFile.changed();
+      ajaxUpload.upload.changed();
     }
 
     // Handle the response from the server
@@ -68,7 +68,7 @@ var uploadFile = (function(){
       if (status == '200' && evt.target.responseText) {
         // TODO: is this the way to go?
         processing = false;
-        uploadFile.changed();
+        ajaxUpload.upload.changed();
         var resp = evt.target.responseText;
         eval(resp);
       }

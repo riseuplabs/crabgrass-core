@@ -1,10 +1,11 @@
-var uploadView = {
+ajaxUpload.view = {
   container: null,
   init: function(_container){
     this.container =_container;
   },
-  render: function() {
-    if (!uploadList.uploading && !uploadFile.isProcessing()) {
+  render: (function() {
+    if (!this.container) return;
+    if (!ajaxUpload.files.uploading && !ajaxUpload.upload.isProcessing()) {
       this.hide();
       return
     }
@@ -14,19 +15,19 @@ var uploadView = {
                '</div>' +
                '<span class="left">#{message}</span>';
     this.container.innerHTML = html.interpolate({
-      filename: uploadFile.getFile().name,
-      percent: uploadFile.getPercent(),
-      message: uploadFile.getMessage(),
-      left: uploadList.pendingFiles.length
+      filename: ajaxUpload.upload.getFile().name,
+      percent: ajaxUpload.upload.getPercent(),
+      message: ajaxUpload.upload.getMessage(),
+      left: ajaxUpload.files.pendingFiles.length + 1
     });
     this.container.classList.remove("hidden");
-  },
+  }),
   hide: function() {
-    if (uploadView.container.innerHTML != "") {
-      setTimeout(function () {
-        uploadView.container.classList.add("hidden")
-        uploadView.container.innerHTML = ""
-      },1000);
+    if (this.container.innerHTML != "") {
+      setTimeout((function () {
+        this.container.classList.add("hidden")
+        this.container.innerHTML = ""
+      }).bind(this),1000);
     }
   }
 }

@@ -1,9 +1,9 @@
-var uploadList = {
+ajaxUpload.files = {
   // view callback
   changed: function(){},
   pendingFiles: [],
   uploading: false,
-  addFiles: function(newFiles) {
+  add: function(newFiles) {
     for (var i = 0; i < newFiles.length; i += 1) {
       this.pendingFiles.push(newFiles[i]);
     }
@@ -12,14 +12,14 @@ var uploadList = {
   startUpload: function() {
     this.uploading = true;
     // TODO: we already have a request queue somewhere - combine!
-    whilst(getNextFile, uploadFile.start, done);
+    whilst(getNextFile.bind(this), ajaxUpload.upload.start, done.bind(this));
 
     function getNextFile() {
-      return uploadFile.setFile(uploadList.pendingFiles.shift());
+      return ajaxUpload.upload.setFile(this.pendingFiles.shift());
     }
 
     function done() {
-      uploadList.uploading = false
+      this.uploading = false
     };
   }
 }

@@ -9,7 +9,8 @@ document.observe("dom:loaded", function() {
     ajaxUpload.init({
       form: 'form-id',
       fileDrop: 'file-drop',
-      fileInput: 'file-id'
+      fileInput: 'file-id',
+      progress: 'current-upload'
     });
   }
 });
