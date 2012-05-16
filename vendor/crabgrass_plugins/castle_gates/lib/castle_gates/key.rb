@@ -21,9 +21,28 @@ module CastleGates
   class Key < ActiveRecord::Base
     belongs_to :castle, :polymorphic => true
 
-    named_scope :for_holder, lambda { |holder|
-      { :conditions => conditions_for_holder(holder) }
-    }
+    #
+    # queries keys that are associated with the holder, or any of its 'subholders'
+    #
+    named_scope(:for_holder, lambda { |holder|
+      { :conditions => conditions_for_holder(Holder[holder]) }
+    })
+
+    #
+    # only returns keys that correspond to the passed in holder names.
+    #
+    # OPTIMIZE: this is an inefficient finder. It would be better
+    # to store the holder_code in a separate field in the keys table.
+    #
+    named_scope(:limit_by_holders, lambda { |holders|
+      holders = [holders] unless holders.is_a?(Array)
+      holder_codes = holders.collect{|holder| Holder[holder].code_prefix.to_s}
+        # ^^ MySQL and SQLite both support substr of integers. For SQLite, however,
+        # the value it is compared to must be a string. MySQL allows you to compare with
+        # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
+        # As noted above, this is not very optimized.
+      { :conditions => ['substr(keys.holder_code,1,1) IN (?)', holder_codes] }
+    })
 
     #
     # Returns the gate_bitfield for a set of keys (defined by the named scope, not
@@ -83,7 +102,7 @@ module CastleGates
     end
 
     def self.conditions_for_holder(holder)
-      conditions_for_holder_codes(Holder.all_codes_for_holder(holder))
+      conditions_for_holder_codes(holder.all_codes)
     end
 
     private

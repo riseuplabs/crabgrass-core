@@ -1,5 +1,5 @@
 #
-# Castle Class Methods
+# Class Methods for Castles
 #
 
 module CastleGates
@@ -29,13 +29,13 @@ module ClassMethods
     gate_set.add( Gate.new(*args) )
   end
 
-  #
-  # class attribute accessor
-  #
   def gate_set
     @gate_set ||= GateSet.new
   end
-  alias :gates :gate_set
+
+  def gates
+    gate_set.values
+  end
 
 end
 end

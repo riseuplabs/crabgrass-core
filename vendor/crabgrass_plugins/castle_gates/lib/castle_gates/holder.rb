@@ -1,12 +1,112 @@
 #
-# A singleton class to manage holders
+# A Holder is a thin proxy around some *thing* that might hold keys.
+#
+# The actual thing might be an ActiveRecord or ActiveRecord::Association, or
+# it could be a symbol.
 #
 
 module CastleGates
 class Holder
 
+  attr_accessor :keys
+
+  def initialize(object)
+    @object = object
+  end
+
   ##
-  ## VARIABLES
+  ## INSTANCE METHODS
+  ##
+
+  #
+  # A Holder is a proxy for the real holder.
+  #
+
+  def method_missing(meth, *args, &block)
+    @object.send(meth, *args, &block)
+  end
+
+  def respond_to?(meth)
+    @object.respond_to?(meth)
+  end
+
+  def ==(other_object)
+    @object == other_object
+  end
+
+  #
+  # returns the holder definition
+  #
+  def definition
+    @definition ||= begin
+      if @object.is_a? Symbol
+        definition = self.class.holder_defs[@object]
+      elsif @object.respond_to? :holder_definition
+        definition = @object.holder_definition
+      end
+      raise ArgumentError.new("not a key holder: %s" % @object.inspect) unless definition
+      definition
+    end
+  end
+
+  ##
+  ## KEYS
+  ##
+
+  def keys_to(castle)
+    castle.keys.find_by_holder(self)
+  end
+
+  ##
+  ## CODES
+  ##
+
+  #
+  # returns a holder code prefix
+  # this is the determined by the holder *type*
+  #
+  def code_prefix
+    definition.prefix
+  end
+
+  #
+  # returns the holder code suffix.
+  # this is determined by the holder *object*
+  # (for abstract holders with no objects, this returns empty string)
+  #
+  def code_suffix
+    definition.abstract ? "" : @object.holder_code_suffix
+  end
+
+  #
+  # returns a holder code for any object
+  #
+  def code
+    "#{code_prefix}#{code_suffix}"
+  end
+
+  #
+  # returns all the holder codes that this holder 'owns'
+  #
+  # In order to specify what holders a holder owns, the holder
+  # must implement the method 'holders' or 'holder_codes'
+  #
+  def all_codes
+     codes = []
+     if @object.respond_to?(:holders) && holder_list = @object.holders
+       codes = holder_list.collect {|holder| Holder.code(holder)}
+     elsif @object.respond_to?(:holder_codes) && return_value = @object.holder_codes
+       if return_value.is_a? Hash
+         codes = self.class.codes_from_hash(return_value)
+       elsif return_value.is_a? Array
+         codes = self.class.codes_from_array(return_value)
+       end
+     end
+     codes << self.code
+  end
+
+  ##
+  ## CLASS METHODS
   ##
 
   #
@@ -14,32 +114,25 @@ class Holder
   #
   class << self
     attr_reader :holder_defs
+    attr_reader :holder_defs_by_prefix
   end
   @holder_defs = {}
-
-  ##
-  ## CLASS METHODS
-  ##
-
-  def self.define(&block)
-    self.instance_eval(&block)
-  end
+  @holder_defs_by_prefix = {}
 
   #
   # defines a new holder
   #
   def self.add_holder(prefix, name, options=nil)
-    abstract = false
-    type = nil
+    options ||= {:abstract => true}
+    options[:prefix] = prefix
+    holder = nil
 
-    if options.nil?
-      abstract = true
-    elsif options[:model]
+    if options[:model]
       model = options[:model]
       raise ArgumentError.new unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
       model.send(:extend, CastleGates::ActsAsHolder::ClassMethods)
       model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
-      type = model
+      holder = model
     elsif options[:association]
       association = options[:association]
       raise ArgumentError.new unless association.is_a?(ActiveRecord::Reflection::MacroReflection)
@@ -49,71 +142,50 @@ class Holder
         end
         attr_accessor :holder_definition
       end
-      type = association
+      options[:association_name] = association.name
+      options[:model] = association.active_record
+      holder = association
+    elsif options[:abstract]
+      # eg :public
     else
       raise ArgumentError.new(options)
     end
 
-    holder_def = HolderDefinition.new(name, {:type => type, :prefix => prefix, :abstract => abstract})
-    if type.respond_to? :holder_definition
-      type.holder_definition = holder_def
+    holder_def = HolderDefinition.new(name, options)
+    if holder.respond_to? :holder_definition
+      holder.holder_definition = holder_def
     end
-    holder_defs[name] = holder_def
+    holder_defs[holder_def.name] = holder_def
+    holder_defs_by_prefix[holder_def.prefix] = holder_def
     holder_def
   end
 
   #
-  # returns a holder code for any object
+  # ensures that the real holder gets wrapped in an object of class Holder
   #
-  def self.code(object)
-    holder_def = get_definition(object)
-    raise ArgumentError.new('no such holder (%s)' % object.inspect) unless holder_def
-
-    code_prefix = holder_def.prefix
-    if holder_def.abstract
-      object_id = ""
+  def self.[](obj)
+    if obj.is_a?(Holder)
+      obj
     else
-      object_id = object.holder_code_suffix
-    end
-    "#{code_prefix}#{object_id}"
-  end
-
-  #
-  # returns a holder code for an array of ids
-  #
-  def self.codes(holder, ids)
-    holder_def = get_definition(holder)
-    code_prefix = holder_def.prefix
-    ids.collect do |id|
-      "#{code_prefix}#{id}"
+      Holder.new(obj)
     end
   end
 
   #
-  # converts whatever is passed in to an appropriate holder definition
+  # Takes a list of holder codes, converts to actual Holders.
+  # Returned list will have nil for entry that can't be converted correctly.
   #
-  def self.get_definition(obj)
-    if obj.is_a? Symbol
-      holder_defs[obj]
-    elsif obj.respond_to? :holder_definition
-      obj.holder_definition
-    else
-      raise ArgumentError.new("not a key holder: %s" % obj.inspect)
-    end
-  end
-
-  def self.all_codes_for_holder(holder)
-    codes = []
-    if holder.respond_to?(:holders) && holder_list = holder.holders
-      codes = holder_list.collect {|holder| Holder.code(holder)}
-    elsif holder.respond_to?(:holder_codes) && return_value = holder.holder_codes
-      if return_value.is_a? Hash
-        codes = codes_from_hash(return_value)
-      elsif return_value.is_a? Array
-        codes = codes_from_array(return_value)
+  def self.codes_to_holders(codes)
+    codes.collect do |code|
+      if code
+        prefix = code.to_s[0..0]
+        id = code.to_s[1..-1]
+        holder_def = holder_defs_by_prefix[prefix]
+        if holder_def
+          Holder[holder_def.get_holder_from_id(id)]
+        end
       end
     end
-    codes << Holder.code(holder)
   end
 
   private
@@ -121,12 +193,20 @@ class Holder
   #
   # returns holder codes for {:holder => x, :ids => [1,2,3]}
   #
+  # Used to parse result of 'holder_codes' method in Holder#all_codes
+  #
   def self.codes_from_hash(hsh)
-    Holder.codes(hsh[:holder], hsh[:ids])
+    ids = hsh[:ids]
+    holder = Holder[hsh[:holder]]
+    ids.collect do |id|
+      "#{holder.code_prefix}#{id}"
+    end
   end
 
   #
-  # returns holder codes for an array
+  # Returns holder codes for an array that might consist of codes or hashes.
+  #
+  # Used to parse result of 'holder_codes' method in Holder#all_codes
   #
   def self.codes_for_array(arry)
     codes = []

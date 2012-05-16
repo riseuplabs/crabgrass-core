@@ -3,7 +3,6 @@
 ##
 
 class User < ActiveRecord::Base
-
   has_many :allegiances
   has_many :minions, :through => :allegiances
 
@@ -41,8 +40,6 @@ end
 class Clan < ActiveRecord::Base
   has_many :memberships
   has_many :users, :through => :memberships
-
-  #acts_as_holder
 end
 class Membership < ActiveRecord::Base
   belongs_to :user
@@ -83,7 +80,7 @@ end
 class Tree
 end
 
-CastleGates::Holder.define do
+CastleGates.define_key_holders do
   add_holder 1, :user,   :model => User
   add_holder 2, :minion, :model => Minion
   add_holder 3, :clan,   :model => Clan

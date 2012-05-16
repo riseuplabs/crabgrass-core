@@ -19,6 +19,8 @@
 # which will return an AssociationProxyProxy.
 #
 class AssociationProxyProxy
+  attr_reader :proxy
+
   def initialize(proxy)
     @proxy = proxy
   end
@@ -27,6 +29,13 @@ class AssociationProxyProxy
   end
   def holder_code_suffix
     @proxy.proxy_owner.id
+  end
+  def ==(other)
+    if other.is_a? AssociationProxyProxy
+      @proxy == other.proxy
+    else
+      @proxy == other
+    end
   end
 end
 

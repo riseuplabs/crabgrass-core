@@ -15,6 +15,7 @@ module InstanceMethods
   #
   def access?(args)
     holder, gate_symbol = args.first
+    holder = Holder[holder]
 
     keys     = keys_for_holder(holder)
     bitfield = gate_bitfield_for_keys(keys, holder)
@@ -45,6 +46,7 @@ module InstanceMethods
     end
 
     as_array(holders).each do |holder|
+      holder = Holder[holder]
       key = keys.find_by_holder(holder)
       key.add_gates! gates
       if self.respond_to? :after_grant_access
@@ -74,6 +76,7 @@ module InstanceMethods
     end
 
     as_array(holders).each do |holder|
+      holder = Holder[holder]
       key = keys.find_by_holder(holder)
       key.remove_gates! gates
       if self.respond_to? :after_revoke_access
@@ -96,13 +99,30 @@ module InstanceMethods
   #  end
   #end
 
+  #
+  # GATES
+  #
+
   def gate_set
     self.class.gate_set
   end
 
-  ##
-  ## CALLBACKS
-  ##
+  def gate(name)
+    gate_set.get(name)
+  end
+
+  def gates
+    self.class.gates
+  end
+
+  #
+  # HOLDERS
+  #
+
+  def holders
+    codes = keys.select_holder_codes
+    Holder.codes_to_holders(codes)
+  end
 
   private
 
@@ -111,11 +131,7 @@ module InstanceMethods
   ##
 
   def as_array(obj)
-    if obj.is_a? Array
-      obj
-    else
-      [obj]
-    end
+    obj.is_a?(Array) ? obj : [obj]
   end
 
   ##
@@ -131,7 +147,7 @@ module InstanceMethods
   #
   def keys_for_holder(holder)
     @key_cache ||= {}
-    @key_cache[Holder.code(holder)] ||= keys.for_holder(holder)
+    @key_cache[holder.code] ||= keys.for_holder(holder)
   end
 
   #
@@ -148,7 +164,7 @@ module InstanceMethods
   #
   def gate_bitfield_for_keys(keys, holder)
     @gate_bitfield_cache ||= {}
-    @gate_bitfield_cache[Holder.code(holder)] ||= begin
+    @gate_bitfield_cache[holder.code] ||= begin
       bitfield = Key::gate_bitfield(keys)
       if bitfield.nil?
         # no actual keys, so lets fall back to the defaults

@@ -13,8 +13,14 @@ def self.included(base)
     ## FINDERS
     ##
 
+    #
+    # search for castle's with particular access.
+    #
+    # e.g. Fort.with_access(:public => :gate)
+    #
     named_scope(:with_access, lambda {|args|
       holder, gates = args.first
+      holder = Holder[holder]
       key_condition, key_values = Key.conditions_for_holder(holder)
       gate_condition = conditions_for_gates(gates)
       {
@@ -33,14 +39,21 @@ def self.included(base)
       # finds a key for a holder, initializing it in memory if it does not exist.
       #
       def find_by_holder(holder)
-        code = Holder.code(holder)
-        key = find_or_initialize_by_holder_code(code)
+        holder = Holder[holder]
+        key = find_or_initialize_by_holder_code(holder.code)
         if key.new_record?
           castle = proxy_owner
           key.gate_bitfield |= castle.gate_set.default_bits(holder)
         end
         key
       end
+
+      def select_holder_codes
+        castle = proxy_owner
+        sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
+        self.connection.select_values("SELECT DISTINCT keys.holder_code FROM keys WHERE keys.castle_type = '%s' AND keys.castle_id = %s" % [sti_type, castle.id])
+      end
+
     end
 
     ##

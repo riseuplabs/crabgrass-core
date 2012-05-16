@@ -60,7 +60,7 @@ module CastleGates
     # OPTIMIZE: self.values ??
     #
     def default_bits(holder)
-      holder_name = Holder.get_definition(holder).name
+      holder_name = Holder[holder].definition.name
       gates = self.values
       gates.inject(0) do |bits_so_far, gate|
         bits_so_far | gate.default_bit(holder_name)

@@ -25,7 +25,7 @@ RELOAD_FIXTURES = ARGV.grep('--reload').any?
 ADAPTER = :sqlite
 
 # set to true to see all the sql commands
-SHOW_SQL = false #true
+SHOW_SQL = false
 
 ##
 ## TEST HELPERS
@@ -214,6 +214,23 @@ class CastleGatesTest < Test::Unit::TestCase
       assert_raises ArgumentError do
         Fort.with_access(:x => :draw_bridge)
       end
+
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  def test_fetch_holders
+    ActiveRecord::Base.transaction do
+      @fort.grant_access! @me => :draw_bridge
+      @fort.grant_access! :public => :draw_bridge
+      @fort.grant_access! @me.associated(:minions) => :draw_bridge
+      @fort.grant_access! @me => :sewers
+      @fort.grant_access! :public => :sewers
+
+      holders = @fort.holders
+      assert holders.include?(@me), 'holders should include me'
+      assert holders.include?(:public), 'holders should include public'
+      assert holders.include?(@me.associated(:minions)), 'holders should include minions'
 
       raise ActiveRecord::Rollback
     end

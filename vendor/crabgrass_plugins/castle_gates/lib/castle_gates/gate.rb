@@ -35,12 +35,14 @@
 module CastleGates
   class Gate
 
-    attr_accessor :name, :id, :bit, :default #, :fallback
+    attr_accessor :name, :id, :bit, :default, :label, :info
 
     def initialize(id, name, options={})
       self.name = name
       self.id = id
       self.default = options[:default_open]
+      self.label = options[:label]
+      self.info = options[:info]
       if id == 0
         raise 'gate with id = 0 is reserved. start with 1.'
       else
