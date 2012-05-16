@@ -1,25 +1,32 @@
-ajaxUpload.files = {
-  // view callback
-  changed: function(){},
-  pendingFiles: [],
-  uploading: false,
-  add: function(newFiles) {
+ajaxUpload.files = ( function() {
+  var pendingFiles = []
+  var uploading = false
+
+  function add(newFiles) {
     for (var i = 0; i < newFiles.length; i += 1) {
-      this.pendingFiles.push(newFiles[i]);
+      pendingFiles.push(newFiles[i]);
     }
-    if(!this.uploading) this.startUpload();
-  },
-  startUpload: function() {
-    this.uploading = true;
+    if(!uploading) startUpload();
+  }
+
+  function startUpload() {
+    uploading = true;
     // TODO: we already have a request queue somewhere - combine!
-    whilst(getNextFile.bind(this), ajaxUpload.upload.start, done.bind(this));
+    whilst(getNextFile, ajaxUpload.upload.start, done);
 
     function getNextFile() {
-      return ajaxUpload.upload.setFile(this.pendingFiles.shift());
+      return ajaxUpload.upload.setFile(pendingFiles.shift());
     }
 
     function done() {
-      this.uploading = false
+      uploading = false
     };
   }
-}
+
+  return {
+    // view callback
+    length: function(){return pendingFiles.length},
+    isUploading: function(){return !!uploading},
+    add: add 
+  }
+})();

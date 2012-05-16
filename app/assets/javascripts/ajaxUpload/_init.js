@@ -14,7 +14,6 @@ var ajaxUpload = {
     this.view.init(progress);
     this.handleInput(fileInput);
     this.handleDragAndDrop(fileDrop);
-    this.files.changed = this.view.render.bind(this.view);
     this.upload.changed = this.view.render.bind(this.view);
   }
 

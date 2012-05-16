@@ -5,7 +5,7 @@ ajaxUpload.view = {
   },
   render: (function() {
     if (!this.container) return;
-    if (!ajaxUpload.files.uploading && !ajaxUpload.upload.isProcessing()) {
+    if (!ajaxUpload.files.isUploading() && !ajaxUpload.upload.isProcessing()) {
       this.hide();
       return
     }
@@ -18,7 +18,7 @@ ajaxUpload.view = {
       filename: ajaxUpload.upload.getFile().name,
       percent: ajaxUpload.upload.getPercent(),
       message: ajaxUpload.upload.getMessage(),
-      left: ajaxUpload.files.pendingFiles.length + 1
+      left: ajaxUpload.files.length() + 1
     });
     this.container.classList.remove("hidden");
   }),
