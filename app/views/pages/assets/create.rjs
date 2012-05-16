@@ -1,2 +1,2 @@
-page.replace_html 'MB_content', :partial => 'popup'
-page << "Modalbox.updatePosition();"
+page.insert_html :bottom, 'assets_list', :partial => '/common/assets/asset_as_li'
+page << "if(document.getElementById('MB_window')) {Modalbox.updatePosition();}"

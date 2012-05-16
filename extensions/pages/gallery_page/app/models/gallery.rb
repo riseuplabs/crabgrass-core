@@ -29,16 +29,14 @@ class Gallery < Page
   # announce that this gallery was updated by her.
   #
   # This method always returns true. On failure an error is raised.
-  def add_image!(asset, user = nil, position = nil)
+  def add_attachment!(asset, options={})
+    asset = Asset.build(asset.merge(:parent_page => self))
     check_type!(asset)
-    assure_page(asset)
-
-    Showing.create! :gallery => self, :asset => asset, :position => position
-    if user
-      user.updated(self)
-    end
-    true
+    asset = super
+    Showing.create! :gallery => self, :asset => asset
+		return asset
   end
+	alias_method :add_image!, :add_attachment!
 
   # Removes an image from this Gallery by destroying the associating Showing.
   # Also destroys the asset itself.

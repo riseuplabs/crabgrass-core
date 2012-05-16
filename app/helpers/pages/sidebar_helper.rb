@@ -173,19 +173,24 @@ module Pages::SidebarHelper
   # required options -- :id, :url, :label, :icon
   #
   def popup_line(options)
-    after_hide = "if (typeof(afterHide) != 'undefined' || afterHide != null) {afterHide()}"
-    content_tag :li, :id => options[:id] do
+    options[:after_hide] =
+      "if (typeof(afterHide) != 'undefined' || afterHide != null) { afterHide(); }"
+    content_tag :li, :id => options.delete(:id) do
       link_to_modal(
-        options[:label],
-        {:url => options[:url], :after_hide => after_hide},
-        {:icon => options[:icon]}
+        options.delete(:label),
+        options
       )
     end
   end
 
   def edit_attachments_line
     if may_show_page?
-      popup_line(:name => 'assets', :label => :edit_attachments_link.t, :icon => 'attach', :title => :edit_attachments.t, :url => page_assets_path(@page))
+      popup_line :name => 'assets',
+        :label => :edit_attachments_link.t,
+        :icon => 'attach',
+        :title => :edit_attachments.t,
+        :url => page_assets_path(@page),
+        :after_load => 'initFileOnlyAjaxUpload();'
     end
   end
 

@@ -4,9 +4,9 @@
 .info-edit-gallery
   = I18n.t :edit_gallery_explaination
 
-.action
-  = upload_images_link
-
-= render :partial => 'gallery/notify_area'
-
 = render :partial => 'gallery/draggable_images'
+
+- # TODO: implement extraction of zip files
+- # %p.info
+- #   = I18n.t :add_images_or_zips_explaination
+= render :partial => 'common/asset_upload', :locals => { :target => @page, :message => :add_images_to_gallery_link.t }

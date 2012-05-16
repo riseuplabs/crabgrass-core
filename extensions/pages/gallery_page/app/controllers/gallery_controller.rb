@@ -1,12 +1,14 @@
 class GalleryController < Pages::BaseController
 
   stylesheet 'upload', :only => :edit
-  javascript :upload, :only => :edit
+  stylesheet 'gallery'
+# included in base for now  javascript :upload, :only => :edit
 
   guard_like :page
 
   def show
     @images = @page.images.paginate(:page => params[:page])
+    redirect_to(page_url(@page, :action => 'edit')) if @images.blank?
     #@cover = @page.cover
   end
 

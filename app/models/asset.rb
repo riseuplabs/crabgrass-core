@@ -339,7 +339,9 @@ class Asset < ActiveRecord::Base
   # if you want to access filename after Asset.build(), try valid?() or validate!()
   #
   def self.build(attributes = nil, &block)
-    asset_class(attributes).new(attributes, &block)
+    asset = asset_class(attributes).new(attributes, &block)
+    asset.update_media_flags
+    asset
   end
 
   before_create :set_default_type

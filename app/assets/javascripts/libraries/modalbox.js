@@ -254,6 +254,7 @@ Modalbox.Methods = {
     }
     this._setPosition();
     this._updateFocus();
+    this.event("afterLoad"); // Passing callback
   },
 
   // sets the dom elements to be visible
