@@ -1,10 +1,7 @@
-#
-#
-#
-
 class AssetsController < ApplicationController
 
   permissions 'assets'
+  guard :may_ACTION_asset?
 
   before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
