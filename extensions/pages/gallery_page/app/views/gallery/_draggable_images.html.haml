@@ -1,4 +1,4 @@
-%ul#assets_list
+%ul#assets_list.sortable
   = render :partial => '/common/assets/asset_as_li', :collection => @images
 = sortable_element "assets_list", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update)
 
