@@ -6,12 +6,12 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
     include Common::Application::Guard
   end
 
+  class InheritedStubController < GuardStubController
+  end
+
   # reset the original
   def teardown
-    GuardStubController.class_eval do
-      @permission_cache = nil
-      @action_map = nil
-    end
+    cleanup(GuardStubController)
   end
 
   def test_default_function_name
@@ -69,4 +69,32 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
     end
   end
 
+  def test_inheriting_actions
+    GuardStubController.guard :may_ALIAS_this?, :actions => [:edit, :update]
+    assert_equal :may_edit_this?, InheritedStubController.permission_for_action(:update)
+    cleanup(InheritedStubController)
+  end
+
+  def test_inheriting_default
+    GuardStubController.guard :may_ALIAS_this?
+    assert_equal :may_edit_this?, InheritedStubController.permission_for_action(:update)
+    cleanup(InheritedStubController)
+  end
+
+  def test_caching_does_not_mess_with_inheritance
+    GuardStubController.guard :may_ALIAS_this?, :actions => [:edit, :update]
+    InheritedStubController.guard :may_update_that?, :actions => :update
+    assert_equal :may_edit_this?, GuardStubController.permission_for_action(:update)
+    assert_equal :may_update_that?, InheritedStubController.permission_for_action(:update)
+    cleanup(InheritedStubController)
+  end
+
+  # HELPERS
+
+  def cleanup(klass)
+    klass.class_eval do
+      @permission_cache = nil
+      @action_map = nil
+    end
+  end
 end

@@ -68,6 +68,12 @@ module Common::Application::Guard
       permission_cache[action] ||= replace_wildcards(method, action)
     end
 
+    protected
+
+    def action_map
+      @action_map ||= inherit_action_map
+    end
+
     private
 
     def add_method_to_action_map(method, options = {})
@@ -90,15 +96,20 @@ module Common::Application::Guard
       string.to_sym
     end
 
-    # TODO: implement inheritance like elijahs mail
-
-    def action_map
-      @action_map ||= HashWithIndifferentAccess.new
-    end
-
     def permission_cache
       @permission_cache ||= HashWithIndifferentAccess.new
     end
 
+    # working around a bug in HashWithIndifferentAccess here
+    # see https://rails.lighthouseapp.com/projects/8994/tickets/5724-subclasses-of-hashwithindifferentaccess-dup-the-wrong-class
+    def inherit_action_map
+      if superclass.respond_to?(:action_map)
+        superclass.action_map.dup.tap do |map|
+          map.default = superclass.action_map.default
+        end
+      else
+        HashWithIndifferentAccess.new
+      end
+    end
   end
 end
