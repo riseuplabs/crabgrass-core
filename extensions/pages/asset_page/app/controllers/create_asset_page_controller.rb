@@ -1,7 +1,5 @@
 class CreateAssetPageController < Pages::CreateController
 
-  guard_like 'page'
-
   def new
     @form_sections.unshift('file')
     @form_sections.delete('title')

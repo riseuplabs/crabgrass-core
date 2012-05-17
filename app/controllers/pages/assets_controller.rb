@@ -1,7 +1,7 @@
 class Pages::AssetsController < Pages::SidebarsController
 
   permissions 'pages'
-  guard_like :page, :edit
+  guard :may_edit_page?
   before_filter :login_required
 
   def index

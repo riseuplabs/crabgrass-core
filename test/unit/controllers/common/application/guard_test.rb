@@ -21,9 +21,7 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
 
   def test_undefined_permission_raises
     GuardStubController.guard :may_do_this?, :actions => [:juggle, :default]
-    assert_raises ArgumentError do
-      GuardStubController.permission_for_action(:dance)
-    end
+    assert_equal false, GuardStubController.permission_for_action(:dance)
   end
 
   def test_actions_can_be_single_symbol

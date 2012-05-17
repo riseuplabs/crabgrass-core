@@ -1,28 +1,11 @@
-# This will load /app/permissions/robots_permissions.rb
 #
-# You can alter the default verb or object with guard_like:
+# Common::Application::Guard
 #
-#   guard_like 'cyborgs'
+# guard defines which permission methods to check for actions of the controller
+# it takes care of inheriting the settings and caching.
 #
-# NOTE: guard and guard_like settings will NOT be inherited by subclasses.
-#
-# You can also do this dynamically by defining the methods permission_verb or
-# permission_object:
-#
-#   def permission_object
-#     half_human? ? :cyborgs : :robots
-#   end
-#
-#   At the top of your controller definition, do this:
-#
-#     guard :show => :may_show_robots?,
-#           :update => :may_edit_robots?  #
-#   This will ensure the may_show_robots? returns true before 'show()' will run.
-#   Procs are also allowed, as well as the special symbol :allow. For example
-#
-#     guard :show => Proc.new { @robot.is_hungry? },
-#           :update => :allow
-#
+# See the +guard+ method for details.
+
 
 module Common::Application::Guard
 
@@ -64,7 +47,12 @@ module Common::Application::Guard
 
     def permission_for_action(action)
       method = action_map[action]
-      raise ArgumentError.new("No Permission defined for #{action}") unless method
+      if !method
+        if RAILS_ENV=='development'
+          raise ArgumentError.new("No Permission defined for #{action}")
+        end
+        return false
+      end
       permission_cache[action] ||= replace_wildcards(method, action)
     end
 
@@ -90,6 +78,7 @@ module Common::Application::Guard
     end
 
     def replace_wildcards(method, action)
+      return method if method.is_a? Proc
       string = method.to_s
       string.sub!("ACTION", action.to_s)
       string.sub!("ALIAS", (ACTION_ALIASES[action] || action).to_s)

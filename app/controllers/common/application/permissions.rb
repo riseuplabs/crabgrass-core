@@ -46,41 +46,17 @@
 #   permissions :robots
 # end
 #
-# This will load /app/permissions/robots_permissions.rb
-#
-# You can alter the default verb or object with guard_like:
-#
-#   guard_like 'cyborgs'
-#
-# NOTE: guard and guard_like settings will NOT be inherited by subclasses.
-#
-# You can also do this dynamically by defining the methods permission_verb or
-# permission_object:
-#
-#   def permission_object
-#     half_human? ? :cyborgs : :robots
-#   end
-#
 # (3) Restricting access to actions
 # -------------------------------------------------
 #
-# There are three ways to apply a permission to a controller action:
+# There are two ways to apply a permission to a controller action:
 #
 #   (a) manually guarding actions
 #   (b) define the authorized?() method
-#   (c) use permission auto-guessing
 #
 # (a) manually guarding actions
 #
-#   At the top of your controller definition, do this:
-#
-#     guard :show => :may_show_robots?,
-#           :update => :may_edit_robots?  #
-#   This will ensure the may_show_robots? returns true before 'show()' will run.
-#   Procs are also allowed, as well as the special symbol :allow. For example
-#
-#     guard :show => Proc.new { @robot.is_hungry? },
-#           :update => :allow
+#   See Common::Application::Guard for more information.
 #
 # (b) define the authorized?() method
 #
@@ -100,20 +76,6 @@
 #   NOTE: The 'authorized?' before filter is called from the
 #         :login_required before filter or needs to be added to the controller.
 #         This should change eventually.
-#
-# (c) permission auto-guessing
-#
-#   Common::Application has this default definition of authorized?()
-#
-#     def authorized?
-#       check_permissions!
-#     end
-#
-#   This will attempt to find a permission method that corresponds to the current
-#   verb and object. If none are found, then it returns true. If a permission method
-#   is found and the test passes, then check_permissions! returns true. If the test
-#   failed, then a PermissionDenied exception is raised.
-#
 #
 # (4) Permissions in views
 # ------------------------------------------------------------
@@ -142,9 +104,6 @@ module Common::Application::Permissions
     end
   end
 
-  #SINGULARIZE_ACTIONS = ['update', 'edit', 'show', 'create', 'new']
-  #PLURALIZE_ACTIONS = ['index']
-
   module ClassMethods
     #
     # Specifies a list of permission mixins to be included in the controller
@@ -164,49 +123,20 @@ module Common::Application::Permissions
       end
     end
 
+    #
+    # Specifies permissions only to be loaded in the related views.
+    #
+    # for example:
+    #
+    #   permissions_helper 'robot/dance'
+    #
+    # will load +Robot::DancePermission+ and make it available in the views.
+    #
     def permission_helper(*class_names)
       for class_name in class_names
         permission_class = "#{class_name}_permission".camelize.constantize
         add_template_helper(permission_class)
       end
-    end
-
-    #
-    # specifies what permission method to use for particular actions.
-    # action_map is a hash in the form {:action => :permission_method}
-    #
-    # e.g.
-    #
-    #   guard :show => :may_show_this?, :update => :may_update_this?
-    #
-    def guard(action_map)
-      @action_map = HashWithIndifferentAccess.new action_map
-    end
-
-    # specifies what default objects and verbs to use for permissions
-    #
-    # for example:
-    #
-    #   guard_like :robot, :play
-    #
-    # Will set the default object to 'robot'
-    # and will set the default verb to 'play'
-    #
-    # So the default permission check would be may_play_robot?
-    #
-    def guard_like(object, verb = nil)
-      options = {}
-      options[:object] = object.to_s if object
-      options[:verb] = verb.to_s if verb
-      @permission_options = HashWithIndifferentAccess.new options
-    end
-
-    def permission_action_map
-      @action_map || {}
-    end
-
-    def permission_options
-      @permission_options
     end
 
   end
@@ -217,12 +147,7 @@ module Common::Application::Permissions
     # returns +true+ if the +current_user+ is allowed to perform +action+ in
     # +controller+, optionally with some arguments.
     #
-    # permissions are resolved in this order:
-    #
-    # (1) check for a method as specified with guard for the given action
-    # (2) check to see if a method is defined that matches may_action_controller?()
-    # (3) check to see if a method with aliased actions
-    # (4) return false if we had no success so far.
+    # permissions are specified with guard for the given action
     #
 
     #
@@ -245,135 +170,37 @@ module Common::Application::Permissions
       @permission_log
     end
 
-    def permission_verb
-      self.class.permission_options[:verb] if self.class.permission_options
-    end
-
-    def permission_object
-      self.class.permission_options[:object] if self.class.permission_options
-    end
-
     def check_permissions
-      key = [params[:controller],params[:action]]
-      method = cache_permission(key) do
-        self.class.permission_action_map[params[:action]] or find_permission_method
-      end
-      if method.is_a? Proc
+      permission_log_setup(params[:action])
+      method = self.class.permission_for_action(params[:action])
+      add_permission_log(method)
+      case method
+      when Proc
         method.call
-      elsif method == :allow
+      when :allow
         true
-      elsif method
+      when Symbol, String
         self.send(method)
       else
-        if RAILS_ENV=='development'
-          raise StandardError.new "Could not find permission for params #{params.inspect}"
-        end
         false
       end
     end
 
     private
 
-    ACTION_ALIASES = {
-      'index'  => ['list'],
-      'update' => ['edit'],
-      'edit'   => ['update'],
-      'create' => ['new'],
-      'new'    => ['create']
-    }
-
-    #
-    # I don't know if this is a good idea, but it caches the permission method
-    # that we find. It seems reasonable, since trying dozens of possible methods
-    # on every request seems excessive, especially since we know what permission
-    # method to use from the last time we found it.
-    #
-    # The only problem is figuring out what key to cache on. Currently, it is
-    # just action and controller.
-    #
-    # We do not cache in development mode, instead, we build a history of the search
-    # and which method was selected.
-    #
-    def cache_permission(key)
-      if RAILS_ENV=='development'
-        permission_log_setup(key)
-        method = yield
-        add_permission_log(:decided => method)
-        return method
-      else
-        @@permission_cache ||= {}
-        return @@permission_cache[key] ||= yield
-      end
-    end
-
-    def find_permission_method
-      verbs = possible_verbs
-      for verb in verbs
-        if method = permission_method_exists(verb,method_object)
-          return method
-        end
-      end
-      return nil # sadly, nothing found
-    end
-
-    # returns the string for the method if it is defined, false otherwise.
-    def permission_method_exists(verb, object)
-      return false unless verb and object
-      methods = ["may_#{verb}_#{object}?"]
-      methods << "may_#{verb}_#{object.pluralize}?" if object != object.pluralize
-      methods.each do |method|
-        add_permission_log(:attempted => method)
-        if self.respond_to?(method)
-          return method
-        end
-      end
-      return false
-    end
-
-    #
-    # returns the object specified with permissions
-    # or a singularized version of the controller param
-    # eg 'groups/requests' -> 'group_request'
-    #
-    def method_object
-      permission_object ||
-      params[:controller].
-        split('/').
-        map{|o| o.singularize}.
-        join('_')
-    end
-
-    def possible_verbs
-      # the possibilities are tried *in order*
-      return [permission_verb] if permission_verb
-      verbs = [params[:action]]
-      verbs += ACTION_ALIASES[params[:action]] if ACTION_ALIASES[params[:action]]
-      verbs << 'access'
-      return verbs
-    end
-
     # setup what combination we are logging
     def permission_log_setup(key)
       if RAILS_ENV == 'development'
         @permission_log ||= {}
         @permission_log_key = key
-        @permission_log[key] = {:attempted => [], :decided => nil}
+        @permission_log[key] = nil
       end
     end
 
     # log perm info for the combination
-    # available keys are :attempted => "method_name" and :decided => "method_name"
-    def add_permission_log(opts = {})
+    def add_permission_log(method)
       if RAILS_ENV == 'development'
-        log = permission_log[@permission_log_key]
-        if opts[:attempted]
-          info('PERMISSIONS: attempting %s' % opts[:decided], 2)
-          log[:attempted] << opts[:attempted]
-        end
-        if opts[:decided]
-          info('PERMISSIONS: using %s' % opts[:decided], 0)
-          log[:decided] = opts[:decided]
-        end
+        permission_log[@permission_log_key] = method
       end
     end
 

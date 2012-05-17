@@ -3,7 +3,7 @@ class GalleryImageController < Pages::BaseController
   helper 'gallery'
 
   # show and edit use base page permissions
-  guard_like :page, :edit
+  guard :may_edit_page?
   guard :show => :may_show_page?
 
   # default_fetch_data is disabled for new in Pages::BaseController
