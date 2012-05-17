@@ -39,7 +39,7 @@ module Common::Application::Guard
     #
     def guard(*settings)
       if settings.first.is_a? Hash
-        action_map.merge settings.first
+        action_map.merge! settings.first
       else
         add_method_to_action_map(*settings)
       end
