@@ -6,12 +6,9 @@ class Me::BaseController < ApplicationController
   before_filter :login_required, :fetch_user
   #stylesheet 'me'
   permissions 'me'
+  guard :may_access_me?
 
   protected
-
-  def authorized?
-    true
-  end
 
   def fetch_user
     @user = current_user
