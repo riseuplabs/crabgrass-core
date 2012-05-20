@@ -150,7 +150,7 @@ module Pages::SidebarHelper
         link_to_asset(asset, :small, :crop! => '36x36')
       end
       #content_tag :div, column_layout(3, items), :class => 'side_indent'
-    elsif may_edit_page_asset?
+    elsif may_edit_page?
       ''
     end
   end
