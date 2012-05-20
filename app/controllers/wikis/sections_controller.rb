@@ -3,12 +3,7 @@ class Wikis::SectionsController < Wikis::BaseController
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit
 
-  permissions 'wikis'
-
-  guard :edit => :may_edit_wiki?,
-        :update => :may_edit_wiki?
-
-  before_filter :login_required, :get_section_markup
+  before_filter :get_section_markup
 
   def edit
     # remove other peoples lock if it exists

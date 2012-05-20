@@ -1,10 +1,9 @@
 class Wikis::WikisController < Wikis::BaseController
 
-  permissions :wikis
-  before_filter :login_required, :except => :show
+  skip_before_filter :login_required, :only => :show
+  before_filter :authorized?, :only => :show
 
-  guard :edit => :may_edit_wiki?,
-        :update => :may_edit_wiki?
+  guard :show => :may_show_wiki?
 
   javascript :wiki
   stylesheet 'wiki_edit'

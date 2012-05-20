@@ -2,12 +2,16 @@ module WikisPermission
 
   protected
 
+  def may_show_wiki?(wiki = @wiki)
+    current_user.may?(:view, (wiki.page || wiki.group))
+  end
+
   def may_edit_wiki?(wiki = @wiki)
-    logged_in? and current_user.may?(:edit, (wiki.page || wiki.group))
+    current_user.may?(:edit, (wiki.page || wiki.group))
   end
 
   def may_admin_wiki?(wiki = @wiki)
-    logged_in? and current_user.may?(:admin, (wiki.page || wiki.group))
+    current_user.may?(:admin, (wiki.page || wiki.group))
   end
 
   def may_revert_wiki_version?(version = @version)
