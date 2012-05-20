@@ -13,7 +13,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_show
     login_as @user
-    assert_permission :may_show_group_home? do
+    assert_permission :may_show_group? do
       get :show, :id => @group.to_param
     end
     assert_response :success
@@ -25,7 +25,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
   def test_show_after_editing_public
     login_as @user
     @request.env['HTTP_REFERER'] = edit_group_wiki_url(@group, @pub)
-    assert_permission :may_show_group_home? do
+    assert_permission :may_show_group? do
       get :show, :id => @group.to_param
     end
     assert_response :success
@@ -36,7 +36,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_show_public
     @group.grant! :public, :view
-    assert_permission :may_show_group_home? do
+    assert_permission :may_show_group? do
       get :show, :id => @group.to_param
     end
     assert_response :success
@@ -47,7 +47,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_may_not_show
     @group.revoke! :public, :view
-    assert_permission :may_show_group_home?, false do
+    assert_permission :may_show_group?, false do
       get :show, :id => @group.to_param
     end
   end

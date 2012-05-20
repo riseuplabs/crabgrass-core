@@ -1,9 +1,13 @@
 class Groups::HomeController < Groups::BaseController
 
+  before_filter 'fetch_wikis'
+  skip_before_filter 'login_required'
+  before_filter :authorized?
+  guard :may_show_group?
+
   layout 'sidecolumn'
   helper 'groups/wikis', 'wikis/base', 'wikis/sections'
-  permissions 'wikis'
-  before_filter 'fetch_wikis'
+  permission_helper 'wikis'
   javascript :wiki
   stylesheet 'wiki_edit'
 
@@ -11,7 +15,6 @@ class Groups::HomeController < Groups::BaseController
     @group = options[:group]
   end
 
-  before_filter :authorized?
 
   def show
     @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',

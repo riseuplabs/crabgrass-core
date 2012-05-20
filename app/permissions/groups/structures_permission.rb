@@ -2,10 +2,6 @@ module Groups::StructuresPermission
 
   protected
 
-  def may_show_group_structure?
-    may_admin_group?
-  end
-
   def may_edit_group_structure?
     may_create_council? or may_create_committee? or may_federate?
   end

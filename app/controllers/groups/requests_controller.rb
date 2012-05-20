@@ -9,10 +9,9 @@ class Groups::RequestsController < Groups::BaseController
 
   include_controllers 'common/requests'
 
-  guard :index => :may_list_group_requests?,
-        :show => :may_list_group_requests?,
-        # permissions handled by model:
-        :create => :allow, :update => :allow, :destroy => :allow
+  # guard defaults to may_admin_group?
+  # permissions handled by model:
+  guard :create => :allow, :update => :allow, :destroy => :allow
 
   rescue_render :create => :index
 
