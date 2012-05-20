@@ -23,7 +23,7 @@ module Wikis::VersionsHelper
   end
 
   def version_show_link(version)
-    return unless may_show_wiki_version?(version)
+    return unless may_edit_wiki?(@wiki)
     link_to :version_link.t, wiki_version_path(@wiki, version)
   end
 
@@ -46,7 +46,7 @@ module Wikis::VersionsHelper
   end
 
   def version_delete_link(version)
-    return unless may_destroy_wiki_version?
+    return unless may_admin_wiki?
     link_to :wiki_version_destroy_link.t,
       wiki_version_path(@wiki, version), :method => :delete
   end

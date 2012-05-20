@@ -2,6 +2,8 @@ class Wikis::DiffsController < Wikis::BaseController
 
   permissions 'wikis/versions'
 
+  guard :show => :may_show_wiki_diff?
+
   helper 'wikis/versions'
   javascript :wiki
 

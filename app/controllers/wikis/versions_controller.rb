@@ -5,6 +5,11 @@ class Wikis::VersionsController < Wikis::BaseController
 
   permissions 'wikis/versions'
 
+  guard :show => :may_edit_wiki?,
+    :index => :may_edit_wiki?,
+    :revert => :may_revert_wiki_version?,
+    :destroy => :may_admin_wiki?
+
   def show
     unless request.xhr?
       params[:page] = @wiki.page_for_version(@version)

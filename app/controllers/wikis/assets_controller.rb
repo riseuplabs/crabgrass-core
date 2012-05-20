@@ -1,9 +1,10 @@
 class Wikis::AssetsController < Wikis::BaseController
 
-  permissions 'wikis/assets'
+  permissions 'wikis'
 
   before_filter :fetch_assets, :only => :new
   before_filter :login_required
+  guard :may_edit_wiki?
 
   def new
   end
