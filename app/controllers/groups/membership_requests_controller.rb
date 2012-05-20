@@ -9,12 +9,10 @@
 class Groups::MembershipRequestsController < Groups::BaseController
 
   include_controllers 'common/requests'
-  before_filter :login_required
 
-  guard :index => :may_list_membership_requests?,
-        :show => :may_list_membership_requests?,
-        # permissions handled by model:
-        :create => :allow, :update => :allow, :destroy => :allow
+  # may_admin_group? is required by default.
+  # permissions handled by model:
+  guard :create => :allow, :update => :allow, :destroy => :allow
 
   def index
     @requests = Request.

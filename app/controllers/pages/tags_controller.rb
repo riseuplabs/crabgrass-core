@@ -1,8 +1,6 @@
 class Pages::TagsController < Pages::SidebarsController
 
   permissions 'pages'
-  guard_like :page, :edit
-  before_filter :login_required
   helper 'pages/tags'
 
   def index

@@ -24,7 +24,8 @@
 #
 class Pages::SharesController < Pages::SidebarsController
 
-  before_filter :login_required
+  guard :update => :may_share_page?
+
   verify :xhr => true
 
   helper 'pages/share', 'pages/participation'
@@ -144,17 +145,6 @@ class Pages::SharesController < Pages::SidebarsController
   end
 
   private
-
-  def authorized?
-    return true if @page.nil?
-    if action?(:update)
-      may_share_page?
-    elsif action?(:notify)
-      may_notify_page?
-    elsif action?(:show, :auto_complete)
-      true
-    end
-  end
 
   # convert {:checkbox => '1'} to {:checkbox => true}
   def convert_checkbox_boolean(hsh)

@@ -7,7 +7,4 @@ module MePermission
     logged_in?
   end
 
-  # Messages
-  alias_method :may_create_posts?, :may_access_me?
-
 end

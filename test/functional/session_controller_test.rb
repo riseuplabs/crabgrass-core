@@ -10,7 +10,7 @@ class SessionControllerTest < ActionController::TestCase
     post :login, :login => 'quentin', :password => 'quentin'
     assert session[:user]
     assert_response :redirect
-    assert_redirected_to '/me/pages'
+    assert_redirected_to '/me'
   end
 
   def test_should_fail_login_and_not_redirect

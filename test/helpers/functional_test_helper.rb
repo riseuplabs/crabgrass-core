@@ -64,11 +64,9 @@ module FunctionalTestHelper
     rescue MockExpectationError => e
       message = "Asserted Permission was not called.\n"
       message += "  Params used were: #{@controller.params.inspect}.\n"
-      key = [@controller.params[:controller], @controller.params[:action]]
-      message += "  Key used was: #{key.inspect}.\n"
-      method = @controller.send :cache_permission, key do
-        nil
-      end
+      action = @controller.params[:action]
+      message += "  action was: #{action}.\n"
+      method = @controller.class.permission_for_action(action)
       message += method ? "  Method used was: #{method}.\n" :
        "  No method was cached. Are you using login_required?\n"
       raise MockExpectationError.new(message)

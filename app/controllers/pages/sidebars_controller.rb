@@ -4,6 +4,7 @@
 #
 class Pages::SidebarsController < Pages::BaseController
 
+  guard :may_edit_page?
   layout nil
 
   def show

@@ -2,6 +2,7 @@ class Groups::AvatarsController < Groups::BaseController
 
   include_controllers 'common/avatars'
   before_filter :setup
+  skip_before_filter :login_required
 
   protected
 

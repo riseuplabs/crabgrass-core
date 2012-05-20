@@ -1,9 +1,7 @@
 class Wikis::VersionsController < Wikis::BaseController
 
-  before_filter :fetch_version, :only => [:show, :destroy, :revert]
-  before_filter :login_required
-
-  permissions 'wikis/versions'
+  guard :revert => :may_revert_wiki_version?,
+    :destroy => :may_admin_wiki?
 
   def show
     unless request.xhr?
@@ -35,7 +33,10 @@ class Wikis::VersionsController < Wikis::BaseController
 
   protected
 
-  def fetch_version
+  # making sure the version is available for the permission
+  def fetch_wiki
+    super
+    return if action? :index
     @version = @wiki.find_version(params[:id])
   rescue Wiki::VersionNotFoundError => ex
     error ex

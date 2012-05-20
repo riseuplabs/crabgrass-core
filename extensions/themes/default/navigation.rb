@@ -269,14 +269,14 @@ define_navigation do
       end
 
       local_section :invites do
-        visible { may_create_group_invite? }
+        visible { may_admin_group? }
         label   { :send_invites.t }
         url     { new_group_invite_path(@group) }
         active  { controller?('groups/invites') }
       end
 
       local_section :requests do
-        visible { may_list_membership_requests? }
+        visible { may_admin_group? }
         label   { :membership_requests.t }
         url     { group_membership_requests_path(@group) }
         active  { controller?('groups/membership_requests') }
@@ -297,7 +297,7 @@ define_navigation do
     end
 
     context_section :settings do
-      visible { may_admin_group? } #there were a few disjuncts here, but all were equivalent to may_admin_group?
+      visible { may_admin_group? }
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
@@ -311,28 +311,28 @@ define_navigation do
       end
 
       local_section :permissions do
-        visible { may_edit_group_permissions? }
+        visible { may_admin_group? }
         label  { :permissions.t }
         url    { group_permissions_path(@group) }
         active { controller?('groups/permissions') }
       end
 
       local_section :profile do
-        visible { may_edit_group_profile? }
+        visible { may_admin_group? }
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
         active { controller?('groups/profiles') }
       end
 
       local_section :structure do
-        visible { may_show_group_structure? }
+        visible { may_admin_group? }
         label  { :structure.t }
         url    { group_structure_path(@group) }
         active { controller?('groups/structures') }
       end
 
       local_section :requests do
-        visible { may_list_group_requests? }
+        visible { may_admin_group? }
         label  { :requests.t }
         url    { group_requests_path(@group) }
         active { controller?('groups/requests') }

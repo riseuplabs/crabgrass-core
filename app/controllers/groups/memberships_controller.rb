@@ -6,7 +6,6 @@
 class Groups::MembershipsController < Groups::BaseController
 
   before_filter :fetch_membership, :only => :destroy
-  before_filter :login_required
 
   guard :index => :may_list_memberships?,
         :destroy => :may_destroy_membership?

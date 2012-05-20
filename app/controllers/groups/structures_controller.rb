@@ -1,9 +1,6 @@
 class Groups::StructuresController < Groups::SettingsController
 
-  guard :show => :may_show_group_structure?,
-        :new => :may_edit_group_structure?,
-        :create => :may_edit_group_structure?,
-        :destroy => :may_edit_group_structure?
+  guard :may_edit_group_structure?, :actions => [:new, :create, :destroy]
 
   def show
   end

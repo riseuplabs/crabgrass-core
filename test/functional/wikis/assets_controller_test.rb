@@ -14,7 +14,7 @@ class Wikis::AssetsControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_create_wiki_asset? do
+    assert_permission :may_edit_wiki? do
       get :new, :wiki_id => @wiki.id
     end
     assert_response :success
@@ -23,7 +23,7 @@ class Wikis::AssetsControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    assert_permission :may_create_wiki_asset? do
+    assert_permission :may_edit_wiki? do
       assert_difference 'Asset.count' do
         assert_difference '@group.pages.count' do
           sleep 1 # make sure most recent always works

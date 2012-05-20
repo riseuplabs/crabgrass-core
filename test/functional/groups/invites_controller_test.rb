@@ -11,7 +11,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
 
   def test_new
     login_as @user
-    assert_permission :may_create_group_invite? do
+    assert_permission :may_admin_group? do
       get :new, :group_id => @group.to_param
     end
     assert_response :success
@@ -20,7 +20,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
   def test_create
     login_as @user
     recipient = User.make
-    assert_permission :may_create_group_invite? do
+    assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUs.count' do
         get :create, :group_id => @group.to_param,
          :recipients => recipient.name

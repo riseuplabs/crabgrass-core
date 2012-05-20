@@ -7,7 +7,7 @@
 
 class Pages::ParticipationsController < Pages::SidebarsController
 
-  before_filter :login_required
+  guard :may_show_page?, :actions => [:update, :create]
   helper 'pages/participation', 'pages/share'
 
   # this is used for ajax pagination
@@ -87,10 +87,6 @@ class Pages::ParticipationsController < Pages::SidebarsController
     else
       @participation = UserParticipation.find(params[:id]) if params[:id]
     end
-  end
-
-  def authorized?
-    may_show_page?
   end
 
 end
