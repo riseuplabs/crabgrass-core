@@ -1,8 +1,6 @@
-
-
 class Pages::TrashController < Pages::SidebarsController
 
-  before_filter :login_required
+  guard :may_admin_page?
   helper 'pages/trash'
 
   # loads popup

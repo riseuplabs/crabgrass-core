@@ -8,17 +8,13 @@ class Pages::BaseController < ApplicationController
 
   layout 'page'
   permissions :pages
-  permission_helper :posts, 'groups/memberships', 'groups/base'
+  guard :may_ACTION_page?
   javascript 'upload'
   stylesheet 'upload', 'gallery'
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
-
-  #stylesheet 'page_creation', :action => :create
-  #javascript 'page'
-  #permissions 'pages', 'posts'
-  #helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
+  permission_helper :posts, 'groups/memberships', 'groups/base'
 
   helper 'pages/base', 'pages/sidebar'
 

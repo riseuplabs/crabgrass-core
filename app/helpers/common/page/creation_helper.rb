@@ -60,7 +60,7 @@ module Common::Page::CreationHelper
 
 #  def create_page_link(group=nil, options={})
 #    if group
-#      url = new_group_page_url(group) if may_create_group_page?
+#      url = new_group_page_url(group) if may_edit_group?
 #    else
 #      url = new_me_page_url if may_create_pages?
 #    end

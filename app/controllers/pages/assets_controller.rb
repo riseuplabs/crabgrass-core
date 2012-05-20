@@ -1,8 +1,7 @@
 class Pages::AssetsController < Pages::SidebarsController
 
   permissions 'pages'
-  guard :may_edit_page?
-  before_filter :login_required
+  guard :destroy => :may_admin_page?
 
   def index
     render :partial => 'pages/assets/popup'

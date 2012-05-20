@@ -53,7 +53,7 @@ module Pages::SidebarHelper
   #
 
   def watch_line
-    if may_watch_page?
+    if may_show_page?
       existing_watch = (@upart and @upart.watch?) or false
       li_id = 'watch_li'
       checkbox_id = 'watch_checkbox'
@@ -68,7 +68,7 @@ module Pages::SidebarHelper
   # checkbox to add/remove public
   #
   def public_line
-    if may_public_page?
+    if may_admin_page?
       url = page_attributes_path(@page, :public => (!@page.public?).inspect)
       content_tag :li, :id => 'public_li' do
         sidebar_checkbox(I18n.t(:public_checkbox),
@@ -89,7 +89,7 @@ module Pages::SidebarHelper
   # checkbox to add/remove star
   #
   def star_line
-    if may_star_page?
+    if may_show_page?
       if @upart and @upart.star?
         icon = 'star'
         add = false
@@ -110,7 +110,7 @@ module Pages::SidebarHelper
   # used in the sidebar of deleted pages
   #
   def undelete_line
-    if may_undelete_page?
+    if may_admin_page?
       content_tag :li do
         link_to_remote_with_icon(I18n.t(:undelete_from_trash), :url => page_trash_path(@page, :type => 'undelete'), :method => 'put', :icon => 'refresh')
       end
@@ -121,7 +121,7 @@ module Pages::SidebarHelper
   # used in the sidebar of deleted pages
   #
   def destroy_line
-    if may_destroy_page?
+    if may_admin_page?
       content_tag :li do
         link_to_remote_with_icon(:destroy_page_via_shred.t, :icon => 'minus', :confirm => :destroy_confirmation.t(:thing => :page.t), :url => page_trash_path(@page, :type => 'destroy'), :method => 'put')
       end
@@ -195,7 +195,7 @@ module Pages::SidebarHelper
   end
 
   def edit_tags_line
-    if may_edit_page_tags?
+    if may_edit_page?
       popup_line(
         :id => 'tag_li',
         :icon => 'tag',
@@ -206,7 +206,7 @@ module Pages::SidebarHelper
   end
 
   def share_line
-    if may_share_page?
+    if may_admin_page?
       popup_line(
         :id => 'share_li',
         :icon => 'group',
@@ -217,7 +217,7 @@ module Pages::SidebarHelper
   end
 
   def notify_line
-    if may_notify_page?
+    if may_edit_page?
       popup_line(
         :id => 'notify_li',
         :icon => 'whistle',
@@ -228,7 +228,7 @@ module Pages::SidebarHelper
   end
 
   def delete_line
-    if may_delete_page?
+    if may_admin_page?
       popup_line(
         :id => 'trash_li',
         :icon => 'trash',
@@ -239,7 +239,7 @@ module Pages::SidebarHelper
   end
 
   def details_line
-    if may_show_page?
+    if may_edit_page?
       popup_line(
         :id => 'details_li',
         :icon => 'page_admin',
