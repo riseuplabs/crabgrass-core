@@ -25,25 +25,10 @@
     - permission_log.each do |key, info|
       %li.method
         METHOD FOUND:
-        = info[:decided]
+        = info
         %br/
         %br/
   %br/
-  %br/
-
-  %h3 Attempted
-  %ul
-    - permission_log.each do |key, info|
-      %li
-        %ul
-          %li
-            - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
-            = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json}"
-          - info[:attempted].each do |attempted|
-            %li
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              = attempted
-          %br/
   %br/
 
   %h3 All
