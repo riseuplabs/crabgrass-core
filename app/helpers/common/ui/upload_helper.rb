@@ -8,9 +8,9 @@ module Common::Ui::UploadHelper
   # This controller can then use render_to_parent to update the page
   # context accordingly.
   #
-  def asset_upload_form_for(target)
+  def asset_upload_form_for(target, message = nil)
     target = target.becomes(Page) if target.is_a?(Page)
     render :partial => '/common/asset_upload',
-      :locals => {:target => target}
+      :locals => {:target => target, :message => message}
   end
 end
