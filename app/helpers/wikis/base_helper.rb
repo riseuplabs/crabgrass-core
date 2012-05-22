@@ -60,7 +60,8 @@ module Wikis::BaseHelper
       "alert('%s');" % :save_wiki_before_adding_image.t
     else
       modalbox_function new_wiki_asset_path(wiki),
-        :title => I18n.t(:insert_image)
+        :title => I18n.t(:insert_image),
+        :complete => "initAjaxUpload();"
     end
   end
 

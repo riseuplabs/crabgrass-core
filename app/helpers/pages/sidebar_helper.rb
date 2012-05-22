@@ -190,7 +190,7 @@ module Pages::SidebarHelper
         :icon => 'attach',
         :title => :edit_attachments.t,
         :url => page_assets_path(@page),
-        :after_load => 'initFileOnlyAjaxUpload();'
+        :after_load => 'initAjaxUpload();'
     end
   end
 

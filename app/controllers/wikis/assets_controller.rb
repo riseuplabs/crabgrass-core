@@ -11,9 +11,7 @@ class Wikis::AssetsController < Wikis::BaseController
     @page ||= asset.create_page(current_user, @wiki.context)
     asset.save
     fetch_assets # now the new one should be included
-    responds_to_parent do
       render
-    end
   end
 
   protected
@@ -22,7 +20,7 @@ class Wikis::AssetsController < Wikis::BaseController
     @images = Asset.visible_to(current_user, @wiki.context).
       media_type(:image).
       most_recent.
-      paginate(pagination_params(:per_page => 8))
+      paginate(pagination_params(:per_page => 4))
   end
 
 end
