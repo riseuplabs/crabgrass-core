@@ -1,14 +1,16 @@
 - # use the asset_upload_form_for helper to use this partial!
 
 - # status messages and progress bar go here:
-#current-upload.hidden
+#upload-progress.hidden
 
-- form_for([target, Asset.new], :html => {:enctype=>"multipart/form-data", :id=>'form-id'}) do |f|
-  #file-drop.drop.hero-unit
+- form_for([target, Asset.new], upload_form_options(local_assigns)) do |f|
+  #upload-drop.drop.hero-unit
     -if local_assigns[:message]
       %p=message
     %p Drop files here or click the button
-    #file-select.upload.btn.btn-primary.btn-large.hook
-      %input#file-id.file.handler(multiple="multiple" type="file" name="our-file")
+    #file-select.upload.btn.btn-primary.hook
+      %input#upload-input.file.handler{:type=>"file",
+        :name => "our-file",
+        :multiple => local_assigns[:single] ? false : "multiple"}
         Select files
 

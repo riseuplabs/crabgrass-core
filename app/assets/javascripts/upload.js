@@ -13,10 +13,10 @@ function initAjaxUpload() {
     // Ajax uploads are supported!
     // Init the single-field file upload
     ajaxUpload.init({
-      form: 'form-id',
-      fileDrop: 'file-drop',
-      fileInput: 'file-id',
-      progress: 'current-upload'
+      form: 'upload-form',
+      fileDrop: 'upload-drop',
+      fileInput: 'upload-input',
+      progress: 'upload-progress'
     });
   }
 }
