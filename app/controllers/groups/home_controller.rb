@@ -1,9 +1,9 @@
 class Groups::HomeController < Groups::BaseController
 
-  before_filter 'fetch_wikis'
-  skip_before_filter 'login_required'
+  skip_before_filter :login_required
   before_filter :authorized?
   guard :may_show_group?
+  before_filter :fetch_wikis
 
   layout 'sidecolumn'
   helper 'groups/wikis', 'wikis/base', 'wikis/sections'

@@ -67,7 +67,7 @@ module FunctionalTestHelper
       action = @controller.params[:action]
       message += "  action was: #{action}.\n"
       method = @controller.class.permission_for_action(action)
-      message += method ? "  Method used was: #{method}.\n" :
+      message += method ? "  Method selected would be: #{method}.\n" :
        "  No method was cached. Are you using login_required?\n"
       raise MockExpectationError.new(message)
     end
