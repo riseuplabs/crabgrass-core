@@ -93,7 +93,6 @@ en:
   ##!  invite_accept_via_register: "I need to register a new account"
   ##!  join_group_success: "You have joined group %{group_name}"
   ##!  state: "State"
-  ##!  action: "Action"
   ##!  ignore: "Ignore"
   ##!  my_requests_link: "My requests"
   ##!  all_requests: "All Requests"
