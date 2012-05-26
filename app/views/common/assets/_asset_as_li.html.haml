@@ -1,5 +1,6 @@
 - asset = asset_as_li || @asset
 %li.asset.box[asset]
-  %h3= link_to h(truncate(asset.basename, :length => 20)), asset.url
-  = link_to_asset asset, :small
+  = link_to_asset asset, :small, :crop => '70x70'
   = remove_asset_button asset
+  .clear
+  %h3= link_to h(truncate(asset.basename, :length => 20)), asset.url
