@@ -17,16 +17,23 @@
   overflow: hidden;
 }
 
+#upload-progress {
+  margin: 20px;
+}
+
 .drop {
-  border:lightgray dotted 5px; 
-  display:block; 
-  border-radius: 20px;
-  margin: 10px;
+  border:lightgray dotted 3px; 
+  padding:30px;
+  color:#888;
+  display:block;
+  font-size: 2em; 
+  border-radius: 10px;
+  margin: 20px;
 }
 
 
 .drop.dragging {
-  border:gray dotted 5px; 
+  border:gray dotted 3px; 
 }
 
 .file.handler {

@@ -9,16 +9,22 @@ ajaxUpload.view = {
       this.hide();
       return
     }
-    var html = '<span id="upload-filename" class="left">#{filename} (#{left})</span>' +
+    var pending = ajaxUpload.files.length()
+    if (pending) {
+      pending = '<div>' + pending + ' files pending</div>'
+    } else {
+      pending = ''
+    }
+    var html = '<div id="upload-filename" class="left">#{filename}</div>' +
                '<div class="progress progress-striped progress-active">' +
                '<div class="bar" style="width: #{percent}%;"></div>' +
-               '</div>' +
-               '<span class="left">#{message}</span>';
+               '</div>'+
+               '#{pending}';
     this.container.innerHTML = html.interpolate({
       filename: ajaxUpload.upload.getFile().name,
       percent: ajaxUpload.upload.getPercent(),
       message: ajaxUpload.upload.getMessage(),
-      left: ajaxUpload.files.length() + 1
+      pending: pending
     });
     this.container.classList.remove("hidden");
   }),

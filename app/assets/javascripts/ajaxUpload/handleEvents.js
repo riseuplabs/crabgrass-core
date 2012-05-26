@@ -18,6 +18,7 @@ ajaxUpload.handleDragAndDrop = function (fileDrop) {
   fileDrop.addEventListener("dragleave", onDragLeave, true);
 
   function onFileDropped(e) {
+    e.currentTarget.classList.remove("dragging");
     ajaxUpload.files.add(e.dataTransfer.files);
     e.stopPropagation();  
     e.preventDefault(); 
@@ -30,6 +31,7 @@ ajaxUpload.handleDragAndDrop = function (fileDrop) {
   }
 
   function onDragOver(e) {
+    e.currentTarget.classList.add("dragging");
     e.stopPropagation();  
     e.preventDefault(); 
   }

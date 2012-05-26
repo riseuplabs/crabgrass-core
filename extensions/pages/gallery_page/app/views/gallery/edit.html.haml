@@ -8,5 +8,7 @@
 
 - # TODO: implement extraction of zip files
 - # %p.info
-- #   = I18n.t :add_images_or_zips_explaination
-= asset_upload_form_for(@page, :message => :add_images_to_gallery_link.t)
+%h3(style="margin-top:20px;")
+  = I18n.t :add_images_to_gallery_link
+
+= asset_upload_form_for(@page)
