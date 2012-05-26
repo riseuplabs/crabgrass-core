@@ -1,5 +1,19 @@
-%span.float_right
-  = wiki_action_links wiki
+= formy(:tabs, :id => dom_id(wiki, :tabs), :class => 'nav nav-tabs tabset') do |f|
+  - f.tab do |t|
+    - t.label :show.t
+    - t.show_tab dom_id(wiki)
+    - t.function remote_function(:url => group_wiki_path(@group, wiki, :preview => true), :method => 'get')
+    - t.selected action?(:show)
+  - f.tab do |t|
+    - t.label :edit.t
+    - t.function remote_function(:url => edit_wiki_path(wiki), :method => 'get')
+    - t.show_tab dom_id(wiki)
+    - t.selected action?(:edit)
+  - f.tab do |t|
+    - t.label :versions.t
+    - t.function remote_function(:url => wiki_versions_path(wiki), :method => 'get')
+    - t.show_tab dom_id(wiki)
+    - t.selected controller?('wikis/versions')
 %div[wiki]
   - if local_assigns.delete(:open)
     = render :partial => 'common/wiki/show', :locals => local_assigns

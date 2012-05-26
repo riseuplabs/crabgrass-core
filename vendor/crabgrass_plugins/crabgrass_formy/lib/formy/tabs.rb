@@ -67,7 +67,8 @@ module Formy
         elsif @function
           a_tag = content_tag :a, @label, :href => '#', :class => @class, :style => @style, :id => @id, :onclick => @function
         end
-        li_class = "tab #{@options[:index] == 0 ? 'first' : ''}"
+        first = 'first' if @options[:index] == 0
+        li_class = ['tab', selected, first].compact.join(' ')
         puts content_tag(:li, a_tag, :class => li_class)
         super
       end

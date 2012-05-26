@@ -19,7 +19,9 @@ function showTab(tabLink, tabContent, hash) {
   var tabset = tabLink.up('.tabset');
   if (tabset) {
     tabset.select('a').invoke('removeClassName', 'active');
+    tabset.select('li').invoke('removeClassName', 'active');
     $$('.tab_content').invoke('hide');
+    tabLink.up('.tabset li').addClassName('active');
     tabLink.addClassName('active');
     tabContent.show();
     evalAttributeOnce(tabContent, 'data-onvisible');
