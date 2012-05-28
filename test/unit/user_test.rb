@@ -104,16 +104,20 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_friends_or_peers_with_access
-    u = users(:blue)
-    accessible = User.friends_or_peers_of(u).access_by(u).allows(:view)
-    assert accessible.first
+    users(:red).grant_access!(users(:blue) => :view)
+    users(:red).add_contact!(users(:blue))
+    accessible = User.with_access(users(:blue) => :view).friends_or_peers_of(users(:blue))
+    assert_equal users(:red), accessible.first
   end
 
-  def test_user_creation_adds_keys
-    assert_difference 'Key.count', 3 do
-      user = User.make
-    end
-  end
+  #
+  # creating users no longer adds keys
+  #
+  #def test_user_creation_adds_keys
+  #  assert_difference 'Key.count', 3 do
+  #    user = User.make
+  #  end
+  #end
 
   protected
 

@@ -12,11 +12,6 @@ module UserExtension::Users
     base.send :include, InstanceMethods
 
     base.instance_eval do
-
-      add_locks :see_contacts => 4
-      add_locks({:request_contact => 5}, :without => :friends)
-      # disabled for now: , :comment => 6
-
       serialize_as IntArray, :friend_id_cache, :foe_id_cache
 
       initialized_by :update_contacts_cache,
@@ -40,19 +35,6 @@ module UserExtension::Users
           sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
 
           User.find_by_sql(sql)
-        end
-
-        # keyring_codes used by acts_as_locked
-        def keyring_code
-          "%04d" % "9#{proxy_owner.id}"
-        end
-
-        def display_name
-          "Peers of #{proxy_owner.name}"
-        end
-
-        def to_sym
-          :peers
         end
       end
 
@@ -87,19 +69,6 @@ module UserExtension::Users
           max_visit_count = find(:first, :select => 'MAX(relationships.total_visits) as id').id || 1
           select = "users.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
           find(:all, :limit => options[:limit], :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
-        end
-
-        # keyring_codes used by acts_as_locked
-        def keyring_code
-          "%04d" % "7#{proxy_owner.id}"
-        end
-
-        def display_name
-          "Friends of #{proxy_owner.display_name}"
-        end
-
-        def to_sym
-          :friends
         end
       end
 

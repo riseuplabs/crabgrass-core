@@ -1,7 +1,7 @@
 class Groups::PermissionsController < Groups::BaseController
 
   before_filter :login_required
-  helper 'acts_as_locked'
+  helper 'castle_gates'
 
   def index
     @key  = @group.keys.find_or_create_by_holder(:public)

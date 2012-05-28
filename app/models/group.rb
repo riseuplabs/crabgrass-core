@@ -26,11 +26,6 @@ end
 
 class Group < ActiveRecord::Base
 
-  acts_as_locked :view, :edit, :admin, :pester, :burden, :spy
-  def to_sym
-    :members
-  end
-
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
   include GroupExtension::Users      # group <--> user behavior
@@ -48,16 +43,6 @@ class Group < ActiveRecord::Base
   ##
   ## FINDERS
   ##
-
-  # finds groups that user may see
-  # this is a depcrecated special case of access_by(user).allows(action)
-  # provided by acts_as_locked.
-  # Please use access_by(user).allows(:view) instead.
-  named_scope :visible_by, lambda { |user|
-    { :joins => :keys,
-      :group => 'locked_id, locked_type',
-      :conditions => "keyring_code IN (#{user.access_codes.join(", ")}) AND 1 & ~mask = 0" }
-  }
 
   # find groups that do not contain the given user
   # used in autocomplete where the users groups are all preloaded
@@ -290,12 +275,6 @@ class Group < ActiveRecord::Base
     self.networks.each do |network|
       Group.increment_counter(:version, network.id)
     end
-  end
-
-  after_create :create_permissions
-  def create_permissions
-    self.grant! self, Conf.default_group_permissions['members']
-    self.grant! :public, Conf.default_group_permissions['public']
   end
 
   ##

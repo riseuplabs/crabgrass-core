@@ -81,3 +81,4 @@ Crabgrass::Initializer.run do |config|
   # See Rails::Configuration for more options
 end
 
+require "#{Rails.root}/config/permissions"
