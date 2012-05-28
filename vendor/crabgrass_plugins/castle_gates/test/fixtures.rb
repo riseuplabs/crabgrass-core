@@ -16,6 +16,10 @@ def create_fixtures
   me.minions << minion2
   other.minions << minion3
 
+  # subclasses
+  faction = Faction.create! :name => 'faction'
+  bunker = Bunker.create! :name => 'faction'
+
   #fusion = Style.create! :name => "fusion"
   #jazz = Style.create! :name => "jazz"
   #soul = Style.create! :name => "soul"

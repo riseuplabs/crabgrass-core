@@ -6,22 +6,3 @@ remember to change
 
    p.integer :gate_bitfield, :default => 1
 
-
-key
-----------------
-
-key.holder is very inefficient
-
-  let say you are iterating over a set of locks and keys.
-  each time, you probably call key.holder, which re-fetches the holder each time.
-
-  ok, i made this a bunch better with @holder ||= xxx
-
-label_for_holder(key.holder) is inefficient
-  we want an object for key.holder so it can tell us its label
-  which may depend on data.
-  the problem is with associations. in order to get the object
-  and call label on it, it fetches all the records in the association.
-
-  i guess in resolve_holder{|code| User.find(id).friends }
-

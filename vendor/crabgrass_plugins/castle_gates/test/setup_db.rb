@@ -3,7 +3,7 @@
 ##
 
 if (ADAPTER == :sqlite)
-  DB_FILE = "#{File.dirname(__FILE__)}/tests.sqlite"
+  DB_FILE = "#{File.dirname(__FILE__)}/test.sqlite"
   if !File.exists?(DB_FILE)
     REBUILD_DB = true
   end
@@ -40,6 +40,7 @@ def setup_db
 
     create_table :forts do |t|
       t.column :name, :string
+      t.column :type, :string
     end
     create_table :towers do |t|
       t.column :name, :string

@@ -1,4 +1,4 @@
-class InstallActsAsLocked < ActiveRecord::Migration
+class InstallCastleGates < ActiveRecord::Migration
   def self.up
     create_table :keys do |p|
       p.integer :castle_id

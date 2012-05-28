@@ -54,9 +54,13 @@ class CastleGatesTest < Test::Unit::TestCase
     @fort = Fort.find :first
     @tower = Tower.find :first
     @me = User.find :first
+    @minion = Minion.find :first
     @other = User.find :last
     @hill_clan = Clan.find_by_name 'hill'
     @forest_clan = Clan.find_by_name 'forest'
+    @faction = Faction.find :first
+    @bunker = Bunker.find :first
+
     #User.current = @me
   end
 
@@ -70,6 +74,10 @@ class CastleGatesTest < Test::Unit::TestCase
     assert_raises ArgumentError do
       @fort.grant_access!(:public => :not_a_gate)
     end
+    #TODO
+    #assert_raises ArgumentError do
+    #  @fort.access?(@me.minions => :draw_bridge)
+    #end
   end
 
   def test_simple_grant
@@ -188,6 +196,10 @@ class CastleGatesTest < Test::Unit::TestCase
       assert @fort.access?(@me => :tunnel), 'default should be open for @me'
       @fort.revoke_access!(:admin => :sewers)
       assert !@fort.access?(:admin => :sewers), 'default should get overridden'
+
+      assert @me.access?(@minion => :follow), "me's minion should have access by default"
+      assert !@me.access?(Minion.create! => :follow), 'other minions should NOT have access by default'
+
       raise ActiveRecord::Rollback
     end
   end
@@ -231,6 +243,21 @@ class CastleGatesTest < Test::Unit::TestCase
       assert holders.include?(@me), 'holders should include me'
       assert holders.include?(:public), 'holders should include public'
       assert holders.include?(@me.associated(:minions)), 'holders should include minions'
+
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  def test_subclasses
+    ActiveRecord::Base.transaction do
+      # subclasses of holders
+      @fort.grant_access!(@faction => :draw_bridge)
+      assert @fort.access?(@faction => :draw_bridge)
+
+      # subclasses of castles
+      @bunker.grant_access!(:public => :draw_bridge)
+      assert @bunker.access?(:public => :draw_bridge)
+      assert !@fort.access?(:public => :draw_bridge)
 
       raise ActiveRecord::Rollback
     end

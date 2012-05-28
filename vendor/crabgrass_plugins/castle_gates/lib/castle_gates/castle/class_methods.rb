@@ -14,6 +14,7 @@ module ClassMethods
     bits = gate_set.bits(gate_names)
     unless bits
       raise ArgumentError.new 'bad gate names %s' % gate_names.inspect
+      exit
     end
     "(#{bits} & ~keys.gate_bitfield) = 0"
   end
@@ -25,12 +26,18 @@ module ClassMethods
   #
   # Adds a new gate to this castle
   #
-  def add_gate(*args)
+  def gate(*args)
     gate_set.add( Gate.new(*args) )
   end
 
   def gate_set
-    @gate_set ||= GateSet.new
+    @gate_set ||= begin
+      if superclass.respond_to?(:gate_set)
+        superclass.gate_set
+      else
+        GateSet.new
+      end
+    end
   end
 
   def gates

@@ -1,6 +1,6 @@
-CASTLE GATES ACL -- model permissions for active record
+CASTLE GATES -- model permissions for active record
 
-Castle Gates ACL provides access control to models using efficient database bitfields.
+Castle Gates provides access control to models using efficient database bitfields.
 
 Castle Gates is more complicated than most model permissions systems. It is designed for
 a usage scenario where a user might have many different possible permission pathways
@@ -9,28 +9,32 @@ resource. For example, a user might have access because they have been granted a
 directly, or they are in a group that was granted access, or they are a friend of someone
 who has granted access to 'friends'.
 
-For example:
+A very simple example:
 
   class Fort
-    acts_as_castle
-    add_castle_gate :front_door, :id => 0
   end
 
   class User
-    acts_as_key_holder :id => 1
   end
 
-  fort = Fort.find 1
-  user = User.find 1
+  CasteGates.define do
+    castle Fort do
+      gate 1, :front_door
+    end
+    holder 1, :user, :model => User
+  end
 
-  user.may?(:front_door, fort)      ==> false
-  fort.grant!(:front_door, user) 
-  user.may?(:front_door)            ==> true
+  fort = Fort.create!
+  user = User.create!
+
+  fort.access?(user => :front_door)      ==> false
+  fort.grant_access!(user => :front_door)
+  fort.access?(user => :front_door)      ==> true
 
 Limitations
 
 Castle Gates is fast, but because of its implementation, every castle is limited
-to a finite number of doors (the number of bits in the door_bitmask field, 
+to a finite number of doors (the number of bits in the door_bitmask field,
 typically 32, see below).
 
 Furthermore, your application cannot have more than 9 different types of key holders.
@@ -40,30 +44,27 @@ Concepts
 
 Castles:
 
-  * Adding 'acts_as_castle' turns a model into a protected "castle".
   * A castle is a model with something you want to control access to.
+  * Every castle has one or more gates.
 
 Gates:
 
-  * Every castle has many gates
   * A gate is just a symbol (e.g. :front_door).
   * A gate is some resource you want to protect in the castle (e.g. :editable)
-  * Gates are just symbols, they don't relate to actual fields of the castle.
+  * Since gates are just symbols, they don't relate to actual fields of the castle.
 
 Keys:
 
-  * A key defines a set of gates it will open for a particular castle.
   * Keys are ActiveRecord models stored in the database in the table 'gate_keys'.
-  * For each holder and castle, there is exactly one key.
+  * A key instance has a set of gates it will open for a particular castle.
   * Castles have many keys, one for each holder with access to any of its gates.
 
 Holders:
 
-  * A key holder is something that can have keys.
+  * A holder is something that can own keys that open gates.
   * A holder has many keys, one for each castle the holder has some access to.
   * A holder might be a record, like a user or group, but it could also be
-    set of things, like 'users created on a tuesday'.
-  * A holder can be basically anything we can define a holder code for.
+    an association or a symbol.
 
 Although there is only one key for a single caste <=> holder relationship,
 in practice an object might have many holders associated with it.
@@ -76,23 +77,13 @@ If any of the keys grant access to a gate, then the user has access to the
 gate. In other words, the user always tries all the possible keys until
 one works or they are denied access.
 
-Acts_as_castle is very flexible, but has a few important limitation:
+Castle Gates is very flexible, but has a few important limitation:
 
   (1) The number of gates a castle can have is limited to the bit
       length of gate_keys.gate_bitfield
 
   (2) System-wide, there can only be nine types of holders.
 
-Todo
-================================================
-
-Use BIT_OR aggregation function:
-
-  for mysql:
-    http://stackoverflow.com/questions/1397913/is-it-possible-to-perform-a-bitwise-group-function
-    http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_bit-or
-  for postgres:
-    http://www.postgresql.org/docs/8.0/static/functions-aggregate.html
 
 Installation
 ================================================
@@ -106,63 +97,66 @@ Optional configuration:
 Usage
 ================================================
 
-class Fort
+To be written.
 
-  acts_as_castle
+Usage Example
+================================================
 
-  add_castle_gate :front_door, 
-    :index => 0,
-    :label => 'Front Door', 
-    :info  => 'Watch out for the dragon'
-
-  # has_many :keys
-  # def doors(); end
+class User < ActiveRecord::Base
+  has_many :memberships
+  has_many :clans, :through => :memberships
 end
 
-class User
+class Clan < ActiveRecord::Base
+  has_many :memberships
+  has_many :users, :through => :memberships
+end
 
-  acts_as_castle
+class Membership < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :clan
+end
 
-  add_castle_gate :request_contact, 
-    :index => 0,
-    :label => 'may friend?', 
-    :info  => 'ability to ask to add to contacts'
+class Fort < ActiveRecord::Base
+end
 
-  acts_as_key_holder :user,
-    :prefix => 5,
-    :label => lambda{self.name}
+CastleGates.define do
 
-  has_many :friends
-    acts_as_key_holder :friends,
-      :prefix => 7,
-      :label => :friends,
-      :info => lambda{'friends of %s'%proxy_owner.name}
+  castle Fort do
+    gate 1, :draw_bridge
+    gate 2, :sewers, :default_open => :admin
+    gate 3, :tunnel, :default_open => [:public, :user]
   end
 
-  # def keys; end
-  # has_many :keys
+  castle Tower do
+    gate 1, :door, :default_open => true
+    gate 2, :window
+    def after_grant_access(holder, gate)
+      if holder == :public
+        grant_access! :admin => gate
+      end
+    end
+    def after_revoke_access(holder, gate)
+      if holder == :admin
+        revoke_access! :public => gate
+      end
+    end
+  end
+
+  holder 1, :user, :model => User do
+    def holder_codes
+      {:holder => :clan, :ids => self.clan_ids}
+    end
+  end
+
+  holder 2, :clan,  :model => Clan
+  holder 3, :public
+  holder 4, :admin
 end
 
-fort.has_access?(:front_door, holder)
-holder.may?(:front_door, fort)
-fort.grant!(:front_door => holders)
-
-
-fort.access_by?(holder, :front_door)
-holder.may?(:front_door, fort)
-fort.grant_access!(holder, :front_door)
-
-Fort.access_by(holder, :front_door).find()
-Fort.access_by(holder).find()
 
 The Database
 ================================================
-
-:locked       => :castle
-:mask         => :gate_bitfield
-:locked_id    => :castle_id
-:locked_type  => :castle_type
-:keyring_code => :holder_code
 
 Schema:
 
@@ -170,13 +164,13 @@ Schema:
     p.integer :castle_id
     p.string  :castle_type
     p.integer :holder_code
-    p.integer :gate_bitfield, :default => 0
+    p.integer :gate_bitfield, :default => 1
   end
   add_index :keys, [:castle_id, :castle_type, :holder_code]
 
 Field explanation:
 
-  castle_id, castle_type -- polymorphic 'belongs_to :castle'. 
+  castle_id, castle_type -- polymorphic 'belongs_to :castle'.
 
   holder_code -- a code that defines the holder of this key. it is kind of like a
     polymorphic belongs_to, except that the holder does not need to be an actual
@@ -185,9 +179,11 @@ Field explanation:
   gate_bitfield -- a bitfield that defines which gates of the castle this key
     will open. For example, if the bits in positions '3' and '5' are set to '1',
     then the key grants the holder access to the gates with id '3' and '5'.
+    The default is 1 because this enables us to quickly distinguish between when
+    there are no keys and when the keys don't allow access.
 
 If you want a bigger gate_bitfield (to store more than 32 doors in a key),
 change the migration like so (MySQL specific):
 
-   p.column :gate_bitfield, 'bigint', :default => 0
+   p.column :gate_bitfield, 'bigint', :default => 1
 

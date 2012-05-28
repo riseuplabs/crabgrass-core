@@ -43,7 +43,7 @@ def self.included(base)
         key = find_or_initialize_by_holder_code(holder.code)
         if key.new_record?
           castle = proxy_owner
-          key.gate_bitfield |= castle.gate_set.default_bits(holder)
+          key.gate_bitfield |= castle.gate_set.default_bits(castle, holder)
         end
         key
       end

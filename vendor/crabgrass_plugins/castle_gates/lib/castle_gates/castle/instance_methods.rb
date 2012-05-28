@@ -29,6 +29,16 @@ module InstanceMethods
   end
 
   #
+  # alternate signature
+  #
+  def has_access!(gate_symbol, holder)
+    access?(holder => gate_symbol) || raise(CastleGates.exception_class.new)
+  end
+  def has_access?(gate_symbol, holder)
+    access?(holder => gate_symbol)
+  end
+
+  #
   # grant access to a gate
   #
   # adds the right bits to specified holder(s) keys so that they can open the specified gate(s)
@@ -168,7 +178,12 @@ module InstanceMethods
       bitfield = Key::gate_bitfield(keys)
       if bitfield.nil?
         # no actual keys, so lets fall back to the defaults
-        gate_set.default_bits(holder)
+        bitfield = gate_set.default_bits(self, holder)
+        if associated_holder = holder.association_with(self)
+          bitfield |= gate_set.default_bits(self, associated_holder)
+        else
+          bitfield
+        end
       else
         bitfield
       end

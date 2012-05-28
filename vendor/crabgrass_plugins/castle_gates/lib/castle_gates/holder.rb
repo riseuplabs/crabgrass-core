@@ -34,6 +34,10 @@ class Holder
     @object == other_object
   end
 
+  def id
+    @object.id
+  end
+
   #
   # returns the holder definition
   #
@@ -93,16 +97,55 @@ class Holder
   #
   def all_codes
      codes = []
-     if @object.respond_to?(:holders) && holder_list = @object.holders
-       codes = holder_list.collect {|holder| Holder.code(holder)}
-     elsif @object.respond_to?(:holder_codes) && return_value = @object.holder_codes
+     if @object.respond_to?(:holder_codes) && return_value = @object.holder_codes
        if return_value.is_a? Hash
          codes = self.class.codes_from_hash(return_value)
        elsif return_value.is_a? Array
          codes = self.class.codes_from_array(return_value)
        end
+     elsif @object.respond_to?(:holders) && holder_list = @object.holders
+       codes = holder_list.collect {|holder| Holder.code(holder)}
      end
      codes << self.code
+  end
+
+  #
+  # When testing to see if a particular holder has default access to a castle, we
+  # sometimes want to check both the holder itself and any other holders
+  # that the holder might be associated with. Got that? Here is an example:
+  #
+  # Suppose you have a group (castle) and a user (holder). There is also a
+  # holder defined called 'members_of_group'. To see if a user has default
+  # access to the group, we should check to see if the user has direct default
+  # access and also if they have default access via the 'members_of_group'.
+  #
+  # To repeat: this is only for fallback defaults. If there are key records, all
+  # this is ignored.
+  #
+  # This method returns the associated holder, if any exist.
+  #
+  # For this to work, the holder definition for the association must have
+  # a method that returns true if the two objects really are in association.
+  # The name of the method is the name of the holder. Here is an example:
+  #
+  # holder 4, :minion_of_user, :association => User.associated(:minions) do
+  #   def minion_of_user?(minion)
+  #     minion_ids.include? minion.id
+  #   end
+  # end
+  #
+  def association_with(castle)
+    possible_holder = definition.associated.find do |hdef|
+      hdef.model == definition.model && hdef.association_model == castle.class
+    end
+    if possible_holder
+      method_name = "#{possible_holder.name}?"
+      if castle.respond_to?(method_name)
+        if castle.send(method_name, self)
+          return possible_holder
+        end
+      end
+    end
   end
 
   ##
@@ -122,7 +165,7 @@ class Holder
   #
   # defines a new holder
   #
-  def self.add_holder(prefix, name, options=nil)
+  def self.add_holder(prefix, name, options=nil, &block)
     options ||= {:abstract => true}
     options[:prefix] = prefix
     holder = nil
@@ -143,7 +186,8 @@ class Holder
         attr_accessor :holder_definition
       end
       options[:association_name] = association.name
-      options[:model] = association.active_record
+      options[:association_model] = association.active_record
+      options[:model] = association.klass
       holder = association
     elsif options[:abstract]
       # eg :public
@@ -157,7 +201,26 @@ class Holder
     end
     holder_defs[holder_def.name] = holder_def
     holder_defs_by_prefix[holder_def.prefix] = holder_def
-    holder_def
+
+    # add custom methods to the model
+    if block
+      model = options[:association_model] || options[:model]
+      if model
+        model.class_eval &block
+      end
+    end
+    return holder_def
+  end
+
+  #
+  # allows multiple classes to share the same holder_definition
+  #
+  def self.add_holder_alias(name, model)
+    hdef = holder_defs[name]
+    raise ArgumentError.new('bad model') unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
+    model.send(:extend, CastleGates::ActsAsHolder::ClassMethods)
+    model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
+    model.holder_definition = hdef
   end
 
   #
@@ -208,11 +271,11 @@ class Holder
   #
   # Used to parse result of 'holder_codes' method in Holder#all_codes
   #
-  def self.codes_for_array(arry)
+  def self.codes_from_array(arry)
     codes = []
     arry.each do |code|
       if code.is_a? Hash
-        codes += codes_from_hash(id)
+        codes += codes_from_hash(code)
       else
         codes << code
       end

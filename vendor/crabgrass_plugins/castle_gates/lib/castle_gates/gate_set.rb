@@ -59,8 +59,9 @@ module CastleGates
     #
     # OPTIMIZE: self.values ??
     #
-    def default_bits(holder)
-      holder_name = Holder[holder].definition.name
+    def default_bits(castle, holder)
+      holder_name = holder.definition.name
+      associated_holder_name =
       gates = self.values
       gates.inject(0) do |bits_so_far, gate|
         bits_so_far | gate.default_bit(holder_name)
@@ -79,21 +80,27 @@ module CastleGates
     # with names that match these symbols.
     #
     def select(gate_names)
-      result = GateSet.new
-      gate_names = [gate_names] unless gate_names.is_a? Enumerable
-      gate_names.each do |gate_name|
-        if gate = self[gate_name]
-          result[gate_name] = gate
+      if gate_names == :all
+        self
+      else
+        result = GateSet.new
+        gate_names = [gate_names] unless gate_names.is_a? Enumerable
+        gate_names.each do |gate_name|
+          if gate = self[gate_name]
+            result[gate_name] = gate
+          end
         end
+        result
       end
-      result
     end
 
     #
     # returns
     #
     def gates_exist?(gate_names)
-      if gate_names.is_a? Enumerable
+      if gate_names == :all
+        true
+      elsif gate_names.is_a? Enumerable
         gate_names.inject(true) {|prior, gate| prior && self[gate]}
       else
         self[gate_names]
