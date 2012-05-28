@@ -1,9 +1,7 @@
 
 class AssetPageHistoryController < Pages::BaseController
-  #before_filter :fetch_asset
-  #stylesheet    'asset'
-  #permissions   'asset_page', :object => 'page'
-  permissions 'asset_page_history'
+
+  guard :index => :may_show_page?, :destroy => :may_edit_page?
   helper 'asset_page'
 
   def index

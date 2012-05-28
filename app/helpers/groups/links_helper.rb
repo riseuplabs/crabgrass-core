@@ -15,7 +15,7 @@ module Groups::LinksHelper
   end
 
   def edit_group_profile_link
-    if may_edit_group_profile?
+    if may_admin_group?
       link_to :edit_profile_link.t, edit_group_profile_path(@group)
     end
   end
@@ -58,21 +58,19 @@ module Groups::LinksHelper
   ##
 
   def list_memberships_link
-    if may_edit_memberships?
-      link_to(:edit.t, group_memberships_path(@group))
-    elsif may_list_memberships?
+    if may_list_memberships?
       link_to(:see_all_link.t, group_memberships_path(@group))
     end
   end
 
   def invite_link
-    if may_create_group_invite?
+    if may_admin_group?
       link_to(:send_invites.t, new_group_invite_path(@group))
     end
   end
 
   def requests_link
-    if may_list_group_requests?
+    if may_admin_group?
       link_to(:view_requests.t, group_requests_path(@group))
     end
   end
@@ -112,7 +110,7 @@ module Groups::LinksHelper
       end
     end
   end
-  
+
   #
   # remove a user from a group or a group from a network.
   #
@@ -123,7 +121,7 @@ module Groups::LinksHelper
       confirm = :membership_destroy_confirm_message.t(
         :entity => content_tag(:b,membership.entity.name),
         :group => content_tag(:b,@group.name))
-      link_to_remote(:remove.t, 
+      link_to_remote(:remove.t,
         {:url => group_membership_path(@group, membership),
         :method => 'delete',
         :confirm => confirm},

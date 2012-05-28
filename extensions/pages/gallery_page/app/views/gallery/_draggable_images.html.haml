@@ -1,8 +1,9 @@
-- if @images.any?
-  %ul#sort_gallery
-    = render :partial => 'image_to_edit', :collection => @images
-  = sortable_element "sort_gallery", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update)
-  %br{:style => 'clear:both'}/
-- else
+%ul#assets_list.sortable
+  = render :partial => '/common/assets/asset_as_li', :collection => @images
+= sortable_element "assets_list", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update)
+
+- if @images.blank?
   = I18n.t(:no_images_in_gallery)
+
+%br.clear
 

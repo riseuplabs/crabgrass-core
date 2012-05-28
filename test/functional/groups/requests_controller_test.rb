@@ -11,7 +11,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   def test_index
     @group.add_user! @user
     login_as @user
-    assert_permission :may_list_group_requests? do
+    assert_permission :may_admin_group? do
       get :index, :group_id => @group.to_param
     end
     assert_response :success

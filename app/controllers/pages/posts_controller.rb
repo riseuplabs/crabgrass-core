@@ -1,8 +1,10 @@
 class Pages::PostsController < ApplicationController
 
-  permissions 'posts'
+  permissions 'posts', 'pages'
   prepend_before_filter :fetch_data
   before_filter :login_required
+  guard :may_ALIAS_page_post?
+  guard :show => :may_show_page?
 
   # if something goes wrong with create, redirect to the page url.
   rescue_render :create => lambda {redirect_to(page_url(@page))}

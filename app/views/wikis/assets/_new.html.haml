@@ -17,7 +17,7 @@
     - f.row(:class => 'clear') do |r|
       - r.label :upload_new_image.t
       - r.info :image_upload_info.t
-      - r.input asset_upload_form_for(@wiki)
+      - r.input asset_upload_form_for(@wiki, :single => true)
 
   .buttons
     = close_modal_button(:cancel)

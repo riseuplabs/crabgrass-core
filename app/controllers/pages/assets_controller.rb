@@ -1,8 +1,7 @@
 class Pages::AssetsController < Pages::SidebarsController
 
   permissions 'pages'
-  guard_like :page, :edit
-  before_filter :login_required
+  guard :destroy => :may_admin_page?
 
   def index
     render :partial => 'pages/assets/popup'
@@ -15,11 +14,8 @@ class Pages::AssetsController < Pages::SidebarsController
   end
 
   def create
-    asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
-    @page.update_attribute :updated_at, Time.now
-    responds_to_parent do
-      render
-    end
+    @asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    current_user.updated(@page)
   end
 
   def destroy

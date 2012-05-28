@@ -26,21 +26,21 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    assert_permission :may_show_wiki_version? do
+    assert_permission :may_edit_wiki? do
       get :show, :wiki_id => @wiki.to_param, :id => @version.to_param
     end
     assert_equal @version, assigns['version']
   end
 
   def test_index
-    assert_permission :may_list_wiki_versions? do
+    assert_permission :may_edit_wiki? do
       get :index, :wiki_id => @wiki.to_param
     end
   end
 
   def test_destroy
     assert_difference "@wiki.versions.count", -1 do
-      assert_permission :may_destroy_wiki_version? do
+      assert_permission :may_admin_wiki? do
         delete :destroy, :wiki_id => @wiki.to_param, :id => @version.to_param
       end
     end

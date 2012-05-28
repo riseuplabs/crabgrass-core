@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120429061013) do
+ActiveRecord::Schema.define(:version => 20120504064620) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -822,14 +822,12 @@ ActiveRecord::Schema.define(:version => 20120429061013) do
     t.integer  "access"
     t.datetime "viewed_at"
     t.datetime "changed_at"
-    t.boolean  "watch",                               :default => false
+    t.boolean  "watch",         :default => false
     t.boolean  "star"
-    t.boolean  "resolved",                            :default => true
+    t.boolean  "resolved",      :default => true
     t.boolean  "viewed"
-    t.integer  "message_count",                       :default => 0
-    t.boolean  "attend",                              :default => false
-    t.text     "notice",        :limit => 2147483647
-    t.boolean  "inbox",                               :default => false
+    t.integer  "message_count", :default => 0
+    t.boolean  "attend",        :default => false
   end
 
   add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true

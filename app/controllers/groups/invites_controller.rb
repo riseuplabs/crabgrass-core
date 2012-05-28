@@ -6,7 +6,8 @@
 
 class Groups::InvitesController < Groups::BaseController
 
-  before_filter :login_required
+# requrires may_admin_group? as Groups::BaseController
+# TODO: if it is an open group, admin should not be required.
 
   def new
   end

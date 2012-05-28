@@ -8,7 +8,7 @@ module Groups::MembershipsPermission
 
   #
   # may current_user join the group immediately?
-  # 
+  #
   # for requests, see may_create_join_request?
   #
   def may_join_group?(group=@group)
@@ -38,7 +38,7 @@ module Groups::MembershipsPermission
   # permission for immediately removing someone from a group.
   # this is possible if there is a council, the current_user is
   # in the council, but the other user is not.
-  # 
+  #
   # for most other cases, use may_create_expell_request?
   #
   def may_destroy_membership?(membership = @membership)
@@ -58,29 +58,9 @@ module Groups::MembershipsPermission
     current_user.may? :see_members, @group
   end
 
-  def may_edit_memberships?(group=@group)
-    current_user.may? :admin, group
-  end
-
-  
   ##
   ## MEMBERSHIP REQUESTS
   ##
-
-  #
-  # for now, same as other group requests
-  #
-  def may_list_membership_requests?(group=@group)
-    may_list_group_requests?(group)
-  end
-  
-  #
-  # may invite someone to be a member of this group?
-  #
-  def may_create_group_invite?(group=@group)
-    # TODO: if it is an open group, admin should not be required.
-    current_user.may? :admin, group
-  end
 
   #
   # may request to join the group?

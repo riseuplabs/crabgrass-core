@@ -1,7 +1,5 @@
 class Groups::SettingsController < Groups::BaseController
 
-  before_filter :login_required
-
   def show
   end
 

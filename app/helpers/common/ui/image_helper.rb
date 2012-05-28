@@ -121,7 +121,7 @@ module Common::Ui::ImageHelper
       options[:crop] ||= options[:crop!]
       if options[:crop] or options[:scale]
         target_width, target_height = (options[:crop]||options[:scale]).split(/x/).map(&:to_f)
-        if target_width > thumbnail.width and target_height > thumbnail.height
+        if target_width >= thumbnail.width and target_height >= thumbnail.height
           # thumbnail is actually _smaller_ than our target area
           margin_x = ((target_width - thumbnail.width) / 2)
           margin_y = ((target_height - thumbnail.height) / 2)
@@ -270,5 +270,5 @@ module Common::Ui::ImageHelper
     width, height = picture.size(geometry)
     "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [width, height, picture.url(geometry)]
   end
-  
+
 end

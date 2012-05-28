@@ -1,11 +1,15 @@
--# This is a file upload that uses an iframe.
--#
--# Options:
--# * target -> Object to add the asset to, currently we support Wiki and Page
+- # use the asset_upload_form_for helper to use this partial!
 
-- form_for([target, @asset ||= Asset.new], :html => {:multipart => true, :target => 'upload_frame'}) do |f|
-  = f.file_field 'uploaded_data', :size => '12'
-  = f.submit :upload.t
-  = spinner 'upload'
-%iframe#upload_frame{:name => :upload_frame, :src=>'about:blank'}
+- # status messages and progress bar go here:
+#upload-progress.alert.hidden
+
+- form_for([target, Asset.new], upload_form_options(local_assigns)) do |f|
+  #upload-drop.drop(style="text-align:center")
+    %p(style="font-size: 20px") Drop files here
+    %p or
+    #file-select.upload.btn.btn-primary.hook
+      %input#upload-input.file.handler{:type=>"file",
+        :name => "our-file",
+        :multiple => local_assigns[:single] ? false : "multiple"}
+        Select files
 

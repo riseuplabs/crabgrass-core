@@ -3,6 +3,9 @@ class Groups::BaseController < ApplicationController
   before_filter :fetch_group
   permissions 'groups'
   helper 'groups/links'
+  # default permission for all group controllers
+  before_filter :login_required
+  guard :may_admin_group?
 
   protected
 

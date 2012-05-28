@@ -5,9 +5,6 @@
 
 class Groups::MembershipsController < Groups::BaseController
 
-  before_filter :fetch_membership, :only => :destroy
-  before_filter :login_required
-
   guard :index => :may_list_memberships?,
         :destroy => :may_destroy_membership?
 
@@ -34,7 +31,9 @@ class Groups::MembershipsController < Groups::BaseController
 
   protected
 
-  def fetch_membership
+  def fetch_group
+    super
+    return unless action? :destroy
     if federation_view?
       @membership = @group.federatings.find(params[:id])
     else

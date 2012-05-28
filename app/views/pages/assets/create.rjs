@@ -1,2 +1,9 @@
-page.replace_html 'MB_content', :partial => 'popup'
-page << "Modalbox.updatePosition();"
+page.insert_html :bottom, 'assets_list', :partial => '/common/assets/asset_as_li'
+page << <<-EOJS
+  if (document.getElementById('MB_window')) { Modalbox.updatePosition(); }
+  var list = document.getElementById('assets_list');
+  if (list.classList.contains('sortable')) {
+    #{sortable_element_js( "assets_list", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update) )}
+  }
+EOJS
+

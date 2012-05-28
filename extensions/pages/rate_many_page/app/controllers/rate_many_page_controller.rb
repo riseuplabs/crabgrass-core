@@ -2,7 +2,7 @@ class RateManyPageController < Pages::BaseController
   before_filter :fetch_poll
   javascript :extra, 'page'
 
-  guard_like :page, :edit
+  guard :may_edit_page?
   guard :show => :may_show_page?
 
   def show

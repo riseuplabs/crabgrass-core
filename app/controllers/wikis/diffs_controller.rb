@@ -1,11 +1,9 @@
 class Wikis::DiffsController < Wikis::BaseController
 
-  permissions 'wikis/versions'
+  guard :show => :may_show_wiki_diff?
 
   helper 'wikis/versions'
   javascript :wiki
-
-  before_filter :fetch_versions
 
   def show
     if @old
@@ -17,7 +15,9 @@ class Wikis::DiffsController < Wikis::BaseController
 
   protected
 
-  def fetch_versions
+  # making sure the version is available for the permission
+  def fetch_wiki
+    super
     if params[:page]
       fetch_versions_with_page
     else

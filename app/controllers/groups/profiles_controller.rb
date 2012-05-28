@@ -1,6 +1,6 @@
 class Groups::ProfilesController < Groups::BaseController
 
-  before_filter :fetch_profile, :login_required
+  before_filter :fetch_profile
 
   def edit
   end

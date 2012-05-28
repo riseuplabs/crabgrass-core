@@ -23,7 +23,7 @@ class PictureTest < ActiveSupport::TestCase
     picture = Picture.create(:upload => upload_data('photo.jpg'))
     picture.add_geometry!(geometry)
     assert_not_nil File.read(picture.private_file_path(geometry))
-    assert_equal [100,64], picture.dimensions[[100,100,0,0]]
+    assert_equal [100,64], picture.dimensions["100-100-0-0"]
   end
 
 end

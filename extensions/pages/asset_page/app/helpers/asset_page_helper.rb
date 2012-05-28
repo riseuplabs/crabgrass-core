@@ -30,7 +30,7 @@ module AssetPageHelper
   #end
 
   def destroy_version_link(version)
-    if may_destroy_asset_page_history? and version.version < @asset.version
+    if may_edit_page? and version.version < @asset.version
       action = {
         :url => page_xpath(@page, :controller => :history, :action => 'destroy', :id => version.version),
         :confirm => I18n.t(:delete_version_confirm)

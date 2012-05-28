@@ -1,7 +1,53 @@
 // used in Add Images to gallery modal box
 
-.styled-upload {
+.hidden {
+  display: none;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.hook {
   position: relative;
-  height: 20px;
-  .real-upload {
-    position: absolute; } }
+  overflow: hidden;
+}
+
+#upload-filename {
+  margin-right: 10px;
+}
+
+#upload-progress {
+  margin: 20px;
+}
+
+.drop {
+  border:lightgray dotted 3px; 
+  padding:30px;
+  color:#888;
+  display:block;
+  font-size: 2em; 
+  border-radius: 10px;
+  margin: 20px;
+}
+
+
+.drop.dragging {
+  border:gray dotted 3px; 
+}
+
+.file.handler {
+  opacity: 0;
+  position: absolute; 
+  font-size: 20px;
+  height: 50px;
+  top: -5px; 
+  right: 0px; 
+  width: 440px;
+  z-index: 1; 
+  cursor: pointer;
+}

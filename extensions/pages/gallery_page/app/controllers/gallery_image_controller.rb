@@ -1,15 +1,10 @@
 class GalleryImageController < Pages::BaseController
 
-  helper 'gallery', 'progress_bar'
+  helper 'gallery'
 
   # show and edit use base page permissions
-  guard_like :page, :edit
+  guard :may_edit_page?
   guard :show => :may_show_page?
-
-  # could we verify delete as the method on destry?
-  verify :method => :post, :only => [:create]
-  verify :method => [:post, :put], :only => [:update]
-  verify :method => [:post, :delete], :only => [:destroy]
 
   # default_fetch_data is disabled for new in Pages::BaseController
   prepend_before_filter :fetch_page_for_new, :only => :new
@@ -68,23 +63,6 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
-  def new
-    @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
-    if request.xhr?
-      render :layout => false
-    end
-  end
-
-  def create
-    params[:assets].each do |param|
-      assets = Asset.create_from_param_with_zip_extraction(param)
-      assets.each do |asset|
-        @page.add_image!(asset, current_user)
-      end
-    end
-    redirect_to page_url(@page)
-  end
-
   def destroy
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)  # this also destroys the asset
@@ -106,7 +84,4 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
-  # adding the same before filter with different conditions confuses
-  # rails 2.3 it seems. So we alias it.
-  alias_method :fetch_page_for_new, :default_fetch_data
 end

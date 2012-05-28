@@ -1,7 +1,9 @@
 class Groups::DirectoryController < ApplicationController
+  skip_before_filter :login_required
+
   stylesheet 'directory'
   helper 'groups/directory'
-  permissions 'groups/structures'
+  permission_helper 'groups/structures'
 
   def index
     if !logged_in?

@@ -4,7 +4,7 @@ class WikiPageController < Pages::BaseController
   helper 'wikis/base'
 
 
-  permissions 'wiki_page', 'wikis'
+  permission_helper 'wikis'
 
   include_controllers 'common/wiki'
   #before_filter :setup_wiki_rendering

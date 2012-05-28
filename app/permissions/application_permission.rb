@@ -9,10 +9,4 @@ module ApplicationPermission
     current_user.may?(:admin, current_site)
   end
 
-  def may_create_pages?
-    logged_in?
-  end
-
-  alias_method :may_create_wiki_pages?, :may_create_pages?
-
 end

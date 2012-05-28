@@ -1,15 +1,16 @@
 class Wikis::WikisController < Wikis::BaseController
 
-  permissions :wikis
-  before_filter :login_required, :except => :show
+  skip_before_filter :login_required, :only => :show
+  before_filter :authorized?, :only => :show
+
+  guard :show => :may_show_wiki?
 
   javascript :wiki
+  javascript 'upload', :only => :edit
   stylesheet 'wiki_edit'
+  stylesheet 'upload', :only => :edit
 
   layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
-
-  guard :edit => :may_edit_wiki?,
-        :update => :may_edit_wiki?
 
   def edit
     if params[:break_lock]

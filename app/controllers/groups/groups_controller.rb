@@ -2,11 +2,8 @@ class Groups::GroupsController < Groups::BaseController
 
   before_filter :force_type,  :only => ['new', 'create']
   before_filter :fetch_group, :only => 'destroy'
-  before_filter :login_required
 
-  guard :new     => :may_create_group?,
-        :create  => :may_create_group?,
-        :destroy => :may_destroy_group?
+  guard :may_ALIAS_group?
 
   def new
     if group_type == :group

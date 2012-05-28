@@ -276,6 +276,7 @@ en:
   ## PAGE HISTORY
   ##
 
+  action: "Action"
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"
   page_history_change_title: "%{user_name} has modified the page title"

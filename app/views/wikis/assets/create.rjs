@@ -1,1 +1,2 @@
 page.replace 'image_popup', :partial => '/wikis/assets/new'
+page << 'initAjaxUpload();'

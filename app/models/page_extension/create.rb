@@ -68,7 +68,7 @@ module PageExtension::Create
                                     :send_notice => inbox)
             end
             unless user.may_admin?(page)
-              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin], :inbox => inbox)
+              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
             end
           end
           page

@@ -1,2 +1,0 @@
-class ArticlePageVersionController < WikiPageVersionController
-end
