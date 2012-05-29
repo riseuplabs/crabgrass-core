@@ -1,5 +1,5 @@
 - if logged_in? and current_user.may? :edit, @page
-  = formy(:tabs, :id => 'page_tabs') do |f|
+  = page_tabs do |f|
     - f.tab do |t|
       - t.label :show_results_tab.t
       - t.url page_path(@page, :action => :show)

@@ -5,6 +5,14 @@ module Pages::BaseHelper
 
   protected
 
+  def page_tabs(options = {})
+    options.reverse_merge! :id => 'page_tabs',
+      :class => 'flat reloadable'
+    formy(:tabs, options) do |f|
+      yield(f)
+    end
+  end
+
   def display_page_cover(page, options={}, html_options={})
     options = {:size => :medium, :crop => "200x200"}.merge(options)
     html_options = {:class => "thumb", :alt => "thumbnail", :width => "200"}.merge(html_options)

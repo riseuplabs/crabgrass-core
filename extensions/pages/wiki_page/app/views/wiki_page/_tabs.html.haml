@@ -1,4 +1,4 @@
-= formy(:tabs, :id => 'page_tabs', :class => 'flat reloadable') do |f|
+= page_tabs do |f|
   - f.tab do |t|
     - t.label :show.t
     - t.url page_path(@page,:action=>'show')
