@@ -1,9 +1,8 @@
 class WikiPageController < Pages::BaseController
 
 
+  guard :print => :may_show_page?
   helper 'wikis/base'
-
-
   permission_helper 'wikis'
 
   include_controllers 'common/wiki'

@@ -1,0 +1,5 @@
+- post = printer_friendly # for use in collections
+%h3
+  = "#{post.user.login} on #{created_modified_date(post.created_at, post.updated_at)}"
+.negativespace
+  = post.body_html

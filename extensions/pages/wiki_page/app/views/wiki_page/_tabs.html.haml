@@ -13,3 +13,7 @@
     - t.function remote_function(:url => wiki_versions_path(@wiki), :method => 'get')
     - t.show_tab dom_id(@wiki)
     - t.selected controller?('wikis/versions')
+  - f.tab do |t|
+    - t.label :print.t
+    - t.url page_url(@page, :action => :print)
+    - t.selected false
