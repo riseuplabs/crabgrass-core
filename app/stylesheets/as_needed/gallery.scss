@@ -84,17 +84,6 @@ ul.floating {
   }
 }
 
-.row {
-  margin-left: -20px;
-}
-.row:before, .row:after {
-  content: "";
-  display: table;
-}
-.row:after {
-  clear: both;
-}
-
 // trying to have sth. similar to the bootstrap spanX
 // MB_content is 574 wide. 3 spans in there:
 .span {

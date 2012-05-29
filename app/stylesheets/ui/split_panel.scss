@@ -62,7 +62,7 @@ $panel_width: ($content_width - $split_panel_gutter) / 2;
 //  }
 //}
 
-#local.sidebar.on_left {
+#local.sidebar.on_left, #local.sidebar.on_right {
   .panel_left {
     width: $panel_width;
   }
