@@ -1,18 +1,21 @@
-= formy(:tabs, :id => 'page_tabs', :class => 'flat') do |f|
+= formy(:tabs, :id => 'page_tabs', :class => 'flat reloadable') do |f|
   - f.tab do |t|
     - t.label :show.t
     - t.url page_path(@page,:action=>'show')
     - t.selected action?(:show)
+    - t.class 'reloadable'
   - f.tab do |t|
     - t.label :edit.t
     - t.function remote_function(:url => edit_wiki_path(@wiki), :method => 'get')
     - t.show_tab dom_id(@wiki)
     - t.selected action?(:edit)
+    - t.class 'reloadable'
   - f.tab do |t|
     - t.label :versions.t
     - t.function remote_function(:url => wiki_versions_path(@wiki), :method => 'get')
     - t.show_tab dom_id(@wiki)
     - t.selected controller?('wikis/versions')
+    - t.class 'reloadable'
   - f.tab do |t|
     - t.label :print.t
     - t.url page_url(@page, :action => :print)

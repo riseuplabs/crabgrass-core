@@ -21,11 +21,20 @@ ul.nav-tabs.flat {
   li {
     a  {
       line-height: 1.75em;
-      border-bottom: 0px;
+      // this would be overriden by hover state bootstrap so !important
+      border-bottom: 0px !important;
       padding: 0px 1em;
       cursor: pointer; // make sure we have a pointer even for ajaxy links
+      &:hover {
+        text-decoration: underline;
+      }
     }
-    a:hover {
+    &.active a:hover {
+      text-decoration: none;
+    }
+    // if you can click on the active tab make it look like a link.
+    &.active a.reloadable:hover {
+      cursor: pointer; // make sure we have a pointer even for ajaxy links
       text-decoration: underline;
     }
   }
