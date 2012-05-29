@@ -6,7 +6,7 @@
   - cache(group_cache_key(@group, :what => 'committees', :expires_in => hours(3))) do
     - if @group.real_committees.size > 0
       = entity_list(@group.real_committees, :header => :committees.t)
-      = link_line(:none, create_committee_link)
+      -# , :after => link_line(create_committee_link))
     - if @group.has_a_council?
       = entity_list([@group.council], :header => :council.t)
 - if @group.network? and may_list_memberships?

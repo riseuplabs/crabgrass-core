@@ -58,13 +58,15 @@ module Groups::LinksHelper
   ##
 
   def list_memberships_link
-    if may_list_memberships?
+    if may_edit_memberships?
+      link_to(:edit.t, group_memberships_path(@group))
+    elsif may_list_memberships?
       link_to(:see_all_link.t, group_memberships_path(@group))
     end
   end
 
   def invite_link
-    if may_admin_group?
+    if may_create_group_invite?
       link_to(:send_invites.t, new_group_invite_path(@group))
     end
   end
