@@ -3,7 +3,6 @@ module Formy
   class Tabs < Root
     #
     # options:
-    #   :type -- one of 'simple', 'top', nil
     #   :class -- class to add to the ul
     #   :id    -- id to add to the ul
     #
@@ -43,7 +42,7 @@ module Formy
 
       def close
         selected = 'active' if @selected
-        @class = [@class, 'tab', selected, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
+        @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
         if @link
           a_tag = @link
         elsif @url
@@ -68,7 +67,7 @@ module Formy
           a_tag = content_tag :a, @label, :href => '#', :class => @class, :style => @style, :id => @id, :onclick => @function
         end
         first = 'first' if @options[:index] == 0
-        li_class = ['tab', selected, first].compact.join(' ')
+        li_class = [selected, first].compact.join(' ')
         puts content_tag(:li, a_tag, :class => li_class)
         super
       end
@@ -83,34 +82,14 @@ module Formy
 
     def open
       super
-      tab_type = @options[:type].to_s
-      if tab_type == 'simple'
-        puts "<ul class=' #{@options[:class]}'>"
-      elsif tab_type == 'top'
-        puts "<div style='height:1%'>" # this is to force hasLayout in ie
-        puts "<ul class='tabset top #{@options[:class]}'>"
-      else
-        puts "<ul class='tab #{@options[:class]}' id='#{@options[:id]}'>"
-      end
+      puts "<div style='height:1%'>" # this is to force hasLayout in ie
+      puts "<ul class='nav nav-tabs #{@options[:class]}'>"
     end
 
     def close
-      tab_type = @options[:type].to_s
-      if tab_type == 'simple'
-        if @options[:separator].any?
-          raw_puts @elements.join("<li> #{options[:separator]} </li>")
-        else
-          raw_puts @elements.join
-        end
-        puts "</ul>"
-      elsif tab_type == 'top'
-        @elements.each {|e| raw_puts e}
-        puts "<li></li></ul>"
-        puts "</div>"
-      else
-        @elements.each {|e| raw_puts e}
-        puts "</ul>"
-      end
+      @elements.each {|e| raw_puts e}
+      puts "<li></li></ul>"
+      puts "</div>"
       super
     end
 

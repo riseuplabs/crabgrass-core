@@ -210,7 +210,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
   protected
 
   def assert_active_tab(tab_text)
-    assert_select ".tabset" do
+    assert_select ".nav-tabs" do
       assert_select "a.active", {:text => tab_text}
     end
   end

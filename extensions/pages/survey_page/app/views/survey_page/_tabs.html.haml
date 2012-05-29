@@ -1,4 +1,4 @@
-= formy(:tabs, :id => 'page_tabs', :class => 'tabset') do |f|
+= formy(:tabs, :id => 'page_tabs') do |f|
   - f.tab do |t|
     - t.label :survey_introduction_tab.t
     - t.url page_url(@page, :action => 'show')

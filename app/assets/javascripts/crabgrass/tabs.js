@@ -16,13 +16,11 @@ function evalAttributeOnce(element, attribute) {
 function showTab(tabLink, tabContent, hash) {
   tabLink = $(tabLink);
   tabContent = $(tabContent);
-  var tabset = tabLink.up('.tabset');
+  var tabset = tabLink.up('.nav-tabs');
   if (tabset) {
-    tabset.select('a').invoke('removeClassName', 'active');
     tabset.select('li').invoke('removeClassName', 'active');
     $$('.tab_content').invoke('hide');
-    tabLink.up('.tabset li').addClassName('active');
-    tabLink.addClassName('active');
+    tabLink.up('.nav-tabs li').addClassName('active');
     tabContent.show();
     evalAttributeOnce(tabContent, 'data-onvisible');
     tabLink.blur();
