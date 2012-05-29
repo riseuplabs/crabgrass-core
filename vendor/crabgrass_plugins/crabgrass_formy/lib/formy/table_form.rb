@@ -119,7 +119,7 @@ module Formy
             label = content_tag :label, @label, :for => id
             puts tag(:tr, content_tag(:td, @input) + content_tag(:td, label))
             if @info
-              puts tag(:tr, content_tag(:td, '&nbsp;') + content_tag(:td, @info, :class => 'info'))
+              puts tag(:tr, content_tag(:td, '&nbsp;') + content_tag(:td, @info, :class => INFO_CLASS))
             end
             super
           end
