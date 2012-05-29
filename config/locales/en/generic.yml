@@ -17,6 +17,7 @@ en:
   total: "%{count} total"
   all: "All"
   none: "None"
+  or: "or"
   ##!  not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   ##!  search_headline: "Search"

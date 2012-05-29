@@ -3,7 +3,7 @@ ajaxUpload.view = {
   init: function(_container){
     this.container =_container;
   },
-  render: (function() {
+  render: function() {
     if (!this.container) return;
     if (!ajaxUpload.files.isUploading() && !ajaxUpload.upload.isProcessing()) {
       this.hide();
@@ -11,7 +11,7 @@ ajaxUpload.view = {
     }
     var pending = ajaxUpload.files.length()
     if (pending) {
-      pending = '<div>' + pending + ' files pending</div>'
+      pending = this.pendingMessage(pending)
     } else {
       pending = ''
     }
@@ -27,7 +27,7 @@ ajaxUpload.view = {
       pending: pending
     });
     this.container.classList.remove("hidden");
-  }),
+  },
   hide: function() {
     if (this.container.innerHTML != "") {
       setTimeout((function () {
@@ -35,5 +35,10 @@ ajaxUpload.view = {
         this.container.innerHTML = ""
       }).bind(this),1000);
     }
+  },
+  pendingMessage: function(count) {
+    var pending = this.container.readAttribute('data-pending_message')
+    pending = pending || '<div>#{pending} files pending</div>'
+    return pending.interpolate({pending: count})
   }
 }

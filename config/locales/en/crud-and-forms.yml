@@ -8,6 +8,10 @@ en:
   thing_required: "%{thing} Required"
   edit: "Edit"
   upload: "Upload"
+  select_files: "Select files"
+  drop_files_here: "Drop files here"
+  # to be read by js and used in an interpolate call - so it's #{} not %{} :
+  files_pending: "#{pending} file(s) pending"
   preview: "Preview"
   return_link: "Return"
   back_button: "Back"
