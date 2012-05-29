@@ -7,15 +7,15 @@ class Me::DestroysController < Me::BaseController
 
   def update
     @user = current_user.ghostify!
-	@user.retire!
-	if params[:scrub_name]
-	  @user.anonymize!
-	end
-	if params[:scrub_comments]
-	  @user.destroy_comments!
-	end
+    @user.retire!
+    if params[:scrub_name]
+      @user.anonymize!
+    end
+    if params[:scrub_comments]
+      @user.destroy_comments!
+    end
     logout
-	success
+    success
   end
 
 end
