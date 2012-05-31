@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/test_helper'
 class GroupTest < ActiveSupport::TestCase
   fixtures :groups, :users, :profiles, :memberships, :sites, :keys
 
+  def teardown
+    Group.clear_key_cache # required! see CastleGates README
+  end
+
   def test_memberships
     g = Group.create :name => 'fruits'
     u = users(:blue)
@@ -46,7 +50,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.revoke! :public, :view
+    g.revoke_access! :public => :view
     u = User.create :login => 'user'
 
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +59,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.grant! :public, [:view, :pester]
+    g.grant_access! :public => [:view, :pester]
     g.reload
     u = User.create :login => 'user'
 
@@ -68,12 +72,11 @@ class GroupTest < ActiveSupport::TestCase
       u = users(:red)
       g = groups(:animals)
 
-      g.grant! :public, [:request_membership]
+      g.grant_access! :public => :request_membership
       g.reload
 
       assert g.profiles.visible_by(u).public?
       assert g.has_access? :request_membership, u
-
     end
   end
 
@@ -110,13 +113,10 @@ class GroupTest < ActiveSupport::TestCase
     assert !group.has_a_council?
 
     assert_nothing_raised do
-      group.add_committee!(committee, true)
+      group.add_council!(committee)
     end
-
-    red.reload
-    blue.reload
-
-    assert !red.may_admin?(group)
+    red.clear_cache
+    blue.clear_cache
     assert !red.may?(:admin, group)
     assert blue.may?(:admin, group)
     assert group.has_a_council?

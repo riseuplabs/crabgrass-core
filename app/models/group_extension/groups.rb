@@ -11,8 +11,6 @@ module GroupExtension::Groups
 
     base.instance_eval do
 
-      add_locks :see_committees => 9, :see_networks => 10
-
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
       belongs_to :council, :class_name => 'Group', :dependent => :destroy
@@ -105,14 +103,21 @@ module GroupExtension::Groups
       if make_council
         add_council(committee)
       elsif self.council == committee
+        # downgrade the council to a committee
+        committee.destroy_permissions
         committee.type = "Committee"
         self.council = nil
-        self.grant! self, :all
       end
       committee.save!
+      committee.create_permissions
+
       self.org_structure_changed
       self.save!
       self.committees.reset
+    end
+
+    def add_council!(council)
+      add_committee!(council, true)
     end
 
     protected
@@ -128,6 +133,7 @@ module GroupExtension::Groups
         committee.type = "Committee"
       end
       committee.save!
+      committee.destroy_permissions
       self.org_structure_changed
       self.save!
       self.committees.reset
@@ -143,7 +149,7 @@ module GroupExtension::Groups
 
     # returns an array of committees visible to the given user
     def committees_for(user)
-      self.real_committees.access_by(user).allows(:view)
+      self.real_committees.with_access(user => :view)
     end
 
     # whenever the structure of this group has changed
@@ -173,8 +179,6 @@ module GroupExtension::Groups
       end
       self.council = committee
       committee.type = "Council"
-      self.grant! committee, :all
-      self.revoke! self, :admin
       self.save!
 
       # creating a new council for a new group
@@ -186,4 +190,3 @@ module GroupExtension::Groups
   end
 
 end
-

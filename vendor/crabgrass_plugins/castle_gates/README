@@ -1,0 +1,203 @@
+CASTLE GATES -- model permissions for active record
+
+Castle Gates provides access control to models using efficient database bitfields.
+
+Castle Gates is more complicated than most model permissions systems. It is designed for
+a usage scenario where a user might have many different possible permission pathways
+and you want to resolve these quickly to determine if they have access to a particular
+resource. For example, a user might have access because they have been granted access
+directly, or they are in a group that was granted access, or they are a friend of someone
+who has granted access to 'friends'.
+
+A very simple example:
+
+  class Fort
+  end
+
+  class User
+  end
+
+  CasteGates.define do
+    castle Fort do
+      gate 1, :front_door
+    end
+    holder 1, :user, :model => User
+  end
+
+  fort = Fort.create!
+  user = User.create!
+
+  fort.access?(user => :front_door)      ==> false
+  fort.grant_access!(user => :front_door)
+  fort.access?(user => :front_door)      ==> true
+
+Limitations
+
+Castle Gates is fast, but because of its implementation, every castle is limited
+to a finite number of doors (the number of bits in the door_bitmask field,
+typically 32, see below).
+
+Furthermore, your application cannot have more than 9 different types of key holders.
+
+Concepts
+================================================
+
+Castles:
+
+  * A castle is a model with something you want to control access to.
+  * Every castle has one or more gates.
+
+Gates:
+
+  * A gate is just a symbol (e.g. :front_door).
+  * A gate is some resource you want to protect in the castle (e.g. :editable)
+  * Since gates are just symbols, they don't relate to actual fields of the castle.
+
+Keys:
+
+  * Keys are ActiveRecord models stored in the database in the table 'gate_keys'.
+  * A key instance has a set of gates it will open for a particular castle.
+  * Castles have many keys, one for each holder with access to any of its gates.
+
+Holders:
+
+  * A holder is something that can own keys that open gates.
+  * A holder has many keys, one for each castle the holder has some access to.
+  * A holder might be a record, like a user or group, but it could also be
+    an association or a symbol.
+
+Although there is only one key for a single caste <=> holder relationship,
+in practice an object might have many holders associated with it.
+
+For example, a user might be associated with a key holder for each group
+they are in. In this case, the user might have many keys for a particular
+castle, each key with access to different gates.
+
+If any of the keys grant access to a gate, then the user has access to the
+gate. In other words, the user always tries all the possible keys until
+one works or they are denied access.
+
+Castle Gates is very flexible, but has a few important limitation:
+
+  (1) The number of gates a castle can have is limited to the bit
+      length of gate_keys.gate_bitfield
+
+  (2) System-wide, there can only be nine types of holders.
+
+
+Installation
+================================================
+
+script/generate castle_gates_migration
+
+Optional configuration:
+
+  CastleGate.exception_class = PermissionDenied
+
+Usage
+================================================
+
+To be written.
+
+Usage Example
+================================================
+
+class User < ActiveRecord::Base
+  has_many :memberships
+  has_many :clans, :through => :memberships
+end
+
+class Clan < ActiveRecord::Base
+  has_many :memberships
+  has_many :users, :through => :memberships
+end
+
+class Membership < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :clan
+end
+
+class Fort < ActiveRecord::Base
+end
+
+CastleGates.define do
+
+  castle Fort do
+    gate 1, :draw_bridge
+    gate 2, :sewers, :default_open => :admin
+    gate 3, :tunnel, :default_open => [:public, :user]
+  end
+
+  castle Tower do
+    gate 1, :door, :default_open => true
+    gate 2, :window
+    def after_grant_access(holder, gate)
+      if holder == :public
+        grant_access! :admin => gate
+      end
+    end
+    def after_revoke_access(holder, gate)
+      if holder == :admin
+        revoke_access! :public => gate
+      end
+    end
+  end
+
+  holder 1, :user, :model => User do
+    def holder_codes
+      {:holder => :clan, :ids => self.clan_ids}
+    end
+  end
+
+  holder 2, :clan,  :model => Clan
+  holder 3, :public
+  holder 4, :admin
+end
+
+Testing
+================================================
+
+Because of the way that CastleGates caches keys, you must call clear_key_cache()
+on the castle class in the setup() or teardown() of your unit tests:
+
+For example:
+
+  class GroupTest < ActiveSupport::TestCase
+    def teardown
+      Group.clear_key_cache
+    end
+  end
+
+
+The Database
+================================================
+
+Schema:
+
+  create_table :keys do |p|
+    p.integer :castle_id
+    p.string  :castle_type
+    p.integer :holder_code
+    p.integer :gate_bitfield, :default => 1
+  end
+  add_index :keys, [:castle_id, :castle_type, :holder_code]
+
+Field explanation:
+
+  castle_id, castle_type -- polymorphic 'belongs_to :castle'.
+
+  holder_code -- a code that defines the holder of this key. it is kind of like a
+    polymorphic belongs_to, except that the holder does not need to be an actual
+    record. It could be an abstract set, like 'users with names that start with z'
+
+  gate_bitfield -- a bitfield that defines which gates of the castle this key
+    will open. For example, if the bits in positions '3' and '5' are set to '1',
+    then the key grants the holder access to the gates with id '3' and '5'.
+    The default is 1 because this enables us to quickly distinguish between when
+    there are no keys and when the keys don't allow access.
+
+If you want a bigger gate_bitfield (to store more than 32 doors in a key),
+change the migration like so (MySQL specific):
+
+   p.column :gate_bitfield, 'bigint', :default => 1
+

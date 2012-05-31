@@ -1,9 +1,5 @@
 class User < ActiveRecord::Base
 
-  acts_as_locked :view, :pester
-  # disabled so far:
-  # :burden, :spy
-
   ##
   ## CORE EXTENSIONS
   ##
@@ -89,13 +85,6 @@ class User < ActiveRecord::Base
     if t_name
       write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
     end
-  end
-
-  after_create :add_permissions
-  def add_permissions
-    self.grant! self.friends, Conf.default_user_permissions['friends']
-    self.grant! self.peers, Conf.default_user_permissions['peers']
-    self.grant! :public, Conf.default_user_permissions['public']
   end
 
   after_save :update_name
@@ -243,26 +232,6 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  # Key Dependencies
-  #
-  # Some keys imply others.
-  # If a setting is public friends and peers have access too.
-  # They would have anyway. This is rather for UI consistency than for the
-  # real permission checks.
-
-  def grant_dependencies(key)
-    if key.holder == :public
-      self.grant! self.friends, key.locks
-      self.grant! self.peers, key.locks
-    end
-  end
-
-  def revoke_dependencies(key)
-    if [self.friends, self.peers].include? key.holder
-      self.revoke! :public, key.locks(:disabled => true)
-    end
-  end
-
   # keyring_code used by acts_as_locked and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
@@ -313,9 +282,11 @@ class User < ActiveRecord::Base
     result or raise PermissionDenied.new("Permission denied!")
   end
 
+  #
   # zeros out the in-memory page access cache. generally, this is called for
-  # you, but must be called manually in the case where page access was via a
+  # you, but must be called manually in the case where access was via a
   # group and that group loses page access.
+  #
   def clear_access_cache
     @access = nil
   end

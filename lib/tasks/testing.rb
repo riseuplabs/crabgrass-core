@@ -54,6 +54,55 @@ namespace :test do
 end
 
 #
+# searching which test is bad! sometimes you have a test that fails when run with others, but works
+# when run individually. the agony! often, including all the fixtures, or more fixtures, will fix
+# this... but sometimes not. sometimes the culprit is another test in the bunch.
+#
+# this task will let you preform a binary search of the unit tests to identify the culprit.
+#
+# this task requires to parameters:
+#
+#   PATH -- a series of 'L' or 'R' characters in a string. this determines the binary search path. ie. LRRLLR.
+#           the way it works is that you try L and if that still works, then you try R.
+#           if that fails, then you try RL, then RR, and so on...
+#
+#   TARGET -- the test that is having the problems (absolute filename).
+#
+namespace :test do
+  namespace :unit do
+    Rake::TestTask.new(:binarysearch) do |t|
+      if ENV['PATH'] && ENV['TARGET']
+        def split_array(array, direction)
+          raise ArgumentError.new('direction must be L or R') unless direction == 'L' or direction == 'R'
+          if direction == 'L'
+            array[0..(array.length/2-1)]
+          else
+            array[(array.length/2)..-1]
+          end
+        end
+
+        path = ENV['PATH'].split(//)
+        target = Pathname.new(ENV['TARGET']).realpath.to_s
+        files = Dir.glob("#{Rails.root}/test/unit/**/*_test.rb")
+        unless files.delete(target)
+          raise ArgumentError.new('TARGET is not actually a file in the test suite.')
+        end
+        files = files.sort
+        path.each do |direction|
+          files = split_array(files, direction)
+        end
+        files << target
+        t.libs << "test"
+        t.test_files = files
+        t.verbose = true
+      end
+    end
+    Rake::Task['test:unit:binarysearch'].comment = "binary search to find problem with failing test"
+  end
+end
+
+
+#
 # Testing mods
 #
 namespace :test do

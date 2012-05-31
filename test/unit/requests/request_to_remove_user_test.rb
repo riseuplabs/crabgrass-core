@@ -31,7 +31,7 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
   def test_remove_fails
     @requester.expects(:longterm_member_of?).with(@group).returns(true)
-    @request   = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
+    @request  = RequestToRemoveUser.create! :created_by => @requester, :group => @group, :user => @user
     @approver = users(:green)
     @approver.expects(:longterm_member_of?).with(@group).returns(false)
     assert_raises PermissionDenied do

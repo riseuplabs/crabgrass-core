@@ -7,7 +7,6 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
-      add_locks :see_members => 6, :request_membership => 7, :join => 8
 
       attr :users_before_destroy
       before_destroy :destroy_memberships
@@ -85,19 +84,24 @@ module GroupExtension::Users
     ret
   end
 
+  #
   # this is the ONLY way to add users to a group.
   # all other methods will not work.
+  #
   def add_user!(user)
     self.memberships.create! :user => user
     user.update_membership_cache
     user.clear_peer_cache_of_my_peers
+    clear_key_cache
 
     @user_ids = nil
     self.increment!(:version)
   end
 
+  #
   # this is the ONLY way to remove users from a group.
   # all other methods will not work.
+  #
   def remove_user!(user)
     membership = self.memberships.find_by_user_id(user.id)
     raise ErrorMessage.new('no such membership') unless membership
@@ -105,6 +109,7 @@ module GroupExtension::Users
     user.clear_peer_cache_of_my_peers
     membership.destroy
     user.update_membership_cache
+    clear_key_cache
 
     @user_ids = nil
     self.increment!(:version)

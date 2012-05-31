@@ -1,0 +1,8 @@
+
+TODO
+--------------
+
+remember to change
+
+   p.integer :gate_bitfield, :default => 1
+

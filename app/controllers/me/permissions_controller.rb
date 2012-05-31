@@ -1,16 +1,18 @@
 class Me::PermissionsController < Me::BaseController
 
-  helper 'acts_as_locked'
+  helper 'castle_gates'
 
   def index
-    @keys  = current_user.keys.filter_by_holder(:include => [:public, current_user.peers, current_user.friends])
-    @locks = User.locks
+    @holders = key_holders(:public, current_user.associated(:peers), current_user.associated(:friends))
+    @gates   = current_user.gates
   end
 
   def update
     @key   = current_user.keys.find_or_create_by_keyring_code params.delete(:id)
     @locks = @key.update!(params)
-    @keys  = current_user.keys.filter_by_holder(:include => [:public, current_user.peers, current_user.friends])
+
+    @holders = [:public, current_user.associated(:peers), current_user.associated(:friends)]
+    @keys  = current_user.keys.limited_by_holders(@holders).all
     render :template => 'common/permissions/update'
   end
 

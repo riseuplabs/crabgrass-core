@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# This file is auto-generated from the current state of the database. Instead of editing this file,
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504064620) do
+ActiveRecord::Schema.define(:version => 20120526071659) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -316,13 +316,13 @@ ActiveRecord::Schema.define(:version => 20120504064620) do
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
 
   create_table "keys", :force => true do |t|
-    t.integer "mask",         :default => 0
-    t.integer "locked_id"
-    t.string  "locked_type"
-    t.integer "keyring_code"
+    t.integer "castle_id"
+    t.string  "castle_type"
+    t.integer "holder_code"
+    t.integer "gate_bitfield", :default => 1
   end
 
-  add_index "keys", ["locked_id", "locked_type", "keyring_code"], :name => "index_keys_on_locked_id_and_locked_type_and_keyring_code"
+  add_index "keys", ["castle_id", "castle_type", "holder_code"], :name => "index_keys_on_castle_id_and_castle_type_and_holder_code"
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"

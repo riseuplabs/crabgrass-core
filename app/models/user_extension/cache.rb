@@ -101,10 +101,10 @@ module UserExtension
       membership.group.increment!(:version)
     end
 
+    #
     # This should be called if a change in relationships has potentially
     # invalidated the cache. For example, adding or removing a commmittee.
-    # This only updates the database: if you want to update the in-memory
-    # object, follow this call with reload()
+    #
     def clear_cache
        self.class.connection.execute(%Q[
          UPDATE users SET
@@ -113,6 +113,14 @@ module UserExtension
          admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
+       self.write_attribute(:tag_id_cache, nil)
+       self.write_attribute(:foe_id_cache, nil)
+       self.write_attribute(:peer_id_cache, nil)
+       self.write_attribute(:friend_id_cache, nil)
+       self.write_attribute(:direct_group_id_cache, nil)
+       self.write_attribute(:all_group_id_cache, nil)
+       self.write_attribute(:admin_for_group_id_cache, nil)
+       self.clear_access_cache
     end
 
     # called whenever an empty self.friend_id_cache is accessed
@@ -241,7 +249,7 @@ module UserExtension
       end
 
       #
-      # should be called whenever a user partipation is added or 
+      # should be called whenever a user partipation is added or
       # the tags have changed.
       #
       def clear_tag_cache(user_ids)

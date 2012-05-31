@@ -104,16 +104,26 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_friends_or_peers_with_access
-    u = users(:blue)
-    accessible = User.friends_or_peers_of(u).access_by(u).allows(:view)
-    assert accessible.first
+    red = users(:red)
+    blue = users(:blue)
+
+    assert !red.access?(red.associated(:friends) => :spy), 'this test assumes that friends cannot spy by default'
+
+    red.grant_access!(blue => :spy)
+    red.add_contact!(blue)
+
+    accessible = User.with_access(blue => :spy).friends_or_peers_of(blue)
+    assert_equal users(:red), accessible.first
   end
 
-  def test_user_creation_adds_keys
-    assert_difference 'Key.count', 3 do
-      user = User.make
-    end
-  end
+  #
+  # creating users no longer adds keys
+  #
+  #def test_user_creation_adds_keys
+  #  assert_difference 'Key.count', 3 do
+  #    user = User.make
+  #  end
+  #end
 
   protected
 
