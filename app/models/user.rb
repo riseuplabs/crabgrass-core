@@ -282,9 +282,11 @@ class User < ActiveRecord::Base
     result or raise PermissionDenied.new("Permission denied!")
   end
 
+  #
   # zeros out the in-memory page access cache. generally, this is called for
-  # you, but must be called manually in the case where page access was via a
+  # you, but must be called manually in the case where access was via a
   # group and that group loses page access.
+  #
   def clear_access_cache
     @access = nil
   end

@@ -98,11 +98,7 @@ class CommitteeTest < ActiveSupport::TestCase
     other_user = users(:blue)
     c.add_user!(user)
     c.add_user!(other_user)
-    c.save
     g.add_user!(other_user)
-    g.save
-
-    assert user.may?(:admin, c)
 
     group_page = Page.create! :title => 'a group page',
       :public => false,
@@ -132,9 +128,9 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.grant! :public, [:view, :pester, :see_committees]
+    g.grant_access! :public => [:view, :pester, :see_committees]
     c = Committee.create :name => 'outreach'
-    c.grant! :public, [:view, :pester]
+    c.grant_access! :public => [:view, :pester]
     g.add_committee!(c)
 
     u = User.create :login => 'user'

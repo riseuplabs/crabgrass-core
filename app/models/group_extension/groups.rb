@@ -103,14 +103,21 @@ module GroupExtension::Groups
       if make_council
         add_council(committee)
       elsif self.council == committee
+        # downgrade the council to a committee
+        committee.destroy_permissions
         committee.type = "Committee"
         self.council = nil
-        self.grant_access! self, :all
       end
       committee.save!
+      committee.create_permissions
+
       self.org_structure_changed
       self.save!
       self.committees.reset
+    end
+
+    def add_council!(council)
+      add_committee!(council, true)
     end
 
     protected
@@ -126,6 +133,7 @@ module GroupExtension::Groups
         committee.type = "Committee"
       end
       committee.save!
+      committee.destroy_permissions
       self.org_structure_changed
       self.save!
       self.committees.reset
@@ -171,8 +179,6 @@ module GroupExtension::Groups
       end
       self.council = committee
       committee.type = "Council"
-      self.grant_access! committee => :all
-      self.revoke_access! self => :admin
       self.save!
 
       # creating a new council for a new group
@@ -184,4 +190,3 @@ module GroupExtension::Groups
   end
 
 end
-

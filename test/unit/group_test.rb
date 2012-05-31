@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/test_helper'
 class GroupTest < ActiveSupport::TestCase
   fixtures :groups, :users, :profiles, :memberships, :sites, :keys
 
+  def teardown
+    Group.clear_key_cache # required! see CastleGates README
+  end
+
   def test_memberships
     g = Group.create :name => 'fruits'
     u = users(:blue)
@@ -73,7 +77,6 @@ class GroupTest < ActiveSupport::TestCase
 
       assert g.profiles.visible_by(u).public?
       assert g.has_access? :request_membership, u
-
     end
   end
 
@@ -87,7 +90,6 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_committee_access
     g = groups(:public_group)
-    p groups(:public_committee).keys
     assert_equal [groups(:public_committee)],
                  g.committees_for(users(:red)).sort_by{|c| c.id},
                  "should find 1 public committee"
@@ -111,13 +113,10 @@ class GroupTest < ActiveSupport::TestCase
     assert !group.has_a_council?
 
     assert_nothing_raised do
-      group.add_committee!(committee, true)
+      group.add_council!(committee)
     end
-
-    red.reload
-    blue.reload
-
-    assert !red.may_admin?(group)
+    red.clear_cache
+    blue.clear_cache
     assert !red.may?(:admin, group)
     assert blue.may?(:admin, group)
     assert group.has_a_council?

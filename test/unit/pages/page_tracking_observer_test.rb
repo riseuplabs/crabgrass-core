@@ -6,7 +6,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     Page.delete_all
     @pepe = User.make :login => "pepe"
     @manu = User.make :login => "manu"
-    @manu.grant!(:public, :pester)
+    @manu.grant_access!(:public => :pester)
     User.current = @pepe
     @page = Page.make_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
     @last_count = @page.page_histories.count

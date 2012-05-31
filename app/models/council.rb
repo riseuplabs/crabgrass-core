@@ -1,9 +1,11 @@
 class Council < Committee
-
-  def destroy_by(user)
-    self.parent.grant! self.parent, :admin
-    super
+  def add_user!(user)
+    parent.clear_key_cache if parent
+    super(user)
   end
 
+  def remove_user!(user)
+    parent.clear_key_cache if parent
+    super(user)
+  end
 end
-

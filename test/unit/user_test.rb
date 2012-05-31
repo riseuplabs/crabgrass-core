@@ -104,9 +104,15 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_friends_or_peers_with_access
-    users(:red).grant_access!(users(:blue) => :view)
-    users(:red).add_contact!(users(:blue))
-    accessible = User.with_access(users(:blue) => :view).friends_or_peers_of(users(:blue))
+    red = users(:red)
+    blue = users(:blue)
+
+    assert !red.access?(red.associated(:friends) => :spy), 'this test assumes that friends cannot spy by default'
+
+    red.grant_access!(blue => :spy)
+    red.add_contact!(blue)
+
+    accessible = User.with_access(blue => :spy).friends_or_peers_of(blue)
     assert_equal users(:red), accessible.first
   end
 

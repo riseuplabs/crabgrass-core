@@ -68,6 +68,19 @@ class Committee < Group
     end
   end
 
+  protected
+
+  #
+  # Override the way create_permissions is called in Groups.
+  # For committees and councils, we call create_permissions
+  # and destroy_permissions explicitly once it is added to a
+  # parent group.
+  #
+  def call_create_permissions
+  end
+  def call_destroy_permissions
+  end
+
   ##
   ## ORGANIZATIONAL
   ##

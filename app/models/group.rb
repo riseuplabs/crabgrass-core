@@ -164,11 +164,21 @@ class Group < ActiveRecord::Base
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
 
+  #
   # type of group
-  def committee?; instance_of? Committee; end
-  def network?;   instance_of? Network;   end
-  def normal?;    instance_of? Group;     end
-  def council?;   instance_of? Council;   end
+  #
+  def committee?
+    read_attribute(:type) == 'Committee' || instance_of?(Committee)
+  end
+  def network?
+    read_attribute(:type) == 'Network' || instance_of?(Network)
+  end
+  def council?
+    read_attribute(:type) == 'Council' || instance_of?(Council)
+  end
+  def normal?
+    reat_attribute(:type).empty? || instance_of?(Group)
+  end
 
   def group_type; self.class.human_name; end
 
@@ -295,6 +305,21 @@ class Group < ActiveRecord::Base
     end
   end
 
+  protected
+
+  #
+  # These callbacks are responsible for setting up and tearing down
+  # the permissions for groups. The actual methods are defined in
+  # config/permissions.rb. Committees override these callbacks.
+  #
+  after_create :call_create_permissions
+  def call_create_permissions
+    create_permissions
+  end
+  after_destroy :call_destroy_permissions
+  def call_destroy_permissions
+    destroy_permissions
+  end
 
   ##
   ## GROUP SETTINGS

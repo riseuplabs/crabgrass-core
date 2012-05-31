@@ -44,6 +44,8 @@ CastleGates.define do
     gate 7, :see_groups,      :default_open => :friend_of_user
     gate 8, :request_contact, :default_open => :user
 
+    protected
+
     #
     # Setting public for anything also sets peer and friend access.
     #
@@ -96,10 +98,10 @@ CastleGates.define do
   castle Group do
     # entity gates
     gate 1, :view,    :default_open => :public
-    gate 2, :pester,  :default_open => :member_of_group
-    gate 3, :burden,  :default_open => :member_of_group
-    gate 4, :spy,     :default_open => :member_of_group
-    gate 5, :comment, :default_open => :member_of_group
+    gate 2, :pester
+    gate 3, :burden
+    gate 4, :spy
+    gate 5, :comment
 
     # group gates
     gate 6,  :edit
@@ -109,17 +111,31 @@ CastleGates.define do
     gate 10, :see_networks
     gate 11, :request_membership, :default_open => :user
     gate 12, :join
+
+    protected
+
+    def create_permissions
+      grant_access! self => :all
+      if council?
+        # councils steal admin rights
+        parent.revoke_access! parent => :admin
+        parent.grant_access! self => :all
+      elsif committee?
+        # committees are always admin'ed by parent group
+        revoke_access! self => :admin
+        grant_access! parent => :all
+      end
+    end
+
+    def destroy_permissions
+      if council?
+        parent.grant_access! parent => :admin
+      end
+    end
   end
 
   holder 8, :group, :model => Group
   holder_alias :group, :model => Committee
   holder_alias :group, :model => Council
   holder_alias :group, :model => Network
-
-  holder nil, :member_of_group, :association => Group.associated(:users) do
-    def member_of_group?(user)
-      user.member_of?(self)
-    end
-  end
-
 end
