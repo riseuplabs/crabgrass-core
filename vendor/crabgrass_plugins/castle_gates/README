@@ -154,6 +154,20 @@ CastleGates.define do
   holder 4, :admin
 end
 
+Testing
+================================================
+
+Because of the way that CastleGates caches keys, you must call clear_key_cache()
+on the castle class in the setup() or teardown() of your unit tests:
+
+For example:
+
+  class GroupTest < ActiveSupport::TestCase
+    def teardown
+      Group.clear_key_cache
+    end
+  end
+
 
 The Database
 ================================================

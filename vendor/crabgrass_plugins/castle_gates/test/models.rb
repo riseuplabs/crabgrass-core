@@ -82,6 +82,10 @@ CastleGates.define do
   castle Tower do
     gate 1, :door, :default_open => true
     gate 2, :window
+    gate 3, :skylight
+
+    protected
+
     def after_grant_access(holder, gate)
       if holder == :public
         grant_access! :admin => gate
@@ -92,6 +96,13 @@ CastleGates.define do
         revoke_access! :public => gate
       end
     end
+
+    def default_open_gates(holder)
+      if holder.is_a?(User) && holder.name == 'sandman'
+        [:skylight]
+      end
+    end
+
   end
 
   castle User do

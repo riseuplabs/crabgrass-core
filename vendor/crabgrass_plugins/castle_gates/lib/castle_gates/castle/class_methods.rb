@@ -44,6 +44,24 @@ module ClassMethods
     gate_set.values
   end
 
+  ##
+  ## CACHE
+  ## This is implemented here, so that different instances with the same ID will share cache.
+  ##
+
+  def clear_key_cache
+    @key_cache = {}
+    @gate_bitfield_cache = {}
+  end
+
+  def key_cache
+    @key_cache ||= {}
+  end
+
+  def gate_bitfield_cache
+    @gate_bitfield_cache ||= {}
+  end
+
 end
 end
 end

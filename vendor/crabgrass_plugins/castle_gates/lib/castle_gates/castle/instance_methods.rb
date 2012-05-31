@@ -65,7 +65,7 @@ module InstanceMethods
         end
       end
     end
-    reset_key_cache
+    clear_key_cache
   end
 
   #
@@ -95,19 +95,16 @@ module InstanceMethods
         end
       end
     end
-    reset_key_cache
+    clear_key_cache
   end
 
-  # this appears to be only used for testing.
-  #def keys_by_lock
-  #  keys.inject({}) do |hash, key|
-  #    key.locks.each do |lock|
-  #      hash[lock] ||= []
-  #      hash[lock].push key
-  #    end
-  #    hash
-  #  end
-  #end
+  #
+  # just like keys.reset, but works with our manual caching.
+  #
+  def clear_key_cache
+    self.class.key_cache[self.id] = {}
+    self.class.gate_bitfield_cache[self.id] = {}
+  end
 
   #
   # GATES
@@ -134,6 +131,14 @@ module InstanceMethods
     Holder.codes_to_holders(codes)
   end
 
+  protected
+
+  #
+  # to be overridden optionally by castles
+  #
+  def default_open_gates(holder)
+  end
+
   private
 
   ##
@@ -156,16 +161,8 @@ module InstanceMethods
   # the result is cached.
   #
   def keys_for_holder(holder)
-    @key_cache ||= {}
-    @key_cache[holder.code] ||= keys.for_holder(holder)
-  end
-
-  #
-  # just like keys.reset, but works with our manual caching.
-  #
-  def reset_key_cache
-    @key_cache = {}
-    @gate_bitfield_cache = {}
+    self.class.key_cache[self.id] ||= {}
+    self.class.key_cache[self.id][holder.code] ||= keys.for_holder(holder)
   end
 
   #
@@ -173,8 +170,8 @@ module InstanceMethods
   # the result is cached on the holder.
   #
   def gate_bitfield_for_keys(keys, holder)
-    @gate_bitfield_cache ||= {}
-    @gate_bitfield_cache[holder.code] ||= begin
+    self.class.gate_bitfield_cache[self.id] ||= {}
+    self.class.gate_bitfield_cache[self.id][holder.code] ||= begin
       bitfield = Key::gate_bitfield(keys)
       if bitfield.nil?
         # no actual keys, so lets fall back to the defaults

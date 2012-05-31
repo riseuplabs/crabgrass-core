@@ -123,7 +123,14 @@ module CastleGates
     # Returns the bitmask for a set of gate names.
     #
     def bits_for_gates(gate_names)
-      castle.gate_set.bits(gate_names)
+      if castle
+        # there are edge cases where castle might be nil.
+        # for example, if it was destroyed in db but grant_access
+        # was called on older in-memory copy.
+        castle.gate_set.bits(gate_names)
+      else
+        0
+      end
     end
 
   end
