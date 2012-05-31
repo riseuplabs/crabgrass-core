@@ -139,7 +139,7 @@ en:
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
-  ##!  print: "Print"
+  print: "Print"
   show: "Show"
   display: "Display"
   message: "Message"
