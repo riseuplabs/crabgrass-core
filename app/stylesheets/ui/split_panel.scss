@@ -52,36 +52,19 @@ $split_panel_gutter_padding: resolve_width($local_content_padding, $center_colum
 $content_width: 100%;
 $panel_width: ($content_width - $split_panel_gutter) / 2;
 
-//#local.sidebar.on_left {
-//  .panel_left {
-//    width: $panel_width;
-//  }
-//  .panel_right {
-//    width: $panel_width + $split_panel_gutter;
-//    margin-left: $panel_width;
-//  }
-//}
 
-#local.sidebar.on_left, #local.sidebar.on_right {
-  .panel_left {
-    width: $panel_width;
-  }
-  .panel_right {
-    width: $panel_width;
-    margin-left: $panel_width + $split_panel_gutter;
-  }
+// this used to be dependent on the sidebar / sidecolumn and on_{left,right}
+// class in #local. However the old usage of the split panel seems to be gone
+// and we need at least some setting for this to work in a wiki versions 
+// context
+
+.panel_left {
+  width: $panel_width;
 }
-
-// with left side column
-
-#local.sidecolumn.on_left {
-  // none yet
+.panel_right {
+  width: $panel_width;
+  margin-left: $panel_width + $split_panel_gutter;
 }
-
-
-//
-// left panel decoration
-//
 
 $row_height: 32px + 2px;  // at least enough space for the avatar and its border
 $row_padding: 8px;
