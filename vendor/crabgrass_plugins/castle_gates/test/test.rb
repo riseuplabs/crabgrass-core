@@ -120,7 +120,8 @@ class CastleGatesTest < Test::Unit::TestCase
       assert @fort.access?(:public => :draw_bridge), 'should have access now'
 
       assert !@fort.access?(:public => :sewers), 'but not to other gates'
-      assert !@fort.access?(@me => :draw_bridge), 'and others should not'
+      assert !@fort.access?(@minion => :draw_bridge), 'and others should not'
+      assert @fort.access?(@me => :draw_bridge), 'me should, it includes public.'
       assert !@tower.access?(:public => :window), 'should not have access to other castles'
 
       raise ActiveRecord::Rollback
@@ -204,13 +205,21 @@ class CastleGatesTest < Test::Unit::TestCase
     end
   end
 
+
+  def test_method_based_defaults
+    ActiveRecord::Base.transaction do
+      assert @tower.access?(User.new(:name => 'sandman') => :skylight), 'gate_open? should get called'
+      raise ActiveRecord::Rollback
+    end
+  end
+
   def test_finder
     ActiveRecord::Base.transaction do
       assert_nil Fort.with_access(:public => :draw_bridge).first
       @fort.grant_access! :public => :draw_bridge
       assert_equal [@fort], Fort.with_access(:public => :draw_bridge)
 
-      assert_nil Fort.with_access(@me => :draw_bridge).first
+      assert_nil Fort.with_access(@minion => :draw_bridge).first
       assert_nil Fort.with_access(:public => :sewers).first
 
       @fort.grant_access! @me => :draw_bridge
@@ -218,7 +227,7 @@ class CastleGatesTest < Test::Unit::TestCase
 
       @fort2 = Fort.create :name => 'fort2'
       @fort2.grant_access! @me => :draw_bridge
-      assert_equal 2, Fort.with_access(@me => :draw_bridge).count
+      assert_equal 2, Fort.with_access(@me => :draw_bridge).distinct_count
 
       assert_raises ArgumentError do
         Fort.with_access(:public => :x)

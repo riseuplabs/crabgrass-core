@@ -30,6 +30,10 @@ class Holder
     @object.respond_to?(meth)
   end
 
+  def is_a?(clss)
+    clss == Holder || @object.is_a?(clss)
+  end
+
   def ==(other_object)
     @object == other_object
   end
@@ -104,7 +108,7 @@ class Holder
          codes = self.class.codes_from_array(return_value)
        end
      elsif @object.respond_to?(:holders) && holder_list = @object.holders
-       codes = holder_list.collect {|holder| Holder.code(holder)}
+       codes = holder_list.collect {|holder| Holder[holder].code}
      end
      codes << self.code
   end
@@ -136,7 +140,7 @@ class Holder
   #
   def association_with(castle)
     possible_holder = definition.associated.find do |hdef|
-      hdef.model == definition.model && hdef.association_model == castle.class
+      hdef.model == definition.model && hdef.association_model == castle.class.base_class
     end
     if possible_holder
       method_name = "#{possible_holder.name}?"
@@ -276,6 +280,8 @@ class Holder
     arry.each do |code|
       if code.is_a? Hash
         codes += codes_from_hash(code)
+      elsif code.is_a? Symbol
+        codes << Holder[code].code
       else
         codes << code
       end

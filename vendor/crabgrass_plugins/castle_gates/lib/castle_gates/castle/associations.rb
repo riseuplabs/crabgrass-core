@@ -30,11 +30,24 @@ def self.included(base)
       }
     })
 
+    #
+    # i could not figure out how to make self.count automatically do a distinct
+    # if scope 'with_access' is active. for now, if you want to combine 'count'
+    # with 'with_access', then you to use this distinct_count.
+    #
+    def self.distinct_count
+      calculate(:count, :id, :distinct => true)
+    end
+
     ##
     ## KEYS
     ##
 
-    has_many :keys, :class_name => "CastleGates::Key", :as => :castle do
+    has_many :keys,
+             :class_name => "CastleGates::Key",
+             :as => :castle,
+             :dependent => :delete_all do
+
       #
       # finds a key for a holder, initializing it in memory if it does not exist.
       #
@@ -51,7 +64,7 @@ def self.included(base)
       def select_holder_codes
         castle = proxy_owner
         sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
-        self.connection.select_values("SELECT DISTINCT keys.holder_code FROM keys WHERE keys.castle_type = '%s' AND keys.castle_id = %s" % [sti_type, castle.id])
+        self.connection.select_values("SELECT DISTINCT `keys`.`holder_code` FROM `keys` WHERE `keys`.`castle_type` = '%s' AND `keys`.`castle_id` = %s" % [sti_type, castle.id])
       end
 
     end
