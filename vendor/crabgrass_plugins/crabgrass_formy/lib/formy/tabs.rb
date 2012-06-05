@@ -42,11 +42,27 @@ module Formy
 
       def close
         selected = 'active' if @selected
+        first = 'first' if @options[:index] == 0
+        li_class = [selected, first].compact.join(' ')
+        puts content_tag(:li, build_link, :class => li_class)
+        super
+      end
+
+      protected
+
+      def build_link
         @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
         if @link
-          a_tag = @link
+          return @link
         elsif @url
-          a_tag = content_tag :a, @label, :href => @url, :class => @class, :style => @style, :id => @id, :onclick => @function
+           options = {
+             :href => @url,
+             :class => @class,
+             :style => @style,
+             :id => @id,
+             :onclick => @function
+           }
+          return content_tag :a, @label, options
         elsif @show_tab
           if @show_tab =~ /_panel$/
             @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
@@ -59,18 +75,28 @@ module Formy
             @function += ';' unless @function[-1].chr == ';'
             onclick = @function + onclick
           end
-          a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id
+          options = {
+            :onclick => onclick,
+            :class => @class,
+            :style => @style,
+            :id => @id
+          }
+          return content_tag :a, @label, options
           if @default
             puts javascript_tag('defaultHash = "%s"' % @hash)
           end
         elsif @function
-          a_tag = content_tag :a, @label, :href => '#', :class => @class, :style => @style, :id => @id, :onclick => @function
+          options = {
+            :href => '#',
+            :class => @class,
+            :style => @style,
+            :id => @id,
+            :onclick => @function
+          }
+          return content_tag :a, @label, options
         end
-        first = 'first' if @options[:index] == 0
-        li_class = [selected, first].compact.join(' ')
-        puts content_tag(:li, a_tag, :class => li_class)
-        super
       end
+
     end
 
     sub_element Tabs::Tab
