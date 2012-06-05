@@ -1,16 +1,9 @@
 class Groups::WikisController < Groups::BaseController
 
-  include_controllers 'common/wiki'
-
-  before_filter :fetch_wiki, :only => :show
-  # show might be allowed when not logged in
-  skip_before_filter :login_required, :only => :show
-  before_filter :authorized?, :only => :show
   guard :may_edit_group?
-  guard :show => :may_show_group_wiki?
 
   permission_helper 'wikis'
-  helper 'wikis/base', 'wikis/sections'
+  helper 'wikis/base'
 
   def new
     if @wiki = @profile.wiki

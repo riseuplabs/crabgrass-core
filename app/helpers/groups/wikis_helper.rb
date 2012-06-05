@@ -19,7 +19,7 @@ module Groups::WikisHelper
   def wiki_toggle(wiki, wiki_type)
     return wiki_new_toggle(wiki_type) if wiki.nil? or wiki.new_record?
     { :label => wiki_type.t,
-      :remote => group_wiki_path(@group, wiki, :preview => true),
+      :remote => wiki_path(wiki, :preview => true),
       :method => :get
     }
   end
@@ -29,16 +29,21 @@ module Groups::WikisHelper
     key = ('create_' + wiki_type.to_s).to_sym
     { :label => key.t,
       :remote => new_group_wiki_path(@group, :private => priv),
-      :icon => 'plus'
+      :icon => 'plus',
+      :method => :get
     }
   end
 
   def wiki_with_tabs(wiki)
-    return unless wiki
-    render :partial => '/groups/home/wiki', :locals => {
-      :open => @wiki && (@wiki == wiki),
-      :preview => !coming_from_wiki?(wiki),
-      :wiki => wiki
-    }
+    if wiki
+      render :partial => '/groups/home/wiki', :locals => {
+        :open => @wiki && (@wiki == wiki),
+        :preview => !coming_from_wiki?(wiki),
+        :wiki => wiki
+      }
+    else
+      # TODO: make sure this is not rendered twice!
+      render :text => '<div id="new_wiki"></div>'
+    end
   end
 end
