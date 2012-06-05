@@ -51,18 +51,16 @@ module Formy
       protected
 
       def build_link
+        return @link if @link
         @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
-        if @link
-          return @link
-        elsif @url
-           options = {
-             :href => @url,
-             :class => @class,
-             :style => @style,
-             :id => @id,
-             :onclick => @function
-           }
-          return content_tag :a, @label, options
+        options = {
+            :class => @class,
+            :style => @style,
+            :id => @id,
+            :onclick => @function
+        }
+        if @url
+          options[:href] = @url
         elsif @show_tab
           if @show_tab =~ /_panel$/
             @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
@@ -75,26 +73,13 @@ module Formy
             @function += ';' unless @function[-1].chr == ';'
             onclick = @function + onclick
           end
-          options = {
-            :onclick => onclick,
-            :class => @class,
-            :style => @style,
-            :id => @id
-          }
-          return content_tag :a, @label, options
+          options[:onclick] = onclick
+          # TODO this needs to be included!
           if @default
             puts javascript_tag('defaultHash = "%s"' % @hash)
           end
-        elsif @function
-          options = {
-            :href => '#',
-            :class => @class,
-            :style => @style,
-            :id => @id,
-            :onclick => @function
-          }
-          return content_tag :a, @label, options
         end
+        return content_tag :a, @label, options
       end
 
     end
