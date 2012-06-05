@@ -1,3 +1,12 @@
+=begin
+
+ WikiController
+
+ This is the controller for the in-place wiki editor, not for the
+ the wiki page type (wiki_page_controller.rb).
+
+=end
+
 class Wikis::WikisController < Wikis::BaseController
 
   skip_before_filter :login_required, :only => :show
@@ -5,7 +14,6 @@ class Wikis::WikisController < Wikis::BaseController
 
   guard :show => :may_show_wiki?
 
-  javascript :wiki
   javascript 'upload', :only => :edit
   stylesheet 'wiki_edit'
   stylesheet 'upload', :only => :edit

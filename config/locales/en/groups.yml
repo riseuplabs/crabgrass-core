@@ -71,6 +71,7 @@ en:
   ## UNSORTED
   ##
 
+  group_wikis: "Group Wikis"
   ##!  group_join_chat: "Join Chat"
   ##!  group_privacy_settings: '%{group} Privacy Settings'
   group_publicly_visible: 'Make %{group} Publicly Visible'

@@ -40,18 +40,19 @@ module Common::Ui::GizmoHelper
   def toggle_bug_links(*links)
     content_tag(:div, :class => 'btn-group') do
       links.collect do |link|
-        classes = [
+        link[:class] = [
           'btn',
           link[:active] ? 'active' : '',
           link == links.first ? 'first' : '',
           link == links.last ? 'last' : ''
         ].combine
         if link[:remote]
-          link_to_remote(link[:label], link[:remote], :class => classes, :id => link[:id])
+          link[:url] = link[:remote]
+          link_to_remote link[:label], link.slice(:url, :method), link.slice(:class, :id)
         elsif link[:function]
-          link_to_function(link[:label], link[:function], :class => classes, :id => link[:id])
+          link_to_function link[:label], link[:function], link.slice(:class, :id)
         else
-          link_to(link[:label], link[:url], :class => classes, :id => link[:id])
+          link_to link[:label], link[:url], link.slice(:class, :id)
         end
       end.join
     end

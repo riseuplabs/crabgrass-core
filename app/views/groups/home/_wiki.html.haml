@@ -17,3 +17,4 @@
 %div[wiki]
   - if local_assigns.delete(:open)
     = render :partial => 'common/wiki/show', :locals => local_assigns
+= spinner(wiki)
