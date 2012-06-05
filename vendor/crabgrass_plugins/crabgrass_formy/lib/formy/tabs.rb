@@ -52,36 +52,47 @@ module Formy
 
       def build_link
         return @link if @link
+
         @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
+        if @show_tab =~ /_panel$/
+           @id = @show_tab.sub(/_panel$/, '_link')
+        end
         options = {
             :class => @class,
             :style => @style,
             :id => @id,
             :onclick => @function
         }
+
         if @url
           options[:href] = @url
         elsif @show_tab
-          if @show_tab =~ /_panel$/
-            @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
-            onclick = "showTab(this, $('%s'), '%s');" % [@show_tab, @hash]
-            @id = @show_tab.sub(/_panel$/, '_link')
-          else
-            onclick = "showTab(this, $('%s'));" % @show_tab
-          end
-          if @function
-            @function += ';' unless @function[-1].chr == ';'
-            onclick = @function + onclick
-          end
-          options[:onclick] = onclick
-          # TODO this needs to be included!
-          if @default
-            puts javascript_tag('defaultHash = "%s"' % @hash)
-          end
+          options[:onclick] = onclick_for_show_tab
+        elsif @function
+          options[:href] = "#"
         end
-        return content_tag :a, @label, options
+        return content_tag(:a, @label, options) + postfix_for_link
       end
 
+      def onclick_for_show_tab
+        if @show_tab =~ /_panel$/
+          @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
+          onclick = "showTab(this, $('%s'), '%s');" % [@show_tab, @hash]
+        else
+          onclick = "showTab(this, $('%s'));" % @show_tab
+        end
+        if @function
+          @function += ';' unless @function[-1].chr == ';'
+          onclick = @function + onclick
+        end
+        return onclick
+      end
+
+      def postfix_for_link
+        @show_tab && @default ?
+          javascript_tag('defaultHash = "%s"' % @hash) :
+          ""
+      end
     end
 
     sub_element Tabs::Tab
