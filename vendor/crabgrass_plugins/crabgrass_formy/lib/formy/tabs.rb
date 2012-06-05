@@ -41,18 +41,25 @@ module Formy
         :style, :class, :hash, :default
 
       def close
-        selected = 'active' if @selected
-        first = 'first' if @options[:index] == 0
-        li_class = [selected, first].compact.join(' ')
-        puts content_tag(:li, build_link, :class => li_class)
+        put_item
         super
       end
 
       protected
 
+      def put_item
+        selected = 'active' if @selected
+        first = 'first' if @options[:index] == 0
+        li_class = [selected, first].compact.join(' ')
+        puts content_tag(:li, build_link, :class => li_class)
+      end
+
       def build_link
         return @link if @link
+        return content_tag(:a, @label, link_options) + postfix_for_link
+      end
 
+      def link_options
         @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
         if @show_tab =~ /_panel$/
            @id = @show_tab.sub(/_panel$/, '_link')
@@ -71,7 +78,7 @@ module Formy
         elsif @function
           options[:href] = "#"
         end
-        return content_tag(:a, @label, options) + postfix_for_link
+        return options
       end
 
       def onclick_for_show_tab
