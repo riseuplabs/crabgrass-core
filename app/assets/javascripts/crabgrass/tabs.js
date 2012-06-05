@@ -19,14 +19,16 @@ function showTab(tabLink, tabContent, hash) {
   var tabset = tabLink.up('.nav-tabs');
   if (tabset) {
     tabset.select('li').invoke('removeClassName', 'active');
-    $$('.tab_content').invoke('hide');
     tabLink.up('.nav-tabs li').addClassName('active');
-    tabContent.show();
-    evalAttributeOnce(tabContent, 'data-onvisible');
     tabLink.blur();
     if (hash) {
       window.location.hash = hash;
     }
+  }
+  if (tabContent) {
+    $$('.tab_content').invoke('hide');
+    tabContent.show();
+    evalAttributeOnce(tabContent, 'data-onvisible');
   }
   return false;
 }
