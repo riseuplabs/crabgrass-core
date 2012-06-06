@@ -1,7 +1,7 @@
 - if current_user.member_of? @group
-  %h2.pull-left= :group_wiki.t
-  .pull-left
+  .pull-right
     = wiki_toggles
+  %h2= :group_wiki.t
   .clear
     = wiki_with_tabs(@private_wiki)
     = wiki_with_tabs(@public_wiki)
