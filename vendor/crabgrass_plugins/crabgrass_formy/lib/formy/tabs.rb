@@ -60,7 +60,7 @@ module Formy
       end
 
       def link_options
-        @class = [@class, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
+        @class = [@class, ("icon #{@icon}_16" if @icon)].compact.join(' ')
         if @show_tab =~ /_panel$/
            @id = @show_tab.sub(/_panel$/, '_link')
         end

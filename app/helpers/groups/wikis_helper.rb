@@ -39,6 +39,8 @@ module Groups::WikisHelper
     bug.label key.t
     bug.function remote_function({:url => new_group_wiki_path(@group, :private => priv), :method => :get})
     bug.icon 'plus'
+    bug.show_tab 'new_wiki'
+    bug.class 'btn-mini'
   end
 
   def wiki_with_tabs(wiki)
@@ -50,7 +52,7 @@ module Groups::WikisHelper
       }
     else
       # TODO: make sure this is not rendered twice!
-      render :text => '<div id="new_wiki"></div>'
+      render :text => '<div id="new_wiki" class="tab_content"></div>'
     end
   end
 end

@@ -98,7 +98,7 @@
 .pencil_16 {background-image: url(/images/png/16/pencil.png)}
 .phone_16 {background-image: url(/images/png/16/phone.png)}
 .picture_edit_16 {background-image: url(/images/png/16/picture_edit.png)}
-.plus_16 {background-image: url(/images/png/16/plus.png)}
+.plus_16 {background-image: url(/images/png/16/plus.png) !important}
 .printer_16 {background-image: url(/images/png/16/printer.png)}
 .profile_16 {background-image: url(/images/png/16/profile.png)}
 .profile_private_16 {background-image: url(/images/png/16/profile_private.png)}
