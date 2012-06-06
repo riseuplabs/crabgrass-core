@@ -1,7 +1,8 @@
-.tab_content[wiki, :tab]
+- open = local_assigns.delete(:open)
+.tab_content[wiki, :tab]{:style => open ? "" : "display:none;"}
   = formy(:tabs, :id => dom_id(wiki, :tabs)) do |f|
     - wiki_tabs(f, wiki)
   %div[wiki]
-    - if local_assigns.delete(:open)
+    - if open
       = render :partial => 'common/wiki/show', :locals => local_assigns
   = spinner(wiki)

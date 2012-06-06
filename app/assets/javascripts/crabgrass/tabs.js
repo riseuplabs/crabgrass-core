@@ -14,23 +14,35 @@ function evalAttributeOnce(element, attribute) {
 }
 
 function showTab(tabLink, tabContent, hash) {
+  activateTabLink(tabLink);
+  showTabContent(tabContent);
+  if (hash) {
+    window.location.hash = hash;
+  }
+  return false;
+}
+
+function activateTabLink(tabLink) {
   tabLink = $(tabLink);
-  tabContent = $(tabContent);
   var tabset = tabLink.up('.nav-tabs');
   if (tabset) {
     tabset.select('li').invoke('removeClassName', 'active');
     tabLink.up('.nav-tabs li').addClassName('active');
     tabLink.blur();
-    if (hash) {
-      window.location.hash = hash;
-    }
+  } else {
+    tabset = tabLink.up('.btn-group');
+    tabset.select('a').invoke('removeClassName', 'active');
+    tabLink.addClassName('active');
   }
+}
+
+function showTabContent(tabContent) {
+  tabContent = $(tabContent);
   if (tabContent) {
     $$('.tab_content').invoke('hide');
     tabContent.show();
     evalAttributeOnce(tabContent, 'data-onvisible');
   }
-  return false;
 }
 
 var defaultHash = null;

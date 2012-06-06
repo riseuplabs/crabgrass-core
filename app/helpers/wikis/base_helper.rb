@@ -9,28 +9,28 @@ module Wikis::BaseHelper
   def wiki_tabs(formy, wiki)
     formy.tab do |t|
       t.label :show.t
-      t.function remote_function(:url => wiki_path(wiki), :method => 'get')
+      t.function wiki_tab_function(wiki_path(wiki))
       t.selected action?(:show)
-      t.class 'reloadable'
     end
     formy.tab do |t|
       t.label :edit.t
-      t.function remote_function(:url => edit_wiki_path(@wiki), :method => 'get')
-      t.show_tab dom_id(@wiki)
+      t.function wiki_tab_function(edit_wiki_path(wiki))
       t.selected action?(:edit)
-      t.class 'reloadable'
     end
     formy.tab do |t|
       t.label :versions.t
-      t.function remote_function(:url => wiki_versions_path(@wiki), :method => 'get')
-      t.show_tab dom_id(@wiki)
+      t.function wiki_tab_function(wiki_versions_path(wiki))
       t.selected controller?('wikis/versions')
-      t.class 'reloadable'
     end
     formy.tab do |t|
       t.label :print.t
       t.url print_wiki_url(wiki)
     end
+  end
+
+  def wiki_tab_function(url)
+    remote_function(:url => url, :method => :get) +
+      "; activateTabLink(this);"
   end
 
   def break_lock_link
