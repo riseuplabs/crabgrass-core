@@ -10,7 +10,8 @@
       =h html_title
     %article#content
       = yield
-    %div.comments
-      %h2
-        = :comments.t
-      = render :partial => 'pages/posts/printer_friendly', :collection => @posts
+    - if @posts && @posts.any?
+      %div.comments
+        %h2
+          = :comments.t
+        = render :partial => 'pages/posts/printer_friendly', :collection => @posts

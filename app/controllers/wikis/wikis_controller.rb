@@ -27,6 +27,7 @@ class Wikis::WikisController < Wikis::BaseController
   end
 
   def print
+    @posts = @page.posts if @page
     render :template => 'common/wiki/show',
       :layout => "printer_friendly"
   end
