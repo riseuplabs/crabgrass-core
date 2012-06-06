@@ -68,10 +68,21 @@ en:
   group_destroyed_email: "%{group_type} %{group} has been destroyed!"
 
   ##
+  ## WIKIS
+  ##
+
+  group_wiki: "Group Wiki"
+  
+  ##!  create_group_wiki: "Create Group Wiki"
+  create_public_group_wiki: "Public"
+  create_private_group_wiki: "Private"
+  public_group_wiki: "Public"
+  private_group_wiki: "Private"
+
+  ##
   ## UNSORTED
   ##
 
-  group_wikis: "Group Wikis"
   ##!  group_join_chat: "Join Chat"
   ##!  group_privacy_settings: '%{group} Privacy Settings'
   group_publicly_visible: 'Make %{group} Publicly Visible'
