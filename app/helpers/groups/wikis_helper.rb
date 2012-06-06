@@ -44,15 +44,11 @@ module Groups::WikisHelper
   end
 
   def wiki_with_tabs(wiki)
-    if wiki
-      render :partial => '/groups/home/wiki', :locals => {
-        :open => @wiki && (@wiki == wiki),
-        :preview => !coming_from_wiki?(wiki),
-        :wiki => wiki
-      }
-    else
-      # TODO: make sure this is not rendered twice!
-      render :text => '<div id="new_wiki" class="tab_content"></div>'
-    end
+    return unless wiki
+    render :partial => '/groups/home/wiki', :locals => {
+      :open => @wiki && (@wiki == wiki),
+      :preview => !coming_from_wiki?(wiki),
+      :wiki => wiki
+    }
   end
 end

@@ -5,6 +5,8 @@
   .clear
     = wiki_with_tabs(@private_wiki)
     = wiki_with_tabs(@public_wiki)
+    - if !@private_wiki || !@public_wiki
+      #new_wiki.tab_content
 - elsif @wiki
   %div[@wiki]
     -# show full wiki not preview:
