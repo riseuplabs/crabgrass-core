@@ -28,6 +28,7 @@ module Groups::WikisHelper
         bug.function remote_function({:url => wiki_path(wiki, :preview => true), :method => :get})
         bug.selected @wiki == wiki
         bug.show_tab dom_id(wiki, :tab)
+        bug.class "btn-mini"
       end
     end
   end

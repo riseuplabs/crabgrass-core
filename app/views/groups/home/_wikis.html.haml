@@ -1,9 +1,10 @@
 - if current_user.member_of? @group
-  %h2.left= :group_wiki.t
-  .left
+  %h2.pull-left= :group_wiki.t
+  .pull-left
     = wiki_toggles
-  = wiki_with_tabs(@private_wiki)
-  = wiki_with_tabs(@public_wiki)
+  .clear
+    = wiki_with_tabs(@private_wiki)
+    = wiki_with_tabs(@public_wiki)
 - elsif @wiki
   %div[@wiki]
     -# show full wiki not preview:

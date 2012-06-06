@@ -3,6 +3,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
   font-weight: bold;
   font-family: $font_heading_family;
   line-height: 1.0em;
+  padding-right: 1em; // just in case we have sth. floating behind
 
   // if someone uses a title or heading somewhere that is one long
   // unbroken word, the layout gets really messed up unless this is set.
