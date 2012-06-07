@@ -22,12 +22,17 @@ module CastleGates
   # RAILS3_TODO
   #
   # In rails 3:
-  #   * Dispatcher.to_prepare is changed to ActionDispatch::Callbacks.to_prepare.
+  #   * ActionController::Dispatcher.to_prepare is changed to ActionDispatch::Callbacks.to_prepare.
   #   * autoload is moved to ActiveSupport::Autoload
   #
   def self.initialize(path)
     file_name  = File.basename(path)  # e.g. 'permissions'
     class_name = file_name.camelcase  # e.g. 'Permissions'
+
+    #
+    # require the permission definition file (this is only useful for testing mode)
+    #
+    require "#{Rails.root}/#{path}"
 
     #
     # make the class where permissions are defined (e.g. Permissions) autoloadable:
@@ -38,7 +43,7 @@ module CastleGates
     #
     # Trigger autoload of Permissions class
     #
-    Dispatcher.to_prepare do
+    ActionController::Dispatcher.to_prepare do
       # everything in this block is run at the start of every request.
       Kernel.const_get(class_name)
     end
