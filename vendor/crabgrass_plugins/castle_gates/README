@@ -120,7 +120,7 @@ end
 class Fort < ActiveRecord::Base
 end
 
-CastleGates.define do
+class Permissions < CastleGates::Permissions do
 
   castle Fort do
     gate 1, :draw_bridge

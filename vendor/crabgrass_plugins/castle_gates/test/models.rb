@@ -71,7 +71,7 @@ end
 class Tree
 end
 
-CastleGates.define do
+class Permissions < CastleGates::Permissions
 
   castle Fort do
     gate 1, :draw_bridge

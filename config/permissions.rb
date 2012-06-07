@@ -20,9 +20,7 @@
 #   comment -- post a comment to the entity's public message board
 #
 
-CastleGates.exception_class = PermissionDenied
-
-CastleGates.define do
+class Permissions < CastleGates::Permissions
 
   holder 0, :public,
     :label => :public,
@@ -180,4 +178,5 @@ CastleGates.define do
   holder_alias :group, :model => Committee
   holder_alias :group, :model => Council
   holder_alias :group, :model => Network
+
 end
