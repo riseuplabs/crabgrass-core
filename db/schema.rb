@@ -269,12 +269,6 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 
-  create_table "group_settings", :force => true do |t|
-    t.integer "group_id"
-    t.string  "template_data"
-    t.string  "allowed_tools"
-  end
-
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.string   "full_name"

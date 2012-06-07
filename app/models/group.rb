@@ -321,31 +321,6 @@ class Group < ActiveRecord::Base
     destroy_permissions
   end
 
-  ##
-  ## GROUP SETTINGS
-  ##
-
-  public
-
-  has_one :group_setting
-  # can't remember the way to do this automatically
-  after_create :create_group_setting
-  def create_group_setting
-    self.group_setting = GroupSetting.new
-    self.group_setting.save
-  end
-
-  #Defaults!
-  def tool_allowed(tool)
-    group_setting.allowed_tools.nil? or group_setting.allowed_tools.index(tool)
-  end
-
-  #Defaults!
-  def layout(section)
-    template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
-    template_data[section]
-  end
-
   protected
 
   after_save :update_name_copies
