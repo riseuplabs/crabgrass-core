@@ -49,6 +49,7 @@ en:
   pending: "Pending"
   rejected: "Rejected"
   approved: "Approved"
+  saved: "Saved"
 
   #
   # 'destroy' should be reserved for when the action has consequence,
@@ -68,4 +69,4 @@ en:
   delete_button: "Delete"
   deleted: "Deleted"
   remove: "Remove"
-  
+

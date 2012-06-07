@@ -24,7 +24,9 @@ CastleGates.exception_class = PermissionDenied
 
 CastleGates.define do
 
-  holder 0, :public
+  holder 0, :public,
+    :label => :public,
+    :info => :public_description
 
   ##
   ## USER
@@ -33,16 +35,36 @@ CastleGates.define do
   castle User do
 
     # entity gates
-    gate 1, :view,            :default_open => :friend_of_user
-    gate 2, :pester,          :default_open => :user
+    gate 1, :view,
+      :default_open => :friend_of_user,
+      :label => :may_view_label,
+      :info => :may_view_description
+
+    gate 2, :pester,
+      :default_open => :user,
+      :label => :may_pester_label,
+      :info => :may_pester_description
+
     gate 3, :burden,          :default_open => [:friend_of_user, :peer_of_user]
     gate 4, :spy
     gate 5, :comment,         :default_open => [:friend_of_user, :peer_of_user]
 
     # user gates
-    gate 6, :see_contacts,    :default_open => :friend_of_user
-    gate 7, :see_groups,      :default_open => :friend_of_user
-    gate 8, :request_contact, :default_open => :user
+    gate 6, :see_contacts,
+      :default_open => :friend_of_user,
+      :label => :may_see_contacts_label,
+      :info => :may_see_contacts_description
+
+    gate 7, :see_groups,
+      :default_open => :friend_of_user,
+      :label => :may_see_groups_label,
+      :info => :may_see_groups_description
+
+    gate 8, :request_contact,
+      :default_open => :user,
+      :label => :may_request_contact_label,
+      :info => :may_request_contact_description
+
 
     protected
 
@@ -79,13 +101,19 @@ CastleGates.define do
     end
   end
 
-  holder 7, :friend_of_user, :association => User.associated(:friends) do
+  holder 7, :friend_of_user,
+    :label => :friends,
+    :info => :friends_description,
+    :association => User.associated(:friends) do
     def friend_of_user?(user)
       friend_of?(user)
     end
   end
 
-  holder 9, :peer_of_user, :association => User.associated(:peers) do
+  holder 9, :peer_of_user,
+    :label => :peers,
+    :info => :peers_description,
+    :association => User.associated(:peers) do
     def peer_of_user?(user)
       peer_of?(user)
     end
@@ -132,6 +160,20 @@ CastleGates.define do
         parent.grant_access! parent => :admin
       end
     end
+
+    #
+    # Removing peer or friend access automatically removes public.
+    #
+    def after_revoke_access(holder, gate)
+      if holder == :public
+        if gate == :view
+          revoke_access! :public => [:see_members, :see_committees, :see_networks, :request_membership]
+        elsif gate == :request_membership
+          revoke_access! :public => :join
+        end
+      end
+    end
+
   end
 
   holder 8, :group, :model => Group

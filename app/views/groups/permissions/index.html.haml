@@ -1,23 +1,21 @@
-= formy(:table_form) do |f|
-  - f.heading :visibility.t
-  - f.row do |r|
-    - r.checkboxes do |list|
-      - publicly_visible_checkbox(list)
-      - committee_publicly_visible_checkbox(list)
-      - networks_publicly_visible_checkbox(list)
-      - group_members_publicly_visible_checkbox(list)
-  - f.heading :membership.t unless group_hidden?
-  - f.row(:disabled => group_hidden?) do |r|
-    - r.classes 'depends_on_view'
-    - r.checkboxes do |list|
-      - allow_membership_requests_checkbox(list)
-      - open_membership_policy_checkbox(list)
-  - if may_create_council?
-    - f.heading :administration.t
-    - f.row do |row|
-      - council_field(row)
-  - if @group.has_a_council?
-    - f.heading :group_wiki.t
-    - f.row do |row|
-      - row.checkboxes do |list|
-        - members_may_edit_wiki_checkbox(list)
+#permissions_area
+  = formy(:table_form) do |f|
+
+    - f.heading :visibility.t
+    - publicly_visible_checkbox(f)
+    - group_members_publicly_visible_checkbox(f)
+    - committee_publicly_visible_checkbox(f)
+    - networks_publicly_visible_checkbox(f)
+
+    - f.heading :membership.t
+    - allow_membership_requests_checkbox(f)
+    - open_membership_policy_checkbox(f)
+
+    -# removed for now. better not to have this in two places.
+    -# if may_create_council?
+    -# f.heading :administration.t
+    -# council_field(f)
+
+    - if @group.has_a_council?
+      - f.heading :group_wiki.t
+      - members_may_edit_wiki_checkbox(f)

@@ -1,8 +1,0 @@
-standard_update(page)
-
-@locks.each do |lock|
-  page.replace "keys_for_#{lock}", permission_lock_tag(lock, @keys)
-  next unless @key
-  page.call("enableAll", ".depends_on_#{lock}", !@key.opens?(lock))
-end
-
