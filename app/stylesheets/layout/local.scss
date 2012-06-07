@@ -55,7 +55,7 @@
         @include columns-eat-gutter($local_nav_width);
       }
 
-      nav#local_nav li {
+      nav#local_nav li.navi {
         @if border_width($local_content_border) > 0px {
           border: border_width($local_content_border) "solid transparent";
         }
@@ -66,16 +66,16 @@
           @if $local_content_shadow { @include local_content_shadow; }
           border-right: 0;
         }
-        a {
+        a.navi {
           @include cg-hover-link;
           text-align: right;
           display: block;
         }
 
-        // a.nav and div.nav are used to give the tab its padding to create the
-        // illusion of a tab. a.nav should normally be the one used, but sometimes
+        // a.navi and div.navi are used to give the tab its padding to create the
+        // illusion of a tab. a.navi should normally be the one used, but sometimes
         // we want a tab that doesnt have links.
-        a, div {
+        a.navi, div.navi {
           padding: resolve_width($local_nav_padding, $local_nav_width) / 2;
           padding-right: resolve_width($local_nav_padding, $local_nav_width);
           &.active {
@@ -89,9 +89,9 @@
           }
         }
 
-        // this is a funky edge case where we have a.nav inside div.nav.
+        // this is a funky edge case where we have a.navi inside div.navi.
         // it is rare, but for now we need this hackishness.
-        div > a {
+        div.navi > a.navi {
            padding: 0;
         }
       }

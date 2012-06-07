@@ -2,21 +2,23 @@
 -# @navigation[:local] can be an array of NavigationItems, or it could just
 -# be an array of hashes, each with keys :active, :label, and :url.
 -#
--# each element, ul, li, and <a> get the class 'nav'. This helps us distinguish 
--# the navigation elements from other ul, li, and <a>'s that might be around.
+-# Each element, ul, li, and <a> get the class 'navi'. This helps us distinguish
+-# the navigation elements from other ul, li, and <a>'s that might be around in the sidebar.
+-#
+-# We would use 'nav' for this, but use 'navi' instead to keep from colliding with bootstrap.
 -#
 
 %ul.nav
   - @navigation[:local].each do |item|
     - next unless item[:visible]
     - active = item[:active] ? 'active' : ''
-    %li{:class => [active, 'round-left']}
+    %li{:class => [active, 'navi', 'round-left']}
       - if item[:html]
-        %div{:class => [active]}
+        %div{:class => ['navi', active]}
           = theme_render(item[:html])
       - elsif item[:icon]
-        = link_to_active(content_tag(:span, item[:label], :class => "icon inline #{item[:icon]}_16"), item[:url], item[:active])
+        = link_to_active(content_tag(:span, item[:label], :class => "icon inline #{item[:icon]}_16"), item[:url], item[:active], :class => 'navi')
       - else
-        = link_to_active(item[:label], item[:url], item[:active])
- 
+        = link_to_active(item[:label], item[:url], item[:active], :class => 'navi')
+
 
