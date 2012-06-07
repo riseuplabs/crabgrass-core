@@ -1,0 +1,13 @@
+This file is a work in progress.
+
+See vendor/crabgrass_plugins/crabgrass_mods for more information.
+
+Making a mod reloable
+-------------------------
+
+add a line:
+
+  reloadable
+
+to the mod's init.rb.
+
