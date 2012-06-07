@@ -58,8 +58,23 @@ class Testr
     end
   end
 
+  def toggle_bugs
+    formy(:toggle_bugs) do |f|
+      f.bug do |t|
+        t.label 'Tab One'
+        t.show_tab 'tab-one-div'
+        t.selected true
+      end
+      f.bug do |t|
+        t.label 'Tab Two'
+        t.show_tab 'tab-two-div'
+        t.selected false
+      end
+    end
+  end
+
   def run
-    ['simple', 'tabs', 'horizontal'].each do |method|
+    ['simple', 'tabs', 'horizontal', 'toggle_bugs'].each do |method|
       puts
       puts '='*60
       puts '== ' + method

@@ -1,8 +1,12 @@
 - if current_user.member_of? @group
-  = public_wiki_toggle
-  = spinner(@public_wiki) if @public_wiki
-  = private_wiki_toggle
-  = spinner(@private_wiki) if @private_wiki
+  .pull-right
+    = wiki_toggles
+  %h2= :group_wiki.t
+  .clear
+    = wiki_with_tabs(@private_wiki)
+    = wiki_with_tabs(@public_wiki)
+    - if !@private_wiki || !@public_wiki
+      #new_wiki.tab_content
 - elsif @wiki
   %div[@wiki]
     -# show full wiki not preview:

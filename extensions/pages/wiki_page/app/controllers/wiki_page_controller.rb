@@ -1,37 +1,20 @@
 class WikiPageController < Pages::BaseController
 
-
   guard :print => :may_show_page?
-  helper 'wikis/base'
+  helper 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
 
-  include_controllers 'common/wiki'
-  #before_filter :setup_wiki_rendering
   before_filter :find_last_seen, :only => :show
-  #before_filter :force_save_or_cancel, :only => [:show, :print]
-
   before_render :setup_title_box
 
+  stylesheet 'wiki_edit'
   ##
   ## ACCESS: public or :view
   ##
 
-=begin
   def show
-    if @wiki.body.empty?
-      # we have no body to show, edit instead
-      redirect_to_edit
-    elsif current_locked_section
-      @editing_section = current_locked_section
-    end
+    render :template => '/common/wiki/show'
   end
-=end
-
-  def print
-    render :template => 'common/wiki/show',
-      :layout => "printer_friendly"
-  end
-
 
   ##
   ## PROTECTED
@@ -43,29 +26,6 @@ class WikiPageController < Pages::BaseController
     Wiki.new(:user => current_user, :body => "")
   end
 
-=begin
-  ### REDIRECTS
-  def redirect_to_edit
-    redirect_to page_url(@page, :action => 'edit')
-  end
-
-  def redirect_to_show
-    redirect_to page_url(@page, :action => 'show')
-  end
-=end
-
-  ### RENDERS
-  def render_or_redirect_to_updated_wiki_html
-    if request.xhr?
-      render :action => 'update_wiki_html'
-    elsif @update_completed
-      redirect_to_show
-    else
-      render :action => 'edit'
-    end
-  end
-
-  # called early in filter chain
   def fetch_data
     return true unless @page
     @wiki = @page.wiki

@@ -1,19 +1,35 @@
 module Wikis::BaseHelper
 
-
-  def wiki_action_links(wiki = @wiki)
-    link_span(wiki_edit_link(wiki), wiki_versions_link(wiki))
+  # to be called with a formy tab set like this:
+  #
+  #   formy(:tabs,...) do |f|
+  #     wiki_tabs(f, wiki)
+  #   end
+  #
+  def wiki_tabs(formy, wiki)
+    formy.tab do |t|
+      t.label :show.t
+      t.function wiki_tab_function(wiki_path(wiki))
+      t.selected action?(:show)
+    end
+    formy.tab do |t|
+      t.label :edit.t
+      t.function wiki_tab_function(edit_wiki_path(wiki))
+      t.selected action?(:edit)
+    end
+    formy.tab do |t|
+      t.label :versions.t
+      t.function wiki_tab_function(wiki_versions_path(wiki))
+      t.selected controller?('wikis/versions')
+    end
+    formy.tab do |t|
+      t.label :print.t
+      t.url print_wiki_url(wiki)
+    end
   end
 
-  def wiki_edit_link(wiki, options = {})
-    return unless may_edit_wiki?(wiki)
-    if options[:remote]
-      link_to_remote :edit.t,
-        { :url => edit_wiki_path(wiki), :method => 'get' },
-          { :icon => 'pencil' }
-    else
-      link_to :edit.t, edit_wiki_path(wiki), :icon => 'pencil'
-    end
+  def wiki_tab_function(url)
+    tab_remote_function :url => url
   end
 
   def break_lock_link
@@ -23,13 +39,6 @@ module Wikis::BaseHelper
     link_to_remote :break_lock.t,
     { :url => url,
       :method => :get }
-  end
-
-  # moved following methods from app/helpers/groups/wikis_helper.rb
-
-  def wiki_versions_link(wiki)
-    return unless may_edit_wiki?(wiki)
-    link_to :versions.t, wiki_versions_path(wiki)
   end
 
   def wiki_locked_notice(wiki)
