@@ -15,6 +15,7 @@ doc/coverage
 doc/guides
 *~
 db/*.sqlite3
+test.sqlite
 db/*.sql
 db/sphinx
 db/development_structure.sql
