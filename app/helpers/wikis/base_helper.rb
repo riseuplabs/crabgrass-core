@@ -29,8 +29,7 @@ module Wikis::BaseHelper
   end
 
   def wiki_tab_function(url)
-    remote_function(:url => url, :method => :get) +
-      "; activateTabLink(this);"
+    tab_remote_function :url => url
   end
 
   def break_lock_link

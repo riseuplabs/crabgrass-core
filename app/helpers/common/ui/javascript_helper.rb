@@ -159,6 +159,35 @@ module Common::Ui::JavascriptHelper
     "window.location.href = '%s'" % url
   end
 
+  # we'll hopefully migrate to jquery soon - so i don't feel like
+  # cleaning this mess up now.
+  def tab_remote_function(options, tab = nil)
+    options.reverse_merge! :method => :get,
+      :success => ''
+    options[:success] += 'tabLink.removeClassName("spinner_icon icon");'
+    return <<-EOJS
+      var tabLink = #{get_dom_element(tab, :tab)};
+      #{remote_function(options)};
+      activateTabLink(tabLink, true);
+    EOJS
+  end
+
+  #
+  # returns a string that will get a prototype extended dom element.
+  #
+  def get_dom_element(identifier, context = nil)
+    case identifier
+    when ActiveRecord::Base
+      "$('#{dom_id(identifier, context)}')"
+    when nil
+      '$(this)'
+    when /^\$\(/  # already uses prototype
+      identifier
+    when String
+      "$('#{identifier}')"
+    end
+  end
+
   ##
   ## classes
   ##

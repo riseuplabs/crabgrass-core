@@ -25,12 +25,18 @@ module Groups::WikisHelper
         wiki_new_toggle(bug, wiki_type)
       else
         bug.label wiki_type.t
-        bug.function remote_function({:url => wiki_path(wiki, :preview => true), :method => :get})
+        bug.function load_wiki_tab_function(wiki)
         bug.selected @wiki == wiki
         bug.show_tab dom_id(wiki, :tab)
         bug.class "btn-mini"
       end
     end
+  end
+
+  def load_wiki_tab_function(wiki)
+    url = wiki_path(wiki, :preview => true)
+    tab_link = "$('#{dom_id(wiki, :tab)}').down('li.first a')"
+    tab_remote_function({:url => url}, tab_link);
   end
 
   def wiki_new_toggle(bug, wiki_type)
