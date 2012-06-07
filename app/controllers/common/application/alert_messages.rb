@@ -28,6 +28,7 @@
 #      :later  -- flash later
 #      :fade   -- hide message after 5 seconds
 #                 (by default, success and notice messages fade.)
+#      :quick  -- fade, but start immediately.
 #      :nofade -- prevent fade
 #
 # Flash now or flash later? The code tries to pick an intelligent default:
@@ -304,6 +305,7 @@ module Common::Application::AlertMessages
   #  :text -- a string or array of strings to display. (optional)
   #  :list -- an array of strings to be used in a bulleted list
   #  :fade -- if true, force fading of this message
+  #  :quick -- faster fading
   #  :nofade -- if true, force no fade
   #
   # if allow_fade is false, then we ignore :fade and :nofade options
@@ -333,8 +335,9 @@ module Common::Application::AlertMessages
       html << content_tag(:ul, message[:list].collect{|item|content_tag(:li, item)})
     end
     if allow_fade
-      if message[:fade] or ((message[:type] == :success or message[:type] == :notice) and !message[:nofade])
-        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{FADE_TIMEOUT});")
+      if message[:fade] || message[:quick] || ((message[:type] == :success || message[:type] == :notice) && !message[:nofade])
+        timeout = message[:quick] ? 0.5 : FADE_TIMEOUT
+        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});")
       end
     end
     content_tag(:div, html.join, :class => "message #{message[:type]}", :id => message_id)
