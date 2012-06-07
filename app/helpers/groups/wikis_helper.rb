@@ -35,8 +35,10 @@ module Groups::WikisHelper
 
   def load_wiki_tab_function(wiki)
     url = wiki_path(wiki, :preview => true)
-    tab_link = "$('#{dom_id(wiki, :tab)}').down('li.first a')"
-    tab_remote_function({:url => url}, tab_link);
+    clear_wiki = get_dom_element(wiki) + ".update();"
+    wiki_tab = get_dom_element(wiki, :tab)
+    tab_link = wiki_tab + ".down('li.first a')"
+    tab_remote_function({:url => url, :loading => clear_wiki}, tab_link);
   end
 
   def wiki_new_toggle(bug, wiki_type)
