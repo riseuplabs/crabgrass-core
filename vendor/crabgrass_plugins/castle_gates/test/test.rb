@@ -53,11 +53,16 @@ class CastleGatesTest < Test::Unit::TestCase
   def setup
     @fort = Fort.find :first
     @tower = Tower.find :first
-    @me = User.find :first
+
+    @me = User.find_by_name 'me'
+    @other = User.find_by_name 'other'
+    @friend = User.find_by_name 'friend'
+
     @minion = Minion.find :first
-    @other = User.find :last
+
     @hill_clan = Clan.find_by_name 'hill'
     @forest_clan = Clan.find_by_name 'forest'
+
     @faction = Faction.find :first
     @bunker = Bunker.find :first
 
@@ -268,6 +273,17 @@ class CastleGatesTest < Test::Unit::TestCase
       assert @bunker.access?(:public => :draw_bridge)
       assert !@fort.access?(:public => :draw_bridge)
 
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  def test_clans
+    ActiveRecord::Base.transaction do
+      @fort.grant_access!(@hill_clan => :draw_bridge)
+      assert @fort.access?(@me => :draw_bridge)
+      assert @fort.access?(@friend => :draw_bridge)
+      @fort.revoke_access!(@hill_clan => :draw_bridge)
+      assert !@fort.access?(@friend => :draw_bridge)
       raise ActiveRecord::Rollback
     end
   end

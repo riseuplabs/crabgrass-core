@@ -42,6 +42,10 @@ class Holder
     @object.id
   end
 
+  def to_s
+    definition.name
+  end
+
   #
   # returns the holder definition
   #
@@ -170,7 +174,8 @@ class Holder
   # defines a new holder
   #
   def self.add_holder(prefix, name, options=nil, &block)
-    options ||= {:abstract => true}
+    options ||= {}
+    options[:abstract] = true if !(options[:model] || options[:association])
     options[:prefix] = prefix
     holder = nil
 
@@ -196,7 +201,7 @@ class Holder
     elsif options[:abstract]
       # eg :public
     else
-      raise ArgumentError.new(options)
+      raise ArgumentError.new(options.inspect)
     end
 
     holder_def = HolderDefinition.new(name, options)
@@ -244,14 +249,16 @@ class Holder
   #
   def self.codes_to_holders(codes)
     codes.collect do |code|
-      if code
-        prefix = code.to_s[0..0]
-        id = code.to_s[1..-1]
-        holder_def = holder_defs_by_prefix[prefix]
-        if holder_def
-          Holder[holder_def.get_holder_from_id(id)]
-        end
-      end
+      find_by_code(code) if code
+    end
+  end
+
+  def self.find_by_code(code)
+    prefix = code.to_s[0..0]
+    id = code.to_s[1..-1]
+    holder_def = holder_defs_by_prefix[prefix]
+    if holder_def
+      Holder[holder_def.get_holder_from_id(id)]
     end
   end
 

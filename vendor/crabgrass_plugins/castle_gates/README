@@ -199,5 +199,6 @@ Field explanation:
 If you want a bigger gate_bitfield (to store more than 32 doors in a key),
 change the migration like so (MySQL specific):
 
-   p.column :gate_bitfield, 'bigint', :default => 1
+   p.column :gate_bitfield, 'BIGINT', :default => 1
 
+In MySQL, INT is 4 bytes, BIGINT is 8 bytes (64 doors).

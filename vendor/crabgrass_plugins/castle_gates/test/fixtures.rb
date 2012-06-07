@@ -3,10 +3,13 @@ def create_fixtures
   tower = Tower.create! :name => 'tower'
   me = User.create! :name => 'me'
   other = User.create! :name => 'other'
+  clan_friend = User.create! :name => 'friend'
+
   forest_clan = Clan.create! :name => 'forest'
   hill_clan = Clan.create! :name => 'hill'
 
   hill_clan.users << me
+  hill_clan.users << clan_friend
 
   minion1 = Minion.create! :name => 'minion_of_me_1'
   minion2 = Minion.create! :name => 'minion_of_me_2'
@@ -19,15 +22,4 @@ def create_fixtures
   # subclasses
   faction = Faction.create! :name => 'faction'
   bunker = Bunker.create! :name => 'faction'
-
-  #fusion = Style.create! :name => "fusion"
-  #jazz = Style.create! :name => "jazz"
-  #soul = Style.create! :name => "soul"
-  #miles = Artist.create! :name => "Miles", :main_style => jazz
-  #jazz.artists << miles
-  #fusion.artists << miles
-  #ella = jazz.artists.create! :name => "Ella", :main_style => jazz
-  #soul.artists << ella
-  #chick = fusion.artists.create! :name => "Chick", :main_style => fusion
-  #me = jazz.users.create! :name => 'me'
 end

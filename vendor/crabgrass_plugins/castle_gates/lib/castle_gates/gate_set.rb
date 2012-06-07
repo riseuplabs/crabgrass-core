@@ -5,7 +5,7 @@
 #
 
 module CastleGates
-  class GateSet < Hash
+  class GateSet < HashWithIndifferentAccess
 
     #
     # Add a gate to the set.
@@ -24,7 +24,11 @@ module CastleGates
     # e.g. gate_set.get(:front_door) ==> <gate>
     #
     def get(name)
-      self[name]
+      if name.is_a? Gate
+        name
+      else
+        self[name]
+      end
     end
 
     #
@@ -116,6 +120,8 @@ module CastleGates
         true
       elsif gate_names.is_a? Enumerable
         gate_names.inject(true) {|prior, gate| prior && self[gate]}
+      #elsif gate_names.is_a? Gate
+      #  self[gate_names.name]
       else
         self[gate_names]
       end

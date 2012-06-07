@@ -29,11 +29,11 @@ class HolderDefinition
 
 
   def initialize(name, options)
-    @name     = name
+    @name     = name.to_sym
     @prefix   = options[:prefix].to_s
     @abstract = options[:abstract]
     @info     = options[:info]
-    @label    = options[:label]
+    @label    = options[:label] || @name
     @model    = options[:model]
     @association_name = options[:association_name]
     @association_model = options[:association_model]
