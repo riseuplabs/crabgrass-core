@@ -15,7 +15,7 @@ class Me::PermissionsControllerTest < ActionController::TestCase
     login_as @user
     get :index
     assert_response :success
-    assert_equal 5, assigns(:locks).count
+    assert_equal 3, assigns(:holders).count
   end
 
 end

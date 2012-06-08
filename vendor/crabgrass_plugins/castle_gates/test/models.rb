@@ -71,6 +71,9 @@ end
 class Tree
 end
 
+class Rabbit
+end
+
 class Permissions < CastleGates::Permissions
 
   castle Fort do
@@ -131,6 +134,8 @@ class Permissions < CastleGates::Permissions
   end
 
   holder 0, :public
+  holder_alias :public, :model => Rabbit
+
   holder 6, :admin
 
   holder nil, :no_prefix_holder

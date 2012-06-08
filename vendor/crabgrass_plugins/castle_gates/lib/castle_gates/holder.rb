@@ -226,7 +226,7 @@ class Holder
   #
   def self.add_holder_alias(name, model)
     hdef = holder_defs[name]
-    raise ArgumentError.new('bad model') unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
+    raise ArgumentError.new('bad model') unless model.is_a?(Class)
     model.send(:extend, CastleGates::ActsAsHolder::ClassMethods)
     model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
     model.holder_definition = hdef

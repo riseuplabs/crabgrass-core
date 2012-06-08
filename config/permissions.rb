@@ -26,6 +26,8 @@ class Permissions < CastleGates::Permissions
     :label => :public,
     :info => :public_description
 
+  holder_alias :public, :model => UnauthenticatedUser
+
   ##
   ## USER
   ##

@@ -5,7 +5,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   def setup
     @user = User.make
     @group = Group.make
-    @group.grant! :public, :view
+    @group.grant_access! :public => :view
     @group.add_user!(@user)
   end
 
@@ -34,7 +34,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
 
   def test_member_can_see_private
     login_as @user
-    @group.revoke! :public, :all
+    @group.revoke_access! :public => :all
     get :show, :group_id => @group.to_param
     assert_response :success
     assert_select '.inline_message_list', 0

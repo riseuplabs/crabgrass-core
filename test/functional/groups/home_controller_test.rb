@@ -35,7 +35,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
   end
 
   def test_show_public
-    @group.grant! :public, :view
+    @group.grant_access! :public => :view
     assert_permission :may_show_group? do
       get :show, :id => @group.to_param
     end
@@ -46,7 +46,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
   end
 
   def test_may_not_show
-    @group.revoke! :public, :view
+    @group.revoke_access! :public => :view
     assert_permission :may_show_group?, false do
       get :show, :id => @group.to_param
     end
