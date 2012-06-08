@@ -60,11 +60,6 @@ class ActiveSupport::TestCase
   # fixtures :all
 end
 
-# we want to be able to mock our application controller
-class ApplicationController
-  include MockableTestHelper
-end
-
 ##
 ## Integration Tests
 ## some special rules for integration tests

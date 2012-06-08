@@ -4,8 +4,17 @@
 
 .tab_area {
   background-color: white;
-  padding-top: 1em;
   clear: left;
+  padding: 1em;
+  border: 1px solid #DDD;
+  .buttons {
+    margin-top: 0;
+    background: white;
+  }
+}
+
+.tab_content {
+  margin-bottom: 2em;
 }
 
 // modifying bootstrap tabs to work with our low height menu tabs

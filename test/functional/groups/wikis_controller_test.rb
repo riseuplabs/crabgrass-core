@@ -96,30 +96,4 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_redirected_to group_url(@group)
   end
 
-  def test_show_private
-    @wiki = @group.profiles.private.create_wiki :body => 'init'
-    login_as @user
-    assert_permission :may_show_group_wiki? do
-      xhr :get, :show, :group_id => @group.to_param, :id => @wiki.id
-    end
-    assert_response :success
-    assert_equal @wiki, assigns['wiki']
-  end
-
-  def test_show_to_stranger
-    @wiki = @group.profiles.public.create_wiki :body => 'init'
-    assert_permission :may_show_group_wiki? do
-      xhr :get, :show, :group_id => @group.to_param, :id => @wiki.id
-    end
-    assert_response :success
-    assert_equal @wiki, assigns['wiki']
-  end
-
-  def test_do_not_show_private_to_stranger
-    @priv = @group.profiles.private.create_wiki :body => 'private'
-    assert_permission(:may_show_group_wiki?, false) do
-      xhr :get, :show, :group_id => @group.to_param, :id => @priv.id
-    end
-  end
-
 end

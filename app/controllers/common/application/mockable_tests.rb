@@ -1,10 +1,14 @@
-module MockableTestHelper
+module Common::Application::MockableTests
 
   class ReturnValueError < StandardError
   end
 
   def self.included(base)
+    return unless RAILS_ENV == 'test'
     base.class_eval do
+
+      hide_action :mock, :expect, :expect_or_raise, :verify
+
       def mock
         @mock ||= ::MiniTest::Mock.new
       end
@@ -64,6 +68,7 @@ module MockableTestHelper
       def verify
         self.mock.verify
       end
+
     end
   end
 end

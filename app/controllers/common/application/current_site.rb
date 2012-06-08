@@ -4,6 +4,9 @@ module Common::Application::CurrentSite
     base.class_eval do
       # make current_site available to the views
       helper_method :current_site
+      if RAILS_ENV == 'test'
+        hide_action :disable_current_site, :enable_current_site
+      end
     end
   end
 
@@ -28,6 +31,7 @@ module Common::Application::CurrentSite
   public
 
   if RAILS_ENV == 'test'
+
     # used for testing
     def disable_current_site
       @current_site_disabled = true

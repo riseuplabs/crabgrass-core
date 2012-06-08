@@ -288,9 +288,27 @@ class CastleGatesTest < Test::Unit::TestCase
     end
   end
 
+  def test_holder_alias
+    ActiveRecord::Base.transaction do
+      @rabbit = Rabbit.new
+
+      # before
+      assert !@fort.access?(@rabbit => :draw_bridge)
+      assert !@fort.access?(:public => :draw_bridge)
+
+      # grant
+      @fort.grant_access!(@rabbit => :draw_bridge)
+
+      # after
+      assert @fort.access?(@rabbit => :draw_bridge)
+      assert @fort.access?(:public => :draw_bridge)
+
+      raise ActiveRecord::Rollback
+    end
+  end
+
   def test_x
     ActiveRecord::Base.transaction do
-
       raise ActiveRecord::Rollback
     end
   end

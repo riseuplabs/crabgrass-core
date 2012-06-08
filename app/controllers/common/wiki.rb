@@ -15,7 +15,6 @@ module Common::Wiki
 #      before_filter :fetch_wiki, :only => [:show, :edit, :update]
 #      before_filter :setup_wiki_rendering
 
-      javascript :wiki
       stylesheet 'wiki_edit'
 
       helper 'wikis/sections'

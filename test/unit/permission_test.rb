@@ -3,6 +3,14 @@ require File.dirname(__FILE__) + '/test_helper'
 class PermissionTest < ActiveSupport::TestCase
   fixtures :all
 
+  #
+  # This test uses user.clear_access_cache. This is needed after a structure change because the user object has
+  # in-memory cached the previous results.
+  #
+  # Changing the org structure clears the cache in the db, but not in memory. This is typically OK in practice,
+  # because after the org structure change the app does not do further permission checks. But for tests,
+  # we need to manually fetch a new user object or call clear_access_cache.
+  #
   def test_group_permissions_with_committee_and_council
     # create a group and user
     user = User.make(:login => 'earth')
@@ -16,7 +24,7 @@ class PermissionTest < ActiveSupport::TestCase
 
     # add a council
     council = Council.make_for :group => group, :name => 'planets+astrophysicists'
-    user.clear_cache
+    user.clear_access_cache
     assert !user.may?(:admin, group), "should not admin group"
     assert user.may?(:edit, committee)
     assert user.may?(:edit, group)
@@ -34,6 +42,7 @@ class PermissionTest < ActiveSupport::TestCase
     council.remove_user!(user)
     assert !user.may?(:admin, group), 'should be booted from council'
     council.destroy_by(user)
+    user.clear_access_cache
     assert user.may?(:admin, group), 'should be able to admin group again'
   end
 

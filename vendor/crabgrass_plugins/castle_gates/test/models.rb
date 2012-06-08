@@ -71,7 +71,10 @@ end
 class Tree
 end
 
-CastleGates.define do
+class Rabbit
+end
+
+class Permissions < CastleGates::Permissions
 
   castle Fort do
     gate 1, :draw_bridge
@@ -131,6 +134,8 @@ CastleGates.define do
   end
 
   holder 0, :public
+  holder_alias :public, :model => Rabbit
+
   holder 6, :admin
 
   holder nil, :no_prefix_holder

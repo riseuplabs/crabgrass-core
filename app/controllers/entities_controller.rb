@@ -35,10 +35,10 @@ class EntitiesController < ApplicationController
   #
   def recipients
     if preload?
-      User.friends_or_peers_of(current_user).access_by(current_user).allows(:pester)
+      User.friends_or_peers_of(current_user).with_access(current_user => :pester)
     elsif filter.any?
       recipients = User.strangers_to(current_user)
-      recipients = recipients.access_by(:public).allows(:pester)
+      recipients = recipients.with_access(:public => :pester)
       recipients.named_like(filter).find(:all, :limit => LIMIT)
     end
   end
@@ -51,7 +51,7 @@ class EntitiesController < ApplicationController
       current_user.all_groups
     elsif filter.any?
       other_groups = Group.without_member(current_user)
-      other_groups = other_groups.access_by(:public).allows(:view)
+      other_groups = other_groups.with_access(:public => :view)
       other_groups.named_like(filter).find :all, :limit => LIMIT
     end
   end
@@ -62,10 +62,10 @@ class EntitiesController < ApplicationController
   def users
     if preload?
       # preload user's groups
-      User.friends_or_peers_of(current_user).access_by(current_user).allows(:view)
+      User.friends_or_peers_of(current_user).with_access(current_user => :view)
     elsif filter.any?
       strangers = User.strangers_to(current_user)
-      strangers = strangers.access_by(:public).allows(:view)
+      strangers = strangers.with_access(:public => :view)
       strangers.named_like(filter).find(:all, :limit => LIMIT)
     end
   end
