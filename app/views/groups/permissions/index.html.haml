@@ -19,3 +19,6 @@
     - if @group.has_a_council?
       - f.heading :group_wiki.t
       - members_may_edit_wiki_checkbox(f)
+
+    - f.heading :content.t
+    - allow_anonymous_content_checkbox(f)

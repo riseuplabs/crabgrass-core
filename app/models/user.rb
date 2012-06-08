@@ -319,7 +319,20 @@ class User < ActiveRecord::Base
   #               the context determines what is possible.
   #
   def may_act_as?(options={})
-    true
+    user, group, context = options[:user], options[:group], options[:context]
+    if context.is_a? Group
+      if user.to_s == "0"
+        context.access?(self => :post_anonymously)
+      elsif user && user.id == self.id
+        true
+      end
+    elsif context.is_a? Network
+      if self.member_of?(group) && group.member_of?(context)
+        true
+      end
+    else
+      false # only group and network context anonymous posts are currently supported
+    end
   end
 
   ##

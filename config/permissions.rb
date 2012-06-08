@@ -65,7 +65,6 @@ class Permissions < CastleGates::Permissions
       :label => :may_request_contact_label,
       :info => :may_request_contact_description
 
-
     protected
 
     #
@@ -140,10 +139,15 @@ class Permissions < CastleGates::Permissions
     gate 11, :request_membership, :default_open => :user
     gate 12, :join
 
+    gate 13, :post_anonymously,
+      :label => 'Anonymous Posts',
+      :info => 'Are members allowed to post anonymously?'
+
     protected
 
     def create_permissions
       grant_access! self => :all
+      revoke_access! self => :post_anonymously
       if council?
         # councils steal admin rights
         parent.revoke_access! parent => :admin

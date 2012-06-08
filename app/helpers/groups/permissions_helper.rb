@@ -52,6 +52,13 @@ module Groups::PermissionsHelper
     end
   end
 
+  def allow_anonymous_content_checkbox(form)
+    form.row do |r|
+      r.input castle_gate_tag(@group, :post_anonymously, @holders, :label => @group.gate(:post_anonymously).label)
+      r.info @group.gate(:post_anonymously).info
+    end
+  end
+
   # def council_field(f)
   #   f.row do |row|
   #     if @group.council_id

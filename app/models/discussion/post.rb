@@ -106,6 +106,7 @@ class Post < ActiveRecord::Base
       page.create_discussion unless page.discussion
       attributes[:discussion] = page.discussion
       attributes[:page_terms_id] = page.page_terms.id
+      group ||= page.owner if page.owner_type == 'Group'
     elsif discussion
       attributes[:discussion] = discussion
     else

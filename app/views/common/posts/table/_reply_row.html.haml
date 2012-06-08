@@ -11,7 +11,7 @@
 - form = remote ? method(:remote_form_for) : method(:form_for)
 - form_options = {:url => create_url, :loading => show_spinner('post')}
 %td.post_author
-  = author_selection_tag('user_id')
+  = author_selection_tag('user_id', @group || @user || @context.try(:entity))
 %td.post_body
   - form.call(:post, @post, form_options) do |f|
     = hidden_field_tag('post[user_id]', '', :id => 'user_id')
