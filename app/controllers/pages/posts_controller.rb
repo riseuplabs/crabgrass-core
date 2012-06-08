@@ -17,7 +17,7 @@ class Pages::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.create! @page, current_user, params[:post]
+    @post = Post.create! @page, current_user, @group, params[:post]
     current_user.updated(@page)
     respond_to do |wants|
       wants.html { redirect_to page_url(@page) }

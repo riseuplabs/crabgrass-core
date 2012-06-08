@@ -37,7 +37,7 @@ class Post < ActiveRecord::Base
   ##
 
   format_attribute :body
-  validates_presence_of :user, :body
+  validates_presence_of :body
 
   alias :created_by :user
 
@@ -72,7 +72,10 @@ class Post < ActiveRecord::Base
   # this is like a normal create, except that it optionally accepts multiple arguments:
   #
   # page -- the page that this post belongs to (optional)
-  # user -- the user creating the post (optional)
+  # user -- the user creating the post
+  # group -- the context under which this post is created.
+  # user_id -- set if the user to show on the post is different than the user making the post (optional)
+  # group_id -- set a group to be the author of the post (optional)
   # discussion -- the discussion holding this post (optional)
   # attributes -- a hash of attributes to fill the new post.
   #
@@ -84,26 +87,44 @@ class Post < ActiveRecord::Base
   #
   def self.create!(*args, &block)
     user = nil
+    group = nil
     page = nil
     discussion = nil
     attributes = {}
+
+    # parse the args
     args.each do |arg|
       user       = arg if arg.is_a? User
+      group      = arg if arg.is_a? Group
       page       = arg if arg.is_a? Page
       attributes = arg if arg.is_a? Hash
       discussion = arg if arg.is_a? Discussion
     end
+
+    # find the discussion we are posting to
     if page
       page.create_discussion unless page.discussion
       attributes[:discussion] = page.discussion
       attributes[:page_terms_id] = page.page_terms.id
-    end
-    if discussion
+    elsif discussion
       attributes[:discussion] = discussion
+    else
+      raise ArgumentError.new('discussion required')
     end
-    if user
-      attributes[:user] = user
+
+    # ensure that there is a user or a group, and that the current_user has
+    # permission to post as this user or group.
+    if attributes[:user_id].any? || attributes[:group_id].any?
+      if attributes[:user_id].any? && !user.may_act_as?(:user => attributes[:user_id], :context => group)
+        raise PermissionDenied.new('may not post as that user')
+      elsif attributes[:group_id].any? && !user.may_act_as?(:group => attributes[:group_id], :context => group)
+        raise PermissionDenied.new('may not post as that group')
+      end
+    else
+      attributes[:user_id] = user.id
     end
+
+    # create the post
     post = Post.new(attributes, &block)
     post.save!
     return post

@@ -15,7 +15,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # there are some problems with this code. in particular, it does not handle
   # it very well when the user or group changes their avatar. also, this code
-  # duplicates some code in avatar_helper, in the interest of cutting out 
+  # duplicates some code in avatar_helper, in the interest of cutting out
   # a lot of logic and method calls.
   #
   def link_to_name(name, id=nil)
@@ -155,7 +155,7 @@ module Common::Ui::EntityDisplayHelper
     # label
 
     display, title = if entity.nil?
-      [:unknown.t, nil]
+      [:anonymous.t, nil]
     elsif options[:label]
       [options[:label], nil]
     elsif format == :short
@@ -205,7 +205,7 @@ module Common::Ui::EntityDisplayHelper
       end
     end
   end
-  
+
 
   #
   # used to display a list of entities
@@ -289,5 +289,29 @@ module Common::Ui::EntityDisplayHelper
       content_tag(:b, $2)
     end
   end
+
+  ##
+  ## ENTITY SWITCHING
+  ##
+
+  def author_selection_tag(element_id)
+    options = options_for_select([[current_user.name, current_user.id], [:anonymous.t,0]])
+    select_tag('author_selector', options, :onchange => "$('#{element_id}').value=this.value;")
+  end
+
+  # def author_selection
+  #   content_tag(:div, :class => "btn-group") do
+  #     content_tag(:button, :class => "btn dropdown-toggle", :'data-toggle' => "dropdown", :href => "#") do
+  #       "AHahada" + content_tag(:span, '', :class => 'caret')
+  #     end +
+  #     content_tag(:ul, :class => 'dropdown-menu') do
+  #       content_tag(:li) do
+  #         content_tag(:a, :href => "#") do
+  #           "bbbbb"
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
 end
