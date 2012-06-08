@@ -48,4 +48,29 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     assert_equal "<p><strong>updated</strong></p>", @wiki.reload.body_html
   end
 
+  def test_show_private_group_wiki
+    @priv = @group.profiles.private.create_wiki :body => 'init'
+    login_as @user
+    assert_permission :may_show_wiki? do
+      xhr :get, :show, :id => @priv.id
+    end
+    assert_response :success
+    assert_equal @priv, assigns['wiki']
+  end
+
+  def test_show_public_group_wiki_to_stranger
+    assert_permission :may_show_wiki? do
+      xhr :get, :show, :id => @wiki.id
+    end
+    assert_response :success
+    assert_equal @wiki, assigns['wiki']
+  end
+
+  def test_do_not_show_private_group_wiki_to_stranger
+    @priv = @group.profiles.private.create_wiki :body => 'private'
+    assert_permission(:may_show_wiki?, false) do
+      xhr :get, :show, :id => @priv.id
+    end
+  end
+
 end

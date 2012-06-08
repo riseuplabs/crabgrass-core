@@ -3,7 +3,11 @@ module WikisPermission
   protected
 
   def may_show_wiki?(wiki = @wiki)
-    current_user.may?(:view, (wiki.page || wiki.group))
+    if wiki.profile && wiki.profile.private?
+      may_edit_wiki? wiki
+    else
+      current_user.may?(:view, (wiki.page || wiki.group))
+    end
   end
 
   def may_edit_wiki?(wiki = @wiki)
