@@ -8,8 +8,8 @@ class Groups::HomeController < Groups::BaseController
   layout 'sidecolumn'
   helper 'groups/wikis', 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
-  javascript :wiki
-  stylesheet 'wiki_edit'
+  javascript :upload
+  stylesheet 'wiki_edit', 'upload'
 
   def initialize(options = {})
     @group = options[:group]
