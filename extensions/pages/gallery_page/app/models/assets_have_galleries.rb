@@ -1,7 +1,7 @@
 module AssetsHaveGalleries
   def self.add_to_class_definition
     lambda do
-      has_one :showing
+      has_one :showing, :dependent => :destroy
       has_one :gallery, :through => :showing
     end
   end
