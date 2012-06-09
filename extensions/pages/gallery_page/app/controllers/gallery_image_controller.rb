@@ -63,16 +63,6 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
-  def destroy
-    asset = Asset.find(params[:id])
-    @page.remove_image!(asset)  # this also destroys the asset
-    if request.xhr?
-      render :layout => false
-    else
-      redirect_to page_url(@page)
-    end
-  end
-
   protected
 
   # just carrying over stuff from the old gallery controller here
