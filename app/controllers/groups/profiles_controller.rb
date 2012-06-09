@@ -1,6 +1,7 @@
 class Groups::ProfilesController < Groups::BaseController
 
   before_filter :fetch_profile
+  helper :profile
 
   def edit
   end

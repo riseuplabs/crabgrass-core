@@ -14,23 +14,6 @@
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
         - r.input @profile.summary_html
 
-    - f.heading :photo.t
-    - if @profile.picture
-      - f.row do |r|
-        - r.input [picture_tag(@profile.picture, :medium), submit_tag("Clear", :name => 'clear_photo')].join('<br/>')
-    - else
-      - f.row do |r|
-        - r.label I18n.t(:file)
-        - r.label_for 'profile_picture_upload'
-        - r.input file_field_tag('profile[picture][upload]', :id => 'profile_picture_upload')
-      - f.row do |r|
-        - r.label I18n.t(:caption)
-        - r.label_for 'profile_picture_caption'
-        - r.input text_field_tag('profile[picture][caption]', '', :id => 'profile_picture_caption')
-      - f.row do |r|
-        - r.label I18n.t(:photo_credit)
-        - r.label_for 'profile_picture_picture'
-        - r.input text_field_tag('profile[picture][credit]', '', :id => 'profile_picture_credit')
-
+    - banner_field(f)
     - f.buttons submit_tag(:save_button.t, :name => 'save')
 
