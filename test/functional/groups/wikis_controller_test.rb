@@ -64,7 +64,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert wiki.profile.private?
     assert_equal @user, wiki.versions.last.user
     assert_response :redirect
-    assert_redirected_to group_url(@group)
+    assert_redirected_to group_home_url(@group, :wiki_id => wiki.id)
   end
 
   def test_create_public
@@ -78,7 +78,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert "<em>created</em>", wiki.body_html
     assert wiki.profile.public?
     assert_response :redirect
-    assert_redirected_to group_url(@group)
+    assert_redirected_to group_home_url(@group, :wiki_id => wiki.id)
   end
 
   def test_create_with_existing_wiki
@@ -93,7 +93,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert "<em>created</em>", wiki.body_html
     assert wiki.profile.public?
     assert_response :redirect
-    assert_redirected_to group_url(@group)
+    assert_redirected_to group_home_url(@group, :wiki_id => wiki.id)
   end
 
 end
