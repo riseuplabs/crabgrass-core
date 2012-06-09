@@ -11,8 +11,15 @@ define_page_type :Gallery, {
 
 extend_model :Asset do
 
-  has_many :showings
+  has_many :showings, :dependent => :destroy
   has_many :galleries, :through => :showings
+
+  def change_source_file(data)
+    raise Exception.new(I18n.t(:file_must_be_image_error)) unless
+    Asset.mime_type_from_data(data) =~ /image|pdf/
+      self.uploaded_data = data
+    self.save!
+  end
 
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
