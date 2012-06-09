@@ -28,9 +28,8 @@ module PagesPermission
     !page or may_admin_page?
   end
 
-  def may_destroy_page?
-    may_admin_page?
-  end
+  alias_method :may_destroy_page?, :may_admin_page?
+  alias_method :may_delete_page?, :may_edit_page?
 
   ##
   ## SHARING
