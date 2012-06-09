@@ -24,7 +24,7 @@ class Groups::HomeController < Groups::BaseController
   protected
 
   def fetch_wikis
-    if current_user.member_of? @group
+    if may_edit_group?
       @private_wiki = @group.private_wiki
       @public_wiki = @group.public_wiki
       @wiki = coming_from_wiki?(@public_wiki) || !@private_wiki ? @public_wiki : @private_wiki
@@ -36,9 +36,7 @@ class Groups::HomeController < Groups::BaseController
   helper_method :coming_from_wiki?
   # will return true if we came from the wiki editor, versions or diffs
   def coming_from_wiki?(wiki)
-    return unless wiki and request.referer
-    request.referer == edit_group_wiki_url(@group, wiki) or
-    request.referer.index(root_url + 'wikis/' + wiki.to_param )
+    wiki and params[:wiki_id].to_i == wiki.id
   end
 
 end

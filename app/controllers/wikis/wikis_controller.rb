@@ -51,7 +51,9 @@ class Wikis::WikisController < Wikis::BaseController
       @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
       success
     end
-    redirect_to @page ? page_url(@page) : entity_path(@wiki.context)
+    redirect_to @page ?
+      page_url(@page) :
+      group_home_path(@wiki.context, :wiki_id => @wiki.id)
 
   rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
     warning exc

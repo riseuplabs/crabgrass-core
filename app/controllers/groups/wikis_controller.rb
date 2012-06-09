@@ -30,7 +30,7 @@ class Groups::WikisController < Groups::BaseController
         success
       end
     end
-    redirect_to entity_path(@group || @page)
+    redirect_to group_home_path(@group, wiki_id => @wiki.id)
   end
 
 
