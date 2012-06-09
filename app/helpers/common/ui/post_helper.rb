@@ -8,6 +8,12 @@ module Common::Ui::PostHelper
     link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
   end
 
+  def edit_post_link(post)
+    if may_edit_post?(post)
+      link_to_remote :edit.t, {:url => edit_post_path(post), :method => 'get'}, {:class => 'shy', :icon => 'pencil'}
+    end
+  end
+
 #  def edit_post_action(post)
 #    return unless may_edit_posts?(post)
 #    content_tag :div, :class=>'post_action_icon' do

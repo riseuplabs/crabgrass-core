@@ -4,10 +4,7 @@
 
 %div.post_body.shy_parent{:id => post.body_id}
   %div.float_right
-    - if local_assigns[:edit_url]
-      - url = safe_call(edit_url, post)
-      = link_to_remote :edit.t, {:url => url}, {:class => 'shy', :icon => 'pencil'}
-    = #edit_post_action(post)
+    = edit_post_link(post)
     = #star_post_action(post)
     = # call_hook :post_actions, {:post => post}
   = post.body_html

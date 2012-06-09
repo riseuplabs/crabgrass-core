@@ -5,16 +5,20 @@
 -#   style -- currently, only 'table'
 -#   posts -- the array of Post objects.
 -#
--# requires:
--#   create_url -- the url to post the create post form to.
--#                 if missing or false, no reply is possible.
+-# these paths must be defined:
 -#
--# optional:
--#   edit_url -- url for editing an old post.
+-#   edit_post_path(post, *args)  -- path for editing post.
+-#        post_path(post, *args)  -- path for updating the post.
+-#             posts_path(*args)  -- path to create a post.
+-#
+-# these permissions must be defined:
+-#     may_create_post?()
+-#   may_edit_post?(post)
 -#
 
 - style = local_assigns[:style] ||= :table
 - posts = local_assigns[:posts] ||= @posts
+- local_assigns[:remote] = true if local_assigns[:remote].nil?
 
 %section{:class => "post_list #{style}", :id => 'posts'}
   = render :partial => "/common/posts/list_as_#{style}", :locals => local_assigns

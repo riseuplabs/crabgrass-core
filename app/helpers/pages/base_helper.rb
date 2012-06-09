@@ -5,6 +5,10 @@ module Pages::BaseHelper
 
   protected
 
+  ##
+  ## MISC HELPERS
+  ##
+
   def page_tabs(options = {})
     options.reverse_merge! :id => 'page_tabs',
       :class => 'flat reloadable'
@@ -37,10 +41,6 @@ module Pages::BaseHelper
     ret << display_entity(recipient, :avatar => :xsmall, :format => :hover)
     ret << "</label>"
   end
-
-  ##
-  ## MISC HELPERS
-  ##
 
   def this_page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize

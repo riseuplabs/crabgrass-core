@@ -1,6 +1,7 @@
 -#
 -# requires:
--#   create_url -- url to send the action to
+-#   posts_path(*arg) -- must be defined, for creating.
+-#
 -# options:
 -#   last_id -- set in_reply_to_id, which currently is just used for helping
 -#              to generate the activity feed.
@@ -9,7 +10,7 @@
 
 - remote = local_assigns[:remote] || false
 - form = remote ? method(:remote_form_for) : method(:form_for)
-- form.call(:post, @post, :url => create_url, :loading => show_spinner('post')) do |f|
+- form.call(:post, @post, :url => posts_path, :loading => show_spinner('post')) do |f|
   = hidden_field_tag('in_reply_to_id', last_id) if last_id
 
   -# not sure if these are still used, or how they are used:

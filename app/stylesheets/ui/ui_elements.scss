@@ -50,32 +50,15 @@
 }
 
 //
-// PAGINATION
-//
-
-//.pagination {
-//  a, span {
-//    padding: 0px 4px 2px 4px;
-//  }
-//  span.prev_page {
-//    padding-left: 0;
-//  }
-//  span.current {
-//    background-color: $link_standard_color;
-//    color: white;
-//  }
-//}
-
-//
 // TWO COLUMN FLOATED ITEMS
-// 
+//
 // this allows us to display a bunch of items in two columns, but in a way such
 // that if the window gets too small to display the two columns it will collapse
 // gracefully to a single column.
 //
 // used like so:
-// 
-//   .two_column_float 
+//
+//   .two_column_float
 //     .column_item= 'hi'
 //     .column_item= 'there'
 //     .column_item= 'stranger'
