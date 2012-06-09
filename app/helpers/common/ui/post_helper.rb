@@ -8,8 +8,12 @@ module Common::Ui::PostHelper
     link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
   end
 
+  #
+  # display the edit link for this post.
+  # sometimes, posts are not really posts. in this case, we skip the edit link.
+  #
   def edit_post_link(post)
-    if may_edit_post?(post)
+    if post.is_a?(Post) && may_edit_post?(post)
       link_to_remote :edit.t, {:url => edit_post_path(post), :method => 'get'}, {:class => 'shy', :icon => 'pencil'}
     end
   end
