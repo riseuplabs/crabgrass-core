@@ -9,6 +9,7 @@ class Pages::BaseController < ApplicationController
   layout 'page'
   permissions :pages
   guard :may_ACTION_page?
+  guard :update => :may_edit_page?
   javascript 'upload'
   stylesheet 'upload', 'gallery'
 

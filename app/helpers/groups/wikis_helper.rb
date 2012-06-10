@@ -6,7 +6,7 @@ module Groups::WikisHelper
 
   def wiki_toggles
     formy(:toggle_bugs) do |f|
-      private_wiki_toggle(f)
+      private_wiki_toggle(f) if may_edit_group?
       public_wiki_toggle(f)
     end
   end

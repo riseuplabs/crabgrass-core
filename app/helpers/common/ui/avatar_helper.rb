@@ -49,5 +49,15 @@ module Common::Ui::AvatarHelper
     ]
   end
 
+  def avatar_field(entity)
+    action = entity.avatar ? :edit : :new
+    context = (entity == current_user) ? :me : entity
+    url = polymorphic_path [context, entity.avatar || :avatar],
+      :action => action
+    link_options = {:url => url, :icon => 'picture_edit'}
+
+    return avatar_for(entity,'large') + "&nbsp;" +
+      link_to_modal(:upload_image_link.t, link_options, :class => 'inline')
+  end
 end
 

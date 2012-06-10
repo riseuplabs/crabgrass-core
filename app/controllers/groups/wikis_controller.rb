@@ -8,8 +8,8 @@ class Groups::WikisController < Groups::BaseController
   def new
     if @wiki = @profile.wiki
       # the wiki has been created by another user since the link to
-      # new was displayed - so we just display it.
-      render :template => '/common/wiki/show'
+      # new was displayed - so we reload the group home instead.
+      render :template => '/groups/home/reload'
     else
       @wiki = Wiki.new :private => fetch_private?
       render :template => '/wikis/wikis/edit'
@@ -30,7 +30,7 @@ class Groups::WikisController < Groups::BaseController
         success
       end
     end
-    redirect_to entity_path(@group || @page)
+    redirect_to group_home_path(@group, :wiki_id => @wiki.id)
   end
 
 

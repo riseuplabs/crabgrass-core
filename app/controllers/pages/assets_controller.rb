@@ -22,7 +22,7 @@ class Pages::AssetsController < Pages::SidebarsController
     asset = Asset.find_by_id(params[:id])
     asset.destroy
     respond_to do |format|
-      format.js {render :nothing => true }
+      format.js {render :text => 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
         #flash_message(:success => "attachment deleted")
         success ['attachment deleted']
