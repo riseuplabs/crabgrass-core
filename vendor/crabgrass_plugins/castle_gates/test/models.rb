@@ -74,7 +74,7 @@ end
 class Rabbit
 end
 
-class Permissions < CastleGates::Permissions
+CastleGates.define do
 
   castle Fort do
     gate 1, :draw_bridge

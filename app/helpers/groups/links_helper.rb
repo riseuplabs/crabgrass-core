@@ -49,7 +49,7 @@ module Groups::LinksHelper
         group_my_membership_path(@group, current_user),
         :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
         :method => :delete,
-        :class => 'nav'
+        :class => 'navi'
     end
   end
 

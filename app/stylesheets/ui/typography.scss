@@ -12,8 +12,8 @@ p, ol, ul, td, div {
 // supposed to contain blocks. Therefore, use this instead.
 
 .p {
-  margin-top: $grid_font_line_height;
-  margin-bottom: $grid_font_line_height;
+  margin-top: $grid_column_gutter;
+  margin-bottom: $grid_column_gutter;
 }
 
 // simulate a blockquote.

@@ -7,7 +7,7 @@
 -#
 
 - local_assigns[:reply_body] ||= false
-- show_reply = local_assigns[:reply_body] || may_create_post? || false
+- show_reply = local_assigns[:reply_body] || safe_call(:may_create_post?) || false
 
 - if posts.any?
   - last_id = posts.last.id
