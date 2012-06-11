@@ -9,7 +9,9 @@
       float: left;
      }
     .text {
-      margin-left: $icon_medium + 7px
+      margin-left: $icon_medium + 7px;
+      // remove unnecessary scrollbar in ff
+      margin-bottom: 1px;
      }
     .info {
       font-style: italic;
