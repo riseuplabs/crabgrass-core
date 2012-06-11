@@ -6,13 +6,7 @@ class Groups::DirectoryController < ApplicationController
   permission_helper 'groups/structures'
 
   def index
-    if !logged_in?
-      @groups = Group.with_access(:public => :view).groups_and_networks.paginate(pagination_params)
-    elsif my_groups?
-      @groups = current_user.primary_groups_and_networks.paginate(pagination_params)
-    else
-      @groups = Group.with_access(current_user => :view).groups_and_networks.paginate(pagination_params)
-    end
+    @groups = groups_to_display.alphabetized(nil).paginate(pagination_params)
   end
 
   protected
@@ -22,5 +16,14 @@ class Groups::DirectoryController < ApplicationController
     params[:path].try.include? 'my'
   end
 
+  def groups_to_display
+    if !logged_in?
+      Group.with_access(:public => :view).groups_and_networks
+    elsif my_groups?
+      current_user.primary_groups_and_networks
+    else
+      Group.with_access(current_user => :view).groups_and_networks
+    end
+  end
 end
 

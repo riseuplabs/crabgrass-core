@@ -4,7 +4,7 @@
 -#       = render :partial => 'group', :locals => {:group => group}
 
 .directory.grid
-  - @groups.in_groups_of(2) do |pair|
+  - @groups.in_groups_of(2, false) do |pair|
     .row
       = render :partial => 'group', :collection => pair
 .p
