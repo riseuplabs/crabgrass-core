@@ -53,8 +53,10 @@ class Holder
     @definition ||= begin
       if @object.is_a? Symbol
         definition = self.class.holder_defs[@object]
-      elsif @object.respond_to? :holder_definition
-        definition = @object.holder_definition
+      elsif @object.respond_to?(:holder_class)
+        definition = self.class.holder_defs_by_class[@object.holder_class.name]
+      else
+        definition = self.class.holder_defs_by_class[@object.class.name]
       end
       raise ArgumentError.new("not a key holder: %s" % @object.inspect) unless definition
       definition
@@ -142,9 +144,11 @@ class Holder
   #   end
   # end
   #
+  # TODO: this is not actually used anymore, so maybe it should be ripped out.
+  #
   def association_with(castle)
     possible_holder = definition.associated.find do |hdef|
-      hdef.model == definition.model && hdef.association_model == castle.class.base_class
+      hdef.model.name == definition.model.name && hdef.association_model_name == castle.class.base_class.name
     end
     if possible_holder
       method_name = "#{possible_holder.name}?"
@@ -166,9 +170,12 @@ class Holder
   class << self
     attr_reader :holder_defs
     attr_reader :holder_defs_by_prefix
+    attr_reader :holder_defs_by_class
+
   end
   @holder_defs = {}
   @holder_defs_by_prefix = {}
+  @holder_defs_by_class = {}
 
   #
   # defines a new holder
@@ -180,56 +187,28 @@ class Holder
     holder = nil
 
     if options[:model]
-      model = options[:model]
-      raise ArgumentError.new unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
-      model.send(:extend, CastleGates::ActsAsHolder::ClassMethods)
-      model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
-      holder = model
+      holder = holder_from_model(options)
     elsif options[:association]
-      association = options[:association]
-      raise ArgumentError.new unless association.is_a?(ActiveRecord::Reflection::MacroReflection)
-      association.class_eval do
-        def holder_code_suffix
-          proxy_owner.id
-        end
-        attr_accessor :holder_definition
-      end
-      options[:association_name] = association.name
-      options[:association_model] = association.active_record
-      options[:model] = association.klass
-      holder = association
+      holder = holder_from_association(options)
     elsif options[:abstract]
-      # eg :public
+      holder = name
     else
       raise ArgumentError.new(options.inspect)
     end
 
-    holder_def = HolderDefinition.new(name, options)
-    if holder.respond_to? :holder_definition
-      holder.holder_definition = holder_def
-    end
-    holder_defs[holder_def.name] = holder_def
-    holder_defs_by_prefix[holder_def.prefix] = holder_def
+    eval_block(block, options)
 
-    # add custom methods to the model
-    if block
-      model = options[:association_model] || options[:model]
-      if model
-        model.class_eval &block
-      end
-    end
-    return holder_def
+    create_holder_definition(holder, name, options)
   end
 
   #
   # allows multiple classes to share the same holder_definition
   #
-  def self.add_holder_alias(name, model)
+  def self.add_holder_alias(name, model_class)
     hdef = holder_defs[name]
-    raise ArgumentError.new('bad model') unless model.is_a?(Class)
-    model.send(:extend, CastleGates::ActsAsHolder::ClassMethods)
-    model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
-    model.holder_definition = hdef
+    raise ArgumentError.new('bad model') unless model_class.is_a?(Class)
+    holder_defs_by_class[model_class.name] = hdef
+    model_class.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
   end
 
   #
@@ -294,6 +273,59 @@ class Holder
       end
     end
     codes
+  end
+
+  ##
+  ## HOLDER DEFINITION HELPERS
+  ##
+
+  def self.create_holder_definition(holder, name, options)
+    holder_defs[name] ||= HolderDefinition.new(name, options)
+    hdef = holder_defs[name]
+    holder_defs_by_prefix[hdef.prefix] = hdef
+    if !holder.nil?
+      if holder.is_a?(Class)
+        holder_defs_by_class[holder.name] = hdef
+      elsif !holder.is_a?(Symbol)
+        holder_defs_by_class[holder.class.name] = hdef
+      end
+    end
+    hdef
+  end
+
+  def self.eval_block(block, options)
+    if block
+      if model = (options[:association_model] || options[:model])
+        after_reload(model) do |model|
+          model.class_eval &block
+        end
+      end
+    end
+  end
+
+  def self.holder_from_model(options)
+    model = options[:model]
+    raise ArgumentError.new unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
+    after_reload(model) do |model|
+      model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
+    end
+    model
+  end
+
+  def self.holder_from_association(options)
+    association = options[:association]
+    raise ArgumentError.new unless association.is_a?(ActiveRecord::Reflection::MacroReflection)
+    after_reload(association.class) do |klass|
+      klass.class_eval do
+        def holder_code_suffix
+          proxy_owner.id
+        end
+      end
+    end
+    options[:association_name] = association.name
+    options[:association_model] = association.active_record
+    options[:model] = association.klass
+    association
   end
 
 end

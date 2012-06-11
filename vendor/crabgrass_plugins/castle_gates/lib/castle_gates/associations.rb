@@ -24,8 +24,8 @@ class AssociationProxyProxy
   def initialize(proxy)
     @proxy = proxy
   end
-  def holder_definition
-    @proxy.reflection.holder_definition
+  def holder_class
+    @proxy.reflection.class
   end
   def holder_code_suffix
     @proxy.proxy_owner.id
