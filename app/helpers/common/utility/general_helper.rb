@@ -119,12 +119,17 @@ module Common::Utility::GeneralHelper
     session[:logged_in_since] || Time.now
   end
 
-  # calls 'call' on proc if it really is a proc.
-  def safe_call(proc, *args)
-    if proc.is_a? Proc
-      proc.call(*args)
+  #
+  # if method is a proc or a symbol for a defined method, then it is called.
+  # otherwise, nothing happens.
+  #
+  def safe_call(method, *args)
+    if method.is_a? Proc
+      method.call(*args)
+    elsif method.is_a?(Symbol) && self.respond_to?(method)
+      send(method, *args)
     else
-      proc
+      false
     end
   end
 
