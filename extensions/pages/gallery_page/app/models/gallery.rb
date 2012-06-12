@@ -38,14 +38,6 @@ class Gallery < Page
   end
 	alias_method :add_image!, :add_attachment!
 
-  # Removes an image from this Gallery by destroying the associating Showing.
-  # Also destroys the asset itself.
-  def remove_image!(asset)
-    showing = self.showings.detect{|showing| showing.asset_id == asset.id}
-    showing.destroy
-    asset.destroy
-  end
-
   def sort_images(sorted_ids)
     sorted_ids.each_with_index do |id, index|
       showing = self.showings.find_by_asset_id(id)

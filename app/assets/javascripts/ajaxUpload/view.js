@@ -26,12 +26,12 @@ ajaxUpload.view = {
       message: ajaxUpload.upload.getMessage(),
       pending: pending
     });
-    this.container.classList.remove("hidden");
+    this.container.classList.remove("hide");
   },
   hide: function() {
     if (this.container.innerHTML != "") {
       setTimeout((function () {
-        this.container.classList.add("hidden")
+        this.container.classList.add("hide")
         this.container.innerHTML = ""
       }).bind(this),1000);
     }

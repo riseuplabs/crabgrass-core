@@ -1,8 +1,17 @@
 - content_for :dom_loaded do
   = "$('post_reply').scrollToBottom();"
 
-%heading.title
-  %h2
-    = :messages_with.t(:other_user => link_to_user(@other_user))
+- content_for :title do
+  .h1= link_to_user(@recipient, :avatar => 'medium')
 
-= render :partial => 'common/posts/list', :locals => {:posts => @posts, :create_url => me_discussion_posts_path(@other_user)}
+-# %ul.breadcrumb
+-#   %li
+-#     = link_to :me.t, me_path
+-#     %span.divider /
+-#   %li
+-#     = link_to :messages.t, me_discussions_path
+-#     %span.divider /
+-#   %li
+-#     = link_to_user(@recipient, :avatar => 'tiny')
+
+= render :partial => 'common/posts/list', :locals => {:posts => @posts}

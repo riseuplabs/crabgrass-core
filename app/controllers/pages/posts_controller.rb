@@ -1,9 +1,13 @@
 class Pages::PostsController < ApplicationController
 
-  permissions 'posts', 'pages'
+  include_controllers 'common/posts'
+
+  permissions 'pages'
+  helper 'pages/post'
+
   prepend_before_filter :fetch_data
   before_filter :login_required
-  guard :may_ALIAS_page_post?
+  guard :may_ALIAS_post?
   guard :show => :may_show_page?
 
   # if something goes wrong with create, redirect to the page url.
@@ -19,23 +23,8 @@ class Pages::PostsController < ApplicationController
   def create
     @post = Post.create! @page, current_user, params[:post]
     current_user.updated(@page)
-    respond_to do |wants|
-      wants.html { redirect_to page_url(@page) }
-      # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
-      wants.js { render :template => 'pages/posts/create' }
-    end
-  end
-
-  def edit
-  end
-
-  def update
-    if params[:save]
-      @post.update_attribute('body', params[:post][:body])
-    elsif params[:destroy]
-      @post.destroy
-      return(render :action => 'destroy')
-    end
+    # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
+    render_posts_refresh @page.posts(pagination_params)
   end
 
   #
@@ -65,11 +54,9 @@ class Pages::PostsController < ApplicationController
 
   def fetch_data
     @page = Page.find(params[:page_id])
-    @post = Post.find(params[:id], :include => :discussion) if params[:id]
-    if @post
-      if @post.discussion.page != @page
-        raise PermissionDenied
-      end
+    if params[:id]
+      @post = @page.discussion.posts.find(params[:id], :include => :discussion)
+      raise PermissionDenied.new unless @post
     end
   end
 

@@ -26,7 +26,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
     login_as @user
     @request.env['HTTP_REFERER'] = edit_group_wiki_url(@group, @pub)
     assert_permission :may_show_group? do
-      get :show, :id => @group.to_param
+      get :show, :id => @group.to_param, :wiki_id => @pub.id
     end
     assert_response :success
     assert_equal @pub, assigns('public_wiki')

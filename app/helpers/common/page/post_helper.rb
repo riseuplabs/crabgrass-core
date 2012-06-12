@@ -2,15 +2,17 @@ module Common::Page::PostHelper
 
   protected
 
-  # for now, no ajax pagination, even in responses from ajax requests.
-  def post_pagination_links(posts)
+  #
+  # klass should be 'first' or 'last'
+  #
+  def post_pagination_links(posts, klass)
     if posts.any? and posts.is_a?(WillPaginate::Collection)
-      color = cycle('shade_odd', 'shade_even')
-      content_tag(:tr, :class => color) do
-        content_tag(:td, :colspan => 2) do
-          will_paginate(posts, :param_name => 'posts', :renderer => LinkRenderer::Page, :previous_label => :pagination_previous.t, :next_label => :pagination_next.t)
-        end
+      if @page
+        param_name = 'posts'
+      else
+        param_name = 'page'
       end
+      will_paginate(posts, :class => "pagination p #{klass}", :param_name => param_name, :renderer => LinkRenderer::Page, :previous_label => :pagination_previous.t, :next_label => :pagination_next.t)
     end
   end
 

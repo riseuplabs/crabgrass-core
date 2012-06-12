@@ -35,15 +35,22 @@ Crabgrass::Initializer.run do |config|
   config.time_zone = 'UTC'
   config.active_record.default_timezone = :utc
 
-  # allow plugins in more places
-  [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
-    config.plugin_paths << path
-  end
-
   # Deliveries are disabled by default. Do NOT modify this section.
   # Define your email configuration in email.yml instead.
   # It will automatically turn deliveries on
   config.action_mailer.perform_deliveries = false
+
+  ##
+  ## PLUGINS
+  ##
+
+  # we must load crabgrass_mods and load_model_callback first.
+  config.plugins = [:crabgrass_mods, :after_reload, :all]
+
+  # allow plugins in more places
+  [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
+    config.plugin_paths << path
+  end
 
   ##
   ## GEMS

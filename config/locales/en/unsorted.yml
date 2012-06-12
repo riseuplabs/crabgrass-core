@@ -306,11 +306,12 @@ en:
   top_pick: "top pick"
   first_choice_of: "first choice of"
 
-  ##!  vote_good: "good"
-  ##!  vote_ok: "ok"
-  ##!  vote_bad: "bad"
-  ##!  vote_none: "none"
-  ##!  vote_no: "no"
+  vote_good: "good"
+  vote_ok: "ok"
+  vote_bad: "bad"
+  vote_none: "none"
+  vote_no: "no"
+  
   ##
   ## SURVEY PAGE
   ##

@@ -75,7 +75,9 @@ class Group < ActiveRecord::Base
 
   named_scope :alphabetized, lambda { |letter|
     opts = {
-      :order => 'groups.full_name ASC, groups.name ASC'
+      # make sure this works with unset full_name as well as mixed case
+      # should work in both mysql and postgres
+      :order => 'LOWER(COALESCE(groups.full_name, groups.name)) ASC'
     }
 
     if letter == '#'

@@ -1,1 +1,9 @@
-= render :partial => "common/entities/two_column", :locals => {:entities => @users, :entity_partial => 'common/entities/directory_entry'}
+.directory.grid
+  - @users.in_groups_of(2, false) do |pair|
+    .row
+      = render :partial => 'user', :collection => pair
+.p
+  = pagination_links(@users)
+
+
+

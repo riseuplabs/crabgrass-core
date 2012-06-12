@@ -1,9 +1,11 @@
+-#
 -# requires:
--#   url
 -#   post
+-#   post_path must be defined.
+-#
 
 %div.post_body{:id => post.body_id}
-  - remote_form_for(:post, post, :url => url, :method => :put, :loading => show_spinner('edit_post')) do |f|
+  - remote_form_for(:post, post, :url => post_path(post), :method => :put, :loading => show_spinner('edit_post')) do |f|
     = f.text_area :body, :rows => 8
     .buttons
       = spinner('edit_post')

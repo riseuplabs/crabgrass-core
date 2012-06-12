@@ -12,6 +12,7 @@ module Wikis::BaseHelper
       t.function wiki_tab_function(wiki_path(wiki))
       t.selected action?(:show)
     end
+    return unless may_edit_wiki?(wiki)
     formy.tab do |t|
       t.label :edit.t
       t.function wiki_tab_function(edit_wiki_path(wiki))
@@ -99,7 +100,7 @@ module Wikis::BaseHelper
     return unless @wiki.group
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_more_link.t,
-      { :url => group_wiki_path(@group, @wiki),
+      { :url => wiki_path(@wiki),
         :method => :get},
       :icon => 'plus'
   end
@@ -108,7 +109,7 @@ module Wikis::BaseHelper
     return unless @wiki.group
     return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
     link_to_remote :see_less_link.t,
-      { :url => group_wiki_path(@group, @wiki, :preview => true),
+      { :url => wiki_path(@wiki, :preview => true),
         :method => :get},
       :icon => 'minus'
   end

@@ -54,18 +54,5 @@ class Pages::TrashController < Pages::SidebarsController
   end
   helper_method :new_url
 
-  def authorized?
-    if action?(:update)
-      case params[:type]
-        when 'move_to_trash' then may_delete_page?
-        when 'undelete' then may_undelete_page?
-        when 'shred_now' then may_destroy_page?
-        when 'destroy' then may_destroy_page?
-      end
-    elsif action?(:edit)
-      may_delete_page?
-    end
-  end
-
 end
 

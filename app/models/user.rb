@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   # alphabetized and (optional) limited to +letter+
   named_scope :alphabetized, lambda {|letter|
     opts = {
-      :order => 'login ASC'
+      :order => 'LOWER(COALESCE(users.display_name, users.login)) ASC'
     }
     if letter == '#'
       opts[:conditions] = ['login REGEXP ?', "^[^a-z]"]

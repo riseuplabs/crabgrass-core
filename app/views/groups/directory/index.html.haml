@@ -3,14 +3,10 @@
 -#     .column_item
 -#       = render :partial => 'group', :locals => {:group => group}
 
-- groups_a, groups_b = even_split(@groups)
-.directory.split_panel
-  .panel_left
-    = render :partial => 'group', :collection => groups_a
-  .panel_right
-    = render :partial => 'group', :collection => groups_b
-
-
+.directory.grid
+  - @groups.in_groups_of(2, false) do |pair|
+    .row
+      = render :partial => 'group', :collection => pair
 .p
   = pagination_links(@groups)
 

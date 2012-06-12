@@ -44,7 +44,7 @@ class Wikis::WikisControllerTest < ActionController::TestCase
         :wiki => {:body => '*updated*', :version => 1}
     end
     assert_response :redirect
-    assert_redirected_to group_url(@group)
+    assert_redirected_to group_home_url(@group, :wiki_id => @wiki.id)
     assert_equal "<p><strong>updated</strong></p>", @wiki.reload.body_html
   end
 
