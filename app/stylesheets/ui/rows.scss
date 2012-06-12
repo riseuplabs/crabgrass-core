@@ -1,0 +1,35 @@
+//
+// Grid Rows
+//
+// trying to emulate bootstrap so we can migrate later on.
+// rows basically wrapping floating elements in a row
+//
+// The fixed width spans serve to rearange in less columns on smaller screens.
+// 
+// the middle container is approx 900 pix wide at max. So simulating 12 cols
+// boils down to 
+//
+
+.grid .row {
+  @include clearfix;
+  margin-left: -20px;
+  [class*="span"] {
+    float:left;
+    margin-left: 20px;
+  }
+  .span1 {
+    width: 55px;
+  }
+  .span2 {
+    width: 130px;
+  }
+  .span3 {
+    width: 205px;
+  }
+  .span4 {
+    width: 280px;
+  }
+  .span6 {
+    width: 430px;
+  }
+}

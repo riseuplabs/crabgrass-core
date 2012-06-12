@@ -1,0 +1,5 @@
+.entry.span4
+  .avatar= avatar_link(user, 'medium')
+  .text
+    .name=link_to_user(user, :format => :full)
+    .info=user.login
