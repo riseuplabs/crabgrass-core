@@ -144,6 +144,7 @@ class Pages::CreateController < ApplicationController
       else Conf.default_page_access
     end
     page_params[:user] = current_user
+    page_params[:owner] = @owner
     page_type.build!(page_params)
   end
 
