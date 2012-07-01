@@ -18,7 +18,7 @@ begin
 
   output_dir  = STATIC_JS_DEST_DIR
   asset_dir   = STATIC_JS_SRC_DIR
-  input_files = ['crabgrass.js','prototype.js','libraries.js','ie.js']
+  input_files = ['crabgrass.js','prototype.js','libraries.js','ie.js', 'upload.js']
   gzip        = `which gzip`.any?
 
   namespace :cg do
