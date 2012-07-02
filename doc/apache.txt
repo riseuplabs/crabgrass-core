@@ -49,5 +49,8 @@ sudo apt-get install apache2-mpm-itk libapache2-mod-passenger
   </Directory>
   <IfModule mpm_itk_module>
     AssignUserId crabgrass crabgrass
+    PassengerUploadBufferDir /home/crabgrass/crabgrass/tmp/tempfiles
   </IfModule>
 </VirtualHost>
+
+The PassengerUploadBufferDir directive is necessary, because this apache process will not be able to write to standard apache upload buffer directory.
