@@ -3,8 +3,12 @@ require "#{RAILS_ROOT}/config/directories"
 module Crabgrass
 end
 
-# do this early because environments/*.rb need it, as do some of the files in lib/extends
+#
+# Do these early because they are needed early
+# (e.g. environments/*.rb, lib/extends, and permissions.rb)
+#
 require File.dirname(__FILE__) + '/conf'
+require File.dirname(__FILE__) + '/exceptions'
 
 # load our core extends early, since they might be use anywhere.
 # active_support needs to be required before this, so we get methods like alias_method_chain
