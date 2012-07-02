@@ -1,4 +1,4 @@
-ajaxUpload.files = ( function() {
+ajaxUpload.files = (function() {
   var pendingFiles = []
   var uploading = false
 
@@ -19,14 +19,14 @@ ajaxUpload.files = ( function() {
     }
 
     function done() {
-      uploading = false
+      uploading = false;
     };
   }
 
   return {
     // view callback
-    length: function(){return pendingFiles.length},
-    isUploading: function(){return !!uploading},
-    add: add 
+    length: function() {return pendingFiles.length},
+    isUploading: function() {return !!uploading},
+    add: add
   }
 })();

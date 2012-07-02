@@ -32,7 +32,9 @@ dirs << CACHE_DIRECTORY = "#{TMP_DIRECTORY}/cache"
 # stylesheets and javascript
 
 dirs << STATIC_JS_SRC_DIR        = "#{Rails.root}/app/assets/javascripts"
+dirs << AS_NEEDED_JS_SRC_DIR     = "#{Rails.root}/app/assets/javascripts/as_needed"
 dirs << STATIC_JS_DEST_DIR       = "#{Rails.root}/public/static"
+dirs << AS_NEEDED_JS_DEST_DIR    = "#{Rails.root}/public/static/as_needed"
 
 # assets
 
