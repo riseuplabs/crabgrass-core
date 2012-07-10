@@ -1,5 +1,14 @@
 =# content_tag_if_any(:div, :class => 'p first float_right') { leave_group_link }
 
+- if @group.committee? && may_admin_group?
+  %h3= :add_members_to_committee.t
+  - form_tag('', :id => 'add_member_form') do
+    = formy(:simple_form) do |f|
+      - f.row(:class => "icon plus_16") do |r|
+        - r.input autocomplete_users_field_tag('user_name')
+
+%h3{:style=>"margin-top:20px;margin-bottom:10px;"}= "Members of Committee"
+
 %section{:class => 'table'}
   %table.fancy{:width => '100%'}
     %tr

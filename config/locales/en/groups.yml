@@ -185,6 +185,7 @@ en:
   ##!  view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
+  add_members_to_committee: "Add group members to this committee"
   ##!  destroy_group_link: "Destroy %{group_type}"
   ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
   ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
