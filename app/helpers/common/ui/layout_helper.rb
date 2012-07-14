@@ -72,13 +72,13 @@ module Common::Ui::LayoutHelper
   #
   def javascript_include_tags
     scripts = controller.class.javascript || {}
-    files = [:prototype, :libraries, :crabgrass, scripts[:all], scripts[params[:action].to_sym]].flatten.compact
-    return unless files.any?
+    files = [:prototype, :libraries, :crabgrass]
+    files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
 
     includes = []
     files.each do |file|
       includes << javascript_include_tag(SPROCKETS_PREFIX + file.to_s)
-    end  
+    end
     return includes
   end
 

@@ -1,0 +1,56 @@
+
+Basic mod_rails config
+------------------------------------------------------------
+
+sudo apt-get install apache2 libapache2-mod-passenger
+
+So long as Apache has permissions to read the 'public' directory, then
+the standard mod_rails configuration should work fine:
+
+<VirtualHost <yourip>:80>
+  ServerName example.org
+  DocumentRoot /var/www/crabgrass/public
+  <Directory /var/www/crabgrass/public>
+    Allow from all
+    Options -MultiViews
+  </Directory>
+</VirtualHost>
+
+When Apache can't read 'public'
+------------------------------------------------------------
+
+Suppose Apache is running as www-data, but crabgrass is installed in
+/home/crabgrass/crabgrass with all the files owned by user 'crabgrass'.
+
+Mod_rails will run rails (rack actually) as user 'crabgrass' (because it
+detects that config.ru is owned by 'crabgrass'). This is great for giving
+rails access to the files it needs, but apache also needs to serve public
+static assets. (This can't be turned off, there is way in mod_rails to
+keep it from using apache to serve on-disk files).
+
+In this case, you have two options:
+
+option 1. grant www-data access to read the 'public' directory
+
+option 2. run apache as user 'crabgrass' for the particular VirtualHost
+
+To implement option 2, you can install mpm-itk instead of mpm-worker.
+It is slightly slower, but lets apache be run as a different user for
+different virtual hosts.
+
+sudo apt-get install apache2-mpm-itk libapache2-mod-passenger
+
+<VirtualHost <ip>:80>
+  ServerName example.org
+  DocumentRoot /home/crabgrass/crabgrass/public
+  <Directory /home/crabgrass/crabgrass/public>
+    Allow from all
+    Options -MultiViews
+  </Directory>
+  <IfModule mpm_itk_module>
+    AssignUserId crabgrass crabgrass
+    PassengerUploadBufferDir /home/crabgrass/crabgrass/tmp/tempfiles
+  </IfModule>
+</VirtualHost>
+
+The PassengerUploadBufferDir directive is necessary, because this apache process will not be able to write to standard apache upload buffer directory.

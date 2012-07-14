@@ -1,9 +1,15 @@
 <%
-  # use a database with the same name as the branch, if the branch is not master:
-  db_name = 'crabgrass'
-  branch = `git branch`.split("\n").grep(/^\*/).first.try.sub('*','').strip
-  if branch != 'master'
-    db_name = branch
+  branch_name_as_db_name = false
+
+  if branch_name_as_db_name
+    branch = `git branch`.split("\n").grep(/^\*/).first.sub('*','').strip
+    if branch == 'master'
+      db_name = 'crabgrass'
+    else
+      db_name = branch
+    end
+  else
+    db_name = 'crabgrass'
   end
 %>
 
@@ -12,7 +18,7 @@ development:
   adapter: mysql
   database: <%=db_name%>_development
   username: root
-  password: 
+  password:
   host: localhost
 
 test:
@@ -20,30 +26,13 @@ test:
   adapter: mysql
   database: <%=db_name%>_test
   username: root
-  password: 
+  password:
   host: localhost
 
 production:
   encoding: utf8
   adapter: mysql
-  database: <%=db_name%>_development
+  database: <%=db_name%>
   username: root
-  password: 
+  password:
   host: localhost
-
-cucumber:
-  encoding: utf8
-  adapter: mysql
-  database: <%=db_name%>_test
-  username: root
-  password: 
-  host: localhost
-
-culerity_development:
-  encoding: utf8
-  adapter: mysql
-  database: <%=db_name%>_test
-  username: root
-  password: 
-  host: localhost
-

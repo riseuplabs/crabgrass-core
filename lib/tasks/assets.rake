@@ -16,10 +16,27 @@ begin
   require "jsmin"
   require "./config/directories"
 
-  output_dir  = STATIC_JS_DEST_DIR
-  asset_dir   = STATIC_JS_SRC_DIR
-  input_files = ['crabgrass.js','prototype.js','libraries.js','ie.js', 'upload.js']
-  gzip        = `which gzip`.any?
+  def clean_dir(dir)
+    Dir.glob(dir + '/*').each do |filename|
+      File.unlink(filename) if File.exists?(filename) && !File.directory?(filename)
+    end
+  end
+
+  def render_dir(from, to)
+    environment = Sprockets::Environment.new
+    environment.append_path from
+    FileUtils.mkdir_p(to)
+    input_files = Dir.glob(from + '/*.js')
+    input_files.each do |file|
+      filename = to + '/' + File.basename(file)
+      File.open(filename, 'w') do |f|
+        f.write(JSMin.minify(environment[file].to_s))
+      end
+      if `which gzip`.any?
+        `gzip --stdout #{filename} > #{filename}.gz`
+      end
+    end
+  end
 
   namespace :cg do
     desc "compile the javascript for deployment"

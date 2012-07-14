@@ -37,8 +37,8 @@ ajaxUpload.view = {
     }
   },
   pendingMessage: function(count) {
-    var pending = this.container.readAttribute('data-pending_message')
-    pending = pending || '<div>#{pending} files pending</div>'
-    return pending.interpolate({pending: count})
+    var pending = this.container.readAttribute('data-pending_message');
+    pending = pending || '<div>#{pending} files pending</div>';
+    return pending.interpolate({pending: count});
   }
 }

@@ -11,19 +11,41 @@
 
 title: "Crabgrass Development"
 
-enabled_mods:
-  - view_examples
-  - mini_wiki
-  #- translator
+#
+# LANGUAGE
+#
 
+default_language: en
+enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
+
+# TODO: remove this
+transifex_user: 'riseuplabs'
+transifex_password: 'SET_ME'
+
+#
+# EMAIL
+#
+
+# e.g. sendmail
 email:
   delivery_method: :sendmail
 
-translation_group: rainbow
+# e.g. smtp
+#email:
+#  delivery_method: :smtp
+#  smtp_settings:
+#    domain: localhost
+#    address: smtp.example.com
+#    port: 587
+#    authentication: :plain
+#    user_name: xxxxxx@example.com
+#    password: xxxxxxx
 
-text_editor: greencloth_only
+email_sender: "robot@$current_host"
 
-#use_full_geonames_data: true
+#
+# PAGES
+#
 
 available_page_types:
   - AssetPage
@@ -36,26 +58,45 @@ available_page_types:
   - SurveyPage # we will make available here, but set in its init file that new surveys cannot be added.
   - Gallery
 
-theme: blueberry
-
-# pagination_size: 3
-
-remote_processing: "http://localhost:3002"
-
-enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
+#
+# GROUPS
+#
 
 committees: true
 councils: true
 networks: true
 
-### TRANSLATIONS: 
+#
+# APPEARANCE
+#
 
-transifex_user: 'riseuplabs'
-transifex_password: 'SET_ME'
+# pagination_size: 3
+theme: blueberry
 
-##
-## SITES
-##
+#
+# SECURITY
+#
+
+enforce_ssl: false
+show_exceptions: true
+tracking: true
+
+#
+# MISC
+#
+
+text_editor: greencloth_only
+remote_processing: "http://localhost:3002"
+
+#
+# MODES
+#
+
+enabled_mods:
+
+#
+# SITES
+#
 
 sites:
 
@@ -69,19 +110,3 @@ sites:
 #  - name: site2
 #    admin_group: superadmins
 
-default_group_permissions:
-  members: !ruby/sym all
-  public:
-    - view
-    - request_membership
-
-default_user_permissions:
-  friends:
-    - view
-    - pester
-    - see_groups
-    - see_contacts
-  peers:
-    - pester
-    - request_contact
-  public: []

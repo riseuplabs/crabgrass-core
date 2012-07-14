@@ -11,22 +11,4 @@
 
 title: "Crabgrass Testing"
 
-# all mods to be tested must be enabled
-enabled_mods:
-   # - chat
-   # - cracklib
-   # - moderation
-   # - super_admin
-   # - translator
-   # - ui_tester
-
-sites:
-# bound to localhost:
-#  - name: site1
-#    admin_group: animals
-# bound to test.host
-#  - name: site2
-#    admin_group: superadmins
-#    chat: false
-
 raise_i18n_exceptions: false

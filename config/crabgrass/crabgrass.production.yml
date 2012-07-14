@@ -9,66 +9,91 @@
 # See doc/CONFIGURATION for more details.
 #
 
-##
-## GLOBAL
-##
-enabled_mods:
-#  - super_admin
-#  - moderation
-#  - translator
-enabled_tools:
-#  - asset_tool
-#  - core_tools
-#  - ranked_vote_tool
-#  - rate_many_tool
-#  - task_list_tool
-#  - wiki_tool
-#  - survey_tool
-#  - gallery_tool
-#  - external_video_tool
-#  - announcement_tool
-#  - feed_tool
+title: "Crabgrass Production"
 
+#
+# LANGUAGE
+#
+
+default_language: en
+enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
+
+#
+# EMAIL
+#
+
+# e.g. sendmail
+email:
+  delivery_method: :sendmail
+
+# e.g. smtp
 #email:
-#  delivery_method: :sendmail
+#  delivery_method: :smtp
 #  smtp_settings:
 #    domain: localhost
-#    address: smtp.gmail.com
+#    address: smtp.example.com
 #    port: 587
 #    authentication: :plain
-#    user_name: xxxxxx@gmail.com
+#    user_name: xxxxxx@example.com
 #    password: xxxxxxx
 
-##
-## SITES
-##
+email_sender: "robot@$current_host"
 
-sites:
-#  - name: site1
-#    admin_group: rainbow
-#    moderation_group: rainbow
-#    translation_group: animals
-#  - name: red
-#    admin_group: redadmins
+#
+# PAGES
+#
 
-##
-## SITE DEFAULTS
-##
+available_page_types:
 
-pagination_size: 30
-default_language: en
+#
+# GROUPS
+#
+
+committees: true
+councils: true
+networks: true
+
+#
+# APPEARANCE
+#
+
+# pagination_size: 30
+# theme: default
+
+#
+# SECURITY
+#
+
 enforce_ssl: false
 show_exceptions: false
-email_sender: "robot@$current_host"
 tracking: true
-available_page_types:
-  - AssetPage
-  - TaskListPage
-  - SurveyPage
-  - DiscussionPage
-  - RateManyPage
-  - MessagePage
-  - RankedVotePage
-  - Gallery
-  - WikiPage
+
+#
+# MISC
+#
+
+text_editor: greencloth_only
+remote_processing: "http://localhost:3002"
+
+#
+# MODES
+#
+
+enabled_mods:
+
+#
+# SITES
+#
+
+sites:
+
+# bound to localhost:
+#  - name: site1
+#    theme: blueberry
+#    admin_group: rainbow
+#    moderation_group: rainbow
+
+# bound to test.host
+#  - name: site2
+#    admin_group: superadmins
 
