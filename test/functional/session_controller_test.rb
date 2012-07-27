@@ -26,6 +26,25 @@ class SessionControllerTest < ActionController::TestCase
     assert_response :redirect
   end
 
+  def test_illegal_hash_redirect
+    post :login, :redirect => {:controller => :pages, :action => :destroy, :id => 123},  :login => "quentin", :password => "quentin"
+    assert_response :redirect
+    assert_redirected_to '/me'
+  end
+
+  def test_legal_redirect
+    post :login, :redirect => "blabla",  :login => "quentin", :password => "quentin"
+    assert_response :redirect
+    assert_redirected_to "blabla"
+  end
+
+  def test_illegal_offsite_redirect
+    post :login, :redirect => "http://blabla.com/track_me",  :login => "quentin", :password => "quentin"
+    assert_response :redirect
+    assert_redirected_to "/me"
+  end
+
+#  def test_should_remember_me
 #  def test_should_remember_me
 #    post :login, :login => 'quentin', :password => 'quentin', :remember_me => "1"
 #    assert_not_nil @response.cookies["auth_token"]

@@ -14,7 +14,7 @@ module FunctionalTestHelper
 
   def assert_login_required
     assert_response :redirect
-    assert_redirected_to '/session/login'
+    assert_redirected_to login_path(:redirect => @request.path)
   end
 
   # can pass either a regexp of the flash error string,

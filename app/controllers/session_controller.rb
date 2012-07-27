@@ -6,7 +6,6 @@ class SessionController < ApplicationController
 
   layout 'notice'
   skip_before_filter :redirect_unverified_user
-  before_filter :stop_illegal_redirect, :only => [:login]
   verify :method => :post, :only => [:language, :logout]
 
   def login
@@ -74,20 +73,11 @@ class SessionController < ApplicationController
   protected
 
   # where to go when the user logs in?
-  # depends on the settings (for example, unverified users should not see any pages)
   def redirect_successful_login
-    params[:redirect] = nil unless params[:redirect].any?
-    redirect_to(params[:redirect] || current_site.login_redirect(current_user))
-  end
-
-  # before filter
-  def stop_illegal_redirect
-    unless params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//
-      redirect_to params
-      error [:illegal_redirect.t, :redirect_to_foreign_domain.t(:url => params.delete(:redirect))]
-      false
+    if params[:redirect].is_a?(String) && !params[:redirect].index(':')
+      redirect_to params[:redirect], :only_path => true
     else
-      true
+      redirect_to current_site.login_redirect(current_user)
     end
   end
 
