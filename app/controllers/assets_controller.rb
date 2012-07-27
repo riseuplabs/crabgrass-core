@@ -33,21 +33,12 @@ class AssetsController < ApplicationController
   def destroy
     @asset.destroy
     respond_to do |format|
-      format.js { render :nothing => true }
+      format.js {render :text => 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
-        flash_message(:success => "file deleted")
+        success ['attachment deleted']
         redirect_to(page_url(@asset.page))
       end
     end
-  end
-
-  def create
-    @asset = Asset.new params[:asset]
-    if params[:asset_title].any?
-      @asset.filename = params[:asset_title] + @asset.suffix
-    end
-    @asset.save!
-    redirect_to page_url(@asset.page)
   end
 
   protected

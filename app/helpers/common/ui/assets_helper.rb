@@ -12,7 +12,7 @@ module Common::Ui::AssetsHelper
 
   def remove_asset_link(asset, options = {}, html_options = {})
     options.reverse_merge!({
-      :url => page_asset_path(@page, asset.id),
+      :url => asset_path(asset.id),
       :method => :delete,
       :complete => hide(dom_id(asset)),
       :icon => 'minus'

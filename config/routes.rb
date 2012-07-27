@@ -25,9 +25,8 @@ ActionController::Routing::Routes.draw do |map|
   ## STATIC FILES AND ASSETS
   ##
 
+  map.resources :assets, :only => [:show, :destroy]
   map.with_options(:controller => 'assets') do |assets|
-    assets.create_asset '/assets/create/:id', :action => :create
-    assets.destroy_asset '/assets/destroy/:id', :action => :destroy
     assets.asset_version '/assets/:id/versions/:version/*path', :action => 'show'
     assets.asset '/assets/:id/*path', :action => 'show'
   end
@@ -156,7 +155,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
     pages.resources :participations, :only => [:index, :update, :create]
     pages.resources :changes
-    pages.resources :assets
+    pages.resources :assets, :only => [:index, :update, :create]
     pages.resources :tags
     pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
 
