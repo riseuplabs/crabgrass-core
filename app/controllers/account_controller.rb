@@ -35,7 +35,10 @@ class AccountController < ApplicationController
   # actually create the new user account
   #
   def create
-    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+    user_params = (params[:user] || {:email => session[:signup_email_address]})
+    user_params.slice! :login, :email, :password, :password_confirmation,
+      :language, :display_name
+    @user = User.new(user_params)
 
     # i think the usage agreement should be a plugin
     #if params[:usage_agreement_accepted] != "1"
