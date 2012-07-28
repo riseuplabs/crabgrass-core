@@ -22,7 +22,7 @@ class WikiPage < Page
       end
       self.data = newwiki
       save unless new_record?
-      newwiki
+      newwiki.reload
     end
   end
 

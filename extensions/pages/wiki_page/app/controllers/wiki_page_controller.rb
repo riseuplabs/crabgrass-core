@@ -13,7 +13,12 @@ class WikiPageController < Pages::BaseController
   ##
 
   def show
-    render :template => '/common/wiki/show'
+    if default_to_edit?
+      params[:action] = 'edit'
+      render :template => '/wikis/wikis/edit'
+    else
+      render :template => '/common/wiki/show'
+    end
   end
 
   ##
@@ -29,7 +34,6 @@ class WikiPageController < Pages::BaseController
   def fetch_data
     return true unless @page
     @wiki = @page.wiki
-    @wiki_is_blank = @wiki.body.blank?
   end
 
   def fetch_context
@@ -53,5 +57,8 @@ class WikiPageController < Pages::BaseController
     end
   end
 
+  def default_to_edit?
+    @wiki.body.blank? && may_edit_page?
+  end
 
 end
