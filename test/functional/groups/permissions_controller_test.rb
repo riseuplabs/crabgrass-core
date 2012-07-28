@@ -25,11 +25,17 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
   end
 
   def test_update
+    public_code = @controller.send(:key_holders, :public).first.code
     login_as @user
     assert_permission :may_admin_group? do
-      post :update, :group_id => @group.to_param, :gate => 'view', :new_state => 'open'
+      post :update,
+        :group_id => @group.to_param,
+        :id => public_code,
+        :gate => 'view',
+        :new_state => 'open'
     end
     assert_response :success
+    assert @group.has_access?(:view, :public)
   end
 
 end

@@ -188,11 +188,6 @@ ActionController::Routing::Routes.draw do |map|
     wikis.resources :sections, :only => [:edit, :update]
   end
 
-  ##
-  ## DEFAULT ROUTE
-  ##
-
-  map.connect '/do/:controller/:action/:id'
   map.root :controller => 'root'
 
   ##
