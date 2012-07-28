@@ -3,6 +3,6 @@
 %h2= :group_wiki.t
 .clear
   = wiki_with_tabs(@private_wiki)
-  = wiki_with_tabs(@public_wiki || @wiki)
+  = wiki_with_tabs(@public_wiki)
   - if may_edit_group? && ( !@private_wiki || !@public_wiki )
     #new_wiki.tab_content
