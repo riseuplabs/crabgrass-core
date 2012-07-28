@@ -34,7 +34,7 @@ config.action_mailer.default_url_options = { :host => "localhost" }
 
 config.gem 'machinist', :version => '~> 1.0' # switch to v2 when stable.
 config.gem 'faker', :version => '~> 1.0.0'
-config.gem 'minitest', :lib => 'minitest/autorun'
+config.gem 'minitest', :lib => 'minitest/autorun', :version => '~> 2.12'
 config.gem 'mocha', :require => false, :version => '~> 0.10.0'
 #
 # mocha note: mocha must be loaded after the things it needs to patch.
