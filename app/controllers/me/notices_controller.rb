@@ -6,6 +6,7 @@ class Me::NoticesController < Me::BaseController
     @notices = Notice.for_user(current_user).
       dismissed(params[:view] == 'old').
       paginate(pagination_params)
+    @pages = current_user.pages.recent_pages
   end
 
   def show

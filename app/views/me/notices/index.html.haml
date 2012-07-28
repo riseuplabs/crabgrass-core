@@ -1,5 +1,5 @@
 .p.first
-  = toggle_bug_links({:label => 'New Notices', :url => me_notices_path, :active => params[:view].empty?}, {:label => 'Old Notices', :url => me_notices_path(:view=>'old'), :active => params[:view] == 'old'})
+  %h2=:notices.t
 
 - if @notices.empty?
   %ul.shaded
@@ -9,3 +9,7 @@
   %table#notice_list.shaded
     = render :partial => 'notice', :collection => @notices
   = bottom_pagination_links @notices
+
+%h2=:recent_pages.t
+.p
+  = render :partial => 'common/pages/list', :locals => {:style => 'rows'}

@@ -35,7 +35,7 @@ define_navigation do
     end
 
     context_section :notices do
-      label  { :notices.t }
+      label  { :my_dashboard.t }
       url    { me_home_path }
       active { controller?('me/notices') }
       icon   :info
