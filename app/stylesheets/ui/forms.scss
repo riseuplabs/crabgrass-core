@@ -118,9 +118,9 @@ input[type=radio], input[type=checkbox] {
 div.image_preview {
   width: 250px;
   height: 200px;
-  background: url('/images/spinner-big.gif') no-repeat 50% 50% transparent;
   overflow: auto;
   text-align: center;
+  font-size: .4em;
 }
 
 div.image_selector {
