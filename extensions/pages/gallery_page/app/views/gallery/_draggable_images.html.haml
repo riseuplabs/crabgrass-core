@@ -1,9 +1,7 @@
 %ul#assets_list.sortable
   = render :partial => '/common/assets/asset_as_li', :collection => @images
-= sortable_element "assets_list", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update)
 
-- if @images.blank?
-  = I18n.t(:no_images_in_gallery)
+= gallery_make_images_sortable_js
 
 %br.clear
 

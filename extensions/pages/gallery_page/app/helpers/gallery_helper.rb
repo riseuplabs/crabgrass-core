@@ -84,6 +84,13 @@ module GalleryHelper
       :title => I18n.t(:edit_image)
   end
 
+  def gallery_make_images_sortable_js
+    sortable_element "assets_list",
+      :constraint => false,
+      :overlap => :horizontal,
+      :url => page_url(@page, :action => :update)
+  end
+
   def gallery_move_image_without_js(image)
     output  = '<noscript>'
     output += link_to(image_tag('icons/small_png/left.png',
