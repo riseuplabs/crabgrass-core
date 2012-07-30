@@ -21,7 +21,10 @@ class WikiPage < Page
          w.body = ""
       end
       self.data = newwiki
-      save unless new_record?
+      if new_record?
+        return newwiki
+      end
+      save
       newwiki.reload
     end
   end
