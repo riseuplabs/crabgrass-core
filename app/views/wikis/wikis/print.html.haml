@@ -1,0 +1,4 @@
+%h1=h(@page ? @page.title : @group.display_name)
+
+%small.summary=h @page.summary if @page
+= render :partial => '/common/wiki/show'
