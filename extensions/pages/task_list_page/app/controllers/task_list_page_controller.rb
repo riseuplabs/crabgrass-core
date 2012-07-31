@@ -4,7 +4,6 @@ class TaskListPageController < Pages::BaseController
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
   permissions 'task_list_page'
-  javascript :extra, 'page'
 
   def show
   end
