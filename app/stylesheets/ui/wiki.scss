@@ -87,6 +87,14 @@
     font-size: 80%;
   }
 
+  ul, ol {
+    list-style: disc outside none;
+    padding-left: 1em;
+    ul, ol {
+      list-style: circle outside none;
+    }
+  }
+
 }
 
 .wiki {
