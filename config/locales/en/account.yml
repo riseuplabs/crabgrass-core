@@ -95,6 +95,19 @@ en:
   login_password: "Password"
   signup_password: "Your Password"
 
+  ##
+  ## ACCOUNT REMOVAL
+  ##
+
+  remove_your_account: "Remove Your Account"
+  anonymize_display_name: "Anonymize display name"
+  anonymize_display_name_info: "Replaces your display name with 'Anonymous' everywhere"
+  destroy_comments: "Destroy comments"
+  destroy_comments_info: "This will remove all comments you made to pages. It might make it hard to understand remaining comments by others."
+  confirm_account_removal: "Are you sure you want to remove your account? This step cannot be undone and your data will be lost."
+  
+  account_successfully_removed: "Your account has successfully been removed. We'll clear it and all it's associated data from the database."
+
   # password strength messages:
   ##!  password_ok: "is OK."
   ##!  password_error_default: "is not strong enough."

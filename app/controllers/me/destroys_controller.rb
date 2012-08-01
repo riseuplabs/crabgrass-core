@@ -14,8 +14,9 @@ class Me::DestroysController < Me::BaseController
     if params[:scrub_comments]
       @user.destroy_comments!
     end
-    logout
-    success
+    logout!
+    success :account_successfully_removed.t
+    redirect_to '/'
   end
 
 end
