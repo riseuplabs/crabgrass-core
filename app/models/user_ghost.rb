@@ -52,7 +52,7 @@ class UserGhost < User
     #
     # use update_attribute to bypass the validations
     #
-    attrs_to_nil_out = %q(
+    attrs_to_nil_out = %w(
       crypted_password salt time_zone email
       login created_at updated_at version
       last_seen_at language remember_token remember_token_expires_at
