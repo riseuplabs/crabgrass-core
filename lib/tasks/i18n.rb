@@ -1,6 +1,6 @@
 require 'yaml'
 require 'fileutils'
-require 'lib/crabgrass/boot'
+require 'crabgrass/boot'
 
 def extract_keys()
   keys = {}
