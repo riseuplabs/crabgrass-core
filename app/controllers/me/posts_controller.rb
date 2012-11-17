@@ -19,7 +19,11 @@ class Me::PostsController < Me::BaseController
   def create
     in_reply_to = Post.find_by_id(params[:in_reply_to_id])
     current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
-    render_posts_refresh(@discussion.posts.paginate(post_pagination_params))
+    if request.xhr?
+      render_posts_refresh(@discussion.posts.paginate(post_pagination_params))
+    else
+      redirect_to me_discussion_posts_url(@recipient)
+    end
   end
 
   protected
