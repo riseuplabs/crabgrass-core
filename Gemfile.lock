@@ -1,0 +1,136 @@
+PATH
+  remote: vendor/gems/compass-susy-plugin-0.8.1
+  specs:
+    compass-susy-plugin (0.8.1)
+      compass (>= 0.10.0)
+
+PATH
+  remote: vendor/gems/riseuplabs-greencloth-0.1
+  specs:
+    greencloth (0.1)
+      RedCloth (>= 4.2.2)
+
+PATH
+  remote: vendor/gems/riseuplabs-uglify_html-0.12
+  specs:
+    uglify_html (0.12)
+      hpricot
+
+PATH
+  remote: vendor/gems/riseuplabs-undress-0.2.4
+  specs:
+    undress (0.2.4)
+      hpricot
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    RedCloth (4.2.9)
+    actionmailer (2.3.15)
+      actionpack (= 2.3.15)
+    actionpack (2.3.15)
+      activesupport (= 2.3.15)
+      rack (~> 1.1.3)
+    activerecord (2.3.15)
+      activesupport (= 2.3.15)
+    activeresource (2.3.15)
+      activesupport (= 2.3.15)
+    activesupport (2.3.15)
+    after_commit (1.0.11)
+      activerecord (>= 1.15.6, < 3.0.0)
+    cgi_multipart_eof_fix (2.5.0)
+    chronic (0.9.0)
+    columnize (0.3.6)
+    compass (0.10.6)
+      haml (>= 3.0.4)
+    daemons (1.0.10)
+    delayed_job (2.0.7)
+      activesupport (~> 2.0)
+      daemons (= 1.0.10)
+    faker (1.0.1)
+      i18n (~> 0.4)
+    fastthread (1.0.7)
+    gem_plugin (0.2.3)
+    haml (3.1.7)
+    hike (1.2.1)
+    hpricot (0.8.6)
+    i18n (0.6.1)
+    jsmin (1.0.1)
+    json (1.7.6)
+    linecache (0.46)
+      rbx-require-relative (> 0.0.4)
+    machinist (1.0.6)
+    metaclass (0.0.1)
+    mime-types (1.19)
+    minitest (2.12.1)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
+    mysql (2.9.0)
+    rack (1.1.5)
+    rails (2.3.15)
+      actionmailer (= 2.3.15)
+      actionpack (= 2.3.15)
+      activerecord (= 2.3.15)
+      activeresource (= 2.3.15)
+      activesupport (= 2.3.15)
+      rake (>= 0.8.3)
+    rake (10.0.3)
+    rbx-require-relative (0.0.9)
+    rdoc (3.12)
+      json (~> 1.4)
+    riddle (1.5.4)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
+      linecache (>= 0.3)
+    sass (3.2.5)
+    sprockets (2.1.3)
+      hike (~> 1.2)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    thinking-sphinx (1.4.14)
+      activerecord (>= 1.15.6, < 3.0.0)
+      after_commit (>= 1.0.7)
+      riddle (>= 1.5.3)
+    tilt (1.3.3)
+    whenever (0.8.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
+    will_paginate (2.3.16)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  RedCloth (~> 4.2)
+  compass (= 0.10.6)
+  compass-susy-plugin!
+  delayed_job (~> 2.0.7)
+  faker (~> 1.0.0)
+  greencloth!
+  haml (~> 3.0)
+  hpricot (~> 0.8)
+  i18n (~> 0.5)
+  jsmin
+  machinist (~> 1.0)
+  mime-types
+  minitest (~> 2.12)
+  mocha (~> 0.10.0)
+  mongrel
+  mysql
+  rails (= 2.3.15)
+  rdoc (~> 3.0)
+  ruby-debug
+  sass (~> 3.2)
+  sprockets (~> 2.1.0)
+  thinking-sphinx (~> 1.4)
+  uglify_html!
+  undress!
+  whenever
+  will_paginate (= 2.3.16)
