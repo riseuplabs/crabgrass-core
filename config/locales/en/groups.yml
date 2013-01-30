@@ -36,6 +36,8 @@ en:
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
   committee_choose_group: 'Choose a group for this committee:'
+  network_committees_may_not_join_networks: 'Committees of other networks may not join.'
+  networks_may_not_join_networks: 'Networks may not join other networks.'
 
   ##
   ## PERMISSIONS

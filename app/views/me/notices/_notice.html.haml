@@ -5,7 +5,7 @@
       %span.label= notice.display_label
       %br
       %span{:style => 'font-size:85%'}= friendly_date notice.created_at
-  %td.icon.small{:style => avatar_style(notice.avatar_id, 'small')}
+  %td.icon.small{:style => avatar_style(notice, 'small')}
     =h embold_links notice.display_title
     %br
     - if notice.display_body_as_quote?

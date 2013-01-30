@@ -33,7 +33,7 @@ module Common::Ui::AvatarHelper
   #
   def avatar_url_for(entity, size='medium')
     if entity
-      '/avatars/%s/%s.jpg?%s' % [entity.avatar_id||0, size, entity.version]
+      '/avatars/%s/%s.jpg?%s' % [entity.avatar_id||0, size, entity.respond_to?(:version) && entity.version]
     else
       '/avatars/0/%s.jpg' % size
     end
