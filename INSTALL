@@ -48,8 +48,12 @@ Install Rails
 
 Create a secret
 
-   cd crabgrass-core
-   rake create_a_secret
+  cd crabgrass-core
+  rake create_a_secret
+
+Create the database config
+
+  cp config/database.yml.example config/database.yml
 
 Install required gems
 
@@ -57,7 +61,6 @@ Install required gems
 
 Create the database:
 
-  cp config/database.yml.example config/database.yml
   rake db:create
   rake db:schema:load
   rake db:fixtures:load

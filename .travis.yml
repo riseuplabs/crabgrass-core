@@ -4,6 +4,6 @@ rvm:
 before_script:
   - "gem install rails --version='~>2.3.16'"
   - "rake create_a_secret"
-  - "rake gems:install"
   - "cp config/database.yml.example config/database.yml"
+  - "rake gems:install"
   - "rake db:create"
