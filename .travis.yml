@@ -1,0 +1,6 @@
+before_script:
+  - "rake create_a_secret"
+  - "gem install -v=~>2.3.15 rails"
+  - "rake gems:install"
+  - "cp config/database.yml.example config/database.yml"
+  - "rake db:create"
