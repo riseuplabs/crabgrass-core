@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Symbol
   def t(options={})
     I18n.t(self,options)
