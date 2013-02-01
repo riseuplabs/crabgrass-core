@@ -1,6 +1,9 @@
 language: ruby
 rvm:
   - 1.8.7
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq -y graphicsmagick
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
