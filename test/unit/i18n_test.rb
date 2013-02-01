@@ -82,11 +82,6 @@ class I18nTest < ActiveSupport::TestCase
     end
   end
 
-  def test_active_record_with_scope
-    debugger
-    Request.human_name(:scope => :bla)
-  end
-
   def test_site_version_of_scoped_translation_works
     with_site("thediggers") do
       assert_equal "scope on site", I18n.translate(:me, :scope => :scope), "Translate scoped key specifically for the site"
