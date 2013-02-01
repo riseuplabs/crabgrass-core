@@ -10,3 +10,5 @@ before_script:
   - "gem install mysql"
   - "rake db:create"
   - "rake db:schema:load"
+notifications:
+  email: false
