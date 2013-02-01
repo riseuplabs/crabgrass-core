@@ -25,6 +25,10 @@ class Federating < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :network_id
 
+  validate :group_is_not_network
+  validate :group_is_not_network_committee
+
+
   # optional
   belongs_to :council, :class_name => 'Group'
   belongs_to :delegation, :class_name => 'Group'
@@ -32,4 +36,18 @@ class Federating < ActiveRecord::Base
   named_scope :alphabetized_by_group, :joins => :group, :order => 'groups.full_name ASC, groups.name ASC'
 
   alias :entity :group
+
+  protected
+
+  def group_is_not_network
+    if group.network?
+      errors.add(:group, "may not be a network.")
+    end
+  end
+
+  def group_is_not_network_committee
+    if group.committee? && group.parent.network?
+      errors.add(:group, "may not be a networks committee.")
+    end
+  end
 end
