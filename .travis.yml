@@ -4,7 +4,6 @@ rvm:
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
-  - "rake gems:install"
   - "gem install mysql"
   - "rake db:create"
   - "rake db:schema:load"
