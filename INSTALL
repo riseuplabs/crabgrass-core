@@ -42,6 +42,10 @@ Checkout the codebase
 
     git clone gitosis@labs.riseup.net:crabgrass-core.git
 
+Install Rails
+
+  sudo gem install rails --version='~>2.3.16'
+
 Create a secret
 
    cd crabgrass-core
@@ -49,7 +53,6 @@ Create a secret
 
 Install required gems
 
-  sudo gem install rails --version='~>2.3.15'
   sudo rake gems:install
 
 Create the database:
