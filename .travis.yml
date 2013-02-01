@@ -2,7 +2,6 @@ language: ruby
 rvm:
   - 1.8.7
 before_script:
-  - "gem install rails --version='~>2.3.16'"
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
   - "rake gems:install"
