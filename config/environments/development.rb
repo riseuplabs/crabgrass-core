@@ -30,9 +30,4 @@ DEFAULT_INFO_LEVEL = 0
 
 require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
 
-##
-## needed for some rake tasks, but not generally.
-##
 
-config.gem 'rdoc', :version => '~> 3.0'
-config.gem 'jsmin'
