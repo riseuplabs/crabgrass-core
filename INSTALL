@@ -42,25 +42,18 @@ Checkout the codebase
 
     git clone gitosis@labs.riseup.net:crabgrass-core.git
 
-Install Rails
+Install rails and required gems
 
-  sudo gem install rails --version='~>2.3.16'
+  bundle install
 
 Create a secret
 
   cd crabgrass-core
   rake create_a_secret
 
-Create the database config
-
-  cp config/database.yml.example config/database.yml
-
-Install required gems
-
-  sudo rake gems:install
-
 Create the database:
 
+  cp config/database.yml.example config/database.yml
   rake db:create
   rake db:schema:load
   rake db:fixtures:load
