@@ -15,24 +15,6 @@
 #              display it with many sizing options.
 #              Permissions: maybe eventually.
 #
-# GEOMETRY
-#
-# A "geometry", for the purposes of Pictures, is an object with the
-# following attributes:
-#
-#  min_width,  max_width
-#  min_height, max_height
-#
-# All the attributes are optional. Attributes with a zero value
-# become nil. Any method that accepts geometry argument will also
-# take nil, which represents the unresized original image.
-#
-# Geometry.new will take three input forms:
-#
-# (1) Hash, like {:min_width => 50}
-# (2) Array, like [50,0,0,0]
-# (3) String, like "50-0-0-0"
-#
 # STORAGE
 #
 # Picture.dimensions stores, in a hash, the height and width of all
@@ -198,63 +180,8 @@ class Picture < ActiveRecord::Base
   # Convert geometry specified as Hash, Array, or String into Geometry.
   #
   def to_geometry(geometry)
-    if geometry.is_a? Geometry
-      return geometry
-    elsif geometry.nil?
-      return Geometry.new
-    elsif geometry.is_a? Hash
-      a = geometry[:min_width]
-      b = geometry[:max_width]
-      c = geometry[:min_height]
-      d = geometry[:max_height]
-    elsif geometry.is_a? Array
-      a, b, c, d = geometry
-    elsif geometry.is_a? String
-      a, b, c, d = geometry.split('-')
-    end
-    return Geometry.new(a,b,c,d)
+    geometry.is_a?(Geometry) ? geometry : Geometry.new(geometry)
   end
-
-  #
-  # Picture::Geometry class
-  #
-  # We ensure that the attributes consists only of integers or nil.
-  # This is important, because we might have got the geometry source
-  # from a url.
-  #
-  class Geometry
-
-    attr_accessor :min_width, :max_width, :min_height, :max_height
-
-    def initialize(minw=nil, maxw=nil, minh=nil, maxh=nil)
-      self.min_width  = minw.to_i if minw
-      self.min_width  = nil       if self.min_width == 0
-      self.max_width  = maxw.to_i if maxw
-      self.max_width  = nil       if self.max_width == 0
-      self.min_height = minh.to_i if minh
-      self.min_height = nil       if self.min_height == 0
-      self.max_height = maxh.to_i if maxh
-      self.max_height = nil       if self.max_height == 0
-    end
-
-    def empty?
-      not any?
-    end
-
-    def any?
-      min_width or max_width or min_height or max_height
-    end
-
-    def to_s
-      empty? ? 'full' : to_a.join('-')
-    end
-
-    def to_a
-      empty? ? [] : [min_width||0, max_width||0, min_height||0, max_height||0]
-    end
-
-  end
-
 
   ##
   ## PRIVATE METHODS
