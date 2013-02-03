@@ -73,6 +73,95 @@ class Picture
       empty? ? [] : [min_width||0, max_width||0, min_height||0, max_height||0]
     end
 
+    #
+    # Convert geometry definition into graphic magick compatible
+    # resize options. The logic is complicated, but it tries
+    # to do the right thing.
+    #
+    # summary from gm man page on -geometry:
+    #
+    #   1. WxH  -- max dimensions, resize with aspect ratio intact
+    #   2. WxH^ -- min dimensions, resize with aspect ratio intact
+    #   3. WxH! -- force dimensions exactly
+    #   4. Wx   -- resize, maintain ratio, auto set height
+    #   5. xH   -- resize, maintain ratio, auto set width
+    #   6. WxH> -- shrink if bigger (W or H)
+    #   7. WxH< -- expand if smaller (W and H)
+    #
+    def to_size(orig_size)
+      width = orig_size[0]
+      height = orig_size[1]
+      scale_width = nil
+      scale_height = nil
+      new_width = nil
+      new_height = nil
+
+      # scale width?
+      if min_width && width < min_width
+        scale_width = min_width.to_f / width   # scale bigger
+        new_width = min_width
+      elsif max_width && width > max_width
+        scale_width = max_width.to_f / width   # scale smaller
+        new_width = max_width
+      end
+
+      # scale height?
+      if min_height && height < min_height
+        scale_height = min_height.to_f / height  # scale bigger
+        new_height = min_height
+      elsif max_height && height > max_height
+        scale_height = max_height.to_f / height  # scale smaller
+        new_height = max_height
+      end
+
+      # scale in both dimensions
+      if scale_width && scale_height
+        # if scale both bigger
+        if scale_width > 1 && scale_height > 1
+          # scale by one that needs to grow more
+          if scale_width > scale_height
+            "%sx^" % new_width   # bigger
+          else
+            "x%s^" % new_height  # bigger
+          end
+          # if scale both smaller
+        elsif scale_width < 1 && scale_height < 1
+          # scale by one that needs to shrink the least
+          if scale_width > scale_height
+            "%sx" % new_width  # smaller
+          else
+            "x%s" % new_height # smaller
+          end
+          # if scale width bigger AND scale height smaller
+        elsif scale_width > 1
+          "%sx^" % new_width  # bigger
+          # if scale height bigger AND scale width smaller
+        elsif scale_height > 1
+          "x%s^" % new_height # bigger
+        end
+        # scale in one dimension
+      elsif scale_width
+        if scale_width > 1
+          "%sx^" % new_width # bigger
+        else
+          "%sx" % new_width  # smaller
+        end
+      elsif scale_height
+        if scale_height > 1
+          "x%s^" % new_height # bigger
+        else
+          "x%s" % new_height  # smaller
+        end
+      end
+    end
+
+    def to_crop
+      if max_width or max_height
+        "%sx%s" % [max_width||10000000, max_height||10000000]
+      else
+        nil
+      end
+    end
 
 
   end
