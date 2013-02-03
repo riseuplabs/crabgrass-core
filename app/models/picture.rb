@@ -96,8 +96,8 @@ class Picture < ActiveRecord::Base
   # a picture resized to a given dimensions.
   #
   def add_geometry!(geometry)
-    geometry = to_geometry(geometry)
     if geometry.any?
+      geometry = to_geometry(geometry)
       geo_key = geometry.to_s
       self.dimensions ||= {}
       if dimensions[geo_key].nil?
@@ -134,7 +134,6 @@ class Picture < ActiveRecord::Base
   # skips it.
   #
   def render!(geometry)
-    geometry = to_geometry(geometry)
     # ensure dimension record exists
     add_geometry!(geometry)
     render(geometry)
@@ -149,7 +148,7 @@ class Picture < ActiveRecord::Base
       resize(geometry)
     end
     # ensure symlink to public dir exists
-    add_symlink # for now, all Pictures are public.
+    storage.add_symlink # for now, all Pictures are public.
   end
 
   #
@@ -224,6 +223,7 @@ class Picture < ActiveRecord::Base
   # render a new file with the specified geometry
   #
   def resize(geometry)
+    geometry = to_geometry(geometry)
     input_path = private_file_path
     output_path = storage.private_path(geometry)
     status = GraphicsMagickTransmogrifier.new(
