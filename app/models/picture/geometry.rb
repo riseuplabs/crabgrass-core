@@ -92,12 +92,12 @@ class Picture
       width = orig_size[0]
       height = orig_size[1]
 
-      new_width, scale_width = scale_to_fit(min_width, width, max_width)
-      new_height, scale_height = scale_to_fit(min_height, height, max_height)
+      new_width = scale_to_fit(min_width, width, max_width)
+      new_height = scale_to_fit(min_height, height, max_height)
 
-      if new_width && scale_width > scale_height
+      if new_width.to_f / width > new_height.to_f / height
         scale_by_width(width, new_width)
-      elsif new_height
+      elsif new_height > 0
         scale_by_height(height, new_height)
       end
     end
@@ -114,11 +114,11 @@ class Picture
 
     def scale_to_fit(min, current, max)
       if min && current < min
-        [min, min.to_f / current]   # scale bigger
+        min    # scale bigger
       elsif max && current > max
-        [max, max.to_f / current]   # scale smaller
+        max    # scale smaller
       else
-        [nil, 0]
+        0
       end
     end
 
