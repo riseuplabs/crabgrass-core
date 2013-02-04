@@ -88,7 +88,7 @@ class Picture
     #   6. WxH> -- shrink if bigger (W or H)
     #   7. WxH< -- expand if smaller (W and H)
     #
-    def to_size(orig_size)
+    def gm_size_param_from(orig_size)
       width = orig_size[0]
       height = orig_size[1]
       scale_width = nil
