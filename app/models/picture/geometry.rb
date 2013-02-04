@@ -95,9 +95,9 @@ class Picture
       new_width, scale_width = scale_to_fit(min_width, width, max_width)
       new_height, scale_height = scale_to_fit(min_height, height, max_height)
 
-      if scale_width && scale_width > scale_height.to_f
+      if new_width && scale_width > scale_height
         scale_by_width(width, new_width)
-      elsif scale_height
+      elsif new_height
         scale_by_height(height, new_height)
       end
     end
@@ -118,7 +118,7 @@ class Picture
       elsif max && current > max
         [max, max.to_f / current]   # scale smaller
       else
-        [nil, nil]
+        [nil, 0]
       end
     end
 
