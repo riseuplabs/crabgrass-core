@@ -6,6 +6,7 @@ before_install:
   - sudo apt-get install -qq -y graphicsmagick
   - sudo apt-get install -qq -y libreoffice-common
   - sudo apt-get install -qq -y sphinxsearch
+  - sudo apt-get install -qq -y inkscape
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
