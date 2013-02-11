@@ -354,12 +354,12 @@ class Request < ActiveRecord::Base
   end
 
   def no_duplicate
-    if duplicate_exists?
+    if duplicates.any?
       errors.add_to_base(:request_exists_error.t(:recipient => recipient.display_name))
     end
   end
 
-  def duplicate_exists?
+  def duplicates
     self.class.pending.with_requestable(requestable).for_recipient(recipient)
   end
 
