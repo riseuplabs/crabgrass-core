@@ -1,17 +1,16 @@
 
 source :rubygems
 
-gem 'rails', '2.3.16'
+gem 'rails', '= 3.0'
 
 ## from config/environment.rb
 
 # required, but not included with crabgrass:
-gem 'i18n', '~> 0.5'
-gem 'thinking-sphinx', '~> 1.4'
-gem 'will_paginate', '= 2.3.16'
-gem 'sprockets', "~> 2.1.0"
+gem 'i18n'#, '~> 0.5'
+gem 'thinking-sphinx', '~> 2.0'
+gem 'will_paginate', '~> 3.0'
 
-gem 'mysql'
+gem 'mysql', '2.8.1'
 
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
@@ -25,9 +24,9 @@ gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-u
 # not required, but a really good idea
 gem 'mime-types', :require => 'mime/types'
 
-# delayed job for rails 2.x:
-gem 'delayed_job', '~> 2.0.7'
+gem 'delayed_job', '~> 3.0.5'
 
+gem 'rails3_before_render'
 
 group :production, :development do
   gem 'compass', '0.10.6'

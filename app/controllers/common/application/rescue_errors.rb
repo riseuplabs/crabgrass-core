@@ -82,7 +82,7 @@ module Common::Application::RescueErrors
 
 #  # allows us to set a new path for the rescue templates
 #  def rescues_path(template_name)
-#    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"
+#    file = "#{Rails.root}/app/views/rescues/#{template_name}.erb"
 #    if File.exists?(file)
 #      return file
 #    else

@@ -18,7 +18,7 @@ require 'open-uri'
 
 class Avatar < ActiveRecord::Base
 
-  DEFAULT_DIR = "#{RAILS_ROOT}/public/images/default"
+  DEFAULT_DIR = "#{Rails.root}/public/images/default"
 
   SIZES = Hash.new(32).merge(
     'tiny'   => 16,

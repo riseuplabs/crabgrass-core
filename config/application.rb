@@ -1,0 +1,95 @@
+require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
+
+info "LOAD FRAMEWORK"
+require File.expand_path('../boot', __FILE__)
+
+require 'rails/all'
+
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+
+  ## THE FOLLOWING LINE WAS ADDED BY rails 3.2 GENERATOR. REMOVE THE COMMENT ONCE
+  ## YOU'RE UPGRADING!
+  #Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(:default, Rails.env)
+
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
+
+RAILS_ROOT = File.expand_path('../..', __FILE__)
+RAILS_ENV = Rails.env
+
+require File.expand_path("../directories.rb", __FILE__)
+require File.expand_path("../../lib/crabgrass/boot.rb", __FILE__)
+
+module Crabgrass
+  class Application < Rails::Application
+    info "LOAD CONFIG BLOCK"
+
+    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/app/models"
+
+    config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers notice).
+     collect { |dir| "#{Rails.root}/app/models/#{dir}" }
+    config.autoload_paths << "#{Rails.root}/app/permissions"
+    config.autoload_paths << "#{Rails.root}/app/sweepers"
+    config.autoload_paths << "#{Rails.root}/app/helpers/classes"
+
+    # Configure the default encoding used in templates for Ruby 1.9.
+    config.encoding = "utf-8"
+
+    # Configure sensitive parameters which will be filtered from the log file.
+    config.filter_parameters += [:password]
+
+    # Enable escaping HTML in JSON.
+    config.active_support.escape_html_entities_in_json = true
+    config.active_record.schema_format = :sql
+
+    # Enforce whitelist mode for mass assignment.
+    # This will create an empty whitelist of attributes available for mass-assignment for all models
+    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
+    # parameters by using an attr_accessible or attr_protected declaration.
+    #config.active_record.whitelist_attributes = true
+
+    config.active_record.observers = :user_observer, :membership_observer,
+    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
+    :request_to_destroy_our_group_observer, :request_observer, :page_observer
+
+    config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
+
+    # store fragments on disk, we might have a lot of them.
+    config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
+
+    # Make Active Record use UTC-base instead of local time
+    config.time_zone = 'UTC'
+    config.active_record.default_timezone = :utc
+
+    # Deliveries are disabled by default. Do NOT modify this section.
+    # Define your email configuration in email.yml instead.
+    # It will automatically turn deliveries on
+    config.action_mailer.perform_deliveries = false
+
+    ##
+    ## PLUGINS
+    ##
+
+    # we must load crabgrass_mods and load_model_callback first.
+    config.plugins = [:after_reload, :all] ## (removed because they don't work yet: crabgrass_mods)
+
+    # allow plugins in more places
+#    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
+#      config.plugin_paths << path
+#    end
+  end
+
+  if defined?(User)
+    #
+    # This needs to be run last, after models are loaded. Sometimes, environment.rb is loaded
+    # without models getting loaded. Hence, the defined?(User) test around this block.
+    # It is hackish, but it works.
+    #
+    CastleGates.initialize('config/permissions')
+  end
+
+end

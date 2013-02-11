@@ -19,7 +19,7 @@ end
 #     :member => {:edit => :any, :update => :get}
 #
 
-ActionController::Routing::Routes.draw do |map|
+Crabgrass::Application.routes.draw do |map|
 
   ##
   ## STATIC FILES AND ASSETS

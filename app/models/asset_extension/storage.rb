@@ -17,7 +17,7 @@
 #
 # This is what the directory structure will look like:
 #
-#   RAILS_ROOT/
+#   Rails.root/
 #     assets/
 #       0000/
 #         0055/
@@ -82,26 +82,26 @@ module AssetExtension # :nodoc:
       args.flatten.compact.join('/')
     end
 
-    # eg RAILS_ROOT/assets/0000/0055/myfile.jpg
-    # or RAILS_ROOT/assets/0000/0055/versions/1/myfile.jpg
+    # eg Rails.root/assets/0000/0055/myfile.jpg
+    # or Rails.root/assets/0000/0055/versions/1/myfile.jpg
     def private_filename
       path private_storage, partitioned_path, version_path, filename
     end
 
-    # eg RAILS_ROOT/assets/0000/0055/myfile~small.jpg
-    # or RAILS_ROOT/assets/0000/0055/versions/1/myfile~small.jpg
+    # eg Rails.root/assets/0000/0055/myfile~small.jpg
+    # or Rails.root/assets/0000/0055/versions/1/myfile~small.jpg
     def private_thumbnail_filename(thumbnail_name)
       path private_storage, partitioned_path, version_path, thumbnail_filename(thumbnail_name)
     end
 
-    # eg RAILS_ROOT/public/assets/55/myfile.jpg
-    # or RAILS_ROOT/public/assets/55/versions/1/myfile.jpg
+    # eg Rails.root/public/assets/55/myfile.jpg
+    # or Rails.root/public/assets/55/versions/1/myfile.jpg
     def public_filename
       path public_storage, path_id, version_path, filename
     end
 
-    # eg RAILS_ROOT/public/assets/55/myfile~small.jpg
-    # or RAILS_ROOT/public/assets/55/versions/1/myfile~small.jpg
+    # eg Rails.root/public/assets/55/myfile~small.jpg
+    # or Rails.root/public/assets/55/versions/1/myfile~small.jpg
     def public_thumbnail_filename(thumbnail_name)
       path public_storage, path_id, version_path, thumbnail_filename(thumbnail_name)
     end

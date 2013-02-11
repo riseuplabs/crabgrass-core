@@ -56,7 +56,7 @@ module AssetExtension
         failures = []
         # to preserve filenames without too much hacks we work in a
         # seperate directory.
-        tmp_dir = File.join(RAILS_ROOT, 'tmp', "unzip_#{Time.now.to_i}")
+        tmp_dir = File.join(Rails.root, 'tmp', "unzip_#{Time.now.to_i}")
         Dir.mkdir(tmp_dir)
         zipfile.each do |entry|
           begin
