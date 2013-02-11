@@ -10,7 +10,6 @@ class RequestToDestroyOurGroup < Request
 
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
-  validate :no_duplicate, :on => :create
 
   alias_attr :group, :recipient
 
@@ -55,12 +54,6 @@ class RequestToDestroyOurGroup < Request
 
   protected
 
-  def no_duplicate
-    if duplicate_exists?
-      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
-    end
-  end
-
   #
   # for votable, if we ever do that:
   #
@@ -72,11 +65,5 @@ class RequestToDestroyOurGroup < Request
   #   xxxx
   # end
   #
-
-  private
-
-  def duplicate_exists?
-    RequestToDestroyOurGroup.pending.to_group(group).find(:first)
-  end
 
 end

@@ -10,18 +10,10 @@ class RequestToRemoveUser < Request
 
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /User/
-  validate :no_duplicate, :on => :create
 
   alias_attr :group, :recipient
   alias_attr :user,  :requestable
 
-
-  #
-  # returns existing request for :group and :user
-  #
-  def self.existing(options)
-    pending.with_requestable(options[:user]).for_recipient(options[:group]).first
-  end
 
   #
   # permissions
@@ -78,12 +70,6 @@ class RequestToRemoveUser < Request
 
   protected
 
-  def no_duplicate
-    if duplicate_exists?
-      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
-    end
-  end
-
   #
   # for votable, if we ever do that:
   #
@@ -96,9 +82,5 @@ class RequestToRemoveUser < Request
   # end
 
   private
-
-  def duplicate_exists?
-    RequestToRemoveUser.existing(:user => user, :group => group)
-  end
 
 end

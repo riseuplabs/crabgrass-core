@@ -11,7 +11,6 @@ class RequestToCreateCouncil < Request
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
 
-  validate :no_request_yet, :on => :create
   alias_attr :group, :recipient
 
   def self.existing(options)
@@ -56,14 +55,6 @@ class RequestToCreateCouncil < Request
       :group_type => group.group_type.downcase,
       :user => user_span(created_by)
     }]
-  end
-
-  protected
-
-  def no_request_yet
-    if RequestToCreateCouncil.existing(:group => group)
-      errors.add_to_base(:request_exists_error.t(:recipient => group.name))
-    end
   end
 
 end

@@ -10,8 +10,6 @@ class RequestToJoinYou < Request
   validates_format_of :recipient_type, :with => /Group/
 
   validate :no_membership_yet, :on => :create
-  validate :no_request_yet, :on => :create
-
 
   def group() recipient end
 
@@ -48,12 +46,6 @@ class RequestToJoinYou < Request
   def no_membership_yet
     if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
       errors.add_to_base("You are already a member")
-    end
-  end
-
-  def no_request_yet
-    if RequestToJoinYou.having_state(state).find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
-      errors.add_to_base("Request already exists")
     end
   end
 

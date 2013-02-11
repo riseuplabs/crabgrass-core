@@ -11,7 +11,6 @@ class RequestToJoinUs < Request
   validates_format_of :recipient_type, :with => /User/
 
   validate :no_membership_yet, :on => :create
-  validate :no_request_yet, :on => :create
 
   def group() requestable end
 
@@ -52,12 +51,6 @@ class RequestToJoinUs < Request
   def no_membership_yet
     if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
       errors.add_to_base(I18n.t(:membership_exists_error, :member => recipient.name))
-    end
-  end
-
-  def no_request_yet
-    if RequestToJoinUs.having_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
-      errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end
 
