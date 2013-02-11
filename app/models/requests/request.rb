@@ -118,10 +118,10 @@ class Request < ActiveRecord::Base
   }
 
   named_scope :for_recipient, lambda { |recipient|
-    {:conditions => {:recipient_id => recipient.id}}
+    {:conditions => {:recipient_id => recipient}}
   }
   named_scope :with_requestable, lambda { |requestable|
-    {:conditions => {:requestable_id => requestable.id}}
+    {:conditions => {:requestable_id => requestable}}
   }
 
   #
