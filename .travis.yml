@@ -4,10 +4,15 @@ rvm:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq -y graphicsmagick
+  - sudo apt-get install -qq -y libreoffice-common
+  - sudo apt-get install -qq -y sphinxsearch
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
   - "rake db:create"
   - "rake db:schema:load"
+  - "rake db:test:prepare"
+  - "rake RAILS_ENV=test db:fixtures:load"
+  - "rake RAILS_ENV=test ts:index ts:start"
 notifications:
   email: false
