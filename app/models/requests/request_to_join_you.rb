@@ -49,6 +49,10 @@ class RequestToJoinYou < Request
     end
   end
 
+  def duplicates
+    self.class.pending.for_recipient(recipient).created_by(created_by)
+  end
+
   def requestable_required?() false end
 end
 

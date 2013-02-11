@@ -92,7 +92,7 @@ class Request < ActiveRecord::Base
   named_scope :by_created_at, :order => 'created_at DESC'
   named_scope :by_updated_at, :order => 'updated_at DESC'
   named_scope :created_by, lambda { |user|
-    {:conditions => {:created_by_id => user.id}}
+    {:conditions => {:created_by_id => user}}
   }
   named_scope :to_user, lambda { |user|
     # you only get to approve group requests for groups that you are an admin for
