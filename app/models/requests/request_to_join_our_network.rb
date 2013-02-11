@@ -8,9 +8,8 @@ class RequestToJoinOurNetwork < Request
   validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /Group/
 
+  validate_on_create :no_membership_yet
   validate :requestable_is_network
-  validate :no_membership_yet
-  validate :no_request_yet
   validate :group_is_not_network
   validate :group_is_not_network_committee
 
@@ -60,12 +59,6 @@ class RequestToJoinOurNetwork < Request
   def no_membership_yet
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
       errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
-    end
-  end
-
-  def no_request_yet
-    if RequestToJoinOurNetwork.having_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
-      errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end
 
