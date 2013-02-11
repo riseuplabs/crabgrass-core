@@ -9,7 +9,7 @@
 class RequestToFriend < Request
 
   validates_format_of :recipient_type, :with => /User/
-  validate :no_friendship_yet, :on => :create
+  validate_on_create :no_friendship_yet
 
   def no_friendship_yet
     if Friendship.find_by_user_id_and_contact_id(created_by_id, recipient_id)

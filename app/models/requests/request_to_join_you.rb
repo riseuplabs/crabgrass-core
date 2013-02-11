@@ -9,7 +9,7 @@ class RequestToJoinYou < Request
 
   validates_format_of :recipient_type, :with => /Group/
 
-  validate :no_membership_yet, :on => :create
+  validate_on_create :no_membership_yet
 
   def group() recipient end
 

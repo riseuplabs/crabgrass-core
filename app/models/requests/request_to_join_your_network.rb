@@ -10,8 +10,8 @@ class RequestToJoinYourNetwork < Request
   validates_format_of :recipient_type, :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
 
-  validate :recipient_is_network, :on => :create
-  validate :no_federating_yet, :on => :create
+  validate_on_create :no_federating_yet
+  validate :recipient_is_network
 
   def group() requestable end
   def network() recipient end
