@@ -57,8 +57,8 @@ class Request < ActiveRecord::Base
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
 
-  validate :no_duplicate, :on => :create
-  validate :check_create_permission, :on => :create
+  validate_on_create :no_duplicate
+  validate_on_create :check_create_permission
 
   before_validation_on_create :set_default_state
 
