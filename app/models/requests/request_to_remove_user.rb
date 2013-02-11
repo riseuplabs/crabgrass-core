@@ -10,15 +10,11 @@ class RequestToRemoveUser < Request
 
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /User/
+  validate :no_duplicate, :on => :create
 
   alias_attr :group, :recipient
   alias_attr :user,  :requestable
 
-  def validate_on_create
-    if duplicate_exists?
-      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
-    end
-  end
 
   #
   # returns existing request for :group and :user
@@ -30,16 +26,16 @@ class RequestToRemoveUser < Request
   #
   # permissions
   #
-  
+
   def may_create?(current_user)
     current_user.may?(:admin, group) and
     current_user.longterm_member_of?(group)
   end
-  
+
   def self.may_create?(options)
     self.new(:user => options[:user], :group => options[:group]).may_create?(options[:current_user])
   end
-  
+
   def may_approve?(current_user)
     current_user.may?(:admin, group) and
     current_user.id != created_by_id and
@@ -82,7 +78,13 @@ class RequestToRemoveUser < Request
 
   protected
 
-  # 
+  def no_duplicate
+    if duplicate_exists?
+      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
+    end
+  end
+
+  #
   # for votable, if we ever do that:
   #
   # def voting_population_count

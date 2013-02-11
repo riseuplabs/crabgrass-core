@@ -9,11 +9,16 @@
 class RequestToFriend < Request
 
   validates_format_of :recipient_type, :with => /User/
+  validate :no_friendship_yet, :on => :create
+  validate :no_request_yet, :on => :create
 
-  def validate_on_create
+  def no_friendship_yet
     if Friendship.find_by_user_id_and_contact_id(created_by_id, recipient_id)
       errors.add_to_base('Friendship already exists')
     end
+  end
+
+  def no_request_yet
     if RequestToFriend.having_state(state).find_by_created_by_id_and_recipient_id(created_by_id, recipient_id)
       errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end

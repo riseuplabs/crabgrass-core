@@ -10,17 +10,12 @@ class RequestToDestroyOurGroup < Request
 
   validates_format_of :recipient_type,   :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
+  validate :no_duplicate, :on => :create
 
   alias_attr :group, :recipient
 
   def self.already_exists?(options)
     pending.from_group(options[:group]).exists?
-  end
-  
-  def validate_on_create
-    if duplicate_exists?
-      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
-    end
   end
 
   def may_create?(user)
@@ -60,7 +55,13 @@ class RequestToDestroyOurGroup < Request
 
   protected
 
-  # 
+  def no_duplicate
+    if duplicate_exists?
+      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
+    end
+  end
+
+  #
   # for votable, if we ever do that:
   #
   # def voting_population_count

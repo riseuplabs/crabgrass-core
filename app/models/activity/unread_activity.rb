@@ -2,12 +2,13 @@ class UnreadActivity < Activity
 
   validates_format_of :subject_type, :with => /User/
   validates_presence_of :subject_id
+  validate :has_unread_count, :on => :create
 
   alias_attr :user, :subject
   alias_attr :author, :object
   alias_attr :unread_count, :key
 
-  def validate_on_create
+  def has_unread_count
     unless unread_count > 0
       errors.add("unread_count", "must be greater than zero")
     end
