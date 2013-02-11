@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 ##
 ## REMEMBER: you can see available tasks with "cap -T"
 ##
