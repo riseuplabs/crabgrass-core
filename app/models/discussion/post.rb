@@ -30,9 +30,9 @@ class Post < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :visible, :conditions => 'deleted_at IS NULL'
+  scope :visible, :conditions => 'deleted_at IS NULL'
 
-  named_scope :by_created_at, :order => 'created_at DESC'
+  scope :by_created_at, :order => 'created_at DESC'
 
   ##
   ## ATTIBUTES

@@ -147,10 +147,10 @@ class Asset < ActiveRecord::Base
     !showing.nil? && showing.is_cover
   end
 
-  named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
+  scope :not_attachment, :conditions => ['is_attachment = ?',false]
 
   # one of :image, :audio, :video, :document
-  named_scope :media_type, lambda {|type|
+  scope :media_type, lambda {|type|
     raise TypeError.new unless [:image,:audio,:video,:document].include?(type)
     {:conditions => ["is_#{type} = ?",true]}
   }

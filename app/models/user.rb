@@ -44,10 +44,10 @@ class User < ActiveRecord::Base
   ## NAMED SCOPES
   ##
 
-  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
+  scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
   # alphabetized and (optional) limited to +letter+
-  named_scope :alphabetized, lambda {|letter|
+  scope :alphabetized, lambda {|letter|
     opts = {
       :order => 'LOWER(COALESCE(users.display_name, users.login)) ASC'
     }
@@ -60,13 +60,13 @@ class User < ActiveRecord::Base
     opts
   }
 
-  named_scope :named_like, lambda {|filter|
+  scope :named_like, lambda {|filter|
     { :conditions => ["users.login LIKE ? OR users.display_name LIKE ?",
       filter, filter] }
   }
 
   # select only logins
-  named_scope :logins_only, :select => 'login'
+  scope :logins_only, :select => 'login'
 
 
   ##

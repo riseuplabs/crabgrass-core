@@ -39,7 +39,7 @@ module UserExtension::Users
       end
 
       # same as results as user.peers, but chainable with other named scopes
-      named_scope(:peers_of, lambda do |user|
+      scope(:peers_of, lambda do |user|
         {:conditions => ['users.id in (?)', user.peer_id_cache]}
       end)
 
@@ -73,17 +73,17 @@ module UserExtension::Users
       end
 
       # same result as user.friends, but chainable with other named scopes
-      named_scope(:friends_of, lambda do |user|
+      scope(:friends_of, lambda do |user|
         {:conditions => ['users.id in (?)', user.friend_id_cache]}
       end)
 
-      named_scope(:friends_or_peers_of, lambda do |user|
+      scope(:friends_or_peers_of, lambda do |user|
         {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
       end)
 
       # neither friends nor peers
       # used for autocomplete when we preloaded the friends and peers
-      named_scope(:strangers_to, lambda do |user|
+      scope(:strangers_to, lambda do |user|
         {:conditions => ['users.id NOT IN (?)',
           user.friend_id_cache + user.peer_id_cache + [user.id]]}
       end)

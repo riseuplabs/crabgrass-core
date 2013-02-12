@@ -21,13 +21,13 @@ class Event < ActiveRecord::Base
     self.description
   end
 
-  named_scope :on_day, lambda { |date|
+  scope :on_day, lambda { |date|
     start_unix = Time.utc(date.year, date.month, date.day, 0, 0, 0).to_i
     end_unix = Time.utc(date.year, date.month, date.day, 23, 59, 59).to_i
     self.between_dates_condition(start_unix, end_unix)
   }
 
-  named_scope :in_month, lambda { |date|
+  scope :in_month, lambda { |date|
     start_unix = Time.utc(date.year, date.month, 1, 0, 0, 0).to_i
     end_day = Date.civil(date.year, date.month, -1)
     end_unix = Time.utc(end_day.year, end_day.month, end_day.day, 23, 59, 59).to_i

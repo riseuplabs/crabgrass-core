@@ -28,7 +28,7 @@ module UserExtension::Pages
       has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
       has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
 
-      named_scope(:most_active_on, lambda do |site, time|
+      scope(:most_active_on, lambda do |site, time|
         ret = {
           :joins => "
             INNER JOIN user_participations
@@ -47,7 +47,7 @@ module UserExtension::Pages
         ret
       end)
 
-      named_scope(:most_active_since, lambda do |time|
+      scope(:most_active_since, lambda do |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
@@ -55,7 +55,7 @@ module UserExtension::Pages
           :select => "users.*" }
       end)
 
-      named_scope(:not_inactive, lambda do
+      scope(:not_inactive, lambda do
         if self.respond_to? :inactive_user_ids
           {:conditions => ["users.id NOT IN (?)", inactive_user_ids]}
         else

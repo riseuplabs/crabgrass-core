@@ -92,33 +92,33 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope(:limit_to, lambda do |limit|
+  scope(:limit_to, lambda do |limit|
     {:limit => limit}
   end)
 
-  named_scope :newest, {:order => 'created_at DESC'}
+  scope :newest, {:order => 'created_at DESC'}
 
-  named_scope :unique, {:group => '`key`'}
+  scope :unique, {:group => '`key`'}
 
   #
   # for 'me/activities'
   #
 
-  named_scope(:for_my_groups, lambda do |me|
+  scope(:for_my_groups, lambda do |me|
     {:conditions => [
       "(subject_type = 'Group' AND subject_id IN (?))",
       me.all_group_id_cache
     ]}
   end)
 
-  named_scope(:for_me, lambda do |me|
+  scope(:for_me, lambda do |me|
     {:conditions => [
       "(subject_type = 'User' AND subject_id = ?)",
       me.id
     ]}
   end)
 
-  named_scope(:for_my_friends, lambda do |me|
+  scope(:for_my_friends, lambda do |me|
     {:conditions => [
       "(subject_type = 'User' AND subject_id IN (?) AND access != ?)",
       me.friend_id_cache,
@@ -126,7 +126,7 @@ class Activity < ActiveRecord::Base
     ]}
   end)
 
-  named_scope(:for_all, lambda do |me|
+  scope(:for_all, lambda do |me|
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
@@ -139,11 +139,11 @@ class Activity < ActiveRecord::Base
   end)
 
   # DEPRECATED - use for_all instead. it does the same
-  #named_scope(:social_activities_for_groups_and_friends, lambda do |user|
+  #scope(:social_activities_for_groups_and_friends, lambda do |user|
   #  {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
   #end)
 
-  #named_scope(:social_activities_for_groups_and_peers, lambda do |user|
+  #scope(:social_activities_for_groups_and_peers, lambda do |user|
   #  {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
   #end)
 
@@ -175,7 +175,7 @@ class Activity < ActiveRecord::Base
   # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
-  named_scope(:for_user, lambda do |user, current_user|
+  scope(:for_user, lambda do |user, current_user|
     if (current_user and current_user.friend_of?(user) or current_user == user)
       restricted = Activity::PRIVATE
     elsif current_user and current_user.peer_of?(user)
@@ -199,7 +199,7 @@ class Activity < ActiveRecord::Base
   # (2) subject matches 'group'
   #     (and activity.public == true)
   #
-  named_scope(:for_group, lambda do |group, current_user|
+  scope(:for_group, lambda do |group, current_user|
     if current_user and current_user.member_of?(group)
       {:conditions => [
         "subject_type = 'Group' AND subject_id IN (?)",

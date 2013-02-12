@@ -46,7 +46,7 @@ class Group < ActiveRecord::Base
 
   # find groups that do not contain the given user
   # used in autocomplete where the users groups are all preloaded
-  named_scope :without_member, lambda { |user|
+  scope :without_member, lambda { |user|
     group_ids = user.all_group_ids
     group_ids.any? ?
       {:conditions => ["NOT groups.id IN (?)", group_ids]} :
@@ -54,9 +54,9 @@ class Group < ActiveRecord::Base
   }
 
   # finds groups that are of type Group (but not Committee or Network)
-  named_scope :only_groups, :conditions => 'groups.type IS NULL'
+  scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope(:only_type, lambda do |*args|
+  scope(:only_type, lambda do |*args|
     group_type = args.first.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
@@ -67,13 +67,13 @@ class Group < ActiveRecord::Base
     end
   end)
 
-  named_scope :groups_and_networks, :conditions => "groups.type IS NULL OR groups.type = 'Network'"
+  scope :groups_and_networks, :conditions => "groups.type IS NULL OR groups.type = 'Network'"
 
-  named_scope :all_networks_for, lambda { |user|
+  scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }
 
-  named_scope :alphabetized, lambda { |letter|
+  scope :alphabetized, lambda { |letter|
     opts = {
       # make sure this works with unset full_name as well as mixed case
       # should work in both mysql and postgres
@@ -89,19 +89,19 @@ class Group < ActiveRecord::Base
     opts
   }
 
-  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
-  named_scope :by_created_at, :order => 'groups.created_at DESC'
+  scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
+  scope :by_created_at, :order => 'groups.created_at DESC'
 
-  named_scope :names_only, :select => 'full_name, name'
+  scope :names_only, :select => 'full_name, name'
 
   # filters the groups based on their name and full name
   # filter is a sql query string
-  named_scope :named_like, lambda { |filter|
+  scope :named_like, lambda { |filter|
     { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
             filter, filter] }
   }
 
-  named_scope :in_location, lambda { |options|
+  scope :in_location, lambda { |options|
     country_id = options[:country_id]
     admin_code_id = options[:state_id]
     city_id = options[:city_id]

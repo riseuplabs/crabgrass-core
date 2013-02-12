@@ -85,9 +85,9 @@ class Page < ActiveRecord::Base
   ## NAMES SCOPES
   ##
 
-  named_scope :only_public, :conditions => {:public => true}
-  named_scope :only_images, :conditions => {:is_image => true}
-  named_scope :only_videos, :conditions => {:is_video => true}
+  scope :only_public, :conditions => {:public => true}
+  scope :only_images, :conditions => {:is_image => true}
+  scope :only_videos, :conditions => {:is_video => true}
 
   ##
   ## PAGE NAMING

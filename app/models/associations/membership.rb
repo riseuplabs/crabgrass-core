@@ -21,7 +21,7 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
 
-  named_scope :alphabetized_by_user, lambda { |letter|
+  scope :alphabetized_by_user, lambda { |letter|
     opts = {
       :joins => :user,
       :order => 'users.login ASC',
@@ -37,7 +37,7 @@ class Membership < ActiveRecord::Base
     opts
   }
 
-  named_scope :with_users, :include => :user
+  scope :with_users, :include => :user
 
   alias :entity :user
 end
