@@ -2,10 +2,9 @@ require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
 
-# Use any Rails in the 2.3.x series, greater than or equal to 2.3.11
-# latest rubygems needs at least 2.3.14 - but we don't have that on
-# CI yet.
-RAILS_GEM_VERSION = '~>2.3.11'
+# Use any Rails in the 2.3.x series, greater than or equal to 2.3.15
+# 2.3.15 fixed a severe security issue. So we should not go below that.
+RAILS_GEM_VERSION = '~>2.3.16'
 require File.join(File.dirname(__FILE__), 'boot')
 require "#{RAILS_ROOT}/config/directories.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
@@ -50,39 +49,6 @@ Crabgrass::Initializer.run do |config|
   # allow plugins in more places
   [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
     config.plugin_paths << path
-  end
-
-  ##
-  ## GEMS
-  ## see environments/test.rb for testing specific gems
-  ##
-
-  # required, but not included with crabgrass:
-  config.gem 'i18n', :version => '~> 0.5'
-  config.gem 'thinking-sphinx', :version => '~> 1.4'
-  config.gem 'will_paginate', :version => '= 2.3.16'
-  config.gem 'sprockets', "~> 2.1.0"
-
-  # required, and compilation is required to install
-  config.gem 'RedCloth', :version => '~> 4.2'
-  config.gem 'hpricot', :version => '~> 0.8'
-
-  # required, included with crabgrass
-  config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
-  config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
-  config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
-
-  # not required, but a really good idea
-  config.gem 'mime-types', :lib => 'mime/types'
-
-  # delayed job for rails 2.x:
-  config.gem 'delayed_job', :version => '~> 2.0.7'
-
-  if Rails.env == 'production' || Rails.env == 'development'
-    config.gem 'compass', :version => '0.10.6'
-    config.gem 'haml', :version => '~> 3.0'
-    config.gem 'compass-susy-plugin', :lib => 'susy', :version => '0.8.1'
-    config.gem 'whenever'
   end
 
   # See Rails::Configuration for more options

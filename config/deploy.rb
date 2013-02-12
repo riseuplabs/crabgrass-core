@@ -10,10 +10,10 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass-core.git"
-set :branch, "master"
+set :branch, "develop"
 
 deploy_host = ""
-staging_host = ""
+staging_host = "we.dev.riseup.net"
 
 staging = ENV['TARGET'] != 'production'
 
@@ -146,7 +146,7 @@ namespace :crabgrass do
     run "ln -nfs #{shared_path}/latex #{current_release}/public/latex"
 
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_release}/config/database.yml"
-    run "ln -nfs #{deploy_to}/#{shared_dir}/config/secret.txt #{current_release}/config/secret.txt"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt #{current_release}/config/crabgrass/secret.txt"
 
     run "rm -rf #{current_release}/db/sphinx"
     run "ln -nfs #{shared_path}/sphinx #{current_release}/db/sphinx"

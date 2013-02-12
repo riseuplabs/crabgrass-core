@@ -17,12 +17,6 @@ class RequestToCreateCouncil < Request
     pending.to_group(options[:group]).find(:first)
   end
 
-  def validate_on_create
-    if RequestToCreateCouncil.existing(:group => group)
-      errors.add_to_base(:request_exists_error.t(:recipient => group.name))
-    end
-  end
-
   def may_create?(user)
     user.may?(:admin, group) and
     user.longterm_member_of?(group)
@@ -31,7 +25,7 @@ class RequestToCreateCouncil < Request
   def self.may_create?(options)
     self.new(:recipient => options[:group], :requestable => options[:group]).may_create?(options[:current_user])
   end
-  
+
   def may_approve?(user)
     user.may?(:admin, group) and
     user.id != created_by_id and
