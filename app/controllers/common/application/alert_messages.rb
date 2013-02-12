@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # this requires ActionView::Helpers::TagHelper
 #
 # Four different alert methods:
@@ -340,7 +341,7 @@ module Common::Application::AlertMessages
         html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});")
       end
     end
-    content_tag(:div, html.join, :class => "message #{message[:type]}", :id => message_id)
+    content_tag(:div, html.join.html_safe, :class => "message #{message[:type]}", :id => message_id)
   end
 
 #  def exception_detailed_message(exception=nil)
