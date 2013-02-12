@@ -56,7 +56,7 @@ module Crabgrass
     :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
     :request_to_destroy_our_group_observer, :request_observer, :page_observer
 
-    config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
+    config.session_store :cookie_store #:mem_cache_store # :p_store
 
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
