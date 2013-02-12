@@ -16,11 +16,6 @@ module Common::Ui::LinkToIconHelper
 
   module ActionViewExtension
 
-    ## FIXME: get rid of this and use regular rails helpers
-    def link_to_remote(name, options, html_options={})
-      link_to(name, options[:url], options.merge(:remote => true, :html => html_options))
-    end
-
     def self.included(base)
       base.class_eval do
         alias_method_chain :link_to, :icon
