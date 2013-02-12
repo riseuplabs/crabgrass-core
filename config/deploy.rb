@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 ##
 ## REMEMBER: you can see available tasks with "cap -T"
 ##
@@ -10,7 +12,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass-core.git"
-set :branch, "develop"
+set :branch, "feature/deploy-with-bundler"
 
 deploy_host = ""
 staging_host = "we.dev.riseup.net"
@@ -163,6 +165,11 @@ namespace :crabgrass do
     end
   end
 
+  desc "Precompile the javascript and css assets"
+  task :compile_assets do
+    run "cd #{current_path}; bundle exec rake cg:compile_assets"
+  end
+
 #  desc "refresh the staging database"
 #  task :refresh do
 #    run "touch #{deploy_to}/shared/tmp/refresh.txt"
@@ -187,6 +194,7 @@ end
 after  "deploy:setup",   "crabgrass:create_shared"
 after  "deploy:symlink", "crabgrass:link_to_shared"
 after  "deploy:symlink", "crabgrass:create_version_files"
+after  "crabgrass:create_version_files", "crabgrass:compile_assets"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
 
