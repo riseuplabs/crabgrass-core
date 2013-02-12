@@ -44,7 +44,7 @@ Crabgrass::Application.routes.draw do |map|
     me.home      '', :controller => 'notices', :action => 'index'
     me.resource  :page, :only => [:new, :create]
     me.resources :recent_pages, :only => [:index]
-    me.pages     'pages/*path', :controller => 'pages'
+    me.pages     'pages/(*path)', :controller => 'pages'
     me.resources :activities
     me.resources(:discussions, :as => 'messages') do |discussion|
       discussion.resources :posts
