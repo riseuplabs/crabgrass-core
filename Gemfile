@@ -3,6 +3,8 @@ source :rubygems
 
 gem 'rails', '= 3.0'
 
+gem 'rake', '~> 0.9.2'
+
 ## from config/environment.rb
 
 # required, but not included with crabgrass:
