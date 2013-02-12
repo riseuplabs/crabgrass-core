@@ -3,8 +3,8 @@ require 'active_support'
 module Mods; end
 require File.join(File.dirname(__FILE__), 'mods/acts_as_extensible')
 require File.join(File.dirname(__FILE__), 'mods/plugin')
-require File.join(File.dirname(__FILE__), 'mods/plugin/loader')
-require File.join(File.dirname(__FILE__), 'mods/plugin/locator')
+# require File.join(File.dirname(__FILE__), 'mods/plugin/loader')
+# require File.join(File.dirname(__FILE__), 'mods/plugin/locator')
 
 module Mods
 
@@ -17,6 +17,9 @@ module Mods
   # used by the application to determine which plugins to enable or disable.
   # if set, this callback is passed the directory path of the plugin, and
   # returns true or false.
+  #
+  # FIXME: this callback is never called, as Mods::Plugin::FileSystemLocator
+  #        is no longer used. Do we still need it?
   mattr_accessor :plugin_enabled_callback
 
   # used by the application to determine which plugins to auto-reload in
