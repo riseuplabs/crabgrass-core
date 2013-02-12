@@ -21,7 +21,7 @@ module Groups::SettingsHelper
 
       f.row do |r|
         r.label :icon.t
-        r.input avatar_field(@group)
+        r.input avatar_field(@group.becomes Group)
       end
 
       f.heading :locale.t
