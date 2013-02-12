@@ -10,7 +10,10 @@ Crabgrass::Application.configure do
   config.action_controller.perform_caching             = false
   config.action_mailer.raise_delivery_errors = false
   config.log_level = :debug
-  config.reload_plugins = true
+
+  ## FIXME: when reloading plugins is enabled, SearchFilter.filters will be
+  ##        empty after the first request.
+  config.reload_plugins = false
 
   config.active_support.deprecation = :log
 
