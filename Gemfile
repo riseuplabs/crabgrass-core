@@ -9,7 +9,7 @@ gem 'rake', '~> 0.9.2'
 
 # required, but not included with crabgrass:
 gem 'i18n'#, '~> 0.5'
-gem 'thinking-sphinx', '~> 2.0'
+gem 'thinking-sphinx', '~> 2.0', :require => 'thinking_sphinx'
 gem 'will_paginate', '~> 3.0'
 gem 'sprockets', '~> 2.2'
 
