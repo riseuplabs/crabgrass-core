@@ -18,7 +18,7 @@ def self.included(base)
     #
     # e.g. Fort.with_access(:public => :gate)
     #
-    named_scope(:with_access, lambda {|args|
+    scope(:with_access, lambda {|args|
       holder, gates = args.first
       holder = Holder[holder]
       key_condition, key_values = Key.conditions_for_holder(holder)
