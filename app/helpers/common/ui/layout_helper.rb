@@ -85,13 +85,17 @@ module Common::Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
 
+    ## FIXME: this uses '@_content_for[:x]' to get data chunks previously
+    ##   added via 'content_for()'. For later Rails versions (> 3.1 ??)
+    ##   this needs to be changed to '@view_flow.get(:x)'.
+
     # inline script code
     lines << '<script type="text/javascript">'
     #lines << localize_modalbox_strings
-    lines << @content_for_script
+    lines << @_content_for[:script]
     lines << 'document.observe("dom:loaded",function(){'
     lines << detect_browser_js
-    lines << @content_for_dom_loaded
+    lines << @_content_for[:dom_loaded]
     lines << '});'
     lines << '</script>'
 
@@ -330,16 +334,6 @@ module Common::Ui::LayoutHelper
         :token           => form_authenticity_token
       }
     }
-  end
-
-  #
-  # rails 3.0 has "content_for?"
-  # i want it too!
-  # this takes advantage of deprecated member variables,
-  # but that is ok since this method won't be needed under v3.
-  #
-  def content_for?(block_name)
-    instance_variable_get("@content_for_#{block_name}")
   end
 
   private
