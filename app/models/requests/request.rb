@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 =begin
     create_table "requests", :force => true do |t|
       t.integer  "created_by_id"
@@ -57,6 +58,11 @@ class Request < ActiveRecord::Base
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
 
+  validate_on_create :no_duplicate
+  validate_on_create :check_create_permission
+
+  before_validation_on_create :set_default_state
+
   ##
   ## FINDERS
   ##
@@ -87,7 +93,7 @@ class Request < ActiveRecord::Base
   scope :by_created_at, :order => 'created_at DESC'
   scope :by_updated_at, :order => 'updated_at DESC'
   scope :created_by, lambda { |user|
-    {:conditions => {:created_by_id => user.id}}
+    {:conditions => {:created_by_id => user}}
   }
   scope :to_user, lambda { |user|
     # you only get to approve group requests for groups that you are an admin for
@@ -113,10 +119,10 @@ class Request < ActiveRecord::Base
   }
 
   scope :for_recipient, lambda { |recipient|
-    {:conditions => {:recipient_id => recipient.id}}
+    {:conditions => {:recipient_id => recipient}}
   }
   scope :with_requestable, lambda { |requestable|
-    {:conditions => {:requestable_id => requestable.id}}
+    {:conditions => {:requestable_id => requestable}}
   }
 
   #
@@ -127,22 +133,6 @@ class Request < ActiveRecord::Base
     'RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail',
     'RequestToJoinYou', 'RequestToJoinYourNetwork', 'RequestToRemoveUser'
   ]}
-
-  ##
-  ## VALIDATIONS
-  ##
-
-  before_validation_on_create :set_default_state
-  def set_default_state
-    self.state = "pending" # needed despite FSM so that validations on create will work.
-  end
-
-  validate_on_create :check_create_permission
-  def check_create_permission
-    unless may_create?(created_by)
-      errors.add_to_base(I18n.t(:permission_denied))
-    end
-  end
 
   ##
   ## ATTRIBUTES
@@ -349,6 +339,30 @@ class Request < ActiveRecord::Base
 
 
   protected
+
+  ##
+  ## VALIDATIONS
+  ##
+
+  def set_default_state
+    self.state = "pending" # needed despite FSM so that validations on create will work.
+  end
+
+  def check_create_permission
+    unless may_create?(created_by)
+      errors.add_to_base(I18n.t(:permission_denied))
+    end
+  end
+
+  def no_duplicate
+    if duplicates.any?
+      errors.add_to_base(:request_exists_error.t(:recipient => recipient.display_name))
+    end
+  end
+
+  def duplicates
+    self.class.pending.with_requestable(requestable).for_recipient(recipient)
+  end
 
   def self.vote_value_for_action(vote_state)
     case vote_state.to_s

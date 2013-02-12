@@ -87,15 +87,4 @@ class TransmogrifierTest < Test::Unit::TestCase
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end
 
-  #def test_dismod_transmog
-  #  input = test_file('dismod-in.json')
-  #  transmog = Media.transmogrifier(:input_file => input, :input_type => 'application/dismod-input', :output_type => 'application/dismod-output')
-  #  assert_not_nil transmog
-  #  status = transmog.run do |progress|
-  #    puts progress
-  #  end
-  #  assert_equal :success, status
-  #  assert File.exists?(transmog.output_file.to_s)
-  #end
-
 end

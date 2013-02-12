@@ -36,6 +36,7 @@ group :production, :development do
   gem 'sass', '~> 3.2'
   gem 'compass-susy-plugin', :require => 'susy', :path => 'vendor/gems/compass-susy-plugin-0.8.1'
   gem 'whenever'
+  gem 'jsmin'
 end
 
 group :development do
@@ -43,7 +44,6 @@ group :development do
   ## needed for some rake tasks, but not generally.
   ##
   gem 'rdoc', '~> 3.0'
-  gem 'jsmin'
 
   gem 'mongrel'
 end

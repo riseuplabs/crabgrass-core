@@ -76,5 +76,11 @@ class RequestToJoinUsViaEmail < Request
   #  Mailer::Request.deliver_invite_code(self) if recipient && recipient.receives_email_on('messages')
   #end
 
+  protected
+
+  # we allow duplicate email invitations
+  def no_duplicate
+  end
+
 end
 
