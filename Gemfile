@@ -11,6 +11,7 @@ gem 'rake', '~> 0.9.2'
 gem 'i18n'#, '~> 0.5'
 gem 'thinking-sphinx', '~> 2.0'
 gem 'will_paginate', '~> 3.0'
+gem 'sprockets', '~> 2.2'
 
 gem 'mysql', '2.8.1'
 
