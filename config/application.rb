@@ -96,13 +96,4 @@ module Crabgrass
   require Rails.root.join('lib/crabgrass/page/class_registrar')
   require Rails.root.join('lib/crabgrass/page/data')
 
-  if defined?(User)
-    #
-    # This needs to be run last, after models are loaded. Sometimes, environment.rb is loaded
-    # without models getting loaded. Hence, the defined?(User) test around this block.
-    # It is hackish, but it works.
-    #
-    CastleGates.initialize('config/permissions')
-  end
-
 end
