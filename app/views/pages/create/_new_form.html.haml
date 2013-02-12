@@ -13,7 +13,7 @@
     = :page_added_to_group.t(:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
 
 .create_page
-  - form_tag(create_page_path(:page_type => page_type), :multipart => @multipart) do
+  = form_tag(create_page_path(:page_type => page_type), :multipart => @multipart) do
     = hidden_field_tag 'page_type', page_type
     = hidden_field_tag('group', params[:group]) if params[:group]
     = formy(:horizontal_form) do |form|

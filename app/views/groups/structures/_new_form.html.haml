@@ -22,7 +22,7 @@
 - content_for :title do
   %h1= :create_a_new_thing.t(:thing => thing.t.downcase)
 
-- form_tag url do
+= form_tag url do
 
   = hidden_field_tag 'type', params[:type]
 

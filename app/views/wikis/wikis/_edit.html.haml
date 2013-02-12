@@ -3,7 +3,7 @@
 - # the wiki text changes.
 - rows = [ 20, (params[:height]||0).to_i/16 ].max
 .image_popup#image_popup
-- form_for(@wiki.new_record? ? [@group.becomes(Group), @wiki] : @wiki) do |f|
+= form_for(@wiki.new_record? ? [@group.becomes(Group), @wiki] : @wiki) do |f|
   = f.hidden_field :version
   = f.hidden_field :private # marks private group wikis during creation
   = f.text_area('body', :rows => rows, :cols => 64)
