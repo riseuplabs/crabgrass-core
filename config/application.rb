@@ -75,7 +75,12 @@ module Crabgrass
     ##
 
     # we must load crabgrass_mods and load_model_callback first.
-    config.plugins = [:crabgrass_mods, :after_reload, :all]
+    config.plugins = [
+      :crabgrass_mods,
+      :after_reload,
+      :crabgrass_path_finder,
+      :all
+    ]
 
     # allow plugins in more places
     [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
@@ -84,8 +89,12 @@ module Crabgrass
 
   end
 
+  ## FIXME: require these, where they are actually needed (or fix autoloading).
   require Rails.root.join('lib/int_array')
   require Rails.root.join('lib/crabgrass/validations')
+  require Rails.root.join('lib/crabgrass/page/class_proxy')
+  require Rails.root.join('lib/crabgrass/page/class_registrar')
+  require Rails.root.join('lib/crabgrass/page/data')
 
   if defined?(User)
     #
