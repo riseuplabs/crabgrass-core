@@ -167,7 +167,7 @@ namespace :crabgrass do
 
   desc "Precompile the javascript and css assets"
   task :compile_assets do
-    run "bundle exec rake cg:compile_assets"
+    run "cd #{current_path}; bundle exec rake cg:compile_assets"
   end
 
 #  desc "refresh the staging database"
