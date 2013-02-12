@@ -1,8 +1,8 @@
 ## FIXME: get rid of this and use regular rails helpers
 module DeprecatedHelper
 
-  def link_to_remote(name, options, html_options={})
-    link_to(name, options[:url], options.merge(:remote => true, :html => html_options))
+  def link_to_remote(name, options = {}, html_options = nil)
+    link_to_function(name, remote_function(options), html_options || options.delete(:html))
   end
 
   def submit_to_remote(name, value, options = {})
@@ -52,4 +52,5 @@ module DeprecatedHelper
 
     return function.html_safe
   end
+
 end

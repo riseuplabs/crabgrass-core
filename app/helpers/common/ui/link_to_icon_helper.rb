@@ -16,6 +16,8 @@ module Common::Ui::LinkToIconHelper
 
   module ActionViewExtension
 
+    include DeprecatedHelper
+
     def self.included(base)
       base.class_eval do
         alias_method_chain :link_to, :icon
