@@ -5,7 +5,7 @@ Crabgrass::Application.configure do
 
   if defined? UNIT_TESTING
     config.eager_load_paths = ["#{Rails.root}/app/models"]
-    config.frameworks=[:active_record, :action_mailer, :action_view]
+    #config.frameworks=[:active_record, :action_mailer, :action_view]
     config.autoload_paths = ["#{Rails.root}/app/models/"]
     config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{Rails.root}/app/models/#{dir}"}
   end
