@@ -2,8 +2,9 @@ language: ruby
 rvm:
   - 1.8.7
 before_install:
-  - "gem uninstall bundler"
-  - "gem install bundler --version=1.0.0"
+  - "rvm @default,@global do gem uninstall bundler -v 1.2.3 -x"
+  - "gem install bundler --version '~>1.0.0'"
+  - "bundle --version"
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
