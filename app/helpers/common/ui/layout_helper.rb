@@ -49,7 +49,7 @@ module Common::Ui::LayoutHelper
     if language_direction == "rtl"
       lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
     end
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   def favicon_link
@@ -57,7 +57,7 @@ module Common::Ui::LayoutHelper
     '<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />' % [current_theme.url(:favicon_ico), current_theme.url(:favicon_png)]
     elsif current_theme[:favicon]
       '<link rel="icon" href="%s" type="image/x-icon" />' % current_theme.url(:favicon)
-    end
+    end.html_safe
   end
 
   ##
@@ -107,7 +107,7 @@ module Common::Ui::LayoutHelper
       lines << '<![endif]-->'
     end
 
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   ##
