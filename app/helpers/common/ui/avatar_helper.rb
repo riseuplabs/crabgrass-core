@@ -56,7 +56,7 @@ module Common::Ui::AvatarHelper
       :action => action
     link_options = {:url => url, :icon => 'picture_edit'}
 
-    return avatar_for(entity,'large') + "&nbsp;" +
+    return avatar_for(entity,'large') + "&nbsp;".html_safe +
       link_to_modal(:upload_image_link.t, link_options, :class => 'inline')
   end
 end

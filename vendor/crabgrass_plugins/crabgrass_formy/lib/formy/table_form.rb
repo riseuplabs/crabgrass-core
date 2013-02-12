@@ -7,7 +7,7 @@ module Formy
       puts "<tr class='#{TITLE_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>"
     end
 
-    def label(value="&nbsp;")
+    def label(value="&nbsp;".html_safe)
       @elements << indent("<tr class='#{LABEL_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>")
     end
 
@@ -68,7 +68,7 @@ module Formy
         @input ||= @elements.first.to_s
         @classes = [@classes, @options[:class]].combine
         if @options[:style] == :hang
-          @label ||= '&nbsp;'
+          @label ||= '&nbsp;'.html_safe
           labelspan = inputspan = 1
           #labelspan = 2 if @label and not @input
           #inputspan = 2 if @input and not @label
@@ -119,7 +119,7 @@ module Formy
             label = content_tag :label, @label, :for => id
             puts tag(:tr, content_tag(:td, @input) + content_tag(:td, label))
             if @info
-              puts tag(:tr, content_tag(:td, '&nbsp;') + content_tag(:td, @info, :class => INFO_CLASS))
+              puts tag(:tr, content_tag(:td, '&nbsp;'.html_safe) + content_tag(:td, @info, :class => INFO_CLASS))
             end
             super
           end
