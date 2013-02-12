@@ -149,20 +149,30 @@ ActiveRecord::Base.class_eval do
   #
   protected
   def self.compute_type(type_name)
-    modularized_name = type_name_with_module(type_name)
-    silence_warnings do
-      begin
-        class_eval(modularized_name, __FILE__)
-      rescue NameError
+    if type_name.match(/^::/)
+      # If the type is prefixed with a scope operator then we assume that
+      # the type_name is an absolute reference.
+      ActiveSupport::Dependencies.constantize(type_name)
+    else
+      # Build a list of candidates to search for
+      candidates = []
+      name.scan(/::|$/) { candidates.unshift "#{$`}::#{type_name}" }
+      candidates << type_name
+
+      candidates.each do |candidate|
         begin
-          class_eval(type_name, __FILE__)
-        rescue NameError
-          if type_name =~ /Page/
-            class_eval("DiscussionPage", __FILE__)
-          else
-            raise # reraise same exception
-          end
+          constant = ActiveSupport::Dependencies.constantize(candidate)
+          return constant if candidate == constant.to_s
+        rescue NameError => e
+          # We don't want to swallow NoMethodError < NameError errors
+          raise e unless e.instance_of?(NameError)
+        rescue ArgumentError
         end
+      end
+      if type_name =~ /Page/
+        ActiveSupport::Dependencies.constantize("DiscussionPage")
+      else
+        raise NameError, "uninitialized constant #{candidates.first}"
       end
     end
   end
