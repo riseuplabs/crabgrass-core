@@ -27,7 +27,7 @@ module Common::Ui::EntityDisplayHelper
         # with the id, we can also display the icon
         icon_url = '/avatars/%s/xsmall.jpg' % id
         '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
-      end
+      end.html_safe
     end
   end
 
