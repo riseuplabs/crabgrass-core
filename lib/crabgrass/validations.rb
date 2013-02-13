@@ -16,7 +16,12 @@ module Crabgrass
         #    also, i can't imagine how this is supposed to work. 'validates_handle' is called once at startup, but
         #    we want to translate the error messages different for each request, since we don't know what the language
         #    should be outside the request.  -elijah
-        configuration = { :on => :save, :with => nil }
+
+        # configuration = { :on => :save, :with => nil }
+        # ^^ only validating the handle :on => :save currently breaks the tests,
+        #    as they use 'create' instead of 'save', and possibly allows creating
+        #    stuff without validating the handle.
+        configuration = { :with => nil }
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|
