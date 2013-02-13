@@ -256,7 +256,9 @@ class Request < ActiveRecord::Base
   def requestable_required?() true end
 
   def flash_message(options = {})
-    thing = self.class.model_name.human(options)
+    # WARNING: don't pass the whole 'options' hash here, as 'human' will
+    #     add :default and :scope options, which break our translations.
+    thing = self.class.model_name.human(:count => options[:count])
     options.merge!(:thing => thing, :recipient => self.recipient.display_name)
     if self.errors.any?
       { :type => :error,
