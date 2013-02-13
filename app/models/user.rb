@@ -194,7 +194,8 @@ class User < ActiveRecord::Base
   ## ASSOCIATED DATA
   ##
 
-  has_many :task_participations, :dependent => :destroy
+  has_many :task_participations, :dependent => :destroy,
+    :class_name => '::TaskParticipation'
   has_many :tasks, :through => :task_participations do
     def pending
       self.find(:all, :conditions => 'assigned == TRUE AND completed_at IS NULL')

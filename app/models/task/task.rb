@@ -2,7 +2,8 @@ class Task < ActiveRecord::Base
 
   belongs_to :task_list
 #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
-  has_many :task_participations, :dependent => :destroy
+  has_many :task_participations, :dependent => :destroy,
+    :class_name => '::TaskParticipation'
   has_many :users, :through => :task_participations
   acts_as_list :scope => :task_list
   format_attribute :description
