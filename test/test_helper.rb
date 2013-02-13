@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 if defined?(UNIT_TESTING)
   require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
 else
-  require 'test_help'
+  require 'rails/test_help'
 end
 
 ##
