@@ -27,21 +27,21 @@ module Wikis::DiffsHelper
 
   def diff_previous_link
     if previous = @old.previous
-      link_to_remote LARROW + :prev_change.t,
+      link_to_remote (LARROW + :prev_change.t).html_safe,
         :url => wiki_diff_path(@wiki, @old.diff_id),
         :method => :get
     else
-      content_tag :span, LARROW + :prev_change.t, :class => 'disabled'
+      content_tag :span, (LARROW + :prev_change.t).html_safe, :class => 'disabled'
     end
   end
 
   def diff_next_link
     if next_version = @new.next
-      link_to_remote :next_change.t + RARROW,
+      link_to_remote (:next_change.t + RARROW).html_safe,
         :url => wiki_diff_path(@wiki, next_version.diff_id),
         :method => :get
     else
-      content_tag :span, :next_change.t + RARROW, :class => 'disabled'
+      content_tag :span, (:next_change.t + RARROW).html_safe, :class => 'disabled'
     end
   end
 end
