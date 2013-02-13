@@ -148,33 +148,18 @@ ActiveRecord::Base.class_eval do
   # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
   #
   protected
-  def self.compute_type(type_name)
-    if type_name.match(/^::/)
-      # If the type is prefixed with a scope operator then we assume that
-      # the type_name is an absolute reference.
-      ActiveSupport::Dependencies.constantize(type_name)
+  def self.compute_type_with_page_fallback(type_name)
+    compute_type_without_page_fallback(type_name)
+  rescue NameError => e
+    if type_name =~ /Page$/
+      ActiveSupport::Dependencies.constantize("DiscussionPage")
     else
-      # Build a list of candidates to search for
-      candidates = []
-      name.scan(/::|$/) { candidates.unshift "#{$`}::#{type_name}" }
-      candidates << type_name
-
-      candidates.each do |candidate|
-        begin
-          constant = ActiveSupport::Dependencies.constantize(candidate)
-          return constant if candidate == constant.to_s
-        rescue NameError => e
-          # We don't want to swallow NoMethodError < NameError errors
-          raise e unless e.instance_of?(NameError)
-        rescue ArgumentError
-        end
-      end
-      if type_name =~ /Page/
-        ActiveSupport::Dependencies.constantize("DiscussionPage")
-      else
-        raise NameError, "uninitialized constant #{candidates.first}"
-      end
+      raise e
     end
+  end
+
+  class << self
+    alias_method_chain :compute_type, :page_fallback
   end
 
 end
