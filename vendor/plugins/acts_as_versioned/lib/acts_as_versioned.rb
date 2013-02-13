@@ -392,7 +392,7 @@ module ActiveRecord #:nodoc:
 
           # Gets the next available version for the current record, or 1 for a new record
           def next_version
-            (new_record? ? 0 : versions.calculate(:max, :version).to_i) + 1
+            (new_record? ? 0 : versions.maximum(:version).to_i) + 1
           end
 
         module ClassMethods
