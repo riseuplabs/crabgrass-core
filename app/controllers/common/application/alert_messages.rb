@@ -128,7 +128,7 @@ module Common::Application::AlertMessages
     content_tag(:div, :class => 'alert_message_container') do
       content_tag(:div, :id => 'alert_messages') do
         if alert_messages?
-          flash[:messages].collect {|message| message_html(message)}.join
+          flash[:messages].collect {|message| message_html(message)}.join.html_safe
         else
           ""
         end

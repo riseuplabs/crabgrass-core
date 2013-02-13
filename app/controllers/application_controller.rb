@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   include_controllers 'common/application'
   include_helpers 'app/helpers/common/*/*.rb'
-  helper :deprecated, :application, :modalbox
+  helper :application, :modalbox
   permissions :application
 
   protected
