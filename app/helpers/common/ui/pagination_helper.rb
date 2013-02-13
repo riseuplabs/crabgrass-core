@@ -48,8 +48,8 @@ module Common::Ui::PaginationHelper
     return if !things.is_a?(WillPaginate::Collection)
 
     defaults = {
-     :previous_label => "&laquo; %s" % :pagination_previous.t,
-     :next_label => "%s &raquo;" % :pagination_next.t,
+     :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
+     :next_label => ("%s &raquo;" % :pagination_next.t).html_safe,
      :inner_window => 2,
      :outer_window => 0
     }
