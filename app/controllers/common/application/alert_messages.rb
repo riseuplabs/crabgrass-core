@@ -338,7 +338,7 @@ module Common::Application::AlertMessages
     if allow_fade
       if message[:fade] || message[:quick] || ((message[:type] == :success || message[:type] == :notice) && !message[:nofade])
         timeout = message[:quick] ? 0.5 : FADE_TIMEOUT
-        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});")
+        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});".html_safe)
       end
     end
     content_tag(:div, html.join.html_safe, :class => "message #{message[:type]}", :id => message_id)

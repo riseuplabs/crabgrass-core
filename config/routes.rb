@@ -94,11 +94,11 @@ Crabgrass::Application.routes.draw do |map|
   ## PEOPLE
   ##
 
-  map.people_directory 'people/directory/(*path)', :controller => 'people/directory'
+  map.people_directory 'people/directory(/*path)', :controller => 'people/directory'
 
   map.resources :people, :namespace => 'people/' do |people|
     people.resource  :home, :only => [:show]
-    people.pages     'pages/(*path)', :controller => 'pages'
+    people.pages     'pages(/*path)', :controller => 'pages'
     people.resources :messages
     people.resources :activities
     people.resource :friend_request, :only => [:new, :create, :destroy]
@@ -108,13 +108,13 @@ Crabgrass::Application.routes.draw do |map|
   ## GROUP
   ##
 
-  map.networks_directory 'networks/directory/(*path)', :controller => 'groups/directory'
-  map.groups_directory 'groups/directory/(*path)', :controller => 'groups/directory'
+  map.networks_directory 'networks/directory(/*path)', :controller => 'groups/directory'
+  map.groups_directory 'groups/directory(/*path)', :controller => 'groups/directory'
 
   map.resources :groups, :namespace => 'groups/', :only => [:new, :create, :destroy] do |groups|
     # content related
     groups.resource  :home, :only => [:show], :controller => 'home'
-    groups.pages     'pages/(*path)', :controller => 'pages'
+    groups.pages     'pages(/*path)', :controller => 'pages'
     groups.resources :avatars
     groups.resources :wikis, :except => [:index, :destroy]
 
@@ -194,7 +194,7 @@ Crabgrass::Application.routes.draw do |map|
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  map.connect ':_context/:_page/(*path)', :controller => 'dispatch', :action => 'dispatch'
+  map.connect ':_context/:_page(/*path)', :controller => 'dispatch', :action => 'dispatch'
   map.connect ':_context',              :controller => 'dispatch', :action => 'dispatch'
 end
 
