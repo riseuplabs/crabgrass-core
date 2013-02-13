@@ -65,7 +65,7 @@ end
 ## some special rules for integration tests
 ##
 
-class ActionController::IntegrationTest
+class ActionDispatch::IntegrationTest
 
   #
   # we load all fixtures because webrat integration test should see exactly
