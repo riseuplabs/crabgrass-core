@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
   validates_presence_of :votable_id
 
-  belongs_to :possible, :class_name => '::PollPossible'
+  belongs_to :possible, :class_name => '::Possible'
   belongs_to :user
   belongs_to :votable, :polymorphic => :true
 
