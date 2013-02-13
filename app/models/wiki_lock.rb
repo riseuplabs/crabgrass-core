@@ -22,9 +22,7 @@ class WikiLock < ActiveRecord::Base
   serialize :locks, Hash
   serialize_default :locks, Hash.new
 
-  def after_find
-    update_expired_locks!
-  end
+  after_find :update_expired_locks!
 
   def all_sections
     wiki.all_sections
