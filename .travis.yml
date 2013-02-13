@@ -2,8 +2,6 @@ language: ruby
 rvm:
   - 1.8.7
 before_install:
-  - "rvm @default,@global do gem uninstall bundler -v 1.2.3 -x"
-  - "gem install bundler --version '~>1.0.0'"
   - "bundle --version"
 #  - sudo apt-get update -qq
 #  - sudo apt-get install -qq -y graphicsmagick
