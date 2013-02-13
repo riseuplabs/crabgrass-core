@@ -8,7 +8,7 @@
         %br
         = :group_description.t
       .p.align_right
-        = link_to :create_a_new_thing.t(:thing => :organization.t) + ' &raquo;', new_group_path(:type => 'group'), :class => 'btn'
+        = link_to (:create_a_new_thing.t(:thing => :organization.t) + ' &raquo;').html_safe, new_group_path(:type => 'group'), :class => 'btn'
 
   - if Conf.networks
     %tr
@@ -18,7 +18,7 @@
           %br
           = :network_description.t
         .p.align_right
-          = link_to :create_a_new_thing.t(:thing => :network.t) + ' &raquo;', new_group_path(:type => 'network'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(:thing => :network.t) + ' &raquo;').html_safe, new_group_path(:type => 'network'), :class => 'btn'
 
   - if Conf.committees and current_user.groups_and_networks.any?
     %tr
@@ -28,7 +28,7 @@
           %br
           = :committee_description.t
         .p.align_right
-          = link_to :create_a_new_thing.t(:thing => :committee.t) + ' &raquo;', new_group_path(:type => 'committee'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(:thing => :committee.t) + ' &raquo;').html_safe, new_group_path(:type => 'committee'), :class => 'btn'
 
   - if Conf.councils and current_user.groups_and_networks.any?
     %tr
@@ -38,5 +38,5 @@
           %br
           = :council_description.t
         .p.align_right
-          = link_to :create_a_new_thing.t(:thing => :council.t) + ' &raquo;', new_group_path(:type => 'council'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(:thing => :council.t) + ' &raquo;').html_safe, new_group_path(:type => 'council'), :class => 'btn'
 
