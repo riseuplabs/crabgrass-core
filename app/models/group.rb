@@ -182,7 +182,7 @@ class Group < ActiveRecord::Base
     read_attribute(:type).empty? || instance_of?(Group)
   end
 
-  def group_type; self.class.human_name; end
+  def group_type; self.class.model_name.human; end
 
   # age of group
   def recent?
