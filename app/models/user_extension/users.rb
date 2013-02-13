@@ -21,6 +21,22 @@ module UserExtension::Users
       ## PEERS
       ##
 
+      has_many :peers, :class_name => 'User' do
+        # overwrites ActiveRecord::Associations::HasManyAssociation#construct_scope
+        # to specify the entire conditions without using :finder_sql
+        def construct_scope
+          { :find => {
+              :conditions => "users.id IN (#{@owner.peer_id_cache.to_sql})",
+              :readonly => true,
+              :order => @reflection.options[:order],
+              :limit => @reflection.options[:limit],
+              :include => @reflection.options[:include]
+            },
+            :create => {}
+          }
+        end
+      end
+
       # same as results as user.peers, but chainable with other named scopes
       scope(:peers_of, lambda do |user|
         {:conditions => ['users.id in (?)', user.peer_id_cache]}
@@ -88,10 +104,6 @@ module UserExtension::Users
   end
 
   module InstanceMethods
-
-    def peers
-      self.class.peers_of(self)
-    end
 
     ##
     ## STATUS / PUBLIC WALL
