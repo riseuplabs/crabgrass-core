@@ -113,13 +113,13 @@ module UserExtension
          admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
-       self.write_attribute(:tag_id_cache, nil)
-       self.write_attribute(:foe_id_cache, nil)
-       self.write_attribute(:peer_id_cache, nil)
-       self.write_attribute(:friend_id_cache, nil)
-       self.write_attribute(:direct_group_id_cache, nil)
-       self.write_attribute(:all_group_id_cache, nil)
-       self.write_attribute(:admin_for_group_id_cache, nil)
+       write_attribute(:tag_id_cache, nil)
+       write_attribute(:foe_id_cache, nil)
+       write_attribute(:peer_id_cache, nil)
+       write_attribute(:friend_id_cache, nil)
+       write_attribute(:direct_group_id_cache, nil)
+       write_attribute(:all_group_id_cache, nil)
+       write_attribute(:admin_for_group_id_cache, nil)
        self.clear_access_cache
     end
 
