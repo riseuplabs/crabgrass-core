@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class Models::GroupTest < ActiveSupport::TestCase
+class GroupModelTest < ActiveSupport::TestCase
 
   def setup
     Conf.load_defaults
@@ -56,7 +56,7 @@ class Models::GroupTest < ActiveSupport::TestCase
     assert !Council.can_have_committees?
   end
 
-  def test_committees?_can_not_have_council
+  def test_committees_can_not_have_council
     assert !Committee.can_have_council?
     assert !Committee.can_have_committees?
   end
