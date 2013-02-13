@@ -1,7 +1,7 @@
 
 source :rubygems
 
-gem 'rails', '= 3.0'
+gem 'rails', '~> 3.0.20'
 
 gem 'rake', '~> 0.9.2'
 
