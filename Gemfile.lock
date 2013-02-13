@@ -92,7 +92,7 @@ GEM
     metaclass (0.0.1)
     mime-types (1.21)
     minitest (2.12.1)
-    mocha (0.10.5)
+    mocha (0.12.9)
       metaclass (~> 0.0.1)
     mongrel (1.1.5)
       cgi_multipart_eof_fix (>= 2.4)
@@ -169,7 +169,7 @@ DEPENDENCIES
   machinist (~> 1.0)
   mime-types
   minitest (~> 2.12)
-  mocha (~> 0.10.0)
+  mocha (~> 0.12.0)
   mongrel
   mysql (= 2.8.1)
   prototype_legacy_helper (= 0.0.0)!
