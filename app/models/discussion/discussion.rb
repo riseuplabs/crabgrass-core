@@ -19,16 +19,16 @@ class Discussion < ActiveRecord::Base
 
   belongs_to :page
   belongs_to :replied_by, :class_name => 'User'
-  belongs_to :last_post, :class_name => 'Post'
+  belongs_to :last_post, :class_name => '::Post'
 
   # i think this is currently unused?
   has_one :profile, :foreign_key => 'discussion_id'
 
   has_many :posts, :order => 'posts.created_at',
-    :dependent => :destroy, :class_name => 'Post'
+    :dependent => :destroy, :class_name => '::Post'
 
   has_many :visible_posts, :order => 'posts.created_at',
-    :class_name => 'Post', :conditions => {:deleted_at => nil}
+    :class_name => '::Post', :conditions => {:deleted_at => nil}
 
   belongs_to :commentable, :polymorphic => true
 
