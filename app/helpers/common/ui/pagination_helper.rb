@@ -61,13 +61,19 @@ module Common::Ui::PaginationHelper
         defaults[:renderer] = LinkRenderer::Pages
       end
     elsif request.xhr?
-      defaults[:renderer] = (template.format == 'html') ?
+      defaults[:renderer] = (current_template_format == :html) ?
        LinkRenderer::ModalAjax :
        LinkRenderer::Ajax
     else
       defaults[:renderer] = LinkRenderer::Dispatch
     end
     will_paginate(things, defaults.merge(options))
+  end
+
+  def current_template_format
+    ## FIXME: this is likely going to break during the next rails upgrade.
+    ##   We should figure out a better way to choose the link renderer.
+    @renderer.instance_variable_get("@template").mime_type.symbol
   end
 
   #
