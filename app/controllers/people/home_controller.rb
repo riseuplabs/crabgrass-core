@@ -5,7 +5,8 @@ class People::HomeController < People::BaseController
   #
   # called by DispatchController
   #
-  def initialize(options)
+  def initialize(options={})
+    super()
     @user = options[:user]
   end
 
