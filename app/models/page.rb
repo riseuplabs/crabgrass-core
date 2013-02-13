@@ -93,7 +93,8 @@ class Page < ActiveRecord::Base
   ## PAGE NAMING
   ##
 
-  def validate
+  validate :unique_name_in_context
+  def unique_name_in_context
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       context = self.owner || self.created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
