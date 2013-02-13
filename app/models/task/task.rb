@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
 
-  belongs_to :task_list
+  belongs_to :task_list, :class_name => '::TaskList'
 #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
   has_many :task_participations, :dependent => :destroy,
     :class_name => '::TaskParticipation'
