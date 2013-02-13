@@ -28,7 +28,11 @@ def self.included(base)
         :select => "DISTINCT #{self.table_name}.*",
         :conditions => [gate_condition + " AND " + key_condition, key_values]
       }
-    })
+    }) do
+      def count
+        super :id, :distinct => true
+      end
+    end
 
     #
     # i could not figure out how to make self.count automatically do a distinct
