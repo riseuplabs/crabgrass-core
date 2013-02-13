@@ -6,7 +6,8 @@ class ChatMessage < ActiveRecord::Base
 
   validates_presence_of  :channel, :sender
 
-  def before_create
+  before_create :set_sender_name
+  def set_sender_name
     if sender
       self.sender_name = sender.login
     end
