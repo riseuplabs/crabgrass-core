@@ -1,7 +1,7 @@
 #
 # This is a link renderer that all our other custom link renderers inherit from.
 #
-class LinkRenderer::CrabgrassBase < WillPaginate::LinkRenderer
+class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
 
   def page_link(page, text, attributes = {})
     @template.content_tag(:li, page_link_to(page, text, attributes))

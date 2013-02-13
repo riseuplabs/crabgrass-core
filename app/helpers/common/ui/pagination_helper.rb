@@ -40,7 +40,7 @@ module Common::Ui::PaginationHelper
   #   :separator    => ' ',
   #   :param_name   => :page,
   #   :params       => nil,
-  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :renderer     => 'WillPaginate::ViewHelper::LinkRenderer',
   #   :page_links   => true,    # when false, only previous/next links are rendered
   #   :container    => true
   #
