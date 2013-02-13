@@ -40,7 +40,7 @@ class Groups::InvitesController < Groups::BaseController
       req = RequestToJoinUsViaEmail.create(:created_by => current_user,
          :email => email, :requestable => @group, :language => I18n.locale.to_s)
       begin
-        Mailer.deliver_request_to_join_us!(req, mailer_options)
+        Mailer.request_to_join_us!(req, mailer_options).deliver
         reqs << req
       rescue Exception => exc
         error(:now, exc)

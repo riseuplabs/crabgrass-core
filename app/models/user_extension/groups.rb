@@ -91,7 +91,7 @@ module UserExtension::Groups
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group',
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
+         :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})" } do
         def normals
           self.select{|group|group.normal?}
         end

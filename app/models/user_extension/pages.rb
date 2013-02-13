@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # A user's relationship to pages
 #
@@ -231,7 +232,7 @@ module UserExtension::Pages
       users_to_email.uniq!
       users_to_email.each do |user|
         #logger.debug '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
+        Mailer.share_notice(user, options[:send_message], options[:mailer_options]).deliver
       end
     end
   end
