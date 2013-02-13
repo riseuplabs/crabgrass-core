@@ -45,7 +45,7 @@ module Common::Ui::PaginationHelper
   #   :container    => true
   #
   def pagination_links(things, options={})
-    return if !things.is_a?(WillPaginate::Collection)
+    return unless things.respond_to?(:total_pages)
 
     defaults = {
      :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
