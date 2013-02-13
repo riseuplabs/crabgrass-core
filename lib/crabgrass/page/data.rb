@@ -4,16 +4,16 @@ module Crabgrass::Page
       # Use page_terms to find what objects the user has access to. Note that it is
       # necessary to match against both access_ids and tags, since the index only
       # works if both fields are included.
-      base.named_scope :visible_to, lambda { |*args|
+      base.scope :visible_to, lambda { |*args|
         access_filter = PageTerms.access_filter_for(*args)
         { :select => "#{base.table_name}.*", :joins => :page_terms,
           :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
         }
       }
 
-      base.named_scope :most_recent, :order => 'updated_at DESC'
+      base.scope :most_recent, :order => 'updated_at DESC'
 
-      base.named_scope :exclude_ids, lambda {|ids|
+      base.scope :exclude_ids, lambda {|ids|
         if ids.any? and ids.is_a? Array
           {:conditions => ["#{base.table_name}.id NOT IN (?)", ids]}
         else
