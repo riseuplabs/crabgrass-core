@@ -287,7 +287,7 @@ module Common::Ui::EntityDisplayHelper
   def embold_links(text)
     text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
       content_tag(:b, $2)
-    end
+    end.html_safe
   end
 
 end
