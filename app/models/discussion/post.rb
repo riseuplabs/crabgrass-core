@@ -112,7 +112,7 @@ class Post < ActiveRecord::Base
   end
 
   def body_html
-    read_attribute(:body_html).html_safe
+    read_attribute(:body_html).try :html_safe
   end
 
   # used for default context, if present, to set for any embedded links
