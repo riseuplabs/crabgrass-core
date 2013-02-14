@@ -43,15 +43,21 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
   #
   def to_html
     links_html = pagination.map do |page|
-      if page.is_a? Fixnum
+      case page
+      when Fixnum
         page_link_or_span(page, page == @collection.current_page ? 'current' : '', page.to_s)
-      else
+      when :gap
+        gap_marker
+      when :previous_page, :next_page
         class_name, text = *(page == :previous_page ?
           ['prev_page', @options[:previous_label]] :
           ['next_page', @options[:next_label]])
         page_number = @collection.send(page)
         class_name += ' disabled' unless page_number
         page_link_or_span(page_number, class_name, text)
+      else
+        ## FIXME: are there any other cases?
+        ''
       end
     end.join(@options[:separator]).html_safe
     @template.content_tag(:div, :class => @options[:class]) do
