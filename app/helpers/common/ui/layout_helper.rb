@@ -235,7 +235,7 @@ module Common::Ui::LayoutHelper
   # the helper can be used wherever a normal helper would be.
   #
   def haml(name=nil, *args, &block)
-    if name.any?
+    if name && name.any?
       if args.empty? and block.nil?
         haml_concat name
       else
