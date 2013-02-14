@@ -96,8 +96,10 @@ end
 require 'redcloth/formatters/html'
 require 'cgi'
 
-$KCODE = 'u'    # \ set utf8 as the default
-require 'jcode' # / encoding
+if RUBY_VERSION < '1.9' #
+  $KCODE = 'u'    # \ set utf8 as the default
+  require 'jcode' # / encoding
+end
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_structure'
