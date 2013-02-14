@@ -32,7 +32,7 @@ end
 
 map '/' do
   use Rails::Rack::LogTailer unless Rails.env.test?
-  use Rails::Rack::Debugger unless Rails.env.test?
+  use Rails::Rack::Debugger if Rails.env.development?
   use Rails::Rack::Static
   run ActionController::Dispatcher.new
 end

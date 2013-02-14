@@ -105,7 +105,7 @@ en:
 
   ##!  dont_understand_group_type: "Could not understand group type %{type}"
   ##!  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
-  group_publicly_visible_description: %{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname.
+  group_publicly_visible_description: "%{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname."
   committee_publicly_visible_description: Committees are visible to non-members at %{domain}/yourgroupname
   networks_publicly_visible_description: Networks are visible to non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
