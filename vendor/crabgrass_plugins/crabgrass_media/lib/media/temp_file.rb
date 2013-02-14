@@ -1,5 +1,5 @@
 require 'tempfile'
-require 'ftools'
+require 'fileutils'
 require 'pathname'
 
 Tempfile.class_eval do
