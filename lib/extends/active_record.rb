@@ -156,6 +156,16 @@ ActiveRecord::Base.class_eval do
     else
       raise e
     end
+
+    # Some of our models break the usual path <-> name relationship (such as "RequestNotice" within
+    # app/models/notice/request_notice.rb). So in cases where "Notice" is asked to compute the type
+    # "RequestNotice", it finds the correct file (because it first tries Notice::RequestNotice), but
+    # then fails when that file doesn't define the expected "Notice::RequestNotice".
+    # We solve such situations by falling back to asking ActiveRecord::Base to compute the type,
+    # which will fall back to the bare 'type_name', because there is no file "active_record/base/request_notice.rb".
+  rescue LoadError => e
+    raise e if self == ActiveRecord::Base
+    ActiveRecord::Base.compute_type(type_name)
   end
 
   class << self
