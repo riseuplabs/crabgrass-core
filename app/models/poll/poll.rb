@@ -6,5 +6,5 @@ class Poll < ActiveRecord::Base
   has_many :pages, :as => :data
   def page; pages.first; end
 
-  has_many :possibles, :dependent => :destroy, :class_name => '::Possible'
+  has_many :possibles, :dependent => :destroy
 end
