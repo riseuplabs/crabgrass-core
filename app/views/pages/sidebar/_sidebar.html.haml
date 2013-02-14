@@ -12,7 +12,7 @@
         = star_line
       - if (access_changing_commands = [share_line, notify_line, public_line].compact).any?
         %ul.side_list.commands.rule
-          = access_changing_commands
+          = access_changing_commands.join.html_safe
       %ul.side_list.commands.rule
         = delete_line
         =# move_line

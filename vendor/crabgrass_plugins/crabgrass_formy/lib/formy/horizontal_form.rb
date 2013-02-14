@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##
 ## A form based on 'bootstrap'
 ## see the end of the files for an example.
@@ -12,7 +13,7 @@ module Formy
       puts "<legend>#{value}</legend>"
     end
 
-    def label(value="&nbsp;")
+    def label(value="&nbsp;".html_safe)
       @elements << indent("<div>#{value}</div>")
     end
 
@@ -74,7 +75,7 @@ module Formy
         if @label.is_a? Array
           @label, @label_for = @label
         else
-          @label ||= '&nbsp;'
+          @label ||= '&nbsp;'.html_safe
         end
 
         puts '<div class="control-group %s %s" id="%s" style="%s">' % [parent.first, @classes, @id, @style]
@@ -83,7 +84,7 @@ module Formy
         if @input
             puts @input
             if @info
-              puts content_tag(:p, @info, :class => 'help-block')
+              puts content_tag(:p, @info.html_safe, :class => 'help-block')
             end
           end
         puts '</div>'
@@ -128,7 +129,7 @@ module Formy
                @input + "\n" + @label
             end
             if @info
-              puts content_tag(:p, @info, :class => 'help-block')
+              puts content_tag(:p, @info.html_safe, :class => 'help-block')
             end
             super
           end

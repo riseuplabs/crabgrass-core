@@ -81,7 +81,7 @@ module Common::Ui::GroupsHelper
         end
       end
     end
-    html.join("\n")
+    html.join("\n").html_safe
   end
 
 end

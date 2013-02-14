@@ -187,7 +187,7 @@ module Common::Ui::LayoutHelper
       lines << ' </tr>'
     end
     lines << '</table>' unless options[:skip_table_tag]
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   ##
