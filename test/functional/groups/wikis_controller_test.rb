@@ -31,7 +31,8 @@ class Groups::WikisControllerTest < ActionController::TestCase
     xhr :get, :new, :group_id => @group.to_param
     assert_response :success
     assert !assigns['wiki'].new_record?
-    assert_template 'groups/home/reload.rjs'
+    assert_template 'groups/home/reload'
+    assert_equal 'text/javascript', @response.content_type
   end
 
   def test_new_with_existing_private_wiki
@@ -40,7 +41,8 @@ class Groups::WikisControllerTest < ActionController::TestCase
     xhr :get, :new, :group_id => @group.to_param, :private => true
     assert_response :success
     assert !assigns['wiki'].new_record?
-    assert_template 'groups/home/reload.rjs'
+    assert_template 'groups/home/reload'
+    assert_equal 'text/javascript', @response.content_type
   end
 
   def test_new_private_with_existing_public_wiki
