@@ -28,6 +28,7 @@ gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-u
 
 # not required, but a really good idea
 gem 'mime-types', :require => 'mime/types'
+gem 'rubyzip'
 
 gem 'delayed_job', '~> 3.0.5'
 
