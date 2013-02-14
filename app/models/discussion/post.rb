@@ -111,6 +111,10 @@ class Post < ActiveRecord::Base
     return post
   end
 
+  def body_html
+    read_attribute(:body_html).try :html_safe
+  end
+
   # used for default context, if present, to set for any embedded links
   def owner_name
     discussion.page.owner_name if discussion.page

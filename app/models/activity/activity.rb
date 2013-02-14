@@ -224,7 +224,7 @@ class Activity < ActiveRecord::Base
     thing_span(attribute, 'group')
   end
 
-  # a safe way to reference a user, even if the group has been deleted.
+  # a safe way to reference a user, even if the user has been deleted.
   def user_span(attribute)
     thing_span(attribute, 'user')
   end
