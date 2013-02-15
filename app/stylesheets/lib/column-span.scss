@@ -1,0 +1,113 @@
+//
+// A mixin to provide a fluid grid layout.
+//
+// This is currently based on Bootstrap's fluid grid, although
+// the hope is that a a different grid could be substituted without
+// changing the api.
+//
+// http://twitter.github.com/bootstrap/scaffolding.html#layouts
+//
+// <div class="container-fluid">
+//   <div class="row-fluid">
+//     <div class="span2">
+//       <!--Sidebar content-->
+//     </div>
+//     <div class="span10">
+//       <!--Body content-->
+//     </div>
+//   </div>
+// </div>
+//
+
+$total-columns: $gridColumns;
+$column-width: $gridColumnWidth !default;
+$gutter-width: $gridGutterWidth !default;
+//$sidecolumn-width: $local_sidecolumn_width;
+//$sidebar-width: $local_nav_width;
+
+@mixin column-container() {
+  @extend .container-fluid;
+}
+
+@mixin column-row() {
+  @extend .row-fluid;
+}
+
+@mixin column-span($n) {
+  @extend .span#{$n};
+}
+
+//@mixin sidecolumn-span() {
+//  @include column-span($sidecolumn-width);
+//}
+
+//@mixin sidebar-span() {
+//  @include column-span($sidebar-width);
+//}
+
+@mixin center-span() {
+  // no css is necessary, me thinks
+  // @include column_span($grid_column_count);
+}
+
+@mixin center-span-with-sidebar() {
+  $center-columns: $total-columns - $sidebar-width;
+  @include column-span($center-columns);
+}
+
+@mixin center-span-with-sidecolumn() {
+  $center-columns: $total-columns - $sidecolumn-width;
+  @include column-span($center-columns);
+}
+
+//
+// FUNCTIONS
+//
+
+//
+// Returns the width of the specified number of columns
+// $columns => The number of columns to get width for.
+//
+@function columns-width($columns : $total-columns) {
+  @return ($columns * $column-width) + (ceil($columns - 1) * $gutter-width);
+}
+
+//
+// Returns the full width of all columns
+//
+//@function full-width() {
+//  @return columns-width();
+//}
+
+//
+// Return the percentage width of a single gutter in a given column context.
+// $context => The grid context in columns, if nested.
+//
+@function gutter($context : $total-columns) {
+  @return percentage($gutter-width / columns-width($context));
+}
+
+//
+// Return the percentage width of multiple 'columns' in a given 'context'.
+// $columns => The number of columns to get relative width for.
+// $context => The grid context in columns, if nested.
+//
+//@function columns($columns, $context : $total-columns) {
+//  @return percentage(columns-width($columns) / columns-width($context));
+//}
+
+//
+// returns the percentage width, in $context
+// supports "1g" for 1 gutter's width.
+//
+@function resolve-width($width, $context : $total-columns) {
+  // maybe unit($width) ???
+  // http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html#unit-instance_method
+  $width_in_gutter_units: gutter_units($width);
+  @if $width_in_gutter_units {
+    @return gutter($context) * $width_in_gutter_units;
+  }
+  @else {
+    @return $width;
+  }
+}

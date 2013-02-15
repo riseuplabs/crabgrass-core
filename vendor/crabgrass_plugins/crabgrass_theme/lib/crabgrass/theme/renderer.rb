@@ -172,15 +172,16 @@ module Crabgrass::Theme::Renderer
     File.join(@public_directory, sheet_name.empty? ? "" : sheet_name + '.css')
   end
 
+  # http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#options
   def sass_options
-    options = Compass.configuration.to_sass_engine_options
-    options.merge(
+    {
+      :load_paths => [Crabgrass::Theme::SASS_ROOT],
       :debug_info => false,
       :style => :nested,
       :line_comments => false,
-      :syntax => :scss
-#     :cache => false
-    )
+      :syntax => :scss,
+      :cache => false
+    }
   end
 
 end

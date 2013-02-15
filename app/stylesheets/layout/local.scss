@@ -12,12 +12,12 @@
 
 #local.full_width {
   $center_columns: $grid_column_count;
-  $padding: resolve_width($local_content_padding, $center_columns);
+  $padding: resolve-width($local_content_padding, $center_columns);
 
-  .title { margin-bottom: resolve_width($local_content_padding, $center_columns) }
+  .title { margin-bottom: resolve-width($local_content_padding, $center_columns) }
 
   #column_center {
-    @include full;
+    @include center-span;
     article#content, #title { padding: $padding }
     .section_spacer { height: $padding; }
   }
@@ -28,9 +28,10 @@
 //
 
 #local.sidebar {
+  @include column-row;
 
   $center_columns: $grid_column_count - $local_nav_width;
-  $padding: resolve_width($local_content_padding, $center_columns);
+  $padding: resolve-width($local_content_padding, $center_columns);
   #title {
     // margin-bottom: $padding;
     padding: $padding;
@@ -40,8 +41,7 @@
 
   &.on_left {
     #column_center {
-      @include omega;
-      @include columns($center_columns);
+      @include column-span($center_columns);
     }
 
     @if $local_nav_style == 'tabs' {
@@ -51,8 +51,7 @@
       //
 
       #column_left {
-        @include alpha;
-        @include columns-eat-gutter($local_nav_width);
+        @include column-span($local_nav_width);
       }
 
       nav#local_nav li.navi {
@@ -76,8 +75,8 @@
         // illusion of a tab. a.navi should normally be the one used, but sometimes
         // we want a tab that doesnt have links.
         a.navi, div.navi {
-          padding: resolve_width($local_nav_padding, $local_nav_width) / 2;
-          padding-right: resolve_width($local_nav_padding, $local_nav_width);
+          padding: resolve-width($local_nav_padding, $local_nav_width) / 2;
+          padding-right: resolve-width($local_nav_padding, $local_nav_width);
           &.active {
             background: $local_content_background;
             @if border_width($local_content_border) > 0px {
@@ -99,12 +98,11 @@
     } @else {
 
       #column_left {
-        @include alpha;
-        @include columns($local_nav_width);
+        @include column-span($local_nav_width);
       }
       nav#local_nav {
         li a {
-          padding: resolve_width($local_nav_padding, $local_nav_width);
+          padding: resolve-width($local_nav_padding, $local_nav_width);
         }
       }
     }
@@ -112,12 +110,10 @@
 
   &.on_right {
     #column_center {
-      @include alpha;
-      @include columns($center_columns);
+      @include column-span($center_columns);
     }
     #column_right {
-      @include omega;
-      @include columns($local_nav_width);
+      @include column-span($local_nav_width);
     }
   }
 }
@@ -129,7 +125,7 @@
 #local.sidecolumn {
 
   $center_columns: $grid_column_count - $local_sidecolumn_width;
-  $padding: resolve_width($local_content_padding, $center_columns);
+  $padding: resolve-width($local_content_padding, $center_columns);
 
   #title { margin-bottom: $padding }
   article#content { padding: $padding }
@@ -137,23 +133,19 @@
 
   &.on_left {
     #column_center {
-      @include omega;
-      @include columns($center_columns);
+      @include column-span($center_columns);
     }
     #column_left {
-      @include alpha;
-      @include columns($local_sidecolumn_width);
+      @include column-span($local_sidecolumn_width);
     }
   }
 
   &.on_right {
     #column_center {
-      @include alpha;
-      @include columns($center_columns);
+      @include column-span($center_columns);
     }
     #column_right {
-      @include omega;
-      @include columns($local_sidecolumn_width);
+      @include column-span($local_sidecolumn_width);
     }
   }
 }

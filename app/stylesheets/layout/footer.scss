@@ -1,7 +1,7 @@
 //
 // FOOTER
-// 
-// if there is a background color set for the footer, it is set in the body, and 
+//
+// if there is a background color set for the footer, it is set in the body, and
 // we keep the footer transparent.
 //
 
@@ -10,39 +10,33 @@
   @if $footer_border { border-top: $footer_border; }
   #footer_content {
     @if $footer_column_count == 1 {
-      @include full;
+      @include center-span;
     }
     @else if $footer_column_count == 2 {
       $col: $grid_column_count / 2;
-      .column1 { 
-        @include alpha;
-        @include columns($col);
+      .column1 {
+        @include column-span($col);
       }
       .column2 {
-        @include omega;
-        @include columns($col);
+        @include column-span($col);
       }
       .full {
-        @include alpha;
-        @include full;
+        @include center-span;
       }
     }
     @else if $footer_column_count == 3 {
       $col: $grid_column_count / 3;
-      .column1 { 
-        @include alpha;
-        @include columns($col);
+      .column1 {
+        @include column-span($col);
       }
       .column2 {
-        @include columns($col);
+        @include column-span($col);
       }
       .column3 {
-        @include omega;
-        @include columns($col);
+        @include column-span($col);
       }
       .full {
-        @include alpha;
-        @include full;
+        @include center-span;
       }
     }
   }

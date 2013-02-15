@@ -17,9 +17,9 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 //
 
 #context_banner {
-  @include full;
+  @include center-span;
   background: $banner_default_background;
-  
+
   a.tab {
     color: $banner_default_foreground;
   }
@@ -46,10 +46,10 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   &.dark_border {
     border: $banner_border_dark;
     a.avatar {
-      outline: $banner_border_dark; 
+      outline: $banner_border_dark;
     }
     //
-    // this way of setting border on tabs is hackish and may 
+    // this way of setting border on tabs is hackish and may
     // need to change if the implementation of cutout_menu() changes
     //
     ul#banner_nav_ul li.tab a.tab.active {
@@ -101,12 +101,12 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 // It takes a bit of work to center both the avatar image and the banner text.
 // For font sizes 24px or below, the banner text is already pretty spot on centered.
 // When it gets bigger, however, it does not look so good without all this extra css.
-// 
+//
 // currently, this works, but requires a hardcoded 64px for the size of the
 // avatar.
 //
 // This is another example of where tables would be 10x easier.
-// 
+//
 
 //@if $banner_vertical_align == 'center' {
 //  #banner_content {
@@ -118,7 +118,7 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 //    position: relative;
 //
 //    // both the title and the avatar are floated left so that the title can be
-//    // a block. why do we want the title to be a block? that is the only way to 
+//    // a block. why do we want the title to be a block? that is the only way to
 //    // vertically align it.
 //    a.title, a.avatar {
 //      display: block;
@@ -139,7 +139,7 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 //
 
 @if $banner_vertical_align == 'top' {
-  
+
 }
 
 //
@@ -160,7 +160,7 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 //
 
 @media only screen and (max-width: 590px), only screen and (max-height: 400px) {
-  // 
+  //
   // i dont know what to do about the context banner tabs, they dont work
   // look very nice on small screen. this is a hacky attempt to squish them.
   //

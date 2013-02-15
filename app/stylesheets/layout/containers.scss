@@ -8,13 +8,13 @@ body {
 }
 
 #middle_container, #footer_container {
-  @include container;
+  @include column-container;
 }
 
 @if $masthead_style == 'grid' {
   // there is only an enclosing container for the 'grid' style.
   #masthead_container {
-    @include container;
+    @include column-container;
   }
 }
 

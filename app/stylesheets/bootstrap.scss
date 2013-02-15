@@ -12,13 +12,21 @@ $baseFontFamily:        $font_default_family;
 $baseLineHeight:        $font_default_line_height;
 $textColor:             $font_default_color;
 
+//$gridColumns:           $grid_column_count;
+//$gridColumnWidth:       $grid_column_width;
+//$gridGutterWidth:       $grid_column_gutter;
+//$gridColumnWidth1200:     70px !default;
+//$gridGutterWidth1200:     30px !default;
+//$gridColumnWidth768:      42px !default;
+//$gridGutterWidth768:      20px !default;
+
 //
 // SELECTIVE BOOTSTRAP
 // we don't use all the bootstrap classes
 //
 
 @import "bootstrap/variables";
-@import "bootstrap/mixins";
+//@import "bootstrap/mixins";
 @import "bootstrap/reset";
 
 // Grid system and page structure
