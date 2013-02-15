@@ -144,7 +144,12 @@ class Pages::CreateController < ApplicationController
       else Conf.default_page_access
     end
     page_params[:user] = current_user
-    page_params[:owner] = @owner
+    # in some routes params[:owner] defaults to 'me', so when the route doesn't
+    # have any real info on the owner, page_params[:owner] would be overwritten
+    # by this.
+    unless page_params[:owner] && @owner == current_user
+      page_params[:owner] = @owner
+    end
     page_type.build!(page_params)
   end
 
