@@ -35,13 +35,15 @@ module Common::Ui::AutocompleteHelper
 
   # this searches on friends and peers. if needed, we could modify
   # this to allow the option to search all users.
-  def autocomplete_users_field_tag(field_id)
-    autocomplete_entity_field_tag(field_id, :view => 'recipients') #should this always be recipients?
+  def autocomplete_users_field_tag(field_id, options = {})
+    options.merge! :view => 'recipients'
+    autocomplete_entity_field_tag(field_id, options) #should this always be recipients?
   end
 
   # just for groups
-  def autocomplete_groups_field_tag(field_id)
-    autocomplete_entity_field_tag(field_id, :view => 'groups')
+  def autocomplete_groups_field_tag(field_id, options = {})
+    options.merge! :view => 'groups'
+    autocomplete_entity_field_tag(field_id, options)
   end
 
   # for groups and users
