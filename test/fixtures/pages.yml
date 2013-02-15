@@ -1,4 +1,5 @@
-<%##
+<%
+  ##
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
   ##%>
@@ -6,7 +7,6 @@
 # make result of 'rand()' be consistent
 srand(314159265359)
 
-<%
 
 $text_pool = %q[
 Mauris tristique magna ut mauris. Praesent id tellus vel odio fringilla suscipit. Morbi ultrices blandit turpis. Vestibulum justo dolor, malesuada nec, ornare id, venenatis eu, est. Donec vitae purus in augue interdum tincidunt. Sed ullamcorper turpis nec risus. Sed blandit elit a libero. Suspendisse potenti. Donec rhoncus pede sit amet massa. In suscipit ligula a nisi. Quisque augue. Maecenas mollis ipsum vitae lacus. Integer ornare. In metus libero, vulputate at, ultricies eget, ullamcorper nec, massa. Duis quis lectus. Vestibulum luctus, sapien sit amet aliquet adipiscing, pede dolor gravida odio, a pellentesque sem tortor ac nisi. Cras commodo. Aliquam arcu. Integer in odio et lectus facilisis ultrices. Sed congue metus a felis.
