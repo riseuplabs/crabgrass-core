@@ -25,7 +25,7 @@ module RFC822
     domain = "#{sub_domain}(?:\\x2e#{sub_domain})*"
     local_part = "#{word}(?:\\x2e#{word})*"
     addr_spec = "#{local_part}\\x40#{domain}"
-    pattern = /\A#{addr_spec}\z/
+    pattern = Regexp.new("\A#{addr_spec}\z", nil, 'n')
   end
 end
 
