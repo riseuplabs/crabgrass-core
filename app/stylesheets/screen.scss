@@ -1,78 +1,13 @@
-// resets and libraries
-@import "compass/reset";
-@import "compass/utilities";
-@include reset-html5;
-@import "compass/css3/gradient";
+//
+// CSS for screen displays
+//
 
-// define the grid and import susy
-@import "layout/grid";
-@import "susy/susy";
-
-// import the mixins
-@import "mixins";
-@import "bootstrap/mixins";
-
-// define our colors
+@import "lib/mixins";
 @import "colors";
+@import "bootstrap";
+@import "layout";
+@import "ui";
+@import "pages";
 
-// define our basic layout
-@import "layout/containers";
-@import "layout/masthead";
-@import "layout/top_menu";
-@import "layout/middle";
-@import "layout/banner";
-@import "layout/title";
-@import "layout/local";
-@import "layout/sidebox";
-@import "layout/footer";
-
-// bootstrap
-@import "bootstrap_var_override";
-@import "bootstrap/variables";
-// @import "bootstrap/forms";
-@import "bootstrap/breadcrumbs";
-@import "bootstrap/buttons";
-@import "bootstrap/button-groups";
-@import "bootstrap/pagination";
-@import "bootstrap/progress-bars";
-@import "bootstrap/utilities";
-@import "bootstrap/labels";
-@import "bootstrap/alerts";
-@import "bootstrap/navs";
-@import "bootstrap_css_override";
-
-// include ui elements
-@import "ui/typography";
-@import "ui/tables";
-@import "ui/errors";
-@import "ui/icons";
-@import "ui/images";
-@import "ui/headings";
-@import "ui/lists";
-@import "ui/forms";
-@import "ui/formy";
-@import "ui/autocomplete";
-@import "ui/borders";
-@import "ui/modalbox";
-@import "ui/posts";
-@import "ui/rows";
-@import "ui/split_panel";
-@import "ui/sliding_list";
-// @import "ui/gizmos";
-@import "ui/ui_elements";
-@import "ui/tabs";
-@import "ui/entities";
-@import "ui/login";
-@import "ui/wiki";
-@import "ui/cursor";
-
-// page styling
-@import "pages/listing";
-@import "pages/search";
-@import "pages/title";
-@import "pages/sidebar";
-
-@import "debug";
-
-// put this last to allow small screen override
+// these overrides should go last:
 @import "layout/small_screen";
