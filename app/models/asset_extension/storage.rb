@@ -41,7 +41,7 @@
 #This tells Rails to generate links to the following four hosts: assets0.example.com, assets1.example.com, assets2.example.com, and assets3.example.com.
 
 
-require 'ftools'
+require 'fileutils'
 require 'pathname'
 
 module AssetExtension # :nodoc:
