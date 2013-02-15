@@ -48,11 +48,13 @@ group :development do
   ##
   gem 'rdoc', '~> 3.0'
 
-  gem 'mongrel'
+  gem 'mongrel', :platforms => :mri_18
+  gem 'thin', :platforms => :mri_19
 end
 
 group :test, :development do
-  gem 'ruby-debug'
+  gem 'debugger', :platforms => :mri_19
+  gem 'ruby-debug', :platforms => :mri_18
 end
 
 
