@@ -1,4 +1,4 @@
-- cache(group_cache_key(@user, :what => 'groups', :expires_in => hours(3))) do
+- cache entity_cache_key(@user, :what => 'groups'), :expires_in => hours(3) do
   = entity_list(@user.groups.recently_active(:limit => 10),
     {:link_options => {:avatar => 'small'},
     :header => content_tag(:h3, :groups.t),

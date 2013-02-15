@@ -1,10 +1,13 @@
 module Common::Utility::CacheHelper
 
+  def entity_cache_key(entity, options={})
+    params.merge(:version => entity.version, :updated_at => entity.updated_at.to_i,
+        :path => nil, :authenticity_token => nil).merge(options)
+  end
+
   def group_cache_key(group, options={})
     may_admin = current_user.may?(:admin, group)
-    params.merge(:version => group.version, :updated_at => group.updated_at.to_i,
-        :lang => session[:language_code], :path => nil, :may_admin => may_admin,
-        :authenticity_token => nil, :access => @access).merge(options)
+    entity_cache_key(group, :lang => session[:language_code], :may_admin => may_admin, :access => @access).merge(options)
   end
 
   def me_cache_key
