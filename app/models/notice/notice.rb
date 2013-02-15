@@ -10,15 +10,15 @@ class Notice < ActiveRecord::Base
   ## CLASS METHODS
   ##
 
-  named_scope(:for_user, lambda {|user|
+  scope(:for_user, lambda {|user|
     {:conditions => {:user_id => user.id}}
   })
 
-  named_scope(:for_noticable, lambda{|noticable|
+  scope(:for_noticable, lambda{|noticable|
     {:conditions => {:noticable_id => noticable.id, :noticable_type => type_field(noticable)}}
   })
 
-  named_scope(:dismissed, lambda{|boolean|
+  scope(:dismissed, lambda{|boolean|
     {:conditions => {:dismissed => boolean}}
   })
 

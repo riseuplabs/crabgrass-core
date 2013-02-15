@@ -17,7 +17,7 @@ module Common::Ui::NavigationHelper
   protected
 
   def breadcrumb_divider()
-    '<span class="divider">&raquo;</span>'
+    '<span class="divider">&raquo;</span>'.html_safe
   end
 
   ##

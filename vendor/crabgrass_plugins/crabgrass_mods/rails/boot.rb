@@ -1,3 +1,5 @@
+## FIXME: this file is no longer loaded in rails 3. What is still needed?
+
 require File.join(File.dirname(__FILE__), '/../lib/mods')
 
 # initialize Rails::Configuration with our own default values to spare users

@@ -32,7 +32,8 @@ class People::DirectoryControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     # 13 users total - so 1 on the fourth page
-    assert_equal 1, assigns(:users).count
+    ## FIXME: 'count' doesn't work here, because it loses pagination params.
+    assert_equal 1, assigns(:users).length
     assert_select '.pagination' do
       # pagination links only up to 3, 4 is current, no next one
       assert_select 'a:last-of-type', '3'

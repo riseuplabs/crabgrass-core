@@ -1,31 +1,7 @@
+#!/usr/bin/env rake
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-require(File.join(File.dirname(__FILE__), 'config', 'boot'))
+require File.expand_path('../config/application', __FILE__)
 
-require 'rake'
-require 'rake/testtask'
-
-require 'tasks/rails'
-
-begin
-  gem 'rdoc', '~> 3.0'
-  require 'rdoc/task'
-rescue LoadError
-  STDERR.puts "(rdoc tasks disabled)"
-end
-
-begin
-  gem 'delayed_job', '~> 2.0'
-  require 'delayed/tasks'
-rescue LoadError
-  STDERR.puts "(delayed_job tasks disabled)"
-end
-
-begin
-  gem 'thinking-sphinx', '~> 1.4'
-  require 'thinking-sphinx'
-  require 'thinking_sphinx/tasks'
-rescue LoadError
-  STDERR.puts "(sphinx tasks disabled)"
-end
+Crabgrass::Application.load_tasks

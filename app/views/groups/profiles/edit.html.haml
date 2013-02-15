@@ -1,5 +1,5 @@
 
-- form_tag(group_profile_path(@group), :method => 'put', :multipart => true) do
+= form_tag(group_profile_path(@group), :method => 'put', :multipart => true) do
   = formy(:table_form) do |f|
 
     - f.heading I18n.t(:information)

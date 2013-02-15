@@ -6,7 +6,7 @@
 - text_area = text_area_tag('post[body]', text, :id => 'say_msg', :rows => '8')
 - send_button = button_to_function(:send_button.t, send_message_function(recipient_name))
 
-- form_tag('', :id => 'say_form') do
+= form_tag('', :id => 'say_form') do
   = formy(:simple_form) do |f|
     - f.row do |r|
       - r.label :recipient.t, 'recipient_name'

@@ -39,7 +39,7 @@ module Wikis::SectionsHelper
       add_edit_link_to_heading(anchor, subsection)
       wrap_in_div(doc, subsection, section == :document)
     end
-    doc.to_html
+    doc.to_html.html_safe
   end
 
   def add_edit_link_to_heading(anchor, section)

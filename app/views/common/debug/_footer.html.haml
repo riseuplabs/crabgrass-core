@@ -14,7 +14,7 @@
 
   .p
     %h3 Become user
-    - form_tag(debug_become_path) do
+    = form_tag(debug_become_path) do
       %label Login
       = text_field_tag('id')
       = hidden_field_tag('url', request.path)
@@ -32,7 +32,7 @@
   %br/
 
   %h3 All
-  - permission_methods = @controller.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+  - permission_methods = controller.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
   - permission_methods.each do |section|
     %ul
       %li.first

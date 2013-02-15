@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # this requires ActionView::Helpers::TagHelper
 #
 # Four different alert methods:
@@ -127,7 +128,7 @@ module Common::Application::AlertMessages
     content_tag(:div, :class => 'alert_message_container') do
       content_tag(:div, :id => 'alert_messages') do
         if alert_messages?
-          flash[:messages].collect {|message| message_html(message)}.join
+          flash[:messages].collect {|message| message_html(message)}.join.html_safe
         else
           ""
         end
@@ -337,10 +338,10 @@ module Common::Application::AlertMessages
     if allow_fade
       if message[:fade] || message[:quick] || ((message[:type] == :success || message[:type] == :notice) && !message[:nofade])
         timeout = message[:quick] ? 0.5 : FADE_TIMEOUT
-        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});")
+        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});".html_safe)
       end
     end
-    content_tag(:div, html.join, :class => "message #{message[:type]}", :id => message_id)
+    content_tag(:div, html.join.html_safe, :class => "message #{message[:type]}", :id => message_id)
   end
 
 #  def exception_detailed_message(exception=nil)

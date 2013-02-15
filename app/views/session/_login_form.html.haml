@@ -9,7 +9,7 @@
 - # if this form is rendered, then we don't create one on the menubar
 
 .login_form
-  - form_tag(login_path, :id => "entry") do
+  = form_tag(login_path, :id => "entry") do
     %div
       %label(for = 'login')= :login_name.t
       %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')

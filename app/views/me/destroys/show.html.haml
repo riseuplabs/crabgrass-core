@@ -1,18 +1,14 @@
 %h1= :remove_your_account.t
 
-- form_tag(me_destroy_path, :method => :put) do
+= form_tag(me_destroy_path, :method => :put) do
   = formy(:table_form) do |f|
     - f.row do |r|
-      - r.checkboxes do |cbs|
-        - cbs.checkbox do |cb|
-          - cb.label :anonymize_display_name.t
-          - cb.info :anonymize_display_name_info.t
-          - cb.input check_box_tag :scrub_name
+      - r.input check_box_tag :scrub_name
+      - r.label :anonymize_display_name.t
+      - r.info :anonymize_display_name_info.t
     - f.row do |r|
-      - r.checkboxes do |cbs|
-        - cbs.checkbox do |cb|
-          - cb.label :destroy_comments.t
-          - cb.info :destroy_comments_info.t
-          - cb.input check_box_tag :scrub_comments
+      - r.input check_box_tag :scrub_comments
+      - r.label :destroy_comments.t
+      - r.info :destroy_comments_info.t
     - f.buttons submit_tag(:destroy.t, :confirm => :confirm_account_removal.t, :class => 'btn btn-danger')
 	  

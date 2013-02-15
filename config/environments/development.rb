@@ -1,33 +1,38 @@
-##
-## STANDARD RAILS OPTIONS
-##
+Crabgrass::Application.configure do
+  ##
+  ## STANDARD RAILS OPTIONS
+  ##
 
-config.cache_classes = false
-config.whiny_nils = true
-config.action_controller.consider_all_requests_local = true
-config.action_view.debug_rjs                         = true
-config.action_controller.perform_caching             = false
-config.action_mailer.raise_delivery_errors = false
-config.log_level = :debug
-config.reload_plugins = true
+  config.cache_classes = false
+  config.whiny_nils = true
+  config.consider_all_requests_local = true
+  config.action_view.debug_rjs                         = true
+  config.action_controller.perform_caching             = false
+  config.action_mailer.raise_delivery_errors = false
+  config.log_level = :debug
 
-##
-## CRABGRASS OPTIONS
-##
+  ## FIXME: when reloading plugins is enabled, SearchFilter.filters will be
+  ##        empty after the first request.
+  config.reload_plugins = false
 
-#
-# When running crabgrass, you can set the environment variable
-# INFO to a level 0 .. 10 to print out debugging messages.
-# This sets the default level to 0, which shows the high level
-# messages.
-#
-DEFAULT_INFO_LEVEL = 0
+  config.active_support.deprecation = :log
 
-##
-## DEBUGGING
-## See doc/DEBUGGING for tips.
-##
+  ##
+  ## CRABGRASS OPTIONS
+  ##
 
-require "#{RAILS_ROOT}/lib/crabgrass/debug.rb"
+  #
+  # When running crabgrass, you can set the environment variable
+  # INFO to a level 0 .. 10 to print out debugging messages.
+  # This sets the default level to 0, which shows the high level
+  # messages.
+  #
+  DEFAULT_INFO_LEVEL = 0
 
+  ##
+  ## DEBUGGING
+  ## See doc/DEBUGGING for tips.
+  ##
 
+  require "#{Rails.root}/lib/crabgrass/debug.rb"
+end

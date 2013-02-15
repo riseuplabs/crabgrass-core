@@ -133,7 +133,7 @@ class Crabgrass::Theme::NavigationItem < Array
       define_method(attr_name) do
         value = instance_variable_get("@#{attr_name}")
         if value.is_a?(Proc) and @theme.controller
-          view = @theme.controller.response.template
+          view = @theme.controller.view_context
           view.instance_eval(&value)
         else
           value

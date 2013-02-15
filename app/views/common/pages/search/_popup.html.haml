@@ -29,7 +29,7 @@
 - with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
 - @filter_submit_options = {:url => url, :with => with, :loading => show_spinner('search_filter'), :complete => close_modal_function}
 
-- form_tag(url, :id => 'page_search_form') do
+= form_tag(url, :id => 'page_search_form') do
   - if filter.description.any?
     .tip.info_16
       = filter.description.t

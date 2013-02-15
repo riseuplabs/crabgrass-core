@@ -24,7 +24,7 @@ module CastleGates
     #
     # queries keys that are associated with the holder, or any of its 'subholders'
     #
-    named_scope(:for_holder, lambda { |holder|
+    scope(:for_holder, lambda { |holder|
       { :conditions => conditions_for_holder(Holder[holder]) }
     })
 
@@ -34,7 +34,7 @@ module CastleGates
     # OPTIMIZE: this is an inefficient finder. It would be better
     # to store the holder_code in a separate field in the keys table.
     #
-    named_scope(:limit_by_holders, lambda { |holders|
+    scope(:limit_by_holders, lambda { |holders|
       holders = [holders] unless holders.is_a?(Array)
       holder_codes = holders.collect{|holder| Holder[holder].code_prefix.to_s}
         # ^^ MySQL and SQLite both support substr of integers. For SQLite, however,

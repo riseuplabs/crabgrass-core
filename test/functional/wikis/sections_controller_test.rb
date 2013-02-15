@@ -32,7 +32,8 @@ biggie
       xhr :get, :edit, :wiki_id => @wiki.id, :id => 'section-one'
     end
     assert_response :success
-    assert_template 'wikis/sections/edit.rjs'
+    assert_template 'wikis/sections/edit'
+    assert_equal 'text/javascript', @response.content_type
     markup = <<-EOM
 h2. section one
 
@@ -58,7 +59,8 @@ one A
       xhr :get, :edit, :wiki_id => @wiki.id, :id => 'section-one'
     end
     assert_response :success
-    assert_template 'wikis/sections/locked.rjs'
+    assert_template 'wikis/sections/locked'
+    assert_equal 'text/javascript', @response.content_type
     assert_equal other_user, @wiki.locker_of(:document)
     assert_equal @wiki, assigns['wiki']
   end

@@ -116,7 +116,7 @@ class Wiki < ActiveRecord::Base
   def body_html
     update_body_html_and_structure
 
-    read_attribute(:body_html)
+    read_attribute(:body_html).html_safe
   end
 
   def preview_html
@@ -286,7 +286,7 @@ class Wiki < ActiveRecord::Base
 
     before_destroy :confirm_existance_of_other_version
 
-    named_scope :most_recent, :order => 'version DESC'
+    scope :most_recent, :order => 'version DESC'
 
     self.per_page = 10
 

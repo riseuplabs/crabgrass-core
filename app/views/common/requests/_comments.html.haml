@@ -6,7 +6,7 @@
 
 -# first row
 - html1 = expand_links(@request.display_description, :avatar => 'tiny', :class => 'inline')
-- post1 = proxy.new(@request.id, 0, @request.created_by, @request.created_at, nil, 0, html1)
+- post1 = proxy.new(@request.id, 0, @request.created_by, @request.created_at, nil, 0, html1.html_safe)
 
 -# second row
 - post2 = nil
@@ -16,10 +16,10 @@
     - post2 = proxy.new(@request.id, 0, current_user, nil, nil, 0, html2)
 - elsif @request.approved?
   - html2 = content_tag(:button, :approved.t, :class => 'btn btn-success disabled')
-  - post2 = proxy.new(@request.id, 0, @request.approved_by, @request.updated_at, nil, 0, html2)
+  - post2 = proxy.new(@request.id, 0, @request.approved_by, @request.updated_at, nil, 0, html2.html_safe)
 - elsif @request.rejected?
   - html2 = content_tag(:button, :rejected.t, :class => 'btn btn-danger disabled')
-  - post2 = proxy.new(@request.id, 0, @request.rejected_by, @request.updated_at, nil, 0, html2)
+  - post2 = proxy.new(@request.id, 0, @request.rejected_by, @request.updated_at, nil, 0, html2.html_safe)
 
 -# comments here?
 

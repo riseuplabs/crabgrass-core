@@ -33,11 +33,15 @@ class PageNotice < Notice
   ##
 
   def display_title
-    props = {:page_title => CGI::escapeHTML(data[:page_title]), :from => CGI::escapeHTML(data[:from])}
+    props = data.merge(
+      :page_title => CGI::escapeHTML(data[:page_title]),
+      :from => CGI::escapeHTML(data[:from]),
+      :message => CGI::escapeHTML(data[:message])
+    )
     if data[:message]
-      :page_notice_title_with_message.t(data).html_safe
+      :page_notice_title_with_message.t(props).html_safe
     else
-      :page_notice_title.t(data).html_safe
+      :page_notice_title.t(props).html_safe
     end
   end
 
@@ -46,7 +50,7 @@ class PageNotice < Notice
   end
 
   def display_body
-    data[:message]
+    CGI::escapeHTML(data[:message])
   end
 
   def button_text

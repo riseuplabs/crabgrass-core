@@ -53,7 +53,7 @@ class CronController < ActionController::Base
   # (on a system with user accounts, tmpreaper should be used instead.)
   #
   def clean_fragment_cache
-    system("find", RAILS_ROOT+'/tmp/cache', '-ctime', '+3', '-exec', 'rm', '{}', ';')
+    system("find", Rails.root+'/tmp/cache', '-ctime', '+3', '-exec', 'rm', '{}', ';')
   end
 
   #
@@ -61,7 +61,7 @@ class CronController < ActionController::Base
   # (on a system with user accounts, tmpreaper should be used instead.)
   #
   def clean_session_cache
-    system("find", RAILS_ROOT+'/tmp/sessions', '-ctime', '+3', '-exec', 'rm', '{}', ';')
+    system("find", Rails.root+'/tmp/sessions', '-ctime', '+3', '-exec', 'rm', '{}', ';')
   end
 
 end

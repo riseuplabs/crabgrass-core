@@ -5,11 +5,12 @@ module Common::Ui::TextHelper
 
   # convert greencloth marktup to html
   def to_html(str)
-    str.any? ? GreenCloth.new(str).to_html() : ''
+    ## FIXME: add 'html_safe' in GreenCloth's to_html instead of here
+    str.any? ? GreenCloth.new(str).to_html().html_safe : ''
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to((I18n.t(:see_more_link)+ARROW).html_safe, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 
@@ -33,7 +34,7 @@ module Common::Ui::TextHelper
     length = options[:length] || 50
     omission = options[:omission] || "... "
     if options[:url]
-      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options[:url])
+      link = link_to((' '+I18n.t(:see_more_link)+ARROW).html_safe, options[:url])
     else
       link = ''
     end

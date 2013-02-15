@@ -74,7 +74,7 @@ module UserExtension
       clear_access_cache
       direct, all, admin_for = get_group_ids
       peer = get_peer_ids(direct)
-      update_attributes :version => version+1,
+      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
         :direct_group_id_cache => direct,
         :all_group_id_cache    => all,
         :admin_for_group_id_cache    => admin_for,
@@ -113,13 +113,13 @@ module UserExtension
          admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
-       self.write_attribute(:tag_id_cache, nil)
-       self.write_attribute(:foe_id_cache, nil)
-       self.write_attribute(:peer_id_cache, nil)
-       self.write_attribute(:friend_id_cache, nil)
-       self.write_attribute(:direct_group_id_cache, nil)
-       self.write_attribute(:all_group_id_cache, nil)
-       self.write_attribute(:admin_for_group_id_cache, nil)
+       write_attribute(:tag_id_cache, nil)
+       write_attribute(:foe_id_cache, nil)
+       write_attribute(:peer_id_cache, nil)
+       write_attribute(:friend_id_cache, nil)
+       write_attribute(:direct_group_id_cache, nil)
+       write_attribute(:all_group_id_cache, nil)
+       write_attribute(:admin_for_group_id_cache, nil)
        self.clear_access_cache
     end
 
@@ -127,7 +127,7 @@ module UserExtension
     # or directly when a new contact is added
     def update_contacts_cache()
       friend,foe = get_contact_ids
-      update_attributes :version => version+1,
+      update_attributes :version => version+1, # might version be nil?
         :friend_id_cache => friend,
         :foe_id_cache    => foe
     end

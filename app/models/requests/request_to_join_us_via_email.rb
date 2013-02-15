@@ -66,7 +66,7 @@ class RequestToJoinUsViaEmail < Request
     end
   end
 
-  before_validation_on_create :set_code
+  before_validation :set_code, :on => :create
   def set_code
     self.code = Password.random(8)
   end

@@ -30,7 +30,7 @@ module Common::Page::ListingRowHelper
   def page_info(page, options={})
     date = friendly_date(page.updated_at)
     user = link_to_name(page.updated_by_login)
-    "#{date}&nbsp;&bull;&nbsp;#{user}<br/>#{page.views_count}&nbsp;views / #{page.stars_count}&nbsp;stars / #{page.contributors_count}&nbsp;voices"
+    "#{date}&nbsp;&bull;&nbsp;#{user}<br/>#{page.views_count}&nbsp;views / #{page.stars_count}&nbsp;stars / #{page.contributors_count}&nbsp;voices".html_safe
 
 #    locals = {:page => page}
 

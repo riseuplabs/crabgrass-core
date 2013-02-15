@@ -1,3 +1,5 @@
+Rails::Plugin.send(:include, Mods::Plugin)
+
 # we don't load any source files from here, because they get
 # loaded by 'boot.rb' earlier on in the rails startup
 

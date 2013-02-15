@@ -9,7 +9,7 @@ class CorruptedAsset < Asset
   end
 
   def private_filename
-    "#{RAILS_ROOT}/public/images/ui/corrupted/corrupted.png"
+    "#{Rails.root}/public/images/ui/corrupted/corrupted.png"
   end
 
   def content_type

@@ -51,6 +51,8 @@ I18n.load_path << load_path
 I18n.default_locale = Conf.default_language
 I18n.exception_handler = :crabgrass_i18n_exception_handler
 
+I18n.load_path.flatten!
+
 #
 # Turn off reloading of .yml files after every request if in BOOST mode.
 # Makes everything much much faster!!

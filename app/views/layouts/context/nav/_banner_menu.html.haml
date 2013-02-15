@@ -5,6 +5,6 @@
         - if tab.visible
           %li{:class => "tab #{first('banner_menu')}"}
             - if tab.icon
-              = link_to_active("<span class='text'>#{tab.label}</span><span class='mobi_icon #{tab.icon}_16'></span>", tab.url, tab.active, :class => "tab")
+              = link_to_active("<span class='text'>#{h(tab.label)}</span><span class='mobi_icon #{tab.icon}_16'></span>".html_safe, tab.url, tab.active, :class => "tab")
             - else
               = link_to_active(tab.label, tab.url, tab.active, :class => "tab")

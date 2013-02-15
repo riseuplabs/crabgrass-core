@@ -8,7 +8,7 @@
 - text_area = text_area_tag 'recipients', params[:recipients], :rows => 4, :cols => 50
 - send_button = submit_tag(:send_invites_button.t(:name => 'send'))
 
-- form_tag(group_invites_path(@group), :method => :post) do 
+= form_tag(group_invites_path(@group), :method => :post) do 
   = formy(:simple_form) do |f|
     - f.row do |r|
       - r.label :recipients.t, 'recipients'
