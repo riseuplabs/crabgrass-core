@@ -96,17 +96,4 @@ module Crabgrass
   require Rails.root.join('lib/crabgrass/page/class_registrar')
   require Rails.root.join('lib/crabgrass/page/data')
 
-  #
-  # Enable/disable rails-dev-boost.
-  # This needs to be done before initializers are loaded, after gem is loaded.
-  #
-  class RailsDevelopmentBoost::Railtie
-    class << self
-      def boost_enabled_with_env_toggle?
-        ENV['BOOST'] && boost_enabled_without_env_toggle?
-      end
-      alias_method_chain :boost_enabled?, :env_toggle
-    end
-  end
-
 end
