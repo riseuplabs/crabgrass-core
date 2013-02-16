@@ -10,7 +10,7 @@
 %>
 <% page_count.times do |page_id| %>
 <% 2.times do %>
-<% tag = tags.choice # in ruby 1.9, this method is named 'sample' %>
+<% tag = tags.sample %>
 <%= "#{tag}_#{page_id}" %>:
   tag: <%= tag %>
   taggable_id: <%= page_id %> 
