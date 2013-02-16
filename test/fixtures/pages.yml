@@ -2,7 +2,7 @@
   ##
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
-  ##%>
+  ##
 
 # make result of 'rand()' be consistent
 srand(314159265359)
