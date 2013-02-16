@@ -127,7 +127,7 @@ module UserExtension
     # or directly when a new contact is added
     def update_contacts_cache()
       friend,foe = get_contact_ids
-      update_attributes :version => version+1, # might version be nil?
+      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
         :friend_id_cache => friend,
         :foe_id_cache    => foe
     end
