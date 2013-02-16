@@ -29,31 +29,16 @@ module RFC822
   end
 end
 
-# Validation helper for ActiveRecord derived objects that cleanly and simply
-# allows the model to check if the given string is a syntactically valid email
-# address (by using the RFC822 module above).
-#
-# Original code by Ximon Eighteen <ximon.eightee@int.greenpeace.org> which was
-# heavily based on code I can no longer find on the net, my apologies to the
-# author!
-#
-# Huge credit goes to Dan Kubb <dan.kubb@autopilotmarketing.com> for
-# submitting a patch to massively simplify this code and thereby instruct me
-# in the ways of Rails too! I reflowed the patch a little to keep the line
-# length to a maximum of 78 characters, an old habit.
+class EmailFormatValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    message   = options[:message] || 'is an invalid email'
+    allow_nil = options[:allow_nil] || true
+    record.errors[attribute] << message unless value =~ RFC822::EmailAddress
+  end
+end
 
-module ActiveRecord
-  module Validations
-    module ClassMethods
-      def validates_as_email(*attr_names)
-        configuration = {
-          :message   => 'is an invalid email',
-          :with      => RFC822::EmailAddress,
-          :allow_nil => true }
-        configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
-
-        validates_format_of attr_names, configuration
-      end
-    end
+ActiveRecord::Base.class_eval do
+  def self.validates_as_email(attr_name, options={})
+    validates :attr_name, :presence => true, :email_format => true  
   end
 end
