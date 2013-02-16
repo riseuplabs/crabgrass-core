@@ -21,6 +21,7 @@
     %div.buttons
       %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
     %div
-      = hidden_field_tag 'redirect', params[:redirect]
+      - if params[:redirect]
+        = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
 
