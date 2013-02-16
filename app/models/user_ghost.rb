@@ -24,8 +24,8 @@ class UserGhost < User
     # setting.destroy #TODO not sure if settings are ever used.
     task_participations.each { |t| t.destroy }
     participations.each { |p| p.destroy }
-    memberships.each { |m| m.destroy }
-    relationships.each { |r| r.destroy }
+    memberships.each { |m| m.destroy } # should we use remove_user! ?
+    relationships.each { |relationship| self.remove_contact!(User.find(relationship.contact_id)) }
     clear_cache
   end
   #handle_asynchronously :retire!
