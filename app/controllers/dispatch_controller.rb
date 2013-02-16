@@ -249,6 +249,7 @@ class DispatchController < ApplicationController
   def controller_for_group(group)
     params[:action] = 'show'
     params[:controller] = 'groups/home'
+    params[:group_id] = params[:_context]
     new_controller('Groups::HomeController')
 
     #
@@ -272,6 +273,7 @@ class DispatchController < ApplicationController
   def controller_for_people
     params[:action] = 'show'
     params[:controller] = 'people/home'
+    params[:person_id] = params[:_context]
     new_controller('People::HomeController')
   end
 
