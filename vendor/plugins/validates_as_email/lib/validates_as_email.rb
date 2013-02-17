@@ -1,32 +1,30 @@
-#
-# RFC822 Email Address Regex
-# --------------------------
-#
-# Originally written by Cal Henderson
-# c.f. http://iamcal.com/publish/articles/php/parsing_email/
-#
-# Translated to Ruby by Tim Fletcher, with changes suggested by Dan Kubb.
-#
-# Licensed under a Creative Commons Attribution-ShareAlike 2.5 License
-# http://creativecommons.org/licenses/by-sa/2.5/
-#
 module RFC822
-  EmailAddress = begin
-    qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]'
-    dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]'
-    atom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-' +
-      '\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+'
-    quoted_pair = '\\x5c[\\x00-\\x7f]'
-    domain_literal = "\\x5b(?:#{dtext}|#{quoted_pair})*\\x5d"
-    quoted_string = "\\x22(?:#{qtext}|#{quoted_pair})*\\x22"
-    domain_ref = atom
-    sub_domain = "(?:#{domain_ref}|#{domain_literal})"
-    word = "(?:#{atom}|#{quoted_string})"
-    domain = "#{sub_domain}(?:\\x2e#{sub_domain})*"
-    local_part = "#{word}(?:\\x2e#{word})*"
-    addr_spec = "#{local_part}\\x40#{domain}"
-    pattern = Regexp.new("\A#{addr_spec}\z", nil, 'n')
-  end
+# Copied from https://github.com/datamapper/dm-validations/blob/master/lib/data_mapper/validation/rule/formats/email.rb
+  EmailAddress =
+    begin
+      letter = 'a-zA-Z'
+      digit          = '0-9'
+      atext          = "[#{letter}#{digit}\!\#\$\%\&\'\*+\/\=\?\^\_\`\{\|\}\~\-]"
+      dot_atom_text  = "#{atext}+([.]#{atext}*)+"
+      dot_atom       = dot_atom_text
+      no_ws_ctl      = '\x01-\x08\x11\x12\x14-\x1f\x7f'
+      qtext          = "[^#{no_ws_ctl}\\x0d\\x22\\x5c]"  # Non-whitespace, non-control character except for \ and "
+      text           = '[\x01-\x09\x11\x12\x14-\x7f]'
+      quoted_pair    = "(\\x5c#{text})"
+      qcontent       = "(?:#{qtext}|#{quoted_pair})"
+      quoted_string  = "[\"]#{qcontent}+[\"]"
+      atom           = "#{atext}+"
+      word           = "(?:#{atom}|#{quoted_string})"
+      obs_local_part = "#{word}([.]#{word})*"
+      local_part     = "(?:#{dot_atom}|#{quoted_string}|#{obs_local_part})"
+      dtext          = "[#{no_ws_ctl}\\x21-\\x5a\\x5e-\\x7e]"
+      dcontent       = "(?:#{dtext}|#{quoted_pair})"
+      domain_literal = "\\[#{dcontent}+\\]"
+      obs_domain     = "#{atom}([.]#{atom})+"
+      domain         = "(?:#{dot_atom}|#{domain_literal}|#{obs_domain})"
+      addr_spec      = "#{local_part}\@#{domain}"
+      pattern        = /\A#{addr_spec}\z/u
+    end
 end
 
 class EmailFormatValidator < ActiveModel::EachValidator
@@ -39,6 +37,6 @@ end
 
 ActiveRecord::Base.class_eval do
   def self.validates_as_email(attr_name, options={})
-    validates attr_name, :presence => true, :email_format => true  
+    validates attr_name, :presence => true, :email_format => true
   end
 end
