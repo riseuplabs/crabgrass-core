@@ -8,7 +8,9 @@ Tempfile.class_eval do
   #
   def make_tmpname(basename, n)
     ext = nil
-    sprintf("%s%d-%d%s", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$, n, ext)
+    name = sprintf("%s%d-", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$)
+    name << n if n
+    name << ext
   end
 end
 
