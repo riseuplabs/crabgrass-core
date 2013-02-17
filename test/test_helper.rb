@@ -22,8 +22,6 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 ## misc.
 ##
 
-require 'factory_girl_rails'
-
 #include ActionController::Assertions::ResponseAssertions
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
