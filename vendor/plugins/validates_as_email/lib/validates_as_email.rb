@@ -39,6 +39,6 @@ end
 
 ActiveRecord::Base.class_eval do
   def self.validates_as_email(attr_name, options={})
-    validates :attr_name, :presence => true, :email_format => true  
+    validates attr_name, :presence => true, :email_format => true  
   end
 end
