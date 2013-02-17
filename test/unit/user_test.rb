@@ -9,7 +9,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_ensure_values_in_receive_notifications
-    user = User.make
+    user = FactoryGirl.create(:user)
 
     user.receive_notifications = nil
     user.save!

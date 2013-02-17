@@ -19,13 +19,6 @@ end
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 ##
-## load machinist blueprints
-##
-
-require File.expand_path(File.dirname(__FILE__) + "/blueprints")
-
-
-##
 ## misc.
 ##
 

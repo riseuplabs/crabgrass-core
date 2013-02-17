@@ -66,7 +66,7 @@ group :test do
   ## GEMS REQUIRED FOR TESTS
   ##
 
-  gem 'machinist', '~> 1.0' # switch to v2 when stable.
+  gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
   gem 'minitest', '~> 2.12', :require => 'minitest/autorun'
   gem 'mocha', '~> 0.12.0', :require => false

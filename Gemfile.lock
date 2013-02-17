@@ -79,6 +79,11 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (1.0.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.0)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
     fastthread (1.0.7)
@@ -91,7 +96,6 @@ GEM
     json (1.7.7)
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
-    machinist (1.0.6)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -175,13 +179,13 @@ DEPENDENCIES
   compass-susy-plugin!
   debugger
   delayed_job (~> 3.0.5)
+  factory_girl_rails
   faker (~> 1.0.0)
   greencloth!
   haml (~> 3.0)
   hpricot (~> 0.8)
   i18n
   jsmin
-  machinist (~> 1.0)
   mime-types
   minitest (~> 2.12)
   mocha (~> 0.12.0)

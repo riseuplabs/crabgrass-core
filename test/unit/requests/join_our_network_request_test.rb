@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 class JoinOurNetworkRequestTest < ActiveSupport::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
-    @network = Network.make
+    @user    = FactoryGirl.create(:user)
+    @group   = FactoryGirl.create(:group)
+    @network = FactoryGirl.create(:network)
   end
 
   def test_valid_request
@@ -39,7 +39,7 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
 
   def test_valid_approval
     @group.add_user! @user
-    inviter = User.make
+    inviter = FactoryGirl.create(:user)
     @network.add_user! inviter
     req = RequestToJoinOurNetwork.create! :created_by => inviter,
       :recipient => @group,
