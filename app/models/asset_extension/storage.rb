@@ -210,7 +210,7 @@ module AssetExtension # :nodoc:
     def save_to_storage(temp_path)
       if File.exists?(temp_path)
         FileUtils.mkdir_p(File.dirname(private_filename))
-        File.cp(temp_path, private_filename)
+        FileUtils.cp(temp_path, private_filename)
         File.chmod(0644, private_filename)
       end
       true
