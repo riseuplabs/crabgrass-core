@@ -82,39 +82,6 @@ ActiveRecord::Base.class_eval do
     end
   end
 
-  # class_attribute()
-  #
-  # Used by Page in order to allow subclasses (ie Tools) to define themselves
-  # (ie icon, description, etc) by setting class attributes.
-  #
-  # <example>
-  #   class Page
-  #     class_attribute :color
-  #   end
-  #   class Wiki < Page
-  #     color 'blue'
-  #   end
-  # </example>
-  #
-  # class_inheritable_accessor is very close to what we want. However, when
-  # an attr is defined with class_inheritable_accessor, the accessor is not
-  # called when it appears in a subclass definition, and I don't understand why.
-  #
-  def self.class_attribute(*keywords)
-    for word in keywords
-      word = word.id2name
-      module_eval <<-"end_eval"
-        def self.#{word}(value=nil)
-          @#{word.sub '?',''} = value if value
-          @#{word.sub '?',''}
-        end
-        def #{word}
-          self.class.#{word.sub '?',''}
-        end
-      end_eval
-    end
-  end
-
   # see http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
   # only works because rails is not thread safe.
   # but a thread safe version could be written.
