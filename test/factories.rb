@@ -11,8 +11,6 @@ FactoryGirl.define do
   sequence(:summary)      { |n| Faker::Lorem.paragraph }
   sequence(:caption)      { |n| Faker::Lorem.sentence }
 
-  factory(:network) {}
-
   factory :site do
     domain       "localhost"
     email_sender "robot@$current_host"
@@ -27,6 +25,10 @@ FactoryGirl.define do
   end
 
   factory :group do
+    name { generate(:login) }
+  end
+
+  factory(:network) do
     name { generate(:login) }
   end
 
