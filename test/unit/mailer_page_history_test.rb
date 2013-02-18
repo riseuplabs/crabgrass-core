@@ -13,7 +13,7 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
 
     User.current = @user
 
-    @page = FactoryGirl.create(:page, :user => @user, :owner => @user, :access => 1)
+    @page = FactoryGirl.create(:page, :owner => @user, :access => 1)
 
     @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
                                :title => "Crabgrass Social Network",
