@@ -22,7 +22,7 @@ module PageExtension::Comments
     options = {:order => "created_at ASC", :per_page => Conf.pagination_size, :include => :ratings}.merge(options)
     options[:page] ||= discussion.last_page # for now, always paginate.
     if options[:page]
-      Post.visible.paginate_by_discussion_id(discussion.id, options)
+      Post.visible.scoped_by_discussion_id(discussion.id).paginate(options)
     else
       Post.visible.find_by_discussion_id(discussion.id, options)
     end
