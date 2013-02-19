@@ -25,19 +25,21 @@ FactoryGirl.define do
   end
 
   factory :group do
-    name { generate(:login) }
+    full_name { generate(:display_name) }
+    name      { full_name.gsub(/[^a-z]/,"") }
+
+    factory(:committee, :class => Committee) {}
+    factory(:network,   :class => Network)   {}
   end
 
-  factory(:network) do
-    name { generate(:login) }
-  end
+  factory(:membership) {}
 
   factory :page do
     title
     summary
+    stars_count 0
     created_at  { generate(:created_date) }
     updated_at  { generate(:updated_date) }
-    stars_count 0
     views_count { rand(100) }
     resolved    { generate(:boolean) }
 
