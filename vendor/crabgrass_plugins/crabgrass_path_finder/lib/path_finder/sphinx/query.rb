@@ -84,7 +84,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     # the default sort is '@relevance DESC', but this can create rather odd
     # results because you might get relevent pages from years ago. So, if there
     # is no explicit order set, we want to additionally sort by page_updated_at.
-    if @order.nil?
+    if @order.blank?
       @sort_mode = :extended
       @order = "@relevance DESC, page_updated_at DESC"
     end
