@@ -17,7 +17,6 @@ class PageHistoryTest < ActiveSupport::TestCase
 
     @page = FactoryGirl.create(:page)
     @page.owner = @user
-    @page.user_participations.create user: @user, access: 1
 
     @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
                                :title => "Crabgrass Social Network",
