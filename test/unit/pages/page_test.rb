@@ -99,7 +99,7 @@ class PageTest < ActiveSupport::TestCase
   def test_tool
     page = create_page :title => 'what is for lunch?'
     assert poll = Poll.create
-    assert poll.valid?, poll.errors.full_messages
+    assert poll.valid?, poll.errors.full_messages.to_s
     page.data = poll
     page.save
     assert_equal poll.page, page
@@ -109,7 +109,7 @@ class PageTest < ActiveSupport::TestCase
   def test_discussion
     @page = WikiPage.create! :title => 'this is a very fine test page'
     assert discussion = Discussion.create
-    assert discussion.valid?, discussion.errors.full_messages
+    assert discussion.valid?, discussion.errors.full_messages.to_s
     #discussion.pages << @page
     @page.discussion = discussion
     @page.save
