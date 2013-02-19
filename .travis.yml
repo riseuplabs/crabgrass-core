@@ -3,11 +3,11 @@ rvm:
   - 1.9.3
 before_install:
   - "bundle --version"
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq -y graphicsmagick
-  - sudo apt-get install -qq -y libreoffice-common
-  - sudo apt-get install -qq -y sphinxsearch
-  - sudo apt-get install -qq -y inkscape
+  - sudo apt-get update -qq > /dev/null
+  - sudo apt-get install -qq -y graphicsmagick > /dev/null
+  - sudo apt-get install -qq -y libreoffice-common > /dev/null
+  - sudo apt-get install -qq -y sphinxsearch > /dev/null
+  - sudo apt-get install -qq -y inkscape > /dev/null
 before_script:
   - "rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
