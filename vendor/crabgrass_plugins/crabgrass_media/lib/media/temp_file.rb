@@ -7,7 +7,7 @@ Tempfile.class_eval do
   # overwrite so that Tempfile will retain the file extension of the basename.
   #
   def make_tmpname(basename, n)
-    ext = File.extname(basename)
+    ext = File.extname(basename).sub(/^\./, '')
     name = sprintf("%s%d-", File.basename(basename), $$)
     name << n if n
     name << ext
