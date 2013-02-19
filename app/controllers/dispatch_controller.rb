@@ -233,14 +233,15 @@ class DispatchController < ApplicationController
       params[:action]     = 'show'
       params[:id]         = nil
     else
-      if page.controllers.include?("#{page.controller}_#{params[:path][0]}")
-        params[:controller] = "#{page.controller}_#{params[:path][0]}"
-        params[:action]     = params[:path][1] || 'index'
-        params[:id]         = params[:path][2]
+      path = params[:path].split('/')
+      if page.controllers.include?("#{page.controller}_#{path[0]}")
+        params[:controller] = "#{page.controller}_#{path[0]}"
+        params[:action]     = path[1] || 'index'
+        params[:id]         = path[2]
       else
         params[:controller] = page.controller
-        params[:action]     = params[:path][0] || 'index'
-        params[:id]         = params[:path][1]
+        params[:action]     = path[0] || 'index'
+        params[:id]         = path[1]
       end
     end
     new_controller("#{params[:controller].camelcase}Controller")
@@ -249,6 +250,7 @@ class DispatchController < ApplicationController
   def controller_for_group(group)
     params[:action] = 'show'
     params[:controller] = 'groups/home'
+    params[:group_id] = params[:_context]
     new_controller('Groups::HomeController')
 
     #
@@ -272,6 +274,7 @@ class DispatchController < ApplicationController
   def controller_for_people
     params[:action] = 'show'
     params[:controller] = 'people/home'
+    params[:person_id] = params[:_context]
     new_controller('People::HomeController')
   end
 

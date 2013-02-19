@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
   # returns this user, as a ghost.
   #
   def ghostify!
-    self.update_attribute(:type, "UserGhost")
+    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself. 
     return User.find(self.id)
   end
 

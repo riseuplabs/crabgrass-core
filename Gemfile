@@ -51,6 +51,8 @@ group :development do
 
   gem 'mongrel', :platforms => :mri_18
   gem 'thin', :platforms => :mri_19
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
+  gem 'rb-inotify', '~> 0.8.8' # used by rails-dev-boost
 end
 
 group :test, :development do

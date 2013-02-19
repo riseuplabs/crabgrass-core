@@ -97,7 +97,7 @@ Crabgrass::Application.routes.draw do |map|
   map.people_directory 'people/directory(/*path)', :controller => 'people/directory'
 
   map.resources :people, :namespace => 'people/' do |people|
-    people.resource  :home, :only => [:show]
+    people.resource  :home, :only => [:show], :controller => 'home'
     people.pages     'pages(/*path)', :controller => 'pages'
     people.resources :messages
     people.resources :activities
