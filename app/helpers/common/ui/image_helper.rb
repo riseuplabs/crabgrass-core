@@ -37,7 +37,7 @@ module Common::Ui::ImageHelper
 
   ## returns the img tag for the page's icon
   def page_icon(page)
-    content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
+    content_tag :div, '&nbsp;'.html_safe, :class => "page_icon #{page.icon}_16"
   end
 
   ##
@@ -54,7 +54,7 @@ module Common::Ui::ImageHelper
       "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:middle' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
     else
       "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='' class='#{options[:class]}' />"
-    end
+    end.html_safe
   end
 
   def spinner_id(id)

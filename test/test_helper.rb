@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 if defined?(UNIT_TESTING)
   require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
 else
-  require 'test_help'
+  require 'rails/test_help'
 end
 
 ##
@@ -65,7 +65,7 @@ end
 ## some special rules for integration tests
 ##
 
-class ActionController::IntegrationTest
+class ActionDispatch::IntegrationTest
 
   #
   # we load all fixtures because webrat integration test should see exactly
@@ -78,8 +78,34 @@ class ActionController::IntegrationTest
   end
 end
 
+# ActiveSupport will define this, if it doesn't find it.
+# It uses StandardError as the superclass though, instead of Exception,
+# so that will generate a "superclass mismatch" error.
+if Mocha.const_defined? :ExpectationError
+  Mocha.__send__ :remove_const, :ExpectationError
+end
+
 #
 # mocha must be required last.
 # the libraries that it patches must be loaded before it is.
 #
 require 'mocha'
+
+# wtf?
+unless Mocha.const_defined? :ExpectationError
+  class Mocha::ExpectationError < Exception
+  end
+end
+
+# ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
+# on all values. This happens when assembling 'assigns' in tests.
+# This little hack will make those tests pass.
+MiniTest::Mock.class_eval do
+  def class
+    MiniTest::Mock
+  end
+
+  def is_a?(klass)
+    false
+  end
+end

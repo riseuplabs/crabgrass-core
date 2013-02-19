@@ -16,12 +16,6 @@ class RequestToDestroyOurGroup < Request
   def self.already_exists?(options)
     pending.from_group(options[:group]).exists?
   end
-  
-  def validate_on_create
-    if duplicate_exists?
-      errors.add_to_base(:request_exists_error.t(:recipient => group.display_name))
-    end
-  end
 
   def may_create?(user)
     user.may?(:admin, group)
@@ -60,7 +54,7 @@ class RequestToDestroyOurGroup < Request
 
   protected
 
-  # 
+  #
   # for votable, if we ever do that:
   #
   # def voting_population_count
@@ -71,11 +65,5 @@ class RequestToDestroyOurGroup < Request
   #   xxxx
   # end
   #
-
-  private
-
-  def duplicate_exists?
-    RequestToDestroyOurGroup.pending.to_group(group).find(:first)
-  end
 
 end

@@ -35,7 +35,7 @@ Then, every mailer method should do this as its first line:
 =end
 
 class Mailer < ActionMailer::Base
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   include Mailers::Page
   include Mailers::User
   include Mailers::Group

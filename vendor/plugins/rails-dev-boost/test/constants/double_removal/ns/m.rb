@@ -1,2 +1,0 @@
-module Ns::M
-end

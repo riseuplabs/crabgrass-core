@@ -33,15 +33,31 @@
 
 class DispatchController < ApplicationController
 
-  def process(request, response, method = :perform_action, *arguments)
-    super(request, response, :dispatch)
+  # this is *not* an action, but the 'dispatch' method from ActionController::Metal
+  # The only change here is that we don't return to_a(), but instead whatever
+  # process() returns.
+  def dispatch(name, request, response = ActionDispatch::Response.new)
+    @_request = request
+    @_env = request.env
+    @_env['action_controller.instance'] = self
+    process(name)
+  rescue Exception => exception
+    @_response ||= response
+    @_response.request ||= request
+    # keep regular rescue_from behaviour, even though we're never calling an action
+    # in this controller (taken from ActionController::Rescue#process_action)
+    rescue_with_handler(exception) || raise(exception)
+    # return "regular" response
+    to_a
   end
 
-  def dispatch
+  # instead of processing the action ('name' is always :dispatch here), we find the
+  # right controller and call 'dispatch' there.
+  def process(name, *args)
     begin
       flash.keep
       load_current_site
-      find_controller.process(request, response)
+      find_controller.dispatch(params[:action], request)
     rescue ActiveRecord::RecordNotFound
       if logged_in? and (@group or (@user and @user == current_user))
         redirect_to create_page_url(:type => 'wiki', :group => @group, 'page[title]' => params[:_page])
@@ -217,14 +233,15 @@ class DispatchController < ApplicationController
       params[:action]     = 'show'
       params[:id]         = nil
     else
-      if page.controllers.include?("#{page.controller}_#{params[:path][0]}")
-        params[:controller] = "#{page.controller}_#{params[:path][0]}"
-        params[:action]     = params[:path][1] || 'index'
-        params[:id]         = params[:path][2]
+      path = params[:path].split('/')
+      if page.controllers.include?("#{page.controller}_#{path[0]}")
+        params[:controller] = "#{page.controller}_#{path[0]}"
+        params[:action]     = path[1] || 'index'
+        params[:id]         = path[2]
       else
         params[:controller] = page.controller
-        params[:action]     = params[:path][0] || 'index'
-        params[:id]         = params[:path][1]
+        params[:action]     = path[0] || 'index'
+        params[:id]         = path[1]
       end
     end
     new_controller("#{params[:controller].camelcase}Controller")
@@ -233,6 +250,7 @@ class DispatchController < ApplicationController
   def controller_for_group(group)
     params[:action] = 'show'
     params[:controller] = 'groups/home'
+    params[:group_id] = params[:_context]
     new_controller('Groups::HomeController')
 
     #
@@ -256,6 +274,7 @@ class DispatchController < ApplicationController
   def controller_for_people
     params[:action] = 'show'
     params[:controller] = 'people/home'
+    params[:person_id] = params[:_context]
     new_controller('People::HomeController')
   end
 

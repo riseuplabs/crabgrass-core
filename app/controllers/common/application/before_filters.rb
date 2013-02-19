@@ -4,7 +4,6 @@ module Common::Application::BeforeFilters
   def self.included(base)
     base.class_eval do
       # the order of these filters matters. change with caution.
-      before_filter :essential_initialization
       before_filter :set_session_locale
       before_filter :set_session_timezone
       before_filter :header_hack_for_ie6
@@ -18,10 +17,9 @@ module Common::Application::BeforeFilters
   protected
 
   # ensure that essential_initialization ALWAYS comes first
-  def self.prepend_before_filter(*filters, &block)
-    filter_chain.skip_filter_in_chain(:essential_initialization, &:before?)
-    filter_chain.prepend_filter_to_chain(filters, :before, &block)
-    filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
+  def process_action(method_name, *args)
+    essential_initialization
+    super
   end
 
   private

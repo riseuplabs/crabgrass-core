@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class AssetTest < ActiveSupport::TestCase
   # fixes fixture_file_upload for Rails 2.3
-  include ActionController::TestProcess
+  include ActionDispatch::TestProcess
   fixtures :all
 
   def setup

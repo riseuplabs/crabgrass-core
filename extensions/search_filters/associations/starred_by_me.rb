@@ -5,6 +5,7 @@ SearchFilter.new('/starred-by-me/') do
       'user_participations.user_id = ? AND user_participations.star',
       query.current_user.id
     )
+    query.add_order('stars_count DESC')
   end
 
   # TODO: we don't have a multi attribute for 'starred_by_ids'

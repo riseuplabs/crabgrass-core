@@ -22,12 +22,17 @@ class Code < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
 
-  def before_create
+  before_create :set_unique_code
+  before_create :set_expiry
+
+  def set_unique_code
     begin
        self.code = Password.random(10)
     end until Code.find_by_code(self.code).nil?
+  end
+
+  def set_expiry
     self.expires_at ||= Time.now + 30.days
-    true
   end
 
   def self.cleanup_expired

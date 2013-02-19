@@ -16,10 +16,10 @@ class Rating < ActiveRecord::Base
     )
   end
 
-  named_scope :with_rating, lambda {|rating|
+  scope :with_rating, lambda {|rating|
     { :conditions => ['rating = ?', rating] }
   }
-  named_scope :by_user, lambda {|user|
+  scope :by_user, lambda {|user|
     { :conditions => ['user_id = ?', user.id] }
   }
 

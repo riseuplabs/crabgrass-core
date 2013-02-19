@@ -25,7 +25,7 @@ class Discussion < ActiveRecord::Base
   has_one :profile, :foreign_key => 'discussion_id'
 
   has_many :posts, :order => 'posts.created_at',
-    :dependent => :destroy, :class_name => 'Post'
+    :dependent => :destroy
 
   has_many :visible_posts, :order => 'posts.created_at',
     :class_name => 'Post', :conditions => {:deleted_at => nil}
@@ -43,19 +43,19 @@ class Discussion < ActiveRecord::Base
   ## NAMED SCOPES
   ##
 
-  named_scope :with_some_posts, :conditions => ['discussions.posts_count > ?', 0]
+  scope :with_some_posts, :conditions => ['discussions.posts_count > ?', 0]
 
   # used when relationships are joined in
   # ex: current_user.discussions.from_user(User.first)
   # where user has many dicussions through relationships
-  named_scope :from_user, lambda { |user|
+  scope :from_user, lambda { |user|
     user.blank? ? {} : { :conditions => ['relationships.contact_id = ?', user.id] }
   }
 
   # user with relationships like the above scope
   # ex: current_user.discussions.unread
-  named_scope :unread, :conditions => ['relationships.unread_count > 0']
-  named_scope :all # used same as :unread, but with nothing to filter
+  scope :unread, :conditions => ['relationships.unread_count > 0']
+  scope :all # used same as :unread, but with nothing to filter
 
   ##
   ## PRIVATE DISCUSSION (MESSAGES)

@@ -73,7 +73,7 @@ module Common::Ui::GroupsHelper
           selected = ('selected' if committee.name == selected_item)
           html << content_tag(
             :option,
-            "&nbsp; + " + truncate(committee.short_name, :length => 40),
+            "&nbsp; + ".html_safe + truncate(committee.short_name, :length => 40),
             :value => committee.name,
             :class => 'indented',
             :selected => selected
@@ -81,7 +81,7 @@ module Common::Ui::GroupsHelper
         end
       end
     end
-    html.join("\n")
+    html.join("\n").html_safe
   end
 
 end

@@ -9,7 +9,7 @@
 - # if this form is rendered, then we don't create one on the menubar
 
 .login_form
-  - form_tag(login_path, :id => "entry") do
+  = form_tag(login_path, :id => "entry") do
     %div
       %label(for = 'login')= :login_name.t
       %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
@@ -21,6 +21,7 @@
     %div.buttons
       %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
     %div
-      = hidden_field_tag 'redirect', params[:redirect]
+      - if params[:redirect]
+        = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
 

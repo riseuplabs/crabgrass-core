@@ -66,7 +66,7 @@ class RequestToJoinUsViaEmail < Request
     end
   end
 
-  before_validation_on_create :set_code
+  before_validation :set_code, :on => :create
   def set_code
     self.code = Password.random(8)
   end
@@ -75,6 +75,12 @@ class RequestToJoinUsViaEmail < Request
   #def send_invite_code
   #  Mailer::Request.deliver_invite_code(self) if recipient && recipient.receives_email_on('messages')
   #end
+
+  protected
+
+  # we allow duplicate email invitations
+  def no_duplicate
+  end
 
 end
 

@@ -49,7 +49,7 @@ module Common::Ui::LayoutHelper
     if language_direction == "rtl"
       lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
     end
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   def favicon_link
@@ -57,7 +57,7 @@ module Common::Ui::LayoutHelper
     '<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />' % [current_theme.url(:favicon_ico), current_theme.url(:favicon_png)]
     elsif current_theme[:favicon]
       '<link rel="icon" href="%s" type="image/x-icon" />' % current_theme.url(:favicon)
-    end
+    end.html_safe
   end
 
   ##
@@ -85,13 +85,17 @@ module Common::Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
 
+    ## FIXME: this uses '@_content_for[:x]' to get data chunks previously
+    ##   added via 'content_for()'. For later Rails versions (> 3.1 ??)
+    ##   this needs to be changed to '@view_flow.get(:x)'.
+
     # inline script code
     lines << '<script type="text/javascript">'
     #lines << localize_modalbox_strings
-    lines << @content_for_script
+    lines << @_content_for[:script]
     lines << 'document.observe("dom:loaded",function(){'
     lines << detect_browser_js
-    lines << @content_for_dom_loaded
+    lines << @_content_for[:dom_loaded]
     lines << '});'
     lines << '</script>'
 
@@ -107,7 +111,7 @@ module Common::Ui::LayoutHelper
       lines << '<![endif]-->'
     end
 
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   ##
@@ -183,7 +187,7 @@ module Common::Ui::LayoutHelper
       lines << ' </tr>'
     end
     lines << '</table>' unless options[:skip_table_tag]
-    lines.join("\n")
+    lines.join("\n").html_safe
   end
 
   ##
@@ -231,7 +235,7 @@ module Common::Ui::LayoutHelper
   # the helper can be used wherever a normal helper would be.
   #
   def haml(name=nil, *args, &block)
-    if name.any?
+    if name && name.any?
       if args.empty? and block.nil?
         haml_concat name
       else
@@ -330,16 +334,6 @@ module Common::Ui::LayoutHelper
         :token           => form_authenticity_token
       }
     }
-  end
-
-  #
-  # rails 3.0 has "content_for?"
-  # i want it too!
-  # this takes advantage of deprecated member variables,
-  # but that is ok since this method won't be needed under v3.
-  #
-  def content_for?(block_name)
-    instance_variable_get("@content_for_#{block_name}")
   end
 
   private

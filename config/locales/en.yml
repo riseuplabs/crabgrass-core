@@ -82,19 +82,12 @@ en:
   # verify email
 
   you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
+
   ##!  successfully_verified_email_message: "Successfully Verified Email Address"
   ##!  already_verified: "Already Verified."
   ##!  already_verified_text: "You don't need to verify again."
-  email_verification_body: |
-    You have signed for %{site_title} (%{host})!
 
-    Before you can login you must verify that this is your email.
-
-    Click the link below or copy and paste it into your browser:
-
-      %{verify_email_link}
-
-    If you do not wish to join, simply ignore this email.
+  email_verification_body: "You have signed up for %{site_title} (%{host}).\n\nBefore you can login you must verify that this is your email.\n\nClick the link below or copy and paste it into your browser:\n\n%{verify_email_link}\n\nIf you do not wish to join, simply ignore this email."
 
   ##
   ## PASSWORD
@@ -106,6 +99,19 @@ en:
   signup_confirm_password: "Confirm Password"
   login_password: "Password"
   signup_password: "Your Password"
+
+  ##
+  ## ACCOUNT REMOVAL
+  ##
+
+  remove_your_account: "Remove Your Account"
+  anonymize_display_name: "Anonymize display name"
+  anonymize_display_name_info: "Replaces your display name with 'Anonymous' everywhere"
+  destroy_comments: "Destroy comments"
+  destroy_comments_info: "This will remove all comments you made to pages. It might make it hard to understand remaining comments by others."
+  confirm_account_removal: "Are you sure you want to remove your account? This step cannot be undone and your data will be lost."
+  
+  account_successfully_removed: "Your account has successfully been removed. We'll clear it and all it's associated data from the database."
 
   # password strength messages:
   ##!  password_ok: "is OK."
@@ -130,8 +136,13 @@ en:
   cancel: "Cancel"
   optional: "Optional"
   required: "Required"
+  thing_required: "%{thing} Required"
   edit: "Edit"
   upload: "Upload"
+  select_files: "Select files"
+  drop_files_here: "Drop files here"
+  # to be read by js and used in an interpolate call - so it's #{} not %{} :
+  files_pending: "#{pending} file(s) pending"
   preview: "Preview"
   return_link: "Return"
   back_button: "Back"
@@ -169,6 +180,7 @@ en:
   pending: "Pending"
   rejected: "Rejected"
   approved: "Approved"
+  saved: "Saved"
 
   #
   # 'destroy' should be reserved for when the action has consequence,
@@ -188,7 +200,79 @@ en:
   delete_button: "Delete"
   deleted: "Deleted"
   remove: "Remove"
+
+
+
+########################################
+### en/gallery.yml
+en:
+  ##
+  ## GALLERY
+  ##
+
+  order_changed: Order changed.
+  error_saving_new_order_message: "Error saving new order: {{error_message}}"
+  successfully_removed_image: Successfully removed image!
+  image_count: Image {{number}} of {{count}}
+  image_count_total: "{{count}} Photos"
+  view_slideshow: View Slideshow
+  show_gallery: Show Gallery
+  edit_gallery: Edit Gallery
+  edit_gallery_explaination: "Add new images or drag images to rearrange their order."
+  edit_image: Edit Image
+  show_gallery_explaination: "Click thumbnail to see full image."
+  back_to_gallery_link: "Back to Gallery"
+  add_images_or_zips: "Add Images or Zip File"
+  add_images_or_zips_explaination: "Zip file will automatically be extracted and put into the gallery"
+  gallery_changing_cover_message: "Changing cover..."
+  download: Download
+  download_gallery: Download Gallery
+  gallery_slideshow_apply_settings_button: "apply"
+  confirm_image_delete: Do you really want to delete this image? This action can not be undone.
+  remove_from_gallery: Remove from gallery
+  removing_image: Removing Image...
+  move_image_left: Move image left
+  move_image_right: Move image right
+  saved_new_order: Saved new order!
+  error_saving_new_order: Error saving new order!
+  no_title_given: (no title given)
+  saving_your_changes: Saving your changes...
+  activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
+  drag_and_drop_to_rearrange_photos: Drag images to rearrange their order. Click pencil to edit image or audio.
+  no_images_in_gallery: No images in Gallery
+  add_existing_image: Add Photo
+  add_images: Add Images
+  edit_images: Edit Images
+  upload_new_image: Upload New Image
+  type_your_messages_here: "Type your messages here and press enter..."
+  add_photo_to_gallery: "Click on a Photo to add it"
+  cancel_link: "cancel"
+  file_must_be_image_error: "File must be an image to be part of a gallery."
+  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
+  add_another_file: "Add another file"
+  slideshow_delay_input: "Update every {{input_field}} seconds"
+  add_comment: "Add Comment"
+  make_album_cover: "make this image the album cover"
+  album_cover_changed: "Album Cover Changed"
+  image_title: "Image title: {{title}}"
+  upload_zip_file_link: "Upload a ZIP-File"
+  add_images_to_gallery_link: "Add Images to gallery"
+  too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
+  too_wide_image_error: "Uploaded image must be exactly  {{count}} pixels wide"
+  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
+  upload_a_zip_file_link: "Upload a ZIP-File"
+  upload_images_link: "Upload"
+  you_are_not_allowed_to_do_that: "You are not allowed to do that!"
+  edit_image_header: "Edit Image and Audio"
+  upload_images_and_zip_files_help: "Optional: Select image or zip files to upload."
+  close_and_reload_gallery: 'Close and reload gallery'
+  audio_updated: 'Updated the audio'
+  audio_selected: 'Selected audio for the image'
+  audio_updated_successfully: 'The audio for this image has been updated successfully.'
+  audio_selected_successfully:  'You picked a new audio track to go with this image.'
+  audio_attached: 'This image has an audio caption below, loading might take some time.'
   
+
 
 ########################################
 ### en/generic.yml
@@ -210,6 +294,7 @@ en:
   total: "%{count} total"
   all: "All"
   none: "None"
+  or: "or"
   ##!  not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   ##!  search_headline: "Search"
@@ -218,8 +303,25 @@ en:
   ##!  search_link: "Search"
   next: "Next"
   previous: "Previous"
+  pagination_next: "Next"
+  pagination_previous: "Previous"
+  ##!  pagination_older: "Older"
+  ##!  pagination_newer: "Newer"
   see_more_link: "More"
   see_less_link: "Less"
+  list_things: "List %{things}"
+
+  ##
+  ## Messaging
+  ##
+
+  thing_was_sent:
+    one: "%{thing} was sent to %{recipient}."
+    other: "%{count} %{thing} were sent."
+
+  thing_was_not_sent:
+    one: "%{thing} could not be sent to %{recipient}."
+    other: "%{count} %{thing} could not be sent."
 
   ##
   ## Entities
@@ -257,7 +359,7 @@ en:
 
   ##
   ## Other
-  ## 
+  ##
 
   ##!  thing_settings: "%{thing} Settings"
   #approved_when_by: "Approved by %{user} on %{when}."
@@ -292,9 +394,12 @@ en:
   public: "Public"
   options: "Options"
   permissions: "Permissions"
+  notification: "Notification"
+  notice: "Notice"
+  notices: "Notices"
+  dismiss: "Dismiss"
+  locale: "Locale"
   ##!  description: "Description"
-  requests: "Requests"
-  request: "Request"
   invite: "Invite"
   membership: "Membership"
   visibility: "Visibility"
@@ -311,17 +416,26 @@ en:
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
-  ##!  print: "Print"
+  print: "Print"
   show: "Show"
+  display: "Display"
   message: "Message"
   ##!  success: "Success"
   ##!  error: "Error"
   ##!  status: "Status"
   visits: "Visits"
-  return_to_list: "Return to List"
+  ##! return_to_list: "Return to List"
+
 
 ########################################
 ### en/groups.yml
+
+  activerecord:
+    models:
+      group: "organization"
+      network: "network"
+      council: "council"
+      committee: "committee"
 
   ##
   ## BASIC TERMS
@@ -349,26 +463,19 @@ en:
   network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
   committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
-  council_description_details: "By default, all members of a group have full permission to modify a group. If you want restrict administrative powers to certain users, create a council and add users to it."
+  council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
   committee_choose_group: 'Choose a group for this committee:'
+  network_committees_may_not_join_networks: 'Committees of other networks may not join.'
+  networks_may_not_join_networks: 'Networks may not join other networks.'
 
   ##
   ## PERMISSIONS
   ##
 
-
-  ##!  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this %{group_type}."
-  ##!  group_profile_description_may_see_committees: "Allow people to see what committees this %{group_type} has."
-  ##!  group_profile_description_may_see_networks: "Allow people to see what networks this %{group_type} is part of."
-  ##!  group_profile_description_may_see_members: "Allow people to see the membership list of this %{group_type}."
-  ##!  group_profile_description_may_request_membership: "Allow people to request to be a member of this %{group_type}."
-  ##!  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this %{group_type} will be hidden entirely."
-  ##!  group_profile_description_may_edit: "I am not sure what this does."
-
-  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
-  open_group: "Open Group"
-  open_group_description: "Users are immediately added to the group - request don't have to be approved"
+  may_request_membership_description: "A \"join %{group}\" link will appear on your %{group} page. This will send a request for membership that can be accepted or rejected."
+  open_group: "Open %{group}"
+  open_group_description: "Users are immediately added to the %{group} - no requests have to be approved"
 
   ##
   ## MEMBERSHIP
@@ -384,9 +491,29 @@ en:
   ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
 
   ##
-  ## UNSORTED
+  ## EMAIL
+  ## 
+
+  group_invite_subject: 'Invitation to join group "%{group}"'
+  group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
+  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
+  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
+
+  ##
+  ## WIKIS
   ##
 
+  group_wiki: "Group Wiki"
+  
+  ##!  create_group_wiki: "Create Group Wiki"
+  create_public_group_wiki: "Public"
+  create_private_group_wiki: "Private"
+  public_group_wiki: "Public"
+  private_group_wiki: "Private"
+
+  ##
+  ## UNSORTED
+  ##
 
   ##!  group_join_chat: "Join Chat"
   ##!  group_privacy_settings: '%{group} Privacy Settings'
@@ -408,11 +535,13 @@ en:
 
   ##!  dont_understand_group_type: "Could not understand group type %{type}"
   ##!  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
-  group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %{domain}/yourgroupname.
-  committee_publicly_visible_description: Committees are viewable by non-members at %{domain}/yourgroupname
-  networks_publicly_visible_description: Networks are viewable by non-members at %{domain}/yourgroupname
+  group_publicly_visible_description: "%{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname."
+  committee_publicly_visible_description: Committees are visible to non-members at %{domain}/yourgroupname
+  networks_publicly_visible_description: Networks are visible to non-members at %{domain}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description: Members are viewable by non-members at %{domain}/yourgroupname. Also, the name of the group will be listed on each members profile page (%{domain}/username)
+  group_members_publicly_visible_description: Members are visible to non-members at %{domain}/yourgroupname. %{group} can be listed on the profile page of members (%{domain}/username)
+  members_may_edit_wiki: "All members may edit the wiki"
+  members_may_edit_wiki_description: "If unchecked, only council members may edit the %{group} wiki."
   ##!  page_list: Page list
   ##!  recent_network_pages: "Recent Network Pages"
   ##!  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"
@@ -488,6 +617,7 @@ en:
   ##!  view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
+  add_members_to_committee: "Add group members to this committee"
   ##!  destroy_group_link: "Destroy %{group_type}"
   ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
   ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
@@ -568,14 +698,14 @@ en:
 
   ##!  me_dashboard_link: "Dashboard"
 
-  me_inbox_link: "Inbox"
+  ##!  me_inbox_link: "Inbox"
   ##!  my_inbox_headline: "My Inbox"
 
   ##!  me_trash_link: "Trash"
   ##!  me_tasks_link: "Tasks"
   ##!  my_world_heading: "My World"
 
-  ##!  my_dashboard: "My Dashboard"
+  my_dashboard: "My Dashboard"
   ##!  my_work_headline: "My Work"
 
   ##!  my_tasks: "Tasks"
@@ -613,7 +743,7 @@ en:
 
   save_changes: Save Changes
   username: Username
-  display_name: Display name
+  display_name: Display Name
   email: Email
   ##!  phone: Phone
   language: Language
@@ -674,7 +804,8 @@ en:
 
   account_settings: "Account Settings"
 
-
+  back_to_page: "Back to the page"
+  back_to_group: "Back to the group"
 
 
 ########################################
@@ -799,17 +930,26 @@ en:
   #page_list_heading_views: "views"
   #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
 
+  ##
+  ## NOTIFICATION
+  ##
+
+  page_notice: "Page Notice"
+  email_notice_subject: 'Check out page "%{title}"'
+  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the message: %{message}"
+  email_notice_hello: "Hello, %{from} has sent you a web page."
+  email_notice_access: "You may access this page here:"
+  email_link_expires: "This link will expire in %{days} days."
+  page_notice_title: '<user>%{from}</user> sent you page "%{page_title}"'
+  page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}" with the message:'
+
   ##!  page_notice_message: "%{user} notified you about this page on %{date}"
   ##!  page_with_message: "with message"
-  pagination_next: "Next"
-  pagination_previous: "Previous"
-
-  ##!  pagination_older: "Older"
-  ##!  pagination_newer: "Newer"
-
   ##!  view_posts_link: "view"
 
-  # sidebar
+  ##
+  ## PAGE SIDEBAR
+  ##
 
   ##!  move_this_page: "Move This Page"
   ##!  move_page_to_different_group: "Move this page to a different group"
@@ -943,8 +1083,11 @@ en:
   ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
   ##!  upload_file_help: "Required. Select a file to upload to this page."
 
-  # history
+  ##
+  ## PAGE HISTORY
+  ##
 
+  action: "Action"
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"
   page_history_change_title: "%{user_name} has modified the page title"
@@ -998,8 +1141,8 @@ en:
   ##!  folder_class_description: "Create a folder to organize other pages."
   ##!  folder_display: "Folder"
 
-  ##!  gallery_description: "Upload multiple images or organize existing images into a set."
-  ##!  gallery_display: "Gallery"
+  gallery_description: "Upload multiple images or organize existing images into a set."
+  gallery_display: "Gallery"
 
   asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
   asset_page_display: "File"
@@ -1060,12 +1203,6 @@ en:
   peers_description: "Members of your groups"
   friends_description: "Your friends"
 
-  ##!  may_see_committees: "Show committees"
-  ##!  may_see_networks: "Show networks"
-  ##!  may_see_members: "Show group members"
-  ##!  may_request_membership: "Allow membership requests"
-  members_may_edit_wiki: "All members may edit the wiki"
-  members_may_edit_wiki_description: "If unchecked, only council members may edit the groups wiki."
   ##!  may_edit: "May edit"
   ##!  may_admin: "May admin"
   ##!  may_burden: "May burden"
@@ -1086,7 +1223,7 @@ en:
   may_request_contact_label: "Request contact?"
   may_request_contact_description: "Allow people to request to be your contact."
 
-
+  sharing_and_requests: "Sharing and Requests"
 
 
 ########################################
@@ -1096,6 +1233,8 @@ en:
   ##!  profile_last_login: "Last Login"
   profile_member_since: "Member Since"
   home: Home
+  banner: Banner
+  banner_info: Optimal dimenssions are 872 x 100 pixels
   ##!  work: Work
   ##!  school: School
   ##!  personal: Personal
@@ -1160,6 +1299,8 @@ en:
 ########################################
 ### en/requests.yml
 
+  requests: "Requests"
+  request: "Request"
   incoming: "Incoming"
   outgoing: "Outgoing"
   request_pending: "%{request} is pending"
@@ -1172,22 +1313,44 @@ en:
   ##
   ## REQUEST TYPES
   ##
-  ## these strings are all used in the request models. 
+  ## these strings are all used in the request models.
   ##
+
+  activerecord:
+    models:
+      request_to_friend: "Request to Become Contacts"
+      request_to_join_our_network:
+        one: "Invitation to Join"
+        other: "Invitations to Join"
+      request_to_destroy_our_group: "Request to Destroy Group"
+      request_to_join_us:
+        one: "Invitation to Join"
+        other: "Invitations to Join"
+      request_to_join_us_via_email:
+        one: "Invitation to Join"
+        other: "Invitations to Join"
+      request_to_join_you: "Request to Join"
+      request_to_join_your_network: "Request to Join"
+      request_to_create_council: "Request to Create Council"
+      request_to_remove_user: "Request to Remove Member"
 
   request_to_friend: "Request to Become Contacts"
   request_to_friend_short: "Shall %{user} become a contact of %{other_user}?"
   request_to_friend_description: "User %{user} has requested to become a contact of user %{other_user}."
 
-  request_to_join_our_network: "Invitation to Join"
+  request_to_destroy_our_group: "Request to Destroy Group"
   request_to_join_our_network_short: "Shall %{group} join %{network}?"
   request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
 
-  request_to_join_us: "Invitation to Join"
+  request_to_join_us:
+    one: "Invitation to Join"
+    other: "Invitations to Join"
   request_to_join_us_short: "Shall %{user} join %{group}?"
   request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
 
-  request_to_join_us_via_email: "Invitation to Join"
+  request_to_join_us_via_email:
+    one: "Invitation to Join"
+    other: "Invitations to Join"
   request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
   request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
 
@@ -1199,7 +1362,6 @@ en:
   request_to_join_your_network_short: "Shall %{group} join %{network}?"
   request_to_join_your_network_description: "The group %{group} requested to join the network %{network}."
 
-  request_to_destroy_our_group: "Request to Destroy Group"
   request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
   request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
 
@@ -1213,12 +1375,9 @@ en:
 
   ##
   ## MEMBERSHIP REQUESTS
-  ## 
+  ##
 
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
-  invite_sent: "Invitation sent to %{recipient}"
-  invites_sent: "%{count} invitations sent"
-  join_request_sent: "Request to join sent to %{recipient}"
 
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
@@ -1232,15 +1391,12 @@ en:
   ##
 
   friend_request_message_label: "Tell %{user} why you want to be their contact."
-  friend_request_sent: "Contact request has been sent"
   friend_remove_confirmation: "Are you sure you wish to no longer be the contact of %{user}?"
 
   ##
   ## ATTIC
   ##
 
-  ##!  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
-  ##!  request_to_remove_user_sent: "You have proposed to remove user %{user} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   ##!  removal_requested: "Removal Requested"
   ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
   ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
@@ -1248,7 +1404,6 @@ en:
   ##!  invite_accept_via_register: "I need to register a new account"
   ##!  join_group_success: "You have joined group %{group_name}"
   ##!  state: "State"
-  ##!  action: "Action"
   ##!  ignore: "Ignore"
   ##!  my_requests_link: "My requests"
   ##!  all_requests: "All Requests"
@@ -1359,12 +1514,12 @@ en:
 
   save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
   preview_selected_image: "Preview of selected image"
-  ##!  image_size_info: "Select the size of the image to insert"
-  ##!  small: small
-  ##!  medium: medium
-  ##!  large: large
-  ##!  full: full
-  ##!  image_options_info: "Should the image included in the wiki link to the fullsize image?"
+  image_size_info: "Select the size of the image to insert"
+  small: small
+  medium: medium
+  large: large
+  full: full
+  image_options_info: "Should the image included in the wiki link to the fullsize image?"
   include_full_checkbox: include link to full image
   image_select_info: "Pick an image to insert from the images uploaded to the group previously"
   image_upload_info: "Upload a new image to the group so it can be used in the wiki"
@@ -1476,7 +1631,6 @@ en:
   drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
   no_images_in_gallery: No images in Gallery
   add_existing_image: Add Photo
-  upload_new_image: "upload new image"
   ##!  type_your_messages_here: "Type your messages here and press enter..."
   add_photo_to_gallery: "Click on a Photo to add it"
   cancel_link: "cancel"
@@ -1572,10 +1726,7 @@ en:
   ## RANKED VOTE & RATE MANY
   ##
 
-  ranked_vote_instructions: |
-    Drag and drop the items on the following list until they are in order from
-    most preferred at the top to least preferred at the bottom. When you are done,
-    press confirm to record your vote.
+  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom. When you are done, press confirm to record your vote."
 
   add_new_possibility_link: "Add new possibility"
   add_possibility_button: "Add Possibility"
@@ -1587,11 +1738,12 @@ en:
   top_pick: "top pick"
   first_choice_of: "first choice of"
 
-  ##!  vote_good: "good"
-  ##!  vote_ok: "ok"
-  ##!  vote_bad: "bad"
-  ##!  vote_none: "none"
-  ##!  vote_no: "no"
+  vote_good: "good"
+  vote_ok: "ok"
+  vote_bad: "bad"
+  vote_none: "none"
+  vote_no: "no"
+  
   ##
   ## SURVEY PAGE
   ##
@@ -1734,14 +1886,6 @@ en:
   insert_image: "Insert Image"
   ##!  add_link: "Add Link"
 
-  # group wiki
-  
-  ##!  create_group_wiki: "Create Group Wiki"
-  create_public_group_wiki: "Add Public Information"
-  create_private_group_wiki: "Add Private Group Wiki"
-  public_group_wiki: "Public Information"
-  private_group_wiki: "Private Group Wiki"
-
   # editor
   # advanded editor is what plain editor is called when visual editor is enabled
   ##!  wiki_advanced_editor: "Advanced Editor"
@@ -1761,24 +1905,9 @@ en:
   ##!  cant_lock_nonexistant_section: "can't lock a nonexistant section"
   ##!  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
 
-  wiki_formating_code: |
-    Big Caption
-    ===========
+  wiki_formating_code: "Big Caption \n===========\n\nSmaller Caption\n---------------\n\nh3. Even smaller caption\n* stars create\n* lists without numbers\n# hashes create\n# numbered lists"
 
-    Smaller Caption
-    ---------------
-
-    h3. Even smaller caption
-
-    * stars create
-    * lists without numbers
-
-    # hashes create
-    # numbered lists
-
-  wiki_formating_end: |
-    You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br>
-    Use the toolbar for inserting images and links.</br>
+  wiki_formating_end: "You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br> Use the toolbar for inserting images and links.</br>"
 
   wiki_formating_intro: "You can use any of the following to format your wiki:"
 
@@ -1800,35 +1929,6 @@ en:
 
   ##!  recent_wall_posts: "Recent Wall Posts"
   ## ^^ no longer used
-
-  ##
-  ## EMAIL
-  ##
-
-  group_invite_subject: "Invitation to join group \"%{group}\""
-  group_invite_email: |
-    %{from_user} has invited you to join group "%{group}".
-
-    If you wish to join this group, click here:
-
-      %{accept_invite_link}
-
-    The home page of this group can be found here:
-
-      %{group_home_link}
-
-    If you do not wish to join this group, simply ignore this email.
-
-  email_notice_subject: 'Check out page "%{title}"'
-  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the following message: %{message}"
-  email_notice_hello: "Hello, %{from} has sent you a web page."
-  email_notice_access: "You may access this page here:"
-  email_link_expires: "This link will expire in %{days} days."
-
-  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
-  group_destroyed_email: |-
-    %{group_type} %{group} has been destroyed!
-
 
   ##
   ## PEOPLE (i.e., PeopleController)
@@ -1867,6 +1967,7 @@ en:
   login_required_description: 'Please login to perform that action.'
   permission_denied_description: 'You do not have sufficient permission to perform that action.'
   permission_denied: 'Permission Denied'
+
   ##
   ## CHAT
   ##
@@ -1878,7 +1979,6 @@ en:
   ##!  chat_archive_link: "view the chat room archive"
   ##!  leave_channel: "Leave channel"
   ##!  trash_chat_message: "move message to trash"
-
 
   ##
   ## TAGS

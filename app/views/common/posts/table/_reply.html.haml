@@ -5,7 +5,7 @@
 %tbody{:id=>'post_reply'}
   %tr{:class=>"post_spacer_top #{color}"}
     %td{:colspan => 2, :class => top_spacer_class}
-      %a{:name=>'reply'}= '&nbsp;' 
+      %a{:name=>'reply'}= '&nbsp;'.html_safe
 
   %tr{:class => "post #{color}"}
     %td.post_author
@@ -18,4 +18,4 @@
       - else
         = render :partial => 'common/posts/table/reply_body', :locals => local_assigns
   %tr{:class => "post_spacer_bottom #{color}"}
-    %td{:colspan => 2, :class => 'round-bottom'}= '&nbsp;'
+    %td{:colspan => 2, :class => 'round-bottom'}= '&nbsp;'.html_safe

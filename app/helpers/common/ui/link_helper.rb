@@ -30,7 +30,7 @@ module Common::Ui::LinkHelper
     end
     %Q(<span class='#{options[:class]}'><a href='#' onclick='#{onclick}' style
 ='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{
-label}</a></span>)
+label}</a></span>).html_safe
   end
 
   ##
@@ -40,12 +40,12 @@ label}</a></span>)
   ## makes this: link | link | link
   def link_line(*links)
     char = content_tag(:em, link_char(links))
-    content_tag(:div, links.compact.join(char), :class => 'link_line')
+    content_tag(:div, links.compact.join(char).html_safe, :class => 'link_line')
   end
 
   def link_span(*links)
     char = content_tag(:em, link_char(links))
-    content_tag(:span, links.compact.join(char), :class => 'link_line')
+    content_tag(:span, links.compact.join(char).html_safe, :class => 'link_line')
   end
 
   ##
@@ -162,7 +162,7 @@ label}</a></span>)
   def link_char(links)
     if links.first.is_a? Symbol
       char = links.shift
-      return ' &bull; ' if char == :bullet
+      return ' &bull; '.html_safe if char == :bullet
       return ' ' if char == :none
       return ' | '
     else

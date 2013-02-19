@@ -20,7 +20,7 @@ module CastleGatesHelper
     content_tag :ul do
       holders.collect do |holder|
         castle_gate_checkbox(castle, gate, holder, options)
-      end
+      end.join.html_safe
     end
   end
 

@@ -67,7 +67,7 @@ class Site < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :for_domain, lambda {|domain|
+  scope :for_domain, lambda {|domain|
     {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, Conf.enabled_site_ids]}
   }
 

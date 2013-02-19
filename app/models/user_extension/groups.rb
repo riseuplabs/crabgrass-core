@@ -91,7 +91,7 @@ module UserExtension::Groups
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group',
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
+         :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})" } do
         def normals
           self.select{|group|group.normal?}
         end
@@ -166,9 +166,9 @@ module UserExtension::Groups
 
   private
 
-  PRIMARY_GROUPS_CONDITION      = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_GROUPS_CONDITION      = lambda { "(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
   PRIMARY_NETWORKS_CONDITION    = '(type = \'Network\')'
-  PRIMARY_G_AND_N_CONDITION     = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_G_AND_N_CONDITION     = lambda { "(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
   GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 

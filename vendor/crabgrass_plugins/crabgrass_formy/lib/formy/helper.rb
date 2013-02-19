@@ -8,7 +8,7 @@ module Formy
       form.open
       yield form
       form.close
-      form.to_s
+      form.to_s.html_safe
     end
 
   end

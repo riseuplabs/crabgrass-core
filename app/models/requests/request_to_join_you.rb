@@ -9,16 +9,7 @@ class RequestToJoinYou < Request
 
   validates_format_of :recipient_type, :with => /Group/
 
-  def validate_on_create
-    if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
-      errors.add_to_base("You are already a member")
-    end
-    if RequestToJoinYou.having_state(state).find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
-      errors.add_to_base("Request already exists")
-    end
-  end
-
-  def requestable_required?() false end
+  validate :no_membership_yet, :on => :create
 
   def group() recipient end
 
@@ -50,5 +41,18 @@ class RequestToJoinYou < Request
     [:request_to_join_you_short, {:user => user_span(created_by), :group => group_span(group)}]
   end
 
+  protected
+
+  def no_membership_yet
+    if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
+      errors.add_to_base("You are already a member")
+    end
+  end
+
+  def duplicates
+    self.class.pending.for_recipient(recipient).created_by(created_by)
+  end
+
+  def requestable_required?() false end
 end
 

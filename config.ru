@@ -1,14 +1,6 @@
-#
-# When run via mod_rails/passenger, passenger will set the environment variable
-# RACK_ENV because it detects the file config.ru. Yes, this is a rack app, but
-# running rails 2.3... which needs RAILS_ENV to be set, not RACK_ENV.
-#
-if ENV["RACK_ENV"]
-  ENV["RAILS_ENV"] = ENV["RACK_ENV"]
-end
+# This file is used by Rack-based servers to start the application.
 
-# we need to protect against multiple includes of the Rails environment (trust me)
-require 'config/environment' if !defined?(Rails) || !Rails.initialized?
+require ::File.expand_path('../config/environment',  __FILE__)
 require 'sprockets'
 
 unless Rails.env.production?
@@ -32,7 +24,6 @@ end
 
 map '/' do
   use Rails::Rack::LogTailer unless Rails.env.test?
-  use Rails::Rack::Debugger unless Rails.env.test?
-  use Rails::Rack::Static
-  run ActionController::Dispatcher.new
+  use Rails::Rack::Debugger if Rails.env.development?
+  run Crabgrass::Application
 end

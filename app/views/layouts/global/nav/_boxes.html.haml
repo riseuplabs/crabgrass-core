@@ -11,7 +11,7 @@
       %h3.dim
         = heading
         %span.more
-          = link_to I18n.t(:see_all_link) + ARROW, see_all_url
+          = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
       %div.leftcol
         %ul
           - for entity in columns[:left_col]

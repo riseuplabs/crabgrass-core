@@ -16,6 +16,8 @@ module Common::Ui::LinkToIconHelper
 
   module ActionViewExtension
 
+    include PrototypeHelper
+
     def self.included(base)
       base.class_eval do
         alias_method_chain :link_to, :icon
@@ -50,7 +52,8 @@ module Common::Ui::LinkToIconHelper
           end
         end
 
-        link_to_remote_without_icon(name, options.merge(icon_options), html_options)
+        ## FIXME: no idea why this isn't html_safe? anymore.
+        link_to_remote_without_icon(name, options.merge(icon_options), html_options).html_safe
       end
     end
 
@@ -60,7 +63,8 @@ module Common::Ui::LinkToIconHelper
         add_icon_class(html_options)
         args << html_options
       end
-      link_to_function_without_icon(name, *args, &block)
+      ## FIXME: no idea why this isn't html_safe? anymore.
+      link_to_function_without_icon(name, *args, &block).html_safe
     end
 
     #
@@ -80,7 +84,8 @@ module Common::Ui::LinkToIconHelper
       if html_options
         add_icon_class(html_options)
       end
-      link_to_without_icon(*args, &block)
+      ## FIXME: no idea why this isn't html_safe? anymore.
+      link_to_without_icon(*args, &block).html_safe
     end
 
     ##

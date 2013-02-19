@@ -36,11 +36,11 @@ module Common::Page::ListingTableHelper
   ##
 
   def row_updated_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>".html_safe
   end
 
   def header_updated_style()
-    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+    "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>".html_safe
   end
 
   ##
@@ -48,11 +48,11 @@ module Common::Page::ListingTableHelper
   ##
 
   def row_owner_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{link_to_name(page.owner_name, page.owner_id)}</td><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>"
+    "<tr class=\"#{cycle('odd','even')}\"><td>#{link_to_name(page.owner_name, page.owner_id)}</td><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>".html_safe
   end
 
   def header_owner_style()
-    "<tr><th>#{:owner.tcap}</th><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>"
+    "<tr><th>#{:owner.tcap}</th><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>".html_safe
   end
 
 

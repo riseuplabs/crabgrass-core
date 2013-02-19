@@ -27,7 +27,7 @@ class Wikis::AssetsControllerTest < ActionController::TestCase
       assert_difference 'Asset.count' do
         assert_difference '@group.pages.count' do
           sleep 1 # make sure most recent always works
-          post :create, :wiki_id => @wiki.id,
+          xhr :post, :create, :wiki_id => @wiki.id,
             :asset => {:uploaded_data => upload_data('gears.jpg')}
         end
       end

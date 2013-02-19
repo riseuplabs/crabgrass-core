@@ -83,7 +83,7 @@ class Asset < ActiveRecord::Base
 
   # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
   # it always picks "Asset". So, we hardcode what the query should be:
-  POLYMORPH_AS_PARENT = 'SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = "#{self.type_as_parent}"'
+  POLYMORPH_AS_PARENT = lambda { "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
 
   # fields in assets table not in asset_versions
   NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
@@ -147,10 +147,10 @@ class Asset < ActiveRecord::Base
     !showing.nil? && showing.is_cover
   end
 
-  named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
+  scope :not_attachment, :conditions => ['is_attachment = ?',false]
 
   # one of :image, :audio, :video, :document
-  named_scope :media_type, lambda {|type|
+  scope :media_type, lambda {|type|
     raise TypeError.new unless [:image,:audio,:video,:document].include?(type)
     {:conditions => ["is_#{type} = ?",true]}
   }

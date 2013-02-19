@@ -20,7 +20,9 @@ class Token < ActiveRecord::Base
 
   @@validity_time = 1.day
 
-  def before_create
+  before_create :generate_value
+
+  def generate_value
     self.value = Token.generate_token_value
   end
 

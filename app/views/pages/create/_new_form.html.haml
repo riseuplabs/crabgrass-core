@@ -13,7 +13,7 @@
     = :page_added_to_group.t(:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
 
 .create_page
-  - form_tag(create_page_path(:page_type => page_type), :multipart => @multipart) do
+  = form_tag(create_page_path(:page_type => page_type), :multipart => @multipart) do
     = hidden_field_tag 'page_type', page_type
     = hidden_field_tag('group', params[:group]) if params[:group]
     = formy(:horizontal_form) do |form|
@@ -24,8 +24,8 @@
           = render :partial => "pages/create/#{section}", :locals => {:form => form}
       = render :partial => 'pages/create/sharing', :locals => {:form => form}
     .form-actions.reverse
-      = submit_tag :create_button.t + ' &raquo;', :name => 'create', :class => 'btn btn-primary'
-      = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel', :class => 'btn'
+      = submit_tag (:create_button.t + ' &raquo;').html_safe, :name => 'create', :class => 'btn btn-primary'
+      = submit_tag ('&laquo; ' + I18n.t(:back_button)).html_safe, :name => 'cancel', :class => 'btn'
 
 = javascript_tag %( $("page_title").focus() )
 

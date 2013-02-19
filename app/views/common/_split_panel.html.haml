@@ -31,6 +31,5 @@
         - else
           = big_spinner
 
-- content_for :script do
-  - dom_loaded do
-    = activate_panel_row(current, load_url)
+- content_for :dom_loaded do
+  = activate_panel_row(current, load_url)

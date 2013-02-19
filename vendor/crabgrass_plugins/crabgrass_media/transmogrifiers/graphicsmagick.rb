@@ -55,6 +55,10 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
         arguments << '-geometry' << size
       end
     end
+    if options[:background]
+      # http://superuser.com/questions/213336/using-graphicsmagick-or-imagemagick-how-do-i-replace-transparency-with-a-fill-c
+      arguments << '-background' << options[:background] << '-extent' << '0x0'
+    end
     if options[:crop]
       # we add '+0+0' because we don't want tiles, just a single image
       arguments << '-crop' << options[:crop]+'+0+0'
