@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 class PageTrackingObserverTest < ActiveSupport::TestCase
 
@@ -8,8 +8,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     @manu = FactoryGirl.create(:user, :login => "manu")
     @manu.grant_access!(:public => :pester)
     User.current = @pepe
-    @page = FactoryGirl.create(:page)
-    @page.owner = @pepe
+    @page = FactoryGirl.create(:page, :owner => @pepe)
     @last_count = @page.page_histories.count
   end
 

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 # WARNING:
 # this test are not isolated since their are using instance objects that for example create a page
@@ -15,8 +15,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     @user = FactoryGirl.create(:user, :login => "pepe")
     User.current = @user
 
-    @page = FactoryGirl.create(:page)
-    @page.owner = @user
+    @page = FactoryGirl.create(:page, :owner => @user)
 
     @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
                                :title => "Crabgrass Social Network",
