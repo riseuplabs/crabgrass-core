@@ -10,7 +10,7 @@ module PageExtension::Groups
       has_many :group_participations, :dependent => :destroy
       has_many :groups, :through => :group_participations
 
-      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
+      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
 
       remove_method :namespace_group_ids  # override the ActiveRecord
       remove_method :group_ids            # created method so we can used cached copy.
