@@ -229,8 +229,8 @@ class Picture < ActiveRecord::Base
     status = GraphicsMagickTransmogrifier.new(
       :input_file => input_path,
       :output_file => output_path,
-      :size => geometry.to_size(self.size),
-      :crop => geometry.to_crop
+      :size => geometry.gm_size_param_from(self.size),
+      :crop => geometry.gm_crop_param
     ).try.run
     if status != :success
       raise ErrorMessage.new('invalid image')

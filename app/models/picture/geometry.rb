@@ -102,7 +102,7 @@ class Picture
       end
     end
 
-    def to_crop
+    def gm_crop_param
       if max_width or max_height
         "%sx%s" % [max_width||10000000, max_height||10000000]
       else
