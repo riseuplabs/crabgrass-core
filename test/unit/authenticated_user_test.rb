@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test_helper'
 
 class AuthenticatedUserTest < ActiveSupport::TestCase
 
@@ -43,12 +43,17 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
   end
 
   def test_should_reset_password
-    users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
+    user = users(:quentin)
+    user.update_attributes :password => 'new password',
+      :password_confirmation => 'new password'
+    user.save
     assert_equal users(:quentin), User.authenticate('quentin', 'new password')
   end
 
   def test_should_not_rehash_password
-    users(:quentin).update_attributes(:login => 'quentin2')
+    user = users(:quentin)
+    user.update_attributes(:login => 'quentin2')
+    user.save
     assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
   end
 
