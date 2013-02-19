@@ -8,7 +8,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     @manu = FactoryGirl.create(:user, :login => "manu")
     @manu.grant_access!(:public => :pester)
     User.current = @pepe
-    @page = FactoryGirl.create(:page, :user => @pepe, :owner => @pepe, :access => 1)
+    @page = FactoryGirl.create(:page)
+    @page.owner = @pepe
+    @page.user_participations.create user: @pepe, access: 1
     @last_count = @page.page_histories.count
   end
 
@@ -86,7 +88,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_create_page
-    page = FactoryGirl.create(:page, :user => @pepe, :owner => @pepe, :access => 1)
+    page = FactoryGirl.create(:page)
+    page.owner = @pepe
+    page.user_participations.create user: @pepe, access: 1
     page.reload
     assert_equal PageHistory::PageCreated, page.page_histories.first.class
     assert_equal PageHistory::GrantUserFullAccess, page.page_histories.last.class
@@ -144,7 +148,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_group_assigning_full_access
-    @pepe.share_page_with!(@page, FactoryGirl.create(:group, :user => @pepe), :access => 1)
+    group = FactoryGirl.create(:group)
+    group.memberships.create user: @pepe
+    @pepe.share_page_with!(@page, group, :access => 1)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupFullAccess, PageHistory.last.class
@@ -152,7 +158,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_group_assigning_write_access
-    @pepe.share_page_with!(@page, FactoryGirl.create(:group, :user => @pepe), :access => 2)
+    group = FactoryGirl.create(:group)
+    group.memberships.create user: @pepe
+    @pepe.share_page_with!(@page, group, :access => 2)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupWriteAccess, PageHistory.last.class
@@ -160,7 +168,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_group_assigning_read_access
-    @pepe.share_page_with!(@page, FactoryGirl.create(:group, :user => @pepe), :access => 3)
+    group = FactoryGirl.create(:group)
+    group.memberships.create user: @pepe
+    @pepe.share_page_with!(@page, group, :access => 3)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupReadAccess, PageHistory.last.class
@@ -168,7 +178,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_group_removing_access
-    @pepe.share_page_with!(@page, FactoryGirl.create(:group, :user => @pepe), :access => 3)
+    group = FactoryGirl.create(:group)
+    group.memberships.create user: @pepe
+    @pepe.share_page_with!(@page, group, :access => 3)
     @page.group_participations.last.destroy
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user

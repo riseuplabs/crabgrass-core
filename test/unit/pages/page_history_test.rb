@@ -15,7 +15,9 @@ class PageHistoryTest < ActiveSupport::TestCase
     @user = FactoryGirl.create(:user, :login => "pepe")
     User.current = @user
 
-    @page = FactoryGirl.create(:page, :owner => @user, :access => 1)
+    @page = FactoryGirl.create(:page)
+    @page.owner = @user
+    @page.user_participations.create user: @user, access: 1
 
     @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
                                :title => "Crabgrass Social Network",
@@ -152,15 +154,15 @@ class PageHistoryTest < ActiveSupport::TestCase
     user_b = FactoryGirl.create(:user, :receive_notifications => "Digest")
     user_c = FactoryGirl.create(:user, :receive_notifications => "Single")
 
-    FactoryGirl.build(:user_participation, :page => @page, :user => user_a, :watch => true).save!
-    FactoryGirl.build(:user_participation, :page => @page, :user => user_b, :watch => true).save!
-    FactoryGirl.build(:user_participation, :page => @page, :user => user_c, :watch => true).save!
+    @page.user_participations.create!(:user => user_a, :watch => true)
+    @page.user_participations.create!(:user => user_b, :watch => true)
+    @page.user_participations.create!(:user => user_c, :watch => true)
 
     PageHistory.delete_all
 
-    @page.participation_for_user(user_a).update_attribute :star, true
-    @page.participation_for_user(user_b).update_attribute :star, true
-    @page.participation_for_user(user_c).update_attribute :star, true
+    @page.participation_for_user(user_a).update_attribute(:star, true)
+    @page.participation_for_user(user_b).update_attribute(:star, true)
+    @page.participation_for_user(user_c).update_attribute(:star, true)
 
     assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
     assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size

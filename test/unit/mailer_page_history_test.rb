@@ -13,7 +13,9 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
 
     User.current = @user
 
-    @page = FactoryGirl.create(:page, :owner => @user, :access => 1)
+    @page = FactoryGirl.create(:page)
+    @page.owner = @user
+    @page.user_participations.create user: @user, access: 1
 
     @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
                                :title => "Crabgrass Social Network",

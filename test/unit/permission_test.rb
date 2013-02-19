@@ -14,16 +14,19 @@ class PermissionTest < ActiveSupport::TestCase
   def test_group_permissions_with_committee_and_council
     # create a group and user
     user = FactoryGirl.create(:user, :login => 'earth')
-    group = FactoryGirl.create(:group, :user => user, :name => 'planets')
+    group = FactoryGirl.create(:group, :name => 'planets')
     group.add_user! user
     assert user.may?(:admin, group), "should admin group i'm in"
 
     # add a committee
-    committee = FactoryGirl.create(:committee, :group => group)
+    committee = FactoryGirl.create(:committee)
+    group.add_committee! committee
+
     assert user.may?(:admin, committee), "should admin committee of my group."
 
     # add a council
-    council = FactoryGirl.create(:council, :group => group, :name => 'planets+astrophysicists')
+    council = FactoryGirl.create(:committee, :name => 'astrophysicists')
+    group.add_council!(council)
     user.clear_access_cache
     assert !user.may?(:admin, group), "should not admin group"
     assert user.may?(:edit, committee)
