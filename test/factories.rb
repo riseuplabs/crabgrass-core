@@ -6,7 +6,7 @@ FactoryGirl.define do
   sequence(:boolean)      { |n| rand(2) == 1 ? true : false }
   sequence(:title)        { |n| Faker::Lorem.words(3).join(" ").capitalize }
   sequence(:email)        { |n| Faker::Internet.email }
-  sequence(:login)        { |n| Faker::Internet.user_name.gsub(/[^a-z]/, "") }
+  sequence(:login)        { |n| uname = Faker::Internet.user_name.gsub(/[^a-z]/, "") ; uname.size < 3 ?  a * (4 - a.size) : uname }
   sequence(:display_name) { |n| Faker::Name.name }
   sequence(:summary)      { |n| Faker::Lorem.paragraph }
   sequence(:caption)      { |n| Faker::Lorem.sentence }
