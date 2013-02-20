@@ -24,11 +24,11 @@ class People::DirectoryController < ApplicationController
   end
 
   def friends?
-    params[:path].try.include? 'contacts'
+    params[:path].try(:include?, 'contacts')
   end
 
   def peers?
-    params[:path].try.include? 'peers'
+    params[:path].try(:include?, 'peers')
   end
 
 end
