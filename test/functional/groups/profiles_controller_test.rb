@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::ProfilesControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user! @user
   end
 

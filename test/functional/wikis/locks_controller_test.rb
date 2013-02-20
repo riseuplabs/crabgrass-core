@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class Wikis::LocksControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @wiki = Wiki.create :group => @group
     @wiki.lock!(:document, @user)
   end
@@ -16,7 +16,7 @@ class Wikis::LocksControllerTest < ActionController::TestCase
   end
 
   def test_cannot_destroy_other_peoples_locks
-    login_as User.make
+    login_as FactoryGirl.create(:user)
     delete :destroy, :wiki_id => @wiki.id
     assert_equal 'permission denied', @response.body
     assert_equal :document, @wiki.reload.section_edited_by(@user)

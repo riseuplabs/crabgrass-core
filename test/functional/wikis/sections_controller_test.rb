@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Wikis::SectionsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
     @wiki = @group.profiles.public.create_wiki :body => <<-EOB
 h2. section one
@@ -52,7 +52,7 @@ one A
   end
 
   def test_edit_locked
-    other_user = User.make
+    other_user  = FactoryGirl.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do

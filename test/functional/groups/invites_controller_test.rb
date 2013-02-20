@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::InvitesControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user! @user
   end
 
@@ -19,7 +19,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    recipient = User.make
+    recipient = FactoryGirl.create(:user)
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUs.count' do
         get :create, :group_id => @group.to_param,
