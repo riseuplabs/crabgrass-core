@@ -13,7 +13,7 @@ class Groups::DirectoryController < ApplicationController
   helper_method :my_groups?
 
   def my_groups?
-    params[:path].try.include? 'my'
+    params[:path].try(:include?, 'my')
   end
 
   def groups_to_display
