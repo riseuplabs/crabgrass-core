@@ -111,6 +111,8 @@ module Common::Ui::LayoutHelper
       lines << '<![endif]-->'
     end
 
+    lines << csrf_meta_tag
+
     lines.join("\n").html_safe
   end
 
