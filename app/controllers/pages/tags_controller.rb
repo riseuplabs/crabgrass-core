@@ -4,7 +4,7 @@ class Pages::TagsController < Pages::SidebarsController
   helper 'pages/tags'
 
   def index
-    render :partial => 'pages/tags/popup'
+    render :partial => 'pages/tags/popup', :content_type => 'text/html'
   end
 
   def create
