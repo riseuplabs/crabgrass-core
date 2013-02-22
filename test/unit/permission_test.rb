@@ -25,8 +25,9 @@ class PermissionTest < ActiveSupport::TestCase
     assert user.may?(:admin, committee), "should admin committee of my group."
 
     # add a council
-    council = FactoryGirl.create(:committee, :name => 'astrophysicists')
-    group.add_council!(council)
+    committee_for_council = FactoryGirl.create(:committee, :name => 'astrophysicists')
+    group.add_council!(committee_for_council)
+    council = Group.find(committee_for_council.id)
     user.clear_access_cache
     assert !user.may?(:admin, group), "should not admin group"
     assert user.may?(:edit, committee)
