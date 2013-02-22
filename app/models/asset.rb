@@ -320,16 +320,6 @@ class Asset < ActiveRecord::Base
   # creates an Asset of the appropriate subclass (ie ImageAsset).
   #
   def self.create_from_params(attributes = nil, &block)
-    begin
-      return self.create_from_params!(attributes, &block)
-    rescue Exception => exc
-      puts 'Error creating asset: ' + exc.to_s
-      puts exc.clean_backtrace
-      return nil
-    end
-  end
-
-  def self.create_from_params!(attributes = nil, &block)
     asset_class(attributes).create!(attributes, &block)
   end
 
