@@ -576,11 +576,9 @@ class GreenCloth < RedCloth::TextileDoc
       (?:\.[-\w]+)*            # remaining subdomains or domain
       (?::\d+)?                # port
       (?:/                     # path
-       (?:
         (?:[#{URL_CHAR}]|
-         (?:[#{URL_PUNCT}][^\s$])
+          (?:[#{URL_PUNCT}][^\s$])
         )+
-       )?
       )*
       (?:\?[\w\+%&=.;-]+?)?    # query string
       (?:\#[\w\-\.]*)?         # trailing anchor
