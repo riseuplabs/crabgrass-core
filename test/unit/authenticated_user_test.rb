@@ -47,19 +47,14 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
     user = users(:quentin)
     user.update_attributes :password => pwd,
       :password_confirmation => pwd
-    user.save
-    user.reload
-    assert_equal pwd, user.password
-    assert_equal 'quentin', user.login
-    assert_equal users(:quentin), User.authenticate('quentin', 'new password')
+    assert user.save
+    assert_equal users(:quentin), User.authenticate('quentin', pwd)
   end
 
   def test_should_not_rehash_password
     user = users(:quentin)
     user.update_attributes(:login => 'quentin2')
-    user.save
-    user.reload
-    assert_equal 'quentin', user.password
+    assert user.save
     assert_equal 'quentin2', user.login
     assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
   end

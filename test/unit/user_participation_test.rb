@@ -20,7 +20,7 @@ class UserParticipationTest < ActiveSupport::TestCase
     p.save
     assert_equal 'orange', p.updated_by_login, 'cached updated_by_login should be "orange"'
     u.login = 'banana'
-    u.save
+    assert u.save
     p.reload
     assert_equal 'banana', u.reload.login
     assert_equal 'banana', p.updated_by_login, 'cached updated_by_login should be "banana"'

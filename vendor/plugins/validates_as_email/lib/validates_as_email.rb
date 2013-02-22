@@ -29,14 +29,14 @@ end
 
 class EmailFormatValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
+    return if value.nil?
     message   = options[:message] || 'is an invalid email'
-    allow_nil = options[:allow_nil] || true
     record.errors[attribute] << message unless value =~ RFC822::EmailAddress
   end
 end
 
 ActiveRecord::Base.class_eval do
   def self.validates_as_email(attr_name, options={})
-    validates attr_name, :presence => true, :email_format => true
+    validates attr_name, :email_format => true
   end
 end
