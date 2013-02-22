@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class UserParticipationTest < ActiveSupport::TestCase
 
@@ -22,6 +22,7 @@ class UserParticipationTest < ActiveSupport::TestCase
     u.login = 'banana'
     u.save
     p.reload
+    assert_equal 'banana', u.reload.login
     assert_equal 'banana', p.updated_by_login, 'cached updated_by_login should be "banana"'
   end
 

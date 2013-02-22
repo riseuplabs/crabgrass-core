@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative 'test_helper'
 
 class AuthenticatedUserTest < ActiveSupport::TestCase
 
@@ -43,10 +43,14 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
   end
 
   def test_should_reset_password
+    pwd = "new password"
     user = users(:quentin)
-    user.update_attributes :password => 'new password',
-      :password_confirmation => 'new password'
+    user.update_attributes :password => pwd,
+      :password_confirmation => pwd
     user.save
+    user.reload
+    assert_equal pwd, user.password
+    assert_equal 'quentin', user.login
     assert_equal users(:quentin), User.authenticate('quentin', 'new password')
   end
 
@@ -54,6 +58,9 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
     user = users(:quentin)
     user.update_attributes(:login => 'quentin2')
     user.save
+    user.reload
+    assert_equal 'quentin', user.password
+    assert_equal 'quentin2', user.login
     assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
   end
 
