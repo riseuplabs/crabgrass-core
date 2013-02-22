@@ -3,7 +3,7 @@
 - edits = @page.edits_stats
 %table.styled{:width=>'100%'}
   %tr
-    %th= "&nbsp;"
+    %th= "&nbsp;".html_safe
     %th= I18n.t(:viewed).capitalize
     %th= I18n.t(:starred).capitalize
     %th= I18n.t(:edited).capitalize
@@ -26,5 +26,5 @@
     %td= I18n.t(:date_all_time)
     %td= views[3]
     %td= stars[3]
-    %td= "&nbsp;"
+    %td= "&nbsp;".html_safe
 
