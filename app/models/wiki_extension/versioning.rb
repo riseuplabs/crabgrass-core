@@ -1,3 +1,5 @@
+# (Wiki::Version is declared in app/models/wiki.rb)
+#
 #     create_table "wiki_versions", :force => true do |t|
 #       t.integer  "wiki_id",    :limit => 11
 #       t.integer  "version",    :limit => 11
