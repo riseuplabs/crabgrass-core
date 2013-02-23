@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
@@ -6,6 +6,22 @@ class UserTest < ActiveSupport::TestCase
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+  end
+
+  def test_user_fixtures_are_valid
+    orange = users(:orange)
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
+  end
+
+  def test_email_required_settings
+    assert !User.new.should_validate_email
+    orange = users(:orange)
+    orange.email = nil
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
   end
 
   def test_ensure_values_in_receive_notifications

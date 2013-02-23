@@ -32,12 +32,11 @@ class User < ActiveRecord::Base
   # ^^ makes the validation succeed if email == ''
 
   def should_validate_email
-    should_validate = if Site.current
+    if Site.current
       Site.current.require_user_email
     else
       Conf.require_user_email
     end
-    should_validate
   end
 
   ##
@@ -149,7 +148,7 @@ class User < ActiveRecord::Base
   # returns this user, as a ghost.
   #
   def ghostify!
-    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself. 
+    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself.
     return User.find(self.id)
   end
 
