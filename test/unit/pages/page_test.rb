@@ -239,7 +239,8 @@ class PageTest < ActiveSupport::TestCase
 
   def test_attachments
     page = Page.create! :title => 'page with attachments', :user => users(:blue)
-    page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+    upload = upload_data('photo.jpg')
+    page.add_attachment! :uploaded_data => upload
 
     assert_equal page.page_terms, page.assets.first.page_terms
 

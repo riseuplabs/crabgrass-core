@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
-  # fixes fixture_file_upload for Rails 2.3
+  # fixture_file_upload for Rails 3:
   include ActionDispatch::TestProcess
   fixtures :all
 
@@ -17,13 +17,6 @@ class AssetTest < ActiveSupport::TestCase
     assert check_associations(Asset)
     assert check_associations(Asset::Version)
     assert check_associations(Thumbnail)
-  end
-
-  def test_simple_upload
-   file_to_upload = upload_data('image.png')
-   @asset = Asset.create_from_params :uploaded_data => file_to_upload
-   assert File.exists?( @asset.private_filename ), 'the private file should exist'
-   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
   def test_paths
@@ -158,7 +151,8 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_type_changes
-    @asset = Asset.create_from_params :uploaded_data => upload_data('bee.jpg')
+    file_to_upload = upload_data('bee.jpg')
+    @asset = Asset.create_from_params :uploaded_data => file_to_upload
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -177,12 +171,20 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 3, @asset.thumbnails.count
   end
 
+  def test_simple_upload
+   file_to_upload = upload_data('image.png')
+   @asset = Asset.create_from_params :uploaded_data => file_to_upload
+   assert File.exists?( @asset.private_filename ), 'the private file should exist'
+   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
+  end
+
   def test_dimensions
     if !GraphicsMagickTransmogrifier.new.available?
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
       return
     end
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    file_to_upload = upload_data('photo.jpg')
+    @asset = Asset.create_from_params :uploaded_data => file_to_upload
     assert_equal 500, @asset.width, 'width must match file'
     assert_equal 321, @asset.height, 'height must match file'
     @asset.uploaded_data = upload_data('bee.jpg')
