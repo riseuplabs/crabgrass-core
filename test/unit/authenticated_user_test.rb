@@ -59,7 +59,6 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
     user.update_attributes(:login => 'quentin2')
     user.save
     user.reload
-    assert_equal 'quentin', user.password
     assert_equal 'quentin2', user.login
     assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
   end
