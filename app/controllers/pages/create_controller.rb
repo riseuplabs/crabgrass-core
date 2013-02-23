@@ -76,7 +76,7 @@ class Pages::CreateController < ApplicationController
     end
     if params[:owner] == 'me'
       @owner = current_user
-    elsif params[:owner].any?
+    elsif params[:owner].present?
       @owner = Group.find_by_name(params[:owner])
     end
   end

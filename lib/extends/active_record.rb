@@ -33,7 +33,7 @@ ActiveRecord::Base.class_eval do
     define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
     before_save :format_body
     define_method(:format_body) {
-      if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
+      if body.present? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
         if respond_to?('owner_name')
           self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html

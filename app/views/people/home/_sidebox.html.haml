@@ -9,20 +9,20 @@
   - sidebox_inside_width = current_theme.columns_width(current_theme.local_sidecolumn_width) - 2 * current_theme.resolve_width(current_theme.local_content_padding)
   = picture_tag(@profile.picture, :max_width => sidebox_inside_width, :min_width => sidebox_inside_width)
 
-- if @profile.summary.any?
+- if @profile.summary.present?
   - anything = true
   .p
     = @profile.summary_html
 
-- if @profile.organization.any?
+- if @profile.organization.present?
   - anything = true
   .p
     =h @profile.organization
-    - if @profile.role
+    - if @profile.role.present?
       %br
       %i=h @profile.role
 
-- if @profile.place.any?
+- if @profile.place.present?
   - anything = true
   .p
     %b= h @profile.place

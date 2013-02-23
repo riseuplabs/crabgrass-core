@@ -58,7 +58,7 @@ module PageExtension::Assets
 
     self.assets << asset
     self.cover = asset if options[:cover]
-    asset.base_filename = options[:filename] if options[:filename].any?
+    asset.base_filename = options[:filename] if options[:filename].present?
 
     unless asset.new_record?
       asset.save!

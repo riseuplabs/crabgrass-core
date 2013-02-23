@@ -24,7 +24,7 @@
 
 - if @context
   - style = context_banner_style
-  %header#context_banner.large{:class => (style.any? ? 'dark_border' : 'light_border')}
+  %header#context_banner.large{:class => (style.present? ? 'dark_border' : 'light_border')}
     %div#banner_content{:style => context_banner_style}
       - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)
         = render :partial => '/layouts/context/nested_banner_content'

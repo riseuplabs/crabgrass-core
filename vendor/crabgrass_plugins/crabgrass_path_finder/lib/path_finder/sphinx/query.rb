@@ -66,7 +66,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     @page        = options[:page] || 1
 
     apply_filters_from_path(path)
-    @order = nil unless @order.any?
+    @order = @order.presence
   end
 
   def apply_filter(filter, args)
@@ -130,7 +130,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   rescue ThinkingSphinx::ConnectionError
     PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).count        # fall back to mysql
   end
-  
+
   ##
   ## utility methods called by SearchFilter classes
   ##

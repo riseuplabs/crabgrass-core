@@ -8,7 +8,7 @@
         = ("&nbsp;/ " + link_to(h(page.title), page_url(page))).html_safe
     - else
       %span.page_title= link_to h(page.title), page_url(page)
-    - if (summary = page_summary(page)).any?
+    - if (summary = page_summary(page)).present?
       %span.page_summary= summary
 
 = pagination_links pages

@@ -11,7 +11,7 @@ require 'tmpdir'
 
 unless defined?(LIBREOFFICE_COMMAND)
   cmd = `which libreoffice`.chomp
-  if cmd.any?
+  if cmd.present?
     LIBREOFFICE_COMMAND = cmd
   else
     LIBREOFFICE_COMMAND = false
@@ -108,8 +108,8 @@ LibreOfficeTransmogrifier.new
 #  end
 #end
 
-  #cmd = `which openoffice`.chomp unless cmd.any?
-  #cmd = `which openoffice.org`.chomp unless cmd.any?
+  #cmd = `which openoffice`.chomp unless cmd.present?
+  #cmd = `which openoffice.org`.chomp unless cmd.present?
 
 #  def try_starting_daemon
 #    log 'attempting to start libreoffice in daemon mode'

@@ -109,7 +109,7 @@ module CastleGates
 
     def self.conditions_for_holder_codes(codes)
       if codes.length == 1
-        if codes.first.any?
+        if codes.first.present?
           ["keys.holder_code = ?", codes.first]
         else
           "keys.holder_code IS NULL"

@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
 
   # the user's custom display name, could be anything.
   def display_name
-    read_attribute('display_name').any? ? read_attribute('display_name') : login
+    read_attribute('display_name').presence || login
   end
 
   # the user's handle, in same namespace as group name,
@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
 
   # displays both display_name and name
   def both_names
-    if read_attribute('display_name').any? and read_attribute('display_name') != name
+    if read_attribute('display_name').present? && read_attribute('display_name') != name
       '%s (%s)' % [display_name,name]
     else
       name
@@ -186,7 +186,7 @@ class User < ActiveRecord::Base
   # and email when someone sends them a page notification
   # message.
   def wants_notification_email?
-    self.email.any?
+    self.email.present?
   end
 
   ##

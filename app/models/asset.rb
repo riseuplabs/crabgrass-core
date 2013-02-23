@@ -374,7 +374,7 @@ class Asset < ActiveRecord::Base
   # returns a mime type of the file_data
   #
   def self.mime_type_from_data(file_data)
-    if file_data and file_data.any?
+    if file_data.present?
       file_data.content_type || Media::MimeType.mime_type_from_extension(file_data.original_filename)
     end
   end
