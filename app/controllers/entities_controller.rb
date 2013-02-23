@@ -81,17 +81,11 @@ class EntitiesController < ApplicationController
   protected
 
   def filter
-    @filter ||= begin
-      if params[:query].any?
-        "#{params[:query]}%"
-      else
-        ""
-      end
-    end
+    params[:query].present? ? "#{params[:query]}%" : ""
   end
 
   # the autocomplete will issues an empty query when first loaded.
-  # which gives us an oppotunity to early load likely results.
+  # which gives us an opportunity to early load likely results.
   def preload?
     filter.empty? and logged_in?
   end
