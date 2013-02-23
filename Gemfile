@@ -17,6 +17,8 @@ gem 'sprockets', '~> 2.2'
 
 gem 'mysql', '2.8.1'
 
+gem 'json', '~> 1.7.7'
+
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
 gem 'hpricot', '~> 0.8'

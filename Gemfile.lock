@@ -198,6 +198,7 @@ DEPENDENCIES
   hpricot (~> 0.8)
   i18n
   jsmin
+  json (~> 1.7.7)
   mime-types
   minitest (~> 2.12)
   mocha (~> 0.12.0)
