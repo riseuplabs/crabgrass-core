@@ -239,12 +239,12 @@ class PageTest < ActiveSupport::TestCase
 
   def test_attachments
     page = Page.create! :title => 'page with attachments', :user => users(:blue)
-    upload = upload_data('photo.jpg')
+    upload = upload_data('gears.jpg')
     page.add_attachment! :uploaded_data => upload
 
     assert_equal page.page_terms, page.assets.first.page_terms
 
-    assert_equal 'photo.jpg', page.assets.first.filename
+    assert_equal 'gears.jpg', page.assets.first.filename
     page.assets.each do |asset|
       assert !asset.public?
     end

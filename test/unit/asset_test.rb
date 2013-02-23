@@ -151,7 +151,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_type_changes
-    file_to_upload = upload_data('bee.jpg')
+    file_to_upload = upload_data('gears.jpg')
     @asset = Asset.create_from_params :uploaded_data => file_to_upload
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
@@ -165,7 +165,7 @@ class AssetTest < ActiveSupport::TestCase
 
     # change back
     @asset = Asset.find(@asset.id)
-    @asset.uploaded_data = upload_data('bee.jpg')
+    @asset.uploaded_data = upload_data('gears.jpg')
     @asset.save
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
@@ -183,7 +183,7 @@ class AssetTest < ActiveSupport::TestCase
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
       return
     end
-    file_to_upload = upload_data('photo.jpg')
+    file_to_upload = upload_data('gears.jpg')
     @asset = Asset.create_from_params :uploaded_data => file_to_upload
     assert_equal 500, @asset.width, 'width must match file'
     assert_equal 321, @asset.height, 'height must match file'
