@@ -41,7 +41,7 @@
           content_tag(:div, help(:coordinator), :class => 'icon tiny_wrench_16'),
           content_tag(:div, help(:participant), :class => 'icon tiny_pencil_16'),
           content_tag(:div, help(:viewer), :class => 'icon tiny_no_pencil_16'),
-        ].join, :class => 'p')
+        ].join.html_safe, :class => 'p')
       )
     else
       r.info help(:sharing)

@@ -6,6 +6,7 @@
   </style>  
 </head>
 <body>
-<%= @content_for_layout %>
+<%# FIXME: see comment in LayoutHelper#crabgrass_javascripts for details on @_content_for %>
+<%= @_content_for[:layout] %>
 </body>
 </html>

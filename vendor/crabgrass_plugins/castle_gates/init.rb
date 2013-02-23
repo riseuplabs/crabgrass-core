@@ -1,5 +1,10 @@
 require 'active_support'
 require 'action_controller'
+
+if defined?(Arel)
+  require File.dirname(__FILE__) + '/lib/castle_gates/arel_extension'
+end
+
 require File.dirname(__FILE__) + '/lib/castle_gates'
 
 ActiveRecord::Base.class_eval do

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 =begin
     create_table "requests", :force => true do |t|
       t.integer  "created_by_id"
@@ -57,16 +58,16 @@ class Request < ActiveRecord::Base
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
 
-  validate_on_create :no_duplicate
-  validate_on_create :check_create_permission
+  validate :no_duplicate, :on => :create
+  validate :check_create_permission, :on => :create
 
-  before_validation_on_create :set_default_state
+  before_validation :set_default_state, :on => :create
 
   ##
   ## FINDERS
   ##
 
-  named_scope :having_state, lambda { |state|
+  scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state.to_s]}
   }
 
@@ -77,7 +78,7 @@ class Request < ActiveRecord::Base
 
   ## same as having_state, but take into account
   ## that user can vote reject/approve on some requests without changing the state
-  #named_scope :having_state_for_user, lambda { |state, user|
+  #scope :having_state_for_user, lambda { |state, user|
   #  votes_conditions = if state == :pending
   #    "votes.value IS NULL AND requests.state = 'pending'"
   #  else
@@ -88,39 +89,39 @@ class Request < ActiveRecord::Base
   #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
   #}
 
-  named_scope :pending, :conditions => "state = 'pending'"
-  named_scope :by_created_at, :order => 'created_at DESC'
-  named_scope :by_updated_at, :order => 'updated_at DESC'
-  named_scope :created_by, lambda { |user|
+  scope :pending, :conditions => "state = 'pending'"
+  scope :by_created_at, :order => 'created_at DESC'
+  scope :by_updated_at, :order => 'updated_at DESC'
+  scope :created_by, lambda { |user|
     {:conditions => {:created_by_id => user}}
   }
-  named_scope :to_user, lambda { |user|
+  scope :to_user, lambda { |user|
     # you only get to approve group requests for groups that you are an admin for
     {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
   }
 
-  named_scope :to_or_created_by_user, lambda { |user|
+  scope :to_or_created_by_user, lambda { |user|
     # you only get to approve group requests for groups that you are an admin for
     {:conditions => [
       "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
       user.id, user.admin_for_group_ids, user.id]}
   }
 
-  named_scope :to_group, lambda { |group|
+  scope :to_group, lambda { |group|
     {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, 'Group']}
   }
-  named_scope :from_group, lambda { |group|
+  scope :from_group, lambda { |group|
     {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
   }
 
-  named_scope :regarding_group, lambda { |group|
+  scope :regarding_group, lambda { |group|
     {:conditions => ['(recipient_id = ? AND recipient_type = ?) OR (requestable_id = ? AND requestable_type = ?)', group.id, 'Group', group.id, 'Group']}
   }
 
-  named_scope :for_recipient, lambda { |recipient|
+  scope :for_recipient, lambda { |recipient|
     {:conditions => {:recipient_id => recipient}}
   }
-  named_scope :with_requestable, lambda { |requestable|
+  scope :with_requestable, lambda { |requestable|
     {:conditions => {:requestable_id => requestable}}
   }
 
@@ -128,7 +129,7 @@ class Request < ActiveRecord::Base
   # find only requests related to remembership.
   # maybe we should add a "membership?" column?
   #
-  named_scope :membership_related, :conditions => {:type => [
+  scope :membership_related, :conditions => {:type => [
     'RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail',
     'RequestToJoinYou', 'RequestToJoinYourNetwork', 'RequestToRemoveUser'
   ]}
@@ -255,7 +256,9 @@ class Request < ActiveRecord::Base
   def requestable_required?() true end
 
   def flash_message(options = {})
-    thing = self.class.human_name(options)
+    # WARNING: don't pass the whole 'options' hash here, as 'human' will
+    #     add :default and :scope options, which break our translations.
+    thing = self.class.model_name.human(:count => options[:count])
     options.merge!(:thing => thing, :recipient => self.recipient.display_name)
     if self.errors.any?
       { :type => :error,

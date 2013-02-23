@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/test_helper'
 
 class AssetTest < ActiveSupport::TestCase
 
-  include ActionController::TestProcess
+  include ActionDispatch::TestProcess
 
   def setup
     Media::Transmogrifier.verbose = true  # set to true to see all the commands being run.

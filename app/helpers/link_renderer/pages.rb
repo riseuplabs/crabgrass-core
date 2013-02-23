@@ -7,7 +7,8 @@
 #
 # NEEDS TO BE WRITTEN
 #
+# FIXME
 
-class LinkRenderer::Pages < WillPaginate::LinkRenderer
+class LinkRenderer::Pages < WillPaginate::ViewHelpers::LinkRenderer
 end
 

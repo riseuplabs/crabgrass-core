@@ -33,7 +33,8 @@ module Common::Ui::AvatarHelper
   #
   def avatar_url_for(entity, size='medium')
     if entity
-      '/avatars/%s/%s.jpg?%s' % [entity.avatar_id||0, size, entity.version]
+      '/avatars/%s/%s.jpg?%s' % [entity.avatar_id||0, size,
+        entity.respond_to?(:version) ? entity.version : entity.updated_at.to_i]
     else
       '/avatars/0/%s.jpg' % size
     end
@@ -56,7 +57,7 @@ module Common::Ui::AvatarHelper
       :action => action
     link_options = {:url => url, :icon => 'picture_edit'}
 
-    return avatar_for(entity,'large') + "&nbsp;" +
+    return avatar_for(entity,'large') + "&nbsp;".html_safe +
       link_to_modal(:upload_image_link.t, link_options, :class => 'inline')
   end
 end

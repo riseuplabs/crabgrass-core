@@ -19,16 +19,16 @@ class UserGhost < User
   #
   def retire!
     clean_attributes
-    avatar.destroy
-    profiles.destroy
-    setting.destroy
-    task_participations.destroy
-    participations.destroy
-    memberships.destroy
-    relationship.destroy
+    avatar.destroy if avatar
+    profiles.each { |p| p.destroy }
+    # setting.destroy #TODO not sure if settings are ever used.
+    task_participations.each { |t| t.destroy }
+    participations.each { |p| p.destroy }
+    memberships.each { |m| m.destroy } # should we use remove_user! ?
+    relationships.each { |relationship| self.remove_contact!(User.find(relationship.contact_id)) }
     clear_cache
   end
-  handle_asynchronously :retire!
+  #handle_asynchronously :retire!
 
   #
   # gets rid of the users name
@@ -36,15 +36,15 @@ class UserGhost < User
   def anonymize!
     self.update_attribute(:display_name, nil)
   end
-  handle_asynchronously :anonymize!
+  #handle_asynchronously :anonymize!
 
   #
   # gets rid of all comments
   #
   def destroy_comments!
-    self.posts.destroy
+    self.posts.each { |p| p.destroy }
   end
-  handle_asynchronously :destroy_comments!
+  #handle_asynchronously :destroy_comments!
 
   private
 
@@ -54,9 +54,10 @@ class UserGhost < User
     #
     attrs_to_nil_out = %w(
       crypted_password salt time_zone email
-      login created_at updated_at version
+      login created_at version
       last_seen_at language remember_token remember_token_expires_at
-    )
+      updated_at
+    ) # updated_at should be last so it isn't re-set
     attrs_to_nil_out.each do |attr|
       update_attribute(attr, nil)
     end

@@ -54,7 +54,7 @@ module Common::Ui::GizmoHelper
         else
           link_to link[:label], link[:url], link.slice(:class, :id)
         end
-      end.join
+      end.join.html_safe
     end
   end
 

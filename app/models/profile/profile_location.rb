@@ -12,6 +12,8 @@ class ProfileLocation < ActiveRecord::Base
   after_save {|record| record.profile.save if record.profile}
   after_destroy {|record| record.profile.save if record.profile}
 
+  validate :part_of_address_is_present
+
   @@geocode_addresses = false
 
   def geocode_address
@@ -45,7 +47,7 @@ class ProfileLocation < ActiveRecord::Base
 
   protected
 
-  def validate
+  def part_of_address_is_present
     errors.add(nil, "The address can not be entirely blank") if (street.to_s + city.to_s + state.to_s + postal_code.to_s + country_name.to_s).strip.blank?
   end
 

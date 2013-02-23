@@ -42,9 +42,9 @@ module Common::Utility::GeneralHelper
     end
 
     content_tag(:ul, options) do
-      header_tag +
-      items.collect {|item| content_tag(:li, yield(item))}.join +
-      footer_tag
+      (header_tag +
+       items.collect {|item| content_tag(:li, yield(item))}.join.html_safe +
+        footer_tag).html_safe
     end
   end
 

@@ -8,11 +8,15 @@
 -# about the page. If nothing is set for the #title_box, we ignore this element.
 -# 
 
+:ruby
+  content = yield(:content)
+  content = yield if content.empty?
+
 - if title_content = yield(:title)
   #title_box.round-top
     #title= title_content
   %article#content.round-bottom
-    = yield(:content) or yield
+    = content
 - else
   %article#content.round
-    = yield(:content) or yield
+    = content

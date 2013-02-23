@@ -1,5 +1,5 @@
 
-- form_tag(person_friend_request_path(@user), :method => :post) do
+= form_tag(person_friend_request_path(@user), :method => :post) do
   .p
     = #:friend_request_message_label.t(:user => content_tag(:b,@user.name))
     = #"(" + :optional.t + ")" #is this saving right?

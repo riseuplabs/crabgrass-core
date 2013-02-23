@@ -12,8 +12,7 @@ class ActionController::TestCase
     session = ActionController::TestSession.new
     @controller.stubs(:session).returns(session)
     @request.stubs(:session).returns(session)
-    chain = @controller.class.filter_chain
-    @controller.send :run_before_filters, chain, 0, 0
+    @controller.send(:run_callbacks, :process_action, action)
   end
 
   # get assigns without going through the whole request

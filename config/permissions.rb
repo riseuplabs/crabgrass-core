@@ -146,14 +146,14 @@ CastleGates.define do
 
     def create_permissions
       grant_access! self => :all
-      if council?
+      if council? && parent
         # councils steal admin rights
         parent.revoke_access! parent => :admin
         parent.grant_access! self => :all
       elsif committee?
         # committees are always admin'ed by parent group
         revoke_access! self => :admin
-        grant_access! parent => :all
+        grant_access! parent => :all if parent
       end
     end
 

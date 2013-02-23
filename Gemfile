@@ -1,17 +1,21 @@
 
 source :rubygems
 
-gem 'rails', '2.3.16'
+gem 'rails', '~> 3.0.20'
+
+gem 'rake', '~> 0.9.2'
+
+gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
 
 ## from config/environment.rb
 
 # required, but not included with crabgrass:
-gem 'i18n', '~> 0.5'
-gem 'thinking-sphinx', '~> 1.4'
-gem 'will_paginate', '= 2.3.16'
-gem 'sprockets', "~> 2.1.0"
+gem 'i18n'#, '~> 0.5'
+gem 'thinking-sphinx', '~> 2.0', :require => 'thinking_sphinx'
+gem 'will_paginate', '~> 3.0'
+gem 'sprockets', '~> 2.2'
 
-gem 'mysql'
+gem 'mysql', '2.8.1'
 
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
@@ -25,9 +29,9 @@ gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-u
 # not required, but a really good idea
 gem 'mime-types', :require => 'mime/types'
 
-# delayed job for rails 2.x:
-gem 'delayed_job', '~> 2.0.7'
+gem 'delayed_job', '~> 3.0.5'
 
+gem 'rails3_before_render'
 
 group :production, :development do
   gem 'compass', '0.10.6'
@@ -44,11 +48,15 @@ group :development do
   ##
   gem 'rdoc', '~> 3.0'
 
-  gem 'mongrel'
+  gem 'mongrel', :platforms => :mri_18
+  gem 'thin', :platforms => :mri_19
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
+  gem 'rb-inotify', '~> 0.8.8' # used by rails-dev-boost
 end
 
 group :test, :development do
-  gem 'ruby-debug'
+  gem 'debugger', :platforms => :mri_19
+  gem 'ruby-debug', :platforms => :mri_18
 end
 
 
@@ -62,7 +70,7 @@ group :test do
   gem 'machinist', '~> 1.0' # switch to v2 when stable.
   gem 'faker', '~> 1.0.0'
   gem 'minitest', '~> 2.12', :require => 'minitest/autorun'
-  gem 'mocha', '~> 0.10.0', :require => false
+  gem 'mocha', '~> 0.12.0', :require => false
   #
   # mocha note: mocha must be loaded after the things it needs to patch.
   #             so, we skip the 'require' here, and do it later.

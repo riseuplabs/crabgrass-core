@@ -30,9 +30,9 @@ class Post < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :visible, :conditions => 'deleted_at IS NULL'
+  scope :visible, :conditions => 'deleted_at IS NULL'
 
-  named_scope :by_created_at, :order => 'created_at DESC'
+  scope :by_created_at, :order => 'created_at DESC'
 
   ##
   ## ATTIBUTES
@@ -109,6 +109,10 @@ class Post < ActiveRecord::Base
     post = Post.new(attributes, &block)
     post.save!
     return post
+  end
+
+  def body_html
+    read_attribute(:body_html).try :html_safe
   end
 
   # used for default context, if present, to set for any embedded links

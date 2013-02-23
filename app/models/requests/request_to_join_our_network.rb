@@ -8,7 +8,7 @@ class RequestToJoinOurNetwork < Request
   validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /Group/
 
-  validate_on_create :no_membership_yet
+  validate :no_membership_yet, :on => :create
   validate :requestable_is_network
   validate :group_is_not_network
   validate :group_is_not_network_committee

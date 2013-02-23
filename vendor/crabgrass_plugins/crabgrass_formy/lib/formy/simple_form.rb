@@ -47,7 +47,7 @@ module Formy
         super
       end
       def close
-        puts content_tag(:div, @buttons.join("\n"), :class => 'form_buttons')
+        puts content_tag(:div, @buttons.join("\n").html_safe, :class => 'form_buttons')
         super
       end
 

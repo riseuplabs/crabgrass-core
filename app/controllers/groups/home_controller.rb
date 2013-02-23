@@ -12,6 +12,7 @@ class Groups::HomeController < Groups::BaseController
   stylesheet 'wiki_edit', 'upload'
 
   def initialize(options = {})
+    super()
     @group = options[:group]
   end
 

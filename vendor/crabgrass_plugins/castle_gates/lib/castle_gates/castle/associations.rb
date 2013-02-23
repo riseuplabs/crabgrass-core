@@ -18,7 +18,7 @@ def self.included(base)
     #
     # e.g. Fort.with_access(:public => :gate)
     #
-    named_scope(:with_access, lambda {|args|
+    scope(:with_access, lambda {|args|
       holder, gates = args.first
       holder = Holder[holder]
       key_condition, key_values = Key.conditions_for_holder(holder)
@@ -28,7 +28,11 @@ def self.included(base)
         :select => "DISTINCT #{self.table_name}.*",
         :conditions => [gate_condition + " AND " + key_condition, key_values]
       }
-    })
+    }) do
+      def count
+        super :id, :distinct => true
+      end
+    end
 
     #
     # i could not figure out how to make self.count automatically do a distinct

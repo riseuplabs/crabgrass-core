@@ -40,16 +40,16 @@ module Common::Ui::PaginationHelper
   #   :separator    => ' ',
   #   :param_name   => :page,
   #   :params       => nil,
-  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :renderer     => 'WillPaginate::ViewHelper::LinkRenderer',
   #   :page_links   => true,    # when false, only previous/next links are rendered
   #   :container    => true
   #
   def pagination_links(things, options={})
-    return if !things.is_a?(WillPaginate::Collection)
+    return unless things.respond_to?(:total_pages)
 
     defaults = {
-     :previous_label => "&laquo; %s" % :pagination_previous.t,
-     :next_label => "%s &raquo;" % :pagination_next.t,
+     :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
+     :next_label => ("%s &raquo;" % :pagination_next.t).html_safe,
      :inner_window => 2,
      :outer_window => 0
     }
@@ -61,13 +61,19 @@ module Common::Ui::PaginationHelper
         defaults[:renderer] = LinkRenderer::Pages
       end
     elsif request.xhr?
-      defaults[:renderer] = (template.format == 'html') ?
+      defaults[:renderer] = (current_template_format == :html) ?
        LinkRenderer::ModalAjax :
        LinkRenderer::Ajax
     else
       defaults[:renderer] = LinkRenderer::Dispatch
     end
     will_paginate(things, defaults.merge(options))
+  end
+
+  def current_template_format
+    ## FIXME: this is likely going to break during the next rails upgrade.
+    ##   We should figure out a better way to choose the link renderer.
+    @renderer.instance_variable_get("@template").mime_type.symbol
   end
 
   #

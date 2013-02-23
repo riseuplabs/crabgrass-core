@@ -10,7 +10,7 @@ class RequestToJoinUs < Request
   validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /User/
 
-  validate_on_create :no_membership_yet
+  validate :no_membership_yet, :on => :create
 
   def group() requestable end
 

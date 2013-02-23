@@ -1,6 +1,6 @@
 - options = {:selected => @page.owner}
 
-- form_tag(page_attributes_path(@page), :method => :put) do
+= form_tag(page_attributes_path(@page), :method => :put) do
   = select_tag('owner', options_for_page_owner(options), :size => 16, :style => 'width:100%')
   .buttons
     = close_modal_button(:cancel)

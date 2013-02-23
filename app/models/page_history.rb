@@ -15,9 +15,9 @@ class PageHistory < ActiveRecord::Base
       end
       recipients_for_single_notification(page_history).each do |user|
         if Conf.paranoid_emails?
-          Mailer.deliver_page_history_single_notification_paranoid(user, page_history)
+          Mailer.page_history_single_notification_paranoid(user, page_history).deliver
         else
-          Mailer.deliver_page_history_single_notification(user, page_history)
+          Mailer.page_history_single_notification(user, page_history).deliver
         end
       end
       page_history.update_attribute :notification_sent_at, Time.now
@@ -29,9 +29,9 @@ class PageHistory < ActiveRecord::Base
       page = Page.find(page_id)
       recipients_for_digest_notifications(page).each do |user|
         if Conf.paranoid_emails?
-          Mailer.deliver_page_history_digest_notification_paranoid(user, page, page_histories)
+          Mailer.page_history_digest_notification_paranoid(user, page, page_histories).deliver
         else
-          Mailer.deliver_page_history_digest_notification(user, page, page_histories)
+          Mailer.page_history_digest_notification(user, page, page_histories).deliver
         end
       end
       PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
