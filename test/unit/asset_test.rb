@@ -283,7 +283,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_build_asset
     asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata
-    assert asset.filename.any?
+    assert asset.filename.present?
   end
 
   protected

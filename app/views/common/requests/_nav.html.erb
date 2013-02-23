@@ -1,6 +1,6 @@
 <div class="p first">
 <%- options = params.dup -%>
-<%- none_active = options[:id].any? -%>
+<%- none_active = options[:id].present? -%>
 <%- options[:id] = nil; options[:action] = nil -%>
 <%= toggle_bug_links(
   { :label => :pending.t,

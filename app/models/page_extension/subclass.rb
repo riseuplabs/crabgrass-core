@@ -79,7 +79,7 @@ module PageExtension::Subclass
     # many class groups.
     def class_group_to_class_names(class_group)
       class_group = class_group.gsub('-',':')
-      return [] unless class_group.any?
+      return [] unless class_group.present?
       PAGES.values.collect do |proxy|
         proxy.class_name if proxy.class_group.include?(class_group)
       end.compact
@@ -88,7 +88,7 @@ module PageExtension::Subclass
     # 'vote' -> PageClassProxy
     def class_group_to_class(class_group)
       class_group = class_group.gsub('-',':')
-      return [] unless class_group.any?
+      return [] unless class_group.present?
       PAGES.values.collect do |proxy|
         proxy if proxy.class_group.include?(class_group)
       end.compact
