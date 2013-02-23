@@ -12,6 +12,8 @@ else
   require 'rails/test_help'
 end
 
+include ActionDispatch::TestProcess
+
 ##
 ## load all the test helpers
 ##

@@ -1,6 +1,7 @@
 require 'faker'
 
 FactoryGirl.define do
+
   sequence(:created_date) { |n| (n + 5 + rand(5)).days.ago.to_s(:db) }
   sequence(:updated_date) { |n| (n + 5 + rand(5)).days.ago.to_s(:db) }
   sequence(:boolean)      { |n| rand(2) == 1 ? true : false }
@@ -63,12 +64,7 @@ FactoryGirl.define do
     association :parent_page, factory: :asset_page
 
     factory :image_asset do
-      content_type  "image/jpeg"
-      height        500
-      width         333
-      filename      "bee.jpg"
-      size          100266
-      is_image      true
+      uploaded_data { fixture_file_upload('/files/bee.jpg',  "image/jpeg") }
     end
   end
 

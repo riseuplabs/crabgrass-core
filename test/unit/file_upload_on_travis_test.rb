@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-class AssetTest < ActiveSupport::TestCase
+class FileUploadOnTravisTest < ActiveSupport::TestCase
   # fixture_file_upload for Rails 3:
   include ActionDispatch::TestProcess
   fixtures :all
@@ -45,6 +45,15 @@ class AssetTest < ActiveSupport::TestCase
       @asset = Asset.create_from_params :uploaded_data => file_to_upload
       assert File.exists?( @asset.private_filename ), 'the private file should exist'
     end
+  end
+
+  def test_using_factory_girl_instead
+    @asset = FactoryGirl.create :image_asset
+    assert File.exists?( @asset.private_filename ), 'the private file should exist'
+    assert_equal 500, @asset.height
+    assert_equal 333, @asset.width
+    assert_equal "bee.jpg", @asset.filename
+    assert_equal 100266, @asset.size
   end
 
 end
