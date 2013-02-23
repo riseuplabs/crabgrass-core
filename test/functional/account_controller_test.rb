@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class AccountControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
@@ -134,7 +134,7 @@ class AccountControllerTest < ActionController::TestCase
     post(:create, {
       :user => {
          :login => 'quire',
-         :email => 'quire@localhost',
+         :email => 'quire@lvh.me',
          :password => 'quire',
          :password_confirmation => 'quire'
       }.merge(options.delete(:user) || {}),
