@@ -15,7 +15,7 @@ FactoryGirl.define do
     domain       "localhost"
     email_sender "robot@$current_host"
   end
-  
+
   factory :user do
     login
     display_name
@@ -29,6 +29,7 @@ FactoryGirl.define do
     name      { full_name.gsub(/[^a-z]/,"") }
 
     factory(:committee, :class => Committee) {}
+    factory(:council, :class => Council) {}
     factory(:network,   :class => Network)   {}
   end
 
