@@ -1,8 +1,6 @@
 require_relative 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
-  # fixture_file_upload for Rails 3:
-  include ActionDispatch::TestProcess
   fixtures :all
 
   def setup

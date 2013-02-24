@@ -12,7 +12,6 @@ else
   require 'rails/test_help'
 end
 
-include ActionDispatch::TestProcess
 
 ##
 ## load all the test helpers
@@ -51,8 +50,15 @@ class ActiveSupport::TestCase
   include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
+  # for fixture_file_upload
+  include ActionDispatch::TestProcess
 
   # fixtures :all
+end
+
+class FactoryGirl::SyntaxRunner
+  # for fixture_file_upload
+  include ActionDispatch::TestProcess
 end
 
 ##

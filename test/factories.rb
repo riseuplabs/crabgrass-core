@@ -63,7 +63,7 @@ FactoryGirl.define do
     version       1
     association :parent_page, factory: :asset_page
 
-    factory :image_asset do
+    factory :image_asset, :class => ImageAsset do
       uploaded_data { fixture_file_upload('/files/bee.jpg',  "image/jpeg") }
     end
   end
