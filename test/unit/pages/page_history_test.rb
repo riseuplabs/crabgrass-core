@@ -241,6 +241,6 @@ class PageHistoryTest < ActiveSupport::TestCase
   def assert_not_change_updated_at(page)
     last_updated_at = page.updated_at.to_i
     page.reload
-    assert_equal page.updated_at.to_i, last_updated_at
+    assert (page.updated_at.to_i - last_updated_at).abs < 2
   end
 end

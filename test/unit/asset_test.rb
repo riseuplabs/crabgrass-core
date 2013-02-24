@@ -183,8 +183,8 @@ class AssetTest < ActiveSupport::TestCase
     end
     file_to_upload = upload_data('gears.jpg')
     @asset = Asset.create_from_params :uploaded_data => file_to_upload
-    assert_equal 500, @asset.width, 'width must match file'
-    assert_equal 321, @asset.height, 'height must match file'
+    assert_equal 64, @asset.width, 'width must match file'
+    assert_equal 64, @asset.height, 'height must match file'
     @asset.uploaded_data = upload_data('bee.jpg')
     @asset.save
     assert_equal 333, @asset.width, 'width must match after new upload'
