@@ -55,15 +55,17 @@ module Common::Page::SearchHelper
   end
 
   def possible_filters_for_section(section)
-    SearchFilter.filters_for_section(section).select do |filter|
-      if filter_excluded?(filter)
-        false
-      elsif filter.singleton? and filter_active?(filter)
-        false
+    enabled, disabled = [], []
+    SearchFilter.filters_for_section(section).each do |filter|
+      if filter_active?(filter)
+         # ignore?
+      elsif filter_excluded?(filter)
+        disabled.push(filter)
       else
-        true
+        enabled.push(filter)
       end
     end
+    return [enabled, disabled]
   end
 
   def filter_all
@@ -80,31 +82,37 @@ module Common::Page::SearchHelper
   #
   # mode: must be :add or :remove
   #
-  def filter_checkbox_li_tag(mode, filter, args=nil)
+  def filter_checkbox_li_tag(mode, filter, args=nil, options={})
     if filter.has_args?
-      filter_multivalue_li_tag(mode, filter, args)
+      filter_multivalue_li_tag(mode, filter, args, options)
     else
-      filter_singlevalue_li_tag(mode, filter)
+      filter_singlevalue_li_tag(mode, filter, options)
     end
   end
 
   #
   # for filters with no args
   #
-  def filter_singlevalue_li_tag(mode, filter)
-    spinbox_tag(filter.path_keyword,
-      page_search_path(mode => filter.path_definition),
-      :label => filter.label(nil, {mode => true, :current_user => current_user}),
-      :with => 'FilterPath.encode()',
-      :checked => (mode == :remove) )
+  def filter_singlevalue_li_tag(mode, filter, options)
+    if options[:disabled]
+      link_to_function(label, '', :icon => 'check_off', :class => 'disabled')
+    else
+      spinbox_tag(filter.path_keyword,
+        page_search_path(mode => filter.path_definition),
+        :label => filter.label(nil, {mode => true, :current_user => current_user}),
+        :with => 'FilterPath.encode()',
+        :checked => (mode == :remove) )
+    end
   end
 
   #
   # for filters with one or more args
   #
-  def filter_multivalue_li_tag(mode, filter, args)
+  def filter_multivalue_li_tag(mode, filter, args, options)
     label = filter.label(args, {mode => true, :current_user => current_user})
-    if mode == :add
+    if options[:disabled]
+      link_to_function(label, '', :icon => 'check_off', :class => 'disabled')
+    elsif mode == :add
       html = render(:partial => 'common/pages/search/popup',
         :locals => {:url => page_search_path(:add => filter.path_definition), :filter => filter})
       link_to_modal(label, :html => html, :icon => 'check_off')
