@@ -30,7 +30,7 @@
 #local.sidebar {
   //@include column-row;
 
-  $center_columns: $grid_column_count - $local_nav_width;
+  $center_columns: $grid_column_count - $local_sidebar_width;
   $padding: resolve-width($local_content_padding, $center_columns);
   #title {
     // margin-bottom: $padding;
@@ -51,7 +51,7 @@
     //   //
 
     //   #column_left {
-    //     @include column-span($local_nav_width);
+    //     @include column-span($local_sidebar_width);
     //   }
 
     //   nav#local_nav li.navi {
@@ -75,8 +75,8 @@
     //     // illusion of a tab. a.navi should normally be the one used, but sometimes
     //     // we want a tab that doesnt have links.
     //     a.navi, div.navi {
-    //       padding: resolve-width($local_nav_padding, $local_nav_width) / 2;
-    //       padding-right: resolve-width($local_nav_padding, $local_nav_width);
+    //       padding: resolve-width($local_nav_padding, $local_sidebar_width) / 2;
+    //       padding-right: resolve-width($local_nav_padding, $local_sidebar_width);
     //       &.active {
     //         background: $local_content_background;
     //         @if border_width($local_content_border) > 0px {
@@ -98,11 +98,11 @@
     // } @else {
 
     //   #column_left {
-    //     @include column-span($local_nav_width);
+    //     @include column-span($local_sidebar_width);
     //   }
     //   nav#local_nav {
     //     li a {
-    //       padding: resolve-width($local_nav_padding, $local_nav_width);
+    //       padding: resolve-width($local_nav_padding, $local_sidebar_width);
     //     }
     //   }
     // }
@@ -113,7 +113,7 @@
   //     @include column-span($center_columns);
   //   }
   //   #column_right {
-  //     @include column-span($local_nav_width);
+  //     @include column-span($local_sidebar_width);
   //   }
   // }
 }

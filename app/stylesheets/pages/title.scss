@@ -1,6 +1,6 @@
 //
 // cutout menu tabs in title_box
-// 
+//
 // this assumes that page tabs are spaced for when there is a sidebar. not sure what
 // to do when there is no sidebar.
 //
@@ -8,7 +8,7 @@
 #title_box.with_tabs {
   // variables
   $ul_id: 'page_tabs';
-  $margin: resolve_width($local_content_padding, $grid_column_count - $local_nav_width);
+  $margin: resolve_width($local_content_padding, $grid_column_count - $local_sidebar_width);
   $active_color: $local_content_background;
   $border: $local_title_border;
 
