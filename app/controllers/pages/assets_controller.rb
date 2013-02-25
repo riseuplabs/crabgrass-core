@@ -16,6 +16,10 @@ class Pages::AssetsController < Pages::SidebarsController
   def create
     @asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
     current_user.updated(@page)
+    render(
+      :template => 'pages/assets/create.js',
+      :content_type => 'text/javascript'
+    )
   end
 
   protected
