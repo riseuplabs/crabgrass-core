@@ -1,2 +1,39 @@
-- @local_layout = 'page'
+- @local_layout = 'sidecolumn'
+
+- #
+- # PAGE SIDEBAR
+- #
+- if @options.show_sidebar
+  - content_for(:right_column) do
+    %nav#sidebar
+      = render(:partial => 'pages/sidebar/sidebar')
+
+- #
+- # PAGE TITLEBOX
+- #
+- # #title_box handles color & border
+- # #title handles text & padding
+- #
+- content_for(:before_content) do
+  #title_box{:class => [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
+    #title.page_title.shy_parent
+      %h1
+        = h @page.title
+        - if may_edit_page?
+          = link_to_modal(:edit_title.t.titleize, {:url => edit_page_title_path(@page)}, {:class => 'shy inline plain', :icon => 'pencil'})
+      - if @page.summary.any?
+        .summary= h @page.summary
+      - if @title_addendum
+        %span= @title_addendum
+    - if @options.show_tabs
+      = render :partial => "#{@page.controller}/tabs"
+
+- #
+- # PAGE CONTENT
+- #
+- content_for(:content) do
+  = yield
+  - if @options.show_posts
+    = render :partial => 'common/posts/list', :locals => {:style => 'table', :remote => true}
+
 = render :file => 'layouts/application'

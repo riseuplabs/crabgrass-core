@@ -1,9 +1,0 @@
-#title_box{:class => [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
-  = render :partial => 'layouts/local/page/title'
-  - if @options.show_tabs
-    = render :partial => "#{@page.controller}/tabs"
-%article#content.round-bottom
-  = yield
-  - if @options.show_posts
-    = render :partial => 'common/posts/list', :locals => {:style => 'table', :remote => true}
-
