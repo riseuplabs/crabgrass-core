@@ -17,7 +17,6 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
 //
 
 #context_banner {
-  @include center-span;
   background: $banner_default_background;
 
   a.tab {

@@ -10,33 +10,33 @@
   @if $footer_border { border-top: $footer_border; }
   #footer_content {
     @if $footer_column_count == 1 {
-      @include center-span;
+      //@include center-span;
     }
     @else if $footer_column_count == 2 {
       $col: $grid_column_count / 2;
       .column1 {
-        @include column-span($col);
+        //@include column-span($col);
       }
       .column2 {
-        @include column-span($col);
+        //@include column-span($col);
       }
       .full {
-        @include center-span;
+        //@include center-span;
       }
     }
     @else if $footer_column_count == 3 {
       $col: $grid_column_count / 3;
       .column1 {
-        @include column-span($col);
+        //@include column-span($col);
       }
       .column2 {
-        @include column-span($col);
+        //@include column-span($col);
       }
       .column3 {
-        @include column-span($col);
+        //@include column-span($col);
       }
       .full {
-        @include center-span;
+        //@include center-span;
       }
     }
   }

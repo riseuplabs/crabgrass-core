@@ -96,12 +96,9 @@
     // minus the overhand needed to cover the border:
     bottom: -(border_width($active_border));
 
-    // padding-left: don't do it.
-    // ^^ In some cases, we need width of 100% to actually be the screen width,
-    // but adding padding makes 100% width be wider than the screen.
-    // So, instead, we add margin to the first and last li.
-
     white-space: nowrap;
+    margin: 0;   // don't add margin or padding.
+    padding: 0;  // it will mess everything up.
 
     li.tab {
       display: block;

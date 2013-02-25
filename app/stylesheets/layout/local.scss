@@ -17,7 +17,7 @@
   .title { margin-bottom: resolve-width($local_content_padding, $center_columns) }
 
   #column_center {
-    @include center-span;
+    //@include center-span;
     article#content, #title { padding: $padding }
     .section_spacer { height: $padding; }
   }
@@ -28,7 +28,7 @@
 //
 
 #local.sidebar {
-  @include column-row;
+  //@include column-row;
 
   $center_columns: $grid_column_count - $local_nav_width;
   $padding: resolve-width($local_content_padding, $center_columns);
@@ -41,81 +41,81 @@
 
   &.on_left {
     #column_center {
-      @include column-span($center_columns);
+      //@include column-span($center_columns);
     }
 
-    @if $local_nav_style == 'tabs' {
-      //
-      // side tab navigation
-      // make the sidebar navigation look like vertical tabs
-      //
+    // @if $local_nav_style == 'tabs' {
+    //   //
+    //   // side tab navigation
+    //   // make the sidebar navigation look like vertical tabs
+    //   //
 
-      #column_left {
-        @include column-span($local_nav_width);
-      }
+    //   #column_left {
+    //     @include column-span($local_nav_width);
+    //   }
 
-      nav#local_nav li.navi {
-        @if border_width($local_content_border) > 0px {
-          border: border_width($local_content_border) "solid transparent";
-        }
-        &.active {
-          border: $local_content_border;
-          background: $local_content_background;
-          @if $local_content_css { @include local_content_css; }
-          @if $local_content_shadow { @include local_content_shadow; }
-          border-right: 0;
-        }
-        a.navi {
-          @include cg-hover-link;
-          text-align: right;
-          display: block;
-        }
+    //   nav#local_nav li.navi {
+    //     @if border_width($local_content_border) > 0px {
+    //       border: border_width($local_content_border) "solid transparent";
+    //     }
+    //     &.active {
+    //       border: $local_content_border;
+    //       background: $local_content_background;
+    //       @if $local_content_css { @include local_content_css; }
+    //       @if $local_content_shadow { @include local_content_shadow; }
+    //       border-right: 0;
+    //     }
+    //     a.navi {
+    //       @include cg-hover-link;
+    //       text-align: right;
+    //       display: block;
+    //     }
 
-        // a.navi and div.navi are used to give the tab its padding to create the
-        // illusion of a tab. a.navi should normally be the one used, but sometimes
-        // we want a tab that doesnt have links.
-        a.navi, div.navi {
-          padding: resolve-width($local_nav_padding, $local_nav_width) / 2;
-          padding-right: resolve-width($local_nav_padding, $local_nav_width);
-          &.active {
-            background: $local_content_background;
-            @if border_width($local_content_border) > 0px {
-              // shift the tab slightly to the right to make it flush
-              // with the content.
-              position: relative;
-              left: border_width($local_content_border);
-            }
-          }
-        }
+    //     // a.navi and div.navi are used to give the tab its padding to create the
+    //     // illusion of a tab. a.navi should normally be the one used, but sometimes
+    //     // we want a tab that doesnt have links.
+    //     a.navi, div.navi {
+    //       padding: resolve-width($local_nav_padding, $local_nav_width) / 2;
+    //       padding-right: resolve-width($local_nav_padding, $local_nav_width);
+    //       &.active {
+    //         background: $local_content_background;
+    //         @if border_width($local_content_border) > 0px {
+    //           // shift the tab slightly to the right to make it flush
+    //           // with the content.
+    //           position: relative;
+    //           left: border_width($local_content_border);
+    //         }
+    //       }
+    //     }
 
-        // this is a funky edge case where we have a.navi inside div.navi.
-        // it is rare, but for now we need this hackishness.
-        div.navi > a.navi {
-           padding: 0;
-        }
-      }
+    //     // this is a funky edge case where we have a.navi inside div.navi.
+    //     // it is rare, but for now we need this hackishness.
+    //     div.navi > a.navi {
+    //        padding: 0;
+    //     }
+    //   }
 
-    } @else {
+    // } @else {
 
-      #column_left {
-        @include column-span($local_nav_width);
-      }
-      nav#local_nav {
-        li a {
-          padding: resolve-width($local_nav_padding, $local_nav_width);
-        }
-      }
-    }
+    //   #column_left {
+    //     @include column-span($local_nav_width);
+    //   }
+    //   nav#local_nav {
+    //     li a {
+    //       padding: resolve-width($local_nav_padding, $local_nav_width);
+    //     }
+    //   }
+    // }
   }
 
-  &.on_right {
-    #column_center {
-      @include column-span($center_columns);
-    }
-    #column_right {
-      @include column-span($local_nav_width);
-    }
-  }
+  // &.on_right {
+  //   #column_center {
+  //     @include column-span($center_columns);
+  //   }
+  //   #column_right {
+  //     @include column-span($local_nav_width);
+  //   }
+  // }
 }
 
 //
@@ -127,27 +127,27 @@
   $center_columns: $grid_column_count - $local_sidecolumn_width;
   $padding: resolve-width($local_content_padding, $center_columns);
 
-  #title { margin-bottom: $padding }
+  #title { padding: $padding }
   article#content { padding: $padding }
   .section_spacer   { height: $padding; }
 
-  &.on_left {
-    #column_center {
-      @include column-span($center_columns);
-    }
-    #column_left {
-      @include column-span($local_sidecolumn_width);
-    }
-  }
+  // &.on_left {
+  //   #column_center {
+  //     @include column-span($center_columns);
+  //   }
+  //   #column_left {
+  //     @include column-span($local_sidecolumn_width);
+  //   }
+  // }
 
-  &.on_right {
-    #column_center {
-      @include column-span($center_columns);
-    }
-    #column_right {
-      @include column-span($local_sidecolumn_width);
-    }
-  }
+  // &.on_right {
+  //   #column_center {
+  //     @include column-span($center_columns);
+  //   }
+  //   #column_right {
+  //     @include column-span($local_sidecolumn_width);
+  //   }
+  // }
 }
 
 //

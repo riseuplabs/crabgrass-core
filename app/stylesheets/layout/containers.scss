@@ -8,13 +8,21 @@ body {
 }
 
 #middle_container, #footer_container {
-  @include column-container;
+  //@include column-container;
 }
 
 @if $masthead_style == 'grid' {
   // there is only an enclosing container for the 'grid' style.
   #masthead_container {
-    @include column-container;
+    //@include column-container;
   }
 }
+
+// .max-width-column-container {
+//   *zoom: 1;
+//   margin-left: auto;
+//   margin-right: auto;
+//   width:
+//   max-width: 100%;
+// }
 

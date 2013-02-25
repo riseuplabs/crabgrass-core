@@ -1,4 +1,6 @@
-
+//
+// #middle is a top level div that holds everything under the masthead and above the footer.
+//
 
 #middle {
 
@@ -10,15 +12,19 @@
     background-color: $background_color;
   }
 
-  @if $masthead_nav_style == 'cutout' {
-    // leave a gap between the bottom of the masthead
-    // and the banner / local area.
-    padding-top: gutter();
+  padding: gutter();
+  padding-top: 0;
+
+  // TODO: move the spacing between masthead and middle to
+  //@if $masthead_nav_style != 'cutout' {
+    // remove the gap
+    //padding-top: 0;
+  //}
+
+  // this glass is applied to either the #context_banner (or #local if no banner)
+  .gap-under-masthead {
+    margin-top: resolve-width($masthead_bottom_gap);
   }
-
-  // for now, always put a gap before the footer
-  padding-bottom: gutter();
-
-} 
+}
 
 

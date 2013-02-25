@@ -1,9 +1,10 @@
 //
-// A mixin to provide a fluid grid layout.
+// Useful tools for modifying bootstrap's fluid grid layout.
 //
-// This is currently based on Bootstrap's fluid grid, although
-// the hope is that a a different grid could be substituted without
-// changing the api.
+// In particular, we make the fluid grid have a max-width. See column-container mixin for
+// the magic that makes this work.
+//
+//
 //
 // http://twitter.github.com/bootstrap/scaffolding.html#layouts
 //
@@ -22,43 +23,6 @@
 $total-columns: $gridColumns;
 $column-width: $gridColumnWidth !default;
 $gutter-width: $gridGutterWidth !default;
-//$sidecolumn-width: $local_sidecolumn_width;
-//$sidebar-width: $local_nav_width;
-
-@mixin column-container() {
-  @extend .container-fluid;
-}
-
-@mixin column-row() {
-  @extend .row-fluid;
-}
-
-@mixin column-span($n) {
-  @extend .span#{$n};
-}
-
-//@mixin sidecolumn-span() {
-//  @include column-span($sidecolumn-width);
-//}
-
-//@mixin sidebar-span() {
-//  @include column-span($sidebar-width);
-//}
-
-@mixin center-span() {
-  // no css is necessary, me thinks
-  // @include column_span($grid_column_count);
-}
-
-@mixin center-span-with-sidebar() {
-  $center-columns: $total-columns - $sidebar-width;
-  @include column-span($center-columns);
-}
-
-@mixin center-span-with-sidecolumn() {
-  $center-columns: $total-columns - $sidecolumn-width;
-  @include column-span($center-columns);
-}
 
 //
 // FUNCTIONS
@@ -75,9 +39,9 @@ $gutter-width: $gridGutterWidth !default;
 //
 // Returns the full width of all columns
 //
-//@function full-width() {
-//  @return columns-width();
-//}
+@function full-width() {
+  @return columns-width();
+}
 
 //
 // Return the percentage width of a single gutter in a given column context.
@@ -92,9 +56,9 @@ $gutter-width: $gridGutterWidth !default;
 // $columns => The number of columns to get relative width for.
 // $context => The grid context in columns, if nested.
 //
-//@function columns($columns, $context : $total-columns) {
-//  @return percentage(columns-width($columns) / columns-width($context));
-//}
+@function columns($columns, $context : $total-columns) {
+  @return percentage(columns-width($columns) / columns-width($context));
+}
 
 //
 // returns the percentage width, in $context
@@ -110,4 +74,24 @@ $gutter-width: $gridGutterWidth !default;
   @else {
     @return $width;
   }
+}
+
+//
+// some tricky css to create a container that has a max width by can resize fluidly
+// to smaller sizes. Should be applied to
+//
+@mixin column-container() {
+  *zoom: 1;
+  margin-left: auto;
+  margin-right: auto;
+  width: full-width();
+  max-width: 100%;
+  padding: 0; // must not have padding, or you get scrollbars when viewport
+              // gets smaller than width. to get padding for column containers,
+              // you must enclose in another div and put padding on that parent.
+}
+
+// Auto include max-width support into all fluid containers. This works so long as they are all full width.
+.container-fluid {
+  @include column-container;
 }
