@@ -12,6 +12,7 @@ end
 
 require 'formy/element'
 require 'formy/root'
+require 'formy/base_form'
 require 'formy/buffer'
 
 require 'formy/simple_form'

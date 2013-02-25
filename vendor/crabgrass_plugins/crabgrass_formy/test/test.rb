@@ -1,15 +1,19 @@
 $: << File.dirname(__FILE__) + '/../lib'
 
 require 'rubygems'
-gem 'activesupport', '> 2.3.0', '< 3.0'
-gem 'actionpack', '> 2.3.0', '< 3.0'
+#gem 'activesupport', '> 2.3.0', '< 3.0'
+#gem 'actionpack', '> 2.3.0', '< 3.0'
 require 'active_support'
-require 'action_view/helpers'
+require 'action_view'
 
 require 'formy'
 require 'formy/helper'
 
-RAILS_ENV = 'developmentx'
+class Rails
+  def self.env
+    'development'
+  end
+end
 
 class Testr
   include ActionView::Helpers
@@ -26,6 +30,7 @@ class Testr
         r.label 'email address', 'user_email'
         r.input text_field 'user', 'email'
       end
+      f.button '<input type="submit">Save</input>'
     end
   end
 

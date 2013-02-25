@@ -1,28 +1,43 @@
-# -*- coding: utf-8 -*-
-##
-## A form based on 'bootstrap'
-## see the end of the files for an example.
-##
+#
+# A form based on bootstrap's horizontal form.
+# See http://twitter.github.com/bootstrap/base-css.html#forms
+#
+# For example
+#
+# <form class="form-horizontal">
+#   <div class="control-group">
+#     <label class="control-label" for="inputEmail">Email</label>
+#     <div class="controls">
+#       <input type="text" id="inputEmail" placeholder="Email">
+#     </div>
+#   </div>
+#   <div class="control-group">
+#     <label class="control-label" for="inputPassword">Password</label>
+#     <div class="controls">
+#       <input type="password" id="inputPassword" placeholder="Password">
+#     </div>
+#   </div>
+#   <div class="control-group">
+#     <div class="controls">
+#       <label class="checkbox">
+#         <input type="checkbox"> Remember me
+#       </label>
+#       <button type="submit" class="btn">Sign in</button>
+#     </div>
+#   </div>
+# </form>
+#
 
 module Formy
 
-  class HorizontalForm < Root
-    element_attr :buttons
-
-    def title(value)
-      puts "<legend>#{value}</legend>"
-    end
-
-    def label(value="&nbsp;".html_safe)
-      @elements << indent("<div>#{value}</div>")
-    end
+  class HorizontalForm < BaseForm
 
     def spacer
-      @elements << indent("<div class='spacer'></div>")
+    #  @elements << indent("<div class='spacer'></div>")
     end
 
     def heading(text)
-      @elements << indent("<h2>#{text}</h2>")
+    #  @elements << indent("<h2>#{text}</h2>")
     end
 
     def hidden(text)
@@ -34,17 +49,11 @@ module Formy
     end
 
     def open
-      super
-      puts '<fieldset class="form-horizontal">'
-      title(@options[:title]) if @options[:title]
+      super('form-horizontal')
     end
 
     def close
-      @elements.each {|e| raw_puts e}
-      if @buttons
-        puts '<div class="form-actions">%s</div>' % @buttons
-      end
-      puts '</fieldset>'
+      @control_group = true
       super
     end
 
@@ -107,7 +116,7 @@ module Formy
       #     Option three can—yes, you guessed it—also be checked and included in form results
       #   </label>
       #   <p class="help-block"><strong>Note:</strong> Labels surround all the options for much larger click areas and a more usable form.</p>
-      # </div>            
+      # </div>
       class Checkboxes < Element
         def open
           super
