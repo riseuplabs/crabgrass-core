@@ -11,16 +11,10 @@ define_theme {
 
   grid {
     column {
-      #width '40px'
-      #count 16
-      width '22px'
-      count 24
-      gutter '15px'
-      side_gutter '15px'
-    }
-    font {
-      size '13px'
-      line_height '18px'
+      count 12
+      width '40px'
+      gutter '20px'
+      side_gutter '20px'
     }
   }
 
@@ -92,6 +86,8 @@ define_theme {
     border $border
     height '100px'
     css "background-color: #f9f9f9;"
+    bottom_gap '1g'
+
 #    css %{
 #      @include linear-gradient(color-stops(green, red));
 #    }
@@ -156,16 +152,23 @@ define_theme {
       css false
       shadow false
     }
+    sidebar {
+      width 2
+    }
+    sidecolumn {
+      width 3
+    }
+    sidecontent {
+      width 4
+    }
     nav {
       style 'tabs'
       padding '1g'
       side 'left'   # only left for now.
-      width 5       # in grid column units
     }
     sidecolumn {
       # for fun, make the side column width approximate a golden ratio.
       # width (0.3819660113 * var(:grid_column_count).to_i).round
-      width 7
       icon_size 'xsmall'
       icon_size_px var_eval('icon_', :local_sidecolumn_icon_size)
     }

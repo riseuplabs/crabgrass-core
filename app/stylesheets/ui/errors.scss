@@ -14,8 +14,8 @@
 //
 // (3) inline the main content area
 //     .inline_message_list
-// 
-// 
+//
+//
 
 $alert_opacity: 0.9;
 $alert_width: 600px;
@@ -72,7 +72,7 @@ $alert_margin: gutter()/2;
       font-size: 24px;
       text-decoration: none;
       font-weight: bold;
-      line-height: $grid_font_size;
+      line-height: $font_default_size;
       &:hover {
         color: #000;
       }

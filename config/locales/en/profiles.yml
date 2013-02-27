@@ -1,11 +1,13 @@
 en:
 
+  view_profile: "View Profile"
   ##!  profile_permissions: "Permissions"
   ##!  profile_last_login: "Last Login"
   profile_member_since: "Member Since"
   home: Home
   banner: Banner
-  banner_info: Optimal dimenssions are 872 x 100 pixels
+  #banner_info: Optimal dimensions are 872 x 100 pixels
+  # ^^ this is dependent on the theme, which might change.
   ##!  work: Work
   ##!  school: School
   ##!  personal: Personal

@@ -6,6 +6,4 @@ In this directories is a copy of bootstrap converted to SCSS:
 
   https://github.com/jlong/sass-twitter-bootstrap
 
-To update the files in this directory, run this command (in this directory!)
-
-  curl https://nodeload.github.com/jlong/sass-twitter-bootstrap/tarball/master | tar -vxz --transform 's/.*lib\///' --overwrite --wildcards '*/lib/*.scss'
+To update these boostrap files, copy the files from lib/*.scss of that repo to this directory.

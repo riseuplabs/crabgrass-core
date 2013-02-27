@@ -2,7 +2,7 @@ module Formy
   module Helper
 
     def formy(form_type, options={})
-      options[:annotate] = RAILS_ENV == 'development'
+      options[:annotate] = Rails.env == 'development'
       class_string = "Formy::" + form_type.to_s.camelize
       form = class_string.constantize.new(options)
       form.open

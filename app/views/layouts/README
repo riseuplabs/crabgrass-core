@@ -13,16 +13,23 @@ the layouts
 ==================================
 
 layouts/application.html.haml
-  the default layout. will show two columns if there is any local navigation.
+  the default layout. will show two columns if needed.
 
 layouts/page.html.haml
   special layout used for pages, with a right column for page sidebar.
 
-layouts/sidecolumn.html.haml
-  used to force a layout with one main column and a smaller side column.
-  ignores local navigation. use content_for(:left_column) or
-  content_for(:right_column) to set the content of the side columns (either left
-  or right, but not both).
+columns
+=================================
+
+There are four types of side columns:
+
+* "sidebar"     - very thin (default 1/6 of page)
+* "sidecolumn"  - medium width (default 1/4 of page)
+* "sidecontent" - wide width (default 1/3 of page)
+
+Which one is picked depends on the variable @local_layout.
+
+The default widths are defined in extensions/themes/default/init.rb.
 
 html structure
 =================================
@@ -36,14 +43,15 @@ html structure
         #masthead_content
         #global_nav
     #middle
-      #middle_container
+      #middle_container.container-fluid
         #context_banner
           #banner_content
           #banner_nav
-        #local
-          #column_left
-            #local_nav
-          #column_center.with_left
+        #local.row-fluid
+          #column_left.spanX
+          #column_center.with_left.spanX
+            #title_box
+              #title
             #content
     #footer
       #footer_container

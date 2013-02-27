@@ -66,7 +66,7 @@ i {
 
 a {
   @if $link_underline == false {
-    @include hover-link;
+    // @include hover-link;
   }
   color: $link_standard_color;
   &:visited { color: $link_visited_color;}

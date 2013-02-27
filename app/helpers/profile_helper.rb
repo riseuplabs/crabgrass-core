@@ -13,7 +13,7 @@ module ProfileHelper
         r.label_for 'profile_picture_upload'
         r.input file_field_tag('profile[picture][upload]',
                                :id => 'profile_picture_upload')
-        r.info :banner_info.t
+        #r.info :banner_info.t
       end
     end
   end

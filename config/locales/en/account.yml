@@ -89,6 +89,7 @@ en:
   ##
 
   # seems like some duplication here!
+  change_password: "Change Password"
   password: "Password"
   password_confirmation: "Password Confirmation"
   signup_confirm_password: "Confirm Password"
@@ -105,7 +106,7 @@ en:
   destroy_comments: "Destroy comments"
   destroy_comments_info: "This will remove all comments you made to pages. It might make it hard to understand remaining comments by others."
   confirm_account_removal: "Are you sure you want to remove your account? This step cannot be undone and your data will be lost."
-  
+
   account_successfully_removed: "Your account has successfully been removed. We'll clear it and all it's associated data from the database."
 
   # password strength messages:

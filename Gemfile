@@ -34,10 +34,8 @@ gem 'delayed_job', '~> 3.0.5'
 gem 'rails3_before_render'
 
 group :production, :development do
-  gem 'compass', '0.10.6'
-  gem 'haml', '~> 3.0'
-  gem 'sass', '~> 3.2'
-  gem 'compass-susy-plugin', :require => 'susy', :path => 'vendor/gems/compass-susy-plugin-0.8.1'
+  gem 'haml'
+  gem 'sass'
   gem 'whenever'
   gem 'jsmin'
 end
@@ -82,9 +80,7 @@ group :test do
 
   # FIXME: figure out if we're unit testing.
   #unless defined?(UNIT_TESTING)
-    gem 'compass', '0.10.6'
-    gem 'haml', '~> 3.0'
-    gem 'compass-susy-plugin', :require => 'susy', :path => 'vendor/gems/compass-susy-plugin-0.8.1'
+    gem 'haml'
   #end
 
   #gem 'webrat'

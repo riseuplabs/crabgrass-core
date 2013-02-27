@@ -1,0 +1,130 @@
+//
+// This file is responsible for loading and customizing Boostrap SCSS
+//
+
+//
+// SET VARIABLES
+//
+
+// boostrap var ------> crabgrass theme var
+$baseFontSize:          $font_default_size;
+$baseFontFamily:        $font_default_family;
+$baseLineHeight:        $font_default_line_height;
+$textColor:             $font_default_color;
+
+//$gridColumns:           $grid_column_count;
+//$gridColumnWidth:       $grid_column_width;
+//$gridGutterWidth:       $grid_column_gutter;
+//$gridColumnWidth1200:     70px !default;
+//$gridGutterWidth1200:     30px !default;
+//$gridColumnWidth768:      42px !default;
+//$gridGutterWidth768:      20px !default;
+
+//
+// SELECTIVE BOOTSTRAP
+// we don't use all the bootstrap classes
+//
+
+@import "bootstrap/variables";
+//@import "bootstrap/mixins";
+@import "bootstrap/reset";
+
+// Grid system and page structure
+@import "bootstrap/scaffolding";
+@import "bootstrap/grid";
+@import "bootstrap/layouts";
+
+// Base CSS
+//@import "bootstrap/type";
+//@import "bootstrap/code";
+@import "bootstrap/forms";
+//@import "bootstrap/tables";
+
+// Components: common
+//@import "bootstrap/sprites";
+//@import "bootstrap/dropdowns";
+//@import "bootstrap/wells";
+//@import "bootstrap/component-animations";
+//@import "bootstrap/close";
+
+// Components: Buttons & Alerts
+@import "bootstrap/buttons";
+@import "bootstrap/button-groups";
+@import "bootstrap/alerts";
+
+// Components: Nav
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+//@import "bootstrap/pager";
+
+// Components: Popovers
+//@import "bootstrap/modals";
+//@import "bootstrap/tooltip";
+//@import "bootstrap/popovers";
+
+// Components: Misc
+//@import "bootstrap/thumbnails";
+//@import "bootstrap/media";
+//@import "bootstrap/labels-badges";
+//@import "bootstrap/progress-bars";
+//@import "bootstrap/accordion";
+//@import "bootstrap/carousel";
+//@import "bootstrap/hero-unit";
+
+// Utility classes
+@import "bootstrap/utilities"; // Has to be last to override when necessary
+
+
+//
+// BOOTSTRAP CSS OVERRIDE
+//
+
+form {
+  margin-bottom: 0;
+}
+
+.btn {
+  margin: 0;
+}
+
+.btn-group {
+  display: inline-block;
+}
+
+.btn-group + .btn-group {
+  margin-left: 1em;
+}
+
+.pagination {
+  margin: 0;
+  a:hover, .active a {
+    background-color: #eee;
+  }
+  .active a:hover, .disabled a:hover {
+    text-decoration: none;
+  }
+
+  //li:first-child a {
+  //  @include border-left-radius(3px);
+  //}
+  //li:last-child a {
+  //  @include border-right-radius(3px);
+  //}
+}
+
+
+input, textarea, select, .uneditable-input {
+  height: auto;
+}
+
+//
+// fields with errors:
+// I find the 1px red border way too subtle.
+//
+.control-group.error {
+  input, textarea, select {
+    border-width: 2px;
+  }
+}

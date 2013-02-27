@@ -1,22 +1,28 @@
 -#
 -# This is the default partial that handles displaying the content.
--# The 'page' layout uses a different partial, but most other layouts use this one.
 -#
 -# yield(:content) in case we are rendering a nested layout
 -#
--# the #title_box is an area above article#content where we display information
--# about the page. If nothing is set for the #title_box, we ignore this element.
--# 
+-# the optional #title_box is an area above article#content where we display
+-# information about the page.
+-#
 
-:ruby
-  content = yield(:content)
-  content = yield if content.empty?
+- if content_for?(:content)
+  - content = yield(:content)
+- else
+  - content = yield
 
-- if title_content = yield(:title)
+- if content_for?(:title)
   #title_box.round-top
-    #title= title_content
+    #title= content_for(:title)
   %article#content.round-bottom
     = content
+
+- elsif content_for?(:before_content)
+  = yield(:before_content)
+  %article#content.round-bottom
+    = content
+
 - else
   %article#content.round
     = content

@@ -28,7 +28,7 @@ Crabgrass::Application.routes.draw do |map|
   map.resources :assets, :only => [:show, :destroy]
   map.with_options(:controller => 'assets') do |assets|
     assets.asset_version '/assets/:id/versions/:version/*path', :action => 'show'
-    assets.asset '/assets/:id/*path', :action => 'show'
+    assets.asset '/assets/:id(/*path)', :action => 'show'
   end
 
   map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
