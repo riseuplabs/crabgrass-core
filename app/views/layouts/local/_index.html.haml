@@ -22,7 +22,7 @@
 - classes = ['row-fluid', @local_layout]
 - unless @context
   - classes << 'gap-under-masthead'
-- if @navigation[:local].any?
+- if @navigation[:local].present?
   - content_for(:left_column) do
     = render :partial => 'layouts/local/side_navigation'
 
