@@ -22,7 +22,7 @@ SearchFilter.new('/most-stars-in/:time/:unit/') do
         filter_submit_button(:date_this_week.t, {:time => 7, :unit=>'days'}),
         filter_submit_button(:date_this_month.t, {:time => 30, :unit=>'days'}),
         filter_submit_button(:date_this_year.t, {:time => 1, :unit=>'years'})
-      ].join(' ')
+      ].join(' ').html_safe
     end
   end
 
