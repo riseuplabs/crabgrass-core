@@ -19,6 +19,9 @@ gem 'mysql', '2.8.1'
 
 gem 'json', '~> 1.7.7'
 
+gem 'haml'
+gem 'sass'
+
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
 gem 'hpricot', '~> 0.8'
@@ -37,8 +40,6 @@ gem 'delayed_job', '~> 3.0.5'
 gem 'rails3_before_render'
 
 group :production, :development do
-  gem 'haml'
-  gem 'sass'
   gem 'whenever'
   gem 'jsmin'
 end
@@ -80,11 +81,6 @@ group :test do
   ##
   ## GEMS REQUIRED FOR FUNCTIONAL TESTS
   ##
-
-  # FIXME: figure out if we're unit testing.
-  #unless defined?(UNIT_TESTING)
-    gem 'haml'
-  #end
 
   #gem 'webrat'
 
