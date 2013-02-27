@@ -15,6 +15,15 @@ ul.page_search_controls {
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     @include cg-hover-link;
+
+    &.disabled {
+      color: #666;
+      cursor: default;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 }
 

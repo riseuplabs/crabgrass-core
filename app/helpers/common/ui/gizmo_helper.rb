@@ -114,9 +114,9 @@ module Common::Ui::GizmoHelper
 
   def spinbox_link_to_function(function, options)
     if options[:label].blank?
-      link_to_function_icon(options[:icon], function, options.slice(:url, :id))
+      link_to_function_icon(options[:icon], function, options.slice(:url, :id, :title))
     else
-      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon))
+      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon, :title))
     end
   end
 

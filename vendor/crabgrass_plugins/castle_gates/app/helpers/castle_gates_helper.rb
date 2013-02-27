@@ -28,6 +28,9 @@ module CastleGatesHelper
     name = "#{gate}_#{holder.to_s}"
     options = options.dup
     options[:label] ||= holder.definition.label.t
+    if holder.definition.info
+      options[:title] ||= holder.definition.info.t
+    end
     options[:method] = 'put'
     options[:checked] = castle.access?(holder => gate)
     url  = key_holder_path(holder.code, 'gate' => gate, 'new_state' => options[:checked] ? 'closed' : 'open')

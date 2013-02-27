@@ -2,14 +2,16 @@
   - unless show_all?
     = filter_checkbox_li_tag :add, filter_all
   - for section in search_filter_sections
-    - filters = possible_filters_for_section(section).select{|filter| !filter_excluded?(filter)}
+    - enabled_filters, disabled_filters = possible_filters_for_section(section)
     - id = "#{section}_section"
-    - if filters.any?
+    - if enabled_filters.any? || disabled_filters.any?
       %li
         .section= section.tcap
         %ul
-          - for filter in filters
+          - for filter in enabled_filters
             = filter_checkbox_li_tag :add, filter
+          - for filter in disabled_filters
+            = filter_checkbox_li_tag :add, filter, nil, :disabled => true
 
 -# for expanding sections:
 -#  = link_to_toggle(section.to_s, id, :open => opened_section?(section))

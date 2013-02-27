@@ -1,10 +1,10 @@
-= form_tag(me_password_path, :method => 'put') do 
-  = formy(:simple_form) do |f|
+= form_tag(me_password_path, :method => 'put') do
+  = formy(:horizontal_form) do |f|
+    - f.label :change_password.t
     - f.row do |r|
       - r.label :new_password.t
       - r.input password_field('user', 'password')
     - f.row do |r|
       - r.label :confirm_new_password.t
-      - r.input password_field('user', 'password_confirmation')			  
-    - f.buttons do |b|
-      - b.button submit_tag(:save_button.t, :class => 'btn btn-primary')
+      - r.input password_field('user', 'password_confirmation')
+    - f.button submit_tag(:save_button.t, :class => 'btn btn-primary')

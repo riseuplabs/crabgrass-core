@@ -85,18 +85,15 @@ module Common::Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
 
-    ## FIXME: this uses '@_content_for[:x]' to get data chunks previously
-    ##   added via 'content_for()'. For later Rails versions (> 3.1 ??)
-    ##   this needs to be changed to '@view_flow.get(:x)'.
-
     # inline script code
     lines << '<script type="text/javascript">'
     #lines << localize_modalbox_strings
-    lines << @_content_for[:script]
-    lines << 'document.observe("dom:loaded",function(){'
-    lines << detect_browser_js
-    lines << @_content_for[:dom_loaded]
-    lines << '});'
+      lines << content_for(:script) if content_for?(:script)
+      if content_for?(:dom_loaded)
+        lines << 'document.observe("dom:loaded",function(){'
+        lines << content_for(:dom_loaded)
+        lines << '});'
+      end
     lines << '</script>'
 
     # make all IEs behave like IE 9
@@ -112,6 +109,21 @@ module Common::Ui::LayoutHelper
     end
 
     lines.join("\n").html_safe
+  end
+
+  ##
+  ## COLUMN SPANS
+  ##
+
+  def center_span_class(column_type)
+    side_column_count = current_theme["local_#{column_type}_width"]
+    center_column_count = current_theme.grid_column_count - side_column_count
+    "span#{center_column_count}"
+  end
+
+  def side_span_class(column_type)
+    column_count = current_theme["local_#{column_type}_width"]
+    "span#{column_count}"
   end
 
   ##
@@ -334,16 +346,6 @@ module Common::Ui::LayoutHelper
         :token           => form_authenticity_token
       }
     }
-  end
-
-  private
-
-  # for susy to work, we need to add class 'webkit' to body when the browser
-  # is a webkit browser. I am not sure if this should be done on dom:loaded or
-  # before.
-  def detect_browser_js
-    # "document.observe('dom:loaded',function(){if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}});"
-    "if(/khtml|webkit/i.test(navigator.userAgent)){$$('body').first().addClassName('webkit');}"
   end
 
 end

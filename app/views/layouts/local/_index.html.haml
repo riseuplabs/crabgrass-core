@@ -1,0 +1,46 @@
+-#
+-# This partial controls the layout structure of #local and its columns.
+-#
+-# @local_layout must be one of: 'sidebar', 'sidecolumn', 'sidecontent'
+-#
+-# it produces one of these:
+-#
+-# #local
+-#   #column_left
+-#   #column_center
+-#
+-# #local
+-#   #column_center
+-#   #column_right
+-#
+-# #local
+-#   #column_center
+-#
+
+- center_span = center_span_class(@local_layout)
+- side_span   = side_span_class(@local_layout)
+- classes = ['row-fluid', @local_layout]
+- unless @context
+  - classes << 'gap-under-masthead'
+- if @navigation[:local].any?
+  - content_for(:left_column) do
+    = render :partial => 'layouts/local/side_navigation'
+
+- if content_for?(:left_column)
+  #local.on_left{:class => classes}
+    #column_left{:class => side_span}
+      = yield :left_column
+    #column_center{:class => center_span}
+      = render :partial => 'layouts/local/content'
+
+- elsif content_for?(:right_column)
+  #local.on_right{:class => classes}
+    #column_center{:class => center_span}
+      = render :partial => 'layouts/local/content'
+    #column_right{:class => side_span}
+      = yield :right_column
+
+- else
+  #local.full_width{:class => classes}
+    #column_center
+      = render :partial => 'layouts/local/content'

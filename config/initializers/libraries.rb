@@ -3,7 +3,7 @@
 #
 
 unless defined? UNIT_TESTING
-  require "#{Rails.root}/app/stylesheets/sass_extension.rb"
+  require "#{Rails.root}/app/stylesheets/lib/sass_extension.rb"
 end
 
 require "#{Rails.root}/lib/crabgrass/exceptions.rb"

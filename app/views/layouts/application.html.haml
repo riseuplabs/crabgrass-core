@@ -1,5 +1,5 @@
 - @navigation = current_navigation()
-- @local_layout ||= 'sidebar'
+- @local_layout ||= 'sidecolumn'
 !!!
 %html{:dir=>language_direction}
 
@@ -16,9 +16,9 @@
           = render :partial => '/layouts/global/nav/top_menus'
 
     #middle
-      #middle_container
+      #middle_container.container-fluid
         = render :partial => "/layouts/context/banner"
-        = render :partial => "/layouts/local/#{@local_layout}/index"
+        = render :partial => "/layouts/local/index"
 
     #footer
       #footer_container

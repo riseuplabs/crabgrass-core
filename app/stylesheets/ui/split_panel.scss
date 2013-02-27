@@ -1,7 +1,7 @@
 //
 // split panel view
 //
-// a list on the left. when you click on an item, it becomes selected and 
+// a list on the left. when you click on an item, it becomes selected and
 // more details are loaded in the right panel.
 //
 // the structure looks like this:
@@ -18,7 +18,7 @@
 //
 // panel sizing
 // we could do this with susy, but it would be then it would need to not be
-// in the article#content. 
+// in the article#content.
 //
 // here, we simulate what susy would do, but account for the inner
 // article#content padding.
@@ -46,7 +46,7 @@ $panel_width: ($content_width - $content_padding) / 2;
 
 // with left sidebar
 
-$center_columns: $grid_column_count - $local_nav_width; // << for now, this only works for sidebar layouts.
+$center_columns: $grid_column_count - $local_sidebar_width; // << for now, this only works for sidebar layouts.
 $split_panel_gutter: resolve_width($local_content_padding, $center_columns);
 $split_panel_gutter_padding: resolve_width($local_content_padding, $center_columns/2);
 $content_width: 100%;
@@ -55,7 +55,7 @@ $panel_width: ($content_width - $split_panel_gutter) / 2;
 
 // this used to be dependent on the sidebar / sidecolumn and on_{left,right}
 // class in #local. However the old usage of the split panel seems to be gone
-// and we need at least some setting for this to work in a wiki versions 
+// and we need at least some setting for this to work in a wiki versions
 // context
 
 .panel_left {
@@ -81,12 +81,12 @@ $row_right_border: none;
 
 .panel_left {
   float: left;        // allow right panel to flow to the right.
-  position: relative; // this is required in order to calculate the offset 
+  position: relative; // this is required in order to calculate the offset
                       // of this row, which is used to position the right row.
   .row {
     cursor: pointer;
     clear:left;
-    // this is a kind of border-collapse for divs, to make the 
+    // this is a kind of border-collapse for divs, to make the
     // space of the border shared by both rows.
     margin-bottom: -1 * border_width($row_separator);
     &.active {

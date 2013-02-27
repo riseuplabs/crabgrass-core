@@ -1,6 +1,8 @@
 
-require 'action_view/helpers/tag_helper'
+#require 'action_view/helpers/tag_helper'
 #require 'active_view/helpers/java_script_helper'
+
+require 'action_view/helpers'
 
 module Formy
 
@@ -63,10 +65,26 @@ module Formy
     end
 
     def indent(str)
-      ("  " * @base.depth) + str.to_s + "\n"
+      if str.is_a? Array
+        str.collect {|i|
+          indent(i)
+        }.join
+      else
+        ("  " * @base.depth) + str.to_s + "\n"
+      end
     end
 
     def puts(str)
+      @buffer << indent(str)
+    end
+
+    def puts_push(str)
+      @buffer << indent(str)
+      @base.depth += 1
+    end
+
+    def puts_pop(str)
+      @base.depth -= 1
       @buffer << indent(str)
     end
 
