@@ -10,6 +10,9 @@ class PageTest < ActiveSupport::TestCase
 
   def teardown
     PageHistory.delete_all
+    # ensure there are no tempfiles left and getting removed
+    # some random time.
+    GC.start
   end
 
   def test_page_history_order
