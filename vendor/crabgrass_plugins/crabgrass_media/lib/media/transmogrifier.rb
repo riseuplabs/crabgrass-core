@@ -220,7 +220,7 @@ module Media
     #end
 
     def command_available?(command)
-      command.present? and File.file?(command) and File.executable?(command)
+      command.chars.any? and File.file?(command) and File.executable?(command)
     end
 
     ##

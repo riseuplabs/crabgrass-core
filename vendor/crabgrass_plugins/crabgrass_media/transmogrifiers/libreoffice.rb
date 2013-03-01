@@ -11,7 +11,7 @@ require 'tmpdir'
 
 unless defined?(LIBREOFFICE_COMMAND)
   cmd = `which libreoffice`.chomp
-  if cmd.present?
+  if cmd.chars.any?
     LIBREOFFICE_COMMAND = cmd
   else
     LIBREOFFICE_COMMAND = false
