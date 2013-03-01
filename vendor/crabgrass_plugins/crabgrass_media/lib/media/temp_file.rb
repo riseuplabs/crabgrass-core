@@ -1,5 +1,5 @@
 require 'tempfile'
-require 'ftools'
+require 'fileutils'
 require 'pathname'
 
 Tempfile.class_eval do
@@ -7,8 +7,10 @@ Tempfile.class_eval do
   # overwrite so that Tempfile will retain the file extension of the basename.
   #
   def make_tmpname(basename, n)
-    ext = nil
-    sprintf("%s%d-%d%s", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$, n, ext)
+    ext = File.extname(basename).sub(/^\./, '')
+    name = sprintf("%s%d-", File.basename(basename), $$)
+    name << n if n
+    name << ext
   end
 end
 

@@ -83,7 +83,7 @@ class Asset < ActiveRecord::Base
 
   # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
   # it always picks "Asset". So, we hardcode what the query should be:
-  POLYMORPH_AS_PARENT = lambda { "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
+  POLYMORPH_AS_PARENT = lambda { |a| "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
 
   # fields in assets table not in asset_versions
   NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
@@ -320,16 +320,6 @@ class Asset < ActiveRecord::Base
   # creates an Asset of the appropriate subclass (ie ImageAsset).
   #
   def self.create_from_params(attributes = nil, &block)
-    begin
-      return self.create_from_params!(attributes, &block)
-    rescue Exception => exc
-      puts 'Error creating asset: ' + exc.to_s
-      puts exc.clean_backtrace
-      return nil
-    end
-  end
-
-  def self.create_from_params!(attributes = nil, &block)
     asset_class(attributes).create!(attributes, &block)
   end
 
@@ -384,7 +374,7 @@ class Asset < ActiveRecord::Base
   # returns a mime type of the file_data
   #
   def self.mime_type_from_data(file_data)
-    if file_data and file_data.any?
+    if file_data.present?
       file_data.content_type || Media::MimeType.mime_type_from_extension(file_data.original_filename)
     end
   end

@@ -48,7 +48,7 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     @page        = options[:page] || 1
 
     apply_filters_from_path( path )
-    @order = nil unless @order.any?
+    @order = @order.presence
   end
 
   def search

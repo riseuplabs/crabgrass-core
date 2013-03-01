@@ -159,14 +159,14 @@ define_navigation do
         visible { logged_in? }
         label { :friends.t }
         url { people_directory_path(:path => ['contacts']) }
-        active { params[:path].try.include?('contacts') }
+        active { params[:path].try(:include?, 'contacts') }
       end
 
       local_section :peers do
         visible { logged_in? }
         label { :peers.t }
         url { people_directory_path(:path => ['peers']) }
-        active { params[:path].try.include?('peers') }
+        active { params[:path].try(:include?, 'peers') }
       end
 
     end
@@ -214,7 +214,7 @@ define_navigation do
         visible { logged_in? }
         label { :my_groups.t }
         url { groups_directory_path(:path => ['my']) }
-        active { controller?('groups/directory') and params[:path].try.include?('my') }
+        active { controller?('groups/directory') and params[:path].try(:include?, 'my') }
       end
 
       local_section :create do

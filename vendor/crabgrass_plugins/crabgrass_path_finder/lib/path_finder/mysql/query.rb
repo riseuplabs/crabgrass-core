@@ -169,7 +169,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   def add_public
     add_access_constraint(:public => true)
   end
-  
+
   def add_tag_constraint(tag)
     @tags << "+" + Page.searchable_tag_list([tag]).first
   end

@@ -13,7 +13,7 @@ module TaskListPageHelper
     else
       list.tasks
     end
-    tasks.any? == true ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
+    tasks.any? ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
   end
 
   def options_for_task_list

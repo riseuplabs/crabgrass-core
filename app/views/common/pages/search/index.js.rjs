@@ -9,7 +9,7 @@ page.replace 'search_controls_possible', :partial => 'common/pages/search/contro
 page.replace_html 'search_results', :partial => 'common/pages/list', :locals => local_assigns
 
 # clear text filter field, if needed
-if (text = @path.search_text).any?
+if (text = @path.search_text).present?
   text.gsub!("'","")
   page << "$('search_text_field').value = '#{text}'"
 else

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require File.dirname(__FILE__) + '/test_helper'
 
 class PageTermsTest < ActiveSupport::TestCase
@@ -14,7 +16,7 @@ class PageTermsTest < ActiveSupport::TestCase
 
   def test_tagging_with_odd_characters
     name = 'test page'
-    page = WikiPage.make :title => name.titleize, :name => name.nameize
+    page = FactoryGirl.create(:wiki_page, :title => name.titleize, :name => name.nameize)
     page.tag_list = "^&#, +, **, %, ə"
     page.save!
 

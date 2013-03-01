@@ -20,10 +20,10 @@ class ProfilePhoneNumber < ActiveRecord::Base
 
   def icon
     case self.phone_number_type
-      when 'Home'   : 'house'
-      when 'Fax'    : 'fax'
-      when 'Mobile' : 'mobile'
-      when 'Pager'  : 'mobile'
+      when 'Home'   then 'house'
+      when 'Fax'    then 'fax'
+      when 'Mobile' then 'mobile'
+      when 'Pager'  then 'mobile'
       else 'phone'
     end
   end

@@ -4,7 +4,7 @@ class GroupModelTest < ActiveSupport::TestCase
 
   def setup
     Conf.load_defaults
-    @group = Group.make_unsaved
+    @group = FactoryGirl.build(:group)
   end
 
   def test_recent_is_false_for_old_group
@@ -19,13 +19,13 @@ class GroupModelTest < ActiveSupport::TestCase
 
   def test_single_user_is_true_with_one_user
     @group.save!
-    @group.add_user!(User.make)
+    @group.add_user!(FactoryGirl.create(:user))
     assert @group.single_user?
   end
 
   def test_single_user_is_false_with_two_users
     @group.save!
-    2.times { @group.add_user!(User.make) }
+    2.times { @group.add_user!(FactoryGirl.create(:user)) }
     assert !@group.single_user?
   end
 

@@ -1,8 +1,6 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
-  # fixes fixture_file_upload for Rails 2.3
-  include ActionDispatch::TestProcess
   fixtures :all
 
   def setup
@@ -11,6 +9,9 @@ class AssetTest < ActiveSupport::TestCase
 
   def teardown
     teardown_assets
+    # Make sure all left over files are cleared now
+    # - not in the middle of the next run.
+    GC.start
   end
 
   def test_associations
@@ -19,15 +20,8 @@ class AssetTest < ActiveSupport::TestCase
     assert check_associations(Thumbnail)
   end
 
-  def test_simple_upload
-   file_to_upload = upload_data('image.png')
-   @asset = Asset.create_from_params :uploaded_data => file_to_upload
-   assert File.exists?( @asset.private_filename ), 'the private file should exist'
-   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
-  end
-
   def test_paths
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
 
     assert_equal "%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
     assert_equal "%s/0000/%04d/image_small.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_thumbnail_filename(:small)
@@ -40,7 +34,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_single_table_inheritance
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     assert_equal 'PngAsset', @asset.type, 'initial asset should be a png'
     assert_equal 'image/png', @asset.content_type, 'initial asset should be a png'
 
@@ -51,7 +45,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_versions
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @id = @asset.id
     @filename_for_1 = @asset.private_filename
     assert_equal 1, @asset.version, 'should be on version 1'
@@ -86,7 +80,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_rename
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @asset.base_filename = 'newimage'
     @asset.save
 
@@ -96,7 +90,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_file_cleanup_on_destroy
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @asset.update_access
     @asset.destroy
 
@@ -106,7 +100,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_access
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     assert @asset.public?
     @asset.update_access
 
@@ -124,7 +118,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_thumbnails
     start_thumb_count = Thumbnail.count
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = FactoryGirl.create :image_asset
     assert @asset.thumbdefs.any?, 'asset should have thumbdefs'
     assert @asset.thumbnails.any?, 'asset should have thumbnail objects'
 
@@ -158,7 +152,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_type_changes
-    @asset = Asset.create_from_params :uploaded_data => upload_data('bee.jpg')
+    @asset = FactoryGirl.create :image_asset
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -171,10 +165,16 @@ class AssetTest < ActiveSupport::TestCase
 
     # change back
     @asset = Asset.find(@asset.id)
-    @asset.uploaded_data = upload_data('bee.jpg')
+    @asset.uploaded_data = upload_data('gears.jpg')
     @asset.save
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
+  end
+
+  def test_simple_upload
+   @asset = FactoryGirl.create :png_asset
+   assert File.exists?( @asset.private_filename ), 'the private file should exist'
+   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
   def test_dimensions
@@ -182,9 +182,9 @@ class AssetTest < ActiveSupport::TestCase
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
       return
     end
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
-    assert_equal 500, @asset.width, 'width must match file'
-    assert_equal 321, @asset.height, 'height must match file'
+    @asset = FactoryGirl.create :small_image_asset
+    assert_equal 64, @asset.width, 'width must match file'
+    assert_equal 64, @asset.height, 'height must match file'
     @asset.uploaded_data = upload_data('bee.jpg')
     @asset.save
     assert_equal 333, @asset.width, 'width must match after new upload'
@@ -283,7 +283,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_build_asset
     asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata
-    assert asset.filename.any?
+    assert asset.filename.present?
   end
 
   protected

@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/test_helper'
-require File.dirname(__FILE__) + '/sleepy_transmogrifier'
+require_relative 'test_helper'
+require_relative 'sleepy_transmogrifier'
 
 class TransmogrifierTest < Test::Unit::TestCase
 

@@ -11,7 +11,7 @@ module Formy
       def close
         selected = 'active' if "#{@selected}" == "true"
         puts "<div class='sidelink #{selected}'>"
-        if @label.any?
+        if @label.present?
           puts "<a href='#{@link}'>#{@label}</a>"
         else
           puts @link

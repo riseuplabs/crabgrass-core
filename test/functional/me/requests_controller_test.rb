@@ -18,11 +18,11 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_update_group_request
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user! @user
     login_as @user
-    requesting = User.make
+    requesting = FactoryGirl.create(:user)
     request = RequestToJoinYou.create :created_by => requesting,
       :recipient => @group
     xhr :post, :update, :id => request.id
@@ -30,11 +30,11 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_group_request
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user! @user
     login_as @user
-    requesting = User.make
+    requesting = FactoryGirl.create(:user)
     request = RequestToJoinYou.create :created_by => requesting,
       :recipient => @group
     assert_difference 'RequestToJoinYou.count', -1 do

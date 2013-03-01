@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
@@ -8,8 +8,24 @@ class UserTest < ActiveSupport::TestCase
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
 
+  def test_user_fixtures_are_valid
+    orange = users(:orange)
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
+  end
+
+  def test_email_required_settings
+    assert !User.new.should_validate_email
+    orange = users(:orange)
+    orange.email = nil
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
+  end
+
   def test_ensure_values_in_receive_notifications
-    user = User.make
+    user = FactoryGirl.create(:user)
 
     user.receive_notifications = nil
     user.save!
@@ -65,7 +81,7 @@ class UserTest < ActiveSupport::TestCase
 
     # find numeric group names
     assert_equal 0, User.alphabetized('#').size
-    User.create! :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
     assert_equal 1, User.alphabetized('#').size
 
     # case insensitive
@@ -99,7 +115,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_new_user_has_discussion
-    u = User.create! :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    u = FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
     assert !u.reload.wall_discussion.new_record?
   end
 

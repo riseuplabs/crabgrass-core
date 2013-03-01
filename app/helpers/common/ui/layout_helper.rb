@@ -247,7 +247,7 @@ module Common::Ui::LayoutHelper
   # the helper can be used wherever a normal helper would be.
   #
   def haml(name=nil, *args, &block)
-    if name && name.any?
+    if name.present?
       if args.empty? and block.nil?
         haml_concat name
       else
@@ -273,7 +273,7 @@ module Common::Ui::LayoutHelper
   # joins an array of elements together using commas.
   #
   def comma_join(*args)
-    args.select(&:any?).join(', ')
+    args.select(&:present?).join(', ')
   end
 
   #

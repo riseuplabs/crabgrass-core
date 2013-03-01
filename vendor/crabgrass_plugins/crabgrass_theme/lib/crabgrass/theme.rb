@@ -83,7 +83,7 @@ module Crabgrass
     ##
 
     #
-    # access theme configuration variable. 
+    # access theme configuration variable.
     # eg current_theme[:border_width]
     #
     def [](key)
@@ -102,7 +102,7 @@ module Crabgrass
     # returns an integer representation of a theme configuration variable.
     #
     def int_var(key)
-      if self[key].any?
+      if self[key].present?
         self[key].gsub(/[^0-9]/,'').to_i
       else
         0
