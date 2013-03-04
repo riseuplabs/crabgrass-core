@@ -142,7 +142,7 @@ module Common::Ui::JavascriptHelper
              else
                ''
              end
-    loader + "activatePanelRow('#{dom_id(item)}');"
+    loader + "activatePanelRow('#{dom_id(item)}');".html_safe
   end
 
   #

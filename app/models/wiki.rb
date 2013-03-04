@@ -306,6 +306,10 @@ class Wiki < ActiveRecord::Base
       "#{previous.to_param}-#{self.to_param}"
     end
 
+    def body_html
+      read_attribute(:body_html).try :html_safe
+    end
+
   end
 
 end
