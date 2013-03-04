@@ -7,15 +7,22 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    @user_a = User.make :login => "miguel", :display_name => "Miguel Bakunin"
-    @user_b = User.make :login => "anselme", :display_name => "Anselme Belgarin"
+    @user   = FactoryGirl.create(:user)
+    @user_a = FactoryGirl.create(:user, :login => "miguel", :display_name => "Miguel Bakunin")
+    @user_b = FactoryGirl.create(:user, :login => "anselme", :display_name => "Anselme Belgarin")
+
     User.current = @user
-    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1)
-    @site = Site.make :domain => "crabgrass.org",
-      :title => "Crabgrass Social Network",
-      :email_sender => "robot@$current_host",
-      :default => true,
-      :name => 'cg'
+
+    @page = FactoryGirl.create(:page)
+    @page.owner = @user
+    @page.user_participations.create user: @user, access: 1
+
+    @site = FactoryGirl.create(:site, :domain => "crabgrass.org",
+                               :title => "Crabgrass Social Network",
+                               :email_sender => "robot@$current_host",
+                               :default => true,
+                               :name => 'cg'
+                              )
     enable_site_testing 'cg'
   end
 

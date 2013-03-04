@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Me::PermissionsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
+    @user  = FactoryGirl.create(:user)
   end
 
   def test_not_logged_in

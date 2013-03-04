@@ -51,7 +51,7 @@ class WikiLock < ActiveRecord::Base
   def sections_locked_for(user)
     locked_for_user = []
     locks.each do |section, lock|
-      locked_for_user << section if lock[:by] != user.id
+      locked_for_user << section unless user.real? && lock[:by] == user.id
     end
 
     # don't show any sections as locked if they don't exist

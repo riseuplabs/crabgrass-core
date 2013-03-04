@@ -12,7 +12,7 @@
 - post2 = nil
 - if @request.pending?
   - html2 = render :partial => 'common/requests/action_buttons', :locals => {:request => @request}
-  - if html2.any?
+  - if html2.present?
     - post2 = proxy.new(@request.id, 0, current_user, nil, nil, 0, html2)
 - elsif @request.approved?
   - html2 = content_tag(:button, :approved.t, :class => 'btn btn-success disabled')

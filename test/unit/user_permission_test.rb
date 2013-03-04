@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/test_helper'
 class UserPermissionTest < ActiveSupport::TestCase
 
   def setup
-    @me = User.make
-    @other = User.make
+    @me = FactoryGirl.create(:user)
+    @other = FactoryGirl.create(:user)
   end
 
   def test_defaults

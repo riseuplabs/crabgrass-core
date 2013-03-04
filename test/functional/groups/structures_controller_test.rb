@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require_relative '../../test_helper'
 
 class Groups::StructuresControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user! @user
   end
 
@@ -26,7 +26,7 @@ class Groups::StructuresControllerTest < ActionController::TestCase
         get :create,
           :group_id => @group.to_param,
           :type => 'committee',
-          :committee => Committee.plan
+          :committee => FactoryGirl.attributes_for(:committee)
       end
     end
     assert_response :redirect
@@ -48,7 +48,7 @@ class Groups::StructuresControllerTest < ActionController::TestCase
       assert_difference '@group.committees.count' do
         get :create,
           :group_id => @group.to_param,
-          :council => Council.plan,
+          :council => FactoryGirl.attributes_for(:council),
           :type => 'council'
       end
     end

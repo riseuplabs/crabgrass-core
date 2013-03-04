@@ -1,6 +1,6 @@
 -#
   CONTEXT BANNER
-
+  
   This is the only place that should hold banner view code.
   it used to be in a dozen places, now it is here, and here alone.
 
@@ -24,7 +24,7 @@
 
 - if @context
   - style = context_banner_style
-  %header#context_banner.large.gap-under-masthead{:class => (style.any? ? 'dark_border' : 'light_border')}
+  %header#context_banner.large.gap-under-masthead{:class => (style.present? ? 'dark_border' : 'light_border')}
     %div#banner_content{:style => context_banner_style}
       - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)
         = render :partial => '/layouts/context/nested_banner_content'

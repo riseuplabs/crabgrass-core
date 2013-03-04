@@ -151,7 +151,7 @@ class Request < ActiveRecord::Base
 
   before_save :build_discussion
   def build_discussion
-    if @initial_post.any?
+    if @initial_post.present?
       self.build_shared_discussion(:post => {:body => @initial_post, :user => created_by})
     end
   end

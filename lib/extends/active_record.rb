@@ -33,7 +33,7 @@ ActiveRecord::Base.class_eval do
     define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
     before_save :format_body
     define_method(:format_body) {
-      if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
+      if body.present? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
         if respond_to?('owner_name')
           self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
@@ -79,39 +79,6 @@ ActiveRecord::Base.class_eval do
     else
       define_method(new) { read_attribute(old) }
       define_method("#{new}=") { |value| write_attribute(old, value) }
-    end
-  end
-
-  # class_attribute()
-  #
-  # Used by Page in order to allow subclasses (ie Tools) to define themselves
-  # (ie icon, description, etc) by setting class attributes.
-  #
-  # <example>
-  #   class Page
-  #     class_attribute :color
-  #   end
-  #   class Wiki < Page
-  #     color 'blue'
-  #   end
-  # </example>
-  #
-  # class_inheritable_accessor is very close to what we want. However, when
-  # an attr is defined with class_inheritable_accessor, the accessor is not
-  # called when it appears in a subclass definition, and I don't understand why.
-  #
-  def self.class_attribute(*keywords)
-    for word in keywords
-      word = word.id2name
-      module_eval <<-"end_eval"
-        def self.#{word}(value=nil)
-          @#{word.sub '?',''} = value if value
-          @#{word.sub '?',''}
-        end
-        def #{word}
-          self.class.#{word.sub '?',''}
-        end
-      end_eval
     end
   end
 

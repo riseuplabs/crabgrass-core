@@ -1,10 +1,17 @@
 class IntegerAnswer < SurveyAnswer
 
-  def validate
-    if(self.minimum.any? && self.minimum > self.value)
+  validate :value_above_minimun
+  validate :value_below_maximum
+
+
+  def value_above_minimum
+    if(self.minimum.present? && self.minimum > self.value)
       errors.add(:value, "must be greater than #{self.minimum}")
     end
-    if(self.maximum.any? && self.maximum < self.value)
+  end
+
+  def value_below_maximum
+    if(self.maximum.present? && self.maximum < self.value)
       errors.add(:value, "must be smaller than #{self.maximum}")
     end
   end

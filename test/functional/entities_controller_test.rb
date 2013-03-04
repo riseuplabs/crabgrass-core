@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class EntitiesControllerTest < ActionController::TestCase
   fixtures :users, :groups, :keys,
@@ -12,8 +12,9 @@ class EntitiesControllerTest < ActionController::TestCase
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     friends_and_peers = (blue.friends + blue.peers).uniq
-    assert_equal response["suggestions"].size,
-      friends_and_peers.count + blue.all_groups.count,
+    total_count = friends_and_peers.count + blue.all_groups.count
+    assert_equal total_count, assigns(:entities).count
+    assert_equal total_count, response["suggestions"].size,
       "suggestions should contain all friends, peers and groups."
     assert_holds_entities(response, '', 5)
   end

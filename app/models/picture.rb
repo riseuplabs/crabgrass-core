@@ -96,7 +96,7 @@ class Picture < ActiveRecord::Base
   # a picture resized to a given dimensions.
   #
   def add_geometry!(geometry)
-    if geometry.any?
+    if geometry.present?
       geometry = to_geometry(geometry)
       geo_key = geometry.to_s
       self.dimensions ||= {}

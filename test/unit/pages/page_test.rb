@@ -10,6 +10,9 @@ class PageTest < ActiveSupport::TestCase
 
   def teardown
     PageHistory.delete_all
+    # ensure there are no tempfiles left and getting removed
+    # some random time.
+    GC.start
   end
 
   def test_page_history_order
@@ -99,7 +102,7 @@ class PageTest < ActiveSupport::TestCase
   def test_tool
     page = create_page :title => 'what is for lunch?'
     assert poll = Poll.create
-    assert poll.valid?, poll.errors.full_messages
+    assert poll.valid?, poll.errors.full_messages.to_s
     page.data = poll
     page.save
     assert_equal poll.page, page
@@ -109,7 +112,7 @@ class PageTest < ActiveSupport::TestCase
   def test_discussion
     @page = WikiPage.create! :title => 'this is a very fine test page'
     assert discussion = Discussion.create
-    assert discussion.valid?, discussion.errors.full_messages
+    assert discussion.valid?, discussion.errors.full_messages.to_s
     #discussion.pages << @page
     @page.discussion = discussion
     @page.save
@@ -239,11 +242,12 @@ class PageTest < ActiveSupport::TestCase
 
   def test_attachments
     page = Page.create! :title => 'page with attachments', :user => users(:blue)
-    page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+    upload = upload_data('gears.jpg')
+    page.add_attachment! :uploaded_data => upload
 
     assert_equal page.page_terms, page.assets.first.page_terms
 
-    assert_equal 'photo.jpg', page.assets.first.filename
+    assert_equal 'gears.jpg', page.assets.first.filename
     page.assets.each do |asset|
       assert !asset.public?
     end

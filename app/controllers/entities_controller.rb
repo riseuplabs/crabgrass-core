@@ -36,7 +36,7 @@ class EntitiesController < ApplicationController
   def recipients
     if preload?
       User.friends_or_peers_of(current_user).with_access(current_user => :pester)
-    elsif filter.any?
+    elsif filter.present?
       recipients = User.strangers_to(current_user)
       recipients = recipients.with_access(:public => :pester)
       recipients.named_like(filter).find(:all, :limit => LIMIT)
@@ -49,7 +49,7 @@ class EntitiesController < ApplicationController
   def groups
     if preload?
       current_user.all_groups
-    elsif filter.any?
+    elsif filter.present?
       other_groups = Group.without_member(current_user)
       other_groups = other_groups.with_access(:public => :view)
       other_groups.named_like(filter).find :all, :limit => LIMIT
@@ -63,7 +63,7 @@ class EntitiesController < ApplicationController
     if preload?
       # preload user's groups
       User.friends_or_peers_of(current_user).with_access(current_user => :view)
-    elsif filter.any?
+    elsif filter.present?
       strangers = User.strangers_to(current_user)
       strangers = strangers.with_access(:public => :view)
       strangers.named_like(filter).find(:all, :limit => LIMIT)
@@ -81,17 +81,11 @@ class EntitiesController < ApplicationController
   protected
 
   def filter
-    @filter ||= begin
-      if params[:query].any?
-        "#{params[:query]}%"
-      else
-        ""
-      end
-    end
+    params[:query].present? ? "#{params[:query]}%" : ""
   end
 
   # the autocomplete will issues an empty query when first loaded.
-  # which gives us an oppotunity to early load likely results.
+  # which gives us an opportunity to early load likely results.
   def preload?
     filter.empty? and logged_in?
   end

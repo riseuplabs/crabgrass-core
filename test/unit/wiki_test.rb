@@ -65,7 +65,7 @@ class WikiTest < ActiveSupport::TestCase
   end
 
   def test_group_association
-    group = Group.make
+    group = FactoryGirl.create(:group)
     wiki = group.profiles.public.create_wiki :body => "bla"
     assert_equal group, wiki.group
   end

@@ -1,5 +1,5 @@
 require 'tempfile'
-require 'ftools'
+require 'fileutils'
 require 'pathname'
 
 Tempfile.class_eval do
@@ -7,8 +7,10 @@ Tempfile.class_eval do
   # overwrite so that Tempfile will retain the file extension of the basename.
   #
   def make_tmpname(basename, n)
-    ext = nil
-    sprintf("%s%d-%d%s", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$, n, ext)
+    ext = File.extname(basename).sub(/^\./, '')
+    name = sprintf("%s%d-", File.basename(basename), $$)
+    name << n if n
+    name << ext
   end
 end
 
@@ -61,7 +63,7 @@ module Media
         @tmpfile = TempFile.create_from_content_type(content_type)
       elsif data.respond_to?(:path)
         # we are dealing with an uploaded file object
-        @tmpfile = TempFile.create_from_file(data.path, content_type, {:mode => :move})
+        @tmpfile = TempFile.create_from_file(data.path, content_type)
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
@@ -137,7 +139,7 @@ module Media
     #
     # create a tmp file that is a copy of another file.
     #
-    def self.create_from_file(filepath, content_type, options)
+    def self.create_from_file(filepath, content_type, options = {})
       tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
       tf.close
       if options[:mode] == :move

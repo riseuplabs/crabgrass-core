@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class PermissionTest < ActiveSupport::TestCase
   fixtures :all
@@ -13,17 +13,21 @@ class PermissionTest < ActiveSupport::TestCase
   #
   def test_group_permissions_with_committee_and_council
     # create a group and user
-    user = User.make(:login => 'earth')
-    group = Group.make_owned_by(:user => user, :name => 'planets')
+    user = FactoryGirl.create(:user, :login => 'earth')
+    group = FactoryGirl.create(:group, :name => 'planets')
     group.add_user! user
     assert user.may?(:admin, group), "should admin group i'm in"
 
     # add a committee
-    committee = Committee.make_for :group => group
+    committee = FactoryGirl.create(:committee)
+    group.add_committee! committee
+
     assert user.may?(:admin, committee), "should admin committee of my group."
 
     # add a council
-    council = Council.make_for :group => group, :name => 'planets+astrophysicists'
+    committee_for_council = FactoryGirl.create(:committee, :name => 'astrophysicists')
+    group.add_council!(committee_for_council)
+    council = Group.find(committee_for_council.id)
     user.clear_access_cache
     assert !user.may?(:admin, group), "should not admin group"
     assert user.may?(:edit, committee)
@@ -62,10 +66,10 @@ class PermissionTest < ActiveSupport::TestCase
   end
 
   def test_group_visibility
-    user = User.make(:login => 'earth')
+    user = FactoryGirl.create(:user, :login => 'earth')
 
     # create an invisible group
-    invisible = Group.make
+    invisible = FactoryGirl.create(:group)
     invisible.revoke_access!(:public => :view)
     assert !user.may?(:view, invisible), "should not view group i'm not in."
 

@@ -32,7 +32,7 @@ begin
       File.open(filename, 'w') do |f|
         f.write(JSMin.minify(environment[file].to_s))
       end
-      if `which gzip`.any?
+      if `which gzip`.chars.any?
         `gzip --stdout #{filename} > #{filename}.gz`
       end
     end

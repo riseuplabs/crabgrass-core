@@ -34,7 +34,6 @@ module ModalboxHelper
   #
   def link_to_modal(label, options={}, html_options={})
     options[:title] ||= label
-    html = options[:html].any?
     icon = options.delete(:icon) || html_options.delete(:icon)
     if options[:html]
       static_html = true

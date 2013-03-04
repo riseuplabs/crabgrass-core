@@ -76,7 +76,7 @@ class RateManyPageController < Pages::BaseController
   # and it must be declared sortable like this:
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    return unless params[:sort_list].any?
+    return unless params[:sort_list].present?
     ids = params[:sort_list]
     @poll.possibles.each do |possible|
       position = ids.index( possible.id.to_s )

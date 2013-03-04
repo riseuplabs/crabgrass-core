@@ -1,6 +1,9 @@
 class TextAnswer < SurveyAnswer
-  def validate
-    if self.regex.any? && !(self.value =~ Regexp.new(self.regex))
+
+  validate :value_fits_regexp
+
+  def value_fits_regexp
+    if self.regex.present? && !(self.value =~ Regexp.new(self.regex))
       errors.add(:value, "doesn't match /#{self.regex}/")
     end
   end

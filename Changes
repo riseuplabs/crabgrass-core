@@ -1,3 +1,20 @@
+Changes since Crabgrass 0.5
+---------------------------
+
+New theming engine
+
+Permission system reworked
+
+UI works better on different screen sizes
+
+Updated dependencies
+
+* Rails 3.0 and counting
+* Ruby 1.9
+* Bootstrap
+* No more compass and Susy
+* using bundler
+
 
 Upgrading to Crabgrass 1.0 from earlier versions
 ------------------------------------------------
