@@ -61,7 +61,7 @@ module TaskListPageHelper
   def task_link_to_people(task)
     links = task.users.collect{|user|
       link_to_user(user, :action => 'tasks', :class => 'hov')
-    }.join(', ')
+    }.join(', ').html_safe
   end
 
   # a button to hide the task detail
