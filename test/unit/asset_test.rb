@@ -9,9 +9,6 @@ class AssetTest < ActiveSupport::TestCase
 
   def teardown
     teardown_assets
-    # Make sure all left over files are cleared now
-    # - not in the middle of the next run.
-    GC.start
   end
 
   def test_associations
