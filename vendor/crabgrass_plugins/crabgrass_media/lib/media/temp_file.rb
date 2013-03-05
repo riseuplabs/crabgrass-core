@@ -2,18 +2,6 @@ require 'tempfile'
 require 'fileutils'
 require 'pathname'
 
-Tempfile.class_eval do
-  #
-  # overwrite so that Tempfile will retain the file extension of the basename.
-  #
-  def make_tmpname(basename, n)
-    ext = File.extname(basename).sub(/^\./, '')
-    name = sprintf("%s%d-", File.basename(basename), $$)
-    name << n if n
-    name << ext
-  end
-end
-
 #
 # media processing requires a different type of tempfile... because we use command
 # line tools to process our temp files, these files can't be open and closed by ruby.
@@ -63,7 +51,7 @@ module Media
         @tmpfile = TempFile.create_from_content_type(content_type)
       elsif data.respond_to?(:path)
         # we are dealing with an uploaded file object
-        @tmpfile = TempFile.create_from_file(data.path, content_type)
+        @tmpfile = TempFile.create_from_file(data.path, content_type, {mode: :move})
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
@@ -156,7 +144,7 @@ module Media
     def self.content_type_basename(content_type)
       if content_type
         extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
-        "%s.%s" % ['media_temp_file', extension]
+        ['media_temp_file', extension.to_s]
       else
         'media_temp_file'
       end
