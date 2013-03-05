@@ -51,7 +51,7 @@ module Media
         @tmpfile = TempFile.create_from_content_type(content_type)
       elsif data.respond_to?(:path)
         # we are dealing with an uploaded file object
-        @tmpfile = TempFile.create_from_file(data.path, content_type)
+        @tmpfile = TempFile.create_from_file(data.path, content_type, {mode: :move})
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
