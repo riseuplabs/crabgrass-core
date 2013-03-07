@@ -212,14 +212,22 @@ class Group < ActiveRecord::Base
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   has_many :wikis, :through => :profiles
-  has_one :public_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.stranger' => true}
-  has_one :private_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.friend' => true}
+
+  def public_wiki
+    profiles.where(:stranger => true).first.wiki
+  end
+
+  def public_wiki=(wiki)
+    profiles.where(:stranger => true).first.wiki = wiki
+  end
+
+  def private_wiki
+    profiles.where(:friend => true).first.wiki
+  end
+
+  def private_wiki(wiki)
+    profiles.where(:friend => true).first.wiki = wiki
+  end
 
   def profile
     self.profiles.visible_by(User.current)
