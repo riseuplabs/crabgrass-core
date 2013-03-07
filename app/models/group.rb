@@ -225,7 +225,7 @@ class Group < ActiveRecord::Base
     profiles.where(:friend => true).first.wiki
   end
 
-  def private_wiki(wiki)
+  def private_wiki=(wiki)
     profiles.where(:friend => true).first.wiki = wiki
   end
 
