@@ -45,17 +45,6 @@ class User < ActiveRecord::Base
 
   scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
-  # (optionally) limited to +letter+
-  scope :alphabetized, lambda {|letter|
-    if letter == '#'
-      where('login REGEXP ?', "^[^a-z]")
-    elsif letter.present?
-      where(['login LIKE ?', "#{letter}%"])
-    else
-      {}
-    end
-  }
-
   # this is a little mysql magic to get what we want:
   # We want to sort by display_name.presence || login
   # if the display_name is NULL
@@ -64,7 +53,10 @@ class User < ActiveRecord::Base
   #   CONCAT gives us the login
   # if the display name is present
   #   CONCAT gives display_name + login which will sort by display name basically.
-  scope :alphabetical_order, order(<<-EOSQL
+  # alphabetized and (optional) limited to +letter+
+
+  def self.alphabetic_order
+    order <<-EOSQL
       LOWER(
         COALESCE(
           CONCAT(users.display_name, users.login),
@@ -72,7 +64,16 @@ class User < ActiveRecord::Base
         )
       ) ASC
     EOSQL
-                                   )
+  end
+
+  def self.alphabetized(letter = nil)
+    if letter == '#'
+      conditions = ['login REGEXP ?', "^[^a-z]"]
+    elsif not letter.blank?
+      conditions = ['login LIKE ?', "#{letter}%"]
+    end
+    where(conditions).alphabetic_order
+  end
 
   scope :named_like, lambda {|filter|
     { :conditions => ["users.login LIKE ? OR users.display_name LIKE ?",
@@ -326,7 +327,6 @@ class User < ActiveRecord::Base
     else
       set_access! peers_holder => public_gates
     end
-
   end
 
 
