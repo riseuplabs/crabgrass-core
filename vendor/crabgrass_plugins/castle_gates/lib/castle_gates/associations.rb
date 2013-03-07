@@ -5,20 +5,20 @@
 #
 
 ##
-## AssociationProxyProxy
+## CollectionProxyProxy
 ##
 
 #
-# This class is a proxy for AssociationProxy.
+# This class is a proxy for CollectionProxy.
 #
 # This double proxy keeps us from accidently hitting the database
 # and fetching the records from the association.
 #
 # For example, just the simple statement {@me.minions => :x} will trigger
 # fetching all the minions. Instead, we use @me.associated(:minions)
-# which will return an AssociationProxyProxy.
+# which will return an CollectionProxyProxy.
 #
-class AssociationProxyProxy
+class CollectionProxyProxy
   attr_reader :proxy
 
   def initialize(proxy)
@@ -32,7 +32,7 @@ class AssociationProxyProxy
   end
 
   def ==(other)
-    if other.is_a? AssociationProxyProxy
+    if other.is_a? CollectionProxyProxy
       @proxy.reflection == other.proxy.reflection and
       @proxy.proxy_owner == other.proxy.proxy_owner
     elsif other.is_a? Symbol
@@ -45,14 +45,14 @@ class AssociationProxyProxy
 end
 
 ##
-## Extend AssociationProxy
+## Extend CollectionProxy
 ##
 
 #
 # make the private reflection variable accessible to the
-# AssociationProxyProxy.
+# CollectionProxyProxy.
 #
-ActiveRecord::Associations::AssociationProxy.class_eval do
+ActiveRecord::Associations::CollectionProxy.class_eval do
   def reflection
     @reflection
   end
@@ -66,7 +66,7 @@ ActiveRecord::Base.class_eval do
   #
   # returns an ActiveRecord::Reflection::AssociationReflection
   #
-  # This reflection is available from the AssociationProxy
+  # This reflection is available from the CollectionProxy
   # and will have a pointer to the holder definition.
   #
   class << self
@@ -77,6 +77,6 @@ ActiveRecord::Base.class_eval do
   # return an association proxy proxy. double proxy!
   #
   def associated(symbol)
-    AssociationProxyProxy.new(self.send(symbol));
+    CollectionProxyProxy.new(self.send(symbol));
   end
 end
