@@ -17,7 +17,7 @@ class AccountControllerTest < ActionController::TestCase
   def test_should_require_login_on_signup
     assert_no_difference 'User.count' do
       post_signup_form(:user => {:login => nil})
-      assert assigns(:user).errors.on(:login)
+      assert assigns(:user).errors[:login]
       assert_response :success
     end
   end
@@ -25,7 +25,7 @@ class AccountControllerTest < ActionController::TestCase
   def test_should_require_password_on_signup
     assert_no_difference 'User.count' do
       post_signup_form(:user => {:password => nil})
-      assert assigns(:user).errors.on(:password)
+      assert assigns(:user).errors[:password]
       assert_response :success
     end
   end
@@ -33,7 +33,7 @@ class AccountControllerTest < ActionController::TestCase
   def test_should_require_password_confirmation_on_signup
     assert_no_difference 'User.count' do
       post_signup_form(:user => {:password_confirmation => nil})
-      assert assigns(:user).errors.on(:password_confirmation)
+      assert assigns(:user).errors[:password_confirmation]
       assert_response :success
     end
   end
@@ -44,7 +44,7 @@ class AccountControllerTest < ActionController::TestCase
         post_signup_form(:user => {:login => login,
                     :password => 'passwd',
                     :password_confirmation => 'passwd'})
-        assert assigns(:user).errors.on(:login), "flash should yield error for #{login}"
+        assert assigns(:user).errors[:login], "flash should yield error for #{login}"
         assert_response :success, "response to creating #{login} should be success"
       end
     }
@@ -54,7 +54,7 @@ class AccountControllerTest < ActionController::TestCase
     def test_should_require_email_on_signup
       assert_no_difference 'User.count' do
         post_signup_form(:user => {:email => nil})
-        assert assigns(:user).errors.on(:email)
+        assert assigns(:user).errors[:email]
         assert_response :success
       end
     end
@@ -124,7 +124,7 @@ class AccountControllerTest < ActionController::TestCase
 
   def test_invalid_looking_email_should_fail
     assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(:user => {:email => "BADEMAIL"}) }
-    assert assigns(:user).errors.on(:email)
+    assert assigns(:user).errors[:email]
     assert_response :success
   end
 
