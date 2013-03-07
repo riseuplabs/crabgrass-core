@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 3.1.11'
-
+gem 'rails_legacy_mapper'
 gem 'rake', '~> 0.9.2'
 
 gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
