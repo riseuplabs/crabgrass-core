@@ -19,9 +19,10 @@ gem 'sprockets'
 gem 'mysql2', '~> 0.2.18'
 
 gem 'json', '~> 1.7.7'
-
 gem 'haml'
 gem 'sass'
+
+gem 'http_accept_language'
 
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
