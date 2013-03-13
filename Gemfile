@@ -49,15 +49,13 @@ group :development do
   ##
   gem 'rdoc', '~> 3.0'
 
-  gem 'mongrel', :platforms => :mri_18
   gem 'thin', :platforms => :mri_19
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
-  gem 'rb-inotify', '~> 0.8.8' # used by rails-dev-boost
+  gem 'rb-inotify', '~> 0.9' # used by rails-dev-boost
 end
 
 group :test, :development do
   gem 'debugger', :platforms => :mri_19
-  gem 'ruby-debug', :platforms => :mri_18
 end
 
 

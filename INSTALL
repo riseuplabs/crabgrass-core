@@ -71,7 +71,7 @@ Install helper applications:
 Run server:
 
   cd crabgrass-core
-  BOOST=1 bundle exec rails s
+  BOOST=1 bundle exec rails server thin
 
 Connect to the web application from your browser:
 
