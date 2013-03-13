@@ -115,7 +115,7 @@ GEM
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
     multi_json (1.6.1)
-    mysql (2.8.1)
+    mysql2 (0.2.18)
     polyglot (0.3.3)
     rack (1.2.8)
     rack-mount (0.6.14)
@@ -194,7 +194,7 @@ DEPENDENCIES
   minitest (~> 2.12)
   mocha (~> 0.12.0)
   mongrel
-  mysql (= 2.8.1)
+  mysql2 (~> 0.2.18)
   prototype_legacy_helper (= 0.0.0)!
   rails (~> 3.0.20)
   rails-dev-boost!

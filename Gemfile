@@ -14,7 +14,7 @@ gem 'thinking-sphinx', '~> 2.0', :require => 'thinking_sphinx'
 gem 'will_paginate', '~> 3.0'
 gem 'sprockets', '~> 2.2'
 
-gem 'mysql', '2.8.1'
+gem 'mysql2', '~> 0.2.18'
 
 gem 'json', '~> 1.7.7'
 
