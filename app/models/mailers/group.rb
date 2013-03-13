@@ -12,8 +12,8 @@ module Mailers::Group
     @site = Site.current
     @recipients = "#{recipient.email}"
 
-    email_sender = @site.try(:email_sender) || Conf.email_sender
-    domain = @site.try(:domain) || Conf.domain
+    email_sender = @site.try.email_sender ? @site.email_sender : Conf.email_sender
+    domain = @site.try.domain ? @site.domain : Conf.domain
 
     @from = email_sender.gsub('$current_host', domain)
 

@@ -157,8 +157,8 @@ class Discussion < ActiveRecord::Base
     update_attributes!(
       :posts_count => posts_count,
       :last_post => visible_posts.last,
-      :replied_by_id => visible_posts.last.try(:user_id),
-      :replied_at => visible_posts.last.try(:updated_at) )
+      :replied_by_id => visible_posts.last.try.user_id,
+      :replied_at => visible_posts.last.try.updated_at )
   end
 
 end
