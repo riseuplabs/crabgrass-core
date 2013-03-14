@@ -40,29 +40,72 @@ require 'active_support'
 
 class SilentNil
   include Singleton
+
   def method_missing(*args)
     nil
   end
+
   def to_s
     ""
   end
+
   def inspect
     "nil"
   end
+
   def nil?
     true
   end
+
   def empty?
     true
   end
+
   def zero?
     true
   end
+
+  def |(obj)
+    nil | obj
+  end
+
+  def &(obj)
+    nil & obj
+  end
+
+  def ^(obj)
+    nil ^ obj
+  end
+
+  def !
+    true
+  end
+
+  def <=>(obj)
+    nil <=> obj
+  end
+
+  def ==(obj)
+    nil == obj
+  end
+
+  def ===(obj)
+    nil === obj
+  end
+
+  def =~(obj)
+    nil =~ obj
+  end
+
 end
 
 class NilClass
   def try(*args)
-    SilentNil.instance
+    if args.empty?
+      SilentNil.instance
+    else
+      nil
+    end
   end
 end
 
