@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.expand_path('../../test_helper', __FILE__)
 
 class Wikis::VersionsControllerTest < ActionController::TestCase
 
@@ -38,14 +38,10 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     end
   end
 
-  def test_destroy
-    assert_difference "@wiki.versions.count", -1 do
-      assert_permission :may_admin_wiki? do
-        delete :destroy, :wiki_id => @wiki.to_param, :id => @version.to_param
-      end
+  def test_destroy_not_possible
+    assert_raise ActionController::RoutingError do
+      delete :destroy, :wiki_id => @wiki.to_param, :id => @version.to_param
     end
-    assert_response :redirect
-    assert_redirected_to wiki_versions_url(@wiki)
   end
 
   def test_revert
