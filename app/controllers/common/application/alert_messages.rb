@@ -152,11 +152,12 @@ module Common::Application::AlertMessages
   end
 
   def alert_messages?
-    flash[:messages].any?
+    flash[:messages].present?
   end
 
   def alert_messages_have_errors?
-    flash[:messages].any? and flash[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
+    flash[:messages].present? &&
+      flash[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
   end
 
   def clear_alert_messages

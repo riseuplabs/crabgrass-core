@@ -196,7 +196,7 @@ class Thumbnail < ActiveRecord::Base
     # by the time we figure out what the thumbnail dimensions are,
     # the duplicate thumbnails for the version have already been created.
     # so, when our dimensions change, update the versioned thumb as well.
-    if (vthumb = versioned()).any?
+    if (vthumb = versioned()).present?
       vthumb.width, vthumb.height = [self.width, self.height]
       vthumb.save
     end

@@ -101,19 +101,22 @@ module GroupExtension::Groups
       committee.parent_id = self.id
       committee.parent_name_changed
       if make_council
-        add_council(committee)
+        committee = add_council(committee)
       elsif self.council == committee
         # downgrade the council to a committee
         committee.destroy_permissions
         committee.type = "Committee"
+        committee.becomes(Committee)
         self.council = nil
       end
       committee.save!
-      committee.create_permissions
 
       self.org_structure_changed
       self.save!
       self.committees.reset
+
+      # make sure we actually have the right class.
+      Group.find(committee.id).create_permissions
     end
 
     def add_council!(council)
@@ -177,8 +180,9 @@ module GroupExtension::Groups
       if has_a_council?
         council.update_attribute(:type, "Committee")
       end
-      self.council = committee
       committee.type = "Council"
+      committee.becomes(Council)
+      self.council = committee
       self.save!
 
       # creating a new council for a new group
@@ -186,6 +190,8 @@ module GroupExtension::Groups
       if self.memberships.count < 2
         committee.full_council_powers = true
       end
+
+      return committee
     end
   end
 

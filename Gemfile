@@ -1,5 +1,4 @@
-
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rails', '~> 3.0.20'
 
@@ -15,7 +14,12 @@ gem 'thinking-sphinx', '~> 2.0', :require => 'thinking_sphinx'
 gem 'will_paginate', '~> 3.0'
 gem 'sprockets', '~> 2.2'
 
-gem 'mysql', '2.8.1'
+gem 'mysql2', '~> 0.2.18'
+
+gem 'json', '~> 1.7.7'
+
+gem 'haml'
+gem 'sass'
 
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
@@ -28,14 +32,13 @@ gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-u
 
 # not required, but a really good idea
 gem 'mime-types', :require => 'mime/types'
+gem 'rubyzip'
 
 gem 'delayed_job', '~> 3.0.5'
 
 gem 'rails3_before_render'
 
 group :production, :development do
-  gem 'haml'
-  gem 'sass'
   gem 'whenever'
   gem 'jsmin'
 end
@@ -65,7 +68,7 @@ group :test do
   ## GEMS REQUIRED FOR TESTS
   ##
 
-  gem 'machinist', '~> 1.0' # switch to v2 when stable.
+  gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
   gem 'minitest', '~> 2.12', :require => 'minitest/autorun'
   gem 'mocha', '~> 0.12.0', :require => false
@@ -77,11 +80,6 @@ group :test do
   ##
   ## GEMS REQUIRED FOR FUNCTIONAL TESTS
   ##
-
-  # FIXME: figure out if we're unit testing.
-  #unless defined?(UNIT_TESTING)
-    gem 'haml'
-  #end
 
   #gem 'webrat'
 

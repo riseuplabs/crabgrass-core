@@ -42,7 +42,7 @@ module Common::PageSearch
   # methods to convert them to a ParsedPath.
   #
   def parsed_path
-    if params[:path].any?
+    if params[:path].present?
       parse_filter_path(params[:path])
     elsif params[:filter]
       parse_hash_filter_path(params[:filter])

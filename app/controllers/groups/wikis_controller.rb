@@ -46,7 +46,7 @@ class Groups::WikisController < Groups::BaseController
 
   def fetch_private?
     priv = params[:wiki] ? params[:wiki][:private] : params[:private]
-    priv && priv.any?
+    priv.present?
   end
 
   def fetch_wiki

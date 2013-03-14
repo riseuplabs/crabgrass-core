@@ -1,10 +1,8 @@
 class Picture
   class Storage
-    attr_accessor :id, :content_type
 
     def initialize(picture)
-      id = picture.id
-      content_type = picture.content_type
+      @picture = picture
     end
 
     def private_path(geometry)
@@ -83,7 +81,7 @@ class Picture
     # e.g. id of 12345 produces ['0001','2345']
     #
     def directory
-      ("%08d" % id).scan(/..../)
+      ("%08d" % @picture.id).scan(/..../)
     end
 
     #
@@ -123,7 +121,7 @@ class Picture
     # returns the file extension suitable for this content_type
     #
     def ext
-      Media::MimeType.extension_from_mime_type(content_type).to_s
+      Media::MimeType.extension_from_mime_type(@picture.content_type).to_s
     end
 
   end

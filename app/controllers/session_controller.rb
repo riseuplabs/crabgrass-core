@@ -28,7 +28,7 @@ class SessionController < ApplicationController
       #  }
       #end
 
-      if self.current_user.language.any?
+      if self.current_user.language.present?
         session[:language_code] = self.current_user.language.to_sym
       else
         session[:language_code] = previous_language

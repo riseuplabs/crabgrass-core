@@ -10,7 +10,7 @@ module PageExtension::Groups
       has_many :group_participations, :dependent => :destroy
       has_many :groups, :through => :group_participations
 
-      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
+      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
 
       remove_method :namespace_group_ids  # override the ActiveRecord
       remove_method :group_ids            # created method so we can used cached copy.
@@ -98,8 +98,8 @@ module PageExtension::Groups
     #
     def month_counts(options)
       field = case options[:field]
-        when 'created': 'created_at'
-        when 'updated': 'updated_at'
+        when 'created' then 'created_at'
+        when 'updated' then 'updated_at'
         else 'error'
       end
 
@@ -110,10 +110,10 @@ module PageExtension::Groups
       Page.connection.select_all(sql)
     end
 
-    # 
+    #
     # tags are potentially sensitive information. we don't want to show visitors to a group
     # all the tags from all the pages for that group.
-    # 
+    #
     # we ONLY want to show them tags for pages that the group owns and that the user has access to see.
     #
     # So, in order to do that, we need to use page_terms. Currently, this query includes pages the group

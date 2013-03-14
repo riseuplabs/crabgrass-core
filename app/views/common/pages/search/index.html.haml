@@ -2,7 +2,7 @@
 = render :partial => 'common/pages/search/top_controls'
 
 #search_results
-  - if @path.any?
+  - if @path.present?
     = render :partial => 'common/pages/list', :locals => local_assigns
   - else
     = big_spinner

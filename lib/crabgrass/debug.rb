@@ -4,7 +4,7 @@
 ##
 
 # set envirenment variable SHOWLOGS to log sql commands to stdout.
-if ENV['SHOWLOGS'].any?
+if ENV['SHOWLOGS'].present?
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
@@ -33,7 +33,7 @@ end
 # script/server
 #
 
-if ENV['STOP_ON_SQL'].any?
+if ENV['STOP_ON_SQL'].present?
   STOP_ON_SQL_MATCH = Regexp.escape(ENV['STOP_ON_SQL']).gsub(/\\\s+/, '\s+')
   class ActiveRecord::ConnectionAdapters::AbstractAdapter
     def log_with_debug(sql, name, &block)
@@ -51,7 +51,7 @@ end
 # Debugging activerecord callbacks.
 #
 
-if ENV['DEBUG_CALLBACKS'].any?
+if ENV['DEBUG_CALLBACKS'].present?
   #
   # if enabled, this will print out when each callback gets called.
   #

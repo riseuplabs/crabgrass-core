@@ -17,7 +17,7 @@ module Groups::DirectoryHelper
       haml '.name', link_to_group(group)
       haml '.info', comma_join(place, count)
       haml '.summary.plain', summary
-      if committees.any?
+      if committees.present?
         haml '.committees' do
           for cmtee in committees
             haml avatar_link(cmtee, 'xsmall')

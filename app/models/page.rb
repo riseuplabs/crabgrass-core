@@ -98,13 +98,13 @@ class Page < ActiveRecord::Base
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       context = self.owner || self.created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
-    elsif name_changed? and name.any?
+    elsif name_changed? and name.present?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
 
   def name_url
-    name.any? ? name : friendly_url
+    name.presence || friendly_url
   end
 
   def flow= flow
@@ -141,12 +141,12 @@ class Page < ActiveRecord::Base
   # best guess uri string, sans protocol/host/port.
   # ie /rainbows/what-a-fine-page+5234
   def uri
-    owner_name.any? ? [owner_name, name_url].path : ['page', friendly_url].path
+    owner_name.present? ? [owner_name, name_url].path : ['page', friendly_url].path
   end
 
   # returns true if self's unique page name is already in use by the same owner.
   def name_taken?
-    return false unless self.name.any?
+    return false unless self.name.present?
     if self.owner
       pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
     else

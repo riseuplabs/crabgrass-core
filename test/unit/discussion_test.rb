@@ -10,7 +10,7 @@ class DiscussionTest < ActiveSupport::TestCase
     assert discussion.valid?, 'discussion should be valid (%s)' % discussion.errors.full_messages.to_s
 
     post       = discussion.posts.create(:body => 'hi', :user => users(:blue))
-    assert 2, discussion.reload.posts_count
+    assert 2 == discussion.reload.posts_count
   end
 
   def test_creation_in_memory

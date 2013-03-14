@@ -176,7 +176,7 @@ class Profile < ActiveRecord::Base
 
     # save nil if value is an empty string:
     params.each do |key,value|
-      params[key] = nil unless value.any?
+      params[key] = value.presence
     end
 
     # build objects from params

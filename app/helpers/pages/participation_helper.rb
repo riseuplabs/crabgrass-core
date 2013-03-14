@@ -5,7 +5,7 @@ module Pages::ParticipationHelper
   def show_or_edit_page_access(participation)
     url = page_participation_path(@page, participation, :group => participation.is_a?(GroupParticipation))
     select_id = "access_select_#{participation.id}"
-    display_access_icon(participation) + '&nbsp;' +
+    display_access_icon(participation) + '&nbsp;'.html_safe +
     if may_remove_participation?(participation)
       select_page_access(select_id, participation, {
         :remove => true,

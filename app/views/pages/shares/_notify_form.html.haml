@@ -17,11 +17,11 @@
     - if (@page.contributors_count || 0) > 0
       %tr.gap
         %td.check= check_box 'recipients', ':contributors'
-        %td= label 'recipients', ':contributors', I18n.t(:notify_contribution)
+        %td= label 'recipients', ':contributors', I18n.t(:notify_contribution).html_safe
 
     %tr.gap
       %td.check= check_box 'recipients', ':participants'
-      %td= label 'recipients', ':participants', I18n.t(:notify_current_access)
+      %td= label 'recipients', ':participants', I18n.t(:notify_current_access).html_safe
 
     %tr
       %td{:colspan=>2}

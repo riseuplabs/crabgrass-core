@@ -13,7 +13,7 @@
     - f.row do |r|
       - r.label :summary.tcap
       - r.input text_area(:profile, :summary, :rows => 5)
-    - if @profile.summary_html.any?
+    - if @profile.summary_html.present?
       - f.row do |r|
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
         - r.input @profile.summary_html

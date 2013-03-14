@@ -19,7 +19,7 @@
         %td
           - if may_view_survey_question?(resp, question)
             - answer = resp.answers.detect{|a|a.question_id == question.id}
-            = answer && answer.value.any? ? truncate(answer.value, :length => 250) : ' '
+            = answer && answer.value.present? ? truncate(answer.value, :length => 250) : ' '
             %span.more
               = link_to(:see_whole_response_link.t, url)
           - else

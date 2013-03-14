@@ -41,7 +41,7 @@ class InkscapeTransmogrifier < Media::Transmogrifier
 
 #=begin
 #    def dimensions(filename)
-#      if INKSCAPE_COMMAND.any?
+#      if INKSCAPE_COMMAND.present?
 #        args = [INKSCAPE_COMMAND, '--query-height', filename]
 #        success_h, height = cmd(*args)
 #        args = [INKSCAPE_COMMAND, '--query-width', filename]

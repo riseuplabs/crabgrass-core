@@ -10,11 +10,11 @@
 - if @group.committee?
   = :this_is_committee.t(:parent_group => link_to_group(@group.parent))
 
-- if @group.profiles.public.summary.any?
+- if @group.profiles.public.summary.present?
   .p{:class => first(:sidebox)}
     = @group.profiles.public.summary_html
 
-- if @group.profiles.public.place.any?
+- if @group.profiles.public.place.present?
   .p{:class => first(:sidebox)}
     %div
       %b= h @group.profiles.public.place
@@ -27,6 +27,6 @@
 .p.last
   = link_span :bullet, join_group_link  #, edit_group_profile_link
 
--# if (link = edit_group_profile_link).any?
+-# if (link = edit_group_profile_link).present?
 -#  .p.last.autoclear
 -#    .float_right= link

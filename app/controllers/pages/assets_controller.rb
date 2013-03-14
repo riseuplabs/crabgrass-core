@@ -4,7 +4,7 @@ class Pages::AssetsController < Pages::SidebarsController
   guard :destroy => :may_admin_page?
 
   def index
-    render :partial => 'pages/assets/popup'
+    render :partial => 'pages/assets/popup', :content_type => 'text/html'
   end
 
   def update

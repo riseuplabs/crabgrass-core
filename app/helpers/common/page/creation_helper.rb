@@ -161,7 +161,7 @@ module Common::Page::CreationHelper
 #    sender = User.find_by_login notice[:user_login]
 #    date = friendly_date notice[:time]
 #    html = I18n.t(:page_notice_message, :user => link_to_user(sender), :date => date)
-#    if notice[:message].any?
+#    if notice[:message].present?
 #      notice_message_html = ":<br/> &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
 #      html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
 #    end

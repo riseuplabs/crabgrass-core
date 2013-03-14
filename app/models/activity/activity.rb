@@ -42,7 +42,7 @@ class Activity < ActiveRecord::Base
     # the key is used to filter out twin activities so that we don't show
     # duplicates. for example, if two of your friends become friends, you don't
     # need to know about it twice.
-    self.key ||= rand(Time.now)
+    self.key ||= rand(Time.now.to_i)
 
     # sometimes the subject or object may be deleted.
     # therefor, we cache the name in case the subject or object doesn't exist.

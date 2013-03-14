@@ -229,9 +229,9 @@ module Common::Ui::ImageHelper
         thumbnail = media.thumbnail(size)
         if thumbnail.nil? or thumbnail.failure?
           dims = case size
-            when :small  : '64x64'
-            when :medium : '200x200'
-            when :large  : '500x500'
+            when :small  then '64x64'
+            when :medium then '200x200'
+            when :large  then '500x500'
           end
           image_tag('/images/ui/corrupted/corrupted.png', :size => dims)
         else

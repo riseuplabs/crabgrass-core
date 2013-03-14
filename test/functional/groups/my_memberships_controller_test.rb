@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::MyMembershipsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
   end
 
   def test_create
@@ -20,7 +20,7 @@ class Groups::MyMembershipsControllerTest < ActionController::TestCase
 
   def test_destroy
     @group.add_user! @user
-    @group.add_user! User.make   # make sure there are at least 2 users
+    @group.add_user! FactoryGirl.create(:user)   # make sure there are at least 2 users
     login_as @user
     membership = @group.memberships.find_by_user_id(@user.id)
     assert_permission :may_leave_group? do

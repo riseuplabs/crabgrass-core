@@ -1,4 +1,4 @@
-<%- if @notice_message.any? -%>
+<%- if @notice_message.present? -%>
 <%= I18n.t(:email_notice_hello_with_message, :from => @from_user.display_name, :message => @notice_message) %>
 <%- else -%>
 <%= I18n.t(:email_notice_hello, :from => @from_user.display_name) %>

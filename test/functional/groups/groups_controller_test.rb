@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::GroupsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
+    @user = FactoryGirl.create(:user)
   end
 
   def test_new_group_requires_login
@@ -40,7 +40,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_group_with_duplicate_name
-    Group.make(:name => 'flowers')
+    FactoryGirl.create(:group, :name => 'flowers')
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, :group => {:name => 'flowers'}
@@ -49,8 +49,8 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
 #  def test_destroy_group
-#    user = User.make
-#    group = Group.make
+#    user  = FactoryGirl.create(:user)
+#    group  = FactoryGirl.create(:group)
 #    group.add_user!(user)
 #    login_as user
 #    assert_difference 'Group.count', -1 do
