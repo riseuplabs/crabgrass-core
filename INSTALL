@@ -12,10 +12,14 @@ Contents:
 
 Install basic ruby environment
 
-  sudo apt-get install ruby1.9 ruby-dev rake libmysql-ruby mysql-server git
+  On a debian-based system:
+    sudo apt-get install ruby1.9 ruby-dev rake libmysql-ruby mysql-server git
 
-  (Depending on what you are running, you might need to install git-core instead of git.
-   You might also need libopenssl-ruby)
+    (Depending on what you are running, you might need to install git-core instead of git.
+     You might also need libopenssl-ruby)
+
+  On a redhat-based system:
+    yum install ruby ruby-devel rubygem-rake mysql-server mysql-devel git gcc make
 
 Install rubygems from rubygems.org
 
@@ -66,7 +70,11 @@ Create the database:
 
 Install helper applications:
 
-  sudo apt-get install graphicsmagick
+  On Debian / Ubuntu:
+    sudo apt-get install graphicsmagick
+  
+  On RHEL/CentOS:
+    <um install ImageMagick
 
 Run server:
 
