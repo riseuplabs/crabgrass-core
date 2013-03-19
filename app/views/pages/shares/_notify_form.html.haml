@@ -4,7 +4,7 @@
 - id = 'notify_page_form'
 - form_options = {:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put'}
 
-- form_remote_tag(form_options) do
+= form_remote_tag(form_options) do
 
   %table.notify
     %tr
