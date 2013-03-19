@@ -438,9 +438,6 @@ en:
   ##!  revert_to_previous_version: "Revert to previous version:"
   wiki_version_creator_heading: "person"
   wiki_version_revert_link: "revert"
-  wiki_version_destroy_link: "destroy"
-  wiki_version_destroy_failed: "Version has not been destroyed. You can't remove the last version."
-  wiki_version_destroy_success: "Version has been destroyed."
   ##!  private_homepage: "Private Homepage"
   ##!  public_homepage: "Public Homepage"
 

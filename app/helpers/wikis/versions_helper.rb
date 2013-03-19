@@ -18,8 +18,7 @@ module Wikis::VersionsHelper
 
   def version_action_links(version)
     link_line version_diff_link(version),
-      version_revert_link(version),
-      version_delete_link(version)
+      version_revert_link(version)
   end
 
   def version_show_link(version)
@@ -43,11 +42,5 @@ module Wikis::VersionsHelper
     link_to :wiki_version_revert_link.t,
       revert_wiki_version_path(@wiki, version),
       :method => :post, :remote => true
-  end
-
-  def version_delete_link(version)
-    return unless may_admin_wiki?
-    link_to :wiki_version_destroy_link.t,
-      wiki_version_path(@wiki, version), :method => :delete, :remote => true
   end
 end
