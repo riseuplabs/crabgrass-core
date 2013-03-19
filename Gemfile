@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.0.20'
+gem 'rails', '~> 3.0.20', :git => 'git://github.com/rails/rails.git', :branch => '3-0-stable'
 
 gem 'rake', '~> 0.9.2'
 
