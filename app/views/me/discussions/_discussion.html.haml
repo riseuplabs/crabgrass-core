@@ -1,5 +1,5 @@
 - other_user = discussion.user_talking_to(current_user)
-- post = discussion.last_post.try
+- post = discussion.last_post
 - unread = discussion.unread_by?(current_user)
 
 %tr{:id => dom_id(discussion), :class => (unread ? 'unread' : '')}

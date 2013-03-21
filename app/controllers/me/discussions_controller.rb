@@ -12,9 +12,8 @@ class Me::DiscussionsController < Me::BaseController
 
   # GET /me/messages
   def index
-    @discussions = current_user.discussions
+    @discussions = current_user.discussions.with_some_posts
 #.
-#      with_some_posts.
 #      send(current_view).
 #      paginate(pagination_params)
   end
