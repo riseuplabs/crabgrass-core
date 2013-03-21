@@ -19,10 +19,14 @@ module Common::Ui::GroupsHelper
   #
   def options_for_select_group(options={})
 
-    if options[:as_admin]
-      items = current_user.primary_groups_and_networks.with_admin(current_user)
+    if options[:without_networks]
+      items = current_user.primary_groups
     else
       items = current_user.primary_groups_and_networks
+    end
+
+    if options[:as_admin]
+      items = items.with_admin(current_user)
     end
 
     items.sort! { |a, b| a.name <=> b.name }
