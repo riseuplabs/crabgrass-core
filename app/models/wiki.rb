@@ -120,7 +120,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def preview_html
-    render_preview(PREVIEW_CHARS)
+    render_preview(PREVIEW_CHARS).html_safe
   end
 
   # will calculate structure if not up to date
