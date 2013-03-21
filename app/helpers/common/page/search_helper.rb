@@ -94,12 +94,13 @@ module Common::Page::SearchHelper
   # for filters with no args
   #
   def filter_singlevalue_li_tag(mode, filter, options)
+    label = filter.label(nil, {mode => true, :current_user => current_user})
     if options[:disabled]
       link_to_function(label, '', :icon => 'check_off', :class => 'disabled')
     else
       spinbox_tag(filter.path_keyword,
         page_search_path(mode => filter.path_definition),
-        :label => filter.label(nil, {mode => true, :current_user => current_user}),
+        :label => label,
         :with => 'FilterPath.encode()',
         :checked => (mode == :remove) )
     end
