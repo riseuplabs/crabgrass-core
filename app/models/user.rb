@@ -305,29 +305,17 @@ class User < ActiveRecord::Base
   # Called from cg:upgrade:user_permission task.
   def migrate_permissions!
     # get holders
+    print '.' if id % 10 == 0
     public_holder = CastleGates::Holder[:public]
     friends_holder = CastleGates::Holder[associated(:friends)]
     peers_holder = CastleGates::Holder[associated(:peers)]
-    [:view, :see_groups, :see_contacts, :pester, :request_contact].each do |gate_name|
-      # all gates correspond to may_* flags in the profile
-      # (except for :view -> may_see)
-      profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
 
-      # public?
-      if profiles.public.send(profile_flag)
-        grant_access!(public_holder => gate_name)
-      end
-
-      # friends?
-      if profiles.private.send(profile_flag)
-        grant_access!(friends_holder => gate_name)
-
-        # peers?
-        if profiles.private.peer?
-          grant_access!(peers_holder => gate_name)
-        end
-      end
+    grant_access! public_holder => profiles.public.to_gates
+    grant_access! friends_holder => profiles.private.to_gates
+    if profiles.private.peer?
+      grant_access! peers_holder => profiles.private.to_gates
     end
+
   end
 
   ##
