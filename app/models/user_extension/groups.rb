@@ -152,9 +152,9 @@ module UserExtension::Groups
   #
   def longterm_member_of?(group)
     if group.created_at > 1.week.ago
-      true
-    else
-      group.memberships.find_by_user_id(self.id).try(:created_at) < 1.week.ago
+      member_of?(group)
+    elsif membership = group.memberships.find_by_user_id(self.id)
+      membership.created_at < 1.week.ago
     end
   end
 
