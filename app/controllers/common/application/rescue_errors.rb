@@ -23,7 +23,7 @@
 #
 # The use of 'raise ErrorMessage.new' is more like a goto, and could lead to problems.
 # In some cases, however, it is nice to put sanity checking deep in the models where
-# it would be impractical to expose an api for testing the validity of every oject.
+# it would be impractical to expose an api for testing the validity of every object.
 #
 
 module Common::Application::RescueErrors

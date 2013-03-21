@@ -83,7 +83,6 @@ GEM
     abstract (1.0.0)
     arel (2.0.10)
     builder (2.1.2)
-    cgi_multipart_eof_fix (2.5.0)
     chronic (0.9.1)
     columnize (0.3.6)
     daemons (1.1.9)
@@ -106,9 +105,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
-    fastthread (1.0.7)
     ffi (1.4.0)
-    gem_plugin (0.2.3)
     haml (4.0.0)
       tilt
     hike (1.2.1)
@@ -116,8 +113,6 @@ GEM
     i18n (0.5.0)
     jsmin (1.0.1)
     json (1.7.7)
-    linecache (0.46)
-      rbx-require-relative (> 0.0.4)
     listen (0.7.3)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -129,11 +124,6 @@ GEM
     minitest (2.12.1)
     mocha (0.12.10)
       metaclass (~> 0.0.1)
-    mongrel (1.1.5)
-      cgi_multipart_eof_fix (>= 2.4)
-      daemons (>= 1.0.3)
-      fastthread (>= 1.0.1)
-      gem_plugin (>= 0.2.3)
     multi_json (1.6.1)
     mysql2 (0.2.18)
     polyglot (0.3.3)
@@ -144,17 +134,11 @@ GEM
       rack (>= 1.0)
     rails3_before_render (0.2.0)
     rake (0.9.6)
-    rb-inotify (0.8.8)
+    rb-inotify (0.9.0)
       ffi (>= 0.5.0)
-    rbx-require-relative (0.0.9)
     rdoc (3.12.2)
       json (~> 1.4)
     riddle (1.5.5)
-    ruby-debug (0.10.4)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.4.0)
-    ruby-debug-base (0.10.4)
-      linecache (>= 0.3)
     rubyzip (0.9.9)
     sass (3.2.6)
     sprockets (2.9.0)
@@ -199,16 +183,14 @@ DEPENDENCIES
   mime-types
   minitest (~> 2.12)
   mocha (~> 0.12.0)
-  mongrel
   mysql2 (~> 0.2.18)
   prototype_legacy_helper (= 0.0.0)!
   rails (~> 3.0.20)!
   rails-dev-boost!
   rails3_before_render
   rake (~> 0.9.2)
-  rb-inotify (~> 0.8.8)
+  rb-inotify (~> 0.9)
   rdoc (~> 3.0)
-  ruby-debug
   rubyzip
   sass
   sprockets (~> 2.2)

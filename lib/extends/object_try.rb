@@ -27,12 +27,41 @@
 #       end
 #
 
+require 'singleton'
 require 'rubygems'
 require 'active_support'
 
+#
+# SilentNil
+#
+# A class that behaves like nil, but will not complain if you call methods on it.
+# It just always returns more nil. Used by Object#try().
+#
+
+class SilentNil
+  include Singleton
+
+  delegate :to_s, :inspect, :nil?, :empty?, :zero?, :blank?, :to => :nil
+  delegate :|, :&, :^, :=~, :===, :==, :<=>, :"!", :to => :nil
+
+  def method_missing(*args)
+    nil
+  end
+
+  protected
+  def nil
+    nil
+  end
+
+end
+
 class NilClass
   def try(*args)
-    nil
+    if args.empty?
+      SilentNil.instance
+    else
+      nil
+    end
   end
 end
 

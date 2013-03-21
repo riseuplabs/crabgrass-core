@@ -200,6 +200,7 @@ module ModalboxHelper
         action = options
         message = html_options.delete(:confirm)
         method = html_options.delete(:method)
+        options = html_options
       else
         message = nil
       end

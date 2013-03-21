@@ -14,6 +14,9 @@ class RequestToRemoveUser < Request
   alias_attr :group, :recipient
   alias_attr :user,  :requestable
 
+  def self.existing(options)
+    pending.with_requestable(options[:user]).for_recipient(options[:group]).first
+  end
 
   #
   # permissions
