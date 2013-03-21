@@ -1,16 +1,13 @@
 class Groups::GroupsController < Groups::BaseController
 
-  before_filter :force_type,  :only => ['new', 'create']
   before_filter :fetch_group, :only => 'destroy'
+  before_filter :force_type,  :only => ['new', 'create']
+  before_filter :initialize_group,  :only => ['new', 'create']
+  before_filter :fetch_member_group, :only => 'create'
 
   guard :may_ALIAS_group?
 
   def new
-    if group_type == :group
-      @group = Group.new
-    elsif group_type == :network
-      @network = Network.new
-    end
   end
 
   #
@@ -18,14 +15,8 @@ class Groups::GroupsController < Groups::BaseController
   # councils and committees are created by groups/structures
   #
   def create
-    @group = new_group_from_params
-    @network = @group
-    # ^^ what is this? setting @network will make the form correctly report errors for networks
     @group.save!
-    if @group.network? and params[:member_group_name]
-      member_group = Group.find_by_name(params[:member_group_name])
-      @group.add_group!(member_group) if current_user.may?(:admin, member_group)
-    end
+    @group.add_group!(@member_group) if @member_group
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -67,10 +58,6 @@ class Groups::GroupsController < Groups::BaseController
     end
   end
 
-  def new_group_from_params
-    group_class.new params[group_type].merge(:created_by => current_user)
-  end
-
   #
   # if some non-normal groups are disabled, then
   # we force type 'group'
@@ -80,6 +67,29 @@ class Groups::GroupsController < Groups::BaseController
       params[:type] = 'group'
     end
   end
+
+  def initialize_group
+    group_params = params[group_type] || {}
+    group_params.merge!(created_by: current_user)
+    @group = group_class.new group_params
+    # setting @network will make the form correctly report errors for networks
+    @network = @group
+  end
+
+  def fetch_member_group
+    if @group.network? and params[:member_group_name]
+      @member_group = Group.find_by_name(params[:member_group_name])
+      raise_denied unless current_user.may?(:admin, @member_group)
+      if @member_group.is_a? Network
+        error(:networks_may_not_join_networks.t)
+        render :new
+      elsif @member_group.parent.is_a? Network
+        error(:network_committees_may_not_join_networks.t)
+        render :new
+      end
+    end
+  end
+
 
 end
 

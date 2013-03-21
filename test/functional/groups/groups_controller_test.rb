@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require_relative '../../test_helper'
 
 class Groups::GroupsControllerTest < ActionController::TestCase
 
@@ -44,6 +44,29 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, :group => {:name => 'flowers'}
+      assert_error_message
+    end
+  end
+
+  def test_create_no_network_with_network_member
+    group = FactoryGirl.create(:group, :name => 'pine')
+    group.add_user! @user
+    login_as @user
+    assert_difference 'Network.count' do
+      post :create, type: 'network',
+        group: { name: 'trees'},
+        member_group_name: group.name
+    end
+  end
+
+  def test_create_no_network_with_network_member
+    network = FactoryGirl.create(:group, :name => 'pine')
+    network.add_user! @user
+    login_as @user
+    assert_no_difference 'Group.count' do
+      post :create, type: 'network',
+        group: { name: 'trees'},
+        member_group_name: network.name
       assert_error_message
     end
   end
