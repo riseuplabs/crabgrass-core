@@ -1,6 +1,6 @@
 -# remote_form_for(:page, @page, :url => page_title_path(@page), :before => show_spinner('save_title'), :html => {:method => :get}) do
 .simple_form
-  - remote_form_for(:page, @page, :url => page_title_path(@page), :html => {:method => :put}, :before => show_spinner('save_title')) do
+  = remote_form_for(:page, @page, :url => page_title_path(@page), :html => {:method => :put}, :before => show_spinner('save_title')) do
     .row.first
       %label= :title.t
       = text_field 'page', 'title', :class => 'h1'
