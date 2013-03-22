@@ -30,9 +30,13 @@ class AssociationProxyProxy
   def holder_code_suffix
     @proxy.proxy_owner.id
   end
+
   def ==(other)
     if other.is_a? AssociationProxyProxy
       @proxy == other.proxy
+    elsif other.is_a? Symbol
+      # make sure we do not load @proxy just to compare to symbol
+      false
     else
       @proxy == other
     end
