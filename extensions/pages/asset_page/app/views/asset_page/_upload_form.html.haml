@@ -1,5 +1,5 @@
 - url ||= page_url(@page, :action => 'update')
-- form_tag url, :multipart => true do
+= form_tag url, :multipart => true do
   = file_field_tag 'asset[uploaded_data]'
   = submit_tag :upload.t
 
