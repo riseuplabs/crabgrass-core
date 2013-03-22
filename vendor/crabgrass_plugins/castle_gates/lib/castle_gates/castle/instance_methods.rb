@@ -58,8 +58,7 @@ module InstanceMethods
     as_array(holders).each do |holder|
       holder = Holder[holder]
       key = keys.find_by_holder(holder)
-      key.add_gates! gates
-      if self.respond_to? :after_grant_access
+      if key.add_gates!(gates) && self.respond_to?(:after_grant_access)
         after_grant_access(holder, gates)
       end
     end
@@ -86,8 +85,7 @@ module InstanceMethods
     as_array(holders).each do |holder|
       holder = Holder[holder]
       key = keys.find_by_holder(holder)
-      key.remove_gates! gates
-      if self.respond_to? :after_revoke_access
+      if key.remove_gates!(gates) && self.respond_to?(:after_revoke_access)
         after_revoke_access(holder, gates)
       end
     end
