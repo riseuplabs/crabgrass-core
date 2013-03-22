@@ -73,19 +73,19 @@ CastleGates.define do
     #
     # Setting public for anything also sets peer and friend access.
     #
-    def after_grant_access(holder, gate)
+    def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! self.associated(:friends) => gate
-        grant_access! self.associated(:peers) => gate
+        grant_access! self.associated(:friends) => gates
+        grant_access! self.associated(:peers) => gates
       end
     end
 
     #
     # Removing peer or friend access automatically removes public.
     #
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == self.associated(:friends) || holder == self.associated(:peers)
-        revoke_access! :public => gate
+        revoke_access! :public => gates
       end
     end
 
@@ -166,11 +166,12 @@ CastleGates.define do
     #
     # Removing peer or friend access automatically removes public.
     #
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == :public
-        if gate == :view
+        if gates.include?(:view)
           revoke_access! :public => [:see_members, :see_committees, :see_networks, :request_membership]
-        elsif gate == :request_membership
+        end
+        if gates.include?(:request_membership)
           revoke_access! :public => :join
         end
       end
