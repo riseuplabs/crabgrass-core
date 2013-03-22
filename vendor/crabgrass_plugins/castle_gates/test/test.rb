@@ -2,7 +2,8 @@ require 'test/unit'
 require 'rubygems'
 require 'ruby_debug'
 require 'logger'
-gem 'activerecord', '~> 2.3.0'
+gem 'actionpack', '~> 3.0.20'
+gem 'activerecord', '~> 3.0.20'
 require 'active_record'
 
 ##
@@ -39,7 +40,7 @@ class Object
 end
 
 ['../init', 'setup_db', 'models', 'fixtures'].each do |file|
-  require "#{File.dirname(__FILE__)}/" + file
+  require_relative file
 end
 
 if REBUILD_DB
