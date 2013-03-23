@@ -59,7 +59,7 @@ module InstanceMethods
       holder = Holder[holder]
       key = keys.find_by_holder(holder)
       if key.add_gates!(gates) && self.respond_to?(:after_grant_access)
-        after_grant_access(holder, gates)
+        after_grant_access(holder, as_array(gates))
       end
     end
     clear_key_cache
@@ -86,7 +86,7 @@ module InstanceMethods
       holder = Holder[holder]
       key = keys.find_by_holder(holder)
       if key.remove_gates!(gates) && self.respond_to?(:after_revoke_access)
-        after_revoke_access(holder, gates)
+        after_revoke_access(holder, as_array(gates))
       end
     end
     clear_key_cache
