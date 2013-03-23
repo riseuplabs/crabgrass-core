@@ -246,7 +246,7 @@ module UserExtension::Pages
     group = entity if entity.is_a? Group
     access = options[:access] || options[:grant_access] || :view
     if user
-      if page.public? and !self.may_pester?(user)
+      if page.public? and !self.may?(:pester, user)
         raise PermissionDenied.new(I18n.t(:share_pester_error, :name => user.login))
       elsif access.nil?
         if !user.may?(:view,page)
@@ -255,13 +255,13 @@ module UserExtension::Pages
       elsif !user.may?(access, page)
         if !self.may?(:admin,page)
           raise PermissionDenied.new(I18n.t(:share_permission_denied_error))
-        elsif !self.may_pester?(user)
+        elsif !self.may?(:pester, user)
           raise PermissionDenied.new(I18n.t(:share_pester_error, :name => user.login))
         end
       end
     elsif group
       unless group.may?(access,page)
-        unless self.may?(:admin,page) and self.may_pester?(group)
+        unless self.may?(:admin,page) and self.may?(:pester, group)
           raise PermissionDenied.new(I18n.t(:share_pester_error, :name => group.name))
         end
       end
@@ -389,9 +389,7 @@ module UserExtension::Pages
     users_to_pester = []
     if options[:send_notice]
       attrs[:viewed] = false
-      users_to_pester = group.users.select do |user|
-        self.may_pester?(user)
-      end
+      users_to_pester = group.users.with_access(self => :pester)
       users_to_pester.each do |user|
         upart = page.add(user, attrs)
         upart.save! unless page.changed?

@@ -293,22 +293,6 @@ class Group < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  public
-
-  def may_be_pestered_by?(user)
-    has_access?(:pester, user)
-  end
-
-  def may_be_pestered_by!(user)
-    if has_access?(:pester, user)
-      return true
-    else
-      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
-    end
-  end
-
-  protected
-
   #
   # These callbacks are responsible for setting up and tearing down
   # the permissions for groups. The actual methods are defined in

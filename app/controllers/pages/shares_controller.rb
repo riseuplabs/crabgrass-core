@@ -126,7 +126,7 @@ class Pages::SharesController < Pages::SidebarsController
     if recipient.nil?
       error(:thing_not_found.t(:thing => h(recipient_name)))
       return nil
-    elsif !recipient.may_be_pestered_by?(current_user)
+    elsif !current_user.may?(:pester, recipient)
       error(:share_pester_error.t(:name => recipient.name))
       return nil
     elsif @page
