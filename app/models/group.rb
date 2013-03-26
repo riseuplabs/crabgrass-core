@@ -332,6 +332,17 @@ class Group < ActiveRecord::Base
     template_data[section]
   end
 
+
+  # migrate permissions from pre-CastleGates databases to CastleGates.
+  # Called from cg:upgrade:user_permission task.
+  def migrate_permissions!
+    print '.' if id % 10 == 0
+    # get holders
+    public_holder = CastleGates::Holder[:public]
+    public_gates = profiles.public.to_gates
+    set_access! public_holder => public_gates
+  end
+
   protected
 
   after_save :update_name_copies

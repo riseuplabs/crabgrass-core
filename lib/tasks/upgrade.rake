@@ -14,13 +14,18 @@
 namespace :cg do
   namespace :upgrade do
     desc "Gives groups self access; for use once in upgrading data to cg 1.0"
-    task(:group_permissions => :environment) do
+    task(:init_group_permissions => :environment) do
       Group.all.each do |group|
         group.send(:create_permissions)
       end
     end
 
-    desc "Creates keys to the user's profile based on settings found in their old profile; also for use once upgrading data to cg 1.0"
+    desc "Create keys to the groups based on their old profile settings; for use once in upgrading data to cg 1.0"
+    task(:migrate_group_permissions => :environment) do
+      Group.all.each(&:migrate_permissions!)
+    end
+
+    desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
     task :user_permissions => :environment do
       User.all.each(&:migrate_permissions!)
     end
