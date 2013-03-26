@@ -47,6 +47,7 @@ class Fort < ActiveRecord::Base
   #add_gate 1, :draw_bridge
   #add_gate 2, :sewers, :default_open => :admin
   #add_gate 3, :tunnel, :default_open => [:public, :user]
+  #add_gate 4, :door, :default_open => :user
 end
 
 class Bunker < Fort
@@ -80,6 +81,7 @@ CastleGates.define do
     gate 1, :draw_bridge
     gate 2, :sewers, :default_open => :admin
     gate 3, :tunnel, :default_open => [:public, :user]
+    gate 4, :door, :default_open => :user
   end
 
   castle Tower do

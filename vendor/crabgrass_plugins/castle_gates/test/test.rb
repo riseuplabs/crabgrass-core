@@ -96,15 +96,32 @@ class CastleGatesTest < Test::Unit::TestCase
   def test_simple_grant
     ActiveRecord::Base.transaction do
       assert !@fort.access?(@me => :draw_bridge), 'no access yet'
+      assert @fort.access?(@me => :door), 'access to defaults'
 
       @fort.grant_access!(@me => :draw_bridge)
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
+      assert @fort.access?(@me => :door), 'defaults are also granted'
 
       assert !@fort.access?(@me => :sewers), 'should NOT have access to other gates'
       assert !@fort.access?(@other => :draw_bridge), 'only @me should have access'
 
       assert !@tower.access?(@me => :window), 'should not have access to other castles'
 
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  def test_set_does_not_add_defaults
+    ActiveRecord::Base.transaction do
+      @me.keys.delete_all
+      assert !@fort.access?(@me => :draw_bridge), 'no access yet'
+      assert @fort.access?(@me => :door), 'access to defaults'
+
+      @fort.set_access!(@me => :draw_bridge)
+      assert @fort.access?(@me => :draw_bridge), 'should have access now'
+      assert !@fort.access?(@me => :door), 'defaults do not apply with set'
+
+      @fort.clear_key_cache
       raise ActiveRecord::Rollback
     end
   end
@@ -155,7 +172,8 @@ class CastleGatesTest < Test::Unit::TestCase
 
   def test_multivalue_arguments
     ActiveRecord::Base.transaction do
-      @fort.grant_access!([:public, @me] => [:draw_bridge, :sewers])
+      @fort.grant_access! :public => [:draw_bridge, :sewers],
+        @me => [:draw_bridge, :sewers]
       assert @fort.access? :public => :draw_bridge
       assert @fort.access? :public => :sewers
       assert @fort.access? @me => :draw_bridge
