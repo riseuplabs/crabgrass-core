@@ -310,10 +310,12 @@ class User < ActiveRecord::Base
     friends_holder = CastleGates::Holder[associated(:friends)]
     peers_holder = CastleGates::Holder[associated(:peers)]
 
-    grant_access! public_holder => profiles.public.to_gates
-    grant_access! friends_holder => profiles.private.to_gates
+    public_gates = profiles.public.to_gates
+    private_gates = profiles.private.to_gates
+    set_access! public_holder => public_gates
+    set_access! friends_holder => (private_gates + public_gates).uniq
     if profiles.private.peer?
-      grant_access! peers_holder => profiles.private.to_gates
+      set_access! peers_holder => (private_gates + public_gates).uniq
     end
 
   end
