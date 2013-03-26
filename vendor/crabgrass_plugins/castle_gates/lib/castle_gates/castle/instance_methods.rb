@@ -39,7 +39,7 @@ module InstanceMethods
   end
 
   #
-  # grant access to a gate
+  # grant access to gates
   #
   # adds the right bits to specified holder(s) keys so that they can open the specified gate(s)
   #
@@ -56,7 +56,7 @@ module InstanceMethods
   end
 
   #
-  # remove access to a gate
+  # remove access to gates
   #
   # zeros out the right bits on the specified holder(s) keys so that they cannot open the specified gate(s)
   #
@@ -74,18 +74,21 @@ module InstanceMethods
   end
 
   #
-  # set access to a gate
+  # set access to gates
   #
   # sets the right bits on the specified holder(s) keys so that they can only open the specified gate(s)
   #
   # if the keys don't exist, they are created and set to exactly match the given bits.
   #
+  # WARNING:
+  # * no defaults apply
+  # * no after_grant or after_revoke callbacks will be run
+  # * this can lead to inconsistencies.
+  #
   def set_access!(access_hash)
     process_access_hash(access_hash) do |holder, gates|
       key = keys.find_by_holder(holder)
-      if key.set_gates!(gates) && self.respond_to?(:after_revoke_access)
-        after_revoke_access(holder, gates)
-      end
+      key.set_gates!(gates)
     end
     clear_key_cache
   end
