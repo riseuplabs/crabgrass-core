@@ -135,7 +135,7 @@ module Common::Page::SearchHelper
   def filter_submit_button(label, params)
     if params.any?
       options = @filter_submit_options.merge({
-        :url => (@filter_submit_options[:url] += "&" + params.collect{|key,value| "%s=%s" % [CGI.escape(key.to_s), CGI.escape(value.to_s)] }.join('&')).html_safe
+        :url => (@filter_submit_options[:url] += "&" + safe_join(params.collect{|key,value| "%s=%s" % [CGI.escape(key.to_s), CGI.escape(value.to_s)] }, '&')).html_safe
       })
     else
       options = @filter_submit_options
