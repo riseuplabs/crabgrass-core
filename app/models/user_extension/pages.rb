@@ -330,6 +330,7 @@ module UserExtension::Pages
   end
 
 
+  # DEPRECATED
   # just like share_page_with, but don't do any actual sharing, just
   # raise an exception of there are any problems with sharing.
   def may_share_page_with!(page,recipients,options)
