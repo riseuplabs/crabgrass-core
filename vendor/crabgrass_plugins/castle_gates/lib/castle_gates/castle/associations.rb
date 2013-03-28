@@ -27,7 +27,7 @@ def self.included(base)
       joins(:keys).
         where(gate_condition).
         where(key_condition, key_values).
-        group("#{self.table_name}.id")
+        group("#{self.quoted_table_name}.id")
     }) do
       # count on a group query will return a hash - not what we want.
       def count(column_name = nil, options = {})
