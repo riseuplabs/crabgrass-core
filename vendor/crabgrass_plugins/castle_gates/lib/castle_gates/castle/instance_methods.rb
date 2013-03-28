@@ -148,7 +148,7 @@ module InstanceMethods
         raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
       end
       holder = Holder[holder]
-      gates.is_a?(Array) ? gates : [gates]
+      gates = [gates] unless gates.is_a?(Array)
 
       yield(holder, gates)
     end
