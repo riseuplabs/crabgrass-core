@@ -53,8 +53,8 @@ class GroupTest < ActiveSupport::TestCase
     g.revoke_access! :public => :view
     u = User.create :login => 'user'
 
-    assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
-    assert u.may_pester?(g) == false, 'should not be able to pester private group'
+    assert g.may?(:be_pestered_by, u) == false, 'should not be able to be pestered by user'
+    assert u.may?(:pester, g) == false, 'should not be able to pester private group'
   end
 
   def test_can_pester_public_group
@@ -63,8 +63,8 @@ class GroupTest < ActiveSupport::TestCase
     g.reload
     u = User.create :login => 'user'
 
-    assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
-    assert u.may_pester?(g) == true, 'should be able to pester private group'
+    assert g.may?(:be_pestered_by, u) == true, 'should be able to be pestered by user'
+    assert u.may?(:pester, g) == true, 'should be able to pester private group'
   end
 
   def test_site_disabling_public_profiles_doesnt_affect_groups
