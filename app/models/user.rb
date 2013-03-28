@@ -302,7 +302,7 @@ class User < ActiveRecord::Base
   end
 
   # Migrate permissions from pre-CastleGates databases to CastleGates.
-  # Called from cg:upgrade:user_permission task.
+  # Called from cg:upgrade:user_permissions task.
   def migrate_permissions!
     # get holders
     print '.' if id % 10 == 0
