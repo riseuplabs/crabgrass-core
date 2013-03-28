@@ -334,7 +334,7 @@ class Group < ActiveRecord::Base
 
 
   # migrate permissions from pre-CastleGates databases to CastleGates.
-  # Called from cg:upgrade:user_permission task.
+  # Called from cg:upgrade:migrate_group_permissions task.
   def migrate_permissions!
     print '.' if id % 10 == 0
     # get holders
