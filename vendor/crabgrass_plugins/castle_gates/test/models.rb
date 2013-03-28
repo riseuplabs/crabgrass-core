@@ -47,6 +47,7 @@ class Fort < ActiveRecord::Base
   #add_gate 1, :draw_bridge
   #add_gate 2, :sewers, :default_open => :admin
   #add_gate 3, :tunnel, :default_open => [:public, :user]
+  #add_gate 4, :door, :default_open => :user
 end
 
 class Bunker < Fort
@@ -56,14 +57,14 @@ class Tower < ActiveRecord::Base
   #acts_as_castle
   #add_gate 1, :door, :default_open => true
   #add_gate 2, :window
-  # def after_grant_access(holder, gate)
+  # def after_grant_access(holder, gates)
   #   if holder == :public
-  #     grant_access! :admin => gate
+  #     grant_access! :admin => gates
   #   end
   # end
-  # def after_revoke_access(holder, gate)
+  # def after_revoke_access(holder, gates)
   #   if holder == :admin
-  #     revoke_access! :public => gate
+  #     revoke_access! :public => gates
   #   end
   # end
 end
@@ -80,6 +81,7 @@ CastleGates.define do
     gate 1, :draw_bridge
     gate 2, :sewers, :default_open => :admin
     gate 3, :tunnel, :default_open => [:public, :user]
+    gate 4, :door, :default_open => :user
   end
 
   castle Tower do
@@ -89,14 +91,14 @@ CastleGates.define do
 
     protected
 
-    def after_grant_access(holder, gate)
+    def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! :admin => gate
+        grant_access! :admin => gates
       end
     end
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == :admin
-        revoke_access! :public => gate
+        revoke_access! :public => gates
       end
     end
 

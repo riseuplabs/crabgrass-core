@@ -39,61 +39,56 @@ module InstanceMethods
   end
 
   #
-  # grant access to a gate
+  # grant access to gates
   #
   # adds the right bits to specified holder(s) keys so that they can open the specified gate(s)
   #
-  # if the keys don't exist, they are created.
+  # if the keys don't exist, they are created and the defaults will be applied.
   #
-  def grant_access!(args)
-    holders, gates = args.first
-
-    unless holders and gates
-      raise ArgumentError.new('argument must be in the form {holder => gate}')
-    end
-    unless gate_set.gates_exist?(gates)
-      raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
-    end
-
-    as_array(holders).each do |holder|
-      holder = Holder[holder]
+  def grant_access!(access_hash)
+    process_access_hash(access_hash) do |holder, gates|
       key = keys.find_by_holder(holder)
-      key.add_gates! gates
-      if self.respond_to? :after_grant_access
-        as_array(gates).each do |gate|
-          after_grant_access(holder, gate)
-        end
+      if key.add_gates!(gates) && self.respond_to?(:after_grant_access)
+        after_grant_access(holder, gates)
       end
     end
     clear_key_cache
   end
 
   #
-  # remove access to a gate
+  # remove access to gates
   #
   # zeros out the right bits on the specified holder(s) keys so that they cannot open the specified gate(s)
   #
   # if the keys don't exist, they are created.
+  # For new keys the defaults will be applied and then the listed bits removed
   #
-  def revoke_access!(args)
-    holders, gates = args.first
-
-    unless holders and gates
-      raise ArgumentError.new('argument must be in the form {holder => gate}')
-    end
-    unless gate_set.gates_exist?(gates)
-      raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
-    end
-
-    as_array(holders).each do |holder|
-      holder = Holder[holder]
+  def revoke_access!(access_hash)
+    process_access_hash(access_hash) do |holder, gates|
       key = keys.find_by_holder(holder)
-      key.remove_gates! gates
-      if self.respond_to? :after_revoke_access
-        as_array(gates).each do |gate|
-          after_revoke_access(holder, gate)
-        end
+      if key.remove_gates!(gates) && self.respond_to?(:after_revoke_access)
+        after_revoke_access(holder, gates)
       end
+    end
+    clear_key_cache
+  end
+
+  #
+  # set access to gates
+  #
+  # sets the right bits on the specified holder(s) keys so that they can only open the specified gate(s)
+  #
+  # if the keys don't exist, they are created and set to exactly match the given bits.
+  #
+  # WARNING:
+  # * no defaults apply
+  # * no after_grant or after_revoke callbacks will be run
+  # * this can lead to inconsistencies.
+  #
+  def set_access!(access_hash)
+    process_access_hash(access_hash) do |holder, gates|
+      key = keys.find_by_holder(holder)
+      key.set_gates!(gates)
     end
     clear_key_cache
   end
@@ -139,15 +134,27 @@ module InstanceMethods
   def default_open_gates(holder)
   end
 
-  private
+  #
+  # takes an access hash and validates it.
+  # loops over the holder => gates pairs
+  #
+  def process_access_hash(access_hash)
+    unless access_hash.respond_to?(:each_pair)
+      raise ArgumentError.new('argument must be in the form {holder => gate}')
+    end
 
-  ##
-  ## UTILITIES
-  ##
+    access_hash.each_pair do |holder, gates|
+      unless gate_set.gates_exist?(gates)
+        raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
+      end
+      holder = Holder[holder]
+      gates = [gates] unless gates.is_a?(Array)
 
-  def as_array(obj)
-    obj.is_a?(Array) ? obj : [obj]
+      yield(holder, gates)
+    end
   end
+
+  private
 
   ##
   ## CACHE

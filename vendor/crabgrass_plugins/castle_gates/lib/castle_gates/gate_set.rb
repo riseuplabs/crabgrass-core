@@ -48,10 +48,7 @@ module CastleGates
           end
         end
       else
-        new_gate_set = self.select(gate_names)
-        if new_gate_set.any?
-          new_gate_set.bits
-        end
+        self.select(gate_names).bits
       end
     end
 
@@ -106,6 +103,8 @@ module CastleGates
         gate_names.each do |gate_name|
           if gate = self[gate_name]
             result[gate_name] = gate
+          else
+            raise ArgumentError.new 'bad gate name: %s' % gate_name
           end
         end
         result
