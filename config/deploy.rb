@@ -12,7 +12,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass-core.git"
-set :branch, "feature/faster-user-upgrade"
+set :branch, "develop"
 
 deploy_host = ""
 staging_host = "we.dev.riseup.net"
