@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   fixtures :groups, :users, :profiles, :memberships, :sites, :keys
@@ -219,6 +219,11 @@ class GroupTest < ActiveSupport::TestCase
       group.destroy_by(users(:red))
     end
 
+  end
+
+  def test_migrate_public_view
+    group = Group.new
+    assert group.valid?
   end
 
 end
