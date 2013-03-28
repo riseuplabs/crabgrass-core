@@ -23,24 +23,17 @@ def self.included(base)
       holder = Holder[holder]
       key_condition, key_values = Key.conditions_for_holder(holder)
       gate_condition = conditions_for_gates(gates)
-      {
-        :joins => :keys,
-        :select => "DISTINCT #{self.table_name}.*",
-        :conditions => [gate_condition + " AND " + key_condition, key_values]
-      }
-    }) do
-      def count
-        super :id, :distinct => true
-      end
-    end
 
-    #
-    # i could not figure out how to make self.count automatically do a distinct
-    # if scope 'with_access' is active. for now, if you want to combine 'count'
-    # with 'with_access', then you to use this distinct_count.
-    #
-    def self.distinct_count
-      calculate(:count, :id, :distinct => true)
+      joins(:keys).
+        where(gate_condition).
+        where(key_condition, key_values).
+        group("#{self.table_name}.id")
+    }) do
+      # count on a group query will return a hash - not what we want.
+      def count(column_name = nil, options = {})
+        column_name, options = nil, column_name if column_name.is_a?(Hash)
+        calculate(:count, column_name, options).count
+      end
     end
 
     ##
