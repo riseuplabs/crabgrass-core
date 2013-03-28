@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 #  require File.dirname(__FILE__) + '/wiki/locking_test.rb'
 #  require File.dirname(__FILE__) + '/wiki/rendering_test.rb'

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class PageSharingTest < ActiveSupport::TestCase
 
@@ -155,7 +155,7 @@ class PageSharingTest < ActiveSupport::TestCase
     page.reload
 
     all_users = (groups(:animals).users + groups(:rainbow).users).uniq.select do |user|
-      creator.may_pester?(user)
+      creator.may?(:pester, user)
     end
 
     assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
@@ -180,7 +180,7 @@ class PageSharingTest < ActiveSupport::TestCase
     page.reload
 
     all_users = (groups(:rainbow).users).uniq.select do |user|
-      creator.may_pester?(user)
+      creator.may?(:pester, user)
     end
     all_users << creator
     assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
