@@ -219,9 +219,4 @@ class GroupTest < ActiveSupport::TestCase
 
   end
 
-  def test_migrate_public_view
-    group = Group.new
-    assert group.valid?
-  end
-
 end
