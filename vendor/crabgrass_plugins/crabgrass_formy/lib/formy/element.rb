@@ -157,9 +157,7 @@ module Formy
         @base.puts "<!-- FORM ERROR: '" + e.classname + "' does not have a '#{word}' -->"
         return
       end
-      return e.send(word,args,&block) if block_given?
-      return e.send(word,args) if args
-      return e.send(word)
+      return e.send(word,args,&block)
     end
 
   end
