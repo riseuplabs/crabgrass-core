@@ -122,7 +122,6 @@ class CommitteeTest < ActiveSupport::TestCase
 
     u = User.create :login => 'user'
 
-    assert c.may?(:be_pestered_by, u) == false, 'should not be able to be pestered by user'
     assert u.may?(:pester, c) == false, 'should not be able to pester committee of group with private committees'
   end
 
@@ -135,7 +134,6 @@ class CommitteeTest < ActiveSupport::TestCase
 
     u = User.create :login => 'user'
 
-    assert c.may?(:be_pestered_by, u), 'should be able to be pestered by user'
     assert u.may?(:pester, c), 'should be able to pester committee of group with public committees'
   end
 end
