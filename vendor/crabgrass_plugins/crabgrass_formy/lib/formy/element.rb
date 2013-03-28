@@ -148,20 +148,6 @@ module Formy
       self.inspect
     end
 
-    def method_missing(method_name, *args, &block)
-      word = method_name.id2name
-      #e = @current_element.last
-      #return unless e
-      e = self
-      unless e.respond_to? word
-        @base.puts "<!-- FORM ERROR: '" + e.classname + "' does not have a '#{word}' -->"
-        return
-      end
-      return e.send(word,args,&block) if block_given?
-      return e.send(word,args) if args
-      return e.send(word)
-    end
-
   end
 
 end

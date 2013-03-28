@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # A simple stacked form, following bootstrap markup.
 #
@@ -47,5 +48,9 @@ module Formy
     end
 
     sub_element Row
+
+    def buttons
+      row { yield self }
+    end
   end
 end
