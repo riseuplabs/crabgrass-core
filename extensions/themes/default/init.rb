@@ -141,6 +141,9 @@ define_theme {
     }
     css false
     shadow false
+
+    # used in banner_info translation
+    optimal_dimensions '872 x 100'
   }
 
   local {

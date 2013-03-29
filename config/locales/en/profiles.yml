@@ -6,8 +6,8 @@ en:
   profile_member_since: "Member Since"
   home: Home
   banner: Banner
-  #banner_info: Optimal dimensions are 872 x 100 pixels
-  # ^^ this is dependent on the theme, which might change.
+  banner_info: Optimal dimensions are %{optimal_dimensions} pixels
+  # this is dependent on the theme, which might change ^^^
   ##!  work: Work
   ##!  school: School
   ##!  personal: Personal
