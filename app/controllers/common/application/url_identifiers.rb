@@ -149,7 +149,7 @@ module Common::Application::UrlIdentifiers
   end
 
   def action_symbol
-    if params[:action].any?
+    if params[:action].present?
       params[:action].to_sym
     else
       nil

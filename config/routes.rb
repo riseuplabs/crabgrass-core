@@ -182,7 +182,7 @@ Crabgrass::Application.routes.draw do |map|
     :member => {:print => :get} do |wikis|
     wikis.resource :lock, :only  => :destroy
     wikis.resources :assets, :only => [:new, :create]
-    wikis.resources :versions, :only  => [:index, :show, :destroy],
+    wikis.resources :versions, :only  => [:index, :show],
       :member => {:revert => :post}
     wikis.resources :diffs, :only => [:show]
     wikis.resources :sections, :only => [:edit, :update]

@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::SettingsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.grant_access! :public => :view
     @group.add_user!(@user)
   end
@@ -24,7 +24,7 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_a_member
-    stranger = User.make
+    stranger = FactoryGirl.create(:user)
     login_as stranger
     assert_permission :may_admin_group?, false do
       get :show, :group_id => @group.to_param

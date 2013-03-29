@@ -3,11 +3,11 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Pages::CreateControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
+    @user  = FactoryGirl.create(:user)
   end
 
   def test_create_page_for_group
-    @group = Group.make
+    @group  = FactoryGirl.create(:group)
     login_as @user
     assert_difference "WikiPage.count" do
       post :create,

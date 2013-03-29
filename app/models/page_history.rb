@@ -56,13 +56,13 @@ class PageHistory < ActiveRecord::Base
   end
 
   def self.recipients_for_digest_notifications(page)
-    User.find :all, :conditions => ["receive_notifications = 'Digest' and id in (?)", recipients_for_page(page)]
+    User.find :all, :conditions => ["receive_notifications = 'Digest' and `users`.id in (?)", recipients_for_page(page)]
   end
 
   def self.recipients_for_single_notification(page_history)
     users_watching_ids = recipients_for_page(page_history.page)
     users_watching_ids.delete(page_history.user.id)
-    User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
+    User.find :all, :conditions => ["receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids]
   end
 
   protected

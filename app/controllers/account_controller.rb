@@ -25,7 +25,7 @@ class AccountController < ApplicationController
   # and we don't want the user to be able to change it.
   #
   def new
-    if current_site.signup_redirect_url.any?
+    if current_site.signup_redirect_url.present?
       redirect_to current_site.signup_redirect_url
     end
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})

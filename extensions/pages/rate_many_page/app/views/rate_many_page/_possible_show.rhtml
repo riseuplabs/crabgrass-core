@@ -33,7 +33,7 @@ end
 
     <div class='name'>
       <h2>
-        <% if possible.description.any? -%>
+        <% if possible.description.present? -%>
           <%= link_to_function possible.name, "Element.toggle('#{details_id}')", :class => 'dotted' %>
         <% else -%>
           <%=h possible.name %>

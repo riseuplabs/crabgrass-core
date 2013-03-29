@@ -63,7 +63,7 @@ class ParsedPath < Array
     # special post processing for some keywords
     # well, this is sure hacky.
     self.each do |element|
-      if element[0] == 'type' and element[1].any?
+      if element[0] == 'type' and element[1].present?
         element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
       end
     end
@@ -391,11 +391,11 @@ class ParsedPath < Array
   def new_from_hash(path)
     path = path.sort_by_order
     path.each do |key,value|
-      next unless value.any?
+      next unless value.present?
       keyword = key.to_s
       search_filter = SearchFilter[keyword]
       if search_filter
-        #if keyword == 'page_state' and value.any? # handle special pseudo keyword...
+        #if keyword == 'page_state' and value.present? # handle special pseudo keyword...
         #  self << [value.to_s]
         arg_count =  search_filter.path_argument_count
         if arg_count == 0

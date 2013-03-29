@@ -12,10 +12,14 @@ Contents:
 
 Install basic ruby environment
 
-  sudo apt-get install ruby1.8 ruby-dev rake libmysql-ruby mysql-server git
+  On a debian-based system:
+    sudo apt-get install ruby1.9 ruby-dev rake libmysql-ruby mysql-server git
 
-  (Depending on what you are running, you might need to install git-core instead of git.
-   You might also need libopenssl-ruby1.8)
+    (Depending on what you are running, you might need to install git-core instead of git.
+     You might also need libopenssl-ruby)
+
+  On a redhat-based system:
+    yum install ruby ruby-devel rubygem-rake mysql-server mysql-devel git gcc make
 
 Install rubygems from rubygems.org
 
@@ -42,13 +46,19 @@ Checkout the codebase
 
     git clone gitosis@labs.riseup.net:crabgrass-core.git
 
+Install bundler
+
+  gem install bundler
+
+  Alternatively you can install bundler with your package manager.
+
 Install rails and required gems
 
+  cd crabgrass-core
   bundle install
 
 Create a secret
 
-  cd crabgrass-core
   rake create_a_secret
 
 Create the database:
@@ -60,12 +70,16 @@ Create the database:
 
 Install helper applications:
 
-  sudo apt-get install graphicsmagick
+  On Debian / Ubuntu:
+    sudo apt-get install graphicsmagick
+  
+  On RHEL/CentOS:
+    <um install ImageMagick
 
 Run server:
 
   cd crabgrass-core
-  BOOST=1 script/server
+  BOOST=1 bundle exec rails server thin
 
 Connect to the web application from your browser:
 
@@ -91,7 +105,7 @@ Create testing database:
 
 Run tests:
 
-  rake test
+  bundle exec rake
 
 
 3. Install for production
@@ -100,13 +114,13 @@ Run tests:
 install prerequisites
 ----------------------
 
-Download and install ruby, rubygems, rails, and mysql the same way as
+Download and install ruby 1.9 , rubygems, rails, and mysql the same way as
 in the 'install for development' instructions.
 
 Then:
 
   export RAILS_ENV=production
-  sudo rake gems:install
+  bundle install
 
 setup the database
 ----------------------

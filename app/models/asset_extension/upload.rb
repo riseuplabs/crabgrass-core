@@ -85,7 +85,9 @@ module AssetExtension
 
       def ensure_temp_file(file)
         if file.is_a?(ActionController::UploadedStringIO)
-          temp_file = Tempfile.new(file.original_filename)
+          ext = File.extname(file.original_filename).sub(/^\./, '')
+          base = File.basename(file.original_filename, ext)
+          temp_file = Tempfile.new([base, ext])
 
           temp_file.write file.read
           file = temp_file

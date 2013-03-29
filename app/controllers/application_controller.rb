@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
      :host => request.host,   :protocol => request.protocol,
      :page => @page,          :from_address => from_address,
      :from_name => from_name }
-    opts[:port] = request.port_string.sub(':','') if request.port_string.any?
+    opts[:port] = request.port_string.sub(':','') if request.port_string.present?
     return opts
   end
 
@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   # as needed stylesheets are kept in public/stylesheets/as_needed
   #
   def self.stylesheet(*css_files)
-    if css_files.any?
+    if css_files.present?
       options = css_files.last.is_a?(Hash) ? css_files.pop : {}
       sheets  = read_inheritable_attribute("stylesheet") || {}
       index   = options[:action] || :all
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   #   javascript 'wiki_edit', :action => :edit
   #
   def self.javascript(*js_files)
-    if js_files.any?
+    if js_files.present?
       options = js_files.last.is_a?(Hash) ? js_files.pop : {}
       scripts  = read_inheritable_attribute("javascript") || {}
       index   = options[:action] || :all

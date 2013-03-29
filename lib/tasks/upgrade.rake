@@ -19,6 +19,12 @@ namespace :cg do
         group.send(:create_permissions)
       end
     end
+
+    desc "Creates keys to the user's profile based on settings found in their old profile; also for use once upgrading data to cg 1.0"
+    task :user_permissions => :environment do
+      User.all.each(&:migrate_permissions!)
+    end
+
   end
 end
 

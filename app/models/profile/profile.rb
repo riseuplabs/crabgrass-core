@@ -176,7 +176,7 @@ class Profile < ActiveRecord::Base
 
     # save nil if value is an empty string:
     params.each do |key,value|
-      params[key] = nil unless value.any?
+      params[key] = value.presence
     end
 
     # build objects from params
@@ -235,6 +235,28 @@ class Profile < ActiveRecord::Base
     return nil if self.geo_location.nil?
     self.geo_location.geo_place_id
   end
+
+
+  # UPGRADE FUNCTIONALITY
+
+  def to_gates
+    if self.entity.is_a? User
+      self.to_user_gates
+    elsif self.entity.is_a? Group
+      self.to_group_gates
+    end
+  end
+
+  def to_user_gates
+    gates = [:view, :see_groups, :see_contacts, :pester, :request_contact]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see)
+      profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+      self.send profile_flag
+    }
+  end
+
 
   # DEPRECATED
   def create_wiki(opts = {})

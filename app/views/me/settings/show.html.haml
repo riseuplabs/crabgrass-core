@@ -24,7 +24,7 @@
       - r.label :notice.t
       - r.info :do_you_want_to_receive_email_notifications.t
       - r.input select('user', 'receive_notifications', [["No", ""], ["Yes: an email per change","Single"], ["Yes: just a summary email","Digest"]])
-    - f.lable :locale.t
+    - f.label :locale.t
     - f.row do |r|
       - r.label :language.t
       - r.input select('user', 'language', all_languages_for_select, { :include_blank => true })

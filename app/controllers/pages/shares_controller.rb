@@ -82,7 +82,7 @@ class Pages::SharesController < Pages::SidebarsController
       close_popup
     elsif params[:add]
       @recipients = []
-      if params[:recipient] and params[:recipient][:name].any?
+      if params[:recipient] and params[:recipient][:name].present?
         recipients_names = params[:recipient][:name].strip.split(/[, ]/)
         recipients_names.each do |recipient_name|
           @recipients << find_recipient(recipient_name, action)
@@ -94,7 +94,7 @@ class Pages::SharesController < Pages::SidebarsController
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-      options[:send_notice] ||= params[:notify_button].any?
+      options[:send_notice] ||= params[:notify_button].present?
 
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
@@ -121,12 +121,12 @@ class Pages::SharesController < Pages::SidebarsController
   #
   def find_recipient(recipient_name, action=:share)
     recipient_name.strip!
-    return nil unless recipient_name.any?
+    return nil unless recipient_name.present?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
       error(:thing_not_found.t(:thing => h(recipient_name)))
       return nil
-    elsif !recipient.may_be_pestered_by?(current_user)
+    elsif !current_user.may?(:pester, recipient)
       error(:share_pester_error.t(:name => recipient.name))
       return nil
     elsif @page

@@ -13,7 +13,7 @@ module TaskListPageHelper
     else
       list.tasks
     end
-    tasks.any? == true ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
+    tasks.any? ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
   end
 
   def options_for_task_list
@@ -61,7 +61,7 @@ module TaskListPageHelper
   def task_link_to_people(task)
     links = task.users.collect{|user|
       link_to_user(user, :action => 'tasks', :class => 'hov')
-    }.join(', ')
+    }.join(', ').html_safe
   end
 
   # a button to hide the task detail

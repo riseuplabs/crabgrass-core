@@ -19,11 +19,7 @@ class Committee < Group
 
   # what we show to the user
   def display_name
-    if read_attribute(:full_name).any?
-      read_attribute(:full_name)
-    else
-      short_name
-    end
+    read_attribute(:full_name).presence || short_name
   end
 
   # called when the parent's name has change

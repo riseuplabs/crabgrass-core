@@ -43,6 +43,7 @@ module GroupExtension::Pages
     page
   end
 
+  # DEPRECATED
   def may?(perm, page)
     begin
        may!(perm,page)
@@ -51,6 +52,7 @@ module GroupExtension::Pages
     end
   end
 
+  # DEPRECATED
   # perm one of :view, :edit, :admin
   # this is still a basic stub. see User.may!
   def may!(perm, page)

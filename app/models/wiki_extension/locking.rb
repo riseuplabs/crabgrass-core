@@ -133,7 +133,9 @@ module WikiExtension
     protected
 
     def may_modify_lock?(section, user)
-      sections_open_for(user).include?(section)
+      user.present? &&
+        user.real? &&
+        sections_open_for(user).include?(section)
     end
 
     def section_exists?(section)

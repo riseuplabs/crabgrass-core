@@ -70,8 +70,7 @@ module CastleGates
     #
     def add_gates!(gates)
       self.gate_bitfield |= (1 | bits_for_gates(gates))
-      save!
-      self
+      changed? && save!
     end
 
     #
@@ -90,8 +89,7 @@ module CastleGates
     #
     def remove_gates!(gates)
       self.gate_bitfield &= ~ bits_for_gates(gates)
-      save!
-      self
+      changed? && save!
     end
 
     #
@@ -109,7 +107,7 @@ module CastleGates
 
     def self.conditions_for_holder_codes(codes)
       if codes.length == 1
-        if codes.first.any?
+        if codes.first.present?
           ["keys.holder_code = ?", codes.first]
         else
           "keys.holder_code IS NULL"

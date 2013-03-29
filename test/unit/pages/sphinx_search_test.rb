@@ -5,7 +5,7 @@
 # This test is skipped if sphinx is not running.
 #
 
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 require 'set'
 
 class Pages::SphinxSearchTest < ActiveSupport::TestCase

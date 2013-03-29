@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class WikiLockTest < ActiveSupport::TestCase
   # Replace this with your real tests.

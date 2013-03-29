@@ -37,7 +37,7 @@ SearchFilter.new('/tag/:tag_name/') do
       link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
     end
     if tags
-      ret += tags.join(' ')
+      ret += tags.join(' ').html_safe
     else
       ret += :no_things_found.t :things => :tags.t
     end

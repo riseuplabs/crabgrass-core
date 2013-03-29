@@ -32,12 +32,11 @@ class User < ActiveRecord::Base
   # ^^ makes the validation succeed if email == ''
 
   def should_validate_email
-    should_validate = if Site.current
+    if Site.current
       Site.current.require_user_email
     else
       Conf.require_user_email
     end
-    should_validate
   end
 
   ##
@@ -102,7 +101,7 @@ class User < ActiveRecord::Base
 
   # the user's custom display name, could be anything.
   def display_name
-    read_attribute('display_name').any? ? read_attribute('display_name') : login
+    read_attribute('display_name').presence || login
   end
 
   # the user's handle, in same namespace as group name,
@@ -111,7 +110,7 @@ class User < ActiveRecord::Base
 
   # displays both display_name and name
   def both_names
-    if read_attribute('display_name').any? and read_attribute('display_name') != name
+    if read_attribute('display_name').present? && read_attribute('display_name') != name
       '%s (%s)' % [display_name,name]
     else
       name
@@ -149,7 +148,7 @@ class User < ActiveRecord::Base
   # returns this user, as a ghost.
   #
   def ghostify!
-    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself. 
+    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself.
     return User.find(self.id)
   end
 
@@ -187,7 +186,7 @@ class User < ActiveRecord::Base
   # and email when someone sends them a page notification
   # message.
   def wants_notification_email?
-    self.email.any?
+    self.email.present?
   end
 
   ##
@@ -300,6 +299,28 @@ class User < ActiveRecord::Base
     rescue PermissionDenied
       false
     end
+  end
+
+  # Migrate permissions from pre-CastleGates databases to CastleGates.
+  # Called from cg:upgrade:user_permissions task.
+  def migrate_permissions!
+    # get holders
+    print '.' if id % 10 == 0
+    public_holder = CastleGates::Holder[:public]
+    friends_holder = CastleGates::Holder[associated(:friends)]
+    peers_holder = CastleGates::Holder[associated(:peers)]
+
+    public_gates  = profiles.public.to_gates
+    private_gates = profiles.private.to_gates
+    friends_gates = (private_gates + public_gates).uniq
+    set_access! public_holder => public_gates
+    set_access! friends_holder => friends_gates
+    if profiles.private.peer?
+      set_access! peers_holder => friends_gates
+    else
+      set_access! peers_holder => public_gates
+    end
+
   end
 
   ##

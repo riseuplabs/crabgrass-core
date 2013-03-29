@@ -3,7 +3,7 @@ require 'test/unit'
 
 pluginroot = File.dirname(File.dirname(__FILE__))
 $: << pluginroot + '/lib'
-require pluginroot + '/init.rb'
+require_relative '../init.rb'
 
 def test_file(name)
   File.dirname(__FILE__) + '/files/' + name

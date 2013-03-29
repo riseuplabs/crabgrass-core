@@ -107,9 +107,9 @@ module Common::Application::WikiRenderer
   def update_editor_data(params={})
     params[:wiki] ||= {}
     hsh = if params[:editor] == 'preview'
-      if params[:wiki][:body].any?
+      if params[:wiki][:body].present?
         {:body_preview => render_preview_from_text(params[:wiki][:body], @page.owner_name)}
-      elsif params[:wiki][:body_html].any?
+      elsif params[:wiki][:body_html].present?
         {:body_preview => render_preview_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
       else
         {:body_preview => ""}

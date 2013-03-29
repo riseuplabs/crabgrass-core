@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class RequestTest < ActiveSupport::TestCase
   fixtures :users, :groups, :requests, :memberships, :federatings, :keys
@@ -129,13 +129,13 @@ class RequestTest < ActiveSupport::TestCase
     group    = groups(:animals)
 
     req = RequestToJoinUsViaEmail.create(
-      :created_by => insider, :email => 'root@localhost', :requestable => group)
+      :created_by => insider, :email => 'root@example.org', :requestable => group)
 
     assert req.valid?, 'request should be valid: %s' % req.errors.full_messages.to_s
     assert req.code.length >= 6
 
     assert_nothing_raised do
-      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@localhost')
+      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@example.org')
     end
 
     assert_nothing_raised do
@@ -143,7 +143,7 @@ class RequestTest < ActiveSupport::TestCase
     end
 
     assert_raises ErrorMessage, 'should only be able to redeem pending requests' do
-      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@localhost')
+      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@example.org')
     end
 
     assert outsider.member_of?(group), 'outsider should be added to group'

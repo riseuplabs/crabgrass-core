@@ -2,7 +2,8 @@ require 'test/unit'
 require 'rubygems'
 require 'ruby_debug'
 require 'logger'
-gem 'activerecord', '~> 2.3.0'
+gem 'actionpack', '~> 3.0.20'
+gem 'activerecord', '~> 3.0.20'
 require 'active_record'
 
 ##
@@ -39,7 +40,7 @@ class Object
 end
 
 ['../init', 'setup_db', 'models', 'fixtures'].each do |file|
-  require "#{File.dirname(__FILE__)}/" + file
+  require_relative file
 end
 
 if REBUILD_DB
@@ -95,15 +96,32 @@ class CastleGatesTest < Test::Unit::TestCase
   def test_simple_grant
     ActiveRecord::Base.transaction do
       assert !@fort.access?(@me => :draw_bridge), 'no access yet'
+      assert @fort.access?(@me => :door), 'access to defaults'
 
       @fort.grant_access!(@me => :draw_bridge)
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
+      assert @fort.access?(@me => :door), 'defaults are also granted'
 
       assert !@fort.access?(@me => :sewers), 'should NOT have access to other gates'
       assert !@fort.access?(@other => :draw_bridge), 'only @me should have access'
 
       assert !@tower.access?(@me => :window), 'should not have access to other castles'
 
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  def test_set_does_not_add_defaults
+    ActiveRecord::Base.transaction do
+      @me.keys.delete_all
+      assert !@fort.access?(@me => :draw_bridge), 'no access yet'
+      assert @fort.access?(@me => :door), 'access to defaults'
+
+      @fort.set_access!(@me => :draw_bridge)
+      assert @fort.access?(@me => :draw_bridge), 'should have access now'
+      assert !@fort.access?(@me => :door), 'defaults do not apply with set'
+
+      @fort.clear_key_cache
       raise ActiveRecord::Rollback
     end
   end
@@ -154,7 +172,8 @@ class CastleGatesTest < Test::Unit::TestCase
 
   def test_multivalue_arguments
     ActiveRecord::Base.transaction do
-      @fort.grant_access!([:public, @me] => [:draw_bridge, :sewers])
+      @fort.grant_access! :public => [:draw_bridge, :sewers],
+        @me => [:draw_bridge, :sewers]
       assert @fort.access? :public => :draw_bridge
       assert @fort.access? :public => :sewers
       assert @fort.access? @me => :draw_bridge
@@ -239,7 +258,7 @@ class CastleGatesTest < Test::Unit::TestCase
 
       @fort2 = Fort.create :name => 'fort2'
       @fort2.grant_access! @me => :draw_bridge
-      assert_equal 2, Fort.with_access(@me => :draw_bridge).distinct_count
+      assert_equal 2, Fort.with_access(@me => :draw_bridge).count
 
       assert_raises ArgumentError do
         Fort.with_access(:public => :x)

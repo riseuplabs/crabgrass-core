@@ -7,7 +7,7 @@
       = 'Saving...'
     #instructions
       = :ranked_vote_instructions.t
-      - form_tag page_xurl(@page, :action => 'confirm') do
+      = form_tag page_xurl(@page, :action => 'confirm') do
         %div{:style => "float:right"}= submit_tag :confirm_vote_button.t
         %br{:style => "clear:right"}/
   %h3 Voted on

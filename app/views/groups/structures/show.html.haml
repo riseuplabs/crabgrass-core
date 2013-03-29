@@ -27,7 +27,7 @@
       - else
         - r.input :none.t
       - r.info :network_description.t
-  - if options.any?
+  - if options.present?
     - f.row do |r|
       - r.label :options.t
       - r.input options

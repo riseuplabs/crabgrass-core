@@ -138,7 +138,7 @@ fai:
   holder_code: 83002
   gate_bitfield: <%= ~0 %>
 
-fai:
+fai_for_public:
   castle_id: 3002
   castle_type: Group
   holder_code: 0

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
@@ -8,8 +8,24 @@ class UserTest < ActiveSupport::TestCase
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
 
+  def test_user_fixtures_are_valid
+    orange = users(:orange)
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
+  end
+
+  def test_email_required_settings
+    assert !User.new.should_validate_email
+    orange = users(:orange)
+    orange.email = nil
+    orange.valid?
+    assert_equal Hash.new, orange.errors
+    assert orange.valid?
+  end
+
   def test_ensure_values_in_receive_notifications
-    user = User.make
+    user = FactoryGirl.create(:user)
 
     user.receive_notifications = nil
     user.save!
@@ -65,7 +81,7 @@ class UserTest < ActiveSupport::TestCase
 
     # find numeric group names
     assert_equal 0, User.alphabetized('#').size
-    User.create! :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
     assert_equal 1, User.alphabetized('#').size
 
     # case insensitive
@@ -99,7 +115,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_new_user_has_discussion
-    u = User.create! :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    u = FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
     assert !u.reload.wall_discussion.new_record?
   end
 
@@ -114,6 +130,123 @@ class UserTest < ActiveSupport::TestCase
 
     accessible = User.with_access(blue => :spy).friends_or_peers_of(blue)
     assert_equal users(:red), accessible.first
+  end
+
+
+  ## Tests for migrate_permissions!, in order:
+  ## * public may :view ?
+  ## * friends may :view ?
+  ## * peers may :view ?
+  ## * public may :see_contacts ?
+  ## * friends may :see_contacts ?
+  ## Assuming that the rest works as well then.
+
+  def test_migrate_public_may_view
+    user = create_user
+    user.keys.destroy_all
+
+    assert ! users(:blue).may?(:view, user), 'expected strangers not to be able to view a user without any keys set up'
+
+    user.profiles.public.update_attributes!(
+      :may_see => true
+    )
+
+    user.migrate_permissions!
+
+    assert users(:blue).may?(:view, user), 'expected strangers to be able to view this user, after migrating permissions'
+
+  end
+
+  def test_migrate_friend_may_view
+    # setup
+    user = create_user
+    user.add_contact!(users(:blue), :friend)
+    groups(:animals).add_user!(user)
+    user.revoke_access!(CastleGates::Holder[user.associated(:friends)] => :view)
+
+    # check assumptions after setup
+    assert users(:blue).friend_of?(user)
+    assert users(:kangaroo).peer_of?(user)
+    assert ! users(:red).friend_of?(user)
+    assert ! users(:red).peer_of?(user)
+
+    assert ! users(:blue).may?(:view, user), 'expected friends not to be able to view this user'
+
+    user.profiles.public.update_attributes!(
+      :may_see => false
+    )
+    user.profiles.private.update_attributes!(
+      :may_see => true,
+      :peer => false
+    )
+
+    user.migrate_permissions!
+
+    assert users(:blue).may?(:view, user), 'expected friends to be able to view this user, after migrating permissions'
+    assert ! users(:kangaroo).may?(:view, user), 'expected peers not to be able to view this user, after migrating permissions'
+    assert ! users(:red).may?(:view, user), 'expected strangers not to be able to view this user, after migrating permissions'
+
+  end
+
+  def test_migrate_peer_may_view
+    user = create_user
+    groups(:animals).add_user!(user)
+    user.revoke_access!(CastleGates::Holder[user.associated(:peers)] => :view)
+
+    assert user.member_of?(groups(:animals))
+    assert user.peer_of?(users(:kangaroo))
+
+    assert ! users(:kangaroo).may?(:view, user), 'expected peers not to be able to view this user'
+
+    user.profiles.public.update_attributes!(
+      :may_see => false
+    )
+    user.profiles.private.update_attributes!(
+      :may_see => true,
+      :peer => true
+    )
+
+    user.migrate_permissions!
+
+    assert users(:kangaroo).may?(:view, user), 'expected peers to be able to view this user after migration'
+    assert ! users(:red).may?(:view, user), 'expected strangers not to be able to view this user after migration'
+  end
+
+  def test_migrate_public_may_see_contacts
+    user = create_user
+    user.keys.destroy_all
+
+    assert ! users(:blue).may?(:see_contacts, user), 'expected strangers not to be able to see the contacts of a user without any keys set up'
+
+    user.profiles.public.update_attributes!(
+      :may_see_contacts => true
+    )
+
+    user.migrate_permissions!
+
+    assert users(:blue).may?(:see_contacts, user), 'expected strangers to be able to see contacts of this user, after migrating permissions'
+  end
+
+  def test_migrate_friend_may_see_contacts
+    # setup
+    user = create_user
+    user.add_contact!(users(:blue), :friend)
+    user.revoke_access!(CastleGates::Holder[user.associated(:friends)] => :see_contacts)
+
+    assert ! users(:blue).may?(:see_contacts, user), 'expected friends not to be able to see the contacts of this user'
+
+    user.profiles.public.update_attributes!(
+      :may_see_contacts => false
+    )
+    user.profiles.private.update_attributes!(
+      :may_see_contacts => true,
+      :peer => false
+    )
+
+    user.migrate_permissions!
+
+    assert users(:blue).may?(:see_contacts, user), 'expected friends to be able to see contacts of this user, after migrating permissions'
+    assert ! users(:red).may?(:see_contacts, user), 'expected strangers not to be able to see contacts of this user, after migrating permissions'
   end
 
   #

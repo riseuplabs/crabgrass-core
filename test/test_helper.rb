@@ -12,18 +12,12 @@ else
   require 'rails/test_help'
 end
 
+
 ##
 ## load all the test helpers
 ##
 
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
-
-##
-## load machinist blueprints
-##
-
-require File.expand_path(File.dirname(__FILE__) + "/blueprints")
-
 
 ##
 ## misc.
@@ -56,8 +50,15 @@ class ActiveSupport::TestCase
   include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
+  # for fixture_file_upload
+  include ActionDispatch::TestProcess
 
   # fixtures :all
+end
+
+class FactoryGirl::SyntaxRunner
+  # for fixture_file_upload
+  include ActionDispatch::TestProcess
 end
 
 ##
