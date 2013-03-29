@@ -48,8 +48,9 @@ module Pages::BaseHelper
 
   def render_page_title
     safe_join returning [] { |ret|
-      ret << content_tag(:h1, @page.title)
-      ret << link_to_modal(:edit_title.t.titleize, {:url => edit_page_title_path(@page)}, {:class => 'shy inline plain', :icon => 'pencil'}) if may_edit_page?
+      title = @page.title
+      title += link_to_modal(:edit_title.t.titleize, {:url => edit_page_title_path(@page)}, {:class => 'shy inline plain', :icon => 'pencil'}) if may_edit_page?
+      ret << content_tag(:h1, title.html_safe)
       ret << content_tag(:div, @page.summary, :class => 'summary') if @page.summary.present?
       ret << content_tag(:span, @title_addendum) if @title_addendum
     }
