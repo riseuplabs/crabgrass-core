@@ -16,15 +16,7 @@
 - #
 - content_for(:before_content) do
   #title_box{:class => [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
-    #title.page_title.shy_parent
-      %h1
-        = h @page.title
-        - if may_edit_page?
-          = link_to_modal(:edit_title.t.titleize, {:url => edit_page_title_path(@page)}, {:class => 'shy inline plain', :icon => 'pencil'})
-      - if @page.summary.present?
-        .summary= h @page.summary
-      - if @title_addendum
-        %span= @title_addendum
+    = render "common/pages/title"
     - if @options.show_tabs
       = render :partial => "#{@page.controller}/tabs"
 
