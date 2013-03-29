@@ -16,8 +16,7 @@
 - #
 - content_for(:before_content) do
   #title_box{:class => [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
-    #title.page_title.shy_parent
-      = render_page_title
+    = render "common/pages/title"
     - if @options.show_tabs
       = render :partial => "#{@page.controller}/tabs"
 
