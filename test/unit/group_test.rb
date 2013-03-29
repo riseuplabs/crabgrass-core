@@ -241,6 +241,7 @@ class GroupTest < ActiveSupport::TestCase
     assert ! users(:blue).may?(:join, group)
 
     group.migrate_permissions!
+    users(:blue).clear_access_cache
 
     assert users(:blue).may?(:join, group)
   end
@@ -257,9 +258,28 @@ class GroupTest < ActiveSupport::TestCase
     assert ! users(:blue).may?(:request_membership, group)
 
     group.migrate_permissions!
+    users(:blue).clear_access_cache
 
     assert ! users(:blue).may?(:join, group)
     assert users(:blue).may?(:request_membership, group)
+  end
+
+  def test_migrate_closed_group
+    group = Group.create :name => 'not-even-allowing-requests'
+    assert group.valid?
+
+    group.profiles.public.update_attributes! :may_request_membership => false
+
+    # defaults in effect
+    assert ! users(:blue).may?(:join, group)
+    assert users(:blue).may?(:request_membership, group)
+
+    group.migrate_permissions!
+    users(:blue).clear_access_cache
+
+    # defaults overwritten to match profile setting
+    assert ! users(:blue).may?(:join, group)
+    assert ! users(:blue).may?(:request_membership, group)
   end
 
 end
