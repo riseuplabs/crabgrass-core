@@ -146,9 +146,9 @@ module Pages::SidebarHelper
 
   def page_attachments
     if @page.assets.any?
-      @page.assets.collect do |asset|
+      safe_join @page.assets.collect { |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
-      end
+      }
       #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_edit_page?
       ''
