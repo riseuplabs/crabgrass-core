@@ -136,7 +136,7 @@ Crabgrass::Application.routes.draw do |map|
   ## DEBUGGING
   ##
 
-  if RAILS_ENV == "development"
+  if Rails.env.development?
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
     map.debug_break 'debug/break', :controller => 'debug', :action => 'break'
   end

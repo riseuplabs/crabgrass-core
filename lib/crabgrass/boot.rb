@@ -23,7 +23,7 @@ end
 #require File.dirname(__FILE__) + '/initializer'
 
 # load configuration file
-Conf.load("crabgrass.#{RAILS_ENV}.yml")
+Conf.load("crabgrass.#{Rails.env}.yml")
 
 # control which plugins get loaded and are reloadable
 #Mods.plugin_enabled_callback = Conf.method(:plugin_enabled?)

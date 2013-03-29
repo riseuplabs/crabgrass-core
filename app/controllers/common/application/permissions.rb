@@ -190,7 +190,7 @@ module Common::Application::Permissions
 
     # setup what combination we are logging
     def permission_log_setup(key)
-      if RAILS_ENV == 'development'
+      if Rails.env.development?
         @permission_log ||= {}
         @permission_log_key = key
         @permission_log[key] = nil
@@ -199,7 +199,7 @@ module Common::Application::Permissions
 
     # log perm info for the combination
     def add_permission_log(method)
-      if RAILS_ENV == 'development'
+      if Rails.env.development?
         permission_log[@permission_log_key] = method
       end
     end

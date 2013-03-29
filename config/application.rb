@@ -18,7 +18,6 @@ if defined?(Bundler)
 end
 
 RAILS_ROOT = File.expand_path('../..', __FILE__)
-RAILS_ENV = Rails.env
 
 require File.expand_path("../directories.rb", __FILE__)
 require File.expand_path("../../lib/crabgrass/boot.rb", __FILE__)

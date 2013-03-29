@@ -179,7 +179,7 @@ module Common::Application::RescueErrors
 #  def rescue_action_locally_with_js(exception)
 #    respond_to do |format|
 #      format.html do
-#        if RAILS_ENV == "production" or RAILS_ENV == "development"
+#        if Rails.env.production? or Rails.env.development?
 #          rescue_action_locally_without_js(exception)
 #        else
 #          render :text => exception
