@@ -236,7 +236,6 @@ class Profile < ActiveRecord::Base
     self.geo_location.geo_place_id
   end
 
-
   # UPGRADE FUNCTIONALITY
 
   def to_gates
@@ -257,6 +256,29 @@ class Profile < ActiveRecord::Base
     }
   end
 
+  def to_group_gates
+    gates = [
+      :view,
+      :pester,
+      :burden,
+      :spy,
+      :join,
+      :request_membership,
+      :see_members,
+      :see_committees,
+      :see_networks
+    ]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see and :join which replaces the membership_policy)
+      if gate_name == :join
+        self.membership_policy_is? :open
+      else
+        profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+        self.send profile_flag
+      end
+    }
+  end
 
   # DEPRECATED
   def create_wiki(opts = {})
