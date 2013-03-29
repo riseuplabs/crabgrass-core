@@ -1,5 +1,5 @@
 page.call 'Modalbox.hide'
-page.replace 'title', :partial => 'layouts/local/page/title'
+page.replace 'title', render_page_title
 
 #
 # the problem:
