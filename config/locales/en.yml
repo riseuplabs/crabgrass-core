@@ -631,6 +631,7 @@ en:
   profile_member_since: Member Since
   home: Home
   banner: Banner
+  banner_info: Optimal dimensions are %{optimal_dimensions} pixels
   organizational_role: Organizational Role
   phone_number: Phone Number
   email_addresses: Email Addresses
@@ -926,10 +927,6 @@ en:
   wiki_revert_version: Revert To Version %{version}
   wiki_version_creator_heading: person
   wiki_version_revert_link: revert
-  wiki_version_destroy_link: destroy
-  wiki_version_destroy_failed: Version has not been destroyed. You can't remove the
-    last version.
-  wiki_version_destroy_success: Version has been destroyed.
   insert_image: Insert Image
   preview: Preview
   save_or_cancel_edit_lock_wiki_error: You have locked this wiki. Other users will not
