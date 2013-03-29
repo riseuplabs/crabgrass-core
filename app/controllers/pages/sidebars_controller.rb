@@ -26,7 +26,7 @@ class Pages::SidebarsController < ApplicationController
     id = params[:page_id]
     @page = Page.find_by_id(id)
     unless @page
-      raise_not_found(:thing_not_found.t(:thing => :page.t))
+      raise_not_found(:page.t)
     end
   end
 

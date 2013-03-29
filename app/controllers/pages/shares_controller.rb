@@ -144,6 +144,12 @@ class Pages::SharesController < Pages::SidebarsController
     return recipient
   end
 
+  # we allow for an id of 0 for pages just getting created
+  def fetch_page
+    @page = Page.new if params['page_id'] == "0"
+    @page || super
+  end
+
   private
 
   # convert {:checkbox => '1'} to {:checkbox => true}
