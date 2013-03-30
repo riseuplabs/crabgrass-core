@@ -1,4 +1,4 @@
-require "#{RAILS_ROOT}/config/directories"
+require_relative "../../config/directories"
 
 module Crabgrass
 end
@@ -7,12 +7,12 @@ end
 # Do these early because they are needed early
 # (e.g. environments/*.rb, lib/extends, and permissions.rb)
 #
-require File.dirname(__FILE__) + '/conf'
-require File.dirname(__FILE__) + '/exceptions'
+require_relative 'conf'
+require_relative 'exceptions'
 
 # load our core extends early, since they might be use anywhere.
 # active_support needs to be required before this, so we get methods like alias_method_chain
-Dir.glob("#{RAILS_ROOT}/lib/extends/*.rb").each do |file|
+Dir.glob(APP_ROOT + "lib/extends/*.rb").each do |file|
   require file
 end
 

@@ -107,9 +107,9 @@ module Crabgrass::Theme::Loader
     ensure_dir(@public_directory)
     if @parent
       # mirror the parent theme's image directory
-      mirror_directory_with_symlinks("#{@parent.directory}/images", "#{@directory}/images")
+      mirror_directory_with_symlinks(@parent.directory + "images", @directory + "images")
     end
-    symlink("#{@directory}/images", "#{@public_directory}/images")
+    symlink(@directory + "images", @public_directory + "images")
 
     info 'Loaded theme %s (%sms)' % [@directory, (Time.now - start_time)*1000]
   end
@@ -127,18 +127,18 @@ module Crabgrass::Theme::Loader
   #
   #def init_paths
   #  paths = []
-  #  paths << @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
-  #  paths << @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+  #  paths << @directory+'init.rb' if File.exist?(@directory+'init.rb')
+  #  paths << @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
   #  raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
   #  return paths
   #end
 
   def data_path
-    @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
+    @directory+'init.rb' if File.exist?(@directory+'init.rb')
   end
 
   def navigation_path
-    @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+    @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
   end
 
   #
@@ -175,7 +175,7 @@ module Crabgrass::Theme::Loader
   # evals a file with the current binding
   #
   def evaluate_ruby_file(file)
-    eval(IO.read(file), binding, file)
+    eval(IO.read(file), binding, file.to_s)
   end
 
   #

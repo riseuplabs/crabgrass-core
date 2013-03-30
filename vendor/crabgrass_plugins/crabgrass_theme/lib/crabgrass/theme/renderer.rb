@@ -161,7 +161,7 @@ module Crabgrass::Theme::Renderer
   #   'screen' => '/usr/apps/crabgrass/app/stylesheets/screen.sass'
 
   def sass_source_path(sheet_name)
-    File.join(Crabgrass::Theme::SASS_ROOT, sheet_name + '.scss')
+    Crabgrass::Theme::SASS_ROOT.join(sheet_name + '.scss')
   end
 
   # given a css sheet name, return the corresponding themed css file
