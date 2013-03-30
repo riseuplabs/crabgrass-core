@@ -24,7 +24,7 @@ Crabgrass::Application.configure do
   ## CRABGRASS OPTIONS
   ##
 
-  DEFAULT_INFO_LEVEL = 0
+  ENV['INFO'] ||= "0"
 
   if ENV["REMOTE"]
     Conf.remote_processing = 'http://localhost:3002'

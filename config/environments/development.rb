@@ -41,7 +41,7 @@ Crabgrass::Application.configure do
   # This sets the default level to 0, which shows the high level
   # messages.
   #
-  DEFAULT_INFO_LEVEL = 0
+  ENV['INFO'] ||= "0"
 
   ##
   ## DEBUGGING
