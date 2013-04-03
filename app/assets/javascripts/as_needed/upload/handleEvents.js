@@ -12,6 +12,9 @@ ajaxUpload.handleInput = function (_fileInput) {
 
 ajaxUpload.handleDragAndDrop = function (fileDrop) {
   if (!fileDrop) return;
+  if (ajaxUpload._dragDropInitialized) return;
+  ajaxUpload._dragDropInitialized = true;
+
   fileDrop.addEventListener("drop", onFileDropped, true);
   fileDrop.addEventListener("dragenter", onDragEnter, true);
   fileDrop.addEventListener("dragover", onDragOver, true);
