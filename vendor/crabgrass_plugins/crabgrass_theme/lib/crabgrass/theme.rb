@@ -15,7 +15,7 @@ unless defined?(info)
 end
 
 %w[renderer cache loader options navigation_item navigation_definition].each do |file|
-  require File.join(File.dirname(__FILE__), 'theme', file)
+  require_relative "theme/#{file}"
 end
 
 module Crabgrass
@@ -46,7 +46,7 @@ module Crabgrass
     def initialize(theme_name)
       @directory  = Theme::theme_directory(theme_name)
       @name       = File.basename(@directory) rescue nil
-      @public_directory = CSS_ROOT.join(@name)
+      @public_directory = CSS_ROOT + @name
       @data       = nil
       @style      = nil
       @controller = nil
@@ -145,7 +145,7 @@ module Crabgrass
     private
 
     def self.theme_directory(theme_name)
-      THEME_ROOT.join(theme_name)
+      THEME_ROOT + theme_name
     end
 
     #def self.theme_loaded?(theme_name)
