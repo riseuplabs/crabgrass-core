@@ -2,26 +2,7 @@
 -# we don't allow commenting on requests yet. but when we do, it will get added here.
 -#
 
-- proxy = Struct.new(:id, :dom_id, :user, :created_at, :updated_at, :body_id, :body_html)
-
--# first row
-- html1 = expand_links(@request.display_description, :avatar => 'tiny', :class => 'inline')
-- post1 = proxy.new(@request.id, 0, @request.created_by, @request.created_at, nil, 0, html1.html_safe)
-
--# second row
-- post2 = nil
-- if @request.pending?
-  - html2 = render :partial => 'common/requests/action_buttons', :locals => {:request => @request}
-  - if html2.present?
-    - post2 = proxy.new(@request.id, 0, current_user, nil, nil, 0, html2)
-- elsif @request.approved?
-  - html2 = content_tag(:button, :approved.t, :class => 'btn btn-success disabled')
-  - post2 = proxy.new(@request.id, 0, @request.approved_by, @request.updated_at, nil, 0, html2.html_safe)
-- elsif @request.rejected?
-  - html2 = content_tag(:button, :rejected.t, :class => 'btn btn-danger disabled')
-  - post2 = proxy.new(@request.id, 0, @request.rejected_by, @request.updated_at, nil, 0, html2.html_safe)
-
 -# comments here?
 
 -# render the 'posts'
-= render :partial => 'common/posts/list', :locals => {:posts => [post1,post2].compact}
+= render 'common/posts/list', :posts => posts_for_request
