@@ -73,7 +73,7 @@ module Crabgrass::Theme::Cache
   def sass_files_for_screen
     # grab everything. not sure what might be in screen.
     Dir.glob(
-      ['/*.sass', '/*.scss', '/*/*.sass', '/*/*.scss'].collect { |dir|
+      ['*.sass', '*.scss', '*/*.sass', '*/*.scss'].collect { |dir|
         Crabgrass::Theme::SASS_ROOT + dir
       }
     )

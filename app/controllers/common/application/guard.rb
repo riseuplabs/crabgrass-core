@@ -48,7 +48,7 @@ module Common::Application::Guard
     def permission_for_action(action)
       method = action_map[action]
       if !method
-        if RAILS_ENV=='development'
+        if Rails.env.development?
           raise ArgumentError.new("No Permission defined for #{action}")
         end
         return false

@@ -1,5 +1,5 @@
 :ruby
-  icon_classes = File.read(RAILS_ROOT + '/public/stylesheets/icon_png.css').
+  icon_classes = File.read(Rails.public_path + 'stylesheets/icon_png.css').
   collect do |line|
     line.sub(/^([^\s]*)\s.*$/,'\1').chop[1..-1]
   end

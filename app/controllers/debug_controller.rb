@@ -1,4 +1,4 @@
-if RAILS_ENV == "development"
+if Rails.env.development?
   class DebugController < ApplicationController
     # make the user assume the identity of another user
     def become
@@ -14,7 +14,7 @@ if RAILS_ENV == "development"
     end
 
     def authorized?
-      RAILS_ENV == "development"
+      Rails.env.development?
     end
   end
 end
