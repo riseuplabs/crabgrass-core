@@ -22,6 +22,12 @@ end
 Crabgrass::Application.routes.draw do |map|
 
   ##
+  ## CRON JOBS
+  ##
+
+  map.connect '/do/cron/run/:id', :controller => 'cron', :action => 'run'
+
+  ##
   ## STATIC FILES AND ASSETS
   ##
 
