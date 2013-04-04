@@ -153,7 +153,7 @@ class Conf
 
   def self.load(filename)
     self.load_defaults
-    self.configuration_filename = "#{CRABGRASS_CONFIG_DIRECTORY}/#{filename}"
+    self.configuration_filename = CRABGRASS_CONFIG_DIRECTORY + filename
     hsh = YAML.load_file(configuration_filename) || {}
     hsh.each do |key, value|
       method = key.to_s + '='
