@@ -8,7 +8,8 @@ module RequestsHelper
 
   def request_display_post(request)
     proxy_as_comment request, user: request.created_by,
-      body_html: display_request(request, avatar: 'tiny', class: 'inline')
+      body_html: display_request(request),
+      updated_at: nil
   end
 
   def request_actions_post(request)
@@ -30,7 +31,7 @@ module RequestsHelper
   end
 
   def active_user_for_request(request)
-    if request.present?
+    if request.pending?
       current_user
     elsif request.approved?
       request.approved_by
@@ -40,8 +41,14 @@ module RequestsHelper
   end
 
   def display_request(request, options = {})
+    options.reverse_merge! avatar: 'tiny', class: 'inline'
+    if options.delete(:short)
+      translatable = request.short_description
+    else
+      translatable = request.description
+    end
     expand_links(options) do
-      translate *request.description
+      translate *translatable
     end
   end
 

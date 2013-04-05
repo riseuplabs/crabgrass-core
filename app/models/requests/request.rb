@@ -304,10 +304,10 @@ class Request < ActiveRecord::Base
   # the text is not html escaped, so please don't change this to display_name
   #
   def user_span(user)
-    '<user>%s</user>' % user.name
+    ('<user>%s</user>' % user.name).html_safe
   end
   def group_span(group)
-    '<group>%s</group>' % group.name
+    ('<group>%s</group>' % group.name).html_safe
   end
 
   #

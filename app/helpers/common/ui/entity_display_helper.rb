@@ -290,7 +290,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # converts the link markers in the text of activies and requests in bolded text
   #
-  def embold_links(text)
+  def embold_links(text = nil)
     text = yield if block_given?
     with_html_safety(text) do
       text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
