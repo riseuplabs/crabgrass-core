@@ -105,7 +105,7 @@ class RequestTest < ActiveSupport::TestCase
       RequestToJoinYou.create!(:created_by => outsider, :recipient => group)
     end
 
-    assert_equal req, Request.to_user(insider).having_state('pending').find(:first, :conditions => {:created_by_id => outsider})
+    assert_equal req, Request.approvable_by(insider).having_state('pending').find(:first, :conditions => {:created_by_id => outsider})
 
     assert_raises PermissionDenied, 'PERMISSIONS DISABLED: non member is able to accept request for a group' do
       req.approve_by!(outsider)

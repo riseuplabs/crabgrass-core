@@ -25,21 +25,12 @@ module Groups::LinksHelper
   ##
 
   def join_group_link
-    return unless logged_in? and !current_user.direct_member_of? @group
+    return unless logged_in?
+    return if current_user.direct_member_of? @group
     if may_join_group?
-      link_to :join_group_link.t(:group_type => @group.group_type),
-        group_my_memberships_path(@group),
-        :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
-        :method => :post
+      directly_join_group_link
     elsif may_create_join_request?
-      req = RequestToJoinYou.having_state(:pending).find_by_created_by_id_and_recipient_id(current_user.id, @group.id)
-      if req
-        link_line :bullet, :request_exists.t, link_to(:show_thing.t(:thing => :request.t), me_request_path(req))
-      else
-        link_to :request_join_group_link.t(:group_type => @group.group_type),
-          group_membership_requests_path(@group, :type => 'join'),
-          :method => 'post'
-      end
+      join_request_link
     end
   end
 
@@ -50,6 +41,27 @@ module Groups::LinksHelper
         :confirm => :leave_group_confirmation.t(:group_type => @group.group_type),
         :method => :delete,
         :class => 'navi'
+    end
+  end
+
+  def directly_join_group_link
+    link_to :join_group_link.t(:group_type => @group.group_type),
+      group_my_memberships_path(@group),
+      :confirm => :join_group_confirmation.t(:group_type => @group.group_type),
+      :method => :post
+  end
+
+  def join_request_link
+    invited = RequestToJoinUs.pending.from_group(@group).to_user(current_user).first
+    requested = RequestToJoinYou.pending.created_by(current_user).to_group(@group).first
+    if invited
+      link_line :bullet, :you_are_invited.t, link_to(:show_thing.t(:thing => :request.t), me_request_path(invited))
+    elsif requested
+      link_line :bullet, :request_exists.t, link_to(:show_thing.t(:thing => :request.t), me_request_path(requested))
+    else
+      link_to :request_join_group_link.t(:group_type => @group.group_type),
+        group_membership_requests_path(@group, :type => 'join'),
+        :method => 'post'
     end
   end
 

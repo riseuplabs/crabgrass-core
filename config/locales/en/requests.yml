@@ -20,16 +20,10 @@ en:
   activerecord:
     models:
       request_to_friend: "Request to Become Contacts"
-      request_to_join_our_network:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
+      request_to_join_our_network: "Invitation to Join"
       request_to_destroy_our_group: "Request to Destroy Group"
-      request_to_join_us:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
-      request_to_join_us_via_email:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
+      request_to_join_us: "Invitation to Join"
+      request_to_join_us_via_email: "Invitation to Join"
       request_to_join_you: "Request to Join"
       request_to_join_your_network: "Request to Join"
       request_to_create_council: "Request to Create Council"
@@ -43,15 +37,11 @@ en:
   request_to_join_our_network_short: "Shall %{group} join %{network}?"
   request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
 
-  request_to_join_us:
-    one: "Invitation to Join"
-    other: "Invitations to Join"
+  request_to_join_us: "Invitation to Join"
   request_to_join_us_short: "Shall %{user} join %{group}?"
   request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
 
-  request_to_join_us_via_email:
-    one: "Invitation to Join"
-    other: "Invitations to Join"
+  request_to_join_us_via_email: "Invitation to Join"
   request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
   request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
 
@@ -86,6 +76,7 @@ en:
   ##!  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
+  you_are_invited: "You are invited to join."
 
   ##
   ## FRIENDS
