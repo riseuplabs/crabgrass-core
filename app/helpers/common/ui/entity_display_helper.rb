@@ -277,7 +277,7 @@ module Common::Ui::EntityDisplayHelper
       text = yield
     end
     with_html_safety(text) do
-      text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
         if options
           content_tag(:b, link_to_entity($2, options))
         else
@@ -293,7 +293,7 @@ module Common::Ui::EntityDisplayHelper
   def embold_links(text)
     text = yield if block_given?
     with_html_safety(text) do
-      text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
         content_tag(:b, $2)
       end
     end
