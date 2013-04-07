@@ -193,7 +193,8 @@ namespace :crabgrass do
   end
 end
 
-before  "crabgrass:link_to_shared",   "crabgrass:create_shared"
+after  "deploy:setup",   "crabgrass:create_shared"
+
 before  "crabgrass:compile_assets", "crabgrass:link_to_shared"
 before  "deploy:finalize_update", "crabgrass:compile_assets"
 
