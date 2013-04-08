@@ -14,7 +14,7 @@ class ConvertLanguageCodesToTwoLetters < ActiveRecord::Migration
           user.update_attribute('email', '')
           user.save!
         else
-          puts "Could not save #{user.login}: "+err
+          puts "Could not save #{user.login}: #{err}"
         end
       end
     end
@@ -24,7 +24,7 @@ class ConvertLanguageCodesToTwoLetters < ActiveRecord::Migration
       begin
         group.save!
       rescue StandardError => err
-        puts "Could not save #{group.name}: "+err
+        puts "Could not save #{group.name}: #{err}"
       end
     end
   end
