@@ -4,6 +4,19 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
   class ::MessagePage < ::Page
   end
 
+  #
+  # There's a Page Observer trying to delete page notices now
+  # for all pages destroyed. Rescue us if the table does not exist yet.
+  #
+  class ::PageObserver
+    def after_destroy_with_rescue(page)
+      after_destroy_without_rescue(page)
+    rescue ActiveRecord::StatementInvalid
+    end
+
+    alias_method_chain :after_destroy, :rescue
+  end
+
   def self.up
 
     # first we turn all the Message Pages with more or less than
