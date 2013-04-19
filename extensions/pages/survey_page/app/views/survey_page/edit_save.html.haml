@@ -20,7 +20,7 @@
     = render :partial => 'tabs'
   #design_questions_container.survey_questions_container
 
-    - form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f|
+    = form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f|
       %p
         = submit_tag I18n.t(:save_survey_button), :class => "submit"
 

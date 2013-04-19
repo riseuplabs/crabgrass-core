@@ -96,8 +96,10 @@ end
 require 'redcloth/formatters/html'
 require 'cgi'
 
-$KCODE = 'u'    # \ set utf8 as the default
-require 'jcode' # / encoding
+if RUBY_VERSION < '1.9' #
+  $KCODE = 'u'    # \ set utf8 as the default
+  require 'jcode' # / encoding
+end
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_structure'
@@ -453,7 +455,7 @@ class GreenCloth < RedCloth::TextileDoc
     # ^^^ get ride of leading returns. This makes it so the text in
     # <pre> doesn't appear in the browser with an empty first line.
     offtag = offtag_it(body)
-    if tag == '<pre>' or (leading_character.any? and leading_character!="\n")
+    if tag == '<pre>' or (leading_character.present? and leading_character!="\n")
       "#{tag}#{offtag}#{tag.sub('<','</')}"
     else
       "<pre><code>#{offtag}</code></pre>"
@@ -573,7 +575,11 @@ class GreenCloth < RedCloth::TextileDoc
       [-\w]+                   # subdomain or domain
       (?:\.[-\w]+)*            # remaining subdomains or domain
       (?::\d+)?                # port
-      (?:/(?:(?:[#{URL_CHAR}]|(?:[#{URL_PUNCT}][^\s$]))+)?)* # path
+      (?:/                     # path
+        (?:[#{URL_CHAR}]|
+          (?:[#{URL_PUNCT}][^\s$])
+        )+
+      )*
       (?:\?[\w\+%&=.;-]+?)?    # query string
       (?:\#[\w\-\.]*)?         # trailing anchor
     )?
@@ -722,7 +728,7 @@ class GreenCloth < RedCloth::TextileDoc
     text.gsub!(LONG_WORDS_RE) do |word|
       chopped = word.scan(/.{#{LONG_WORD_CHAR_MAX}}/)
       offtag = offtag_it("<wbr/><span class='break'> </span>")
-      remainder = word.split(/.{#{LONG_WORD_CHAR_MAX}}/).select{|str| str.any?}
+      remainder = word.split(/.{#{LONG_WORD_CHAR_MAX}}/).select{|str| str.present?}
       (chopped + remainder).join(offtag)
     end
   end

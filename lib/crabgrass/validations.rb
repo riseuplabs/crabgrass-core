@@ -47,14 +47,14 @@ module Crabgrass
           # TODO: make this dynamic so this function can be
           # used over any set of classes (instead of just User, Group)
           if record.instance_of? User
-            if User.exists?(['login = ? and id <> ?', value, record.id||-1])
+            if User.exists?(['login = ? and `users`.id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
             if Group.exists?({:name => value})
               record.errors.add(attr_name, 'is already taken')
             end
           elsif record.kind_of? Group
-            if Group.exists?(['name = ? and id <> ?', value, record.id||-1])
+            if Group.exists?(['name = ? and `groups`.id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
             if User.exists?({:login => value})

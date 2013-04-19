@@ -5,7 +5,7 @@ class ViewExamplesController < ApplicationController
   def index
     params[:file] ||= 'index'
     setup_navigation
-    if RAILS_ENV == 'development'
+    if Rails.env.development?
       render :file => 'view_examples/' + params[:file], :layout => 'application'
     end
   end

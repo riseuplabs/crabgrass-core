@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class GroupParticipationTest < ActiveSupport::TestCase
   fixtures :groups, :users, :memberships, :group_participations

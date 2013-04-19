@@ -247,29 +247,6 @@ module UserExtension::Users
     ## PERMISSIONS
     ##
 
-    def may_be_pestered_by?(user)
-      begin
-        may_be_pestered_by!(user)
-      rescue PermissionDenied
-        false
-      end
-    end
-
-    def may_be_pestered_by!(user)
-      if has_access? :pester, user
-        return true
-      else
-        raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
-      end
-    end
-
-    def may_pester?(entity)
-      entity.may_be_pestered_by? self
-    end
-    def may_pester!(entity)
-      entity.may_be_pestered_by! self
-    end
-
     def may_show_status_to?(user)
       return true if user==self
       return true if friend_of?(user) or peer_of?(user)

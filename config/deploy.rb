@@ -57,6 +57,7 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
+set :public_children, %w(images stylesheets static)
 
 ##
 ## CUSTOM TASKS
@@ -149,6 +150,7 @@ namespace :crabgrass do
 
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_release}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt #{current_release}/config/crabgrass/secret.txt"
+    run "test -f #{deploy_to}/#{shared_dir}/config/.htpasswd && ln -nfs #{deploy_to}/#{shared_dir}/config/.htpasswd #{current_release}/config/.htpasswd"
 
     run "rm -rf #{current_release}/db/sphinx"
     run "ln -nfs #{shared_path}/sphinx #{current_release}/db/sphinx"
@@ -167,7 +169,7 @@ namespace :crabgrass do
 
   desc "Precompile the javascript and css assets"
   task :compile_assets do
-    run "cd #{current_path}; bundle exec rake cg:compile_assets"
+    run "cd #{current_release}; bundle exec rake cg:compile_assets"
   end
 
 #  desc "refresh the staging database"
@@ -192,9 +194,11 @@ namespace :crabgrass do
 end
 
 after  "deploy:setup",   "crabgrass:create_shared"
-after  "deploy:symlink", "crabgrass:link_to_shared"
+
+before  "crabgrass:compile_assets", "crabgrass:link_to_shared"
+before  "deploy:finalize_update", "crabgrass:compile_assets"
+
 after  "deploy:symlink", "crabgrass:create_version_files"
-after  "crabgrass:create_version_files", "crabgrass:compile_assets"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
 

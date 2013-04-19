@@ -4,8 +4,8 @@ require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 class SurveyTest < ActiveSupport::TestCase
   fixtures :surveys, :survey_questions
 
-  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  @@private = AssetExtension::Storage.private_storage = Rails.root + "tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = Rails.root + "tmp/public_assets"
 
   def setup
     FileUtils.mkdir_p(@@private)

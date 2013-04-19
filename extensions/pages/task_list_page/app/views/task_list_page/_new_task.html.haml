@@ -2,7 +2,7 @@
 #new-task-link
   = link_to_function 'add task', show('new-task') + hide('new-task-link')
 #new-task{:style => "display:none"}
-  - form_remote_tag( *options_for_new_task_form(page) ) do
+  = form_remote_tag( *options_for_new_task_form(page) ) do
     description:
     %br/
     = text_field 'task', 'name', :class => 'task_name'

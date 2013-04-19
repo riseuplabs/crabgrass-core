@@ -3,7 +3,7 @@
 - url    = page_share_path(@page, :mode => 'share')
 - id     = 'share_page_form'
 
-- form_remote_tag(:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put') do
+= form_remote_tag(:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put') do
   
   .share_page
     %h2.first= :share_page_recipients.t(:page_class => :page.t)

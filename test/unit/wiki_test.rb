@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 #  require File.dirname(__FILE__) + '/wiki/locking_test.rb'
 #  require File.dirname(__FILE__) + '/wiki/rendering_test.rb'
@@ -65,7 +65,7 @@ class WikiTest < ActiveSupport::TestCase
   end
 
   def test_group_association
-    group = Group.make
+    group = FactoryGirl.create(:group)
     wiki = group.profiles.public.create_wiki :body => "bla"
     assert_equal group, wiki.group
   end

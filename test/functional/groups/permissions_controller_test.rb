@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::PermissionsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @other_user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @other_user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
   end
 

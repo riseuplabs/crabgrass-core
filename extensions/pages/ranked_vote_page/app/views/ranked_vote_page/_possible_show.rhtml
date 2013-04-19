@@ -11,7 +11,7 @@ edit_url           = page_xurl(@page, :action=>'edit_possible', :id=>possible.id
 #             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
 -%>
   <div class='name'>
-    <% if possible.description.any? -%>
+    <% if possible.description.present? -%>
       <%= link_to_function possible.name, "Element.toggle('#{details_id}')", :class => 'dotted' %>
     <% else -%>
       <%=h possible.name %>

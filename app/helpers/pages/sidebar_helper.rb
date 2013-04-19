@@ -13,9 +13,9 @@ module Pages::SidebarHelper
 
   def link_to_user_participation(upart)
     icon = case upart.access_sym
-      when :admin : 'tiny_wrench_16'
-      when :edit : 'tiny_pencil_16'
-      when :view : ''
+      when :admin then 'tiny_wrench_16'
+      when :edit then 'tiny_pencil_16'
+      when :view then ''
     end
     label = content_tag :span, upart.user.display_name, :class => icon
     link_to_entity(upart.user, :avatar => 'xsmall', :label => label)
@@ -23,9 +23,9 @@ module Pages::SidebarHelper
 
   def link_to_group_participation(gpart)
     icon = case gpart.access_sym
-      when :admin : 'tiny_wrench_16'
-      when :edit : 'tiny_pencil_16'
-      when :view : ''
+      when :admin then 'tiny_wrench_16'
+      when :edit then 'tiny_pencil_16'
+      when :view then ''
     end
     label = content_tag :span, gpart.group.display_name, :class => icon
     link_to_entity(gpart.group, :avatar => 'xsmall', :label => label)
@@ -146,9 +146,9 @@ module Pages::SidebarHelper
 
   def page_attachments
     if @page.assets.any?
-      @page.assets.collect do |asset|
+      safe_join @page.assets.collect { |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
-      end
+      }
       #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_edit_page?
       ''

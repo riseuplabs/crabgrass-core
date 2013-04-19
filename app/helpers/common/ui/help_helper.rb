@@ -18,7 +18,7 @@ module Common::Ui::HelpHelper
     end
 
     # return nil if I18n.t can't find the translation (in production mode) and has to humanize it
-    text == symbol.to_s.humanize ? nil : text
+    text == symbol.to_s.humanize ? nil : text.html_safe
   end
 
   def tooltip(caption, content)

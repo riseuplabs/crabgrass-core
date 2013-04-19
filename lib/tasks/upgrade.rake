@@ -14,11 +14,34 @@
 namespace :cg do
   namespace :upgrade do
     desc "Gives groups self access; for use once in upgrading data to cg 1.0"
-    task(:group_permissions => :environment) do
+    task(:init_group_permissions => :environment) do
       Group.all.each do |group|
         group.send(:create_permissions)
       end
     end
+
+    desc "Create keys to the groups based on their old profile settings; for use once in upgrading data to cg 1.0"
+    task(:migrate_group_permissions => :environment) do
+      Group.all.each(&:migrate_permissions!)
+    end
+
+    desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
+    task :user_permissions => :environment do
+      User.all.each(&:migrate_permissions!)
+    end
+
+    desc "Set created_at timestamps where it is not set"
+    task :init_created_at => :environment do
+      [Membership, Tagging, Task, Profile].each do |model|
+        print "#{model.name}: "
+        model.where(["#{model.quoted_table_name}.created_at IS NULL"]).each do |record|
+          print '.'
+          record.update_attributes(:created_at => 1.week.ago)
+        end
+        puts
+      end
+    end
+
   end
 end
 

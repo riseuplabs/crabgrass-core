@@ -176,7 +176,7 @@ class Profile < ActiveRecord::Base
 
     # save nil if value is an empty string:
     params.each do |key,value|
-      params[key] = nil unless value.any?
+      params[key] = value.presence
     end
 
     # build objects from params
@@ -234,6 +234,50 @@ class Profile < ActiveRecord::Base
   def city_id
     return nil if self.geo_location.nil?
     self.geo_location.geo_place_id
+  end
+
+  # UPGRADE FUNCTIONALITY
+
+  def to_gates
+    if self.entity.is_a? User
+      self.to_user_gates
+    elsif self.entity.is_a? Group
+      self.to_group_gates
+    end
+  end
+
+  def to_user_gates
+    gates = [:view, :see_groups, :see_contacts, :pester, :request_contact]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see)
+      profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+      self.send profile_flag
+    }
+  end
+
+  def to_group_gates
+    gates = [
+      :view,
+      :pester,
+      :burden,
+      :spy,
+      :join,
+      :request_membership,
+      :see_members,
+      :see_committees,
+      :see_networks
+    ]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see and :join which replaces the membership_policy)
+      if gate_name == :join
+        self.membership_policy_is? :open
+      else
+        profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+        self.send profile_flag
+      end
+    }
   end
 
   # DEPRECATED

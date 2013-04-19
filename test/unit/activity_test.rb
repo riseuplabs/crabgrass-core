@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
 
   def setup
-    @joe = User.make
-    @ann = User.make
-    @group = Group.make
+    @joe = FactoryGirl.create(:user)
+    @ann = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user! @joe
     @group.add_user! @ann
     @joe.reload
@@ -59,7 +59,7 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_membership
-    ruth = User.make
+    ruth = FactoryGirl.create(:user)
     @group.add_user!(ruth)
 
     assert_nil UserJoinedGroupActivity.for_all(@ann).find_by_subject_id(ruth.id),
@@ -107,7 +107,7 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_avatar
-    new_group = Group.make
+    new_group = FactoryGirl.create(:group)
 
     @joe.add_contact!(@ann, :friend)
     @joe.send_message_to!(@ann, "hi @ann")

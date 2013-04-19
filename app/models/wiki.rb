@@ -120,7 +120,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def preview_html
-    render_preview(PREVIEW_CHARS)
+    render_preview(PREVIEW_CHARS).try.html_safe
   end
 
   # will calculate structure if not up to date
@@ -304,6 +304,10 @@ class Wiki < ActiveRecord::Base
 
     def diff_id
       "#{previous.to_param}-#{self.to_param}"
+    end
+
+    def body_html
+      read_attribute(:body_html).try :html_safe
     end
 
   end

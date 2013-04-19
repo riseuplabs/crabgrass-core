@@ -35,7 +35,7 @@ module Common::Application::Paths
   ##
   ## ENTITY PATHS
   ##
- 
+
   def entity_path(entity)
     if entity.is_a? String
       "/"+name
@@ -58,7 +58,7 @@ module Common::Application::Paths
   def direct_group_path(group,options={})
     "/groups/" + group.name + build_query_string(options)
   end
-  
+
   ##
   ## PAGE PATHS
   ##
@@ -85,8 +85,8 @@ module Common::Application::Paths
   # otherwise, returns nil and modifies options hash as needed.
   #
   def custom_create_path(options={})
-    if (page_type = options.delete(:page_type)).any?
-      if (controller = page_type.definition.creation_controller).any?
+    if (page_type = options.delete(:page_type)).present?
+      if (controller = page_type.definition.creation_controller).present?
         return "/pages/#{controller}/#{options[:action]}/#{options[:owner]}"
       else
         options[:type] = page_type.url
@@ -155,7 +155,7 @@ module Common::Application::Paths
     # (4) id
     path << options.delete(:id)
 
-    return ('/' + path.select(&:any?).join('/') + build_query_string(options))
+    return ('/' + path.select(&:present?).join('/') + build_query_string(options))
   end
 
   def page_url(page, options={})

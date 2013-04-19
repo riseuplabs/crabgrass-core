@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class TaggingTest < ActiveSupport::TestCase
   fixtures :pages, :users
@@ -34,8 +34,8 @@ class TaggingTest < ActiveSupport::TestCase
   end
 
   def test_users_tag_cache
-    user = User.make :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx'
-    page = Page.make :title => 'hi'
+    user = FactoryGirl.create(:user, :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx')
+    page = FactoryGirl.create(:page, :title => 'hi')
     page.tag_list = 'one, two'
     page.save!
 

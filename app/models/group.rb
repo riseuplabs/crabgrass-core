@@ -142,7 +142,7 @@ class Group < ActiveRecord::Base
   # the code shouldn't call find_by_name directly, because the group name
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
-    return nil unless name.any?
+    return nil unless name.present?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
@@ -153,7 +153,7 @@ class Group < ActiveRecord::Base
 
   # name stuff
   def to_param; name; end
-  def display_name; full_name.any? ? full_name : name; end
+  def display_name; full_name.presence || name; end
   def short_name; name; end
   def cut_name; name[0..20]; end
   def both_names
@@ -293,22 +293,6 @@ class Group < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  public
-
-  def may_be_pestered_by?(user)
-    has_access?(:pester, user)
-  end
-
-  def may_be_pestered_by!(user)
-    if has_access?(:pester, user)
-      return true
-    else
-      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
-    end
-  end
-
-  protected
-
   #
   # These callbacks are responsible for setting up and tearing down
   # the permissions for groups. The actual methods are defined in
@@ -346,6 +330,17 @@ class Group < ActiveRecord::Base
   def layout(section)
     template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
     template_data[section]
+  end
+
+
+  # migrate permissions from pre-CastleGates databases to CastleGates.
+  # Called from cg:upgrade:migrate_group_permissions task.
+  def migrate_permissions!
+    print '.' if id % 10 == 0
+    # get holders
+    public_holder = CastleGates::Holder[:public]
+    public_gates = profiles.public.to_gates
+    set_access! public_holder => public_gates
   end
 
   protected

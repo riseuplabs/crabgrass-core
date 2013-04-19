@@ -22,6 +22,12 @@ end
 Crabgrass::Application.routes.draw do |map|
 
   ##
+  ## CRON JOBS
+  ##
+
+  map.connect '/do/cron/run/:id', :controller => 'cron', :action => 'run'
+
+  ##
   ## STATIC FILES AND ASSETS
   ##
 
@@ -136,7 +142,7 @@ Crabgrass::Application.routes.draw do |map|
   ## DEBUGGING
   ##
 
-  if RAILS_ENV == "development"
+  if Rails.env.development?
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
     map.debug_break 'debug/break', :controller => 'debug', :action => 'break'
   end
@@ -182,7 +188,7 @@ Crabgrass::Application.routes.draw do |map|
     :member => {:print => :get} do |wikis|
     wikis.resource :lock, :only  => :destroy
     wikis.resources :assets, :only => [:new, :create]
-    wikis.resources :versions, :only  => [:index, :show, :destroy],
+    wikis.resources :versions, :only  => [:index, :show],
       :member => {:revert => :post}
     wikis.resources :diffs, :only => [:show]
     wikis.resources :sections, :only => [:edit, :update]

@@ -7,7 +7,7 @@
 .full
   %div{:style => 'margin: 0px auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
 
-- if RAILS_ENV == 'development'
+- if Rails.env.development?
   .full
     = render :partial => 'common/debug/footer'
 

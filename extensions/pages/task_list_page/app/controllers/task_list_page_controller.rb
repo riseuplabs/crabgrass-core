@@ -14,7 +14,7 @@ class TaskListPageController < Pages::BaseController
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
     sort_list_key = params.keys.grep(/^sort_list_/)
-    if sort_list_key.any?
+    if sort_list_key.present?
       ids = params[sort_list_key[0]]
       ids.reject!{|i|i.to_i == 0} # only allow integers
       @list.tasks.each do |task|
@@ -35,7 +35,7 @@ class TaskListPageController < Pages::BaseController
   def create_task
     return unless request.xhr?
     @task = Task.new(params[:task])
-    @task.name = 'untitled' unless @task.name.any?
+    @task.name = 'untitled' unless @task.name.present?
     @task.task_list = @list
     @task.save
     render :template => 'task_list_page/create_task'
@@ -73,7 +73,7 @@ class TaskListPageController < Pages::BaseController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     @task.update_attributes(params[:task])
-    @task.name = 'untitled' unless @task.name.any?
+    @task.name = 'untitled' unless @task.name.present?
     render :update do |page|
       page.replace_html dom_id(@task), :partial => 'inner_task_show', :locals => {:task => @task}
     end

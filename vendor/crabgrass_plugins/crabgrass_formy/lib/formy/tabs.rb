@@ -92,7 +92,7 @@ module Formy
           @function += ';' unless @function[-1].chr == ';'
           onclick = @function + onclick
         end
-        return onclick
+        return onclick.html_safe
       end
 
       def postfix_for_link

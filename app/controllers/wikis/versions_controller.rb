@@ -16,16 +16,6 @@ class Wikis::VersionsController < Wikis::BaseController
     @version = @versions.first
   end
 
-  def destroy
-    @version.destroy
-    if @version.destroyed?
-      success :wiki_version_destroy_success.t
-    else # last version
-      warning :wiki_version_destroy_failed.t
-    end
-    redirect_to wiki_versions_path(@wiki)
-  end
-
   def revert
     @wiki.revert_to_version(@version, current_user)
     redirect_to wiki_versions_path(@wiki)

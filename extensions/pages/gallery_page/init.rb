@@ -1,5 +1,5 @@
 unless defined? Zip
-  require "#{RAILS_ROOT}/lib/zip/zip.rb"
+  require "zip/zip"
 end
 
 define_page_type :Gallery, {

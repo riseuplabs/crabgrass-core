@@ -47,7 +47,7 @@ module Common::Utility::TimeHelper
       #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
     end
     #"<label class='date' title='#{ full_time(time) }'>#{str}</label>"
-    return str
+    return str.html_safe
   end
 
   def friendly_time(time, format = :long)

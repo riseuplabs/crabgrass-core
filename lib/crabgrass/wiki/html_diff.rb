@@ -20,7 +20,7 @@ module Crabgrass::Wiki
       success, output = cmd(*arguments)
       f1.unlink
       f2.unlink
-      return output
+      return output.html_safe
     end
 
     def self.cmd(*args)

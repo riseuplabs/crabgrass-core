@@ -1,16 +1,6 @@
 require 'tempfile'
-require 'ftools'
+require 'fileutils'
 require 'pathname'
-
-Tempfile.class_eval do
-  #
-  # overwrite so that Tempfile will retain the file extension of the basename.
-  #
-  def make_tmpname(basename, n)
-    ext = nil
-    sprintf("%s%d-%d%s", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$, n, ext)
-  end
-end
 
 #
 # media processing requires a different type of tempfile... because we use command
@@ -61,7 +51,7 @@ module Media
         @tmpfile = TempFile.create_from_content_type(content_type)
       elsif data.respond_to?(:path)
         # we are dealing with an uploaded file object
-        @tmpfile = TempFile.create_from_file(data.path, content_type, {:mode => :move})
+        @tmpfile = TempFile.create_from_file(data.path, content_type, {mode: :move})
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
@@ -137,7 +127,7 @@ module Media
     #
     # create a tmp file that is a copy of another file.
     #
-    def self.create_from_file(filepath, content_type, options)
+    def self.create_from_file(filepath, content_type, options = {})
       tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
       tf.close
       if options[:mode] == :move
@@ -154,7 +144,7 @@ module Media
     def self.content_type_basename(content_type)
       if content_type
         extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
-        "%s.%s" % ['media_temp_file', extension]
+        ['media_temp_file', extension.to_s]
       else
         'media_temp_file'
       end

@@ -17,6 +17,7 @@ title: "Crabgrass Development"
 
 default_language: en
 enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
+raise_i18n_exceptions: true
 
 # TODO: remove this
 transifex_user: 'riseuplabs'

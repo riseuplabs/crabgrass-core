@@ -11,7 +11,7 @@ namespace :db do
       ActiveRecord::Base.establish_connection
       i = "000"
       sql  = "SELECT * FROM `#{table}`"
-      filename = "#{RAILS_ROOT}/test/fixtures/#{table}.yml"
+      filename = Rails.root + "test/fixtures/#{table}.yml"
       File.open(filename, 'w') do |file|
         data = ActiveRecord::Base.connection.select_all(sql)
         file.write data.inject({}) {|hash, record|

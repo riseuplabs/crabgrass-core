@@ -23,7 +23,7 @@
 #
 # The use of 'raise ErrorMessage.new' is more like a goto, and could lead to problems.
 # In some cases, however, it is nice to put sanity checking deep in the models where
-# it would be impractical to expose an api for testing the validity of every oject.
+# it would be impractical to expose an api for testing the validity of every object.
 #
 
 module Common::Application::RescueErrors
@@ -179,7 +179,7 @@ module Common::Application::RescueErrors
 #  def rescue_action_locally_with_js(exception)
 #    respond_to do |format|
 #      format.html do
-#        if RAILS_ENV == "production" or RAILS_ENV == "development"
+#        if Rails.env.production? or Rails.env.development?
 #          rescue_action_locally_without_js(exception)
 #        else
 #          render :text => exception

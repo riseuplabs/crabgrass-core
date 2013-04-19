@@ -15,7 +15,7 @@ unless defined?(info)
 end
 
 %w[renderer cache loader options navigation_item navigation_definition].each do |file|
-  require File.join(File.dirname(__FILE__), 'theme', file)
+  require_relative "theme/#{file}"
 end
 
 module Crabgrass
@@ -26,9 +26,9 @@ module Crabgrass
     include Crabgrass::Theme::Loader
     include Crabgrass::Theme::ColumnCalculator
 
-    THEME_ROOT = RAILS_ROOT + '/extensions/themes'  # where theme configs live
-    SASS_ROOT  = RAILS_ROOT + '/app/stylesheets'    # where the sass source files live
-    CSS_ROOT   = RAILS_ROOT + '/public/theme'       # where the rendered css files live
+    THEME_ROOT = Rails.root.join('extensions', 'themes')  # where theme configs live
+    SASS_ROOT  = Rails.root.join('app', 'stylesheets')    # where the sass source files live
+    CSS_ROOT   = Rails.root.join('public', 'theme')       # where the rendered css files live
     CORE_CSS_SHEET = 'screen'
 
     attr_reader :directory, :public_directory, :name, :data
@@ -46,7 +46,7 @@ module Crabgrass
     def initialize(theme_name)
       @directory  = Theme::theme_directory(theme_name)
       @name       = File.basename(@directory) rescue nil
-      @public_directory = File.join(CSS_ROOT,@name)
+      @public_directory = CSS_ROOT + @name
       @data       = nil
       @style      = nil
       @controller = nil
@@ -83,7 +83,7 @@ module Crabgrass
     ##
 
     #
-    # access theme configuration variable. 
+    # access theme configuration variable.
     # eg current_theme[:border_width]
     #
     def [](key)
@@ -102,7 +102,7 @@ module Crabgrass
     # returns an integer representation of a theme configuration variable.
     #
     def int_var(key)
-      if self[key].any?
+      if self[key].present?
         self[key].gsub(/[^0-9]/,'').to_i
       else
         0
@@ -145,7 +145,7 @@ module Crabgrass
     private
 
     def self.theme_directory(theme_name)
-      File.join(THEME_ROOT,theme_name)
+      THEME_ROOT + theme_name
     end
 
     #def self.theme_loaded?(theme_name)

@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
+require_relative "../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -17,11 +17,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-RAILS_ROOT = File.expand_path('../..', __FILE__)
-RAILS_ENV = Rails.env
-
-require File.expand_path("../directories.rb", __FILE__)
-require File.expand_path("../../lib/crabgrass/boot.rb", __FILE__)
+require_relative "../lib/crabgrass/boot.rb"
 
 module Crabgrass
   class Application < Rails::Application
@@ -53,8 +49,10 @@ module Crabgrass
     #config.active_record.whitelist_attributes = true
 
     config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
-    :request_to_destroy_our_group_observer, :request_observer, :page_observer
+    :group_observer, :relationship_observer, :post_observer,
+    :request_to_destroy_our_group_observer, :request_observer, :page_observer,
+    "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
+    "tracking/user_participation_observer", "tracking/group_participation_observer"
 
     config.session_store :cookie_store #:mem_cache_store # :p_store
 
@@ -90,10 +88,10 @@ module Crabgrass
   end
 
   ## FIXME: require these, where they are actually needed (or fix autoloading).
-  require Rails.root.join('lib/int_array')
-  require Rails.root.join('lib/crabgrass/validations')
-  require Rails.root.join('lib/crabgrass/page/class_proxy')
-  require Rails.root.join('lib/crabgrass/page/class_registrar')
-  require Rails.root.join('lib/crabgrass/page/data')
+  require 'int_array'
+  require 'crabgrass/validations'
+  require 'crabgrass/page/class_proxy'
+  require 'crabgrass/page/class_registrar'
+  require 'crabgrass/page/data'
 
 end

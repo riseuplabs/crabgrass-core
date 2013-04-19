@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class NetworkTest < ActiveSupport::TestCase
   fixtures :federatings, :groups, :users, :memberships
@@ -92,7 +92,7 @@ class NetworkTest < ActiveSupport::TestCase
     assert child_network.groups.include?(group)
     assert user.member_of?(child_network)
     assert !user.direct_member_of?(child_network)
-    assert committee.parent, parent_network
+    assert committee.parent == parent_network
 
     assert_raises ActiveRecord::RecordInvalid do
       parent_network.add_group!(child_network)

@@ -121,7 +121,7 @@ module Common::Page::ListingHelper
       links = page.tags.collect do |tag|
         tag_link(tag, page.owner)
       end
-      links = (join != false) ? links.join(join) : links
+      links = (join != false) ? safe_join(links, join) : links
     end
   end
 

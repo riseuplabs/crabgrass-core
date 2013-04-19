@@ -1,7 +1,7 @@
 module Wikis::VersionsHelper
 
   def short_description(version, link_to_version = false)
-    version_text = "Version&nbsp;" + version.version.to_s
+    version_text = "Version&nbsp;".html_safe + version.version.to_s
     if link_to_version
       version_text = link_to(version_text, wiki_version_path(@wiki, version))
     end
@@ -18,8 +18,7 @@ module Wikis::VersionsHelper
 
   def version_action_links(version)
     link_line version_diff_link(version),
-      version_revert_link(version),
-      version_delete_link(version)
+      version_revert_link(version)
   end
 
   def version_show_link(version)
@@ -42,12 +41,6 @@ module Wikis::VersionsHelper
     return unless may_revert_wiki_version?(version)
     link_to :wiki_version_revert_link.t,
       revert_wiki_version_path(@wiki, version),
-      :method => :post
-  end
-
-  def version_delete_link(version)
-    return unless may_admin_wiki?
-    link_to :wiki_version_destroy_link.t,
-      wiki_version_path(@wiki, version), :method => :delete
+      :method => :post, :remote => true
   end
 end

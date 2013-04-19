@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   fixtures :groups, :users, :profiles, :memberships, :sites, :keys
@@ -53,8 +53,7 @@ class GroupTest < ActiveSupport::TestCase
     g.revoke_access! :public => :view
     u = User.create :login => 'user'
 
-    assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
-    assert u.may_pester?(g) == false, 'should not be able to pester private group'
+    assert u.may?(:pester, g) == false, 'should not be able to pester private group'
   end
 
   def test_can_pester_public_group
@@ -63,8 +62,7 @@ class GroupTest < ActiveSupport::TestCase
     g.reload
     u = User.create :login => 'user'
 
-    assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
-    assert u.may_pester?(g) == true, 'should be able to pester private group'
+    assert u.may?(:pester, g) == true, 'should be able to pester private group'
   end
 
   def test_site_disabling_public_profiles_doesnt_affect_groups
@@ -219,6 +217,69 @@ class GroupTest < ActiveSupport::TestCase
       group.destroy_by(users(:red))
     end
 
+  end
+
+  def test_migrate_public_view
+    group = Group.create :name => 'publicly-visible'
+    assert group.valid?, "Failed to create group: #{group.errors.inspect}"
+
+    group.profiles.public.update_attributes! :may_see => true
+
+    assert ! users(:blue).may?(:view, group), "initially blue shouldn't be able to view the group"
+
+    group.migrate_permissions!
+
+    assert users(:blue).may?(:view, group), "after migration blue should be able to view the group"
+  end
+
+  def test_migrate_open_group
+    group = Group.create :name => 'hold-hands-and-join-the-circle'
+    assert group.valid?
+
+    group.profiles.public.update_attributes! :membership_policy => Profile::MEMBERSHIP_POLICY[:open]
+
+    assert ! users(:blue).may?(:join, group)
+
+    group.migrate_permissions!
+    users(:blue).clear_access_cache
+
+    assert users(:blue).may?(:join, group)
+  end
+
+  def test_migrate_non_open_group
+    group = Group.create :name => 'du-kimst-hier-net-nei'
+    assert group.valid?
+
+    group.revoke_access! CastleGates::Holder[:public] => :request_membership
+
+    group.profiles.public.update_attributes! :may_request_membership => true
+
+    assert ! users(:blue).may?(:join, group)
+    assert ! users(:blue).may?(:request_membership, group)
+
+    group.migrate_permissions!
+    users(:blue).clear_access_cache
+
+    assert ! users(:blue).may?(:join, group)
+    assert users(:blue).may?(:request_membership, group)
+  end
+
+  def test_migrate_closed_group
+    group = Group.create :name => 'not-even-allowing-requests'
+    assert group.valid?
+
+    group.profiles.public.update_attributes! :may_request_membership => false
+
+    # defaults in effect
+    assert ! users(:blue).may?(:join, group)
+    assert users(:blue).may?(:request_membership, group)
+
+    group.migrate_permissions!
+    users(:blue).clear_access_cache
+
+    # defaults overwritten to match profile setting
+    assert ! users(:blue).may?(:join, group)
+    assert ! users(:blue).may?(:request_membership, group)
   end
 
 end

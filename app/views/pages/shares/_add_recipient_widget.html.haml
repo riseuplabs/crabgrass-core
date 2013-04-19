@@ -14,7 +14,7 @@
 -  # the remote action that is triggered when the 'add' button is pressed (or
 -  # the popup item is selected).
 -
--  add_action = {:url => page_share_path(page, :mode => mode, :add => true), :method => 'put', :with => "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}", :loading => spinner_icon_on('plus', add_button_id), :complete => spinner_icon_off('plus', add_button_id)}
+-  add_action = {:url => page_share_path(page, :mode => mode, :add => true).html_safe, :method => 'put', :with => "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}", :loading => spinner_icon_on('plus', add_button_id), :complete => spinner_icon_off('plus', add_button_id)}
 -
 -  # (1) submit the form when the enter key is pressed in the text box
 -  # (2) don't submit the form if the recipient name field is empty

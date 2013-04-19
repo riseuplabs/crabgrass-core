@@ -17,7 +17,7 @@ module Common::Utility::GeneralHelper
       opts = options
       content = content_or_options_with_block
     end
-    if content.any?
+    if content.present?
       return content_tag(name, content, opts, escape)
     else
       return ""
@@ -62,16 +62,16 @@ module Common::Utility::GeneralHelper
   def force_wrap(text,max_length=20)
     text.gsub(/(\w{#{max_length},})/) do |word|
       split_up_word = word.scan(/.{#{max_length}}/)
-      word_remainder = word.split(/.{#{max_length}}/).select{|str| str.any?}
+      word_remainder = word.split(/.{#{max_length}}/).select{|str| str.present?}
       (split_up_word + word_remainder).join('&shy;')
     end
   end
 
-  # returns the first of the args where any? returns true
+  # returns the first of the args where present? returns true
   # if none has any, return last
-  def first_with_any(*args)
+  def first_present(*args)
     for str in args
-      return str if str.any?
+      return str if str.present?
     end
     return args.last
   end

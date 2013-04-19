@@ -4,7 +4,7 @@ module Common::Application::MockableTests
   end
 
   def self.included(base)
-    return unless RAILS_ENV == 'test'
+    return unless Rails.env.test?
     base.class_eval do
 
       hide_action :mock, :expect, :expect_or_raise, :verify
