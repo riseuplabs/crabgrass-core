@@ -33,6 +33,8 @@
 
 class DispatchController < ApplicationController
 
+  include Common::Page::CreationHelper
+
   # this is *not* an action, but the 'dispatch' method from ActionController::Metal
   # The only change here is that we don't return to_a(), but instead whatever
   # process() returns.
