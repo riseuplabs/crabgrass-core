@@ -39,6 +39,12 @@ module Common::Ui::ThemeHelper
     end
   end
 
+  def banner_height
+    @banner_height ||= begin
+      current_theme.int_var(:banner_padding) * 2 + current_theme.int_var(:icon_large) + 4
+    end
+  end
+
   def link_to_banner_title(entity, size=nil)
     if size
       link_to_entity(entity, :class => 'title', :format => :full, :style => 'line-height: %spx' % Avatar.pixel_width(size))
