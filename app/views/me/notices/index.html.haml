@@ -1,6 +1,4 @@
-.p.first
-  %h2=:notices.t
-
+.h2.first=:notices.t
 - if @notices.empty?
   %ul.shaded
     %li= :none.t
@@ -10,6 +8,5 @@
     = render :partial => 'notice', :collection => @notices
   = bottom_pagination_links @notices
 
-%h2=:recent_pages.t
-.p
-  = render :partial => 'common/pages/list', :locals => {:style => 'rows'}
+.h2=:recent_pages.t
+= render :partial => 'common/pages/list', :locals => {:style => 'table'}

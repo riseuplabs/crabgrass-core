@@ -8,9 +8,9 @@
 - if not entities.empty?
   - cache(menu_cache_key(:menu_id => id)) do
     %div{:style=>"display: none", :class => columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
-      %h3.dim
+      .h3.first
         = heading
-        %span.more
+        %small
           = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
       %div.leftcol
         %ul
