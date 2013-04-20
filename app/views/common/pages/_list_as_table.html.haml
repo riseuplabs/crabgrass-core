@@ -1,12 +1,12 @@
 - ##
-- ## displays a list of pages in a table (ie, using rows and columns). 
+- ## displays a list of pages in a table (ie, using rows and columns).
 - ##
 -
 -  columns = local_assigns[:columns] || :updated
 -  heading = true if heading.nil?
 -  sortable = false
 
-%table
+%table.table
   - if pages.empty?
     %tr
       %td= :no_search_results.t
@@ -15,8 +15,9 @@
       = page_table_header_row(columns)
     - pages.each do |page|
       = page_table_row(page, columns)
-    - if paginated?(@pages)
+    -# if paginated?(@pages)
       %tr
         %td{:colspan => page_table_colspan(columns)}
           = pagination_links(@pages)
-
+.p
+  = pagination_links(@pages)
