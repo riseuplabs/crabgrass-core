@@ -80,7 +80,7 @@ module Common::Ui::PaginationHelper
   # returns true if the array of things is actually paginated
   #
   def paginated?(things)
-    things.is_a?(WillPaginate::Collection) and things.total_entries > things.per_page
+    things.respond_to?(:total_entries) && things.total_entries > things.per_page
   end
 
   #
