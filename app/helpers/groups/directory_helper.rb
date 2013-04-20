@@ -15,6 +15,7 @@ module Groups::DirectoryHelper
 
     haml do
       haml '.name', link_to_group(group)
+      haml '.display-name', group.display_name if group.display_name != group.name
       haml '.info', comma_join(place, count)
       haml '.summary.plain', summary.try.html_safe
       if committees.present?

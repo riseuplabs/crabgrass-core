@@ -15,7 +15,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # there are some problems with this code. in particular, it does not handle
   # it very well when the user or group changes their avatar. also, this code
-  # duplicates some code in avatar_helper, in the interest of cutting out 
+  # duplicates some code in avatar_helper, in the interest of cutting out
   # a lot of logic and method calls.
   #
   def link_to_name(name, id=nil)
@@ -205,7 +205,7 @@ module Common::Ui::EntityDisplayHelper
       end
     end
   end
-  
+
 
   #
   # used to display a list of entities

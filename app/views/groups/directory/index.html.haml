@@ -1,14 +1,7 @@
--# .directory.two_column_float
--#   - for group in @groups
--#     .column_item
--#       = render :partial => 'group', :locals => {:group => group}
+%ul.directory
+  - for group in @groups
+    %li.entry= render :partial => 'group', :locals => {:group => group}
+    %li.divider
 
-.directory.grid
-  - @groups.in_groups_of(2, false) do |pair|
-    .row
-      = render :partial => 'group', :collection => pair
 .p
   = pagination_links(@groups)
-
-
-

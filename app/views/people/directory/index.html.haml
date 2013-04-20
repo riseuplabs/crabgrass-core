@@ -1,9 +1,7 @@
-.directory.grid
-  - @users.in_groups_of(2, false) do |pair|
-    .row
-      = render :partial => 'user', :collection => pair
+%ul.directory
+  - @users.each do |user|
+    %li.entry= render :partial => 'user', :locals => {:user => user}
+    %li.divider
+
 .p
   = pagination_links(@users)
-
-
-
