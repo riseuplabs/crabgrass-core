@@ -1,6 +1,6 @@
--# 
+-#
 -# this login form is used inline on the login page and for the login modal popup.
--# 
+-#
 -# for the popup, the class 'nofocus' tells modalbox to skip the element for
 -# tab focus.
 -#
@@ -10,6 +10,8 @@
 
 .login_form
   = form_tag(login_path, :id => "entry") do
+    #cookie_warning.alert.alert-error{:display => 'none'}
+      = :cookie_disabled_warning.t
     %div
       %label(for = 'login')= :login_name.t
       %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
@@ -24,4 +26,14 @@
       - if params[:redirect]
         = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
+
+:javascript
+  document.observe("dom:loaded", function() {
+    document.cookie = "are_cookies_enabled=1; expires=" + (new Date(Date.now() + 2000)).toGMTString();
+    if (document.cookie.length == 0) {
+      $('cookie_warning').show();
+    } else {
+      $('cookie_warning').hide();
+    }
+  });
 
