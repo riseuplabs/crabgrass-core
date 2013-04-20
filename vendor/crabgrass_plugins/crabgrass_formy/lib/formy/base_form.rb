@@ -7,7 +7,7 @@ module Formy
 
     def label(value=nil)
       if value
-        @elements << indent('<div class="legend">%s</div>' % value)
+        @elements << indent('<div class="legend %s">%s</div>' % [first(:legend), value])
       end
     end
 

@@ -57,13 +57,6 @@ module Formy
       super
     end
 
-    def first
-      if @first.nil?
-        @first = false
-        return 'first'
-      end
-    end
-
     class Row < Element
       element_attr :info, :label, :label_for, :input, :id, :style, :classes
 
@@ -87,7 +80,7 @@ module Formy
           @label ||= '&nbsp;'.html_safe
         end
 
-        puts '<div class="control-group %s %s" id="%s" style="%s">' % [parent.first, @classes, @id, @style]
+        puts '<div class="control-group %s %s" id="%s" style="%s">' % [parent.first(:row), @classes, @id, @style]
         puts content_tag(:label, @label, :for => @label_for, :class => 'control-label')
         puts '<div class="controls">'
         if @input

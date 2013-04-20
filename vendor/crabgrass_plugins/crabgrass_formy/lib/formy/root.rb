@@ -10,6 +10,17 @@ module Formy
       @base = self
       @current_element = [self]
     end
+
+    def first(what=:default)
+      @firsts ||= {}
+      if @firsts[what].nil?
+        @firsts[what] = false
+        return 'first'
+      else
+        return nil
+      end
+    end
+
   end
 
 end

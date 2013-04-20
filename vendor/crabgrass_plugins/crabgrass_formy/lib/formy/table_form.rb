@@ -42,13 +42,6 @@ module Formy
       super
     end
 
-    def first
-      if @first.nil?
-        @first = false
-        return 'first'
-      end
-    end
-
 #    class Section < Element
 #      sub_element :row
 #      def label(value)
