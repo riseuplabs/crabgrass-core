@@ -2,7 +2,7 @@
 -# Every time we show a list of posts, it should go through this partial.
 -#
 -# options:
--#   style -- currently, only 'table'
+-#   style -- currently, only 'default'
 -#   posts -- the array of Post objects.
 -#
 -# these paths must be defined:
@@ -16,7 +16,7 @@
 -#   may_edit_post?(post)
 -#
 
-- style = local_assigns[:style] ||= :table
+- style = local_assigns[:style] ||= :default
 - posts = local_assigns[:posts] ||= @posts
 - local_assigns[:remote] = true if local_assigns[:remote].nil?
 
