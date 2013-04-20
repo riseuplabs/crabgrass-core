@@ -4,4 +4,9 @@
   = header
   = :no_things_found.t(:things => :requests.t.downcase)
 - else
-  = render :partial => 'common/sliding_list', :locals => {:items => '@requests', :partial => 'common/requests/line_item', :path_method => :request_path, :header => header, :footer => pagination_links(@requests)}
+  = header
+  %ul.clickable.round
+    - @requests.each do |request|
+      %li{:onmousedown => "window.location.href = '%s'" % request_path(request)}
+        = render :partial => 'common/requests/line_item', :locals => {:request => request}
+  = pagination_links(@requests)

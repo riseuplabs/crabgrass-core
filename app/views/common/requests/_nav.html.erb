@@ -13,6 +13,7 @@
     :url => options.merge(:state => 'rejected'),
     :active => !none_active && options[:state] == 'rejected' }
 ) -%>
+&nbsp;
 <%= toggle_bug_links(
   { :label => :all.t,
     :url => options.merge(:view => 'all'),

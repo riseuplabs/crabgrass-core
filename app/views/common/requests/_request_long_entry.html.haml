@@ -39,7 +39,7 @@
 
   - # APPROVAL / REJECTION
   - if request.pending? and request.may_approve?(current_user)
-    = button_to_remote(:approve.tcap, 
+    = button_to_remote(:approve.tcap,
       {:url => approve_url, :method => :put, :loading => show_spinner(spinner_id)},
       {:class => 'btn btn-success'})
     = button_to_remote(:reject.tcap,
@@ -48,7 +48,7 @@
 
   - # DESTRUCTION
   - if request.may_destroy?(current_user)
-    = button_to_remote(:destroy.tcap, 
+    = button_to_remote(:destroy.tcap,
       {:url => request_path(request), :method => :delete, :loading => show_spinner(spinner_id)},
       {:class => 'btn btn-inverse'})
 

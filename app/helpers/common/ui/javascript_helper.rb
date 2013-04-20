@@ -147,6 +147,7 @@ module Common::Ui::JavascriptHelper
 
   #
   # called when a user clicks on a row in a 'sliding list'
+  # sliding list is currently deprecated
   #
 
   def activate_sliding_row(url)

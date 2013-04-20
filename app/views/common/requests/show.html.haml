@@ -1,5 +1,5 @@
 - content_for :title do
-  %h2= I18n.t(@request.name)
+  %h2= I18n.t(@request.name, :count => 1)
 
 .p.first
   - if referrer =~ /\/requests[\/\?]/ # hackish

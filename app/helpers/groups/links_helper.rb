@@ -84,11 +84,11 @@ module Groups::LinksHelper
       elsif may_destroy_group?
         link_to_with_confirm(:destroy_thing.t(:thing => @group.group_type),
           {:confirm => :destroy_confirmation.t(:thing => @group.group_type.downcase),
-           :url => direct_group_path(@group), :method => :delete })
+           :url => direct_group_path(@group), :method => :delete }, :class => 'btn')
       elsif may_create_destroy_request?
         link_to(:destroy_thing.t(:thing => @group.group_type),
           group_requests_path(@group, :type => 'destroy_group'),
-          :method => 'post')
+          :method => 'post', :class => 'btn')
       end
     end
   end
