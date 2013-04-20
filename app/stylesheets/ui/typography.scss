@@ -2,11 +2,12 @@
 // default font
 //
 
-p, ol, ul, td, div {
-  font-family: $font_default_family;
-  font-size: $font_default_size;
-  line-height: $font_default_line_height;
-}
+// I don't think this is necessary:
+// p, ol, ul, td, div {
+//   font-family: $font_default_family;
+//   font-size: $font_default_size;
+//   line-height: $font_default_line_height;
+// }
 
 // simulate a <p> using a class. technically, <p>'s are not
 // supposed to contain blocks. Therefore, use this instead.
@@ -49,7 +50,7 @@ i {
 // MARGINS
 //
 
-.p, .section, .h1, .h2, .h3 {
+.p, .section, .h1, .h2, .h3, h1, h2, h3 {
   &.first {
     // if class .first is added, remove the top margin.
     // this is often use with .p.first or .h1.first, etc.
@@ -58,6 +59,12 @@ i {
   &.last {
     margin-bottom: 0 !important;
   }
+}
+
+// do the same for "legend", a class for bootstrap forms
+.legend.first {
+  line-height: 1em;
+  padding-bottom: 8px;
 }
 
 //

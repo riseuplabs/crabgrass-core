@@ -12,6 +12,10 @@ $baseFontFamily:        $font_default_family;
 $baseLineHeight:        $font_default_line_height;
 $textColor:             $font_default_color;
 
+$headingsFontFamily:    $font_heading_family;
+$headingsFontWeight:    $font_heading_weight;
+$headingsColor:         $font_heading_color;
+
 //$gridColumns:           $grid_column_count;
 //$gridColumnWidth:       $grid_column_width;
 //$gridGutterWidth:       $grid_column_gutter;
@@ -35,10 +39,10 @@ $textColor:             $font_default_color;
 @import "bootstrap/layouts";
 
 // Base CSS
-//@import "bootstrap/type";
+@import "bootstrap/type";
 //@import "bootstrap/code";
 @import "bootstrap/forms";
-//@import "bootstrap/tables";
+@import "bootstrap/tables";
 
 // Components: common
 //@import "bootstrap/sprites";
@@ -131,4 +135,19 @@ input, textarea, select, .uneditable-input {
 
 .form-horizontal .control-label {
   padding-top: 0;
+}
+
+//
+// In normal bootstrap, plane ul is styled, and ul.unstyled is unstyled. This is annoying, because we almost always want an unstyled ul.
+// So, we switch it. Add .styled if you want the styled version.
+//
+
+ul, ol {
+  margin-left: 0;
+  list-style: none;
+}
+
+ul.styled, ol.styled {
+  padding: 0;
+  margin: 0 0 $baseLineHeight / 2 25px;
 }

@@ -1,52 +1,50 @@
+//
+// heading classes: they look the same as headings, but are more compact (1em line height),
+// and can be applied to any block.
+//
+
+h1 { font-size: $font_heading_h1_size; }
+h2 { font-size: $font_heading_h2_size; }
+h3 { font-size: $font_heading_h3_size; }
+h4 { font-size: $font_heading_h4_size; }
+
+.h1 {@extend h1}
+.h2 {@extend h2}
+.h3 {@extend h3}
+.h4 {@extend h4}
+
+.h1, .h2, .h3, .h4 {
+  line-height: 1em;
+}
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
-  font-weight: bold;
-  font-family: $font_heading_family;
-  line-height: 1.0em;
-
   // if someone uses a title or heading somewhere that is one long
   // unbroken word, the layout gets really messed up unless this is set.
   word-wrap: break-word;
-
-  // "more" links are commonly used to embed a small link inside a heading
-  // to see more information.
-  .more {
-    padding-left: 1em;
-    font-size: 0.8em; // $grid_font_size;
-  }
-
-  .plain {
-    font-size: $font_default_size;
-    font-family: $font_default_family;
-    font-weight: normal;
-  }
-
-  a {
-    @include cg-hover-link;
-  }
 }
 
-h2.dim, h3.dim, h4.dim {
-  color: $color_dim;
-}
+// h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+//   // "more" links are commonly used to embed a small link inside a heading
+//   // to see more information.
+//   .more {
+//     padding-left: 1em;
+//     font-size: 0.8em; // $grid_font_size;
+//   }
+//   .plain {
+//     font-size: $font_default_size;
+//     font-family: $font_default_family;
+//     font-weight: normal;
+//   }
+//   a {
+//     @include cg-hover-link;
+//   }
+// }
 
-h1, .h1 {font-size: $font_heading_h1_size;}
-h2, .h2 {font-size: $font_heading_h2_size;}
-h3, .h3 {font-size: $font_heading_h3_size;}
-h4, .h4 {font-size: $font_heading_h4_size;}
+// h2.dim, h3.dim, h4.dim {
+//   color: $color_dim;
+// }
 
-//
-// plain makes everything the default font. used in places where you want to eliminate
-// the html formatting of some user supplied text.
-//
-// currently, this is used in the directories. I am not sure this is the best long term
-// method for dealing with this situation.
-//
-
-.plain {
-  h1, .h1 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
-  h2, .h2 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
-  h3, .h3 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
-  h4, .h4 {font-size: inherit !important; font-weight: inherit !important; font-family: inherit !important;}
-}
-
+// h1, .h1 {font-size: $font_heading_h1_size;}
+// h2, .h2 {font-size: $font_heading_h2_size;}
+// h3, .h3 {font-size: $font_heading_h3_size;}
+// h4, .h4 {font-size: $font_heading_h4_size;}

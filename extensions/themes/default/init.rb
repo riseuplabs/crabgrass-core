@@ -52,10 +52,12 @@ define_theme {
     }
     heading {
       family "verdana, 'bitstream vera sans', helvetica, sans-serif"
-      h1_size '2.10em'
-      h2_size '1.125em'
-      h3_size '1em'
-      h4_size '1em'
+      weight 'normal'
+      color '#000'
+      h1_size "#{var(:font_default_size).to_i * 2.25}px"
+      h2_size "#{var(:font_default_size).to_i * 1.75}px"
+      h3_size "#{var(:font_default_size).to_i * 1.25}px"
+      h4_size var(:font_default_size)
     }
   }
 
