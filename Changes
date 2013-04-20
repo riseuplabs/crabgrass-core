@@ -13,8 +13,7 @@ Updated dependencies
 * Ruby 1.9
 * Bootstrap
 * No more compass and Susy
-* using bundler
-
+* Using bundler
 
 Upgrading to Crabgrass 1.0 from earlier versions
 ------------------------------------------------
@@ -34,5 +33,6 @@ configuration changes
   enabled_tools is now enabled_pages
   added login_redirect_url
 
-
+config/database.yml
+  "mysql" must be replaced with "mysql2"
 
