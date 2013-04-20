@@ -128,3 +128,7 @@ input, textarea, select, .uneditable-input {
     border-width: 2px;
   }
 }
+
+.form-horizontal .control-label {
+  padding-top: 0;
+}
