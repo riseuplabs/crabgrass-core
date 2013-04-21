@@ -49,9 +49,9 @@ module Common::Ui::ImageHelper
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:baseline;", :class => 'spin'}.merge(options)
     if options[:text]
-      "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:middle' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
+      "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:baseline' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
     else
       "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='' class='#{options[:class]}' />"
     end.html_safe
