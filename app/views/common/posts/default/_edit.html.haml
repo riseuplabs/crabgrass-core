@@ -5,9 +5,9 @@
 -#
 
 %div.post_body{:id => post.body_id}
-  - remote_form_for(:post, post, :url => post_path(post), :method => :put, :loading => show_spinner('edit_post')) do |f|
+  = remote_form_for(:post, post, :url => post_path(post), :method => :put, :loading => show_spinner('edit_post')) do |f|
     = f.text_area :body, :rows => 8
-    .buttons
+    .right_buttons
       = spinner('edit_post')
       = submit_tag :delete_button.t, :name => 'destroy', :class => 'btn btn'
       = submit_tag :cancel_button.t, :name => 'cancel', :class => 'btn btn'
