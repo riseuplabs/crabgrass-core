@@ -62,7 +62,7 @@ en:
 
   ##
   ## EMAIL
-  ## 
+  ##
 
   group_invite_subject: 'Invitation to join group "%{group}"'
   group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
@@ -74,7 +74,7 @@ en:
   ##
 
   group_wiki: "Group Wiki"
-  
+
   ##!  create_group_wiki: "Create Group Wiki"
   create_public_group_wiki: "Public"
   create_private_group_wiki: "Private"
@@ -187,7 +187,7 @@ en:
   ##!  view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
-  add_members_to_committee: "Add group members to this committee"
+  add_members_to_committee: "Add a group member to this committee. To add people not in the parent group, send an invite instead."
   ##!  destroy_group_link: "Destroy %{group_type}"
   ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
   ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."

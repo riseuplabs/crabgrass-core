@@ -130,7 +130,7 @@ module Groups::LinksHelper
         :icon => 'minus')
     else
       if membership.entity.is_a? Group
-        raise 'not yet supported'
+        return 'not yet supported'
         req = RequestToRemoveGroup.existing(:group => membership.entity, :network => @group)
       else
         req = RequestToRemoveUser.existing(:user => membership.entity, :group => @group)

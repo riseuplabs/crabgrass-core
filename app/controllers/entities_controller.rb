@@ -20,15 +20,35 @@ class EntitiesController < ApplicationController
 
   def index
     @entities = case params[:view]
-      when 'recipients' then recipients();
-      when 'groups' then groups();
-      when 'users' then users();
-      when 'all' then all();
-      else all();
+      when 'recipients' then recipients
+      when 'groups' then groups
+      when 'users' then users
+      when 'members' then members
+      when 'all' then all
+      else all
     end
   end
 
   private
+
+  #
+  # all the people in a group, if you are allowed to see them
+  #
+  def members
+    group = Group.find_by_name(params[:group])
+    logger.error params[:group]
+    if current_user.may?(:see_members, group)
+      if preload?
+        group.users
+      else
+        []
+      #elsif filter.present?
+      #  group.users.named_like(filter).find(:all, :limit => LIMIT)
+      end
+    else
+      []
+    end
+  end
 
   #
   # people that the current user is allowed to pester

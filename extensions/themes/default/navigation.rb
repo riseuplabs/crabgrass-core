@@ -282,10 +282,10 @@ define_navigation do
         active  { controller?('groups/membership_requests') }
       end
 
-      local_section :leave_group_link do
-        visible { may_leave_group? }
-        html    { leave_group_link }
-      end
+      #local_section :leave_group_link do
+      #  visible { may_leave_group? }
+      #  html    { leave_group_link }
+      #end
 
       #local_section :membership_settings do
       #  visible { may_edit_group? }

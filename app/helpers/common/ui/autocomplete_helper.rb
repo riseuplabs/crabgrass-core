@@ -46,6 +46,12 @@ module Common::Ui::AutocompleteHelper
     autocomplete_entity_field_tag(field_id, options)
   end
 
+  # just for group members
+  def autocomplete_members_field_tag(field_id, options = {})
+    options.merge! :view => 'members'
+    autocomplete_entity_field_tag(field_id, options)
+  end
+
   # for groups and users
   def autocomplete_entity_field_tag(field_id, options={})
     # setup options
@@ -62,7 +68,7 @@ module Common::Ui::AutocompleteHelper
     text_field_tag(field_id, '', :style => options[:style], :onkeypress => options[:onkeypress]) +
     javascript_tag("cgAutocompleteEntities('%s', '%s' %s)" % [
       field_id,
-      entities_path(:view => options[:view], :format => 'json'),
+      entities_path(:view => options[:view], :format => 'json', :group => options[:group]),
       option_string
     ])
   end
