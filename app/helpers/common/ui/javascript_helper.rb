@@ -256,6 +256,10 @@ module Common::Ui::JavascriptHelper
     "if(this.value==this.defaultValue) this.value='';"
   end
 
+  def focus_form(id)
+    javascript_tag "Form.focusFirstElement('#{id}');"
+  end
+
   # toggle all checkboxes off and then toggle a subset of them on
   # selectors are css expressions
   #def checkboxes_subset_function(all_selector, subset_selector)

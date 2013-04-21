@@ -1,6 +1,6 @@
 -#
 -# this is a partial for the top search controls.
--# which contain a text filter field and view controls. 
+-# which contain a text filter field and view controls.
 -#
 -# REQUIREMENTS
 -#
@@ -9,7 +9,7 @@
 -# NOTES
 -#
 -#   form_remote_tag does not support the :with option, so we must use some other method.
--#   (here we use link_to_remote). 
+-#   (here we use link_to_remote).
 -#
 -#   because we are not using form_remote_tag, we eat the return key and trigger a click
 -#   to the submit link.
@@ -44,4 +44,4 @@
             %td.search
               = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
 
-= javascript_tag "Form.focusFirstElement('page_search_form');"
+= focus_form 'page_search_form'

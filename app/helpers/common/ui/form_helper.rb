@@ -86,4 +86,18 @@ module Common::Ui::FormHelper
     %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect})]
   end
 
+  #
+  # Wraps arguments in a div with class 'input-append'. This is a bootstrap css thing:
+  #
+  # <div class="input-append">
+  #   <input class="span2" id="appendedInputButton" type="text">
+  #   <button class="btn" type="button">Go!</button>
+  # </div>
+  #
+  # Warning: input args are tags as html_safe.
+  #
+  def input_append(*args)
+    content_tag :div, args.join("\n").html_safe, :class => 'input-append'
+  end
+
 end
