@@ -61,8 +61,11 @@ module Common::Ui::AlertHelper
   #
   #  update_alert_messages(page)
   #
-  # in order to show any messages that might be set, or to hide the message
+  # In order to show any messages that might be set, or to hide the message
   # area if there are none set.
+  #
+  # Note: this is included in the method standard_update(), which is better to use
+  # because it also will stop all spinners.
   #
   def update_alert_messages(page)
     if alert_messages?
@@ -107,7 +110,7 @@ module Common::Ui::AlertHelper
     text = if message[:text].is_a?(Array)
       if message[:text].size > 1
         content_tag(:p, message[:text][0], :class => 'first') +
-        content_tag(:p, message[:text][1..-1])
+        content_tag(:p, message[:text][1..-1].join)
       else
         message[:text].first
       end
@@ -118,7 +121,11 @@ module Common::Ui::AlertHelper
     html << link_to_function('×', "hideAlertMessage('#{message_id}')", :class => 'close')
     html << content_tag(:div, text, :class => "text #{icon_class}")
     if message[:list]
-      html << content_tag(:ul, message[:list].collect{|item|content_tag(:li, item)})
+      html << content_tag(:ul,
+        safe_join(message[:list].collect{|item|
+          content_tag(:li, item)
+        })
+      )
     end
     if allow_fade
       if message[:fade] || message[:quick] || ((message[:type] == :success || message[:type] == :notice) && !message[:nofade])
