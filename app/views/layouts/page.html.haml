@@ -26,6 +26,6 @@
 - content_for(:content) do
   = yield
   - if @options.show_posts
-    = render :partial => 'common/posts/list', :locals => {:style => 'table', :remote => true}
+    = render :partial => 'common/posts/list', :locals => {:remote => true}
 
 = render :file => 'layouts/application'
