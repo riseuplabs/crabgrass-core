@@ -323,10 +323,19 @@ Autocomplete.prototype = {
     this.container.hide();
   },
 
+  loading: function() {
+    this.container.show();
+    this.container.innerHTML = "<em>Loading...</em>";
+  },
+
   suggest: function() {
     var content = [];
     if (this.suggestions.length === 0) {
-      this.hide();
+      if(Object.keys(this.cachedResponse).length === 0 && this.pending > 0) {
+        this.loading();
+      } else {
+        this.hide();
+      }
       return;
     }
     this.suggestions.each(function (value, i) {
@@ -365,7 +374,10 @@ Autocomplete.prototype = {
     this.data = this.data.concat(response.data);
   },
 
+  pending: 0,
+
   requestSuggestions: function(query) {
+    this.pending++;
     new Ajax.Request(this.serviceUrl, {
           parameters: { query: query },
           onComplete: this.processResponse.bind(this),
@@ -374,6 +386,7 @@ Autocomplete.prototype = {
   },
 
   processResponse: function(xhr) {
+    this.pending--;
     var response;
     try {
       response = xhr.responseText.evalJSON();
