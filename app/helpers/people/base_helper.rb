@@ -6,10 +6,10 @@ module People::BaseHelper
   # for viewing our own profile, this becomes an edit link.
   #
   def profile_contact_link
+    return if current_user.is_a? UnauthenticatedUser
+
     if current_user == @user
       link_to :edit.t, edit_me_profile_path, :icon => 'pencil'
-    elsif current_user.is_a?(UnauthenticatedUser)
-      ''
     elsif current_user.friend_of?(@user)
       link_to :remove_friend_link.t,
         person_friend_request_path(@user),
