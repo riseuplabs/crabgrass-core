@@ -64,7 +64,7 @@ module Common::Utility::GeneralHelper
       split_up_word = word.scan(/.{#{max_length}}/)
       word_remainder = word.split(/.{#{max_length}}/).select{|str| str.present?}
       (split_up_word + word_remainder).join('&shy;')
-    end
+    end.html_safe
   end
 
   # returns the first of the args where present? returns true
