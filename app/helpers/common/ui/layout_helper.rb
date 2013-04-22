@@ -110,6 +110,11 @@ module Common::Ui::LayoutHelper
 
     lines << csrf_meta_tag
 
+    # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
+    unless logged_in?
+      lines.push('<script type="text/javascript">if(sessionStorage.length > 0) sessionStorage.clear();</script>')
+    end
+
     lines.join("\n").html_safe
   end
 
