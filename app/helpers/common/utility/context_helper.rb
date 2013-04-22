@@ -38,7 +38,8 @@ module Common::Utility::ContextHelper
 
   def context_banner_style
     if picture = @context.entity.profiles.public.picture
-      picture.add_geometry!({:max_width => banner_width, :min_width => banner_width, :max_height => banner_height, :min_height => banner_height})
+      geometry = {:max_width => banner_width, :min_width => banner_width, :max_height => banner_height, :min_height => banner_height}
+      picture.add_geometry!(geometry)
       "background-image: url(#{picture.url(geometry)})"
     else
       ""
