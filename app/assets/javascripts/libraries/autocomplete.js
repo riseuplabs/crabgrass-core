@@ -10,6 +10,12 @@
 
 var Autocomplete = function(el, options, id){
   this.el = $(el);
+  if(! (this.el instanceof Element)) {
+    // quickly opening / closing "share" or "notify" dialogs will cause the element
+    // to disappear before Autocomplete has been initialized. In this case we can
+    // just stop here, to prevent further JS errors.
+    return;
+  }
   this.id = id ? id : this.el.identify();
   this.el.setAttribute('autocomplete','off');
   this.suggestions = [];
