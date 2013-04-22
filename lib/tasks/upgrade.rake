@@ -30,6 +30,14 @@ namespace :cg do
       User.all.each(&:migrate_permissions!)
     end
 
+    desc "Set created_at timestamps where it is not set"
+    task :init_created_at => :environment do
+      [Membership, Tagging, Task, Profile].each do |model|
+        puts "- #{model.name}"
+        model.update_all({ :created_at => 1.week.ago }, "#{model.quoted_table_name}.created_at IS NULL")
+      end
+    end
+
   end
 end
 
