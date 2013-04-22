@@ -60,7 +60,7 @@ module Common::Utility::GeneralHelper
   # see http://www.quirksmode.org/oddsandends/wbr.html
   #
   def force_wrap(text,max_length=20)
-    text.gsub(/(\w{#{max_length},})/) do |word|
+    h(text).gsub(/(\w{#{max_length},})/) do |word|
       split_up_word = word.scan(/.{#{max_length}}/)
       word_remainder = word.split(/.{#{max_length}}/).select{|str| str.present?}
       (split_up_word + word_remainder).join('&shy;')
