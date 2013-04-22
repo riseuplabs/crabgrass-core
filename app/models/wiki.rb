@@ -56,6 +56,9 @@ class Wiki < ActiveRecord::Base
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
+  # see description below.
+  after_save :save_page_after_save
+
   # constant for length to show preview rather than full wiki
   PREVIEW_CHARS = 500
 
@@ -84,6 +87,15 @@ class Wiki < ActiveRecord::Base
     self.user = user
     self.body = text
     self.save!
+  end
+
+  # after the wiki text has been updated the page terms need to be rebuilt, so the
+  # search index gets updated. For some reason this doesn't happen automatically
+  # when saving the wiki, so we trigger a page save here.
+  def save_page_after_save
+    if page && page.type == 'WikiPage' && page.valid?
+      page.save!
+    end
   end
 
   # similar to update_attributes!, but only for text
