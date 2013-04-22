@@ -8,8 +8,19 @@
  *
  */
 
+// simple fallback when sessionStorage is not available
+if(! ('sessionStorage' in window)) {
+  window.sessionStorage = {};
+}
+
 var Autocomplete = function(el, options, id){
   this.el = $(el);
+  if(! (this.el instanceof Element)) {
+    // quickly opening / closing "share" or "notify" dialogs will cause the element
+    // to disappear before Autocomplete has been initialized. In this case we can
+    // just stop here, to prevent further JS errors.
+    return;
+  }
   this.id = id ? id : this.el.identify();
   this.el.setAttribute('autocomplete','off');
   this.suggestions = [];
@@ -20,7 +31,6 @@ var Autocomplete = function(el, options, id){
   this.intervalId = 0;
   this.preloadedSuggestions = 0;
   this.renderedQuery = "";
-  this.cachedResponse = [];
   this.instanceId = null;
   this.onChangeInterval = null;
   this.ignoreValueChange = false;
@@ -42,6 +52,15 @@ var Autocomplete = function(el, options, id){
     this.initialize();
   }else{
     Event.observe(document, 'dom:loaded', this.initialize.bind(this), false);
+  }
+
+  // load cached response from session storage
+  try {
+    this.cachedResponse = JSON.parse(sessionStorage['autocomplete-' + this.serviceUrl]);
+  } catch(e) {};
+
+  if(typeof(this.cachedResponse) !== 'object') {
+    this.cachedResponse = {};
   }
 };
 
@@ -304,10 +323,19 @@ Autocomplete.prototype = {
     this.container.hide();
   },
 
+  loading: function() {
+    this.container.show();
+    this.container.innerHTML = "<em>Loading...</em>";
+  },
+
   suggest: function() {
     var content = [];
     if (this.suggestions.length === 0) {
-      this.hide();
+      if(Object.keys(this.cachedResponse).length === 0 && this.pending > 0) {
+        this.loading();
+      } else {
+        this.hide();
+      }
       return;
     }
     this.suggestions.each(function (value, i) {
@@ -346,7 +374,10 @@ Autocomplete.prototype = {
     this.data = this.data.concat(response.data);
   },
 
+  pending: 0,
+
   requestSuggestions: function(query) {
+    this.pending++;
     new Ajax.Request(this.serviceUrl, {
           parameters: { query: query },
           onComplete: this.processResponse.bind(this),
@@ -355,12 +386,17 @@ Autocomplete.prototype = {
   },
 
   processResponse: function(xhr) {
+    this.pending--;
     var response;
     try {
       response = xhr.responseText.evalJSON();
       if (!Object.isArray(response.data)) { response.data = []; }
     } catch (err) { return; }
     this.cachedResponse[response.query] = response;
+
+    // store new cache in session storage, so it is available after a refresh
+    sessionStorage['autocomplete-' + this.serviceUrl] = JSON.stringify(this.cachedResponse);
+
     if (this.currentValue.indexOf(response.query) === 0 &&
         response.query.length >= this.renderedQuery.length) {
       this.updateSuggestions(this.filterResponse(response));
