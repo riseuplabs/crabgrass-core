@@ -8,6 +8,11 @@
  *
  */
 
+// simple fallback when sessionStorage is not available
+if(! ('sessionStorage' in window)) {
+  window.sessionStorage = {};
+}
+
 var Autocomplete = function(el, options, id){
   this.el = $(el);
   if(! (this.el instanceof Element)) {
