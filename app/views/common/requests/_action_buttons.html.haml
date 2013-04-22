@@ -5,14 +5,14 @@
   - approve_url = request_path(request, :state => current_state, :mark => 'approve')
   - reject_url = request_path(request, :state => current_state, :mark => 'reject')
 
-  .p.first= expand_links(request.display_short_description, :avatar => 'tiny', :class => 'inline').html_safe
+  .p.first= display_request(request, short: true)
 
   .buttons
     = spinner(spin_id)
 
     - # APPROVAL / REJECTION
     - if may_approve
-      = button_to_remote(:approve.t,
+      = button_to_remote(:approve.t, 
         {:url => approve_url, :method => :put, :loading => show_spinner(spin_id)},
         {:class => 'btn btn-success'})
       = button_to_remote(:reject.t,
@@ -21,6 +21,6 @@
 
     - # DESTRUCTION
     - if may_destroy
-      = button_to_remote(:delete_thing.t(:thing => :request.t),
+      = button_to_remote(:delete_thing.t(:thing => :request.t), 
         {:url => request_path(request), :method => :delete, :loading => show_spinner(spin_id)},
         {:class => 'btn btn-inverse'})

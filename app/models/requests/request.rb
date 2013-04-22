@@ -92,11 +92,12 @@ class Request < ActiveRecord::Base
   scope :pending, :conditions => "state = 'pending'"
   scope :by_created_at, :order => 'created_at DESC'
   scope :by_updated_at, :order => 'updated_at DESC'
-  scope :created_by, lambda { |user|
-    {:conditions => {:created_by_id => user}}
-  }
+  scope :created_by, lambda { |user| where(created_by_id: user) }
   scope :to_user, lambda { |user|
-    # you only get to approve group requests for groups that you are an admin for
+    where(recipient_id: user, recipient_type: 'User')
+  }
+  # you only get to approve group requests for groups that you are an admin for
+  scope :approvable_by, lambda { |user|
     {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
   }
 
@@ -108,10 +109,11 @@ class Request < ActiveRecord::Base
   }
 
   scope :to_group, lambda { |group|
-    {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, 'Group']}
+    where(recipient_id: group, recipient_type: 'Group')
   }
+
   scope :from_group, lambda { |group|
-    {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
+    where(requestable_id: group, requestable_type: 'Group')
   }
 
   scope :regarding_group, lambda { |group|
@@ -304,10 +306,10 @@ class Request < ActiveRecord::Base
   # the text is not html escaped, so please don't change this to display_name
   #
   def user_span(user)
-    '<user>%s</user>' % user.name
+    ('<user>%s</user>' % user.name).html_safe
   end
   def group_span(group)
-    '<group>%s</group>' % group.name
+    ('<group>%s</group>' % group.name).html_safe
   end
 
   #

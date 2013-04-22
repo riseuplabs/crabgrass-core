@@ -272,11 +272,17 @@ module Common::Ui::EntityDisplayHelper
   # used to convert the text produced by activities & requests into actual links
   #
   def expand_links(text, options=nil)
-    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
-      if options
-        content_tag(:b, link_to_entity($2, options))
-      else
-        content_tag(:b, link_to_name($2))
+    if block_given?
+      options = text if text.is_a? Hash
+      text = yield
+    end
+    with_html_safety(text) do
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+        if options
+          content_tag(:b, link_to_entity($2, options))
+        else
+          content_tag(:b, link_to_name($2))
+        end
       end
     end
   end
@@ -284,10 +290,17 @@ module Common::Ui::EntityDisplayHelper
   #
   # converts the link markers in the text of activies and requests in bolded text
   #
-  def embold_links(text)
-    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
-      content_tag(:b, $2)
-    end.html_safe
+  def embold_links(text = nil)
+    text = yield if block_given?
+    with_html_safety(text) do
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+        content_tag(:b, $2)
+      end
+    end
+  end
+
+  def with_html_safety(text)
+    text.html_safe? ? yield.html_safe : yield
   end
 
 end
