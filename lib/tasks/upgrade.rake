@@ -33,12 +33,8 @@ namespace :cg do
     desc "Set created_at timestamps where it is not set"
     task :init_created_at => :environment do
       [Membership, Tagging, Task, Profile].each do |model|
-        print "#{model.name}: "
-        model.where(["#{model.quoted_table_name}.created_at IS NULL"]).each do |record|
-          print '.'
-          record.update_attributes(:created_at => 1.week.ago)
-        end
-        puts
+        puts "- #{model.name}"
+        model.update_all({ :created_at => 1.week.ago }, "#{model.quoted_table_name}.created_at IS NULL")
       end
     end
 
