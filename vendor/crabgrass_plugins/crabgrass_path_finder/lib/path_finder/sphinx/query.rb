@@ -113,22 +113,26 @@ class PathFinder::Sphinx::Query < PathFinder::Query
 
   def find
     search
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).find     # fall back to mysql
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.find
   end
 
   def paginate
     search # sphinx search *always* paginates
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).paginate     # fall back to mysql
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.paginate
   end
 
   def count
     PageTerms.search_for_ids(@search_text, :with => @with, :without => @without,
       :page => @page, :per_page => @per_page, :conditions => @conditions,
       :order => @order, :include => :page).size
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).count        # fall back to mysql
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.count
+  end
+
+  def fallback
+    PathFinder::Mysql::Query.new(@original_path, @original_options, @klass)
   end
 
   ##
