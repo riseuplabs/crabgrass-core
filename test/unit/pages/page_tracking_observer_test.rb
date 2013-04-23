@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative 'test_helper'
 
 class PageTrackingObserverTest < ActiveSupport::TestCase
 
@@ -182,6 +182,12 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_update_content
     page = FactoryGirl.create(:wiki_page, :data => Wiki.new(:user => @pepe, :body => ""))
+    # for some reason creating the page didn't create a GrantUserFullExist history
+    # item. Instead that would be created as soon as the wiki is updated (because
+    # that triggers a page.save! to update the page terms). The GrantUserFullAccess
+    # item would then be created *after* the UpdatedContent item, which breaks this
+    # test. Saving the page here makes everything work as expected again.
+    page.save!
     wiki = Wiki.find page.data_id
     previous_page_history = page.page_histories.count
     wiki.update_section!(:document, @pepe, 1, "dsds")
