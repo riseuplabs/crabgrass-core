@@ -153,6 +153,7 @@ namespace :cg do
     desc "pull translations from transifex"
     task :download do
       Conf.enabled_languages.each do |lang|
+        next unless lang == 'en'
         `curl -L --user #{Conf.transifex_user}:#{Conf.transifex_password} -X GET https://www.transifex.net/api/2/project/crabgrass/resource/master/translation/#{lang}/?file > config/locales/#{lang}.yml`
       end
     end
