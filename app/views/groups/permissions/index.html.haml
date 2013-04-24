@@ -14,9 +14,9 @@
 
     -# removed for now. better not to have this in two places.
     -# if may_create_council?
-    -# f.heading :administration.t
+    -# f.label :administration.t
     -# council_field(f)
 
     - if @group.has_a_council?
-      - f.heading :group_wiki.t
+      - f.label :group_wiki.t
       - members_may_edit_wiki_checkbox(f)
