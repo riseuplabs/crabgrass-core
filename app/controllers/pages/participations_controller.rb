@@ -10,6 +10,8 @@ class Pages::ParticipationsController < Pages::SidebarsController
   guard :may_show_page?, :actions => [:update, :create]
   helper 'pages/participation', 'pages/share'
 
+  before_filter :fetch_data
+
   # this is used for ajax pagination
   def index
     tab = params[:tab] == 'permissions' ? 'permissions_tab' : 'participation_tab'
