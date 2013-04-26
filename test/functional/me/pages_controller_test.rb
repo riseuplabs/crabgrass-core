@@ -12,10 +12,11 @@ class Me::PagesControllerTest < ActionController::TestCase
   def test_list_page_with_long_title
     title = 'VeryLongTitleWithNoSpaceThatWillBeFarTooLongToFitIntoTheTableColumnAndInTurnBreakTheLayoutUnlessItIsBrokenUsingHiddenHyphens'
     expected = 'VeryLongTitleWithNoS&shy;paceThatWillBeFarToo&shy;LongToFitIntoTheTabl&shy;eColumnAndInTurnBrea&shy;kTheLayoutUnlessItIs&shy;BrokenUsingHiddenHyp&shy;hens'
-    FactoryGirl.create :wiki_page, :title => title, :owner => users(:blue)
+    page = FactoryGirl.create :wiki_page, :title => title, :owner => users(:blue)
     login_as users(:blue)
     xhr :get, :index
     assert_response :success
+    assert assigns(:pages).include?(page)
     assert response.body.include?(expected), "Expected #{response.body} to include #{expected}."
   end
 
