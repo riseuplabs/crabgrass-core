@@ -103,7 +103,7 @@ class Holder
   # returns all the holder codes that this holder 'owns'
   #
   # In order to specify what holders a holder owns, the holder
-  # must implement the method 'holders' or 'holder_codes'
+  # must implement the method 'holder_codes'
   #
   def all_codes
      codes = []
@@ -113,8 +113,6 @@ class Holder
        elsif return_value.is_a? Array
          codes = self.class.codes_from_array(return_value)
        end
-     elsif @object.respond_to?(:holders) && holder_list = @object.holders
-       codes = holder_list.collect {|holder| Holder[holder].code}
      end
      codes << self.code
   end
