@@ -48,11 +48,6 @@ var Autocomplete = function(el, options, id){
     preloadedOnTop:false
   };
   if(options){ Object.extend(this.options, options); }
-  if(Autocomplete.isDomLoaded){
-    this.initialize();
-  }else{
-    Event.observe(document, 'dom:loaded', this.initialize.bind(this), false);
-  }
 
   // load cached response from session storage
   try {
@@ -61,6 +56,12 @@ var Autocomplete = function(el, options, id){
 
   if(typeof(this.cachedResponse) !== 'object') {
     this.cachedResponse = {};
+  }
+
+  if(Autocomplete.isDomLoaded){
+    this.initialize();
+  }else{
+    Event.observe(document, 'dom:loaded', this.initialize.bind(this), false);
   }
 };
 
@@ -131,7 +132,9 @@ Autocomplete.prototype = {
     }
     this.instanceId = Autocomplete.instances.push(this) - 1;
     /* I think we should trigger a preloading request from here */
-    this.requestSuggestions("");
+    if(! this.cachedResponse[""]) {
+      this.requestSuggestions("");
+    }
   },
 
   fixPosition: function() {
@@ -306,7 +309,7 @@ Autocomplete.prototype = {
         }
       });
     }
-    return {data:data, query:this.currentValue, suggestions:suggest};
+    return {data:data, query:this.currentValue, suggestions:suggest, preloading: response.query === ''};
   },
 
   isBadQuery: function(q) {
@@ -325,7 +328,7 @@ Autocomplete.prototype = {
 
   loading: function() {
     this.container.show();
-    this.container.innerHTML = "<em>Loading...</em>";
+    this.container.innerHTML = '<img src="/images/spinner.gif">';
   },
 
   suggest: function() {
@@ -378,7 +381,7 @@ Autocomplete.prototype = {
 
   requestSuggestions: function(query) {
     this.pending++;
-    new Ajax.Request(this.serviceUrl, {
+    RequestQueue.add(this.serviceUrl, {
           parameters: { query: query },
           onComplete: this.processResponse.bind(this),
           method: 'get'
@@ -416,7 +419,7 @@ Autocomplete.prototype = {
       this.appendSuggestions(filtered); /*adding preloaded suggestions*/
     }
     this.preloadedSuggestions=this.suggestions.length
-    if (response != "") {
+    if (response != "" && (! response.preloading)) {
       this.appendSuggestions(response);
       this.renderedQuery=response.query;
     }
