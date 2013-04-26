@@ -309,7 +309,7 @@ Autocomplete.prototype = {
         }
       });
     }
-    return {data:data, query:this.currentValue, suggestions:suggest};
+    return {data:data, query:this.currentValue, suggestions:suggest, preloading: response.query === ''};
   },
 
   isBadQuery: function(q) {
@@ -419,7 +419,7 @@ Autocomplete.prototype = {
       this.appendSuggestions(filtered); /*adding preloaded suggestions*/
     }
     this.preloadedSuggestions=this.suggestions.length
-    if (response != "") {
+    if (response != "" && (! response.preloading)) {
       this.appendSuggestions(response);
       this.renderedQuery=response.query;
     }
