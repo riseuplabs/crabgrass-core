@@ -47,7 +47,7 @@ module Groups::PermissionsHelper
 
   def members_may_edit_wiki_checkbox(form)
     form.row do |r|
-      r.input castle_gate_tag(@group, :edit, [@group], :label => :members_may_edit_wiki.t)
+      r.input castle_gate_tag(@group, :edit, [CastleGates::Holder[@group]], :label => :members_may_edit_wiki.t)
       r.info :members_may_edit_wiki_description.t(:group => @group.group_type)
     end
   end

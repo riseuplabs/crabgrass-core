@@ -11,10 +11,28 @@ class Groups::PermissionsController < Groups::BaseController
     # update
     gate = @group.gate(params.delete(:gate).to_sym)
     new_state = params[:new_state]
-    if new_state == 'open'
-      @group.grant_access!(:public => gate.name)
+
+    if params[:id].to_i == 0
+      holder = :public
     else
-      @group.revoke_access!(:public => gate.name)
+      holder = CastleGates::Holder.find_by_code(params[:id])
+      # don't allow altering any other holder than :public or
+      # the group itself.
+      # otherwise you could do all kinds of nasty things.
+      if holder != @group
+        render :status => 400, :text => '' and return
+      end
+    end
+
+    ## FIXME: should we prevent the following cases?
+    ##  - granting :admin to :public
+    ##  - granting :admin to @group, when @group has a council
+    ##  - ...
+
+    if new_state == 'open'
+      @group.grant_access!(holder => gate.name)
+    else
+      @group.revoke_access!(holder => gate.name)
     end
 
     # render
