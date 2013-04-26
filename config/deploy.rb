@@ -3,7 +3,7 @@ require "bundler/capistrano"
 ##
 ## updates the crontap on deploy if needed.
 ##
-set :whenever_command, "bundle exec whenever"
+set :whenever_command, "bundle exec whenever -f config/misc/schedule.rb"
 require "whenever/capistrano"
 
 ##
