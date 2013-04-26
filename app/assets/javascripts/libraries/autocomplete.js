@@ -48,11 +48,6 @@ var Autocomplete = function(el, options, id){
     preloadedOnTop:false
   };
   if(options){ Object.extend(this.options, options); }
-  if(Autocomplete.isDomLoaded){
-    this.initialize();
-  }else{
-    Event.observe(document, 'dom:loaded', this.initialize.bind(this), false);
-  }
 
   // load cached response from session storage
   try {
@@ -61,6 +56,12 @@ var Autocomplete = function(el, options, id){
 
   if(typeof(this.cachedResponse) !== 'object') {
     this.cachedResponse = {};
+  }
+
+  if(Autocomplete.isDomLoaded){
+    this.initialize();
+  }else{
+    Event.observe(document, 'dom:loaded', this.initialize.bind(this), false);
   }
 };
 
