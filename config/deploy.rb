@@ -1,6 +1,12 @@
 require "bundler/capistrano"
 
 ##
+## updates the crontap on deploy if needed.
+##
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
+##
 ## REMEMBER: you can see available tasks with "cap -T"
 ##
 
