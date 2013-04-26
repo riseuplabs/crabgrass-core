@@ -328,7 +328,7 @@ Autocomplete.prototype = {
 
   loading: function() {
     this.container.show();
-    this.container.innerHTML = "<em>Loading...</em>";
+    this.container.innerHTML = '<img src="/images/spinner.gif">';
   },
 
   suggest: function() {
