@@ -16,7 +16,7 @@ class Me::PagesControllerTest < ActionController::TestCase
     login_as users(:blue)
     xhr :get, :index
     assert_response :success
-    assert response.body.match(expected)
+    assert response.body.include?(expected), "Expected #{response.body} to include #{expected}."
   end
 
 end
