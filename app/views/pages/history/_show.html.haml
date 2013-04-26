@@ -7,4 +7,5 @@
       %td= full_time(event.created_at)
       %td= description_for(event)
 
-
+:javascript
+  setTimeout(Modalbox.updatePosition.bind(Modalbox), 0);
