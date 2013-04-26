@@ -381,7 +381,7 @@ Autocomplete.prototype = {
 
   requestSuggestions: function(query) {
     this.pending++;
-    new Ajax.Request(this.serviceUrl, {
+    RequestQueue.add(this.serviceUrl, {
           parameters: { query: query },
           onComplete: this.processResponse.bind(this),
           method: 'get'
