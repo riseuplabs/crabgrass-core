@@ -42,3 +42,4 @@ config/database.yml
 vendor/plugins/haml/init.rb
 .bundle
 bin/
+config/sphinx/*.conf
