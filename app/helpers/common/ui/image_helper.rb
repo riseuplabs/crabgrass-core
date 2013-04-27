@@ -47,9 +47,26 @@ module Common::Ui::ImageHelper
   ## see JavascriptHelper for showing and hiding spinners.
   ##
 
+  #
+  # returns a spinner tag.
+  #
+  # arguments:
+  #
+  #  id -- unique name of the spinner
+  #  options -- hash of optional options
+  #
+  # options:
+  #
+  #  :show -- if true, default the spinner to be visible
+  #  :align -- override the default vertical alignment. generally, should use the default except in <TD> elements with middle vertical alignment.
+  #  :class -- add css classes to the spinner
+  #  :text  -- include text with the spinner
+  #  :spinner -- used a different image for the spinner
+  #
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:baseline;", :class => 'spin'}.merge(options)
+    align = "vertical-align:#{options[:align] || 'baseline'}"
+    options = {:spinner=>"spinner.gif", :style=>"#{display} #{align};", :class => 'spin'}.merge(options)
     if options[:text]
       "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:baseline' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
     else

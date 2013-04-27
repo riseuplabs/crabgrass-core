@@ -13,7 +13,7 @@
     -else
       =h truncate(embold_links(notice.display_body), :length => 512)
   %td.nowrap.align_right.reflow
-    = spinner(notice)
+    = spinner(notice, :align => :middle)
     = link_to_remote(notice.button_text, {:url => me_notice_path(notice), :method => 'get', :loading => show_spinner(notice)},{:href => me_notice_path(notice), :class => 'btn btn-mini'})
     = link_to_remote(:dismiss.t, {:url => me_notice_path(notice), :method => 'delete', :loading => show_spinner(notice)}, {:class => 'btn btn-mini'})
 
