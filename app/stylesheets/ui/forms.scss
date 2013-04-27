@@ -13,6 +13,29 @@ textarea {
 }
 
 //
+// sometimes, we want big input fields
+//
+input.big {
+  font-size: $font_heading_h2_size !important;
+}
+
+//
+// sometimes we really want full width controls.
+// this flies in the face of what bootstrap does for control sizes, so we have
+// to step on bootstraps toes a bit to make this work.
+//
+
+input, textarea {
+  &.full_width {
+    width: 100%;
+    height: inherit;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+}
+
+//
 // this seems to make form elements line up better,
 // especially in chrome:
 //

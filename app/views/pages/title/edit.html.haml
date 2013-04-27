@@ -1,17 +1,16 @@
 -# remote_form_for(:page, @page, :url => page_title_path(@page), :before => show_spinner('save_title'), :html => {:method => :get}) do
-.simple_form
-  = remote_form_for(:page, @page, :url => page_title_path(@page), :html => {:method => :put}, :before => show_spinner('save_title')) do
-    .row-fluid.first
-      %label= :title.t
-      = text_field 'page', 'title', :class => 'h1'
-    .row-fluid
-      %label= :page_name_description.t
-      = text_field 'page', 'name'
-    .row-fluid
-      %label= :summary.t
-      = text_area 'page', 'summary', :size => '50x6'
-    .buttons
-      = close_modal_button(:cancel)
-      = submit_tag :save_button.t, :name => 'save'
-      = spinner('save_title')
- 
+= remote_form_for(:page, @page, :url => page_title_path(@page), :html => {:method => :put}, :before => show_spinner('save_title')) do
+  = formy(:simple_form) do |f|
+    - f.row do |r|
+      - r.label :title.t
+      - r.input text_field('page', 'title', :class => 'big full_width')
+    - f.row do |r|
+      - r.label :page_name_description.t
+      - r.input text_field('page', 'name', :class => 'full_width')
+    - f.row do |r|
+      - r.label :summary.t
+      - r.input text_area('page', 'summary', :size => '50x6', :class => 'full_width')
+    - f.button spinner('save_title')
+    - f.button close_modal_button(:cancel)
+    - f.button submit_tag(:save_button.t, :name => 'save', :class => 'btn')
+

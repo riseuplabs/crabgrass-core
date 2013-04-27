@@ -109,7 +109,7 @@
 
 #MB_frame {
   table.styled {
-    border-collapse: collapse; 
+    border-collapse: collapse;
      td {
        background: white;
        border-top: 1px solid #cccccc;
@@ -120,15 +120,17 @@
   tr.gap td {
     padding: 0.5em 0;
   }
-  .buttons {
+
+  // override bootstrap's form-actions appearance
+  .form-actions {
     padding: 1em;
     margin: 1em -1em -1em -1em;
-    text-align: right;
     background: #ebeae6;
     border-top: 1px solid white;
-    input {
-      margin-left: 0.5em;
-    }
+    text-align: right;
+    //input {
+    //  margin-left: 0.5em;
+    //}
   }
   .simple_form {
     max-width: inherit;

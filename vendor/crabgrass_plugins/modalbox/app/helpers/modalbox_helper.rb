@@ -74,7 +74,7 @@ module ModalboxHelper
 
   # close the modal box
   def close_modal_button(label=nil)
-    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();')
+    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();', :class => 'btn')
   end
 
   def cancel_modal_button()
