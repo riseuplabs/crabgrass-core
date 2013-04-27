@@ -92,18 +92,21 @@ ul.floating {
   float: left;
 }
 
-// fixed height boxes so they work without rows
+//
+// an asset box
+//
+// * fixed height boxes so they work without rows
+// * this is probably duplicated by bootstrap.
+// * this is used by the page attachments popup as well.
+//
 .box {
   list-style: none;
-  margin-left: 20px;
-  margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   float: left;
   padding: 10px;
   border: solid lightgray 1px;
   border-radius: 4px;
   background: white;
-  box-shadow: 1px 1px 4px #CCC9C3;
-  h3 {
-    font-weight: normal;
-  }
+  // box-shadow: 1px 1px 4px #CCC9C3;
 }

@@ -1,6 +1,7 @@
 class Pages::AssetsController < Pages::SidebarsController
 
   permissions 'pages'
+  helper 'pages/assets'
   guard :destroy => :may_admin_page?
 
   def index

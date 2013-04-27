@@ -113,7 +113,7 @@ module Common::Application::AlertMessages
     end
   end
 
-  def raise_not_found(thing)
+  def raise_not_found(thing="")
     raise ErrorNotFound.new(thing)
   end
 
