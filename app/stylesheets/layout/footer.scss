@@ -9,6 +9,8 @@
   width: 100%;
   @if $footer_border { border-top: $footer_border; }
   #footer_content {
+    padding: gutter();
+    padding-top: 0;
     @if $footer_column_count == 1 {
       //@include center-span;
     }

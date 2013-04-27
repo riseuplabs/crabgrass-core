@@ -1,13 +1,13 @@
 -# this is set by the default theme to be the footer
 -# but other themes often override it.
 
-.full
+.row_fluid
   = language_select_tag
 
-.full
+.row_fluid
   %div{:style => 'margin: 0px auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
 
 - if Rails.env.development?
-  .full
+  .fow_fluid
     = render :partial => 'common/debug/footer'
 
