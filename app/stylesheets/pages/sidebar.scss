@@ -15,12 +15,13 @@
 //  h5 {
 //    padding: 0.4em 0 0.5em;
 //  }
-  h3 {
+  .h3 {
     padding-top: 2em;
-    padding-bottom: 0.5em;
+    //padding-bottom: 0.5em;
     text-transform: uppercase;
     font-size: 0.85em;
     color: #666;
+    font-weight: bold;
   }
   ul.rule {
     border-top: 1px dotted #fff;

@@ -24,5 +24,19 @@ module Pages::TagsHelper
     }]
   end
 
+  def page_tag_delete_links
+    haml do
+      if @page.tags.any?
+        haml '.two_column_float' do
+          @page.tags.sort_by{|t|t.name}.each do |tag|
+            haml '.column_item', remove_tag_link(tag)
+          end
+        end
+      else
+        haml '.p', :no_tags.t
+      end
+    end
+  end
+
 end
 

@@ -4,7 +4,7 @@
       %ul.side_list.commands
         = undelete_line
         = destroy_line
-        = details_line 
+        = details_line
         =# history_line
     - else
       %ul.side_list.commands
@@ -21,48 +21,48 @@
         =# view_line
     =# call_hook :page_sidebar_actions
 
-  -# 
+  -#
   -# TAGS
   -#
   - if @page.tags.any? || may_edit_page?
-    %h3= I18n.t(:tags)
+    .h3= I18n.t(:tags)
     %div.tags
       = page_tags
     %ul
       = edit_tags_line
 
-  -# 
+  -#
   -# ATTACHMENTS
   -#
   - if @page.supports_attachments and !(attachment_content = page_attachments).nil?
     %section#attachments
-      %h3= I18n.t(:attachments)
+      .h3= I18n.t(:attachments)
       .attachments
         = attachment_content
       %ul
         = edit_attachments_line
 
-  -# 
+  -#
   -# CONTRIBUTOR LIST
   -#
   - if @page.group_participations.any? or @page.user_participations.any?
     %section#contributors
       - if @page.group_participations.any?
-        %h3= I18n.t(:groups)
+        .h3= I18n.t(:groups)
         %ul#groups.names
-          - @page.sorted_group_participations.each do |participation| 
-            %li 
+          - @page.sorted_group_participations.each do |participation|
+            %li
               = link_to_group_participation(participation)
       - if @page.user_participations.any?
-        %h3= I18n.t(:people)
+        .h3= I18n.t(:people)
         %ul#people.names
-          - @page.sorted_user_participations.each do |participation| 
-            %li 
+          - @page.sorted_user_participations.each do |participation|
+            %li
               = link_to_user_participation(participation)
 
 -# %section#attachments
 -#   %h4 attachments
--#   %ul 
+-#   %ul
 -#     %li
 -#       %a{:href => "#"}
 -#         %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
