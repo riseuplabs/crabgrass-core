@@ -194,7 +194,14 @@ Crabgrass::Application.routes.draw do |map|
     wikis.resources :sections, :only => [:edit, :update]
   end
 
+  ##
+  ## OTHER ROUTES
+  ##
+
   map.root :controller => 'root'
+  map.with_options(:path_prefix => 'do') do |map|
+    map.connect '/static/:action/:id', :controller => 'static'
+  end
 
   ##
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES

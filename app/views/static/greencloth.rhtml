@@ -62,7 +62,7 @@ def row(text)
   <td><b>&rarr;</b></td>
   <td class='rendered wiki'>#{GreenCloth.new(text, 'page', [:outline]).to_html}</td>
 </tr>
-  )
+  ).html_safe
 end
 
 def header(text)
@@ -70,16 +70,16 @@ def header(text)
 <tr>
   <td class='header' colspan="3">#{text}</td>
 </tr>
-  )
+  ).html_safe
 end
 
 %>
 
 <table cellpadding='0' cellspacing='10' id='maintable'>
 <tr><td colspan="3">
-Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. In the example source text, the symbol <b>&para;</b> is used to indicate where returns are. 
+Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. In the example source text, the symbol <b>&para;</b> is used to indicate where returns are.
 </tr></td>
-<%=  
+<%=
 
   header('Paragraphs and line breaks') +
   row(<<END) +
@@ -192,10 +192,10 @@ END
   row(<<END) +
 Tables can be built with tabs instead of "|" and they can have headers:
 
-	_. bird	_. color	_. locomotion	
-	macaw	red	fly	
-	kakapo	green	walk	
-	penguin	black	swim	
+	_. bird	_. color	_. locomotion
+	macaw	red	fly
+	kakapo	green	walk
+	penguin	black	swim
 END
 
   header('Preformatted Code') +
@@ -252,7 +252,7 @@ END
 #END
 
 #  header('Hanging Indent') +
-#  row(<<END) 
+#  row(<<END)
 #If you have a single line of text
 #  followed by some indented text,
 #  It will have a hanging indent.
