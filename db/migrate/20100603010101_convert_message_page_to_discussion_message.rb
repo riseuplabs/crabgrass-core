@@ -11,7 +11,8 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
   class ::PageObserver
     def after_destroy_with_rescue(page)
       after_destroy_without_rescue(page)
-    rescue ActiveRecord::StatementInvalid
+    rescue Mysql2::Error => e
+      raise e unless e.to_s.include? "notices"
     end
 
     alias_method_chain :after_destroy, :rescue
