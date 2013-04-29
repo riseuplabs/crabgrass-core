@@ -1,13 +1,11 @@
 class AssignPollsToVotes < ActiveRecord::Migration
-  def self.up
-    Possible.all.each do |possible|
-      poll = possible.poll
-      votes = possible.votes
 
-      votes.each do |vote|
-        vote.update_attributes({:votable_id => poll.id, :votable_type => 'Poll'})
-      end
-    end
+  def self.up
+    Possible.connection.execute <<-EOSQL
+      UPDATE votes, possibles
+        SET votes.votable_type = 'Poll', votes.votable_id = possible.poll_id
+        WHERE votes.possible_id = possible.id
+    EOSQL
   end
 
   def self.down
