@@ -21,6 +21,9 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
 
+  validates :user, presence: true
+  validates :group, presence: true
+
   scope :alphabetized_by_user, lambda { |letter|
     opts = {
       :joins => :user,
