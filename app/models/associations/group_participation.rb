@@ -20,8 +20,12 @@ class GroupParticipation < ActiveRecord::Base
   # include GroupParticipationExtension::Featured
   include GroupParticipationExtension::PageHistory
 
-  belongs_to :page
-  belongs_to :group
+  belongs_to :page, inverse_of: :group_participations
+  belongs_to :group, inverse_of: :participations
+
+  validates :page, presence: true
+  validates :group, presence: true
+
 
   def entity
     group

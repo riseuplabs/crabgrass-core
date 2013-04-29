@@ -5,18 +5,26 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
   end
 
   def self.up
-    pages = MessagePage.all
 
+    # first we turn all the Message Pages with more or less than
+    # two participants into Discussion Pages.
+
+    puts "#{MessagePage.count} Message pages."
+    puts "Converting to DiscussionPages."
+    MessagePage.update_all { type: "DiscussionPage"},
+      <<-EOSQL
+        pages.id IN (
+          SELECT page_id FROM user_participations
+            GROUP BY page_id HAVING count(page_id) <> 2
+        )
+      EOSQL
+
+    pages = MessagePage.all
+    puts "#{pages.count} Message pages left."
+    puts "Converting to Messages."
     pages.each do |page|
-      if page.users.count < 2
-        page.destroy
-      elsif page.users.count > 2
-        page.type = "DiscussionPage"
-        page.save
-      else
-        turn_page_into_messages(page)
-        page.destroy
-      end
+      turn_page_into_messages(page)
+      page.destroy
     end
   ensure
     enable_timestamps

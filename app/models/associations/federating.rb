@@ -22,8 +22,8 @@ class Federating < ActiveRecord::Base
   belongs_to :group
   belongs_to :network, :class_name => 'Group'
 
-  validates_presence_of :group_id
-  validates_presence_of :network_id
+  validates :group, :presence => true
+  validates :network, :presence => true
 
   validate :group_is_not_network
   validate :group_is_not_network_committee
