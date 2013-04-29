@@ -13,7 +13,6 @@ module RateManyPageHelper
 
   # value a string, one of 'good', 'ok', 'bad', 'no'
   def button_row(possible, vote, value)
-    voters_list = @allvotes[value].to_sentence if @allvotes[value]
     button = radio_button_tag(
       "vote[#{possible.id}]",   # name
       map(value),               # value
@@ -25,12 +24,6 @@ module RateManyPageHelper
        )
     )
 
-    translated_value = I18n.t("vote_#{value}".to_sym)
-    %Q+
-    <tr>
-      <td><label class='not_handle'>#{button}#{translated_value}</label></td>
-      <td><span>&mdash;</span> #{voters_list}</td>
-    </tr>
-    +
+    render 'rate_many_page/button', button: button, value: value
   end
 end
