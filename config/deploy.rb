@@ -203,6 +203,13 @@ namespace :crabgrass do
     run "bundle exec rake cg:upgrade:user_permissions"
   end
 
+  desc "Cleanup old data records that have invalid associations"
+  task :cleanup_outdated_data do
+    run "cd #{current_release};"
+    run "bundle exec rake cg:cleanup:remove_dead_participations"
+    run "bundle exec rake cg:cleanup:remove_dead_federatings"
+  end
+
 end
 
 after  "deploy:setup",   "crabgrass:create_shared"
@@ -213,4 +220,4 @@ before  "deploy:finalize_update", "crabgrass:compile_assets"
 after  "deploy:symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
-before 'crabgrass:upgrade_to_0_9', 'deploy:migrations'
+before 'crabgrass:upgrade_to_0_9', 'crabgrass:cleanup_outdated_data', 'deploy:migrations'
