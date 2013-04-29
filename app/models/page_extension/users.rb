@@ -13,7 +13,7 @@ module PageExtension::Users
 
       belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
       belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'
-      has_many :user_participations, :dependent => :destroy
+      has_many :user_participations, dependent: :destroy, inverse_of: :page
       has_many :users, :through => :user_participations do
         def with_access
           find(:all, :conditions => 'access IS NOT NULL')

@@ -7,7 +7,9 @@ module PageExtension::Groups
     base.extend(ClassMethods)
     base.instance_eval do
 
-      has_many :group_participations, :dependent => :destroy
+      has_many :group_participations,
+        dependent: :destroy,
+        inverse_of: :page
       has_many :groups, :through => :group_participations
 
       has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }

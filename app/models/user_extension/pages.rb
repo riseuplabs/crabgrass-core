@@ -14,7 +14,10 @@ module UserExtension::Pages
 
   def self.included(base)
     base.instance_eval do
-      has_many :participations, :class_name => 'UserParticipation', :dependent => :destroy
+      has_many :participations,
+        class_name: 'UserParticipation',
+        dependent: :destroy,
+        inverse_of: :user
 
       has_many :pages, :through => :participations do
         def pending
