@@ -1,7 +1,7 @@
 module RankedVotePageHelper
 
  def possible_name(possible)
-   if possible.description.present? or @who_voted_for[possible.id].any?
+   if possible.description.present? or @who_voted_for[possible.id].present?
      link_to_function(possible.name,
        "Element.toggle('#{details_id(possible)}')",
        :class => 'dotted')
