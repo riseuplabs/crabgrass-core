@@ -218,4 +218,4 @@ before  "deploy:finalize_update", "crabgrass:compile_assets"
 after  "deploy:create_symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
-before 'crabgrass:upgrade_to_0_9', 'crabgrass:cleanup_outdated_data', 'deploy:migrations'
+before 'crabgrass:upgrade_to_0_9', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'
