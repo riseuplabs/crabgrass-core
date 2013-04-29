@@ -88,7 +88,7 @@ end
 def database_configuration(db_role)
 %Q[
 login: &login
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   host: #{eval(db_role+"_db_host")}
   username: #{eval(db_role+"_db_user")}
