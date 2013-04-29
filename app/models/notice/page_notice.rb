@@ -50,7 +50,7 @@ class PageNotice < Notice
   end
 
   def display_body
-    CGI::escapeHTML(data[:message])
+    data[:message]
   end
 
   def button_text

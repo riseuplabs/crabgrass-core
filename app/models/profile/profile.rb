@@ -280,6 +280,10 @@ class Profile < ActiveRecord::Base
     }
   end
 
+  def summary_html
+    super.try :html_safe
+  end
+
   # DEPRECATED
   def create_wiki(opts = {})
     return wiki unless wiki.nil?
