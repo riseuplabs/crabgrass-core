@@ -17,7 +17,7 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :page, inverse_of: :user_participations
   belongs_to :user, inverse_of: :participations
 
-  validates :page, presence: true, if: :persisted?
+  validates :page, presence: true
   validates :user, presence: true
 
   before_create :clear_tag_cache
