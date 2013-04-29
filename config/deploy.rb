@@ -123,7 +123,7 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
     run "mkdir -p #{deploy_to}/#{shared_dir}/sphinx"
 
-    run "mkdir -p #{deploy_to}/#{shared_dir}/config"
+    run "mkdir -p #{deploy_to}/#{shared_dir}/config/crabgrass"
     put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml"
     put secret, "#{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt"
   end
