@@ -108,7 +108,7 @@ module Media
     # creates a tempfile filled with the given binary data
     #
     def self.create_from_data(data, content_type=nil)
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf = new_for_content_type(content_type)
       tf.binmode
       tf.write(data)
       tf.close
@@ -119,7 +119,7 @@ module Media
     # create an empty temp file with an extension to match the content_type
     #
     def self.create_from_content_type(content_type)
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf = new_for_content_type(content_type)
       tf.close
       tf
     end
@@ -128,7 +128,7 @@ module Media
     # create a tmp file that is a copy of another file.
     #
     def self.create_from_file(filepath, content_type, options = {})
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf = new_for_content_type(content_type)
       tf.close
       if options[:mode] == :move
         FileUtils.mv filepath, tf.path
@@ -136,6 +136,12 @@ module Media
         FileUtils.cp filepath, tf.path
       end
       tf
+    end
+
+    def self.new_for_content_type(content_type)
+      Tempfile.new content_type_basename(content_type),
+        tempfile_path,
+        mode: 022
     end
 
     #
