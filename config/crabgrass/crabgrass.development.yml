@@ -100,12 +100,11 @@ enabled_mods:
 #
 
 sites:
-
 # bound to localhost:
-#  - name: site1
-#    theme: blueberry
-#    admin_group: rainbow
-#    moderation_group: rainbow
+- name: site1
+  theme: blueberry
+  admin_group: rainbow
+  moderation_group: rainbow
 
 # bound to test.host
 #  - name: site2
