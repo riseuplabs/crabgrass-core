@@ -87,24 +87,13 @@ end
 
 def database_configuration(db_role)
 %Q[
-login: &login
+production:
+  database: #{application}
   adapter: mysql2
   encoding: utf8
   host: #{eval(db_role+"_db_host")}
   username: #{eval(db_role+"_db_user")}
   password: #{eval(db_role+"_db_pass")}
-
-development:
-  database: #{application}_development
-  <<: *login
-
-test:
-  database: #{application}_test
-  <<: *login
-
-production:
-  database: #{application}
-  <<: *login
 ]
 end
 
