@@ -197,15 +197,12 @@ namespace :crabgrass do
   #
   desc "Upgrade to Version 0.9"
   task :upgrade_to_0_9 do
-    run "cd #{current_release};"
-    run "bundle exec rake cg:upgrade:init_group_permissions"
-    run "bundle exec rake cg:upgrade:migrate_group_permissions"
-    run "bundle exec rake cg:upgrade:user_permissions"
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:upgrade:init_group_permissions cg:upgrade:migrate_group_permissions cg:upgrade:user_permissions"
   end
 
   desc "Cleanup old data records that have invalid associations"
   task :cleanup_outdated_data do
-    run "cd #{current_release}; bundle exec rake cg:cleanup:remove_dead_participations cg:cleanup:remove_dead_federatings"
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:cleanup:remove_dead_participations cg:cleanup:remove_dead_federatings"
   end
 
 end
