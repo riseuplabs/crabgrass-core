@@ -39,6 +39,11 @@ class RequestToCreateCouncil < Request
     council = Council.new :name => :council.t, :created_by => created_by
     council.save!
     group.add_committee!(council)
+    council.add_user!(created_by)
+    # FIXME: when this code runs in tests, the user needs to be added. But
+    #   in real life User.current has already been made a member by the
+    #   GroupObserver.
+    council.add_user!(approved_by) unless approved_by.member_of?(council)
   end
 
   def description
