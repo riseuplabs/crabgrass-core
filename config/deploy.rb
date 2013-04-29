@@ -205,9 +205,7 @@ namespace :crabgrass do
 
   desc "Cleanup old data records that have invalid associations"
   task :cleanup_outdated_data do
-    run "cd #{current_release};"
-    run "bundle exec rake cg:cleanup:remove_dead_participations"
-    run "bundle exec rake cg:cleanup:remove_dead_federatings"
+    run "cd #{current_release}; bundle exec rake cg:cleanup:remove_dead_participations cg:cleanup:remove_dead_federatings"
   end
 
 end
