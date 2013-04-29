@@ -19,9 +19,9 @@ namespace :cg do
 
     desc "Remove all federatings where the group does not exist anymore"
     task(:remove_dead_federatings => :environment) do
-      count = Federatings.where(dead_entity_sql('group')).delete_all
+      count = Federating.where(dead_entity_sql('group')).delete_all
       puts "Removed #{count} Federatings with outdated groups."
-      count = Federatings.where(dead_entity_sql('network', 'groups')).delete_all
+      count = Federating.where(dead_entity_sql('network', 'groups')).delete_all
       puts "Removed #{count} Federatings with outdated networks."
     end
 
