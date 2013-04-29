@@ -17,7 +17,6 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :user
 
-  validates :page, presence: true
   validates :user, presence: true
 
   before_create :clear_tag_cache
