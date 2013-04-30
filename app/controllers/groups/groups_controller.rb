@@ -1,6 +1,10 @@
 class Groups::GroupsController < Groups::BaseController
 
-  before_filter :fetch_group, :only => 'destroy'
+  # restricting the before filter to { :only => :destroy } doesn't work, because
+  # then it changes position in the filter chain and runs after the guards, but
+  # may_admin_group? requires @group to be set.
+  def fetch_group() super if action? :destroy end
+
   before_filter :force_type,  :only => ['new', 'create']
   before_filter :initialize_group,  :only => ['new', 'create']
   before_filter :fetch_member_group, :only => 'create'
@@ -24,7 +28,7 @@ class Groups::GroupsController < Groups::BaseController
   #
   # immediately destroy a group.
   # for destruction that requires approval, see RequestToDestroyOurGroup.
-  # unlike creation, this all destruction of all group types is handled here.
+  # unlike creation, all destruction of all group types is handled here.
   #
   def destroy
     parent = @group.parent
