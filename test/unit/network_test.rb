@@ -5,7 +5,7 @@ class NetworkTest < ActiveSupport::TestCase
 
   def test_creation
     assert_nothing_raised do
-      Network.create! :name => 'robot-federation'
+      Network.create! :name => 'robot-federation', :initial_member_group => groups(:rainbow)
     end
   end
 
