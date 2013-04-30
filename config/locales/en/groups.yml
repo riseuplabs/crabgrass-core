@@ -237,7 +237,7 @@ en:
 
   # networks
 
-  network_initial_member: "Choose a group to be an initial member of this network."
+  network_initial_member: "Choose an organization to be an initial member of this network."
 
   # menu items
 
