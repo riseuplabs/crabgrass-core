@@ -87,24 +87,13 @@ end
 
 def database_configuration(db_role)
 %Q[
-login: &login
-  adapter: mysql
+production:
+  database: #{application}
+  adapter: mysql2
   encoding: utf8
   host: #{eval(db_role+"_db_host")}
   username: #{eval(db_role+"_db_user")}
   password: #{eval(db_role+"_db_pass")}
-
-development:
-  database: #{application}_development
-  <<: *login
-
-test:
-  database: #{application}_test
-  <<: *login
-
-production:
-  database: #{application}
-  <<: *login
 ]
 end
 
@@ -123,7 +112,7 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
     run "mkdir -p #{deploy_to}/#{shared_dir}/sphinx"
 
-    run "mkdir -p #{deploy_to}/#{shared_dir}/config"
+    run "mkdir -p #{deploy_to}/#{shared_dir}/config/crabgrass"
     put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml"
     put secret, "#{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt"
   end
@@ -191,6 +180,20 @@ namespace :crabgrass do
   task :index do
     run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
   end
+
+  #
+  #  UPGRADE
+  #
+  desc "Upgrade to Version 0.9"
+  task :upgrade_to_0_9 do
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:upgrade:init_group_permissions cg:upgrade:migrate_group_permissions cg:upgrade:user_permissions"
+  end
+
+  desc "Cleanup old data records that have invalid associations"
+  task :cleanup_outdated_data do
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:cleanup:remove_dead_participations cg:cleanup:remove_dead_federatings"
+  end
+
 end
 
 after  "deploy:setup",   "crabgrass:create_shared"
@@ -198,7 +201,7 @@ after  "deploy:setup",   "crabgrass:create_shared"
 before  "crabgrass:compile_assets", "crabgrass:link_to_shared"
 before  "deploy:finalize_update", "crabgrass:compile_assets"
 
-after  "deploy:symlink", "crabgrass:create_version_files"
+after  "deploy:create_symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
-
+before 'crabgrass:upgrade_to_0_9', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'
