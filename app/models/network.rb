@@ -22,6 +22,7 @@ class Network < Group
   attr_accessor :initial_member_group
   attr_accessible :initial_member_group
 
+  validates :initial_member_group, :presence => true, :unless => :persisted?
   validate :validate_initial_member_group
 
   after_save :add_initial_member_group
