@@ -70,14 +70,14 @@ class Groups::GroupsController < Groups::BaseController
 
   def initialize_group
     group_params = params[group_type] || {}
-    group_params.merge!(created_by: current_user)
     @group = group_class.new group_params
+    @group.created_by = current_user
     # setting @network will make the form correctly report errors for networks
     @network = @group
   end
 
   def fetch_member_group
-    if @group.network? and params[:member_group_name]
+    if @group.network? and params[:member_group_name].present?
       @member_group = Group.find_by_name(params[:member_group_name])
       raise_denied unless current_user.may?(:admin, @member_group)
       if @member_group.is_a? Network
