@@ -20,7 +20,6 @@ class Groups::GroupsController < Groups::BaseController
   #
   def create
     @group.save!
-    @group.add_group!(@member_group) if @member_group
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -81,19 +80,10 @@ class Groups::GroupsController < Groups::BaseController
   end
 
   def fetch_member_group
-    if @group.network? and params[:member_group_name].present?
-      @member_group = Group.find_by_name(params[:member_group_name])
-      raise_denied unless current_user.may?(:admin, @member_group)
-      if @member_group.is_a? Network
-        error(:networks_may_not_join_networks.t)
-        render :new
-      elsif @member_group.parent.is_a? Network
-        error(:network_committees_may_not_join_networks.t)
-        render :new
-      end
+    if @group.network? and @group.initial_member_group
+      raise_denied unless current_user.may?(:admin, @group.initial_member_group)
     end
   end
-
 
 end
 
