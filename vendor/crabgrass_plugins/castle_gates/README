@@ -55,7 +55,7 @@ Gates:
 
 Keys:
 
-  * Keys are ActiveRecord models stored in the database in the table 'gate_keys'.
+  * Keys are ActiveRecord models stored in the database in the table 'castle_gates_keys'.
   * A key instance has a set of gates it will open for a particular castle.
   * Castles have many keys, one for each holder with access to any of its gates.
 

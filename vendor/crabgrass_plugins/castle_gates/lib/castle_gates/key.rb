@@ -2,7 +2,7 @@
 #
 # schema:
 #
-#   create_table :keys do |p|
+#   create_table :castle_gates_keys do |p|
 #     p.integer :castle_id
 #     p.string  :castle_type
 #     p.integer :holder_code
@@ -19,6 +19,9 @@
 #
 module CastleGates
   class Key < ActiveRecord::Base
+
+    set_table_name :castle_gates_keys
+
     belongs_to :castle, :polymorphic => true
 
     #
