@@ -103,22 +103,10 @@ module CastleGates
     end
 
     def self.conditions_for_holder(holder)
-      conditions_for_holder_codes(holder.all_codes)
+      { "castle_gates_keys.holder_code" => holder.all_codes }
     end
 
     private
-
-    def self.conditions_for_holder_codes(codes)
-      if codes.length == 1
-        if codes.first.present?
-          ["keys.holder_code = ?", codes.first]
-        else
-          "keys.holder_code IS NULL"
-        end
-      else
-        ["keys.holder_code IN (?)", codes]
-      end
-    end
 
     #
     # Returns the bitmask for a set of gate names.
