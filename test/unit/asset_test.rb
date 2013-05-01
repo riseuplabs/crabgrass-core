@@ -158,7 +158,7 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
     assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
-    assert_equal 5, @asset.thumbnails.count
+    assert_equal 6, @asset.thumbnails.count
 
     # change back
     @asset = Asset.find(@asset.id)
