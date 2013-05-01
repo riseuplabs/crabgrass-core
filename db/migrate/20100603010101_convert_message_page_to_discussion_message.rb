@@ -38,8 +38,12 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
     puts "#{pages.count} Message pages left."
     puts "Converting to Messages."
     pages.each do |page|
-      turn_page_into_messages(page)
-      page.destroy
+      if page.assets.any?
+        page.update_attributes! type: "DiscussionPage"
+      else
+        turn_page_into_messages(page)
+        page.destroy
+      end
     end
   ensure
     enable_timestamps
