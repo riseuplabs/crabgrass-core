@@ -18,7 +18,11 @@ test:
   morphology: stem_en
 
 production:
-  config_file: config/sphinx/production.conf
+  config_file: /usr/apps/crabgrass/shared/config/sphinx/production.conf
+  pid_file: /usr/apps/crabgrass/shared/tmp/searchd.pid
+  searchd_file_path: /usr/apps/crabgrass/shared/db/sphinx
+  searchd_log_file: /usr/apps/crabgrass/shared/log/sphinx.log
+  query_log_file: /usr/apps/crabgrass/shared/log/sphinx.query.log
   port: 3312
   address: localhost
   morphology: stem_en
