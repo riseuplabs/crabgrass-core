@@ -44,7 +44,7 @@ module CastleGates
         # the value it is compared to must be a string. MySQL allows you to compare with
         # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
         # As noted above, this is not very optimized.
-      { :conditions => ['substr(keys.holder_code,1,1) IN (?)', holder_codes] }
+      { :conditions => ['substr(castle_gates_keys.holder_code,1,1) IN (?)', holder_codes] }
     })
 
     #

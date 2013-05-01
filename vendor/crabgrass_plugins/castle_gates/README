@@ -80,7 +80,7 @@ one works or they are denied access.
 Castle Gates is very flexible, but has a few important limitation:
 
   (1) The number of gates a castle can have is limited to the bit
-      length of gate_keys.gate_bitfield
+      length of castle_gates_keys.gate_bitfield
 
   (2) System-wide, there can only be nine types of holders.
 
