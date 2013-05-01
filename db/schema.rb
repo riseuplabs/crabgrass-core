@@ -1,15 +1,17 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526071659) do
+ActiveRecord::Schema.define(:version => 20130501010101) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -83,6 +85,15 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.binary  "image_file_data", :limit => 2147483647
     t.boolean "public",                                :default => false
   end
+
+  create_table "castle_gates_keys", :force => true do |t|
+    t.integer "castle_id"
+    t.string  "castle_type"
+    t.integer "holder_code"
+    t.integer "gate_bitfield", :default => 1
+  end
+
+  add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
 
   create_table "categories", :force => true do |t|
   end
@@ -314,15 +325,6 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
   end
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
-
-  create_table "keys", :force => true do |t|
-    t.integer "castle_id"
-    t.string  "castle_type"
-    t.integer "holder_code"
-    t.integer "gate_bitfield", :default => 1
-  end
-
-  add_index "keys", ["castle_id", "castle_type", "holder_code"], :name => "index_keys_on_castle_id_and_castle_type_and_holder_code"
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"
