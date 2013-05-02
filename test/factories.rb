@@ -35,7 +35,9 @@ FactoryGirl.define do
 
     factory(:committee, :class => Committee) {}
     factory(:council, :class => Council) {}
-    factory(:network,   :class => Network)   {}
+    factory(:network,   :class => Network)   {
+      initial_member_group { FactoryGirl.create(:group) }
+    }
   end
 
   factory(:membership) {}

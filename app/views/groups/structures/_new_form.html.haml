@@ -46,8 +46,8 @@
     - if group_type == :network
       - f.row do |r|
         - r.label :group.t
-        - r.input select_tag('member_group_name', options_for_select_group(as_admin: true, without_networks: true), :class => 'full_width')
-        - r.info "(#{:optional.t}) "
+        - r.input select(group_type, 'initial_member_group', options_for_select_group(as_admin: true, without_networks: true, selected: @network.initial_member_group), :class => 'full_width')
+        - r.info "(#{:required.t}) "
         - r.info :network_initial_member.t
      
     - f.row do |r|

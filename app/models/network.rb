@@ -19,6 +19,34 @@ class Network < Group
   has_many :groups, :through => :federatings
   has_many :sites
 
+  attr_accessor :initial_member_group
+  attr_accessible :initial_member_group
+
+  validates :initial_member_group, :presence => true, :unless => :persisted?
+  validate :validate_initial_member_group
+
+  after_save :add_initial_member_group
+
+  def initial_member_group=(group)
+    @initial_member_group = (group.nil? || group.is_a?(Group) ? group :
+      Group.find_by_name(group))
+  end
+
+  def validate_initial_member_group
+    return unless initial_member_group
+    if initial_member_group.is_a? Network
+      errors.add(:initial_member_group, :networks_may_not_join_nteworks.t)
+    elsif initial_member_group.parent.is_a? Network
+      errors.add(:initial_member_group, :network_committees_may_not_join_networks.t)
+    end
+  end
+
+  def add_initial_member_group
+    if @initial_member_group and not @initial_member_group.member_of? self
+      add_group!(@initial_member_group)
+    end
+  end
+
   # only this method should be used for adding groups to a network
   def add_group!(group, delegation=nil)
     self.federatings.create!(:group => group, :delegation => delegation, :council => council)

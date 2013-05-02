@@ -1,6 +1,10 @@
 class Groups::GroupsController < Groups::BaseController
 
-  before_filter :fetch_group, :only => 'destroy'
+  # restricting the before filter to { :only => :destroy } doesn't work, because
+  # then it changes position in the filter chain and runs after the guards, but
+  # may_admin_group? requires @group to be set.
+  def fetch_group() super if action? :destroy end
+
   before_filter :force_type,  :only => ['new', 'create']
   before_filter :initialize_group,  :only => ['new', 'create']
   before_filter :fetch_member_group, :only => 'create'
@@ -16,7 +20,6 @@ class Groups::GroupsController < Groups::BaseController
   #
   def create
     @group.save!
-    @group.add_group!(@member_group) if @member_group
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -24,7 +27,7 @@ class Groups::GroupsController < Groups::BaseController
   #
   # immediately destroy a group.
   # for destruction that requires approval, see RequestToDestroyOurGroup.
-  # unlike creation, this all destruction of all group types is handled here.
+  # unlike creation, all destruction of all group types is handled here.
   #
   def destroy
     parent = @group.parent
@@ -70,26 +73,17 @@ class Groups::GroupsController < Groups::BaseController
 
   def initialize_group
     group_params = params[group_type] || {}
-    group_params.merge!(created_by: current_user)
     @group = group_class.new group_params
+    @group.created_by = current_user
     # setting @network will make the form correctly report errors for networks
     @network = @group
   end
 
   def fetch_member_group
-    if @group.network? and params[:member_group_name]
-      @member_group = Group.find_by_name(params[:member_group_name])
-      raise_denied unless current_user.may?(:admin, @member_group)
-      if @member_group.is_a? Network
-        error(:networks_may_not_join_networks.t)
-        render :new
-      elsif @member_group.parent.is_a? Network
-        error(:network_committees_may_not_join_networks.t)
-        render :new
-      end
+    if @group.network? and @group.initial_member_group
+      raise_denied unless current_user.may?(:admin, @group.initial_member_group)
     end
   end
-
 
 end
 

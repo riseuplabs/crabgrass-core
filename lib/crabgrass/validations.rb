@@ -25,7 +25,7 @@ module Crabgrass
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|
-          unless value
+          unless value.present?
             record.errors.add(attr_name, 'must exist')
             next #can't use return cause it raises a LocalJumpError
           end
