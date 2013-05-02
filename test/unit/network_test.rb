@@ -4,9 +4,16 @@ class NetworkTest < ActiveSupport::TestCase
   fixtures :federatings, :groups, :users, :memberships
 
   def test_creation
-    assert_nothing_raised do
-      Network.create! :name => 'robot-federation', :initial_member_group => groups(:rainbow)
-    end
+    network = Network.create! :name => 'robot-federation', :initial_member_group => groups(:rainbow)
+
+    assert groups(:rainbow).member_of?(network)
+  end
+
+  def test_creation_without_initial_member_group_doesnt_work
+    network = Network.create :name => 'robot-federation'
+
+    assert ! network.valid?
+    assert_equal ["can't be blank"], network.errors['initial_member_group']
   end
 
   def test_member_of
