@@ -24,14 +24,15 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
     # two participants into Discussion Pages.
 
     puts "#{MessagePage.count} Message pages."
-    puts "Converting to DiscussionPages."
-    MessagePage.update_all { type: "DiscussionPage"},
-      <<-EOSQL
-        pages.id IN (
-          SELECT page_id FROM user_participations
-            GROUP BY page_id HAVING count(page_id) <> 2
-        )
-      EOSQL
+    to_convert = MessagePage.connection.execute <<-EOSQL
+      SELECT pages.id FROM pages
+        JOIN user_participations AS parts ON parts.page_id = pages.id
+        WHERE pages.type = "MessagePage"
+        GROUP BY pages.id HAVING count(pages.id) <> 2
+    EOSQL
+    convert_ids = to_convert.to_a.flatten
+    puts "Converting #{convert_ids.count} to DiscussionPages."
+    MessagePage.where(id: convert_ids).update_all type: "DiscussionPage"
 
     pages = MessagePage.all
     puts "#{pages.count} Message pages left."
