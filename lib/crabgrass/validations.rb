@@ -25,42 +25,40 @@ module Crabgrass
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|
-          unless value
+          unless value.present?
             record.errors.add(attr_name, 'must exist')
             next #can't use return cause it raises a LocalJumpError
           end
           unless (3..50).include? value.length
             record.errors.add(attr_name, 'must be at least 3 and no more than 50 characters')
           end
-          if value.present?
-            unless /^[a-z0-9]+([-\+_]*[a-z0-9]+){1,49}$/ =~ value
+          unless /^[a-z0-9]+([-\+_]*[a-z0-9]+){1,49}$/ =~ value
+            record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
+          end
+          unless record.instance_of?(Committee) || record.instance_of?(Council)
+            # only allow '+' for Committees
+            if /\+/ =~ value
               record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
             end
-            unless record.instance_of?(Committee) || record.instance_of?(Council)
-              # only allow '+' for Committees
-              if /\+/ =~ value
-                record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
-              end
-            end
-            if FORBIDDEN_NAMES.include?(value)
+          end
+          if FORBIDDEN_NAMES.include?(value)
+            record.errors.add(attr_name, 'is already taken')
+          end
+          # TODO: make this dynamic so this function can be
+          # used over any set of classes (instead of just User, Group)
+          if record.instance_of? User
+            if User.exists?(['login = ? and `users`.id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
-            # TODO: make this dynamic so this function can be
-            # used over any set of classes (instead of just User, Group)
-            if record.instance_of? User
-              if User.exists?(['login = ? and `users`.id <> ?', value, record.id||-1])
-                record.errors.add(attr_name, 'is already taken')
-              end
-              if Group.exists?({:name => value})
-                record.errors.add(attr_name, 'is already taken')
-              end
-            elsif record.kind_of? Group
-              if Group.exists?(['name = ? and `groups`.id <> ?', value, record.id||-1])
-                record.errors.add(attr_name, 'is already taken')
-              end
-              if User.exists?({:login => value})
-                record.errors.add(attr_name, 'is already taken')
-              end
+            if Group.exists?({:name => value})
+              record.errors.add(attr_name, 'is already taken')
+            end
+          elsif record.kind_of? Group
+            if Group.exists?(['name = ? and `groups`.id <> ?', value, record.id||-1])
+              record.errors.add(attr_name, 'is already taken')
+            end
+            if User.exists?({:login => value})
+              record.errors.add(attr_name, 'is already taken')
             end
           end
         end
