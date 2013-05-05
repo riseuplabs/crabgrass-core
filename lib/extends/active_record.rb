@@ -168,11 +168,11 @@ module ActiveRecord
       end
       indexes = @connection.indexes(table)
       indexes.each do |index|
-        if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+        if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
           stream.puts %(  execute "ALTER TABLE #{index.table} ENGINE = MyISAM")
           stream.puts %(  execute "CREATE FULLTEXT INDEX #{index.name} ON #{index.table} (#{index.columns.join(',')})")
-        elsif index.name =~ /\d+$/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
-          lengths = index.name.match(/(_\d+)+$/).to_s.split('_').select(&:any?)
+        elsif index.name =~ /\d+$/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
+          lengths = index.name.match(/(_\d+)+$/).to_s.split('_').select {|length| length.chars.any?}
           index_parts = []
           index.columns.size.times do |i|
             if lengths[i] == '0'
