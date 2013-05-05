@@ -18,6 +18,6 @@ class Tracking::PostObserver < ActiveRecord::Observer
 
   protected
   def params_for_post(post)
-    { :user => User.current, :page => post.discussion.page, :object => post }
+    { :user => User.current, :page => post.discussion.page, :item => post }
   end
 end

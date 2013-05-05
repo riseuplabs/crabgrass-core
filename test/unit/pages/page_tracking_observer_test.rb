@@ -115,7 +115,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserFullAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.object.class
+    assert_equal User, PageHistory.last.item.class
   end
 
   def test_share_page_with_user_assigning_write_access
@@ -123,7 +123,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserWriteAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.object.class
+    assert_equal User, PageHistory.last.item.class
   end
 
   def test_share_page_with_user_assigning_read_access
@@ -131,7 +131,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserReadAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.object.class
+    assert_equal User, PageHistory.last.item.class
   end
 
   def test_share_page_with_user_removing_access
@@ -140,7 +140,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::RevokedUserAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.object.class
+    assert_equal User, PageHistory.last.item.class
   end
 
   def test_share_page_with_group_assigning_full_access
@@ -149,7 +149,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupFullAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.object.class
+    assert_equal Group, PageHistory.last.item.class
   end
 
   def test_share_page_with_group_assigning_write_access
@@ -158,7 +158,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupWriteAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.object.class
+    assert_equal Group, PageHistory.last.item.class
   end
 
   def test_share_page_with_group_assigning_read_access
@@ -167,7 +167,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupReadAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.object.class
+    assert_equal Group, PageHistory.last.item.class
   end
 
   def test_share_page_with_group_removing_access
@@ -177,7 +177,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::RevokedGroupAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.object.class
+    assert_equal Group, PageHistory.last.item.class
   end
 
   def test_update_content
@@ -201,8 +201,8 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::AddComment, PageHistory.last.class
-    assert_equal Post, PageHistory.last.object.class
-    assert_equal Post.last, PageHistory.last.object
+    assert_equal Post, PageHistory.last.item.class
+    assert_equal Post.last, PageHistory.last.item
   end
 
   def test_edit_comment
@@ -212,8 +212,8 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::UpdateComment, PageHistory.last.class
-    assert_equal Post, PageHistory.last.object.class
-    assert_equal Post.last, PageHistory.last.object
+    assert_equal Post, PageHistory.last.item.class
+    assert_equal Post.last, PageHistory.last.item
   end
 
   def test_delete_comment

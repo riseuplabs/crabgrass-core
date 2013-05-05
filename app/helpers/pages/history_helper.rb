@@ -18,9 +18,9 @@ module Pages::HistoryHelper
   def build_description(page_history)
     user_name = page_history.user.nil? ? "Unknown/Deleted" : page_history.user.display_name
 
-    object_name = case page_history.object
-    when Group then page_history.object.full_name
-    when User then page_history.object.display_name
+    item_name = case page_history.item
+    when Group then page_history.item.full_name
+    when User then page_history.item.display_name
     else "Unknown/Deleted"
     end
 
@@ -35,14 +35,14 @@ module Pages::HistoryHelper
     when PageHistory::StartWatching          then I18n.t(:page_history_start_watching, :user_name => user_name)
     when PageHistory::StopWatching           then I18n.t(:page_history_stop_watching, :user_name => user_name)
     when PageHistory::UpdatedContent         then I18n.t(:page_history_updated_content, :user_name => user_name)
-    when PageHistory::GrantGroupFullAccess   then I18n.t(:page_history_granted_group_full_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::GrantGroupWriteAccess  then I18n.t(:page_history_granted_group_write_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::GrantGroupReadAccess   then I18n.t(:page_history_granted_group_read_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::RevokedGroupAccess     then I18n.t(:page_history_revoked_group_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::GrantUserFullAccess    then I18n.t(:page_history_granted_user_full_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::GrantUserWriteAccess   then I18n.t(:page_history_granted_user_write_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::GrantUserReadAccess    then I18n.t(:page_history_granted_user_read_access, :user_name => user_name, :object_name => object_name)
-    when PageHistory::RevokedUserAccess      then I18n.t(:page_history_revoked_user_access, :user_name => user_name, :object_name => object_name)
+    when PageHistory::GrantGroupFullAccess   then I18n.t(:page_history_granted_group_full_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::GrantGroupWriteAccess  then I18n.t(:page_history_granted_group_write_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::GrantGroupReadAccess   then I18n.t(:page_history_granted_group_read_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::RevokedGroupAccess     then I18n.t(:page_history_revoked_group_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::GrantUserFullAccess    then I18n.t(:page_history_granted_user_full_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::GrantUserWriteAccess   then I18n.t(:page_history_granted_user_write_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::GrantUserReadAccess    then I18n.t(:page_history_granted_user_read_access, :user_name => user_name, :item_name => item_name)
+    when PageHistory::RevokedUserAccess      then I18n.t(:page_history_revoked_user_access, :user_name => user_name, :item_name => item_name)
     when PageHistory::AddComment             then I18n.t(:page_history_added_comment, :user_name => user_name)
     when PageHistory::UpdateComment          then I18n.t(:page_history_updated_comment, :user_name => user_name)
     when PageHistory::DestroyComment         then I18n.t(:page_history_destroyed_comment, :user_name => user_name)

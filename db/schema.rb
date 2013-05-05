@@ -1,23 +1,25 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526071659) do
+ActiveRecord::Schema.define(:version => 20130505182524) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
     t.string   "subject_type"
     t.string   "subject_name"
-    t.integer  "object_id"
-    t.string   "object_type"
-    t.string   "object_name"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.string   "item_name"
     t.string   "type"
     t.string   "extra"
     t.integer  "key"
@@ -82,6 +84,26 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
   create_table "avatars", :force => true do |t|
     t.binary  "image_file_data", :limit => 2147483647
     t.boolean "public",                                :default => false
+  end
+
+  create_table "bdrb_job_queues", :force => true do |t|
+    t.text     "args",           :limit => 2147483647
+    t.string   "worker_name"
+    t.string   "worker_method"
+    t.string   "job_key"
+    t.integer  "taken"
+    t.integer  "finished"
+    t.integer  "timeout"
+    t.integer  "priority"
+    t.datetime "submitted_at"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "archived_at"
+    t.string   "tag"
+    t.string   "submitter_info"
+    t.string   "runner_info"
+    t.string   "worker_key"
+    t.datetime "scheduled_at"
   end
 
   create_table "categories", :force => true do |t|
@@ -399,15 +421,14 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.integer  "page_id"
     t.string   "type"
     t.datetime "created_at"
-    t.integer  "object_id"
-    t.string   "object_type"
+    t.integer  "item_id"
+    t.string   "item_type"
     t.datetime "notification_sent_at"
     t.datetime "notification_digest_sent_at"
     t.string   "details"
   end
 
   add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
-  add_index "page_histories", ["object_id", "object_type"], :name => "index_page_histories_on_object_id_and_object_type"
   add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", :force => true do |t|
