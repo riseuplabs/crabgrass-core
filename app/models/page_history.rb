@@ -1,7 +1,7 @@
 class PageHistory < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
-  belongs_to :object, :polymorphic => true
+  belongs_to :item, :polymorphic => true
 
   validates_presence_of :user, :page
 
@@ -106,76 +106,76 @@ end
 class PageHistory::GrantGroupFullAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantGroupWriteAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantGroupReadAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::RevokedGroupAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserFullAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserWriteAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserReadAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::RevokedUserAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::AddComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Post/
+  validates_presence_of :item_id
 end
 
 class PageHistory::UpdateComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Post/
+  validates_presence_of :item_id
 end
 
 class PageHistory::DestroyComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, :with => /Post/
+  validates_presence_of :item_id
 end

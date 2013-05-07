@@ -168,7 +168,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       options[:locale] = :en
       return I18n.translate(key, options)
     end
-  elsif exception.is_a? I18n::MissingTranslation
+  elsif exception.is_a? I18n::InvalidLocale
     # the language was not found... default to english
     #options[:locale] = :en
     #return I18n.translate(key, options) #this was getting in endless loop

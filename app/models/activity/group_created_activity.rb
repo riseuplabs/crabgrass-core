@@ -4,7 +4,7 @@ class GroupCreatedActivity < Activity
   validates_presence_of :subject_id
 
   alias_attr :group, :subject
-  alias_attr :user,  :object
+  alias_attr :user,  :item
 
   def description(view=nil)
     I18n.t(:activity_group_created,

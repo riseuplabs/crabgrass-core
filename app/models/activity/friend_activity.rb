@@ -1,12 +1,12 @@
 class FriendActivity < Activity
 
   validates_format_of :subject_type, :with => /User/
-  validates_format_of :object_type, :with => /User/
+  validates_format_of :item_type, :with => /User/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
 
   alias_attr :user,       :subject
-  alias_attr :other_user, :object
+  alias_attr :other_user, :item
 
   before_create :set_access
   def set_access
@@ -28,7 +28,7 @@ class FriendActivity < Activity
   end
 
   def self.find_twin(user, other_user)
-    find(:first, :conditions => ['subject_id = ? AND object_id = ?', other_user.id, user.id])
+    find(:first, :conditions => ['subject_id = ? AND item_id = ?', other_user.id, user.id])
   end
 
   def icon

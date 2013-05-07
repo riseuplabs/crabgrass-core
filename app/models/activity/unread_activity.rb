@@ -5,7 +5,7 @@ class UnreadActivity < Activity
   validate :has_unread_count, :on => :create
 
   alias_attr :user, :subject
-  alias_attr :author, :object
+  alias_attr :author, :item
   alias_attr :unread_count, :key
 
   def has_unread_count

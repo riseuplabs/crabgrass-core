@@ -5,7 +5,7 @@ class GroupDestroyedActivity < Activity
   validates_presence_of :extra
 
   alias_attr :recipient,     :subject
-  alias_attr :destroyed_by,  :object
+  alias_attr :destroyed_by,  :item
   alias_attr :groupname,     :extra
 
   def description(view=nil)

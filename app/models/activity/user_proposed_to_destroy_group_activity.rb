@@ -1,11 +1,11 @@
 class UserProposedToDestroyGroupActivity < Activity
   validates_format_of :subject_type, :with => /User/
-  validates_format_of :object_type, :with => /Group/
+  validates_format_of :item_type, :with => /Group/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
 
   alias_attr :user,  :subject
-  alias_attr :group, :object
+  alias_attr :group, :item
 
   before_create :set_access
   def set_access

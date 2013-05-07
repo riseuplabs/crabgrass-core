@@ -2,16 +2,16 @@ class MessageWallActivity < Activity
   include ActionView::Helpers::TagHelper
 
   validates_format_of :subject_type, :with => /User/
-  validates_format_of :object_type, :with => /User/
+  validates_format_of :item_type, :with => /User/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
   validates_presence_of :extra
 
   serialize :extra
 
   alias_attr :user,     :subject
-  alias_attr :author,   :object
-  alias_attr :avatar,   :object
+  alias_attr :author,   :item
+  alias_attr :avatar,   :item
   alias_attr :post_id,  :related_id
 
   def post=(post)
