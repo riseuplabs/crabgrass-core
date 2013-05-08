@@ -64,7 +64,9 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
       arguments << '-crop' << options[:crop]+'+0+0'
     end
     arguments << input_file << output_file
-    run_command(*arguments, &block)
+    status = run_command(*arguments, &block)
+    FileUtils.chmod 0644, output_file.to_s if File.exists? output_file.to_s
+    return status
   end
 
   def dimensions(filename)
