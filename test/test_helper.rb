@@ -54,6 +54,7 @@ class ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   # fixtures :all
+  set_fixture_class :castle_gates_keys => CastleGates::Key
 end
 
 class FactoryGirl::SyntaxRunner

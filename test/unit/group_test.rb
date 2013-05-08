@@ -1,7 +1,8 @@
 require_relative 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites, :keys
+  fixtures :groups, :users, :profiles, :memberships, :sites,
+    :castle_gates_keys
 
   def teardown
     Group.clear_key_cache # required! see CastleGates README
