@@ -65,7 +65,7 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     end
     arguments << input_file << output_file
     status = run_command(*arguments, &block)
-    FileUtils.chmod 0644, output_file if File.exists? output_file
+    FileUtils.chmod 0644, output_file.to_s if File.exists? output_file.to_s
     return status
   end
 
