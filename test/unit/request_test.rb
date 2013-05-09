@@ -1,7 +1,8 @@
 require_relative 'test_helper'
 
 class RequestTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :requests, :memberships, :federatings, :keys
+  fixtures :users, :groups, :requests, :memberships, :federatings,
+    :castle_gates_keys
 
   def test_request_to_friend
     u1 = users(:kangaroo)

@@ -2,7 +2,7 @@
 #
 # schema:
 #
-#   create_table :keys do |p|
+#   create_table :castle_gates_keys do |p|
 #     p.integer :castle_id
 #     p.string  :castle_type
 #     p.integer :holder_code
@@ -19,6 +19,9 @@
 #
 module CastleGates
   class Key < ActiveRecord::Base
+
+    set_table_name :castle_gates_keys
+
     belongs_to :castle, :polymorphic => true
 
     #
@@ -41,7 +44,7 @@ module CastleGates
         # the value it is compared to must be a string. MySQL allows you to compare with
         # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
         # As noted above, this is not very optimized.
-      { :conditions => ['substr(keys.holder_code,1,1) IN (?)', holder_codes] }
+      { :conditions => ['substr(castle_gates_keys.holder_code,1,1) IN (?)', holder_codes] }
     })
 
     #
@@ -100,22 +103,10 @@ module CastleGates
     end
 
     def self.conditions_for_holder(holder)
-      conditions_for_holder_codes(holder.all_codes)
+      { "castle_gates_keys.holder_code" => holder.all_codes }
     end
 
     private
-
-    def self.conditions_for_holder_codes(codes)
-      if codes.length == 1
-        if codes.first.present?
-          ["keys.holder_code = ?", codes.first]
-        else
-          "keys.holder_code IS NULL"
-        end
-      else
-        ["keys.holder_code IN (?)", codes]
-      end
-    end
 
     #
     # Returns the bitmask for a set of gate names.

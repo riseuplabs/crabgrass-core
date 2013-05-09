@@ -86,25 +86,14 @@ ActiveRecord::Schema.define(:version => 20130505182524) do
     t.boolean "public",                                :default => false
   end
 
-  create_table "bdrb_job_queues", :force => true do |t|
-    t.text     "args",           :limit => 2147483647
-    t.string   "worker_name"
-    t.string   "worker_method"
-    t.string   "job_key"
-    t.integer  "taken"
-    t.integer  "finished"
-    t.integer  "timeout"
-    t.integer  "priority"
-    t.datetime "submitted_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "archived_at"
-    t.string   "tag"
-    t.string   "submitter_info"
-    t.string   "runner_info"
-    t.string   "worker_key"
-    t.datetime "scheduled_at"
+  create_table "castle_gates_keys", :force => true do |t|
+    t.integer "castle_id"
+    t.string  "castle_type"
+    t.integer "holder_code"
+    t.integer "gate_bitfield", :default => 1
   end
+
+  add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
 
   create_table "categories", :force => true do |t|
   end
@@ -336,15 +325,6 @@ ActiveRecord::Schema.define(:version => 20130505182524) do
   end
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
-
-  create_table "keys", :force => true do |t|
-    t.integer "castle_id"
-    t.string  "castle_type"
-    t.integer "holder_code"
-    t.integer "gate_bitfield", :default => 1
-  end
-
-  add_index "keys", ["castle_id", "castle_type", "holder_code"], :name => "index_keys_on_castle_id_and_castle_type_and_holder_code"
 
   create_table "locations", :force => true do |t|
     t.integer "profile_id"
