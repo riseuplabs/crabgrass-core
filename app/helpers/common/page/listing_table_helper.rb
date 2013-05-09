@@ -1,4 +1,4 @@
-##
+#
 ## Helpers for page lists in "table" style (ie in a table of columns and rows).
 ##
 ## The idea here is to allow the columns to be displayed in any order.
@@ -7,13 +7,6 @@
 module Common::Page::ListingTableHelper
 
   protected
-
-  def page_table_row(page, style)
-    case style
-      when :updated then row_updated_style(page)
-      when :updated_with_owner then row_owner_style(page)
-    end
-  end
 
   def page_table_header_row(style)
     case style
@@ -35,10 +28,6 @@ module Common::Page::ListingTableHelper
   ## STYLE :updated
   ##
 
-  def row_updated_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>".html_safe
-  end
-
   def header_updated_style()
     "<tr><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>".html_safe
   end
@@ -46,10 +35,6 @@ module Common::Page::ListingTableHelper
   ##
   ## STYLE :updated_with_owner
   ##
-
-  def row_owner_style(page)
-    "<tr class=\"#{cycle('odd','even')}\"><td>#{link_to_name(page.owner_name, page.owner_id)}</td><td>#{page_icon(page)}</td><td>#{cell_title(page)}</td><td>#{link_to_name(page.updated_by_login, page.updated_by_id)}</td><td class=\"nowrap\">#{friendly_date(page.updated_at)}</td><td>#{page.contributors_count}</td></tr>".html_safe
-  end
 
   def header_owner_style()
     "<tr><th>#{:owner.tcap}</th><th>&nbsp;</th><th>#{:title.tcap}</th><th colspan='2'>#{:updated.tcap}</th><th>#{image_tag('ui/person-dark.png')}</th></tr>".html_safe

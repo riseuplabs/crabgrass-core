@@ -13,8 +13,7 @@
   - else
     - if heading
       = page_table_header_row(columns)
-    - pages.each do |page|
-      = page_table_row(page, columns)
+    = render_pages pages, style: :table_row
     -# if paginated?(@pages)
       %tr
         %td{:colspan => page_table_colspan(columns)}

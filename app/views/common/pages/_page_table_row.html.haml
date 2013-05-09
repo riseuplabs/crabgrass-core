@@ -1,0 +1,8 @@
+%tr{class: cycle('odd','even')}
+  -if local_assigns[:owner]
+    %td= link_to_name(page.owner_name, page.owner.try(:avatar_id))
+  %td= page_icon(page)
+  %td= cell_title(page)
+  %td= link_to_name(page.updated_by_login, page.updated_by.try(:avatar_id))
+  %td.nowrap= friendly_date(page.updated_at)
+  %td= page.contributors_count
