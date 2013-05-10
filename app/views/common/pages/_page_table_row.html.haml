@@ -8,6 +8,6 @@
     %td= page.contributors_count.to_s + " voices"
   %tr.lower
     %td{colspan:5}
-      = page.summary.truncate(75)
+      = page.summary.try(:truncate, 75)
     %td
       = short_page_info(page)
