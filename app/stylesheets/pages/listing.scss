@@ -1,5 +1,19 @@
 
-// .page_list.table {
+.page_list.table {
+  tr.upper td {
+    padding-bottom: 0px;
+  }
+  tr.lower td {
+    color:#777;
+    font-size:0.9em;
+    border-top:0px; 
+    padding-top:0px; 
+  }
+  tr.lower td:first-child {
+    padding-left:40px;
+  }
+}
+
 //   table {
 //     width: 100%;
 //     border-collapse: collapse;
