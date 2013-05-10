@@ -18,14 +18,17 @@ module Common::Ui::EntityDisplayHelper
   # duplicates some code in avatar_helper, in the interest of cutting out
   # a lot of logic and method calls.
   #
-  def link_to_name(name, id=nil)
+  # If you do not specify the avatar_id no avatar will be displayed.
+  # If you use and avatar id of 0 the fallback avatar will be used instead.
+  #
+  def link_to_name(name, avatar_id=nil)
     if name
       display_name = name.length > 16 ? force_wrap(name,16) : name
-      if id.nil?
+      if avatar_id.nil?
         '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
       else
         # with the id, we can also display the icon
-        icon_url = '/avatars/%s/xsmall.jpg' % id
+        icon_url = '/avatars/%s/xsmall.jpg' % avatar_id
         '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
       end.html_safe
     end

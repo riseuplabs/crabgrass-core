@@ -26,6 +26,21 @@ module Common::Page::ListingHelper
       'common/pages/page_table_row'
     end
   end
+
+  def page_tags(page=@page, join=nil)
+    join ||= "\n" if join.nil?
+    if page.tags.any?
+      links = page.tags.collect do |tag|
+        tag_link(tag, page.owner)
+      end
+      links = (join != false) ? safe_join(links, join) : links
+    end
+  end
+
+  def cell_title(page)
+    link_to(force_wrap(page.title), page_path(page))
+  end
+
 #  def page_path_link(text,link_path='',image=nil)
 #    hash          = params.dup.to_hash        # hash must not be HashWithIndifferentAccess
 #    hash['path']  = @path.merge(link_path)    # we want to preserve the @path class
@@ -134,16 +149,6 @@ module Common::Page::ListingHelper
 #  def escape_excerpt(str)
 #    h(str).gsub /\{(\/?)bold\}/, '<\1b>'
 #  end
-
-  def page_tags(page=@page, join=nil)
-    join ||= "\n" if join.nil?
-    if page.tags.any?
-      links = page.tags.collect do |tag|
-        tag_link(tag, page.owner)
-      end
-      links = (join != false) ? safe_join(links, join) : links
-    end
-  end
 
 #  #
 #  # Often when you run a page search, you will get an array of UserParticipation
