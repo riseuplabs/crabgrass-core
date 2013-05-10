@@ -41,6 +41,11 @@ module Common::Page::ListingHelper
     link_to(force_wrap(page.title), page_path(page))
   end
 
+
+  def short_page_info(page)
+    "#{page.views_count}&nbsp;views / #{page.stars_count}&nbsp;stars".html_safe
+  end
+
 #  def page_path_link(text,link_path='',image=nil)
 #    hash          = params.dup.to_hash        # hash must not be HashWithIndifferentAccess
 #    hash['path']  = @path.merge(link_path)    # we want to preserve the @path class
