@@ -17,8 +17,9 @@ SearchFilter.new('/starred-by-me/') do
   # ui
   #
 
+  # TODO: bring this back. disabled now because it's not working with sphinx.
+  # self.section = :my_pages
   self.singleton = true
-  self.section = :my_pages
 
   label do |opts|
     if opts[:remove]
