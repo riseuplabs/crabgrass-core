@@ -6,7 +6,7 @@ module Common::Utility::CacheHelper
       :path => nil,
       :authenticity_token => nil,
       :_context => nil
-    options.reverse_merge params
+    options.reverse_merge(params).values.compact.join('-')
   end
 
   def group_cache_key(group, options={})

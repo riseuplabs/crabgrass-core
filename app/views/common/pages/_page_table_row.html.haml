@@ -1,7 +1,8 @@
-%tr{class: cycle('odd','even')}
-  %td= link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)
-  %td= page_icon(page)
-  %td= cell_title(page)
-  %td= link_to_name(page.updated_by_login, page.updated_by.try(:avatar_id) || 0)
-  %td.nowrap= friendly_date(page.updated_at)
-  %td= page.contributors_count
+- cache("v1-page-#{page.id}-#{page.update_hash}") do
+  %tr{class: cycle('odd','even')}
+    %td= link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)
+    %td= page_icon(page)
+    %td= cell_title(page)
+    %td= link_to_name(page.updated_by_login, page.updated_by.try(:avatar_id) || 0)
+    %td.nowrap= friendly_date(page.updated_at)
+    %td= page.contributors_count
