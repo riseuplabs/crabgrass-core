@@ -11,8 +11,9 @@ SearchFilter.new('/most-views-in/:time/:unit/') do
   # ui
   #
 
+  # TODO: bring this back. disabled now because it's not working with sphinx.
+  # self.section = :popular_pages
   self.singleton = true
-  self.section = :popular_pages
   self.exclude = :popular_pages
 
   self.description = "pages that have been viewed the most"
