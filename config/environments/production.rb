@@ -13,8 +13,6 @@ Crabgrass::Application.configure do
   ## use syslog if available, trying gems 'logging' and 'SyslogLogger'
   ##
 
-  config.log_level = :debug
-
   # try gem 'logging'
   begin
     require 'logging'
