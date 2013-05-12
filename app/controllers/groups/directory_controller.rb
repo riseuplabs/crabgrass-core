@@ -6,7 +6,7 @@ class Groups::DirectoryController < ApplicationController
   permission_helper 'groups/structures'
 
   def index
-    @groups = groups_to_display.alphabetized(nil).paginate(pagination_params)
+    @groups = groups_to_display.order(:name).paginate(pagination_params)
   end
 
   protected
