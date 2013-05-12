@@ -18,7 +18,11 @@ module ClassMethods
   def subselect_for_holder_and_gates(holder, gate_names)
     gate_names = [gate_names] unless gate_names.is_a? Array
     bits = gate_set.bits(gate_names)
-    Key.for_holder(holder).with_gate_bits(bits).select(:castle_id).to_sql
+    Key.for_holder(holder).
+      with_gate_bits(bits).
+      where(:castle_type => self.base_class.sti_name).
+      select(:castle_id).
+      to_sql
   end
 
   ##
