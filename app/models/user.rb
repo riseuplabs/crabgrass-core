@@ -47,16 +47,32 @@ class User < ActiveRecord::Base
 
   # alphabetized and (optional) limited to +letter+
   scope :alphabetized, lambda {|letter|
-    opts = {
-      :order => 'LOWER(COALESCE(users.display_name, users.login)) ASC'
-    }
     if letter == '#'
-      opts[:conditions] = ['login REGEXP ?', "^[^a-z]"]
-    elsif not letter.blank?
-      opts[:conditions] = ['login LIKE ?', "#{letter}%"]
+      where('login REGEXP ?', "^[^a-z]").alphabetical_order
+    elsif letter.present?
+      where(['login LIKE ?', "#{letter}%"]).alphabetical_order
+    else
+      alphabetical_order
     end
+  }
 
-    opts
+  # this is a little mysql magic to get what we want:
+  # We want to sort by display_name.presence || login
+  # if the display_name is NULL
+  #   CONCAT is null and we get login from COALESCE
+  # if the display_name is ""
+  #   CONCAT gives us the login
+  # if the display name is present
+  #   CONCAT gives display_name + login which will sort by display name basically.
+  scope :alphabetical_order {
+    .order <<-EOSQL
+      LOWER(
+        COALESCE(
+          CONCAT(users.display_name, users.login),
+          users.login
+        )
+      ) ASC')
+    EOSQL
   }
 
   scope :named_like, lambda {|filter|
