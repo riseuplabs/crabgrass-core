@@ -61,7 +61,7 @@ def self.included(base)
       def select_holder_codes
         castle = proxy_owner
         sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
-        self.connection.select_values("SELECT DISTINCT `keys`.`holder_code` FROM `keys` WHERE `keys`.`castle_type` = '%s' AND `keys`.`castle_id` = %s" % [sti_type, castle.id])
+        self.connection.select_values("SELECT DISTINCT `castle_gates_keys`.`holder_code` FROM `castle_gates_keys` WHERE `castle_gates_keys`.`castle_type` = '%s' AND `castle_gates_keys`.`castle_id` = %s" % [sti_type, castle.id])
       end
 
     end

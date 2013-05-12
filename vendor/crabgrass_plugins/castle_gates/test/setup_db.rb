@@ -31,7 +31,7 @@ end
 def setup_db
   ActiveRecord::Schema.define(:version => 1) do
 
-    create_table :keys do |p|
+    create_table :castle_gates_keys do |p|
       p.integer :castle_id
       p.string  :castle_type
       p.integer :holder_code
