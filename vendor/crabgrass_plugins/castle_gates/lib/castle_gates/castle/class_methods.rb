@@ -7,12 +7,18 @@ module Castle
 module ClassMethods
 
   #
-  # Used to find castles that with particular access. Assumes 'keys' table is joined in.
+  # Used in subqueries.
+  # Returns a select statement for castle_ids.
+  # Will find castles where the holder has access to particular gates.
   #
-  def conditions_for_gates(gate_names)
+  # UPGRADE: Later rails versions than 3.0 make subqueries on
+  # Castle.where(:id => CastleGates::Key.for_holder(...))
+  # so this probably can be simplified
+  #
+  def subselect_for_holder_and_gates(holder, gate_names)
     gate_names = [gate_names] unless gate_names.is_a? Array
     bits = gate_set.bits(gate_names)
-    "(#{bits} & ~castle_gates_keys.gate_bitfield) = 0"
+    Key.for_holder(holder).with_gate_bits(bits).select(:castle_id).to_sql
   end
 
   ##

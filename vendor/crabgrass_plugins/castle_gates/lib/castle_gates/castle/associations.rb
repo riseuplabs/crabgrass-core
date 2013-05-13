@@ -20,21 +20,9 @@ def self.included(base)
     #
     scope(:with_access, lambda {|args|
       holder, gates = args.first
-      holder = Holder[holder]
-      key_condition, key_values = Key.conditions_for_holder(holder)
-      gate_condition = conditions_for_gates(gates)
-
-      joins(:keys).
-        where(gate_condition).
-        where(key_condition, key_values).
-        group("#{self.quoted_table_name}.id")
-    }) do
-      # count on a group query will return a hash - not what we want.
-      def count(column_name = nil, options = {})
-        column_name, options = nil, column_name if column_name.is_a?(Hash)
-        calculate(:count, column_name, options).count
-      end
-    end
+      subselect = subselect_for_holder_and_gates(holder, gates)
+      where("#{self.quoted_table_name}.id IN (#{subselect})")
+    })
 
     ##
     ## KEYS
@@ -61,7 +49,7 @@ def self.included(base)
       def select_holder_codes
         castle = proxy_owner
         sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
-        self.connection.select_values("SELECT DISTINCT `keys`.`holder_code` FROM `keys` WHERE `keys`.`castle_type` = '%s' AND `keys`.`castle_id` = %s" % [sti_type, castle.id])
+        self.connection.select_values("SELECT DISTINCT `castle_gates_keys`.`holder_code` FROM `castle_gates_keys` WHERE `castle_gates_keys`.`castle_type` = '%s' AND `castle_gates_keys`.`castle_id` = %s" % [sti_type, castle.id])
       end
 
     end

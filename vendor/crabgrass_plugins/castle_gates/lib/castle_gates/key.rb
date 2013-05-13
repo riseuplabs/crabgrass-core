@@ -28,7 +28,11 @@ module CastleGates
     # queries keys that are associated with the holder, or any of its 'subholders'
     #
     scope(:for_holder, lambda { |holder|
-      { :conditions => conditions_for_holder(Holder[holder]) }
+      where holder_code: Holder[holder].all_codes
+    })
+
+    scope(:with_gate_bits, lambda { |bits|
+      where("(#{bits} & ~castle_gates_keys.gate_bitfield) = 0")
     })
 
     #
@@ -100,10 +104,6 @@ module CastleGates
     #
     def inspect
       "#<Key id:#{id}, castle_id:#{castle_id}, castle_type:#{castle_type}, holder_code:#{holder_code}, gate_bitfield:#{gate_bitfield.to_s(2)}>"
-    end
-
-    def self.conditions_for_holder(holder)
-      { "castle_gates_keys.holder_code" => holder.all_codes }
     end
 
     private
