@@ -7,7 +7,9 @@ module Castle
 module ClassMethods
 
   #
-  # Used to in subqueries to find castles that with particular access.
+  # Used in subqueries.
+  # Returns a select statement for castle_ids.
+  # Will find castles where the holder has access to particular gates.
   #
   # UPGRADE: Later rails versions than 3.0 make subqueries on
   # Castle.where(:id => CastleGates::Key.for_holder(...))
