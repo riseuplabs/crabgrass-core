@@ -4,7 +4,7 @@ class People::DirectoryController < ApplicationController
   stylesheet 'directory'
 
   def index
-    @users = users_to_display.alphabetized(nil).paginate(pagination_params)
+    @users = users_to_display.order(:login).paginate(pagination_params)
   end
 
   protected
