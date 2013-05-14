@@ -134,7 +134,7 @@ module PageExtension::Create
           groups << g
         elsif entity =~ RFC822::EmailAddress
           emails << entity
-        else
+        elsif entity.present?
           errors << I18n.t(:name_or_email_not_found, :name => h(entity))
         end
       end
