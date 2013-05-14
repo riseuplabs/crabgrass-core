@@ -128,8 +128,8 @@ class UserTest < ActiveSupport::TestCase
     red.grant_access!(blue => :spy)
     red.add_contact!(blue)
 
-    accessible = User.with_access(blue => :spy).friends_or_peers_of(blue)
-    assert_equal users(:red), accessible.first
+    with_access = User.with_access(blue => :spy).friends_or_peers_of(blue)
+    assert_equal ['red'], with_access.all.map(&:login)
   end
 
 

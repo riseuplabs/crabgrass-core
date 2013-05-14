@@ -73,21 +73,35 @@ class Group < ActiveRecord::Base
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }
 
-  scope :alphabetized, lambda { |letter|
-    opts = {
-      # make sure this works with unset full_name as well as mixed case
-      # should work in both mysql and postgres
-      :order => 'LOWER(COALESCE(groups.full_name, groups.name)) ASC'
-    }
-
+  # alphabetized and (optional) limited to +letter+
+  scope :alphabetized, lambda {|letter|
     if letter == '#'
-      opts[:conditions] = ['(groups.full_name REGEXP ? OR groups.name REGEXP ?)', "^[^a-z]", "^[^a-z]"]
-    elsif not letter.blank?
-      opts[:conditions] = ['(groups.full_name LIKE ? OR groups.name LIKE ?)', "#{letter}%", "#{letter}%"]
+      where('name REGEXP ?', "^[^a-z]").alphabetical_order
+    elsif letter.present?
+      where(['name LIKE ?', "#{letter}%"]).alphabetical_order
+    else
+      alphabetical_order
     end
-
-    opts
   }
+
+  # this is a little mysql magic to get what we want:
+  # We want to sort by display_name.presence || name
+  # if the display_name is NULL
+  #   CONCAT is null and we get name from COALESCE
+  # if the display_name is ""
+  #   CONCAT gives us the name
+  # if the display name is present
+  #   CONCAT gives display_name + name which will sort by display name basically.
+  scope :alphabetical_order,
+    order(<<-EOSQL
+      LOWER(
+        COALESCE(
+          CONCAT(groups.display_name, groups.name),
+          groups.name
+        )
+      ) ASC')
+    EOSQL
+   )
 
   scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
   scope :by_created_at, :order => 'groups.created_at DESC'
