@@ -115,7 +115,7 @@ module PageExtension::Create
       elsif recipients.is_a? Array
         entities = recipients
       elsif recipients.is_a? String
-        entities = recipients.split(/[\s,]/)
+        entities = recipients.split(/[\s,]+/)
       else
         entities = [recipients]
       end
@@ -134,7 +134,7 @@ module PageExtension::Create
           groups << g
         elsif entity =~ RFC822::EmailAddress
           emails << entity
-        elsif entity.any?
+        elsif entity.present?
           errors << I18n.t(:name_or_email_not_found, :name => h(entity))
         end
       end
