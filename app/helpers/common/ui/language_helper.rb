@@ -10,17 +10,6 @@ module Common::Ui::LanguageHelper
     end
   end
 
-  def language_select_links
-    @language_form_already_rendered = true
-    enabled_language_array.collect do |lang_name, lang_code|
-      if lang_code == session[:language_code].to_s
-        link_to(lang_name, language_path(:id => lang_code), :method => 'post', :class => 'inline', :style => 'margin-right: 1em; line-height: 2em', :icon => 'ok')
-      else
-        link_to(lang_name, language_path(:id => lang_code), :method => 'post', :style => 'margin-right: 1em; line-height: 2em')
-      end
-    end.join(' ')
-  end
-
   def all_languages_for_select
     I18n.sorted_languages.collect do |lang|
       [lang.name, lang.code]
