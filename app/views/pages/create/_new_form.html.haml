@@ -7,8 +7,8 @@
 
 - content_for :title do
   %div.icon.multi.medium{:class => "#{page_type.icon}_48"}
-    %h3= :create_a_new_thing.t(:thing => :page.t.downcase)
-    %h1= content_tag(:i, page_type.class_display_name)
+    = :create_a_new_thing.t(:thing => :page.t.downcase)
+    .h2= page_type.class_display_name
   - if @group
     = :page_added_to_group.t(:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
 
