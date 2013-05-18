@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   helper :application, :modalbox
   permissions :application
 
+  class_attribute :stylesheets
+  class_attribute :javascripts
+
   protected
 
   # this is used by the code that is included for both controllers and helpers.
@@ -75,19 +78,12 @@ class ApplicationController < ActionController::Base
   #   stylesheet 'gallery', 'images'
   #   stylesheet 'page_creation', :action => :create
   #
+  # They'll be accessible in the class_attribute stylesheets
+  #
   # as needed stylesheets are kept in public/stylesheets/as_needed
   #
   def self.stylesheet(*css_files)
-    if css_files.present?
-      options = css_files.last.is_a?(Hash) ? css_files.pop : {}
-      sheets  = read_inheritable_attribute("stylesheet") || {}
-      index   = options[:action] || :all
-      sheets[index] ||= []
-      sheets[index] << css_files
-      write_inheritable_attribute "stylesheet", sheets
-    else
-      read_inheritable_attribute "stylesheet"
-    end
+    self.stylesheets = merge_requirements(self.stylesheets, *css_files)
   end
 
   # let controllers require extra javascript
@@ -95,17 +91,19 @@ class ApplicationController < ActionController::Base
   #
   #   javascript 'wiki_edit', :action => :edit
   #
+  # They'll be accessible in the class_attribute javascripts
+  #
   def self.javascript(*js_files)
-    if js_files.present?
-      options = js_files.last.is_a?(Hash) ? js_files.pop : {}
-      scripts  = read_inheritable_attribute("javascript") || {}
-      index   = options[:action] || :all
-      scripts[index] ||= []
-      scripts[index] << js_files
-      write_inheritable_attribute "javascript", scripts
-    else
-      read_inheritable_attribute "javascript"
-    end
+    self.javascripts = merge_requirements(self.javascripts, *js_files)
+  end
+
+  def self.merge_requirements(current, *new_files)
+    current ||= {}
+    options = new_files.extract_options!
+    index   = options[:action] || :all
+    value   = current[index] || []
+    value += new_files
+    current.merge index => value.uniq
   end
 
 end

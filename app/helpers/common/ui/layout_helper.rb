@@ -19,7 +19,7 @@ module Common::Ui::LayoutHelper
   # only included if they are needed. See Application#stylesheet()
 
   def optional_stylesheets
-    stylesheet = controller.class.stylesheet || {}
+    stylesheet = controller.class.stylesheets || {}
     return [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
   end
 
@@ -71,7 +71,7 @@ module Common::Ui::LayoutHelper
   # See ApplicationController#javascript for details.
   #
   def javascript_include_tags
-    scripts = controller.class.javascript || {}
+    scripts = controller.class.javascripts || {}
     files = [:prototype, :libraries, :crabgrass]
     files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
 
