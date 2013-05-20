@@ -52,6 +52,9 @@ group :development do
   gem 'thin', :platforms => :mri_19
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'rb-inotify', '~> 0.9' # used by rails-dev-boost
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test, :development do

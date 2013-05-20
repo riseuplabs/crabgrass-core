@@ -82,10 +82,17 @@ GEM
     RedCloth (4.2.9)
     abstract (1.0.0)
     arel (2.0.10)
+    better_errors (0.8.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     builder (2.1.2)
     chronic (0.9.1)
+    coderay (1.0.9)
     columnize (0.3.6)
     daemons (1.1.9)
+    debug_inspector (0.0.2)
     debugger (1.4.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -170,6 +177,8 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.2)
+  better_errors
+  binding_of_caller
   debugger
   delayed_job (~> 3.0.5)
   factory_girl_rails
