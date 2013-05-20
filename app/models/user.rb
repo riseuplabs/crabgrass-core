@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
           CONCAT(users.display_name, users.login),
           users.login
         )
-      ) ASC')
+      ) ASC
     EOSQL
                                    )
 
