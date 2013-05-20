@@ -1,4 +1,4 @@
-- cache("v1-page-#{page.id}-#{page.update_hash}") do
+- cache("v2-page-#{page.id}-#{page.update_hash}") do
   %tr.upper{class: cycle('odd','even')}
     %td= link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)
     %td= page_icon(page)
@@ -6,7 +6,9 @@
     %td= link_to_name(page.updated_by_login, page.updated_by.try(:avatar_id) || 0)
     %td.nowrap= friendly_date(page.updated_at)
     %td= page.contributors_count.to_s + " voices"
-  %tr.lower
+  -# we hide the details for now with .shy
+  -# TODO: bring them back in a good looking non cluttered way.
+  %tr.lower.shy
     %td{colspan:5}
       = page.summary.try(:truncate, 75)
     %td
