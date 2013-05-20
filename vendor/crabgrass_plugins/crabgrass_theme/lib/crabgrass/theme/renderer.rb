@@ -66,7 +66,11 @@ module Crabgrass::Theme::Renderer
     end
     sass << ""
     sass << '// FILE FROM %s' % sass_source_path(file)
-    sass << File.read( sass_source_path(file) )
+    begin
+      sass << File.read( sass_source_path(file) )
+    rescue Errno::ENOENT => e
+      sass << "// ERROR: #{e}"
+    end
     if @style and file == Crabgrass::Theme::CORE_CSS_SHEET
       sass << '// CUSTOM CSS FROM THEME'
       sass << @style
