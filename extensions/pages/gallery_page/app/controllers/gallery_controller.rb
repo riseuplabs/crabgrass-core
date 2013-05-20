@@ -1,8 +1,6 @@
 class GalleryController < Pages::BaseController
 
-  stylesheet 'upload', :only => :edit
   stylesheet 'gallery'
-# included in base for now  javascript :upload, :only => :edit
 
   def show
     @images = @page.images.paginate(:page => params[:page])

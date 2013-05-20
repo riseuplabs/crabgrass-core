@@ -11,7 +11,7 @@ class Pages::BaseController < ApplicationController
   guard :may_ACTION_page?
   guard :update => :may_edit_page?
   javascript 'upload'
-  stylesheet 'upload', 'gallery'
+  stylesheet 'upload'
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
