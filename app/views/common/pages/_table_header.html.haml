@@ -1,6 +1,10 @@
 %tr
-  %th= :owner.tcap
-  %th
-  %th= :title.tcap
-  %th{colspan: 2}= :updated.tcap
-  %th= image_tag 'ui/person-dark.png'
+  %th.owner
+    = :owner.tcap
+  %th.icon
+  %th.title
+    = :title.tcap
+  %th.updated{colspan: 2}
+    = :updated.tcap
+  %th.contributors
+    = image_tag 'ui/person-dark.png'

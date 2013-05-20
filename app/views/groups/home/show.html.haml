@@ -4,5 +4,6 @@
 = render :partial => 'wikis'
 
 %h2.p.first= :recent_pages.t
-= render :partial => 'common/pages/list'
+.without_owner
+  = render :partial => 'common/pages/list'
 

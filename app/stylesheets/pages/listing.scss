@@ -55,3 +55,9 @@
     font-size: 90%;
   }
 }
+
+.without_owner .page_list {
+  .owner {
+    display: none;
+  }
+}
