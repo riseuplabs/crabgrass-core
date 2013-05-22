@@ -3,7 +3,6 @@
 
 class ApplicationController < ActionController::Base
 
-  prepend_view_path "app/common/views"
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
