@@ -246,7 +246,7 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  # keyring_code used by acts_as_locked and pathfinder
+  # keyring_code used by castle_gates and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
   end
