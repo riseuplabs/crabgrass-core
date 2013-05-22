@@ -45,14 +45,14 @@ class User < ActiveRecord::Base
 
   scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
-  # alphabetized and (optional) limited to +letter+
+  # (optionally) limited to +letter+
   scope :alphabetized, lambda {|letter|
     if letter == '#'
-      where('login REGEXP ?', "^[^a-z]").alphabetical_order
+      where('login REGEXP ?', "^[^a-z]")
     elsif letter.present?
-      where(['login LIKE ?', "#{letter}%"]).alphabetical_order
+      where(['login LIKE ?', "#{letter}%"])
     else
-      alphabetical_order
+      {}
     end
   }
 
