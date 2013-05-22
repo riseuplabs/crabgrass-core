@@ -338,12 +338,6 @@ class User < ActiveRecord::Base
 
   end
 
-  ##
-  ## DEPRECATED
-  ##
 
-  # TODO: this does not belong here, should be in the mod, but it was not working
-  # there.
-  include UserExtension::SuperAdmin rescue NameError
-  include UserExtension::Moderator  rescue NameError
+  acts_as_extensible
 end
