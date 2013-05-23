@@ -33,8 +33,6 @@
 
 class DispatchController < ApplicationController
 
-  include Common::Page::CreationHelper
-
   # this is *not* an action, but the 'dispatch' method from ActionController::Metal
   # The only change here is that we don't return to_a(), but instead whatever
   # process() returns.
@@ -62,8 +60,15 @@ class DispatchController < ApplicationController
       find_controller.dispatch(params[:action], request)
     rescue ActiveRecord::RecordNotFound
       if logged_in? and (@group or (@user and @user == current_user))
-        redirect_to create_page_url(:type => 'wiki', :group => @group, 'page[title]' => params[:_page])
-        warning :thing_not_found.t(:thing => :page.t)
+        url = create_page_url(:type => 'wiki', 'page[owner]' => (@group || @user), 'page[title]' => params[:_page])
+        logger.info("Redirect to #{url}")
+
+        # FIXME: this controller isn't fully set-up yet (because usually the request
+        #   will be completed in a new controller instance), so redirect_to etc.
+        #   won't work.
+        return [302, { 'Location' => url }, []]
+
+        #warning :thing_not_found.t(:thing => :page.t)
       else
         #set_language do
           # is it required to set the language here?
@@ -278,6 +283,14 @@ class DispatchController < ApplicationController
     params[:controller] = 'people/home'
     params[:person_id] = params[:_context]
     new_controller('People::HomeController')
+  end
+
+  private
+
+  ## Link to the action for the form to create a page of a particular type.
+  def create_page_url(options={})
+    group = options.delete(:group)
+    url_for(options.merge(:controller => 'pages/create', :action => 'new'))
   end
 
 end
