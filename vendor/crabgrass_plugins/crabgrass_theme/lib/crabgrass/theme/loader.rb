@@ -118,6 +118,7 @@ module Crabgrass::Theme::Loader
     if @parent
       @parent.reload!
     end
+    @navigation = nil
     info 'Reloading theme %s' % @name
     load()
   end
