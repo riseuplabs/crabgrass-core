@@ -1,17 +1,15 @@
-
 module Common::Application::BeforeFilters
+  extend ActiveSupport::Concern
 
-  def self.included(base)
-    base.class_eval do
-      # the order of these filters matters. change with caution.
-      before_filter :set_session_locale
-      before_filter :set_session_timezone
-      before_filter :header_hack_for_ie6
-      before_filter :redirect_unverified_user
-      before_filter :enforce_ssl_if_needed
-      before_filter :setup_theme
-      before_render :setup_context
-    end
+  included do
+    # the order of these filters matters. change with caution.
+    before_filter :set_session_locale
+    before_filter :set_session_timezone
+    before_filter :header_hack_for_ie6
+    before_filter :redirect_unverified_user
+    before_filter :enforce_ssl_if_needed
+    before_filter :setup_theme
+    before_render :setup_context
   end
 
   protected
