@@ -3,7 +3,6 @@
 
 class ApplicationController < ActionController::Base
 
-  prepend_view_path "app/common/views"
   protect_from_forgery
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
 
@@ -23,18 +22,20 @@ class ApplicationController < ActionController::Base
   def controller(); self; end
 
   def current_theme
-    @theme ||= if Rails.env.development?
-      # in dev mode, allow switching themes. maybe allow anyone to switch themes...
-      session[:theme] = params[:theme] || session[:theme] || current_site.theme
-      unless Crabgrass::Theme.exists?(session[:theme])
-        session[:theme] = current_site.theme
-      end
-      Crabgrass::Theme[session[:theme]]
-    else
-      Crabgrass::Theme[current_site.theme]
-    end
+    @theme ||= Crabgrass::Theme[select_theme]
   end
   helper_method :current_theme
+
+  def select_theme
+    switch_theme || current_site.theme
+  end
+
+  # in dev mode, allow switching themes. maybe allow anyone to switch themes...
+  def switch_theme
+    return unless Rails.env.development?
+    theme = params[:theme] || session[:theme]
+    session[:theme] = theme if Crabgrass::Theme.exists?(theme)
+  end
 
   # view() method lets controllers have access to the view helpers.
   def view

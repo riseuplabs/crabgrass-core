@@ -35,7 +35,7 @@ end
 def info(str,level=0)
   if (ENV['INFO'] and ENV['INFO'].to_i >= level) or (DEFAULT_INFO_LEVEL >= level)
     str = str.to_s
-    if INFO_PAD_CHARACTER.present?
+    if INFO_PAD_CHARACTER.chars.any?
       prefix = (INFO_PAD_CHARACTER * 2 * (level+1)) + ' ' + str + ' '
       postfix = INFO_PAD_CHARACTER * ([80 - prefix.length, 0].max)
       STDOUT.print prefix

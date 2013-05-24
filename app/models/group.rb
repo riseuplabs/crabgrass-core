@@ -96,10 +96,10 @@ class Group < ActiveRecord::Base
     order(<<-EOSQL
       LOWER(
         COALESCE(
-          CONCAT(groups.display_name, groups.name),
+          CONCAT(groups.full_name, groups.name),
           groups.name
         )
-      ) ASC')
+      ) ASC
     EOSQL
    )
 

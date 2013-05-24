@@ -75,6 +75,7 @@ module Crabgrass
 
     # return true if the theme's directory exists.
     def self.exists?(theme_name)
+      return if theme_name.blank?
       File.directory? Theme::theme_directory(theme_name)
     end
 

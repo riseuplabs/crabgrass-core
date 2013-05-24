@@ -203,6 +203,14 @@ Crabgrass::Application.routes.draw do |map|
     map.connect '/static/:action/:id', :controller => 'static'
   end
 
+  ## ADD ROUTES FROM MODS
+
+  if Crabgrass.mod_route_blocks
+    Crabgrass.mod_route_blocks.each do |block|
+      block.call(map)
+    end
+  end
+
   ##
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##

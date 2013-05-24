@@ -45,14 +45,14 @@ class User < ActiveRecord::Base
 
   scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
 
-  # alphabetized and (optional) limited to +letter+
+  # (optionally) limited to +letter+
   scope :alphabetized, lambda {|letter|
     if letter == '#'
-      where('login REGEXP ?', "^[^a-z]").alphabetical_order
+      where('login REGEXP ?', "^[^a-z]")
     elsif letter.present?
-      where(['login LIKE ?', "#{letter}%"]).alphabetical_order
+      where(['login LIKE ?', "#{letter}%"])
     else
-      alphabetical_order
+      {}
     end
   }
 
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
           CONCAT(users.display_name, users.login),
           users.login
         )
-      ) ASC')
+      ) ASC
     EOSQL
                                    )
 
@@ -246,7 +246,7 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  # keyring_code used by acts_as_locked and pathfinder
+  # keyring_code used by castle_gates and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
   end
@@ -338,12 +338,6 @@ class User < ActiveRecord::Base
 
   end
 
-  ##
-  ## DEPRECATED
-  ##
 
-  # TODO: this does not belong here, should be in the mod, but it was not working
-  # there.
-  include UserExtension::SuperAdmin rescue NameError
-  include UserExtension::Moderator  rescue NameError
+  acts_as_extensible
 end

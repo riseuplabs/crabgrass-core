@@ -194,7 +194,7 @@ define_navigation do
   global_section :group do
     label  { :groups.t }
     url    { groups_directory_path }
-    active { controller?('groups/') or @group or context?(:group) }
+    active { controller?('groups/') or context?(:group) }
     html    :partial => '/layouts/global/nav/groups_menu'
 
     context_section :directory do
