@@ -1,7 +1,7 @@
 module Mods::Plugin
 
   def load(initializer)
-    info('loading plugin %s' % directory.sub(RAILS_ROOT+'/',''), 1)
+    info('loading plugin %s' % initializer.sub(RAILS_ROOT+'/',''), 1)
     super(initializer)
   end
 
