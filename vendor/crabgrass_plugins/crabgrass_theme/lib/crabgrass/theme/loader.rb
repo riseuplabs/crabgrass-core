@@ -59,7 +59,7 @@ module Crabgrass::Theme::Loader
         starting_data = @navigation_parent.navigation
       end
     end
-    starting_data ||= nil
+    starting_data ||= self.navigation
     @navigation = Crabgrass::Theme::NavigationDefinition.parse(self, starting_data, &block)
   end
 
