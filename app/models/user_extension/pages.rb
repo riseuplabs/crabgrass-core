@@ -110,6 +110,9 @@ module UserExtension::Pages
       )
       participation.page = page
     end
+    unless participation.changed_at or page.created_by != self
+      participation.changed_at = Time.now
+    end
     page.association_will_change(:users)
     participation
   end

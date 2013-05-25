@@ -305,17 +305,6 @@ class User < ActiveRecord::Base
     @access = nil
   end
 
-  # as special call used in special places: This should only be called if you
-  # know for sure that you can't use user.may?(:admin,thing).
-  # Significantly, this does not return true for new records.
-  def may_admin?(thing)
-    begin
-      thing.has_access!(:admin,self)
-    rescue PermissionDenied
-      false
-    end
-  end
-
   # Migrate permissions from pre-CastleGates databases to CastleGates.
   # Called from cg:upgrade:user_permissions task.
   def migrate_permissions!

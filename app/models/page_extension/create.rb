@@ -67,8 +67,14 @@ module PageExtension::Create
               user.share_page_with!(page, recipients, :access => access,
                                     :send_notice => inbox)
             end
-            unless user.may_admin?(page)
-              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
+            # Page#owner= creates a user participation for the owner. Creating it
+            # here is only needed, if the page is created for a different owner.
+            unless owner == user.login
+              page.user_participations.build(
+                user_id: user.id,
+                access: ACCESS[:admin],
+                changed_at: Time.now
+              )
             end
           end
           page
