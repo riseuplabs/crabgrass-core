@@ -1,5 +1,11 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
+##
+## All these tests are disabled, because Groups::WikiController is now
+## much more simple and these tests do not apply. I am keeping these here
+## in case some of this logic is put back into Groups::WikiController.
+##
+
 class Groups::WikisControllerTest < ActionController::TestCase
 
   def setup
@@ -8,7 +14,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     @group.add_user!(@user)
   end
 
-  def test_new
+  def xtest_new
     login_as @user
     assert_permission :may_edit_group? do
       xhr :get, :new, :group_id => @group.to_param
@@ -17,7 +23,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert assigns['wiki'].new_record?
   end
 
-  def test_new_private_wiki
+  def xtest_new_private_wiki
     login_as @user
     xhr :get, :new, :group_id => @group.to_param, :private => true
     assert_response :success
@@ -25,7 +31,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_select 'input#wiki_private[type="hidden"][value="true"]'
   end
 
-  def test_new_with_existing_wiki
+  def xtest_new_with_existing_wiki
     login_as @user
     @wiki = @group.profiles.public.create_wiki :body => 'init'
     xhr :get, :new, :group_id => @group.to_param
@@ -35,7 +41,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_equal 'text/javascript', @response.content_type
   end
 
-  def test_new_with_existing_private_wiki
+  def xtest_new_with_existing_private_wiki
     login_as @user
     @wiki = @group.profiles.private.create_wiki :body => 'init'
     xhr :get, :new, :group_id => @group.to_param, :private => true
@@ -45,7 +51,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_equal 'text/javascript', @response.content_type
   end
 
-  def test_new_private_with_existing_public_wiki
+  def xtest_new_private_with_existing_public_wiki
     login_as @user
     @wiki = @group.profiles.public.create_wiki :body => 'init'
     xhr :get, :new, :group_id => @group.to_param, :private => true
@@ -54,7 +60,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_select 'input#wiki_private[type="hidden"][value="true"]'
   end
 
-  def test_create_private
+  def xtest_create_private
     login_as @user
     assert_permission :may_edit_group? do
       xhr :post, :create,
@@ -69,7 +75,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_redirected_to group_home_url(@group, :wiki_id => wiki.id)
   end
 
-  def test_create_public
+  def xtest_create_public
     login_as @user
     assert_permission :may_edit_group? do
       xhr :post, :create,
@@ -83,7 +89,7 @@ class Groups::WikisControllerTest < ActionController::TestCase
     assert_redirected_to group_home_url(@group, :wiki_id => wiki.id)
   end
 
-  def test_create_with_existing_wiki
+  def xtest_create_with_existing_wiki
     @wiki = @group.profiles.public.create_wiki :body => 'init'
     login_as @user
     assert_difference '@wiki.versions.count' do

@@ -4,8 +4,17 @@
 // stuff that doesn't go anywhere else.
 //
 
+//
 // hides all spinners. this is called by default by most rjs templates.
-function hideSpinners() {$$('.spin').invoke('hide');}
+//
+function hideSpinners() {
+  $$('.spin').invoke('hide');
+  $$('html').invoke('removeClassName', 'busy');
+}
+
+function showSpinner() {
+  $$('html').invoke('addClassName', 'busy');
+}
 
 // opens the greencloth editing reference.
 function quickRedReference() {
@@ -127,7 +136,7 @@ function activatePanelRow(row_id) {
     $('panel_left_'+row_id).addClassName('active');
     var halfHeight = $('panel_left_'+row_id).getHeight() / 2 + "px";
     var borderWidthStr = "#{top} #{right} #{bottom} #{left}".interpolate({top: halfHeight, right:"0px", bottom: halfHeight, left:"10px"});
-    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'}); 
+    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'});
 
     // position and show right panel row
     var offset = $('panel_left_'+row_id).offsetTop + 'px';

@@ -1,8 +1,51 @@
-.pull-right
-  = wiki_toggles
-%h2= :group_wiki.t
-.clear
-  = wiki_with_tabs(@private_wiki)
-  = wiki_with_tabs(@public_wiki)
-  - if may_edit_group? && ( !@private_wiki || !@public_wiki )
-    #new_wiki.tab_content
+- content_for :dom_loaded do
+  showTabByHash();
+
+- active_tab = local_assigns['profile'] || (may_edit_group? ? 'private' : 'public')
+- edit_mode = local_assigns['edit_mode'] && may_edit_group?
+- wiki_tab = edit_mode ? 'edit' : 'show'
+
+#group_home_wiki_area
+  -#
+  -# TOP BUTTONS
+  -#
+  - if may_edit_group?
+    - if @public_wiki || @private_wiki
+      .pull-right
+        = edit_mode_button(edit_mode)
+    .p.first
+      = formy(:toggle_bugs) do |f|
+        - f.bug do |b|
+          - b.label :public_wiki.t
+          - b.show_tab 'public_panel'
+          - b.selected active_tab == 'public'
+        - f.bug do |b|
+          - b.label :private_wiki.t
+          - b.show_tab 'private_panel'
+          - b.selected active_tab == 'private'
+
+  -#
+  -# PUBLIC WIKI
+  -# note: data-wiki attribute is used to by javascript.
+  -#
+  #public_panel.tab_content{'data-wiki' => @public_wiki.try(:id), :style => ("display: none" if active_tab == 'private')}
+    - if @public_wiki
+      - if edit_mode
+        = formy(:tabs) do |f|
+          = wiki_tabs(f, @public_wiki, :show_print => false, :active => wiki_tab)
+      = render :file => "wikis/wikis/#{wiki_tab}", :locals => {:wiki => @public_wiki, :mode => local_assigns[:mode]}
+    - else
+      .p= create_group_wiki_link('public')
+
+  -#
+  -# PRIVATE WIKI
+  -#
+  - if may_edit_group?
+    #private_panel.tab_content{'data-wiki' => @private_wiki.try(:id), :style => ("display: none" if active_tab == 'public')}
+      - if @private_wiki
+        - if edit_mode
+          = formy(:tabs) do |f|
+            = wiki_tabs(f, @private_wiki, :show_print => false, :active => wiki_tab)
+        = render :file => "wikis/wikis/#{wiki_tab}", :locals => {:wiki => @private_wiki, :mode => local_assigns[:mode]}
+      - else
+        .p= create_group_wiki_link('private')

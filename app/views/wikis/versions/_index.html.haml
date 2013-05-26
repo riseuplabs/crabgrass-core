@@ -1,0 +1,7 @@
+
+= pagination_links(@versions, :renderer => LinkRenderer::Ajax, :params => {:controller => 'wikis/versions', :wiki_id => @wiki.id, :action => 'index'})
+
+%ul.clickable
+  - @versions.each do |version|
+    %li{:onmousedown => show_version_remote_function(version)}
+      = render :partial => 'wikis/versions/line_item', :locals => {:version => version}

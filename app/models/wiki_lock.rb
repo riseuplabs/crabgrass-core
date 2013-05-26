@@ -33,14 +33,17 @@ class WikiLock < ActiveRecord::Base
     update_attributes!({:locks => locks})
   end
 
-  def unlock!(section, user, opts = {})
-    if section == :document
-      # wipe away everything. safer in case of stray locks
-      locks.clear
-    else
-      locks.delete(section)
+  #
+  # removes a lock from one or more sections, saving the result immediately
+  #
+  def unlock!(sections)
+    [sections].flatten.each do |section|
+      if section == :document
+        locks.clear
+      else
+        locks.delete(section)
+      end
     end
-
     update_attributes!({:locks => locks})
   end
 
@@ -48,6 +51,9 @@ class WikiLock < ActiveRecord::Base
     all_sections - sections_locked_for(user)
   end
 
+  #
+  # returns list of sections that the user may NOT edit
+  #
   def sections_locked_for(user)
     locked_for_user = []
     locks.each do |section, lock|
@@ -64,6 +70,10 @@ class WikiLock < ActiveRecord::Base
     section
   end
 
+  # returns true if the section is locked by user
+  def locked_by?(section, user)
+    locks[section] && locks[section][:by] == user.id
+  end
 
   protected
   # this should be called every time WikiLocks is loaded from db

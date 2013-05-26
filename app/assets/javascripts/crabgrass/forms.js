@@ -101,39 +101,3 @@ function submitNestedResourceForm(resource_id_field, resource_url_template,
     input.value; form.action = resource_url_template.gsub('__ID__',
         resource_id); form.submit(); } }
 
-
-// starts watching the textarea when window.onbeforeunload event happens it
-// will ask the user if they want to leave the unsaved form everything that
-// matches savingSelectors will permenantly disable the confirm message when
-// clicked this a way to exclude "Save" and "Cancel" buttons from raising the
-// "Do you want to discard this?" dialog
-
-function confirmDiscardingTextArea(textAreaId, discardingMessage,
-    savingSelectors) {
-
-  var textArea = $(textAreaId);
-  var confirmActive = true;
-  var originalValue = textArea.value;
-
-  window.onbeforeunload = function(ev) {
-    if(confirmActive) {
-      var newValue = textArea.value;
-      if(newValue != originalValue) {
-        return discardingMessage;
-      }
-    }
-  };
-
-  // toggle off the confirmation when saving or explicitly discarding the text
-  // area (clicking 'cancel' for example)
-  savingSelectors.each(function(savingSelector) {
-    var savingElements = $$(savingSelector);
-    savingElements.each(function(savingElement) {
-      savingElement.observe('click', function() {
-        // user clicked 'save', 'cancel' or something similar
-        // we should no longer display confirmation when leaving page
-        confirmActive = false;
-      })
-    });
-  });
-}

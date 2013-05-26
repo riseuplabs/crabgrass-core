@@ -11,9 +11,17 @@ class Wikis::BaseController < ApplicationController
   helper 'wikis/base'
 
   protected
+
   def fetch_wiki
     @wiki = Wiki.find(params[:wiki_id] || params[:id])
     @page = @wiki.page
+    if params[:section]
+      @section = params[:section]
+      @body = @wiki.get_body_for_section(@section)
+    else
+      @section = :document
+      @body = @wiki.body
+    end
   end
 
   def setup_context

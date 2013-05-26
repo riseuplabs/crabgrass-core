@@ -1,4 +1,4 @@
-// 
+//
 // everywhere we need to display lists of things.
 //
 // there are four main types of lists:
@@ -92,6 +92,9 @@ ul.list_as_cols {
 
 ul.clickable {
   @extend ul.shaded;
+  @extend .round;
+  @extend .unstyled;
+
   & > li {
     cursor: pointer;
   }
@@ -124,5 +127,5 @@ ul.shaded {
   //}
   //& > li:hover .hover-btn-inverse {
   //  @extend .btn-inverse
-  //} 
+  //}
 }

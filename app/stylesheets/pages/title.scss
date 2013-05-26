@@ -20,6 +20,9 @@
   #page_tabs {
     width: 100%; // not sure why this is needed, but it is.
   }
+  #title {
+    padding-bottom: gutter() / 2;
+  }
 }
 
 

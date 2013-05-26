@@ -30,7 +30,7 @@ module Formy
     def open
       super
       puts "<table class='#{FORM_CLASS}'>"
-      title(@options[:title]) if @options[:title]
+      title(@opts[:title]) if @opts[:title]
     end
 
     def close
@@ -54,13 +54,13 @@ module Formy
 
       def open
         super
-        @options[:style] ||= :hang
+        @opts[:style] ||= :hang
       end
 
       def close
         @input ||= @elements.first.to_s
-        @classes = [@classes, @options[:class]].combine
-        if @options[:style] == :hang
+        @classes = [@classes, @opts[:class]].combine
+        if @opts[:style] == :hang
           @label ||= '&nbsp;'.html_safe
           labelspan = inputspan = 1
           #labelspan = 2 if @label and not @input
@@ -76,11 +76,11 @@ module Formy
             puts '</td>'
           end
           puts '</tr>'
-        elsif @options[:style] == :stack
+        elsif @opts[:style] == :stack
           if @label
             puts '<tr><td class="%s">%s</td></tr>' % [LABEL_CLASS, @label]
           end
-          puts '<tr class="%s">' % @options[:class]
+          puts '<tr class="%s">' % @opts[:class]
           puts '<td class="%s">%s</td>' % [INPUT_CLASS, @input]
           puts '<td class="%s">%s</td>' % [INFO_CLASS, @info]
           puts '</tr>'

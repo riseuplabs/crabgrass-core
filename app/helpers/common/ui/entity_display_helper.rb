@@ -25,12 +25,14 @@ module Common::Ui::EntityDisplayHelper
     if name
       display_name = name.length > 16 ? force_wrap(name,16) : name
       if avatar_id.nil?
-        '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
+        '<a href="/%s" title="%s">%s</a>'.html_safe % [name, name, h(display_name)]
       else
         # with the id, we can also display the icon
         icon_url = '/avatars/%s/xsmall.jpg' % avatar_id
-        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
+        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>'.html_safe % [name, name, icon_url, h(display_name)]
       end.html_safe
+    else
+      :unknown.t
     end
   end
 

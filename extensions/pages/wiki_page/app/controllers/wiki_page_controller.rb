@@ -5,25 +5,19 @@ class WikiPageController < Pages::BaseController
   permission_helper 'wikis'
 
   before_filter :find_last_seen, :only => :show
-  before_render :setup_title_box
 
   stylesheet 'wiki_edit'
-  ##
-  ## ACCESS: public or :view
-  ##
+  javascript 'wiki'
 
   def show
     if default_to_edit?
       params[:action] = 'edit'
       render :template => '/wikis/wikis/edit'
     else
-      render :template => '/common/wiki/show'
+      render :template => '/wikis/wikis/show'
     end
   end
 
-  ##
-  ## PROTECTED
-  ##
   protected
 
   # called during BasePage::create
@@ -48,13 +42,6 @@ class WikiPageController < Pages::BaseController
 
   def setup_options
     @options.show_tabs = true
-  end
-
-  def setup_title_box
-    unless @wiki.nil? or @wiki.document_open_for?(current_user)
-      locker = @wiki.locker_of(:document)
-      @title_addendum = :wiki_is_locked.t(:user => locker.display_name)
-    end
   end
 
   def default_to_edit?

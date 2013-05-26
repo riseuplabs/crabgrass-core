@@ -169,6 +169,8 @@ module Common::Application::AlertMessages
       end
     elsif exception.is_a? ActiveRecord::RecordInvalid
       add_flash_record(exception.record)
+    elsif exception.is_a? CrabgrassException
+      [{:type => exception.options[:type] || :error, :text => exception.message}]
     else
       [{:type => :error, :text => exception.to_s}]
     end

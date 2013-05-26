@@ -1,3 +1,4 @@
 standard_update(page)
-page.replace_html dom_id(@version, :panel_right), :partial => '/wikis/versions/show'
-page << "activatePanelRow('#{dom_id(@version)}')"
+page << "activateTabLink('%s')" % dom_id(@wiki, 'versions_tab')
+
+page.replace_html dom_id(@wiki), :partial => 'wikis/versions/show'

@@ -16,7 +16,7 @@ class LinkRenderer::Ajax < LinkRenderer::CrabgrassBase
   def spinner_id
     # eg, if we are paginating user_participations, results in spinners with
     # id => 'pagination_user_participation_spinner'
-    'pagination_' + @collection.first.class.name.underscore
+    "pagination_#{@collection.first.class.name}".gsub('/', '_').underscore
   end
 
   protected

@@ -62,7 +62,7 @@ module Formy
 
       def open
         super
-        @options[:style] ||= :hang
+        @opts[:style] ||= :hang
       end
 
       # <div class="control-group">

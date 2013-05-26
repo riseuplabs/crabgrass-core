@@ -1,5 +1,5 @@
 en:
- 
+
   ##
   ## Time Formats
   ## (override the defaults in locale/rails)
@@ -310,7 +310,7 @@ en:
   vote_bad: "bad"
   vote_none: "none"
   vote_no: "no"
-  
+
   ##
   ## SURVEY PAGE
   ##
@@ -397,83 +397,6 @@ en:
   current_video_sources: "Currently supported: youtube, blip.tv, google video, vimeo."
   video_embed_code_prompt: "Embed code from external video source."
 
-
-  ##
-  ## WIKI
-  ##
-
-  wiki_existed_new_version_created: "This wiki had already been created by another user. Your changes have been saved as a new version."
-  wiki_is_locked: "This wiki is currently locked by %{user}"
-  ##!  wont_be_able_to_save: "You will not be able to save this page"
-  leave_editing_wiki_page_warning: "If you don't save the wiki, you will lose your changes."
-  ##!  page_locked_header: "Page Locked"
-  ##!  locked_by_user: "Locked by %{user}"
-  ##!  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
-  cant_edit_section: "Can't edit %{section}."
-  user_locked_section: "%{user} has locked %{section}."
-  can_still_save: "You can still save."
-  ##!  changes_might_be_overwritte: "Your changes might be overwritten."
-  other_section_locked_error: "Can only lock one section at a time. You already locked '%{section}'."
-  break_lock: "Break Lock"
-  break_lock_button: "Break Lock"
-  versions: "Versions"
-  ##!  last_change: "Last Change"
-  ##!  print_underlined_p: "<u>p</u>rint"
-  ##!  edit_underlined_e: "<u>e</u>dit"
-  comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
-  changes_made: "Changes made %{when}."
-  prev_change: "Previous Change"
-  next_change: "Next Change"
-  formatting_reference_link: "Editing Help"
-  version_doesnt_exist: "There is no version %{version}"
-  version_exists_error: "%{user} has saved new changes first. You can still save your changes as the newest version."
-  you_are_viewing_version: "You are viewing version %{version} by %{user}"
-  diff_link: "view changes"
-  version_link: "view version"
-  ##!  insert_image_heading: "Insert Image"
-  ##!  wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
-  wiki_section_edit: "Edit This Section"
-
-  wiki_revert_version: "Revert To Version %{version}"
-  ##!  revert_to_previous_version: "Revert to previous version:"
-  wiki_version_creator_heading: "person"
-  wiki_version_revert_link: "revert"
-  ##!  private_homepage: "Private Homepage"
-  ##!  public_homepage: "Public Homepage"
-
-  # popup
-
-  ##!  clear_link_button: "Clear Link"
-  ##!  create_link_button: "Create Link"
-  ##!  update_link_button: "Update Link"
-
-  insert_image: "Insert Image"
-  ##!  add_link: "Add Link"
-
-  # editor
-  # advanded editor is what plain editor is called when visual editor is enabled
-  ##!  wiki_advanced_editor: "Advanced Editor"
-  ##!  wiki_plain_editor: "Plain Editor"
-  ##!  wiki_visual_editor: "Visual Editor"
-  ##!  wiki_editor: "Editor"
-  preview: "Preview"
-  ##!  close_editor: "Close Editor"
-
-  # errors
-
-  ##!  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
-  save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either %{save_button} or %{cancel_button} to stop editing."
-
-  cant_find_wiki_section: "Can't find wiki section %{section}"
-  ##!  cant_lock_another_section: "you already have a section locked. Can't lock another."
-  ##!  cant_lock_nonexistant_section: "can't lock a nonexistant section"
-  ##!  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
-
-  wiki_formating_code: "Big Caption \n===========\n\nSmaller Caption\n---------------\n\nh3. Even smaller caption\n* stars create\n* lists without numbers\n# hashes create\n# numbered lists"
-
-  wiki_formating_end: "You can also make the text <strong>*bold*</strong> or <em>_italic_</em> ...</br> Use the toolbar for inserting images and links.</br>"
-
-  wiki_formating_intro: "You can use any of the following to format your wiki:"
 
   ##
   ## WALL

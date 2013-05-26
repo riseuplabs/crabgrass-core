@@ -19,44 +19,44 @@
 
 // modifying bootstrap tabs to work with our low height menu tabs
 
-ul.nav-tabs.flat {
-  padding-left: 2em;
-  margin: 0;
-  clear: left;
-  float: left;
-  width: 100%;
-  height: 1%;
-  border-bottom: 0px;
-  li {
-    a  {
-      line-height: 1.75em;
-      // this would be overriden by hover state bootstrap so !important
-      border-bottom: 0px !important;
-      padding: 0px 1em;
-      cursor: pointer; // make sure we have a pointer even for ajaxy links
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    &.active a:hover {
-      text-decoration: none;
-    }
-    // if you can click on the active tab make it look like a link.
-    &.active a.reloadable:hover {
-      cursor: pointer; // make sure we have a pointer even for ajaxy links
-      text-decoration: underline;
-    }
-  }
-}
+// ul.nav-tabs.flat {
+//   padding-left: 2em;
+//   margin: 0;
+//   clear: left;
+//   float: left;
+//   width: 100%;
+//   height: 1%;
+//   border-bottom: 0px;
+//   li {
+//     a  {
+//       line-height: 1.75em;
+//       // this would be overriden by hover state bootstrap so !important
+//       border-bottom: 0px !important;
+//       padding: 0px 1em;
+//       cursor: pointer; // make sure we have a pointer even for ajaxy links
+//       &:hover {
+//         text-decoration: underline;
+//       }
+//     }
+//     &.active a:hover {
+//       text-decoration: none;
+//     }
+//     // if you can click on the active tab make it look like a link.
+//     &.active a.reloadable:hover {
+//       cursor: pointer; // make sure we have a pointer even for ajaxy links
+//       text-decoration: underline;
+//     }
+//   }
+// }
 
 //
 // TODO: switch to cutout_menu style tabs...
 //
 // See mixins.scss cutout_menu for detailed comments on how
 // these tabs work. It would be better to reuse that mixin,
-// but at the moment I am not sure how, since it is designed 
+// but at the moment I am not sure how, since it is designed
 // for special case where the tabs are absolutely positioned
-// on the bottom of an enclosing block. 
+// on the bottom of an enclosing block.
 //
 // These tabs work the same, but are not positioned on the bottom.
 // These tabs are class based, and so can be reused in many places.

@@ -34,7 +34,11 @@ module Common::Application::UrlIdentifiers
       if action.is_a? String
         action == action_string
       elsif action.is_a? Symbol
-        action == action_symbol
+        if action == :none
+          action_string == nil
+        else
+          action == action_symbol
+        end
       end
     end
   end
@@ -149,7 +153,7 @@ module Common::Application::UrlIdentifiers
   end
 
   def action_symbol
-    if params[:action].present?
+    @action_symbol ||= if params[:action].present?
       params[:action].to_sym
     else
       nil

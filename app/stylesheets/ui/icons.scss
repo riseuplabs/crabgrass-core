@@ -4,7 +4,7 @@
 
 // Most often, we display icons as background images. This is used for small
 // icons, big icons, and for avatar icons.
-// 
+//
 // The basic idea is that we add some left-padding and then position the background
 // image in the space created. This has the advantage of telling the browser to
 // load the images later, there is very little markup, and it is easy to add
@@ -14,19 +14,19 @@
 // spacing is a bit more of a pain. There are three methods we can use to
 // ensure the element has enough height for the icon:
 //
-// * vertical padding: 
+// * vertical padding:
 //   Using this method, you add a few pixels of top and bottom padding to try
-//   to give the element enough height. This is OK, but creates inconsistant 
-//   results with different font sizes and font families. 
+//   to give the element enough height. This is OK, but creates inconsistant
+//   results with different font sizes and font families.
 //   This is the only method that works with display:inline.
 //
-// * line-height: 
+// * line-height:
 //   using this method, you set the line height of the element to be greater than
 //   the size of the icon. This works great, so long as the element doesnt have
 //   text that wraps on multiple lines, then this method really sucks.
 //   This requires display:block or display:inline-block.
 //
-// * min-height: 
+// * min-height:
 //   this problem seems like a job for min-height, but this only works in modern
 //   browsers. ie7-js supposedly makes min-height work for older IEs, so maybe
 //   this is the way to go for blocks. also, min-height will not vertically center
@@ -66,7 +66,7 @@
 //
 // * large icon, multi line: min-height allows the icon to be fully visible if
 //   there is only a single line of text, although it does not center the icon
-//   vertically unless there are multiple lines of text. 
+//   vertically unless there are multiple lines of text.
 //
 // min-height is applied to single line icons larger than 16px, but it is not
 // needed. the styles are just easier that way.
@@ -75,7 +75,7 @@
 //
 // icon sizes, as defined in avatar.rb (and automatically imported by the
 // default theme):
-// 
+//
 // $icon_tiny    = 16px;
 // $icon_xsmall  = 22px;
 // $icon_small   = 32px;
@@ -97,7 +97,7 @@
     display: inline;
     padding: 1px;
   }
-  &.inline-block {
+  &.inline-block, &.btn {
     display: inline-block;  // not supported in ie6
   }
 
@@ -121,6 +121,9 @@
       line-height: $icon_small;
       height: $icon_small;
     }
+    //&.right {
+    //  padding-right: $icon_small + 8px !important;
+    //}
   }
 
   &.medium {
@@ -135,6 +138,13 @@
   // some elements may want the icon to vertically aligned top instead of middle.
   &.top {
     background-position: 0 0 !important; // flush left, vertical align top
+  }
+
+  // flip the icon to be on the right side instead of the left
+  &.right {
+    background-position: 100% 50% !important;
+    padding-right: $icon_tiny + 4px !important;
+    padding-left: 12px !important; // 12px is a magic number. It is what default bootstrap buttons are.
   }
 }
 
@@ -195,7 +205,7 @@ i.small_icon {
 //
 // I changed this from 'button' to 'i' tag, since that is what bootstrap uses.
 // Here is the old CSS:
-// 
+//
 // button.small_icon {
 //   width: 16px;
 //   padding: 0;

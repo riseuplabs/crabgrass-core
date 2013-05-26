@@ -61,6 +61,7 @@ module Common::Ui::PaginationHelper
         defaults[:renderer] = LinkRenderer::Pages
       end
     elsif request.xhr?
+      # this is a really bad guess, and should be replaced with a parameter
       defaults[:renderer] = (current_template_format == :html) ?
        LinkRenderer::ModalAjax :
        LinkRenderer::Ajax

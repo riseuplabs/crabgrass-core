@@ -3,6 +3,14 @@ module Common::Ui::TextHelper
 
   protected
 
+  #
+  # simply makes a string bold. for use with i18n,
+  # like :created_by_user.t(:user => bold(user.name))
+  #
+  def bold(str)
+    "<b>#{h(str)}</b>".html_safe
+  end
+
   # convert greencloth marktup to html
   def to_html(str)
     ## FIXME: add 'html_safe' in GreenCloth's to_html instead of here

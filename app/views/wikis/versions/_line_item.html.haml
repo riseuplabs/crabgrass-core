@@ -1,0 +1,6 @@
+%div.icon.xsmall{:style => avatar_style(version.user, 'xsmall')}
+  = :version.t
+  %span.b
+    = version.version
+  &mdash;
+  = :created_by_user_on.t(:user => link_to_name(version.user.try(:name)), :when => friendly_time(version.updated_at)).html_safe

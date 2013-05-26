@@ -4,22 +4,24 @@ class Wikis::VersionsController < Wikis::BaseController
     :destroy => :may_admin_wiki?
 
   def show
-    unless request.xhr?
-      params[:page] = @wiki.page_for_version(@version)
-      @versions = @wiki.versions.most_recent.paginate(pagination_params)
-    end
+    #unless request.xhr?
+    #  params[:page] = @wiki.page_for_version(@version)
+    #  @versions = @wiki.versions.most_recent.paginate(pagination_params)
+    #end
   end
 
   def index
-    flash.keep
     @versions = @wiki.versions.most_recent.paginate(pagination_params)
-    @version = @versions.first
   end
 
   def revert
     @wiki.revert_to_version(@version, current_user)
     redirect_to wiki_versions_path(@wiki)
   end
+
+  #def destroy
+  #  what happened to this code?
+  #end
 
   protected
 

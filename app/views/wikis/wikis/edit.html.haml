@@ -1,8 +1,9 @@
-- content_for :left_column do
-  = render :partial => 'sidehelp' if @wiki.group # only want sidehelp for group wikis
-%div[@wiki]
-  = render :partial => '/wikis/wikis/edit'
-  = javascript_tag create_wiki_toolbar(@wiki)
-  = javascript_tag confirm_discarding_wiki_edit_text_area
-  = javascript_tag release_lock_on_unload unless @wiki.new_record?
-= spinner(@wiki)
+- template = local_assigns[:mode] || 'edit'
+- wiki = local_assigns[:wiki] || @wiki
+
+%div{:id => dom_id(wiki)}
+  = render :partial => "wikis/wikis/#{template}", :locals => local_assigns
+  - if template == 'edit'
+    = javascript_tag create_wiki_toolbar(wiki)
+    = javascript_tag confirm_discarding_wiki_edit_text_area(wiki)
+    = javascript_tag release_lock_on_unload(wiki) unless wiki.new_record?

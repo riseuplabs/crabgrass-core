@@ -1,10 +1,11 @@
-                 create_asset        /assets/create/:id                                       {:controller=>"assets", :action=>"create"}
-                destroy_asset        /assets/destroy/:id                                      {:controller=>"assets", :action=>"destroy"}
-                asset_version        /assets/:id/versions/:version/:path                      {:controller=>"assets", :action=>"show"}
-                        asset        /assets/:id/:path                                        {:controller=>"assets", :action=>"show"}
+                                     /do/cron/run(/:id)                                       {:controller=>"cron", :action=>"run"}
+                        asset GET    /assets/:id(.:format)                                    {:controller=>"assets", :action=>"show"}
+                              DELETE /assets/:id(.:format)                                    {:controller=>"assets", :action=>"destroy"}
+                asset_version        /assets/:id/versions/:version/*path                      {:controller=>"assets", :action=>"show"}
+                        asset        /assets/:id(/*path)                                      {:controller=>"assets", :action=>"show"}
                        avatar        /avatars/:id/:size.jpg                                   {:controller=>"avatars", :action=>"show"}
-                                     /theme/:name/:file.css                                   {:controller=>"theme", :action=>"show"}
-                     pictures        /pictures/:id1/:id2/:geometry(.:format)                  {:controller=>"pictures", :action=>"show"}
+                                     /theme/:name/*file.css                                   {:controller=>"theme", :action=>"show"}
+                     pictures        /pictures/:id1/:id2(/:geometry(.:format))                {:controller=>"pictures", :action=>"show"}
                    me_notices GET    /me/notices(.:format)                                    {:controller=>"me/notices", :action=>"index"}
                               POST   /me/notices(.:format)                                    {:controller=>"me/notices", :action=>"create"}
                 new_me_notice GET    /me/notices/new(.:format)                                {:controller=>"me/notices", :action=>"new"}
@@ -16,7 +17,7 @@
                   new_me_page GET    /me/page/new(.:format)                                   {:controller=>"me/pages", :action=>"new"}
                       me_page POST   /me/page(.:format)                                       {:controller=>"me/pages", :action=>"create"}
               me_recent_pages GET    /me/recent_pages(.:format)                               {:controller=>"me/recent_pages", :action=>"index"}
-                     me_pages        /me/pages/:path                                          {:controller=>"me/pages", :action=>"index"}
+                     me_pages        /me/pages(/*path)                                        {:controller=>"me/pages", :action=>"index"}
                 me_activities GET    /me/activities(.:format)                                 {:controller=>"me/activities", :action=>"index"}
                               POST   /me/activities(.:format)                                 {:controller=>"me/activities", :action=>"create"}
               new_me_activity GET    /me/activities/new(.:format)                             {:controller=>"me/activities", :action=>"new"}
@@ -71,18 +72,18 @@
                     me_avatar GET    /me/avatars/:id(.:format)                                {:controller=>"me/avatars", :action=>"show"}
                               PUT    /me/avatars/:id(.:format)                                {:controller=>"me/avatars", :action=>"update"}
                               DELETE /me/avatars/:id(.:format)                                {:controller=>"me/avatars", :action=>"destroy"}
-               reset_password        /account/reset_password/:token                           {:controller=>"account", :action=>"reset_password"}
+               reset_password        /account/reset_password(/:token)                         {:controller=>"account", :action=>"reset_password"}
                verify_account        /account/verify_email/:token                             {:controller=>"account", :action=>"verify_email"}
                   new_account        /account/new                                             {:controller=>"account", :action=>"new"}
-                      account        /account/:action/:id                                     {:controller=>"account"}
+                      account        /account(/:action(/:id))                                 {:controller=>"account", :action=>"index"}
                      language        /session/language                                        {:controller=>"session", :action=>"language"}
                         login        /session/login                                           {:controller=>"session", :action=>"login"}
                        logout        /session/logout                                          {:controller=>"session", :action=>"logout"}
-                      session        /session/:action/:id                                     {:controller=>"session"}
+                      session        /session(/:action(/:id))                                 {:controller=>"session", :action=>"index"}
                      entities GET    /entities(.:format)                                      {:controller=>"entities", :action=>"index"}
-             people_directory        /people/directory/:path                                  {:controller=>"people/directory", :action=>"index"}
-                  person_home GET    /people/:person_id/home(.:format)                        {:controller=>"people/homes", :action=>"show"}
-                 person_pages        /people/:person_id/pages/:path                           {:controller=>"people/pages", :action=>"index"}
+             people_directory        /people/directory(/*path)                                {:controller=>"people/directory", :action=>"index"}
+                  person_home GET    /people/:person_id/home(.:format)                        {:controller=>"people/home", :action=>"show"}
+                 person_pages        /people/:person_id/pages(/*path)                         {:controller=>"people/pages", :action=>"index"}
               person_messages GET    /people/:person_id/messages(.:format)                    {:controller=>"people/messages", :action=>"index"}
                               POST   /people/:person_id/messages(.:format)                    {:controller=>"people/messages", :action=>"create"}
            new_person_message GET    /people/:person_id/messages/new(.:format)                {:controller=>"people/messages", :action=>"new"}
@@ -107,10 +108,10 @@
                        person GET    /people/:id(.:format)                                    {:controller=>"people/people", :action=>"show"}
                               PUT    /people/:id(.:format)                                    {:controller=>"people/people", :action=>"update"}
                               DELETE /people/:id(.:format)                                    {:controller=>"people/people", :action=>"destroy"}
-           networks_directory        /networks/directory/:path                                {:controller=>"groups/directory", :action=>"index"}
-             groups_directory        /groups/directory/:path                                  {:controller=>"groups/directory", :action=>"index"}
+           networks_directory        /networks/directory(/*path)                              {:controller=>"groups/directory", :action=>"index"}
+             groups_directory        /groups/directory(/*path)                                {:controller=>"groups/directory", :action=>"index"}
                    group_home GET    /groups/:group_id/home(.:format)                         {:controller=>"groups/home", :action=>"show"}
-                  group_pages        /groups/:group_id/pages/:path                            {:controller=>"groups/pages", :action=>"index"}
+                  group_pages        /groups/:group_id/pages(/*path)                          {:controller=>"groups/pages", :action=>"index"}
                 group_avatars GET    /groups/:group_id/avatars(.:format)                      {:controller=>"groups/avatars", :action=>"index"}
                               POST   /groups/:group_id/avatars(.:format)                      {:controller=>"groups/avatars", :action=>"create"}
              new_group_avatar GET    /groups/:group_id/avatars/new(.:format)                  {:controller=>"groups/avatars", :action=>"new"}
@@ -119,10 +120,6 @@
                               PUT    /groups/:group_id/avatars/:id(.:format)                  {:controller=>"groups/avatars", :action=>"update"}
                               DELETE /groups/:group_id/avatars/:id(.:format)                  {:controller=>"groups/avatars", :action=>"destroy"}
                   group_wikis POST   /groups/:group_id/wikis(.:format)                        {:controller=>"groups/wikis", :action=>"create"}
-               new_group_wiki GET    /groups/:group_id/wikis/new(.:format)                    {:controller=>"groups/wikis", :action=>"new"}
-              edit_group_wiki GET    /groups/:group_id/wikis/:id/edit(.:format)               {:controller=>"groups/wikis", :action=>"edit"}
-                   group_wiki GET    /groups/:group_id/wikis/:id(.:format)                    {:controller=>"groups/wikis", :action=>"show"}
-                              PUT    /groups/:group_id/wikis/:id(.:format)                    {:controller=>"groups/wikis", :action=>"update"}
             group_memberships GET    /groups/:group_id/memberships(.:format)                  {:controller=>"groups/memberships", :action=>"index"}
                               POST   /groups/:group_id/memberships(.:format)                  {:controller=>"groups/memberships", :action=>"create"}
              group_membership DELETE /groups/:group_id/memberships/:id(.:format)              {:controller=>"groups/memberships", :action=>"destroy"}
@@ -162,7 +159,7 @@ edit_group_membership_request GET    /groups/:group_id/membership_requests/:id/e
                  debug_become        /debug/become                                            {:controller=>"debug", :action=>"become"}
                   debug_break        /debug/break                                             {:controller=>"debug", :action=>"break"}
                  debug_report        /debug/report/submit                                     {:controller=>"bugreport", :action=>"submit"}
-                page_creation        /pages/:action/:owner/:type                              {:controller=>"pages/create"}
+                page_creation        /pages(/:action(/:owner(/:type)))                        {:action=>"create", :controller=>"pages/create", :owner=>"me"}
           page_participations GET    /pages/:page_id/participations(.:format)                 {:controller=>"pages/participations", :action=>"index"}
                               POST   /pages/:page_id/participations(.:format)                 {:controller=>"pages/participations", :action=>"create"}
            page_participation PUT    /pages/:page_id/participations/:id(.:format)             {:controller=>"pages/participations", :action=>"update"}
@@ -175,11 +172,7 @@ edit_group_membership_request GET    /groups/:group_id/membership_requests/:id/e
                               DELETE /pages/:page_id/changes/:id(.:format)                    {:controller=>"pages/changes", :action=>"destroy"}
                   page_assets GET    /pages/:page_id/assets(.:format)                         {:controller=>"pages/assets", :action=>"index"}
                               POST   /pages/:page_id/assets(.:format)                         {:controller=>"pages/assets", :action=>"create"}
-               new_page_asset GET    /pages/:page_id/assets/new(.:format)                     {:controller=>"pages/assets", :action=>"new"}
-              edit_page_asset GET    /pages/:page_id/assets/:id/edit(.:format)                {:controller=>"pages/assets", :action=>"edit"}
-                   page_asset GET    /pages/:page_id/assets/:id(.:format)                     {:controller=>"pages/assets", :action=>"show"}
-                              PUT    /pages/:page_id/assets/:id(.:format)                     {:controller=>"pages/assets", :action=>"update"}
-                              DELETE /pages/:page_id/assets/:id(.:format)                     {:controller=>"pages/assets", :action=>"destroy"}
+                   page_asset PUT    /pages/:page_id/assets/:id(.:format)                     {:controller=>"pages/assets", :action=>"update"}
                     page_tags GET    /pages/:page_id/tags(.:format)                           {:controller=>"pages/tags", :action=>"index"}
                               POST   /pages/:page_id/tags(.:format)                           {:controller=>"pages/tags", :action=>"create"}
                  new_page_tag GET    /pages/:page_id/tags/new(.:format)                       {:controller=>"pages/tags", :action=>"new"}
@@ -209,22 +202,19 @@ edit_group_membership_request GET    /groups/:group_id/membership_requests/:id/e
                          page GET    /pages/:id(.:format)                                     {:controller=>"pages/base", :action=>"show"}
                               PUT    /pages/:id(.:format)                                     {:controller=>"pages/base", :action=>"update"}
                               DELETE /pages/:id(.:format)                                     {:controller=>"pages/base", :action=>"destroy"}
-                                     /pages/:controller/:action/:page_id                      {:constraints=>{:controller=>/.*_page/}}
-                    wiki_lock DELETE /wikis/:wiki_id/lock(.:format)                           {:controller=>"wikis/locks", :action=>"destroy"}
+                                     /pages/:controller/:action/:page_id                      
+                    wiki_lock PUT    /wikis/:wiki_id/lock(.:format)                           {:controller=>"wikis/locks", :action=>"update"}
+                              DELETE /wikis/:wiki_id/lock(.:format)                           {:controller=>"wikis/locks", :action=>"destroy"}
                   wiki_assets POST   /wikis/:wiki_id/assets(.:format)                         {:controller=>"wikis/assets", :action=>"create"}
                new_wiki_asset GET    /wikis/:wiki_id/assets/new(.:format)                     {:controller=>"wikis/assets", :action=>"new"}
                 wiki_versions GET    /wikis/:wiki_id/versions(.:format)                       {:controller=>"wikis/versions", :action=>"index"}
           revert_wiki_version POST   /wikis/:wiki_id/versions/:id/revert(.:format)            {:controller=>"wikis/versions", :action=>"revert"}
                  wiki_version GET    /wikis/:wiki_id/versions/:id(.:format)                   {:controller=>"wikis/versions", :action=>"show"}
-                              DELETE /wikis/:wiki_id/versions/:id(.:format)                   {:controller=>"wikis/versions", :action=>"destroy"}
-                    wiki_diff GET    /wikis/:wiki_id/diffs/:id(.:format)                      {:controller=>"wikis/diffs", :action=>"show"}
-            edit_wiki_section GET    /wikis/:wiki_id/sections/:id/edit(.:format)              {:controller=>"wikis/sections", :action=>"edit"}
-                 wiki_section PUT    /wikis/:wiki_id/sections/:id(.:format)                   {:controller=>"wikis/sections", :action=>"update"}
                     edit_wiki GET    /wikis/:id/edit(.:format)                                {:controller=>"wikis/wikis", :action=>"edit"}
                    print_wiki GET    /wikis/:id/print(.:format)                               {:controller=>"wikis/wikis", :action=>"print"}
                          wiki GET    /wikis/:id(.:format)                                     {:controller=>"wikis/wikis", :action=>"show"}
                               PUT    /wikis/:id(.:format)                                     {:controller=>"wikis/wikis", :action=>"update"}
-                                     /do/:controller/:action/:id
                          root        /                                                        {:controller=>"root", :action=>"index"}
-                                     /:_context/:_page/:path                                  {:controller=>"dispatch", :action=>"dispatch"}
+                                     /do/static(/:action(/:id))                               {:controller=>"static", :action=>"index"}
+                                     /:_context/:_page(/*path)                                {:controller=>"dispatch", :action=>"dispatch"}
                                      /:_context                                               {:controller=>"dispatch", :action=>"dispatch"}

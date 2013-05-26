@@ -1,9 +1,0 @@
-= form_remote_tag :loading => show_spinner('save'), :url => wiki_section_url(@wiki, @section), :method => 'put' do
-  .fieldset
-    = hidden_field_tag 'wiki[version]', @wiki.version
-    = wiki_section_text_area
-    = formatting_reference_link
-    .buttons
-      = submit_tag("Save", :name => 'save')
-      = submit_tag("Cancel", :name => 'cancel')
-      = spinner('save')

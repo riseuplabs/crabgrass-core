@@ -82,13 +82,6 @@ class Wiki < ActiveRecord::Base
     end
   end
 
-  def update_document!(user, current_version, text)
-    check_and_unlock_section!(:document, user, current_version)
-    self.user = user
-    self.body = text
-    self.save!
-  end
-
   # after the wiki text has been updated the page terms need to be rebuilt, so the
   # search index gets updated. For some reason this doesn't happen automatically
   # when saving the wiki, so we trigger a page save here.
@@ -98,9 +91,11 @@ class Wiki < ActiveRecord::Base
     end
   end
 
+  #
   # similar to update_attributes!, but only for text
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
+  #
   def update_section!(section, user, current_version, text)
     check_and_unlock_section!(section, user, current_version)
     self.user = user
@@ -232,11 +227,15 @@ class Wiki < ActiveRecord::Base
 
   protected
 
+  #
+  # Check to make sure that user may unlock the section and
+  # that the version has not changed. If the user still has a valid lock
+  # we allow saving even if the version has changed.
+  #
   def check_and_unlock_section!(section, user, current_version)
     if sections_locked_for(user).include? section
-      raise SectionLockedOnSaveError.new(section)
+      raise SectionLockedOnSaveError.new(section, locker_of(section))
     end
-
     if current_version and self.version > current_version.to_i
       # our version might be outdated but if the last edit
       # was in a different section we still have the lock
@@ -245,8 +244,7 @@ class Wiki < ActiveRecord::Base
         raise VersionExistsError.new(self.versions.last)
       end
     end
-
-    unlock!(section, user)
+    release_my_lock!(section, user)
   end
 
   def render_preview(length)

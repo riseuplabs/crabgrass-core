@@ -76,7 +76,11 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
   end
 
   def url_for(page)
-    "?#{param_name}=#{page}"
+    if @options[:params]
+      @template.url_for(@options[:params].merge({param_name => page}))
+    else
+      "?#{param_name}=#{page}"
+    end
   end
 
 end

@@ -12,7 +12,7 @@ module Pages::BaseHelper
   def page_tabs(options = {})
     options.reverse_merge! :id => 'page_tabs',
       :class => 'flat reloadable'
-    formy(:tabs, options) do |f|
+    formy(:cutout_tabs, options) do |f|
       yield(f)
     end
   end

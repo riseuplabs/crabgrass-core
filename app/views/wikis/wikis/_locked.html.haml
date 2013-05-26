@@ -1,2 +1,11 @@
-= local_assigns[:err] || wiki_locked_notice(@wiki)
-= break_lock_link
+-# %pre= @wiki.section_locks.locks
+
+= remote_form_for(:wiki, @wiki, :url => wiki_lock_path(@wiki), :method => :put, :loading => show_spinner('unlock_wiki')) do |f|
+  .alert.alert-error= @error_message.to_s
+  = hidden_field_tag :section, @section if @section && @section != :document
+  .right_buttons.p
+    = spinner('unlock_wiki')
+    = f.submit :cancel_button.t, :name => 'cancel', :class => 'btn btn'
+    = f.submit :break_lock_button.t, :name => 'break_lock', :class => 'btn btn'
+  .p
+    = text_area_tag('body', @body, :rows => wiki_textarea_rows(@body, 4, 15), :class => 'full_width', :disabled => true)

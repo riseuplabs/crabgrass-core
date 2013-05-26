@@ -1,0 +1,4 @@
+standard_update(page)
+page << "activateTabLink('%s')" % dom_id(@wiki, 'show_tab')
+page << "if ($('posts')) {$('posts').show()}"
+page.replace_html dom_id(@wiki), :partial => 'wikis/wikis/show' #, :locals => local_assigns

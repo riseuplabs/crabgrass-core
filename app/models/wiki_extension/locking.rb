@@ -1,92 +1,127 @@
-# this is a wrapper for the lower level WikiLock class
+#
+# This is a wrapper for the lower level WikiLock class
 # it adds lock permissions, breaking and section hierarchy
 # see WikiLock for more info
+#
+# The rules for locks are this:
+#
+# (1) every wiki has a hierarchical structure of heading sections
+# (2) When one section is locked, all the sections above and below it are also treated
+#     as locked.
+# (3) This means two locks can only co-exist if they are in sibling trees
+#
+#
 module WikiExtension
   module Locking
 
-    class SectionLockedError < CrabgrassException
+    #
+    # EXCEPTIONS
+    #
+
+    class LockedError < CrabgrassException
     end
 
-    class OtherSectionLockedError < SectionLockedError
+    class SectionLockedError < LockedError
+      def initialize(section, user, options = {})
+        if section == :document
+          super([
+            :wiki_is_locked.t(:user => bold(user.name))
+          ], options)
+        else
+          super([
+            :cant_edit_section.t(:section => bold(section)),
+            :user_locked_section.t(:section => bold(section), :user => bold(user.name))
+          ], options)
+        end
+      end
     end
 
-    class SectionLockedOnSaveError < CrabgrassException
+    class OtherSectionLockedError < LockedError
       def initialize(section, options = {})
-        message = :user_locked_section.t  :section => section,
-          :user => locker_of(section).display_name
-        message += :can_still_save.t
-        message += :changes_might_be_overwritten.t
-        super(message, options)
+        super(
+          :other_section_locked_error.t(:section => bold(section)).html_safe,
+          options
+        )
       end
     end
 
-    def lock!(section, user)
-      unless section_exists? section
-        raise SectionNotFoundError.new(section)
+    class SectionLockedOnSaveError < LockedError
+      def initialize(section, user, options = {})
+        if section == :document
+          super([
+            :wiki_is_locked.t(:user => bold(user.name)),
+            :can_still_save.t,
+            :changes_might_be_overwritten.t
+          ], options)
+        else
+          super([
+            :user_locked_section.t(:section => bold(section), :user => bold(user.name)),
+            :can_still_save.t,
+            :changes_might_be_overwritten.t
+          ], options)
+        end
       end
+    end
+
+    #
+    # LOCK/UNLOCK
+    #
+
+    #
+    # create a new exclusive lock for user
+    #
+    def lock!(section, user)
+      return unless section_exists?(section)
 
       if section_edited_by?(user) and section_edited_by(user) != section
+        #
+        # NOTE: for now, we only allow the user a single lock. This is for UI
+        # reasons more than anything else.
+        #
         raise OtherSectionLockedError.new(section_edited_by(user))
-      end
-
-      if may_modify_lock?(section, user)
+      elsif may_modify_lock?(section, user)
         section_locks.lock!(section, user)
       else
-        message = :section_locked_error.t(:section => section,
-          :user => locker_of(section).display_name)
-        raise SectionLockedError.new(message)
+        other_user = locker_of(section)
+        section_they_have_locked = section_edited_by(other_user)
+        raise SectionLockedError.new(section_they_have_locked, other_user)
       end
     end
 
-    # options can be
-    #   :break          :: will break the lock and won't throw a
-    #                      WikiLockException if user doesn't own the lock
-    #   :with_structure :: will unlock all sections that lock the given
-    #                      section including children and anchestors
-    def unlock!(section, user, options = {})
-      unless section_exists? section
-        raise SectionNotFoundError.new(section)
-      end
+    #
+    # Forcibly unlock a section.
+    #
+    # The actual lock may be on a parent or child section, so we unlock the genealogy
+    #
+    def break_lock!(section)
+      return unless section_exists?(section)
+      section_locks.unlock!(structure.genealogy_for_section(section))
+    end
 
-      if options.delete(:with_structure)
-        sections = structure.genealogy_for_section(section)
-        sections &= section_locks.sections_locked_for(user)
-        # there should only be one lock in a genealogy anyway...
-        # if there is none we're done.
-        return unless unlock = sections.first
-      else
-        unlock = section
-      end
-
-      # don't let other people unlock this unless :break option is given
-      if may_modify_lock?(unlock, user) or options[:break]
-        section_locks.unlock!(unlock, user, options)
-      else
-        message = :cant_edit_section.t(:section => section)
-        message += :section_locked_error.t(:section => unlock,
-          :user => locker_of(section).try.display_name)
-        raise SectionLockedError.new(message)
+    #
+    # Release the section held by user.
+    #
+    def release_my_lock!(section, user)
+      if may_modify_lock?(section, user)
+        section_locks.unlock!(section)
       end
     end
 
-    # release a lock without raising an error if the section was
-    # locked by someone else
-    def unlock(section, user, options = {})
-      self.unlock!(section, user, options)
-    rescue SectionLockedError => exc
-      return
-    end
+    #
+    # HELPERS
+    #
 
+    #
     # get a list of sections that the +user+ may not edit
+    #
+    # some sections are not locked, but should appear locked to this user
+    # for example, a locked section might have a subsection, or a parent section
+    # no one else should be able to edit either the subsection or the parent
+    #
     def sections_locked_for(user)
       locked_sections = section_locks.sections_locked_for(user)
-
-      # some sections are not locked, but should appear locked to this user
-      # for example, a locked section might have a subsection, or a parent section
-      # no one else should be able to edit either the subsection or the parent
       appearant_locked_sections = []
       locked_sections.each do |section|
-        # amend all the parents and all the children of the locked section
         appearant_locked_sections |= structure.genealogy_for_section(section)
       end
       appearant_locked_sections
@@ -103,14 +138,6 @@ module WikiExtension
 
     def section_locked_for?(section, user)
       sections_locked_for(user).include?(section)
-    end
-
-    def document_open_for?(user)
-      section_open_for?(:document, user)
-    end
-
-    def document_locked_for?(user)
-      section_locked_for?(:document, user)
     end
 
     # returns which user is responsible for locking a section
@@ -133,9 +160,7 @@ module WikiExtension
     protected
 
     def may_modify_lock?(section, user)
-      user.present? &&
-        user.real? &&
-        sections_open_for(user).include?(section)
+      user.present? && user.real? && !sections_locked_for(user).include?(section)
     end
 
     def section_exists?(section)

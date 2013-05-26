@@ -1,68 +1,59 @@
 module Wikis::BaseHelper
 
-  # to be called with a formy tab set like this:
   #
-  #   formy(:tabs,...) do |f|
-  #     wiki_tabs(f, wiki)
-  #   end
+  # html element options for the main div enclosing the wiki
   #
-  def wiki_tabs(formy, wiki)
-    formy.tab do |t|
-      t.label :show.t
-      t.function wiki_tab_function(wiki_path(wiki))
-      t.selected action?(:show)
+  def wiki_div(wiki)
+    {:id => dom_id(wiki)}
+  end
+
+  ##
+  ## TABS
+  ##
+
+  #
+  # note: js events are bound to a.wiki_tab and a.wiki_away
+  #
+  def wiki_tabs(formy, wiki, options={})
+    unless wiki.new_record?
+      formy.tab do |t|
+        t.label :show.t
+        t.url wiki_path(wiki)
+        t.id dom_id(wiki, 'show_tab')
+        t.active options[:active] == 'show' || action?(:show, :none)
+        t.options 'data-remote' => true, 'data-method' => :get, :class => 'wiki_tab wiki_away'
+      end
     end
-    return unless may_edit_wiki?(wiki)
-    formy.tab do |t|
-      t.label :edit.t
-      t.function wiki_tab_function(edit_wiki_path(wiki))
-      t.selected action?(:edit)
+    if may_edit_wiki?(wiki)
+      formy.tab do |t|
+        t.label :edit.t
+        t.url edit_wiki_path(wiki)
+        t.id dom_id(wiki, 'edit_tab')
+        t.active options[:active] == 'edit' || action?(:edit)
+        t.options 'data-remote' => true, 'data-method' => :get, :class => 'wiki_tab' # no wiki_away
+      end
+      formy.tab do |t|
+        t.label :versions.t
+        t.url wiki_versions_path(wiki)
+        t.id dom_id(wiki, 'versions_tab')
+        t.active options[:active] == 'versions' || controller?('wikis/versions')
+        t.options 'data-remote' => true, 'data-method' => :get, :class => 'wiki_tab wiki_away'
+      end
+      if options[:show_print].nil? || options[:show_print]
+        formy.tab do |t|
+          t.label :print.t
+          t.url print_wiki_url(wiki)
+        end
+      end
     end
-    formy.tab do |t|
-      t.label :versions.t
-      t.function wiki_tab_function(wiki_versions_path(wiki))
-      t.selected controller?('wikis/versions')
-    end
-    formy.tab do |t|
-      t.label :print.t
-      t.url print_wiki_url(wiki)
-    end
   end
 
-  def wiki_tab_function(url)
-    tab_remote_function :url => url
-  end
-
-  def break_lock_link
-    url = @section ?
-      edit_wiki_section_path(@wiki, @section, :break_lock => true) :
-      edit_wiki_path(@wiki, :break_lock => true)
-    link_to_remote :break_lock.t,
-    { :url => url,
-      :method => :get }
-  end
-
-  def wiki_locked_notice(wiki)
-    return if wiki.document_open_for? current_user
-
-    user = wiki.locker_of(:document).try.name || I18n.t(:unknown)
-    error_text = :wiki_is_locked.t(:user => user)
-    %Q[<blockquote class="error">#{h error_text}</blockquote>]
-  end
-
-  # returns something like
-  # 'Version 3 created Fri May 08 12:22:03 UTC 2009 by Blue!'
-  def wiki_version_label(version)
-    label = :version_number.t(:version => version.version)
-    user_name = version.try.user.name || :unknown.t
-    label << ' '
-    label << :created_when_by.t(:when => full_time(version.updated_at),
-      :user => user_name)
-    label
-  end
+  ##
+  ## JAVASCRIPT HELPERS
+  ##
 
   def create_wiki_toolbar(wiki)
-   "wikiEditAddToolbar('#{wiki.id.to_s}', function() {#{image_popup_function(wiki)}});"
+   "wikiEditAddToolbar('#{dom_id(wiki, 'textarea')}', function() {#{image_popup_function(wiki)}});"
   end
 
   def image_popup_function(wiki)
@@ -75,43 +66,49 @@ module Wikis::BaseHelper
     end
   end
 
-  def confirm_discarding_wiki_edit_text_area(text_area_id = nil)
-    text_area_id ||= 'wiki_body'
-    saving_selectors = ["input[name=break_lock]",
-          "input[name=save]",
-          "input[name=cancel]",
-          "input[name=ajax_cancel]"]
+  #
+  # tiggered by events to .wiki_away elements. see wiki.js
+  #
+  def confirm_discarding_wiki_edit_text_area(wiki)
+    wiki_id = wiki.id
+    text_area_id = dom_id(wiki, 'textarea')
     message = I18n.t(:leave_editing_wiki_page_warning)
-    %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect});]
+    %Q[confirmWikiDiscard.setTextArea("#{wiki_id}", "#{text_area_id}", "#{message}");]
   end
 
-  def release_lock_on_unload
-    if @section
-      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}", "#{@section}");]
-    else
-      %Q[releaseLockOnUnload(#{@wiki.id},"#{form_authenticity_token}");]
+  #
+  # tiggered by events to .wiki_away elements. see wiki.js
+  #
+  def release_lock_on_unload(wiki, section=:document)
+    unless wiki.new_record?
+      url = if section != :document
+        wiki_lock_path(wiki, :section => section)
+      else
+        wiki_lock_path(wiki)
+      end
+      %Q[wikiLock.autoRelease("#{wiki.id}", "#{url}");]
     end
   end
 
-  # These are group only but might be called from a generic place such as
-  # Wikis::SectionsController for a xhr update
-
-  def wiki_more_link
-    return unless @wiki.group
-    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
-    link_to_remote :see_more_link.t,
-      { :url => wiki_path(@wiki),
-        :method => :get},
-      :icon => 'plus'
+  #
+  # try to guess a good default textarea height
+  #
+  def wiki_textarea_rows(text, min_height = 8, max_height = 30)
+    lines = word_wrap(text||"", 60).count("\n") + 5
+    [[lines, max_height].min, min_height].max
   end
 
-  def wiki_less_link
-    return unless @wiki.group
-    return unless @wiki.try.body and @wiki.body.length > Wiki::PREVIEW_CHARS
-    link_to_remote :see_less_link.t,
-      { :url => wiki_path(@wiki, :preview => true),
-        :method => :get},
-      :icon => 'minus'
+  #
+  # Called by wikis/show partial.
+  # Show a notice if some part of of the wiki is locked.
+  #
+  def wiki_notice
+    if @wiki && !@wiki.section_open_for?(:document, current_user)
+      other_user = @wiki.locker_of(:document)
+      section_they_have_locked = @wiki.section_edited_by(other_user)
+      msg = WikiExtension::Locking::SectionLockedError.new(section_they_have_locked, other_user).to_s
+      content_tag(:div, msg, :class => "alert alert-info")
+    end
   end
 
 end

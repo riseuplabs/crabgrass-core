@@ -1,8 +1,18 @@
 class CrabgrassException < Exception
   attr_accessor :options
+  attr_accessor :message
   def initialize(message = nil, opts={})
     self.options = opts
+    self.message = message
     super(message)
+  end
+
+  def bold(str)
+    "<b>#{h(str)}</b>".html_safe
+  end
+
+  def to_s
+    [self.message].flatten.join("<br/>").html_safe
   end
 end
 

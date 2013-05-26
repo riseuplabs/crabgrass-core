@@ -1,16 +1,32 @@
-#wiki-error-area
-- # 16 here is a magic number. it might have to change if the font size of
-- # the wiki text changes.
-- rows = [ 20, (params[:height]||0).to_i/16 ].max
+-# %pre= wiki.section_locks.locks
+- wiki = local_assigns[:wiki] || @wiki
+- section = local_assigns[:section] || @section
+- body = @body || wiki.body
+- spinner_id = dom_id(wiki, 'spinner')
+
+-# empty element used by javascript:
 .image_popup#image_popup
-= form_for(@wiki.new_record? ? [@group.becomes(Group), @wiki] : @wiki) do |f|
+
+-#
+-# the wiki edit form -- this is used for both saving edits and force saving edits
+-# if there was a lock or version error.
+-#
+-# note: data-wiki attribute is used by the auto-unlock javascript.
+-#
+= remote_form_for(:wiki, wiki, :url => wiki_path(wiki), :method => :put, :loading => show_spinner(spinner_id), :html => {'data-wiki' => wiki.id}) do |f|
   = f.hidden_field :version
-  = f.hidden_field :private # marks private group wikis during creation
-  = f.text_area('body', :rows => rows, :cols => 64)
-  %div
-    = formatting_reference_link
-    - if @wiki.document_open_for?(current_user)
-      = f.submit :save_button.t, :name => 'save'
+  = hidden_field_tag :section, section if section && section != :document
+  - if @error_message
+    .alert.alert-error= @error_message.to_s
+  = text_area_tag('wiki[body]', h(body), {:rows => wiki_textarea_rows(body), :class => 'full_width', :id => dom_id(wiki, 'textarea')})
+  .right_buttons.p
+    -# NOTE: there is an event listener on input.wiki_button
+    = spinner(spinner_id)
+    = f.submit :cancel_button.t, :name => 'cancel', :class => 'btn wiki_button'
+    - if @show_force_save_button
+      = f.submit :force_save_button.t, :name => 'force_save',
+        :class => 'btn btn-primary wiki_button'
     - else
-      = f.submit :break_lock_button.t, :name => 'break_lock'
-    = f.submit :cancel_button.t, :name => 'cancel'
+      = f.submit :save_button.t, :name => 'save',
+        :class => 'btn btn-primary wiki_button'
+    .float_left= formatting_reference_link

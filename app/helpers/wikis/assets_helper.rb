@@ -60,7 +60,7 @@ module Wikis::AssetsHelper
   end
 
   def insert_image_function
-    "insertImage('%s');" % @wiki.id
+    "insertImage('%s');" % dom_id(@wiki, 'textarea')
   end
 
 end

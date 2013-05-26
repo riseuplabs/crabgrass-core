@@ -1,11 +1,9 @@
-=begin
-
- WikiController
-
- This is the controller for the in-place wiki editor, not for the
- the wiki page type (wiki_page_controller.rb).
-
-=end
+#
+# The master controller to handle all saving of all wikis.
+#
+# These actions are AJAX only, although the non-AJAX views in views/wikis/wikis are
+# are used by Pages and Groups.
+#
 
 class Wikis::WikisController < Wikis::BaseController
 
@@ -13,17 +11,11 @@ class Wikis::WikisController < Wikis::BaseController
   before_filter :authorized?, :only => :show
 
   guard :show => :may_show_wiki?
-
   helper 'wikis/sections'
-  javascript 'upload', :only => :edit
-  stylesheet 'wiki_edit'
-  stylesheet 'upload', :only => :edit
-
-  layout proc{ |c| c.request.xhr? ? false : 'sidecolumn' }
+  layout false
 
   def show
-    render :template => '/common/wiki/show',
-      :locals => {:preview => params['preview']}
+    render :template => 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
   end
 
   def print
@@ -31,35 +23,48 @@ class Wikis::WikisController < Wikis::BaseController
     render :layout => "printer_friendly"
   end
 
+  #
+  # this edit does not follow the REST model, since it alters the database
+  # in order to lock the section.
+  #
   def edit
-    if params[:break_lock]
-      # remove other peoples lock if it exists
-      @wiki.unlock!(:document, current_user, :break => true )
+    WikiLock.transaction do
+      @wiki.lock!(@section, current_user)
     end
-    if @wiki.document_open_for?(current_user)
-      @wiki.lock!(:document, current_user)
-    else
-      render :template => '/wikis/wikis/locked'
-    end
+    render :template => "wikis/wikis/edit"
+  rescue Wiki::LockedError => @error_message
+    render :template => 'wikis/wikis/edit', :locals => {:mode => 'locked'}
   end
 
+  #
+  # three ways this can be called:
+  # - cancel button     -> unlock section      - params[:cancel]
+  # - save button       -> save section        - params[:save]
+  # - force save button -> unlock, then save   - params[:force_save]
+  #
+  # Either :cancel, :save, or :force_save must be present for this action
+  # to have any effect.
+  #
   def update
-    if params[:cancel]
-      @wiki.unlock!(:document, current_user, :break => true ) if @wiki
-    else
-      @wiki.update_document!(current_user, params[:wiki][:version], params[:wiki][:body])
-      success
+    WikiLock.transaction do
+      if params[:cancel]
+        @wiki.release_my_lock!(@section, current_user)
+      elsif params[:force_save]
+        @wiki.break_lock!(@section)
+      end
+      if params[:save] || params[:force_save]
+        version = params[:save] ? params[:wiki][:version] : nil # disable version checked if force save
+        @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
+        success
+      end
     end
-    redirect_to @page ?
-      page_url(@page) :
-      group_home_path(@wiki.context, :wiki_id => @wiki.id)
-
-  rescue Wiki::VersionExistsError, Wiki::SectionLockedOnSaveError => exc
-    warning exc
-    @wiki.body = params[:wiki][:body]
+    render :template => 'wikis/wikis/show'
+  rescue Wiki::VersionExistsError, Wiki::LockedError => exc
+    # could not save, but give user a choice to force save anyway
+    @error_message = exc
+    @wiki.body = @body = params[:wiki][:body]
     @wiki.version = @wiki.versions.last.version + 1
-    # this won't unlock if they don't hit save:
-    @wiki.unlock!(:document, current_user, :break => true )
+    @show_force_save_button = true
     render :template => '/wikis/wikis/edit'
   end
 
