@@ -43,12 +43,6 @@ rainbow_deleted:
   group_id: 3
   access: 1
 
-true_levellers_video1:
-  id: 46
-  page_id: 250
-  group_id: 1
-  access: 1
-
 <% for i in 1..20 %>
 networkpage_<%=i%>:
   id: 5<%= i %>
