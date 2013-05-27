@@ -450,4 +450,6 @@ class Page < ActiveRecord::Base
   def save_timestamps
     self.created_at = self.updated_at = Time.now if self.new_record?
   end
+
+  acts_as_extensible
 end

@@ -180,5 +180,7 @@ class Post < ActiveRecord::Base
     discussion.post_destroyed(self, decrement) if discussion
   end
 
+  acts_as_extensible
+
 end
 
