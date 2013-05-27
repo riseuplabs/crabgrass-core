@@ -10,7 +10,6 @@
 #  end
 
 class Post < ActiveRecord::Base
-  #extend PathFinder::FindByPath
 
   ##
   ## ASSOCIATIONS
@@ -29,6 +28,8 @@ class Post < ActiveRecord::Base
   ##
   ## FINDERS
   ##
+
+  acts_as_path_findable
 
   scope :visible, :conditions => 'deleted_at IS NULL'
 
