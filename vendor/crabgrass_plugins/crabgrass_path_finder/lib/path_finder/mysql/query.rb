@@ -371,6 +371,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
+    return nil if @and_clauses.blank?
     Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end
 end
