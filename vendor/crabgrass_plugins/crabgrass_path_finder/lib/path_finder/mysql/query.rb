@@ -151,9 +151,9 @@ class PathFinder::Mysql::Query < PathFinder::Query
   ## utility methods called by SearchFilter classes
   ##
 
-  def add_sql_condition(condition, value)
+  def add_sql_condition(condition, value = nil)
     @conditions << condition
-    @values << value
+    @values << value if value
   end
 
   # and a condition based on an attribute of the page
