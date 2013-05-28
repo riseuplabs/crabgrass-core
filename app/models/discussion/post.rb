@@ -143,6 +143,10 @@ class Post < ActiveRecord::Base
     post_destroyed(true)
   end
 
+  def deleted? ; !!deleted_at ; end
+
+  def deleted_changed? ; deleted_at_changed? ; end
+
   def undelete
     update_attribute :deleted_at, nil
     post_created

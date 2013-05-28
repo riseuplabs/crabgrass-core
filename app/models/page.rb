@@ -131,6 +131,10 @@ class Page < ActiveRecord::Base
     flow == FLOW[:deleted]
   end
 
+  def deleted_changed?
+    flow_changed? && [flow_was, flow].include?(FLOW[:deleted])
+  end
+
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
