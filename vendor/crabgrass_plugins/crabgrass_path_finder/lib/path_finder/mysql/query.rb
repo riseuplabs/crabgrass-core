@@ -174,6 +174,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @tags << "+" + Page.searchable_tag_list([tag]).first
   end
 
+  def add_flow_constraint(flow)
+    @flow = flow
+  end
+
   def add_order(order_sql)
     if @order # if set to nil, this means we must skip sorting
       if order_sql =~ /\./
