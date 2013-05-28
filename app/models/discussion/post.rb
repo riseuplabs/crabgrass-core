@@ -138,6 +138,13 @@ class Post < ActiveRecord::Base
   end
 
   # These are currently only used from moderation mod.
+  #
+  # We implement a similar interface as for pages to ease things there.
+
+  def flow=(value)
+    value == FLOW[:deleted] ? self.delete : self.undelete
+  end
+
   def delete
     update_attribute :deleted_at, Time.now
     post_destroyed(true)
