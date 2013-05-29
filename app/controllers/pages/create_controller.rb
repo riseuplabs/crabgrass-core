@@ -31,6 +31,7 @@ class Pages::CreateController < ApplicationController
   rescue_render :create => lambda { new }
 
   def new
+    @page = build_new_page! if params[:page]
     render_new_template
   end
 
