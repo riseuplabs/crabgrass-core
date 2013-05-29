@@ -27,8 +27,9 @@ class UserParticipationTest < ActiveSupport::TestCase
   end
 
   def test_updated
+    g = groups(:animals)
     u = users(:blue)
-    page = Page.create :title => 'hello', :user => u
+    page = Page.create :title => 'hello', :owner => g
     assert_difference 'Page.find(%d).contributors_count' % page.id do
       u.updated(page)
       page.save
