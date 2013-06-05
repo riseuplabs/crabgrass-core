@@ -1,25 +1,5 @@
 %div#page_sidebar
-  - if logged_in?
-    - if @page.deleted?
-      %ul.side_list.commands
-        = undelete_line
-        = destroy_line
-        = details_line
-        =# history_line
-    - else
-      %ul.side_list.commands
-        = watch_line
-        = star_line
-      - if (access_changing_commands = [share_line, notify_line, public_line].compact).any?
-        %ul.side_list.commands.rule
-          = access_changing_commands.join.html_safe
-      %ul.side_list.commands.rule
-        = delete_line
-        =# move_line
-        = details_line
-        =# history_line
-        =# view_line
-    =# call_hook :page_sidebar_actions
+  = render partial: 'pages/sidebar/command_group', collection: sidebar_command_groups
 
   -#
   -# TAGS
