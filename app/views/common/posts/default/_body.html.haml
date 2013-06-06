@@ -2,7 +2,7 @@
 - # stars = post.ratings.with_rating(1).size
 - # @page ||= post.discussion.page # in case @page is not already set
 
-%div.post_body.shy_parent{:id => post.body_id}
+%div.post_body{:id => post.body_id}
   %div.float_right
     = edit_post_link(post)
     = #star_post_action(post)
