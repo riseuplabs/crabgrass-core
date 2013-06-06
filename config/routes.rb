@@ -1,8 +1,13 @@
+#
+# Some of these are not used for routes right now. But we still reserve
+# them for later use.
+# posts is currently used in routes from the moderation mod.
+#
 unless defined?(FORBIDDEN_NAMES)
   FORBIDDEN_NAMES = %w{
     account admin anonymous assets avatars chat code debug do groups
-    javascripts me networks page pages people pictures places issues
-    session static stats stylesheets theme wikis
+    javascripts me networks page pages people pictures places posts
+    issues session static stats stylesheets theme wikis
   }
 end
 
