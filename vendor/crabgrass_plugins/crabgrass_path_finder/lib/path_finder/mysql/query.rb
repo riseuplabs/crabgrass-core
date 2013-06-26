@@ -151,9 +151,9 @@ class PathFinder::Mysql::Query < PathFinder::Query
   ## utility methods called by SearchFilter classes
   ##
 
-  def add_sql_condition(condition, value)
+  def add_sql_condition(condition, value = nil)
     @conditions << condition
-    @values << value
+    @values << value if value
   end
 
   # and a condition based on an attribute of the page
@@ -172,6 +172,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def add_tag_constraint(tag)
     @tags << "+" + Page.searchable_tag_list([tag]).first
+  end
+
+  def add_flow_constraint(flow)
+    @flow = flow
   end
 
   def add_order(order_sql)
@@ -371,6 +375,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
+    return nil if @and_clauses.blank?
     Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end
 end

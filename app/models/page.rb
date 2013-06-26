@@ -131,6 +131,10 @@ class Page < ActiveRecord::Base
     flow == FLOW[:deleted]
   end
 
+  def deleted_changed?
+    flow_changed? && [flow_was, flow].include?(FLOW[:deleted])
+  end
+
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
@@ -450,4 +454,6 @@ class Page < ActiveRecord::Base
   def save_timestamps
     self.created_at = self.updated_at = Time.now if self.new_record?
   end
+
+  acts_as_extensible
 end

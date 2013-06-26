@@ -1,0 +1,4 @@
+- group = command_group
+- if group.commands.any?
+  %ul.side_list.commands{class: (group.rule ? :rule : nil)}
+    = render partial: 'pages/sidebar/command', collection: group.commands

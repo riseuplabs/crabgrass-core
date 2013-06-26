@@ -16,7 +16,7 @@
       %div.author{:style => author_style}
         %div.username= link_to_user post.user
         %div.nowrap.date= created_modified_date(post.created_at, post.updated_at)
-    %td{:class => "post_body"}
+    %td{:class => "post_body shy_parent"}
       = render :partial => 'common/posts/default/body', :locals => local_assigns
   %tr{:class => "post_spacer_bottom"}
     %td{:colspan => 2, :class => ''}= '&nbsp;'.html_safe

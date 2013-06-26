@@ -21,10 +21,10 @@ module FunctionalTestHelper
   # or the error symbol
   def assert_error_message(arg=nil)
     errors = flash_messages :error
-    assert errors.any?, 'there should have been flash errors'
+    assert errors.present?, 'there should have been flash errors'
     if arg
       if arg.is_a?(Regexp)
-        assert message_text(errors).grep(arg).any?, 'error message did not match %s. it was %s.'%[arg.inspect, message_text(errors).inspect]
+        assert message_text(errors).grep(arg).present?, 'error message did not match %s. it was %s.'%[arg.inspect, message_text(errors).inspect]
       elsif arg.is_a?(Symbol) or arg.is_a?(String)
         assert message_text(errors).detect { |text| text == arg.t }, 'error message did not match %s. it was %s'%[arg.inspect, message_text(errors).inspect]
       end
@@ -32,9 +32,9 @@ module FunctionalTestHelper
   end
 
   def assert_message(regexp=nil)
-    assert flash_messages.any?, 'no flash messages'
+    assert flash_messages.present?, 'no flash messages'
     if regexp
-      assert message_text(flash_messages).grep(regexp).any?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect]
+      assert message_text(flash_messages).grep(regexp).present?, 'flash message did not match %s. it was %s.'%[regexp.inspect, message_text(flash_messages).inspect]
     end
   end
 
