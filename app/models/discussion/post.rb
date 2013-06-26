@@ -142,7 +142,7 @@ class Post < ActiveRecord::Base
   # We implement a similar interface as for pages to ease things there.
 
   def flow=(value)
-    value == FLOW[:deleted] ? self.delete : self.undelete
+    value.to_i == FLOW[:deleted] ? self.delete : self.undelete
   end
 
   def delete
