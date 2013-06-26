@@ -58,7 +58,7 @@ group :development do
 end
 
 group :test, :development do
-  gem 'debugger', :platforms => :mri_19
+  gem 'debugger'
 end
 
 
