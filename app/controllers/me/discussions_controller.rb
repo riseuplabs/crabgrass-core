@@ -10,6 +10,8 @@
 class Me::DiscussionsController < Me::BaseController
   # helper 'autocomplete', 'javascript'
 
+  guard :may_message?
+
   # GET /me/messages
   def index
     @discussions = current_user.discussions.with_some_posts
