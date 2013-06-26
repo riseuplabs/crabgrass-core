@@ -17,6 +17,7 @@ namespace :cg do
       # load existing fixtures
       #
       Rake::Task["db:fixtures:load"].invoke
+      PageTerms.delete_all
 
       #
       # regenerate page terms in the database
