@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class Me::PagesControllerTest < ActionController::TestCase
-  fixtures :users, :pages, :user_participations
+  fixtures :users, :pages, :user_participations, :page_terms
 
   def test_get_index_view
     login_as users(:blue)
@@ -12,6 +12,15 @@ class Me::PagesControllerTest < ActionController::TestCase
   def test_list_pages
     login_as users(:blue)
     xhr :post, :index
+    assert !assigns(:pages).empty?, "blue should have some pages to render"
+    assert_response :success
+  end
+
+  def test_empty_list
+    user = FactoryGirl.create :user
+    login_as user
+    xhr :post, :index
+    assert assigns(:pages).empty?
     assert_response :success
   end
 
@@ -30,6 +39,7 @@ class Me::PagesControllerTest < ActionController::TestCase
     xhr :post, :index, add: "created-by-me"
     assert_response :success
     assert pages = assigns(:pages)
+    assert !pages.empty?, "blue should have some own pages to render"
     assert_nil pages.detect{|page| page.created_by != users(:blue)}
   end
 
