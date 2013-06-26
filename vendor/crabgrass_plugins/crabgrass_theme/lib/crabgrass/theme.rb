@@ -36,7 +36,7 @@ module Crabgrass
     attr_reader :parent             # the parent of the theme data
     attr_reader :navigation_parent  # the parent of the navigation data
 
-    @@themes = {}
+    @@themes = HashWithIndifferentAccess.new
 
     # for the theme to work, this controller must be set.
     # crabgrass sets it in a before_filter common to call controllers.
@@ -146,7 +146,7 @@ module Crabgrass
     private
 
     def self.theme_directory(theme_name)
-      THEME_ROOT + theme_name
+      THEME_ROOT + theme_name.to_s
     end
 
     #def self.theme_loaded?(theme_name)
