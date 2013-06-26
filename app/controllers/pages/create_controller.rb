@@ -21,8 +21,8 @@ class Pages::CreateController < ApplicationController
   guard :may_ACTION_page?
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
-  # so, we must load the appropriate permissions from groups.
-  permission_helper 'groups/memberships', 'groups/base'
+  # so, we must load the appropriate permissions from groups and me.
+  permission_helper 'groups/memberships', 'groups/base', 'me'
 
   #
   # if there is any error in the 'create' action, call the 'new' action
