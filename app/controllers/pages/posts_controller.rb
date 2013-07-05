@@ -11,7 +11,7 @@ class Pages::PostsController < ApplicationController
   guard :show => :may_show_page?
 
   # if something goes wrong with create, redirect to the page url.
-  rescue_render :create => lambda {redirect_to(page_url(@page))}
+  rescue_render :create => lambda { |controller| redirect_to(page_url(@page)) }
 
   # do we still want this?...
   # cache_sweeper :social_activities_sweeper, :only => [:create, :save, :twinkle]

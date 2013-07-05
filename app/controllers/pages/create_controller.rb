@@ -28,7 +28,7 @@ class Pages::CreateController < ApplicationController
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.
   #
-  rescue_render :create => lambda { new }
+  rescue_render :create => :new
 
   def new
     @page = build_new_page! if params[:page]
