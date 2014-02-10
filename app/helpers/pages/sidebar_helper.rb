@@ -124,7 +124,7 @@ module Pages::SidebarHelper
       method: 'put', title: I18n.t(:public_checkbox_help)
   end
 
-  def public_checkbox
+  def is_public_checkbox
     icon = @page.public? ? 'check_on_16' : 'check_off_16'
     content_tag :span, :class => "a icon #{icon}" do
       :public_checkbox.t
