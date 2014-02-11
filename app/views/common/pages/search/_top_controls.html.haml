@@ -28,20 +28,18 @@
 - clear_filter_options = {:url => page_search_path(:remove => '/text/:text'), :with => 'FilterPath.encode()'}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
-%table#page_search_table
-  %tr
-    %td
-      = # search_view_toggle_links(page_search_path)
-      = spinner('view_toggle')
-    %td
-      = form_tag '', :id => 'page_search_form' do
-        %table.page_text_search
-          %tr
-            %td.x
-              = link_to_remote_icon 'tiny_clear', clear_filter_options
-            %td.text
-              = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
-            %td.search
-              = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
+.row#page_search_table
+  %div
+    = # search_view_toggle_links(page_search_path)
+    = spinner('view_toggle')
+  %div
+    = form_tag '', :id => 'page_search_form' do
+      %span.page_text_search.pull-right
+        %span.x{:style => "display:inline-block"}
+          = link_to_remote_icon 'tiny_clear', clear_filter_options
+        %span.text{:style => "display:inline-block"}
+          = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
+        %span.search{:style => "display:inline-block"}
+          = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
 
 = focus_form 'page_search_form'
