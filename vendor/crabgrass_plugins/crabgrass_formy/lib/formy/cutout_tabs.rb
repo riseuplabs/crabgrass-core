@@ -3,7 +3,7 @@ module Formy
     class Tab < Formy::Tab
       def initialize(form,opts={})
         super(form, opts)
-        @class = 'tab'
+        @class = 'tab '
       end
     end
     sub_element CutoutTabs::Tab
