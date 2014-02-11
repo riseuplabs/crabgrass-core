@@ -47,7 +47,8 @@ module Common::Ui::LinkToIconHelper
           # i am not sure the best way to handle this. we don't want to do :complete for
           # certain icons. For example, checkboxes change the icon after a complete, so
           # replacing the old icon for checkboxes would be a bad idea.
-          unless icon =~ /check/
+          # the star displays like an on/off checkbox, so don't do a complete in that case either.
+          unless icon =~ /check/ or icon =~ /star/
             icon_options[:complete] = [spinner_icon_off(icon, id), options[:complete]].combine(';')
           end
         end
