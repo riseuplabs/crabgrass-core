@@ -33,6 +33,14 @@ class Picture
       set_limits *limits_from_source(source)
     end
 
+    def self.[](geo)
+      if geo.class == self
+        return geo
+      else
+        return new(geo)
+      end
+    end
+
     def limits_from_source(source=nil)
       case source
       when Hash

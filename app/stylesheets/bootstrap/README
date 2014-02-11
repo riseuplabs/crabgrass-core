@@ -6,4 +6,4 @@ In this directories is a copy of bootstrap converted to SCSS:
 
   https://github.com/jlong/sass-twitter-bootstrap
 
-To update these boostrap files, copy the files from lib/*.scss of that repo to this directory.
+To update these bootstrap files, copy the files from lib/*.scss of that repo to this directory.

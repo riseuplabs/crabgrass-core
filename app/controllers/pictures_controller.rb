@@ -28,7 +28,7 @@ class PicturesController < ApplicationController
   def fetch_picture
     id = params[:id1] + params[:id2]
     @picture  = Picture.find id.to_i
-    @geometry = @picture.to_geometry params[:geometry]
+    @geometry = Picture::Geometry[params[:geometry]]
   end
 
 end

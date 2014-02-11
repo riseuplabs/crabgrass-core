@@ -97,7 +97,7 @@ class Picture < ActiveRecord::Base
   #
   def add_geometry!(geometry)
     if geometry.present?
-      geometry = to_geometry(geometry)
+      geometry = Geometry[geometry]
       geo_key = geometry.to_s
       self.dimensions ||= {}
       if dimensions[geo_key].nil?
@@ -112,7 +112,7 @@ class Picture < ActiveRecord::Base
   # removes a geometry from this picture, and the associated image files
   #
   def remove_geometry!(geometry)
-    geometry = to_geometry(geometry)
+    geometry = Geometry[geometry]
     if geometry.any?
       geo_key = geometry.to_s
       self.dimensions ||= {}
@@ -175,13 +175,6 @@ class Picture < ActiveRecord::Base
 
   private
 
-  #
-  # Convert geometry specified as Hash, Array, or String into Geometry.
-  #
-  def to_geometry(geometry)
-    geometry.is_a?(Geometry) ? geometry : Geometry.new(geometry)
-  end
-
   def storage
     @storage ||= Storage.new(self)
   end
@@ -223,7 +216,7 @@ class Picture < ActiveRecord::Base
   # render a new file with the specified geometry
   #
   def resize(geometry)
-    geometry = to_geometry(geometry)
+    geometry = Geometry[geometry]
     input_path = private_file_path
     output_path = storage.private_path(geometry)
     status = GraphicsMagickTransmogrifier.new(
