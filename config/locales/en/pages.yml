@@ -335,6 +335,7 @@ en:
 
   asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
   asset_page_display: "File"
+  select_file_to_upload: "Select a file to upload."
 
   ##!  external_video_page_description: "Show a video hosted on an external website."
   ##!  external_video_page_display: "External Video"
