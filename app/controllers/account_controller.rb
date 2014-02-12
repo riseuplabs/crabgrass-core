@@ -19,25 +19,17 @@ class AccountController < ApplicationController
   #
   # allow the user to request a new user account.
   #
-  # the session[:signup_email_address] is used when accepting an invite to join
-  # a group, but you don't have an account yet. First, you accept the invite,
-  # then you get the option to sign up. In this case, we already know the email,
-  # and we don't want the user to be able to change it.
-  #
   def new
     if current_site.signup_redirect_url.present?
       redirect_to current_site.signup_redirect_url
     end
-    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+    @user = User.new(user_params)
   end
 
   #
   # actually create the new user account
   #
   def create
-    user_params = (params[:user] || {:email => session[:signup_email_address]})
-    user_params.slice! :login, :email, :password, :password_confirmation,
-      :language, :display_name
     @user = User.new(user_params)
 
     # i think the usage agreement should be a plugin
@@ -94,6 +86,17 @@ class AccountController < ApplicationController
   end
 
   protected
+
+  # the session[:signup_email_address] is used when accepting an invite to join
+  # a group, but you don't have an account yet. First, you accept the invite,
+  # then you get the option to sign up. In this case, we already know the email,
+  # and we don't want the user to be able to change it.
+  #
+  def user_params
+    user_params = params[:user].merge :email => session[:signup_email_address]
+    user_params.slice :login, :email, :password, :password_confirmation,
+      :language, :display_name
+  end
 
   def reset_password_form
     render :template => 'account/reset_password'
