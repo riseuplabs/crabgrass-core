@@ -210,19 +210,16 @@ module UserExtension
     end
 
     def update_tag_cache
-      # this query sucks and should be optimized
-      # see http://dev.mysql.com/doc/refman/5.0/en/in-subquery-optimization.html
       # TODO: acts_as_taggable_on includes the user_id in every tagging,
       # thus making it easy to find all the tags you have made. maybe this is
       # what we should return here instead?
       if self.id
         ids = Tag.connection.select_values(%Q[
-          SELECT tags.id FROM tags
-          INNER JOIN taggings ON tags.id = taggings.tag_id
-          WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
-           (SELECT pages.id FROM pages
-            INNER JOIN user_participations ON pages.id = user_participations.page_id
-            WHERE user_participations.user_id = #{id})
+          SELECT taggings.tag_id FROM taggings
+          INNER JOIN user_participations
+            ON taggings.taggable_id = user_participations.page_id
+          WHERE taggings.taggable_type = 'Page'
+          AND user_participations.user_id = #{id}
         ])
       else
         ids = []
