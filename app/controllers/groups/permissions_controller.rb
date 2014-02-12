@@ -9,7 +9,7 @@ class Groups::PermissionsController < Groups::BaseController
 
   def update
     # update
-    gate = @group.gate(params.delete(:gate).to_sym)
+    gate = @group.gate(params.delete(:gate))
     new_state = params[:new_state]
 
     if params[:id].to_i == 0
