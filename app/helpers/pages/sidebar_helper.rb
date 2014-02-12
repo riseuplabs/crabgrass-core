@@ -99,7 +99,7 @@ module Pages::SidebarHelper
 
   def watch_checkbox
     existing_watch = (@upart and @upart.watch?) or false
-    checkbox_id = 'watch_checkbox'
+    checkbox_id = 'watch_li'
     url = page_participations_path(@page, :watch => (!existing_watch).inspect)
     sidebar_checkbox I18n.t(:watch_checkbox), url,
       id: checkbox_id, method: 'post', checked: existing_watch
@@ -120,7 +120,7 @@ module Pages::SidebarHelper
   def publish_checkbox
     url = page_attributes_path(@page, :public => (!@page.public?).inspect)
     sidebar_checkbox I18n.t(:public_checkbox), url,
-      id: 'public_checkbox', checked: @page.public?,
+      id: 'public_li', checked: @page.public?,
       method: 'put', title: I18n.t(:public_checkbox_help)
   end
 
@@ -151,7 +151,7 @@ module Pages::SidebarHelper
       label = I18n.t(:add_star_link, :star_count => @page.stars_count)
     end
     url = page_participations_path(@page, :star => add.inspect)
-    link_to_remote(label, {url: url, method: 'post'}, {icon: icon})
+    link_to_remote(label, {url: url, method: 'post'}, {icon: icon, :id => 'star_li'})
   end
 
   #
