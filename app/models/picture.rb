@@ -95,6 +95,12 @@ class Picture < ActiveRecord::Base
   # You must add a geometry definition before you can display
   # a picture resized to a given dimensions.
   #
+  def add_geometry(geometry)
+    add_geometry!(geometry)
+  rescue ErrorMessage => exc
+    return false
+  end
+
   def add_geometry!(geometry)
     if geometry.present?
       geometry = Geometry[geometry]
