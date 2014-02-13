@@ -1,5 +1,7 @@
 class CreateAssetPageController < Pages::CreateController
 
+  before_filter :ensure_asset, only: :create
+
   def new
     @form_sections.unshift('file')
     @form_sections.delete('title')
@@ -25,5 +27,11 @@ class CreateAssetPageController < Pages::CreateController
     AssetPage
   end
 
+  def ensure_asset
+    if params[:asset].blank?
+      warning :select_file_to_upload.t
+      new
+    end
+  end
 end
 
