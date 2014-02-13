@@ -5,6 +5,7 @@ class SurveyPageController < Pages::BaseController
   javascript 'survey'
   helper 'survey_page'
 
+  guard :may_ACTION_survey?
   permissions 'survey_page'
 
 #  def new

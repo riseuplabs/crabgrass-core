@@ -7,6 +7,15 @@ class SurveyPageResponseController < Pages::BaseController
   javascript :extra
   javascript 'survey'
   helper 'survey_page'
+
+  guard show: :may_view_survey_response?,
+    list: :may_view_survey_response?,
+    update: :may_modify_survey_response?,
+    edit: :may_modify_survey_response?,
+    new: :may_create_survey_response?,
+    make: :may_create_survey_response?,
+    destroy: :may_destroy_survey_response?
+
   permissions 'survey_page'
 
   verify :method => :post, :only => [:make, :update, :destroy]
@@ -69,9 +78,10 @@ class SurveyPageResponseController < Pages::BaseController
   end
 
   def list
-    @responses = @survey.responses.paginate(:all,
+    @responses = @survey.responses.paginate({
       :include => ['answers', 'ratings'],
-      :page => params[:page])
+      :page => params[:page]
+    })
   end
 
   # xhr and get

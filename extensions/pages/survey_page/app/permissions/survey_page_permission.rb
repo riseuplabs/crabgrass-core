@@ -69,10 +69,6 @@ module SurveyPagePermission
     end
   end
 
-  %w[new make].each {|action|
-    alias_method "may_#{action}_survey_page_response?".to_sym, :may_create_survey_response?
-  }
-
   def may_modify_survey_response?(response=nil)
     return false unless logged_in?
 
@@ -83,10 +79,6 @@ module SurveyPagePermission
     end
   end
 
-  %w[update edit].each {|action|
-    alias_method "may_#{action}_survey_page_response?".to_sym, :may_modify_survey_response?
-  }
-
   def may_destroy_survey_response?(response=@response)
     return false unless logged_in?
 
@@ -96,8 +88,6 @@ module SurveyPagePermission
       current_user.may?(:admin, @page)
     end
   end
-
-  alias_method :may_destroy_survey_page_response?, :may_destroy_survey_response?
 
   # you should be able to view responses even if responses are disabled.
   def may_view_survey_response?(response=@response)
@@ -115,10 +105,6 @@ module SurveyPagePermission
       false
     end
   end
-
-  %w[show list].each {|action|
-    alias_method "may_#{action}_survey_page_response?".to_sym, :may_view_survey_response?
-  }
 
   def may_rate_survey_response?(response=nil)
     return false unless logged_in?
