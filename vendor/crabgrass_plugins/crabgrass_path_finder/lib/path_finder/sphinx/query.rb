@@ -89,7 +89,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       @order = "@relevance DESC, page_updated_at DESC"
     end
 
-    #puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
+    # puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
@@ -109,6 +109,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       # but sometimes it does, and if it does we don't want to bomb out.
     end
     page_terms.replace(pages)
+    return page_terms
   end
 
   def find
