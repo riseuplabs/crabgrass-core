@@ -99,7 +99,7 @@ class Notice < ActiveRecord::Base
       if data[attr].is_a? Array
         I18n.t(*data[attr])
       else
-        I18n.t(data[attr])
+        I18n.t(data[attr], count: 1)
       end
     end
   end
