@@ -7,6 +7,8 @@ class Me::PostsController < Me::BaseController
   include_controllers 'common/posts'
 
   prepend_before_filter :fetch_data
+
+  permissions 'posts'
   guard :may_ALIAS_post?
 
   # /me/discussions/green/posts
