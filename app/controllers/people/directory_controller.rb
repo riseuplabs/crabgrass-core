@@ -5,7 +5,8 @@ class People::DirectoryController < ApplicationController
   stylesheet 'directory'
 
   def index
-    @users = users_to_display.order(:login).paginate(pagination_params)
+    @users = users_to_display
+    @users = @users.order(:login).paginate(pagination_params) if @users
   end
 
   protected
@@ -38,7 +39,9 @@ class People::DirectoryController < ApplicationController
     elsif peers?
       current_user.peers
     else
-      User.with_access(current_user => :view)
+      if filter
+        User.named_like(filter).with_access(current_user => :view)
+      end
     end
   end
 
@@ -50,5 +53,10 @@ class People::DirectoryController < ApplicationController
     params[:path].try(:include?, 'peers')
   end
 
+  def filter
+    if q = params[:q]
+      q.gsub('%', '\%').gsub('_', '\_') + '%'
+    end
+  end
 end
 
