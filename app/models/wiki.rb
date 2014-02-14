@@ -123,7 +123,7 @@ class Wiki < ActiveRecord::Base
   def body_html
     update_body_html_and_structure
 
-    read_attribute(:body_html).html_safe
+    read_attribute(:body_html).try.html_safe
   end
 
   def preview_html
