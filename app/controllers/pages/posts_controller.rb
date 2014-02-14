@@ -3,6 +3,7 @@ class Pages::PostsController < ApplicationController
   include_controllers 'common/posts'
 
   permissions 'pages'
+  permissions 'posts'
   helper 'pages/post'
 
   prepend_before_filter :fetch_data

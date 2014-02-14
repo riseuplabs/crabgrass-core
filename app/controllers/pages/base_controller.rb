@@ -13,6 +13,8 @@ class Pages::BaseController < ApplicationController
   javascript 'upload'
   stylesheet 'upload'
 
+  permission_helper 'posts'
+
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
   permission_helper 'groups/memberships', 'groups/base', 'me'
