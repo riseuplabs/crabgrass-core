@@ -35,7 +35,7 @@ end
 
 def load_data()
   unless File.exists?('tmp/en.yml')
-    puts "skipping, no en.yml"
+    puts "skipping, no en.yml. This might be because you have not run the bundle task."
     exit
   end
   en = YAML.load_file('tmp/en.yml')['en']
