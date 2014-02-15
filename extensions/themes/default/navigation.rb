@@ -204,17 +204,17 @@ define_navigation do
       visible { context?(:none) }
       active  { context?(:none) }
 
-      local_section :all do
-        label { :all.t }
-        url { groups_directory_path }
-        active { controller?('groups/directory') and params[:path].empty? }
-      end
-
       local_section :mygroups do
         visible { logged_in? }
         label { :my_groups.t }
         url { groups_directory_path(:path => ['my']) }
         active { controller?('groups/directory') and params[:path].try(:include?, 'my') }
+      end
+
+      local_section :search do
+        label { :search.t }
+        url { groups_directory_path(:path => ['search']) }
+        active { controller?('groups/directory') and params[:path].try(:include?, 'search') }
       end
 
       local_section :create do
