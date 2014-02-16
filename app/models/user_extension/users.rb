@@ -21,7 +21,9 @@ module UserExtension::Users
       ## PEERS
       ##
 
-      has_many :peers, :class_name => 'User' do
+      has_many :peers,
+        :class_name => 'User',
+        :counter_sql => 'SELECT count(*) FROM users WHERE users.id IN (#{peer_id_cache.to_sql})' do
         # overwrites ActiveRecord::Associations::HasManyAssociation#construct_scope
         # to specify the entire conditions without using :finder_sql
         def construct_scope

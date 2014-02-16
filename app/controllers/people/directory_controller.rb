@@ -1,6 +1,7 @@
 class People::DirectoryController < ApplicationController
 
   skip_before_filter :login_required
+  before_filter :set_default_path
   stylesheet 'directory'
 
   def index
@@ -8,6 +9,24 @@ class People::DirectoryController < ApplicationController
   end
 
   protected
+
+  def set_default_path
+    if params[:path].empty?
+      params[:path] = default_path
+    end
+  end
+
+  def default_path
+    if !logged_in?
+      'search'
+    elsif current_user.friends.any?
+      'contacts'
+    elsif current_user.peers.any?
+      'peers'
+    else
+      'search'
+    end
+  end
 
 #  VIEW_KEYWORDS = ['friends', 'peers']
 

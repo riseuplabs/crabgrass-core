@@ -1,5 +1,6 @@
 class Groups::DirectoryController < ApplicationController
   skip_before_filter :login_required
+  before_filter :set_default_path
 
   stylesheet 'directory'
   helper 'groups/directory'
@@ -10,6 +11,21 @@ class Groups::DirectoryController < ApplicationController
   end
 
   protected
+
+  def set_default_path
+    if params[:path].empty?
+      params[:path] = default_path
+    end
+  end
+
+  def default_path
+    if logged_in? && current_user.groups.any?
+      'my'
+    else
+      'search'
+    end
+  end
+
   helper_method :my_groups?
 
   def my_groups?
