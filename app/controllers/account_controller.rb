@@ -87,13 +87,16 @@ class AccountController < ApplicationController
 
   protected
 
-  # the session[:signup_email_address] is used when accepting an invite to join
-  # a group, but you don't have an account yet. First, you accept the invite,
-  # then you get the option to sign up. In this case, we already know the email,
-  # and we don't want the user to be able to change it.
-  #
+  # session[:signup_email_address] is used when accepting an invite to join
+  # a group, but you don't have an account yet.
+  # First, you accept the invite, then you get the option to sign up.
+  # In this case, we already know the email, and we don't want the user to
+  # be able to change it.
   def user_params
-    user_params = params[:user].merge :email => session[:signup_email_address]
+    user_params = params[:user] || {}
+    if session[:signup_email_address].present?
+      user_params[:email] = session[:signup_email_address]
+    end
     user_params.slice :login, :email, :password, :password_confirmation,
       :language, :display_name
   end
