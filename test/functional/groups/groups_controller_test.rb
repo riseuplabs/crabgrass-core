@@ -17,6 +17,43 @@ class Groups::GroupsControllerTest < ActionController::TestCase
       get :new
     end
     assert_response :success
+    assert_template :choose_group_type
+  end
+
+  def test_new_committee
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'committee'
+    end
+    assert_response :success
+    assert_template :choose_parent_group
+  end
+
+  def test_new_council
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'council'
+    end
+    assert_response :success
+    assert_template :choose_parent_group
+  end
+
+  def test_new_group
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'group'
+    end
+    assert_response :success
+    assert_template 'groups/structures/_new_form'
+  end
+
+  def test_new_network
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'network'
+    end
+    assert_response :success
+    assert_template 'groups/structures/_new_form'
   end
 
   def test_create_group
