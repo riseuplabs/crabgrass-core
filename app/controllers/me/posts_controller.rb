@@ -46,9 +46,8 @@ class Me::PostsController < Me::BaseController
   private
 
   def post_pagination_params
-    #default_page = params[:page].blank? ? @discussion.last_page : params[:page]
-    #pagination_params(:page => default_page)
-    pagination_params
+    default_page = params[:page].blank? ? @discussion.last_page : params[:page]
+    pagination_params(:page => default_page)
   end
 
   #
