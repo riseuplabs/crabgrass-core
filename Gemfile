@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 3.0.20', :git => 'git://github.com/rails/rails.git', :branch => '3-0-stable'
 
-gem 'rake', '~> 0.9.2'
-
 gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
 
 ## from config/environment.rb
