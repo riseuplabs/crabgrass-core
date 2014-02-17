@@ -1,0 +1,13 @@
+update_alert_messages(page)  # will clear it if there are none.
+page << "$('user_name').focus();"
+page.replace_html(:user_list, render('users'))
+page << "History.pushState({content: $('content').innerHTML}, '#{params[:path]}', '/people/directory/#{params[:path]}')"
+page << <<-EOJS
+  History.Adapter.bind(window,'statechange',function() {
+    var state = History.getState();
+    console.log('history state change: ' + JSON.stringify({url:state.url, data:state.data}))
+    if (state.data && state.data.content) {
+      $('content').innerHTML = state.data.content;
+    }
+  });
+EOJS

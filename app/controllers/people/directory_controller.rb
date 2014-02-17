@@ -5,7 +5,8 @@ class People::DirectoryController < ApplicationController
   stylesheet 'directory'
 
   def index
-    @users = users_to_display.order(:login).paginate(pagination_params)
+    @users = finder.find_by_path(params[:path])
+    @users = @users.paginate(pagination_params) if @users
   end
 
   protected
@@ -16,9 +17,13 @@ class People::DirectoryController < ApplicationController
     end
   end
 
+  def finder
+    @user_finder ||= UserFinder.new(current_user)
+  end
+
   def default_path
-    if !logged_in?
-      'search'
+    if !logged_in? || params[:q].present?
+      'search/' + params[:q]
     elsif current_user.friends.any?
       'contacts'
     elsif current_user.peers.any?
@@ -26,28 +31,6 @@ class People::DirectoryController < ApplicationController
     else
       'search'
     end
-  end
-
-#  VIEW_KEYWORDS = ['friends', 'peers']
-
-  def users_to_display
-    if !logged_in?
-      User.with_access(:public => :view)
-    elsif friends?
-      current_user.friends
-    elsif peers?
-      current_user.peers
-    else
-      User.with_access(current_user => :view)
-    end
-  end
-
-  def friends?
-    params[:path].try(:include?, 'contacts')
-  end
-
-  def peers?
-    params[:path].try(:include?, 'peers')
   end
 
 end
