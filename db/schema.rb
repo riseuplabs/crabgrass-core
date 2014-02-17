@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130505182524) do
+ActiveRecord::Schema.define(:version => 20140212131634) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -487,6 +487,7 @@ ActiveRecord::Schema.define(:version => 20130505182524) do
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
+  add_index "pages", ["data_id", "data_type"], :name => "index_pages_on_data_id_and_data_type"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id"

@@ -9,13 +9,13 @@ before_install:
   - sudo apt-get install -y sphinxsearch
   - sudo apt-get install -y inkscape
 before_script:
-  - "rake create_a_secret"
+  - "bundle exec rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
-  - "rake db:create"
-  - "rake db:schema:load"
-  - "rake db:test:prepare"
-  - "rake RAILS_ENV=test db:fixtures:load"
-  - "rake RAILS_ENV=test ts:index ts:start"
+  - "bundle exec rake db:create"
+  - "bundle exec rake db:schema:load"
+  - "bundle exec rake db:test:prepare"
+  - "bundle exec rake RAILS_ENV=test db:fixtures:load"
+  - "bundle exec rake RAILS_ENV=test ts:index ts:start"
 notifications:
   email: false
 
