@@ -1,6 +1,7 @@
 class People::HomeController < People::BaseController
 
   layout 'sidecolumn'
+  guard :show => :may_show_person?
 
   #
   # called by DispatchController
