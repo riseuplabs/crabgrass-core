@@ -37,15 +37,18 @@ module Common::Utility::ContextHelper
   ##
 
   def context_banner_style
-    if context_picture && context_picture.add_geometry(banner_geometry)
-      "background-image: url(#{picture.url(geometry)})"
+    if url = context_picture_url(banner_geometry)
+      "background-image: url(#{url})"
     else
       ""
     end
   end
 
-  def context_picture
-    @context.entity.profiles.public.picture
+  def context_picture_url(geometry)
+    picture = @context.entity.profiles.public.picture
+    if picture.try.add_geometry(geometry)
+      picture.url(geometry)
+    end
   end
 
   def banner_geometry
