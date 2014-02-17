@@ -12,101 +12,90 @@ Contents:
 
 Install basic ruby environment
 
-  On a debian-based system:
-    sudo apt-get install ruby1.9 ruby-dev rake libmysql-ruby mysql-server git
+On a debian-based system:
 
-    (Depending on what you are running, you might need to install git-core instead of git.
-     You might also need libopenssl-ruby)
+    sudo apt-get install ruby1.9 ruby-dev rake ruby-mysql mysql-server git
 
-  On a redhat-based system:
+Depending on what you are running, you might need to install `git-core`
+instead of `git` and `libmysql-ruby` instead of `ruby-mysql`. You might also
+need libopenssl-ruby. If installing using bundler, you may need
+`libmysqlclient-dev`.
+
+On a redhat-based system:
+
     yum install ruby ruby-devel rubygem-rake mysql-server mysql-devel git gcc make
-
-Install rubygems from rubygems.org
-
-  1. Download latest rubygems-x.x.x.tgz from http://rubygems.org
-  2. Extract the tarball, and cd to the directory
-  3. Run `sudo ruby setup.rb --no-format-executable`
-
-Prevent rubygems from installing rdocs (optional)
-
-  1. edit ~/.gemrc
-  2. add this "gem: --no-rdoc --no-ri"
 
 Checkout the codebase
 
-  git clone git://labs.riseup.net/crabgrass-core.git
+    git clone ssh://git@github.com/riseuplabs/crabgrass-core.git
+    or
+    git clone https://github.com/riseuplabs/crabgrass-core.git
 
-  Alternately, do a shallow clone. This will only check out a copy of
-  the most recent version.
+Alternately, do a shallow clone. This will only check out a copy of the most recent version.
 
-    git clone --depth 1 git://labs.riseup.net/crabgrass-core.git
-
-  Alternately, use gitosis. Use this if you have gitosis access
-  to crabgrass-core.git.
-
-    git clone gitosis@labs.riseup.net:crabgrass-core.git
+    git clone --depth 1 https://github.com/riseuplabs/crabgrass-core.git
 
 Install bundler
 
-  gem install bundler
+    gem install bundler
 
-  Alternatively you can install bundler with your package manager.
+Alternatively you can install bundler with your package manager.
 
 Install rails and required gems
 
-  cd crabgrass-core
-  bundle install
+   cd crabgrass-core
+   bundle install
 
 Create a secret
 
-  rake create_a_secret
+   rake create_a_secret
 
 Create the database:
 
-  cp config/database.yml.example config/database.yml
-  rake db:create
-  rake db:schema:load
-  rake db:fixtures:load
+   cp config/database.yml.example config/database.yml
+   rake db:create
+   rake db:schema:load
+   rake db:fixtures:load
 
 Install helper applications:
 
-  On Debian / Ubuntu:
+On Debian / Ubuntu:
+
     sudo apt-get install graphicsmagick
-  
-  On RHEL/CentOS:
-    <um install ImageMagick
+
+On RHEL/CentOS:
+
+    yum install ImageMagick
 
 Run server:
 
-  cd crabgrass-core
-  BOOST=1 bundle exec rails server thin
+    cd crabgrass-core
+    BOOST=1 bundle exec rails server thin
 
 Connect to the web application from your browser:
 
-  http://localhost:3000
-  login: blue
-  password: blue
+    http://localhost:3000
+    login: blue
+    password: blue
 
 See doc/development_tips for information on the arguments to script/server
-
 
 2. Install for testing
 ====================================================
 
 Install additional gems needed for testing:
 
-  sudo RAILS_ENV=test rake gems:install
+    sudo RAILS_ENV=test rake gems:install
 
 Create testing database:
 
-  sudo mysqladmin create crabgrass_test
-  cd crabgrass-core
-  rake db:test:prepare
+    sudo mysqladmin create crabgrass_test
+    cd crabgrass-core
+    rake db:test:prepare
 
 Run tests:
 
-  bundle exec rake
-
+    bundle exec rake
 
 3. Install for production
 ====================================================
@@ -119,38 +108,38 @@ in the 'install for development' instructions.
 
 Then:
 
-  export RAILS_ENV=production
-  bundle install
+    export RAILS_ENV=production
+    bundle install
 
 setup the database
 ----------------------
 
 create the database:
 
-  sudo mysqladmin create crabgrass
+    sudo mysqladmin create crabgrass
 
 create database.yml:
 
-  cp config/database.yml.example config/database.yml
+    cp config/database.yml.example config/database.yml
 
 edit config/database.yml:
 
-  username: crabgrass
-  password: your_password
+    username: crabgrass
+    password: your_password
 
 set the permissions:
 
-  > mysql --user root -p
-  mysql> use crabgrass;
-  mysql> grant all on crabgrass.* to crabgrass@localhost identified by 'your_password';
-  mysql> flush privileges;
-  mysql> quit
+    > mysql --user root -p
+    mysql> use crabgrass;
+    mysql> grant all on crabgrass.* to crabgrass@localhost identified by 'your_password';
+    mysql> flush privileges;
+    mysql> quit
 
 initialize the database:
 
-  export RAILS_ENV=production
-  rake cg:convert_to_unicode
-  rake db:schema:load
+    export RAILS_ENV=production
+    rake cg:convert_to_unicode
+    rake db:schema:load
 
 A note about unicode support: running `rake db:create` does not correctly create a
 fully unicode compatible database. To make non-latin languages work, you need the
@@ -163,13 +152,12 @@ compile assets
 There are some static assets that need to be compiled in production mode.
 This should be run after deploying a new version of the codebase:
 
-  rake cg:compile_assets
+    rake cg:compile_assets
 
 configure apache
 -----------------------
 
 See doc/apache.txt for information on deploying for production with apache.
-
 
 4. Configuration options
 ====================================================
