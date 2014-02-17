@@ -12,7 +12,7 @@ module PostsPermission
 
   def may_edit_post?(post=@post)
     logged_in? and
-    (may_message? || @page) and
+    (@page || may_message?) and
     post and
     post.user_id == current_user.id
   end
