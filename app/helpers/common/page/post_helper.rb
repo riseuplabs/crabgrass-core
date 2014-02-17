@@ -6,7 +6,7 @@ module Common::Page::PostHelper
   # klass should be 'first' or 'last'
   #
   def post_pagination_links(posts, klass)
-    if posts.any? and posts.is_a?(WillPaginate::Collection)
+    if posts.any?
       if @page
         param_name = 'posts'
       else
