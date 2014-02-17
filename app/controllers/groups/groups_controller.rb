@@ -57,6 +57,8 @@ class Groups::GroupsController < Groups::BaseController
     case group_type
       when :group then Group
       when :network then Network
+      when :committee then Committee
+      when :council then Council
       else raise 'error'
     end
   end
