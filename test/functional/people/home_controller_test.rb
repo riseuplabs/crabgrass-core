@@ -8,4 +8,24 @@ class People::HomeControllerTest < ActionController::TestCase
     get :show, :person_id => 'blue'
     assert_response :success
   end
+
+  def test_new_user_hidden
+    user = FactoryGirl.create :user
+    login_as :blue
+    get :show, :person_id => user.login
+    assert_response 404
+    assert_nil assigns[:user]
+    assert_nil assigns[:group]
+    user.destroy
+  end
+
+  def test_new_user_visible_to_friends
+    user = FactoryGirl.create :user
+    user.add_contact! users(:blue), :friend
+    login_as :blue
+    get :show, :person_id => user.login
+    assert_response :success
+    assert_equal user, assigns[:user]
+    user.destroy
+  end
 end
