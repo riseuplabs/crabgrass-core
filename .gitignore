@@ -43,3 +43,4 @@ vendor/plugins/haml/init.rb
 .bundle
 bin/
 config/sphinx/*.conf
+Gemfile.lock
