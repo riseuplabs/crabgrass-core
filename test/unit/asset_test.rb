@@ -197,6 +197,8 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 43, @asset.versions.latest.thumbnail(:small).width, 'actual width of versioned thumb should be 43'
     assert_equal 64, @asset.versions.latest.thumbnail(:small).height, 'actual height of versioned thumb should be 64'
 
+    assert_equal ["43","64"], Media.dimensions(@asset.thumbnail(:small).private_filename)
+    assert_equal ["133","200"], Media.dimensions(@asset.thumbnail(:medium).private_filename)
   end
 
   def test_doc

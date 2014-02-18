@@ -268,7 +268,7 @@ module Media
     def replace_extension(filename, new_extension)
       old_extension = (File.extname(filename) || '').to_s
       new_extension = new_extension.to_s
-      if old_extension.present?
+      if !old_extension.empty?
         base = File.basename(filename, old_extension)
       else
         base = filename
@@ -294,7 +294,7 @@ module Media
     def replace_file(args={})
       from = args[:from].to_s
       to   = args[:to].to_s
-      raise ArgumentError unless from.present? && to.present?
+      raise ArgumentError unless !from.empty? && !to.empty?
       if File.exists?(from)
         if File.exists?(to)
           FileUtils.rm(to)

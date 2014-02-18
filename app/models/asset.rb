@@ -17,11 +17,6 @@ Assets use a lot of classes to manage a particular uploaded file:
 
   Asset::Versions have the latter two included as well.
 
-  Additional modules used by assets:
-    Media::MimeType -- where all the mime magicky stuff happens, including
-                       determining which Asset subclass to create.
-    Media::Process  -- processors for creating thumbnails.
-
 TODO:
 
   * Image assets that are smaller than the thumbnails should not get thumbnails,

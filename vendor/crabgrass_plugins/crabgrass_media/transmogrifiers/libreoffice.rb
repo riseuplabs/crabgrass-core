@@ -63,7 +63,7 @@ class LibreOfficeTransmogrifier < Media::Transmogrifier
       # run command
       ext = extension(output_type)
       if ext
-        arguments = [LIBREOFFICE_COMMAND, '-headless', '-convert-to', extension(output_type), '-outdir', work_directory, input_file]
+        arguments = [LIBREOFFICE_COMMAND, '--headless', '-convert-to', extension(output_type), '-outdir', work_directory, input_file]
         status = run_command(*arguments, &block)
 
         # we cannot specify the name of the output file, so grab what it generated and move it to self.output_file
