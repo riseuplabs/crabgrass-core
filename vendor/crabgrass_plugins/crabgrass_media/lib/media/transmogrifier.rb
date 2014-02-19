@@ -294,7 +294,7 @@ module Media
     def replace_file(args={})
       from = args[:from].to_s
       to   = args[:to].to_s
-      raise ArgumentError unless !from.empty? && !to.empty?
+      raise ArgumentError if from.empty? || to.empty?
       if File.exists?(from)
         if File.exists?(to)
           FileUtils.rm(to)
