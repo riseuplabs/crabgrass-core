@@ -159,6 +159,15 @@ configure apache
 
 See doc/apache.txt for information on deploying for production with apache.
 
+set up crontab
+-----------------------
+
+There are a bunch of maintenance tasks that need to be updated regularly. The
+easiest way to do this is to set up a crontab. The gem `whatever` will install
+one for you from the schedule.rb config file.
+
+    whenever --update-crontab -f config/misc/schedule.rb
+
 4. Configuration options
 ====================================================
 
