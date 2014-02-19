@@ -31,7 +31,7 @@ en:
   group_creation_info: "There are four types of groups:"
   group_description: "Organizations are groups that are autonomous and have people as members."
   network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
-  committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
+  committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network. A user added to the committee from outside the organization or network will only have access to the committee."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
