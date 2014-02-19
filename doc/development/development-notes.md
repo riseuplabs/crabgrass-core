@@ -1,4 +1,39 @@
-crabgrass-core is a basic, paired down crabgrass.
+known bugs
+==============================
+
+upgrade to latest thinking sphinx
+
+deleting a page tag causes the discussions to get loaded for the ajax request.
+this should not be the case.
+
+destroying groups
+  needs a lot of work
+  what to do with orphaned pages?
+  all the pages that have cached the owner_name should get cleared out.
+    (or maybe not, instead link to 'anonymous'?)
+  what about everywhere else? create GroupGhost with the same id but with no content?
+
+when notices are rendered as pages, they still fade.
+
+i18n blows up if the session language is set to swedish.
+
+alert messages don't stack for modalbox
+
+confirmation before destroy contact
+
+page search:
+  should be 'watching' instead of 'watched'
+  once active, needs to indicate i clicked on 'my pages -> own'.
+  need ajaxy history
+
+the split panel is not something that we should keep, unless it can
+  be made to work when the screen gets small.
+
+wiki:
+  need history
+
+pages:
+  need 'show print' option.
 
 remote processing
 ==============================
@@ -15,52 +50,67 @@ integrate documentcloud.org for displaying pdfs and docs.
 things to work on
 ============================
 
+Misc Quick
+* grouphome: summary links break left column formatting
+* remove details from page feeds for now
+
+Misc
+* banner width problems: https://labs.riseup.net/code/issues/4360
+* Speed Problems Across App
+* Search
+
+Pages
+* gallery > show formatting problems
+* tasklist text doesnt line up with checkboxes
+* survey page formatting and error message: https://labs.riseup.net/code/issues/4362
+* wiki - versioning is a mess, full page edit form is too narrow, trying to open multiple sections for editing isnt working (see issue)
+
 groups
-. destroying group
-. request to expell
+* destroying group
+* request to expell
 
 directory
-. group
-. person
+* group
+* person
 
 account
-. reset lost password
-. cracklib
+* reset lost password
+* cracklib
 
 sphinx
-. new sphinx
-. better fields for sphinx
-. get rid of page_terms
+* new sphinx
+* better fields for sphinx
+* get rid of page_terms
 
 pages
-. history
-. text page
-. poll page
-. asset page
-. folder page
+* history
+* text page
+* poll page
+* asset page
+* folder page
 
 plugins
-. write new plugin system
+* write new plugin system
 
 themes
-. add more themes
+* add more themes
 
 tests
-. minitest
-. write more tests
+* minitest
+* write more tests
 
 i18n
-. identify used and unused keys
-. a system to translate
-. better en.yml organization
+* identify used and unused keys
+* a system to translate
+* better en.yml organization
 
 misc
-. replace backgroundrb - kclair
-. clean up css class usage for tabs - bootstrap and cg use different ones now - azul
+* replace backgroundrb - kclair
+* clean up css class usage for tabs - bootstrap and cg use different ones now - azul
 
 new features
-. issues
-. notices
+* issues
+* notices
 
 rails 3
 ============================
@@ -105,7 +155,7 @@ indexes?
 mailing list integration
 =============================
 
-two main problems: 
+two main problems:
 
   (1) queuing and processing incoming messages
   (2) queuing outgoing messages
@@ -185,7 +235,7 @@ delayed database updates
 
 Most of the database updates that are slow for the user are things that don't
 need to be done right away. For example, you change one tiny thing about a page
-and it kicks of tons and tons of database updates, but these are just for searching 
+and it kicks of tons and tons of database updates, but these are just for searching
 and could be delayed.
 
 A huge speed improvement can be acheived by running these, and the sphinx indexing,
@@ -218,7 +268,7 @@ networked job queues:
   https://github.com/ivanvanderbyl/cloudist (rabbitmq)
   https://github.com/defunkt/resque (reddit)
   http://mperham.github.com/sidekiq/ (faster than resque, api compatible)
-  
+
 backgrounding long running code:
   https://github.com/tra/spawn
   https://github.com/Try2Code/jobQueue
@@ -237,7 +287,7 @@ On linux, fixes thread timeout problems:
   http://systemtimer.rubyforge.org/
 
 Unsorted links:
-  http://code.google.com/p/activemessaging/wiki/ActiveMessaging  
+  http://code.google.com/p/activemessaging/wiki/ActiveMessaging
   http://codeforpeople.rubyforge.org/svn/bj/trunk/README
   https://github.com/barttenbrinke/worker_queue/
   https://github.com/starling/active_queue
@@ -255,8 +305,8 @@ Type A List
 * avatar
 * display name
 * login
-* online status 
-* you friend/ groups / networks 
+* online status
+* you friend/ groups / networks
 
 Type B List
 
@@ -264,7 +314,7 @@ Only visible on the profile page of a user, but there can be Multiple or non at 
 
 * pictures, may be multiple.
 * contact info
-** email 
+** email
 ** phone
 ** instant message
 ** snail mail address
@@ -317,3 +367,68 @@ Multi-user field editing
 
 https://github.com/josephg/ShareJS
 
+questions
+===================
+
+why rails v3.0 and not v3.x?
+why github for rails in Gemfile? (huge extra overhead to pull in entire rails repo, versus the gem)
+
+WIKIS
+===========================
+
+clicking 'show' leaves :document locked.
+
+w.reload.section_locks.all_sections
+w.section_locks.locks
+w.break_locks!
+w.lock!(section, user)
+
+w = Wiki.last
+u1 = User.find 4
+u2 = User.find 5
+w.section_locks.locks
+
+test 1
+  w.lock!(:document, u1)
+  w.lock!(:document, u1)
+
+test 2
+  w.lock!(:document, u1)
+  w.lock!(:document, u2)
+
+sections
+----------------
+
+- #- if @wiki.section_open_for?(@section || :document, current_user)
+
+todo
+-----
+
+* new page creation tab is 'show' should be 'edit'
+
+
+scenarios
+---------------
+
+[x] user tries to edit page that is locked
+    w.lock!(:document, u2)
+
+[x] user force unlocks page and saves
+    w.lock!(:document, u2)
+
+[ ] user tries to saves, but someone as broken lock
+    w.unlock!(:document, u2, :break => true)
+    w.lock!(:document, u2)
+
+[ ] user visits page that is empty but locked
+
+[ ] user saves but new version already exists
+
+[ ] user clicks away from edit field without hiting save or cancel
+
+[x] force unlocking a subsection while remove locks on that tree path.
+
+[x] edit section
+[x] edit section that is locked
+
+[ ] prevent multiple section edits at once (for now)

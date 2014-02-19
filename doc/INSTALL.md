@@ -1,13 +1,9 @@
-Contents:
+1. [Install for development](#install-for-development)
+2. [Install for testing](#install-for-testing)
+3. [Install for production](#install-for-production)
+4. [Configuration options](#configuration-options)
 
-1. Install for development
-2. Install for testing
-3. Install for production
-4. Configuration options
-5. Database options
-6. Troubleshooting
-
-1. Install for development
+Install for development
 ====================================================
 
 Install basic ruby environment
@@ -43,19 +39,19 @@ Alternatively you can install bundler with your package manager.
 
 Install rails and required gems
 
-   cd crabgrass-core
-   bundle install
+    cd crabgrass-core
+    bundle install
 
 Create a secret
 
-   rake create_a_secret
+    rake create_a_secret
 
 Create the database:
 
-   cp config/database.yml.example config/database.yml
-   rake db:create
-   rake db:schema:load
-   rake db:fixtures:load
+    cp config/database.yml.example config/database.yml
+    rake db:create
+    rake db:schema:load
+    rake db:fixtures:load
 
 Install helper applications:
 
@@ -80,7 +76,7 @@ Connect to the web application from your browser:
 
 See doc/development_tips for information on the arguments to script/server
 
-2. Install for testing
+Install for testing
 ====================================================
 
 Install additional gems needed for testing:
@@ -97,7 +93,7 @@ Run tests:
 
     bundle exec rake
 
-3. Install for production
+Install for production
 ====================================================
 
 install prerequisites
@@ -159,7 +155,16 @@ configure apache
 
 See doc/apache.txt for information on deploying for production with apache.
 
-4. Configuration options
+set up crontab
+-----------------------
+
+There are a bunch of maintenance tasks that need to be updated regularly. The
+easiest way to do this is to set up a crontab. The gem `whatever` will install
+one for you from the schedule.rb config file.
+
+    whenever --update-crontab -f config/misc/schedule.rb
+
+Configuration options
 ====================================================
 
 All the options that you might want to change live in three places:
@@ -169,10 +174,3 @@ All the options that you might want to change live in three places:
 3. config/crabgrass/crabgrass-<mode>.yml.
 
 See config/crabgrass/README for more information.
-
-6. Troubleshooting
-====================================================
-
-delayed_job -- Currently, it seems to fail if you have multiple 'daemons' gems install.
-  If you encounter this problem, run `gem uninstall daemons; gem uninstall delayed_job; rake gems:install` as root.
-
