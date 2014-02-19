@@ -1,11 +1,7 @@
 these still need a place:
 ===================================
 
-# uncomment this to print out what the hell the processors are doing.
-# Media::Process::Base.log_to_stdout_when = :always
-
 AssetExtension::Storage.make_required_dirs
-
 
 THINGS TO CONFIGURE
 ==================================
@@ -36,7 +32,7 @@ RAILS INITIALIZATION PROCESS
   3. environment
      in config/environments/*.rb
 
-  4. plugins 
+  4. plugins
      alpha order of everything in vendor/plugins, vendor/crabgrass_plugins,
      extensions/mods, and extensions/pages.
 

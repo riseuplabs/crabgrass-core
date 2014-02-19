@@ -149,8 +149,8 @@ module Media
     #
     def self.content_type_basename(content_type)
       if content_type
-        extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
-        ['media_temp_file', extension.to_s]
+        extension = Media::MimeType.extension_from_mime_type(content_type) || :bin
+        ['media_temp_file', ".#{extension}"]
       else
         'media_temp_file'
       end

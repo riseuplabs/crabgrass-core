@@ -18,14 +18,14 @@ class AssetsController < ApplicationController
         return not_found
       end
     else
-      path = params[:path].first
+      path = params[:path]
       if thumb_name_from_path(path)
         thumb = @asset.thumbnail( thumb_name_from_path(path) )
         raise_not_found unless thumb
         thumb.generate
-        send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
+        send_file(private_filename(thumb), :type => thumb.content_type, :disposition => disposition(thumb))
       else
-        send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
+        send_file(private_filename(@asset), :type => @asset.content_type, :disposition => disposition(@asset))
       end
     end
   end
@@ -69,7 +69,7 @@ class AssetsController < ApplicationController
   end
 
   def thumb_name_from_path(path)
-    $~[1].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(.+)\./
+    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)\.[^\.]+$/
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.
@@ -79,6 +79,12 @@ class AssetsController < ApplicationController
     else
       'attachment'
     end
+  end
+
+  # this exists only to make the test easier. sadly, you can't mock send_file, since then
+  # rails looks for a view template.
+  def private_filename(asset_or_thumbnail)
+    asset_or_thumbnail.private_filename
   end
 
 end
