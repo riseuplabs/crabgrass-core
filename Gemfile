@@ -9,7 +9,9 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototyp
 ## from config/environment.rb
 
 # required, but not included with crabgrass:
-gem 'i18n'#, '~> 0.5'
+# lock i18n to 0.5.0 as 0.5.x with 1>x>3 will break with ActiveRecord 3.0:
+# https://github.com/svenfuchs/i18n/issues/233
+gem 'i18n', '0.5.0'
 gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
     # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
     # so, we bind to the latest in the version 2 series.

@@ -121,7 +121,7 @@ GEM
       tilt
     hike (1.2.3)
     hpricot (0.8.6)
-    i18n (0.5.3)
+    i18n (0.5.0)
     innertube (1.0.2)
     jsmin (1.0.1)
     json (1.7.7)
@@ -201,7 +201,7 @@ DEPENDENCIES
   greencloth!
   haml
   hpricot (~> 0.8)
-  i18n
+  i18n (= 0.5.0)
   jsmin
   json (~> 1.7.7)
   mime-types
