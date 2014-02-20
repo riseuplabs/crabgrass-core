@@ -104,8 +104,12 @@ in the 'install for development' instructions.
 
 Then:
 
+    apt-get install sphinxsearch
     export RAILS_ENV=production
     bundle install
+
+`sphinxsearch` is not technically required, but crabgrass runs 100 times faster
+with it installed.
 
 setup the database
 ----------------------
