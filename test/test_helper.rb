@@ -113,3 +113,9 @@ MiniTest::Mock.class_eval do
     false
   end
 end
+
+$test_msgs ||= {}
+def print_test_msg(id, msg)
+  $test_msg[id] = msg
+end
+at_exit { puts $test_msgs.values.join("\n") }

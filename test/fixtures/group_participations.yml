@@ -2,7 +2,7 @@
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
   ##%>
-  
+
 <% srand(314159265359) # consistent rand results %>
 
 <% for i in 1..40 %>
@@ -40,6 +40,12 @@ animals_asset3:
 rainbow_deleted:
   id: 45
   page_id: 207
+  group_id: 3
+  access: 1
+
+rainbow_blue:
+  id: 46
+  page_id: 1002
   group_id: 3
   access: 1
 

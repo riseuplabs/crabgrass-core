@@ -9,7 +9,7 @@ SearchFilter.new('/owned-by-me/') do
 
   # TODO: add owner_id attribute
   sphinx do |query|
-    id = encoded_user_id(query.current_user.id)
+    id = Page.encode_user_id(query.current_user.id)
     query.add_attribute_constraint(:owner_id, id)
   end
 
@@ -19,7 +19,7 @@ SearchFilter.new('/owned-by-me/') do
   # There's a pending test for this in
   #   test/functionals/me/pages_controller_test.rb
   #
-  # self.section = :my_pages
+  self.section = :my_pages
   self.exclude = :owned
   self.singleton = true
   self.label   = :owned_by_me

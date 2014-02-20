@@ -28,7 +28,8 @@ class Pages::SphinxSearchTest < ActiveSupport::TestCase
       ['/created-by/blue/public', Proc.new {|p| p.created_by_id == 4 && p.public?}],
       ['/user/red', Proc.new {|p| p.participation_for_user(users(:red)) }],
       ['/group/rainbow', Proc.new {|p| groups(:rainbow).may?(:view,p)} ],
-      ['/tag/joy/tag/disgust', Proc.new {|p| p.tag_list.include? "joy" and p.tag_list.include? "disgust"} ]
+      ['/tag/joy/tag/disgust', Proc.new {|p| p.tag_list.include? "joy" and p.tag_list.include? "disgust"} ],
+      ['/owned-by/person/blue', Proc.new {|p| p.owner_id == 4}]
     ]
 
     ##
