@@ -1,7 +1,3 @@
-unless defined? Zip
-  require "zip/zip"
-end
-
 define_page_type :Gallery, {
   :controller => ['gallery', 'gallery_image'],
   :icon => 'page_gallery',
