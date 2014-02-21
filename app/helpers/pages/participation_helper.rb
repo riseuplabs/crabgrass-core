@@ -40,7 +40,7 @@ module Pages::ParticipationHelper
     params.reverse_merge! controller: 'pages/participations', page_id: @page.id, action: 'index', tab: 'participation'
     # We can't use the normal ModalboxAjax LinkRenderer since the
     # participations are displayed in a tab within the modalbox
-    pagination_links uparts, params: params, renderer: LinkRenderer::Ajax
+    pagination_links parts, params: params, renderer: LinkRenderer::Ajax
   end
 end
 
