@@ -97,9 +97,9 @@ class Picture < ActiveRecord::Base
   #
   def add_geometry(geometry)
     add_geometry!(geometry)
-    return true
+    return geometry
   rescue ErrorMessage => exc
-    return false
+    return nil
   end
 
   def add_geometry!(geometry)

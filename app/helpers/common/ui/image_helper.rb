@@ -283,7 +283,7 @@ module Common::Ui::ImageHelper
     else
       geometry = size
     end
-    picture.add_geometry!(geometry)
+    geometry = picture.add_geometry(geometry)
     width, height = picture.size(geometry)
     "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [width, height, picture.url(geometry)]
   end
