@@ -1,13 +1,13 @@
-= render :partial => 'tabs'
+= render 'tabs'
 
 #information_tab.tab_content.tab_area
-  = render :partial => 'information'
+  = render 'information'
 
 #permissions_tab.tab_content.tab_area{:style=>'display:none'}
-  = render :partial => 'pages/participation/permissions'
+  = render 'pages/participations/permissions'
 
 #participation_tab.tab_content.tab_area{:style=>'display:none'}
-  = render :partial => 'pages/participation/participation'
+  = render 'pages/participations/participation'
 
 #history_tab.tab_content.tab_area{:style=>'display:none'}
 

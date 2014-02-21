@@ -13,7 +13,7 @@
 
     - gparts.each do |gpart|
       %tr{:class => cycle("odd","even"), :id => dom_id(gpart)}
-        = render :partial => 'pages/participation/permission_row', :locals => {:participation => gpart}
+        = render 'pages/participations/permission_row', participation: gpart
 
   - if (uparts = @page.sorted_user_participations(:page => params[:page], :per_page => pagination_size, :include => :user)).any?
     %tr{:class => cycle("odd","even")}
@@ -22,7 +22,7 @@
 
     - uparts.each do |upart|
       %tr{:class => cycle("odd","even"), :id => dom_id(upart)}
-        = render :partial => 'pages/participation/permission_row', :locals => {:participation => upart}
+        = render 'pages/participations/permission_row', participation: upart
 
     - if uparts.total_entries > pagination_size
       %tr{:class => cycle("odd","even")}
