@@ -82,10 +82,6 @@ class WikiTest < ActiveSupport::TestCase
     assert_equal "", wiki.body_html
   end
 
-  def test_wiki_preview_is_not_nil
-    wiki = Wiki.new
-    assert_equal "", wiki.preview_html
-  end
 end
 
 

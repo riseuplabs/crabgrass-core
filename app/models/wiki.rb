@@ -59,9 +59,6 @@ class Wiki < ActiveRecord::Base
   # see description below.
   after_save :save_page_after_save
 
-  # constant for length to show preview rather than full wiki
-  PREVIEW_CHARS = 500
-
   # section locks should never be nil
   alias_method :existing_section_locks, :section_locks
   def section_locks(force_reload = false)
@@ -123,10 +120,6 @@ class Wiki < ActiveRecord::Base
   def body_html
     update_body_html_and_structure
     read_attribute(:body_html).html_safe
-  end
-
-  def preview_html
-    render_preview(PREVIEW_CHARS).html_safe
   end
 
   # will calculate structure if not up to date
@@ -243,15 +236,6 @@ class Wiki < ActiveRecord::Base
     release_my_lock!(section, user)
   end
 
-  def render_preview(length)
-    return "" unless content = truncated_body(length)
-    if @render_body_html_proc
-      @render_body_html_proc.call(content)
-    else
-      GreenCloth.new(content, link_context, [:outline]).to_html
-    end
-  end
-
   # # used when wiki is rendered for deciding the prefix for some link urls
   def link_context
     if page and page.owner_name
@@ -277,14 +261,6 @@ class Wiki < ActiveRecord::Base
 
   def render_raw_structure
     GreenCloth.new(body.to_s).to_structure
-  end
-
-  def truncated_body(length)
-    return nil if body.nil?
-    return body if body.length < length
-    cut = body.to_s[0...length-3] + '...'
-    cut.gsub! /^\[\[toc\]\]$/, ''
-    cut
   end
 
   class Version < ActiveRecord::Base
