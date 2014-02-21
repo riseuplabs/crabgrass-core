@@ -34,7 +34,9 @@ namespace :cg do
     task :init_created_at => :environment do
       [Membership, Tagging, Task, Profile].each do |model|
         puts "- #{model.name}"
-        model.update_all({ :created_at => 1.week.ago }, "#{model.quoted_table_name}.created_at IS NULL")
+        oldest = model.order(:created_at).where("created_at IS NOT NULL").first
+        older = oldest.created_at - 1.week
+        model.update_all({ :created_at => older }, "#{model.quoted_table_name}.created_at IS NULL")
       end
     end
 
