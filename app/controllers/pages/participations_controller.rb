@@ -14,14 +14,6 @@ class Pages::ParticipationsController < Pages::SidebarsController
 
   # this is used for ajax pagination
   def index
-    tab = params[:tab] == 'permissions' ? 'permissions_tab' : 'participation_tab'
-    render :update do |page|
-      if params[:tab] == 'permissions'
-        page.replace_html 'permissions_tab', :partial => 'pages/participation/permissions'
-      elsif params[:tab] == 'participation'
-        page.replace_html 'participation_tab', :partial => 'pages/participation/participation'
-      end
-    end
   end
 
   def update
