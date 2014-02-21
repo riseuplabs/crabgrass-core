@@ -23,6 +23,4 @@
   - if uparts.total_entries > pagination_size
     %tr{:class => cycle("odd","even")}
       %td{:colspan=>'4'}
-        -# for will_paginate to work, we must pass it params hash instead of a url.
-        = pagination_links(uparts, :params => {:controller => 'pages/participations', :page_id => @page.id, :action => 'index', :tab => 'participation'})
-
+        = participation_pagination_links(uparts)
