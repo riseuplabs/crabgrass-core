@@ -154,7 +154,8 @@ module UserExtension::Groups
     if group.created_at > 1.week.ago
       member_of?(group)
     elsif membership = group.memberships.find_by_user_id(self.id)
-      membership.created_at < 1.week.ago
+      # hacky fix to catch old memberships that don't have a created_at:
+      (membership.created_at || 2.weeks.ago) < 1.week.ago
     end
   end
 
