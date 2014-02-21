@@ -154,7 +154,7 @@ class PageTest < ActiveSupport::TestCase
   def test_delete_and_undelete
     page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
     poll_id = page.data.id
-    assert_equal page.flow, nil, 'a new page should have flow nil'
+    assert_equal FLOW[:normal], page.flow, 'a new page should have normal flow'
     page.delete
     assert_equal page.flow, FLOW[:deleted]
     assert_equal page.data, Poll.find_by_id(poll_id), 'the page data must be preserved when deleting the page'

@@ -25,13 +25,11 @@ class Me::PagesControllerTest < ActionController::TestCase
   end
 
   def test_filter_by_own_pages
-    pending "filter by me not implemented yet" do
-      login_as users(:blue)
-      xhr :post, :index, add: "owned-by-me"
-      assert_response :success
-      assert pages = assigns(:pages)
-      assert_nil pages.detect{|page| page.owner != users(:blue)}
-    end
+    login_as users(:blue)
+    xhr :post, :index, add: "owned-by-me"
+    assert_response :success
+    assert pages = assigns(:pages)
+    assert_nil pages.detect{|page| page.owner != users(:blue)}
   end
 
   def test_filter_by_created_by_me
