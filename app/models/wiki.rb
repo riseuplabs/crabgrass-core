@@ -122,12 +122,11 @@ class Wiki < ActiveRecord::Base
   # will render if not up to date
   def body_html
     update_body_html_and_structure
-
-    read_attribute(:body_html).try.html_safe
+    read_attribute(:body_html).html_safe
   end
 
   def preview_html
-    render_preview(PREVIEW_CHARS).try.html_safe
+    render_preview(PREVIEW_CHARS).html_safe
   end
 
   # will calculate structure if not up to date
@@ -154,15 +153,12 @@ class Wiki < ActiveRecord::Base
     write_attribute(:raw_structure, render_raw_structure)
   end
 
-  # returns true if wiki body is fresher than body_html
+  # whenever we set body, we reset body_html to nil, so this condition will
+  # be true whenever body is changed
+  # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
   def needs_rendering?
-    html = read_attribute(:body_html)
-    rs = read_attribute(:raw_structure)
-
-    # whenever we set body, we reset body_html to nil, so this condition will
-    # be true whenever body is changed
-    # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
-    (html.blank? != body.blank?) or rs.blank?
+    read_attribute(:body_html).blank? or
+    read_attribute(:raw_structure).blank?
   end
 
   # reload the association
@@ -248,7 +244,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def render_preview(length)
-    return unless content = truncated_body(length)
+    return "" unless content = truncated_body(length)
     if @render_body_html_proc
       @render_body_html_proc.call(content)
     else
