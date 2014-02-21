@@ -1,14 +1,14 @@
 #
 #
-# A Sphinx specific test.
+# Tests that utilize the search_filters
 #
-# This test is skipped if sphinx is not running.
+# Some tests require that sphinx be running. These are skipped if it is not.
 #
 
 require_relative 'test_helper'
 require 'set'
 
-class Pages::SphinxSearchTest < ActiveSupport::TestCase
+class Pages::PageSearchTest < ActiveSupport::TestCase
 
   def self.helper_method(method); end
 
@@ -21,15 +21,16 @@ class Pages::SphinxSearchTest < ActiveSupport::TestCase
   ## Tests for various search parameters
   ##
 
-  def try_many_sphinx_searches(user)
+  def try_many_searches(user, method)
     searches = [
       ['/type/discussion', Proc.new {|p| p['type'] == "DiscussionPage"}],
       ['/created-by/blue/', Proc.new {|p| p.created_by_id == 4}],
       ['/created-by/blue/public', Proc.new {|p| p.created_by_id == 4 && p.public?}],
       ['/user/red', Proc.new {|p| p.participation_for_user(users(:red)) }],
       ['/group/rainbow', Proc.new {|p| groups(:rainbow).may?(:view,p)} ],
-      ['/tag/joy/tag/disgust', Proc.new {|p| p.tag_list.include? "joy" and p.tag_list.include? "disgust"} ],
-      ['/owned-by/person/blue', Proc.new {|p| p.owner_id == 4}]
+      ['/tag/surprise/tag/anticipation', Proc.new {|p| p.tag_list.include?("surprise") && p.tag_list.include?("anticipation")} ],
+      ['/owned-by/person/blue', Proc.new {|p| p.owner_id == 4}],
+      ['/deleted', Proc.new {|p| p.deleted?}]
     ]
 
     ##
@@ -38,75 +39,78 @@ class Pages::SphinxSearchTest < ActiveSupport::TestCase
 
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
-      sphinx_pages = Page.find_by_path(
-        search_str, options_for_me(:method => :sphinx, :per_page => 1000)
+      searched_pages = Page.find_by_path(
+        search_str, options_for_me(:method => method, :per_page => 1000)
       )
-      raw_pages = Page.all(:order => "updated_at DESC").select{ |p|
+      actual_pages = Page.all(:order => "updated_at DESC").select{ |p|
         search_code.call(p) && user.may?(:view, p)
       }
-      assert raw_pages.any?, 'a filter with no results is a bad test'
-      assert_equal page_ids(raw_pages), page_ids(sphinx_pages),
-        "#{search_str} should match results for user"
+      assert actual_pages.any?, 'a filter with no results is a bad test (user `%s`, filter `%s`)' % [user.name, search_str]
+      actual_set = page_ids(actual_pages)
+      searched_set = page_ids(searched_pages)
+      assert actual_set == searched_set, "#{search_str} should match results for user:
+    pages missing from result: #{(actual_set-searched_set).to_a.sort}
+    extra pages in result: #{(searched_set-actual_set).to_a.sort}"
     end
 
     ##
     ## options_for_group
     ##
-
+    group = groups(:rainbow)
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
-      sphinx_pages = Page.find_by_path(
-        search_str, options_for_group(
-          groups(:rainbow), :method => :sphinx, :per_page => 1000
-        )
+      searched_pages = Page.find_by_path(
+        search_str, options_for_group(group, :method => method, :per_page => 1000)
       )
-      raw_pages = Page.find(:all).select{ |p|
-        search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)
+      actual_pages = Page.find(:all).select{ |p|
+        search_code.call(p) && group.may?(:view, p) && user.may?(:view, p)
       }
-      assert_equal page_ids(raw_pages), page_ids(sphinx_pages),
-        "#{search_str} should match results for group"
+      assert actual_pages.any?, 'a filter with no results is a bad test (group `%s`, filter `%s`)' % [group.name, search_str]
+      actual_set = page_ids(actual_pages)
+      searched_set = page_ids(searched_pages)
+      assert actual_set == searched_set, "#{search_str} should match results for user:
+    pages missing from result: #{(actual_set-searched_set).to_a.sort}
+    extra pages in result: #{(searched_set-actual_set).to_a.sort}"
     end
+  end
+
+  def test_mysql_searches
+    login(:blue)
+    user = users(:blue)
+    try_many_searches user, :mysql
   end
 
   def test_sphinx_searches
     return unless sphinx_working?(:test_sphinx_searches)
-
     login(:blue)
     user = users(:blue)
+    try_many_searches user, :sphinx
 
-    try_many_sphinx_searches user
-
-=begin
     # the following test is not yet working
-    ThinkingSphinx.deltas_enabled = true # will this make delta index active?
-    # add some pages, and make sure that they appear in the sphinx search results
-    (1..10).each do |i|
-      p = Page.create :title => "new pending page #{i}"
-      p.add user
-      p.unresolve
-      p.save
-    end
-
-    try_many_sphinx_searches user
-=end
-
-  end
-
-  def test_sphinx_searches_different_user
-    return unless sphinx_working?(:test_sphinx_searches)
-
-    # orange has access to different pages (some vote pages, etc.)
-    login(:orange)
-    user = users(:orange)
-
+    #ThinkingSphinx.deltas_enabled = true # will this make delta index active?
+    ## add some pages, and make sure that they appear in the sphinx search results
+    #(1..10).each do |i|
+    #  p = Page.create :title => "new pending page #{i}"
+    #  p.add user
+    #  p.unresolve
+    #  p.save
+    #end
+    #
     #try_many_sphinx_searches user
   end
 
-  def test_sphinx_search_text_doc
-    # return unless sphinx_working?(:test_sphinx_search_text_doc)
+  # def test_sphinx_searches_different_user
+  #   return unless sphinx_working?(:test_sphinx_searches)
+  #   # orange has access to different pages (some vote pages, etc.)
+  #   login(:orange)
+  #   user = users(:orange)
+  #   #try_many_sphinx_searches user
+  # end
 
-    # TODO: write this test
-  end
+  # def test_sphinx_search_text_doc
+  #   # return unless sphinx_working?(:test_sphinx_search_text_doc)
+  #   # TODO: write this test
+  # end
 
   def xtest_sphinx_with_pagination
     return unless sphinx_working?(:test_sphinx_with_pagination)
