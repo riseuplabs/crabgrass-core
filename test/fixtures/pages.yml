@@ -70,7 +70,7 @@ committee_page:
   <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-  owner_id: 31 
+  owner_id: 31
   owner_type: Group
   updated_by_id: 4
   type: DiscussionPage
@@ -78,11 +78,11 @@ committee_page:
 blue_page:
   id: 1002
   name: "blue_page"
-  title: "page owned by blue"
+  title: "page owned by blue, rainbow has access"
   <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-  owner_id: 4 
+  owner_id: 4
   owner_type: User
   updated_by_id: 4
   type: DiscussionPage
@@ -94,7 +94,7 @@ rainbow_page:
   <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-  owner_id: 3 
+  owner_id: 3
   owner_type: Group
   updated_by_id: 4
   type: DiscussionPage

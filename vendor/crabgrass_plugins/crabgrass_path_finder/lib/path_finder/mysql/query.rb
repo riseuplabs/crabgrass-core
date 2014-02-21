@@ -174,7 +174,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @tags << "+" + Page.searchable_tag_list([tag]).first
   end
 
-  def add_flow_constraint(flow)
+  def set_flow_constraint(flow)
     @flow = flow
   end
 
@@ -353,19 +353,15 @@ class PathFinder::Mysql::Query < PathFinder::Query
         cond << cond_for_flow(f)
       end
       @conditions << "(" + cond.join(' OR ') + ")"
-    else
+    elsif flow
       @conditions << cond_for_flow(flow)
     end
   end
 
   def cond_for_flow(flow)
-    if flow.nil?
-      return 'pages.flow IS NULL'
-    elsif flow.instance_of? Symbol
-      raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
-      @values << FLOW[flow]
-      return 'pages.flow = ?'
-    end
+    raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
+    @values << FLOW[flow]
+    return 'pages.flow = ?'
   end
 
   def sql_for_conditions()

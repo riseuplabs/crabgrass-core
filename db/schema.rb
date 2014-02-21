@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212131634) do
+ActiveRecord::Schema.define(:version => 20140221062609) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -422,7 +422,7 @@ ActiveRecord::Schema.define(:version => 20140212131634) do
     t.boolean  "resolved"
     t.integer  "rating"
     t.integer  "contributors_count"
-    t.integer  "flow"
+    t.integer  "flow",                                     :default => 0
     t.string   "created_by_login"
     t.string   "updated_by_login"
     t.integer  "created_by_id"
@@ -434,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20140212131634) do
     t.integer  "stars_count",                              :default => 0
     t.integer  "views_count",                              :default => 0, :null => false
     t.string   "owner_name"
+    t.integer  "owner_id"
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
@@ -466,7 +467,7 @@ ActiveRecord::Schema.define(:version => 20140212131634) do
     t.string   "name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
-    t.integer  "flow"
+    t.integer  "flow",                                     :default => 0
     t.integer  "stars_count",                              :default => 0
     t.integer  "views_count",                              :default => 0,    :null => false
     t.integer  "owner_id"

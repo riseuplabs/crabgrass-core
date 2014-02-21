@@ -5,19 +5,26 @@
 # searchd files::    db/sphinx/#{environment}/
 # allow star::       false
 
+common: &common
+  indexed_models:
+    - PageTerms
+
 development:
+  <<: *common
   config_file: config/sphinx/development.conf
   port: 3312
   address: localhost
   morphology: stem_en
-  
+
 test:
+  <<: *common
   config_file: config/sphinx/test.conf
   port: 3313
   address: localhost
   morphology: stem_en
 
 production:
+  <<: *common
   config_file: /usr/apps/crabgrass/shared/config/sphinx/production.conf
   pid_file: /usr/apps/crabgrass/shared/tmp/searchd.pid
   searchd_file_path: /usr/apps/crabgrass/shared/db/sphinx

@@ -67,9 +67,9 @@ class PageTerms < ActiveRecord::Base
       # ids
       has :created_by_id
       has :updated_by_id
+      has :owner_id
       # has :updated_by_ids, :type => :multi
       # has :watched_by_ids, :type => :multi
-      # has :owner_id (encoded)
 
       # counts
       has :views_count
@@ -79,6 +79,7 @@ class PageTerms < ActiveRecord::Base
       has :resolved
       has :access_ids, :type => :multi # multi: indexes as an array of ints
       has :media, :type => :multi
+      has :flow
 
       # index options
       set_property :delta => true
