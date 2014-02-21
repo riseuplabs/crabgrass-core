@@ -64,8 +64,10 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     @search_text  = ""
     @per_page    = options[:per_page] || PathFinder.default_pagination_size
     @page        = options[:page] || 1
+    @flow        = options.delete(:flow)
 
     apply_filters_from_path(path)
+    apply_flow
     @order = @order.presence
   end
 
@@ -89,7 +91,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       @order = "@relevance DESC, page_updated_at DESC"
     end
 
-    # puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
+    #puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
@@ -196,6 +198,10 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     end
   end
 
+  def set_flow_constraint(flow)
+    @flow = flow
+  end
+
   def cleanup_sort_column(column)
     column = case column
       when 'updated_at' then 'page_updated_at'
@@ -224,5 +230,16 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   def access_limit(access_hash)
     ['access_ids', Page.access_ids_for(access_hash)]
   end
+
+  #
+  # possible flows are :normal, :deleted, :announcement.
+  # symbols can converted to integers via FLOW constant
+  #
+  def apply_flow
+    if @flow
+      add_attribute_constraint('flow', FLOW[@flow])
+    end
+  end
+
 end
 
