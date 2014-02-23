@@ -88,9 +88,9 @@ group :test do
   #
 
   ##
-  ## GEMS REQUIRED FOR FUNCTIONAL TESTS
+  ## GEMS REQUIRED FOR INTEGRATION TESTS
   ##
 
-  #gem 'webrat'
+  gem 'capybara', require: false
 
 end
