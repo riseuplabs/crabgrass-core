@@ -9,6 +9,16 @@ class People::HomeControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_show
+    login_as :blue
+    blue = users(:blue)
+    blue.revoke_access! CastleGates::Holder[blue.associated(:friends)] => :view
+    blue.revoke_access! CastleGates::Holder[blue.associated(:peers)] => :view
+    blue.revoke_access! :public => :view
+    get :show, :person_id => 'blue'
+    assert_response :success
+  end
+
   def test_new_user_hidden
     user = FactoryGirl.create :user
     login_as :blue
