@@ -48,7 +48,34 @@ class IntegrationTest < MiniTest::Unit::TestCase
     if @user
       User.find_by_login(@user.login).try.destroy
     end
+    @user = nil
   end
+
+  def create_page(type)
+    @page ||= FactoryGirl.create type
+    type_name = I18n.t "#{type}_display"
+    # create page is on a hidden dropdown
+    # click_on :create_page.t
+    visit '/pages/new/me'
+    click_on type_name
+    fill_in(:title.t, with: @page.title) if @page.title
+    fill_in(:summary.t, with: @page.summary) if @page.summary
+    click_on :create.t
+  end
+
+  def assert_page_header
+    within '#title h1' do
+      assert_content @page.title
+    end
+  end
+
+  def cleanup_page
+    if @page
+      Page.find_by_name(@page.name).try.destroy
+    end
+    @page = nil
+  end
+
 end
 
 # fix a rack issue that only comes up with rack < 1.3.0 and capybara
