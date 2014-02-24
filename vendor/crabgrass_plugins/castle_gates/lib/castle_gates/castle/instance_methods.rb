@@ -15,7 +15,7 @@ module InstanceMethods
   #
   def access?(args)
     holder, gate_symbol = args.first
-    holder = Holder[holder]
+    holder = Holder[holder, self]
 
     keys     = keys_for_holder(holder)
     bitfield = gate_bitfield_for_keys(keys, holder)
@@ -147,7 +147,7 @@ module InstanceMethods
       unless gate_set.gates_exist?(gates)
         raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
       end
-      holder = Holder[holder]
+      holder = Holder[holder, self]
       gates = [gates] unless gates.is_a?(Array)
 
       yield(holder, gates)
