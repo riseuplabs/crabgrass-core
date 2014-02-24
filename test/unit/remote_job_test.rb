@@ -38,7 +38,7 @@ class AssetTest < ActiveSupport::TestCase
     begin
       RemoteJob.find(:all)
     rescue Errno::ECONNREFUSED => exc
-      skip_msg(:remote_job, 'cg-processor is not running.')
+      skip('cg-processor is not running.')
       return false
     end
     return true

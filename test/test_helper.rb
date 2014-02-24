@@ -99,7 +99,3 @@ MiniTest::Mock.class_eval do
     false
   end
 end
-
-at_exit do
-  DebugTestHelper.print_delayed_test_messages
-end

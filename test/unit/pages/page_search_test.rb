@@ -207,9 +207,9 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
   end
 
   def print_sphinx_hints
-    skip_msg(:sphinx, "To make thinking_sphinx tests not skip, try this:
-      bundle exec rake db:schema:dump cg:test:update_fixtures
-      bundle exec rake RAILS_ENV=test db:test:prepare db:fixtures:load ts:rebuild")
+    skip("To make thinking_sphinx tests not skip, try this:
+  bundle exec rake db:schema:dump cg:test:update_fixtures
+  bundle exec rake RAILS_ENV=test db:test:prepare db:fixtures:load ts:rebuild")
   end
 
   def sphinx_working?(test_name="")
