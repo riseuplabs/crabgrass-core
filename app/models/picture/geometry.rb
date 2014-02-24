@@ -70,7 +70,7 @@ class Picture
     end
 
     def any?
-      min_width or max_width or min_height or max_height
+      min_width || max_width || min_height || max_height
     end
 
     def to_s

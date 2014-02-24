@@ -5,11 +5,11 @@ class Picture
       @picture = picture
     end
 
-    def private_path(geometry)
+    def private_path(geometry=nil)
       File.join(private_directory, file_name(geometry))
     end
 
-    def public_path(geometry)
+    def public_path(geometry=nil)
       File.join(public_directory, file_name(geometry))
     end
 
@@ -21,6 +21,10 @@ class Picture
       path = private_path(geometry)
       width, height = GraphicsMagickTransmogrifier.new.dimensions(path)
       [(width||0).to_i, (height||0).to_i]
+    end
+
+    def average_color
+      GraphicsMagickTransmogrifier.new.average_color(private_path)
     end
 
     def destroy_files

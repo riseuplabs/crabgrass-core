@@ -201,6 +201,8 @@ define_theme {
   # all the various z-index values are defined here.
   # these should not ever need to be changed.
   zindex {
+    banner_tabs 9      # context banner navigation tabs
+    banner_avatar 10   # context banner avatar icon
     menu 99            # masthead navigation menus
     modalbox 200       # modal dialog boxes
     tooltip 300        #
