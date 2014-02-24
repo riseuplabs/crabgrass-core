@@ -106,7 +106,7 @@ class ProfileTest < ActiveSupport::TestCase
         })
       end
     else
-      skip 'ExternalVideo not defined'
+      skip_msg :external_video, 'ExternalVideo not defined'
     end
 
     assert_difference 'Picture.count', -1 do

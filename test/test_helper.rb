@@ -45,7 +45,6 @@ class ActiveSupport::TestCase
 
   include AuthenticatedTestHelper
   include AssetTestHelper
-  include SphinxTestHelper
   include SiteTestHelper
   include LoginTestHelper
   include FixtureTestHelper
@@ -101,8 +100,6 @@ MiniTest::Mock.class_eval do
   end
 end
 
-$test_msgs ||= {}
-def print_test_msg(id, msg)
-  $test_msg[id] = msg
+at_exit do
+  DebugTestHelper.print_delayed_test_messages
 end
-at_exit { puts $test_msgs.values.join("\n") }
