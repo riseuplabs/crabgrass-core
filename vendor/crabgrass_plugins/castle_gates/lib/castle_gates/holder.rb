@@ -212,12 +212,12 @@ class Holder
   #
   # ensures that the real holder gets wrapped in an object of class Holder
   #
-  def self.[](obj)
-    if obj.is_a?(Holder)
-      obj
-    else
-      Holder.new(obj)
+  def self.[](obj, context = nil)
+    return obj if obj.is_a?(Holder)
+    if obj.is_a?(Symbol) && holder_defs[obj].nil?
+      obj = context.associated(obj)
     end
+    Holder.new(obj)
   end
 
   #
