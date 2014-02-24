@@ -6,10 +6,12 @@ class UnauthenticatedUser
   alias :display_name :login
 
   def may?(access,thing)
+    # nothing but viewing for now.
+    return false unless access == :view
     case thing
     when Page
       access == :view and thing.public?
-    when Group
+    when Group, User
       thing.has_access?(access, self)
     else
       false
@@ -31,7 +33,7 @@ class UnauthenticatedUser
   def friend_of?(user)
     false
   end
-  
+
   def method_missing(method)
     raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
   end

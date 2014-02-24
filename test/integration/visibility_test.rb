@@ -16,14 +16,30 @@ class VisibilityTest < IntegrationTest
     end
   end
 
+  def test_visible_to_friends_by_default
+    as_a friend_of(user) do
+      visit "/#{user.login}"
+      assert_landing_page(user)
+    end
+  end
+
+  def test_not_visible_to_peers_and_strangers
+    as_a [peer_of(user), other_user, visitor] do
+      visit "/#{user.login}"
+      assert_not_found
+    end
+  end
+
   def test_visible_to_friends_and_peers
-    as_a [friend_of(user), peer_of(user)] do
+    user.grant_access! peers: :view
+    as_a friend_of(user) do
       visit "/#{user.login}"
       assert_landing_page(user)
     end
   end
 
   def test_not_visible_to_strangers
+    user.grant_access! peers: :view
     as_a [other_user, visitor] do
       visit "/#{user.login}"
       assert_not_found
