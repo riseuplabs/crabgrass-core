@@ -115,7 +115,7 @@ en:
   activity_wall_message: "%{author} wrote to %{user}: %{message}"
   activity_message: "%{author} wrote: %{message}"
   activity_unread: "You have %{count} unread [private messages]"
-  activity_unread_singular: "You have an unread [private message]"
+  activity_unread_singular: "You have an unread private message from %{user}"
   activity_user_left_site: "%{user} has left %{group}"
   activity_message_received: "You received %{message_tag} from %{other_user}: %{title}"
   activity_twinkled: "%{user} has starred your post \"%{post}\""
