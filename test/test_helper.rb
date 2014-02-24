@@ -69,19 +69,6 @@ end
 ## some special rules for integration tests
 ##
 
-class ActionDispatch::IntegrationTest
-
-  #
-  # we load all fixtures because webrat integration test should see exactly
-  # the same thing the user sees in development mode.
-  # using self.inherited to ensure all fixtures are being loaded only if some
-  # integration tests are being defined
-  #
-  def self.inherited(subclass)
-    subclass.fixtures :all
-  end
-end
-
 # ActiveSupport will define this, if it doesn't find it.
 # It uses StandardError as the superclass though, instead of Exception,
 # so that will generate a "superclass mismatch" error.

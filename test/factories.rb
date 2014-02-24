@@ -56,6 +56,9 @@ FactoryGirl.define do
     factory(:gallery, class: Gallery)                {}
     factory(:showing, class: Showing)                {}
     factory(:asset_page, class: AssetPage)           {}
+    factory(:rate_many_page, class: RateManyPage)         {}
+    factory(:ranked_vote_page, class: RankedVotePage)     {}
+    factory(:task_list_page, class: TaskListPage)         {}
   end
 
   factory :asset do
@@ -93,7 +96,6 @@ FactoryGirl.define do
     sequence(:body) { |n| Faker::Lorem.paragraphs(10).join "\n" }
   end
 
-  factory(:rate_many_page) {}
   factory(:poll)           {}
   factory(:ranking_poll)   {}
   factory(:rating_poll)    {}
