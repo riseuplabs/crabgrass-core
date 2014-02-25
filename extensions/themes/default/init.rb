@@ -12,7 +12,7 @@ define_theme {
   grid {
     column {
       count 12
-      width '40px'
+      width '64px'
       gutter '20px'
       side_gutter '20px'
     }
@@ -128,7 +128,7 @@ define_theme {
 
   banner {
     # unfortunately, banner padding must be specified in pixels.
-    padding "16px"
+    padding "20px"
     border "1px solid #888"
     border_dark "1px solid #000"
     default_background '#999'

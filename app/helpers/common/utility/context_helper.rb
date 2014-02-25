@@ -51,8 +51,8 @@ module Common::Utility::ContextHelper
             nav_shade = 'rgba(255,255,255,0.3)'
           end
           "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
-          "#context_banner a.tab, #banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 4px}\n"+
-          "ul#banner_nav_ul {background-color: #{nav_shade}}"
+          "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 2px}\n"+
+          "ul#banner_nav_ul li.tab a.tab {background-color: #{nav_shade}}"
         else
           "#banner_content {background-image: url(#{url})}"
         end
