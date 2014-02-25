@@ -22,7 +22,7 @@ class PrivateMessageNotice < Notice
   end
 
   def display_title
-     I18n.t(:activity_unread_singular, :user => data[:from])
+     I18n.t(:unread_private_message, :user => data[:from])
   end
 
   def display_body_as_quote?

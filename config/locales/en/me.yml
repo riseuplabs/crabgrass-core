@@ -80,4 +80,4 @@ en:
   message_you_wrote_caption: "You wrote:"
   message_user_wrote_caption: "%{user} wrote:"
 
-
+  unread_private_message: "You have an unread private message from %{user}"
