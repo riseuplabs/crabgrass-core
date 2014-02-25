@@ -29,7 +29,7 @@ module Common::Ui::EntityDisplayHelper
       else
         # with the id, we can also display the icon
         icon_url = '/avatars/%s/xsmall.jpg' % avatar_id
-        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>'.html_safe % [name, name, icon_url, h(display_name)]
+        '<a href="/%s" title="%s" class="icon xsmall single" style="background-image: url(%s)">%s</a>'.html_safe % [name, name, icon_url, h(display_name)]
       end.html_safe
     else
       :unknown.t

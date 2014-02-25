@@ -1,8 +1,8 @@
 - cache("v2-page-#{page.id}-#{page.update_hash}") do
-  %tr.upper{class: cycle('odd','even')}
+  %tr
     %td.owner
       = link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)
-    %td.icon
+    %td.page_icon
       = page_icon(page)
     %td.title
       = cell_title(page)
@@ -11,15 +11,15 @@
     %td.nowrap.updated_at
       = friendly_date(page.updated_at)
     %td.contributors
-      = page.contributors_count.to_s + " voices"
+      = page.contributors_count
   -# we hide the details for now with .shy
   -# TODO: bring them back in a good looking non cluttered way.
-  %tr.lower.shy
-    %td{colspan:4}
-      = page.summary.try(:truncate, 75)
-    %td.owner.icon.title.updated_by.updated_at
-      - # This is a little hack.
-      - # If any of the first upper five colums is hidden this one should be too.
-      - # This way the last column still fits in nicely.
-    %td
-      = short_page_info(page)
+  -# %tr.lower.shy
+  -#   %td{colspan:4}
+  -#     = page.summary.try(:truncate, 75)
+  -#   %td.owner.icon.title.updated_by.updated_at
+  -#     - # This is a little hack.
+  -#     - # If any of the first upper five colums is hidden this one should be too.
+  -#     - # This way the last column still fits in nicely.
+  -#   %td
+  -#     = short_page_info(page)

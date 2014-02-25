@@ -37,7 +37,7 @@ module Common::Ui::ImageHelper
 
   ## returns the img tag for the page's icon
   def page_icon(page)
-    content_tag :div, '&nbsp;'.html_safe, :class => "page_icon #{page.icon}_16"
+    content_tag :i, ' ', :class => "page_icon #{page.icon}_16"
   end
 
   ##

@@ -164,17 +164,6 @@
 }
 
 //
-// currently used in the table-list view for pages.
-//
-
-.page_icon {
-  height: $icon_tiny;
-  width: $icon_tiny;
-  background-repeat: no-repeat;
-  background-position: 0 50%;
-}
-
-//
 // for creating a clickable link that has no text but just
 // the icon. see link_helper.rb
 //
@@ -200,6 +189,17 @@ i.small_icon {
   vertical-align: text-top;
   padding: 0;
   border: 0;
+}
+
+//
+// currently used in the table-list view for pages.
+//
+
+i.page_icon {
+  @extend .small_icon;
+  height: $icon_tiny;
+  width: $icon_tiny;
+  line-height: $icon_tiny;
 }
 
 //
