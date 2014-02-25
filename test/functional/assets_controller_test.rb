@@ -12,7 +12,7 @@ class AssetsControllerTest < ActionController::TestCase
   def test_thumbnail_get
     ImageAsset.any_instance.stubs(:public?).returns(false)
     asset = FactoryGirl.create :image_asset
-    @controller.stubs(:public_or_login_required).returns(true)
+    @controller.stubs(:authorized?).returns(true)
     @controller.expects(:private_filename).returns(asset.private_filename)
     get :show, :id => asset.id, :path => asset.filename
     @controller.expects(:private_filename).returns(thumbnail(asset.private_filename))

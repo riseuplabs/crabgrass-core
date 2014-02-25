@@ -86,7 +86,6 @@ define_navigation do
       label  { :messages.t }
       url    { me_discussions_path }
       active { controller?('me/discussions', 'me/posts') }
-      visible { may_message? }
       icon   :page_message
     end
 

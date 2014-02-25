@@ -12,6 +12,7 @@ module RecordTracking
 
   def teardown
     @records.each_value do |record|
+      next if record.new_record?
       # update all associations - they might already be gone.
       record.reload
       # destroy is protected for groups. We want to use

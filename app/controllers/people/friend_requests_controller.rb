@@ -30,7 +30,8 @@ class People::FriendRequestsController < People::BaseController
     if action?('create', 'new')
       may_request_contact?
     elsif action?('destroy')
-      current_user.friend_of?(@user)
+      logged_in? &&
+        current_user.friend_of?(@user)
     end
   end
 

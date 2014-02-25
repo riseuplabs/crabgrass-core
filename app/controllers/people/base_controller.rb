@@ -1,6 +1,8 @@
 class People::BaseController < ApplicationController
 
   before_filter :fetch_person
+  before_filter :authorization_required
+
   permissions 'people'
   helper 'people/base'
 

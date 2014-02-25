@@ -32,22 +32,15 @@ module AccountManagement
   # log you in as that user and run te code block.
   # It also takes an array of users and does so for each one in turn.
   def as_a(users,&block)
-    if users.respond_to? :each
-      users.each{ |user| as_a(user, &block) }
-    else
-      run_for_user(users, &block)
+    assert_for_all users do |user|
+      run_for_user(user, &block)
     end
   end
 
   def run_for_user(current_user, &block)
-    @run ||= 0
-    @run += 1
     @user = current_user
     login unless @user.is_a? UnauthenticatedUser
     block.arity == 1 ? yield(@user) : yield
     Capybara.reset_sessions!
-  rescue MiniTest::Assertion => e
-    # preserve the backtrace but add the run number to the message
-    raise $!, "#{$!} in run #{@run}", $!.backtrace
   end
 end

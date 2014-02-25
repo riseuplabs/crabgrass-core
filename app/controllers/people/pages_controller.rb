@@ -1,6 +1,7 @@
 class People::PagesController < People::BaseController
 
   include_controllers 'common/page_search'
+  guard :may_show_home?
 
   def index
     @path  = apply_path_modifiers( parsed_path() )

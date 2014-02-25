@@ -6,10 +6,13 @@ class Pages::BaseController < ApplicationController
 
   public
 
-  layout 'page'
+  before_filter :login_required, except: :show
+  before_filter :authorization_required
   permissions :pages
   guard :may_ACTION_page?
   guard :update => :may_edit_page?
+
+  layout 'page'
   javascript 'upload'
   stylesheet 'upload'
 
@@ -28,7 +31,6 @@ class Pages::BaseController < ApplicationController
 
   prepend_before_filter :default_fetch_data, :except => :new
 
-  append_before_filter :login_or_public_page_required
   append_before_filter :default_setup_options
   append_before_filter :load_posts
 

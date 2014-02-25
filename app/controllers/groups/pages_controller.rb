@@ -3,6 +3,8 @@ class Groups::PagesController < Groups::BaseController
   skip_before_filter :login_required
   include_controllers 'common/page_search'
 
+  guard :may_show_group?
+
   def index
     @path  = apply_path_modifiers( parsed_path() )
     @pages = Page.paginate_by_path(@path, options_for_group(@group), pagination_params)

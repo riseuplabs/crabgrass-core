@@ -10,7 +10,6 @@
 # (3) access is restricted to controller's actions, either by...
 #     (a) manually guarding some actions
 #     (b) defining the authorized?() method.
-#     (c) using permission auto-guessing.
 # (4) views use permission definitions in order to display the right thing
 #
 #
@@ -73,9 +72,9 @@
 #   Basically, if authorized?() returns false, the user will get a permission
 #   denied message.
 #
-#   NOTE: The 'authorized?' before filter is called from the
-#         :login_required before filter or needs to be added to the controller.
-#         This should change eventually.
+#   NOTE: 'authorized?' is called from the :authorization_required
+#         before filter by default.
+#         If you do not want any authorization skip that before filter
 #
 # (4) Permissions in views
 # ------------------------------------------------------------
@@ -83,6 +82,10 @@
 # The permission methods can be called anywhere. It is useful to call them
 # before displaying a link, because you don't want to link to something that
 # the user is not allowed to do.
+#
+# If you need permissions only in the view and not in the controller you
+# can add them as a helper in your controller:
+# permissions_helper :robots
 #
 
 #
@@ -149,22 +152,6 @@ module Common::Application::Permissions
     #
     # permissions are specified with guard for the given action
     #
-
-    #
-    # This method will raise PermissionDenied if the current user cannot
-    # perform the action.
-    #
-    # It should only be used in places where you are going to catch the exception,
-    # or you want permission denied displayed to the user.
-    #
-    def check_permissions!
-      if check_permissions
-        true
-      else
-        raise_denied
-      end
-      true
-    end
 
     def permission_log
       @permission_log

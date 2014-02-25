@@ -1,7 +1,6 @@
 class Groups::HomeController < Groups::BaseController
 
   skip_before_filter :login_required
-  before_filter :authorized?
   guard :may_show_group?
   before_filter :fetch_wikis
 
