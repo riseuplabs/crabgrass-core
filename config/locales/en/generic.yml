@@ -143,6 +143,7 @@ en:
   show: "Show"
   display: "Display"
   message: "Message"
+  private_message_notice: "Private Message Notice"
   ##!  success: "Success"
   ##!  error: "Error"
   ##!  status: "Status"
