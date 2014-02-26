@@ -27,7 +27,7 @@ module EnhancedLogging
       end
       test_log.puts "server log"
       test_log.puts "------------------------"
-      test_log.puts `tail log/test.log -n 200`
+      test_log.puts `tail log/test.log -n 1000`
     end
   end
 
