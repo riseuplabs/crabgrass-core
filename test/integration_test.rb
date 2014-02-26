@@ -14,6 +14,9 @@ class IntegrationTest < MiniTest::Unit::TestCase
   include AccountManagement
   include UserRecords
 
+  # included last so crashes in other extensions will get logged.
+  include EnhancedLogging
+
   protected
 
   def teardown
