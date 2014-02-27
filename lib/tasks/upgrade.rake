@@ -46,7 +46,7 @@ namespace :cg do
     end
 
     desc "Convert the MessagePages to other classes"
-    task :convert_message_pages do
+    task :convert_message_pages => :environment do
 
       require_relative 'upgrade/message_page'
       # first we turn all the Message Pages with more or less than
