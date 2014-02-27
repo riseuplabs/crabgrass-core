@@ -1,18 +1,23 @@
+#  UPGRADE TASKS
 #
-# This will grant a group's access to its members.
-# This is for the migration to core's castle_gates permission system to work
-# with data created before this system was added.
+# Some data structures have changed over years. These tasks help upgrade them.
 #
-# If we wanted to migrate group (or user) profile settings, we could do that here.
+# They only need to be run once and only when migrating from older versions. 
+# However, when adding tasks make sure running them again won't hurt.
 #
-# Instead, currently, all groups (and users) will be set to most restrictive permission settings.
-#
-# This task should only need to be run once. However, running it again shouldn't hurt.
 #
 #
 
 namespace :cg do
   namespace :upgrade do
+    # This will grant a group's access to its members.
+    # This is for the migration to core's castle_gates permission system to work
+    # with data created before this system was added.
+    #
+    # If we wanted to migrate group (or user) profile settings, we could do that here.
+    #
+    # Instead, currently, all groups (and users) will be set to most restrictive permission settings.
+    #
     desc "Gives groups self access; for use once in upgrading data to cg 1.0"
     task(:init_group_permissions => :environment) do
       Group.all.each do |group|
@@ -40,6 +45,32 @@ namespace :cg do
       end
     end
 
+    desc "Convert the MessagePages to other classes"
+    task :convert_message_pages do
+
+      require_relative 'upgrade/message_page'
+      # first we turn all the Message Pages with more or less than
+      # two participants into Discussion Pages.
+
+      puts "#{MessagePage.count} Message pages."
+      to_convert = MessagePage.connection.execute <<-EOSQL
+      SELECT pages.id FROM pages
+        JOIN user_participations AS parts ON parts.page_id = pages.id
+        WHERE pages.type = "MessagePage"
+        GROUP BY pages.id HAVING count(pages.id) <> 2
+      EOSQL
+      convert_ids = to_convert.to_a.flatten
+      puts "Converting #{convert_ids.count} to DiscussionPages."
+      MessagePage.where(id: convert_ids).update_all type: "DiscussionPage"
+
+      pages = MessagePage.all
+      puts "#{pages.count} Message pages left."
+      puts "Converting to Messages."
+      pages.each do |page|
+        page.convert
+      end
+    end
+    
   end
 end
 
