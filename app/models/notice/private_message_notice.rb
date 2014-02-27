@@ -55,7 +55,7 @@ class PrivateMessageNotice < Notice
 
   before_create :set_avatar
   def set_avatar
-    self.avatar.id = from.avatar_id if from.avatar_id
+    self.avatar_id = from.avatar_id if from.avatar_id
   end
 
 end
