@@ -1,5 +1,6 @@
 class InstallActsAsLocked < ActiveRecord::Migration
   def self.up
+    drop_table :keys if ActiveRecord::Base.connection.table_exists? :keys
     create_table :keys do |p|
       p.integer :mask, :default => 0
       p.integer :locked_id
