@@ -1,8 +1,9 @@
 class People::DirectoryController < ApplicationController
 
-  skip_before_filter :login_required
   before_filter :set_default_path
   stylesheet 'directory'
+
+  guard :allow
 
   def index
     @users = finder.find_by_path(params[:path])

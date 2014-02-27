@@ -3,7 +3,7 @@ class Wikis::BaseController < ApplicationController
   before_filter :fetch_wiki
 
   permissions 'wikis'
-  before_filter :login_required
+  before_filter :login_required, :authorization_required
   guard :may_edit_wiki?
 
   permission_helper 'groups/memberships', 'groups/base'

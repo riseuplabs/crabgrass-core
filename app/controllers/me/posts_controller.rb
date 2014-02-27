@@ -8,8 +8,10 @@ class Me::PostsController < Me::BaseController
 
   prepend_before_filter :fetch_data
 
+  before_filter :require_authorization
   permissions 'posts'
   guard :may_ALIAS_post?
+  guard index: :allow
 
   # /me/discussions/green/posts
   def index

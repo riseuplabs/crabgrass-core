@@ -1,9 +1,9 @@
 class AssetsController < ApplicationController
 
+  before_filter :authorization_required
   permissions 'assets'
   guard :may_ACTION_asset?
 
-  before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
 
   def show
@@ -61,11 +61,6 @@ class AssetsController < ApplicationController
   #
   def thumbnail_filename?(filename)
     filename =~ /#{THUMBNAIL_SEPARATOR}/
-  end
-
-  def public_or_login_required
-    return true unless @asset
-    @asset.public? or login_required
   end
 
   def thumb_name_from_path(path)

@@ -9,6 +9,7 @@ module PagesPermission
   def may_show_page?(page = @page)
     # public pages are dealt with in login_or_public_page_required
     # in the controller, so we don't need to test for that here.
+    page.is_a? RankedVotePage
     !page or current_user.may?(:view, page)
   end
 

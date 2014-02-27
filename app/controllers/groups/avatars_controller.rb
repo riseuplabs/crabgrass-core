@@ -5,6 +5,8 @@ class Groups::AvatarsController < Groups::BaseController
   skip_before_filter :login_required
   cache_sweeper :group_sweeper
 
+  guard :allow
+
   # always enable cache, even in dev mode.
   def self.perform_caching; true; end
   def perform_caching; true; end

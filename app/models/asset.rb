@@ -95,6 +95,8 @@ class Asset < ActiveRecord::Base
 
   # checks wether the given `user' has permission `perm' on this Asset.
   #
+  # This does not include checking if the asset is public.
+  #
   # there is only one way that a user may have access to an asset:
   #
   #    if the user also has access to the asset's page

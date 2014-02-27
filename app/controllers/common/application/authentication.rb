@@ -48,22 +48,7 @@ module Common::Application::Authentication
     session[:logged_in_since]
   end
 
-
-  # Filter method to enforce a login requirement.
-  #
-  # To require logins for all actions, use this in your controllers:
-  #
-  #   before_filter :login_required
-  #
-  # To require logins for specific actions, use this in your controllers:
-  #
-  #   before_filter :login_required, :only => [ :edit, :update ]
-  #
-  # To skip this in a subclassed controller:
-  #
-  #   skip_before_filter :login_required
-  #
-  def login_required
+  def process_login
     unless current_user
       # auth using http headers
       username, passwd = get_auth_data
@@ -72,11 +57,6 @@ module Common::Application::Authentication
       end
     end
     User.current = current_user
-    if !logged_in?
-      raise_authentication_required
-    else
-      return authorized?
-    end
   end
 
   # Store the URI of the current request in the session.

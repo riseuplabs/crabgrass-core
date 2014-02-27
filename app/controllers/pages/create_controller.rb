@@ -15,7 +15,8 @@
 
 class Pages::CreateController < ApplicationController
 
-  before_filter :login_required, :init_options, :set_owner, :catch_cancel
+  before_filter :login_required, :authorization_required
+  before_filter :init_options, :set_owner, :catch_cancel
   helper 'pages/share', 'pages/owner', 'pages/creation'
   permissions :pages
   guard :may_ACTION_page?

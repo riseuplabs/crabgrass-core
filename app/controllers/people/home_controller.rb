@@ -1,5 +1,6 @@
 class People::HomeController < People::BaseController
 
+  guard :may_show_home?
   layout 'sidecolumn'
 
   #

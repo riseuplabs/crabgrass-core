@@ -33,6 +33,8 @@ class ThemeController < ApplicationController
     expire_page :name => params[:name], :file => params[:file]
   end
 
+  protected
+
   # don't cache css if '_refresh' is in the theme or stylesheet name.
   # useful for debugging.
   prepend_before_filter :get_theme

@@ -48,10 +48,47 @@ module Common::Application::BeforeFilters
     end
   end
 
-  # if we have login_required this will be called and check the
+  # Filter method to enforce a login requirement.
+  #
+  # By default we require login for all actions.
+  #
+  # To not require logins for specific actions, use this in your controllers:
+  #
+  #   skip_before_filter :login_required, :only => [ :view, :index ]
+  #
+  # To not require them for any action:
+  #
+  #   skip_before_filter :login_required
+  #
+  def login_required
+    process_login
+    raise_authentication_required unless logged_in?
+  end
+
+  # Filter method to enforce authorization.
+  #
+  # By default we require this for all actions.
+  #
+  # To allow actions by default use guard in your controllers:
+  #
+  #   guard :allow
+  #   guard :edit => :may_edit_robot?
+  #
+  # To not require authorization for a specific action:
+  #
+  #   guard :show => :allow
+  #
+  def authorization_required
+    raise_denied unless authorized?
+  end
+
+  #
+  # if we have authorization_required this will be called and check the
   # permissions accordingly
+  #
+  # overwrite if you want to handle permissions differently
   def authorized?
-    check_permissions!
+    check_permissions
   end
 
   #
