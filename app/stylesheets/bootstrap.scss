@@ -16,13 +16,13 @@ $headingsFontFamily:    $font_heading_family;
 $headingsFontWeight:    $font_heading_weight;
 $headingsColor:         $font_heading_color;
 
-//$gridColumns:           $grid_column_count;
-//$gridColumnWidth:       $grid_column_width;
-//$gridGutterWidth:       $grid_column_gutter;
-//$gridColumnWidth1200:     70px !default;
-//$gridGutterWidth1200:     30px !default;
-//$gridColumnWidth768:      42px !default;
-//$gridGutterWidth768:      20px !default;
+$gridColumns:           $grid_column_count;
+$gridColumnWidth:       $grid_column_width;
+$gridGutterWidth:       $grid_column_gutter;
+$gridColumnWidth1200:   $grid_column_width;
+$gridGutterWidth1200:   $grid_column_gutter;
+$gridColumnWidth768:    $grid_column_width;
+$gridGutterWidth768:    $grid_column_gutter;
 
 //
 // SELECTIVE BOOTSTRAP

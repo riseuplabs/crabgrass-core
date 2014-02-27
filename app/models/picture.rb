@@ -55,7 +55,8 @@ class Picture < ActiveRecord::Base
 
   URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root,'public'),'')
 
-  serialize :dimensions
+  serialize :dimensions      # Hash
+  serialize :average_color   # Array
   after_destroy :destroy_files
   after_create :save_uploaded_file
 
@@ -83,8 +84,11 @@ class Picture < ActiveRecord::Base
 
   #
   # returns [width, height] for a given geometry
+  # as a side effect, the self.dimensions hash is updated with that geometry.
+  # it is only saved to the db if later self.save is called.
   #
   def size(geometry=nil)
+    geometry = Geometry[geometry]
     dimensions[geometry.to_s] ||= storage.dimensions(geometry)
   end
 
@@ -103,15 +107,12 @@ class Picture < ActiveRecord::Base
   end
 
   def add_geometry!(geometry)
-    if geometry.present?
-      geometry = Geometry[geometry]
-      geo_key = geometry.to_s
-      self.dimensions ||= {}
-      if dimensions[geo_key].nil?
-        resize(geometry)
-        size(geometry) # stores size in dimensions
-        save!
-      end
+    geometry = Geometry[geometry]
+    self.dimensions ||= {}
+    if self.dimensions[geometry.to_s].nil?
+      resize(geometry)  # generates a file with said geometry
+      size(geometry)    # stores geometry in self.dimensions
+      save!
     end
   end
 
@@ -198,10 +199,10 @@ class Picture < ActiveRecord::Base
     File.open(private_file_path, "wb") do |f|
       f.write(@uploaded_file.read)
     end
-    # save the height & width for the 'full' image (indexed as 'full' in geometry hash)
-    add_geometry! nil
+    self.average_color = storage.average_color # will get saved by add_geometry!
+    self.add_geometry! nil                     # save the height & width for the 'full' image
+                                               # (indexed as 'full' in geometry hash)
   end
-
 
   #
   # Destroys the all files for this picture
@@ -216,8 +217,6 @@ class Picture < ActiveRecord::Base
   def destroy_file(geometry)
     storage.destroy_file(geometry)
   end
-
-
 
   #
   # render a new file with the specified geometry

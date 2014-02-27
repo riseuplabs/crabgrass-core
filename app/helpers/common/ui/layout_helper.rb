@@ -37,6 +37,9 @@ module Common::Ui::LayoutHelper
     end
     lines << '<style type="text/css">'
       lines << @content_for_style
+      if banner_style = context_banner_style()
+        lines << banner_style
+      end
     lines << '</style>'
     lines << '<!--[if IE 6]>'
       lines << stylesheet_link_tag('ie6')

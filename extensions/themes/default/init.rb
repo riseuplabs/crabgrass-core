@@ -12,7 +12,7 @@ define_theme {
   grid {
     column {
       count 12
-      width '40px'
+      width '64px'
       gutter '20px'
       side_gutter '20px'
     }
@@ -128,7 +128,7 @@ define_theme {
 
   banner {
     # unfortunately, banner padding must be specified in pixels.
-    padding "16px"
+    padding "20px"
     border "1px solid #888"
     border_dark "1px solid #000"
     default_background '#999'
@@ -201,6 +201,8 @@ define_theme {
   # all the various z-index values are defined here.
   # these should not ever need to be changed.
   zindex {
+    banner_tabs 9      # context banner navigation tabs
+    banner_avatar 10   # context banner avatar icon
     menu 99            # masthead navigation menus
     modalbox 200       # modal dialog boxes
     tooltip 300        #
