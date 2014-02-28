@@ -117,7 +117,9 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def thumbdef
-    parent.thumbdefs[self.name.to_sym]
+    definition = parent.thumbdefs[self.name.to_sym]
+    return definition if definition
+    raise RuntimeError.new("No thumbnail definition found for #{name} #{id}")
   end
 
   def ok?

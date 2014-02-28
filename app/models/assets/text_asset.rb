@@ -1,5 +1,5 @@
 #
-# For MS Word and OO Text documents.
+# For MS Word and documents.
 #
 
 class TextAsset < Asset
@@ -10,6 +10,7 @@ class TextAsset < Asset
 
   define_thumbnails(
     :txt    => {:ext => 'txt', :remote => true},
+    :odt    => {:ext => 'odt', :remote => true},
     :pdf    => {:ext => 'pdf', :remote => true},
     :small  => {:size => '64x64>',   :ext => 'jpg', :depends => :pdf, :title => 'Small Thumbnail'},
     :medium => {:size => '200x200>', :ext => 'jpg', :depends => :pdf, :title => 'Medium Thumbnail'},
