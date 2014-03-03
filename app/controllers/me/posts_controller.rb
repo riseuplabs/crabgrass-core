@@ -8,7 +8,7 @@ class Me::PostsController < Me::BaseController
 
   prepend_before_filter :fetch_data
 
-  before_filter :require_authorization
+  before_filter :authorization_required
   permissions 'posts'
   guard :may_ALIAS_post?
   guard index: :allow
