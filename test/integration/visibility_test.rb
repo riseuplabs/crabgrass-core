@@ -9,6 +9,13 @@ class VisibilityTest < IntegrationTest
     end
   end
 
+  def test_hidden_user_can_see_own_pages
+    as_a hidden_user do |me|
+      visit "/me/pages"
+      assert_content me.display_name
+    end
+  end
+
   def test_not_visible_to_others
     as_a [friend_of(hidden_user), peer_of(hidden_user), user, visitor] do
       visit "/#{hidden_user.login}"
