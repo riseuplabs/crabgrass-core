@@ -30,17 +30,23 @@ class Groups::DirectoryController < ApplicationController
   helper_method :my_groups?
 
   def my_groups?
-    params[:path].try(:include?, 'my')
+    logged_in? && params[:path].start_with?('my')
   end
 
   def groups_to_display
-    if !logged_in?
-      Group.with_access(:public => :view).groups_and_networks
-    elsif my_groups?
+    if my_groups?
       current_user.primary_groups_and_networks
+    elsif search_filter
+      Group.with_access(current_user => :view).named_like(search_filter)
     else
-      Group.with_access(current_user => :view).groups_and_networks
+      Group.none # we might want to display promoted groups here at some point
     end
+  end
+
+  def search_filter
+    return @filter if defined?(@filter)
+    filter = params[:path].dup
+    @filter = filter.sub!(/^search\//, '') && "#{filter}%"
   end
 end
 
