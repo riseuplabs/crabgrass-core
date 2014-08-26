@@ -7,10 +7,11 @@ module PagesPermission
   ##
 
   def may_show_page?(page = @page)
-    # public pages are dealt with in login_or_public_page_required
-    # in the controller, so we don't need to test for that here.
-    page.is_a? RankedVotePage
-    !page or current_user.may?(:view, page)
+    # public pages do not require a login in the controller
+    # but the permission will still be checked here.
+    # So we need to make sure users who do not have explicit
+    # access the page can still see it if it's public.
+    !page or page.public? or current_user.may?(:view, page)
   end
 
   def may_edit_page?(page = @page)
