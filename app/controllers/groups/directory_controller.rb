@@ -37,7 +37,7 @@ class Groups::DirectoryController < ApplicationController
     if my_groups?
       current_user.primary_groups_and_networks
     elsif search_filter
-      Group.with_access(current_user => :view).named_like(search_filter)
+      Group.with_access(current_user => :view).named_like("#{search_filter}%")
     else
       Group.none # we might want to display promoted groups here at some point
     end
@@ -45,8 +45,15 @@ class Groups::DirectoryController < ApplicationController
 
   def search_filter
     return @filter if defined?(@filter)
-    filter = params[:path].dup
-    @filter = filter.sub!(/^search\//, '') && "#{filter}%"
+    @filter = get_filter_from_params
+  end
+
+  def get_filter_from_params
+    if params[:name].present?
+      params[:name]
+    elsif params[:path].include? 'search/'
+      params[:path].sub(/.*search\//, '')
+    end
   end
 end
 
