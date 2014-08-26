@@ -115,6 +115,9 @@ class Group < ActiveRecord::Base
             filter, filter] }
   }
 
+  # return an empty relation so it can still be combined with order and pagination
+  scope :none, :conditions => '1=2'
+
   scope :in_location, lambda { |options|
     country_id = options[:country_id]
     admin_code_id = options[:state_id]
