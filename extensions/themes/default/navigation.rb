@@ -213,7 +213,7 @@ define_navigation do
       local_section :search do
         label { :search.t }
         url { groups_directory_path(:path => ['search']) }
-        active { controller?('groups/directory') and !params[:path].try(:start_with?, 'my') }
+        active { controller?('groups/directory') and params[:path].try(:include?, 'search') }
       end
 
       local_section :create do
