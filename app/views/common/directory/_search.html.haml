@@ -1,0 +1,11 @@
+.row.search.pull-right
+  = form_tag '',
+    :id => 'directory_search_form',
+    :class => 'form-search' do
+    .input-append
+      = text_field_tag 'name', @filter,
+        :id => 'search_name_field',
+        :class => 'search-query',
+        :placeholder => :search_by_name.t
+      %button.btn.btn-primary(type="submit")= :search.t
+
