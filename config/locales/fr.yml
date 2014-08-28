@@ -273,7 +273,7 @@ fr:
   join_group_link: Rejoindre %{group_type}
   leave_group_link: Quitter %{group_type}
   leave_group_confirmation: Êtes-vous certain•e de vouloir quitter cette organisation ?
-  request_join_group_link: Demander à rejoindre %{group_type}
+  request_join_group_link: Demande d'inscription à %{group_type}
   request_exists: Votre demande d'adhésion est en attente d'approbation.
   join_group_confirmation: Êtes-vous certain•e de vouloir rejoindre cette organisation ?
   link_name_description: C'est ce nom qui sera utilisé pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
@@ -500,21 +500,21 @@ fr:
   all_requests: Toutes Les Demandes
   activerecord:
     models:
-      request_to_friend: Demander à être en contact
+      request_to_friend: Demande de mise en contact
       request_to_join_our_network:
         one: Invitation à adhérer
         other: Invitations à adhérer
-      request_to_destroy_our_group: Demander à détruire le groupe
+      request_to_destroy_our_group: Demande de destruction de groupe
       request_to_join_us:
         one: Invitation à adhérer
         other: Invitations à adhérer
       request_to_join_us_via_email:
         one: Invitation à adhérer
         other: Invitations à adhérer
-      request_to_join_you: Demander à adhérer
-      request_to_join_your_network: Demander à adhérer
-      request_to_create_council: Demander à créer un conseil
-      request_to_remove_user: Demander à retirer un membre
+      request_to_join_you: Demande d'inscription
+      request_to_join_your_network: Demande d'inscription
+      request_to_create_council: Demande de création de conseil
+      request_to_remove_user: Demande de désinscription
   request_to_friend: Demander à être en contact
   request_to_friend_short: '%{user} peut-il ou peut-elle être mise en contact avec %{other_user} ?'
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
@@ -531,7 +531,7 @@ fr:
     other: Invitations à adhérer
   request_to_join_us_via_email_short: '%{email} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
-  request_to_join_you: Demander à adhérer
+  request_to_join_you: Demander inscription
   request_to_join_you_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_you_description: '%{user} a demandé à rejoindre le groupe %{group}.'
   request_to_join_your_network: Demander à adhérer
