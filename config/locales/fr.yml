@@ -1,4 +1,5 @@
 fr:
+  cookie_disabled_warning: Les cookies sont désactivés sur votre navigateur. Vous ne pourrez vous connecter tant que ce sera le cas.
   signup_link: Besoin d'un nouveau compte ?
   signup_email_info: 'Optionnel: utilisé si vous oubliez votre mot de passe'
   forgot_password_link: J'ai oublié mon mot de passe
@@ -12,6 +13,8 @@ fr:
   signup_button: S'inscrire
   login_failed: Connexion impossible
   signup_login_name: Votre identifiant
+  login_button: Connexion
+  login: Connexion
   signup_title: Créez votre compte
   signup_email: Votre Mail
   forgot_password_text: Si vous avez oublié votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer un nouveau.
@@ -31,20 +34,47 @@ fr:
   requested_forgot_password: Vous avez demandé une modification du mot de passe
   password_was_reset: Votre mot de passe a été réinitialisé
   forgotten_email_address: Quelle adresse mail avez vous donné lors de la création du compte ?
-  new_password: Nouveau Mot de Passe
-  confirm_new_password: Confirmer le Nouveau Mot de Passe
+  new_password: Nouveau mot de passe
+  confirm_new_password: Confirmer le nouveau mot de passe
   congratulations_you_have_signed_up: Félicitations ! Vous êtes inscrits sur %{site_title}.
+  you_should_receive_instructions_email: Vous devriez recevoir un mail avec les instructions pour finaliser la création de votre compte.
+  email_verification_body: 'Vous ou une autre personnes avez demandé à vous inscrire sur %{site_title} (%{host}).
+
+
+    Avant de pouvoir vous connecter, vous devez confirmer que c''est bien votre mail.
+
+
+    Cliquez le lien ci-dessous ou copiez-le dans votre navigateur:
+
+
+    %{verify_email_link}
+
+
+    Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.'
+  change_password: Modification du mot de passe
   password: Mot de passe
   password_confirmation: Confirmation du Mot de Passe
   signup_confirm_password: Confirmation du mot de passe
   login_password: Mot de passe
   signup_password: Votre mot de passe
+  remove_your_account: Suppression de votre compte
+  anonymize_display_name: 'Anonymiser le nom d''affichage '
+  anonymize_display_name_info: Remplace votre nom d'affichage par 'Anonyme' partout
+  destroy_comments: Détruire les commentaires
+  destroy_comments_info: Cela va détruire tous les commentaires que vous avez fait sur les pages, Cela peut rendre difficile la compréhension des commentaires restant des autres personnes.
+  confirm_account_removal: Êtes-vous certain•e de vouloir supprimer votre compte ? Cette action est définitive et vos données seront perdues.
+  account_successfully_removed: Votre compte a bien été supprimé. Nous allons le supprimer ainsi que toutes les informations associées dans la base de donnée.
   destroy_confirmation: Êtes vous certain de vouloir effacer ce %{thing}? Cette opération est définitive.
   confirmation: Êtes-vous sûr ?
   cancel: Annuler
+  optional: Optionel•le
   required: (requis)
+  thing_required: '%{thing} nécessaire'
   edit: Éditer
   upload: Télécharger
+  select_files: Sélectionner fichiers
+  drop_files_here: Glisser les fichiers ici
+  files_pending: '#{pending} fichier(s) en cours'
   return_link: Retour
   back_button: Retour
   send_button: Envoyer
@@ -56,23 +86,30 @@ fr:
   create_button: Créer
   ok_button: OK
   show_button: Montrer
+  show_thing: Afficher %{thing}
   confirm: confirmer
   alert: Alerte
   loading_progress: Chargement...
   loadingdotdotdot: Chargement...
-  create_a_new_thing: Créer un-e nouvel-le %{thing}
+  create_a_new_thing: Créer un•e %{thing}
+  create_thing: Créer %{thing}
   created_by: Créée par
+  updated_by: Mise à jour par
   created_by_user_on: créé à %{when} par %{user}
   approve: approuver
   reject: rejeter
   pending: En attente
   rejected: rejetées
   approved: approuvées
+  saved: Sauvegardé•e
   destroy: détruire
+  thing_destroyed: '%{thing} détruit•e'
+  destroy_thing: Détruire %{thing}
+  delete_thing: Supprimer %{thing}
   delete: Supprimer
   delete_button: Supprimer
   deleted: Supprimé-e
-  remove: retirer
+  remove: Retirer
   show_gallery: Montrer la Galerie
   edit_gallery_explaination: Ajouter de nouvelles images ou glisser les images pour les réordonner
   edit_image: Modifier l'image
@@ -83,7 +120,7 @@ fr:
   no_title_given: (pas de titre donné)
   add_images: Ajouter des images
   edit_images: Modifier les images
-  upload_new_image: télécharger une nouvelle image
+  upload_new_image: Téléverser une nouvelle image
   type_your_messages_here: Écrivez votre message ici et validez avec la touche Entrée...
   group_not_allowed_to_view_image_error: Le groupe qui possède cette page n'est pas autorisé à voir cette image.
   add_comment: Ajouter un commentaire
@@ -172,6 +209,7 @@ fr:
   show: Montrer
   display: Afficher
   message: message
+  private_message_notice: Notification de message privé
   visits: Visites
   group: Groupe
   groups: Groupes
@@ -259,6 +297,7 @@ fr:
   message_to_self_error: Ne peut parler à soi-même
   message_you_wrote_caption: 'Vous avez écrit:'
   message_user_wrote_caption: '%{user} a écrit:'
+  unread_private_message: Vous avez un message privé non lu de %{user}
   menu_me: Moi
   menu_groups: Groupes
   menu_home: Accueil
@@ -407,6 +446,7 @@ fr:
   gallery_display: Galerie
   asset_page_description: Envoyer une image, un document, une présentation, ou tout autre fichier.
   asset_page_display: Fichier
+  select_file_to_upload: Choisir un fichier à téléverser
   discussion_page_description: Discuter d'un sujet particulier avec des groupes ou d'autres personnes.
   discussion_page_display: Discussion de groupe
   ranked_vote_page_description: Créer une liste de propositions à classer par ordre de préférence.
@@ -435,6 +475,7 @@ fr:
   may_request_contact_label: Contacter ?
   may_request_contact_description: Choisir qui peut demander à être en contact avec vous.
   sharing_and_requests: Partages et requêtes
+  view_profile: Voir le profil
   profile_member_since: Membre Depuis
   home: Accueil
   banner: Bannière
@@ -475,7 +516,7 @@ fr:
       request_to_create_council: Demander à créer un conseil
       request_to_remove_user: Demander à retirer un membre
   request_to_friend: Demander à être en contact
-  request_to_friend_short: '%{user} peut-ille être mis en contact avec %{other_user} ?'
+  request_to_friend_short: '%{user} peut-il ou peut-elle être mise en contact avec %{other_user} ?'
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_destroy_our_group: Demander à détruire le groupe
   request_to_join_our_network_short: '%{group} peut-il rejoindre %{network} ?'
@@ -483,15 +524,15 @@ fr:
   request_to_join_us:
     one: Invitation à adhérer
     other: Invitations à adhérer
-  request_to_join_us_short: '%{user} peut-ille rejoindre %{group} ?'
+  request_to_join_us_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_description: '%{user} a été invité•e à rejoindre %{group}'
   request_to_join_us_via_email:
     one: Invitation à adhérer
     other: Invitations à adhérer
-  request_to_join_us_via_email_short: '%{email} peut-ille rejoindre %{group} ?'
+  request_to_join_us_via_email_short: '%{email} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
   request_to_join_you: Demander à adhérer
-  request_to_join_you_short: '%{user} peut-ille rejoindre %{group} ?'
+  request_to_join_you_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_you_description: '%{user} a demandé à rejoindre le groupe %{group}.'
   request_to_join_your_network: Demander à adhérer
   request_to_join_your_network_short: '%{group} peut-il rejoindre %{network} ? '
@@ -502,7 +543,7 @@ fr:
   request_to_create_council_short: '%{group} doit-il avoir un conseil ?'
   request_to_create_council_description: '%{user} a proposé de créer un conseil pour l''organisation %{group}.'
   request_to_remove_user: Demander à retirer un membre
-  request_to_remove_user_short: '%{member} doit-ille être retiré•e de %{group} ?'
+  request_to_remove_user_short: '%{member} doit-il ou doit-elle être retirée de %{group} ?'
   request_to_remove_user_description: '%{user} a proposé de retirer %{member} de l''organisation %{group}.'
   invite_info: Entrez la liste des identifiants ou des adresses mail des personnes que vous voulez inviter à rejoindre cette organisation.
   invite_error_redeemed: L'invitation a déjà été utilisée.
@@ -510,6 +551,7 @@ fr:
   request_exists_error: La demande existe déjà pour %{recipient}
   network_invite_info: Écrivez les noms des groupes que vous désirez inviter à rejoindre ce réseau.
   recipient_tip: Séparez les destinataires par des virgules, des espaces ou de nouvelles lignes.
+  you_are_invited: Vous êtes invité•e à rejoindre.
   friend_request_message_label: Précisez à %{user} pourquoi vous voulez être en contact.
   friend_remove_confirmation: Êtes-vous certain•e de ne plus vouloir être en contact avec %{user} ?
   place: place
@@ -624,7 +666,7 @@ fr:
     Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix.'
   add_new_possibility_link: Ajouter une nouvelle possibilité
   add_possibility_button: Ajouter une Possibilité
-  new_possibility_heading: Nouvelle Possibilité
+  new_possibility_heading: Nouvelle possibilité
   confirm_vote_button: Confirmer le Vote
   edit_my_vote_tab: Modifier mon vote
   show_results_tab: Voir les résultats
@@ -698,14 +740,20 @@ fr:
   welcome_title: Bienvenue sur %{site_title}
   welcome_message: Crabgrass permet aux organisations de transformation sociale de s'organiser, communiquer, collaborer et établir des réseaux.
   wiki: Wiki
+  public_wiki: Wiki public
+  private_wiki: Wiki privé
+  edit_wiki: Éditer le wiki
   wiki_existed_new_version_created: Ce wiki a déjà été créé par une autre personne. Vos changements ont été sauvegardés comme une nouvelle version.
   wiki_is_locked: Ce wiki est actuellement verrouillé par %{user}
+  wiki_section_is_locked: La section %{section} est verrouillée par %{user}.
   leave_editing_wiki_page_warning: Si vous quittez cette page sans sauvegarder le wiki ou sans annuler l'édition; alors les autres utilisateur-rice-s verront ce wiki comme verrouillé par vous et il-le-s ne pourront l'éditer. De même, si vous ne sauvegardez pas le wiki, vous perdrez vos modifications.
   cant_edit_section: Édition de %{section} impossible.
   user_locked_section: '%{section} verrouillée par %{user}.'
   can_still_save: Vous pouvez toujours faire une sauvegarde.
+  changes_might_be_overwritten: Vos modifications peuvent être écrasées.
   other_section_locked_error: Vous ne pouvez verrouiller qu'une section simultanément. Vous avez déjà verrouillé '%{section}'.
   break_lock_button: forcer le verrou
+  force_save_button: Forcer le verrou et sauvegarder
   versions: Versions
   version: Version
   comparing_changes_header: Comparaison des modifications de %{user} à %{when} de %{old_version} vers %{new_version}
