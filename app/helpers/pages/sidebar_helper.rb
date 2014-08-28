@@ -179,7 +179,7 @@ module Pages::SidebarHelper
   def destroy_link
     link_to_remote_with_icon :destroy_page_via_shred.t,
       icon: 'minus',
-      confirm: destroy_confirmation.t(thing: :page.t),
+      confirm: :destroy_confirmation.t(thing: :page.t),
       url: page_trash_path(@page, type: 'destroy'),
       method: 'put'
   end
