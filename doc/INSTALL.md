@@ -10,7 +10,7 @@ Install basic ruby environment
 
 On a debian-based system:
 
-    sudo apt-get install ruby1.9.1 ruby1.9.1-dev mysql-server git
+    sudo apt-get install ruby1.9.1 ruby1.9.1-dev mysql-server git make
 
 Depending on what you are running, you might need to install `git-core`
 instead of `git`. You might also need libopenssl-ruby.
