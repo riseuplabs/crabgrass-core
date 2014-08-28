@@ -10,12 +10,11 @@ Install basic ruby environment
 
 On a debian-based system:
 
-    sudo apt-get install ruby1.9 ruby-dev rake ruby-mysql mysql-server git
+    sudo apt-get install ruby1.9.1 ruby1.9.1-dev mysql-server git
 
 Depending on what you are running, you might need to install `git-core`
-instead of `git` and `libmysql-ruby` instead of `ruby-mysql`. You might also
-need libopenssl-ruby. If installing using bundler, you may need
-`libmysqlclient-dev`.
+instead of `git`. You might also need libopenssl-ruby.
+If installing using bundler, you may need `libmysqlclient-dev`.
 
 On a redhat-based system:
 
