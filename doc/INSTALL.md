@@ -40,6 +40,7 @@ Alternatively you can install bundler with your package manager.
 Install rails and required gems
 
     cd crabgrass-core
+    git checkout develop
     bundle install
 
 Create a secret
