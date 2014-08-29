@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224051835) do
+ActiveRecord::Schema.define(:version => 20140829095525) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -592,6 +592,7 @@ ActiveRecord::Schema.define(:version => 20140224051835) do
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "profiles", ["wiki_id", "entity_id"], :name => "profiles_for_wikis"
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",                      :default => 0
@@ -835,6 +836,7 @@ ActiveRecord::Schema.define(:version => 20140224051835) do
   end
 
   add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true
+  add_index "user_participations", ["user_id", "changed_at"], :name => "recent_changes"
 
   create_table "user_settings", :force => true do |t|
     t.integer  "user_id"
