@@ -106,10 +106,19 @@ module AuthenticatedUser
   def seen!
     now = Time.now.utc
     return unless last_seen_at.nil? || last_seen_at < now - 5.minutes
-    update_attribute :last_seen_at, now
+    update_column :last_seen_at, now
   end
 
   protected
+
+  # backported from RAILS 3.1
+  # this is faster than update_attribute as it skips callbacks and
+  # avoids using a transaction in mysql
+  def update_column(name, value)
+    name = name.to_s
+    write_attribute name, value
+    self.class.update_all({ name => value }, self.class.primary_key => id) == 1
+  end
 
   # before filter
   def encrypt_password
