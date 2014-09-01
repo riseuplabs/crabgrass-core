@@ -20,6 +20,32 @@ def self.included(base)
     #
     scope(:with_access, lambda {|args|
       holder, gates = args.first
+      holder = Holder[holder]
+
+      joins(:keys).
+        where(conditions_for_gates(gates)).
+        where("castle_gates_keys.holder_code" => holder.all_codes).
+        select("DISTINCT #{self.quoted_table_name}.*")
+    }) do
+      # Preserve the DISTINCT in count by default
+      # Pagination needs this.
+      # UPGRADE: this can be worked around by a .distinct in newer rails versions
+      def count(column_name = nil, options = {})
+        if column_name.blank? && options.blank?
+          super("#{self.quoted_table_name}.id", distinct: true)
+        else
+          super(column_name, options)
+        end
+      end
+    end
+
+    #
+    # alternative implementation with subselect.
+    # It's faster for getting all castles. However usually there are
+    # conditions on the castles that make the join a lot faster.
+    #
+    scope(:with_subselect_access, lambda {|args|
+      holder, gates = args.first
       subselect = subselect_for_holder_and_gates(holder, gates)
       where("#{self.quoted_table_name}.id IN (#{subselect})")
     })

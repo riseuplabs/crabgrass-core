@@ -25,6 +25,16 @@ module ClassMethods
       to_sql
   end
 
+   #
+   # Used to find castles that with particular access. Assumes 'keys' table is joined in.
+   #
+   def conditions_for_gates(gate_names)
+     gate_names = [gate_names] unless gate_names.is_a? Array
+     bits = gate_set.bits(gate_names)
+     "(#{bits} & ~castle_gates_keys.gate_bitfield) = 0"
+   end
+
+
   ##
   ## GATES
   ##
