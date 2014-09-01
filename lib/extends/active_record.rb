@@ -200,3 +200,19 @@ module ActiveRecord::AttributeMethods::ClassMethods
     time_zone_aware_attributes && !skip_time_zone_conversion_for_attributes.include?(name.to_sym) && [:datetime, :timestamp].include?(column.type)
   end
 end
+
+module ActiveRecord::QueryMethods
+
+  # clear all other selects that might have been applied before
+  # and only select the given string.
+  #
+  # This helps to make sure distinct selects also work on associations
+  # like group.users.only_select("DISTINCT ..")
+  # UPGRADE: replace me with using .distinct in rails 4.0
+  def only_select(value)
+    relation = clone
+    relation.select_values = Array.wrap(value)
+    relation
+  end
+
+end
