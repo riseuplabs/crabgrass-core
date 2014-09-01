@@ -27,7 +27,15 @@ module GroupExtension::Groups
       has_many :real_committees,
         :foreign_key => 'parent_id',
         :class_name => 'Committee',
-        :conditions => {:type => 'Committee'}
+        :conditions => {:type => 'Committee'} do
+        # UPGRADE: This is a workaround for the lack of declaring a
+        # query DISTINCT and having that applied to the final query.
+        # it won't be needed anymore as soon as .distinct can be used
+        # with rails 4.0
+        def with_access(access)
+          super(access).only_select("DISTINCT groups.*")
+        end
+      end
 
     end
   end
