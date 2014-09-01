@@ -1,6 +1,7 @@
 .row.search.pull-right#group_search
   = form_tag groups_directory_path(:path => 'search'),
     :id => 'group_search_form',
+    :method => :get,
     :class => 'form-search' do
     .input-append
       = text_field_tag 'name', @filter,
@@ -9,10 +10,12 @@
         :placeholder => 'Search all groups by name'
       %button.btn.btn-primary(type="submit") Search
 
+.row.clear
+
 %ul.directory
   - for group in @groups
     %li.entry= render :partial => 'group', :locals => {:group => group}
     %li.divider
 
 .p
-  = pagination_links(@groups)
+  = pagination_links(@groups, :params => params.except(:utf8))
