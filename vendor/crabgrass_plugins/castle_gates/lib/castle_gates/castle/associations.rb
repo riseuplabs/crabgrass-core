@@ -40,11 +40,11 @@ def self.included(base)
     end
 
     #
-    # alternative implementation with subselect.
+    # alternative implementation of with_access using a subselect.
     # It's faster for getting all castles. However usually there are
     # conditions on the castles that make the join a lot faster.
     #
-    scope(:with_subselect_access, lambda {|args|
+    scope(:all_with_access, lambda {|args|
       holder, gates = args.first
       subselect = subselect_for_holder_and_gates(holder, gates)
       where("#{self.quoted_table_name}.id IN (#{subselect})")

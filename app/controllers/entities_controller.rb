@@ -56,7 +56,7 @@ class EntitiesController < ApplicationController
   #
   def recipients
     if preload?
-      User.friends_or_peers_of(current_user).with_access(current_user => :pester)
+      User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
     elsif filter.present?
       recipients = User.strangers_to(current_user)
       recipients = recipients.with_access(:public => :pester)
@@ -83,7 +83,7 @@ class EntitiesController < ApplicationController
   def users
     if preload?
       # preload user's groups
-      User.friends_or_peers_of(current_user).with_access(current_user => :view)
+      User.friends_or_peers_of(current_user).all_with_access(current_user => :view)
     elsif filter.present?
       strangers = User.strangers_to(current_user)
       strangers = strangers.with_access(:public => :view)
