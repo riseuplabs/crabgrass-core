@@ -1,5 +1,7 @@
 class StaticController < ActionController::Base
-  session :off
+
   def greencloth
+    # do not send a session cookie.
+    request.session_options[:skip] = true
   end
 end
