@@ -3,7 +3,6 @@ class Groups::DirectoryController < ApplicationController
   skip_before_filter :authorization_required
   before_filter :set_default_path
 
-  stylesheet 'directory'
   helper 'groups/directory'
   permission_helper 'groups/structures'
 

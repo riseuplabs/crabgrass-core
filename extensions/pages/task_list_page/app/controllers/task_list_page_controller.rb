@@ -2,7 +2,6 @@ class TaskListPageController < Pages::BaseController
   before_filter :fetch_task_list, :fetch_user_participation
   after_filter :update_participations,
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
-  stylesheet 'tasks'
   permissions 'task_list_page'
 
   def show

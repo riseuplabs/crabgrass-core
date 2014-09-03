@@ -69,9 +69,16 @@ class ApplicationController < ActionController::Base
   ## CLASS METHODS
   ##
 
-  # rather than include every stylesheet in every request, some stylesheets are
-  # only included "as needed". A controller can set a custom stylesheet
-  # using 'stylesheet' in the class definition:
+  # We currently include all stylesheets in screen.css as it's cached,
+  # hardly expires and the optional stylesheets do not add much weight
+  # anyway.
+  #
+  # Still keeping this here though in case we need it again.
+  #
+  # rather than include every stylesheet in every request,
+  # we used to only include some stylesheets "as needed".
+  # A controller can set a custom stylesheet using 'stylesheet'
+  # in the class definition:
   #
   # for example:
   #
@@ -86,6 +93,12 @@ class ApplicationController < ActionController::Base
     self.stylesheets = merge_requirements(self.stylesheets, *css_files)
   end
 
+  # We currently include all javascript in application.js as it's cached,
+  # hardly expires and the optional javascripts do not add much weight
+  # anyway.
+  #
+  # Still keeping this here though in case we need it again.
+  #
   # let controllers require extra javascript
   # for example:
   #

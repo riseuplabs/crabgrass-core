@@ -7,8 +7,6 @@ class Groups::HomeController < Groups::BaseController
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
-  javascript 'upload', 'wiki'
-  stylesheet 'wiki_edit', 'upload'
 
   def initialize(options = {})
     super()

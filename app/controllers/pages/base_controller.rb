@@ -13,8 +13,6 @@ class Pages::BaseController < ApplicationController
   guard :update => :may_edit_page?
 
   layout 'page'
-  javascript 'upload'
-  stylesheet 'upload'
 
   permission_helper 'posts'
 
