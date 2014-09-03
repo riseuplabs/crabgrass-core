@@ -17,7 +17,7 @@ gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
 gem 'will_paginate', '~> 3.0'
 gem 'sprockets'
 
-gem 'mysql2', '~> 0.2.18'
+gem 'mysql2'
 
 gem 'json', '~> 1.7.7'
 gem 'haml'
