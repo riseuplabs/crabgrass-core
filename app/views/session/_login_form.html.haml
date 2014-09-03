@@ -10,18 +10,19 @@
 
 .login_form
   = form_tag(login_path, :id => "entry") do
-    #cookie_warning.alert.alert-error{:display => 'none'}
-      = :cookie_disabled_warning.t
-    %div
-      %label(for = 'login')= :login_name.t
-      %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
-      = text_field_tag 'login', params['login'], :id => 'login', :tabindex => 1
-    %div.password
-      %label(for = 'password')= :login_password.t
-      %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
-      = password_field_tag 'password', '', {:id => 'password', :tabindex => 2}
-    %div.buttons
-      %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
+    - cache("login-form-v1-#{current_language_code}") do
+      #cookie_warning.alert.alert-error{:display => 'none'}
+        = :cookie_disabled_warning.t
+      %div
+        %label(for = 'login')= :login_name.t
+        %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
+        = text_field_tag 'login', params['login'], :id => 'login', :tabindex => 1
+      %div.password
+        %label(for = 'password')= :login_password.t
+        %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
+        = password_field_tag 'password', '', {:id => 'password', :tabindex => 2}
+      %div.buttons
+        %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
     %div
       - if params[:redirect]
         = hidden_field_tag 'redirect', params[:redirect]
