@@ -76,8 +76,8 @@ module GroupParticipationExtension
         ##
         ## NAMED SCOPES
         ##
-        scope :featured, :conditions => {:static => true}
-        scope :with_pages, :include => :page
+        scope :featured, where(:static => true)
+        scope :with_pages, include(:page)
       end
     end
 

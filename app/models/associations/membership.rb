@@ -24,23 +24,17 @@ class Membership < ActiveRecord::Base
   validates :user, presence: true
   validates :group, presence: true
 
-  scope :alphabetized_by_user, lambda { |letter|
-    opts = {
-      :joins => :user,
-      :order => 'users.login ASC',
-      :select => 'memberships.*'
-    }
-
-    if letter == '#'
-      opts[:conditions] = ['users.login REGEXP ?', "^[^a-z]"]
-    elsif not letter.blank?
-      opts[:conditions] = ['users.login LIKE ?', "#{letter}%"]
+  def self.alphabetized_by_user(letter)
+    conditions = if letter == '#'
+      ['users.login REGEXP ?', "^[^a-z]"]
+    elsif letter.present?
+      ['users.login LIKE ?', "#{letter}%"]
     end
-
-    opts
-  }
-
-  scope :with_users, :include => :user
+    joins(:user).
+      order('users.login ASC').
+      select('memberships.*').
+      where(conditions)
+  end
 
   alias :entity :user
 end

@@ -92,60 +92,33 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope(:limit_to, lambda do |limit|
-    {:limit => limit}
-  end)
+  scope :newest, order('created_at DESC')
 
-  scope :newest, {:order => 'created_at DESC'}
-
-  scope :unique, {:group => '`key`'}
+  scope :unique, group('`key`')
 
   #
   # for 'me/activities'
   #
 
-  scope(:for_my_groups, lambda do |me|
-    {:conditions => [
-      "(subject_type = 'Group' AND subject_id IN (?))",
+  def self.for_my_groups(me)
+    where "(subject_type = 'Group' AND subject_id IN (?))",
       me.all_group_id_cache
-    ]}
-  end)
+  end
 
-  scope(:for_me, lambda do |me|
-    {:conditions => [
-      "(subject_type = 'User' AND subject_id = ?)",
+  def self.for_me(me)
+    where "(subject_type = 'User' AND subject_id = ?)",
       me.id
-    ]}
-  end)
+  end
 
-  scope(:for_my_friends, lambda do |me|
-    {:conditions => [
-      "(subject_type = 'User' AND subject_id IN (?) AND access != ?)",
+  def self.for_my_friends(me)
+    where "(subject_type = 'User' AND subject_id IN (?) AND access != ?)",
       me.friend_id_cache,
       Activity::PRIVATE
-    ]}
-  end)
+  end
 
-  scope(:for_all, lambda do |me|
-    {:conditions => [
-      "(subject_type = 'User'  AND subject_id = ?) OR
-       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-       (subject_type = 'Group' AND subject_id IN (?))",
-       me.id,
-       me.friend_id_cache,
-       Activity::PRIVATE,
-       me.all_group_id_cache
-    ]}
-  end)
-
-  # DEPRECATED - use for_all instead. it does the same
-  #scope(:social_activities_for_groups_and_friends, lambda do |user|
-  #  {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
-  #end)
-
-  #scope(:social_activities_for_groups_and_peers, lambda do |user|
-  #  {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
-  #end)
+  def self.for_all(me)
+    where(social_activities_scope_conditions(me, me.friend_id_cache))
+  end
 
   # +other_users_ids_list+ should be an array of user ids whose
   # social activity should be retrieved
@@ -155,15 +128,15 @@ class Activity < ActiveRecord::Base
   # (2) subject belongs to the +other_users_ids_list+ (a list of current_user's friends or peers)
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  #def self.social_activities_scope_conditions(user, other_users_ids_list)
-  #  [ "(subject_type = 'User'  AND subject_id = ?) OR
-  #     (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-  #     (subject_type = 'Group' AND subject_id IN (?)) ",
-  #    user.id,
-  #    other_users_ids_list,
-  #    Activity::PRIVATE,
-  #    user.all_group_id_cache]
-  #end
+  def self.social_activities_scope_conditions(user, other_users_ids_list)
+    [ "(subject_type = 'User'  AND subject_id = ?) OR
+       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+       (subject_type = 'Group' AND subject_id IN (?)) ",
+      user.id,
+      other_users_ids_list,
+      Activity::PRIVATE,
+      user.all_group_id_cache]
+  end
 
   # for user's landing page
   #
@@ -175,19 +148,17 @@ class Activity < ActiveRecord::Base
   # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
-  scope(:for_user, lambda do |user, current_user|
+  def self.for_user(user, current_user)
     if (current_user and current_user.friend_of?(user) or current_user == user)
       restricted = Activity::PRIVATE
-    elsif current_user and current_user.peer_of?(user)
-      restricted = Activity::DEFAULT
+    # elsif current_user and current_user.peer_of?(user)
+    #   restricted = Activity::DEFAULT
     else
       restricted = Activity::DEFAULT
     end
-    {:conditions => [
-      "subject_type = 'User' AND subject_id = ? AND access > ?",
+    where "subject_type = 'User' AND subject_id = ? AND access > ?",
       user.id, restricted
-    ]}
-  end)
+  end
 
   # for group's landing page
   #
@@ -199,19 +170,15 @@ class Activity < ActiveRecord::Base
   # (2) subject matches 'group'
   #     (and activity.public == true)
   #
-  scope(:for_group, lambda do |group, current_user|
+  def self.for_group(group, current_user)
     if current_user and current_user.member_of?(group)
-      {:conditions => [
-        "subject_type = 'Group' AND subject_id IN (?)",
+      where "subject_type = 'Group' AND subject_id IN (?)",
         group.group_and_committee_ids
-      ]}
     else
-      {:conditions => [
-        "subject_type = 'Group' AND subject_id IN (?) AND access = ?",
+      where "subject_type = 'Group' AND subject_id IN (?) AND access = ?",
         group.group_and_committee_ids, Activity::PUBLIC
-      ]}
     end
-  end)
+  end
 
   ##
   ## DISPLAY HELPERS

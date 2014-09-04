@@ -214,7 +214,7 @@ module UserExtension
       # thus making it easy to find all the tags you have made. maybe this is
       # what we should return here instead?
       if self.id
-        ids = Tag.connection.select_values(%Q[
+        ids = ActsAsTaggableOn::Tag.connection.select_values(%Q[
           SELECT taggings.tag_id FROM taggings
           INNER JOIN user_participations
             ON taggings.taggable_id = user_participations.page_id

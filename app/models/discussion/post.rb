@@ -31,9 +31,9 @@ class Post < ActiveRecord::Base
 
   acts_as_path_findable
 
-  scope :visible, :conditions => 'deleted_at IS NULL'
+  scope :visible, where('deleted_at IS NULL')
 
-  scope :by_created_at, :order => 'created_at DESC'
+  scope :by_created_at, order('created_at DESC')
 
   ##
   ## ATTIBUTES

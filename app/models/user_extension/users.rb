@@ -55,20 +55,20 @@ module UserExtension::Users
       end
 
       # same result as user.friends, but chainable with other named scopes
-      scope(:friends_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache]}
-      end)
+      def self.friends_of(user)
+        where('users.id in (?)', user.friend_id_cache)
+      end
 
-      scope(:friends_or_peers_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
-      end)
+      def self.friends_or_peers_of(user)
+        where('users.id in (?)', user.friend_id_cache + user.peer_id_cache)
+      end
 
       # neither friends nor peers
       # used for autocomplete when we preloaded the friends and peers
-      scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)',
-          user.friend_id_cache + user.peer_id_cache + [user.id]]}
-      end)
+      def self.strangers_to(user)
+        where 'users.id NOT IN (?)',
+          user.friend_id_cache + user.peer_id_cache + [user.id]
+      end
 
       ##
       ## CACHE

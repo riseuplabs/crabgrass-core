@@ -67,12 +67,14 @@ class Site < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope :for_domain, lambda {|domain|
-    {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, Conf.enabled_site_ids]}
-  }
+  def self.for_domain(domain)
+    where 'sites.domain = ? AND sites.id IN (?)',
+      domain, Conf.enabled_site_ids
+  end
 
   def self.default
-    Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
+    where("sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids).
+      first
   end
 
   # def stylesheet_render_options(path)

@@ -16,9 +16,9 @@ class VotableRequest < Request
   #
   # returns Requests for which the voting time has passed
   #
+  # use lamba here so that VOTE_DURATION.ago is evaluated freshly each time
   scope :voting_completed, lambda {
-    # use lamba here so that VOTE_DURATION.ago is evaluated freshly each time
-    {:conditions => ["state = 'pending' AND created_at <= ?", self.vote_duration.ago]}
+    where("state = 'pending' AND created_at <= ?", self.vote_duration.ago)
   }
 
   #
