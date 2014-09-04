@@ -54,6 +54,10 @@ module Crabgrass
     "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
     "tracking/user_participation_observer", "tracking/group_participation_observer"
 
+    config.session_store :cookie_store,
+      :key => 'crabgrass_session',
+      :secret => Conf.secret
+
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 
