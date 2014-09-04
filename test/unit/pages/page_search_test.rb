@@ -15,7 +15,7 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
   include PathFinder::ControllerExtension
 
   fixtures :groups, :users, :memberships, :pages, :page_terms,
-   :user_participations, :group_participations, :taggings, :tags
+   :user_participations, :group_participations, :tags, :taggings
 
   ##
   ## Tests for various search parameters

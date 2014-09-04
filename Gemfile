@@ -20,8 +20,12 @@ gem 'sprockets'
 gem 'mysql2'
 
 gem 'json', '~> 1.7.7'
+
 gem 'haml'
 gem 'sass'
+gem 'acts-as-taggable-on', '~> 2.4.1'
+    # Could not get the migration rake task for acts-as-taggable-on 3.x to work
+    # seems it requires rails 3.2
 
 gem 'http_accept_language'
 

@@ -61,6 +61,8 @@ GEM
       activesupport (= 3.1.12)
     activesupport (3.1.12)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.4.1)
+      rails (>= 3, < 5)
     arel (2.2.3)
     builder (3.0.4)
     capybara (2.4.1)
@@ -184,6 +186,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.2)
+  acts-as-taggable-on (~> 2.4.1)
   capybara
   debugger
   delayed_job (~> 3.0.5)

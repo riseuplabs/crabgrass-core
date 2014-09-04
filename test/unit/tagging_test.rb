@@ -19,18 +19,18 @@ class TaggingTest < ActiveSupport::TestCase
     assert_equal ["hoppy", "pilsner"], @obj2.tag_list
   end
 
-  def test_find_tagged_with
+  def test_tagged_with
     @obj1.tag_list = "seasonal, lager, ipa"
     @obj1.save
     @obj2.tag_list = "lager, stout, fruity, seasonal"
     @obj2.save
 
     result1 = [@obj1]
-    assert_equal Page.find_tagged_with("ipa", :on => :tags), result1
+    assert_equal Page.tagged_with("ipa", :on => :tags), result1
 
     result2 = [@obj1.id, @obj2.id].sort
-    assert_equal result2, Page.find_tagged_with("seasonal", :on => :tags).map(&:id).sort
-    assert_equal result2, Page.find_tagged_with(["seasonal", "lager"], :on => :tags).map(&:id).sort
+    assert_equal result2, Page.tagged_with("seasonal", :on => :tags).map(&:id).sort
+    assert_equal result2, Page.tagged_with(["seasonal", "lager"], :on => :tags).map(&:id).sort
   end
 
   def test_users_tag_cache
