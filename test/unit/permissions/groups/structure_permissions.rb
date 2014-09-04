@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'minitest/autorun'
 require 'mocha'
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 module Groups
-  require RAILS_ROOT + '/app/permissions/groups/structures_permission'
+  require Rails.root + '/app/permissions/groups/structures_permission'
 
   class StructuresPermissionTest < MiniTest::Unit::TestCase
     include StructuresPermission

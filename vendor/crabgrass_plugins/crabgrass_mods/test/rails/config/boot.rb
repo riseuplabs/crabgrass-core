@@ -1,5 +1,3 @@
-RAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(RAILS_ROOT)
-
 module Rails
   class << self
     def boot!
@@ -17,16 +15,22 @@ module Rails
       (vendor_rails? ? VendorBoot : GemBoot).new
     end
 
+    unless self.respond_to? :root
+      def root
+        Pathname.new(__FILE__).dirname.parent
+      end
+    end
+
     def vendor_rails?
-      File.exist?("#{RAILS_ROOT}/vendor/rails")
+      Rails.root.join("vendor/rails").exist?
     end
 
     def preinitialize
-      load(preinitializer_path) if File.exist?(preinitializer_path)
+      load(preinitializer_path) if preinitializer_path.exist?
     end
 
     def preinitializer_path
-      "#{RAILS_ROOT}/config/preinitializer.rb"
+      Rails.root + "config/preinitializer.rb"
     end
   end
 
