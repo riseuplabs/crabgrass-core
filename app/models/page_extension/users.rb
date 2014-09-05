@@ -109,16 +109,14 @@ module PageExtension::Users
   # This method is almost always called on the current user.
   def participation_for_user(user)
     return false unless user.real?
-    if @user_participations
-      # if we currently have in-memory data for user_participations, we must use it.
-      # why? participation_for_user is called sometimes on pages that have not yet been
-      # saved. Also, heck, it is faster. There is a danger here, in that Rails is not
-      # gauranteed to set the member variable @user_participations. If this is no longer
-      # the case, a bunch of tests will fail.
-      upart = @user_participations.detect{|p| p.user_id==user.id }
+    if association(:user_participations).target.present?
+      # if we have in-memory data for user_participations, we must use it.
+      # why? participation_for_user can be called on pages that have not yet
+      # been saved. Also, heck, it is faster.
+      upart = user_participations.find{|p| p.user_id==user.id }
     else
-      # go ahead and fetch the one record we care about. We probably don't care about others
-      # anyway.
+      # go ahead and fetch the one record we care about.
+      # We probably don't care about others anyway.
       upart = user_participations.find_by_user_id(user.id)
     end
     upart.page = self if upart
