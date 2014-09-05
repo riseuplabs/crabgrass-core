@@ -53,8 +53,8 @@ class Holder
     @definition ||= begin
       if @object.is_a? Symbol
         definition = self.class.holder_defs[@object]
-      elsif @object.respond_to?(:holder_class)
-        definition = self.class.holder_defs_by_class[@object.holder_class.name]
+      elsif @object.respond_to?(:holder_type)
+        definition = self.class.holder_defs_by_class[@object.holder_type]
       else
         definition = self.class.holder_defs_by_class[@object.class.name]
       end
@@ -146,7 +146,7 @@ class Holder
   #
   def association_with(castle)
     possible_holder = definition.associated.find do |hdef|
-      hdef.model.name == definition.model.name && hdef.association_model_name == castle.class.base_class.name
+      hdef.model.name == definition.model.name && hdef.model.name == castle.class.base_class.name
     end
     if possible_holder
       method_name = "#{possible_holder.name}?"
@@ -282,18 +282,24 @@ class Holder
     hdef = holder_defs[name]
     holder_defs_by_prefix[hdef.prefix] = hdef
     if !holder.nil?
-      if holder.is_a?(Class)
-        holder_defs_by_class[holder.name] = hdef
-      elsif !holder.is_a?(Symbol)
-        holder_defs_by_class[holder.class.name] = hdef
-      end
+      holder_defs_by_class[holder_identifier(holder)] = hdef
     end
     hdef
   end
 
+  def self.holder_identifier(holder)
+    if holder.respond_to?(:holder_type)
+      id = holder.holder_type
+    elsif holder.is_a?(Class)
+      id = holder.name
+    elsif !holder.is_a?(Symbol)
+      id = holder.class.name
+    end
+  end
+
   def self.eval_block(block, options)
     if block
-      if model = (options[:association_model] || options[:model])
+      if model = options[:model]
         after_reload(model) do |model|
           model.class_eval &block
         end
@@ -312,17 +318,8 @@ class Holder
 
   def self.holder_from_association(options)
     association = options[:association]
-    raise ArgumentError.new unless association.is_a?(ActiveRecord::Reflection::MacroReflection)
-    after_reload(association.class) do |klass|
-      klass.class_eval do
-        def holder_code_suffix
-          proxy_owner.id
-        end
-      end
-    end
-    options[:association_name] = association.name
-    options[:association_model] = association.active_record
-    options[:model] = association.klass
+    options[:association_name] = association.relationship
+    options[:model] ||= association.owner_class
     association
   end
 

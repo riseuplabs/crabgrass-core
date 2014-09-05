@@ -22,11 +22,7 @@ class HolderDefinition
 
   attr_reader :model            # active record class, if any
   attr_reader :association_name # name of association, like 'friends' if model has_many :friends
-  attr_reader :association_model_name   # active record class name of the other side of the association.
-                                        # for example, for holder Group.associated(:users), User is the model,
-                                        # 'users' is the association_name, and "Group" is the associated_model_name.
-  attr_reader :associated       # an array of other holder definitions
-
+  attr_reader :associated      # other holders for the same model
 
   def initialize(name, options)
     @name     = name.to_sym
@@ -36,23 +32,22 @@ class HolderDefinition
     @label    = options[:label] || @name
     @model    = options[:model]
     @association_name = options[:association_name]
-    @association_model_name = options[:association_model].name if options[:association_model]
     @associated = []
 
     #
     # add association links (used for resolving default bitfield values)
     #
-    if @association_model_name
+    if association_name
       # if this is an association model, add to previously defined non-association defs.
       Holder.holder_defs.each do |name, hdef|
-        if !hdef.association_model_name && hdef.model && (hdef.model.name == @model.name || hdef.model.name == @association_model_name)
+        if !hdef.association_name && hdef.model && (hdef.model.name == model.name)
           hdef.associated << self
         end
       end
-    elsif @model
+    elsif model
       # if this is a regular model, add to previously defined association defs.
       Holder.holder_defs.each do |name, hdef|
-        if hdef.association_model_name && hdef.model && (hdef.model.name == @model.name || hdef.association_model_name == @model.name)
+        if hdef.association_name && (hdef.model.name == model.name)
           hdef.associated << self
         end
       end
@@ -61,7 +56,7 @@ class HolderDefinition
 
   def get_holder_from_id(id)
     if association_name
-      association_model_name.constantize.find(id).associated(association_name)
+      model.find(id).associated(association_name)
     elsif model
       model.find(id)
     elsif abstract

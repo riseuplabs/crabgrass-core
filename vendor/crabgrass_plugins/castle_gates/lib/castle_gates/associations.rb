@@ -1,46 +1,57 @@
 #
-# Code that makes it easy to use activerecord associations as holders.
+# Code that makes it easy to build holders based on Active Record associations
+# and relations.
 #
-# We extend activerecord here, so it might break for later versions.
+# For example Association.new(user, :peers) refers to all the
+# peers of the given user.
 #
 
 ##
-## CollectionProxyProxy
+## Association
 ##
 
 #
-# This class is a proxy for CollectionProxy.
+# This class is a proxy for the AR relation
 #
 # This double proxy keeps us from accidently hitting the database
-# and fetching the records from the association.
+# and fetching the records from the relation.
 #
 # For example, just the simple statement {@me.minions => :x} will trigger
 # fetching all the minions. Instead, we use @me.associated(:minions)
-# which will return an CollectionProxyProxy.
+# which will return an Association.
 #
-class CollectionProxyProxy
-  attr_reader :proxy
+class Association
+  attr_reader :owner, :relationship
 
-  def initialize(proxy)
-    @proxy = proxy
+  # owner can be a class to refer to all associations of a certain type
+  # for instance during definition or an instance to refer to a specific
+  # association of a concrete record.
+  def initialize(owner, relationship)
+    @owner = owner
+    @relationship = relationship
   end
-  def holder_class
-    @proxy.reflection.class
+
+  def holder_type
+    "#{owner_class.name}-#{relationship}"
   end
+
   def holder_code_suffix
-    @proxy.proxy_owner.id
+    @owner.id
   end
 
   def ==(other)
-    if other.is_a? CollectionProxyProxy
-      @proxy.reflection == other.proxy.reflection and
-      @proxy.proxy_owner == other.proxy.proxy_owner
+    if other.is_a? Association
+      owner == other.owner &&
+        relationship = other.relationship
     elsif other.is_a? Symbol
-      # make sure we do not load @proxy just to compare to symbol
-      false
+      false  # don't query the relation just to compare to Symbol
     else
-      @proxy == other
+      owner.send(:relationship) == other
     end
+  end
+
+  def owner_class
+    owner.is_a?(Class) ? owner : owner.class
   end
 end
 
@@ -50,7 +61,7 @@ end
 
 #
 # make the private reflection variable accessible to the
-# CollectionProxyProxy.
+# Association.
 #
 ActiveRecord::Associations::CollectionProxy.class_eval do
   def reflection
@@ -70,13 +81,15 @@ ActiveRecord::Base.class_eval do
   # and will have a pointer to the holder definition.
   #
   class << self
-    alias_method :associated, :reflect_on_association
+    def associated(symbol)
+      Association.new(self, symbol)
+    end
   end
 
   #
   # return an association proxy proxy. double proxy!
   #
   def associated(symbol)
-    CollectionProxyProxy.new(self.send(symbol));
+    Association.new(self, symbol)
   end
 end
