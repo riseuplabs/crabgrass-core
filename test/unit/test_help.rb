@@ -10,7 +10,7 @@ if defined?(ActiveRecord)
 
   class ActiveSupport::TestCase
     include ActiveRecord::TestFixtures
-    self.fixture_path = Rails.root + "test/fixtures/"
+    self.fixture_path = Rails.root.join("test/fixtures/").to_s
     self.use_instantiated_fixtures  = false
     self.use_transactional_fixtures = true
   end
