@@ -34,7 +34,7 @@ class TaggingTest < ActiveSupport::TestCase
   end
 
   def test_users_tag_cache
-    user = FactoryGirl.create(:user, :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx')
+    user = FactoryGirl.create(:user)
     page = FactoryGirl.create(:page, :title => 'hi')
     page.tag_list = 'one, two'
     page.save!
