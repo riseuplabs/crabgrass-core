@@ -23,7 +23,7 @@ class CommitteeTest < ActiveSupport::TestCase
     g.reload
     assert_equal g, c1.parent, "committee's parent should match group"
 
-    assert_difference 'Group.find(%d).version'%g.id, -1 do
+    assert_difference 'Group.find(%d).version'%g.id do
       assert_difference 'Group.find(%d).committees.count'%g.id, -1 do
         c1.destroy_by(users(:red))
       end
