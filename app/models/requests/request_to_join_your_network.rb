@@ -48,13 +48,13 @@ class RequestToJoinYourNetwork < Request
 
   def recipient_is_network
     unless recipient.type =~ /Network/
-      errors.add_to_base('recipient must be a network')
+      errors.add(:base, 'recipient must be a network')
     end
   end
 
   def no_federating_yet
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
-      errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
+      errors.add(:base, I18n.t(:membership_exists_error, :member => group.name))
     end
   end
 

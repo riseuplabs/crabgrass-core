@@ -367,13 +367,13 @@ class Request < ActiveRecord::Base
 
   def check_create_permission
     unless may_create?(created_by)
-      errors.add_to_base(I18n.t(:permission_denied))
+      errors.add(:base, I18n.t(:permission_denied))
     end
   end
 
   def no_duplicate
     if duplicates.any?
-      errors.add_to_base(:request_exists_error.t(:recipient => recipient.display_name))
+      errors.add(:base, :request_exists_error.t(:recipient => recipient.display_name))
     end
   end
 
