@@ -12,9 +12,11 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototyp
 # required, but not included with crabgrass:
 gem 'i18n', '~> 0.6.11'
 gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
-    # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
-    # so, we bind to the latest in the version 2 series.
-gem 'will_paginate', '~> 3.0'
+  # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
+  # so, we bind to the latest in the version 2 series.
+gem 'will_paginate', '= 3.0.6'
+  # 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
+  # we should remove this strict version once that is fixed.
 gem 'sprockets'
 
 gem 'mysql2'
