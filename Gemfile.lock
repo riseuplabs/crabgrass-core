@@ -96,7 +96,7 @@ GEM
       tilt
     hike (1.2.3)
     hpricot (0.8.6)
-    http_accept_language (2.0.1)
+    http_accept_language (2.0.2)
     i18n (0.6.11)
     innertube (1.0.2)
     jsmin (1.0.1)

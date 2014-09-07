@@ -161,9 +161,9 @@ module Common::Application::BeforeFilters
       'en'
     elsif !logged_in? || current_user.language.empty?
       if Conf.enabled_languages.any?
-         code = request.compatible_language_from(Conf.enabled_languages)
+         code = http_accept_language.compatible_language_from(Conf.enabled_languages)
       else
-         code = request.user_preferred_languages.first
+         code = http_accept_language.user_preferred_languages.first
       end
       code ||= current_site.default_language
       code ||= 'en'
