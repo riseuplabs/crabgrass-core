@@ -50,7 +50,7 @@ class Group < ActiveRecord::Base
     group_ids = user.all_group_ids
     group_ids.any? ?
       where("NOT groups.id IN (?)", group_ids) :
-      {}
+      self
   end
 
   # finds groups that are of type Group (but not Committee or Network)
@@ -60,11 +60,8 @@ class Group < ActiveRecord::Base
     group_type = args.first.to_s.capitalize
     if group_type == 'Group'
       only_groups
-    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
-      where 'groups.type = ? and groups.id != ?',
-        group_type, args[1].network_id
     else
-      where('groups.type = ?', group_type)
+      where(:type => group_type)
     end
   end
 
@@ -73,7 +70,7 @@ class Group < ActiveRecord::Base
 
   def self.all_networks_for(user)
     only_type('Network').
-      where("groups.id IN (?)", user.all_group_id_cache)
+      where(:id => user.all_group_id_cache)
   end
 
   # alphabetized and (optional) limited to +letter+
@@ -123,22 +120,6 @@ class Group < ActiveRecord::Base
   # return an empty relation so it can still be combined with order and pagination
   scope :none, where('1=2')
 
-  def self.in_location(options)
-    country_id = options[:country_id]
-    admin_code_id = options[:state_id]
-    city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
-    end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
-    end
-    joins("join geo_locations as gl").where(conditions)
-  end
-
   ##
   ## GROUP INFORMATION
   ##
@@ -163,7 +144,7 @@ class Group < ActiveRecord::Base
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
     return nil unless name.present?
-    Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
+    Group.where(:name => name.gsub(' ','+')).first
   end
 
   # keyring_code used by acts_as_locked and pathfinder

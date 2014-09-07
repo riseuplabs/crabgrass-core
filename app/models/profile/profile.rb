@@ -153,6 +153,19 @@ class Profile < ActiveRecord::Base
 
   belongs_to :geo_location
 
+  # UNTESTED!
+  #
+  # you can be as specific as needed. From just the country down to
+  # specifying the city id.
+  def self.in_location(options)
+    location_conditions = {
+      :country_id => options[:country_id],
+      :geo_admin_code_id => options[:state_id],
+      :geo_place_id => options[:city_id]
+    }.delete_if{|k,v| v.blank?}
+    joins(:geo_location).where(:geo_location => location_conditions)
+  end
+
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
