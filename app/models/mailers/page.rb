@@ -13,8 +13,11 @@ module Mailers::Page
     end
     recipients user.email
     subject I18n.t(:email_notice_subject, :title => @page.title)
-    body({ :page => @page, :notice_message => notice_message, :from_user => @current_user,
-     :to => user, :link => page_link, :code => code })
+    @notice_message = notice_message
+    @from_user = @current_user
+    @to = user
+    @link = page_link
+    @code = code
   end
 
 end

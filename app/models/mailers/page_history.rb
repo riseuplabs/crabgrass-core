@@ -16,44 +16,38 @@ module Mailers::PageHistory
   end
 
   def page_history_single_notification(user, page_history)
-    @page_history         = page_history
-    @user                 = user
-    @site                 = Site.default
-    @subject              = "#{@site.title} : #{@page_history.page.title}"
-    @body[:page_history]  = @page_history
+    @page_history   = page_history
+    @user           = user
+    @site           = Site.default
+    @subject        = "#{@site.title} : #{@page_history.page.title}"
     setup_watched_notification_email
   end
 
   def page_history_single_notification_paranoid(user, page_history)
-    @page_history         = page_history
-    @user                 = user
-    @site                 = Site.default
-    @subject              = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
-    @body[:page_history]  = @page_history
-
-    @body[:code] = Code.create!(:user => user, :page => page_history.page)
-
+    @page_history   = page_history
+    @user           = user
+    @site           = Site.default
+    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
+    @code           = Code.create!(:user => user, :page => page_history.page)
     setup_watched_notification_email
   end
 
   def page_history_digest_notification(user, page, page_histories)
-    @site                 = Site.default
-    @user                   = user
-    @subject                = "#{@site.title} : #{page.title}"
-    @body[:page]            = page
-    @body[:page_histories]  = page_histories
+    @site           = Site.default
+    @user           = user
+    @subject        = "#{@site.title} : #{page.title}"
+    @page           = page
+    @page_histories = page_histories
     setup_watched_notification_email
   end
 
   def page_history_digest_notification_paranoid(user, page, page_histories)
-    @site                 = Site.default
-    @user                   = user
-    @subject                = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
-    @body[:page]            = page
-    @body[:page_histories]  = page_histories
-
-    @body[:code] = Code.create!(:user => user, :page => page)
-
+    @site           = Site.default
+    @user           = user
+    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
+    @page           = page
+    @page_histories = page_histories
+    @code           = Code.create!(:user => user, :page => page)
     setup_watched_notification_email
   end
 
@@ -64,9 +58,9 @@ module Mailers::PageHistory
   end
 
   def setup_watched_notification_email
-    @from                 = "#{from_address}"
-    @recipients           = "#{@user.email}"
-    @body[:site]          = @site
-    @body[:user]          = @user
+    @from           = "#{from_address}"
+    @recipients     = "#{@user.email}"
+    @site           = @site
+    @user           = @user
   end
 end

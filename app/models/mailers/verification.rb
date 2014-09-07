@@ -7,9 +7,7 @@ module Mailers::Verification
     recipients @current_user.email
     subject I18n.t(:welcome_title, :site_title => @site.title)
 
-    body({:site_title => @site.title,
-            :link => account_verify_url(:token => token.value),
-            :host => @host})
+    @link = account_verify_url(:token => token.value)
   end
 
 end
