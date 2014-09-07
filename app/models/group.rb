@@ -287,7 +287,12 @@ class Group < ActiveRecord::Base
   def destroy_by(user)
     # needed for the activity
     self.destroyed_by = user
-    self.children.each {|committee| committee.destroyed_by = user}
+    # first we remove all the children in a clean way.
+    self.children.each {|committee| committee.destroy_by(user)}
+    # then we make sure they are not cached anymore so
+    # dependent: destroy does not get triggered.
+    # It would try to .destroy them which is a protected method.
+    self.reload
     self.destroy
   end
 
