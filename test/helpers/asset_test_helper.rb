@@ -23,7 +23,7 @@ module AssetTestHelper
   end
 
   def fixture_file(file)
-    Rails.root + '/test/fixtures/files/' + file
+    Rails.root + 'test/fixtures/files' + file
   end
 
   def setup_assets
