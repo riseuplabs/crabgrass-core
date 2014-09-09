@@ -52,9 +52,12 @@ class Site < ActiveRecord::Base
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
 
-  serialize :translators, Array
-  serialize :available_page_types, Array
-  serialize :evil, Hash
+  # We do not specify types because nil is a valid value.
+  # Otherwise proxy to conf won't work in rails >= 3.1 as the
+  # attributes are initialized to [] or {} instead of nil.
+  serialize :translators           # Array
+  serialize :available_page_types  # Array
+  serialize :evil                  # Hash
   serialize :profile_fields
   serialize :profiles
 
