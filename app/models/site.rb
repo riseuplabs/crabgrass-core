@@ -94,7 +94,10 @@ class Site < ActiveRecord::Base
   # whatever crabgrass.*.yml gets loaded).
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
-      define_method(attribute) { (value = read_attribute(attribute.to_s.sub(/\?$/,''))).nil? ? Conf.send(attribute) : value }
+      define_method(attribute) do
+        value = read_attribute(attribute.to_s.sub(/\?$/,''))
+        value.nil? ? Conf.send(attribute) : value
+      end
     end
   end
 
