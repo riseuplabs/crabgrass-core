@@ -38,7 +38,7 @@ namespace :db do
         ActiveRecord::Fixtures.create_fixtures fixtures_dir, fixture_file,
           :castle_gates_keys => CastleGates::Key,
           :taggings => ActsAsTaggableOn::Tagging,
-          :tag => ActsAsTaggableOn::Tag
+          :tags => ActsAsTaggableOn::Tag
       end
     end
   end
