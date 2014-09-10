@@ -1,5 +1,3 @@
-# apply some unit testing optimizations
-UNIT_TESTING = true unless defined? UNIT_TESTING
 require File.dirname(__FILE__) + '/../test_helper'
 
 # stubbing out controller helpers

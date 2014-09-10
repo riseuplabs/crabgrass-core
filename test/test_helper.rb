@@ -8,12 +8,7 @@ require 'minitest/autorun'
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-if defined?(UNIT_TESTING)
-  require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
-else
-  require 'rails/test_help'
-end
-
+require 'rails/test_help'
 
 ##
 ## load all the test helpers
