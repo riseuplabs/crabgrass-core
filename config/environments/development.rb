@@ -19,6 +19,8 @@ Crabgrass::Application.configure do
 
   config.cache_classes = false
   config.whiny_nils = true
+  config.assets.compress = false
+  config.assets.debug = true
   config.consider_all_requests_local = true
   #config.action_view.debug_rjs                         = true
   config.action_controller.perform_caching             = false
