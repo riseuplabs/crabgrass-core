@@ -22,7 +22,8 @@ before_script:
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
   - "bundle exec rake db:test:prepare"
-  - "bundle exec rake RAILS_ENV=test ts:index ts:start"
+  - "RAILS_ENV=test bundle exec rake db:fixtures:load"
+  - "RAILS_ENV=test bundle exec rake ts:index ts:start"
 after_script:
   - "cat tmp/*.test*.log" # printing logs from the failed integration tests
 notifications:
