@@ -16,7 +16,8 @@
         "test_environment": {
           "test_helper": {"test": ["rspec", "testrb"]},
           "test_console": ["tc"],
-          "test_db": ["tdb"]
+          "test_db": ["tdb"],
+          "test_rake": ["trake", "tr"]
         }
       }
     }

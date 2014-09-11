@@ -14,6 +14,10 @@ class CustomPlan < Zeus::Rails
   def test_db
     dbconsole
   end
+
+  def test_rake
+    rake
+  end
 end
 
 Zeus.plan = CustomPlan.new
