@@ -86,15 +86,3 @@ class IntegrationTest < ActiveSupport::TestCase
 
 end
 
-# fix a rack issue that only comes up with rack < 1.3.0 and capybara
-module Rack
-  module Utils
-    def escape(s)
-      CGI.escape(s.to_s)
-    end
-    def unescape(s)
-      CGI.unescape(s)
-    end
-  end
-end
-
