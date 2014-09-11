@@ -109,7 +109,7 @@ module PageExtension::Users
   # This method is almost always called on the current user.
   def participation_for_user(user)
     return false unless user.real?
-    if association(:user_participations).loaded?
+    if new_record? or association(:user_participations).loaded?
       # if we have in-memory data for user_participations, we must use it.
       # why?
       # * participation_for_user can be called on pages that have not yet
