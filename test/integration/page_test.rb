@@ -10,10 +10,7 @@ class PageTest < IntegrationTest
     PAGE_TYPES.each do |type|
       create_page type
       assert_page_header
-      cleanup_page
     end
-  ensure
-    cleanup_user
   end
 
   def test_all_page_types_are_hidden_by_default
