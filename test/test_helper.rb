@@ -24,8 +24,6 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-  # only for Machinist v2
-  # setup { Machinist.reset_before_test }
 
   #  setup {
   #    # Make sure Faker generates random but predictable content
