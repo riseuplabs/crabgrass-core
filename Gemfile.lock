@@ -136,8 +136,6 @@ GEM
       bundler (~> 1.0)
       railties (= 3.1.12)
     rails3_before_render (0.2.0)
-    rails_legacy_mapper (1.1.0)
-      actionpack (~> 3.1)
     railties (3.1.12)
       actionpack (= 3.1.12)
       activesupport (= 3.1.12)
@@ -208,7 +206,6 @@ DEPENDENCIES
   rails (~> 3.1.11)
   rails-dev-boost!
   rails3_before_render
-  rails_legacy_mapper
   rake (~> 0.9.2)
   rb-inotify (~> 0.9)
   rdoc (~> 3.0)

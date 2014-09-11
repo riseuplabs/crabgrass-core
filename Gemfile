@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 3.1.11'
-gem 'rails_legacy_mapper'
 gem 'prototype-rails'
 gem 'rake', '~> 0.9.2'
 
