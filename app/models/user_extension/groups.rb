@@ -31,8 +31,8 @@ module UserExtension::Groups
           records.each do |group|
             group.increment!(:version)
           end
-          proxy_owner.clear_peer_cache_of_my_peers
-          proxy_owner.update_membership_cache
+          proxy_association.owner.clear_peer_cache_of_my_peers
+          proxy_association.owner.update_membership_cache
         end
         def normals
           self.select{|group|group.normal?}
