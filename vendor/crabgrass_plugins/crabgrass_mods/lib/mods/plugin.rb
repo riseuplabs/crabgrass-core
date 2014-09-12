@@ -29,8 +29,8 @@ module Mods::Plugin
   # the logic for this is in Rails::Plugin::Loader#add_plugin_load_paths
   #
   def reloadable
-    ActiveSupport::Dependencies.autoload_once_paths.delete config.paths.lib
-    paths.app.each do |path|
+    ActiveSupport::Dependencies.autoload_once_paths.delete config.paths["lib"]
+    paths["app"].each do |path|
       ActiveSupport::Dependencies.autoload_once_paths.delete path
     end
   end
