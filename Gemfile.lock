@@ -33,6 +33,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
+    aasm (3.3.3)
     actionmailer (3.1.12)
       actionpack (= 3.1.12)
       mail (~> 2.4.4)
@@ -184,6 +185,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.2)
+  aasm
   acts-as-taggable-on (~> 2.4.1)
   capybara
   debugger

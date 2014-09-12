@@ -50,9 +50,6 @@ acts_as_list:
 acts_as_rateable
   Adds ratings to activerecords. Used to rate comments.
   
-acts_as_state_machine
-  Makes an active_record into a simple state machine. Used by requests.  
-
 better_acts_as_tree
   A slightly modified version of standard acts as tree. 
   This modification allows association callbacks. 

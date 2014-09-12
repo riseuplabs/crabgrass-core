@@ -30,6 +30,7 @@
 # This includes invitations, requests to join, RSVP, etc.
 #
 class Request < ActiveRecord::Base
+  include AASM
 
   ##
   ## ASSOCIATIONS
@@ -248,7 +249,7 @@ class Request < ActiveRecord::Base
   end
 
   # triggered by FSM
-  def approval_allowed()
+  def approval_allowed?
     may_approve?(approved_by)
   end
 
@@ -297,17 +298,18 @@ class Request < ActiveRecord::Base
   ## working at all! --Mario Savio
   ##
 
-  acts_as_state_machine :initial => :pending
-  state :pending
-  state :approved, :after => :after_approval
-  state :rejected
+  aasm :column => :state, :whiny_transitions => false do
+    state :pending, :initial => true
+    state :approved, :after_commit => :after_approval
+    state :rejected
 
-  event :approve do
-    transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
-    transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-  end
-  event :reject do
-    transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
+    event :approve do
+      transitions :from => :pending,  :to => :approved, :guard => :approval_allowed?
+      transitions :from => :rejected, :to => :approved, :guard => :approval_allowed?
+    end
+    event :reject do
+      transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed?
+    end
   end
 
   ##

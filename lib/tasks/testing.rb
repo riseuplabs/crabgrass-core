@@ -15,7 +15,6 @@ end
 #      acts_as_versioned
 #      acts_as_list
 #      better_acts_as_tree
-#      acts_as_state_machine
 #      ).include? p.name
 #   end
 # end

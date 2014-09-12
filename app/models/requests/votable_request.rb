@@ -81,7 +81,7 @@ class VotableRequest < Request
   # State changes are always allowed, because they are only triggered by
   # tally!() for VotableRequests.
   #
-  def approval_allowed()
+  def approval_allowed?
     true
   end
 
