@@ -50,7 +50,7 @@ class RequestToJoinUs < Request
 
   def no_membership_yet
     if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
-      errors.add_to_base(I18n.t(:membership_exists_error, :member => recipient.name))
+      errors.add(:base, I18n.t(:membership_exists_error, :member => recipient.name))
     end
   end
 

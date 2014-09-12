@@ -8,12 +8,7 @@ require 'minitest/autorun'
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-if defined?(UNIT_TESTING)
-  require File.expand_path(File.dirname(__FILE__) + "/unit/test_help")
-else
-  require 'rails/test_help'
-end
-
+require 'rails/test_help'
 
 ##
 ## load all the test helpers
@@ -29,8 +24,6 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 #ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
-  # only for Machinist v2
-  # setup { Machinist.reset_before_test }
 
   #  setup {
   #    # Make sure Faker generates random but predictable content
@@ -56,6 +49,8 @@ class ActiveSupport::TestCase
 
   # fixtures :all
   set_fixture_class :castle_gates_keys => CastleGates::Key
+  set_fixture_class :taggings => ActsAsTaggableOn::Tagging
+  set_fixture_class :tags => ActsAsTaggableOn::Tag
 end
 
 class FactoryGirl::SyntaxRunner

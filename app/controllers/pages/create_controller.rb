@@ -170,7 +170,7 @@ class Pages::CreateController < ApplicationController
 #  # subclasses override this to build their own data objects
 #  def build_page_data
 #    # if something goes terribly wrong with the data do this:
-#    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
+#    # @page.errors.add :base, I18n.t(:terrible_wrongness)
 #    # raise ActiveRecord::RecordInvalid.new(@page)
 #    # return new data if everything goes well
 #  end

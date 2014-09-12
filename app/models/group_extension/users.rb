@@ -34,13 +34,17 @@ module GroupExtension::Users
       end
 
       # tmp hack until we have a better viewing system in place.
-      scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}
+      scope :most_visits, joins(:memberships).
+        group('groups.id').
+        order('count(memberships.total_visits) DESC')
 
-      scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
+      scope :recent_visits, joins(:memberships).
+        group('groups.id').
+        order('memberships.visited_at DESC')
 
-      scope :with_admin, lambda { |user|
-        {:conditions => ["groups.id IN (?)", user.admin_for_group_ids]}
-      }
+      def self.with_admin(user)
+        where("groups.id IN (?)", user.admin_for_group_ids)
+      end
 
     end
   end

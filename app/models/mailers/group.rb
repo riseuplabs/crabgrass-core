@@ -22,10 +22,8 @@ module Mailers::Group
                         :group => @group.full_name,
                         :user => @user.try.display_name)
 
-    @body[:group_type] = @group.group_type
-    @body[:group] = @group.full_name
     # TODO: include this link in the email body and have a directory for destroyed groups
     # why do we want that?
-    # @body[:destroyed_group_directory_url] = groups_directory_url(:action => 'index', :view => 'destroyed', :host => domain)
+    # @destroyed_group_directory_url = groups_directory_url(:action => 'index', :view => 'destroyed', :host => domain)
   end
 end

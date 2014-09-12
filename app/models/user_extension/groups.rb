@@ -31,8 +31,8 @@ module UserExtension::Groups
           records.each do |group|
             group.increment!(:version)
           end
-          proxy_owner.clear_peer_cache_of_my_peers
-          proxy_owner.update_membership_cache
+          proxy_association.owner.clear_peer_cache_of_my_peers
+          proxy_association.owner.update_membership_cache
         end
         def normals
           self.select{|group|group.normal?}
@@ -88,21 +88,6 @@ module UserExtension::Groups
       # just groups and networks the user is a member of, no committees.
       has_many :groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => GROUPS_AND_NETWORKS_CONDITION
 
-      # all groups, including groups we have indirect access to even when there
-      # is no membership join record. (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group',
-         :finder_sql => lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})" } do
-        def normals
-          self.select{|group|group.normal?}
-        end
-        def networks
-          self.select{|group|group.network?}
-        end
-        def committees
-          self.select{|group|group.committee?}
-        end
-      end
-
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
 
@@ -111,10 +96,14 @@ module UserExtension::Groups
 
       # this seems to be the only way to override the A/R created methods.
       # new accessor defined in user_extension/cache.rb
-      remove_method :all_group_ids
       remove_method :group_ids
-      #remove_method :admin_for_group_ids
     end
+  end
+
+  # all groups, including groups we have indirect access to even when there
+  # is no membership join record. (ie committees and networks)
+  def all_groups
+    Group.where(:id => all_group_id_cache)
   end
 
   # is this user a member of the group?

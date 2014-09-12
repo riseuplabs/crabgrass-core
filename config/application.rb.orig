@@ -54,11 +54,13 @@ module Crabgrass
     "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
     "tracking/user_participation_observer", "tracking/group_participation_observer"
 
+<<<<<<< HEAD
+=======
     config.session_store :cookie_store,
-      :key => 'crabgrass_session'
+      :key => 'crabgrass_session',
+      :secret => Conf.secret
 
-    config.secret_token = Conf.secret
-
+>>>>>>> move session store options into application config
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 

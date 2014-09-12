@@ -13,6 +13,10 @@ class SiteTest < ActiveSupport::TestCase
     assert_equal Conf.title, Site.new.title
   end
 
+  def test_defaults_to_confs_page_types
+    assert_equal Conf.available_page_types, Site.new.available_page_types
+  end
+
   def test_site_admin
     blue = users(:blue)
     kangaroo = users(:kangaroo)

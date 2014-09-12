@@ -9,6 +9,6 @@ end
 require "#{Rails.root}/lib/crabgrass/exceptions.rb"
 
 # model extensions:
-require "#{Rails.root}/app/models/tag.rb"
+require "#{Rails.root}/lib/extends/acts_as_taggable_on.rb"
 
 

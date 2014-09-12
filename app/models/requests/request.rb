@@ -30,6 +30,7 @@
 # This includes invitations, requests to join, RSVP, etc.
 #
 class Request < ActiveRecord::Base
+  include AASM
 
   ##
   ## ASSOCIATIONS
@@ -67,9 +68,9 @@ class Request < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope :having_state, lambda { |state|
-    {:conditions => [ "requests.state = ?", state.to_s]}
-  }
+  def self.having_state(state)
+    where("requests.state = ?", state.to_s)
+  end
 
   # i think this is a nice idea, but... i am not sure about the UI for this. by making the view dependent
   # on the user, you make it hard to find requests that are still pending but have been approved by you
@@ -78,7 +79,7 @@ class Request < ActiveRecord::Base
 
   ## same as having_state, but take into account
   ## that user can vote reject/approve on some requests without changing the state
-  #scope :having_state_for_user, lambda { |state, user|
+  #def :having_state_for_user(state, user)
   #  votes_conditions = if state == :pending
   #    "votes.value IS NULL AND requests.state = 'pending'"
   #  else
@@ -89,52 +90,65 @@ class Request < ActiveRecord::Base
   #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
   #}
 
-  scope :pending, :conditions => "state = 'pending'"
-  scope :by_created_at, :order => 'created_at DESC'
-  scope :by_updated_at, :order => 'updated_at DESC'
-  scope :created_by, lambda { |user| where(created_by_id: user) }
-  scope :to_user, lambda { |user|
+  scope :pending, where("state = 'pending'")
+  scope :by_created_at, order('created_at DESC')
+  scope :by_updated_at, order('updated_at DESC')
+
+  def self.created_by(user)
+    where(created_by_id: user)
+  end
+
+  def self.to_user(user)
     where(recipient_id: user, recipient_type: 'User')
-  }
+  end
+
   # you only get to approve group requests for groups that you are an admin for
-  scope :approvable_by, lambda { |user|
-    {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
-  }
+  def self.approvable_by(user)
+    where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')",
+      user.id, user.admin_for_group_ids
+  end
 
-  scope :to_or_created_by_user, lambda { |user|
+  def self.to_or_created_by_user(user)
     # you only get to approve group requests for groups that you are an admin for
-    {:conditions => [
-      "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
-      user.id, user.admin_for_group_ids, user.id]}
-  }
+    where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
+      user.id, user.admin_for_group_ids, user.id
+  end
 
-  scope :to_group, lambda { |group|
+  def self.to_group(group)
     where(recipient_id: group, recipient_type: 'Group')
-  }
+  end
 
-  scope :from_group, lambda { |group|
+  def self.from_group(group)
     where(requestable_id: group, requestable_type: 'Group')
-  }
+  end
 
-  scope :regarding_group, lambda { |group|
-    {:conditions => ['(recipient_id = ? AND recipient_type = ?) OR (requestable_id = ? AND requestable_type = ?)', group.id, 'Group', group.id, 'Group']}
-  }
+  def self.regarding_group(group)
+    where '(recipient_id = ? AND recipient_type = ?) OR (requestable_id = ? AND requestable_type = ?)',
+      group.id, 'Group', group.id, 'Group'
+  end
 
-  scope :for_recipient, lambda { |recipient|
-    {:conditions => {:recipient_id => recipient}}
-  }
-  scope :with_requestable, lambda { |requestable|
-    {:conditions => {:requestable_id => requestable}}
-  }
+  def self.for_recipient(recipient)
+    where(:recipient_id => recipient)
+  end
+
+  def self.with_requestable(requestable)
+    where(:requestable_id => requestable)
+  end
+
+  MEMBERSHIP_TYPES = [
+    'RequestToJoinOurNetwork',
+    'RequestToJoinUs',
+    'RequestToJoinViaEmail',
+    'RequestToJoinYou',
+    'RequestToJoinYourNetwork',
+    'RequestToRemoveUser'
+  ]
 
   #
-  # find only requests related to remembership.
+  # find only requests related to membership.
   # maybe we should add a "membership?" column?
   #
-  scope :membership_related, :conditions => {:type => [
-    'RequestToJoinOurNetwork','RequestToJoinUs','RequestToJoinViaEmail',
-    'RequestToJoinYou', 'RequestToJoinYourNetwork', 'RequestToRemoveUser'
-  ]}
+  scope :membership_related, where(:type => MEMBERSHIP_TYPES)
 
   ##
   ## ATTRIBUTES
@@ -235,7 +249,7 @@ class Request < ActiveRecord::Base
   end
 
   # triggered by FSM
-  def approval_allowed()
+  def approval_allowed?
     may_approve?(approved_by)
   end
 
@@ -284,17 +298,18 @@ class Request < ActiveRecord::Base
   ## working at all! --Mario Savio
   ##
 
-  acts_as_state_machine :initial => :pending
-  state :pending
-  state :approved, :after => :after_approval
-  state :rejected
+  aasm :column => :state, :whiny_transitions => false do
+    state :pending, :initial => true
+    state :approved, :after_commit => :after_approval
+    state :rejected
 
-  event :approve do
-    transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
-    transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-  end
-  event :reject do
-    transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
+    event :approve do
+      transitions :from => :pending,  :to => :approved, :guard => :approval_allowed?
+      transitions :from => :rejected, :to => :approved, :guard => :approval_allowed?
+    end
+    event :reject do
+      transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed?
+    end
   end
 
   ##
@@ -354,13 +369,13 @@ class Request < ActiveRecord::Base
 
   def check_create_permission
     unless may_create?(created_by)
-      errors.add_to_base(I18n.t(:permission_denied))
+      errors.add(:base, I18n.t(:permission_denied))
     end
   end
 
   def no_duplicate
     if duplicates.any?
-      errors.add_to_base(:request_exists_error.t(:recipient => recipient.display_name))
+      errors.add(:base, :request_exists_error.t(:recipient => recipient.display_name))
     end
   end
 

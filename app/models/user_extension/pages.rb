@@ -32,40 +32,30 @@ module UserExtension::Pages
       has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
       has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
 
-      scope(:most_active_on, lambda do |site, time|
-        ret = {
-          :joins => "
-            INNER JOIN user_participations
-              ON users.id = user_participations.user_id
-            INNER JOIN pages
-              ON pages.id = user_participations.page_id AND
-              pages.site_id = #{site.id} AND
-              pages.type != 'AssetPage'",
-          :group => "users.id",
-          :order => 'count(user_participations.id) DESC',
-          :select => "users.*, user_participations.changed_at"
-        }
-        if time
-          ret[:conditions] = ["user_participations.changed_at >= ?", time]
-        end
-        ret
-      end)
+      def self.most_active_on(site, time)
+        condition = time && ["user_participations.changed_at >= ?", time]
+        joins(:user_participations => :pages).
+          where(condition).
+          where(pages => {:site_id => site}).
+          where("pages.type != 'AssetPage'").
+          group('users.id').
+          order('count(user_participations.id) DESC').
+          select('users.*, user_participations.changed_at')
+      end
 
-      scope(:most_active_since, lambda do |time|
-        { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
-          :group => "users.id",
-          :order => 'count(user_participations.id) DESC',
-          :conditions => ["user_participations.changed_at >= ?", time],
-          :select => "users.*" }
-      end)
+      def self.most_active_since(time)
+        joins(:user_participations).
+          group('users.id').
+          order('count(user_participations.id) DESC').
+          where("user_participations.changed_at >= ?", time).
+          select("users.*")
+      end
 
-      scope(:not_inactive, lambda do
+      def self.not_inactive
         if self.respond_to? :inactive_user_ids
-          {:conditions => ["users.id NOT IN (?)", inactive_user_ids]}
-        else
-          {}
+          where("users.id NOT IN (?)", inactive_user_ids)
         end
-      end)
+      end
 
       # some page data objects belong to users.
       # These need has many relationships so they get cleaned up if a user

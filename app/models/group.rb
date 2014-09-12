@@ -46,43 +46,43 @@ class Group < ActiveRecord::Base
 
   # find groups that do not contain the given user
   # used in autocomplete where the users groups are all preloaded
-  scope :without_member, lambda { |user|
+  def self.without_member(user)
     group_ids = user.all_group_ids
     group_ids.any? ?
-      {:conditions => ["NOT groups.id IN (?)", group_ids]} :
-      {}
-  }
+      where("NOT groups.id IN (?)", group_ids) :
+      self
+  end
 
   # finds groups that are of type Group (but not Committee or Network)
-  scope :only_groups, :conditions => 'groups.type IS NULL'
+  scope :only_groups, where('groups.type IS NULL')
 
-  scope(:only_type, lambda do |*args|
+  def self.only_type(*args)
     group_type = args.first.to_s.capitalize
     if group_type == 'Group'
-      {:conditions => 'groups.type IS NULL'}
-    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
-      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
+      only_groups
     else
-      {:conditions => ['groups.type = ?', group_type]}
+      where(:type => group_type)
     end
-  end)
+  end
 
-  scope :groups_and_networks, :conditions => "groups.type IS NULL OR groups.type = 'Network'"
+  scope :groups_and_networks,
+    where("groups.type IS NULL OR groups.type = 'Network'")
 
-  scope :all_networks_for, lambda { |user|
-    {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
-  }
+  def self.all_networks_for(user)
+    only_type('Network').
+      where(:id => user.all_group_id_cache)
+  end
 
   # alphabetized and (optional) limited to +letter+
-  scope :alphabetized, lambda {|letter|
+  def self.alphabetized(letter)
     if letter == '#'
       where('name REGEXP ?', "^[^a-z]").alphabetical_order
     elsif letter.present?
-      where(['name LIKE ?', "#{letter}%"]).alphabetical_order
+      where('name LIKE ?', "#{letter}%").alphabetical_order
     else
       alphabetical_order
     end
-  }
+  end
 
   # this is a little mysql magic to get what we want:
   # We want to sort by display_name.presence || name
@@ -92,8 +92,7 @@ class Group < ActiveRecord::Base
   #   CONCAT gives us the name
   # if the display name is present
   #   CONCAT gives display_name + name which will sort by display name basically.
-  scope :alphabetical_order,
-    order(<<-EOSQL
+  scope :alphabetical_order, order(<<-EOSQL
       LOWER(
         COALESCE(
           CONCAT(groups.full_name, groups.name),
@@ -103,38 +102,23 @@ class Group < ActiveRecord::Base
     EOSQL
    )
 
-  scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
-  scope :by_created_at, :order => 'groups.created_at DESC'
+  def self.recent
+    by_created_at.where("groups.created_at > ?", RECENT_TIME.ago)
+  end
 
-  scope :names_only, :select => 'full_name, name'
+  scope :by_created_at, order('groups.created_at DESC')
+
+  scope :names_only, select('full_name, name')
 
   # filters the groups based on their name and full name
   # filter is a sql query string
-  scope :named_like, lambda { |filter|
-    { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
-            filter, filter] }
-  }
+  def self.named_like(filter)
+    where "(groups.name LIKE ? OR groups.full_name LIKE ? )",
+      filter, filter
+  end
 
   # return an empty relation so it can still be combined with order and pagination
-  scope :none, :conditions => '1=2'
-
-  scope :in_location, lambda { |options|
-    country_id = options[:country_id]
-    admin_code_id = options[:state_id]
-    city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
-    end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
-    end
-    { :joins => "join geo_locations as gl",
-      :conditions => conditions
-    }
-  }
+  scope :none, where('1=2')
 
   ##
   ## GROUP INFORMATION
@@ -160,7 +144,7 @@ class Group < ActiveRecord::Base
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
     return nil unless name.present?
-    Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
+    Group.where(:name => name.gsub(' ','+')).first
   end
 
   # keyring_code used by acts_as_locked and pathfinder
@@ -212,14 +196,22 @@ class Group < ActiveRecord::Base
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   has_many :wikis, :through => :profiles
-  has_one :public_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.stranger' => true}
-  has_one :private_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.friend' => true}
+
+  def public_wiki
+    profiles.where(:stranger => true).first.wiki
+  end
+
+  def public_wiki=(wiki)
+    profiles.where(:stranger => true).first.wiki = wiki
+  end
+
+  def private_wiki
+    profiles.where(:friend => true).first.wiki
+  end
+
+  def private_wiki=(wiki)
+    profiles.where(:friend => true).first.wiki = wiki
+  end
 
   def profile
     self.profiles.visible_by(User.current)
@@ -276,7 +268,12 @@ class Group < ActiveRecord::Base
   def destroy_by(user)
     # needed for the activity
     self.destroyed_by = user
-    self.children.each {|committee| committee.destroyed_by = user}
+    # first we remove all the children in a clean way.
+    self.children.each {|committee| committee.destroy_by(user)}
+    # then we make sure they are not cached anymore so
+    # dependent: destroy does not get triggered.
+    # It would try to .destroy them which is a protected method.
+    self.reload
     self.destroy
   end
 

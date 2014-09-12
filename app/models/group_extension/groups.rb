@@ -13,7 +13,7 @@ module GroupExtension::Groups
 
       has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
-      belongs_to :council, :class_name => 'Group', :dependent => :destroy
+      belongs_to :council, :class_name => 'Group'
 
       # Committees are children! They must respect their parent group.
       # This uses crabgrass_acts_as_tree, which allows callbacks.
@@ -138,13 +138,13 @@ module GroupExtension::Groups
     # use it on its own as you'll have a committee without
     # a group afterwards.
     def remove_committee!(committee)
+      committee.destroy_permissions
       committee.parent_id = nil
       if council_id == committee.id
         self.council = nil
         committee.type = "Committee"
       end
       committee.save!
-      committee.destroy_permissions
       self.org_structure_changed
       self.save!
       self.committees.reset

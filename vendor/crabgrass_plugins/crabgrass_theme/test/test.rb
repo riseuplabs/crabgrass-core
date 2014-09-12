@@ -1,17 +1,14 @@
-
-RAILS_ENV = 'development'
-RAILS_ROOT = File.dirname(__FILE__) + '/../../../..'
 module Rails
   def self.env
-    RAILS_ENV
+    'development'
   end
   def self.root
-    RAILS_ROOT
+    Pathname.new(__FILE__) + '../../../../..'
   end
 end
 
 $: << 'lib/crabgrass'
-$: << RAILS_ROOT
+$: << Rails.root
 
 require 'rubygems'
 require 'active_record'

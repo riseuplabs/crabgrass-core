@@ -1,13 +1,13 @@
 require_relative 'test_helper'
 require 'capybara/rails'
-require "active_support/testing/setup_and_teardown"
+require "active_support/test_case"
 
 # require all integration helpers
 Dir[File.dirname(__FILE__) + '/helpers/integration/*.rb'].each do |file|
   require file
 end
 
-class IntegrationTest < MiniTest::Unit::TestCase
+class IntegrationTest < ActiveSupport::TestCase
   include Capybara::DSL
   include RecordTracking
   include ContentAssertions
@@ -84,17 +84,5 @@ class IntegrationTest < MiniTest::Unit::TestCase
   end
 
 
-end
-
-# fix a rack issue that only comes up with rack < 1.3.0 and capybara
-module Rack
-  module Utils
-    def escape(s)
-      CGI.escape(s.to_s)
-    end
-    def unescape(s)
-      CGI.unescape(s)
-    end
-  end
 end
 

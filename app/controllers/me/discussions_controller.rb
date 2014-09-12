@@ -11,11 +11,9 @@ class Me::DiscussionsController < Me::BaseController
   # helper 'autocomplete', 'javascript'
 
   # GET /me/messages
+  # we currently lack pagination and filtering for unread
   def index
     @discussions = current_user.discussions.with_some_posts
-#.
-#      send(current_view).
-#      paginate(pagination_params)
   end
 
   # GET /me/messages/penguin
@@ -40,14 +38,6 @@ class Me::DiscussionsController < Me::BaseController
   #end
 
   protected
-
-  def current_view
-    if params[:view] == 'unread'
-      :unread
-    else
-      :all
-    end
-  end
 
   def post_pagination_params
     default_page = params[:page].blank? ? @discussion.last_page : nil

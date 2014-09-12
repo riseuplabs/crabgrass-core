@@ -52,9 +52,12 @@ class Site < ActiveRecord::Base
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
 
-  serialize :translators, Array
-  serialize :available_page_types, Array
-  serialize :evil, Hash
+  # We do not specify types because nil is a valid value.
+  # Otherwise proxy to conf won't work in rails >= 3.1 as the
+  # attributes are initialized to [] or {} instead of nil.
+  serialize :translators           # Array
+  serialize :available_page_types  # Array
+  serialize :evil                  # Hash
   serialize :profile_fields
   serialize :profiles
 
@@ -67,12 +70,14 @@ class Site < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope :for_domain, lambda {|domain|
-    {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, Conf.enabled_site_ids]}
-  }
+  def self.for_domain(domain)
+    where 'sites.domain = ? AND sites.id IN (?)',
+      domain, Conf.enabled_site_ids
+  end
 
   def self.default
-    Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
+    where("sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids).
+      first
   end
 
   # def stylesheet_render_options(path)
@@ -92,7 +97,10 @@ class Site < ActiveRecord::Base
   # whatever crabgrass.*.yml gets loaded).
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
-      define_method(attribute) { (value = read_attribute(attribute.to_s.sub(/\?$/,''))).nil? ? Conf.send(attribute) : value }
+      define_method(attribute) do
+        value = read_attribute(attribute.to_s.sub(/\?$/,''))
+        value.nil? ? Conf.send(attribute) : value
+      end
     end
   end
 

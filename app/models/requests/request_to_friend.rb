@@ -13,7 +13,7 @@ class RequestToFriend < Request
 
   def no_friendship_yet
     if Friendship.find_by_user_id_and_contact_id(created_by_id, recipient_id)
-      errors.add_to_base('Friendship already exists')
+      errors.add(:base, 'Friendship already exists')
     end
   end
 

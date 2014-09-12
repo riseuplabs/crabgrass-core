@@ -1,5 +1,3 @@
-# apply some unit testing optimizations
-UNIT_TESTING = true unless defined? UNIT_TESTING
 require File.dirname(__FILE__) + '/../test_helper'
 
 # stubbing out controller helpers
@@ -14,7 +12,8 @@ class ActionView::Base
 
 end
 
-module ActionController::UrlWriter
+# we don't want to load the roots. So instead we create our own url_for
+module ActionDispatch::Routing::UrlFor
   def url_for(options = {})
     "url://#{options.values.join('/')}"
   end

@@ -1,6 +1,13 @@
 language: ruby
 rvm:
   - 1.9.3
+  - 2.0.0
+  - 2.1.1
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: 2.0.0
+    - rvm: 2.1.1
 before_install:
   - "bundle --version"
   - sudo apt-get update
@@ -14,8 +21,8 @@ before_script:
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
   - "bundle exec rake db:test:prepare"
-  - "bundle exec rake RAILS_ENV=test db:fixtures:load"
-  - "bundle exec rake RAILS_ENV=test ts:index ts:start"
+  - "RAILS_ENV=test bundle exec rake db:fixtures:load"
+  - "RAILS_ENV=test bundle exec rake ts:index ts:start"
 after_script:
   - "cat tmp/*.test*.log" # printing logs from the failed integration tests
 notifications:

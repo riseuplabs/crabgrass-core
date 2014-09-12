@@ -66,14 +66,14 @@ def self.included(base)
         holder = Holder[holder]
         key = find_or_initialize_by_holder_code(holder.code)
         if key.new_record?
-          castle = proxy_owner
+          castle = proxy_association.owner
           key.gate_bitfield |= castle.gate_set.default_bits(castle, holder)
         end
         key
       end
 
       def select_holder_codes
-        castle = proxy_owner
+        castle = proxy_association.owner
         sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
         self.connection.select_values("SELECT DISTINCT `castle_gates_keys`.`holder_code` FROM `castle_gates_keys` WHERE `castle_gates_keys`.`castle_type` = '%s' AND `castle_gates_keys`.`castle_id` = %s" % [sti_type, castle.id])
       end
@@ -94,7 +94,7 @@ def self.included(base)
     #          :conditions => 'holder_code IN (#{User.current.access_codes.join(", ")})',
     #          :as => :castle do
     #   def open?(locks)
-    #     proxy_owner.class.keys_open_locks?(self, locks)
+    #     proxy_association.owner.class.keys_open_locks?(self, locks)
     #   end
     #   def gate_bitfield
     #     if ActiveRecord::Base.connection.adapter_name == 'SQLite'

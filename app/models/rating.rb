@@ -10,18 +10,15 @@ class Rating < ActiveRecord::Base
   # Helper class method to lookup all ratings assigned
   # to all rateable types for a given user.
   def self.find_ratings_by_user(user)
-    find(:all,
-      :conditions => ["user_id = ?", user.id],
-      :order => "created_at DESC"
-    )
+    by_user(user).order('created_at DESC')
   end
 
-  scope :with_rating, lambda {|rating|
-    { :conditions => ['rating = ?', rating] }
-  }
-  scope :by_user, lambda {|user|
-    { :conditions => ['user_id = ?', user.id] }
-  }
+  def self.with_rating(rating)
+    where(rating: rating)
+  end
 
+  def self.by_user(user)
+    where(user_id: user)
+  end
 end
 

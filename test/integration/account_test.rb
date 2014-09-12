@@ -10,15 +10,11 @@ class AccountTest < IntegrationTest
     destroy_account
     login
     assert_login_failed
-  ensure
-    cleanup_user
   end
 
   def test_login_shortcut
     visit '/'
     login
     logout
-  ensure
-    cleanup_user
   end
 end

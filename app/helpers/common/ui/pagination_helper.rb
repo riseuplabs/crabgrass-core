@@ -51,30 +51,10 @@ module Common::Ui::PaginationHelper
      :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
      :next_label => ("%s &raquo;" % :pagination_next.t).html_safe,
      :inner_window => 2,
-     :outer_window => 0
+     :outer_window => 0,
+     :renderer => pagination_link_renderer
     }
-
-    if defined? page_search_path
-      if xhr_page_search?
-        defaults[:renderer] = LinkRenderer::AjaxPages
-      else
-        defaults[:renderer] = LinkRenderer::Pages
-      end
-    elsif request.xhr?
-      # this is a really bad guess, and should be replaced with a parameter
-      defaults[:renderer] = (current_template_format == :html) ?
-       LinkRenderer::ModalAjax :
-       LinkRenderer::Ajax
-    else
-      defaults[:renderer] = LinkRenderer::Dispatch
-    end
     will_paginate(things, defaults.merge(options))
-  end
-
-  def current_template_format
-    ## FIXME: this is likely going to break during the next rails upgrade.
-    ##   We should figure out a better way to choose the link renderer.
-    @renderer.instance_variable_get("@template").mime_type.symbol
   end
 
   #

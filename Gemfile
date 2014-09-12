@@ -1,28 +1,35 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.0.20', :git => 'git://github.com/rails/rails.git', :branch => '3-0-stable'
-
-gem 'rake', '~> 0.9.2', :require => false
+gem 'rails', '~> 3.1.11'
+gem 'prototype-rails'
+gem 'rake', '~> 0.9.2'
 
 gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
 
 ## from config/environment.rb
 
 # required, but not included with crabgrass:
-    # 0.5.4 has critical fixes - so we need at least that.
-gem 'i18n', '~> 0.5.4'
+gem 'i18n', '~> 0.6.11'
 gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
-    # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
-    # so, we bind to the latest in the version 2 series.
-gem 'will_paginate', '~> 3.0'
-gem 'sprockets', '~> 2.2'
+  # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
+  # so, we bind to the latest in the version 2 series.
+gem 'will_paginate', '= 3.0.6'
+  # 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
+  # we should remove this strict version once that is fixed.
+gem 'sprockets'
 
-gem 'mysql2', '~> 0.2.18'
+gem 'mysql2'
 
 gem 'json', '~> 1.7.7'
 
 gem 'haml'
 gem 'sass'
+gem 'acts-as-taggable-on', '~> 2.4.1'
+gem 'aasm'  # state-machine for requests
+    # Could not get the migration rake task for acts-as-taggable-on 3.x to work
+    # seems it requires rails 3.2
+
+gem 'http_accept_language'
 
 # required, and compilation is required to install
 gem 'RedCloth', '~> 4.2'
@@ -59,8 +66,6 @@ group :development do
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'rb-inotify', '~> 0.9', :require => false  # used by rails-dev-boost
 
-  gem 'better_errors'
-  gem 'binding_of_caller'
 end
 
 group :test, :development do

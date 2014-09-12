@@ -55,9 +55,9 @@ class PageTest < ActiveSupport::TestCase
     assert_no_difference 'Page.count', 'no new page' do
       assert_no_difference 'PageTerms.count', 'no new page terms' do
         assert_no_difference 'UserParticipation.count', 'no new user part' do
-           assert_raises ActiveRecord::RecordInvalid do
-             WikiPage.create!(params)
-           end
+          assert_raises ActiveRecord::RecordInvalid do
+            WikiPage.create!(params)
+          end
         end
       end
     end
@@ -193,12 +193,12 @@ class PageTest < ActiveSupport::TestCase
     assert check_associations(Page)
   end
 
-#  def test_thinking_sphinx
-#    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
-#      page = Page.new :title => 'title'
-#      page.expects(:save_without_after_commit_callback)
-#      page.save
-#    else
+  #  def test_thinking_sphinx
+  #    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
+  #      page = Page.new :title => 'title'
+  #      page.expects(:save_without_after_commit_callback)
+  #      page.save
+  #    else
 #      puts "thinking sphinx is not included"
 #    end
 #  end
@@ -238,64 +238,6 @@ class PageTest < ActiveSupport::TestCase
     assert_equal groups(:animals).name, page.owner_name
     assert_equal groups(:animals).id, page.owner_id
     assert_equal groups(:animals), page.owner
-  end
-
-  def test_attachments
-    page = Page.create! :title => 'page with attachments', :user => users(:blue)
-    upload = upload_data('gears.jpg')
-    page.add_attachment! :uploaded_data => upload
-
-    assert_equal page.page_terms, page.assets.first.page_terms
-
-    assert_equal 'gears.jpg', page.assets.first.filename
-    page.assets.each do |asset|
-      assert !asset.public?
-    end
-
-    page.public = true
-    page.save
-
-    page.assets(true).each do |asset|
-      assert asset.public?
-    end
-
-    assert_difference('Page.count', -1) do
-      assert_difference('Asset.count', -1) do
-        page.destroy
-      end
-    end
-  end
-
-  def test_attachment_options
-    asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
-    page = Page.create! :title => 'page with attachments'
-    page.add_attachment! asset, :filename => 'picture', :cover => true
-
-    assert_equal 'picture.jpg', page.assets.first.filename
-    assert_equal asset, page.cover
-  end
-
-  def test_attachment_building
-    # make sure we don't create assets when we create invalid pages
-    assert_no_difference 'Page.count' do
-      assert_no_difference 'Asset.count' do
-        assert_raises ActiveRecord::RecordInvalid do
-          Page.create! do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-          end
-        end
-      end
-    end
-    assert_difference 'Page.count' do
-      assert_difference 'Asset.count' do
-        assert_nothing_raised do
-          page = Page.create!(:title => 'hi') do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-          end
-          assert_equal 'photo.jpg', page.assets.first.filename
-        end
-      end
-    end
   end
 
   def test_update_at_updated_by_certain_fields

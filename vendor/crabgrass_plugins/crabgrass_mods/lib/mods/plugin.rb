@@ -1,7 +1,7 @@
 module Mods::Plugin
 
   def load(initializer)
-    info('loading plugin %s' % initializer.sub(RAILS_ROOT+'/',''), 1)
+    info('loading plugin %s' % initializer.sub(Rails.root.to_s + '/',''), 1)
     super(initializer)
   end
 
@@ -29,8 +29,8 @@ module Mods::Plugin
   # the logic for this is in Rails::Plugin::Loader#add_plugin_load_paths
   #
   def reloadable
-    ActiveSupport::Dependencies.autoload_once_paths.delete config.paths.lib
-    paths.app.each do |path|
+    ActiveSupport::Dependencies.autoload_once_paths.delete config.paths["lib"]
+    paths["app"].each do |path|
       ActiveSupport::Dependencies.autoload_once_paths.delete path
     end
   end

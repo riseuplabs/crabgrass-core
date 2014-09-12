@@ -11,136 +11,136 @@ unless defined?(FORBIDDEN_NAMES)
   }
 end
 
-#
-# useful options:
-#
-#   for normal routes
-#
-#     :conditions => {:method => :post}
-#
-#   for resources
-#
-#     :only => [:new, :show]
-#     :member => {:edit => :any, :update => :get}
-#
+#  See http://guides.rubyonrails.org/v3.1.0/routing.html
 
-Crabgrass::Application.routes.draw do |map|
+Crabgrass::Application.routes.draw do
 
   ##
   ## CRON JOBS
   ##
 
-  map.connect '/do/cron/run/:id', :controller => 'cron', :action => 'run'
+  # TODO: add localhost constraint
+  # TODO: specify http verb
+  match '/do/cron/run(/:id)', :to => 'cron#run', :format => false
 
   ##
   ## STATIC FILES AND ASSETS
   ##
 
-  map.resources :assets, :only => [:show, :destroy]
-  map.with_options(:controller => 'assets') do |assets|
-    assets.asset_version '/assets/:id/versions/:version/*path', :action => 'show'
-    assets.asset '/assets/:id(/*path)', :action => 'show'
+  resources :assets, :only => [:show, :destroy]
+  match '/assets/:id/versions/:version/*path',
+    :to => 'assets#show',
+    :as => 'asset_version'
+  match '/assets/:id(/*path)', :to => 'assets#show', :as => 'asset'
+
+  scope :format => false do
+    match 'avatars/:id/:size.jpg', :to => 'avatars#show', :as => 'avatar'
+    match 'theme/:name/*file.css', :to => 'theme#show'
   end
 
-  map.avatar 'avatars/:id/:size.jpg', :controller => 'avatars', :action => 'show'
-  map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
-  map.pictures 'pictures/:id1/:id2/:geometry.:format', :controller => 'pictures', :action => 'show'
+  match 'pictures/:id1/:id2(/:geometry)',
+    :to => 'pictures#show',
+    :as => 'pictures'
 
   ##
   ## ME
   ##
 
-  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
-    me.resources :notices
-    me.home      '', :controller => 'notices', :action => 'index'
-    me.resource  :page, :only => [:new, :create]
-    me.resources :recent_pages, :only => [:index]
-    me.pages     'pages(/*path)', :controller => 'pages'
-    me.resources :activities
-    me.resources(:discussions, :as => 'messages') do |discussion|
-      discussion.resources :posts
+  namespace 'me' do
+    resources :notices
+    match '', :to => 'notices#index', :as => 'home'
+    resource  :page, :only => [:new, :create]
+    resources :recent_pages, :only => [:index]
+    match 'pages(/*path)', :to => 'pages#index', :as => 'pages'
+    resources :activities
+    resources :discussions, :path => 'messages' do
+      resources :posts
     end
-    me.resource  :settings, :only => [:show, :update]
-    me.resource  :destroy, :only => [:show, :update]
-    me.resource  :password, :only => [:edit, :update]
-    me.resources :permissions
-    me.resource  :profile, :controller => 'profile', :only => [:edit, :update]
-    me.resources :requests, :only => [:index, :update, :destroy, :show]
-    me.resources :events
-    me.resources :avatars
+    resource  :settings, :only => [:show, :update]
+    resource  :destroy, :only => [:show, :update]
+    resource  :password, :only => [:edit, :update]
+    resources :permissions
+    resource  :profile, :controller => 'profile', :only => [:edit, :update]
+    resources :requests, :only => [:index, :update, :destroy, :show]
+    resources :events
+    resources :avatars
   end
 
   ##
   ## EMAIL
   ##
 
-#  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
-#  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
+  # UPGRADE: this is pre rails 3 syntax. If you want to bring these
+  # routes back please upgrade them
+  #  match '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  #  match '/code/:id', :to => 'codes#jump'
 
   ##
   ## ACCOUNT
   ##
 
-  map.with_options(:controller => 'account') do |account|
-    account.reset_password 'account/reset_password/:token', :action => 'reset_password', :token => nil
-    account.verify_account 'account/verify_email/:token',   :action => 'verify_email'
-    account.new_account    'account/new', :action => 'new'
-    account.account        'account/:action/:id'
-  end
+  match 'account/reset_password(/:token)',
+    :as => 'reset_password',
+    :to => 'account#reset_password'
+  match 'account/verify_email/:token',
+    :as => 'verify_account',
+    :to => 'account#verify_email'
+  match 'account/new', :as => 'new_account', :to => 'account#new'
+  match 'account(/:action(/:id))', :as => 'account', :controller => 'account'
 
-  map.with_options(:controller => 'session') do |session|
-    session.language 'session/language', :action => 'language'
-    session.login    'session/login',  :action => 'login'
-    session.logout   'session/logout', :action => 'logout'
-    session.session  'session/:action/:id'
-  end
+  match 'session/language', :as => 'language', :to => 'session#language'
+  match 'session/login', :as => 'login',  :to => 'session#login'
+  match 'session/logout', :as => 'logout', :to => 'session#logout'
+  match 'session(/:action(/:id))', :as => 'session', :controller => 'session'
 
   ##
   ## ENTITIES
   ##
 
-  map.resources :entities, :only => [:index]
+  resources :entities, :only => [:index]
 
   ##
   ## PEOPLE
   ##
 
-  map.people_directory 'people/directory(/*path)', :controller => 'people/directory'
+  match 'people/directory(/*path)',
+    :as => 'people_directory',
+    :to => 'people/directory#index'
 
-  map.resources :people, :namespace => 'people/' do |people|
-    people.resource  :home, :only => [:show], :controller => 'home'
-    people.pages     'pages(/*path)', :controller => 'pages'
-    people.resources :messages
-    people.resources :activities
-    people.resource :friend_request, :only => [:new, :create, :destroy]
+  resources :people, :module => 'people' do
+    resource  :home, :only => [:show], :controller => 'home'
+    match 'pages(/*path)', :as => 'pages', :to => 'pages#index'
+    resources :messages
+    resources :activities
+    resource :friend_request, :only => [:new, :create, :destroy]
   end
 
   ##
   ## GROUP
   ##
 
-  map.networks_directory 'networks/directory(/*path)', :controller => 'groups/directory'
-  map.groups_directory 'groups/directory(/*path)', :controller => 'groups/directory'
+  match 'networks/directory(/*path)', :as => 'networks_directory', :to => 'groups/directory#index'
+  match 'groups/directory(/*path)', :as => 'groups_directory', :to => 'groups/directory#index'
 
-  map.resources :groups, :namespace => 'groups/', :only => [:new, :create, :destroy] do |groups|
+  resources :groups, :module => 'groups', :only => [:new, :create, :destroy] do
     # content related
-    groups.resource  :home, :only => [:show], :controller => 'home'
-    groups.pages     'pages(/*path)', :controller => 'pages'
-    groups.resources :avatars
-    groups.resources :wikis, :only => [:create, :index] #:except => [:index, :destroy, :update, ]
+    resource  :home, :only => [:show], :controller => 'home'
+    match 'pages(/*path)', :as => 'pages', :to => 'pages#index'
+    resources :avatars
+    resources :wikis, :only => [:create, :index]
 
     # membership related
-    groups.resources :memberships, :only => [:index, :create, :destroy]
-    groups.resources :my_memberships, :only => [:create, :destroy]
-    groups.resources :membership_requests #, :only => [:index, :create]
-    groups.resources :invites, :only => [:new, :create]
+    resources :memberships, :only => [:index, :create, :destroy]
+    resources :my_memberships, :only => [:create, :destroy]
+    resources :membership_requests #, :only => [:index, :create]
+    resources :invites, :only => [:new, :create]
 
     # settings related
-    groups.resource  :settings, :only => [:show, :update]
-    groups.resources :requests #, :only => [:index, :create]
-    groups.resources :permissions, :only => [:index, :update]
-    groups.resource  :profile, :only => [:edit, :update]
-    groups.resource  :structure
+    resource  :settings, :only => [:show, :update]
+    resources :requests #, :only => [:index, :create]
+    resources :permissions, :only => [:index, :update]
+    resource  :profile, :only => [:edit, :update]
+    resource  :structure
  end
 
   ##
@@ -148,70 +148,78 @@ Crabgrass::Application.routes.draw do |map|
   ##
 
   if Rails.env.development?
-    map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
-    map.debug_break 'debug/break', :controller => 'debug', :action => 'break'
+    match 'debug/become', :as => 'debug_become', :to => 'debug#become'
+    match 'debug/break', :as => 'debug_break', :to => 'debug#break'
   end
-  map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
+  match 'debug/report/submit', :as => 'debug_report', :to => 'bugreport#submit'
 
   ##
   ## NORMAL PAGE ROUTES
   ##
 
   # default page creator
-  map.page_creation '/pages/:action/:owner/:type', :controller => 'pages/create',
-    :action => 'create', :owner => 'me', :type => nil,
-    :requirements => {:action => /new|create/}
+  match '/pages(/:action(/:owner(/:type)))',
+    :as => 'page_creation',
+    :controller => 'pages/create',
+    :defaults => {:owner => 'me', :action => 'create'},
+    :constraints => {:action => /new|create/}
 
   # base page
-  map.resources :pages, :namespace => 'pages/', :controller => 'base' do |pages|
-    pages.resources :participations, :only => [:index, :update, :create]
-    pages.resources :changes
-    pages.resources :assets, :only => [:index, :update, :create]
-    pages.resources :tags
-    pages.resources :posts, :member => {:edit => :any}, :only => [:show, :create, :edit, :update]
+  resources :pages, :module => 'pages', :controller => 'base' do |pages|
+    resources :participations, :only => [:index, :update, :create]
+    resources :changes
+    resources :assets, :only => [:index, :update, :create]
+    resources :tags
+    resources :posts, :only => [:show, :create, :edit, :update] do
+      member do
+        match :edit
+      end
+    end
 
     # page sidebar/popup controllers:
-    pages.resource :sidebar,    :only => [:show]
-    pages.resource :share,      :only => [:show, :update]
-    pages.resource :details,    :only => [:show]
-    pages.resource :history,    :only => [:show], :controller => 'history'
-    pages.resource :attributes, :only => [:update]
-    pages.resource :title,      :only => [:edit, :update], :controller => 'title'
-    pages.resource :trash,      :only => [:edit, :update], :controller => 'trash'
+    resource :sidebar,    :only => [:show]
+    resource :share,      :only => [:show, :update]
+    resource :details,    :only => [:show]
+    resource :history,    :only => [:show], :controller => 'history'
+    resource :attributes, :only => [:update]
+    resource :title,      :only => [:edit, :update], :controller => 'title'
+    resource :trash,      :only => [:edit, :update], :controller => 'trash'
   end
 
   # page subclasses, gets triggered for any controller class Pages::XxxController
-  map.connect '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
+  match '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
 
   ##
   ## WIKI
   ##
 
-  map.resources :wikis,
-    :namespace => 'wikis/',
-    :only => [:show, :edit, :update],
-    :member => {:print => :get} do |wikis|
-    wikis.resource :lock, :only  => [:destroy, :update]
-    wikis.resources :assets, :only => [:new, :create]
-    wikis.resources :versions, :only  => [:index, :show], :member => {:revert => :post}
-    #wikis.resources :diffs, :only => [:show]
-    #wikis.resources :sections, :only => [:edit, :update]
+  resources :wikis, :module => 'wikis', :only => [:show, :edit, :update] do
+    member do
+      get 'print'
+    end
+    resource :lock, :only  => [:destroy, :update]
+    resources :assets, :only => [:new, :create]
+    resources :versions, :only => [:index, :show] do
+      member do
+        post 'revert'
+      end
+    end
+    resources :diffs, :only => [:show]
+    resources :sections, :only => [:edit, :update]
   end
 
   ##
   ## OTHER ROUTES
   ##
 
-  map.root :controller => 'root'
-  map.with_options(:path_prefix => 'do') do |map|
-    map.connect '/static/:action/:id', :controller => 'static'
-  end
+  root :to => 'root#index'
+  match '/do/static/:action/:id', :controller => 'static'
 
   ## ADD ROUTES FROM MODS
 
   if Crabgrass.mod_route_blocks
     Crabgrass.mod_route_blocks.each do |block|
-      block.call(map)
+      block.call
     end
   end
 
@@ -219,7 +227,6 @@ Crabgrass::Application.routes.draw do |map|
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  map.connect ':_context/:_page(/*path)', :controller => 'dispatch', :action => 'dispatch'
-  map.connect ':_context',              :controller => 'dispatch', :action => 'dispatch'
+  match ':_context/(:_page(/*path))', :to => 'dispatch#dispatch'
 end
 

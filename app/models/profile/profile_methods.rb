@@ -10,10 +10,11 @@ module ProfileMethods
   # returns the best profile for user to see
   def visible_by(user)
     if user
-      relationships = proxy_owner.relationships_to(user)
+      owner = proxy_association.owner
+      relationships = owner.relationships_to(user)
 
       # site relationship settings are for user <=> user relationships only
-      filter_relationships_for_site(relationships) unless proxy_owner.is_a? Group
+      filter_relationships_for_site(relationships) unless owner.is_a? Group
 
       profile = find_by_access(*relationships)
     else
@@ -64,7 +65,7 @@ module ProfileMethods
   end
 
   def create_or_build(args={})
-    if proxy_owner.new_record?
+    if proxy_association.owner.new_record?
       build(args)
     else
       create(args)

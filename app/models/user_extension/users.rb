@@ -21,28 +21,9 @@ module UserExtension::Users
       ## PEERS
       ##
 
-      has_many :peers,
-        :class_name => 'User',
-        :counter_sql => 'SELECT count(*) FROM users WHERE users.id IN (#{peer_id_cache.to_sql})' do
-        # overwrites ActiveRecord::Associations::HasManyAssociation#construct_scope
-        # to specify the entire conditions without using :finder_sql
-        def construct_scope
-          { :find => {
-              :conditions => "users.id IN (#{@owner.peer_id_cache.to_sql})",
-              :readonly => true,
-              :order => @reflection.options[:order],
-              :limit => @reflection.options[:limit],
-              :include => @reflection.options[:include]
-            },
-            :create => {}
-          }
-        end
+      def self.peers_of(user)
+        where('users.id in (?)', user.peer_id_cache)
       end
-
-      # same as results as user.peers, but chainable with other named scopes
-      scope(:peers_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.peer_id_cache]}
-      end)
 
       ##
       ## USER'S STATUS / PUBLIC WALL
@@ -74,20 +55,20 @@ module UserExtension::Users
       end
 
       # same result as user.friends, but chainable with other named scopes
-      scope(:friends_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache]}
-      end)
+      def self.friends_of(user)
+        where('users.id in (?)', user.friend_id_cache)
+      end
 
-      scope(:friends_or_peers_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
-      end)
+      def self.friends_or_peers_of(user)
+        where('users.id in (?)', user.friend_id_cache + user.peer_id_cache)
+      end
 
       # neither friends nor peers
       # used for autocomplete when we preloaded the friends and peers
-      scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)',
-          user.friend_id_cache + user.peer_id_cache + [user.id]]}
-      end)
+      def self.strangers_to(user)
+        where 'users.id NOT IN (?)',
+          user.friend_id_cache + user.peer_id_cache + [user.id]
+      end
 
       ##
       ## CACHE
@@ -106,6 +87,9 @@ module UserExtension::Users
   end
 
   module InstanceMethods
+    def peers
+      User.peers_of(self).readonly
+    end
 
     ##
     ## STATUS / PUBLIC WALL

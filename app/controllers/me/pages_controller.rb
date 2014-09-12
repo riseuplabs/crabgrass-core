@@ -2,9 +2,6 @@ class Me::PagesController < Me::BaseController
 
   include_controllers 'common/page_search'
 
-  def show
-  end
-
   #
   # see controller/common/page_search.rb
   #

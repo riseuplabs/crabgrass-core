@@ -270,14 +270,15 @@ class PathFinder::Mysql::Query < PathFinder::Query
     find_opts = {
       :conditions => conditions,
       :joins => sql_for_joins(conditions),
-      :limit => @limit,         # \ manual offset or limit
-      :offset => @offset,       # /
       :order => order,
       :include => @include,
       :select => @select || @selects.join(", "),
     }
+    # setting limit to nil will keep will_paginate from setting its own limit
+    find_opts[:limit]  = @limit  if @limit   # manual limit
+    find_opts[:offset] = @offset if @offset  # manual offset
 
-    find_opts[:group] = sql_for_group(order)
+    find_opts[:group]  = sql_for_group(order)
     find_opts[:having] = sql_for_group(order)
 
     return find_opts

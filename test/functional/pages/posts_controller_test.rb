@@ -7,11 +7,6 @@ class Pages::PostsControllerTest < ActionController::TestCase
     @page = FactoryGirl.create(:page, :owner => @user)
   end
 
-  def teardown
-    @user.destroy if @user
-    @page.destroy if @page
-  end
-
   def test_create_post
     login_as @user
     body = "Test Message"

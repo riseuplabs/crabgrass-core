@@ -11,7 +11,7 @@ class UserTest < ActiveSupport::TestCase
   def test_user_fixtures_are_valid
     orange = users(:orange)
     orange.valid?
-    assert_equal Hash.new, orange.errors
+    assert_equal Hash.new, orange.errors.messages
     assert orange.valid?
   end
 
@@ -20,7 +20,7 @@ class UserTest < ActiveSupport::TestCase
     orange = users(:orange)
     orange.email = nil
     orange.valid?
-    assert_equal Hash.new, orange.errors
+    assert_equal Hash.new, orange.errors.messages
     assert orange.valid?
   end
 
@@ -60,13 +60,13 @@ class UserTest < ActiveSupport::TestCase
   def test_namespace
     assert_no_difference 'User.count' do
       u = create_user(:login => 'groups')
-      assert u.errors.on(:login)
+      assert u.errors[:login]
     end
 
     g = Group.create :name => 'robot-overlord'
     assert_no_difference 'User.count' do
       u = create_user(:login => 'robot-overlord')
-      assert u.errors.on(:login)
+      assert u.errors[:login]
     end
   end
 
