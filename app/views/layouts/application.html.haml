@@ -12,8 +12,11 @@
       #masthead_container
         #masthead_content
           = render :partial => '/layouts/global/masthead_content'
-        #global_nav
-          = render :partial => '/layouts/global/nav/top_menus'
+        #global_nav{:class => "#{active_top_nav.name}-active"}
+          - key = menu_cache_key :lang => current_language_code,
+            :active => active_top_nav.name
+          - cache(key) do
+            = render :partial => '/layouts/global/nav/top_menus'
 
     #middle
       #middle_container.container-fluid

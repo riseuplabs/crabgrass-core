@@ -24,19 +24,16 @@ module Common::Utility::CacheHelper
   end
 
   def menu_cache_key(options={})
-    current_site_key = current_site.id ? "current_site="+current_site.id.to_s+"&" : ""
-    "menu/#{current_site_key}menu_id=#{options[:menu_id]}&user_id=#{current_user.id}&version=#{current_user.version}"
+    options.reverse_merge! :site => current_site.id,
+      :user => current_user.cache_key,
+      :v => 2
+    cache_key 'menu', options
   end
 
   # example input: cache_key('wiki', :version => 1, :editable => false)
   # output "wiki/version=1&editable=false"
   def cache_key(path, options = {})
-    path = "#{path}/"
-    key_pairs = []
-    options.each do |k, v|
-      key_pairs << "#{k}=#{v}"
-    end
-    path + key_pairs.sort.join('&')
+    path = "#{path}/" + options.to_query
   end
 
 end

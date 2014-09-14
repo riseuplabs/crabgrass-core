@@ -16,6 +16,10 @@ module Common::Ui::NavigationHelper
 
   protected
 
+  def active_top_nav
+    current_theme.navigation.root.currently_active_item
+  end
+
   def breadcrumb_divider()
     '<span class="divider">&raquo;</span>'.html_safe
   end

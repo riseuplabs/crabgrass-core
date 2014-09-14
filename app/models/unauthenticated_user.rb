@@ -5,6 +5,10 @@ class UnauthenticatedUser
   alias :name :login
   alias :display_name :login
 
+  def cache_key
+    "anonymous-1"
+  end
+
   def may?(access,thing)
     # nothing but viewing for now.
     return false unless access == :view

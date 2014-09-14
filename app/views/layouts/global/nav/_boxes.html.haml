@@ -6,12 +6,12 @@
 - columns = split_entities_into_columns(entities)
 
 - if not entities.empty?
-  - cache(menu_cache_key(:menu_id => id)) do
-    %div{:style=>"display: none", :class => columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
-      .h3.first
-        = heading
-        %small
-          = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
+  %div{:style=>"display: none", :class => columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
+    .h3.first
+      = heading
+      %small
+        = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
+    - cache(menu_cache_key(:menu => id)) do
       %div.leftcol
         %ul
           - for entity in columns[:left_col]

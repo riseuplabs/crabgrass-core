@@ -88,6 +88,11 @@ class User < ActiveRecord::Base
   ## USER IDENTITY
   ##
 
+
+  def cache_key
+    "user/#{id}-#{version}"
+  end
+
   belongs_to :avatar, :dependent => :destroy
 
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
