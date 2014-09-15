@@ -12,11 +12,7 @@ module GroupExtension::Pages
         dependent: :delete_all,
         order: :featured_position,
         inverse_of: :group
-      has_many :pages, :through => :participations do
-        def pending
-          find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-        end
-      end
+      has_many :pages, :through => :participations
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
     end

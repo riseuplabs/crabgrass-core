@@ -21,6 +21,14 @@ module PageExtension::Groups
     end
   end
 
+
+  def self.for_group(group)
+    ids = Group.namespace_ids(group.id)
+    joins(:group_participations).
+      where(:group_participations => {:group_id => ids})
+  end
+
+
   # returns the owner if the owner happens to be a group
   def group
     if owner and owner.is_a? Group

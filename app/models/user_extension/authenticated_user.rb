@@ -63,7 +63,7 @@ module AuthenticatedUser
     end
 
     def find_for_forget(email)
-      find :first, :conditions => ['email = ?', email]
+      where(:email => email).first
     end
 
     # set to the currently logged in user.

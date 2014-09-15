@@ -14,7 +14,7 @@ class RequestToCreateCouncil < Request
   alias_attr :group, :recipient
 
   def self.existing(options)
-    pending.to_group(options[:group]).find(:first)
+    pending.to_group(options[:group]).first
   end
 
   def may_create?(user)

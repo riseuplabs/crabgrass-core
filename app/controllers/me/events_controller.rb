@@ -4,7 +4,7 @@ class Me::EventsController < Me::BaseController
   include_controllers 'common/events'
 
   def index
-    @events = Event.find(:all)
+    @events = Event.all
     render :template => 'common/events/index'
   end
 

@@ -88,6 +88,7 @@ class Page < ActiveRecord::Base
   scope :only_public, where(:public => true)
   scope :only_images, where(:is_image => true)
   scope :only_videos, where(:is_video => true)
+  scope :pending, where(:resolved => false).order(:happens_at)
 
   ##
   ## PAGE NAMING
