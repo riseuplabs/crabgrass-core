@@ -8,48 +8,58 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototyp
 
 ## from config/environment.rb
 
-# required, but not included with crabgrass:
+##
+## GEMS required, but not included with crabgrass:
+##
+
 gem 'i18n', '~> 0.6.11'
-gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
-  # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
-  # so, we bind to the latest in the version 2 series.
-gem 'will_paginate', '= 3.0.6'
-  # 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
-  # we should remove this strict version once that is fixed.
-gem 'sprockets'
-
 gem 'mysql2'
-
 gem 'json', '~> 1.7.7'
-
 gem 'haml'
 gem 'sass'
-gem 'acts-as-taggable-on', '~> 2.4.1'
-gem 'aasm'  # state-machine for requests
-    # Could not get the migration rake task for acts-as-taggable-on 3.x to work
-    # seems it requires rails 3.2
-
 gem 'http_accept_language'
 
-# required, and compilation is required to install
+# thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
+# so, we bind to the latest in the version 2 series.
+gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
+
+# 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
+# we should remove this strict version once that is fixed.
+gem 'will_paginate', '= 3.0.6'
+
+# Could not get the migration rake task for acts-as-taggable-on 3.x to work
+# seems it requires rails 3.2
+gem 'acts-as-taggable-on', '~> 2.4.1'
+gem 'aasm'  # state-machine for requests
+
+##
+## GEMS required, and compilation is required to install
+##
+
 gem 'RedCloth', '~> 4.2'
 gem 'hpricot', '~> 0.8'
 
-# required, included with crabgrass
+##
+## GEMS required, included with crabgrass
+##
+
 gem 'greencloth', :require => 'greencloth', :path => 'vendor/gems/riseuplabs-greencloth-0.1'
 gem 'undress', :require => 'undress/greencloth', :path => 'vendor/gems/riseuplabs-undress-0.2.4'
 gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-uglify_html-0.12'
 
-# not required, but a really good idea
+##
+## GEMS not required, but a really good idea
+##
+
 gem 'mime-types', :require => 'mime/types'
-gem 'rubyzip', '~> 1.1.0', :require => false
-gem 'zip-zip', :require => 'zip'
-    # load new rubyzip, but with the old API.
-    # TODO: use the new zip api and remove gem zip-zip
-
 gem 'delayed_job', '~> 3.0.5'
-
 gem 'rails3_before_render'
+gem 'rubyzip', '~> 1.1.0', :require => false
+
+# load new rubyzip, but with the old API.
+# TODO: use the new zip api and remove gem zip-zip
+gem 'zip-zip', :require => 'zip'
+
 
 group :production, :development do
   gem 'whenever', :require => false  # used to install crontab

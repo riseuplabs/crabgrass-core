@@ -213,7 +213,6 @@ DEPENDENCIES
   rdoc (~> 3.0)
   rubyzip (~> 1.1.0)
   sass
-  sprockets
   thin
   thinking-sphinx (~> 2.1.0)
   uglify_html!
