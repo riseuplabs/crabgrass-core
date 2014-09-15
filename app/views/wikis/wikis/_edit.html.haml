@@ -13,7 +13,7 @@
 -#
 -# note: data-wiki attribute is used by the auto-unlock javascript.
 -#
-= remote_form_for(:wiki, wiki, :url => wiki_path(wiki), :method => :put, :loading => show_spinner(spinner_id), :html => {'data-wiki' => wiki.id}) do |f|
+= form_for(wiki, :url => wiki_path(wiki), :method => :put, :remote => true, :html => { :onsubmit => show_spinner(spinner_id), 'data-wiki' => wiki.id}) do |f|
   = f.hidden_field :version
   = hidden_field_tag :section, section if section && section != :document
   - if @error_message

@@ -1,5 +1,6 @@
 -# remote_form_for(:page, @page, :url => page_title_path(@page), :before => show_spinner('save_title'), :html => {:method => :get}) do
-= remote_form_for(:page, @page, :url => page_title_path(@page), :html => {:method => :put}, :before => show_spinner('save_title')) do
+= form_for @page, :url => page_title_path(@page), :remote => true,
+  :html => {:method => :put, :onsubmit => show_spinner('save_title')} do
   = formy(:simple_form) do |f|
     - f.row do |r|
       - r.label :title.t

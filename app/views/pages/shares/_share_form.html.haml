@@ -1,10 +1,5 @@
-- type   = 'send' if type.nil?
 - notify = true if notify.nil?
-- url    = page_share_path(@page, :mode => 'share')
-- id     = 'share_page_form'
-
-= form_remote_tag(:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put') do
-  
+= page_popup_form('share') do
   .share_page
     %h2.first= :share_page_recipients.t(:page_class => :page.t)
     = render :partial => 'pages/shares/add_recipient_widget'

@@ -1,6 +1,6 @@
 -# %pre= @wiki.section_locks.locks
 
-= remote_form_for(:wiki, @wiki, :url => wiki_lock_path(@wiki), :method => :put, :loading => show_spinner('unlock_wiki')) do |f|
+= form_for(@wiki, :url => wiki_lock_path(@wiki), :method => :put, :remote => true, :html => { :onsubmit => show_spinner('unlock_wiki') }) do |f|
   .alert.alert-error= @error_message.to_s
   = hidden_field_tag :section, @section if @section && @section != :document
   .right_buttons.p
