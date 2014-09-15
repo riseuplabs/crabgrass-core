@@ -42,8 +42,9 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_group_created
-    group = Group.create!(:name => "plants",
-                          :fullname =>"All the plants") do |group|
+    group = Group.create! do |group|
+      group.name = "plants"
+      group.full_name = "All the plants"
       group.avatar = Avatar.new
       group.created_by = @ann
     end
