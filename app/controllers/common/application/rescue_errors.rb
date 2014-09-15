@@ -31,6 +31,9 @@ module Common::Application::RescueErrors
   def self.included(base)
     base.extend ClassMethods
     base.class_eval do
+
+      class_attribute :rescue_render_map
+
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, :with => :render_error
       rescue_from CrabgrassException,          :with => :render_error
@@ -71,9 +74,12 @@ module Common::Application::RescueErrors
     #
     def rescue_render(hsh=nil)
       if hsh
-        write_inheritable_attribute "rescue_render", HashWithIndifferentAccess.new(hsh)
+        # this has to be a copy so the super class is not affected.
+        # see http://apidock.com/rails/v4.0.2/Class/class_attribute
+        map = rescue_render_map || HashWithIndifferentAccess.new
+        self.rescue_render_map = map.merge(hsh)
       else
-        read_inheritable_attribute "rescue_render"
+        rescue_render_map
       end
     end
   end
