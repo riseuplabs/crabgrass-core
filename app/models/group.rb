@@ -198,19 +198,19 @@ class Group < ActiveRecord::Base
   has_many :wikis, :through => :profiles
 
   def public_wiki
-    profiles.where(:stranger => true).first.wiki
+    profiles.where(:stranger => true).first.try.wiki
   end
 
   def public_wiki=(wiki)
-    profiles.where(:stranger => true).first.wiki = wiki
+    profiles.public.wiki = wiki
   end
 
   def private_wiki
-    profiles.where(:friend => true).first.wiki
+    profiles.where(:friend => true).first.try.wiki
   end
 
   def private_wiki=(wiki)
-    profiles.where(:friend => true).first.wiki = wiki
+    profiles.private.wiki = wiki
   end
 
   def profile
