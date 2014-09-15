@@ -23,7 +23,6 @@ module PageExtension::Users
         end
       end
 
-      remove_method :user_ids
       after_save :reset_users
     end
 

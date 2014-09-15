@@ -78,11 +78,6 @@ module UserExtension::Users
       initialized_by :update_contacts_cache, :friend_id_cache, :foe_id_cache
       initialized_by :update_membership_cache, :peer_id_cache
 
-      # this seems to be the only way to override the A/R created methods.
-      # new accessor defined in user_extension/cache.rb
-      remove_method :friend_ids
-      #remove_method :foe_ids
-      #remove_method :peer_ids
     end
   end
 
