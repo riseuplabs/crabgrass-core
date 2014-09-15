@@ -56,6 +56,10 @@ end
 class FactoryGirl::SyntaxRunner
   # for fixture_file_upload
   include ActionDispatch::TestProcess
+
+  def self.fixture_path
+    ActionController::TestCase.fixture_path
+  end
 end
 
 ##
