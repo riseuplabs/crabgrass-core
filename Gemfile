@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.1.11'
+gem 'rails', '~> 3.2.18'
 gem 'prototype-rails'
-gem 'rake', '~> 0.9.2'
+gem 'rake'
 
 gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
 
@@ -12,9 +12,9 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototyp
 ## GEMS required, but not included with crabgrass:
 ##
 
-gem 'i18n', '~> 0.6.11'
+gem 'i18n'
 gem 'mysql2'
-gem 'json', '~> 1.7.7'
+gem 'json'
 gem 'haml'
 gem 'sass'
 gem 'http_accept_language'
@@ -60,6 +60,13 @@ gem 'rubyzip', '~> 1.1.0', :require => false
 # TODO: use the new zip api and remove gem zip-zip
 gem 'zip-zip', :require => 'zip'
 
+# Assets group according to migration guide:
+# http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-3-1-to-rails-3-2
+group :assets do
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier',     '>= 1.0.3'
+end
 
 group :production, :development do
   gem 'whenever', :require => false  # used to install crontab
