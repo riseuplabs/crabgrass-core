@@ -42,10 +42,6 @@ routing_filter
 ActiveRecord Plugins
 --------------------
 
-better_acts_as_tree
-  A slightly modified version of standard acts as tree. 
-  This modification allows association callbacks. 
-
 acts_as_versioned
   used to do wiki versioning.
 

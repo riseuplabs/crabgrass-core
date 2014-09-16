@@ -6,19 +6,6 @@ rescue LoadError
   # ^^ I don't want to get this error every time.
 end
 
-# def plugins_with_allowed_fixtures
-#   # skip plugins that load fixtures we don't have a schema for
-#   Engines.plugins.by_precedence.reject do |p|
-#      %w(
-#      multiple_select
-#      will_paginate
-#      acts_as_versioned
-#      acts_as_list
-#      better_acts_as_tree
-#      ).include? p.name
-#   end
-# end
-
 #
 # Faster tests
 #
