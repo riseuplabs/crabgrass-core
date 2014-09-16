@@ -161,7 +161,6 @@ Crabgrass::Application.routes.draw do
   match '/pages(/:action(/:owner(/:type)))',
     :as => 'page_creation',
     :controller => 'pages/create',
-    :defaults => {:owner => 'me', :action => 'create'},
     :constraints => {:action => /new|create/}
 
   # base page
