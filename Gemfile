@@ -30,7 +30,8 @@ gem 'will_paginate', '= 3.0.6'
 # Could not get the migration rake task for acts-as-taggable-on 3.x to work
 # seems it requires rails 3.2
 gem 'acts-as-taggable-on', '~> 2.4.1'
-gem 'aasm'  # state-machine for requests
+gem 'aasm'          # state-machine for requests
+gem 'acts_as_list'  # continuation of the old standart rails plugin
 
 ##
 ## GEMS required, and compilation is required to install
