@@ -39,15 +39,6 @@ routing_filter
   allows you to wrap a black box around the rails routing code to modify the
   behavior as you see fit. fun and powerful!  
 
-ActiveRecord Plugins
---------------------
-
-acts_as_versioned
-  used to do wiki versioning.
-
-will_paginate
-  Adds paginate() to activerecord. 
-
 ActionController Plugins
 -------------------------
 
