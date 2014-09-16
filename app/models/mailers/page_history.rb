@@ -20,7 +20,7 @@ module Mailers::PageHistory
     @user           = user
     @site           = Site.default
     @subject        = "#{@site.title} : #{@page_history.page.title}"
-    setup_watched_notification_email
+    mail :from => from_address, to: @user.email, :subject => @subject
   end
 
   def page_history_single_notification_paranoid(user, page_history)
@@ -29,7 +29,7 @@ module Mailers::PageHistory
     @site           = Site.default
     @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
     @code           = Code.create!(:user => user, :page => page_history.page)
-    setup_watched_notification_email
+    mail :from => from_address, to: @user.email, :subject => @subject
   end
 
   def page_history_digest_notification(user, page, page_histories)
@@ -38,7 +38,7 @@ module Mailers::PageHistory
     @subject        = "#{@site.title} : #{page.title}"
     @page           = page
     @page_histories = page_histories
-    setup_watched_notification_email
+    mail :from => from_address, to: @user.email, :subject => @subject
   end
 
   def page_history_digest_notification_paranoid(user, page, page_histories)
@@ -48,7 +48,7 @@ module Mailers::PageHistory
     @page           = page
     @page_histories = page_histories
     @code           = Code.create!(:user => user, :page => page)
-    setup_watched_notification_email
+    mail :from => from_address, to: @user.email, :subject => @subject
   end
 
   protected
@@ -57,10 +57,4 @@ module Mailers::PageHistory
     @site.email_sender.gsub('$current_host', @site.domain)
   end
 
-  def setup_watched_notification_email
-    @from           = "#{from_address}"
-    @recipients     = "#{@user.email}"
-    @site           = @site
-    @user           = @user
-  end
 end
