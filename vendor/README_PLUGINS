@@ -42,13 +42,16 @@ routing_filter
 ActiveRecord Plugins
 --------------------
 
-acts_as_list:
-  Once part of rails core. Lets you have an ordered list of things.
-  Used by tasks.
-  updated Aug 2010
-
 acts_as_rateable
   Adds ratings to activerecords. Used to rate comments.
+  Not maintained in 4 years. There's a gem but its init file
+  is not compatible with rails 3.
+  There are forks on github that fix this but they also apply
+  other changes in particular they change the database structure
+  possible next steps:
+  * fork on github and cherry pick from other repos
+  * use letsrate instead https://github.com/muratguzel/letsrate
+  * include as lib in crabgrass
   
 better_acts_as_tree
   A slightly modified version of standard acts as tree. 
