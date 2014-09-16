@@ -9,7 +9,8 @@
       %tr
         %td= text_area  'task', 'description', :size => '50x4', :class => 'task_description'
       %tr
-        %td= checkboxes_for_assign_people_to_task(task, task.user_ids)
+        %td
+          %ul= checkboxes_for_assign_people_to_task(task, task.user_ids)
       %tr
         %td
           = delete_task_edit_button(task)

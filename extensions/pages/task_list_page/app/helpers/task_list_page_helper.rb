@@ -123,7 +123,10 @@ module TaskListPageHelper
 
   def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
     page ||= task.task_list.page
-    collection_multiple_select('task', 'user_ids', possible_users(task, page), :id, :login, :outer_class=>'plain floatlist', :selected_items => selected)
+    render :partial => 'assigned_checkbox',
+      :collection => possible_users(task, page),
+      :as => :user,
+      :locals => {:selected => selected}
   end
 
   def close_task_edit_button(task)

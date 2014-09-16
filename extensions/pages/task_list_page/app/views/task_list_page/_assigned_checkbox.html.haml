@@ -1,0 +1,4 @@
+%li
+  = check_box_tag dom_id(user, :task), user.id, selected.include?(user.id),
+    :name => "task[user_ids][]"
+  = label_tag dom_id(user, :task), user.display_name

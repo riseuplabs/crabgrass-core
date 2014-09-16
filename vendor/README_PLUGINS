@@ -74,9 +74,6 @@ UI Plugins
 calendar_date_select
   javascript calendar widget 
 
-multiple_select
-  widget for habtm checkboxes and selection tree.
-
 mested_layouts
   lets you enclose one layout in another.
   TODO: check to see if it is still used
