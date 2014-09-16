@@ -6,7 +6,6 @@ class SessionController < ApplicationController
 
   layout 'notice'
   skip_before_filter :redirect_unverified_user
-  verify :method => :post, :only => [:language, :logout]
 
   def login
     return unless request.post?

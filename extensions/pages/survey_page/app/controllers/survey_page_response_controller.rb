@@ -18,7 +18,7 @@ class SurveyPageResponseController < Pages::BaseController
 
   permissions 'survey_page'
 
-  verify :method => :post, :only => [:make, :update, :destroy]
+  before_filter :verify_post, :only => [:make, :update, :destroy]
 
   def new
     @response = SurveyResponse.new
@@ -124,6 +124,10 @@ class SurveyPageResponseController < Pages::BaseController
 
 
   protected
+
+  def verify_post
+    raise PermissionDenied unless request.post?
+  end
 
   # called early in filter chain
   def fetch_data

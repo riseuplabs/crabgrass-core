@@ -15,6 +15,6 @@
     -# = call_hook :top_right_links
   - elsif !@login_form_already_rendered
     %li.tab.account.last
-      = link_to_modal(:login.t, {:url => session_path(:action => 'login_form'), :width => '280'}, {:class => 'tab'})
+      = link_to_modal(:login.t, {:url => login_form_path, :width => '280'}, {:class => 'tab'})
   -# this dummy tab is needed at the end for correct rendering in webkit:
   %li.tab
