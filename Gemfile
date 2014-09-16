@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.18'
-gem 'prototype-rails'
 gem 'rake'
 
-gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
+# we still use prototype.
+# these will be replaced by jquery equivalents at some point:
+gem 'prototype-rails'
+gem 'prototype_legacy_helper', '0.0.0', :github => 'rails/prototype_legacy_helper'
+gem 'respond_to_parent', :github => 'jmoline/respond_to_parent'
 
 ## from config/environment.rb
 
@@ -81,7 +84,7 @@ group :development do
   gem 'rdoc', '~> 3.0'
 
   gem 'thin', :platforms => :mri_19, :require => false
-  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
+  gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
   gem 'rb-inotify', '~> 0.9', :require => false  # used by rails-dev-boost
 
 end

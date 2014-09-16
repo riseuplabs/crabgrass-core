@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/jmoline/respond_to_parent.git
+  revision: 706594cad7f3a1dd3c93a1f7be8fbf03fa829ea7
+  specs:
+    respond_to_parent (0.0.4)
+      rails (>= 3.2)
+
+GIT
   remote: git://github.com/rails/prototype_legacy_helper.git
   revision: a2cd95c3e3c1a4f7a9566efdab5ce59c886cb05f
   specs:
@@ -228,6 +235,7 @@ DEPENDENCIES
   rake
   rb-inotify (~> 0.9)
   rdoc (~> 3.0)
+  respond_to_parent!
   rubyzip (~> 1.1.0)
   sass
   sass-rails (~> 3.2.6)
