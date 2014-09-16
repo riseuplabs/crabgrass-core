@@ -112,7 +112,7 @@ class AccountController < ApplicationController
   # solution.
   #
   def send_reset_token
-    unless RFC822::EmailAddress.match(params[:email])
+    if ValidatesEmailFormatOf.validate_email_format(params[:email])
       error :invalid_email_text.t
       return
     end

@@ -35,6 +35,7 @@ gem 'will_paginate', '= 3.0.6'
 gem 'acts-as-taggable-on', '~> 2.4.1'
 gem 'aasm'          # state-machine for requests
 gem 'acts_as_list'  # continuation of the old standart rails plugin
+gem 'validates_email_format_of' # better maintained than validates_as_email
 
 ##
 ## GEMS required, and compilation is required to install

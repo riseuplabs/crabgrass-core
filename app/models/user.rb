@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   include Crabgrass::Validations
   validates_handle :login
 
-  validates_presence_of :email, :if => :should_validate_email
 
   before_validation :validates_receive_notifications
 
@@ -27,9 +26,9 @@ class User < ActiveRecord::Base
     self.receive_notifications = nil if ! ['Single', 'Digest'].include?(self.receive_notifications)
   end
 
-  validates_as_email :email
-  before_validation 'self.email = nil if email.empty?'
-  # ^^ makes the validation succeed if email == ''
+  validates :email,
+    :email_format => {:allow_blank => true},
+    :presence     => {:if => :should_validate_email}
 
   def should_validate_email
     if Site.current
