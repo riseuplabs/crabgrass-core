@@ -139,13 +139,13 @@ module PageExtension::Users
     options[:page] ||= 1 if options.key?(:page)   # options[:page] might be set to nil
     options.reverse_merge!(
       :order=>'access ASC, changed_at DESC, users.login ASC',
-      :limit => (options[:page] ? nil : 31),
       :include => :user,
       :conditions => 'access IS NOT NULL OR changed_at IS NOT NULL'
     )
     if options[:page]
       self.user_participations.paginate(options);
     else
+      options[:limit] ||= 31
       self.user_participations.find(:all, options);
     end
   end

@@ -28,7 +28,8 @@ class FriendActivity < Activity
   end
 
   def self.find_twin(user, other_user)
-    find(:first, :conditions => ['subject_id = ? AND item_id = ?', other_user.id, user.id])
+    where(:subject_id => other_user, :subject_type => 'User').
+      where(:item_id => user, :item_type => 'User').first
   end
 
   def icon

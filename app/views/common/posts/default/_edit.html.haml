@@ -5,7 +5,8 @@
 -#
 
 %div.post_body{:id => post.body_id}
-  = remote_form_for(:post, post, :url => post_path(post), :method => :put, :loading => show_spinner('edit_post')) do |f|
+  = form_for post, :url => post_path(post), :remote => true, :method => :put,
+    :html => {:onsubmit => show_spinner('edit_post')} do |f|
     = f.text_area :body, :rows => 8
     .right_buttons
       = spinner('edit_post')

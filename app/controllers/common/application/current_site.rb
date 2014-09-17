@@ -17,7 +17,7 @@ module Common::Application::CurrentSite
     if !@current_site_disabled
       @current_site ||= begin
         host = request.host.sub(/^staging\./, '')
-        site = Site.for_domain(host).find(:first)
+        site = Site.for_domain(host).first
         site ||= Site.default
         site ||= Site.new(:domain => host, :name => 'custom')
         Site.current = site

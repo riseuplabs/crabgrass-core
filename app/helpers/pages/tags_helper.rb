@@ -14,16 +14,6 @@ module Pages::TagsHelper
     end
   end
 
-  def options_for_edit_tag_form
-    [{
-      :url => page_tags_path(@page),
-      :method => :post,
-      :page_id => @page.id,
-      :html     => {:id => 'edit_tag_form'},
-      :loading  => show_spinner('tag')
-    }]
-  end
-
   def page_tag_delete_links
     haml do
       if @page.tags.any?

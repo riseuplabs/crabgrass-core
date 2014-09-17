@@ -40,7 +40,8 @@ class PageHistory < ActiveRecord::Base
 
   def self.pending_digest_notifications_by_page
     histories = {}
-    PageHistory.find(:all, :order => "created_at desc", :conditions => {:notification_digest_sent_at => nil}).each do |page_history|
+    PageHistory.order("created_at desc")
+      .where(:notification_digest_sent_at => nil).each do |page_history|
       histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
       histories[page_history.page.id] << page_history
     end
@@ -48,21 +49,22 @@ class PageHistory < ActiveRecord::Base
   end
 
   def self.pending_notifications
-    PageHistory.find :all, :conditions => {:notification_sent_at => nil}
+    PageHistory.where(:notification_sent_at => nil).all
   end
 
   def self.recipients_for_page(page)
-    UserParticipation.find(:all, :conditions => {:page_id => page.id, :watch => true}).map(&:user_id)
+    UserParticipation.where(:page_id => page.id, :watch => true).map(&:user_id)
   end
 
   def self.recipients_for_digest_notifications(page)
-    User.find :all, :conditions => ["receive_notifications = 'Digest' and `users`.id in (?)", recipients_for_page(page)]
+    User.where("receive_notifications = 'Digest'")
+      .where(:id => recipients_for_page(page)).all
   end
 
   def self.recipients_for_single_notification(page_history)
     users_watching_ids = recipients_for_page(page_history.page)
     users_watching_ids.delete(page_history.user.id)
-    User.find :all, :conditions => ["receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids]
+    User.where("receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids).all
   end
 
   protected

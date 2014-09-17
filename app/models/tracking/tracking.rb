@@ -173,7 +173,7 @@ class Tracking < ActiveRecord::Base
   end
 
   def self.last_processed_at
-    Tracking.find(:first, :order => :tracked_at).tracked_at || Time.now - 3.month
+    Tracking.order(:tracked_at).first.try.tracked_at || Time.now - 3.month
   end
 
 end

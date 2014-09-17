@@ -10,7 +10,7 @@ class ChatChannel < ActiveRecord::Base
 
   has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all, :conditions => 'deleted_at IS NULL' do
     def since(last_seen_id)
-      find(:all, :conditions => ['id > ?', last_seen_id])
+      where('id > ?', last_seen_id).all
     end
     # returns an array of months that had messages for a particular channel
     def months
@@ -39,12 +39,12 @@ class ChatChannel < ActiveRecord::Base
       end_date = begin_date.advance(:days => 1)
       conditions = "created_at >= '#{begin_date.to_s(:db)}' "
       conditions += "AND created_at < '#{end_date.to_s(:db)}'"
-      find(:all, :conditions => conditions)
+      where(conditions).all
     end
   end
 
   def self.cleanup!
-    users_just_left = ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 1 MINUTE) OR last_seen IS NULL", Time.now.utc.to_s(:db)])
+    users_just_left = ChatChannelsUser.where("last_seen < DATE_SUB(?, INTERVAL 1 MINUTE) OR last_seen IS NULL", Time.now.utc.to_s(:db)).all
     users_just_left.each do |ex_user|
       ChatMessage.create(:channel => ex_user.channel, :sender => ex_user.user, :content => I18n.t(:left_the_chatroom), :level => 'sys')
       ex_user.destroy

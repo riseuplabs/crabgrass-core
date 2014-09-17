@@ -123,7 +123,7 @@ class DispatchController < ApplicationController
       # no group should have multiple pages with the same name
       @page = find_page_by_group_and_name(@group, page_handle)
     elsif @user
-      @page = find_page_by_user_and_name(@user, page_handle)
+      @page = @user.pages_owned.where(:name => page_handle).first
     else
       @pages = find_pages_with_unknown_context(page_handle)
       if @pages.size == 1
@@ -162,7 +162,7 @@ class DispatchController < ApplicationController
   end
 
   def find_page_by_id(id)
-    Page.find_by_id(id.to_i, :include => includes )
+    Page.includes(includes).find(id)
   end
 
   # Almost every page is retrieved from the database using this method.
@@ -188,34 +188,8 @@ class DispatchController < ApplicationController
   # and is likely to be used much more often than the second query.
   #
   def find_page_by_group_and_name(group, name)
-    Page.find(
-      :first, :conditions => [
-        'pages.name = ? AND pages.owner_id = ? AND pages.owner_type = ?',
-         name, group.id, 'Group'
-      ]
-    ) or Page.find(
-      :first, :conditions => [
-         'pages.name = ? AND group_participations.group_id IN (?)',
-          name, Group.namespace_ids(group.id)
-      ],
-      :joins => :group_participations,
-      :readonly => false
-    )
-  end
-
-  #
-  # The main method for loading pages that are in a user context.
-  #
-  # User context is less forgiving then group context. We only return
-  # a page if the owner matches exactly.
-  #
-  def find_page_by_user_and_name(user, name)
-    Page.find(
-      :first, :conditions => [
-        'pages.name = ? AND pages.owner_id = ? AND pages.owner_type = ?',
-         name, user.id, 'User'
-      ]
-    )
+    Page.where(:owner => group).where(:name => name).first ||
+      Page.for_group(group).where(:name => name).first
   end
 
   def find_pages_with_unknown_context(name)

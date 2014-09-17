@@ -22,7 +22,6 @@ class AdminMailer < Mailer
     @recipients = "#{user.email}"
     @from       = @from_address
     @subject    = @site.title + ": "
-    @sent_on    = Time.now
     @user       = user
   end
 

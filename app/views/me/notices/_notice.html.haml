@@ -15,6 +15,7 @@
       =h truncate(embold_links(notice.display_body), :length => 512)
   %td.nowrap.align_right.reflow
     = spinner(notice, :align => :middle)
-    = link_to_remote(notice.button_text, {:url => me_notice_path(notice), :method => 'get', :loading => show_spinner(notice)},{:href => me_notice_path(notice), :class => 'btn btn-mini'})
-    = link_to_remote(:dismiss.t, {:url => me_notice_path(notice), :method => 'delete', :loading => show_spinner(notice)}, {:class => 'btn btn-mini'})
+    - url = self.send(notice.noticable_path, notice.noticable)
+    = link_to notice.button_text, url, :class => 'btn btn-mini', :onclick => show_spinner(notice)
+    = link_to(:dismiss.t, me_notice_path(notice),{:remote => true, :method => 'delete', :onclick => show_spinner(notice), :class => 'btn btn-mini'})
 

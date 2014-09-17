@@ -93,11 +93,11 @@ module WikiExtension
     protected
 
     def versions_since(version)
-      self.versions.count(:conditions => "version > #{version.version}")
+      self.versions.where("version > #{version.version}").count
     end
 
     def destroy_versions_after(version_number)
-      versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
+      versions.where("version > ?", version_number).each do |version|
         version.destroy
       end
     end

@@ -48,9 +48,9 @@ module UserExtension::Users
       has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
         def most_active(options = {})
           options[:limit] ||= 13
-          max_visit_count = find(:first, :select => 'MAX(relationships.total_visits) as id').id || 1
+          max_visit_count = select('MAX(relationships.total_visits) as id').first.id || 1
           select = "users.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-          find(:all, :limit => options[:limit], :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+          limit(options[:limit]).select(select).order('last_visit_weight + total_visits_weight DESC').all
         end
       end
 
@@ -97,7 +97,10 @@ module UserExtension::Users
 
     # returns the users current status by returning their latest status_posts.body
     def current_status
-      @current_status ||= self.wall_discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
+      @current_status ||= self.wall_discussion.posts
+        .where('type' => 'StatusPost')
+        .order('created_at DESC')
+        .first.try.body || ""
     end
 
     ##

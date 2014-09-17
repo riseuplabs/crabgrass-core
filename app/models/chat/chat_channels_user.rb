@@ -12,7 +12,7 @@ class ChatChannelsUser < ActiveRecord::Base
   end
 
   def join_message
-    channel.messages.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", user.id])
+    channel.messages.order("id DESC").where("sender_id = ?", user.id).first
   end
 
   def record_user_action(action = nil)
