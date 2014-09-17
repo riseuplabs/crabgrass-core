@@ -209,9 +209,9 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.2)
-  aasm
+  aasm (~> 3.4)
   acts-as-taggable-on (~> 2.4.1)
-  acts_as_list
+  acts_as_list (~> 0.4)
   capybara
   coffee-rails (~> 3.2.2)
   debugger
@@ -219,25 +219,25 @@ DEPENDENCIES
   factory_girl_rails
   faker (~> 1.0.0)
   greencloth!
-  haml
+  haml (~> 4.0)
   hpricot (~> 0.8)
-  http_accept_language
-  i18n
+  http_accept_language (~> 2.0)
+  i18n (~> 0.6)
   jsmin
-  json
+  json (~> 1.8)
   mime-types
   minitest (~> 2.12)
   mocha (~> 0.12.0)
-  mysql2
-  prototype-rails
+  mysql2 (~> 0.3)
+  prototype-rails (~> 3.2.1)
   prototype_legacy_helper (= 0.0.0)!
-  rails (~> 3.2.18)
+  rails (~> 3.2.19)
   rails-dev-boost!
   rails3_before_render
-  rake
+  rake (~> 10.0)
   rb-inotify (~> 0.9)
   rdoc (~> 3.0)
-  respond_to_parent!
+  respond_to_parent (~> 0.0)!
   rubyzip (~> 1.1.0)
   sass
   sass-rails (~> 3.2.6)
@@ -246,7 +246,7 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   uglify_html!
   undress!
-  validates_email_format_of
+  validates_email_format_of (~> 1.6)
   whenever
   will_paginate (= 3.0.6)
   zip-zip
