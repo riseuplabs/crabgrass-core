@@ -4,6 +4,7 @@ class AdminMailer < Mailer
     setup_user(user)
     @subject += options[:subject]
     @message = options[:body]
+    mail :from => @from_address, :to => user.email, :subject => @subject
   end
 
 
@@ -14,15 +15,14 @@ class AdminMailer < Mailer
     @message = options[:body]
     @url = link(options[:url])
     @owner = options[:owner]
+    mail :from => @from_address, :to => user.email, :subject => @subject
   end
 
   protected
 
   def setup_user(user)
-    @recipients = "#{user.email}"
-    @from       = @from_address
     @subject    = @site.title + ": "
-    @user       = user
+    @user = user
   end
 
 end

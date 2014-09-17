@@ -1,59 +1,168 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.1.11'
-gem 'prototype-rails'
-gem 'rake', '~> 0.9.2'
+##
+#  Core components
+##
 
-gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
+# Rails is the framework we use.
+# use the 3.2 series including all security fixes
+gem 'rails', '~> 3.2.19'
 
-## from config/environment.rb
+# Rake is rubys make... performing tasks
+# locking in to latest major to fix API
+gem 'rake', '~> 10.0', :require => false
 
-# required, but not included with crabgrass:
-gem 'i18n', '~> 0.6.11'
+##
+# Prototype - yes. we still use it.
+# these will be replaced by jquery equivalents at some point:
+##
+
+# main part of prototype
+# locking so it matches rails version
+gem 'prototype-rails', '~> 3.2.1'
+
+# legacy helper for form_remote_for and link_to_remote
+# there's only a 0.0.0 version out there it seems
+gem 'prototype_legacy_helper', '0.0.0',
+  :github => 'rails/prototype_legacy_helper'
+
+# another prototype addition to respond to the parent of an iframe
+# used for file uploads
+# locking in to latest major to fix API
+gem 'respond_to_parent', '~> 0.0',
+  :github => 'jmoline/respond_to_parent'
+
+##
+# Upgrade pending
+##
+
+# Full text search for the database
+# thinking-sphinx version 3 requires activerecord >= 3.1 which we have now
+# It also requires sphinx >= 2.06 and probably changes the API
+# so, we bind to the latest in the version 2 series for now
 gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
-  # thinking-sphinx version 3 requires activerecord >= 3.1 and sphinx >= 2.06
-  # so, we bind to the latest in the version 2 series.
-gem 'will_paginate', '= 3.0.6'
-  # 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
-  # we should remove this strict version once that is fixed.
-gem 'sprockets'
 
-gem 'mysql2'
-
-gem 'json', '~> 1.7.7'
-
-gem 'haml'
-gem 'sass'
+# Enhanced Tagging lib. Used to tag pages
+# Could not get the migration rake task for acts-as-taggable-on 3.x to work
+# before rails 3.2.
+# So we should run the migration and upgrade now that we are on rails 3.2
 gem 'acts-as-taggable-on', '~> 2.4.1'
-gem 'aasm'  # state-machine for requests
-    # Could not get the migration rake task for acts-as-taggable-on 3.x to work
-    # seems it requires rails 3.2
 
-gem 'http_accept_language'
+##
+#  Required, but not included with crabgrass:
+##
 
-# required, and compilation is required to install
+# translating strings for the user interface
+# locking in to latest major to fix API
+gem 'i18n', '~> 0.6'
+
+# improved gem to access mysql database
+# locking in to latest major to fix API
+gem 'mysql2', '~> 0.3'
+
+# parsing and generating JSON
+# locking in to latest major to fix API
+gem 'json', '~> 1.8'
+
+# Markup language that uses indent to indicate nesting
+# locking in to latest major to fix API
+gem 'haml', '~> 4.0'
+
+# Extendet scriptable CSS language
+# locking in to latest major to fix API
+gem 'sass'
+
+# ?
+# locking in to latest major to fix API
+gem 'http_accept_language', '~> 2.0'
+
+# Pagination for lists with a lot of items
+# 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
+# we should remove this strict version once that is fixed.
+gem 'will_paginate', '= 3.0.6'
+
+# state-machine for requests
+# locking in to latest major to fix API
+gem 'aasm' , '~> 3.4'
+
+# lists used for tasks and choices in votes so far
+# continuation of the old standart rails plugin
+# locking in to latest major to fix API, not really maintained though
+gem 'acts_as_list', '~> 0.4'
+
+# Check the format of email addresses against RFCs
+# better maintained than validates_as_email
+# locking in to latest major to fix API
+gem 'validates_email_format_of', '~> 1.6'
+
+##
+## GEMS required, and compilation is required to install
+##
+
+# Formatting text input
+# We extend this to resolve links locally -> GreenCloth
+# locking in to latest major to fix API
 gem 'RedCloth', '~> 4.2'
+
+# HTML parser used inside our own uglify gem
+# Deprecated by the original maintainers
+# TODO: replace with nokogiri
 gem 'hpricot', '~> 0.8'
 
-# required, included with crabgrass
-gem 'greencloth', :require => 'greencloth', :path => 'vendor/gems/riseuplabs-greencloth-0.1'
-gem 'undress', :require => 'undress/greencloth', :path => 'vendor/gems/riseuplabs-undress-0.2.4'
-gem 'uglify_html', :require => 'uglify_html', :path => 'vendor/gems/riseuplabs-uglify_html-0.12'
+##
+## GEMS required, included with crabgrass
+##
 
-# not required, but a really good idea
+# extension of the redcloth markup lang
+gem 'greencloth', :require => 'greencloth',
+  :path => 'vendor/gems/riseuplabs-greencloth-0.1'
+
+# ?
+gem 'undress', :require => 'undress/greencloth',
+  :path => 'vendor/gems/riseuplabs-undress-0.2.4'
+
+# ?
+gem 'uglify_html', :require => 'uglify_html',
+  :path => 'vendor/gems/riseuplabs-uglify_html-0.12'
+
+##
+## GEMS not required, but a really good idea
+##
+
+# detect mime-types of uploaded files
+#
 gem 'mime-types', :require => 'mime/types'
-gem 'rubyzip', '~> 1.1.0', :require => false
-gem 'zip-zip', :require => 'zip'
-    # load new rubyzip, but with the old API.
-    # TODO: use the new zip api and remove gem zip-zip
 
+# process heavy tasks asynchronously
+# TODO: why is this locked to 3.0 ?
 gem 'delayed_job', '~> 3.0.5'
 
+# ?
 gem 'rails3_before_render'
 
+# unpack file uploads
+# TODO: why is this locked to 1.1. ?
+gem 'rubyzip', '~> 1.1.0', :require => false
+
+# load new rubyzip, but with the old API.
+# TODO: use the new zip api and remove gem zip-zip
+gem 'zip-zip', :require => 'zip'
+
+# Assets group according to migration guide:
+# http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-3-1-to-rails-3-2
+group :assets do
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier',     '>= 1.0.3'
+end
+
 group :production, :development do
-  gem 'whenever', :require => false  # used to install crontab
-  gem 'jsmin', :require => false     # used to minify javascript
+  # used to install crontab
+  gem 'whenever', :require => false
+  # used to minify javascript
+  # I don't think this is used in production with the Asset Pipeline
+  # TODO check if it's needed at all
+  gem 'jsmin', :require => false
 end
 
 group :development do
@@ -62,13 +171,18 @@ group :development do
   ##
   gem 'rdoc', '~> 3.0'
 
+  # fast and light weight server
   gem 'thin', :platforms => :mri_19, :require => false
-  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
-  gem 'rb-inotify', '~> 0.9', :require => false  # used by rails-dev-boost
 
+  # speed up rails dev mode
+  gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
+
+  # used by rails-dev-boost
+  gem 'rb-inotify', '~> 0.9', :require => false
 end
 
 group :test, :development do
+  # as the name says... debug things
   gem 'debugger'
 end
 

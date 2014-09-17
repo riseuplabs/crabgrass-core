@@ -15,7 +15,6 @@
 class EntitiesController < ApplicationController
 
   before_filter :login_required
-  verify :xhr => true
 
   LIMIT = 20
 

@@ -75,7 +75,7 @@ module Common::Ui::LayoutHelper
   #
   def javascript_include_tags
     scripts = controller.class.javascripts || {}
-    files = [:prototype, :libraries, :crabgrass]
+    files = [:application] # asset pipeline js
     files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
 
     includes = []

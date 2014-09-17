@@ -6,11 +6,9 @@
 # Login and logout are in SessionController.
 #
 
-class AccountController < ApplicationController
+class AccountsController < ApplicationController
 
   layout 'notice'
-
-  verify :method => :post, :only => [:create]
 
   ##
   ## SIGNUP
@@ -35,7 +33,7 @@ class AccountController < ApplicationController
     # i think the usage agreement should be a plugin
     #if params[:usage_agreement_accepted] != "1"
     #  error :usage_agreement_required.t
-    #  render :template => 'account/new'
+    #  render :template => 'accounts/new'
     #else
       @user.language   = session[:language_code].to_s
       @user.avatar     = Avatar.new
@@ -102,7 +100,7 @@ class AccountController < ApplicationController
   end
 
   def reset_password_form
-    render :template => 'account/reset_password'
+    render :template => 'accounts/reset_password'
   end
 
   #
@@ -112,7 +110,7 @@ class AccountController < ApplicationController
   # solution.
   #
   def send_reset_token
-    unless RFC822::EmailAddress.match(params[:email])
+    if ValidatesEmailFormatOf.validate_email_format(params[:email])
       error :invalid_email_text.t
       return
     end
@@ -133,7 +131,7 @@ class AccountController < ApplicationController
 
   def reset_password_confirmation
     confirm_token or return
-    render :template => 'account/reset_password_confirmation'
+    render :template => 'accounts/reset_password_confirmation'
   end
 
   def set_new_password

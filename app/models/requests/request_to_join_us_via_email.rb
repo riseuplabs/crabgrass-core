@@ -10,8 +10,8 @@
 class RequestToJoinUsViaEmail < Request
 
   validates_format_of :requestable_type, :with => /Group/
-  validates_presence_of :email
-  validates_as_email :email
+  validates :email, :presence => true,
+    :email_format => true
   validates_length_of :code, :in => 6..8
 
   def recipient_required?() false end

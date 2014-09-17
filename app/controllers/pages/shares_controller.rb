@@ -26,8 +26,6 @@ class Pages::SharesController < Pages::SidebarsController
 
   guard :update => :may_share_page?
 
-  verify :xhr => true
-
   helper 'pages/share', 'pages/participation'
 
   # display the share or notify forms.

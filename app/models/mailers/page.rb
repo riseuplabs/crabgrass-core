@@ -12,12 +12,13 @@ module Mailers::Page
       page_link = link(@page.uri)
     end
     recipients user.email
-    subject I18n.t(:email_notice_subject, :title => @page.title)
     @notice_message = notice_message
     @from_user = @current_user
     @to = user
     @link = page_link
     @code = code
+    mail :from => @from, to: @to,
+      :subject => I18n.t(:email_notice_subject, :title => @page.title)
   end
 
 end

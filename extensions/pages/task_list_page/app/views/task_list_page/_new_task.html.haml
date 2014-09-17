@@ -13,7 +13,7 @@
     %br/
     assign to:
     %br/
-    = checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
+    %ul= checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
     %br{:style => "clear:left"}/
     %p
       = submit_tag 'Add Task'

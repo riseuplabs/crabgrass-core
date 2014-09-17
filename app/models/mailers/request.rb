@@ -3,11 +3,16 @@ module Mailers::Request
   ###
   #  UPGRADE: These have not been ported over to core yet.
   #
-  #  Please do so and keep in mind that rails3 has a new Mailer API.
-  #    body :key => value
-  #  now is replaced by
-  #    @key = value
-  #  just like in controllers.
+  #  Please do so and keep in mind that rails3 has a new Mailer API:
+  #
+  #  1.)
+  #      body :key => value
+  #    now is replaced by
+  #      @key = value
+  #    just like in controllers.
+  #  2.)
+  #    call mail with subject, to, from at the end.
+  #
   ###
 
   #

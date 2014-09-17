@@ -36,7 +36,9 @@ class RequestToCreateCouncil < Request
   alias_method :may_destroy?, :may_create?
 
   def after_approval
-    council = Council.new :name => :council.t, :created_by => created_by
+    council = Council.new
+    council.name = :council.t
+    council.created_by = created_by
     council.save!
     group.add_committee!(council)
     council.add_user!(created_by)

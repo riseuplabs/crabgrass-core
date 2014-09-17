@@ -69,15 +69,15 @@ FactoryGirl.define do
     # association :parent_page, factory: :asset_page
 
     factory :image_asset, :class => ImageAsset do
-      uploaded_data { fixture_file_upload('/files/bee.jpg',  "image/jpeg") }
+      uploaded_data { fixture_file_upload('files/bee.jpg',  "image/jpeg") }
 
       factory :small_image_asset do
-        uploaded_data { fixture_file_upload('/files/gears.jpg',  "image/jpeg") }
+        uploaded_data { fixture_file_upload('files/gears.jpg',  "image/jpeg") }
       end
     end
 
     factory :png_asset, :class => PngAsset do
-      uploaded_data { fixture_file_upload('/files/image.png',  "image/png") }
+      uploaded_data { fixture_file_upload('files/image.png',  "image/png") }
     end
 
   end

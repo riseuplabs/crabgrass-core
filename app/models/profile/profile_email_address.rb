@@ -7,8 +7,8 @@ class ProfileEmailAddress < ActiveRecord::Base
   set_table_name 'email_addresses'
 
   validates_presence_of :email_type
-  validates_presence_of :email_address
-  #validates_as_email :email_address
+  validates :email_address, :presence => true
+  # :email_format => true
 
   belongs_to :profile, :class_name => 'Profile', :foreign_key => 'profile_id'
 

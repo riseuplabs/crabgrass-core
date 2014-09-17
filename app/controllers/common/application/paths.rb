@@ -70,7 +70,7 @@ module Common::Application::Paths
 
   def new_page_path(options={})
     options[:action] = 'new'
-    options[:owner] ||= params[:owner]
+    options[:owner] ||= params[:owner] || :me
     custom_create_path(options) || page_creation_path(options)
   end
 

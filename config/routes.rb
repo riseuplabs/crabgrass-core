@@ -79,25 +79,27 @@ Crabgrass::Application.routes.draw do
   ## ACCOUNT
   ##
 
+  resource :account, :only => [:new, :create]
   match 'account/reset_password(/:token)',
     :as => 'reset_password',
-    :to => 'account#reset_password'
-  match 'account/verify_email/:token',
-    :as => 'verify_account',
-    :to => 'account#verify_email'
-  match 'account/new', :as => 'new_account', :to => 'account#new'
-  match 'account(/:action(/:id))', :as => 'account', :controller => 'account'
+    :to => 'accounts#reset_password'
 
-  match 'session/language', :as => 'language', :to => 'session#language'
+
+  post  'session/language', :as => 'language', :to => 'session#language'
   match 'session/login', :as => 'login',  :to => 'session#login'
-  match 'session/logout', :as => 'logout', :to => 'session#logout'
-  match 'session(/:action(/:id))', :as => 'session', :controller => 'session'
+  post  'session/logout', :as => 'logout', :to => 'session#logout'
+  # ajax login form
+  get   'session/login_form', :as => 'login_form', :to => 'session#login_form',
+    :constraints => lambda{|request| request.xhr?}
+
 
   ##
   ## ENTITIES
   ##
 
-  resources :entities, :only => [:index]
+  # autocomplete queries, restricted to ajax
+  resources :entities, :only => [:index],
+    :constraints => lambda{|request| request.xhr?}
 
   ##
   ## PEOPLE
@@ -161,7 +163,6 @@ Crabgrass::Application.routes.draw do
   match '/pages(/:action(/:owner(/:type)))',
     :as => 'page_creation',
     :controller => 'pages/create',
-    :defaults => {:owner => 'me', :action => 'create'},
     :constraints => {:action => /new|create/}
 
   # base page
@@ -178,7 +179,8 @@ Crabgrass::Application.routes.draw do
 
     # page sidebar/popup controllers:
     resource :sidebar,    :only => [:show]
-    resource :share,      :only => [:show, :update]
+    resource :share,      :only => [:show, :update],
+      :constraints => lambda{|request| request.xhr?}
     resource :details,    :only => [:show]
     resource :history,    :only => [:show], :controller => 'history'
     resource :attributes, :only => [:update]

@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class AccountControllerTest < ActionController::TestCase
+class AccountsControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
 
   def teardown

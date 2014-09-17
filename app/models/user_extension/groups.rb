@@ -94,10 +94,6 @@ module UserExtension::Groups
 
       initialized_by :update_membership_cache,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
-
-      # this seems to be the only way to override the A/R created methods.
-      # new accessor defined in user_extension/cache.rb
-      remove_method :group_ids
     end
   end
 
