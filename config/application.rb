@@ -7,12 +7,7 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-
-  ## THE FOLLOWING LINE WAS ADDED BY rails 3.2 GENERATOR. REMOVE THE COMMENT ONCE
-  ## YOU'RE UPGRADING!
-  #Bundler.require(*Rails.groups(:assets => %w(development test)))
-  Bundler.require(:default, Rails.env)
-
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -58,6 +53,13 @@ module Crabgrass
       :key => 'crabgrass_session'
 
     config.secret_token = Conf.secret
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+    # We serve assets from /static because /assets is already used
+    config.assets.prefix = '/static'
 
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
