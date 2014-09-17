@@ -3,18 +3,19 @@
 - # say that ten times fast.
 - #
 
-%ul#menu
-  - @navigation[:global].each do |tab|
-    - if tab.visible
-      %li{:class => "tab drop_menu #{first('top_menu')}", :id => "menu_#{tab.name}"}
-        = link_to_active(tab.label, tab.url, tab.active, :class => 'tab')
-        = theme_render(tab.html)
-  - if logged_in?
-    %li.tab.account.last
-      = link_to(:menu_link_logout.t(:user => current_user.display_name), logout_path, :class => 'tab', :method => 'post')
-    -# = call_hook :top_right_links
-  - elsif !@login_form_already_rendered
-    %li.tab.account.last
-      = link_to_modal(:login.t, {:url => login_form_path, :width => '280'}, {:class => 'tab'})
-  -# this dummy tab is needed at the end for correct rendering in webkit:
-  %li.tab
+- cache [current_site, current_user, current_language_code, active_top_nav.try.name] do
+  %ul#menu
+    - @navigation[:global].each do |tab|
+      - if tab.visible
+        %li{:class => "tab drop_menu #{first('top_menu')}", :id => "menu_#{tab.name}"}
+          = link_to_active(tab.label, tab.url, tab.active, :class => 'tab')
+          = theme_render(tab.html)
+    - if logged_in?
+      %li.tab.account.last
+        = link_to(:menu_link_logout.t(:user => current_user.display_name), logout_path, :class => 'tab', :method => 'post')
+      -# = call_hook :top_right_links
+    - elsif !@login_form_already_rendered
+      %li.tab.account.last
+        = link_to_modal(:login.t, {:url => login_form_path, :width => '280'}, {:class => 'tab'})
+    -# this dummy tab is needed at the end for correct rendering in webkit:
+    %li.tab
