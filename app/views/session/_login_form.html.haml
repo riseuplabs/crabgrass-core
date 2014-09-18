@@ -5,12 +5,10 @@
 -# tab focus.
 -#
 
-- @login_form_already_rendered = true
-- # if this form is rendered, then we don't create one on the menubar
 
 .login_form
   = form_tag(login_path, :id => "entry") do
-    - cache("login-form-v1-#{current_language_code}") do
+    - cache current_language do
       #cookie_warning.alert.alert-error{:display => 'none'}
         = :cookie_disabled_warning.t
       %div
@@ -28,6 +26,7 @@
         = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
 
+-# TODO: move into javascript assets
 :javascript
   document.observe("dom:loaded", function() {
     document.cookie = "are_cookies_enabled=1; expires=" + (new Date(Date.now() + 2000)).toGMTString();

@@ -53,6 +53,27 @@ module UserExtension
       base.extend ClassMethods
     end
 
+
+    # For groups and users we have two cache keys:
+    # * the version based for relationships of the user.
+    # * the normal one based on updated_at for the user itself
+    #
+    # So for example a users own top menu is cached based on
+    # the version cache_key so it refreshes when one of the
+    # users groups changes.
+    #
+    # The display of a different user inside that top menu is
+    # based on that users normal cache key. It changes when the
+    # other user itself changes.
+    def version_cache_key
+      if new_record?
+        cache_key
+      else
+        "#{self.class.model_name.cache_key}/#{id}-#{version}"
+      end
+    end
+
+
     #
     # friendly access, in a more railsy form
     #

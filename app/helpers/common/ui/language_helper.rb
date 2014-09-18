@@ -24,7 +24,7 @@ module Common::Ui::LanguageHelper
     end
   end
 
-  def current_language_code
+  def current_language
     session[:language_code]
   end
 
@@ -37,7 +37,7 @@ module Common::Ui::LanguageHelper
   end
 
   def options_for_language(selected=nil)
-    selected ||= current_language_code.to_s
+    selected ||= current_language.to_s
     options_for_select(enabled_language_array, selected)
   end
 
