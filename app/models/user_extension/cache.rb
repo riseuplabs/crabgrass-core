@@ -261,11 +261,7 @@ module UserExtension
       # version increment for that is already handled elsewhere.
       def increment_version(ids)
         return unless ids.any?
-        self.connection.execute(
-          quote_sql(
-            ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
-          )
-        )
+        self.where(:id => ids).update_all('version = version+1')
       end
 
       ## serialize_as

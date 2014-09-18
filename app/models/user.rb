@@ -107,6 +107,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  before_save :display_name_update
+
+  def display_name_update
+    if display_name_changed?
+      increment :version
+      Group.increment_version(group_ids)
+    end
+  end
+
   after_save :update_name
   def update_name
     if login_changed? and !login_was.nil?

@@ -132,6 +132,28 @@ class UserTest < ActiveSupport::TestCase
     assert_equal ['red'], with_access.all.map(&:login)
   end
 
+  def test_changing_display_name_pushes_group
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    assert_increases(rainbow, :version) do
+      assert_preserves(rainbow, :updated_at) do
+        red.display_name = 'rojo'
+        red.save
+      end
+    end
+  end
+
+  def test_changing_display_name_increments_version
+    red = users(:red)
+
+    assert_increases(red, :version) do
+      red.display_name = 'rojo'
+      red.save
+    end
+  end
+
+
   #
   # creating users no longer adds keys
   #
