@@ -94,7 +94,7 @@ module Wikis::BaseHelper
   # try to guess a good default textarea height
   #
   def wiki_textarea_rows(text, min_height = 8, max_height = 30)
-    lines = word_wrap(text||"", 60).count("\n") + 5
+    lines = word_wrap(text||"", :line_width => 60).count("\n") + 5
     [[lines, max_height].min, min_height].max
   end
 

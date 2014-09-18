@@ -20,7 +20,7 @@
 module CastleGates
   class Key < ActiveRecord::Base
 
-    set_table_name :castle_gates_keys
+    self.table_name = :castle_gates_keys
 
     belongs_to :castle, :polymorphic => true
 
