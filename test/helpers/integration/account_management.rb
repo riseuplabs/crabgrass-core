@@ -15,7 +15,7 @@ module AccountManagement
     visit '/' unless page.current_path == '/'
     fill_in :login_name.t, with: @user.login
     fill_in :login_password.t, with: @user.password
-    click_on :login_button.t
+    click_button :login_button.t
   end
 
   def logout
