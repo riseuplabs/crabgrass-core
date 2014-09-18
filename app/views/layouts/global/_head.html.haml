@@ -1,4 +1,4 @@
-- cache("head-v1-#{current_theme.name}-#{language_direction}") do
+- cache [current_theme, language_direction.to_s] do
   %meta{ :name=>"description", :content=>""}
   %meta{ :name=>"keywords", :content=>""}
   %meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
