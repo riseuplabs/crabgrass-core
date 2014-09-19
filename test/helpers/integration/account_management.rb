@@ -42,7 +42,6 @@ module AccountManagement
     login unless @user.is_a? UnauthenticatedUser
     block.arity == 1 ? yield(@user) : yield
   ensure
-    Capybara.reset_sessions!
-    User.current = nil
+    clear_session
   end
 end

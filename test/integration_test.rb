@@ -25,6 +25,13 @@ class IntegrationTest < ActiveSupport::TestCase
     Capybara.reset_sessions!
   end
 
+  # this is overwritten by JavascriptIntegrationTest.
+  # RackTests run in the same process so we need to reset User.current
+  def clear_session
+    Capybara.reset_sessions!
+    User.current = nil
+  end
+
   def group
     records[:group] ||= FactoryGirl.create(:group)
   end
