@@ -5,3 +5,6 @@
 require File.expand_path('../config/application', __FILE__)
 
 Crabgrass::Application.load_tasks
+
+task :default => 'test:pages:all'
+task :default => 'test:mods:all'
