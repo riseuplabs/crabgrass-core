@@ -1,7 +1,6 @@
 class People::DirectoryController < ApplicationController
 
   before_filter :set_default_path
-  stylesheet 'directory'
 
   guard :allow
 

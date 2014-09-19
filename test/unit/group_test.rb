@@ -121,19 +121,19 @@ class GroupTest < ActiveSupport::TestCase
     assert group.has_a_council?
   end
 
-  def test_name_change
+  def test_name_change_increments_member_version
     group = groups(:true_levellers)
     user = users(:gerrard)
-
-    version = user.version
-
-    group.name = 'diggers'
-    group.save!
 
     # note: if the group has a committee, and the user is a member of that
     # committee, then the user's version will increment by more than one,
     # since the committees also experience a name change.
-    assert_equal version+1, user.reload.version, 'user version should increment on group name change'
+    assert_increases(user, :version) do
+      assert_preserves(user, :updated_at) do
+        group.name = 'diggers'
+        group.save!
+      end
+    end
   end
 
   def test_associations

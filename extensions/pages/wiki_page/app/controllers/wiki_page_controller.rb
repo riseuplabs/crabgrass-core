@@ -6,9 +6,6 @@ class WikiPageController < Pages::BaseController
 
   before_filter :find_last_seen, :only => :show
 
-  stylesheet 'wiki_edit'
-  javascript 'wiki'
-
   def show
     if default_to_edit?
       params[:action] = 'edit'

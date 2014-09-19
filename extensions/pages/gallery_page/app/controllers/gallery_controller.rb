@@ -1,7 +1,5 @@
 class GalleryController < Pages::BaseController
 
-  stylesheet 'gallery'
-
   def show
     @images = @page.images.paginate(:page => params[:page])
     redirect_to(page_url(@page, :action => 'edit')) if @images.blank?

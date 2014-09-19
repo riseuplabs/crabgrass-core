@@ -1,9 +1,9 @@
 #add_questions_links_bar {
   .label {
-    color= !add_new_item_color {}
+    // color= !add_new_item_color {}
   }
   span.link_background {
-    background-color= !box1_bg_color {}
+    // background-color= !box1_bg_color {}
     padding: 0.5em;
   }
 }
@@ -15,7 +15,7 @@
       margin: 0px;
     }
     .formError {
-      color= !error_color {}
+      // color= !error_color {}
       padding: 1em;
     }
     .fieldWithErrors {
@@ -37,8 +37,8 @@
   }
   #survey_settings {
     margin-top: 0.5em;
-    background-color= !draggable_item_bg_color {}
-    border= !draggable_item_border {}
+    // background-color= !draggable_item_bg_color {}
+    // border= !draggable_item_border {}
     padding: 1em;
   }
 }

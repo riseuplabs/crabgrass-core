@@ -11,6 +11,10 @@ module Crabgrass::Theme::Cache
     FileUtils.rm_r(cached, :secure => true) if File.exists? cached
   end
 
+  def cache_key
+    "theme/#{name}-#{config_updated_at.utc.to_s(:number)}"
+  end
+
   private
 
   #
@@ -26,14 +30,17 @@ module Crabgrass::Theme::Cache
   # the timestamp given.
   #
   def config_changed_since?(updated_at)
-    max_age = (all_data_paths + all_navigation_paths).inject(100.years.ago) do |previous,current|
+    config_updated_at > updated_at
+  end
+
+  def config_updated_at
+    (all_data_paths + all_navigation_paths).inject(100.years.ago) do |previous, current|
       if current.nil?
         previous
       else
         [previous, File.mtime(current)].max
       end
     end
-    max_age > updated_at
   end
 
   def clear_cache_if_needed(sheet_name)

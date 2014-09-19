@@ -1,6 +1,5 @@
 class RateManyPageController < Pages::BaseController
   before_filter :fetch_poll
-  stylesheet :vote
 
   guard :may_edit_page?
   guard :show => :may_show_page?

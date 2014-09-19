@@ -1,15 +1,17 @@
-%meta{ :name=>"description", :content=>""}
-%meta{ :name=>"keywords", :content=>""}
-%meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
-= favicon_link
+- cache [current_theme, language_direction.to_s] do
+  %meta{ :name=>"description", :content=>""}
+  %meta{ :name=>"keywords", :content=>""}
+  %meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
+  = favicon_link
+  / begin styling
+  = crabgrass_stylesheets
+  / end styling
+  / begin scripts
+  = crabgrass_javascripts
+  / end scripts
+
 %title
   =h html_title
-/ begin styling 
-= crabgrass_stylesheets
-/ end styling
-/ begin scripts
-= crabgrass_javascripts
-/ end scripts
 =# call_hook :html_head
 = yield :html_head
 

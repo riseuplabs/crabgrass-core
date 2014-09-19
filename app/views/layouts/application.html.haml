@@ -12,9 +12,8 @@
       #masthead_container
         #masthead_content
           = render :partial => '/layouts/global/masthead_content'
-        #global_nav
+        #global_nav{:class => global_nav_class}
           = render :partial => '/layouts/global/nav/top_menus'
-
     #middle
       #middle_container.container-fluid
         = render :partial => "/layouts/context/banner"

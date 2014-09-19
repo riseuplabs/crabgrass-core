@@ -31,6 +31,7 @@ class Group < ActiveRecord::Base
   include GroupExtension::Users      # group <--> user behavior
   include GroupExtension::Featured   # this makes this group's pages featureable
   include GroupExtension::Pages      # group <--> page behavior
+  include GroupExtension::Cache      # only versioning so far
 
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 

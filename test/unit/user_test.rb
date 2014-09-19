@@ -132,122 +132,27 @@ class UserTest < ActiveSupport::TestCase
     assert_equal ['red'], with_access.all.map(&:login)
   end
 
+  def test_changing_display_name_pushes_group
+    red = users(:red)
+    rainbow = groups(:rainbow)
 
-  ## Tests for migrate_permissions!, in order:
-  ## * public may :view ?
-  ## * friends may :view ?
-  ## * peers may :view ?
-  ## * public may :see_contacts ?
-  ## * friends may :see_contacts ?
-  ## Assuming that the rest works as well then.
-
-  def test_migrate_public_may_view
-    user = create_user
-    user.keys.destroy_all
-
-    assert ! users(:blue).may?(:view, user), 'expected strangers not to be able to view a user without any keys set up'
-
-    user.profiles.public.update_attributes!(
-      :may_see => true
-    )
-
-    user.migrate_permissions!
-
-    assert users(:blue).may?(:view, user), 'expected strangers to be able to view this user, after migrating permissions'
-
+    assert_increases(rainbow, :version) do
+      assert_preserves(rainbow, :updated_at) do
+        red.display_name = 'rojo'
+        red.save
+      end
+    end
   end
 
-  def test_migrate_friend_may_view
-    # setup
-    user = create_user
-    user.add_contact!(users(:blue), :friend)
-    groups(:animals).add_user!(user)
-    user.revoke_access!(CastleGates::Holder[user.associated(:friends)] => :view)
+  def test_changing_display_name_increments_version
+    red = users(:red)
 
-    # check assumptions after setup
-    assert users(:blue).friend_of?(user)
-    assert users(:kangaroo).peer_of?(user)
-    assert ! users(:red).friend_of?(user)
-    assert ! users(:red).peer_of?(user)
-
-    assert ! users(:blue).may?(:view, user), 'expected friends not to be able to view this user'
-
-    user.profiles.public.update_attributes!(
-      :may_see => false
-    )
-    user.profiles.private.update_attributes!(
-      :may_see => true,
-      :peer => false
-    )
-
-    user.migrate_permissions!
-
-    assert users(:blue).may?(:view, user), 'expected friends to be able to view this user, after migrating permissions'
-    assert ! users(:kangaroo).may?(:view, user), 'expected peers not to be able to view this user, after migrating permissions'
-    assert ! users(:red).may?(:view, user), 'expected strangers not to be able to view this user, after migrating permissions'
-
+    assert_increases(red, :version) do
+      red.display_name = 'rojo'
+      red.save
+    end
   end
 
-  def test_migrate_peer_may_view
-    user = create_user
-    groups(:animals).add_user!(user)
-    user.revoke_access!(CastleGates::Holder[user.associated(:peers)] => :view)
-
-    assert user.member_of?(groups(:animals))
-    assert user.peer_of?(users(:kangaroo))
-
-    assert ! users(:kangaroo).may?(:view, user), 'expected peers not to be able to view this user'
-
-    user.profiles.public.update_attributes!(
-      :may_see => false
-    )
-    user.profiles.private.update_attributes!(
-      :may_see => true,
-      :peer => true
-    )
-
-    user.migrate_permissions!
-
-    assert users(:kangaroo).may?(:view, user), 'expected peers to be able to view this user after migration'
-    assert ! users(:red).may?(:view, user), 'expected strangers not to be able to view this user after migration'
-  end
-
-  def test_migrate_public_may_see_contacts
-    user = create_user
-    user.keys.destroy_all
-
-    assert ! users(:blue).may?(:see_contacts, user), 'expected strangers not to be able to see the contacts of a user without any keys set up'
-
-    user.profiles.public.update_attributes!(
-      :may_see_contacts => true
-    )
-
-    user.migrate_permissions!
-
-    assert users(:blue).may?(:see_contacts, user), 'expected strangers to be able to see contacts of this user, after migrating permissions'
-  end
-
-  def test_migrate_friend_may_see_contacts
-    # setup
-    user = create_user
-    user.add_contact!(users(:blue), :friend)
-    user.revoke_access!(CastleGates::Holder[user.associated(:friends)] => :see_contacts)
-
-    assert ! users(:blue).may?(:see_contacts, user), 'expected friends not to be able to see the contacts of this user'
-
-    user.profiles.public.update_attributes!(
-      :may_see_contacts => false
-    )
-    user.profiles.private.update_attributes!(
-      :may_see_contacts => true,
-      :peer => false
-    )
-
-    user.migrate_permissions!
-
-    assert users(:blue).may?(:see_contacts, user), 'expected friends to be able to see contacts of this user, after migrating permissions'
-    assert ! users(:red).may?(:see_contacts, user), 'expected strangers not to be able to see contacts of this user, after migrating permissions'
-  end
 
   #
   # creating users no longer adds keys

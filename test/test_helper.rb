@@ -44,6 +44,7 @@ class ActiveSupport::TestCase
   include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
+  include CachingTestHelper
   # for fixture_file_upload
   include ActionDispatch::TestProcess
 

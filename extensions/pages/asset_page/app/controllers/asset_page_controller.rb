@@ -1,6 +1,5 @@
 class AssetPageController < Pages::BaseController
   #before_filter :fetch_asset
-  #stylesheet    'asset'
   permissions   'asset_page'
 
   def show

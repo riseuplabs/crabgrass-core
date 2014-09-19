@@ -1,8 +1,5 @@
 
 class SurveyPageController < Pages::BaseController
-  stylesheet 'survey'
-  javascript :extra
-  javascript 'survey'
   helper 'survey_page'
 
   guard :may_ACTION_survey?

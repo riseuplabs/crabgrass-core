@@ -49,6 +49,14 @@ gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
 gem 'acts-as-taggable-on', '~> 2.4.1'
 
 ##
+#  Backported from rails 4
+##
+
+# add a digest of a template and its dependencies to the cache key
+# not developed anymore. Fixing major version never the less.
+gem 'cache_digests', '~> 0.3'
+
+##
 #  Required, but not included with crabgrass:
 ##
 

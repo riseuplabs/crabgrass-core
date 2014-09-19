@@ -20,7 +20,11 @@ IE9.js
 Using scripts
 =========================
 
-The optional scripts are loaded like so:
+We currently load all scripts on all pages. The aditional javascript
+for wiki and upload functionality is so small that we might as well
+include it rather than determining what to include for every request.
+
+The optional scripts used to be loaded like so:
 
   class MyController < ApplicationController
     javascript :tasks, :wiki

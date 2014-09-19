@@ -88,6 +88,11 @@ class User < ActiveRecord::Base
   ## USER IDENTITY
   ##
 
+
+  def cache_key
+    "user/#{id}-#{version}"
+  end
+
   belongs_to :avatar, :dependent => :destroy
 
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
@@ -99,6 +104,15 @@ class User < ActiveRecord::Base
     t_name = read_attribute(:display_name)
     if t_name
       write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
+    end
+  end
+
+  before_save :display_name_update
+
+  def display_name_update
+    if display_name_changed?
+      increment :version
+      Group.increment_version(group_ids)
     end
   end
 

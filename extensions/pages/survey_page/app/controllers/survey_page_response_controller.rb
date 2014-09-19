@@ -3,9 +3,6 @@
 ##
 
 class SurveyPageResponseController < Pages::BaseController
-  stylesheet 'survey'
-  javascript :extra
-  javascript 'survey'
   helper 'survey_page'
 
   guard show: :may_view_survey_response?,
