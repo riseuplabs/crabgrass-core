@@ -32,7 +32,7 @@ module PageRecords
     visit '/pages/new/me'
     click_on type_name
     new_page(type)
-    fill_in(:title.t, with: new_page.title) if new_page.title
+    fill_in(:title.t, with: type_name + new_page.title) if new_page.title
     fill_in(:summary.t, with: new_page.summary) if new_page.summary
     click_on :create.t
   end
