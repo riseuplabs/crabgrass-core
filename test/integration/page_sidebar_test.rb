@@ -1,4 +1,4 @@
-require_relative '../javascript_integration_test'
+require 'javascript_integration_test'
 
 class PageSideBarTest < JavascriptIntegrationTest
 
