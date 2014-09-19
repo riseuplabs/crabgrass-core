@@ -11,6 +11,21 @@ module Common::Ui::LayoutHelper
   end
 
   ##
+  ## CLASS
+  ##
+
+  def local_class
+    case
+    when @page
+      @page.definition.url
+    when @group
+      @group.type.try.underscore || 'group'
+    when @user
+      @user.class.name.underscore
+    end
+  end
+
+  ##
   ## STYLESHEET
   ##
 

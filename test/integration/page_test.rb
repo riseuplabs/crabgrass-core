@@ -1,6 +1,6 @@
-require_relative '../integration_test'
+require_relative '../javascript_integration_test'
 
-class PageTest < IntegrationTest
+class PageTest < JavascriptIntegrationTest
 
   PAGE_TYPES = [:wiki_page, :gallery, :discussion_page, :rate_many_page, :task_list_page, :ranked_vote_page, :asset_page]
 

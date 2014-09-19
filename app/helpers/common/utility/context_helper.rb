@@ -32,6 +32,10 @@ module Common::Utility::ContextHelper
     end.reverse
   end
 
+  def context_class
+    @context.breadcrumbs.first if @context
+  end
+
   ##
   ## BANNER
   ##
