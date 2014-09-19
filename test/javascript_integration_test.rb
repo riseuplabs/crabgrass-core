@@ -7,19 +7,19 @@ Dir[File.dirname(__FILE__) + '/helpers/integration/javascript/*.rb'].each do |fi
 end
 
 class JavascriptIntegrationTest < IntegrationTest
+  include PageActions
 
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new app,
-      :js_errors => false,
-      :inspector => true
-  end
   Capybara.javascript_driver = :poltergeist
-
 
   def setup
     super
     Capybara.current_driver = Capybara.javascript_driver
     page.driver.add_headers "Accept-Language" => "en"
+  end
+
+  def teardown
+    Capybara.use_default_driver
+    super
   end
 
   protected

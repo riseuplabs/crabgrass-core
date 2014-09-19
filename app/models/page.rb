@@ -138,7 +138,8 @@ class Page < ActiveRecord::Base
 
   def friendly_url
     s = title.nameize
-    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
+    # limit name length, and remove any half-cut trailing word
+    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42
     "#{s}+#{id}"
   end
 

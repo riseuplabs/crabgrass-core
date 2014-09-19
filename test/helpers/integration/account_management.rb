@@ -11,7 +11,7 @@ module AccountManagement
 
   def login
     # Create a user wihtout the lengthy signup procedure
-    @user ||= FactoryGirl.create :user
+    @user ||= records[:user] ||=  FactoryGirl.create(:user)
     visit '/' unless page.current_path == '/'
     fill_in :login_name.t, with: @user.login
     fill_in :login_password.t, with: @user.password
