@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../../test/test_helper'
+require 'test_helper'
 
 class GalleryControllerTest < ActionController::TestCase
   fixtures :pages, :users
@@ -8,12 +8,8 @@ class GalleryControllerTest < ActionController::TestCase
     # there are no galleries in fixtures yet.
     #
     @gallery = Gallery.create! :title => 'gimme pictures', :user => users(:blue)
-    @asset = Asset.create_from_params({
-      :uploaded_data => upload_data('photo.jpg')}) do |asset|
-        asset.parent_page = @gallery
-      end
-    @gallery.add_image!(@asset, users(:blue))
-    @asset.save!
+    @asset = @gallery.add_image! :uploaded_data => upload_data('photo.jpg')
+    users(:blue).updated(@gallery)
   end
 
   def test_show
