@@ -4,9 +4,14 @@ require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 class GalleryToolTest < ActiveSupport::TestCase
 
   def setup
+    setup_assets
     @user = FactoryGirl.create :user
     @gal = Gallery.create! :title => 'kites', :user => @user
     @asset = @gal.add_image!(:uploaded_data => upload_data('image.png'))
+  end
+
+  def teardown
+    teardown_assets
   end
 
   def test_properties_after_adding

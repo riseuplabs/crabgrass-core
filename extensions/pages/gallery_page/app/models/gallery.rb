@@ -36,7 +36,7 @@ class Gallery < Page
   def sort_images(sorted_ids)
     sorted_ids.each_with_index do |id, index|
       showing = self.showings.find_by_asset_id(id)
-      showing.insert_at(index)
+      showing.insert_at(index + 1)
     end
   end
 
