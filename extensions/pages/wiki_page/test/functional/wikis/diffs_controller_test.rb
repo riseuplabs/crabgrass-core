@@ -7,7 +7,7 @@ class Wikis::DiffsControllerTest < ActionController::TestCase
     login_as :orange
 
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" % i)
+      pages(:wiki).data.update_section!(:document, users(user), i, "text %d for the wiki" % i)
     end
 
     get :show, :wiki_id => pages(:wiki).data_id, :id => "4-5"

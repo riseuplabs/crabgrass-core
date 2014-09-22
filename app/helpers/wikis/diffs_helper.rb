@@ -1,10 +1,11 @@
 module Wikis::DiffsHelper
 
-  #def back_to_wiki_link
-  #  @page ?
-  #    link_to(:back_to_page.t, page_url(@page)):
-  #    link_to(:back_to_group.t, group_url(@group))
-  #end
+  # not sure this is what we want.
+  # it's currently required by the Wiki::DiffsControllerTest
+  # but we might have remove diffs from the UI for now.
+  def back_to_wiki_link
+    wiki_path(@wiki)
+  end
 
   # some translations still have the %{user} and %{when} key.
   # TODO clean them up and remove params here.

@@ -27,4 +27,12 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     end
   end
 
+  def test_print
+    login_as :orange
+
+    get :print, :id => pages(:wiki).data_id
+    assert_response :success
+#    assert_template 'print'
+  end
+
 end
