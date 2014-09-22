@@ -19,6 +19,18 @@ class AssetsControllerTest < ActionController::TestCase
     get :show, :id => asset.id, :path => thumbnail(asset.filename)
   end
 
+  def test_destroy
+    user = FactoryGirl.create :user
+    page = FactoryGirl.create :page, :created_by => user
+    asset = page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+    user.updated(page)
+    login_as user
+    assert_difference 'page.assets.count', -1 do
+      delete :destroy, :id => asset.id, :page_id => page.id
+    end
+  end
+
+
   private
 
   def thumbnail(path)

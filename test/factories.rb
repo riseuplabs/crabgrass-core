@@ -42,7 +42,8 @@ FactoryGirl.define do
 
   factory(:membership) {}
 
-  factory :page do
+  # DiscussionPage has the least data so we use it as the default
+  factory :page, class: DiscussionPage do
     title
     summary
     stars_count 0

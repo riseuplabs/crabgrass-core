@@ -5,6 +5,8 @@ class Pages::AssetsControllerTest < ActionController::TestCase
 
   def setup
     @page = FactoryGirl.create :page, :created_by => users(:blue)
+    @asset = @page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+    users(:blue).updated(@page)
     login_as :blue
   end
 
@@ -28,6 +30,9 @@ class Pages::AssetsControllerTest < ActionController::TestCase
   end
 
   def test_create_zip
+    skip "currently not supporting zip extraction"
+    # Need to add an option to the controller and Page#add_attachment!
+    # to use Asset#create_from_param_with_zip_extraction
     login_as :blue
     assert_difference '@page.assets.count' do
       post :create, :page_id => @page.id,
@@ -43,7 +48,8 @@ class Pages::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_difference '@page.assets.count' do
-      post :create, :page_id => @page.id, :assets => [upload_data('photo.jpg')]
+      post :create, :page_id => @page.id,
+        :asset => {:uploaded_data => upload_data('photo.jpg')}
     end
     assert_equal @page.id, Asset.last.page_id
   end
@@ -53,15 +59,9 @@ class Pages::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_no_difference '@page.assets.count' do
-      post :create, :page_id => @page.id, :assets => [upload_data('photo.jpg')]
+      post :create, :page_id => @page.id,
+        :asset => {:uploaded_data => upload_data('photo.jpg')}
       assert_permission_denied
-    end
-  end
-
-  def test_destroy
-    login_as :blue
-    assert_difference '@page.assets.count', -1 do
-      delete :destroy, :id => @asset.id, :page_id => @page.id
     end
   end
 

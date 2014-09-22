@@ -6,9 +6,5 @@ module AssetsPermission
     asset.try.public? || current_user.may?(:view, asset)
   end
 
-  def may_create_asset?(asset=@asset)
-    current_user.may?(:edit, asset)
-  end
-
-  alias_method :may_destroy_asset?, :may_create_asset?
+  alias_method :may_destroy_asset?, :may_admin_page?
 end
