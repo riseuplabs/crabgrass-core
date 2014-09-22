@@ -6,5 +6,7 @@ module AssetsPermission
     asset.try.public? || current_user.may?(:view, asset)
   end
 
-  alias_method :may_destroy_asset?, :may_admin_page?
+  def may_destroy_asset?(asset=@asset)
+    current_user.may?(:admin, asset)
+  end
 end
