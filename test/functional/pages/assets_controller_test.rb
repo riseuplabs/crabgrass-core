@@ -15,20 +15,6 @@ class Pages::AssetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_upload_ready_for_progress_bar
-    get :index, :page_id => @page.id
-    assert_not_nil upload_id = assigns['image_upload_id'],
-      "index action should include image_upload-id"
-    assert_select '.progress[style="display: none;"]', 1,
-        "a hidden progress bar should be included" do
-      assert_select '.bar[style="width: 10%;"]', "0 %",
-        "the progress bar should be 10% filled"
-      end
-    assert_select 'form[action*="X-Progress-ID"]' do
-      assert_select 'input[type="hidden"][value="' + upload_id + '"]'
-    end
-  end
-
   def test_create_zip
     skip "currently not supporting zip extraction"
     # Need to add an option to the controller and Page#add_attachment!
