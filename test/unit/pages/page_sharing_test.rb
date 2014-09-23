@@ -20,11 +20,13 @@ class PageSharingTest < ActiveSupport::TestCase
 
     # share with user
     creator.share_page_with!(page, "red", :message => "hi red", :grant_access => :view)
+    red.clear_access_cache
     assert_equal true, red.may?(:view, page), 'user red should see the page'
     assert_equal false, red.may?(:edit, page), 'user red should not be able to edit the page'
 
     # share with group
     creator.share_page_with!(page, "rainbow", :message => "hi rainbow", :grant_access => :edit)
+    red.clear_access_cache
     assert_equal true, red.may?(:edit, page), 'user red should be able to edit the page'
     assert_equal true, rainbow.may?(:edit, page), 'group rainbow should be able to edit the page'
   end

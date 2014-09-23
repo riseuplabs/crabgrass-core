@@ -48,17 +48,22 @@ class SocialUserTest < ActiveSupport::TestCase
   end
 
   def test_pestering
-    users(:green).revoke_access! :public => :pester
+    green = users(:green)
+    kangaroo = users(:kangaroo)
+    red = users(:red)
+    green.revoke_access! :public => :pester
 
-    assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
-    assert !users(:kangaroo).may?(:pester, users(:green)), 'strangers should be not be able to pester'
+    assert kangaroo.stranger_to?(green), 'must be strangers'
+    assert !kangaroo.may?(:pester, green), 'strangers should be not be able to pester'
 
-    assert users(:red).peer_of?(users(:green)), 'must be peers'
-    assert users(:red).may?(:pester, users(:green)), 'peers should always be able to pester'
+    assert red.peer_of?(green), 'must be peers'
+    assert red.may?(:pester, green), 'peers should always be able to pester'
 
     #users(:green).profiles.public.may_pester = true
-    users(:green).grant_access! :public => :pester
-    assert users(:kangaroo).may?(:pester, users(:green)), 'should be able to pester if set in profile'
+    green.grant_access! :public => :pester
+    assert !kangaroo.may?(:pester, green), 'we cache access permissions'
+    kangaroo.clear_access_cache
+    assert kangaroo.may?(:pester, green), 'should be able to pester if set in profile'
   end
 
   protected
