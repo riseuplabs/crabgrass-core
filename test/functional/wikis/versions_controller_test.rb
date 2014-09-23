@@ -20,9 +20,9 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_version_not_found
-    run_before_filters :show, :wiki_id => @wiki.to_param, :id => '123'
-    assert_nil assigned(:version)
-    assert flashed_errors.any?, "expected an error to be displayed"
+    assert_raises ErrorNotFound do
+      run_before_filters :show, :wiki_id => @wiki.to_param, :id => '123'
+    end
   end
 
   def test_show

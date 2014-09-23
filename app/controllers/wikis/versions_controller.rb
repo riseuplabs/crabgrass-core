@@ -31,8 +31,8 @@ class Wikis::VersionsController < Wikis::BaseController
     return if action? :index
     @version = @wiki.find_version(params[:id])
   rescue Wiki::VersionNotFoundError => ex
-    @version = @wiki.versions.last
     error ex
+    raise ErrorNotFound.new('Version')
     return false
   end
 
