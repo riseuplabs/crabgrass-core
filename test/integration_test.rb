@@ -21,7 +21,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   protected
 
-  def teardown
+  def setup
     Capybara.reset_sessions!
     super
   end
