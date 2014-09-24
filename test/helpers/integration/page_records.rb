@@ -23,7 +23,7 @@ module PageRecords
     end
   end
 
-  def create_page(type)
+  def create_page(type, options = {})
     #TODO: implement test for asset page creation with file upload
     type = :discussion_page if type == :asset_page
     type_name = I18n.t "#{type}_display"
@@ -31,8 +31,9 @@ module PageRecords
     # click_on :create_page.t
     visit '/pages/new/me'
     click_on type_name
-    new_page(type)
-    fill_in(:title.t, with: type_name + new_page.title) if new_page.title
+    new_page(type, options)
+    title = options[:title] || type_name + new_page.title.to_s
+    fill_in :title.t, with: title
     fill_in(:summary.t, with: new_page.summary) if new_page.summary
     click_on :create.t
   end
