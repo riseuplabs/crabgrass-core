@@ -191,7 +191,7 @@ end
 
 group :test, :development do
   # as the name says... debug things
-  gem 'debugger'
+  gem 'debugger', :platforms => :mri_19
 end
 
 
