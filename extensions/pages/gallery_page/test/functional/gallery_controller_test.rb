@@ -24,8 +24,8 @@ class GalleryControllerTest < ActionController::TestCase
     gallery = Gallery.create!( :user => users(:blue),
       :title => "Empty Gallery")
     get :show, :page_id => gallery.id
-    assert_response :success
-    assert_equal [], assigns['images']
+    assert_response :redirect
+    assert_redirected_to @controller.send(:page_url, gallery, :action => 'edit')
   end
 
   def test_edit
@@ -48,15 +48,5 @@ class GalleryControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal [@asset2.id, @asset.id], @gallery.reload.images.map(&:id)
   end
-
-  # TODO: this should live in a different controller
-  def test_update_cover
-    login_as :blue
-    post :update, :page_id => @gallery.id,
-      :page => {:cover_id => @asset.id}
-    assert_response :redirect
-    assert_equal @asset, @gallery.reload.cover
-  end
-
 
 end

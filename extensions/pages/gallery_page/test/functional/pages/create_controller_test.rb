@@ -1,10 +1,12 @@
-require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
+require 'test_helper'
 
 class Pages::CreateControllerTest < ActionController::TestCase
   fixtures :users
 
-# this controller does not really even exist yet:
-  #azul: I think it does - at least there is some base page magic
+  def setup
+    skip 'you cannot upload initial images during gallery creation right now.'
+  end
+
   def test_create
     login_as :blue
 

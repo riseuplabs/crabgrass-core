@@ -26,6 +26,7 @@ class GalleryImageControllerTest < ActionController::TestCase
   end
 
   def test_may_edit
+    skip "we currently do not allow editing images"
     @gallery.add(groups(:rainbow), :access => :edit).save!
     @gallery.save!
     login_as :red
@@ -54,6 +55,17 @@ class GalleryImageControllerTest < ActionController::TestCase
       :image => {:caption => 'New Title' }
     assert_response :redirect
     assert_equal 'New Title',  @asset.reload.caption
+  end
+
+  def test_update_cover
+    skip "we currently do not allow updating the gallery cover"
+    @gallery.add(groups(:rainbow), :access => :edit).save!
+    @gallery.save!
+    login_as :red
+    post :update, :page_id => @gallery.id, :id => @asset.id,
+      :image => {:cover => true }
+    assert_response :redirect
+    assert_equal @asset, @gallery.reload.cover
   end
 
   def test_show
