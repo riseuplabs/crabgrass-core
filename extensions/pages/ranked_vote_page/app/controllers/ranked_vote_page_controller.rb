@@ -4,7 +4,9 @@ class RankedVotePageController < Pages::BaseController
   permissions 'ranked_vote_page'
 
   def show
-    redirect_to(:action => 'edit') unless @poll.possibles.any?
+    # we need to specify the whole page_url not just the action here
+    # because we might have ended up here from the DispatchController.
+    redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
 
     @who_voted_for = @poll.tally
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
