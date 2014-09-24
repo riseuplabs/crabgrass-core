@@ -13,7 +13,7 @@ class RankedVotePageControllerTest < ActionController::TestCase
   def test_show_empty_redirects
     get :show, :page_id => @page.id
     assert_response :redirect
-    assert_redirected_to :action => :edit
+    assert_redirected_to @controller.send(:page_url, @page, :action => :edit)
   end
 
   def test_add_possible
