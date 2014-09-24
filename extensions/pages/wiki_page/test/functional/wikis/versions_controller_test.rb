@@ -37,9 +37,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     login_as :orange
     # should fail gracefully for non-existant version
     get :show, :wiki_id => wiki.id, :id => 7
-    assert_response :success
-    assert_equal wiki.versions.last, assigns(:version)
-    assert_error_message "There is no version 7"
+    assert_response 404
   end
 
   def test_revert
