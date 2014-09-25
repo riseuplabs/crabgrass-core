@@ -22,32 +22,29 @@ class Gallery < Page
   # position).
   #
   # The `asset' needs to respond `true' on Asset#is_image?, else an appropriate
-  # ErrorMessage is raised. `Showing' creation might fail if the `asset' has not
-  # been saved yet (i.e. new_record? #=> true).
-  #
-  # After adding the Asset, the given user's `updated' method is called to
-  # announce that this gallery was updated by her.
+  # ErrorMessage is raised.
   #
   # This method always returns true. On failure an error is raised.
-  def add_attachment!(asset, options={})
-    asset = Asset.build(asset.merge(:parent_page => self))
-    check_type!(asset)
+  def add_attachment!(asset_params, options={})
+    check_type!(asset_params)
     asset = super
     Showing.create! :gallery => self, :asset => asset
-		return asset
+    return asset
   end
-	alias_method :add_image!, :add_attachment!
+  alias_method :add_image!, :add_attachment!
 
   def sort_images(sorted_ids)
     sorted_ids.each_with_index do |id, index|
       showing = self.showings.find_by_asset_id(id)
-      showing.insert_at(index)
+      showing.insert_at(index + 1)
     end
   end
 
   private
 
+  # can either be called with an asset or params used to build an asset.
   def check_type!(asset)
+    asset = Asset.build(asset) unless asset.respond_to? :is_image?
     raise ErrorMessage.new(I18n.t(:file_must_be_image_error)) unless asset.is_image?
   end
 

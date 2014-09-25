@@ -27,27 +27,12 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     end
   end
 
-  def test_break_lock
-    login_as :blue
+  def test_print
+    login_as :orange
 
-    page = pages(:wiki)
-    wiki = page.data
-
-    user = users(:blue)
-    different_user = users(:orange)
-
-    page.add(user, :access => :admin)
-    page.add(different_user, :access => :admin)
-
-    wiki.lock!(:document, different_user)
-
-    assert_equal [], wiki.sections_open_for(user)
-
-    get :edit, :id => pages(:wiki).data_id, :break_lock => true
-
-    assert_equal [:document], wiki.reload.sections_open_for(user)
-    assert_equal [], wiki.sections_open_for(different_user)
+    get :print, :id => pages(:wiki).data_id
     assert_response :success
+#    assert_template 'print'
   end
 
 end

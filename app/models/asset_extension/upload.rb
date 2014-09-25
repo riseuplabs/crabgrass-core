@@ -114,8 +114,16 @@ module AssetExtension
       # finalize_attachment
       #
       def uploaded_data=(file_data)
-        @data_changed = true
+        attribute_will_change!('uploaded_data') if file_data != @file_data
         @file_data = file_data
+      end
+
+      def uploaded_data
+        @file_data || @raw_data
+      end
+
+      def uploaded_data_changed?
+        changed.include? 'uploaded_data'
       end
 
       #
@@ -124,7 +132,7 @@ module AssetExtension
       # from it (the file is actually created later in finalize_attachment).
       #
       def data=(raw_data)
-        @data_changed = true
+        attribute_will_change!('uploaded_data') if raw_data != @raw_data
         @raw_data = raw_data
       end
 
@@ -134,7 +142,7 @@ module AssetExtension
       # in finalize_attachment().
       #
       def process_attachment
-        if @file_data or @raw_data
+        if uploaded_data
           # temporarily capture old filenames
           @old_files = self.all_filenames || []
 
@@ -176,12 +184,7 @@ module AssetExtension
           @temp_file = nil
           create_thumbnail_records
         end
-        @data_changed = false
         true
-      end
-
-      def uploaded_data_changed?
-        @data_changed
       end
 
       private

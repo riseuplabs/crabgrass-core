@@ -7,54 +7,34 @@ Dir[File.dirname(__FILE__) + '/helpers/integration/*.rb'].each do |file|
   require file
 end
 
-class IntegrationTest < ActiveSupport::TestCase
+class IntegrationTest < ActionDispatch::IntegrationTest
   include Capybara::DSL
   include RecordTracking
   include ContentAssertions
+  include PageAssertions
   include AccountManagement
   include UserRecords
+  include PageRecords
 
   # included last so crashes in other extensions will get logged.
   include EnhancedLogging
 
   protected
 
-  def teardown
-    super
-  ensure
+  def setup
     Capybara.reset_sessions!
+    super
+  end
+
+  # this is overwritten by JavascriptIntegrationTest.
+  # RackTests run in the same process so we need to reset User.current
+  def clear_session
+    Capybara.reset_sessions!
+    User.current = nil
   end
 
   def group
     records[:group] ||= FactoryGirl.create(:group)
-  end
-
-  def with_page(types)
-    assert_for_all types do |type|
-      yield new_page(type)
-    end
-  end
-
-  def new_page(type=nil)
-    if type
-      @page = records[type] ||= FactoryGirl.build(type)
-    else
-      @page ||= FactoryGirl.build(:discussion_page)
-    end
-  end
-
-  def create_page(type)
-    #TODO: implement test for asset page creation with file upload
-    type = :discussion_page if type == :asset_page
-    type_name = I18n.t "#{type}_display"
-    # create page is on a hidden dropdown
-    # click_on :create_page.t
-    visit '/pages/new/me'
-    click_on type_name
-    new_page(type)
-    fill_in(:title.t, with: new_page.title) if new_page.title
-    fill_in(:summary.t, with: new_page.summary) if new_page.summary
-    click_on :create.t
   end
 
   #

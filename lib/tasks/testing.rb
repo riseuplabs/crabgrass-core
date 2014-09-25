@@ -143,18 +143,21 @@ namespace :test do
 
     desc "Run all pages unit tests"
     Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
+      t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Run all pages functional tests"
     Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
+      t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Integration test engines for pages"
     Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
+      t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/integration/**/*_test.rb"
       t.verbose = true
     end

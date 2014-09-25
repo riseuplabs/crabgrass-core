@@ -4,13 +4,13 @@ module Wikis::VersionsHelper
   # DISPLAY
   #
 
-  # def short_description(version, link_to_version = false)
-  #   version_text = "Version&nbsp;".html_safe + version.version.to_s
-  #   if link_to_version
-  #     version_text = link_to(version_text, wiki_version_path(@wiki, version))
-  #   end
-  #   version_text + " created by " + version_user_link(version)
-  # end
+  def short_description(version, link_to_version = false)
+    version_text = "Version&nbsp;".html_safe + version.version.to_s
+    if link_to_version
+      version_text = link_to(version_text, wiki_version_path(@wiki, version))
+    end
+    version_text + " created by " + version_user_link(version)
+  end
 
   #
   # NAVIGATION LINKS

@@ -1,11 +1,10 @@
-require_relative '../integration_test'
+require 'integration_test'
 
 class PageTest < IntegrationTest
 
   PAGE_TYPES = [:wiki_page, :gallery, :discussion_page, :rate_many_page, :task_list_page, :ranked_vote_page, :asset_page]
 
   def test_create_all_page_types
-    visit '/'
     login
     PAGE_TYPES.each do |type|
       create_page type

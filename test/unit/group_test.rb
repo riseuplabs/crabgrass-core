@@ -229,6 +229,7 @@ class GroupTest < ActiveSupport::TestCase
     assert ! users(:blue).may?(:view, group), "initially blue shouldn't be able to view the group"
 
     group.migrate_permissions!
+    users(:blue).clear_access_cache
 
     assert users(:blue).may?(:view, group), "after migration blue should be able to view the group"
   end

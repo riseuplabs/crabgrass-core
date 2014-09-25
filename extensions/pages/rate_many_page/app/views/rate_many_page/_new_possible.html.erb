@@ -8,7 +8,7 @@
 
 <div id='new_possible_form_container' style='<%= hide ? "display:none" : "" %>'>
   <h4><%= I18n.t(:new_possibility_heading) %></h4>
-<% form_remote_tag(
+<%= form_remote_tag(
   :url      => page_xurl(@page, :action=>'add_possible'),
   :html     => {:action => page_url(@page, :action=>'add_possible'), :id => 'new_possible_form'}, # non-ajax fallback
   :loading  => show_spinner('new_possible_loading'),

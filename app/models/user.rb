@@ -303,7 +303,11 @@ class User < ActiveRecord::Base
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
-      result = protected_thing.has_access!(perm, self) rescue false
+      begin
+        result = protected_thing.has_access!(perm, self)
+      rescue PermissionDenied
+        result = false
+      end
       # has_access? might call clear_access_cache, so we need to rebuild it
       # after it has been called.
       @access ||= {}

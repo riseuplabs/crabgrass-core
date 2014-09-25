@@ -15,10 +15,10 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     # create versions
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
       login_as user
-      wiki.update_document!(users(user), i, "text %d for the wiki" % i)
+      wiki.update_section!(:document, users(user), i, "text %d for the wiki" % i)
     end
 
-    wiki.update_document!(users(:purple), 6, "text 6 for the wiki")
+    wiki.update_section!(:document, users(:purple), 6, "text 6 for the wiki")
 
     login_as :orange
     wiki.versions.reload
@@ -33,22 +33,19 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   def test_show_invalid_version
     pages(:wiki).add groups(:rainbow), :access => :edit
     wiki = pages(:wiki).data
-    wiki.update_document!(users(:purple), 1, "text for the wiki")
+    wiki.update_section!(:document, users(:purple), 1, "text for the wiki")
     login_as :orange
     # should fail gracefully for non-existant version
     get :show, :wiki_id => wiki.id, :id => 7
-    assert_response :success
-    assert_nil assigns(:version)
-    assert_equal wiki.reload.versions, assigns(:versions)
-    assert_error_message "There is no version 7"
+    assert_response 404
   end
 
   def test_revert
     login_as :orange
     page = pages(:wiki)
     wiki = page.data
-    wiki.update_document!(users(:blue), 1, "version 1")
-    wiki.update_document!(users(:yellow), 2, "version 2")
+    wiki.update_section!(:document, users(:blue), 1, "version 1")
+    wiki.update_section!(:document, users(:yellow), 2, "version 2")
     post :revert, :wiki_id => wiki.id, :id => 1
 
     wiki.reload

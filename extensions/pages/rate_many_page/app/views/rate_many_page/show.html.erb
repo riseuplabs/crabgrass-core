@@ -1,57 +1,24 @@
-<% content_for :style do %>
-ul.possibles li {
-  list-style: none;
-  background: #eee;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-width: 0 2px 2px 0;
-}
-ul.possibles {margin-left: 0; padding-left: 0;}
-ul.possibles li h2 {margin: 0 0 2px 1.5em; font-size: 1em}
-ul.possibles label {
-  vertical-align: center;
-  display: block;
-}
-ul.possibles label:hover {
-  background: #fff;
-  outline: 1px dotted black;
-}
-ul.possibles input[type=radio] {
-  vertical-align: top;
-}
-ul.possibles span {opacity: 0.25}
-div#new_possible {background: #eee; padding: 1em; margin: 1em;}
-<% end %>
+<%= form_tag(page_xurl(@page,:action=>'vote')) do -%>
+  <div id='non-ajax-form' style="text-align: right">
+    <%= submit_tag 'Save my choices' if @possibles.any? %>
+  </div>
+  <ul id='sort_list' class='possibles plain'>
 
-<% content_for :right_sidebar do %>
-  <%= render :partial => 'pages/sidebar/sidebar' %>
-<% end %>
+    <% @possibles.each do |possible| -%>
+      <%= render :partial => 'possible', :locals => {:possible => possible} %>
+    <% end -%>
 
-
-<p>
-
-
-<% form_tag(page_xurl(@page,:action=>'vote')) do -%>
-	<div id='non-ajax-form' style="text-align: right">
-	<%= submit_tag 'Save my choices' if @possibles.any? %>
-	</div>
-	<ul id='sort_list' class='possibles plain'>
-
-<% @possibles.each do |possible| -%>
-<%= render :partial => 'possible', :locals => {:possible => possible} %>
-<% end -%>
-
-	</ul>
+  </ul>
 <% end %>
 
 <% if current_user.may? :edit, @page -%>
-<div id='new_possible'>
-<%= render :partial => 'new_possible'%>
-</div> 
+  <div id='new_possible'>
+    <%= render :partial => 'new_possible'%>
+  </div> 
 <% end -%>
 
 <!--
-<% form_tag(page_url(@page,:action=>'new_possible')) do -%>
+<%= form_tag(page_url(@page,:action=>'new_possible')) do -%>
   Create a new possibility:</br>
   <%= text_field 'possible','name' %>
   <%= submit_tag "Create" %>

@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../../../../../test/test_helper'
+require 'test_helper'
 
 class RateManyPageControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @page = RateManyPage.create! :title => "Show this page!", :user => @user
+    @user = FactoryGirl.create :user
+    @page = FactoryGirl.create :rate_many_page, :title => "Show this page!", :created_by => @user
   end
 
   def test_show
@@ -37,7 +37,7 @@ class RateManyPageControllerTest < ActionController::TestCase
     poll = @page.data
     possible = poll.possibles.create :name => "my option", :description => "undescribable"
 
-    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
+    xhr :post, :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
 
     assert_equal 1, poll.votes.by_user(@user).for_possible(possible).count
     assert_equal 2, poll.votes.by_user(@user).for_possible(possible).first.value
@@ -46,10 +46,10 @@ class RateManyPageControllerTest < ActionController::TestCase
   def test_stranger_may_not_vote
     poll = @page.data
     possible = poll.possibles.create :name => "my option", :description => "undescribable"
-    stranger = User.make
+    stranger = FactoryGirl.create :user
 
     login_as stranger
-    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
+    xhr :post, :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
 
     assert_equal 0, poll.votes.by_user(stranger).for_possible(possible).count
   end
@@ -57,12 +57,12 @@ class RateManyPageControllerTest < ActionController::TestCase
   def test_participant_may_vote
     poll = @page.data
     possible = poll.possibles.create :name => "my option", :description => "undescribable"
-    participant = User.make
+    participant = FactoryGirl.create :user
     @page.add(participant, :access => :edit).save
     assert participant.may?(:edit, @page)
 
     login_as participant
-    post :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
+    xhr :post, :vote_one, :page_id => @page.id, :id => possible.id, :value => "2"
 
     assert_equal 1, poll.votes.by_user(participant).for_possible(possible).count
   end

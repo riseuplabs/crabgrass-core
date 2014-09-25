@@ -5,6 +5,10 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
   fixtures :users, :pages, :groups, :user_participations, :survey_questions,
     :surveys, :survey_responses, :survey_answers
 
+  def setup
+    skip "skipping survey page tests for now"
+  end
+
   def test_new_response
     login_as :dolphin
 

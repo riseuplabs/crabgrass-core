@@ -5,6 +5,7 @@
 class Pages::SidebarsController < ApplicationController
 
   before_filter :fetch_page
+  before_filter :authorization_required
   permissions :pages
   guard :may_edit_page?
   layout nil

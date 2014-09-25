@@ -29,8 +29,10 @@ module Common::Ui::GroupsHelper
       items = items.with_admin(current_user)
     end
 
-    items.sort! { |a, b| a.name <=> b.name }
-    items.collect! {|group| {:value => group.name, :label => group.name, :group => group} }
+    items.order(:name)
+
+    # make sure to act on a copy so we do not alter the relation
+    items = items.map {|group| {:value => group.name, :label => group.name, :group => group} }
 
     selected_item = nil
 

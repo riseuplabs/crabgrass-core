@@ -191,7 +191,7 @@ end
 
 group :test, :development do
   # as the name says... debug things
-  gem 'debugger'
+  gem 'debugger', :platforms => :mri_19
 end
 
 
@@ -219,4 +219,11 @@ group :test do
 
   gem 'capybara', require: false
 
+  # Capybara driver with javascript capabilities using phantomjs
+  # locked to major version for stable API
+  gem 'poltergeist', '~> 1.5', :require => false
+
+  # Headless webkit browser for testing, fast and with javascript
+  # Version newer than 1.8 is required by current poltergeist.
+  gem 'phantomjs-binaries', '~> 1.8', :require => false
 end

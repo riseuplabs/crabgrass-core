@@ -1,68 +1,95 @@
-.hover {
-  background: red;
-  border: 2px solid yellow;
-}
-
-#progress,  #instructions {
-  padding: 0.5em;
-  background-color: #ffeeaa;
-  border: 1px solid #eebb00;
-  margin: 1em;
-}
-
-ul {
-  &.possible_list li {
-    margin: 0 3em 0 3em;
-    padding: 4px 16px;
-    cursor: move;
-    line-height: 24px;
-    &:hover {
-      .edit {
-        display: inline;
-      }
-    }
-    .edit {
-      display: none;
-    }
+.ranked_vote, .rate_many {
+  .hover {
+    background: red;
+    border: 2px solid yellow;
   }
-  &.possibles {
+
+  #progress,  #instructions {
+    padding: 0.5em;
+    background-color: #ffeeaa;
+    border: 1px solid #eebb00;
     margin: 1em;
-    li {
-      padding: 10px 10px 14px 10px;
-      clear: both;
-      padding-left: 44px;
-      div.rank {
-        float: left;
-        display: inline;
-        color: #55bbff;
-        font-size: 36px;
-        margin-left: -30px;
+  }
+
+  ul {
+    &.possible_list li {
+      margin: 0 3em 0 3em;
+      padding: 4px 16px;
+      cursor: move;
+      line-height: 24px;
+      &:hover {
+        .edit {
+          display: inline;
+        }
       }
-      &.winner {
-        background-color: #ffffaa;
+      .edit {
+        display: none;
+      }
+    }
+    &.possibles {
+      margin: 1em;
+      li {
+        padding: 10px 10px 14px 10px;
+        clear: both;
+        padding-left: 44px;
+        div.rank {
+          float: left;
+          display: inline;
+          color: #55bbff;
+          font-size: 36px;
+          margin-left: -30px;
+        }
+        &.winner {
+          background-color: #ffffaa;
+        }
       }
     }
   }
-}
 
-li#add_possible_link {
-  margin-top: 2em;
-  background: #eeeeee;
-  padding: 10px;
-  cursor: default;
-}
-
-div {
-  &.name {
-    font-weight: bold;
+  li#add_possible_link {
+    margin-top: 2em;
+    background: #eeeeee;
+    padding: 10px;
+    cursor: default;
   }
-  &.possible_details {
-    margin: 6px;
-    color: #666666;
+
+  div {
+    &.name {
+      font-weight: bold;
+    }
+    &.possible_details {
+      margin: 6px;
+      color: #666666;
+    }
+  }
+
+  span.winner {
+    display: block;
+    float: right;
   }
 }
 
-span.winner {
-  display: block;
-  float: right;
+.rate_many {
+  ul.possibles li {
+    list-style: none;
+    background: #eee;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-width: 0 2px 2px 0;
+  }
+  ul.possibles {margin-left: 0; padding-left: 0;}
+  ul.possibles li h2 {margin: 0 0 2px 1.5em; font-size: 1em}
+  ul.possibles label {
+    vertical-align: center;
+    display: block;
+  }
+  ul.possibles label:hover {
+    background: #fff;
+    outline: 1px dotted black;
+  }
+  ul.possibles input[type=radio] {
+    vertical-align: top;
+  }
+  ul.possibles span {opacity: 0.25}
+  div#new_possible {background: #eee; padding: 1em; margin: 1em;}
 }

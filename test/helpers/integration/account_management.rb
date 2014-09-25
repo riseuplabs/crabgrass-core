@@ -11,7 +11,7 @@ module AccountManagement
 
   def login
     # Create a user wihtout the lengthy signup procedure
-    @user ||= FactoryGirl.create :user
+    @user ||= records[:user] ||=  FactoryGirl.create(:user)
     visit '/' unless page.current_path == '/'
     fill_in :login_name.t, with: @user.login
     fill_in :login_password.t, with: @user.password
@@ -42,7 +42,6 @@ module AccountManagement
     login unless @user.is_a? UnauthenticatedUser
     block.arity == 1 ? yield(@user) : yield
   ensure
-    Capybara.reset_sessions!
-    User.current = nil
+    clear_session
   end
 end

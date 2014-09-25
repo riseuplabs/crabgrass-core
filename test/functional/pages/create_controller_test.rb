@@ -39,5 +39,36 @@ class Pages::CreateControllerTest < ActionController::TestCase
     assert_equal @group, Page.last.owner
     assert Page.last.users.include? @user
   end
+
+  def test_create_same_name
+    login_as @user
+
+    data_ids, page_ids, page_urls = [],[],[]
+    3.times do
+      post 'create',
+        :owner => @user,
+        :page => {:title => "dupe"},
+        :type => "ranked-vote",
+        :page_type => "RankedVotePage"
+      page = assigns(:page)
+
+      assert_equal "dupe", page.title
+      assert_not_nil page.id
+
+      # check that we have:
+      # a new ranked vote
+      assert !data_ids.include?(page.data.id)
+      # a new page
+      assert !page_ids.include?(page.id)
+      # a new url
+      assert !page_urls.include?(page.name_url)
+
+      # remember the values we saw
+      data_ids << page.data.id
+      page_ids << page.id
+      page_urls << page.name_url
+    end
+  end
+
 end
 

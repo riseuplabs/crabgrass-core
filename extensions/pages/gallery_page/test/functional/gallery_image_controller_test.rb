@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../../test/test_helper'
+require 'test_helper'
 
 class GalleryImageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :groups, :memberships
@@ -17,59 +17,6 @@ class GalleryImageControllerTest < ActionController::TestCase
     @asset.save!
   end
 
-  def test_new
-    login_as :blue
-    get :new, :page_id => @gallery.id
-    assert_response :success
-  end
-
-  def test_new_ready_for_progress_bar
-    login_as :blue
-    get :new, :page_id => @gallery.id
-    assert_response :success
-    assert_not_nil upload_id = assigns['image_upload_id'],
-      "new action should create image_upload-id"
-    assert_select '.progress[style="display: none;"]', 1,
-        "a hidden progress bar should be included" do
-      assert_select '.bar[style="width: 10%;"]', "0 %",
-        "the progress bar should be 10% filled"
-      end
-    assert_select 'form[action*="X-Progress-ID"]' do
-      assert_select 'input[type="hidden"][value="' + upload_id + '"]'
-    end
-  end
-
-  def test_create_zip
-    login_as :blue
-    assert_difference '@gallery.assets.count' do
-      post :create, :page_id => @gallery.id,
-       :assets => [upload_data('subdir.zip')]
-    end
-    assert_equal 'image/jpeg', Asset.last.content_type
-    assert_equal @gallery.id, Asset.last.page_id
-    assert_equal "fox", Asset.last.basename
-  end
-
-  def test_may_create
-    @gallery.add(groups(:rainbow), :access => :edit).save!
-    @gallery.save!
-    login_as :red
-    assert_difference '@gallery.assets.count' do
-      post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
-    end
-    assert_equal @gallery.id, Asset.last.page_id
-  end
-
-  def test_may_not_create
-    @gallery.add(groups(:rainbow), :access => :view).save!
-    @gallery.save!
-    login_as :red
-    assert_no_difference '@gallery.assets.count' do
-      post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
-      assert_permission_denied
-    end
-  end
-
   def test_may_not_edit
     @gallery.add(groups(:rainbow), :access => :view).save!
     @gallery.save!
@@ -79,6 +26,7 @@ class GalleryImageControllerTest < ActionController::TestCase
   end
 
   def test_may_edit
+    skip "we currently do not allow editing images"
     @gallery.add(groups(:rainbow), :access => :edit).save!
     @gallery.save!
     login_as :red
@@ -109,11 +57,15 @@ class GalleryImageControllerTest < ActionController::TestCase
     assert_equal 'New Title',  @asset.reload.caption
   end
 
-  def test_destroy
-    login_as :blue
-    assert_difference '@gallery.assets.count', -1 do
-      delete :destroy, :id => @asset.id, :page_id => @gallery.id
-    end
+  def test_update_cover
+    skip "we currently do not allow updating the gallery cover"
+    @gallery.add(groups(:rainbow), :access => :edit).save!
+    @gallery.save!
+    login_as :red
+    post :update, :page_id => @gallery.id, :id => @asset.id,
+      :image => {:cover => true }
+    assert_response :redirect
+    assert_equal @asset, @gallery.reload.cover
   end
 
   def test_show

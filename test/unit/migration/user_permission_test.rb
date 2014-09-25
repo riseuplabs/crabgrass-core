@@ -33,6 +33,7 @@ module Migration
 
       @user.migrate_permissions!
 
+      users(:blue).clear_access_cache
       assert users(:blue).may?(:view, @user),
         'strangers can view this user, after migrating permissions'
     end
@@ -62,6 +63,7 @@ module Migration
 
       @user.migrate_permissions!
 
+      users(:blue).clear_access_cache
       assert users(:blue).may?(:view, @user),
         'friends can view this user, after migrating permissions'
       assert ! users(:kangaroo).may?(:view, @user),
@@ -91,6 +93,7 @@ module Migration
 
       @user.migrate_permissions!
 
+      users(:kangaroo).clear_access_cache
       assert users(:kangaroo).may?(:view, @user),
         'peers can view this user after migration'
       assert ! users(:red).may?(:view, @user),
@@ -109,6 +112,7 @@ module Migration
 
       @user.migrate_permissions!
 
+      users(:blue).clear_access_cache
       assert users(:blue).may?(:see_contacts, @user),
         'strangers can see contacts of this user, after migrating permissions'
     end
@@ -131,6 +135,7 @@ module Migration
 
       @user.migrate_permissions!
 
+      users(:blue).clear_access_cache
       assert users(:blue).may?(:see_contacts, @user),
         'friends can see contacts of this user, after migrating permissions'
       assert ! users(:red).may?(:see_contacts, @user),
