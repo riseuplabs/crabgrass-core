@@ -17,11 +17,6 @@ class JavascriptIntegrationTest < IntegrationTest
     page.driver.add_headers "Accept-Language" => "en"
   end
 
-  def teardown
-    Capybara.use_default_driver
-    super
-  end
-
   protected
 
   def clear_session

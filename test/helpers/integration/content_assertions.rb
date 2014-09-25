@@ -1,7 +1,12 @@
 module ContentAssertions
 
   def assert_content(content)
+    assert content.present?, "Checking for empty content is pointless."
     assert page.has_content?(content), "Could not find '#{content}'"
+  end
+
+  def assert_no_content(content)
+    assert !page.has_content?(content), "Did not expect to find '#{content}'"
   end
 
   def assert_landing_page(owner)
