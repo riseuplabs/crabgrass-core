@@ -29,4 +29,17 @@ module ContentAssertions
     end
   end
 
+  def assert_success(message)
+    message ||= "Changes saved"
+    within "#alert_messages .ok_16" do
+      assert_content message
+    end
+  end
+
+  def assert_page_tab(active)
+    within "#page_tabs li.tab.active" do
+      assert_content active
+    end
+  end
+
 end
