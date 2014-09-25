@@ -8,8 +8,11 @@ FactoryGirl.define do
   sequence(:title)        { |n| Faker::Lorem.words(3).join(" ").capitalize }
   sequence(:email)        { |n| Faker::Internet.email }
   sequence(:login)        { |n|
-    uname = Faker::Internet.user_name.gsub(/[^a-z]/, "")
-    uname += Faker::Lorem.characters(4 - uname.size) if uname.size < 3
+    begin
+      uname = Faker::Internet.user_name.gsub(/[^a-z]/, "")
+      uname += Faker::Lorem.characters(4 - uname.size) if uname.size < 3
+      # let's not use an existing login...
+    end while User.find_by_login(uname)
     uname
   }
   sequence(:display_name) { |n| Faker::Name.name }
