@@ -305,11 +305,11 @@ module UserExtension
           word = word.id2name
           module_eval <<-"end_eval"
             def #{word}=(value)
-              @#{word} = #{klass.to_s}.new(value)
+              @#{word} = #{klass}.new(value)
               write_attribute('#{word}', @#{word}.to_s)
             end
             def #{word}
-              @#{word} ||= #{klass.to_s}.new( read_attribute('#{word}') )
+              @#{word} ||= #{klass}.new( read_attribute('#{word}') )
             end
           end_eval
         end

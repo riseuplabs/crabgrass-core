@@ -78,7 +78,7 @@ module Common::Ui::ImageHelper
     if id.is_a? ActiveRecord::Base
       id = dom_id(id, 'spinner')
     else
-      "#{id.to_s}_spinner"
+      "#{id}_spinner"
     end
   end
 

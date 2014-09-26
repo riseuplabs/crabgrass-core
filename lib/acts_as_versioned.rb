@@ -187,7 +187,7 @@ module ActiveRecord #:nodoc:
           self.version_condition            = options[:if] || true
           self.non_versioned_columns        = [self.primary_key, inheritance_column, 'version', 'lock_version', versioned_inheritance_column]
           self.version_association_options  = {
-                                                class_name: "#{self.to_s}::#{versioned_class_name}",
+                                                class_name: "#{self}::#{versioned_class_name}",
                                                 foreign_key: versioned_foreign_key,
                                                 dependent: :delete_all
                                               }.merge(options[:association_options] || {})
@@ -258,7 +258,7 @@ module ActiveRecord #:nodoc:
           versioned_class.original_class = self
           versioned_class.table_name = versioned_table_name
           versioned_class.belongs_to self.to_s.demodulize.underscore.to_sym,
-            class_name: "::#{self.to_s}",
+            class_name: "::#{self}",
             foreign_key: versioned_foreign_key
           versioned_class.send :include, options[:extend]         if options[:extend].is_a?(Module)
           versioned_class.set_sequence_name version_sequence_name if version_sequence_name

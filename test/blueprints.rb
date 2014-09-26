@@ -44,7 +44,7 @@ User.blueprint do
   login
   display_name
   email
-  salt              { Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") }
+  salt              { Digest::SHA1.hexdigest("--#{Time.now}--#{login}--") }
   crypted_password  { Digest::SHA1.hexdigest("--#{salt}--#{login}--") }
 
   created_at        { created_date }

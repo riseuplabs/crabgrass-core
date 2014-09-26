@@ -90,7 +90,7 @@ class TrackingTest < ActiveSupport::TestCase
     assert_equal track.group_id, group.id, "Group not stored correctly in Tracking"
     assert_equal track.page_id, page.id, "Page not stored correctly in Tracking"
     if action != :unstar
-      assert_equal "#{action.to_s}s", ["views", "edits", "stars"].find{|a| Tracking.last.send a},
+      assert_equal "#{action}s", ["views", "edits", "stars"].find{|a| Tracking.last.send a},
         'Tracking did not count the right action.'
       assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'There shall be exactly one action counted.'

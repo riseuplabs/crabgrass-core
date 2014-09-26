@@ -25,7 +25,7 @@ module CastleGatesHelper
   end
 
   def castle_gate_checkbox(castle, gate, holder, options = {})
-    name = "#{gate}_#{holder.to_s}"
+    name = "#{gate}_#{holder}"
     options = options.dup
     options[:label] ||= holder.definition.label.t
     if holder.definition.info
