@@ -152,7 +152,7 @@ class Picture < ActiveRecord::Base
   #
   def render(geometry)
     # ensure the file has been rendered
-    unless File.exists?(storage.private_path(geometry))
+    unless File.exist?(storage.private_path(geometry))
       resize(geometry)
     end
     # ensure symlink to public dir exists

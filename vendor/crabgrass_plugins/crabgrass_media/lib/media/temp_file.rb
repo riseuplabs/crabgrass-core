@@ -159,5 +159,5 @@ module Media
   end
 end
 
-FileUtils.mkdir_p(Media::TempFile.tempfile_path) unless File.exists?(Media::TempFile.tempfile_path)
+FileUtils.mkdir_p(Media::TempFile.tempfile_path) unless File.exist?(Media::TempFile.tempfile_path)
 

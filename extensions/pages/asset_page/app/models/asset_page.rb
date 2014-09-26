@@ -36,7 +36,7 @@ class AssetPage < Page
     return "" unless self.asset and self.asset.is_a? DocAsset and self.asset.thumbnail(:txt)
 
     thumbnail = self.asset.thumbnail(:txt)
-    thumbnail.generate unless File.exists?(thumbnail.private_filename)
+    thumbnail.generate unless File.exist?(thumbnail.private_filename)
     File.open(thumbnail.private_filename).readlines rescue ""
   end
 

@@ -8,7 +8,7 @@ module Crabgrass::Theme::Cache
 
   def clear_cache(file='')
     cached = css_destination_path(file)
-    FileUtils.rm_r(cached, secure: true) if File.exists? cached
+    FileUtils.rm_r(cached, secure: true) if File.exist? cached
   end
 
   def cache_key
@@ -74,7 +74,7 @@ module Crabgrass::Theme::Cache
 
   def css_updated_at(sheet_name)
     path = css_destination_path(sheet_name)
-    File.exists?(path) ? File.mtime(path) : nil
+    File.exist?(path) ? File.mtime(path) : nil
   end
 
   def sass_files_for_screen

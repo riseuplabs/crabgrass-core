@@ -82,7 +82,7 @@ class Avatar < ActiveRecord::Base
   def resize_from_file(filename, size, content_type = 'image/jpeg')
     dimensions = Avatar.pixels(size) + '^' # ie '32x32^', forces each dimension to be at least 32px
     crop = Avatar.pixels(size)
-    if !File.exists?(filename)
+    if !File.exist?(filename)
       IO.read(default_file(size))
     else
       Media::TempFile.open(nil,content_type) do |dest_file|

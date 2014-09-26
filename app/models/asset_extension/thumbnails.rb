@@ -76,7 +76,7 @@ module AssetExtension
       # returnes true if the thumbnail file has been generated
       def thumbnail_exists?(name)
         fname = private_thumbnail_filename(name)
-        File.exists?(fname) and File.size(fname) > 0
+        File.exist?(fname) and File.size(fname) > 0
       end
 
       # returns the thumbnail with 'name'

@@ -27,8 +27,8 @@ class AssetPageHistoryControllerTest < ActionController::TestCase
     assert_difference 'Asset::Version.count', -1, "destroy should remove a version" do
       post :destroy, page_id: @page, id: 1
     end
-    assert File.exists?(@asset.private_filename)
-    assert !File.exists?(@version_filename)
+    assert File.exist?(@asset.private_filename)
+    assert !File.exist?(@version_filename)
 
     assert_equal 1, @asset.reload.versions.size
   end

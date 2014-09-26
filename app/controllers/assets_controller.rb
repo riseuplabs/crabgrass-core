@@ -7,7 +7,7 @@ class AssetsController < ApplicationController
   prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
-    if @asset.public? and !File.exists?(@asset.public_filename)
+    if @asset.public? and !File.exist?(@asset.public_filename)
       # update access and redirect iff asset is public AND the public
       # file is not yet in place.
       @asset.update_access

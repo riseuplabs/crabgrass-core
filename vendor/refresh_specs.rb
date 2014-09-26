@@ -16,7 +16,7 @@ Dir.chdir( File.dirname(__FILE__) + '/gems' ) do |gemsdir|
     Dir.chdir(gem) do |gemdir|
       puts
       puts gemdir
-      if File.exists?('.specification')
+      if File.exist?('.specification')
         puts '  skipping, .specification already exists'
       elsif Dir.glob('*.gemspec').any?
         puts '  generating .specification'

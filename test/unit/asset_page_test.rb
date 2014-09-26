@@ -31,8 +31,8 @@ class AssetPageTest < ActiveSupport::TestCase
     asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     page.data = asset
     page.save!
-    assert File.exists?(asset.private_filename)
-    assert !File.exists?(asset.public_filename), 'public file "%s" should NOT exist' % asset.public_filename
+    assert File.exist?(asset.private_filename)
+    assert !File.exist?(asset.public_filename), 'public file "%s" should NOT exist' % asset.public_filename
   end
 
   # make sure assigning page.data later still updates permissions.

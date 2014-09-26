@@ -295,8 +295,8 @@ module Media
       from = args[:from].to_s
       to   = args[:to].to_s
       raise ArgumentError if from.empty? || to.empty?
-      if File.exists?(from)
-        if File.exists?(to)
+      if File.exist?(from)
+        if File.exist?(to)
           FileUtils.rm(to)
         end
         FileUtils.mv(from, to)

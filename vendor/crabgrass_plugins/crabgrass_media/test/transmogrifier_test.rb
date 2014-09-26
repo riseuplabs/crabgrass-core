@@ -30,7 +30,7 @@ class TransmogrifierTest < Test::Unit::TestCase
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a jpg: #{file_info(transmog.output_file)}"
     assert_equal ['100','100'], Media.dimensions(transmog.output_file), "output should be resized: #{file_info(transmog.output_file)}"
@@ -44,7 +44,7 @@ class TransmogrifierTest < Test::Unit::TestCase
       assert_not_nil transmog, 'should find transmog'
       status = transmog.run
       assert_equal :success, status
-      assert File.exists?(dest_file.to_s)
+      assert File.exist?(dest_file.to_s)
       assert file_info_matches?(dest_file, /JPEG/), "output should be a jpg: #{file_info(transmog.output_file)}"
     end
   end
@@ -57,7 +57,7 @@ class TransmogrifierTest < Test::Unit::TestCase
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /PDF/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end
@@ -70,7 +70,7 @@ class TransmogrifierTest < Test::Unit::TestCase
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end
@@ -83,7 +83,7 @@ class TransmogrifierTest < Test::Unit::TestCase
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end

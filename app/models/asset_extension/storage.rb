@@ -58,8 +58,8 @@ module AssetExtension # :nodoc:
     end
 
     def self.make_required_dirs
-      FileUtils.mkdir_p(@@private_storage) unless File.exists?(@@private_storage)
-      FileUtils.mkdir_p(@@public_storage) unless File.exists?(@@public_storage)
+      FileUtils.mkdir_p(@@private_storage) unless File.exist?(@@private_storage)
+      FileUtils.mkdir_p(@@public_storage) unless File.exist?(@@public_storage)
     end
 
     ##
@@ -168,7 +168,7 @@ module AssetExtension # :nodoc:
 
     def hard_link(source, dest)
       FileUtils.mkdir_p(File.dirname(dest))
-      if File.exists?(source) and !File.exists?(dest)
+      if File.exist?(source) and !File.exist?(dest)
         FileUtils.ln(source, dest)
       end
     end
@@ -183,14 +183,14 @@ module AssetExtension # :nodoc:
     def destroy_file
       if is_version?
         # just remove version directory
-        FileUtils.rm_rf(File.dirname(private_filename)) if File.exists?(File.dirname(private_filename))
+        FileUtils.rm_rf(File.dirname(private_filename)) if File.exist?(File.dirname(private_filename))
 #      elsif is_thumbnail?
 #        # just remove thumbnail
 #        FileUtils.rm(private_filename) if File.exists?(private_filename)
       else
         # remove everything
         remove_symlink
-        FileUtils.rm_rf(File.dirname(private_filename)) if File.exists?(File.dirname(private_filename))
+        FileUtils.rm_rf(File.dirname(private_filename)) if File.exist?(File.dirname(private_filename))
       end
     end
 
@@ -208,7 +208,7 @@ module AssetExtension # :nodoc:
 
     # Saves the file to the file system
     def save_to_storage(temp_path)
-      if File.exists?(temp_path)
+      if File.exist?(temp_path)
         FileUtils.mkdir_p(File.dirname(private_filename))
         FileUtils.cp(temp_path, private_filename)
         File.chmod(0644, private_filename)
@@ -222,7 +222,7 @@ module AssetExtension # :nodoc:
 
     # creates a symlink from the private asset storage to a publicly accessible directory
     def add_symlink
-      unless File.exists?(File.dirname(public_filename))
+      unless File.exist?(File.dirname(public_filename))
         real_private_path = Pathname.new(private_filename).realpath.dirname
         real_public_path  = Pathname.new(public_storage).realpath
         public_to_private = real_private_path.relative_path_from(real_public_path)
@@ -234,7 +234,7 @@ module AssetExtension # :nodoc:
 
     # removes symlink from public directory
     def remove_symlink
-      if File.exists?(File.dirname(public_filename))
+      if File.exist?(File.dirname(public_filename))
         FileUtils.rm(File.dirname(public_filename))
       end
     end
@@ -278,7 +278,7 @@ module AssetExtension # :nodoc:
     # a utility function to remove a series of files.
     def remove_files(*files)
       files.each do |file|
-        File.unlink(file) if file and File.exists?(file)
+        File.unlink(file) if file and File.exist?(file)
       end
     end
 

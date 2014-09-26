@@ -4,7 +4,7 @@
 
 if (ADAPTER == :sqlite)
   DB_FILE = "#{File.dirname(__FILE__)}/test.sqlite"
-  if !File.exists?(DB_FILE)
+  if !File.exist?(DB_FILE)
     REBUILD_DB = true
   end
   ActiveRecord::Base.establish_connection(
