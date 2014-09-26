@@ -35,7 +35,7 @@ class SurveyPageResponseController < Pages::BaseController
       flash_message success: I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, action: 'response-show', id: @response.id)
-  rescue Exception => exc
+  rescue => exc
     flash_message_now exception: exc, object: @response
     render template: 'survey_page_response/new'
   end
@@ -52,7 +52,7 @@ class SurveyPageResponseController < Pages::BaseController
       flash_message success: I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, action: 'response-show', id: @response.id)
-  rescue Exception => exc
+  rescue => exc
     flash_message_now object: @response, exc: exc
   end
 

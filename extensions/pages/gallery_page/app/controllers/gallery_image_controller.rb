@@ -45,7 +45,7 @@ class GalleryImageController < Pages::BaseController
             page.hide('update_message')
           end
         end
-      rescue Exception => exc
+      rescue => exc
         responds_to_parent do
           render :update do |page|
             page.hide('progress')

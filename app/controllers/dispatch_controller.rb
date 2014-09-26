@@ -41,7 +41,7 @@ class DispatchController < ApplicationController
     @_env = request.env
     @_env['action_controller.instance'] = self
     process(name)
-  rescue Exception => exception
+  rescue => exception
     @_response ||= response
     @_response.request ||= request
     # keep regular rescue_from behaviour, even though we're never calling an action

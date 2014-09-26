@@ -42,7 +42,7 @@ class Groups::InvitesController < Groups::BaseController
       begin
         Mailer.request_to_join_us!(req, mailer_options).deliver
         reqs << req
-      rescue Exception => exc
+      rescue => exc
         error(:now, exc)
         req.destroy
       end

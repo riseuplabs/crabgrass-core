@@ -61,7 +61,7 @@ class Avatar < ActiveRecord::Base
     if url.present?
       begin
         self.image_file_data = resize_from_blob(open(url).read, 'huge') # from 'open-uri'
-      rescue Exception => exc
+      rescue => exc
         raise ErrorMessage.new(exc.to_s)
       end
     end
