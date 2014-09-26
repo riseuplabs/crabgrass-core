@@ -11,7 +11,10 @@ module EnhancedLogging
   end
 
   def save_state
-    page.save_screenshot screenshot_path if page.respond_to? :save_screenshot
+    begin
+      page.save_screenshot screenshot_path
+    rescue Capybara::NotSupportedByDriverError
+    end
     File.open(logfile_path, 'w') do |test_log|
       test_log.puts self.class.name
       test_log.puts "========================="

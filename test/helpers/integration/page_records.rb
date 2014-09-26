@@ -24,8 +24,6 @@ module PageRecords
   end
 
   def create_page(type, options = {})
-    #TODO: implement test for asset page creation with file upload
-    type = :discussion_page if type == :asset_page
     type_name = I18n.t "#{type}_display"
     # create page is on a hidden dropdown
     # click_on :create_page.t
@@ -33,8 +31,13 @@ module PageRecords
     click_on type_name
     new_page(type, options)
     title = options[:title] || type_name + new_page.title.to_s
-    fill_in :title.t, with: title
-    fill_in(:summary.t, with: new_page.summary) if new_page.summary
+    file = options[:file] || fixture_file('bee.jpg')
+    try_to_fill_in :title.t,   with: title
+    try_to_fill_in :summary.t, with: new_page.summary
+    try_to_attach_file :asset_uploaded_data, file
     click_on :create.t
+    if type == :asset_page
+      new_page.title = file.basename(file.extname)
+    end
   end
 end
