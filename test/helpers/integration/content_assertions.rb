@@ -6,7 +6,7 @@ module ContentAssertions
   end
 
   def assert_no_content(content)
-    assert !page.has_content?(content), "Did not expect to find '#{content}'"
+    assert page.has_no_content?(content), "Did not expect to find '#{content}'"
   end
 
   def assert_landing_page(owner)
