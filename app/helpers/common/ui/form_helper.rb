@@ -26,19 +26,19 @@ module Common::Ui::FormHelper
 
     select_id = "select_#{select_title.gsub(/[^a-zA-Z]+/, '')}"
 
-    text_label = content_tag(:label, I18n.t(:view_label), :for => select_id) if !select_title.nil? && !select_title.blank?
+    text_label = content_tag(:label, I18n.t(:view_label), for: select_id) if !select_title.nil? && !select_title.blank?
 
     current_index = 0
     options = items.map do |title, perform|
-      selected = selected_index == current_index ? {:selected => "selected"} : {}
+      selected = selected_index == current_index ? {selected: "selected"} : {}
       current_index += 1
       perform = url_for(perform) if perform.is_a?(Hash)
       option_id = "option_#{title.gsub(/[^a-zA-Z]+/, '')}"
       value = drop_down_action(perform)
-      content_tag :option, title, {:value => value, :id => option_id}.merge(selected)
+      content_tag :option, title, {value: value, id: option_id}.merge(selected)
     end.join("\n")
 
-    content_tag(:div, text_label + select_tag(select_id, options, :onchange => "javascript: eval(this.options[this.selectedIndex].value)"), :id => "pages_view")
+    content_tag(:div, text_label + select_tag(select_id, options, onchange: "javascript: eval(this.options[this.selectedIndex].value)"), id: "pages_view")
   end
 
   def drop_down_action(perform)
@@ -82,7 +82,7 @@ module Common::Ui::FormHelper
   # Warning: input args are tags as html_safe.
   #
   def input_append(*args)
-    content_tag :div, args.join("\n").html_safe, :class => 'input-append'
+    content_tag :div, args.join("\n").html_safe, class: 'input-append'
   end
 
 end

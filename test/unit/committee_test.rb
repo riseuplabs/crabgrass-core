@@ -10,9 +10,9 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_creation_and_deletion
-    g = Group.create :name => 'riseup'
-    c1 = Committee.create :name => 'finance'
-    c2 = Committee.create :name => 'food'
+    g = Group.create name: 'riseup'
+    c1 = Committee.create name: 'finance'
+    c2 = Committee.create name: 'food'
 
     assert_difference 'Group.find(%d).version'%g.id do
       g.add_committee!(c1)
@@ -43,9 +43,9 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_membership
-    g = Group.create :name => 'riseup'
-    c1 = Committee.create :name => 'finance'
-    c2 = Committee.create :name => 'food'
+    g = Group.create name: 'riseup'
+    c1 = Committee.create name: 'finance'
+    c2 = Committee.create name: 'food'
     g.add_committee!(c1)
     g.add_committee!(c2)
     user = users(:kangaroo)
@@ -65,8 +65,8 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_naming
-    g = Group.create :name => 'riseup'
-    c = Committee.new :name => 'outreach'
+    g = Group.create name: 'riseup'
+    c = Committee.new name: 'outreach'
     g.add_committee!(c)
     assert_equal 'riseup+outreach', c.full_name, 'committee full name should be in the form <groupname>+<committeename>'
     c.name = 'legal'
@@ -91,8 +91,8 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
-    g = Group.create :name => 'riseup'
-    c = Committee.create :name => 'outreach'
+    g = Group.create name: 'riseup'
+    c = Committee.create name: 'outreach'
     g.add_committee!(c)
     user = users(:gerrard)
     other_user = users(:blue)
@@ -100,15 +100,15 @@ class CommitteeTest < ActiveSupport::TestCase
     c.add_user!(other_user)
     g.add_user!(other_user)
 
-    group_page = Page.create! :title => 'a group page',
-      :public => false,
-      :user => other_user,
-      :share_with => g, :access => :admin
+    group_page = Page.create! title: 'a group page',
+      public: false,
+      user: other_user,
+      share_with: g, access: :admin
     group_page.save
-    committee_page = Page.create! :title => 'a committee page',
-      :public => false,
-      :user => other_user,
-      :share_with => c, :access => :admin
+    committee_page = Page.create! title: 'a committee page',
+      public: false,
+      user: other_user,
+      share_with: c, access: :admin
     committee_page.save
 
     assert user.may?(:view, committee_page), "should be able to view committee page"
@@ -116,23 +116,23 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_cant_pester_private_committee
-    g = Group.create :name => 'riseup'
-    c = Committee.create :name => 'outreach'
+    g = Group.create name: 'riseup'
+    c = Committee.create name: 'outreach'
     g.add_committee!(c)
 
-    u = User.create :login => 'user'
+    u = User.create login: 'user'
 
     assert u.may?(:pester, c) == false, 'should not be able to pester committee of group with private committees'
   end
 
   def test_can_pester_public_committee
-    g = Group.create :name => 'riseup'
-    g.grant_access! :public => [:view, :pester, :see_committees]
-    c = Committee.create :name => 'outreach'
-    c.grant_access! :public => [:view, :pester]
+    g = Group.create name: 'riseup'
+    g.grant_access! public: [:view, :pester, :see_committees]
+    c = Committee.create name: 'outreach'
+    c.grant_access! public: [:view, :pester]
     g.add_committee!(c)
 
-    u = User.create :login => 'user'
+    u = User.create login: 'user'
 
     assert u.may?(:pester, c), 'should be able to pester committee of group with public committees'
   end

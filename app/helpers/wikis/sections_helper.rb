@@ -29,9 +29,9 @@ module Wikis::SectionsHelper
   def add_edit_link_to_heading(wiki, anchor, section)
     heading = anchor.parent
     link = link_to_remote(:edit.t,
-      {:url => edit_wiki_path(wiki, :section => section), :method => 'get'},
-      :title => :wiki_section_edit.t, :id => "#{section}_edit_link",
-      :icon => 'pencil', :class => 'edit shy wiki-section-edit'
+      {url: edit_wiki_path(wiki, section: section), method: 'get'},
+      title: :wiki_section_edit.t, id: "#{section}_edit_link",
+      icon: 'pencil', class: 'edit shy wiki-section-edit'
     )
     heading.insert_after(Hpricot(link), anchor)
     heading.attributes['class'] += " shy_parent"

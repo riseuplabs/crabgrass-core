@@ -26,9 +26,9 @@ class LinkRenderer::Ajax < LinkRenderer::CrabgrassBase
     # ajax pagination will always use :get as the method
     # because the action should be index (or possibly show)
     options = {
-      :url => url_for(page),
-      :method => :get,
-      :loading => @template.show_spinner(spinner_id)
+      url: url_for(page),
+      method: :get,
+      loading: @template.show_spinner(spinner_id)
     }
   end
 

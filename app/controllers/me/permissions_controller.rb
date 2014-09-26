@@ -22,7 +22,7 @@ class Me::PermissionsController < Me::BaseController
     success :saved.t, :quick
     render :update do |page|
       standard_update(page)
-      page.replace_html 'permissions_area', :file => 'me/permissions/index'
+      page.replace_html 'permissions_area', file: 'me/permissions/index'
     end
   end
 

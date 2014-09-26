@@ -367,7 +367,7 @@ module Media
     #
     def restore_temporary_outfile
       if @temporary_outfile
-        replace_file :from => output_file, :to => @outfile_to_return
+        replace_file from: output_file, to: @outfile_to_return
         self.output_file = @outfile_to_return
       end
       return true

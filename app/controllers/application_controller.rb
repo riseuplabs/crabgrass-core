@@ -57,10 +57,10 @@ class ApplicationController < ActionController::Base
       sub('$user_name', current_user.display_name).
       sub('$site_title', current_site.title)
     opts = {
-     :site => current_site,   :current_user => current_user,
-     :host => request.host,   :protocol => request.protocol,
-     :page => @page,          :from_address => from_address,
-     :from_name => from_name }
+     site: current_site,   current_user: current_user,
+     host: request.host,   protocol: request.protocol,
+     page: @page,          from_address: from_address,
+     from_name: from_name }
     opts[:port] = request.port_string.sub(':','') if request.port_string.present?
     return opts
   end

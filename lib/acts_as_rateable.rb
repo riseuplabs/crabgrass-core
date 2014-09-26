@@ -9,7 +9,7 @@ module Juixe
 
       module ClassMethods
         def acts_as_rateable
-          has_many :ratings, :as => :rateable, :dependent => :destroy
+          has_many :ratings, as: :rateable, dependent: :destroy
           include Juixe::Acts::Rateable::InstanceMethods
           extend Juixe::Acts::Rateable::SingletonMethods
         end
@@ -23,8 +23,8 @@ module Juixe
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
 
           Rating.find(:all,
-            :conditions => ["rateable_id = ? and rateable_type = ?", obj.id, rateable],
-            :order => "created_at DESC"
+            conditions: ["rateable_id = ? and rateable_type = ?", obj.id, rateable],
+            order: "created_at DESC"
           )
         end
 
@@ -35,8 +35,8 @@ module Juixe
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
 
           Rating.find(:all,
-            :conditions => ["user_id = ? and rateable_type = ?", user.id, rateable],
-            :order => "created_at DESC"
+            conditions: ["user_id = ? and rateable_type = ?", user.id, rateable],
+            order: "created_at DESC"
           )
         end
 
@@ -45,8 +45,8 @@ module Juixe
         def find_by_rating(rating)
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
           ratings = Rating.find(:all,
-            :conditions => ["rating = ? and rateable_type = ?", rating, rateable],
-            :order => "created_at DESC"
+            conditions: ["rating = ? and rateable_type = ?", rating, rateable],
+            order: "created_at DESC"
           )
           rateables = []
           ratings.each { |r|

@@ -3,7 +3,7 @@ class CreateSurveyTables < ActiveRecord::Migration
     create_table :surveys do |t|
       t.text :description
       t.datetime :created_at
-      t.integer :responses_count, :default => 0
+      t.integer :responses_count, default: 0
     end
 
     create_table :survey_questions do |t|
@@ -27,7 +27,7 @@ class CreateSurveyTables < ActiveRecord::Migration
       t.integer :user_id
       t.string :name
       t.string :email
-      t.integer :stars_count, :default => 0
+      t.integer :stars_count, default: 0
       t.datetime :created_at
     end
 

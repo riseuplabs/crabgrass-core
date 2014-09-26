@@ -12,7 +12,7 @@ module Common::Page::PostHelper
       else
         param_name = 'page'
       end
-      will_paginate(posts, :class => "pagination p #{klass}", :param_name => param_name, :renderer => LinkRenderer::Page, :previous_label => :pagination_previous.t, :next_label => :pagination_next.t)
+      will_paginate(posts, class: "pagination p #{klass}", param_name: param_name, renderer: LinkRenderer::Page, previous_label: :pagination_previous.t, next_label: :pagination_next.t)
     end
   end
 

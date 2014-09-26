@@ -59,13 +59,13 @@ class UserTest < ActiveSupport::TestCase
   ## ensure that a user and a group cannot have the same handle
   def test_namespace
     assert_no_difference 'User.count' do
-      u = create_user(:login => 'groups')
+      u = create_user(login: 'groups')
       assert u.errors[:login]
     end
 
-    g = Group.create :name => 'robot-overlord'
+    g = Group.create name: 'robot-overlord'
     assert_no_difference 'User.count' do
-      u = create_user(:login => 'robot-overlord')
+      u = create_user(login: 'robot-overlord')
       assert u.errors[:login]
     end
   end
@@ -81,7 +81,7 @@ class UserTest < ActiveSupport::TestCase
 
     # find numeric group names
     assert_equal 0, User.alphabetized('#').size
-    FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    FactoryGirl.create :user, login: '2unlimited', password: '3qasdb43!sdaAS...', password_confirmation: '3qasdb43!sdaAS...'
     assert_equal 1, User.alphabetized('#').size
 
     # case insensitive
@@ -102,20 +102,20 @@ class UserTest < ActiveSupport::TestCase
 
     group1 = groups(:true_levellers)
     group1.add_user! user
-    channel1 = ChatChannel.create(:name => group1.name, :group_id => group1.id)
-    ChatChannelsUser.create({:channel => channel1, :user => user})
+    channel1 = ChatChannel.create(name: group1.name, group_id: group1.id)
+    ChatChannelsUser.create({channel: channel1, user: user})
 
     group2 = groups(:rainbow)
     group2.add_user! user
-    channel2 = ChatChannel.create(:name => group2.name, :group_id => group2.id)
-    ChatChannelsUser.create({:channel => channel2, :user => user})
+    channel2 = ChatChannel.create(name: group2.name, group_id: group2.id)
+    ChatChannelsUser.create({channel: channel2, user: user})
 
     user.destroy
-    assert ChatChannelsUser.find(:all, :conditions => {:user_id => user_id}).empty?
+    assert ChatChannelsUser.find(:all, conditions: {user_id: user_id}).empty?
   end
 
   def test_new_user_has_discussion
-    u = FactoryGirl.create :user, :login => '2unlimited', :password => '3qasdb43!sdaAS...', :password_confirmation => '3qasdb43!sdaAS...'
+    u = FactoryGirl.create :user, login: '2unlimited', password: '3qasdb43!sdaAS...', password_confirmation: '3qasdb43!sdaAS...'
     assert !u.reload.wall_discussion.new_record?
   end
 
@@ -166,7 +166,7 @@ class UserTest < ActiveSupport::TestCase
   protected
 
   def create_user(options = {})
-    User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
+    User.create({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
   end
 
 end

@@ -1,9 +1,9 @@
 class PrivatePostActivity < Activity
 
-  validates_format_of :subject_type, :with => /User/
+  validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id
 
-  validates_format_of :item_type, :with => /User/
+  validates_format_of :item_type, with: /User/
   validates_presence_of :item_id
 
   alias_attr :user_to, :subject
@@ -33,9 +33,9 @@ class PrivatePostActivity < Activity
     link_text = reply ? I18n.t(:a_reply_link) : I18n.t(:a_message_link)
 
     I18n.t(:activity_message_received,
-             :message_tag => view.link_to(link_text, url),
-             :other_user => user_span(:user_from),
-             :title => "<i>#{snippet}</i>")
+             message_tag: view.link_to(link_text, url),
+             other_user: user_span(:user_from),
+             title: "<i>#{snippet}</i>")
   end
 
   def icon

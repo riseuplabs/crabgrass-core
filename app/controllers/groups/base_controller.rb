@@ -26,12 +26,12 @@ class Groups::BaseController < ApplicationController
   end
 
   def new_group_committee_path(group)
-    new_group_structure_path(group, :type => 'committee')
+    new_group_structure_path(group, type: 'committee')
   end
   helper_method :new_group_committee_path
 
   def new_group_council_path(group)
-    new_group_structure_path(group, :type => 'council')
+    new_group_structure_path(group, type: 'council')
   end
   helper_method :new_group_council_path
 

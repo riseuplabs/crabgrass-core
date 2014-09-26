@@ -2,7 +2,7 @@ class Possible < ActiveRecord::Base
 
   acts_as_list
   belongs_to :poll
-  has_many :votes, :dependent => :destroy do
+  has_many :votes, dependent: :destroy do
     # disable votes collection builder, since we want the vote to take it's type from the poll
     %w(build create create!).each do |method_name|
       define_method(method_name) {

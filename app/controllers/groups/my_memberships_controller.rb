@@ -1,7 +1,7 @@
 class Groups::MyMembershipsController < Groups::BaseController
 
-  guard :create => :may_join_group?,
-        :destroy => :may_leave_group?
+  guard create: :may_join_group?,
+        destroy: :may_leave_group?
 
   def create
     @group.add_user!(current_user)

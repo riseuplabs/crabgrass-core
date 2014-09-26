@@ -71,7 +71,7 @@ class SurveyTest < ActiveSupport::TestCase
   def test_destruction
     survey = Survey.create!
     SurveyQuestion # loads the source file for ImageUploadQuestion
-    question = ImageUploadQuestion.create :survey => survey
+    question = ImageUploadQuestion.create survey: survey
 
     response_data = {
       "answers_attributes" => {

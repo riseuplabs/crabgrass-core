@@ -47,9 +47,9 @@ module Common::Ui::ThemeHelper
 
   def link_to_banner_title(entity, size=nil)
     if size
-      link_to_entity(entity, :class => 'title', :format => :full, :style => 'line-height: %spx' % Avatar.pixel_width(size))
+      link_to_entity(entity, class: 'title', format: :full, style: 'line-height: %spx' % Avatar.pixel_width(size))
     else
-      link_to_entity(entity, :class => 'title', :format => :full)
+      link_to_entity(entity, class: 'title', format: :full)
     end
   end
 

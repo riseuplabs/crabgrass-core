@@ -12,8 +12,8 @@ class Conf
   ##
 
   TEXT_EDITOR = Hash.new(0).merge({
-    :greencloth_only => 0,        :html_only => 1,
-    :greencloth_preferred => 2,   :html_preferred => 3
+    greencloth_only: 0,        html_only: 1,
+    greencloth_preferred: 2,   html_preferred: 3
   }).freeze
 
   ##

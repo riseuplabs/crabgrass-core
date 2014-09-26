@@ -19,7 +19,7 @@ module Common::Application::CurrentSite
         host = request.host.sub(/^staging\./, '')
         site = Site.for_domain(host).first
         site ||= Site.default
-        site ||= Site.new(:domain => host, :name => 'custom')
+        site ||= Site.new(domain: host, name: 'custom')
         Site.current = site
         # ^^ not so nice, but required for now. used by i18n
       end

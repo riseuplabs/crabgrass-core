@@ -4,7 +4,7 @@ class AdminMailer < Mailer
     setup_user(user)
     @subject += options[:subject]
     @message = options[:body]
-    mail :from => @from_address, :to => user.email, :subject => @subject
+    mail from: @from_address, to: user.email, subject: @subject
   end
 
 
@@ -15,7 +15,7 @@ class AdminMailer < Mailer
     @message = options[:body]
     @url = link(options[:url])
     @owner = options[:owner]
-    mail :from => @from_address, :to => user.email, :subject => @subject
+    mail from: @from_address, to: user.email, subject: @subject
   end
 
   protected

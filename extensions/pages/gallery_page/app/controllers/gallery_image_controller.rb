@@ -4,13 +4,13 @@ class GalleryImageController < Pages::BaseController
 
   # show and edit use base page permissions
   guard :may_edit_page?
-  guard :show => :may_show_page?
+  guard show: :may_show_page?
 
   # default_fetch_data is disabled for new in Pages::BaseController
-  prepend_before_filter :fetch_page_for_new, :only => :new
+  prepend_before_filter :fetch_page_for_new, only: :new
 
   def show
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @showing = @page.showings.find_by_asset_id(params[:id], include: 'asset')
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
@@ -20,11 +20,11 @@ class GalleryImageController < Pages::BaseController
   end
 
   def edit
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @showing = @page.showings.find_by_asset_id(params[:id], include: 'asset')
     @image = @showing.asset
     @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
-      render :layout => false
+      render layout: false
     end
   end
 
@@ -39,8 +39,8 @@ class GalleryImageController < Pages::BaseController
         @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
-            page.replace_html 'show-image', :partial => 'show_image',
-              :locals => {:size => 'medium', :no_link => true}
+            page.replace_html 'show-image', partial: 'show_image',
+              locals: {size: 'medium', no_link: true}
             page.hide('progress')
             page.hide('update_message')
           end
@@ -57,8 +57,8 @@ class GalleryImageController < Pages::BaseController
     elsif params[:image] and @image.update_attributes!(params[:image])
       @image.reload
       respond_to do |format|
-        format.html { redirect_to page_url(@page,:action=>'show') }
-        format.js { render :partial => 'update', :locals => {:params => params[:image]} }
+        format.html { redirect_to page_url(@page,action: 'show') }
+        format.js { render partial: 'update', locals: {params: params[:image]} }
       end
     end
   end

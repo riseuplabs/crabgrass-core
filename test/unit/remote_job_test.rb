@@ -19,7 +19,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_doc
     if remote_available?
-      asset = TextAsset.create! :uploaded_data => upload_data('msword.doc')
+      asset = TextAsset.create! uploaded_data: upload_data('msword.doc')
       thumbnail = asset.thumbnails.select{|thumb|thumb.name == 'pdf'}.first
       thumbnail.generate
     end

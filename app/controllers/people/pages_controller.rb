@@ -6,15 +6,15 @@ class People::PagesController < People::BaseController
   def index
     @path  = apply_path_modifiers( parsed_path() )
     @pages = Page.paginate_by_path(@path, options_for_user(@user), pagination_params)
-    render :template => 'common/pages/search/index'
+    render template: 'common/pages/search/index'
   end
 
   protected
 
   def setup_navigation(nav)
     nav[:local] = [
-      {:active => true,  :visible => true, :html => {:partial => 'common/pages/search/controls_active'}},
-      {:active => false, :visible => true, :html => {:partial => 'common/pages/search/controls_possible'}}
+      {active: true,  visible: true, html: {partial: 'common/pages/search/controls_active'}},
+      {active: false, visible: true, html: {partial: 'common/pages/search/controls_possible'}}
     ]
     return nav
   end

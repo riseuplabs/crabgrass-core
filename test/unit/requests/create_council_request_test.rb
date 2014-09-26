@@ -20,9 +20,9 @@ class CreateCouncilRequestTest < ActiveSupport::TestCase
     @group.add_user!(@new_user)
 
     @request = RequestToCreateCouncil.create!(
-      :created_by => @requesting_user,
-      :recipient => @group,
-      :requestable => @group
+      created_by: @requesting_user,
+      recipient: @group,
+      requestable: @group
     )
   end
 

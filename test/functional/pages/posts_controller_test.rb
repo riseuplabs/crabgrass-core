@@ -4,7 +4,7 @@ class Pages::PostsControllerTest < ActionController::TestCase
 
   def setup
     @user = FactoryGirl.create :user
-    @page = FactoryGirl.create(:page, :owner => @user)
+    @page = FactoryGirl.create(:page, owner: @user)
   end
 
   def test_create_post

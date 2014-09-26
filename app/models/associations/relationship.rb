@@ -2,8 +2,8 @@
 
 class Relationship < ActiveRecord::Base
   belongs_to :user
-  belongs_to :contact, :class_name => 'User', :foreign_key => :contact_id
-  belongs_to :discussion, :dependent => :destroy
+  belongs_to :contact, class_name: 'User', foreign_key: :contact_id
+  belongs_to :discussion, dependent: :destroy
 
   # mark as read or unread the discussion on this relationship
   def mark!(as)

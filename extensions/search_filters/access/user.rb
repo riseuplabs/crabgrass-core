@@ -1,7 +1,7 @@
 SearchFilter.new('/user/:user_id/') do
 
   query do |query, id|
-    query.add_access_constraint(:user_ids => [user_id(id)])
+    query.add_access_constraint(user_ids: [user_id(id)])
   end
 
   #
@@ -22,9 +22,9 @@ SearchFilter.new('/user/:user_id/') do
 
   self.description = :filter_user_description
   html do
-    content_tag(:p, :id => :user_autocomplete) do
+    content_tag(:p, id: :user_autocomplete) do
       content_tag(:strong, :user.tcap) + " " +
-      autocomplete_users_field_tag('user_id', :container => 'user_autocomplete')
+      autocomplete_users_field_tag('user_id', container: 'user_autocomplete')
     end
   end
 

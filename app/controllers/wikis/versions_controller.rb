@@ -1,7 +1,7 @@
 class Wikis::VersionsController < Wikis::BaseController
 
-  guard :revert => :may_revert_wiki_version?,
-    :destroy => :may_admin_wiki?
+  guard revert: :may_revert_wiki_version?,
+    destroy: :may_admin_wiki?
 
   def show
     #unless request.xhr?

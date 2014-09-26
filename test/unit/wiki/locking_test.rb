@@ -13,8 +13,8 @@ module Wiki::LockingTest
             assert_nothing_raised {@wiki.lock!(:document, @user) }
           end
 
-          should_change("the number of saved wikis", :by => 1) { Wiki.count }
-          should_change("the number of wiki locks", :by => 1) { WikiLock.count }
+          should_change("the number of saved wikis", by: 1) { Wiki.count }
+          should_change("the number of wiki locks", by: 1) { WikiLock.count }
 
           should "get saved" do
             assert !@wiki.new_record?
@@ -53,7 +53,7 @@ module Wiki::LockingTest
           context "and a different user renames 'section-two' bypassing locks" do
             setup do
               body = @wiki.body.sub('section two', 'section 2')
-              @wiki.update_attributes!({:user => @different_user, :body => body, :body_html => nil})
+              @wiki.update_attributes!({user: @different_user, body: body, body_html: nil})
             end
 
             should "have no section locked for either user" do
@@ -170,7 +170,7 @@ module Wiki::LockingTest
             end
 
             should "not raise WikiLockError when trying to break the lock for 'section-two'" do
-              assert_nothing_raised {@wiki.unlock! 'section-two', @user, :break => true}
+              assert_nothing_raised {@wiki.unlock! 'section-two', @user, break: true}
             end
           end
         end

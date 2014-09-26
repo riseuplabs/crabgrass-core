@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
   end
 
   validates :email,
-    :email_format => {:allow_blank => true},
-    :presence     => {:if => :should_validate_email}
+    email_format: {allow_blank: true},
+    presence: {if: :should_validate_email}
 
   def should_validate_email
     if Site.current
@@ -93,9 +93,9 @@ class User < ActiveRecord::Base
     "user/#{id}-#{version}"
   end
 
-  belongs_to :avatar, :dependent => :destroy
+  belongs_to :avatar, dependent: :destroy
 
-  validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
+  validates_format_of :login, with: /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   before_validation :clean_names
 
   def clean_names
@@ -163,7 +163,7 @@ class User < ActiveRecord::Base
 
   def banner_style
     #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
-    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
+    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
   end
 
   def online?
@@ -186,7 +186,7 @@ class User < ActiveRecord::Base
   ## PROFILE
   ##
 
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
 
   def profile(reload=false)
     @profile = nil if reload
@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
-  has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
+  has_one :setting, class_name: 'UserSetting', dependent: :destroy
 
   # allow us to call user.setting.x even if user.setting is nil
   def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
@@ -223,22 +223,22 @@ class User < ActiveRecord::Base
   ## ASSOCIATED DATA
   ##
 
-  has_many :task_participations, :dependent => :destroy
-  has_many :tasks, :through => :task_participations do
+  has_many :task_participations, dependent: :destroy
+  has_many :tasks, through: :task_participations do
     def pending
-      self.find(:all, :conditions => 'assigned == TRUE AND completed_at IS NULL')
+      self.find(:all, conditions: 'assigned == TRUE AND completed_at IS NULL')
     end
     def completed
-      self.find(:all, :conditions => 'completed_at IS NOT NULL')
+      self.find(:all, conditions: 'completed_at IS NOT NULL')
     end
     def priority
-      self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
+      self.find(:all, conditions: ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
 
-  has_many :posts, :dependent => :destroy
+  has_many :posts, dependent: :destroy
 
-  has_many :notices, :dependent => :destroy
+  has_many :notices, dependent: :destroy
 
   after_destroy :destroy_requests
   def destroy_requests

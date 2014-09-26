@@ -22,8 +22,8 @@ module Common::Ui::HelpHelper
   end
 
   def tooltip(caption, content)
-    content_tag :span, :class => 'tooltip' do
-      content_tag(:span, caption, :class => 'caption') + content_tag(:span, content, :class => 'content')
+    content_tag :span, class: 'tooltip' do
+      content_tag(:span, caption, class: 'caption') + content_tag(:span, content, class: 'content')
     end
   end
 

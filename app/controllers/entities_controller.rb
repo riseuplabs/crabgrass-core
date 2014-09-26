@@ -58,8 +58,8 @@ class EntitiesController < ApplicationController
       User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
     elsif filter.present?
       recipients = User.strangers_to(current_user)
-      recipients = recipients.with_access(:public => :pester)
-      recipients.named_like(filter).find(:all, :limit => LIMIT)
+      recipients = recipients.with_access(public: :pester)
+      recipients.named_like(filter).find(:all, limit: LIMIT)
     end
   end
 
@@ -71,8 +71,8 @@ class EntitiesController < ApplicationController
       current_user.all_groups
     elsif filter.present?
       other_groups = Group.without_member(current_user)
-      other_groups = other_groups.with_access(:public => :view)
-      other_groups.named_like(filter).find :all, :limit => LIMIT
+      other_groups = other_groups.with_access(public: :view)
+      other_groups.named_like(filter).find :all, limit: LIMIT
     end
   end
 
@@ -85,8 +85,8 @@ class EntitiesController < ApplicationController
       User.friends_or_peers_of(current_user).all_with_access(current_user => :view)
     elsif filter.present?
       strangers = User.strangers_to(current_user)
-      strangers = strangers.with_access(:public => :view)
-      strangers.named_like(filter).find(:all, :limit => LIMIT)
+      strangers = strangers.with_access(public: :view)
+      strangers.named_like(filter).find(:all, limit: LIMIT)
     end
   end
 

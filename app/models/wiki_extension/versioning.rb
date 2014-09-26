@@ -19,7 +19,7 @@ module WikiExtension
     class VersionNotFoundError < CrabgrassException
       def initialize(version_or_message = '', options = {})
         message = version_or_message.is_a?(Integer) ?
-          :version_doesnt_exist.t(:version => version_or_message.to_s) :
+          :version_doesnt_exist.t(version: version_or_message.to_s) :
           version_or_message.to_s
         super(message, options)
       end
@@ -28,7 +28,7 @@ module WikiExtension
     class VersionExistsError < CrabgrassException
       def initialize(version_or_message = '', options = {})
         message = version_or_message.respond_to?(:user) ?
-          :version_exists_error.t(:user => version_or_message.user.display_name) :
+          :version_exists_error.t(user: version_or_message.user.display_name) :
           version_or_message.to_s
         super(message, options)
       end
@@ -46,8 +46,8 @@ module WikiExtension
     # returns first version since +time+
     def first_version_since(time)
       return nil unless time
-      versions.first :conditions => ["updated_at <= :time", {:time => time}],
-        :order => "updated_at DESC"
+      versions.first conditions: ["updated_at <= :time", {time: time}],
+        order: "updated_at DESC"
     end
 
     def find_version(number)
@@ -74,14 +74,14 @@ module WikiExtension
       # only need to update the latest version when not creating a new one
       return if create_new_version?
       versions.last.update_attributes(
-        :body => body,
+        body: body,
         # read_attributes for body_html and raw_structure
         # because we don't want to trigger another rendering
         # by calling our own body_html method
-        :body_html => read_attribute(:body_html),
-        :raw_structure => read_attribute(:raw_structure),
-        :user => user,
-        :updated_at => Time.now)
+        body_html: read_attribute(:body_html),
+        raw_structure: read_attribute(:raw_structure),
+        user: user,
+        updated_at: Time.now)
     end
 
     def page_for_version(version)

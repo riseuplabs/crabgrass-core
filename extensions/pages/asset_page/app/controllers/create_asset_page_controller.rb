@@ -10,7 +10,7 @@ class CreateAssetPageController < Pages::CreateController
   end
 
   def create
-    @asset = Asset.build params[:asset].merge(:user => current_user)
+    @asset = Asset.build params[:asset].merge(user: current_user)
     @asset.validate!
 
     @page = build_new_page!

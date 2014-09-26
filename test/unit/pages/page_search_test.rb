@@ -40,9 +40,9 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
       searched_pages = Page.find_by_path(
-        search_str, options_for_me(:method => method, :per_page => 1000)
+        search_str, options_for_me(method: method, per_page: 1000)
       )
-      actual_pages = Page.all(:order => "updated_at DESC").select{ |p|
+      actual_pages = Page.all(order: "updated_at DESC").select{ |p|
         search_code.call(p) && user.may?(:view, p)
       }
       assert actual_pages.any?, 'a filter with no results is a bad test (user `%s`, filter `%s`)' % [user.name, search_str]
@@ -60,7 +60,7 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
       searched_pages = Page.find_by_path(
-        search_str, options_for_group(group, :method => method, :per_page => 1000)
+        search_str, options_for_group(group, method: method, per_page: 1000)
       )
       actual_pages = Page.find(:all).select{ |p|
         search_code.call(p) && group.may?(:view, p) && user.may?(:view, p)
@@ -120,20 +120,20 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
 
     searches = [
       ['/descending/updated_at/limit/10', Proc.new {
-        Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}[0,10]
+        Page.find(:all, order: "updated_at DESC").select{|p| user.may?(:view, p)}[0,10]
       }],
       ['/ascending/updated_at/limit/13', Proc.new {
-        Page.find(:all, :order => "updated_at ASC").select{|p| user.may?(:view, p)}[0,13]
+        Page.find(:all, order: "updated_at ASC").select{|p| user.may?(:view, p)}[0,13]
       }],
       ['/descending/created_at/limit/5', Proc.new {
-        Page.find(:all, :order => "created_at DESC").select{|p| user.may?(:view, p)}[0,5]
+        Page.find(:all, order: "created_at DESC").select{|p| user.may?(:view, p)}[0,5]
       }],
       ['/ascending/created_at/limit/15', Proc.new {
-        Page.find(:all, :order => "created_at ASC").select{|p| user.may?(:view, p)}[0,15]
+        Page.find(:all, order: "created_at ASC").select{|p| user.may?(:view, p)}[0,15]
       }],
    ]
 
-    options = { :user_ids => [users(:blue).id], :group_ids => users(:blue).all_group_ids, :method => :sphinx }
+    options = { user_ids: [users(:blue).id], group_ids: users(:blue).all_group_ids, method: :sphinx }
 
     searches.each do |search_str, search_code|
       sphinx_pages = Page.find_by_path(search_str, options)

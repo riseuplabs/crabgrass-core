@@ -10,7 +10,7 @@ class UserPermissionTest < ActiveSupport::TestCase
   def test_defaults
     assert @me.access?(@me.associated(:friends) => :view)
     assert @me.access?(@other => :request_contact)
-    assert !@me.access?(:public => :see_groups)
+    assert !@me.access?(public: :see_groups)
     assert !@me.access?(@me.associated(:peers) => :see_groups)
     assert @me.access?(@me.associated(:friends) => :see_groups)
   end
@@ -34,11 +34,11 @@ class UserPermissionTest < ActiveSupport::TestCase
     peers   = @me.associated(:peers)
     @me.revoke_access!(friends => :view)
     assert !@me.access?(friends => :view)
-    @me.grant_access!(:public => :view)
+    @me.grant_access!(public: :view)
     assert @me.access?(friends => :view)
     assert @me.access?(peers => :view)
     @me.revoke_access!(friends => :view)
-    assert !@me.access?(:public => :view)
+    assert !@me.access?(public: :view)
     assert @me.access?(peers => :view)
   end
 end

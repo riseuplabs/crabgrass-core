@@ -39,11 +39,11 @@ module AuthenticatedUser
       attr_accessor :current_site
 
       validates_presence_of     :login
-      validates_presence_of     :password,                   :if => :password_required?
-      validates_presence_of     :password_confirmation,      :if => :password_required?
-      validates_confirmation_of :password,                   :if => :password_required?
-      validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-      validates_length_of       :login, :within => 3..40
+      validates_presence_of     :password,                   if: :password_required?
+      validates_presence_of     :password_confirmation,      if: :password_required?
+      validates_confirmation_of :password,                   if: :password_required?
+      validates_format_of       :login, with: /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+      validates_length_of       :login, within: 3..40
       # uniqueness is validated elsewhere
       #validates_uniqueness_of   :login, :case_sensitive => false
       before_save :encrypt_password
@@ -63,7 +63,7 @@ module AuthenticatedUser
     end
 
     def find_for_forget(email)
-      where(:email => email).first
+      where(email: email).first
     end
 
     # set to the currently logged in user.
@@ -88,13 +88,13 @@ module AuthenticatedUser
   def remember_me
     self.remember_token_expires_at = 2.weeks.from_now.utc
     self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(:validate=> false)
+    save(validate: false)
   end
 
   def forget_me
     self.remember_token_expires_at = nil
     self.remember_token            = nil
-    save(:validate=> false)
+    save(validate: false)
   end
 
   # authenticated users are real, unathenticated are not

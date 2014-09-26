@@ -10,7 +10,7 @@ class Pages::BaseController < ApplicationController
   before_filter :authorization_required
   permissions :pages
   guard :may_ACTION_page?
-  guard :update => :may_edit_page?
+  guard update: :may_edit_page?
 
   layout 'page'
 
@@ -27,14 +27,14 @@ class Pages::BaseController < ApplicationController
   ## (the order matters!)
   ##
 
-  prepend_before_filter :default_fetch_data, :except => :new
+  prepend_before_filter :default_fetch_data, except: :new
 
   append_before_filter :default_setup_options
   append_before_filter :load_posts
 
-  after_filter :update_viewed, :only => :show
-  after_filter :save_if_needed, :except => :create
-  after_filter :update_view_count, :only => [:show, :edit, :create]
+  after_filter :update_viewed, only: :show
+  after_filter :save_if_needed, except: :create
+  after_filter :update_view_count, only: [:show, :edit, :create]
 
   include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work?
 

@@ -6,9 +6,9 @@
 
 class Groups::MembershipsController < Groups::BaseController
 
-  guard :index => :may_list_memberships?,
-        :destroy => :may_destroy_membership?,
-        :create => :may_create_membership?
+  guard index: :may_list_memberships?,
+        destroy: :may_destroy_membership?,
+        create: :may_create_membership?
 
   #
   # list all the memberships
@@ -41,7 +41,7 @@ class Groups::MembershipsController < Groups::BaseController
       success
       render :update do |page|
         standard_update(page)
-        page.replace 'group_membership_list', :partial => 'groups/memberships/list'
+        page.replace 'group_membership_list', partial: 'groups/memberships/list'
       end
     else
       raise_not_found params[:user_name]

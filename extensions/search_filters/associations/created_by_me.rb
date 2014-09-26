@@ -14,7 +14,7 @@ SearchFilter.new('/created-by-me/') do
 
   label do |opts|
     if opts[:remove]
-      :created_by_user.t(:user => :me.t)
+      :created_by_user.t(user: :me.t)
     else
       :created_by_me.t
     end

@@ -4,7 +4,7 @@ module Mailers::Page
   def share_notice(user, notice_message, options)
     setup(options)
     if Conf.paranoid_emails?
-      code = Code.create! :user => user, :page => @page
+      code = Code.create! user: user, page: @page
       page_link = link()
       notice_message = nil
     else
@@ -17,8 +17,8 @@ module Mailers::Page
     @to = user
     @link = page_link
     @code = code
-    mail :from => @from, to: @to,
-      :subject => I18n.t(:email_notice_subject, :title => @page.title)
+    mail from: @from, to: @to,
+      subject: I18n.t(:email_notice_subject, title: @page.title)
   end
 
 end

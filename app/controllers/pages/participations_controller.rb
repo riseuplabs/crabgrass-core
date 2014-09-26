@@ -7,7 +7,7 @@
 
 class Pages::ParticipationsController < Pages::SidebarsController
 
-  guard :may_show_page?, :actions => [:update, :create]
+  guard :may_show_page?, actions: [:update, :create]
   helper 'pages/participation', 'pages/share'
 
   before_filter :fetch_data
@@ -33,13 +33,13 @@ class Pages::ParticipationsController < Pages::SidebarsController
   protected
 
   def watch
-    @upart = @page.add(current_user, :watch => params[:watch])
+    @upart = @page.add(current_user, watch: params[:watch])
     @upart.save!
     render(:update) {|page| page.replace 'watch_li', watch_checkbox}
   end
 
   def star
-    @upart = @page.add(current_user, :star => params[:star])
+    @upart = @page.add(current_user, star: params[:star])
     @upart.save!
     render(:update) {|page| page.replace 'star_li', star_link}
   end
@@ -48,9 +48,9 @@ class Pages::ParticipationsController < Pages::SidebarsController
     if params[:access] == 'remove'
       destroy
     else
-      @page.add(@participation.entity, :access => params[:access]).save!
+      @page.add(@participation.entity, access: params[:access]).save!
       render :update do |page|
-        page.replace_html dom_id(@participation), :partial => 'pages/participation/permission_row', :locals => {:participation => @participation.reload}
+        page.replace_html dom_id(@participation), partial: 'pages/participation/permission_row', locals: {participation: @participation.reload}
       end
     end
   end

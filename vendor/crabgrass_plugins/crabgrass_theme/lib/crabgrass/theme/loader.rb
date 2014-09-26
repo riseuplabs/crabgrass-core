@@ -88,7 +88,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(data_path)
       # (the file pointed to by data_path must call 'define_theme')
     else
-      define_theme(:parent => 'default')
+      define_theme(parent: 'default')
     end
 
     # load @navigation
@@ -96,7 +96,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(navigation_path)
       # (the file pointed to by navigation_path must call 'define_navigation')
     else
-      define_navigation(:parent => 'default')
+      define_navigation(parent: 'default')
     end
 
     # in production, clear the cache once at startup.

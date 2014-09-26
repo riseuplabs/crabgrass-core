@@ -32,7 +32,7 @@ module GroupExtension
       # version increment for that is already handled elsewhere.
       def increment_version(ids)
         return unless ids.any?
-        self.where(:id => ids).update_all('version = version+1')
+        self.where(id: ids).update_all('version = version+1')
       end
     end
   end

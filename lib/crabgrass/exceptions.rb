@@ -40,7 +40,7 @@ class ErrorNotFound < CrabgrassException
     super("",options)
   end
   def to_s
-    I18n.t(:thing_not_found, :thing => @thing).capitalize
+    I18n.t(:thing_not_found, thing: @thing).capitalize
   end
   def status
     :not_found

@@ -18,19 +18,19 @@ class Discussion < ActiveRecord::Base
   ##
 
   belongs_to :page
-  belongs_to :replied_by, :class_name => 'User'
-  belongs_to :last_post, :class_name => 'Post'
+  belongs_to :replied_by, class_name: 'User'
+  belongs_to :last_post, class_name: 'Post'
 
   # i think this is currently unused?
-  has_one :profile, :foreign_key => 'discussion_id'
+  has_one :profile, foreign_key: 'discussion_id'
 
-  has_many :posts, :order => 'posts.created_at',
-    :dependent => :destroy
+  has_many :posts, order: 'posts.created_at',
+    dependent: :destroy
 
-  has_many :visible_posts, :order => 'posts.created_at',
-    :class_name => 'Post', :conditions => {:deleted_at => nil}
+  has_many :visible_posts, order: 'posts.created_at',
+    class_name: 'Post', conditions: {deleted_at: nil}
 
-  belongs_to :commentable, :polymorphic => true
+  belongs_to :commentable, polymorphic: true
 
   # if we are a private discussion (or 'messages')
   has_many :relationships do
@@ -139,11 +139,11 @@ class Discussion < ActiveRecord::Base
     self.posts_count += 1
     page.update_attribute(:posts_count, posts_count) if page
     update_attributes!(
-      :posts_count => posts_count,
-      :last_post => post,
-      :replied_by_id => post.user_id,
-      :replied_at => post.updated_at )
-    PrivateMessageNotice.create!(:user => post.discussion.user_talking_to(post.user), :message => post.body_html, :from => post.user) if post.private?
+      posts_count: posts_count,
+      last_post: post,
+      replied_by_id: post.user_id,
+      replied_at: post.updated_at )
+    PrivateMessageNotice.create!(user: post.discussion.user_talking_to(post.user), message: post.body_html, from: post.user) if post.private?
 
   end
 
@@ -156,10 +156,10 @@ class Discussion < ActiveRecord::Base
       page.update_attribute(:posts_count, posts_count) if page
     end
     update_attributes!(
-      :posts_count => posts_count,
-      :last_post => visible_posts.last,
-      :replied_by_id => visible_posts.last.try.user_id,
-      :replied_at => visible_posts.last.try.updated_at )
+      posts_count: posts_count,
+      last_post: visible_posts.last,
+      replied_by_id: visible_posts.last.try.user_id,
+      replied_at: visible_posts.last.try.updated_at )
   end
 
 end

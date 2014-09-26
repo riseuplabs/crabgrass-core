@@ -13,7 +13,7 @@ class MembersTest < ActiveSupport::TestCase
   # association now.
   def test_pestering_all_members
     group = groups(:rainbow)
-    users = group.users.with_access(:public => :pester)
+    users = group.users.with_access(public: :pester)
     assert users.all
   end
 end

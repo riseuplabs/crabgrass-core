@@ -13,17 +13,17 @@ class FileUploadTest < ActiveSupport::TestCase
 
   def test_classic_file_upload
     file_to_upload = upload_data('photo.jpg')
-    @asset = Asset.create_from_params :uploaded_data => file_to_upload
+    @asset = Asset.create_from_params uploaded_data: file_to_upload
   end
 
   def test_smaller_file_upload
     file_to_upload = upload_data('gears.jpg')
-    @asset = Asset.create_from_params :uploaded_data => file_to_upload
+    @asset = Asset.create_from_params uploaded_data: file_to_upload
   end
 
   def test_file_upload_that_used_to_work
     file_to_upload = upload_data('image.png')
-    @asset = Asset.create_from_params :uploaded_data => file_to_upload
+    @asset = Asset.create_from_params uploaded_data: file_to_upload
     assert File.exists?( @asset.private_filename ), 'the private file should exist'
   end
 

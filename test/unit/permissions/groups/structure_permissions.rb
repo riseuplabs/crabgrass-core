@@ -36,7 +36,7 @@ module Groups
     end
 
     def test_may_not_create_council_for_class_without_councils
-      @group = stub_group(:class => stub(:can_have_council? => false))
+      @group = stub_group(class: stub(:can_have_council? => false))
       self.current_user = stub_admin
       assert !may_create_council?
     end

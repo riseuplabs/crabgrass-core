@@ -4,10 +4,10 @@ class CodeTest < ActiveSupport::TestCase
 
   def test_create
     assert_difference 'Code.count' do
-      Code.create! :expires_at => 1.hour.ago
+      Code.create! expires_at: 1.hour.ago
     end
     assert_difference 'Code.count' do
-      Code.create! :expires_at => 1.hour.from_now
+      Code.create! expires_at: 1.hour.from_now
     end
 
     assert_equal 2, Code.find(:all).size

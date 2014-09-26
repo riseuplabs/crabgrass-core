@@ -41,8 +41,8 @@ require 'active_support'
 class SilentNil
   include Singleton
 
-  delegate :to_s, :inspect, :nil?, :empty?, :zero?, :blank?, :to => :nil
-  delegate :|, :&, :^, :=~, :===, :==, :<=>, :"!", :to => :nil
+  delegate :to_s, :inspect, :nil?, :empty?, :zero?, :blank?, to: :nil
+  delegate :|, :&, :^, :=~, :===, :==, :<=>, :"!", to: :nil
 
   def method_missing(*args)
     nil

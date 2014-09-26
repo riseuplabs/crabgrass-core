@@ -25,7 +25,7 @@ SearchFilter.new('/edited-by-me/') do
 
   label do |opts|
     if opts[:remove]
-      :edited_by_user.t(:user => :me.t)
+      :edited_by_user.t(user: :me.t)
     else
       :edited_by_me.t
     end

@@ -20,8 +20,8 @@ module Pages::SidebarHelper
            when :edit then 'tiny_pencil_16'
            when :view then ''
            end
-    label = content_tag :span, upart.user.display_name, :class => icon
-    link_to_entity(upart.user, :avatar => 'xsmall', :label => label)
+    label = content_tag :span, upart.user.display_name, class: icon
+    link_to_entity(upart.user, avatar: 'xsmall', label: label)
   end
 
   def link_to_group_participation(gpart)
@@ -30,8 +30,8 @@ module Pages::SidebarHelper
            when :edit then 'tiny_pencil_16'
            when :view then ''
            end
-    label = content_tag :span, gpart.group.display_name, :class => icon
-    link_to_entity(gpart.group, :avatar => 'xsmall', :label => label)
+    label = content_tag :span, gpart.group.display_name, class: icon
+    link_to_entity(gpart.group, avatar: 'xsmall', label: label)
   end
 
   ##
@@ -79,8 +79,8 @@ module Pages::SidebarHelper
     icon = options[:checked] ? 'check_on' : 'check_off'
     link_to_remote(
       text,
-      {:url => url, :method => options[:method], :complete => ''},
-      {:icon => icon, :id => options[:id], :title => options[:title]}
+      {url: url, method: options[:method], complete: ''},
+      {icon: icon, id: options[:id], title: options[:title]}
     )
   end
 
@@ -100,7 +100,7 @@ module Pages::SidebarHelper
   def watch_checkbox
     existing_watch = (@upart and @upart.watch?) or false
     checkbox_id = 'watch_li'
-    url = page_participations_path(@page, :watch => (!existing_watch).inspect)
+    url = page_participations_path(@page, watch: (!existing_watch).inspect)
     sidebar_checkbox I18n.t(:watch_checkbox), url,
       id: checkbox_id, method: 'post', checked: existing_watch
   end
@@ -118,7 +118,7 @@ module Pages::SidebarHelper
   end
 
   def publish_checkbox
-    url = page_attributes_path(@page, :public => (!@page.public?).inspect)
+    url = page_attributes_path(@page, public: (!@page.public?).inspect)
     sidebar_checkbox I18n.t(:public_checkbox), url,
       id: 'public_li', checked: @page.public?,
       method: 'put', title: I18n.t(:public_checkbox_help)
@@ -126,7 +126,7 @@ module Pages::SidebarHelper
 
   def is_public_checkbox
     icon = @page.public? ? 'check_on_16' : 'check_off_16'
-    content_tag :span, :class => "a icon #{icon}" do
+    content_tag :span, class: "a icon #{icon}" do
       :public_checkbox.t
     end
   end
@@ -144,14 +144,14 @@ module Pages::SidebarHelper
     if @upart and @upart.star?
       icon = 'star'
       add = false
-      label = I18n.t(:remove_star_link, :star_count => @page.stars_count)
+      label = I18n.t(:remove_star_link, star_count: @page.stars_count)
     else
       icon = 'star_empty_dark'
       add = true
-      label = I18n.t(:add_star_link, :star_count => @page.stars_count)
+      label = I18n.t(:add_star_link, star_count: @page.stars_count)
     end
-    url = page_participations_path(@page, :star => add.inspect)
-    link_to_remote(label, {url: url, method: 'post'}, {icon: icon, :id => 'star_li'})
+    url = page_participations_path(@page, star: add.inspect)
+    link_to_remote(label, {url: url, method: 'post'}, {icon: icon, id: 'star_li'})
   end
 
   #
@@ -163,7 +163,7 @@ module Pages::SidebarHelper
   end
 
   def undelete_link
-    url = page_trash_path(@page, :type => 'undelete')
+    url = page_trash_path(@page, type: 'undelete')
     link_to_remote_with_icon I18n.t(:undelete_from_trash),
       url: url, method: 'put', icon: 'refresh'
   end
@@ -221,7 +221,7 @@ module Pages::SidebarHelper
   # the function, when called, will remove itself.
   #
   def refresh_sidebar_on_close
-    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(:url => page_sidebar_path(@page), :method => :get))
+    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(url: page_sidebar_path(@page), method: :get))
   end
 
   #
@@ -234,7 +234,7 @@ module Pages::SidebarHelper
   end
 
   def popup_line(options)
-    content_tag :li, :id => options.delete(:id) do
+    content_tag :li, id: options.delete(:id) do
       popup_link(options)
     end
   end
@@ -247,22 +247,22 @@ module Pages::SidebarHelper
 
   def edit_attachments_line
     if may_show_page?
-      popup_line :name => 'assets',
-        :label => :edit_attachments_link.t,
-        :icon => 'attach',
-        :title => :edit_attachments.t,
-        :url => page_assets_path(@page),
-        :after_load => 'initAjaxUpload();'
+      popup_line name: 'assets',
+        label: :edit_attachments_link.t,
+        icon: 'attach',
+        title: :edit_attachments.t,
+        url: page_assets_path(@page),
+        after_load: 'initAjaxUpload();'
     end
   end
 
   def edit_tags_line
     if may_edit_page?
       popup_line(
-        :id => 'tag_li',
-        :icon => 'tag',
-        :label => I18n.t(:edit_tags_link),
-        :url => page_tags_path(@page)
+        id: 'tag_li',
+        icon: 'tag',
+        label: I18n.t(:edit_tags_link),
+        url: page_tags_path(@page)
       )
     end
   end
@@ -270,10 +270,10 @@ module Pages::SidebarHelper
   def share_page
     if may_admin_page?
       popup_command(
-        :id => 'share_li',
-        :icon => 'group',
-        :label => I18n.t(:share_page_link, :page_class => :page.t),
-        :url => page_share_path(@page, :mode => 'share')
+        id: 'share_li',
+        icon: 'group',
+        label: I18n.t(:share_page_link, page_class: :page.t),
+        url: page_share_path(@page, mode: 'share')
       )
     end
   end
@@ -281,10 +281,10 @@ module Pages::SidebarHelper
   def notify_page
     if may_edit_page?
       popup_command(
-        :id => 'notify_li',
-        :icon => 'whistle',
-        :label => I18n.t(:notify_page_link),
-        :url => page_share_path(@page, :mode => 'notify')
+        id: 'notify_li',
+        icon: 'whistle',
+        label: I18n.t(:notify_page_link),
+        url: page_share_path(@page, mode: 'notify')
       )
     end
   end
@@ -292,10 +292,10 @@ module Pages::SidebarHelper
   def delete_page
     if may_admin_page?
       popup_command(
-        :id => 'trash_li',
-        :icon => 'trash',
-        :label => I18n.t(:delete_page_link, :page_class => :page.t),
-        :url => edit_page_trash_path(@page)
+        id: 'trash_li',
+        icon: 'trash',
+        label: I18n.t(:delete_page_link, page_class: :page.t),
+        url: edit_page_trash_path(@page)
       )
     end
   end
@@ -303,10 +303,10 @@ module Pages::SidebarHelper
   def details_page
     if may_edit_page?
       popup_command(
-        :id => 'details_li',
-        :icon => 'page_admin',
-        :label => I18n.t(:page_details_link, :page_class => :page.t),
-        :url => page_details_path(@page)
+        id: 'details_li',
+        icon: 'page_admin',
+        label: I18n.t(:page_details_link, page_class: :page.t),
+        url: page_details_path(@page)
       )
     end
   end

@@ -30,7 +30,7 @@ class MessagePage < Page
     new_post = sender.send_message_to!(receiver, text)
 
     disable_timestamps
-    new_post.update_attributes({:updated_at => post.updated_at, :created_at => post.created_at})
+    new_post.update_attributes({updated_at: post.updated_at, created_at: post.created_at})
   ensure
     enable_timestamps
   end

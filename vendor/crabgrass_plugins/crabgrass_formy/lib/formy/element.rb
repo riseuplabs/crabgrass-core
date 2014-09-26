@@ -94,7 +94,7 @@ module Formy
     end
 
     def tag(element_tag, value, options={})
-      content_tag(element_tag, value, {:style => @opts[:style], :class => @opts[:class], :id => @opts[:id]})
+      content_tag(element_tag, value, {style: @opts[:style], class: @opts[:class], id: @opts[:id]})
     end
 
     def self.sub_element(*class_names)

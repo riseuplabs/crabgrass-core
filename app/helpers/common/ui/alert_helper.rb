@@ -15,8 +15,8 @@ module Common::Ui::AlertHelper
     # the id alert_messages is required by the showAlertMessage
     # javascript function. it is important to include this html
     # even if ther are not currently any messages to display.
-    content_tag(:div, :class => 'alert_message_container') do
-      content_tag(:div, :id => 'alert_messages') do
+    content_tag(:div, class: 'alert_message_container') do
+      content_tag(:div, id: 'alert_messages') do
         if alert_messages?
           safe_join(alert_message_strings)
         else
@@ -109,7 +109,7 @@ module Common::Ui::AlertHelper
     message_id = "alert_message_#{rand(100_000_000)}"
     text = if message[:text].is_a?(Array)
       if message[:text].size > 1
-        content_tag(:p, message[:text][0], :class => 'first') +
+        content_tag(:p, message[:text][0], class: 'first') +
         content_tag(:p, message[:text][1..-1].join)
       else
         message[:text].first
@@ -118,8 +118,8 @@ module Common::Ui::AlertHelper
       message[:text]
     end
     html = []
-    html << link_to_function('×', "hideAlertMessage('#{message_id}')", :class => 'close')
-    html << content_tag(:div, text, :class => "text #{icon_class}")
+    html << link_to_function('×', "hideAlertMessage('#{message_id}')", class: 'close')
+    html << content_tag(:div, text, class: "text #{icon_class}")
     if message[:list]
       html << content_tag(:ul,
         safe_join(message[:list].collect{|item|
@@ -133,7 +133,7 @@ module Common::Ui::AlertHelper
         html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});".html_safe)
       end
     end
-    content_tag(:div, html.join.html_safe, :class => "message #{message[:type]}", :id => message_id)
+    content_tag(:div, html.join.html_safe, class: "message #{message[:type]}", id: message_id)
   end
 
 end

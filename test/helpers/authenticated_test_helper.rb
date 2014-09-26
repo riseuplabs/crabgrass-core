@@ -86,7 +86,7 @@ class HttpLoginProxy < BaseLoginProxy
     end
 
     def check(method,*args)
-      @controller.assert_redirected_to({:controller => 'account', :action => 'login'}, "%s: %s(%s) did not require a login" % [@controller, method, args.collect{|a|a.inspect}.join(', ')])
+      @controller.assert_redirected_to({controller: 'account', action: 'login'}, "%s: %s(%s) did not require a login" % [@controller, method, args.collect{|a|a.inspect}.join(', ')])
     end
 end
 

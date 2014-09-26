@@ -10,13 +10,13 @@ class PageTermsTest < ActiveSupport::TestCase
 
   def test_create
     user = users(:blue)
-    page = DiscussionPage.create! :title => 'hi', :user => user
-    assert_equal Page.access_ids_for(:user_ids => [user.id]).first, page.page_terms.access_ids
+    page = DiscussionPage.create! title: 'hi', user: user
+    assert_equal Page.access_ids_for(user_ids: [user.id]).first, page.page_terms.access_ids
   end
 
   def test_tagging_with_odd_characters
     name = 'test page'
-    page = FactoryGirl.create(:wiki_page, :title => name.titleize, :name => name.nameize)
+    page = FactoryGirl.create(:wiki_page, title: name.titleize, name: name.nameize)
     page.tag_list = "^&#, +, **, %, ə"
     page.save!
 

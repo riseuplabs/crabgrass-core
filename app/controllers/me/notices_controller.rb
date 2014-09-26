@@ -1,11 +1,11 @@
 class Me::NoticesController < Me::BaseController
 
-  before_filter :fetch_notice, :only => [:show, :destroy]
+  before_filter :fetch_notice, only: [:show, :destroy]
 
   def index
     @notices = Notice.for_user(current_user).
       dismissed(params[:view] == 'old').
-      paginate(pagination_params.merge(:order => "created_at desc"))
+      paginate(pagination_params.merge(order: "created_at desc"))
     @pages = current_user.pages.recent_pages
   end
 

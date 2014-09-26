@@ -8,16 +8,16 @@ if (ADAPTER == :sqlite)
     REBUILD_DB = true
   end
   ActiveRecord::Base.establish_connection(
-    :adapter  => "sqlite3",
-    :database => DB_FILE
+    adapter: "sqlite3",
+    database: DB_FILE
   )
 else
   # if you want to test BIT_OR aggregation function
   ActiveRecord::Base.establish_connection(
-    :adapter  => "mysql",
-    :host => "localhost",
-    :database => "castle_gates",
-    :user => "root"
+    adapter: "mysql",
+    host: "localhost",
+    database: "castle_gates",
+    user: "root"
   )
 end
 
@@ -29,13 +29,13 @@ if SHOW_SQL
 end
 
 def setup_db
-  ActiveRecord::Schema.define(:version => 1) do
+  ActiveRecord::Schema.define(version: 1) do
 
     create_table :castle_gates_keys do |p|
       p.integer :castle_id
       p.string  :castle_type
       p.integer :holder_code
-      p.integer :gate_bitfield, :default => 1
+      p.integer :gate_bitfield, default: 1
     end
 
     create_table :forts do |t|

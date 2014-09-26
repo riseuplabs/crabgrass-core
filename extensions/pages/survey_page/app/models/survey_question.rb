@@ -20,8 +20,8 @@ class SurveyQuestion < ActiveRecord::Base
   serialize :choices, Array
   serialize_default :choices, []
 
-  has_many(:answers, :dependent => :destroy, :class_name => 'SurveyAnswer',
-           :foreign_key => 'question_id')
+  has_many(:answers, dependent: :destroy, class_name: 'SurveyAnswer',
+           foreign_key: 'question_id')
 
   def answer_class
     TextAnswer

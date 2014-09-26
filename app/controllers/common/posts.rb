@@ -17,7 +17,7 @@ module Common::Posts
 
   def edit
     render(:update) do |page|
-      page.replace(@post.body_id, :partial => 'common/posts/default/edit', :locals => {:post => @post})
+      page.replace(@post.body_id, partial: 'common/posts/default/edit', locals: {post: @post})
     end
   end
 
@@ -32,7 +32,7 @@ module Common::Posts
         @post.update_attribute('body', params[:post][:body])
       end
       render :update do |page|
-        page.replace(@post.body_id, :partial => 'common/posts/default/body', :locals => {:post => @post})
+        page.replace(@post.body_id, partial: 'common/posts/default/body', locals: {post: @post})
       end
     end
   end
@@ -43,7 +43,7 @@ module Common::Posts
   #
   def destroy
     @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name)), :later
+    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
     render(:update) {|page| page.redirect_to requests_path}
   end
 
@@ -53,7 +53,7 @@ module Common::Posts
     @post = Post.new # for the reply form
     render :update do |page|
       standard_update(page)
-      page.replace('posts', :partial => 'common/posts/list', :locals => {:posts => posts})
+      page.replace('posts', partial: 'common/posts/list', locals: {posts: posts})
     end
   end
 

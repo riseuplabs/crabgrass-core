@@ -28,17 +28,17 @@ class Groups::InvitesController < Groups::BaseController
       raise_error('Recipient required')
     end
     users.each do |user|
-      reqs << RequestToJoinUs.create(:created_by => current_user,
-        :recipient => user, :requestable => @group)
+      reqs << RequestToJoinUs.create(created_by: current_user,
+        recipient: user, requestable: @group)
     end
     groups.each do |group|
-      reqs << RequestToJoinOurNetwork.create(:created_by=>current_user,
-        :recipient => group, :requestable => @group)
+      reqs << RequestToJoinOurNetwork.create(created_by: current_user,
+        recipient: group, requestable: @group)
     end
 
     emails.each do |email|
-      req = RequestToJoinUsViaEmail.create(:created_by => current_user,
-         :email => email, :requestable => @group, :language => I18n.locale.to_s)
+      req = RequestToJoinUsViaEmail.create(created_by: current_user,
+         email: email, requestable: @group, language: I18n.locale.to_s)
       begin
         Mailer.request_to_join_us!(req, mailer_options).deliver
         reqs << req
@@ -53,10 +53,10 @@ class Groups::InvitesController < Groups::BaseController
         alert_message req
       end
     else
-      success reqs.first, :count => reqs.size
+      success reqs.first, count: reqs.size
       params[:recipients] = ""
     end
-    redirect_to :action => :new
+    redirect_to action: :new
   end
 
 end

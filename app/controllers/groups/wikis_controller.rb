@@ -11,7 +11,7 @@ class Groups::WikisController < Groups::BaseController
     else
       raise_error 'missing profile parameter'
     end
-    wiki = @profile.create_wiki :version => 0, :body => '', :user => current_user
+    wiki = @profile.create_wiki version: 0, body: '', user: current_user
     params[:edit_mode] = 'on'
     index()
   end
@@ -29,13 +29,13 @@ class Groups::WikisController < Groups::BaseController
       end
     end
     render :update do |page|
-      page.replace 'group_home_wiki_area', :partial => 'groups/home/wikis',
-        :locals => {'profile' => profile, 'edit_mode' => edit_mode}
+      page.replace 'group_home_wiki_area', partial: 'groups/home/wikis',
+        locals: {'profile' => profile, 'edit_mode' => edit_mode}
     end
   rescue Wiki::LockedError => @error_message
     render :update do |page|
-      page.replace 'group_home_wiki_area', :partial => 'groups/home/wikis',
-        :locals => {'profile' => profile, 'edit_mode' => edit_mode, :mode => 'locked'}
+      page.replace 'group_home_wiki_area', partial: 'groups/home/wikis',
+        locals: {'profile' => profile, 'edit_mode' => edit_mode, :mode => 'locked'}
     end
   end
 

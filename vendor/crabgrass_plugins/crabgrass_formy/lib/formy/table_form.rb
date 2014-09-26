@@ -109,10 +109,10 @@ module Formy
 
           def close
             id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
-            label = content_tag :label, @label, :for => id
+            label = content_tag :label, @label, for: id
             puts tag(:tr, content_tag(:td, @input) + content_tag(:td, label))
             if @info
-              puts tag(:tr, content_tag(:td, '&nbsp;'.html_safe) + content_tag(:td, @info, :class => INFO_CLASS))
+              puts tag(:tr, content_tag(:td, '&nbsp;'.html_safe) + content_tag(:td, @info, class: INFO_CLASS))
             end
             super
           end

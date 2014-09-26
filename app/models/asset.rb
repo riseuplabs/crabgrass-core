@@ -86,7 +86,7 @@ class Asset < ActiveRecord::Base
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include AssetExtension::Upload
-  validates_presence_of :filename, :unless => 'new_record?'
+  validates_presence_of :filename, unless: 'new_record?'
 
 
   ##
@@ -161,8 +161,8 @@ class Asset < ActiveRecord::Base
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
       base.belongs_to :user
-      base.has_many :thumbnails, :class_name => '::Thumbnail',
-        :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT do
+      base.has_many :thumbnails, class_name: '::Thumbnail',
+        dependent: :destroy, finder_sql: POLYMORPH_AS_PARENT do
         def preview_images
           small, medium, large = nil
           self.each do |tn|
@@ -216,7 +216,7 @@ class Asset < ActiveRecord::Base
   def type_as_parent; self.type; end
 
   versioned_class.class_eval do
-    delegate :page, :public?, :has_access!, :to => :asset
+    delegate :page, :public?, :has_access!, to: :asset
 
     # all our paths will have version info inserted into them
     def version_path
@@ -260,7 +260,7 @@ class Asset < ActiveRecord::Base
 
   # an asset might have two different types of associations to a page. it could
   # be the data of page (1), or it could be an attachment of the page (2).
-  belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
+  belongs_to :parent_page, foreign_key: 'page_id', class_name: 'Page' # (2)
   def page()
     page = page_id ? parent_page : pages.first
     return page
@@ -270,15 +270,15 @@ class Asset < ActiveRecord::Base
     # run validations so filname gets set
     self.valid?
     page_params = {
-      :title => self.basename,
-      :summary =>"Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
-      :tag_list => "",
-      :user => user,
-      :access => "admin",
-      :data => self
+      title: self.basename,
+      summary: "Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
+      tag_list: "",
+      user: user,
+      access: "admin",
+      data: self
     }
     if group
-      page_params.merge! :share_with => {group.name => {:access =>  "1"}}
+      page_params.merge! share_with: {group.name => {access: "1"}}
     end
     self.parent_page = AssetPage.create!(page_params)
   end

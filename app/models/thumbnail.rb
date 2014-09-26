@@ -24,7 +24,7 @@ class Thumbnail < ActiveRecord::Base
   #   self.parent_id = id of the version
   #   self.parent_type = "Asset::Version"
   #
-  belongs_to :parent, :polymorphic => true
+  belongs_to :parent, polymorphic: true
 
   after_destroy :rm_file
   def rm_file
@@ -70,9 +70,9 @@ class Thumbnail < ActiveRecord::Base
       output_file = private_filename
 
       options = {
-        :size => thumbdef.size,
-        :input_file  => input_file,  :input_type => input_type,
-        :output_file => output_file, :output_type => output_type
+        size: thumbdef.size,
+        input_file: input_file,  input_type: input_type,
+        output_file: output_file, output_type: output_type
       }
 
       if thumbdef.remote and RemoteJob.site

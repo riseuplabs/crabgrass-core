@@ -16,9 +16,9 @@ SearchFilter.new('/tag/:tag_name/') do
   #
   # this gets invoked in the view with instance_eval, so it has the view's variables.
   #
-  html(:delayed => true, :submit_button => false) do
+  html(delayed: true, submit_button: false) do
     ret = content_tag(:p) do
-      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name', nil, :onkeydown => "if (enterPressed(event)) {$('page_search_form').submit.click(); event.stop();}")
+      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name', nil, onkeydown: "if (enterPressed(event)) {$('page_search_form').submit.click(); event.stop();}")
     end
     ret += "\n"
 
@@ -34,12 +34,12 @@ SearchFilter.new('/tag/:tag_name/') do
     end
 
     tags = tag_cloud(tags_to_show) do |tag, css_class|
-      link_to_page_search tag.name, {:tag_name => tag.name}, :class => css_class
+      link_to_page_search tag.name, {tag_name: tag.name}, class: css_class
     end
     if tags
       ret += tags.join(' ').html_safe
     else
-      ret += :no_things_found.t :things => :tags.t
+      ret += :no_things_found.t things: :tags.t
     end
     ret
   end

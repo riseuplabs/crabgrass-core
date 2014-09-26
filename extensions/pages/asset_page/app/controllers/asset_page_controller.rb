@@ -4,7 +4,7 @@ class AssetPageController < Pages::BaseController
 
   def show
     if @asset.nil?
-      redirect_to page_url(@page, :action => 'new')
+      redirect_to page_url(@page, action: 'new')
     end
   end
 
@@ -18,7 +18,7 @@ class AssetPageController < Pages::BaseController
     unless params[:asset]
       raise_error :no_data_uploaded_label.t
     else
-      @asset.update_attributes! params[:asset].merge(:user => current_user)
+      @asset.update_attributes! params[:asset].merge(user: current_user)
       current_user.updated(@page)
       redirect_to page_url(@page)
     end

@@ -22,7 +22,7 @@ SearchFilter.new('/watched-by-me/') do
 
   label do |opts|
     if opts[:remove]
-      :watched_by_user.t(:user => :me.t)
+      :watched_by_user.t(user: :me.t)
     else
       :watched_by_me.t
     end

@@ -7,7 +7,7 @@ module Common
       attr_writer :params
 
       def params
-        @params ||= {:controller => 'stub'}
+        @params ||= {controller: 'stub'}
       end
 
       def self.helpers

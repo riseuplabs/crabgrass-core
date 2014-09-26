@@ -214,7 +214,7 @@ class AssetTest < ActiveSupport::TestCase
       return
     end
 
-    @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
+    @asset = Asset.create_from_params uploaded_data: upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
 
@@ -226,14 +226,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_binary
-    @asset = Asset.create_from_params :uploaded_data => upload_data('raw_file.bin')
+    @asset = Asset.create_from_params uploaded_data: upload_data('raw_file.bin')
     assert_equal Asset, @asset.class, 'asset should be an Asset'
     assert_equal 'Asset', @asset.versions.earliest.versioned_type, 'version should by of type Asset'
   end
 
   def test_failure_on_corrupted_file
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -244,7 +244,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_failure
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { false })
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -262,7 +262,7 @@ class AssetTest < ActiveSupport::TestCase
     data1 = '<b>this is some very interesting data</b>'
     data2 = '<i>but not this</i>'
 
-    asset = Asset.create!(:data => '<b>this is some very interesting data</b>', :content_type => 'text/html', :filename => 'data')
+    asset = Asset.create!(data: '<b>this is some very interesting data</b>', content_type: 'text/html', filename: 'data')
     assert_equal data1, File.read(asset.private_filename)
 
     asset.data = data2
@@ -273,14 +273,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_user_versions
-    asset = Asset.create! :data => 'hi', :filename => 'x'
-    asset.update_attributes :data => 'bye', :user => users(:blue)
+    asset = Asset.create! data: 'hi', filename: 'x'
+    asset.update_attributes data: 'bye', user: users(:blue)
     assert_nil asset.versions.first.user
     assert_equal users(:blue), asset.versions.last.user
   end
 
   def test_build_asset
-    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata
     assert asset.filename.present?
   end

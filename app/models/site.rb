@@ -49,8 +49,8 @@ Example data for serialized fields:
 
 class Site < ActiveRecord::Base
   belongs_to :network
-  belongs_to :custom_appearance, :dependent => :destroy
-  belongs_to :council, :class_name => 'Group'
+  belongs_to :custom_appearance, dependent: :destroy
+  belongs_to :council, class_name: 'Group'
 
   # We do not specify types because nil is a valid value.
   # Otherwise proxy to conf won't work in rails >= 3.1 as the
@@ -163,7 +163,7 @@ class Site < ActiveRecord::Base
   # gets all the ids of all the groups in the site
   def group_ids
     self.network.nil? ?
-      Group.find(:all, :select => :id).collect{|group| group.id} :
+      Group.find(:all, select: :id).collect{|group| group.id} :
       self.network.group_ids
   end
 

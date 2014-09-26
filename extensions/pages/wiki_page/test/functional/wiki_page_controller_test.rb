@@ -8,18 +8,18 @@ class WikiPageControllerTest < ActionController::TestCase
     login_as :orange
 
     # existing page
-    get :show, :page_id => pages(:wiki).id
+    get :show, page_id: pages(:wiki).id
     assert_response :success
   end
 
   def test_deny_show_without_login
     # existing page
-    get :show, :page_id => pages(:wiki).id
+    get :show, page_id: pages(:wiki).id
     assert_login_required
   end
 
   def test_show_without_login
-    get :show, :page_id => pages(:public_wiki).id
+    get :show, page_id: pages(:public_wiki).id
     assert_response :success
   end
 

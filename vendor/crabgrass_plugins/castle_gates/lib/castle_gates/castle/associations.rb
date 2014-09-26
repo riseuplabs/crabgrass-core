@@ -55,9 +55,9 @@ def self.included(base)
     ##
 
     has_many :keys,
-             :class_name => "CastleGates::Key",
-             :as => :castle,
-             :dependent => :delete_all do
+             class_name: "CastleGates::Key",
+             as: :castle,
+             dependent: :delete_all do
 
       #
       # finds a key for a holder, initializing it in memory if it does not exist.

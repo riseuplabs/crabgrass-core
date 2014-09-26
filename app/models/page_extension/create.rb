@@ -64,8 +64,8 @@ module PageExtension::Create
           yield(page) if block_given?
           if user
             if recipients
-              user.share_page_with!(page, recipients, :access => access,
-                                    :send_notice => inbox)
+              user.share_page_with!(page, recipients, access: access,
+                                    send_notice: inbox)
             end
             # Page#owner= creates a user participation for the owner. Creating it
             # here is only needed, if the page is created for a different owner.
@@ -74,7 +74,7 @@ module PageExtension::Create
             # set as well (so the page shows up under "Recent Pages" on the dash)
             participation = page.user_participations.select { |part|
               part.user == user
-            }.first || page.user_participations.build(:user_id => user.id)
+            }.first || page.user_participations.build(user_id: user.id)
             participation.access = ACCESS[:admin]
             participation.changed_at = Time.now
           end
@@ -142,7 +142,7 @@ module PageExtension::Create
         elsif entity =~ RFC822::EmailAddress
           emails << entity
         elsif entity.present?
-          errors << I18n.t(:name_or_email_not_found, :name => h(entity))
+          errors << I18n.t(:name_or_email_not_found, name: h(entity))
         end
       end
 

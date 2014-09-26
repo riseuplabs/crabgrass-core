@@ -72,7 +72,7 @@ module Common::Utility::ContextHelper
   end
 
   def banner_geometry
-    @banner_geometry ||= {:max_width => banner_width, :min_width => banner_width, :max_height => banner_height, :min_height => banner_height}
+    @banner_geometry ||= {max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height}
   end
 
   def banner_picture

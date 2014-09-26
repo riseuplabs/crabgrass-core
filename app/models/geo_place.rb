@@ -27,7 +27,7 @@ class GeoPlace < ActiveRecord::Base
     ### search for LIKE in name and alternatenames
     admin_codes.each do |ac|
       @places << find(:all,
-        :conditions=>['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"]
+        conditions: ['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"]
       )
     end
     return @places.flatten!

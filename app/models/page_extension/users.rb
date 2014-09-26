@@ -11,15 +11,15 @@ module PageExtension::Users
 
       before_create :set_user
 
-      belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
-      belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'
+      belongs_to :created_by, class_name: 'User', foreign_key: 'created_by_id'
+      belongs_to :updated_by, class_name: 'User', foreign_key: 'updated_by_id'
       has_many :user_participations, dependent: :destroy, inverse_of: :page
-      has_many :users, :through => :user_participations do
+      has_many :users, through: :user_participations do
         def with_access
-          find(:all, :conditions => 'access IS NOT NULL')
+          find(:all, conditions: 'access IS NOT NULL')
         end
         def contributed
-          find(:all, :conditions => 'changed_at IS NOT NULL')
+          find(:all, conditions: 'changed_at IS NOT NULL')
         end
       end
 
@@ -137,9 +137,9 @@ module PageExtension::Users
   def sorted_user_participations(options={})
     options[:page] ||= 1 if options.key?(:page)   # options[:page] might be set to nil
     options.reverse_merge!(
-      :order=>'access ASC, changed_at DESC, users.login ASC',
-      :include => :user,
-      :conditions => 'access IS NOT NULL OR changed_at IS NOT NULL'
+      order: 'access ASC, changed_at DESC, users.login ASC',
+      include: :user,
+      conditions: 'access IS NOT NULL OR changed_at IS NOT NULL'
     )
     if options[:page]
       self.user_participations.paginate(options);

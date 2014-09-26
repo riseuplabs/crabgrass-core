@@ -4,10 +4,10 @@
 
 class User < ActiveRecord::Base
   has_many :allegiances
-  has_many :minions, :through => :allegiances
+  has_many :minions, through: :allegiances
 
   has_many :memberships
-  has_many :clans, :through => :memberships
+  has_many :clans, through: :memberships
 
   # def self.current
   #   @current
@@ -19,7 +19,7 @@ end
 
 class Minion < ActiveRecord::Base
   has_many :allegiances
-  has_many :users, :through => :allegiances
+  has_many :users, through: :allegiances
 end
 class Allegiance < ActiveRecord::Base
   belongs_to :user
@@ -28,7 +28,7 @@ end
 
 class Clan < ActiveRecord::Base
   has_many :memberships
-  has_many :users, :through => :memberships
+  has_many :users, through: :memberships
 end
 class Membership < ActiveRecord::Base
   belongs_to :user
@@ -79,13 +79,13 @@ CastleGates.define do
 
   castle Fort do
     gate 1, :draw_bridge
-    gate 2, :sewers, :default_open => :admin
-    gate 3, :tunnel, :default_open => [:public, :user]
-    gate 4, :door, :default_open => :user
+    gate 2, :sewers, default_open: :admin
+    gate 3, :tunnel, default_open: [:public, :user]
+    gate 4, :door, default_open: :user
   end
 
   castle Tower do
-    gate 1, :door, :default_open => true
+    gate 1, :door, default_open: true
     gate 2, :window
     gate 3, :skylight
 
@@ -93,12 +93,12 @@ CastleGates.define do
 
     def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! :admin => gates
+        grant_access! admin: gates
       end
     end
     def after_revoke_access(holder, gates)
       if holder == :admin
-        revoke_access! :public => gates
+        revoke_access! public: gates
       end
     end
 
@@ -111,32 +111,32 @@ CastleGates.define do
   end
 
   castle User do
-    gate 1, :follow, :default_open => :minion_of_user
+    gate 1, :follow, default_open: :minion_of_user
   end
 
-  holder 1, :user, :model => User do
+  holder 1, :user, model: User do
     def holder_codes
-      [:public, {:holder => :clan, :ids => self.clan_ids}]
+      [:public, {holder: :clan, ids: self.clan_ids}]
     end
   end
 
-  holder 2, :minion, :model => Minion do
+  holder 2, :minion, model: Minion do
     def holder_codes
-      {:holder => :minion_of_user, :ids => self.user_ids}
+      {holder: :minion_of_user, ids: self.user_ids}
     end
   end
 
-  holder 3, :clan, :model => Clan
-  holder_alias :clan, :model => Faction
+  holder 3, :clan, model: Clan
+  holder_alias :clan, model: Faction
 
-  holder 4, :minion_of_user, :association => User.associated(:minions) do
+  holder 4, :minion_of_user, association: User.associated(:minions) do
     def minion_of_user?(minion)
       minion_ids.include? minion.id
     end
   end
 
   holder 0, :public
-  holder_alias :public, :model => Rabbit
+  holder_alias :public, model: Rabbit
 
   holder 6, :admin
 

@@ -24,7 +24,7 @@ class TransmogrifierTest < Test::Unit::TestCase
 
   def test_graphicsmagick_transmog
     input = test_file('lyra.png')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg', :size => '100x100!')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg', size: '100x100!')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
@@ -40,7 +40,7 @@ class TransmogrifierTest < Test::Unit::TestCase
     input = test_file('lyra.png')
     Media::TempFile.open(nil,'image/jpg') do |dest_file|
       filename = dest_file.to_s
-      transmog = Media.transmogrifier(:input_file => input, :output_file => dest_file)
+      transmog = Media.transmogrifier(input_file: input, output_file: dest_file)
       assert_not_nil transmog, 'should find transmog'
       status = transmog.run
       assert_equal :success, status
@@ -51,7 +51,7 @@ class TransmogrifierTest < Test::Unit::TestCase
 
   def test_libreoffice_transmog
     input = test_file('msword.doc')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'application/pdf')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'application/pdf')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
@@ -64,7 +64,7 @@ class TransmogrifierTest < Test::Unit::TestCase
 
   def test_libremagick_transmog
     input = test_file('msword.doc')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
@@ -77,7 +77,7 @@ class TransmogrifierTest < Test::Unit::TestCase
 
   def test_inkscape_transmog
     input = test_file('anarchism.svg')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress

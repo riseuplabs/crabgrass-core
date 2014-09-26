@@ -85,10 +85,10 @@ class Page < ActiveRecord::Base
   ## NAMES SCOPES
   ##
 
-  scope :only_public, where(:public => true)
-  scope :only_images, where(:is_image => true)
-  scope :only_videos, where(:is_video => true)
-  scope :pending, where(:resolved => false).order(:happens_at)
+  scope :only_public, where(public: true)
+  scope :only_images, where(is_image: true)
+  scope :only_videos, where(is_video: true)
+  scope :pending, where(resolved: false).order(:happens_at)
 
   ##
   ## PAGE NAMING
@@ -194,7 +194,7 @@ class Page < ActiveRecord::Base
   ## RELATIONSHIP TO PAGE DATA
   ##
 
-  belongs_to :data, :polymorphic => true, :dependent => :destroy
+  belongs_to :data, polymorphic: true, dependent: :destroy
 
   validates_presence_of :title
   validates_associated :data
@@ -308,7 +308,7 @@ class Page < ActiveRecord::Base
   public
 
   # every page is owned by a person or group.
-  belongs_to :owner, :polymorphic => true
+  belongs_to :owner, polymorphic: true
 
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
@@ -366,7 +366,7 @@ class Page < ActiveRecord::Base
         raise Exception.new('must be user or group')
       end
       part = most_privileged_participation_for(entity)
-      self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+      self.add(entity, access: :admin) unless part and part.access == ACCESS[:admin]
       return self.owner
     end
   end

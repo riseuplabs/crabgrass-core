@@ -8,7 +8,7 @@ class EntitiesControllerTest < ActionController::TestCase
   def test_preloading_entities
     login_as :blue
     blue = users(:blue)
-    xhr :get, :index, :format => :json, :view => :all, :query => ''
+    xhr :get, :index, format: :json, view: :all, query: ''
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     friends_and_peers = (blue.friends + blue.peers).uniq
@@ -21,7 +21,7 @@ class EntitiesControllerTest < ActionController::TestCase
 
   def test_querying_entities
     login_as :red
-    xhr :get, :index, :format => :json, :view => :all, :query => 'pu'
+    xhr :get, :index, format: :json, view: :all, query: 'pu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'pu')
@@ -34,7 +34,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_equal 0, users(:quentin).groups.count,
       "quentin should not be in any groups."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'an'
+    xhr :get, :index, format: :json, view: :all, query: 'an'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'an')
@@ -47,7 +47,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert_equal 0, users(:red).friends.count,
       "red should not have any friends."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'qu'
+    xhr :get, :index, format: :json, view: :all, query: 'qu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'qu')
@@ -57,7 +57,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert !users(:red).member_of?(groups(:private_group)),
       "red should not be in the private group."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'pri'
+    xhr :get, :index, format: :json, view: :all, query: 'pri'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
@@ -68,7 +68,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :green
     assert_equal ["blue"], users(:orange).friends.map(&:login)
       "orange should only have blue as a friend."
-    xhr :get, :index, :format => :json, :view => :all, :query => 're'
+    xhr :get, :index, format: :json, view: :all, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
@@ -79,7 +79,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :green
     assert_equal ["blue"], users(:orange).friends.map(&:login)
       "orange should only have blue as a friend."
-    xhr :get, :index, :format => :json, :view => :users, :query => 're'
+    xhr :get, :index, format: :json, view: :users, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],

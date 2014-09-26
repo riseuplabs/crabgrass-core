@@ -44,7 +44,7 @@ module Common::Application::BeforeFilters
 
   def redirect_unverified_user
     if logged_in? and current_user.unverified?
-      redirect_to account_url(:action => 'unverified')
+      redirect_to account_url(action: 'unverified')
     end
   end
 

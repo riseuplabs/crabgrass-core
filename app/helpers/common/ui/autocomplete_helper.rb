@@ -36,19 +36,19 @@ module Common::Ui::AutocompleteHelper
   # this searches on friends and peers. if needed, we could modify
   # this to allow the option to search all users.
   def autocomplete_users_field_tag(field_id, options = {})
-    options.merge! :view => 'recipients'
+    options.merge! view: 'recipients'
     autocomplete_entity_field_tag(field_id, options) #should this always be recipients?
   end
 
   # just for groups
   def autocomplete_groups_field_tag(field_id, options = {})
-    options.merge! :view => 'groups'
+    options.merge! view: 'groups'
     autocomplete_entity_field_tag(field_id, options)
   end
 
   # just for group members
   def autocomplete_members_field_tag(field_id, options = {})
-    options.merge! :view => 'members'
+    options.merge! view: 'members'
     autocomplete_entity_field_tag(field_id, options)
   end
 
@@ -65,10 +65,10 @@ module Common::Ui::AutocompleteHelper
     end
 
     # create tag
-    text_field_tag(field_id, '', :style => options[:style], :onkeypress => options[:onkeypress]) +
+    text_field_tag(field_id, '', style: options[:style], onkeypress: options[:onkeypress]) +
     javascript_tag("cgAutocompleteEntities('%s', '%s' %s)" % [
       field_id,
-      entities_path(:view => options[:view], :format => 'json', :group => options[:group]),
+      entities_path(view: options[:view], format: 'json', group: options[:group]),
       option_string
     ])
   end

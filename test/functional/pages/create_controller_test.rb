@@ -8,7 +8,7 @@ class Pages::CreateControllerTest < ActionController::TestCase
 
   def test_new_page_view
     login_as @user
-    get :new, :owner => 'me', :type => "wiki"
+    get :new, owner: 'me', type: "wiki"
     assert_equal assigns(:owner), @user
   end
 
@@ -17,10 +17,10 @@ class Pages::CreateControllerTest < ActionController::TestCase
     login_as @user
     assert_difference "WikiPage.count" do
       post :create,
-        :owner => 'me',
-        :page => {:title => 'title'},
-        :type => "wiki",
-        :page_type => "WikiPage"
+        owner: 'me',
+        page: {title: 'title'},
+        type: "wiki",
+        page_type: "WikiPage"
     end
     assert_equal @user, Page.last.owner
     assert Page.last.users.include? @user
@@ -31,10 +31,10 @@ class Pages::CreateControllerTest < ActionController::TestCase
     login_as @user
     assert_difference "WikiPage.count" do
       post :create,
-        :owner => @group.name,
-        :page => {:title => 'title'},
-        :type => "wiki",
-        :page_type => "WikiPage"
+        owner: @group.name,
+        page: {title: 'title'},
+        type: "wiki",
+        page_type: "WikiPage"
     end
     assert_equal @group, Page.last.owner
     assert Page.last.users.include? @user
@@ -46,10 +46,10 @@ class Pages::CreateControllerTest < ActionController::TestCase
     data_ids, page_ids, page_urls = [],[],[]
     3.times do
       post 'create',
-        :owner => @user,
-        :page => {:title => "dupe"},
-        :type => "ranked-vote",
-        :page_type => "RankedVotePage"
+        owner: @user,
+        page: {title: "dupe"},
+        type: "ranked-vote",
+        page_type: "RankedVotePage"
       page = assigns(:page)
 
       assert_equal "dupe", page.title

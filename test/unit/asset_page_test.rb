@@ -15,10 +15,10 @@ class AssetPageTest < ActiveSupport::TestCase
   end
 
   def test_asset_page
-    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     page = nil
     assert_nothing_raised do
-      page = AssetPage.create! :title => 'hi', :data => asset, :user => users(:blue)
+      page = AssetPage.create! title: 'hi', data: asset, user: users(:blue)
     end
     assert_equal asset, page.data
     asset.reload
@@ -27,8 +27,8 @@ class AssetPageTest < ActiveSupport::TestCase
   end
 
   def test_asset_page_access
-    page = AssetPage.build! :title => 'hi', :user => users(:blue)
-    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    page = AssetPage.build! title: 'hi', user: users(:blue)
+    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     page.data = asset
     page.save!
     assert File.exists?(asset.private_filename)
@@ -37,8 +37,8 @@ class AssetPageTest < ActiveSupport::TestCase
 
   # make sure assigning page.data later still updates permissions.
   def test_asset_page_alt_method
-    page = AssetPage.create! :title => 'perm test', :user => users(:blue)
-    asset = Asset.create! :data => 'hi', :filename => 'x'
+    page = AssetPage.create! title: 'perm test', user: users(:blue)
+    asset = Asset.create! data: 'hi', filename: 'x'
     page.data = asset
     page.save!
     assert asset.visible?(users(:blue))

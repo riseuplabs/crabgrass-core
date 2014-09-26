@@ -1,7 +1,7 @@
 
 class AssetPageHistoryController < Pages::BaseController
 
-  guard :index => :may_show_page?, :destroy => :may_edit_page?
+  guard index: :may_show_page?, destroy: :may_edit_page?
   helper 'asset_page'
 
   def index

@@ -18,11 +18,11 @@ module UserExtension::Groups
   def self.included(base)
     base.instance_eval do
 
-      has_many :memberships, :foreign_key => 'user_id',
-        :dependent => :destroy,
-        :before_add => :check_duplicate_memberships
+      has_many :memberships, foreign_key: 'user_id',
+        dependent: :destroy,
+        before_add: :check_duplicate_memberships
 
-      has_many :groups, :foreign_key => 'user_id', :through => :memberships do
+      has_many :groups, foreign_key: 'user_id', through: :memberships do
         def <<(*dummy)
           raise Exception.new("don't call << on user.groups");
         end
@@ -60,8 +60,8 @@ module UserExtension::Groups
       # 'primary groups' is useful when you want to list of the user's groups,
       # including committees only when necessary. primary_groups_and_networks is the same
       # but it includes networks in addition to just groups.
-      has_many(:primary_groups, :class_name => 'Group', :through => :memberships,
-       :source => :group, :conditions => PRIMARY_GROUPS_CONDITION) do
+      has_many(:primary_groups, class_name: 'Group', through: :memberships,
+       source: :group, conditions: PRIMARY_GROUPS_CONDITION) do
 
          # most active should return a list of groups that we are most interested in.
          # this includes groups we have recently visited, and groups that we visit the most.
@@ -72,7 +72,7 @@ module UserExtension::Groups
          end
       end
 
-      has_many(:primary_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_NETWORKS_CONDITION) do
+      has_many(:primary_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_NETWORKS_CONDITION) do
          # most active should return a list of groups that we are most interested in.
          # in the case of networks this should not include the site network
          # this includes groups we have recently visited, and groups that we visit the most.
@@ -84,10 +84,10 @@ module UserExtension::Groups
          end
       end
 
-      has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_G_AND_N_CONDITION
+      has_many :primary_groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_G_AND_N_CONDITION
 
       # just groups and networks the user is a member of, no committees.
-      has_many :groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => GROUPS_AND_NETWORKS_CONDITION
+      has_many :groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: GROUPS_AND_NETWORKS_CONDITION
 
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
@@ -100,7 +100,7 @@ module UserExtension::Groups
   # all groups, including groups we have indirect access to even when there
   # is no membership join record. (ie committees and networks)
   def all_groups
-    Group.where(:id => all_group_id_cache)
+    Group.where(id: all_group_id_cache)
   end
 
   # is this user a member of the group?

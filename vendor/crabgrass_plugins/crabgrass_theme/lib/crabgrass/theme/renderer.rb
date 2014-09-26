@@ -184,12 +184,12 @@ module Crabgrass::Theme::Renderer
   # http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#options
   def sass_options
     {
-      :load_paths => [Crabgrass::Theme::SASS_ROOT],
-      :debug_info => false,
-      :style => :nested,
-      :line_comments => false,
-      :syntax => :scss,
-      :cache => false
+      load_paths: [Crabgrass::Theme::SASS_ROOT],
+      debug_info: false,
+      style: :nested,
+      line_comments: false,
+      syntax: :scss,
+      cache: false
     }
   end
 

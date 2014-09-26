@@ -27,7 +27,7 @@ class WikiTest < JavascriptIntegrationTest
     end
     click_page_tab "Versions"
     assert_no_content "Version 4"
-    find("span.b", :text => "3", :exact => false).click
+    find("span.b", text: "3", exact: false).click
     clicking "previous" do
       assert_content versions.pop
     end

@@ -12,9 +12,9 @@ module GroupExtension::Users
       before_destroy :destroy_memberships
 #      before_create :set_created_by
 
-      has_many :memberships, :before_add => :check_duplicate_memberships
+      has_many :memberships, before_add: :check_duplicate_memberships
 
-      has_many :users, :through => :memberships do
+      has_many :users, through: :memberships do
         def <<(*dummy)
           raise Exception.new("don't call << on group.users");
         end
@@ -22,7 +22,7 @@ module GroupExtension::Users
           raise Exception.new("don't call delete on group.users");
         end
         def most_recently_active(options={})
-          find(:all, {:order => 'memberships.visited_at DESC', :limit => 10}.merge(options))
+          find(:all, {order: 'memberships.visited_at DESC', limit: 10}.merge(options))
         end
         # UPGRADE: This is a workaround for the lack of declaring a
         # query DISTINCT and having that applied to the final query.
@@ -100,7 +100,7 @@ module GroupExtension::Users
   # all other methods will not work.
   #
   def add_user!(user)
-    self.memberships.create! :user => user
+    self.memberships.create! user: user
     user.update_membership_cache
     user.clear_peer_cache_of_my_peers
     clear_key_cache

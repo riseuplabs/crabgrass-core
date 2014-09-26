@@ -162,7 +162,7 @@ module AssetExtension
       # only called on Asset::Versions
       def clone_thumbnails_from(orig_model)
         orig_model.thumbnails.each do |thumbnail|
-          t = Thumbnail.create thumbnail.attributes.merge(:parent_id => self.id, :parent_type => 'Asset::Version')
+          t = Thumbnail.create thumbnail.attributes.merge(parent_id: self.id, parent_type: 'Asset::Version')
         end
       end
 

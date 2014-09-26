@@ -8,11 +8,11 @@ class Groups::MyMembershipsControllerTest < ActionController::TestCase
   end
 
   def test_create
-    @group.grant_access! :public => :join
+    @group.grant_access! public: :join
     login_as @user
     assert_permission :may_join_group? do
       assert_difference '@group.users.count' do
-        get :create, :group_id => @group.to_param
+        get :create, group_id: @group.to_param
       end
     end
     assert_response :redirect
@@ -25,7 +25,7 @@ class Groups::MyMembershipsControllerTest < ActionController::TestCase
     membership = @group.memberships.find_by_user_id(@user.id)
     assert_permission :may_leave_group? do
       assert_difference '@group.users.count', -1 do
-        delete :destroy, :group_id => @group.to_param, :id => membership.id
+        delete :destroy, group_id: @group.to_param, id: membership.id
       end
     end
     assert_response :redirect

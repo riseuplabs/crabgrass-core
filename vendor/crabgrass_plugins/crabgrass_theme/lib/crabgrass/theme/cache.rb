@@ -8,7 +8,7 @@ module Crabgrass::Theme::Cache
 
   def clear_cache(file='')
     cached = css_destination_path(file)
-    FileUtils.rm_r(cached, :secure => true) if File.exists? cached
+    FileUtils.rm_r(cached, secure: true) if File.exists? cached
   end
 
   def cache_key

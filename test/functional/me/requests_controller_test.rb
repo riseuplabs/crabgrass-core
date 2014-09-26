@@ -7,7 +7,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   def test_destroy
     login_as users(:blue)
     request = RequestToJoinUs.created_by(users(:blue)).find(:first)
-    xhr :delete, :destroy, :id => request.id
+    xhr :delete, :destroy, id: request.id
     assert_message /destroyed/i
   end
 
@@ -23,9 +23,9 @@ class Me::RequestsControllerTest < ActionController::TestCase
     @group.add_user! @user
     login_as @user
     requesting = FactoryGirl.create(:user)
-    request = RequestToJoinYou.create :created_by => requesting,
-      :recipient => @group
-    xhr :post, :update, :id => request.id
+    request = RequestToJoinYou.create created_by: requesting,
+      recipient: @group
+    xhr :post, :update, id: request.id
     assert_response :success
   end
 
@@ -35,10 +35,10 @@ class Me::RequestsControllerTest < ActionController::TestCase
     @group.add_user! @user
     login_as @user
     requesting = FactoryGirl.create(:user)
-    request = RequestToJoinYou.create :created_by => requesting,
-      :recipient => @group
+    request = RequestToJoinYou.create created_by: requesting,
+      recipient: @group
     assert_difference 'RequestToJoinYou.count', -1 do
-      xhr :delete, :destroy, :id => request.id
+      xhr :delete, :destroy, id: request.id
     end
     assert_response :success
   end

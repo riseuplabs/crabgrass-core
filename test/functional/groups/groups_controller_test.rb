@@ -60,7 +60,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     login_as @user
     assert_difference 'Group.count' do
       assert_permission :may_create_group? do
-        post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!"}
+        post :create, group: {name: 'test-create-group', full_name: "Group for Testing Group Creation!"}
       end
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
@@ -71,22 +71,22 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   def test_create_no_group_without_name
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, :group => {:name => ''}
+      post :create, group: {name: ''}
       assert_error_message
     end
   end
 
   def test_create_no_group_with_duplicate_name
-    FactoryGirl.create(:group, :name => 'flowers')
+    FactoryGirl.create(:group, name: 'flowers')
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, :group => {:name => 'flowers'}
+      post :create, group: {name: 'flowers'}
       assert_error_message
     end
   end
 
   def test_create_no_network_with_network_member
-    group = FactoryGirl.create(:group, :name => 'pine')
+    group = FactoryGirl.create(:group, name: 'pine')
     group.add_user! @user
     login_as @user
     assert_difference 'Network.count' do
@@ -97,7 +97,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_network_with_network_member
-    network = FactoryGirl.create(:group, :name => 'pine')
+    network = FactoryGirl.create(:group, name: 'pine')
     network.add_user! @user
     login_as @user
     assert_no_difference 'Group.count' do

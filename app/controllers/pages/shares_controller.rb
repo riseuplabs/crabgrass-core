@@ -24,7 +24,7 @@
 #
 class Pages::SharesController < Pages::SidebarsController
 
-  guard :update => :may_share_page?
+  guard update: :may_share_page?
 
   helper 'pages/share', 'pages/participation'
 
@@ -32,9 +32,9 @@ class Pages::SharesController < Pages::SidebarsController
   # this returns the html, which is used to populate the modalbox
   def show
     if params[:mode] == 'share'
-      render :template => 'pages/shares/show_share'
+      render template: 'pages/shares/show_share'
     elsif params[:mode] == 'notify'
-      render :template => 'pages/shares/show_notify'
+      render template: 'pages/shares/show_notify'
     else
       raise_error 'bad mode'
     end
@@ -87,7 +87,7 @@ class Pages::SharesController < Pages::SidebarsController
         end
         @recipients.compact!
       end
-      render :partial => 'pages/shares/add_recipient', :locals => {:alter_access => action == :share}
+      render partial: 'pages/shares/add_recipient', locals: {alter_access: action == :share}
     elsif (params[:share_button] || params[:notify_button]) and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
@@ -122,19 +122,19 @@ class Pages::SharesController < Pages::SidebarsController
     return nil unless recipient_name.present?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
-      error(:thing_not_found.t(:thing => h(recipient_name)))
+      error(:thing_not_found.t(thing: h(recipient_name)))
       return nil
     elsif !current_user.may?(:pester, recipient)
-      error(:share_pester_error.t(:name => recipient.name))
+      error(:share_pester_error.t(name: recipient.name))
       return nil
     elsif @page
       upart = recipient.participations.find_by_page_id(@page.id)
       if upart && action == :share && !upart.access.nil?
-        notice(:share_already_exists_error.t(:name => recipient.name))
+        notice(:share_already_exists_error.t(name: recipient.name))
         return nil
       elsif upart.nil? && action == :notify
         if !recipient.may?(:view, @page) and !may_share_page?
-          error(:notify_no_access_error.t(:name => recipient.name))
+          error(:notify_no_access_error.t(name: recipient.name))
           return nil
         end
       end

@@ -6,9 +6,9 @@
 module Common::Ui::ImageHelper
 
   IMAGE_SIZES = Hash.new(200).merge({
-    :small  => 64,
-    :medium => 200,
-    :large  => 500
+    small: 64,
+    medium: 200,
+    large: 500
   }).freeze
 
   ##
@@ -21,7 +21,7 @@ module Common::Ui::ImageHelper
   # currently, any 'size' argument other than the default will not display well.
   #
   def icon_tag(icon, size = 16)
-    content_tag :i, ' ', :class => "small_icon #{icon}_#{size}"
+    content_tag :i, ' ', class: "small_icon #{icon}_#{size}"
   end
 
 #  def pushable_icon_tag(icon, size = 16, id = nil)
@@ -37,7 +37,7 @@ module Common::Ui::ImageHelper
 
   ## returns the img tag for the page's icon
   def page_icon(page)
-    content_tag :i, ' ', :class => "page_icon #{page.icon}_16"
+    content_tag :i, ' ', class: "page_icon #{page.icon}_16"
   end
 
   ##
@@ -66,7 +66,7 @@ module Common::Ui::ImageHelper
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     align = "vertical-align:#{options[:align] || 'middle'}"
-    options = {:spinner=>"spinner.gif", :style=>"#{display} #{align};", :class => 'spin'}.merge(options)
+    options = {spinner: "spinner.gif", style: "#{display} #{align};", class: 'spin'}.merge(options)
     if options[:text]
       "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:baseline' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
     else
@@ -93,7 +93,7 @@ module Common::Ui::ImageHelper
   end
 
   def big_spinner()
-    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", :class => 'spin'
+    content_tag :div, '', style: "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", class: 'spin'
   end
 
   # we can almost do this to trick ie into working with event.target,
@@ -142,24 +142,24 @@ module Common::Ui::ImageHelper
           # thumbnail is actually _smaller_ than our target area
           margin_x = ((target_width - thumbnail.width) / 2)
           margin_y = ((target_height - thumbnail.height) / 2)
-          img = image_tag(thumbnail.url, html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}",
-            :style => "padding: #{margin_y}px #{margin_x}px;"))
+          img = image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
+            style: "padding: #{margin_y}px #{margin_x}px;"))
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
           ratio  = [1, ratio].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          img = image_tag(thumbnail.url, html_options.merge(:size => "#{width}x#{height}"))
+          img = image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
         elsif options[:scale]
           # set image tag to use new scale
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          image_tag(thumbnail.url, html_options.merge(:size => "#{width}x#{height}"))
+          image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
         end
       else
-        image_tag(thumbnail.url, html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}"))
+        image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}"))
       end
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
@@ -189,7 +189,7 @@ module Common::Ui::ImageHelper
     # options[:method] ||= 'get'
     # span = content_tag(:span, asset.filename)
     if options[:xhr]
-      link_to_remote img, {:url => url}, options.slice(:class, :title, :style)
+      link_to_remote img, {url: url}, options.slice(:class, :title, :style)
     else
       link_to img, url, options.slice(:class, :title, :style)
     end
@@ -212,7 +212,7 @@ module Common::Ui::ImageHelper
     klass   = options[:class] || 'thumbnail'
     url     = options[:url] || asset.url
     method  = options[:method] || 'get'
-    link_to img, url, :class => klass, :title => asset.filename, :style => style, :method => method
+    link_to img, url, class: klass, title: asset.filename, style: style, method: method
   end
 
 
@@ -225,14 +225,14 @@ module Common::Ui::ImageHelper
   end
 
   def icon_for(asset)
-    image_tag "/images/png/16/#{asset.big_icon}.png", :style => 'vertical-align: middle'
+    image_tag "/images/png/16/#{asset.big_icon}.png", style: 'vertical-align: middle'
   end
 
   def mini_icon_for(asset, width=nil, height=nil)
     if width.nil? or height.nil?
-      image_tag "/images/png/16/#{asset.small_icon}.png", :style => 'vertical-align: middle;'
+      image_tag "/images/png/16/#{asset.small_icon}.png", style: 'vertical-align: middle;'
     else
-      image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
+      image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
   end
 
@@ -250,9 +250,9 @@ module Common::Ui::ImageHelper
             when :medium then '200x200'
             when :large  then '500x500'
           end
-          image_tag('/images/ui/corrupted/corrupted.png', :size => dims)
+          image_tag('/images/ui/corrupted/corrupted.png', size: dims)
         else
-          image_tag(thumbnail.url, :height => thumbnail.height, :width => thumbnail.width)
+          image_tag(thumbnail.url, height: thumbnail.height, width: thumbnail.width)
         end
       else
         # not sure what we are trying to display
@@ -273,13 +273,13 @@ module Common::Ui::ImageHelper
   # of the format used by Picture geometry (see picture.rb)
   #
   def picture_tag(picture, size=:medium)
-    content_tag :div, '', :style => picture_style(picture, size)
+    content_tag :div, '', style: picture_style(picture, size)
   end
 
   def picture_style(picture, size=:medium)
     if size.is_a? Symbol
       pixels = IMAGE_SIZES[size];
-      geometry = {:max_width => pixels, :min_width => pixels, :max_height => pixels*2}
+      geometry = {max_width: pixels, min_width: pixels, max_height: pixels*2}
     else
       geometry = size
     end

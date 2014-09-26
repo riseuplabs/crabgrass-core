@@ -1,7 +1,7 @@
 
 
 
-define_theme(:parent => 'default') {
+define_theme(parent: 'default') {
 
   background {
     color '#E6E3DC'
@@ -30,12 +30,12 @@ define_theme(:parent => 'default') {
   }
 
   banner {
-    shadow :inset => true, :x => '1px', :y => '1px', :blur => '3px', :color => 'rgba(0,0,0,0.15)'
+    shadow inset: true, x: '1px', y: '1px', blur: '3px', color: 'rgba(0,0,0,0.15)'
   }
 
   local {
     content {
-       shadow :x => '1px', :y => '1px', :color => '#CCC9C3', :blur => '4px'
+       shadow x: '1px', y: '1px', color: '#CCC9C3', blur: '4px'
     }
   }
 

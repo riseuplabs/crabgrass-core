@@ -42,7 +42,7 @@ module Common::Utility::TimeHelper
       # 7/Mar/08
       #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
     else
-      str = I18n.l date, :format => :short
+      str = I18n.l date, format: :short
       # 7/Mar
       #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
     end
@@ -51,7 +51,7 @@ module Common::Utility::TimeHelper
   end
 
   def friendly_time(time, format = :long)
-    I18n.l time, :format => format
+    I18n.l time, format: format
   end
 
   # localized short date (or time if timestamp is from today).

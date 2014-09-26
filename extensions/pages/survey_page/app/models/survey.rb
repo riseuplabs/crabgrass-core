@@ -8,12 +8,12 @@
 class Survey < ActiveRecord::Base
 
   serialize :settings
-  serialize_default :settings, {:edit_may_create => true, :edit_may_see_responses => true}
+  serialize_default :settings, {edit_may_create: true, edit_may_see_responses: true}
 
-  has_many(:questions, :order => :position, :dependent => :destroy,
-           :class_name => 'SurveyQuestion')
+  has_many(:questions, order: :position, dependent: :destroy,
+           class_name: 'SurveyQuestion')
 
-  has_many(:responses, :dependent => :destroy, :class_name => 'SurveyResponse') do
+  has_many(:responses, dependent: :destroy, class_name: 'SurveyResponse') do
     # returns `count' responses, the given `user' may rate on, but hasn't yet.
     def unrated_by(user, count)
       # (proxy_owner is the Survey)
@@ -21,10 +21,10 @@ class Survey < ActiveRecord::Base
     end
     # returns responses that the user has already rated.
     def rated_by(user, count)
-      self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
+      self.find(:all, conditions: ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], include: :ratings, order: 'ratings.created_at ASC', limit: count)
     end
     def for_user(user)
-      self.find(:first, :conditions => ['survey_responses.user_id = ?',user.id])
+      self.find(:first, conditions: ['survey_responses.user_id = ?',user.id])
     end
 
   end

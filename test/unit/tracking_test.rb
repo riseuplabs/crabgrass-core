@@ -14,11 +14,11 @@ class TrackingTest < ActiveSupport::TestCase
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
     assert_difference('Membership.find(%d).total_visits'%membership.id) do
-      Tracking.insert_delayed(:current_user => user, :group => group)
+      Tracking.insert_delayed(current_user: user, group: group)
       Tracking.process
     end
     assert_difference('Membership.find(%d).total_visits'%membership.id) do
-      Tracking.insert_delayed(:current_user => user.id, :group => group.id)
+      Tracking.insert_delayed(current_user: user.id, group: group.id)
       Tracking.process
     end
   end
@@ -28,7 +28,7 @@ class TrackingTest < ActiveSupport::TestCase
     user = users(:orange)
 
     assert_difference 'Tracking.count', 3 do
-      3.times { Tracking.insert_delayed(:current_user => current_user, :user => user) }
+      3.times { Tracking.insert_delayed(current_user: current_user, user: user) }
     end
     assert_difference 'Tracking.count', -3 do
       Tracking.process
@@ -73,9 +73,9 @@ class TrackingTest < ActiveSupport::TestCase
     group1 = groups(:rainbow)
     group2 = groups(:animals)
     group3 = groups(:recent_group)
-    1.times { Tracking.insert_delayed(:current_user => user, :group => group3) }
-    2.times { Tracking.insert_delayed(:current_user => user, :group => group2) }
-    3.times { Tracking.insert_delayed(:current_user => user, :group => group1) }
+    1.times { Tracking.insert_delayed(current_user: user, group: group3) }
+    2.times { Tracking.insert_delayed(current_user: user, group: group2) }
+    3.times { Tracking.insert_delayed(current_user: user, group: group1) }
     Tracking.process
     assert_equal [group1, group2, group3], user.primary_groups.most_active[0..2]
   end
@@ -84,7 +84,7 @@ class TrackingTest < ActiveSupport::TestCase
 
   # Insert delayed is not delaysed for testing so this should not cause problems.
   def assert_tracking(user, group, page, action, time=nil)
-    Tracking.insert_delayed(:current_user => user, :group => group, :page => page, :action => action, :time => time)
+    Tracking.insert_delayed(current_user: user, group: group, page: page, action: action, time: time)
     track=Tracking.last
     assert_equal track.current_user_id, user.id, "User not stored correctly in Tracking"
     assert_equal track.group_id, group.id, "Group not stored correctly in Tracking"

@@ -2,14 +2,14 @@ module UserRecords
 
   def hidden_user
     records[:hidden_user] ||= FactoryGirl.create(:user).tap do |hide|
-      hide.revoke_access! :friends => :view
-      hide.revoke_access! :peers => :view
+      hide.revoke_access! friends: :view
+      hide.revoke_access! peers: :view
     end
   end
 
   def public_user
     records[:public_user] ||= FactoryGirl.create(:user).tap do |pub|
-      pub.grant_access! :public => :view
+      pub.grant_access! public: :view
     end
   end
 

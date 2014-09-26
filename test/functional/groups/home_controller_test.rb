@@ -14,7 +14,7 @@ class Groups::HomeControllerTest < ActionController::TestCase
   def test_show
     login_as @user
     assert_permission :may_show_group? do
-      get :show, :group_id => @group.to_param
+      get :show, group_id: @group.to_param
     end
     assert_response :success
     assert_equal @pub, assigns('public_wiki')
@@ -38,9 +38,9 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_show_public_only
     login_as FactoryGirl.create(:user)
-    @group.grant_access! :public => :view
+    @group.grant_access! public: :view
     assert_permission :may_show_group? do
-      get :show, :group_id => @group.to_param
+      get :show, group_id: @group.to_param
     end
     assert_response :success
     assert_nil assigns('private_wiki')
@@ -49,9 +49,9 @@ class Groups::HomeControllerTest < ActionController::TestCase
 
   def test_may_not_show
     login_as FactoryGirl.create(:user)
-    @group.revoke_access! :public => :view
+    @group.revoke_access! public: :view
     assert_permission :may_show_group?, false do
-      get :show, :group_id => @group.to_param
+      get :show, group_id: @group.to_param
     end
   end
 

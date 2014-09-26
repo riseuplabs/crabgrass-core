@@ -20,29 +20,29 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
   end
 
   def test_undefined_permission_raises
-    GuardStubController.guard :may_do_this?, :actions => [:juggle, :default]
+    GuardStubController.guard :may_do_this?, actions: [:juggle, :default]
     assert_equal false, GuardStubController.permission_for_action(:dance)
   end
 
   def test_actions_can_be_single_symbol
-    GuardStubController.guard :may_do_this?, :actions => :dance
+    GuardStubController.guard :may_do_this?, actions: :dance
     assert_equal :may_do_this?, GuardStubController.permission_for_action(:dance)
   end
 
   def test_default_does_not_override
-    GuardStubController.guard :may_do_this?, :actions => [:dance, :juggle]
+    GuardStubController.guard :may_do_this?, actions: [:dance, :juggle]
     GuardStubController.guard :may_do_that?
     assert_equal :may_do_this?, GuardStubController.permission_for_action(:dance)
   end
 
   def test_later_actions_overwrite
-    GuardStubController.guard :may_do_that?, :actions => [:dance, :juggle]
-    GuardStubController.guard :may_do_this?, :actions => [:dance, :default]
+    GuardStubController.guard :may_do_that?, actions: [:dance, :juggle]
+    GuardStubController.guard :may_do_this?, actions: [:dance, :default]
     assert_equal :may_do_this?, GuardStubController.permission_for_action(:dance)
   end
 
   def test_action_wildcard
-    GuardStubController.guard :may_ACTION_this?, :actions => [:dance, :juggle]
+    GuardStubController.guard :may_ACTION_this?, actions: [:dance, :juggle]
     assert_equal :may_dance_this?, GuardStubController.permission_for_action(:dance)
   end
 
@@ -68,7 +68,7 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
   end
 
   def test_inheriting_actions
-    GuardStubController.guard :may_ALIAS_this?, :actions => [:edit, :update]
+    GuardStubController.guard :may_ALIAS_this?, actions: [:edit, :update]
     assert_equal :may_edit_this?, InheritedStubController.permission_for_action(:update)
     cleanup(InheritedStubController)
   end
@@ -80,8 +80,8 @@ class Common::Application::PermissionsTest < ActiveSupport::TestCase
   end
 
   def test_caching_does_not_mess_with_inheritance
-    GuardStubController.guard :may_ALIAS_this?, :actions => [:edit, :update]
-    InheritedStubController.guard :may_update_that?, :actions => :update
+    GuardStubController.guard :may_ALIAS_this?, actions: [:edit, :update]
+    InheritedStubController.guard :may_update_that?, actions: :update
     assert_equal :may_edit_this?, GuardStubController.permission_for_action(:update)
     assert_equal :may_update_that?, InheritedStubController.permission_for_action(:update)
     cleanup(InheritedStubController)

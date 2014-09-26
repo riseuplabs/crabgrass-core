@@ -82,10 +82,10 @@ class CastleGatesTest < Test::Unit::TestCase
       @fort.grant_access!(Tree.new => :draw_bridge)
     end
     assert_raises ArgumentError do
-      @fort.grant_access!(:not_a_holder => :draw_bridge)
+      @fort.grant_access!(not_a_holder: :draw_bridge)
     end
     assert_raises ArgumentError do
-      @fort.grant_access!(:public => :not_a_gate)
+      @fort.grant_access!(public: :not_a_gate)
     end
     #TODO
     #assert_raises ArgumentError do
@@ -144,15 +144,15 @@ class CastleGatesTest < Test::Unit::TestCase
 
   def test_symbolic_grant
     ActiveRecord::Base.transaction do
-      assert !@fort.access?(:public => :draw_bridge), 'no access yet'
+      assert !@fort.access?(public: :draw_bridge), 'no access yet'
 
-      @fort.grant_access!(:public => :draw_bridge)
-      assert @fort.access?(:public => :draw_bridge), 'should have access now'
+      @fort.grant_access!(public: :draw_bridge)
+      assert @fort.access?(public: :draw_bridge), 'should have access now'
 
-      assert !@fort.access?(:public => :sewers), 'but not to other gates'
+      assert !@fort.access?(public: :sewers), 'but not to other gates'
       assert !@fort.access?(@minion => :draw_bridge), 'and others should not'
       assert @fort.access?(@me => :draw_bridge), 'me should, it includes public.'
-      assert !@tower.access?(:public => :window), 'should not have access to other castles'
+      assert !@tower.access?(public: :window), 'should not have access to other castles'
 
       raise ActiveRecord::Rollback
     end
@@ -174,8 +174,8 @@ class CastleGatesTest < Test::Unit::TestCase
     ActiveRecord::Base.transaction do
       @fort.grant_access! :public => [:draw_bridge, :sewers],
         @me => [:draw_bridge, :sewers]
-      assert @fort.access? :public => :draw_bridge
-      assert @fort.access? :public => :sewers
+      assert @fort.access? public: :draw_bridge
+      assert @fort.access? public: :sewers
       assert @fort.access? @me => :draw_bridge
       assert @fort.access? @me => :sewers
       raise ActiveRecord::Rollback
@@ -194,40 +194,40 @@ class CastleGatesTest < Test::Unit::TestCase
 
   def test_after_grant_access
     ActiveRecord::Base.transaction do
-      @tower.grant_access!(:public => :window)
-      assert @tower.access?(:admin => :window)
-      @tower.revoke_access!(:admin => :window)
-      assert !@tower.access?(:public => :window)
+      @tower.grant_access!(public: :window)
+      assert @tower.access?(admin: :window)
+      @tower.revoke_access!(admin: :window)
+      assert !@tower.access?(public: :window)
       raise ActiveRecord::Rollback
     end
   end
 
   def test_global_defaults
     ActiveRecord::Base.transaction do
-      assert @tower.access?(:public => :door), 'default should be open'
+      assert @tower.access?(public: :door), 'default should be open'
       assert @tower.access?(@me => :door), 'default should be open'
-      assert !@tower.access?(:public => :window), 'but not the window'
+      assert !@tower.access?(public: :window), 'but not the window'
 
-      @tower.grant_access!(:public => :window)
-      assert @tower.access?(:public => :window), 'now the window'
-      assert @tower.access?(:public => :door), 'still the door'
+      @tower.grant_access!(public: :window)
+      assert @tower.access?(public: :window), 'now the window'
+      assert @tower.access?(public: :door), 'still the door'
 
-      @tower.revoke_access!(:public => :window)
-      assert !@tower.access?(:public => :window), 'not the window, again'
-      assert @tower.access?(:public => :door), 'still the door'
+      @tower.revoke_access!(public: :window)
+      assert !@tower.access?(public: :window), 'not the window, again'
+      assert @tower.access?(public: :door), 'still the door'
 
-      @tower.revoke_access!(:public => :door)
-      assert !@tower.access?(:public => :door), 'explicit revoke should remove access'
+      @tower.revoke_access!(public: :door)
+      assert !@tower.access?(public: :door), 'explicit revoke should remove access'
       raise ActiveRecord::Rollback
     end
   end
 
   def test_holder_specific_defaults
     ActiveRecord::Base.transaction do
-      assert @fort.access?(:admin => :sewers), 'default should be open for :admin'
+      assert @fort.access?(admin: :sewers), 'default should be open for :admin'
       assert @fort.access?(@me => :tunnel), 'default should be open for @me'
-      @fort.revoke_access!(:admin => :sewers)
-      assert !@fort.access?(:admin => :sewers), 'default should get overridden'
+      @fort.revoke_access!(admin: :sewers)
+      assert !@fort.access?(admin: :sewers), 'default should get overridden'
 
       assert @me.access?(@minion => :follow), "me's minion should have access by default"
       assert !@me.access?(Minion.create! => :follow), 'other minions should NOT have access by default'
@@ -239,32 +239,32 @@ class CastleGatesTest < Test::Unit::TestCase
 
   def test_method_based_defaults
     ActiveRecord::Base.transaction do
-      assert @tower.access?(User.new(:name => 'sandman') => :skylight), 'gate_open? should get called'
+      assert @tower.access?(User.new(name: 'sandman') => :skylight), 'gate_open? should get called'
       raise ActiveRecord::Rollback
     end
   end
 
   def test_finder
     ActiveRecord::Base.transaction do
-      assert_nil Fort.with_access(:public => :draw_bridge).first
-      @fort.grant_access! :public => :draw_bridge
-      assert_equal [@fort], Fort.with_access(:public => :draw_bridge)
+      assert_nil Fort.with_access(public: :draw_bridge).first
+      @fort.grant_access! public: :draw_bridge
+      assert_equal [@fort], Fort.with_access(public: :draw_bridge)
 
       assert_nil Fort.with_access(@minion => :draw_bridge).first
-      assert_nil Fort.with_access(:public => :sewers).first
+      assert_nil Fort.with_access(public: :sewers).first
 
       @fort.grant_access! @me => :draw_bridge
       assert_equal [@fort], Fort.with_access(@me => :draw_bridge)
 
-      @fort2 = Fort.create :name => 'fort2'
+      @fort2 = Fort.create name: 'fort2'
       @fort2.grant_access! @me => :draw_bridge
       assert_equal 2, Fort.with_access(@me => :draw_bridge).count
 
       assert_raises ArgumentError do
-        Fort.with_access(:public => :x)
+        Fort.with_access(public: :x)
       end
       assert_raises ArgumentError do
-        Fort.with_access(:x => :draw_bridge)
+        Fort.with_access(x: :draw_bridge)
       end
 
       raise ActiveRecord::Rollback
@@ -274,10 +274,10 @@ class CastleGatesTest < Test::Unit::TestCase
   def test_fetch_holders
     ActiveRecord::Base.transaction do
       @fort.grant_access! @me => :draw_bridge
-      @fort.grant_access! :public => :draw_bridge
+      @fort.grant_access! public: :draw_bridge
       @fort.grant_access! @me.associated(:minions) => :draw_bridge
       @fort.grant_access! @me => :sewers
-      @fort.grant_access! :public => :sewers
+      @fort.grant_access! public: :sewers
 
       holders = @fort.holders
       assert holders.include?(@me), 'holders should include me'
@@ -295,9 +295,9 @@ class CastleGatesTest < Test::Unit::TestCase
       assert @fort.access?(@faction => :draw_bridge)
 
       # subclasses of castles
-      @bunker.grant_access!(:public => :draw_bridge)
-      assert @bunker.access?(:public => :draw_bridge)
-      assert !@fort.access?(:public => :draw_bridge)
+      @bunker.grant_access!(public: :draw_bridge)
+      assert @bunker.access?(public: :draw_bridge)
+      assert !@fort.access?(public: :draw_bridge)
 
       raise ActiveRecord::Rollback
     end
@@ -320,14 +320,14 @@ class CastleGatesTest < Test::Unit::TestCase
 
       # before
       assert !@fort.access?(@rabbit => :draw_bridge)
-      assert !@fort.access?(:public => :draw_bridge)
+      assert !@fort.access?(public: :draw_bridge)
 
       # grant
       @fort.grant_access!(@rabbit => :draw_bridge)
 
       # after
       assert @fort.access?(@rabbit => :draw_bridge)
-      assert @fort.access?(:public => :draw_bridge)
+      assert @fort.access?(public: :draw_bridge)
 
       raise ActiveRecord::Rollback
     end

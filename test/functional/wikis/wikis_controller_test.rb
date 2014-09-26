@@ -6,7 +6,7 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     @user  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
-    @wiki = @group.profiles.public.create_wiki :body => <<-EOB
+    @wiki = @group.profiles.public.create_wiki body: <<-EOB
 h2. section one
 
 one
@@ -29,7 +29,7 @@ biggie
   def test_edit
     login_as @user
     assert_permission :may_edit_wiki? do
-      xhr :get, :edit, :id => @wiki.id
+      xhr :get, :edit, id: @wiki.id
     end
     assert_response :success
     assert_template 'wikis/wikis/edit'
@@ -45,7 +45,7 @@ biggie
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
-      xhr :get, :edit, :id => @wiki.id
+      xhr :get, :edit, id: @wiki.id
     end
     assert_response :success
     assert_template 'wikis/wikis/_locked'
@@ -58,9 +58,9 @@ biggie
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        :id => @wiki.id,
-        :wiki => {:body => '*updated*', :version => 1},
-        :save => true
+        id: @wiki.id,
+        wiki: {body: '*updated*', version: 1},
+        save: true
     end
     ## assert_response :redirect
     ## assert_redirected_to group_home_url(@group, :wiki_id => @wiki.id)
@@ -68,10 +68,10 @@ biggie
   end
 
   def test_show_private_group_wiki
-    @priv = @group.profiles.private.create_wiki :body => 'init'
+    @priv = @group.profiles.private.create_wiki body: 'init'
     login_as @user
     assert_permission :may_show_wiki? do
-      xhr :get, :show, :id => @priv.id
+      xhr :get, :show, id: @priv.id
     end
     assert_response :success
     assert_equal @priv, assigns['wiki']
@@ -79,16 +79,16 @@ biggie
 
   def test_show_public_group_wiki_to_stranger
     assert_permission :may_show_wiki? do
-      xhr :get, :show, :id => @wiki.id
+      xhr :get, :show, id: @wiki.id
     end
     assert_response :success
     assert_equal @wiki, assigns['wiki']
   end
 
   def test_do_not_show_private_group_wiki_to_stranger
-    @priv = @group.profiles.private.create_wiki :body => 'private'
+    @priv = @group.profiles.private.create_wiki body: 'private'
     assert_permission(:may_show_wiki?, false) do
-      xhr :get, :show, :id => @priv.id
+      xhr :get, :show, id: @priv.id
     end
   end
 
@@ -99,7 +99,7 @@ biggie
   def test_edit_section
     login_as @user
     assert_permission :may_edit_wiki? do
-      xhr :get, :edit, :id => @wiki.id, :section => 'section-one'
+      xhr :get, :edit, id: @wiki.id, section: 'section-one'
     end
     assert_response :success
     assert_template 'wikis/_edit'
@@ -126,7 +126,7 @@ one A
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
-      xhr :get, :edit, :id => @wiki.id, :section => 'section-one'
+      xhr :get, :edit, id: @wiki.id, section: 'section-one'
     end
     assert_response :success
     assert_template 'wikis/_locked'
@@ -139,9 +139,9 @@ one A
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        :id => @wiki.id, :section => 'section-one',
-        :wiki => {:body => '*updated*', :version => 1},
-        :save => true
+        id: @wiki.id, section: 'section-one',
+        wiki: {body: '*updated*', version: 1},
+        save: true
     end
     # this is an xhr so we just render the wiki in place
     assert_response :success

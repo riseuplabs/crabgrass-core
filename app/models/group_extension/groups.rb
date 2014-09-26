@@ -11,23 +11,23 @@ module GroupExtension::Groups
 
     base.instance_eval do
 
-      has_many :federatings, :dependent => :destroy
-      has_many :networks, :through => :federatings
-      belongs_to :council, :class_name => 'Group'
+      has_many :federatings, dependent: :destroy
+      has_many :networks, through: :federatings
+      belongs_to :council, class_name: 'Group'
 
       # Committees are children! They must respect their parent group.
       # This uses crabgrass_acts_as_tree, which allows callbacks.
       acts_as_tree(
-        :order => 'name',
-        :after_add => :org_structure_changed,
-        :after_remove => :org_structure_changed
+        order: 'name',
+        after_add: :org_structure_changed,
+        after_remove: :org_structure_changed
       )
       alias_method :committees, :children
 
       has_many :real_committees,
-        :foreign_key => 'parent_id',
-        :class_name => 'Committee',
-        :conditions => {:type => 'Committee'} do
+        foreign_key: 'parent_id',
+        class_name: 'Committee',
+        conditions: {type: 'Committee'} do
         # UPGRADE: This is a workaround for the lack of declaring a
         # query DISTINCT and having that applied to the final query.
         # it won't be needed anymore as soon as .distinct can be used

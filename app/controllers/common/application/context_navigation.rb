@@ -63,11 +63,11 @@ module Common::Application::ContextNavigation
     elsif group
       # find just pages with the name that are owned by the group
       # no group should have multiple pages with the same name
-      page = Page.for_group(group).where(:name => name).first
+      page = Page.for_group(group).where(name: name).first
     elsif user and !allow_multiple_results
-      page = user.pages.where(:name => name).first
+      page = user.pages.where(name: name).first
     elsif user and allow_multiple_results
-      page = user.pages.where(:name => name).all
+      page = user.pages.where(name: name).all
     end
 
     raise ActiveRecord::RecordNotFound.new unless page

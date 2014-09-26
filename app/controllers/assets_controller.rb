@@ -4,7 +4,7 @@ class AssetsController < ApplicationController
   permissions 'assets'
   guard :may_ACTION_asset?
 
-  prepend_before_filter :fetch_asset, :only => [:show, :destroy]
+  prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
     if @asset.public? and !File.exists?(@asset.public_filename)
@@ -23,9 +23,9 @@ class AssetsController < ApplicationController
         thumb = @asset.thumbnail( thumb_name_from_path(path) )
         raise_not_found unless thumb
         thumb.generate
-        send_file(private_filename(thumb), :type => thumb.content_type, :disposition => disposition(thumb))
+        send_file(private_filename(thumb), type: thumb.content_type, disposition: disposition(thumb))
       else
-        send_file(private_filename(@asset), :type => @asset.content_type, :disposition => disposition(@asset))
+        send_file(private_filename(@asset), type: @asset.content_type, disposition: disposition(@asset))
       end
     end
   end
@@ -33,7 +33,7 @@ class AssetsController < ApplicationController
   def destroy
     @asset.destroy
     respond_to do |format|
-      format.js {render :text => 'if (initAjaxUpload) initAjaxUpload();' }
+      format.js {render text: 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
         success ['attachment deleted']
         redirect_to(page_url(@asset.page))

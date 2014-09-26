@@ -20,7 +20,7 @@ class Groups::PermissionsController < Groups::BaseController
       # the group itself.
       # otherwise you could do all kinds of nasty things.
       if holder != @group
-        render :status => 400, :text => '' and return
+        render status: 400, text: '' and return
       end
     end
 
@@ -40,7 +40,7 @@ class Groups::PermissionsController < Groups::BaseController
     success :saved.t, :quick
     render :update do |page|
       standard_update(page)
-      page.replace_html 'permissions_area', :file => 'groups/permissions/index'
+      page.replace_html 'permissions_area', file: 'groups/permissions/index'
     end
 
   end

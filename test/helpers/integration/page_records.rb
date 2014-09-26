@@ -2,7 +2,7 @@ module PageRecords
 
   def own_page(type = nil, options = {})
     options, type = type, nil  if type.is_a? Hash
-    options.merge! :created_by => user
+    options.merge! created_by: user
     page = new_page(type, options)
     page.save
     page

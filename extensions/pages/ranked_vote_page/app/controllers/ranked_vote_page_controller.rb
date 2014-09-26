@@ -1,12 +1,12 @@
 class RankedVotePageController < Pages::BaseController
   before_filter :fetch_poll
-  before_filter :find_possibles, :only => [:show, :edit]
+  before_filter :find_possibles, only: [:show, :edit]
   permissions 'ranked_vote_page'
 
   def show
     # we need to specify the whole page_url not just the action here
     # because we might have ended up here from the DispatchController.
-    redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
+    redirect_to(page_url(@page, action: 'edit')) unless @poll.possibles.any?
 
     @who_voted_for = @poll.tally
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
@@ -22,18 +22,18 @@ class RankedVotePageController < Pages::BaseController
     if @poll.valid? and @possible.valid?
       @page.unresolve
       if request.xhr?
-        render :template => 'ranked_vote_page/add_possible'
+        render template: 'ranked_vote_page/add_possible'
       else
         redirect_to page_url(@page)
       end
     else
       @poll.possibles.delete(@possible)
-      flash_message_now :object => @possible unless @possible.valid?
-      flash_message_now :object => @poll unless @poll.valid?
+      flash_message_now object: @possible unless @possible.valid?
+      flash_message_now object: @poll unless @poll.valid?
       if request.post?
-        render :action => 'show'
+        render action: 'show'
       else
-        render :text => 'error', :status => 500
+        render text: 'error', status: 500
       end
       return
     end
@@ -45,7 +45,7 @@ class RankedVotePageController < Pages::BaseController
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
     if params[:sort_list_voted].empty?
-      render :nothing => true
+      render nothing: true
       return
     else
       @poll.votes.by_user(current_user).delete_all
@@ -53,7 +53,7 @@ class RankedVotePageController < Pages::BaseController
       ids.each_with_index do |id, rank|
         next unless id.to_i != 0
         possible = @poll.possibles.find(id)
-        @poll.votes.create! :user => current_user, :value => rank, :possible => possible
+        @poll.votes.create! user: current_user, value: rank, possible: possible
       end
       find_possibles
     end
@@ -64,19 +64,19 @@ class RankedVotePageController < Pages::BaseController
     @possible = @poll.possibles.find(params[:id])
     params[:possible].delete('name')
     @possible.update_attributes(params[:possible])
-    render :template => 'ranked_vote_page/update_possible'
+    render template: 'ranked_vote_page/update_possible'
   end
 
   def edit_possible
     return unless request.xhr?
     @possible = @poll.possibles.find(params[:id])
-    render :template => 'ranked_vote_page/edit_possible'
+    render template: 'ranked_vote_page/edit_possible'
   end
 
   def destroy_possible
     possible = @poll.possibles.find(params[:id])
     possible.destroy
-    render :nothing => true
+    render nothing: true
   end
 
   def confirm
@@ -90,7 +90,7 @@ class RankedVotePageController < Pages::BaseController
     @who_voted_for = @poll.tally
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
 
-    render :layout => "printer-friendly"
+    render layout: "printer-friendly"
   end
   protected
 

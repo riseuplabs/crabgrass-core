@@ -13,13 +13,13 @@ class Pages::SidebarsController < ApplicationController
   helper 'pages/base', 'pages/sidebar'
 
   def show
-    render :template => 'pages/sidebar/reset'
+    render template: 'pages/sidebar/reset'
   end
 
   protected
 
   def close_popup
-    render :template => 'pages/sidebar/reset'
+    render template: 'pages/sidebar/reset'
   end
 
   def fetch_page

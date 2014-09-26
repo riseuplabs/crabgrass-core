@@ -10,7 +10,7 @@ class NoticeTest < ActiveSupport::TestCase
   test "request observers" do
     req = nil
     assert_difference 'RequestNotice.count' do
-      req = RequestToFriend.create! :recipient => users(:yellow), :created_by => users(:green)
+      req = RequestToFriend.create! recipient: users(:yellow), created_by: users(:green)
     end
     assert_equal req, RequestNotice.for_noticable(req).find(:first).request
     assert_difference 'RequestNotice.dismissed(true).count' do

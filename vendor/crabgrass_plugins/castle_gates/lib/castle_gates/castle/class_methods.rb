@@ -20,7 +20,7 @@ module ClassMethods
     bits = gate_set.bits(gate_names)
     Key.for_holder(holder).
       with_gate_bits(bits).
-      where(:castle_type => self.base_class.sti_name).
+      where(castle_type: self.base_class.sti_name).
       select(:castle_id).
       to_sql
   end
