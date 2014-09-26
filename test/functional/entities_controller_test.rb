@@ -86,15 +86,15 @@ class EntitiesControllerTest < ActionController::TestCase
       "orange can't see red"
   end
 
-#  def test_querying_locations
-#    login_as :blue
-#    xhr :get, :locations, :country => 1, :query => 'yen'
-#    assert_response :success
-#    response = ActiveSupport::JSON.decode(@response.body)
-#    assert response["suggestions"].size > 0
-#  end
+  #  def test_querying_locations
+  #    login_as :blue
+  #    xhr :get, :locations, :country => 1, :query => 'yen'
+  #    assert_response :success
+  #    response = ActiveSupport::JSON.decode(@response.body)
+  #    assert response["suggestions"].size > 0
+  #  end
 
-   def assert_holds_entities(response, query=nil, min_results = 0)
+  def assert_holds_entities(response, query=nil, min_results = 0)
     assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
     assert response["suggestions"].size > min_results,
