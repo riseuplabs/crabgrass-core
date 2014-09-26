@@ -41,7 +41,7 @@ module Common::Utility::ContextHelper
   ##
 
   def context_banner_style
-    if banner_picture
+    @context_banner_style ||= if banner_picture
       if banner_picture.add_geometry(banner_geometry)
         url = banner_picture.url(banner_geometry)
         if banner_picture.average_color
