@@ -12,9 +12,9 @@ class GalleryTest < JavascriptIntegrationTest
     assert_content 'photo'
     click_page_tab 'Show'
     first('.image_asset .thumbnail').click
-    assert_content 'Photo 1 of 2'
+    assert_content 'Image 1 of 2'
     find('.right-arrow a').click
-    assert_content 'Photo 2 of 2'
+    assert_content 'Image 2 of 2'
     find('.up-arrow a').click
     assert_content 'Click thumbnail to see full image.'
   end
