@@ -1,4 +1,5 @@
 module EnhancedLogging
+  require 'pp'
 
   def teardown
     super
@@ -27,6 +28,11 @@ module EnhancedLogging
         test_log.puts "page.html"
         test_log.puts "------------------------"
         test_log.puts page.html
+      end
+      if page.driver.respond_to? :network_traffic
+        test_log.puts "network traffic"
+        test_log.puts "------------------------"
+        PP.pp page.driver.network_traffic, test_log
       end
       test_log.puts "server log"
       test_log.puts "------------------------"
