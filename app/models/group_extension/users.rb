@@ -16,10 +16,10 @@ module GroupExtension::Users
 
       has_many :users, through: :memberships do
         def <<(*dummy)
-          raise Exception.new("don't call << on group.users");
+          raise "don't call << on group.users"
         end
         def delete(*records)
-          raise Exception.new("don't call delete on group.users");
+          raise "don't call delete on group.users"
         end
         def most_recently_active(options={})
           find(:all, {order: 'memberships.visited_at DESC', limit: 10}.merge(options))

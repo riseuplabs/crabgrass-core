@@ -22,7 +22,7 @@ class Me::DiscussionsController < Me::BaseController
   #  @discussion = current_user.discussions.from_user(@other_user).first
   #  @discussion.mark!(:read, current_user)
   #  @posts = @discussion.posts.paginate(post_pagination_params)
-  #rescue Exception => exc
+  #rescue exc
   #  render_error exc
   #end
 
@@ -33,7 +33,7 @@ class Me::DiscussionsController < Me::BaseController
   #  if params[:state]
   #    @discussion.mark!(params[:state], current_user)
   #  end
-  #rescue Exception => exc
+  #rescue exc
   #  render_error exc
   #end
 

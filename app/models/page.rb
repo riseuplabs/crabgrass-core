@@ -363,7 +363,7 @@ class Page < ActiveRecord::Base
       elsif entity.is_a? User
         self.owner_type = "User"
       else
-        raise Exception.new('must be user or group')
+        raise 'must be user or group'
       end
       part = most_privileged_participation_for(entity)
       self.add(entity, access: :admin) unless part and part.access == ACCESS[:admin]

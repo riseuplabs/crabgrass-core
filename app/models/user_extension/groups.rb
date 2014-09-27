@@ -24,7 +24,7 @@ module UserExtension::Groups
 
       has_many :groups, foreign_key: 'user_id', through: :memberships do
         def <<(*dummy)
-          raise Exception.new("don't call << on user.groups");
+          raise "don't call << on user.groups"
         end
         def delete(*records)
           super(*records)

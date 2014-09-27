@@ -81,12 +81,6 @@ end
 #
 require 'mocha'
 
-# wtf?
-unless Mocha.const_defined? :ExpectationError
-  class Mocha::ExpectationError < Exception
-  end
-end
-
 # ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
 # on all values. This happens when assembling 'assigns' in tests.
 # This little hack will make those tests pass.

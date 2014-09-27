@@ -13,7 +13,7 @@ class SurveyPageController < Pages::BaseController
 #    @survey = Survey.create! params[:survey]
 #    @page.data = @survey
 #    @page.save
-#  rescue Exception => exc
+#  rescue exc
 #    flash_message_now :object => @survey, :exception => exc
 #  end
 

@@ -12,7 +12,7 @@ class GroupTest < ActiveSupport::TestCase
     g = Group.create name: 'fruits'
     u = users(:blue)
     assert_equal 0, g.users.size, 'there should be no users'
-    assert_raises(Exception, '<< should raise exception not allowed') do
+    assert_raises RuntimeError, '<< should raise exception not allowed' do
       g.users << u
     end
     g.add_user! u

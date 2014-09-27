@@ -11,9 +11,10 @@ extend_model :Asset do
   has_many :galleries, through: :showings
 
   def change_source_file(data)
-    raise Exception.new(I18n.t(:file_must_be_image_error)) unless
-    Asset.mime_type_from_data(data) =~ /image|pdf/
-      self.uploaded_data = data
+    if Asset.mime_type_from_data(data) !~ /image|pdf/
+      raise StandardError.new(I18n.t(:file_must_be_image_error))
+    end
+    self.uploaded_data = data
     self.save!
   end
 

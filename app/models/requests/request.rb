@@ -189,13 +189,13 @@ class Request < ActiveRecord::Base
   #
   def set_state!(newstate, user=nil)
     if new_record?
-      raise Exception.new('record must be saved first')
+      raise 'record must be saved first'
     end
 
     command = case newstate
       when 'approved' then 'approve!'
       when 'rejected' then 'reject!'
-      else raise Exception.new('state must be approved or rejected')
+      else raise 'state must be approved or rejected'
     end
 
     if user.nil?

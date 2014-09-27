@@ -43,7 +43,7 @@
       gallery.add_image!(@asset)
     end
     redirect_to page_url(@page)
-  rescue Exception => exc
+  rescue exc
     flash_message_now :exception => exc
   end
 

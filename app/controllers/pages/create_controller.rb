@@ -117,7 +117,7 @@ class Pages::CreateController < ApplicationController
 #      # success!
 #      return redirect_to(page_url(@page))
 
-#    rescue Exception => exc
+#    rescue exc
 #      # failure!
 #      destroy_page_data
 #      # in case page gets saved before the exception happens
