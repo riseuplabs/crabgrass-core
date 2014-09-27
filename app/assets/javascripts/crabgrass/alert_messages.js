@@ -30,6 +30,8 @@ function showAlertMessage(msg) {
 //
 function hideAlertMessage(target, fade_seconds) {
   target = $(target);
+  if (!target)
+    return;
   if (!target.hasClassName('message'))
     target = target.up('.message');
   if (fade_seconds) {

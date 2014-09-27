@@ -20,8 +20,13 @@ ajaxUpload.view = {
                '<div class="bar" style="width: #{percent}%;"></div>' +
                '</div>'+
                '#{pending}';
+    var file = ajaxUpload.upload.getFile();
+    var filename = "";
+    if(file) {
+      filename = file.name;
+    }
     this.container.innerHTML = html.interpolate({
-      filename: ajaxUpload.upload.getFile().name.truncate(),
+      filename: filename.truncate(),
       percent: ajaxUpload.upload.getPercent(),
       message: ajaxUpload.upload.getMessage(),
       pending: pending

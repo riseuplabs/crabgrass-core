@@ -14,6 +14,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   include PageAssertions
   include AccountManagement
   include UserRecords
+  include OptionalFields
   include PageRecords
 
   # included last so crashes in other extensions will get logged.
@@ -22,8 +23,12 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   protected
 
   def setup
-    Capybara.reset_sessions!
     super
+    # we reset the defaults during setup because we rely on the
+    # driver and the session in the enhanced_logging module.
+    # Make sure to call super BEFORE the initialization in subclasses.
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
   end
 
   # this is overwritten by JavascriptIntegrationTest.

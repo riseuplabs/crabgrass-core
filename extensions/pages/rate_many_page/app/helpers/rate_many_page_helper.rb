@@ -24,6 +24,8 @@ module RateManyPageHelper
        )
     )
 
-    render 'rate_many_page/button', button: button, value: value
+    render 'rate_many_page/button', button: button,
+      value: value,
+      id: "vote_#{possible.id}_#{map(value)}"
   end
 end
