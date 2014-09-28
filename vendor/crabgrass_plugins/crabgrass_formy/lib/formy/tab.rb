@@ -44,7 +44,7 @@ module Formy
       selected = 'active' if @selected || @active
       first = 'first' if @opts[:index] == 0
       li_class = [selected, first, @class].compact.join(' ')
-      puts content_tag(:li, build_link, :class => li_class)
+      puts content_tag(:li, build_link, class: li_class)
     end
 
     def build_link
@@ -73,10 +73,10 @@ module Formy
         @options.delete(:class)
       ].compact.join(' ')
       options = {
-          :class => css_class,
-          :style => @style,
-          :id => @id,
-          :onclick => @function
+          class: css_class,
+          style: @style,
+          id: @id,
+          onclick: @function
       }
       if @url
         options[:href] = @url

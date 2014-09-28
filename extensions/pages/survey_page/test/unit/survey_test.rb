@@ -54,10 +54,8 @@ class SurveyTest < ActiveSupport::TestCase
     # Also we will use strong_params to fix mass assignments -
     # so no use in fixing the test now.
     survey.new_questions_attributes = params_hash
-    assert_nothing_raised(Exception) do
-      survey.save!
-      survey.reload
-    end
+    survey.save!
+    survey.reload
     # check every question
     current_position = 1
 
@@ -71,7 +69,7 @@ class SurveyTest < ActiveSupport::TestCase
   def test_destruction
     survey = Survey.create!
     SurveyQuestion # loads the source file for ImageUploadQuestion
-    question = ImageUploadQuestion.create :survey => survey
+    question = ImageUploadQuestion.create survey: survey
 
     response_data = {
       "answers_attributes" => {

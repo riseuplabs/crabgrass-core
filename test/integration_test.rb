@@ -59,7 +59,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
         rescue MiniTest::Assertion => e
           # preserve the backtrace but add the run number to the message
           message  = "#{$!} in run #{i+1} with #{one.class.name}"
-          message += " #{one.to_s}" if one.respond_to? :to_s
+          message += " #{one}" if one.respond_to? :to_s
           raise $!, message, $!.backtrace
         end
       end

@@ -5,7 +5,7 @@ class Me::EventsController < Me::BaseController
 
   def index
     @events = Event.all
-    render :template => 'common/events/index'
+    render template: 'common/events/index'
   end
 
 end

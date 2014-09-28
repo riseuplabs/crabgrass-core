@@ -15,14 +15,14 @@
 #
 class Network < Group
 
-  has_many :federatings, :dependent => :destroy
-  has_many :groups, :through => :federatings
+  has_many :federatings, dependent: :destroy
+  has_many :groups, through: :federatings
   has_many :sites
 
   attr_accessor :initial_member_group
   attr_accessible :initial_member_group
 
-  validates :initial_member_group, :presence => true, :unless => :persisted?
+  validates :initial_member_group, presence: true, unless: :persisted?
   validate :validate_initial_member_group
 
   after_save :add_initial_member_group
@@ -49,7 +49,7 @@ class Network < Group
 
   # only this method should be used for adding groups to a network
   def add_group!(group, delegation=nil)
-    self.federatings.create!(:group => group, :delegation => delegation, :council => council)
+    self.federatings.create!(group: group, delegation: delegation, council: council)
     group.org_structure_changed
     group.save!
     Group.increment_counter(:version, self.id) # in case self is not saved

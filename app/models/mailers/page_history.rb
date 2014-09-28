@@ -20,16 +20,16 @@ module Mailers::PageHistory
     @user           = user
     @site           = Site.default
     @subject        = "#{@site.title} : #{@page_history.page.title}"
-    mail :from => from_address, to: @user.email, :subject => @subject
+    mail from: from_address, to: @user.email, subject: @subject
   end
 
   def page_history_single_notification_paranoid(user, page_history)
     @page_history   = page_history
     @user           = user
     @site           = Site.default
-    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
-    @code           = Code.create!(:user => user, :page => page_history.page)
-    mail :from => from_address, to: @user.email, :subject => @subject
+    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, site_title: @site.title)
+    @code           = Code.create!(user: user, page: page_history.page)
+    mail from: from_address, to: @user.email, subject: @subject
   end
 
   def page_history_digest_notification(user, page, page_histories)
@@ -38,17 +38,17 @@ module Mailers::PageHistory
     @subject        = "#{@site.title} : #{page.title}"
     @page           = page
     @page_histories = page_histories
-    mail :from => from_address, to: @user.email, :subject => @subject
+    mail from: from_address, to: @user.email, subject: @subject
   end
 
   def page_history_digest_notification_paranoid(user, page, page_histories)
     @site           = Site.default
     @user           = user
-    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
+    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, site_title: @site.title)
     @page           = page
     @page_histories = page_histories
-    @code           = Code.create!(:user => user, :page => page)
-    mail :from => from_address, to: @user.email, :subject => @subject
+    @code           = Code.create!(user: user, page: page)
+    mail from: from_address, to: @user.email, subject: @subject
   end
 
   protected

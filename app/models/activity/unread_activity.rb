@@ -1,8 +1,8 @@
 class UnreadActivity < Activity
 
-  validates_format_of :subject_type, :with => /User/
+  validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id
-  validate :has_unread_count, :on => :create
+  validate :has_unread_count, on: :create
 
   alias_attr :user, :subject
   alias_attr :author, :item
@@ -16,7 +16,7 @@ class UnreadActivity < Activity
 
   protected
 
-  before_validation :set_access, :on => :create
+  before_validation :set_access, on: :create
   def set_access
     self.access = Activity::PRIVATE
     self.unread_count = user.relationships.sum('unread_count') || 0
@@ -25,7 +25,7 @@ class UnreadActivity < Activity
   # We want to delete the other UnreadActivities even if we don't pass
   # validations, because if there are no unread messages, we want no
   # UnreadActivities.
-  before_validation :destroy_twins, :on => :create
+  before_validation :destroy_twins, on: :create
   def destroy_twins
     UnreadActivity.destroy_all 'subject_id = %s' % user.id
   end
@@ -45,7 +45,7 @@ class UnreadActivity < Activity
         link = view.send(:my_private_messages_path)
       end
     else
-      str = I18n.t(:activity_unread, :count => unread_count)
+      str = I18n.t(:activity_unread, count: unread_count)
       link = view.send(:my_private_messages_path)
     end
 

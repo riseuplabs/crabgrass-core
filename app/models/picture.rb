@@ -152,7 +152,7 @@ class Picture < ActiveRecord::Base
   #
   def render(geometry)
     # ensure the file has been rendered
-    unless File.exists?(storage.private_path(geometry))
+    unless File.exist?(storage.private_path(geometry))
       resize(geometry)
     end
     # ensure symlink to public dir exists
@@ -226,10 +226,10 @@ class Picture < ActiveRecord::Base
     input_path = private_file_path
     output_path = storage.private_path(geometry)
     status = GraphicsMagickTransmogrifier.new(
-      :input_file => input_path,
-      :output_file => output_path,
-      :size => geometry.gm_size_param_from(self.size),
-      :crop => geometry.gm_crop_param
+      input_file: input_path,
+      output_file: output_path,
+      size: geometry.gm_size_param_from(self.size),
+      crop: geometry.gm_crop_param
     ).try.run
     if status != :success
       raise ErrorMessage.new('invalid image')

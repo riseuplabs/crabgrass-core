@@ -21,7 +21,7 @@ class RelationshipObserver < ActiveRecord::Observer
       else
         key = rand(Time.now.to_i)
       end
-      FriendActivity.create!(:user => relationship.user, :other_user => relationship.contact, :key => key)
+      FriendActivity.create!(user: relationship.user, other_user: relationship.contact, key: key)
     end
   end
 

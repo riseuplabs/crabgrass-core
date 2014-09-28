@@ -28,8 +28,8 @@ class Picture
     end
 
     def destroy_files
-      FileUtils.rm_rf(private_directory) if File.exists?(private_directory)
-      FileUtils.rm(public_directory) if File.exists?(public_directory)
+      FileUtils.rm_rf(private_directory) if File.exist?(private_directory)
+      FileUtils.rm(public_directory) if File.exist?(public_directory)
     end
 
     def destroy_file(geometry)
@@ -41,7 +41,7 @@ class Picture
     # Ensures storage directory exists for this Picture
     #
     def allocate_directory
-      FileUtils.mkdir_p(private_directory) unless File.exists?(private_directory)
+      FileUtils.mkdir_p(private_directory) unless File.exist?(private_directory)
       add_symlink # for now, all Pictures are public.
     end
 
@@ -51,10 +51,10 @@ class Picture
     # this makes the picture public
     #
     def add_symlink
-      unless File.exists?(public_directory)
+      unless File.exist?(public_directory)
 
         public_directory_parent = File.dirname(public_directory)
-        unless File.exists?(public_directory_parent)
+        unless File.exist?(public_directory_parent)
           FileUtils.mkdir_p(public_directory_parent)
         end
 
@@ -71,7 +71,7 @@ class Picture
   # this makes the picture private.
   #
   def remove_symlink
-    if File.exists?(public_directory)
+    if File.exist?(public_directory)
       FileUtils.rm(public_directory)
     end
   end

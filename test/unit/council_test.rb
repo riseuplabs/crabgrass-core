@@ -5,7 +5,7 @@ class CouncilTest < ActiveSupport::TestCase
 
   def test_add_council
     network = groups(:cnt)
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     network.add_committee!(council)
     network.reload
     council.reload
@@ -17,11 +17,11 @@ class CouncilTest < ActiveSupport::TestCase
   end
 
   def test_add_council_with_full_powers
-    g = Group.create :name => 'boosh'
+    g = Group.create name: 'boosh'
     # only one user added
     g.add_user!(users(:blue))
 
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.reload
@@ -29,12 +29,12 @@ class CouncilTest < ActiveSupport::TestCase
   end
 
   def test_add_council_without_full_powers
-    g = Group.create :name => 'boosh'
+    g = Group.create name: 'boosh'
     # two users added
     g.add_user!(users(:blue))
     g.add_user!(users(:yellow))
 
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.reload
@@ -42,11 +42,11 @@ class CouncilTest < ActiveSupport::TestCase
   end
 
   def test_council_takes_admin_from_group_members
-    g = Group.create :name => 'boosh'
+    g = Group.create name: 'boosh'
     g.add_user!(users(:yellow))
     g.add_user!(users(:blue))
 
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
@@ -56,11 +56,11 @@ class CouncilTest < ActiveSupport::TestCase
   end
 
   def test_removing_council_brings_admin_back_to_group
-    g = Group.create :name => 'boosh'
+    g = Group.create name: 'boosh'
     g.add_user!(users(:yellow))
     g.add_user!(users(:blue))
 
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
@@ -73,7 +73,7 @@ class CouncilTest < ActiveSupport::TestCase
 
   def test_remove_council_from_network
     network = groups(:cnt)
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     council.add_user!(users(:blue))
     network.add_committee!(council)
     council.destroy_by(users(:blue))
@@ -84,10 +84,10 @@ class CouncilTest < ActiveSupport::TestCase
   end
 
   def test_destroying_group_destroys_council
-    g = Group.create :name => 'boosh'
+    g = Group.create name: 'boosh'
     g.add_user!(users(:blue))
 
-    council = Council.create!(:name => 'council')
+    council = Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))

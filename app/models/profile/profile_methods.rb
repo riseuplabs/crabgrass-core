@@ -33,8 +33,8 @@ module ProfileMethods
     conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
     find(
       :first,
-      :conditions => [conditions] + ([true] * args.size),
-      :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
+      conditions: [conditions] + ([true] * args.size),
+      order: 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
     )
   end
 
@@ -43,21 +43,21 @@ module ProfileMethods
     conditions = fields.collect{|access| "profiles.`#{access}` = ?"}.join(' AND ')
     find(
       :first,
-      :conditions => [conditions] + ([false] * fields.size),
-      :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
+      conditions: [conditions] + ([false] * fields.size),
+      order: 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
     )
   end
 
   # a shortcut to grab the 'public' profile
   def public
-    profile_options = {:stranger => true}
+    profile_options = {stranger: true}
 
     @public_profile ||= (find_by_access(:stranger) || create_or_build(profile_options))
   end
 
   # a shortcut to grab the 'private' profile
   def private
-    @private_profile ||= (find_by_access(:friend) || create_or_build(:friend => true))
+    @private_profile ||= (find_by_access(:friend) || create_or_build(friend: true))
   end
 
   def hidden

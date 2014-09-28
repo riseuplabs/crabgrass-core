@@ -19,9 +19,9 @@ class Pages::AttachmentTest < ActiveSupport::TestCase
 
   def test_attachments
     setup_assets
-    page = Page.create! :title => 'page with attachments', :user => users(:blue)
+    page = Page.create! title: 'page with attachments', user: users(:blue)
     upload = upload_data('gears.jpg')
-    page.add_attachment! :uploaded_data => upload
+    page.add_attachment! uploaded_data: upload
 
     assert_equal page.page_terms, page.assets.first.page_terms
 
@@ -45,9 +45,9 @@ class Pages::AttachmentTest < ActiveSupport::TestCase
   end
 
   def test_attachment_options
-    asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
-    page = Page.create! :title => 'page with attachments'
-    page.add_attachment! asset, :filename => 'picture', :cover => true
+    asset = Asset.create! uploaded_data: upload_data('photo.jpg')
+    page = Page.create! title: 'page with attachments'
+    page.add_attachment! asset, filename: 'picture', cover: true
 
     assert_equal 'picture.jpg', page.assets.first.filename
     assert_equal asset, page.cover
@@ -59,7 +59,7 @@ class Pages::AttachmentTest < ActiveSupport::TestCase
       assert_no_difference 'Asset.count' do
         assert_raises ActiveRecord::RecordInvalid do
           Page.create! do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+            page.add_attachment! uploaded_data: upload_data('photo.jpg')
           end
         end
       end
@@ -67,8 +67,8 @@ class Pages::AttachmentTest < ActiveSupport::TestCase
     assert_difference 'Page.count' do
       assert_difference 'Asset.count' do
         assert_nothing_raised do
-          page = Page.create!(:title => 'hi') do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+          page = Page.create!(title: 'hi') do |page|
+            page.add_attachment! uploaded_data: upload_data('photo.jpg')
           end
           assert_equal 'photo.jpg', page.assets.first.filename
         end

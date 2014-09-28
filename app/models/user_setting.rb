@@ -36,16 +36,16 @@ class UserSetting < ActiveRecord::Base
   ##
 
   # update digest frequency
-  DIGEST = {:daily => 0, :twice_weekly => 1, :weekly => 2, :twice_monthly => 3, :monthly => 4}.freeze
+  DIGEST = {daily: 0, twice_weekly: 1, weekly: 2, twice_monthly: 3, monthly: 4}.freeze
 
   # preferred notificatin reception method
-  METHOD = {:none => 0, :email => 1, :sms => 2, :im => 3}.freeze
+  METHOD = {none: 0, email: 1, sms: 2, im: 3}.freeze
 
   # level of expertise / how much help to show
-  EXPERTISE = {:low => 0, :medium => 1, :high => 2}.freeze
+  EXPERTISE = {low: 0, medium: 1, high: 2}.freeze
 
   # when you first login, where do you go?
-  LANDING = {:dashboard => 0, :site_home => 1}.freeze
+  LANDING = {dashboard: 0, site_home: 1}.freeze
 
   # which editor to use by default.
   EDITOR = {:greencloth => 0, :html => 1, 0 => :greencloth, 1 => :html}.freeze

@@ -30,13 +30,13 @@ module Common::Utility::GeneralHelper
   def ul_list_tag(items, options={}, &block)
 
     if (header = options.delete(:header))
-      header_tag = content_tag(:li, header, :class => 'header')
+      header_tag = content_tag(:li, header, class: 'header')
     else
       header_tag = ""
     end
 
     if (footer = options.delete(:footer))
-      footer_tag = content_tag(:li, footer, :class => 'footer')
+      footer_tag = content_tag(:li, footer, class: 'footer')
     else
       footer_tag = ""
     end
@@ -139,8 +139,8 @@ module Common::Utility::GeneralHelper
   # 2. Merge the 'body' variable into our options hash
   # 3. Render the partial with the given options hash. Just like calling the partial directly.
   def block_to_partial(partial_name, options = {}, &block)
-    options.merge!(:body => capture(&block))
-    concat(render(:partial => partial_name, :locals => options))
+    options.merge!(body: capture(&block))
+    concat(render(partial: partial_name, locals: options))
   end
 
   def browser_is_ie?

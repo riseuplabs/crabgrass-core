@@ -1,7 +1,7 @@
 class TaskListPageController < Pages::BaseController
   before_filter :fetch_task_list, :fetch_user_participation
   after_filter :update_participations,
-    :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
+    only: [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   permissions 'task_list_page'
 
   def show
@@ -24,10 +24,10 @@ class TaskListPageController < Pages::BaseController
       end
       if ids.length > @list.tasks.length
         new_ids = ids.reject {|t| @list.task_ids.include?(t.to_i) }
-        new_ids.each {|id| Task.update(id, :position => ids.index(id)+1, :task_list_id => @list.id) }
+        new_ids.each {|id| Task.update(id, position: ids.index(id)+1, task_list_id: @list.id) }
       end
     end
-    render :nothing => true
+    render nothing: true
   end
 
   # ajax only, returns rjs
@@ -37,7 +37,7 @@ class TaskListPageController < Pages::BaseController
     @task.name = 'untitled' unless @task.name.present?
     @task.task_list = @list
     @task.save
-    render :template => 'task_list_page/create_task'
+    render template: 'task_list_page/create_task'
   end
 
   # ajax only, returns rjs
@@ -46,7 +46,7 @@ class TaskListPageController < Pages::BaseController
     @task = @list.tasks.find(params[:id])
     @task.completed = true
     @task.move_to_bottom # also saves task
-    render :template => 'task_list_page/mark_task_complete'
+    render template: 'task_list_page/mark_task_complete'
   end
 
   # ajax only, returns rjs
@@ -55,7 +55,7 @@ class TaskListPageController < Pages::BaseController
     @task = @list.tasks.find(params[:id])
     @task.completed = false
     @task.move_to_bottom # also saves task
-    render :template => 'task_list_page/mark_task_pending'
+    render template: 'task_list_page/mark_task_pending'
   end
 
   # ajax only, returns nothing
@@ -64,7 +64,7 @@ class TaskListPageController < Pages::BaseController
     @task = @list.tasks.find(params[:id])
     @task.remove_from_list
     @task.destroy
-    render :nothing => true
+    render nothing: true
   end
 
   # ajax only, returns rjs
@@ -74,7 +74,7 @@ class TaskListPageController < Pages::BaseController
     @task.update_attributes(params[:task])
     @task.name = 'untitled' unless @task.name.present?
     render :update do |page|
-      page.replace_html dom_id(@task), :partial => 'inner_task_show', :locals => {:task => @task}
+      page.replace_html dom_id(@task), partial: 'inner_task_show', locals: {task: @task}
     end
   end
 
@@ -83,7 +83,7 @@ class TaskListPageController < Pages::BaseController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     render :update do |page|
-      page.replace_html dom_id(@task), :partial => 'inner_task_edit', :locals => {:task => @task}
+      page.replace_html dom_id(@task), partial: 'inner_task_edit', locals: {task: @task}
     end
   end
 

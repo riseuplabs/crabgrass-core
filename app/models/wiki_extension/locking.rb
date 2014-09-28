@@ -25,12 +25,12 @@ module WikiExtension
       def initialize(section, user, options = {})
         if section == :document
           super([
-            :wiki_is_locked.t(:user => bold(user.name))
+            :wiki_is_locked.t(user: bold(user.name))
           ], options)
         else
           super([
-            :cant_edit_section.t(:section => bold(section)),
-            :user_locked_section.t(:section => bold(section), :user => bold(user.name))
+            :cant_edit_section.t(section: bold(section)),
+            :user_locked_section.t(section: bold(section), user: bold(user.name))
           ], options)
         end
       end
@@ -39,7 +39,7 @@ module WikiExtension
     class OtherSectionLockedError < LockedError
       def initialize(section, options = {})
         super(
-          :other_section_locked_error.t(:section => bold(section)).html_safe,
+          :other_section_locked_error.t(section: bold(section)).html_safe,
           options
         )
       end
@@ -49,13 +49,13 @@ module WikiExtension
       def initialize(section, user, options = {})
         if section == :document
           super([
-            :wiki_is_locked.t(:user => bold(user.name)),
+            :wiki_is_locked.t(user: bold(user.name)),
             :can_still_save.t,
             :changes_might_be_overwritten.t
           ], options)
         else
           super([
-            :user_locked_section.t(:section => bold(section), :user => bold(user.name)),
+            :user_locked_section.t(section: bold(section), user: bold(user.name)),
             :can_still_save.t,
             :changes_might_be_overwritten.t
           ], options)

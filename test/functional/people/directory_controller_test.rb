@@ -12,14 +12,14 @@ class People::DirectoryControllerTest < ActionController::TestCase
 
   def test_friends
     login_as :blue
-    get :index, :path => 'contacts'
+    get :index, path: 'contacts'
     assert_response :success
     assert_equal 2, assigns(:users).count
   end
 
   def test_peers
     login_as :blue
-    get :index, :path => 'peers'
+    get :index, path: 'peers'
     assert_response :success
     assert_equal 10, assigns(:users).count
   end
@@ -27,7 +27,7 @@ class People::DirectoryControllerTest < ActionController::TestCase
   def test_pagination
     login_as :blue
     def @controller.pagination_params
-      {:page => 4, :per_page => 3}
+      {page: 4, per_page: 3}
     end
     get :index, path: 'peers'
     assert_response :success

@@ -18,14 +18,14 @@ module Wiki::VersioningTest
         # a new user does it
         context "saved with a body by a user" do
           setup do
-            @wiki.update_attributes!(:body => 'hi', :user => @user)
+            @wiki.update_attributes!(body: 'hi', user: @user)
           end
 
-          should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
+          should_change("versions count", from: 0, to: 1) { @wiki.versions.size }
 
           context "and then saved with the same body by different user" do
             setup do
-              @wiki.update_attributes!(:user => @different_user)
+              @wiki.update_attributes!(user: @different_user)
             end
 
             should_not_change("versions count") { @wiki.versions.size }
@@ -33,10 +33,10 @@ module Wiki::VersioningTest
 
           context "and saved with a new body by a different user" do
             setup do
-              @wiki.update_attributes!(:body => 'hi there', :user => @different_user)
+              @wiki.update_attributes!(body: 'hi there', user: @different_user)
             end
 
-            should_change("versions count", :from => 1, :to => 2) { @wiki.versions.size }
+            should_change("versions count", from: 1, to: 2) { @wiki.versions.size }
 
             should_have_latest_body 'hi there'
             should_have_latest_body_html '<p>hi there</p>'
@@ -62,10 +62,10 @@ module Wiki::VersioningTest
         ['', nil].each do |initial_body|
           context "saved with #{initial_body.inspect} body by a user" do
             setup do
-              @wiki.update_attributes!(:body => initial_body, :user => @user)
+              @wiki.update_attributes!(body: initial_body, user: @user)
             end
 
-            should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
+            should_change("versions count", from: 0, to: 1) { @wiki.versions.size }
 
             should_have_latest_body initial_body
             should_have_latest_body_html ''
@@ -73,7 +73,7 @@ module Wiki::VersioningTest
 
             context "and then saved with new body by a different user" do
               setup do
-                @wiki.update_attributes!(:body => 'oi', :user => @user)
+                @wiki.update_attributes!(body: 'oi', user: @user)
               end
 
               should_not_change("versions count") { @wiki.versions.size }
@@ -82,7 +82,7 @@ module Wiki::VersioningTest
 
             context "and then saved with new body by the same user" do
               setup do
-                @wiki.update_attributes!(:body => 'oi', :user => @user)
+                @wiki.update_attributes!(body: 'oi', user: @user)
               end
 
               should_not_change("versions count") { @wiki.versions.size }
@@ -93,12 +93,12 @@ module Wiki::VersioningTest
 
         context "saved with 'oi', '' (blank body) and 'vey' bodies by alternating users" do
           setup do
-            @wiki.update_attributes!(:body => 'oi', :user => @user)
-            @wiki.update_attributes!(:body => '', :user => @different_user)
-            @wiki.update_attributes!(:body => 'vey', :user => @user)
+            @wiki.update_attributes!(body: 'oi', user: @user)
+            @wiki.update_attributes!(body: '', user: @different_user)
+            @wiki.update_attributes!(body: 'vey', user: @user)
           end
 
-          should_change("versions count", :from => 0, :to => 2) { @wiki.versions.size }
+          should_change("versions count", from: 0, to: 2) { @wiki.versions.size }
 
           should "have only 'oi' and 'vey' versions" do
             assert_equal ['oi', 'vey'], @wiki.versions.collect(&:body)
@@ -113,12 +113,12 @@ module Wiki::VersioningTest
 
         context "with four versions" do
           setup do
-            @wiki = Wiki.create! :body => '1111', :user => @user
+            @wiki = Wiki.create! body: '1111', user: @user
             @wiki.update_document!(@different_user, 1, '2222')
             @wiki.update_document!(@user, 2, '3333')
             @wiki.update_document!(@different_user, 3, '4444')
           end
-          should_change("versions count", :from => 0, :to => 4) { @wiki.versions.size }
+          should_change("versions count", from: 0, to: 4) { @wiki.versions.size }
 
           should "find version 1 body" do
             assert_equal '1111', @wiki.versions.find_by_version(1).body

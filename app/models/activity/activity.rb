@@ -34,8 +34,8 @@ class Activity < ActiveRecord::Base
   DEFAULT = 2  # your friends can see this activity for you
   PUBLIC  = 3  # anyone can see it.
 
-  belongs_to :subject, :polymorphic => true  # the "subject" is typically the actor who is doing something.
-  belongs_to :item, :polymorphic => true   # the "item" is the thing that is acted upon.
+  belongs_to :subject, polymorphic: true  # the "subject" is typically the actor who is doing something.
+  belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
 
   before_create :set_defaults
   def set_defaults # :nodoc:

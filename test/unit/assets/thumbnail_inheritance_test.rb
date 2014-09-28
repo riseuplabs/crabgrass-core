@@ -3,11 +3,11 @@ require_relative '../test_helper'
 class Assets::ThumbnailInharitanceTest < ActiveSupport::TestCase
 
   class RootAsset < Asset
-    define_thumbnails :foo => {}
+    define_thumbnails foo: {}
   end
 
   class ChildAsset < RootAsset
-    define_thumbnails :bar => {}
+    define_thumbnails bar: {}
   end
 
   def test_child_inherits_root_thumbdefs

@@ -5,7 +5,7 @@ class People::HomeControllerTest < ActionController::TestCase
 
   def test_show
     login_as :blue
-    get :show, :person_id => 'blue'
+    get :show, person_id: 'blue'
     assert_response :success
   end
 
@@ -14,22 +14,22 @@ class People::HomeControllerTest < ActionController::TestCase
     blue = users(:blue)
     blue.revoke_access! CastleGates::Holder[blue.associated(:friends)] => :view
     blue.revoke_access! CastleGates::Holder[blue.associated(:peers)] => :view
-    blue.revoke_access! :public => :view
-    get :show, :person_id => 'blue'
+    blue.revoke_access! public: :view
+    get :show, person_id: 'blue'
     assert_response :success
   end
 
   def test_new_user_hidden
     user = FactoryGirl.create :user
     login_as :blue
-    get :show, :person_id => user.login
+    get :show, person_id: user.login
     assert_no_user_found
     user.destroy
   end
 
   def test_missing_user
     login_as :blue
-    get :show, :person_id => "missinguserlogin"
+    get :show, person_id: "missinguserlogin"
     assert_no_user_found
   end
 
@@ -37,7 +37,7 @@ class People::HomeControllerTest < ActionController::TestCase
     user = FactoryGirl.create :user
     user.add_contact! users(:blue), :friend
     login_as :blue
-    get :show, :person_id => user.login
+    get :show, person_id: user.login
     assert_response :success
     assert_equal user, assigns[:user]
     user.destroy

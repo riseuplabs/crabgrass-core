@@ -20,7 +20,7 @@ class PageNotice < Notice
     def create!(args={})
       if recipients = args.delete(:recipients)
         recipients.each do |user|
-          create!(args.merge(:user => user))
+          create!(args.merge(user: user))
         end
       else
         super(args)
@@ -34,9 +34,9 @@ class PageNotice < Notice
 
   def display_title
     props = data.merge(
-      :page_title => CGI::escapeHTML(data[:page_title]),
-      :from => CGI::escapeHTML(data[:from]),
-      :message => CGI::escapeHTML(data[:message])
+      page_title: CGI::escapeHTML(data[:page_title]),
+      from: CGI::escapeHTML(data[:from]),
+      message: CGI::escapeHTML(data[:message])
     )
     if data[:message]
       :page_notice_title_with_message.t(props).html_safe
@@ -54,7 +54,7 @@ class PageNotice < Notice
   end
 
   def button_text
-    :show_thing.t(:thing => :page.t)
+    :show_thing.t(thing: :page.t)
   end
 
   def display_label
@@ -69,7 +69,7 @@ class PageNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {:message => message, :from => from.name, :page_title => page.title}
+    self.data = {message: message, from: from.name, page_title: page.title}
   end
 
   before_create :set_avatar

@@ -29,7 +29,7 @@ class Pages::CreateController < ApplicationController
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.
   #
-  rescue_render :create => :new
+  rescue_render create: :new
 
   def new
     @page = build_new_page! if params[:page]
@@ -53,7 +53,7 @@ class Pages::CreateController < ApplicationController
   #
   def catch_cancel
     if params[:cancel]
-      redirect_to new_page_url(:owner => params[:owner])
+      redirect_to new_page_url(owner: params[:owner])
       return false
     else
       return true
@@ -98,7 +98,7 @@ class Pages::CreateController < ApplicationController
   helper_method :page_type
 
   def render_new_template
-    render :template => 'pages/create/new'
+    render template: 'pages/create/new'
   end
 
 #  def create_page
@@ -117,7 +117,7 @@ class Pages::CreateController < ApplicationController
 #      # success!
 #      return redirect_to(page_url(@page))
 
-#    rescue Exception => exc
+#    rescue exc
 #      # failure!
 #      destroy_page_data
 #      # in case page gets saved before the exception happens

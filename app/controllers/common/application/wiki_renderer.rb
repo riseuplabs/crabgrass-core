@@ -44,7 +44,7 @@ module Common::Application::WikiRenderer
         context_name, page_name = path_elements
         begin
           entity, page = resolve_context(context_name, page_name)
-          content_tag :a, page.title, :href => page_url(page)
+          content_tag :a, page.title, href: page_url(page)
         rescue ActiveRecord::RecordNotFound => exc
           # not found
           return nil
@@ -67,13 +67,13 @@ module Common::Application::WikiRenderer
     begin
       entity, page = resolve_context(context_name, page_name)
       label ||= page.title
-      content_tag :a, label, :href => page_url(page) + anchor
+      content_tag :a, label, href: page_url(page) + anchor
     rescue ActiveRecord::RecordNotFound => exc
       # not found
       label ||= page_name.nameized? ? page_name.denameize : page_name
       label = html_escape(label)
       url = '/%s/%s' % [context_name.nameize, page_name.nameize]
-      content_tag :a, label, :href => url, :class => 'dead_link'
+      content_tag :a, label, href: url, class: 'dead_link'
     end
   end
 
@@ -108,18 +108,18 @@ module Common::Application::WikiRenderer
     params[:wiki] ||= {}
     hsh = if params[:editor] == 'preview'
       if params[:wiki][:body].present?
-        {:body_preview => render_preview_from_text(params[:wiki][:body], @page.owner_name)}
+        {body_preview: render_preview_from_text(params[:wiki][:body], @page.owner_name)}
       elsif params[:wiki][:body_html].present?
-        {:body_preview => render_preview_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
+        {body_preview: render_preview_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
       else
-        {:body_preview => ""}
+        {body_preview: ""}
       end
     elsif params[:editor] == 'greencloth'
-      current_user.update_setting(:preferred_editor_sym => :greencloth)
-      {:body => render_text_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
+      current_user.update_setting(preferred_editor_sym: :greencloth)
+      {body: render_text_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
     elsif params[:editor] == 'html'
-      current_user.update_setting(:preferred_editor_sym => :html)
-      {:body_html => render_ugly_html_from_text(params[:wiki][:body], @page.owner_name)}
+      current_user.update_setting(preferred_editor_sym: :html)
+      {body_html: render_ugly_html_from_text(params[:wiki][:body], @page.owner_name)}
     end
     return hsh.to_json
   end
@@ -130,7 +130,7 @@ module Common::Application::WikiRenderer
 
   def greencloth_to_editable_html(text, context_name='page')
     text ||= ""
-    options = {:pass_through => ['strong', 'b', 'em', 'i', 'strike', 'del'], :rename_tag => {"ins" => "u"}}
+    options = {pass_through: ['strong', 'b', 'em', 'i', 'strike', 'del'], rename_tag: {"ins" => "u"}}
     UglifyHtml.new( render_wiki_html(text, context_name), options ).make_ugly
   end
 
@@ -143,7 +143,7 @@ module Common::Application::WikiRenderer
 
   def render_ugly_html_from_text(text, context_name='page')
     text ||= ""
-    options = {:pass_through => ['strong', 'b', 'em', 'i', 'strike', 'del'], :rename_tag => {"ins" => "u"}}
+    options = {pass_through: ['strong', 'b', 'em', 'i', 'strike', 'del'], rename_tag: {"ins" => "u"}}
     encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name), options ).make_ugly
   end
 

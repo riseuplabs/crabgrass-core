@@ -36,15 +36,15 @@ class Request < ActiveRecord::Base
   ## ASSOCIATIONS
   ##
 
-  belongs_to :created_by, :class_name => 'User'
-  belongs_to :approved_by, :class_name => 'User'
+  belongs_to :created_by, class_name: 'User'
+  belongs_to :approved_by, class_name: 'User'
   alias_method :rejected_by, :approved_by
 
-  belongs_to :recipient, :polymorphic => true
-  belongs_to :requestable, :polymorphic => true
+  belongs_to :recipient, polymorphic: true
+  belongs_to :requestable, polymorphic: true
 
-  belongs_to :shared_discussion, :class_name => 'Discussion', :dependent => :destroy
-  belongs_to :private_discussion, :class_name => 'Discussion', :dependent => :destroy
+  belongs_to :shared_discussion, class_name: 'Discussion', dependent: :destroy
+  belongs_to :private_discussion, class_name: 'Discussion', dependent: :destroy
 
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
@@ -53,16 +53,16 @@ class Request < ActiveRecord::Base
   # when a period of time has passed
   # 'ignore' is another vote that could be use by otherwise non-votable requests
   # so that each person has a distinct 'ignore'/'non-ignore' state
-  has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
+  has_many :votes, as: :votable, class_name: "RequestVote", dependent: :delete_all
 
   validates_presence_of :created_by_id
-  validates_presence_of :recipient_id,   :if => :recipient_required?
-  validates_presence_of :requestable_id, :if => :requestable_required?
+  validates_presence_of :recipient_id,   if: :recipient_required?
+  validates_presence_of :requestable_id, if: :requestable_required?
 
-  validate :no_duplicate, :on => :create
-  validate :check_create_permission, :on => :create
+  validate :no_duplicate, on: :create
+  validate :check_create_permission, on: :create
 
-  before_validation :set_default_state, :on => :create
+  before_validation :set_default_state, on: :create
 
   ##
   ## FINDERS
@@ -128,11 +128,11 @@ class Request < ActiveRecord::Base
   end
 
   def self.for_recipient(recipient)
-    where(:recipient_id => recipient)
+    where(recipient_id: recipient)
   end
 
   def self.with_requestable(requestable)
-    where(:requestable_id => requestable)
+    where(requestable_id: requestable)
   end
 
   MEMBERSHIP_TYPES = [
@@ -148,7 +148,7 @@ class Request < ActiveRecord::Base
   # find only requests related to membership.
   # maybe we should add a "membership?" column?
   #
-  scope :membership_related, where(:type => MEMBERSHIP_TYPES)
+  scope :membership_related, where(type: MEMBERSHIP_TYPES)
 
   ##
   ## ATTRIBUTES
@@ -168,7 +168,7 @@ class Request < ActiveRecord::Base
   before_save :build_discussion
   def build_discussion
     if @initial_post.present?
-      self.build_shared_discussion(:post => {:body => @initial_post, :user => created_by})
+      self.build_shared_discussion(post: {body: @initial_post, user: created_by})
     end
   end
 
@@ -189,13 +189,13 @@ class Request < ActiveRecord::Base
   #
   def set_state!(newstate, user=nil)
     if new_record?
-      raise Exception.new('record must be saved first')
+      raise 'record must be saved first'
     end
 
     command = case newstate
       when 'approved' then 'approve!'
       when 'rejected' then 'reject!'
-      else raise Exception.new('state must be approved or rejected')
+      else raise 'state must be approved or rejected'
     end
 
     if user.nil?
@@ -213,7 +213,7 @@ class Request < ActiveRecord::Base
   end
 
   def raise_denied(user, state)
-    raise PermissionDenied.new(:not_allowed_to_respond_to_request.t(:user => user.try(:name), :command => I18n.t(state)))
+    raise PermissionDenied.new(:not_allowed_to_respond_to_request.t(user: user.try(:name), command: I18n.t(state)))
   end
 
   #
@@ -274,15 +274,15 @@ class Request < ActiveRecord::Base
   def flash_message(options = {})
     # WARNING: don't pass the whole 'options' hash here, as 'human' will
     #     add :default and :scope options, which break our translations.
-    thing = self.class.model_name.human(:count => options[:count])
-    options.merge!(:thing => thing, :recipient => self.recipient.display_name)
+    thing = self.class.model_name.human(count: options[:count])
+    options.merge!(thing: thing, recipient: self.recipient.display_name)
     if self.errors.any?
-      { :type => :error,
-        :text => :thing_was_not_sent.t(options),
-        :list => self.errors.full_messages }
+      { type: :error,
+        text: :thing_was_not_sent.t(options),
+        list: self.errors.full_messages }
     else
-      { :type => :success,
-        :text => :thing_was_sent.t(options) }
+      { type: :success,
+        text: :thing_was_sent.t(options) }
     end
   end
 
@@ -298,17 +298,17 @@ class Request < ActiveRecord::Base
   ## working at all! --Mario Savio
   ##
 
-  aasm :column => :state, :whiny_transitions => false do
-    state :pending, :initial => true
-    state :approved, :after_commit => :after_approval
+  aasm column: :state, whiny_transitions: false do
+    state :pending, initial: true
+    state :approved, after_commit: :after_approval
     state :rejected
 
     event :approve do
-      transitions :from => :pending,  :to => :approved, :guard => :approval_allowed?
-      transitions :from => :rejected, :to => :approved, :guard => :approval_allowed?
+      transitions from: :pending,  to: :approved, guard: :approval_allowed?
+      transitions from: :rejected, to: :approved, guard: :approval_allowed?
     end
     event :reject do
-      transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed?
+      transitions from: :pending,  to: :rejected, guard: :approval_allowed?
     end
   end
 
@@ -375,7 +375,7 @@ class Request < ActiveRecord::Base
 
   def no_duplicate
     if duplicates.any?
-      errors.add(:base, :request_exists_error.t(:recipient => recipient.display_name))
+      errors.add(:base, :request_exists_error.t(recipient: recipient.display_name))
     end
   end
 
@@ -394,7 +394,7 @@ class Request < ActiveRecord::Base
   def add_vote!(response, user)
     value = self.class.vote_value_for_action(response)
     votes.by_user(user).delete_all
-    votes.create!(:value => value, :user => user)
+    votes.create!(value: value, user: user)
   end
 
 end

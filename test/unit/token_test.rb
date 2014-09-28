@@ -21,7 +21,7 @@ class TokenTest < ActiveSupport::TestCase
   fixtures :tokens, :users
 
   def test_create
-    token = Token.new(:user => users(:blue))
+    token = Token.new(user: users(:blue))
     token.save
     assert_equal 20, token.value.length
     assert !token.expired?

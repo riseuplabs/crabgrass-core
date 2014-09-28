@@ -35,14 +35,14 @@ class LibreMagickTransmogrifier < Media::Transmogrifier
   def run(&block)
     pdf_output_file = Media::TempFile.new(nil, "application/pdf")
     libre_transmog = libre.class.new(
-      :input_file => input_file,       :input_type => input_type,
-      :output_file => pdf_output_file, :output_type => "application/pdf")
+      input_file: input_file,       input_type: input_type,
+      output_file: pdf_output_file, output_type: "application/pdf")
     status = libre_transmog.run(&block)
     return status if status != :success
     magick_transmog = magick.class.new(
       options.merge({
-        :input_file => pdf_output_file,  :input_type => "application/pdf",
-        :output_file => output_file,     :output_type => output_type
+        input_file: pdf_output_file,  input_type: "application/pdf",
+        output_file: output_file,     output_type: output_type
       })
     )
     magick_transmog.run(&block)

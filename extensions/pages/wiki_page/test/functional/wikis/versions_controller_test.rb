@@ -9,7 +9,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
 
   def test_version_show
     login_as :orange
-    pages(:wiki).add groups(:rainbow), :access => :edit
+    pages(:wiki).add groups(:rainbow), access: :edit
     wiki = pages(:wiki).data
 
     # create versions
@@ -24,19 +24,19 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     wiki.versions.reload
 
     # find versions
-    get :show, :wiki_id => wiki.id, :id => 6
+    get :show, wiki_id: wiki.id, id: 6
     assert_response :success
     assert_equal 6, assigns(:version).version
     assert_equal 'text 6 for the wiki', assigns(:wiki).body
   end
 
   def test_show_invalid_version
-    pages(:wiki).add groups(:rainbow), :access => :edit
+    pages(:wiki).add groups(:rainbow), access: :edit
     wiki = pages(:wiki).data
     wiki.update_section!(:document, users(:purple), 1, "text for the wiki")
     login_as :orange
     # should fail gracefully for non-existant version
-    get :show, :wiki_id => wiki.id, :id => 7
+    get :show, wiki_id: wiki.id, id: 7
     assert_response 404
   end
 
@@ -46,7 +46,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     wiki = page.data
     wiki.update_section!(:document, users(:blue), 1, "version 1")
     wiki.update_section!(:document, users(:yellow), 2, "version 2")
-    post :revert, :wiki_id => wiki.id, :id => 1
+    post :revert, wiki_id: wiki.id, id: 1
 
     wiki.reload
 

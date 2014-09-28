@@ -8,8 +8,8 @@
 
 class RequestToCreateCouncil < Request
 
-  validates_format_of :recipient_type,   :with => /Group/
-  validates_format_of :requestable_type, :with => /Group/
+  validates_format_of :recipient_type,   with: /Group/
+  validates_format_of :requestable_type, with: /Group/
 
   alias_attr :group, :recipient
 
@@ -23,7 +23,7 @@ class RequestToCreateCouncil < Request
   end
 
   def self.may_create?(options)
-    self.new(:recipient => options[:group], :requestable => options[:group]).may_create?(options[:current_user])
+    self.new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
   end
 
   def may_approve?(user)
@@ -50,17 +50,17 @@ class RequestToCreateCouncil < Request
 
   def description
     [:request_to_create_council_description, {
-      :group => group_span(group),
-      :group_type => group.group_type.downcase,
-      :user => user_span(created_by)
+      group: group_span(group),
+      group_type: group.group_type.downcase,
+      user: user_span(created_by)
     }]
   end
 
   def short_description
     [:request_to_create_council_short, {
-      :group => group_span(group),
-      :group_type => group.group_type.downcase,
-      :user => user_span(created_by)
+      group: group_span(group),
+      group_type: group.group_type.downcase,
+      user: user_span(created_by)
     }]
   end
 

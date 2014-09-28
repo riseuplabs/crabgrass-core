@@ -16,7 +16,7 @@ SearchFilter.new('/created-by/:user_id/') do
 
   label do |opts|
     if opts[:user_id]
-      :created_by_user.t(:user => user_login(opts[:user_id]).capitalize)
+      :created_by_user.t(user: user_login(opts[:user_id]).capitalize)
     else
       :created_by_dotdotdot.t
     end
@@ -24,9 +24,9 @@ SearchFilter.new('/created-by/:user_id/') do
 
   self.description = :created_by_user_description
   html do
-    content_tag(:p, :id => :created_by_autocomplete) do
+    content_tag(:p, id: :created_by_autocomplete) do
       content_tag(:strong, :person.tcap) + " " +
-      autocomplete_users_field_tag('user_id', :container => :created_by_autocomplete)
+      autocomplete_users_field_tag('user_id', container: :created_by_autocomplete)
     end
   end
 

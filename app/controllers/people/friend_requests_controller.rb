@@ -7,7 +7,7 @@ class People::FriendRequestsController < People::BaseController
     if params[:cancel]
       redirect_to entity_url(@user)
     else
-      req = RequestToFriend.create! :recipient => @user, :created_by => current_user, :message => params[:message]
+      req = RequestToFriend.create! recipient: @user, created_by: current_user, message: params[:message]
       if req.valid?
         success req
         redirect_to entity_url(@user)

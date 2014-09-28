@@ -62,7 +62,7 @@ class Group < ActiveRecord::Base
     if group_type == 'Group'
       only_groups
     else
-      where(:type => group_type)
+      where(type: group_type)
     end
   end
 
@@ -71,7 +71,7 @@ class Group < ActiveRecord::Base
 
   def self.all_networks_for(user)
     only_type('Network').
-      where(:id => user.all_group_id_cache)
+      where(id: user.all_group_id_cache)
   end
 
   # alphabetized and (optional) limited to +letter+
@@ -145,7 +145,7 @@ class Group < ActiveRecord::Base
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
     return nil unless name.present?
-    Group.where(:name => name.gsub(' ','+')).first
+    Group.where(name: name.gsub(' ','+')).first
   end
 
   # keyring_code used by acts_as_locked and pathfinder
@@ -165,7 +165,7 @@ class Group < ActiveRecord::Base
 
   # visual identity
   def banner_style
-    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
+    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
   end
 
   #
@@ -195,11 +195,11 @@ class Group < ActiveRecord::Base
   ## PROFILE
   ##
 
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-  has_many :wikis, :through => :profiles
+  has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
+  has_many :wikis, through: :profiles
 
   def public_wiki
-    profiles.where(:stranger => true).first.try.wiki
+    profiles.where(stranger: true).first.try.wiki
   end
 
   def public_wiki=(wiki)
@@ -207,7 +207,7 @@ class Group < ActiveRecord::Base
   end
 
   def private_wiki
-    profiles.where(:friend => true).first.try.wiki
+    profiles.where(friend: true).first.try.wiki
   end
 
   def private_wiki=(wiki)
@@ -222,7 +222,7 @@ class Group < ActiveRecord::Base
   ## MENU_ITEMS
   ##
 
-  has_many :menu_items, :dependent => :destroy, :order => :position do
+  has_many :menu_items, dependent: :destroy, order: :position do
 
     def update_order(menu_item_ids)
       menu_item_ids.each_with_index do |id, position|
@@ -236,7 +236,7 @@ class Group < ActiveRecord::Base
 
   # creates a menu item for the group and returns it.
   def add_menu_item(params)
-    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
+    item = MenuItem.create!(params.merge(group_id: self.id, position: self.menu_items.count))
   end
 
 
@@ -251,7 +251,7 @@ class Group < ActiveRecord::Base
 
   public
 
-  belongs_to :avatar, :dependent => :destroy
+  belongs_to :avatar, dependent: :destroy
 
   protected
 

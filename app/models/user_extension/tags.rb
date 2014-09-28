@@ -9,7 +9,7 @@ module UserExtension
 
     end
     def tags
-      ActsAsTaggableOn::Tag.where(:id => tag_id_cache)
+      ActsAsTaggableOn::Tag.where(id: tag_id_cache)
     end
   end
 end

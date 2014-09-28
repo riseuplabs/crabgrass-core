@@ -295,8 +295,8 @@ module Media
       from = args[:from].to_s
       to   = args[:to].to_s
       raise ArgumentError if from.empty? || to.empty?
-      if File.exists?(from)
-        if File.exists?(to)
+      if File.exist?(from)
+        if File.exist?(to)
           FileUtils.rm(to)
         end
         FileUtils.mv(from, to)
@@ -367,7 +367,7 @@ module Media
     #
     def restore_temporary_outfile
       if @temporary_outfile
-        replace_file :from => output_file, :to => @outfile_to_return
+        replace_file from: output_file, to: @outfile_to_return
         self.output_file = @outfile_to_return
       end
       return true

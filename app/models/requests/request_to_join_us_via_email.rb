@@ -9,10 +9,10 @@
 #
 class RequestToJoinUsViaEmail < Request
 
-  validates_format_of :requestable_type, :with => /Group/
-  validates :email, :presence => true,
-    :email_format => true
-  validates_length_of :code, :in => 6..8
+  validates_format_of :requestable_type, with: /Group/
+  validates :email, presence: true,
+    email_format: true
+  validates_length_of :code, in: 6..8
 
   def recipient_required?() false end
   def group() requestable end
@@ -41,11 +41,11 @@ class RequestToJoinUsViaEmail < Request
   end
 
   def description
-    [:request_to_join_us_via_email_description, {:email => email, :group => group_span(group)}]
+    [:request_to_join_us_via_email_description, {email: email, group: group_span(group)}]
   end
 
   def short_description
-    [:request_to_join_us_via_email_short, {:email => email, :group => group_span(group)}]
+    [:request_to_join_us_via_email_short, {email: email, group: group_span(group)}]
   end
 
   ##
@@ -66,7 +66,7 @@ class RequestToJoinUsViaEmail < Request
     end
   end
 
-  before_validation :set_code, :on => :create
+  before_validation :set_code, on: :create
   def set_code
     self.code = Password.random(8)
   end

@@ -9,8 +9,8 @@
 
 module Common::Application::Guard
 
-  ACTION_ALIASES = HashWithIndifferentAccess.new(:update => :edit,
-                                                 :new    => :create)
+  ACTION_ALIASES = HashWithIndifferentAccess.new(update: :edit,
+                                                 new: :create)
 
   def self.included(base)
     base.extend ClassMethods

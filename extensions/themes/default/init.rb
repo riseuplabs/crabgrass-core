@@ -103,7 +103,7 @@ define_theme {
       padding_top "10px"
 
       padding "1g"
-      html { content_tag :div, current_site.title, :id => 'masthead_title' }
+      html { content_tag :div, current_site.title, id: 'masthead_title' }
     }
     nav {
       style 'cutout'  # accepts [cutout | bar]
@@ -194,7 +194,7 @@ define_theme {
     column_count 3
     content {
       #padding '1g'
-      html :partial => 'layouts/global/default_footer_content'
+      html partial: 'layouts/global/default_footer_content'
     }
   }
 

@@ -7,13 +7,13 @@ require File.join(File.dirname(__FILE__), '/../lib/mods')
 
 {
   # use a custom locator
-  :default_plugin_locators => [Mods::Plugin::FileSystemLocator],
+  default_plugin_locators: [Mods::Plugin::FileSystemLocator],
 
   # use a custom loader
-  :default_plugin_loader => Mods::Plugin::Loader,
+  default_plugin_loader: Mods::Plugin::Loader,
 
   # load the mods plugin before the others!
-  :default_plugins => [:crabgrass_mods, :all]
+  default_plugins: [:crabgrass_mods, :all]
 
 }.each do |name, default|
   Rails::Configuration.send(:define_method, name) { default }

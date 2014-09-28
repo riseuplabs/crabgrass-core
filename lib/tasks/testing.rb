@@ -95,28 +95,28 @@ namespace :test do
   namespace :mods do
 
     desc "Run the plugin tests in extensions/mods/**/test (or specify with MOD=name)"
-    task :all => [:units, :functionals, :integration]
+    task all: [:units, :functionals, :integration]
 
     desc "Run all plugin unit tests"
-    Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(units: :setup_plugin_fixtures) do |t|
       t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Run all plugin functional tests"
-    Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(functionals: :setup_plugin_fixtures) do |t|
       t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Integration test engines"
-    Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(integration: :setup_plugin_fixtures) do |t|
       t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/integration/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Mirrors plugin fixtures into a single location to help plugin tests"
-    task :setup_plugin_fixtures => :environment do
+    task setup_plugin_fixtures: :environment do
       if ENV['MOD']
         plugin = Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}
         unless plugin
@@ -139,31 +139,31 @@ namespace :test do
   namespace :pages do
 
     desc "Run the plugin tests in extensions/pages/**/test (or specify with PAGE=name)"
-    task :all => [:units, :functionals, :integration]
+    task all: [:units, :functionals, :integration]
 
     desc "Run all pages unit tests"
-    Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(units: :setup_plugin_fixtures) do |t|
       t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Run all pages functional tests"
-    Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(functionals: :setup_plugin_fixtures) do |t|
       t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Integration test engines for pages"
-    Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(integration: :setup_plugin_fixtures) do |t|
       t.libs << "test"
       t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/integration/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Mirrors plugin fixtures into a single location to help plugin tests"
-    task :setup_plugin_fixtures => :environment do
+    task setup_plugin_fixtures: :environment do
       # Engines::Testing.setup_plugin_fixtures
     end
 
@@ -173,7 +173,7 @@ end
 namespace :test do
 
   desc "Test everything: crabgrass, pages and mods."
-  task :everything => "everything:default"
+  task everything: "everything:default"
 
   task :coverage do
     Rake::Task["test:everything:with_rcov"].invoke
@@ -181,7 +181,7 @@ namespace :test do
 
   namespace :everything do
     desc "Test everything: crabgrass, pages and mods."
-    task :default => :try_with_rcov
+    task default: :try_with_rcov
 
     def all_file_list
       # don't include mods by default
@@ -200,13 +200,13 @@ namespace :test do
       return list
     end
 
-    task :load_plugin_fixtures => [:environment, "db:test:prepare"] do
+    task load_plugin_fixtures: [:environment, "db:test:prepare"] do
       # Engines::Testing.setup_plugin_fixtures(plugins_with_allowed_fixtures)
     end
 
     if defined? Rcov::RcovTask
       desc "Test everything and generate rcov statistics"
-      Rcov::RcovTask.new(:with_rcov => :load_plugin_fixtures) do |t|
+      Rcov::RcovTask.new(with_rcov: :load_plugin_fixtures) do |t|
         t.libs << "test"
 
         t.test_files = all_file_list
@@ -229,7 +229,7 @@ namespace :test do
     end
 
     desc "Test everything without rcov"
-    Rake::TestTask.new(:without_rcov => :load_plugin_fixtures) do |t|
+    Rake::TestTask.new(without_rcov: :load_plugin_fixtures) do |t|
       t.libs << "test"
 
       t.test_files = all_file_list

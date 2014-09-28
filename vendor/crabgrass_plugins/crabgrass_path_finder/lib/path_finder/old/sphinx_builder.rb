@@ -23,20 +23,20 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     @with = []
     if options[:group_ids] or options[:user_ids] or options[:public]
       @with << ['access_ids', Page.access_ids_for(
-        :public => options[:public],
-        :group_ids => options[:group_ids],
-        :user_ids => options[:user_ids]
+        public: options[:public],
+        group_ids: options[:group_ids],
+        user_ids: options[:user_ids]
       )]
     end
     if options[:secondary_group_ids] or options[:secondary_user_ids]
       @with << ['access_ids', Page.access_ids_for(
-        :group_ids => options[:secondary_group_ids],
-        :user_ids => options[:secondary_user_ids]
+        group_ids: options[:secondary_group_ids],
+        user_ids: options[:secondary_user_ids]
       )]
     end
     if options[:site_ids]
       @with << ['access_ids', Page.access_ids_for(
-        :site_ids => options[:site_ids]
+        site_ids: options[:site_ids]
       )]
     end
 
@@ -66,9 +66,9 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
     page_terms = PageTerms.search @search_text,
-      :page => @page,   :per_page => @per_page,  :include => :page,
-      :with => @with,   :without => @without, :conditions => @conditions,
-      :order => @order, :sort_mode => @sort_mode
+      page: @page,   per_page: @per_page,  include: :page,
+      with: @with,   without: @without, conditions: @conditions,
+      order: @order, sort_mode: @sort_mode
 
     # page_terms has all of the will_paginate magic included, it just needs to
     # actually have the pages, which we supply with page_terms.replace(pages).
@@ -95,9 +95,9 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without,
-      :page => @page, :per_page => @per_page, :conditions => @conditions,
-      :order => @order, :include => :page).size
+    PageTerms.search_for_ids(@search_text, with: @with, without: @without,
+      page: @page, per_page: @per_page, conditions: @conditions,
+      order: @order, include: :page).size
   rescue ThinkingSphinx::ConnectionError
     PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).count        # fall back to mysql
   end

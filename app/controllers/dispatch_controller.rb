@@ -41,7 +41,7 @@ class DispatchController < ApplicationController
     @_env = request.env
     @_env['action_controller.instance'] = self
     process(name)
-  rescue Exception => exception
+  rescue => exception
     @_response ||= response
     @_response.request ||= request
     # keep regular rescue_from behaviour, even though we're never calling an action
@@ -123,7 +123,7 @@ class DispatchController < ApplicationController
       # no group should have multiple pages with the same name
       @page = find_page_by_group_and_name(@group, page_handle)
     elsif @user
-      @page = @user.pages_owned.where(:name => page_handle).first
+      @page = @user.pages_owned.where(name: page_handle).first
     else
       @pages = find_pages_with_unknown_context(page_handle)
       if @pages.size == 1
@@ -141,7 +141,7 @@ class DispatchController < ApplicationController
   # create a new instance of a controller, and pass it whatever info regarding
   # current group or user context or page object that we have gathered.
   def new_controller(class_name)
-    class_name.constantize.new({:group => @group, :user => @user, :page => @page, :pages => @pages})
+    class_name.constantize.new({group: @group, user: @user, page: @page, pages: @pages})
   end
 
   def includes(default=nil)
@@ -188,8 +188,8 @@ class DispatchController < ApplicationController
   # and is likely to be used much more often than the second query.
   #
   def find_page_by_group_and_name(group, name)
-    Page.where(:owner => group).where(:name => name).first ||
-      Page.for_group(group).where(:name => name).first
+    Page.where(owner: group).where(name: name).first ||
+      Page.for_group(group).where(name: name).first
   end
 
   def find_pages_with_unknown_context(name)
@@ -264,7 +264,7 @@ class DispatchController < ApplicationController
   ## Link to the action for the form to create a page of a particular type.
   def create_page_url(options={})
     group = options.delete(:group)
-    url_for(options.merge(:controller => 'pages/create', :action => 'new'))
+    url_for(options.merge(controller: 'pages/create', action: 'new'))
   end
 
 end

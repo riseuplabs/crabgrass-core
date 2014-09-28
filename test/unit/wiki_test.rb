@@ -16,11 +16,11 @@ class WikiTest < ActiveSupport::TestCase
 
   def self.raw_structure_for_n_byte_body(n)
     {
-      :name => nil,
-      :children => [],
-      :start_index => 0,
-      :end_index => n - 1,
-      :heading_level => 0
+      name: nil,
+      children: [],
+      start_index: 0,
+      end_index: n - 1,
+      heading_level: 0
     }
   end
 
@@ -66,7 +66,7 @@ class WikiTest < ActiveSupport::TestCase
 
   def test_group_association
     group = FactoryGirl.create(:group)
-    wiki = group.profiles.public.create_wiki :body => "bla"
+    wiki = group.profiles.public.create_wiki body: "bla"
     assert_equal group, wiki.group
   end
 

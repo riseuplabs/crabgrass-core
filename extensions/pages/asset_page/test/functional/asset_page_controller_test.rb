@@ -5,7 +5,7 @@ class AssetPageControllerTest < ActionController::TestCase
 
   def setup
     setup_assets
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
   end
 
   def teardown
@@ -13,9 +13,9 @@ class AssetPageControllerTest < ActionController::TestCase
   end
 
   def test_show
-    page = create_page :data => @asset, :public => true
+    page = create_page data: @asset, public: true
 
-    post :show, :page_id => page.id, :id => 1
+    post :show, page_id: page.id, id: 1
     assert_response :success
     assert_template 'show'
     assert_equal @asset.private_filename, assigns(:asset).private_filename,
@@ -26,43 +26,43 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_update
     login_as :gerrard
 
-    create_page :created_by => users(:gerrard), :asset => @asset
+    create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
-      post 'update', :page_id => @page.id,
-        :asset => {:uploaded_data => upload_data('photo.jpg')}
+      post 'update', page_id: @page.id,
+        asset: {uploaded_data: upload_data('photo.jpg')}
     end
   end
 
   def test_updated_by
-    page = AssetPage.create :title => 'hi',
-      :user => users(:blue),
-      :share_with => users(:kangaroo),
-      :access => 'edit',
-      :data => @asset
+    page = AssetPage.create title: 'hi',
+      user: users(:blue),
+      share_with: users(:kangaroo),
+      access: 'edit',
+      data: @asset
     assert_equal users(:blue).id, page.updated_by_id
 
     login_as :kangaroo
-    post 'update', :page_id => page.id,
-      :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'update', page_id: page.id,
+      asset: {uploaded_data: upload_data('photo.jpg')}
     assert_equal 'kangaroo', page.reload.updated_by_login
   end
 
 
   def test_generate_preview
     login_as :gerrard
-    create_page :created_by => users(:gerrard), :asset => @asset
+    create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Thumbnail.count', 0,
       "the first time an asset is shown, it should call generate preview" do
-      xhr :post, 'generate_preview', :page_id => @page
+      xhr :post, 'generate_preview', page_id: @page
     end
   end
 
 
   protected
   def create_page(options = {})
-    defaults = {:title => 'untitled page', :public => false}
+    defaults = {title: 'untitled page', public: false}
     @page = AssetPage.create(defaults.merge(options))
   end
 end

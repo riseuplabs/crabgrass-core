@@ -34,12 +34,12 @@ module TaskListPageHelper
   def task_checkbox(task)
     disabled = !current_user.may?(:edit, task.task_list.page)
     if (disabled)
-      content_tag :li, task.name, :class => 'icon checkoff'
+      content_tag :li, task.name, class: 'icon checkoff'
     else
       next_state = task.completed? ? 'pending' : 'complete'
-      url =  page_xurl(task.task_list.page, :action => 'mark_task_'+next_state, :id => task.id)
+      url =  page_xurl(task.task_list.page, action: 'mark_task_'+next_state, id: task.id)
       name = "#{task.id}_task"
-      spinbox_tag name, url, :checked => task.completed?, :tag => :span
+      spinbox_tag name, url, checked: task.completed?, tag: :span
     end
   end
 
@@ -60,7 +60,7 @@ module TaskListPageHelper
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
   def task_link_to_people(task)
     links = task.users.collect{|user|
-      link_to_user(user, :action => 'tasks', :class => 'hov')
+      link_to_user(user, action: 'tasks', class: 'hov')
     }.join(', ').html_safe
   end
 
@@ -72,9 +72,9 @@ module TaskListPageHelper
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(task.task_list.page, :action=>'destroy_task', :id=>task.id),
-      :loading => show_spinner(task),
-      :complete => hide(task)
+      url: page_xurl(task.task_list.page, action: 'destroy_task', id: task.id),
+      loading: show_spinner(task),
+      complete: hide(task)
     )
     button_to_function "Delete", function
   end
@@ -82,18 +82,18 @@ module TaskListPageHelper
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(task.task_list.page, :action=>'edit_task', :id=>task.id),
-      :loading => show_spinner(task)
+      url: page_xurl(task.task_list.page, action: 'edit_task', id: task.id),
+      loading: show_spinner(task)
     )
     button_to_function "Edit", function
   end
 
   def no_pending_tasks(visible)
-    content_tag(:li, 'no pending tasks', :id => 'no_pending_tasks', :style => (visible ? nil : 'display:none'))
+    content_tag(:li, 'no pending tasks', id: 'no_pending_tasks', style: (visible ? nil : 'display:none'))
   end
 
   def no_completed_tasks(visible)
-    content_tag(:li, 'no completed tasks', :id => 'no_completed_tasks', :style => (visible ? nil : 'display:none'))
+    content_tag(:li, 'no completed tasks', id: 'no_completed_tasks', style: (visible ? nil : 'display:none'))
   end
 
   ##
@@ -115,18 +115,18 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      :url => page_xurl(task.task_list.page, :action=>'update_task', :id => task.id),
-      :loading  => show_spinner(task),
-      :html => {}
+      url: page_xurl(task.task_list.page, action: 'update_task', id: task.id),
+      loading: show_spinner(task),
+      html: {}
     }]
   end
 
   def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
     page ||= task.task_list.page
-    render :partial => 'assigned_checkbox',
-      :collection => possible_users(task, page),
-      :as => :user,
-      :locals => {:selected => selected}
+    render partial: 'assigned_checkbox',
+      collection: possible_users(task, page),
+      as: :user,
+      locals: {selected: selected}
   end
 
   def close_task_edit_button(task)
@@ -147,11 +147,11 @@ module TaskListPageHelper
 
   def options_for_new_task_form(page)
     [{
-      :url      => page_xurl(page, :action => 'create_task'),
-      :html     => {:action => page_url(page, :action => 'create_task'), :id => 'new-task-form'}, # non-ajax fallback
-      :loading  => show_spinner('new-task'),
-      :complete => hide_spinner('new-task'),
-      :success => reset_form('new-task-form')
+      url: page_xurl(page, action: 'create_task'),
+      html: {action: page_url(page, action: 'create_task'), id: 'new-task-form'}, # non-ajax fallback
+      loading: show_spinner('new-task'),
+      complete: hide_spinner('new-task'),
+      success: reset_form('new-task-form')
     }]
   end
 

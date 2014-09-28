@@ -18,12 +18,12 @@ class AvatarsController < ApplicationController
       size = Avatar.pixels(params[:size])
       size.sub!(/^\d*x/,'')
       filename = "#{File.dirname(__FILE__)}/../../public/images/default/#{size}.jpg"
-      send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
+      send_data(IO.read(filename), type: 'image/jpeg', disposition: 'inline')
     else
       content_type = 'image/jpeg'
       data = @image.resize(params[:size], content_type);
       response.headers['Cache-Control'] = 'public, max-age=86400'
-      send_data data, :type => content_type, :disposition => 'inline'
+      send_data data, type: content_type, disposition: 'inline'
     end
   end
 

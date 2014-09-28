@@ -10,10 +10,10 @@ class Pages::PostsController < ApplicationController
   before_filter :login_required
   before_filter :authorization_required
   guard :may_ALIAS_post?
-  guard :show => :may_show_page?
+  guard show: :may_show_page?
 
   # if something goes wrong with create, redirect to the page url.
-  rescue_render :create => lambda { |controller| redirect_to(page_url(@page)) }
+  rescue_render create: lambda { |controller| redirect_to(page_url(@page)) }
 
   # do we still want this?...
   # cache_sweeper :social_activities_sweeper, :only => [:create, :save, :twinkle]
@@ -57,7 +57,7 @@ class Pages::PostsController < ApplicationController
   def fetch_data
     @page = Page.find(params[:page_id])
     if params[:id]
-      @post = @page.discussion.posts.find(params[:id], :include => :discussion)
+      @post = @page.discussion.posts.find(params[:id], include: :discussion)
       raise PermissionDenied.new unless @post
     end
   end

@@ -1,7 +1,7 @@
 class Notice < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :noticable, :polymorphic => true
+  belongs_to :noticable, polymorphic: true
   belongs_to :avatar
 
   serialize :data
@@ -11,15 +11,15 @@ class Notice < ActiveRecord::Base
   ##
 
   def self.for_user(user)
-    where(:user_id => user)
+    where(user_id: user)
   end
 
   def self.for_noticable(noticable)
-    where(:noticable_id => noticable, :noticable_type => type_field(noticable))
+    where(noticable_id: noticable, noticable_type: type_field(noticable))
   end
 
   def self.dismissed(boolean)
-    where(:dismissed => boolean)
+    where(dismissed: boolean)
   end
 
   def self.find_all_by_noticable(noticable)
@@ -27,7 +27,7 @@ class Notice < ActiveRecord::Base
   end
 
   def self.destroy_all_by_noticable(noticable)
-    destroy_all(:noticable_id => noticable.id, :noticable_type => type_field(noticable))
+    destroy_all(noticable_id: noticable.id, noticable_type: type_field(noticable))
   end
 
   #

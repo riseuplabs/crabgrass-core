@@ -12,7 +12,7 @@ require 'yaml'
 namespace :cg do
   namespace :test do
     desc "refreshes the auto-generated fixtures"
-    task :update_fixtures => :environment do
+    task update_fixtures: :environment do
       #
       # load existing fixtures
       #

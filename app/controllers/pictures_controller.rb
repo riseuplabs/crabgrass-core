@@ -20,7 +20,7 @@ class PicturesController < ApplicationController
       # prevent generation of a new geometry
       @picture.render(@geometry)
     end
-    send_file(@picture.private_file_path(@geometry), :type => @picture.content_type, :disposition => 'inline')
+    send_file(@picture.private_file_path(@geometry), type: @picture.content_type, disposition: 'inline')
   end
 
   protected

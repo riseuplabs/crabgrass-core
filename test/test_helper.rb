@@ -49,9 +49,9 @@ class ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   # fixtures :all
-  set_fixture_class :castle_gates_keys => CastleGates::Key
-  set_fixture_class :taggings => ActsAsTaggableOn::Tagging
-  set_fixture_class :tags => ActsAsTaggableOn::Tag
+  set_fixture_class castle_gates_keys: CastleGates::Key
+  set_fixture_class taggings: ActsAsTaggableOn::Tagging
+  set_fixture_class tags: ActsAsTaggableOn::Tag
 end
 
 class FactoryGirl::SyntaxRunner
@@ -80,12 +80,6 @@ end
 # the libraries that it patches must be loaded before it is.
 #
 require 'mocha'
-
-# wtf?
-unless Mocha.const_defined? :ExpectationError
-  class Mocha::ExpectationError < Exception
-  end
-end
 
 # ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
 # on all values. This happens when assembling 'assigns' in tests.

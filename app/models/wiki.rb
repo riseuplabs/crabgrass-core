@@ -28,16 +28,16 @@ class Wiki < ActiveRecord::Base
   include WikiExtension::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
-  has_many :pages, :as => :data
+  has_many :pages, as: :data
   has_one :profile
-  has_one :group, :through => :profile, :source => :entity, :source_type => 'Group'
+  has_one :group, through: :profile, source: :entity, source_type: 'Group'
   attr_accessor :private # marks private group wikis during creation
 
-  has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
+  has_one :section_locks, class_name: "WikiLock", dependent: :destroy
 
   serialize :raw_structure, Hash
 
-  acts_as_versioned :if => :create_new_version? do
+  acts_as_versioned if: :create_new_version? do
     def self.included(base)
       base.belongs_to :user
       base.serialize :raw_structure, Hash
@@ -63,7 +63,7 @@ class Wiki < ActiveRecord::Base
   alias_method :existing_section_locks, :section_locks
   def section_locks(force_reload = false)
     # current section_locks or create a new one if it doesn't exist
-    locks = (existing_section_locks(force_reload) || build_section_locks(:wiki => self))
+    locks = (existing_section_locks(force_reload) || build_section_locks(wiki: self))
     # section_locks should always have self as its wiki instance
     # in case self.body is updated (and section names get changed)
     locks.wiki = self
@@ -71,7 +71,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def label
-    return :create_a_new_thing.t(:thing => 'Wiki') if self.new_record?
+    return :create_a_new_thing.t(thing: 'Wiki') if self.new_record?
     if self.profile
       self.profile.public? ? :public_group_wiki : :private_group_wiki
     else

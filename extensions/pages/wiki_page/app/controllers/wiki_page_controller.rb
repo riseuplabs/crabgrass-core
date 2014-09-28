@@ -1,17 +1,17 @@
 class WikiPageController < Pages::BaseController
 
-  guard :print => :may_show_page?
+  guard print: :may_show_page?
   helper 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
 
-  before_filter :find_last_seen, :only => :show
+  before_filter :find_last_seen, only: :show
 
   def show
     if default_to_edit?
       params[:action] = 'edit'
-      render :template => '/wikis/wikis/edit'
+      render template: '/wikis/wikis/edit'
     else
-      render :template => '/wikis/wikis/show'
+      render template: '/wikis/wikis/show'
     end
   end
 
@@ -19,7 +19,7 @@ class WikiPageController < Pages::BaseController
 
   # called during BasePage::create
   def build_page_data
-    Wiki.new(:user => current_user, :body => "")
+    Wiki.new(user: current_user, body: "")
   end
 
   def fetch_data

@@ -81,7 +81,7 @@ module Common::Application::Authentication
     if user && user.remember_token?
       user.remember_me
       self.current_user = user
-      cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
+      cookies[:auth_token] = { value: self.current_user.remember_token , expires: self.current_user.remember_token_expires_at }
       flash[:notice] = "Logged in successfully"
     end
   end

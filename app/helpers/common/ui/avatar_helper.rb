@@ -5,7 +5,7 @@ module Common::Ui::AvatarHelper
   #
   def avatar_link(entity, size='medium')
     if entity
-      link_to avatar_for(entity, size), entity_path(entity), {:title => entity.display_name }
+      link_to avatar_for(entity, size), entity_path(entity), {title: entity.display_name }
     end
   end
 
@@ -18,8 +18,8 @@ module Common::Ui::AvatarHelper
     return nil if entity.blank? || entity.new_record?
     image_tag(
       avatar_url_for(entity, size),
-      {:size => Avatar.pixels(size),
-      :class => (options[:class] || "avatar avatar_#{size}")}.merge(options)
+      {size: Avatar.pixels(size),
+      class: (options[:class] || "avatar avatar_#{size}")}.merge(options)
     )
   end
 
@@ -54,11 +54,11 @@ module Common::Ui::AvatarHelper
     action = entity.avatar ? :edit : :new
     context = (entity == current_user) ? :me : entity
     url = polymorphic_path [context, entity.avatar || :avatar],
-      :action => action
-    link_options = {:url => url, :icon => 'picture_edit'}
+      action: action
+    link_options = {url: url, icon: 'picture_edit'}
 
     return avatar_for(entity,'large') + "&nbsp;".html_safe +
-      link_to_modal(:upload_image_link.t, link_options, :class => 'inline')
+      link_to_modal(:upload_image_link.t, link_options, class: 'inline')
   end
 end
 

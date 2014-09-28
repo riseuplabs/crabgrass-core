@@ -19,21 +19,21 @@ module UserExtension::Pages
         dependent: :destroy,
         inverse_of: :user
 
-      has_many :pages, :through => :participations do
+      has_many :pages, through: :participations do
         def recent_pages
           order('user_participations.changed_at DESC').limit(15)
         end
       end
 
-      has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
-      has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
-      has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
+      has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
+      has_many :pages_created, class_name: 'Page', foreign_key: :created_by_id, dependent: :nullify
+      has_many :pages_updated, class_name: 'Page', foreign_key: :updated_by_id, dependent: :nullify
 
       def self.most_active_on(site, time)
         condition = time && ["user_participations.changed_at >= ?", time]
-        joins(:user_participations => :pages).
+        joins(user_participations: :pages).
           where(condition).
-          where(pages => {:site_id => site}).
+          where(pages => {site_id: site}).
           where("pages.type != 'AssetPage'").
           group('users.id').
           order('count(user_participations.id) DESC').
@@ -57,7 +57,7 @@ module UserExtension::Pages
       # some page data objects belong to users.
       # These need has many relationships so they get cleaned up if a user
       # is destroyed.
-      has_many :votes, :dependent => :destroy
+      has_many :votes, dependent: :destroy
 
     end
   end
@@ -91,8 +91,8 @@ module UserExtension::Pages
       # use user_participations directly.
       participation = page.user_participations.build(
         part_attrs.merge(
-          :page_id => page.id, :user_id => id,
-          :resolved => page.resolved?
+          page_id: page.id, user_id: id,
+          resolved: page.resolved?
         )
       )
       participation.page = page
@@ -118,11 +118,11 @@ module UserExtension::Pages
 
   # set resolved status vis-à-vis self.
   def resolved(page, resolved_flag)
-    find_or_build_participation(page).update_attributes :resolved => resolved_flag
+    find_or_build_participation(page).update_attributes resolved: resolved_flag
   end
 
   def find_or_build_participation(page)
-    page.participation_for_user(self) || page.user_participations.build(:user_id => self.id)
+    page.participation_for_user(self) || page.user_participations.build(user_id: self.id)
   end
 
   # This should be called when a user modifies a page and that modification
@@ -153,8 +153,8 @@ module UserExtension::Pages
     # create self's participation if it does not exist
     my_part = find_or_build_participation(page)
     my_part.update_attributes(
-      :changed_at => now, :viewed_at => now, :viewed => true,
-      :resolved => (options[:resolved] || options[:all_resolved] || my_part.resolved?)
+      changed_at: now, viewed_at: now, viewed: true,
+      resolved: (options[:resolved] || options[:all_resolved] || my_part.resolved?)
     )
 
     # this is unfortunate, because perhaps we have already just modified the page?
@@ -240,22 +240,22 @@ module UserExtension::Pages
     access = options[:access] || options[:grant_access] || :view
     if user
       if page.public? and !self.may?(:pester, user)
-        raise PermissionDenied.new(I18n.t(:share_pester_error, :name => user.login))
+        raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
       elsif access.nil?
         if !user.may?(:view,page)
-          raise PermissionDenied.new(I18n.t(:share_grant_required_error, :name => user.login))
+          raise PermissionDenied.new(I18n.t(:share_grant_required_error, name: user.login))
         end
       elsif !user.may?(access, page)
         if !self.may?(:admin,page)
           raise PermissionDenied.new(I18n.t(:share_permission_denied_error))
         elsif !self.may?(:pester, user)
-          raise PermissionDenied.new(I18n.t(:share_pester_error, :name => user.login))
+          raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
         end
       end
     elsif group
       unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may?(:pester, group)
-          raise PermissionDenied.new(I18n.t(:share_pester_error, :name => group.name))
+          raise PermissionDenied.new(I18n.t(:share_pester_error, name: group.name))
         end
       end
     end
@@ -351,7 +351,7 @@ module UserExtension::Pages
     attrs = {}
     if options[:send_notice]
       attrs[:viewed] = false
-      PageNotice.create!(:user => user, :page => page, :from => self, :message => options[:send_message])
+      PageNotice.create!(user: user, page: page, from: self, message: options[:send_message])
     end
 
     default_access_level = :none
@@ -370,10 +370,10 @@ module UserExtension::Pages
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options.key?(:access) # might be nil
-      gpart = page.add(group, :access => options[:access])
+      gpart = page.add(group, access: options[:access])
     else
       options[:grant_access] ||= :view
-      gpart = page.add(group, :grant_access => options[:grant_access])
+      gpart = page.add(group, grant_access: options[:grant_access])
     end
     gpart.save! unless page.changed?
 
@@ -388,7 +388,7 @@ module UserExtension::Pages
         upart = page.add(user, attrs)
         upart.save! unless page.changed?
       end
-      PageNotice.create!(:recipients => users_to_pester, :page => page, :from => self, :message => options[:send_message])
+      PageNotice.create!(recipients: users_to_pester, page: page, from: self, message: options[:send_message])
     end
 
     users_to_pester # returns users to pester so they can get an email, maybe.

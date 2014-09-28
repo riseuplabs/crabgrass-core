@@ -24,13 +24,13 @@ class TransmogrifierTest < Test::Unit::TestCase
 
   def test_graphicsmagick_transmog
     input = test_file('lyra.png')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg', :size => '100x100!')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg', size: '100x100!')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a jpg: #{file_info(transmog.output_file)}"
     assert_equal ['100','100'], Media.dimensions(transmog.output_file), "output should be resized: #{file_info(transmog.output_file)}"
@@ -40,50 +40,50 @@ class TransmogrifierTest < Test::Unit::TestCase
     input = test_file('lyra.png')
     Media::TempFile.open(nil,'image/jpg') do |dest_file|
       filename = dest_file.to_s
-      transmog = Media.transmogrifier(:input_file => input, :output_file => dest_file)
+      transmog = Media.transmogrifier(input_file: input, output_file: dest_file)
       assert_not_nil transmog, 'should find transmog'
       status = transmog.run
       assert_equal :success, status
-      assert File.exists?(dest_file.to_s)
+      assert File.exist?(dest_file.to_s)
       assert file_info_matches?(dest_file, /JPEG/), "output should be a jpg: #{file_info(transmog.output_file)}"
     end
   end
 
   def test_libreoffice_transmog
     input = test_file('msword.doc')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'application/pdf')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'application/pdf')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /PDF/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end
 
   def test_libremagick_transmog
     input = test_file('msword.doc')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end
 
   def test_inkscape_transmog
     input = test_file('anarchism.svg')
-    transmog = Media.transmogrifier(:input_file => input, :output_type => 'image/jpg')
+    transmog = Media.transmogrifier(input_file: input, output_type: 'image/jpg')
     assert_not_nil transmog
     status = transmog.run do |progress|
       debug_progress progress
     end
     assert_equal :success, status
-    assert File.exists?(transmog.output_file.to_s)
+    assert File.exist?(transmog.output_file.to_s)
 
     assert file_info_matches?(transmog.output_file, /JPEG/), "output should be a pdf: #{file_info(transmog.output_file)}"
   end

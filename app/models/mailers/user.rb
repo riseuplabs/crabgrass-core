@@ -4,15 +4,15 @@ module Mailers::User
     setup(options)
     setup_email(token.user)
     @subject += I18n.t(:requested_forgot_password)
-    @url = reset_password_url(:token => token.value)
-    mail :from => @from, to: @recipients, :subject => @subject
+    @url = reset_password_url(token: token.value)
+    mail from: @from, to: @recipients, subject: @subject
   end
 
   def reset_password(user, options)
     setup(options)
     setup_email(user)
     @subject += I18n.t(:password_was_reset)
-    mail :from => @from, to: @recipients, :subject => @subject
+    mail from: @from, to: @recipients, subject: @subject
   end
 
   protected

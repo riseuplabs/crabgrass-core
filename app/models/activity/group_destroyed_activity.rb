@@ -1,6 +1,6 @@
 class GroupDestroyedActivity < Activity
 
-  validates_format_of :subject_type, :with => /User/
+  validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id
   validates_presence_of :extra
 
@@ -10,8 +10,8 @@ class GroupDestroyedActivity < Activity
 
   def description(view=nil)
     I18n.t(:activity_group_destroyed,
-       :user => user_span(:destroyed_by),
-       :group => groupname)
+       user: user_span(:destroyed_by),
+       group: groupname)
   end
 
   def icon

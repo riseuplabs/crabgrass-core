@@ -20,18 +20,18 @@
 class Federating < ActiveRecord::Base
   # required
   belongs_to :group
-  belongs_to :network, :class_name => 'Group'
+  belongs_to :network, class_name: 'Group'
 
-  validates :group, :presence => true
-  validates :network, :presence => true
+  validates :group, presence: true
+  validates :network, presence: true
 
   validate :group_is_not_network
   validate :group_is_not_network_committee
 
 
   # optional
-  belongs_to :council, :class_name => 'Group'
-  belongs_to :delegation, :class_name => 'Group'
+  belongs_to :council, class_name: 'Group'
+  belongs_to :delegation, class_name: 'Group'
 
   scope :alphabetized_by_group,
     joins(:group).order('groups.full_name ASC, groups.name ASC')

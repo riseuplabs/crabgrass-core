@@ -10,11 +10,11 @@ class PostObserver < ActiveRecord::Observer
       # )
     elsif post.default?  # so far these are only status posts
       MessageWallActivity.create(
-        :user => post.recipient, :author => post.user, :post => post, :access => 2
+        user: post.recipient, author: post.user, post: post, access: 2
       )
     elsif post.public?
       MessageWallActivity.create(
-        :user => post.recipient, :author => post.user, :post => post
+        user: post.recipient, author: post.user, post: post
       )
     end
   end

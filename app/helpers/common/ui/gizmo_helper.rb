@@ -38,7 +38,7 @@ module Common::Ui::GizmoHelper
   # </div>
   #
   def toggle_bug_links(*links)
-    content_tag(:div, :class => 'btn-group') do
+    content_tag(:div, class: 'btn-group') do
       links.collect do |link|
         link[:class] = [
           'btn',
@@ -90,7 +90,7 @@ module Common::Ui::GizmoHelper
   def spinbox_tag(name, url, options = {})
     icon = options[:checked] ? 'check_on' : 'check_off'
     options[:tag] ||= :li
-    options = options.merge(:url => url, :id => "#{name}_spinbox", :icon => icon)
+    options = options.merge(url: url, id: "#{name}_spinbox", icon: icon)
 
     function = queued_remote_function(spinbox_function_options(options))
     content_tag(options[:tag]) do
@@ -102,8 +102,8 @@ module Common::Ui::GizmoHelper
 
   def spinbox_function_options(options)
     options.merge!(
-      :before  => spinner_icon_on(options[:icon], options[:id]),
-      :condition => "isEnabled(this)"
+      before: spinner_icon_on(options[:icon], options[:id]),
+      condition: "isEnabled(this)"
       # no :complete option, because in cases where this is used, so
       # far we end up replacing the spinbox itself. but maybe this could be
       # necessary someday:

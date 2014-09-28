@@ -100,7 +100,7 @@ class AccountsController < ApplicationController
   end
 
   def reset_password_form
-    render :template => 'accounts/reset_password'
+    render template: 'accounts/reset_password'
   end
 
   #
@@ -119,7 +119,7 @@ class AccountsController < ApplicationController
 
     user = User.find_for_forget(params[:email])
     if user
-      token = Token.new(:user => user, :action => "recovery")
+      token = Token.new(user: user, action: "recovery")
       token.save
       Mailer.forgot_password(token, mailer_options).deliver
     end
@@ -131,7 +131,7 @@ class AccountsController < ApplicationController
 
   def reset_password_confirmation
     confirm_token or return
-    render :template => 'accounts/reset_password_confirmation'
+    render template: 'accounts/reset_password_confirmation'
   end
 
   def set_new_password

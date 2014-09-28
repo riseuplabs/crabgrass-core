@@ -81,12 +81,12 @@ module Formy
         end
 
         puts '<div class="control-group %s %s" id="%s" style="%s">' % [parent.first(:row), @classes, @id, @style]
-        puts content_tag(:label, @label, :for => @label_for, :class => 'control-label')
+        puts content_tag(:label, @label, for: @label_for, class: 'control-label')
         puts '<div class="controls">'
         if @input
             puts @input
             if @info
-              puts content_tag(:p, @info.html_safe, :class => 'help-block')
+              puts content_tag(:p, @info.html_safe, class: 'help-block')
             end
           end
         puts '</div>'
@@ -127,11 +127,11 @@ module Formy
           end
 
           def close
-            puts content_tag(:label, :class => 'checkbox') do
+            puts content_tag(:label, class: 'checkbox') do
                @input + "\n" + @label
             end
             if @info
-              puts content_tag(:p, @info.html_safe, :class => 'help-block')
+              puts content_tag(:p, @info.html_safe, class: 'help-block')
             end
             super
           end

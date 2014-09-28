@@ -24,13 +24,13 @@ class Thumbnail < ActiveRecord::Base
   #   self.parent_id = id of the version
   #   self.parent_type = "Asset::Version"
   #
-  belongs_to :parent, :polymorphic => true
+  belongs_to :parent, polymorphic: true
 
   after_destroy :rm_file
   def rm_file
     unless proxy?
       fname = parent.private_thumbnail_filename(filename)
-      FileUtils.rm(fname) if File.exists?(fname) and File.file?(fname)
+      FileUtils.rm(fname) if File.exist?(fname) and File.file?(fname)
     end
   end
 
@@ -55,7 +55,7 @@ class Thumbnail < ActiveRecord::Base
   def generate(force=false)
     if proxy?
       return
-    elsif !force and File.exists?(private_filename) and File.size(private_filename) > 0
+    elsif !force and File.exist?(private_filename) and File.size(private_filename) > 0
       return
     else
       if depends_on
@@ -70,9 +70,9 @@ class Thumbnail < ActiveRecord::Base
       output_file = private_filename
 
       options = {
-        :size => thumbdef.size,
-        :input_file  => input_file,  :input_type => input_type,
-        :output_file => output_file, :output_type => output_type
+        size: thumbdef.size,
+        input_file: input_file,  input_type: input_type,
+        output_file: output_file, output_type: output_type
       }
 
       if thumbdef.remote and RemoteJob.site

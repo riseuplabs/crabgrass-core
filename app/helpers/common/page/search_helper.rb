@@ -96,13 +96,13 @@ module Common::Page::SearchHelper
   def filter_singlevalue_li_tag(mode, filter, options)
     label = filter.label(nil, {mode => true, :current_user => current_user})
     if options[:disabled]
-      link_to_function(label, '', :icon => 'check_off', :class => 'disabled')
+      link_to_function(label, '', icon: 'check_off', class: 'disabled')
     else
       spinbox_tag(filter.path_keyword,
         page_search_path(mode => filter.path_definition),
-        :label => label,
-        :with => 'FilterPath.encode()',
-        :checked => (mode == :remove) )
+        label: label,
+        with: 'FilterPath.encode()',
+        checked: (mode == :remove) )
     end
   end
 
@@ -112,19 +112,19 @@ module Common::Page::SearchHelper
   def filter_multivalue_li_tag(mode, filter, args, options)
     label = filter.label(args, {mode => true, :current_user => current_user})
     if options[:disabled]
-      link_to_function(label, '', :icon => 'check_off', :class => 'disabled')
+      link_to_function(label, '', icon: 'check_off', class: 'disabled')
     elsif mode == :add
-      html = render(:partial => 'common/pages/search/popup',
-        :locals => {:url => page_search_path(:add => filter.path_definition), :filter => filter})
-      link_to_modal(label, :html => html, :icon => 'check_off')
+      html = render(partial: 'common/pages/search/popup',
+        locals: {url: page_search_path(add: filter.path_definition), filter: filter})
+      link_to_modal(label, html: html, icon: 'check_off')
     elsif mode == :remove
       if label
         path = filter.path(args)
         name = filter.name(args)
-        spinbox_tag(name, page_search_path(:remove => path),
-          :label => label,
-          :with => 'FilterPath.encode()',
-          :checked => true)
+        spinbox_tag(name, page_search_path(remove: path),
+          label: label,
+          with: 'FilterPath.encode()',
+          checked: true)
       end
     end
   end
@@ -135,7 +135,7 @@ module Common::Page::SearchHelper
   def filter_submit_button(label, params)
     if params.any?
       options = @filter_submit_options.merge({
-        :url => (@filter_submit_options[:url] += "&" + safe_join(params.collect{|key,value| "%s=%s" % [CGI.escape(key.to_s), CGI.escape(value.to_s)] }, '&')).html_safe
+        url: (@filter_submit_options[:url] += "&" + safe_join(params.collect{|key,value| "%s=%s" % [CGI.escape(key.to_s), CGI.escape(value.to_s)] }, '&')).html_safe
       })
     else
       options = @filter_submit_options
@@ -167,15 +167,15 @@ module Common::Page::SearchHelper
   def search_view_toggle_links(url)
     with = "FilterPath.encode()"   # grab the current filterpath,
                                    # at the time the request is made, not when it is queued.
-    options = {:with => with, :before => show_spinner('view_toggle')}
+    options = {with: with, before: show_spinner('view_toggle')}
     current_view = @path.arg_for('view') || 'compact'
 
     # compact
-    function = queued_remote_function options.merge(:url => url+'?add=/view/compact/')
-    compact_link = {:label => 'compact', :function => function, :active => current_view == 'compact', :id => 'toggle_view_compact'}
+    function = queued_remote_function options.merge(url: url+'?add=/view/compact/')
+    compact_link = {label: 'compact', function: function, active: current_view == 'compact', id: 'toggle_view_compact'}
     # detailed
-    function = queued_remote_function options.merge(:url => url+'?add=/view/detailed/')
-    detailed_link = {:label => 'detailed', :function => function, :active => current_view == 'detailed', :id => 'toggle_view_detailed'}
+    function = queued_remote_function options.merge(url: url+'?add=/view/detailed/')
+    detailed_link = {label: 'detailed', function: function, active: current_view == 'detailed', id: 'toggle_view_detailed'}
     # grid
     #function = queued_remote_function options.merge(:url => url+'?add=/view/grid/')
     #grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
@@ -191,9 +191,9 @@ module Common::Page::SearchHelper
   #
   def fire_page_search_on_location_hash_change
     function = queued_remote_function(
-      :url => page_search_path,
-      :with => 'FilterPath.encode()',
-      :condition => 'FilterPath.shouldUpdateServer()'
+      url: page_search_path,
+      with: 'FilterPath.encode()',
+      condition: 'FilterPath.shouldUpdateServer()'
     )
     "LocationHash.onChange = function(){#{function}};"
   end

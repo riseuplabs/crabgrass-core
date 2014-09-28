@@ -4,11 +4,11 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all
-    @pepe = FactoryGirl.create(:user, :login => "pepe")
-    @manu = FactoryGirl.create(:user, :login => "manu")
-    @manu.grant_access!(:public => :pester)
+    @pepe = FactoryGirl.create(:user, login: "pepe")
+    @manu = FactoryGirl.create(:user, login: "manu")
+    @manu.grant_access!(public: :pester)
     User.current = @pepe
-    @page = FactoryGirl.create(:page, :owner => @pepe)
+    @page = FactoryGirl.create(:page, owner: @pepe)
     @last_count = @page.page_histories.count
   end
 
@@ -30,7 +30,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_add_star
-    @upart = @page.add(@pepe, :star => true ).save!
+    @upart = @page.add(@pepe, star: true ).save!
     @page.reload
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -38,8 +38,8 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_remove_star
-    @upart = @page.add(@pepe, :star => true).save!
-    @upart = @page.add(@pepe, :star => nil).save!
+    @upart = @page.add(@pepe, star: true).save!
+    @upart = @page.add(@pepe, star: nil).save!
     @page.reload
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -93,7 +93,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_start_watching
-    @upart = @page.add(@pepe, :watch => true).save!
+    @upart = @page.add(@pepe, watch: true).save!
     @page.reload
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -101,9 +101,9 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_stop_watching
-    @upart = @page.add(@pepe, :watch => true).save!
+    @upart = @page.add(@pepe, watch: true).save!
     @page.reload
-    @upart = @page.add(@pepe, :watch => nil).save!
+    @upart = @page.add(@pepe, watch: nil).save!
     @page.reload
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -111,7 +111,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_full_access
-    @pepe.share_page_with!(@page, [@manu.login], {:access => 1})
+    @pepe.share_page_with!(@page, [@manu.login], {access: 1})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserFullAccess, PageHistory.last.class
@@ -119,7 +119,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_write_access
-    @pepe.share_page_with!(@page, [@manu.login], {:access => 2})
+    @pepe.share_page_with!(@page, [@manu.login], {access: 2})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserWriteAccess, PageHistory.last.class
@@ -127,7 +127,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_read_access
-    @pepe.share_page_with!(@page, [@manu.login], {:access => 3})
+    @pepe.share_page_with!(@page, [@manu.login], {access: 3})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserReadAccess, PageHistory.last.class
@@ -135,7 +135,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_removing_access
-    @pepe.share_page_with!(@page, [@manu.login], {:access => 3})
+    @pepe.share_page_with!(@page, [@manu.login], {access: 3})
     @page.user_participations.last.destroy
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -145,7 +145,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_share_page_with_group_assigning_full_access
     group = FactoryGirl.create(:group)
-    @pepe.share_page_with!(@page, group, :access => 1)
+    @pepe.share_page_with!(@page, group, access: 1)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupFullAccess, PageHistory.last.class
@@ -154,7 +154,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_share_page_with_group_assigning_write_access
     group = FactoryGirl.create(:group)
-    @pepe.share_page_with!(@page, group, :access => 2)
+    @pepe.share_page_with!(@page, group, access: 2)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupWriteAccess, PageHistory.last.class
@@ -163,7 +163,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_share_page_with_group_assigning_read_access
     group = FactoryGirl.create(:group)
-    @pepe.share_page_with!(@page, group, :access => 3)
+    @pepe.share_page_with!(@page, group, access: 3)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantGroupReadAccess, PageHistory.last.class
@@ -172,7 +172,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_share_page_with_group_removing_access
     group = FactoryGirl.create(:group)
-    @pepe.share_page_with!(@page, group, :access => 3)
+    @pepe.share_page_with!(@page, group, access: 3)
     @page.group_participations.last.destroy
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
@@ -181,7 +181,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_update_content
-    page = FactoryGirl.create(:wiki_page, :data => Wiki.new(:user => @pepe, :body => ""))
+    page = FactoryGirl.create(:wiki_page, data: Wiki.new(user: @pepe, body: ""))
     # for some reason creating the page didn't create a GrantUserFullExist history
     # item. Instead that would be created as soon as the wiki is updated (because
     # that triggers a page.save! to update the page terms). The GrantUserFullAccess
@@ -197,7 +197,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_add_comment
-    Post.create! @page, @pepe, :body => "Some nice comment"
+    Post.create! @page, @pepe, body: "Some nice comment"
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::AddComment, PageHistory.last.class
@@ -206,7 +206,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_edit_comment
-    Post.create! @page, @pepe, :body => "Some nice comment"
+    Post.create! @page, @pepe, body: "Some nice comment"
     @post = Post.last
     @post.update_attribute("body", "Some nice comment, congrats!")
     assert_equal @last_count + 2, @page.page_histories.count
@@ -217,7 +217,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_delete_comment
-    Post.create! @page, @pepe, :body => "Some nice comment"
+    Post.create! @page, @pepe, body: "Some nice comment"
     @post = Post.last
     @post.destroy
     assert_equal @last_count + 2, @page.page_histories.count

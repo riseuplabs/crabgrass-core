@@ -12,9 +12,9 @@ module GroupExtension::Pages
         dependent: :delete_all,
         order: :featured_position,
         inverse_of: :group
-      has_many :pages, :through => :participations
+      has_many :pages, through: :participations
 
-      has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
+      has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
     end
   end
 
@@ -28,7 +28,7 @@ module GroupExtension::Pages
     if participation
       participation.attributes = attributes
     else
-      participation = page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
+      participation = page.group_participations.build attributes.merge(page_id: page.id, group_id: id)
     end
     page.association_will_change(:groups)
     page.groups_changed = true

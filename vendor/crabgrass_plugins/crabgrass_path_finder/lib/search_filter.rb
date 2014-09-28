@@ -143,7 +143,7 @@ class SearchFilter
   end
 
   def html(options={},&block)
-    self.html_options = {:submit_button => true}.merge(options)
+    self.html_options = {submit_button: true}.merge(options)
     self.html_block = block
   end
 

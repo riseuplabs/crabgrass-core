@@ -43,7 +43,7 @@ module AssetExtension
         begin
           make_from_zip(param).first
         rescue Zip::ZipError
-          asset = create_from_params(:uploaded_data => param)
+          asset = create_from_params(uploaded_data: param)
           [asset]
         end
       end
@@ -64,7 +64,7 @@ module AssetExtension
             tmp_file=File.join(tmp_dir, entry.name)
             FileUtils.mkdir_p(File.dirname(tmp_file))
             zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)
-            asset = create_from_params :uploaded_data => FileData.new(tmp_file)
+            asset = create_from_params uploaded_data: FileData.new(tmp_file)
             assets << asset if asset
           rescue => exc
             logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")

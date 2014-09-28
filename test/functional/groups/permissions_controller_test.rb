@@ -12,7 +12,7 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
   def test_index
     login_as @user
     assert_permission :may_admin_group? do
-      get :index, :group_id => @group.to_param
+      get :index, group_id: @group.to_param
     end
     assert_response :success
   end
@@ -20,7 +20,7 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
   def test_index_no_access
     login_as @other_user
     assert_permission_denied do
-      get :index, :group_id => @group.to_param
+      get :index, group_id: @group.to_param
     end
   end
 
@@ -29,10 +29,10 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_admin_group? do
       post :update,
-        :group_id => @group.to_param,
-        :id => public_code,
-        :gate => 'view',
-        :new_state => 'open'
+        group_id: @group.to_param,
+        id: public_code,
+        gate: 'view',
+        new_state: 'open'
     end
     assert_response :success
     assert @group.has_access?(:view, :public)

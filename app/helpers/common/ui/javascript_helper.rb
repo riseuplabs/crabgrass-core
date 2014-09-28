@@ -62,7 +62,7 @@ module Common::Ui::JavascriptHelper
 
     # argument 1: url
     url_options = options[:url]
-    url_options = url_options.merge(:escape => false) if url_options.is_a?(Hash)
+    url_options = url_options.merge(escape: false) if url_options.is_a?(Hash)
     function << "'#{escape_javascript(url_for(url_options))}'"
 
     # argument 2: options
@@ -138,7 +138,7 @@ module Common::Ui::JavascriptHelper
                load_url_function
              when Proc
                url = load_url_function.call(item)
-               remote_function(:url => url, :method => :get) + ";\n"
+               remote_function(url: url, method: :get) + ";\n"
              else
                ''
              end
@@ -163,8 +163,8 @@ module Common::Ui::JavascriptHelper
   # we'll hopefully migrate to jquery soon - so i don't feel like
   # cleaning this mess up now.
   def tab_remote_function(options, tab = nil)
-    options.reverse_merge! :method => :get,
-      :success => ''
+    options.reverse_merge! method: :get,
+      success: ''
     options[:success] += 'tabLink.removeClassName("spinner_icon icon");'
     return <<-EOJS
       var tabLink = #{get_dom_element(tab, :tab)};

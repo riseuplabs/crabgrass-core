@@ -61,7 +61,7 @@ module Common::Ui::EntityDisplayHelper
     if group
       options ||= {}
       unless options[:url] or options[:remote] or options[:function]
-        options = options.merge :url => group_path(group)
+        options = options.merge url: group_path(group)
       end
     end
     display_entity(group, options)
@@ -79,7 +79,7 @@ module Common::Ui::EntityDisplayHelper
     if user
       options ||= {}
       unless options[:url] or options[:remote] or options[:function]
-        options = options.merge :url => user_path(user)
+        options = options.merge url: user_path(user)
       end
     end
     display_entity(user, options)
@@ -183,7 +183,7 @@ module Common::Ui::EntityDisplayHelper
 
     # element
 
-    element_options = {:class => classes.join(' '), :style => styles.join(';'), :title => title}
+    element_options = {class: classes.join(' '), style: styles.join(';'), title: title}
     if options[:remote]
       link_to_remote(display, options[:remote], element_options)
     elsif options[:function]
@@ -205,8 +205,8 @@ module Common::Ui::EntityDisplayHelper
   def entity_list(entities, options={})
     if entities.any?
       avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
-      ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
-        link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
+      ul_list_tag(entities, header: options[:header], footer: options[:footer], class: 'entities') do |entity|
+        link_to_entity(entity, avatar: avatar_size, class: options[:class])
       end
     end
   end

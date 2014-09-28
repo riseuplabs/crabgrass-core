@@ -5,7 +5,7 @@ class GalleryTest < JavascriptIntegrationTest
 
   def test_create_gallery_with_images
     login
-    create_page :gallery,  :title => 'my pictures'
+    create_page :gallery,  title: 'my pictures'
     assert_content 'my pictures'
     attach_file 'upload-input', fixture_file('photo.jpg')
     attach_file 'upload-input', fixture_file('bee.jpg')

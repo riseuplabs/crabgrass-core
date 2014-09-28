@@ -11,7 +11,7 @@ module Common::Avatars
 
   def new
     @avatar = Avatar.new
-    render :template => 'common/avatars/edit'
+    render template: 'common/avatars/edit'
   end
 
   def create
@@ -24,7 +24,7 @@ module Common::Avatars
 
   def edit
     @avatar = @entity.avatar
-    render :template => 'common/avatars/edit'
+    render template: 'common/avatars/edit'
   end
 
   def update
@@ -40,7 +40,7 @@ module Common::Avatars
   def expire_avatar(avatar)
     if avatar
       for size in Avatar::SIZES.keys
-        expire_page :controller => '/avatars', :action => 'show', :id => avatar.id, :size => size
+        expire_page controller: '/avatars', action: 'show', id: avatar.id, size: size
       end
     end
   end

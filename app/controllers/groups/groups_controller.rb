@@ -5,9 +5,9 @@ class Groups::GroupsController < Groups::BaseController
   # may_admin_group? requires @group to be set.
   def fetch_group() super if action? :destroy end
 
-  before_filter :force_type,  :only => ['new', 'create']
-  before_filter :initialize_group,  :only => ['new', 'create']
-  before_filter :fetch_member_group, :only => 'create'
+  before_filter :force_type,  only: ['new', 'create']
+  before_filter :initialize_group,  only: ['new', 'create']
+  before_filter :fetch_member_group, only: 'create'
 
   guard :may_ALIAS_group?
 
@@ -32,7 +32,7 @@ class Groups::GroupsController < Groups::BaseController
   def destroy
     parent = @group.parent
     @group.destroy_by(current_user)
-    success :thing_destroyed.t(:thing => @group.name)
+    success :thing_destroyed.t(thing: @group.name)
     if parent
       redirect_to group_url(parent)
     else

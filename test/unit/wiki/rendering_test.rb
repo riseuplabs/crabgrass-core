@@ -4,7 +4,7 @@ module Wiki::RenderingTest
   def self.included(base)
     base.instance_eval do
       context "A new Wiki" do
-        setup {@wiki = Wiki.new :body => "a"}
+        setup {@wiki = Wiki.new body: "a"}
 
         should "have the correct body_html" do
           assert_equal "<p>a</p>",  @wiki.body_html
@@ -18,7 +18,7 @@ module Wiki::RenderingTest
 
       context "A saved Wiki" do
         setup do
-          @wiki = Wiki.create! :body => "a"
+          @wiki = Wiki.create! body: "a"
         end
 
         should "have saved the correct body_html" do
@@ -99,7 +99,7 @@ module Wiki::RenderingTest
 
         context "after clearing body_html with SQL and reloading" do
           setup do
-            Wiki.update_all("body_html = ''", {:id => @wiki.id})
+            Wiki.update_all("body_html = ''", {id: @wiki.id})
             @wiki.reload
           end
 

@@ -15,6 +15,6 @@ class Pages::SharesControllerTest < ActionController::TestCase
       mode: 'share',
       format: :js
     assert @response.body.include?(@recipient.login)
-    assert_template :partial => '_add_recipient'
+    assert_template partial: '_add_recipient'
   end
 end

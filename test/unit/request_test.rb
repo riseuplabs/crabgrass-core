@@ -11,10 +11,10 @@ class RequestTest < ActiveSupport::TestCase
     assert !u1.friend_of?(u2)
     assert !u2.friend_of?(u1)
 
-    req = RequestToFriend.create!(:created_by => u1, :recipient => u2, :message => 'hi, lets be friends')
+    req = RequestToFriend.create!(created_by: u1, recipient: u2, message: 'hi, lets be friends')
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
-      RequestToFriend.create!(:created_by => u1, :recipient => u2)
+      RequestToFriend.create!(created_by: u1, recipient: u2)
     end
 
     assert_raises PermissionDenied do
@@ -30,7 +30,7 @@ class RequestTest < ActiveSupport::TestCase
 
     req.destroy
     assert_raises ActiveRecord::RecordInvalid, "contact already exists" do
-      RequestToFriend.create!(:created_by => u1, :recipient => u2)
+      RequestToFriend.create!(created_by: u1, recipient: u2)
     end
   end
 
@@ -45,12 +45,12 @@ class RequestTest < ActiveSupport::TestCase
     assert !outsider.peer_of?(insider)
 
     req = RequestToJoinUs.create(
-      :created_by => insider, :recipient => outsider, :requestable => group)
+      created_by: insider, recipient: outsider, requestable: group)
     assert req.valid?, 'request should be valid'
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
       RequestToJoinUs.create!(
-        :created_by => insider, :recipient => outsider, :requestable => group)
+        created_by: insider, recipient: outsider, requestable: group)
     end
 
     assert_equal req, Request.to_user(outsider).having_state('pending').find(:last)
@@ -74,7 +74,7 @@ class RequestTest < ActiveSupport::TestCase
     req.destroy
     assert_raises ActiveRecord::RecordInvalid, "membership already exists" do
       RequestToJoinUs.create!(
-        :created_by => insider, :recipient => outsider, :requestable => group)
+        created_by: insider, recipient: outsider, requestable: group)
     end
   end
 
@@ -84,7 +84,7 @@ class RequestTest < ActiveSupport::TestCase
     group    = groups(:animals)
 
     req = RequestToJoinUs.create(
-      :created_by => outsider, :recipient => insider, :requestable => group)
+      created_by: outsider, recipient: insider, requestable: group)
     assert !req.valid?, 'request should be invalid'
   end
 
@@ -95,18 +95,18 @@ class RequestTest < ActiveSupport::TestCase
     assert !outsider.member_of?(group)
 
     req = RequestToJoinYou.create(
-      :created_by => outsider, :recipient => insider, :requestable => group)
+      created_by: outsider, recipient: insider, requestable: group)
     assert !req.valid?, 'request should be invalid: a user recipient should not be allowed'
 
     req = RequestToJoinYou.create(
-      :created_by => outsider, :recipient => group)
+      created_by: outsider, recipient: group)
     assert req.valid?, 'request should be valid: %s' % req.errors.full_messages.to_s
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
-      RequestToJoinYou.create!(:created_by => outsider, :recipient => group)
+      RequestToJoinYou.create!(created_by: outsider, recipient: group)
     end
 
-    assert_equal req, Request.approvable_by(insider).having_state('pending').find(:first, :conditions => {:created_by_id => outsider})
+    assert_equal req, Request.approvable_by(insider).having_state('pending').find(:first, conditions: {created_by_id: outsider})
 
     assert_raises PermissionDenied, 'PERMISSIONS DISABLED: non member is able to accept request for a group' do
       req.approve_by!(outsider)
@@ -120,7 +120,7 @@ class RequestTest < ActiveSupport::TestCase
 
     req.destroy
     assert_raises ActiveRecord::RecordInvalid, "membership already exists" do
-      RequestToJoinYou.create!(:created_by => outsider, :recipient => group)
+      RequestToJoinYou.create!(created_by: outsider, recipient: group)
     end
   end
 
@@ -130,7 +130,7 @@ class RequestTest < ActiveSupport::TestCase
     group    = groups(:animals)
 
     req = RequestToJoinUsViaEmail.create(
-      :created_by => insider, :email => 'root@example.org', :requestable => group)
+      created_by: insider, email: 'root@example.org', requestable: group)
 
     assert req.valid?, 'request should be valid: %s' % req.errors.full_messages.to_s
     assert req.code.length >= 6
@@ -154,7 +154,7 @@ class RequestTest < ActiveSupport::TestCase
     u1 = users(:kangaroo)
     u2 = users(:iguana)
 
-    req = RequestToFriend.create!(:created_by => u1, :recipient => u2)
+    req = RequestToFriend.create!(created_by: u1, recipient: u2)
     u1.destroy
     assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
       Request.find(req.id)
@@ -165,7 +165,7 @@ class RequestTest < ActiveSupport::TestCase
     group    = groups(:animals)
 
     req = RequestToJoinUs.create(
-      :created_by => insider, :recipient => outsider, :requestable => group)
+      created_by: insider, recipient: outsider, requestable: group)
 
     group.destroy_by(insider)
     assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
@@ -179,13 +179,13 @@ class RequestTest < ActiveSupport::TestCase
 
   def test_success_flash_messages
     request = RequestToJoinUs.new
-    request.stubs(:recipient).returns(stub(:display_name => "New Member"))
+    request.stubs(:recipient).returns(stub(display_name: "New Member"))
     assert_equal "Invitation to Join was sent to New Member.",
-      request.flash_message(:count => 1)[:text]
+      request.flash_message(count: 1)[:text]
     assert_equal "3 Invitations to Join were sent.",
-      request.flash_message(:count => 3)[:text]
+      request.flash_message(count: 3)[:text]
     assert_equal "0 Invitations to Join were sent.",
-      request.flash_message(:count => 0)[:text]
+      request.flash_message(count: 0)[:text]
   end
 end
 

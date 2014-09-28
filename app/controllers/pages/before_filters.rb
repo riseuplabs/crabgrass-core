@@ -22,7 +22,7 @@ module Pages::BeforeFilters
       if id and id != "0"
         @page = Page.find_by_id(id)
         unless @page
-          raise_not_found(:thing_not_found.t(:thing => :page.t))
+          raise_not_found(:thing_not_found.t(thing: :page.t))
         end
       end
     end
@@ -72,7 +72,7 @@ module Pages::BeforeFilters
 
   def load_posts
     if @options.show_posts and request.get? and !@page.nil?
-      @posts = @page.posts(:page => params[:posts]) # use params[:posts] for pagination
+      @posts = @page.posts(page: params[:posts]) # use params[:posts] for pagination
       if @options.show_reply
         @post = Post.new
       end
@@ -110,8 +110,8 @@ module Pages::BeforeFilters
     group ||= current_site.tracking? && @page.owner.is_a?(Group) && @page.owner
     user  = current_site.tracking? && @page.owner.is_a?(User) && @page.owner
     Tracking.insert_delayed(
-      :page => @page, :current_user => current_user, :action => action,
-      :group => group, :user => user
+      page: @page, current_user: current_user, action: action,
+      group: group, user: user
     )
     true
   end

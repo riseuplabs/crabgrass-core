@@ -4,7 +4,7 @@ class Pages::TitleControllerTest < ActionController::TestCase
 
   def setup
     @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, :owner => @user)
+    @page = FactoryGirl.create(:page, owner: @user)
 
     assert @user, 'no user!'
     assert @page, 'no page!'
@@ -12,7 +12,7 @@ class Pages::TitleControllerTest < ActionController::TestCase
 
   def test_edit_title
     login_as @user
-    xhr :get, :edit, :page_id => @page.id
+    xhr :get, :edit, page_id: @page.id
     assert_template 'pages/title/edit'
   end
 

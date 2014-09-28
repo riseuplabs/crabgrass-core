@@ -18,7 +18,7 @@ class RankedVotePage < Page
       self.data = RankingPoll.new
     end
     return true # ensure we don't halt on this callback
-   end
+  end
 
 end
 

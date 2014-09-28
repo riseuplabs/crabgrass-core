@@ -5,7 +5,7 @@ module GroupExtension
       base.send :include, InstanceMethods
       base.instance_eval do
 
-        has_many :featured_pages, :through => :participations, :conditions => ["`group_participations`.static = ?", true], :source => :page
+        has_many :featured_pages, through: :participations, conditions: ["`group_participations`.static = ?", true], source: :page
 
       end
     end
@@ -76,7 +76,7 @@ module GroupParticipationExtension
         ##
         ## NAMED SCOPES
         ##
-        scope :featured, where(:static => true)
+        scope :featured, where(static: true)
         scope :with_pages, include(:page)
       end
     end
@@ -86,11 +86,11 @@ module GroupParticipationExtension
       def feature!
         # find and increment the higest sibling position
         position = self.group.participations.maximum(:featured_position).to_i + 1
-        self.update_attributes!({:static => true, :featured_position => position})
+        self.update_attributes!({static: true, featured_position: position})
       end
 
       def unfeature!
-        self.update_attributes!({:static => false, :featured_position => nil})
+        self.update_attributes!({static: false, featured_position: nil})
       end
 
 

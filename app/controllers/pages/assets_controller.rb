@@ -3,21 +3,21 @@ class Pages::AssetsController < Pages::SidebarsController
   helper 'pages/assets'
 
   def index
-    render :partial => 'pages/assets/popup', :content_type => 'text/html'
+    render partial: 'pages/assets/popup', content_type: 'text/html'
   end
 
   def update
     @page.cover = @asset
     @page.save!
-    render :template => 'pages/reset_sidebar'
+    render template: 'pages/reset_sidebar'
   end
 
   def create
-    @asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    @asset = @page.add_attachment! params[:asset], cover: params[:use_as_cover], title: params[:asset_title]
     current_user.updated(@page)
     render(
-      :template => 'pages/assets/create.js',
-      :content_type => 'text/javascript'
+      template: 'pages/assets/create.js',
+      content_type: 'text/javascript'
     )
   end
 

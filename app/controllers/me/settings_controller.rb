@@ -1,6 +1,6 @@
 class Me::SettingsController < Me::BaseController
 
-  rescue_render :update => :show
+  rescue_render update: :show
 
   def show
   end

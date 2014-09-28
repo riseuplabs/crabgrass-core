@@ -10,9 +10,9 @@ module PageExtension::Groups
       has_many :group_participations,
         dependent: :destroy,
         inverse_of: :page
-      has_many :groups, :through => :group_participations
+      has_many :groups, through: :group_participations
 
-      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
+      has_many :namespace_groups, class_name: 'Group', finder_sql: lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
 
       attr_accessor :groups_changed       # set to true of group_participations has changed.
     end
@@ -22,7 +22,7 @@ module PageExtension::Groups
   def self.for_group(group)
     ids = Group.namespace_ids(group.id)
     joins(:group_participations).
-      where(:group_participations => {:group_id => ids})
+      where(group_participations: {group_id: ids})
   end
 
 
@@ -127,7 +127,7 @@ module PageExtension::Groups
     # has access to but is not the owner of. It would be slower to limit it to owned pages, so we don't yet.
     #
     def tags_for_group(group, current_user)
-      filter = access_filter(:group => group, :current_user => current_user)
+      filter = access_filter(group: group, current_user: current_user)
       Tag.find_by_sql(%Q[
         SELECT tags.*, count(name) as count
         FROM tags

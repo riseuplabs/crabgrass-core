@@ -146,7 +146,7 @@ module Common::Application::AlertMessages
   end
 
   def add_flash_message(type, message)
-    [{:type => type, :text => message}]
+    [{type: type, text: message}]
   end
 
   def add_flash_default(type)
@@ -160,19 +160,19 @@ module Common::Application::AlertMessages
 
   def add_flash_exception(exception)
     if exception.is_a? PermissionDenied
-      [{:type => :warning, :text => [:alert_permission_denied.t, :permission_denied_description.t]}]
+      [{type: :warning, text: [:alert_permission_denied.t, :permission_denied_description.t]}]
     elsif exception.is_a? AuthenticationRequired
-      [{:type => :notice, :text => [:login_required.t, :login_required_description.t]}]
+      [{type: :notice, text: [:login_required.t, :login_required_description.t]}]
     elsif exception.is_a? ErrorMessages
       exception.errors.collect do |msg|
-        {:type => :error, :text => msg}
+        {type: :error, text: msg}
       end
     elsif exception.is_a? ActiveRecord::RecordInvalid
       add_flash_record(exception.record)
     elsif exception.is_a? CrabgrassException
-      [{:type => exception.options[:type] || :error, :text => exception.message}]
+      [{type: exception.options[:type] || :error, text: exception.message}]
     else
-      [{:type => :error, :text => exception.to_s}]
+      [{type: :error, text: exception.to_s}]
     end
   end
 
@@ -181,12 +181,12 @@ module Common::Application::AlertMessages
       options[:count] ||= 1
       [ record.flash_message(options) ]
     elsif record.errors.any?
-      [{ :type => :error,
-         :text => [:alert_not_saved.t, :alert_field_errors.t],
-         :list => record.errors.full_messages }]
+      [{ type: :error,
+         text: [:alert_not_saved.t, :alert_field_errors.t],
+         list: record.errors.full_messages }]
     else
-      [{ :type => :success,
-         :text => :alert_saved.t }]
+      [{ type: :success,
+         text: :alert_saved.t }]
     end
   end
 

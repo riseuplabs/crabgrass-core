@@ -88,7 +88,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(data_path)
       # (the file pointed to by data_path must call 'define_theme')
     else
-      define_theme(:parent => 'default')
+      define_theme(parent: 'default')
     end
 
     # load @navigation
@@ -96,7 +96,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(navigation_path)
       # (the file pointed to by navigation_path must call 'define_navigation')
     else
-      define_navigation(:parent => 'default')
+      define_navigation(parent: 'default')
     end
 
     # in production, clear the cache once at startup.
@@ -186,11 +186,11 @@ module Crabgrass::Theme::Loader
     # these sanity checks are necessary to prevent Pathname from throwing
     # exceptions... Pathname does not act gracefully if it references bad symlinks
     # or missing files.
-    if !File.exists?(src)
+    if !File.exist?(src)
       return
     elsif File.symlink?(dst)
       FileUtils.rm(dst)
-    elsif File.exists?(dst)
+    elsif File.exist?(dst)
       raise 'For the theme to work, the file "%s" must not exist.' % dst
     end
 
@@ -220,7 +220,7 @@ module Crabgrass::Theme::Loader
 
   # ensures the directory exists
   def ensure_dir(dir)
-    unless File.exists?(dir)
+    unless File.exist?(dir)
       FileUtils.mkdir_p(dir)
     end
     unless File.directory?(dir)

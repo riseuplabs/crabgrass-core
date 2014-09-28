@@ -8,8 +8,8 @@ class DiscussionPageControllerTest < ActionController::TestCase
   end
 
   def test_show
-    page = DiscussionPage.find :first, :conditions => {:public => true}
-    get :show, :page_id => page.id
+    page = DiscussionPage.find :first, conditions: {public: true}
+    get :show, page_id: page.id
     assert_response :success
   end
 

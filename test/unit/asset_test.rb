@@ -53,8 +53,8 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 2, @asset.version, 'should be on version 2'
     assert_equal 2, @asset.versions.size, 'there should be two versions'
 
-    assert !File.exists?(@filename_for_1), 'first non-version file should not exist'
-    assert File.exists?(@filename_for_2), 'second non-version file should exist'
+    assert !File.exist?(@filename_for_1), 'first non-version file should not exist'
+    assert File.exist?(@filename_for_2), 'second non-version file should exist'
 
     @version = @asset.versions.earliest
     assert_equal @version.class, Asset::Version
@@ -82,8 +82,8 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
 
     assert_equal "%s/0000/%04d/newimage.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
-    assert File.exists?(@asset.private_filename)
-    assert !File.exists?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
+    assert File.exist?(@asset.private_filename)
+    assert !File.exist?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
   end
 
   def test_file_cleanup_on_destroy
@@ -91,9 +91,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset.update_access
     @asset.destroy
 
-    assert !File.exists?(@asset.private_filename), 'private file should not exist'
-    assert !File.exists?(File.dirname(@asset.private_filename)), 'dir for private file should not exist'
-    assert !File.exists?(@asset.public_filename), 'public file should not exist'
+    assert !File.exist?(@asset.private_filename), 'private file should not exist'
+    assert !File.exist?(File.dirname(@asset.private_filename)), 'dir for private file should not exist'
+    assert !File.exist?(@asset.public_filename), 'public file should not exist'
   end
 
   def test_access
@@ -101,7 +101,7 @@ class AssetTest < ActiveSupport::TestCase
     assert @asset.public?
     @asset.update_access
 
-    assert File.exists?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
+    assert File.exist?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
     assert File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should be a symlink'
     @asset.instance_eval do
       def public?
@@ -109,7 +109,7 @@ class AssetTest < ActiveSupport::TestCase
       end
     end
     @asset.update_access
-    assert !File.exists?(@asset.public_filename), 'public file should NOT exist'
+    assert !File.exist?(@asset.public_filename), 'public file should NOT exist'
     assert !File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should NOT be a symlink'
   end
 
@@ -123,8 +123,8 @@ class AssetTest < ActiveSupport::TestCase
 
     @thumb1 = @asset.private_thumbnail_filename(:small)
     @thumb_v1 = @asset.versions.latest.private_thumbnail_filename(:small)
-    assert File.exists?(@thumb1), '%s should exist' % @thumb1
-    assert File.exists?(@thumb_v1), '%s should exist' % @thumb_v1
+    assert File.exist?(@thumb1), '%s should exist' % @thumb1
+    assert File.exist?(@thumb_v1), '%s should exist' % @thumb_v1
 
     @asset.uploaded_data = upload_data('image.png')
     @asset.save
@@ -140,9 +140,9 @@ class AssetTest < ActiveSupport::TestCase
     @thumb2 = @asset.private_thumbnail_filename(:small)
     @thumb_v2 = @asset.versions.latest.private_thumbnail_filename(:small)
 
-    assert File.exists?(@thumb2), '%s should exist (new thumb)' % @thumb2
-    assert File.exists?(@thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
-    assert !File.exists?(@thumb1), '%s should NOT exist (old filename)' % @thumb1
+    assert File.exist?(@thumb2), '%s should exist (new thumb)' % @thumb2
+    assert File.exist?(@thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
+    assert !File.exist?(@thumb1), '%s should NOT exist (old filename)' % @thumb1
 
     end_thumb_count = Thumbnail.count
     assert_equal start_thumb_count+9, end_thumb_count, 'there should be exactly 9 more thumbnail objects'
@@ -170,7 +170,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_simple_upload
    @asset = FactoryGirl.create :png_asset
-   assert File.exists?( @asset.private_filename ), 'the private file should exist'
+   assert File.exist?( @asset.private_filename ), 'the private file should exist'
    assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
@@ -214,7 +214,7 @@ class AssetTest < ActiveSupport::TestCase
       return
     end
 
-    @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
+    @asset = Asset.create_from_params uploaded_data: upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
 
@@ -226,14 +226,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_binary
-    @asset = Asset.create_from_params :uploaded_data => upload_data('raw_file.bin')
+    @asset = Asset.create_from_params uploaded_data: upload_data('raw_file.bin')
     assert_equal Asset, @asset.class, 'asset should be an Asset'
     assert_equal 'Asset', @asset.versions.earliest.versioned_type, 'version should by of type Asset'
   end
 
   def test_failure_on_corrupted_file
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -244,7 +244,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_failure
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { false })
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -262,7 +262,7 @@ class AssetTest < ActiveSupport::TestCase
     data1 = '<b>this is some very interesting data</b>'
     data2 = '<i>but not this</i>'
 
-    asset = Asset.create!(:data => '<b>this is some very interesting data</b>', :content_type => 'text/html', :filename => 'data')
+    asset = Asset.create!(data: '<b>this is some very interesting data</b>', content_type: 'text/html', filename: 'data')
     assert_equal data1, File.read(asset.private_filename)
 
     asset.data = data2
@@ -273,14 +273,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_user_versions
-    asset = Asset.create! :data => 'hi', :filename => 'x'
-    asset.update_attributes :data => 'bye', :user => users(:blue)
+    asset = Asset.create! data: 'hi', filename: 'x'
+    asset.update_attributes data: 'bye', user: users(:blue)
     assert_nil asset.versions.first.user
     assert_equal users(:blue), asset.versions.last.user
   end
 
   def test_build_asset
-    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata
     assert asset.filename.present?
   end

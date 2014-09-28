@@ -23,14 +23,14 @@ class ThemeController < ApplicationController
   def perform_caching; true; end
 
   attr_accessor :cache_css
-  caches_page :show, :if => Proc.new {|ctrl| ctrl.cache_css}
+  caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
 
   def show
-    render :text => @theme.render_css(@file), :content_type => 'text/css'
+    render text: @theme.render_css(@file), content_type: 'text/css'
   rescue Sass::SyntaxError => exc
     self.cache_css = false
-    render :text => @theme.error_response(exc)
-    expire_page :name => params[:name], :file => params[:file]
+    render text: @theme.error_response(exc)
+    expire_page name: params[:name], file: params[:file]
   end
 
   protected

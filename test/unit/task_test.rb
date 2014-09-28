@@ -26,8 +26,8 @@ class TaskTest < ActiveSupport::TestCase
 
   def test_include_associations
     assert_nothing_raised do
-      TaskList.find(:first, :include => [:tasks, :completed, :pending])
-      Task.find(:first, :include => :task_list)
+      TaskList.find(:first, include: [:tasks, :completed, :pending])
+      Task.find(:first, include: :task_list)
     end
   end
 

@@ -18,10 +18,10 @@ class RequestNotice < Notice
           nil
         elsif request.recipient.is_a? Group
           request.recipient.users.each do |user|
-            create!(:request => request, :user => user)
+            create!(request: request, user: user)
           end
         else
-          create!(:request => request, :user => request.recipient)
+          create!(request: request, user: request.recipient)
         end
       end  
     end
@@ -29,7 +29,7 @@ class RequestNotice < Notice
   end
 
   def button_text
-    :show_thing.t(:thing => :request.t)
+    :show_thing.t(thing: :request.t)
   end
  
   def display_label
@@ -48,7 +48,7 @@ class RequestNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {:body => request.description, :title => request.name}
+    self.data = {body: request.description, title: request.name}
   end
 
   before_create :set_avatar

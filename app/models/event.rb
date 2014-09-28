@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
 
-  has_many :pages, :as => :data
+  has_many :pages, as: :data
   format_attribute :description
 
   #validates_presence_of :location

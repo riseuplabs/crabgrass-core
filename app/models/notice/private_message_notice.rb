@@ -22,7 +22,7 @@ class PrivateMessageNotice < Notice
   end
 
   def display_title
-     I18n.t(:unread_private_message, :user => data[:from])
+     I18n.t(:unread_private_message, user: data[:from])
   end
 
   def display_body_as_quote?
@@ -35,7 +35,7 @@ class PrivateMessageNotice < Notice
   end
 
   def button_text
-    :show_thing.t(:thing => :message.t)
+    :show_thing.t(thing: :message.t)
   end
 
   def noticable_path
@@ -50,7 +50,7 @@ class PrivateMessageNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {:message => message, :from => from.name}
+    self.data = {message: message, from: from.name}
   end
 
   before_create :set_avatar

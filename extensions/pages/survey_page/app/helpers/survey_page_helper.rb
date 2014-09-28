@@ -21,13 +21,13 @@ module SurveyPageHelper
     object.choices = ["Answer choice 1", "Answer choice 2", "Answer choice 3"]
 
     link_to_function object.add_question_link_text do |page|
-      page.insert_html(:bottom, :questions, :partial => 'edit_question', :locals => {:question => object})
+      page.insert_html(:bottom, :questions, partial: 'edit_question', locals: {question: object})
       page.call 'surveyDesignerEnableSorting'
     end
   end
 
   def delete_question_function(question)
-    link_to_function(I18n.t(:delete), :class => "delete_question") do |page|
+    link_to_function(I18n.t(:delete), class: "delete_question") do |page|
       page.call "$(this).up('.question').remove"
       unless question.new_record?
         page.insert_html :bottom, :questions, "<input type='hidden' name='survey[new_questions_attributes][#{question.id}][deleted]' value='true'>"
@@ -45,8 +45,8 @@ module SurveyPageHelper
 
   def respond_to_question_form(response_form, question)
     answer = response_form.object.find_or_build_answer_for_question(question)
-    render :partial => 'survey_page/response_form/' + question.partial,
-              :locals => {:question => question, :response_form => response_form, :answer => answer}
+    render partial: 'survey_page/response_form/' + question.partial,
+              locals: {question: question, response_form: response_form, answer: answer}
   end
 
   def show_answers_for_question(response, question)
@@ -57,7 +57,7 @@ module SurveyPageHelper
       if answer.asset
         render_asset(answer.asset, answer.value)
       else
-        content_tag(:div, answer.display_value, :class => 'answer')
+        content_tag(:div, answer.display_value, class: 'answer')
       end
     end
 
@@ -66,13 +66,13 @@ module SurveyPageHelper
 
   def render_asset(asset, name)
     if asset.embedding_partial.any?
-      render :partial => asset.embedding_partial
+      render partial: asset.embedding_partial
     else
       thumbnail = asset.thumbnails(:large)
       if thumbnail.nil?
-        link_to(image_tag(asset.big_icon, :alt => name), asset.url )
+        link_to(image_tag(asset.big_icon, alt: name), asset.url )
       else
-        link_to_asset(asset, :large, :class => '')
+        link_to_asset(asset, :large, class: '')
       end
     end
   end
@@ -82,7 +82,7 @@ module SurveyPageHelper
   # returns modified+ html+ with error markup
   def wrap_error_html(html, instance)
     if html =~ /(input|textarea|select)/ and html !~ /hidden/
-      content_tag(:span, html, :class => 'fieldWithErrors')
+      content_tag(:span, html, class: 'fieldWithErrors')
     else
       html
     end
@@ -92,9 +92,9 @@ module SurveyPageHelper
     # rating of 0 has special meaning: it creates a rating of nil, which is
     # skipped in the rating calculation. These nil rating records help us keep
     # track of the fact that the user decided to skip the current response.
-    { :url => page_url(@page, :action => 'response-rate', :id => @response.id, :rating => (rating||0)),
-      :loading => show_spinner('next_response'),
-      :complete => hide_spinner('next_response')
+    { url: page_url(@page, action: 'response-rate', id: @response.id, rating: (rating||0)),
+      loading: show_spinner('next_response'),
+      complete: hide_spinner('next_response')
     }
   end
 

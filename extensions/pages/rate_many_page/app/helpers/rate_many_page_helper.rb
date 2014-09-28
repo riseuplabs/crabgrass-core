@@ -17,10 +17,10 @@ module RateManyPageHelper
       "vote[#{possible.id}]",   # name
       map(value),               # value
       value == map(vote.value), # checked?
-      :disabled => !current_user.may?(:edit, @page),
-      :onclick => remote_function(
-        :url => page_xurl(@page, :action => 'vote_one', :id => possible.id, :value => map(value)),
-        :loading => show_spinner("possible_%s" % possible.id)
+      disabled: !current_user.may?(:edit, @page),
+      onclick: remote_function(
+        url: page_xurl(@page, action: 'vote_one', id: possible.id, value: map(value)),
+        loading: show_spinner("possible_%s" % possible.id)
        )
     )
 

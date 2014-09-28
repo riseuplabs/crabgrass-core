@@ -5,7 +5,7 @@ class AssetPageHistoryControllerTest < ActionController::TestCase
 
   def setup
     setup_assets
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
   end
 
   def teardown
@@ -15,7 +15,7 @@ class AssetPageHistoryControllerTest < ActionController::TestCase
   def test_destroy
     user = users(:gerrard)
     login_as user
-    create_page :created_by => user, :asset => @asset
+    create_page created_by: user, asset: @asset
 
     @asset = @page.data
     @version_filename = @asset.versions.find_by_version(1).private_filename
@@ -25,17 +25,17 @@ class AssetPageHistoryControllerTest < ActionController::TestCase
     user.updated(@page)
 
     assert_difference 'Asset::Version.count', -1, "destroy should remove a version" do
-      post :destroy, :page_id => @page, :id => 1
+      post :destroy, page_id: @page, id: 1
     end
-    assert File.exists?(@asset.private_filename)
-    assert !File.exists?(@version_filename)
+    assert File.exist?(@asset.private_filename)
+    assert !File.exist?(@version_filename)
 
     assert_equal 1, @asset.reload.versions.size
   end
 
   protected
   def create_page(options = {})
-    defaults = {:title => 'untitled page', :public => false}
+    defaults = {title: 'untitled page', public: false}
     @page = AssetPage.create(defaults.merge(options))
   end
 end

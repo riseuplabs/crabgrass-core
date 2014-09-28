@@ -7,7 +7,7 @@ begin
       task(:clean) { rm_f "coverage.data" }
     end
     desc 'Aggregate code coverage for unit, functional and integration tests'
-    task :coverage => "test:coverage:clean"
+    task coverage: "test:coverage:clean"
     %w[unit functional integration].each do |target|
       namespace :coverage do
         Rcov::RcovTask.new(target) do |t|
@@ -18,7 +18,7 @@ begin
           t.rcov_opts << '--rails --aggregate coverage.data'
         end
       end
-      task :coverage => "test:coverage:#{target}"
+      task coverage: "test:coverage:#{target}"
     end
   end
 

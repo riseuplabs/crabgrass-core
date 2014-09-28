@@ -12,7 +12,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
   def test_new
     login_as @user
     assert_permission :may_admin_group? do
-      get :new, :group_id => @group.to_param
+      get :new, group_id: @group.to_param
     end
     assert_response :success
   end
@@ -22,12 +22,12 @@ class Groups::InvitesControllerTest < ActionController::TestCase
     recipient = FactoryGirl.create(:user)
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUs.count' do
-        get :create, :group_id => @group.to_param,
-         :recipients => recipient.name
+        get :create, group_id: @group.to_param,
+         recipients: recipient.name
       end
     end
     assert_response :redirect
-    assert_redirected_to :action => :new
+    assert_redirected_to action: :new
     assert req = RequestToJoinUs.last
     assert_equal @group, req.requestable
     assert_equal recipient, req.recipient

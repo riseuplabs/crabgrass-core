@@ -24,7 +24,7 @@ module Common::Application::PaginationOptions
     page = opts[:page] || params[:page] || pagination_default_page
     per_page = opts[:per_page]
 
-    {:page => page, :per_page => per_page }
+    {page: page, per_page: per_page }
   end
 
   #

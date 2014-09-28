@@ -29,7 +29,7 @@ module UserExtension::Users
       ## USER'S STATUS / PUBLIC WALL
       ##
 
-      has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
+      has_one :wall_discussion, as: :commentable, dependent: :destroy, class_name: "Discussion"
 
       before_destroy :save_relationships
       attr_reader :peers_before_destroy, :contacts_before_destroy
@@ -38,14 +38,14 @@ module UserExtension::Users
       ## RELATIONSHIPS
       ##
 
-      has_many :relationships, :dependent => :destroy do
+      has_many :relationships, dependent: :destroy do
         def with(user) find_by_contact_id(user.id) end
       end
 
-      has_many :discussions, :through => :relationships, :order => 'discussions.replied_at DESC'
-      has_many :contacts,    :through => :relationships
+      has_many :discussions, through: :relationships, order: 'discussions.replied_at DESC'
+      has_many :contacts,    through: :relationships
 
-      has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
+      has_many :friends, through: :relationships, conditions: "relationships.type = 'Friendship'", source: :contact do
         def most_active(options = {})
           options[:limit] ||= 13
           max_visit_count = select('MAX(relationships.total_visits) as id').first.id || 1
@@ -120,13 +120,13 @@ module UserExtension::Users
       type = 'Friendship' if type == :friend
 
       unless relationship = other_user.relationships.with(self)
-        relationship = Relationship.new(:user => other_user, :contact => self)
+        relationship = Relationship.new(user: other_user, contact: self)
       end
       relationship.type = type
       relationship.save!
 
       unless relationship = self.relationships.with(other_user)
-        relationship = Relationship.new(:user => self, :contact => other_user)
+        relationship = Relationship.new(user: self, contact: other_user)
       end
       relationship.type = type
       relationship.save!

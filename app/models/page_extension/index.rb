@@ -11,7 +11,7 @@ module PageExtension::Index
   def self.included(base)
     base.extend(ClassMethods)
     base.instance_eval do
-      has_one :page_terms, :dependent => :destroy
+      has_one :page_terms, dependent: :destroy
       before_save :update_page_terms_in_background
       include InstanceMethods
     end
@@ -113,7 +113,7 @@ module PageExtension::Index
             PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
           end
           # fire off background task
-          MiddleMan.worker(:indexing_worker).async_update_page_terms(:arg => self.id)
+          MiddleMan.worker(:indexing_worker).async_update_page_terms(arg: self.id)
         rescue BackgrounDRb::NoServerAvailable => err
           logger.error "Warning: #{err}; performing synchronous update of page index"
           update_page_terms
@@ -163,9 +163,9 @@ module PageExtension::Index
     # :nodoc:
     def access_ids
       Page.access_ids_for(
-        :public => public?,
-        :group_ids => group_ids,
-        :user_ids => user_ids
+        public: public?,
+        group_ids: group_ids,
+        user_ids: user_ids
       ).join(' ')
     end
 

@@ -9,9 +9,9 @@ module Mailers::Bugreport
     @error_action      = params[:error_action]
     @exception_message = params[:exception_detailed_message]
     @comments          = params[:comments]
-    mail :from => @from_address,
-      :to => options[:dev_email],
-      :subject => 'Crabgrass Bug Report'
+    mail from: @from_address,
+      to: options[:dev_email],
+      subject: 'Crabgrass Bug Report'
   end
 
 end

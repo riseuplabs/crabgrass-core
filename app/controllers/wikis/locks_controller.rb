@@ -6,11 +6,11 @@ class Wikis::LocksController < Wikis::BaseController
   #
   def update
     if params[:cancel]
-      render :template => 'wikis/wikis/show'
+      render template: 'wikis/wikis/show'
     elsif params[:break_lock]
       @wiki.break_lock!(@section)
       @wiki.lock!(@section, current_user)
-      render :template => 'wikis/wikis/edit'
+      render template: 'wikis/wikis/edit'
     end
   end
 
@@ -21,7 +21,7 @@ class Wikis::LocksController < Wikis::BaseController
   #
   def destroy
     @wiki.release_my_lock!(@section, current_user)
-    render :text => nil
+    render text: nil
   end
 
 end

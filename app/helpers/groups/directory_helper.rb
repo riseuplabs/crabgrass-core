@@ -5,7 +5,7 @@ module Groups::DirectoryHelper
   #
   def group_entry(group)
     place = h(group.profiles.public.place)
-    count = :group_membership_count.t(:count => group.users.count)
+    count = :group_membership_count.t(count: group.users.count)
     summary = group.profiles.public.summary_html
     if may_list_group_committees?(group)
       committees = group.real_committees

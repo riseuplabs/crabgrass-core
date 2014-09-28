@@ -6,8 +6,8 @@ class GalleryToolTest < ActiveSupport::TestCase
   def setup
     setup_assets
     @user = FactoryGirl.create :user
-    @gal = Gallery.create! :title => 'kites', :user => @user
-    @asset = @gal.add_image!(:uploaded_data => upload_data('image.png'))
+    @gal = Gallery.create! title: 'kites', user: @user
+    @asset = @gal.add_image!(uploaded_data: upload_data('image.png'))
   end
 
   def teardown
@@ -33,7 +33,7 @@ class GalleryToolTest < ActiveSupport::TestCase
 
   def test_sorting_images
     2.times do
-      another_asset = @gal.add_image!(:uploaded_data => upload_data('image.png'))
+      another_asset = @gal.add_image!(uploaded_data: upload_data('image.png'))
     end
 
     positions = @gal.images.collect{|image| image.id}

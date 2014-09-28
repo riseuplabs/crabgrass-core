@@ -1,4 +1,4 @@
-class CrabgrassException < Exception
+class CrabgrassException < StandardError
   attr_accessor :options
   attr_accessor :message
   def initialize(message = nil, opts={})
@@ -40,7 +40,7 @@ class ErrorNotFound < CrabgrassException
     super("",options)
   end
   def to_s
-    I18n.t(:thing_not_found, :thing => @thing).capitalize
+    I18n.t(:thing_not_found, thing: @thing).capitalize
   end
   def status
     :not_found
@@ -59,12 +59,12 @@ class ErrorMessages < ErrorMessage
   end
 end
 
-# extend base Exception class to have record() method.
+# extend StandardError to have record() method.
 # this is useful like so:
 #
 #  begin
 #    @page = Page.create!( ... )
-#  rescue Exception => exc
+#  rescue exc
 #    @page = exc.record
 #    flash_message_now :exception => exc
 #  end
@@ -73,7 +73,7 @@ end
 #  will get little red boxes because @page is set.
 #  nifty.
 #
-class Exception
+class StandardError
   def record
     nil
   end

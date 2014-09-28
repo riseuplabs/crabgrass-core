@@ -28,7 +28,7 @@ SearchFilter.new('/owned-by-me/') do
     if opts[:add]
       :owned_by_me.t
     else
-      :owned_by_user.t(:user => :me.t)
+      :owned_by_user.t(user: :me.t)
     end
   end
 

@@ -24,8 +24,8 @@ module PageExtension::Assets
 
   def self.included(base)
     base.instance_eval do
-      has_many   :assets, :dependent => :destroy
-      belongs_to :cover, :class_name => "Asset"
+      has_many   :assets, dependent: :destroy
+      belongs_to :cover, class_name: "Asset"
 
       before_save :update_media_flags
       after_save :update_attachment_access
@@ -51,7 +51,7 @@ module PageExtension::Assets
   #
   def add_attachment!(asset, options={})
     if asset.is_a? Hash
-      asset = Asset.build(asset.merge(:parent_page => self))
+      asset = Asset.build(asset.merge(parent_page: self))
     elsif asset.is_a? Asset
       asset.parent_page = self
     end

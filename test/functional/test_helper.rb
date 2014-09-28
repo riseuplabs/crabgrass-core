@@ -6,8 +6,8 @@ class ActionController::TestCase
 
   def run_before_filters(action=nil, params = {})
     @controller.stubs(:action_name).returns(action.to_s) if action
-    params.reverse_merge! :action => action,
-      :controller => @controller.class.controller_path
+    params.reverse_merge! action: action,
+      controller: @controller.class.controller_path
     @controller.stubs(:params).returns(params)
     session = ActionController::TestSession.new
     @controller.stubs(:session).returns(session)

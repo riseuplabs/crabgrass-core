@@ -4,8 +4,8 @@ class Gallery < Page
   # A gallery is a collection of images, being presented to the user by a cover
   # page, an overview or a slideshow.
 
-  has_many :showings, :order => 'position', :dependent => :destroy
-  has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
+  has_many :showings, order: 'position', dependent: :destroy
+  has_many :images, through: :showings, source: :asset, order: 'showings.position'
 
   def update_media_flags
     self.is_image = true
@@ -28,7 +28,7 @@ class Gallery < Page
   def add_attachment!(asset_params, options={})
     check_type!(asset_params)
     asset = super
-    Showing.create! :gallery => self, :asset => asset
+    Showing.create! gallery: self, asset: asset
     return asset
   end
   alias_method :add_image!, :add_attachment!

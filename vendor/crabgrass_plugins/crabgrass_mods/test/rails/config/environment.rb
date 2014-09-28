@@ -14,6 +14,6 @@ end
 Rails::Initializer.run do |config|
   #config.plugin_paths << "#{File.dirname(__FILE__)}/../../../"
 
-  config.action_controller.session = { :key => "xxxx", :secret => "65d7f157d09d6a6a549cb273c24318330fdb5c565a781cdf406ddfcdbf45b7468c935c6e84d9b5" }
+  config.action_controller.session = { key: "xxxx", secret: "65d7f157d09d6a6a549cb273c24318330fdb5c565a781cdf406ddfcdbf45b7468c935c6e84d9b5" }
 end
 

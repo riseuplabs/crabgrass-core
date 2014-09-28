@@ -22,11 +22,11 @@ module RequestsHelper
 
   def buttons_for_request(request)
     if request.pending?
-      render 'common/requests/action_buttons', :request => request
+      render 'common/requests/action_buttons', request: request
     elsif request.approved?
-      content_tag(:button, :approved.t, :class => 'btn btn-success disabled')
+      content_tag(:button, :approved.t, class: 'btn btn-success disabled')
     elsif request.rejected?
-      content_tag(:button, :rejected.t, :class => 'btn btn-danger disabled')
+      content_tag(:button, :rejected.t, class: 'btn btn-danger disabled')
     end
   end
 

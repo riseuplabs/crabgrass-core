@@ -21,7 +21,7 @@ module Common::Page::ListingRowHelper
   # render the cover of the page if it exists
   #
   def page_cover(page)
-    thumbnail_img_tag(page.cover, :medium, :scale => '64x64') if page.cover
+    thumbnail_img_tag(page.cover, :medium, scale: '64x64') if page.cover
   end
 
   #
@@ -63,7 +63,7 @@ module Common::Page::ListingRowHelper
 
 
   def page_summary(page)
-    text_with_more(page.summary, :length => 300)
+    text_with_more(page.summary, length: 300)
   end
 
   #def owner_image(page, options={})

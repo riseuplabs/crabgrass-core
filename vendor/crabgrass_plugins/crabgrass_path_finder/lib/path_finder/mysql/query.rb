@@ -71,20 +71,20 @@ class PathFinder::Mysql::Query < PathFinder::Query
     ##  together in the query).
     if options[:group_ids] or options[:user_ids] or options[:public]
       @access_me_clause = "+(%s)" % Page.access_ids_for(
-        :public    => options[:public],
-        :group_ids => options[:group_ids],
-        :user_ids  => options[:user_ids]
+        public: options[:public],
+        group_ids: options[:group_ids],
+        user_ids: options[:user_ids]
       ).join(' ')
     end
     if options[:secondary_group_ids] or options[:secondary_user_ids]
       @access_target_clause = "+(%s)" % Page.access_ids_for(
-        :group_ids => options[:secondary_group_ids],
-        :user_ids  => options[:secondary_user_ids]
+        group_ids: options[:secondary_group_ids],
+        user_ids: options[:secondary_user_ids]
       ).join(' ')
     end
     if options[:site_ids]
       @access_site_clause = "+(%s)" % Page.access_ids_for(
-        :site_ids => options[:site_ids]
+        site_ids: options[:site_ids]
       ).join(' ')
     end
 
@@ -135,7 +135,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def paginate
-    @klass.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
+    @klass.paginate options_for_find.merge(page: @page, per_page: @per_page)
   end
 
   def count
@@ -144,7 +144,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def ids
-    @klass.find_ids options_for_find.merge(:select => 'pages.id')
+    @klass.find_ids options_for_find.merge(select: 'pages.id')
   end
 
   ##
@@ -167,7 +167,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def add_public
-    add_access_constraint(:public => true)
+    add_access_constraint(public: true)
   end
 
   def add_tag_constraint(tag)
@@ -268,11 +268,11 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
     # make the hash
     find_opts = {
-      :conditions => conditions,
-      :joins => sql_for_joins(conditions),
-      :order => order,
-      :include => @include,
-      :select => @select || @selects.join(", "),
+      conditions: conditions,
+      joins: sql_for_joins(conditions),
+      order: order,
+      include: @include,
+      select: @select || @selects.join(", "),
     }
     # setting limit to nil will keep will_paginate from setting its own limit
     find_opts[:limit]  = @limit  if @limit   # manual limit

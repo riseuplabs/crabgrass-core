@@ -66,7 +66,7 @@ class SessionController < ApplicationController
   # returns login form without layout.
   # used for ajax login form.
   def login_form
-    render :partial => 'session/login_form', :layout => false, :content_type => "text/html"
+    render partial: 'session/login_form', layout: false, content_type: "text/html"
   end
 
   protected
@@ -74,7 +74,7 @@ class SessionController < ApplicationController
   # where to go when the user logs in?
   def redirect_successful_login
     if params[:redirect].is_a?(String) && !params[:redirect].index(':')
-      redirect_to params[:redirect], :only_path => true
+      redirect_to params[:redirect], only_path: true
     else
       redirect_to current_site.login_redirect(current_user)
     end

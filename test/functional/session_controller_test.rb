@@ -7,14 +7,14 @@ class SessionControllerTest < ActionController::TestCase
     get :login
     assert_response :success
 
-    post :login, :login => 'quentin', :password => 'quentin'
+    post :login, login: 'quentin', password: 'quentin'
     assert session[:user]
     assert_response :redirect
     assert_redirected_to '/me'
   end
 
   def test_should_fail_login_and_not_redirect
-    post :login, :login => 'quentin', :password => 'bad password'
+    post :login, login: 'quentin', password: 'bad password'
     assert_nil session[:user]
     assert_response :success
   end
@@ -27,19 +27,19 @@ class SessionControllerTest < ActionController::TestCase
   end
 
   def test_illegal_hash_redirect
-    post :login, :redirect => {:controller => :pages, :action => :destroy, :id => 123},  :login => "quentin", :password => "quentin"
+    post :login, redirect: {controller: :pages, action: :destroy, id: 123},  login: "quentin", password: "quentin"
     assert_response :redirect
     assert_redirected_to '/me'
   end
 
   def test_legal_redirect
-    post :login, :redirect => "blabla",  :login => "quentin", :password => "quentin"
+    post :login, redirect: "blabla",  login: "quentin", password: "quentin"
     assert_response :redirect
     assert_redirected_to "blabla"
   end
 
   def test_illegal_offsite_redirect
-    post :login, :redirect => "http://blabla.com/track_me",  :login => "quentin", :password => "quentin"
+    post :login, redirect: "http://blabla.com/track_me",  login: "quentin", password: "quentin"
     assert_response :redirect
     assert_redirected_to "/me"
   end

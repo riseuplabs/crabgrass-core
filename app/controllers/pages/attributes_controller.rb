@@ -8,7 +8,7 @@ class Pages::AttributesController < Pages::SidebarsController
 
   before_filter :login_required
 
-  guard :update => :may_admin_page?
+  guard update: :may_admin_page?
 
   def update
     if params[:public]

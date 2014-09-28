@@ -187,9 +187,9 @@ module ActiveRecord #:nodoc:
           self.version_condition            = options[:if] || true
           self.non_versioned_columns        = [self.primary_key, inheritance_column, 'version', 'lock_version', versioned_inheritance_column]
           self.version_association_options  = {
-                                                :class_name  => "#{self.to_s}::#{versioned_class_name}",
-                                                :foreign_key => versioned_foreign_key,
-                                                :dependent   => :delete_all
+                                                class_name: "#{self}::#{versioned_class_name}",
+                                                foreign_key: versioned_foreign_key,
+                                                dependent: :delete_all
                                               }.merge(options[:association_options] || {})
 
           if block_given?
@@ -205,12 +205,12 @@ module ActiveRecord #:nodoc:
             has_many :versions, version_association_options do
               # finds earliest version of this record
               def earliest
-                @earliest ||= find(:first, :order => 'version')
+                @earliest ||= find(:first, order: 'version')
               end
 
               # find latest version of this record
               def latest
-                @latest ||= find(:first, :order => 'version desc')
+                @latest ||= find(:first, order: 'version desc')
               end
             end
             before_save  :set_new_version
@@ -231,14 +231,14 @@ module ActiveRecord #:nodoc:
             def self.reloadable? ; false ; end
             # find first version before the given version
             def self.before(version)
-              find :first, :order => 'version desc',
-                :conditions => ["#{original_class.versioned_foreign_key} = ? and version < ?", version.send(original_class.versioned_foreign_key), version.version]
+              find :first, order: 'version desc',
+                conditions: ["#{original_class.versioned_foreign_key} = ? and version < ?", version.send(original_class.versioned_foreign_key), version.version]
             end
 
             # find first version after the given version.
             def self.after(version)
-              find :first, :order => 'version',
-                :conditions => ["#{original_class.versioned_foreign_key} = ? and version > ?", version.send(original_class.versioned_foreign_key), version.version]
+              find :first, order: 'version',
+                conditions: ["#{original_class.versioned_foreign_key} = ? and version > ?", version.send(original_class.versioned_foreign_key), version.version]
             end
 
             def previous
@@ -258,8 +258,8 @@ module ActiveRecord #:nodoc:
           versioned_class.original_class = self
           versioned_class.table_name = versioned_table_name
           versioned_class.belongs_to self.to_s.demodulize.underscore.to_sym,
-            :class_name  => "::#{self.to_s}",
-            :foreign_key => versioned_foreign_key
+            class_name: "::#{self}",
+            foreign_key: versioned_foreign_key
           versioned_class.send :include, options[:extend]         if options[:extend].is_a?(Module)
           versioned_class.set_sequence_name version_sequence_name if version_sequence_name
         end
@@ -422,18 +422,18 @@ module ActiveRecord #:nodoc:
             self.versioned_columns.each do |col|
               updated_col = col if !updated_col && %(updated_at updated_on).include?(col.name)
               self.connection.add_column versioned_table_name, col.name, col.type,
-                :limit     => col.limit,
-                :default   => col.default,
-                :scale     => col.scale,
-                :precision => col.precision
+                limit: col.limit,
+                default: col.default,
+                scale: col.scale,
+                precision: col.precision
             end
 
             if type_col = self.columns_hash[inheritance_column]
               self.connection.add_column versioned_table_name, versioned_inheritance_column, type_col.type,
-                :limit     => type_col.limit,
-                :default   => type_col.default,
-                :scale     => type_col.scale,
-                :precision => type_col.precision
+                limit: type_col.limit,
+                default: type_col.default,
+                scale: type_col.scale,
+                precision: type_col.precision
             end
 
             if updated_col.nil?

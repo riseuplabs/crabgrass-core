@@ -23,7 +23,7 @@ SearchFilter.new('/starred-by-me/') do
 
   label do |opts|
     if opts[:remove]
-      :starred_by_user.t(:user => :me.t)
+      :starred_by_user.t(user: :me.t)
     else
       :starred_by_me.t
     end

@@ -68,7 +68,7 @@ class LibreOfficeTransmogrifier < Media::Transmogrifier
 
         # we cannot specify the name of the output file, so grab what it generated and move it to self.output_file
         libreoffice_output = work_directory + '/' + replace_extension(input_file, extension(output_type))
-        replace_file :from => libreoffice_output, :to => output_file
+        replace_file from: libreoffice_output, to: output_file
       else
         yield('could not find extension for type %s' % output_type) if block_given?
         return :failure

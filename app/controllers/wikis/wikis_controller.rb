@@ -7,20 +7,20 @@
 
 class Wikis::WikisController < Wikis::BaseController
 
-  skip_before_filter :login_required, :only => :show
-  before_filter :authorized?, :only => :show
+  skip_before_filter :login_required, only: :show
+  before_filter :authorized?, only: :show
 
-  guard :show => :may_show_wiki?
+  guard show: :may_show_wiki?
   helper 'wikis/sections'
   layout false
 
   def show
-    render :template => 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
+    render template: 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
   end
 
   def print
     @posts = @page.posts if @page
-    render :layout => "printer_friendly"
+    render layout: "printer_friendly"
   end
 
   #
@@ -31,9 +31,9 @@ class Wikis::WikisController < Wikis::BaseController
     WikiLock.transaction do
       @wiki.lock!(@section, current_user)
     end
-    render :template => "wikis/wikis/edit"
+    render template: "wikis/wikis/edit"
   rescue Wiki::LockedError => @error_message
-    render :template => 'wikis/wikis/edit', :locals => {:mode => 'locked'}
+    render template: 'wikis/wikis/edit', locals: {mode: 'locked'}
   end
 
   #
@@ -58,14 +58,14 @@ class Wikis::WikisController < Wikis::BaseController
         success
       end
     end
-    render :template => 'wikis/wikis/show'
+    render template: 'wikis/wikis/show'
   rescue Wiki::VersionExistsError, Wiki::LockedError => exc
     # could not save, but give user a choice to force save anyway
     @error_message = exc
     @wiki.body = @body = params[:wiki][:body]
     @wiki.version = @wiki.versions.last.version + 1
     @show_force_save_button = true
-    render :template => '/wikis/wikis/edit'
+    render template: '/wikis/wikis/edit'
   end
 
 end

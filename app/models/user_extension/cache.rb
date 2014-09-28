@@ -95,11 +95,11 @@ module UserExtension
       clear_access_cache
       direct, all, admin_for = get_group_ids
       peer = get_peer_ids(direct)
-      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
-        :direct_group_id_cache => direct,
-        :all_group_id_cache    => all,
-        :admin_for_group_id_cache    => admin_for,
-        :peer_id_cache         => peer
+      update_attributes version: (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
+        direct_group_id_cache: direct,
+        all_group_id_cache: all,
+        admin_for_group_id_cache: admin_for,
+        peer_id_cache: peer
     end
 
     #
@@ -148,9 +148,9 @@ module UserExtension
     # or directly when a new contact is added
     def update_contacts_cache()
       friend,foe = get_contact_ids
-      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
-        :friend_id_cache => friend,
-        :foe_id_cache    => foe
+      update_attributes version: (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
+        friend_id_cache: friend,
+        foe_id_cache: foe
     end
 
     # include direct memberships, committees, and networks
@@ -245,7 +245,7 @@ module UserExtension
       else
         ids = []
       end
-      update_attributes :version => version+1, :tag_id_cache => ids
+      update_attributes version: version+1, tag_id_cache: ids
     end
 
     def clear_tag_cache
@@ -282,7 +282,7 @@ module UserExtension
       # version increment for that is already handled elsewhere.
       def increment_version(ids)
         return unless ids.any?
-        self.where(:id => ids).update_all('version = version+1')
+        self.where(id: ids).update_all('version = version+1')
       end
 
       ## serialize_as
@@ -305,11 +305,11 @@ module UserExtension
           word = word.id2name
           module_eval <<-"end_eval"
             def #{word}=(value)
-              @#{word} = #{klass.to_s}.new(value)
+              @#{word} = #{klass}.new(value)
               write_attribute('#{word}', @#{word}.to_s)
             end
             def #{word}
-              @#{word} ||= #{klass.to_s}.new( read_attribute('#{word}') )
+              @#{word} ||= #{klass}.new( read_attribute('#{word}') )
             end
           end_eval
         end

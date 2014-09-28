@@ -12,7 +12,7 @@ module PageExtension::Tracking
     # returns an array of view counts, [daily, weekly, monthly, all time]
     def views_stats
       [  hourlies.sum(:views),
-         dailies.sum(:views, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:views, conditions: ['created_at > ?',1.week.ago]),
          dailies.sum(:views),
          views_count ]
     end
@@ -20,14 +20,14 @@ module PageExtension::Tracking
     # returns an array of view counts, [daily, weekly, monthly, all time]
     def stars_stats
       [  hourlies.sum(:stars),
-         dailies.sum(:stars, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:stars, conditions: ['created_at > ?',1.week.ago]),
          dailies.sum(:stars),
          stars_count ]
     end
 
     def edits_stats
       [  hourlies.sum(:edits),
-         dailies.sum(:edits, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:edits, conditions: ['created_at > ?',1.week.ago]),
          dailies.sum(:edits) ]
     end
 

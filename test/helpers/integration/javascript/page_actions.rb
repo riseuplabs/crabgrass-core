@@ -6,7 +6,7 @@ module PageActions
     within '#tag_li' do
       click_on 'Edit'
     end
-    fill_in 'add', :with => tags
+    fill_in 'add', with: tags
     click_on 'Add'
   end
 

@@ -13,7 +13,7 @@ module Common::Requests
       helper_method :request_path
       helper_method :requests_path
       before_filter :login_required
-      before_filter :fetch_request, :only => [:update, :destroy, :show]
+      before_filter :fetch_request, only: [:update, :destroy, :show]
     end
   end
 
@@ -24,7 +24,7 @@ module Common::Requests
   # and sees that a request is pending and wants to click on a link for more information.
   # 
   def show
-    render :template => 'common/requests/show'
+    render template: 'common/requests/show'
   end
 
   #
@@ -34,13 +34,13 @@ module Common::Requests
     if mark
       @request.mark!(mark, current_user)
       if mark == :approve
-        msg = :approved_by_entity.t(:entity => current_user.name)
+        msg = :approved_by_entity.t(entity: current_user.name)
       elsif mark == :reject
-        msg = :rejected_by_entity.t(:entity => current_user.name)
+        msg = :rejected_by_entity.t(entity: current_user.name)
       end
       success I18n.t(@request.name), msg
     end
-    render :template => 'common/requests/update'
+    render template: 'common/requests/update'
   end
 
   #
@@ -49,7 +49,7 @@ module Common::Requests
   #
   def destroy
     @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(:thing => I18n.t(@request.name)), :later
+    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
     render(:update) {|page| page.redirect_to requests_path}
   end
 

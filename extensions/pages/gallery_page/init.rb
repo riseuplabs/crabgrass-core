@@ -1,19 +1,20 @@
 define_page_type :Gallery, {
-  :controller => ['gallery', 'gallery_image'],
-  :icon => 'page_gallery',
-  :class_group => ['media', 'media:image', 'collection'],
-  :order => 30
+  controller: ['gallery', 'gallery_image'],
+  icon: 'page_gallery',
+  class_group: ['media', 'media:image', 'collection'],
+  order: 30
 }
 
 extend_model :Asset do
 
-  has_many :showings, :dependent => :destroy
-  has_many :galleries, :through => :showings
+  has_many :showings, dependent: :destroy
+  has_many :galleries, through: :showings
 
   def change_source_file(data)
-    raise Exception.new(I18n.t(:file_must_be_image_error)) unless
-    Asset.mime_type_from_data(data) =~ /image|pdf/
-      self.uploaded_data = data
+    if Asset.mime_type_from_data(data) !~ /image|pdf/
+      raise StandardError.new(I18n.t(:file_must_be_image_error))
+    end
+    self.uploaded_data = data
     self.save!
   end
 

@@ -37,14 +37,14 @@ module PathFinder::Mysql::BuilderFilters
   # uses fulltext filter
   def filter_person(id)
     @access_filter_clause << "+" + Page.access_ids_for(
-      :user_ids  => [id]
+      user_ids: [id]
     ).first
   end
 
   # uses fulltext filter
   def filter_group(id)
     @access_filter_clause << "+" + Page.access_ids_for(
-      :group_ids  => [id]
+      group_ids: [id]
     ).first
   end
 
@@ -67,11 +67,11 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_public()
-    @access_filter_clause << "+" + Page.access_ids_for(:public => true)
+    @access_filter_clause << "+" + Page.access_ids_for(public: true)
   end
 
   def filter_published()
-    @access_filter_clause << "+" + Page.access_ids_for(:published => true)
+    @access_filter_clause << "+" + Page.access_ids_for(published: true)
   end
 
   ##

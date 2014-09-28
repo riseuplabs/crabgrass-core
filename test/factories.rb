@@ -36,9 +36,9 @@ FactoryGirl.define do
     full_name { generate(:display_name) }
     name      { full_name.gsub(/[^a-z]/,"") }
 
-    factory(:committee, :class => Committee) {}
-    factory(:council, :class => Council) {}
-    factory(:network,   :class => Network)   {
+    factory(:committee, class: Committee) {}
+    factory(:council, class: Council) {}
+    factory(:network,   class: Network)   {
       initial_member_group { FactoryGirl.create(:group) }
     }
   end
@@ -72,7 +72,7 @@ FactoryGirl.define do
     version       1
     # association :parent_page, factory: :asset_page
 
-    factory :image_asset, :class => ImageAsset do
+    factory :image_asset, class: ImageAsset do
       uploaded_data { fixture_file_upload('files/bee.jpg',  "image/jpeg") }
 
       factory :small_image_asset do
@@ -80,7 +80,7 @@ FactoryGirl.define do
       end
     end
 
-    factory :png_asset, :class => PngAsset do
+    factory :png_asset, class: PngAsset do
       uploaded_data { fixture_file_upload('files/image.png',  "image/png") }
     end
 

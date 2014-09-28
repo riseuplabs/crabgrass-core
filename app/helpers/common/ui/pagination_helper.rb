@@ -48,11 +48,11 @@ module Common::Ui::PaginationHelper
     return unless things.respond_to?(:total_pages)
 
     defaults = {
-     :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
-     :next_label => ("%s &raquo;" % :pagination_next.t).html_safe,
-     :inner_window => 2,
-     :outer_window => 0,
-     :renderer => pagination_link_renderer
+     previous_label: ("&laquo; %s" % :pagination_previous.t).html_safe,
+     next_label: ("%s &raquo;" % :pagination_next.t).html_safe,
+     inner_window: 2,
+     outer_window: 0,
+     renderer: pagination_link_renderer
     }
     will_paginate(things, defaults.merge(options))
   end
@@ -70,7 +70,7 @@ module Common::Ui::PaginationHelper
   #
   def top_pagination_links(things, options={})
     if paginated?(things)
-      content_tag(:div, :class => 'p first') do
+      content_tag(:div, class: 'p first') do
         pagination_links(things,options)
       end
     end
@@ -81,7 +81,7 @@ module Common::Ui::PaginationHelper
   #
   def bottom_pagination_links(things, options={})
     if paginated?(things)
-      content_tag(:div, :class => 'p last') do
+      content_tag(:div, class: 'p last') do
         pagination_links(things,options)
       end
     end

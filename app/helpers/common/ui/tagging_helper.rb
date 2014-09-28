@@ -23,7 +23,7 @@ module Common::Ui::TaggingHelper
 
   # Not using this currently:
   def tag_cloud(tags, options={})
-    options = {:classes => ['tag1','tag2','tag3','tag4'], :max => false}.merge(options)
+    options = {classes: ['tag1','tag2','tag3','tag4'], max: false}.merge(options)
     return if tags.empty?
     max_count = tags.sort_by(&:count).last.count.to_f
     if options[:max]
@@ -57,7 +57,7 @@ module Common::Ui::TaggingHelper
       # should use me_pages_path, but wasn't able to get it to work yet
       link_path = "/me/pages#/tag/#{name}"
     end
-    link_to h(tag.name), link_path, :class => css_class
+    link_to h(tag.name), link_path, class: css_class
   end
 
 end

@@ -51,7 +51,7 @@ class SocialUserTest < ActiveSupport::TestCase
     green = users(:green)
     kangaroo = users(:kangaroo)
     red = users(:red)
-    green.revoke_access! :public => :pester
+    green.revoke_access! public: :pester
 
     assert kangaroo.stranger_to?(green), 'must be strangers'
     assert !kangaroo.may?(:pester, green), 'strangers should be not be able to pester'
@@ -60,7 +60,7 @@ class SocialUserTest < ActiveSupport::TestCase
     assert red.may?(:pester, green), 'peers should always be able to pester'
 
     #users(:green).profiles.public.may_pester = true
-    green.grant_access! :public => :pester
+    green.grant_access! public: :pester
     assert !kangaroo.may?(:pester, green), 'we cache access permissions'
     kangaroo.clear_access_cache
     assert kangaroo.may?(:pester, green), 'should be able to pester if set in profile'
@@ -68,8 +68,8 @@ class SocialUserTest < ActiveSupport::TestCase
 
   protected
     def create_user(options = {})
-      user = User.new({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
-      user.profiles.build :first_name => "Test", :last_name => "Test", :friend => true
+      user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
+      user.profiles.build first_name: "Test", last_name: "Test", friend: true
       user.save!
       user
     end

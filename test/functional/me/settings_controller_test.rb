@@ -19,13 +19,13 @@ class Me::SettingsControllerTest < ActionController::TestCase
 
   def test_update
     login_as @user
-    post :update, :user => {:login => 'new_login'}
+    post :update, user: {login: 'new_login'}
     assert_equal 'new_login', @user.reload.login, "login should have changed"
   end
 
   def test_password_fail
     login_as @user
-    post :update, :user => {:password => 'sdofi33si', :password_confirmation => 'xxxxxxx'}
+    post :update, user: {password: 'sdofi33si', password_confirmation: 'xxxxxxx'}
     assert_error_message /password doesn.t match confirmation/i
   end
 

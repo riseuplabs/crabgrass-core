@@ -28,7 +28,7 @@ module Migration
         'strangers cannot view a user without any keys set up'
 
       @user.profiles.public.update_attributes!(
-        :may_see => true
+        may_see: true
       )
 
       @user.migrate_permissions!
@@ -54,11 +54,11 @@ module Migration
         'friends cannot view this user'
 
       @user.profiles.public.update_attributes!(
-        :may_see => false
+        may_see: false
       )
       @user.profiles.private.update_attributes!(
-        :may_see => true,
-        :peer => false
+        may_see: true,
+        peer: false
       )
 
       @user.migrate_permissions!
@@ -84,11 +84,11 @@ module Migration
         'peers cannot view this user'
 
       @user.profiles.public.update_attributes!(
-        :may_see => false
+        may_see: false
       )
       @user.profiles.private.update_attributes!(
-        :may_see => true,
-        :peer => true
+        may_see: true,
+        peer: true
       )
 
       @user.migrate_permissions!
@@ -107,7 +107,7 @@ module Migration
         'strangers cannot see the contacts of a user without any keys set up'
 
       @user.profiles.public.update_attributes!(
-        :may_see_contacts => true
+        may_see_contacts: true
       )
 
       @user.migrate_permissions!
@@ -126,11 +126,11 @@ module Migration
         'friends cannot see the contacts of this user'
 
       @user.profiles.public.update_attributes!(
-        :may_see_contacts => false
+        may_see_contacts: false
       )
       @user.profiles.private.update_attributes!(
-        :may_see_contacts => true,
-        :peer => false
+        may_see_contacts: true,
+        peer: false
       )
 
       @user.migrate_permissions!
