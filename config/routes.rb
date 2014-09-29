@@ -19,9 +19,9 @@ Crabgrass::Application.routes.draw do
   ## CRON JOBS
   ##
 
-  # TODO: add localhost constraint
   # TODO: specify http verb
-  match '/do/cron/run(/:id)', to: 'cron#run', format: false
+  match '/do/cron/run(/:id)', to: 'cron#run', format: false,
+    constraints: {ip: /127.0.0.1/}
 
   ##
   ## STATIC FILES AND ASSETS
