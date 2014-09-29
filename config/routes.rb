@@ -189,8 +189,18 @@ Crabgrass::Application.routes.draw do
     resource :trash,      only: [:edit, :update], controller: 'trash'
   end
 
-  # page subclasses, gets triggered for any controller class Pages::XxxController
-  match '/pages/:controller/:action/:page_id', constraints: {controller: /.*_page/ }
+  # Page_items route. Used to directly alter items of a page.
+  # This is only meant for "hidden use" inside ajax.
+  # If you want a pretty url look at the context based route
+  # at the end of this file.
+  scope path: 'pages/:page_id/:controller' do
+    resources :page_items, path: '',
+      constraints: lambda{|request| request.xhr?} do
+      collection do
+        post :sort
+      end
+    end
+  end
 
   ##
   ## WIKI

@@ -104,8 +104,10 @@ module Common::Application::Paths
   #               /:context/:page/:action/:id
   #               /:context/:page/:controller/:action/:id
   #
-  # (2) direct -- page_xpath and page_xurl
-  #               /pages/:controller/:action/:page_id
+  # (2) direct -- page_item_url and friends
+  #               restful routes to
+  #               /pages/:page_id/:controller/:id
+  #               (restful actions so GET without :id -> index etc.)
   #
   # We use the direct form when pretty doesn't matter, like ajax. The direct
   # form bypasses the dispatcher and so is slightly faster and less prone to errors.
@@ -160,25 +162,6 @@ module Common::Application::Paths
 
   def page_url(page, options={})
     urlize page_path(page, options)
-  end
-
-  #
-  # direct page path
-  #
-  def page_xpath(page, options={})
-    controller = options.delete(:controller) || page.controller
-    if controller.is_a?(Symbol)
-       controller = page.controller + '_' + controller.to_s
-       if Rails.env == 'development' and !page.controllers.include?(controller)
-        raise 'controller %s not defined for page type %s' % [controller, page.class.name]
-      end
-    end
-    options[:action] ||= 'index'
-    '/pages/' + [controller, options.delete(:action), page.id].join('/') + build_query_string(options)
-  end
-
-  def page_xurl(page, options={})
-    urlize page_xpath(page,options)
   end
 
   ##
