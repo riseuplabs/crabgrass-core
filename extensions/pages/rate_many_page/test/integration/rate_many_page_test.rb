@@ -14,6 +14,7 @@ class RateManyPageTest < JavascriptIntegrationTest
     assert_page_header
     option, description = add_possibility
     click_on 'Done'
+    assert_content option
     assert_no_content description
     click_on option
     assert_content description

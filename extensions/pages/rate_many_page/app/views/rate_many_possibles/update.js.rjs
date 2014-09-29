@@ -1,0 +1,8 @@
+possible_id  = "possible_#{@possible.id}"
+
+# update the possible li with the updated possible data
+page.replace_html possible_id, partial: 'possibles/possible_show',
+  locals: {possible: @possible}
+page.sortable 'sort_list', handle: 'handle',
+  url: sort_page_items_url(page_id: @page, controller: :rate_many_page)
+
