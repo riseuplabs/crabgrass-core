@@ -28,17 +28,17 @@ Crabgrass::Application.routes.draw do
   ##
 
   resources :assets, only: [:show, :destroy]
-  match '/assets/:id/versions/:version/*path',
+  get '/assets/:id/versions/:version/*path',
     to: 'assets#show',
     as: 'asset_version'
-  match '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
+  get '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
 
   scope format: false do
-    match 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar'
-    match 'theme/:name/*file.css', to: 'theme#show'
+    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar'
+    get 'theme/:name/*file.css', to: 'theme#show'
   end
 
-  match 'pictures/:id1/:id2(/:geometry)',
+  get 'pictures/:id1/:id2(/:geometry)',
     to: 'pictures#show',
     as: 'pictures'
 
@@ -48,10 +48,10 @@ Crabgrass::Application.routes.draw do
 
   namespace 'me' do
     resources :notices
-    match '', to: 'notices#index', as: 'home'
+    get '', to: 'notices#index', as: 'home'
     resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
-    match 'pages(/*path)', to: 'pages#index', as: 'pages'
+    get 'pages(/*path)', to: 'pages#index', as: 'pages'
     resources :activities
     resources :discussions, path: 'messages' do
       resources :posts
@@ -82,12 +82,13 @@ Crabgrass::Application.routes.draw do
   resource :account, only: [:new, :create]
   match 'account/reset_password(/:token)',
     as: 'reset_password',
-    to: 'accounts#reset_password'
+    to: 'accounts#reset_password',
+    via: [:get, :post]
 
 
-  post  'session/language', as: 'language', to: 'session#language'
-  match 'session/login', as: 'login',  to: 'session#login'
-  post  'session/logout', as: 'logout', to: 'session#logout'
+  post 'session/language', as: 'language', to: 'session#language'
+  post 'session/login', as: 'login',  to: 'session#login'
+  post 'session/logout', as: 'logout', to: 'session#logout'
   # ajax login form
   get   'session/login_form', as: 'login_form', to: 'session#login_form',
     constraints: lambda{|request| request.xhr?}
@@ -105,13 +106,13 @@ Crabgrass::Application.routes.draw do
   ## PEOPLE
   ##
 
-  match 'people/directory(/*path)',
+  get 'people/directory(/*path)',
     as: 'people_directory',
     to: 'people/directory#index'
 
   resources :people, module: 'people' do
     resource  :home, only: [:show], controller: 'home'
-    match 'pages(/*path)', as: 'pages', to: 'pages#index'
+    get 'pages(/*path)', as: 'pages', to: 'pages#index'
     resources :messages
     resources :activities
     resource :friend_request, only: [:new, :create, :destroy]
@@ -121,13 +122,13 @@ Crabgrass::Application.routes.draw do
   ## GROUP
   ##
 
-  match 'networks/directory(/*path)', as: 'networks_directory', to: 'groups/directory#index'
-  match 'groups/directory(/*path)', as: 'groups_directory', to: 'groups/directory#index'
+  get 'networks/directory(/*path)', as: 'networks_directory', to: 'groups/directory#index'
+  get 'groups/directory(/*path)', as: 'groups_directory', to: 'groups/directory#index'
 
   resources :groups, module: 'groups', only: [:new, :create, :destroy] do
     # content related
     resource  :home, only: [:show], controller: 'home'
-    match 'pages(/*path)', as: 'pages', to: 'pages#index'
+    get 'pages(/*path)', as: 'pages', to: 'pages#index'
     resources :avatars
     resources :wikis, only: [:create, :index]
 
@@ -150,20 +151,24 @@ Crabgrass::Application.routes.draw do
   ##
 
   if Rails.env.development?
-    match 'debug/become', as: 'debug_become', to: 'debug#become'
-    match 'debug/break', as: 'debug_break', to: 'debug#break'
+    post 'debug/become', as: 'debug_become', to: 'debug#become'
+    get 'debug/break', as: 'debug_break', to: 'debug#break'
   end
-  match 'debug/report/submit', as: 'debug_report', to: 'bugreport#submit'
+  # There's no bugreport controller right now it seems
+  # match 'debug/report/submit', as: 'debug_report', to: 'bugreport#submit'
 
   ##
   ## NORMAL PAGE ROUTES
   ##
 
   # default page creator
-  match '/pages(/:action(/:owner(/:type)))',
+  get '/pages/new(/:owner(/:type))',
     as: 'page_creation',
-    controller: 'pages/create',
-    constraints: {action: /new|create/}
+    to: 'pages/create#new'
+
+  post '/pages/create(/:owner(/:type))',
+    as: 'page_creation',
+    to: 'pages/create#create'
 
   # base page
   resources :pages, module: 'pages', controller: 'base' do |pages|
@@ -171,11 +176,7 @@ Crabgrass::Application.routes.draw do
     resources :changes
     resources :assets, only: [:index, :update, :create]
     resources :tags
-    resources :posts, only: [:show, :create, :edit, :update] do
-      member do
-        match :edit
-      end
-    end
+    resources :posts, only: [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:
     resource :sidebar,    only: [:show]
@@ -215,7 +216,7 @@ Crabgrass::Application.routes.draw do
   ##
 
   root to: 'root#index'
-  match '/do/static/:action/:id', controller: 'static'
+  get '/do/static/greencloth', to: 'static#greencloth'
 
   ## ADD ROUTES FROM MODS
 
