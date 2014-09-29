@@ -3,13 +3,13 @@
   = previous_version_link
 
 .p.first
-  %div{:style => 'text-align:right; width: 5em; float: left'}
-    %div{:style => "line-height: #{current_theme.font_default_size}"}
+  %div{style: 'text-align:right; width: 5em; float: left'}
+    %div{style: "line-height: #{current_theme.font_default_size}"}
       = :version.t
     %div.bignum.b
       = @version.version
-  %div.icon.small{:style => 'margin-left: 6em;' + avatar_style(@version.user, 'small')}
-    = :created_by_user_on.t(:user => link_to_name(@version.user.try(:name)), :when => friendly_time(@version.updated_at)).html_safe
+  %div.icon.small{style: 'margin-left: 6em;' + avatar_style(@version.user, 'small')}
+    = :created_by_user_on.t(user: link_to_name(@version.user.try(:name)), when: friendly_time(@version.updated_at)).html_safe
 
 .wiki.clear
   = @version.body_html

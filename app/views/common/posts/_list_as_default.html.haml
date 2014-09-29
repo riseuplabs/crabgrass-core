@@ -17,7 +17,7 @@
 = post_pagination_links(posts, 'first')
 %table.posts.round
   - for post in posts do
-    = render :partial => 'common/posts/default/row', :locals => local_assigns.merge(:post => post, :last => (post.id == last_id))
+    = render partial: 'common/posts/default/row', locals: local_assigns.merge(post: post, last: (post.id == last_id))
   - if show_reply
-    = render :partial => 'common/posts/default/reply', :locals => local_assigns.merge(:last_id => last_id)
+    = render partial: 'common/posts/default/reply', locals: local_assigns.merge(last_id: last_id)
 = post_pagination_links(posts, 'last')

@@ -4,10 +4,10 @@
 
 .big_screen
   - if @context.avatar
-    %a.avatar{:href => entity_path(@context.entity), :style => square_avatar_style(@context.entity, 'large')}
+    %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'large')}
   = link_to_banner_title(@context.entity, 'large')
 .small_screen
   - if @context.avatar
-    %a.avatar{:href => entity_path(@context.entity), :style => square_avatar_style(@context.entity, 'small')}
+    %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'small')}
   = link_to_banner_title(@context.entity)
 

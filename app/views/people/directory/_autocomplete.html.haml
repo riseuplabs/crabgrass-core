@@ -1,8 +1,8 @@
-- search_users = {:url => '/people/directory', with: "'q=' + $('user_name').value"}
+- search_users = {url: '/people/directory', with: "'q=' + $('user_name').value"}
 - eat_enter = "return(!enterPressed(event));"
 - only_on_enter_press = "enterPressed(event) && $('user_name').value != ''"
-- key_pressed_function = remote_function(search_users.merge(:condition => only_on_enter_press)) + eat_enter;
+- key_pressed_function = remote_function(search_users.merge(condition: only_on_enter_press)) + eat_enter;
 - after_update_function = "function(value, data) { #{remote_function(search_users)}; $('user_name').value='';}"
 #autocomplete_container
-  = autocomplete_users_field_tag('user_name', :style => 'width:100%', :onkeypress => key_pressed_function, :onselect => after_update_function, :message => I18n.t(:entity_autocomplete_tip), :container => 'autocomplete_container')
+  = autocomplete_users_field_tag('user_name', style: 'width:100%', onkeypress: key_pressed_function, onselect: after_update_function, message: I18n.t(:entity_autocomplete_tip), container: 'autocomplete_container')
 #user_list

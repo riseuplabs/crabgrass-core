@@ -1,6 +1,6 @@
-= form_tag group_memberships_path, remote: true, :id => 'add_member_form',
-  :onsubmit => show_spinner('add') do
-  = input_append(autocomplete_members_field_tag('user_name', :group => @group.parent.name, :onkeypress => ''), submit_tag(:add_button.t, :class => 'btn'))
+= form_tag group_memberships_path, remote: true, id: 'add_member_form',
+  onsubmit: show_spinner('add') do
+  = input_append(autocomplete_members_field_tag('user_name', group: @group.parent.name, onkeypress: ''), submit_tag(:add_button.t, class: 'btn'))
   = spinner('add')
   %span.help-block= :add_members_to_committee.t
 = focus_form('add_member_form')

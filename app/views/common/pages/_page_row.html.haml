@@ -2,7 +2,7 @@
   %span.page_info= page_info(page)
   %span.page_cover= page_cover(page)
   - if true and page.owner_id
-    %span.page_owner= link_to_entity(page.owner, :avatar => :tiny)
+    %span.page_owner= link_to_entity(page.owner, avatar: :tiny)
     %span.page_title
       = ("&nbsp;/ " + link_to(h(page.title), page_url(page))).html_safe
   - else

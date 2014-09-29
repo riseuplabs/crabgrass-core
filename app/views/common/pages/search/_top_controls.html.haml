@@ -24,8 +24,8 @@
 -#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
 - with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
-- text_filter_submit_options = {:url => page_search_path, :with => with}
-- clear_filter_options = {:url => page_search_path(:remove => '/text/:text'), :with => 'FilterPath.encode()'}
+- text_filter_submit_options = {url: page_search_path, with: with}
+- clear_filter_options = {url: page_search_path(remove: '/text/:text'), with: 'FilterPath.encode()'}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
 .row#page_search_table
@@ -33,13 +33,13 @@
     = # search_view_toggle_links(page_search_path)
     = spinner('view_toggle')
   %div
-    = form_tag '', :id => 'page_search_form' do
+    = form_tag '', id: 'page_search_form' do
       %span.page_text_search.pull-right
-        %span.x{:style => "display:inline-block"}
+        %span.x{style: "display:inline-block"}
           = link_to_remote_icon 'tiny_clear', clear_filter_options
-        %span.text{:style => "display:inline-block"}
-          = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
-        %span.search{:style => "display:inline-block"}
-          = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
+        %span.text{style: "display:inline-block"}
+          = text_field_tag 'text', '', id: 'search_text_field', onkeypress: key_pressed
+        %span.search{style: "display:inline-block"}
+          = link_to_remote_icon 'magnifier', text_filter_submit_options, id: 'search_submit'
 
 = focus_form 'page_search_form'

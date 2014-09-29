@@ -20,6 +20,6 @@
 - posts = local_assigns[:posts] ||= @posts
 - local_assigns[:remote] = true if local_assigns[:remote].nil?
 
-%section{:class => "post_list #{style}", :id => 'posts'}
-  = render :partial => "/common/posts/list_as_#{style}", :locals => local_assigns
+%section{class: "post_list #{style}", id: 'posts'}
+  = render partial: "/common/posts/list_as_#{style}", locals: local_assigns
 

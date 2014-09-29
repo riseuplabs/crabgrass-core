@@ -1,21 +1,21 @@
-- color = cycle('shade_odd', 'shade_even', :name => 'post_row')
+- color = cycle('shade_odd', 'shade_even', name: 'post_row')
 - author_style = "background-image: url(#{avatar_url_for(current_user,'small')})"
 - top_spacer_class = once?('post_spacer') ? "first round-top" : ""
 
-%tbody{:id=>'post_reply'}
-  %tr{:class=>"post_spacer_top #{color}"}
-    %td{:colspan => 2, :class => top_spacer_class}
-      %a{:name=>'reply'}= '&nbsp;'.html_safe
+%tbody{id:'post_reply'}
+  %tr{class:"post_spacer_top #{color}"}
+    %td{colspan: 2, class: top_spacer_class}
+      %a{name:'reply'}= '&nbsp;'.html_safe
 
-  %tr{:class => "post #{color}"}
+  %tr{class: "post #{color}"}
     %td.post_author
-      %div.author{:style => author_style}
+      %div.author{style: author_style}
         %div.username= display_entity(current_user)
         %div.date &nbsp;
-    %td{:class => 'post_body'}
+    %td{class: 'post_body'}
       - if local_assigns[:reply_body]
         = local_assigns[:reply_body]
       - else
-        = render :partial => 'common/posts/default/reply_body', :locals => local_assigns
-  %tr{:class => "post_spacer_bottom #{color}"}
-    %td{:colspan => 2, :class => 'round-bottom'}= '&nbsp;'.html_safe
+        = render partial: 'common/posts/default/reply_body', locals: local_assigns
+  %tr{class: "post_spacer_bottom #{color}"}
+    %td{colspan: 2, class: 'round-bottom'}= '&nbsp;'.html_safe

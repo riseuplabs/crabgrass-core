@@ -1,5 +1,5 @@
-%div.icon.small{:style => avatar_style(request.icon_entity, 'small')}
-  = I18n.t request.name, :count => 1
+%div.icon.small{style: avatar_style(request.icon_entity, 'small')}
+  = I18n.t request.name, count: 1
   %br
   = embold_links do
     -translate *request.description

@@ -1,11 +1,11 @@
 %ul.possibles.plain
   - @sorted_possibles.each do |possible|
     - winner = 'winner' if (@poll.winners.any? and @poll.winners.include? possible.id)
-    %li{:class => winner}
+    %li{class: winner}
       .rank= @poll.rank(possible.id)
       %span.winner= "(" + :top_pick.t + ")" if winner.present?
       .name= possible_name(possible)
-      .indent.possible_details{:id => details_id(possible), :style => "display: none"}
+      .indent.possible_details{id: details_id(possible), style: "display: none"}
         = possible.description_html
         - if @who_voted_for[possible.id].respond_to?('join')
           %p

@@ -1,4 +1,4 @@
-= formy(:tabs, :class => 'flat') do |f|
+= formy(:tabs, class: 'flat') do |f|
   - f.tab do |t|
     - t.label I18n.t(:information)
     - t.show_tab 'information_tab'
@@ -13,7 +13,7 @@
     - t.selected false
   - f.tab do |t|
     - t.label I18n.t(:history)
-    - t.function remote_function(:url => page_history_url(@page), :method => :get)
+    - t.function remote_function(url: page_history_url(@page), method: :get)
     - t.show_tab 'history_tab'
     - t.selected false
 

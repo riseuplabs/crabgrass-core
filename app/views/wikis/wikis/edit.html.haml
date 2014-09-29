@@ -1,8 +1,8 @@
 - template = local_assigns[:mode] || 'edit'
 - wiki = local_assigns[:wiki] || @wiki
 
-%div{:id => dom_id(wiki)}
-  = render :partial => "wikis/wikis/#{template}", :locals => local_assigns
+%div{id: dom_id(wiki)}
+  = render partial: "wikis/wikis/#{template}", locals: local_assigns
   - if template == 'edit'
     = javascript_tag create_wiki_toolbar(wiki)
     = javascript_tag confirm_discarding_wiki_edit_text_area(wiki)

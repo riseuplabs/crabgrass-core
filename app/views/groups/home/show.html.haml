@@ -1,9 +1,9 @@
 - content_for :left_column do
-  = render :partial => 'sidecolumn'
+  = render partial: 'sidecolumn'
 
-= render :partial => 'wikis'
+= render partial: 'wikis'
 
 %h2.p.first= :recent_pages.t
 .without_owner
-  = render :partial => 'common/pages/list'
+  = render partial: 'common/pages/list'
 

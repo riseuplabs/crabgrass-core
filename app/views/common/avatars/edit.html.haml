@@ -4,7 +4,7 @@
 -# require: @entity
 -#
 
-= form_for [@entity, @avatar], :html => {:multipart => true} do |f|
+= form_for [@entity, @avatar], html: {multipart: true} do |f|
   .tip.info_16
     = :uploaded_image_cropped.t
   .p

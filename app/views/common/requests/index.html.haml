@@ -1,12 +1,12 @@
-- header = render :partial => 'common/requests/nav'
+- header = render partial: 'common/requests/nav'
 
 - if @requests.empty?
   = header
-  = :no_things_found.t(:things => :requests.t.downcase)
+  = :no_things_found.t(things: :requests.t.downcase)
 - else
   = header
   %ul.clickable.round
     - @requests.each do |request|
-      %li{:onmousedown => "window.location.href = '%s'" % request_path(request)}
-        = render :partial => 'common/requests/line_item', :locals => {:request => request}
+      %li{onmousedown: "window.location.href = '%s'" % request_path(request)}
+        = render partial: 'common/requests/line_item', locals: {request: request}
   = pagination_links(@requests)

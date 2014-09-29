@@ -1,7 +1,7 @@
 - cache [current_language, @user.version_cache_key] do
-  = entity_list(@user.friends.most_active(:limit => 10),
-    {:link_options => {:avatar => 'small'},
-    :header => content_tag(:h3, :friends.t),
-    :after => ''})
+  = entity_list(@user.friends.most_active(limit: 10),
+    {link_options: {avatar: 'small'},
+    header: content_tag(:h3, :friends.t),
+    after: ''})
 
 

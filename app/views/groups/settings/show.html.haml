@@ -1,16 +1,16 @@
 
-= form_tag(group_settings_path(@group), :method => 'put') do
+= form_tag(group_settings_path(@group), method: 'put') do
   = formy(:horizontal_form) do |f|
     -# f.label :display.t
     - f.row do |r|
       - r.label :name.t
-      - r.input text_field('group', 'name', :size => 40, :maxlength => 40)
+      - r.input text_field('group', 'name', size: 40, maxlength: 40)
       - r.info "(#{:required.t}) "
       - r.info :link_name_description.t
     - f.row do |r|
       - r.label :display_name.t
       - r.label_for 'group_full_name'
-      - r.input text_field('group', 'full_name', :size => 40, :maxlength => 100)
+      - r.input text_field('group', 'full_name', size: 40, maxlength: 100)
       - r.info "(#{:optional.t}) "
       - r.info I18n.t(:descriptive_name_for_display)
     - f.row do |r|
@@ -20,5 +20,5 @@
     - f.row do |r|
       - r.label :language.t
       - r.label_for 'group_language'
-      - r.input select('group', 'language', all_languages_for_select, { :include_blank => true })
-    - f.button submit_tag(:save_button.t, :class => 'btn btn-primary')
+      - r.input select('group', 'language', all_languages_for_select, { include_blank: true })
+    - f.button submit_tag(:save_button.t, class: 'btn btn-primary')

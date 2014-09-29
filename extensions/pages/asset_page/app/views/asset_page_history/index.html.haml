@@ -7,9 +7,9 @@
     %th &nbsp;
 
   - @asset.versions.reverse.each do |version|
-    %tr{:class => cycle('odd', 'even'), :id => "asset_#{@asset.id}_version_#{version.version}"}
+    %tr{class: cycle('odd', 'even'), id: "asset_#{@asset.id}_version_#{version.version}"}
       %td= link_to_asset(version, :small, :crop! => '32x32')
-      %td.nowrap= link_to :version_number.t(:version => version.version), version.url
+      %td.nowrap= link_to :version_number.t(version: version.version), version.url
       %td= friendly_date(version.updated_at)
       %td= link_to_user(version.user) if version.user_id
       %td= destroy_version_link(version)

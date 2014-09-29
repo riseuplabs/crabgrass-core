@@ -1,4 +1,4 @@
-= form_tag(me_profile_path(@group), :method => 'put', :multipart => true) do
+= form_tag(me_profile_path(@group), method: 'put', multipart: true) do
   = formy(:horizontal_form) do |f|
     - f.label :information.t
     - f.row do |r|
@@ -12,24 +12,24 @@
       - r.input text_field(:profile, :role)
     - f.row do |r|
       - r.label :summary.tcap
-      - r.input text_area(:profile, :summary, :rows => 5)
+      - r.input text_area(:profile, :summary, rows: 5)
     - if @profile.summary_html.present?
       - f.row do |r|
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
         - r.input @profile.summary_html
     - f.label :banner.t
     - banner_field(f)
-    - f.button submit_tag(:save_button.t, :name => 'save', :class => 'btn btn-primary')
-    - f.button link_to(:view_profile.t, entity_path(@current_user), :class => 'btn')
+    - f.button submit_tag(:save_button.t, name: 'save', class: 'btn btn-primary')
+    - f.button link_to(:view_profile.t, entity_path(@current_user), class: 'btn')
 
 
 -# graveyard
 -#    - f.row do |r|
 -#      - r.label :phone_number.tcap
 -#      - r.input text_field_tag("profile[phone_numbers][0][phone_number]", @profile.phone_numbers[0].try.phone_number)
--#      - r.input text_field_tag("profile[phone_numbers][0][phone_number_type]", 'Home', :hidden => true)
+-#      - r.input text_field_tag("profile[phone_numbers][0][phone_number_type]", 'Home', hidden: true)
 -#    - f.row do |r|
 -#      - r.label :email_addresses.tcap
 -#      - r.input text_field_tag("profile[email_addresses][0][email_address]", @profile.email_addresses[0].try.email_address)
--#      - r.input text_field_tag("profile[email_addresses][0][email_type]", 'Home', :hidden => true)
+-#      - r.input text_field_tag("profile[email_addresses][0][email_type]", 'Home', hidden: true)
 

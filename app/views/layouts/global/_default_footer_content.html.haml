@@ -5,9 +5,9 @@
   = language_select_tag
 
 .row_fluid
-  %div{:style => 'margin: 0px auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
+  %div{style: 'margin: 0px auto; width: 73px; height: 33px; background: url(/images/crabgrass.png)'}
 
 - if Rails.env.development?
   .fow_fluid
-    = render :partial => 'common/debug/footer'
+    = render partial: 'common/debug/footer'
 

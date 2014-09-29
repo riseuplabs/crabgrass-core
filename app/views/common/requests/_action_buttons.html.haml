@@ -2,8 +2,8 @@
 - may_destroy = request.may_destroy?(current_user)
 - if may_approve or may_destroy
   - spin_id = request.dom_id
-  - approve_url = request_path(request, :state => current_state, :mark => 'approve')
-  - reject_url = request_path(request, :state => current_state, :mark => 'reject')
+  - approve_url = request_path(request, state: current_state, mark: 'approve')
+  - reject_url = request_path(request, state: current_state, mark: 'reject')
 
   .p.first= display_request(request, short: true)
 
@@ -13,14 +13,14 @@
     - # APPROVAL / REJECTION
     - if may_approve
       = button_to_remote(:approve.t, 
-        {:url => approve_url, :method => :put, :loading => show_spinner(spin_id)},
-        {:class => 'btn btn-success'})
+        {url: approve_url, method: :put, loading: show_spinner(spin_id)},
+        {class: 'btn btn-success'})
       = button_to_remote(:reject.t,
-        {:url => reject_url, :method => :put, :loading => show_spinner(spin_id)},
-        {:class => 'btn btn-danger'})
+        {url: reject_url, method: :put, loading: show_spinner(spin_id)},
+        {class: 'btn btn-danger'})
 
     - # DESTRUCTION
     - if may_destroy
-      = button_to_remote(:delete_thing.t(:thing => :request.t), 
-        {:url => request_path(request), :method => :delete, :loading => show_spinner(spin_id)},
-        {:class => 'btn btn-inverse'})
+      = button_to_remote(:delete_thing.t(thing: :request.t), 
+        {url: request_path(request), method: :delete, loading: show_spinner(spin_id)},
+        {class: 'btn btn-inverse'})

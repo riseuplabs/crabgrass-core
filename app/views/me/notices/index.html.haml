@@ -5,8 +5,8 @@
 - else
   = top_pagination_links @notices
   %table#notice_list.shaded
-    = render :partial => 'notice', :collection => @notices
+    = render partial: 'notice', collection: @notices
   = bottom_pagination_links @notices
 
 .h2=:recent_pages.t
-= render :partial => 'common/pages/list', :locals => {:style => 'table'}
+= render partial: 'common/pages/list', locals: {style: 'table'}

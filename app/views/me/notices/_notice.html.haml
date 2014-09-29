@@ -1,21 +1,21 @@
 
-%tr{:id => dom_id(notice)}
+%tr{id: dom_id(notice)}
   %td.nowrap
     .big_screen
       %span.label= notice.display_label
       %br
-      %span{:style => 'font-size:85%'}= friendly_date notice.created_at
-  %td.icon.small{:style => avatar_style(notice, 'small')}
+      %span{style: 'font-size:85%'}= friendly_date notice.created_at
+  %td.icon.small{style: avatar_style(notice, 'small')}
     =h embold_links notice.display_title
     %br
     - # TODO truncate messes up HTML, and we maybe should have a scroll bar instead of using truncate anyway.
     - if notice.display_body_as_quote?
-      %i=h truncate(embold_links(notice.display_body), :length => 512)
+      %i=h truncate(embold_links(notice.display_body), length: 512)
     - else
-      =h truncate(embold_links(notice.display_body), :length => 512)
+      =h truncate(embold_links(notice.display_body), length: 512)
   %td.nowrap.align_right.reflow
-    = spinner(notice, :align => :middle)
+    = spinner(notice, align: :middle)
     - url = self.send(notice.noticable_path, notice.noticable)
-    = link_to notice.button_text, url, :class => 'btn btn-mini', :onclick => show_spinner(notice)
-    = link_to(:dismiss.t, me_notice_path(notice),{:remote => true, :method => 'delete', :onclick => show_spinner(notice), :class => 'btn btn-mini'})
+    = link_to notice.button_text, url, class: 'btn btn-mini', onclick: show_spinner(notice)
+    = link_to(:dismiss.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-mini'})
 

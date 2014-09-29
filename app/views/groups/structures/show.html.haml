@@ -5,25 +5,25 @@
     - f.row do |r|
       - r.label :council.t
       - if @group.has_a_council?
-        - r.input link_to_group(@group.council, :avatar => :small)
+        - r.input link_to_group(@group.council, avatar: :small)
       - else
         - r.input link_line :bullet, :none.t, create_council_link
       - r.info :council_description.t
       - if !@group.has_a_council?
-        - r.info content_tag(:div, :council_description_details.t(:group => @group.group_type), :class => 'p')
+        - r.info content_tag(:div, :council_description_details.t(group: @group.group_type), class: 'p')
   - if may_list_group_committees?
     - f.row do |r|
       - r.label :committees.t
       - if @group.real_committees.any?
-        - r.input entity_list(@group.real_committees, :avatar => 'small', :class => 'spaced', :footer => link_to(:create_a_new_thing.t(:thing => :committee.t.downcase), new_group_committee_path(@group)))
+        - r.input entity_list(@group.real_committees, avatar: 'small', class: 'spaced', footer: link_to(:create_a_new_thing.t(thing: :committee.t.downcase), new_group_committee_path(@group)))
       - elsif may_create_committee?
-        - r.input link_line :bullet, :none.t, link_to(:create_a_new_thing.t(:thing => :committee.t.downcase), new_group_committee_path(@group))
+        - r.input link_line :bullet, :none.t, link_to(:create_a_new_thing.t(thing: :committee.t.downcase), new_group_committee_path(@group))
       - r.info :committee_description.t
   - if may_list_group_networks?
     - f.row do |r|
       - r.label :networks.t
       - if @group.networks.any?
-        - r.input entity_list(@group.networks, :avatar => 'small', :class => 'spaced')
+        - r.input entity_list(@group.networks, avatar: 'small', class: 'spaced')
       - else
         - r.input :none.t
       - r.info :network_description.t

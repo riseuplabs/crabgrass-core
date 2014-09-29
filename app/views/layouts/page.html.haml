@@ -6,7 +6,7 @@
 - if @options.show_sidebar
   - content_for(:right_column) do
     %nav#sidebar
-      = render(:partial => 'pages/sidebar/sidebar')
+      = render(partial: 'pages/sidebar/sidebar')
 
 - #
 - # PAGE TITLEBOX
@@ -15,10 +15,10 @@
 - # #title handles text & padding
 - #
 - content_for(:before_content) do
-  #title_box{:class => [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
+  #title_box{class: [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
     = render "common/pages/title"
     - if @options.show_tabs
-      = render :partial => "#{@page.controller}/tabs"
+      = render partial: "#{@page.controller}/tabs"
 
 - #
 - # PAGE CONTENT
@@ -26,6 +26,6 @@
 - content_for(:content) do
   = yield
   - if @options.show_posts
-    = render :partial => 'common/posts/list', :locals => {:remote => true}
+    = render partial: 'common/posts/list', locals: {remote: true}
 
-= render :file => 'layouts/application'
+= render file: 'layouts/application'

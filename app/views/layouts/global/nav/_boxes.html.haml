@@ -5,7 +5,7 @@
 - columns = split_entities_into_columns(entities)
 
 - if entities.present?
-  %div{:style=>"display: none", :class => columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
+  %div{style:"display: none", class: columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
     - cache current_language do
       .h3.first
         = heading
@@ -15,9 +15,9 @@
       %div.leftcol
         %ul
           - for entity in columns[:left_col]
-            %li= link_to_entity(entity, :avatar => 'small', :format => :full, :class => 'single')
+            %li= link_to_entity(entity, avatar: 'small', format: :full, class: 'single')
       - if columns[:right_col].present?
         %div.rightcol
           %ul
             - for entity in columns[:right_col]
-              %li= link_to_entity(entity, :avatar => 'small', :format => :full, :class => 'single')
+              %li= link_to_entity(entity, avatar: 'small', format: :full, class: 'single')

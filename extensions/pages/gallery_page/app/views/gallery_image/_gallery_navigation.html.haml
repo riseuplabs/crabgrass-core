@@ -1,6 +1,6 @@
-#gallery-navigation{:align => 'right'}
+#gallery-navigation{align: 'right'}
   %ul
-    %li.up-arrow= link_to(image_tag('/images/png/16/grey-arrow-up.png'), page_url(@page,:action=>'show') )
+    %li.up-arrow= link_to(image_tag('/images/png/16/grey-arrow-up.png'), page_url(@page,action:'show') )
     - if @previous
       %li.left-arrow
         = nav_to_gallery_image(:previous, @page, @previous)

@@ -22,8 +22,8 @@
       = local_assigns[:header]
       %ul.clickable.round
         - @items.each do |item|
-          %li{:onmousedown => activate_sliding_row(self.send(path_method, item)), :class => (once?(:clickable) ? 'first round-top' : '')}
-            = render :partial => partial, :locals => {item_name => item}
+          %li{onmousedown: activate_sliding_row(self.send(path_method, item)), class: (once?(:clickable) ? 'first round-top' : '')}
+            = render partial: partial, locals: {item_name => item}
       .p.last= local_assigns[:footer]
     .right-panel
       #sliding-item

@@ -1,5 +1,5 @@
 - content_for :title do
-  %h2= I18n.t(@request.name, :count => 1)
+  %h2= I18n.t(@request.name, count: 1)
 
 .p.first
   - if referrer =~ /\/requests[\/\?]/ # hackish
@@ -7,7 +7,7 @@
   - else
     - return_path = requests_path
 
-  = link_to icon_tag('left') + :list_things.t(:things => :requests.t), return_path, :class => 'btn'
+  = link_to icon_tag('left') + :list_things.t(things: :requests.t), return_path, class: 'btn'
 
 #request-comments
-  = render :partial => 'common/requests/comments'
+  = render partial: 'common/requests/comments'

@@ -4,23 +4,23 @@
 - #
 
 -# if @group.profiles.public.picture
-  .p{:class => first(:sidebox)}
-    = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
+  .p{class: first(:sidebox)}
+    = picture_tag(@group.profiles.public.picture, max_width: sidecolumn_inside_width, min_width: sidecolumn_inside_width)
 
 - if @group.committee?
-  .p{:class => first(:sidebox)}
-    = :this_is_committee.t(:parent_group => link_to_group(@group.parent)).html_safe
+  .p{class: first(:sidebox)}
+    = :this_is_committee.t(parent_group: link_to_group(@group.parent)).html_safe
 
 - if @group.profiles.public.summary.present?
-  .p{:class => first(:sidebox)}
+  .p{class: first(:sidebox)}
     = @group.profiles.public.summary_html
 
 - if @group.profiles.public.place.present?
-  .p{:class => first(:sidebox)}
+  .p{class: first(:sidebox)}
     %div
       %b= h @group.profiles.public.place
 
-%div= :group_membership_count.t(:count => @group.users.count)
+%div= :group_membership_count.t(count: @group.users.count)
 
 -# Created on
 -# = friendly_date @group.created_at

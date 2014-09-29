@@ -1,30 +1,30 @@
 - pagination_size = 10
 
-%table.styled{:width => '100%'}
+%table.styled{width: '100%'}
   %tr
     %th= :name.t
-    %th{:width=>'16px'} &nbsp;
+    %th{width:'16px'} &nbsp;
     %th= :access.t
 
   - if (gparts = @page.group_participations).any?
-    %tr{:class => cycle("odd","even")}
-      %td{:colspan=>'4'}
+    %tr{class: cycle("odd","even")}
+      %td{colspan:'4'}
         %b= I18n.t(:groups)
 
     - gparts.each do |gpart|
-      %tr{:class => cycle("odd","even"), :id => dom_id(gpart)}
+      %tr{class: cycle("odd","even"), id: dom_id(gpart)}
         = render 'pages/participations/permission_row', participation: gpart
 
-  - if (uparts = @page.sorted_user_participations(:page => params[:page], :per_page => pagination_size, :include => :user)).any?
-    %tr{:class => cycle("odd","even")}
-      %td{:colspan=>'4'}
+  - if (uparts = @page.sorted_user_participations(page: params[:page], per_page: pagination_size, include: :user)).any?
+    %tr{class: cycle("odd","even")}
+      %td{colspan:'4'}
         %b= :users.t
 
     - uparts.each do |upart|
-      %tr{:class => cycle("odd","even"), :id => dom_id(upart)}
+      %tr{class: cycle("odd","even"), id: dom_id(upart)}
         = render 'pages/participations/permission_row', participation: upart
 
     - if uparts.total_entries > pagination_size
-      %tr{:class => cycle("odd","even")}
-        %td{:colspan=>'4'}
+      %tr{class: cycle("odd","even")}
+        %td{colspan:'4'}
           = participation_pagination_links(uparts, tab: 'permissions')

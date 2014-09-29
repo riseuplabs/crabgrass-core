@@ -25,8 +25,8 @@
 
 .big_screen
   .nested_avatars
-    %a.avatar{:href => entity_path(parent), :style => square_avatar_style(parent, parent_size) + parent_style}
-    %a.avatar{:href => entity_path(child),  :style => square_avatar_style(child,  child_size)  + child_style}
+    %a.avatar{href: entity_path(parent), style: square_avatar_style(parent, parent_size) + parent_style}
+    %a.avatar{href: entity_path(child),  style: square_avatar_style(child,  child_size)  + child_style}
   = link_to_banner_title(child, @context.size)
 
 - parent_size   = 'xsmall'
@@ -46,7 +46,7 @@
 
 .small_screen
   - if @context.avatar
-    %a.avatar{:href => entity_path(parent), :style => square_avatar_style(parent, parent_size) + parent_style}
-    %a.avatar{:href => entity_path(child),  :style => square_avatar_style(child,  child_size)  + child_style}
+    %a.avatar{href: entity_path(parent), style: square_avatar_style(parent, parent_size) + parent_style}
+    %a.avatar{href: entity_path(child),  style: square_avatar_style(child,  child_size)  + child_style}
   = link_to_banner_title(child)
   

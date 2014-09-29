@@ -1,4 +1,4 @@
 - cache [current_language, @group.version_cache_key] do
-  - users = @group.users.most_recently_active(:limit => 20)
-  = entity_list(users, :header => :members.t)
-  -# :after => link_line(:bullet, list_memberships_link, invite_link, leave_group_link))
+  - users = @group.users.most_recently_active(limit: 20)
+  = entity_list(users, header: :members.t)
+  -# after: link_line(:bullet, list_memberships_link, invite_link, leave_group_link))

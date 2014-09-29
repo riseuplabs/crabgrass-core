@@ -10,11 +10,11 @@
   - @navigation[:local].each do |item|
     - next unless item[:visible]
     - active = item[:active] ? 'active' : ''
-    %li{:class => [active]}
+    %li{class: [active]}
       - if item[:html]
-        %div{:class => [active]}
+        %div{class: [active]}
           = theme_render(item[:html])
       - elsif item[:icon]
-        = link_to_active(content_tag(:span, item[:label], :class => "icon inline #{item[:icon]}_16"), item[:url], item[:active], :class => '')
+        = link_to_active(content_tag(:span, item[:label], class: "icon inline #{item[:icon]}_16"), item[:url], item[:active], class: '')
       - else
-        = link_to_active(item[:label], item[:url], item[:active], :class => '')
+        = link_to_active(item[:label], item[:url], item[:active], class: '')
