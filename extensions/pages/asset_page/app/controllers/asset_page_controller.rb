@@ -24,13 +24,6 @@ class AssetPageController < Pages::BaseController
     end
   end
 
-  # xhr request
-  def generate_preview
-    @asset.generate_thumbnails
-    render :update do |page|
-      page.replace_html 'preview_area', asset_link_with_preview(@asset)
-    end
-  end
 
   protected
 

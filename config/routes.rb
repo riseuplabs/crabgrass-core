@@ -165,10 +165,18 @@ Crabgrass::Application.routes.draw do
   get '/pages/new(/:owner(/:type))',
     as: 'page_creation',
     to: 'pages/create#new'
-
   post '/pages/create(/:owner(/:type))',
     as: 'page_creation',
     to: 'pages/create#create'
+
+  # custom page creators
+  get '/pages/:controller/new(/:owner(/:type))',
+    as: 'custom_page_creation',
+    action: 'new'
+  post '/pages/:controller/new(/:owner(/:type))',
+    as: 'custom_page_creation',
+    action: 'create'
+
 
   # base page
   resources :pages, module: 'pages', controller: 'base' do |pages|

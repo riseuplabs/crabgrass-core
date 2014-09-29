@@ -5,6 +5,13 @@ module AssetPageHelper
     if thumbnail.nil?
       link_to( image_tag(asset.big_icon), asset.url )
     elsif !thumbnail.exists?
+      load_preview_tag + javascript_tag(create_preview_javascript)
+    else
+      link_to_asset(asset, :large, class: '')
+    end
+  end
+
+  def load_preview_tag
       #if false and thumbnail.width
       #  width = thumbnail.width
       #  height = thumbnail.height
@@ -14,11 +21,12 @@ module AssetPageHelper
       width, height = [300,300]
       style = "height:#{height}px; width:#{width}px;"
       style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
-      javascript = javascript_tag(remote_function(url: page_xpath(@page, action: 'generate_preview')))
-      content_tag(:div, '', id: 'preview-loading', style: style) + javascript
-    else
-      link_to_asset(asset, :large, class: '')
-    end
+      content_tag(:div, '', id: 'preview-loading', style: style)
+  end
+
+  def create_preview_javascript
+    remote_function method: :post,
+      url: page_items_path(page_id: @page, controller: 'preview')
   end
 
   #def download_link
@@ -32,7 +40,8 @@ module AssetPageHelper
   def destroy_version_link(version)
     if may_edit_page? and version.version < @asset.version
       action = {
-        url: page_xpath(@page, controller: :history, action: 'destroy', id: version.version),
+        url: page_item_path(version.version, page_id: @page, controller: :asset_page_history),
+        method: :delete,
         confirm: I18n.t(:delete_version_confirm)
         #:before => "$($(this).up('td')).addClassName('busy')",
         #:failure => "$($(this).up('td')).removeClassName('busy')"

@@ -87,7 +87,9 @@ module Common::Application::Paths
   def custom_create_path(options={})
     if (page_type = options.delete(:page_type)).present?
       if (controller = page_type.definition.creation_controller).present?
-        return "/pages/#{controller}/#{options[:action]}/#{options[:owner]}"
+        custom_page_creation_path controller: controller,
+          action: options[:action],
+          owner: options[:owner]
       else
         options[:type] = page_type.url
         return nil
