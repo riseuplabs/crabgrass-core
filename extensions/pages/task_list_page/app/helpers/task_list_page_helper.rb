@@ -37,9 +37,8 @@ module TaskListPageHelper
       content_tag :li, task.name, class: 'icon checkoff'
     else
       next_state = task.completed? ? 'pending' : 'complete'
-      url =  page_xurl(task.task_list.page, action: 'mark_task_'+next_state, id: task.id)
       name = "#{task.id}_task"
-      spinbox_tag name, url, checked: task.completed?, tag: :span
+      spinbox_tag name, task_url(task), checked: task.completed?, tag: :span, method: :put, with: "'task[state]=#{next_state}'"
     end
   end
 
@@ -72,7 +71,8 @@ module TaskListPageHelper
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      url: page_xurl(task.task_list.page, action: 'destroy_task', id: task.id),
+      url: task_url(task),
+      method: 'delete',
       loading: show_spinner(task),
       complete: hide(task)
     )
@@ -82,7 +82,7 @@ module TaskListPageHelper
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      url: page_xurl(task.task_list.page, action: 'edit_task', id: task.id),
+      url: edit_page_item_url(task, controller: :tasks, page_id: task.task_list.page),
       loading: show_spinner(task)
     )
     button_to_function "Edit", function
@@ -115,7 +115,7 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      url: page_xurl(task.task_list.page, action: 'update_task', id: task.id),
+      url: page_item_url(task, controller: :tasks, page_id: task.task_list.page),
       loading: show_spinner(task),
       html: {}
     }]
@@ -123,7 +123,7 @@ module TaskListPageHelper
 
   def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
     page ||= task.task_list.page
-    render partial: 'assigned_checkbox',
+    render partial: 'tasks/assigned_checkbox',
       collection: possible_users(task, page),
       as: :user,
       locals: {selected: selected}
@@ -147,13 +147,22 @@ module TaskListPageHelper
 
   def options_for_new_task_form(page)
     [{
-      url: page_xurl(page, action: 'create_task'),
-      html: {action: page_url(page, action: 'create_task'), id: 'new-task-form'}, # non-ajax fallback
+      url: tasks_url(page),
+      html: {id: 'new-task-form'},
       loading: show_spinner('new-task'),
       complete: hide_spinner('new-task'),
       success: reset_form('new-task-form')
     }]
   end
 
+  def tasks_url(page)
+    page_items_url(page_id: page, controller: :tasks)
+  end
+
+  def task_url(task)
+    page_item_url task,
+      page_id: task.task_list.page,
+      controller: :tasks
+  end
 end
 
