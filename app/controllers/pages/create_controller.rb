@@ -4,14 +4,13 @@
 #
 # Routes:
 #
-#  GET new
-#     new_page_path
-#     /pages/new/:owner/:type
-#
-#  POST create
-#     create_page_path
+#  GET new_page_path
 #     /pages/create/:owner/:type
 #
+#  POST create_page_path
+#     /pages/create/:owner/:type
+#
+# (the two paths are the same... the action destinct.)
 
 class Pages::CreateController < ApplicationController
 

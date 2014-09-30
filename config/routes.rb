@@ -162,7 +162,7 @@ Crabgrass::Application.routes.draw do
   ##
 
   # default page creator
-  get '/pages/new(/:owner(/:type))',
+  get '/pages/create(/:owner(/:type))',
     as: 'page_creation',
     to: 'pages/create#new'
   post '/pages/create(/:owner(/:type))',
@@ -170,10 +170,10 @@ Crabgrass::Application.routes.draw do
     to: 'pages/create#create'
 
   # custom page creators
-  get '/pages/:controller/new(/:owner(/:type))',
+  get '/pages/:controller/create(/:owner(/:type))',
     as: 'custom_page_creation',
     action: 'new'
-  post '/pages/:controller/new(/:owner(/:type))',
+  post '/pages/:controller/create(/:owner(/:type))',
     as: 'custom_page_creation',
     action: 'create'
 

@@ -69,16 +69,10 @@ module Common::Application::Paths
   #
 
   def new_page_path(options={})
-    options[:action] = 'new'
     options[:owner] ||= params[:owner] || :me
     custom_create_path(options) || page_creation_path(options)
   end
-
-  def create_page_path(options={})
-    options[:action] = 'create'
-    options[:owner] ||= params[:owner]
-    custom_create_path(options) || page_creation_path(options)
-  end
+  alias_method :create_page_path, :new_page_path
 
   #
   # if page definition has a custom constroller, return a path for it.
@@ -88,7 +82,6 @@ module Common::Application::Paths
     if (page_type = options.delete(:page_type)).present?
       if (controller = page_type.definition.creation_controller).present?
         custom_page_creation_path controller: controller,
-          action: options[:action],
           owner: options[:owner]
       else
         options[:type] = page_type.url
