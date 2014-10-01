@@ -20,7 +20,7 @@
 module Common::Page::UrlHelper
 
   def sort_page_items_url(*args)
-    add_page_defaults_to_args! args
+    add_page_item_defaults_to_args! args
     super
   end
 

@@ -3,6 +3,20 @@ class RateManyPossiblesController < Pages::BaseController
 
   guard :may_edit_page?
 
+  # ajax only, returns nothing
+  # for this to work, there must be a <ul id='sort_list_xxx'> element
+  # and it must be declared sortable like this:
+  # <%= sortable_element 'sort_list_xxx', .... %>
+  def sort
+    return unless params[:sort_list].present?
+    ids = params[:sort_list]
+    @poll.possibles.each do |possible|
+      position = ids.index( possible.id.to_s )
+      possible.update_attribute('position',position+1) if position
+    end
+    render nothing: true
+  end
+
   def create
     @possible = @poll.possibles.create params[:possible]
     if @poll.valid? and @possible.valid?
