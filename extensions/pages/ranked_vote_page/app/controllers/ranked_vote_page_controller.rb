@@ -15,30 +15,6 @@ class RankedVotePageController < Pages::BaseController
   def edit
   end
 
-  # ajax or post
-  def add_possible
-    return if request.get?
-    @possible = @poll.possibles.create params[:possible]
-    if @poll.valid? and @possible.valid?
-      @page.unresolve
-      if request.xhr?
-        render template: 'ranked_vote_page/add_possible'
-      else
-        redirect_to page_url(@page)
-      end
-    else
-      @poll.possibles.delete(@possible)
-      flash_message_now object: @possible unless @possible.valid?
-      flash_message_now object: @poll unless @poll.valid?
-      if request.post?
-        render action: 'show'
-      else
-        render text: 'error', status: 500
-      end
-      return
-    end
-  end
-
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -59,41 +35,14 @@ class RankedVotePageController < Pages::BaseController
     end
   end
 
-  def update_possible
-    return unless request.xhr?
-    @possible = @poll.possibles.find(params[:id])
-    params[:possible].delete('name')
-    @possible.update_attributes(params[:possible])
-    render template: 'ranked_vote_page/update_possible'
-  end
-
-  def edit_possible
-    return unless request.xhr?
-    @possible = @poll.possibles.find(params[:id])
-    render template: 'ranked_vote_page/edit_possible'
-  end
-
-  def destroy_possible
-    possible = @poll.possibles.find(params[:id])
-    possible.destroy
-    render nothing: true
-  end
-
-  def confirm
-    # right now, this is just an illusion, but perhaps we should make the vote
-    # only get saved after confirmation. people like the confirmation, rather
-    # then the weird ajax-only sorting.
-    redirect_to page_url(@page)
-  end
-
   def print
     @who_voted_for = @poll.tally
     @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
 
     render layout: "printer-friendly"
   end
-  protected
 
+  protected
 
   def fetch_poll
     @poll = @page.data if @page

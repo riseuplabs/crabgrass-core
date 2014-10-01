@@ -1,6 +1,6 @@
 require 'javascript_integration_test'
 
-class RateManyPageTest < JavascriptIntegrationTest
+class RankedVoteTest < JavascriptIntegrationTest
   include Integration::Possibility
   include Integration::Navigation
 
@@ -35,13 +35,30 @@ class RateManyPageTest < JavascriptIntegrationTest
     assert_first_choice_of(@user, option)
   end
 
+
+  def test_multiple_options
+    click_on 'Add new possibility'
+    add_possibility
+    option, description = add_possibility
+    click_on 'Done'
+    click_page_tab 'Show results'
+    click_on option
+    assert_content description
+    click_page_tab 'Edit my vote'
+    assert_content option
+    vote
+    vote
+    finish_voting
+    assert_content 'top pick'
+  end
+
   def vote
-    option_li = find('#sort_list_unvoted li.possible')
+    option_li = find('#sort_list_unvoted li.possible', match: :first)
     option_li.drag_to find('#sort_list_voted')
   end
 
   def finish_voting
-    click_on "Confirm Vote"
+    click_page_tab "Show results"
   end
 
   def assert_not_voted_yet

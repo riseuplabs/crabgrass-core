@@ -27,7 +27,7 @@ module PageRecords
     type_name = I18n.t "#{type}_display"
     # create page is on a hidden dropdown
     # click_on :create_page.t
-    visit '/pages/new/me'
+    visit '/pages/create/me'
     click_on type_name
     new_page(type, options)
     title = options[:title] || type_name + new_page.title.to_s
