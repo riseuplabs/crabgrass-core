@@ -8,7 +8,7 @@
 
 <div id='new_possible_form_container' style='<%= hide ? "display:none" : "" %>'>
   <h4><%= I18n.t(:new_possibility_heading) %></h4>
-  <%= form_tag(page_items_url(page_id: @page, controller: :rate_many_possibles),
+  <%= form_tag(page_items_url,
                on_submit: show_spinner('new_possible_loading'),
                remote: true,
                id: 'new_possible_form',

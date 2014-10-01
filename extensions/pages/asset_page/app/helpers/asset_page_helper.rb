@@ -25,8 +25,7 @@ module AssetPageHelper
   end
 
   def create_preview_javascript
-    remote_function method: :post,
-      url: page_items_path(page_id: @page, controller: 'preview')
+    remote_function method: :post, url: page_items_url(controller: :preview)
   end
 
   #def download_link
@@ -40,7 +39,7 @@ module AssetPageHelper
   def destroy_version_link(version)
     if may_edit_page? and version.version < @asset.version
       action = {
-        url: page_item_path(version.version, page_id: @page, controller: :asset_page_history),
+        url: page_item_url(version.version),
         method: :delete,
         confirm: I18n.t(:delete_version_confirm)
         #:before => "$($(this).up('td')).addClassName('busy')",

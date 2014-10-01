@@ -82,7 +82,7 @@ module TaskListPageHelper
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      url: edit_page_item_url(task, controller: :tasks, page_id: task.task_list.page),
+      url: edit_page_item_url(task, page_id: task.task_list.page),
       loading: show_spinner(task)
     )
     button_to_function "Edit", function
@@ -115,7 +115,7 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      url: page_item_url(task, controller: :tasks, page_id: task.task_list.page),
+      url: page_item_url(task, page_id: task.task_list.page),
       loading: show_spinner(task),
       html: {}
     }]
@@ -156,13 +156,12 @@ module TaskListPageHelper
   end
 
   def tasks_url(page)
-    page_items_url(page_id: page, controller: :tasks)
+    page_items_url(page_id: page)
   end
 
   def task_url(task)
     page_item_url task,
-      page_id: task.task_list.page,
-      controller: :tasks
+      page_id: task.task_list.page
   end
 end
 

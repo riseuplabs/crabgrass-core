@@ -189,7 +189,7 @@ module GalleryHelper
   end
 
   #form_options = {
-  #  :url => page_items_url(image, page_id: @page, controller: :gallery_image)
+  #  :url => page_item_url(image)
   #  :update => 'detail_image_title',
   #  :complete => "$('detail_image_title').show()",
   #  :pending => "$('change_title_spinner').show()"

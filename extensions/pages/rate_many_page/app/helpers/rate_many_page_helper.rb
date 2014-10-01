@@ -19,7 +19,7 @@ module RateManyPageHelper
       value == map(vote.value), # checked?
       disabled: !current_user.may?(:edit, @page),
       onclick: remote_function(
-        url: page_item_url(possible, page_id: @page, controller: :rate_many_possibles, value: map(value)),
+        url: page_item_url(possible, value: map(value)),
         method: :put,
         loading: show_spinner("possible_%s" % possible.id)
        )
