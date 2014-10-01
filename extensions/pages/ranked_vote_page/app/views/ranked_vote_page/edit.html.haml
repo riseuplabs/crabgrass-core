@@ -29,7 +29,7 @@
     %li#add_possible_link= render partial: 'new_possible'
   = sortable_element 'sort_list_voted', handle: 'handle',
     containment: ['sort_list_voted', 'sort_list_unvoted'],
-    url: sort_page_items_url(page_id: @page, controller: :ranked_vote_page)
+    url: sort_page_items_url
   = sortable_element 'sort_list_unvoted', handle: 'handle',
     containment: ['sort_list_voted', 'sort_list_unvoted'],
-    url: sort_page_items_url(page_id: @page, controller: :ranked_vote_page)
+    url: sort_page_items_url

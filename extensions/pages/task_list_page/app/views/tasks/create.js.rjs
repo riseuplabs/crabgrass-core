@@ -4,4 +4,4 @@ page.hide 'no_pending_tasks'
 
 # makes sure the new one is sortable
 page.sortable 'sort_list_pending', :handle => 'handle', 
-  :url => sort_page_items_url(page_id: @page, controller: :tasks)
+  :url => sort_page_items_url
