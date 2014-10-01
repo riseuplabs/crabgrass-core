@@ -189,9 +189,9 @@ module GalleryHelper
   end
 
   #form_options = {
-  #  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+  #  :url => page_items_url(image, page_id: @page, controller: :gallery_image)
   #  :update => 'detail_image_title',
-  #	:complete => "$('detail_image_title').show()",
+  #  :complete => "$('detail_image_title').show()",
   #  :pending => "$('change_title_spinner').show()"
   #}
   def save_caption_form_options page, image

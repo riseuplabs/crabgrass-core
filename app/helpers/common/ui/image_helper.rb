@@ -188,11 +188,7 @@ module Common::Ui::ImageHelper
     url     = options[:url] || asset.url
     # options[:method] ||= 'get'
     # span = content_tag(:span, asset.filename)
-    if options[:xhr]
-      link_to_remote img, {url: url}, options.slice(:class, :title, :style)
-    else
-      link_to img, url, options.slice(:class, :title, :style)
-    end
+    link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 
   # links to an asset with a thumbnail preview

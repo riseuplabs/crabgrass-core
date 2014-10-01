@@ -1,3 +1,7 @@
 %li[image]
   %div[image, :control]
-  = link_to_asset image, :medium, crop: '90x90', url: page_xurl(@page, controller: :image, action: 'show', id: image.id), xhr: 1, title: h(image.caption)
+    = link_to_asset image, :medium, crop: '90x90',
+      url: page_item_url(image, page_id: @page, controller: :gallery_image),
+      remote: true,
+      method: :get,
+      title: h(image.caption)
