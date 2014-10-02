@@ -248,8 +248,8 @@ Crabgrass::Application.routes.draw do
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  resources :context, path: "", only: :show do
-    resources :pages, path: "", controller: :dispatch
+  resources :contexts, path: "", only: :show do
+    resources :pages, path: "", controller: :context_pages
   end
 
   scope path: ':context_id/:page_id/:controller' do
