@@ -23,8 +23,7 @@ class Pages::SidebarsController < ApplicationController
   end
 
   def fetch_page
-    id = params[:page_id]
-    @page = Page.find_by_id(id)
+    @page = Page.find params[:page_id]
     unless @page
       raise_not_found(:page.t)
     end
