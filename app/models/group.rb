@@ -25,6 +25,7 @@ end
 =end
 
 class Group < ActiveRecord::Base
+  extend ContextRoutes
 
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
