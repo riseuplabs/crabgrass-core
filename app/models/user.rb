@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  extend ContextRoutes
 
   ##
   ## CORE EXTENSIONS

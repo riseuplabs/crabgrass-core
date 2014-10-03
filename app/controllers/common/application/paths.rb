@@ -96,8 +96,8 @@ module Common::Application::Paths
   # That is no good. We want page paths in these forms:
   #
   # (1) pretty -- page_path and page_url
-  #               /:context/:page/:action/:id
-  #               /:context/:page/:controller/:action/:id
+  #               /:context/:page
+  #               /:context/:page/:controller/:id/:action
   #
   # (2) direct -- page_item_url and friends
   #               restful routes to
