@@ -2,7 +2,7 @@ class GalleryController < Pages::BaseController
 
   def show
     @images = @page.images.paginate(page: params[:page])
-    redirect_to(page_url(@page, action: 'edit')) if @images.blank?
+    redirect_to([:edit, @page.owner, @page].compact) if @images.blank?
     #@cover = @page.cover
   end
 
