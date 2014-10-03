@@ -142,14 +142,7 @@ module Common::Application::Paths
     end
     path << controller
 
-    # (3) action
-    action = options.delete(:action)
-    if action == 'show' and !options[:id]
-      action = nil
-    end
-    path << action
-
-    # (4) id
+    # (3) id
     path << options.delete(:id)
 
     return ('/' + path.select(&:present?).join('/') + build_query_string(options))
