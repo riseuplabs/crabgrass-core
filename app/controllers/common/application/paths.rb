@@ -145,6 +145,10 @@ module Common::Application::Paths
     # (3) id
     path << options.delete(:id)
 
+    # (4) action
+    action = options.delete(:action)
+    path << action if [:sort, :new, :edit].include? action.to_sym
+
     return ('/' + path.select(&:present?).join('/') + build_query_string(options))
   end
 

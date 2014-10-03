@@ -1,10 +1,16 @@
-
-class AssetPageHistoryController < Pages::BaseController
+class AssetPageVersionsController < Pages::BaseController
 
   guard index: :may_show_page?, destroy: :may_edit_page?
   helper 'asset_page'
 
   def index
+  end
+
+  def create
+    @asset.generate_thumbnails
+    render :update do |page|
+      page.replace_html 'preview_area', asset_link_with_preview(@asset)
+    end
   end
 
   def destroy

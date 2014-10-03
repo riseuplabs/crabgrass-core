@@ -25,7 +25,7 @@ module AssetPageHelper
   end
 
   def create_preview_javascript
-    remote_function method: :post, url: page_items_url(controller: :preview)
+    remote_function method: :post, url: page_items_url
   end
 
   #def download_link

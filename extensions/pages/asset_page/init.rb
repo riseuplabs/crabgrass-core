@@ -1,5 +1,5 @@
 define_page_type :AssetPage, {
-  controller: ['asset_page', 'asset_page_history', 'preview'],
+  controller: ['asset_page', 'asset_page_versions'],
   creation_controller: 'create_asset_page',
   model: 'Asset',
   form_sections: ['file'],

@@ -33,7 +33,7 @@ class AssetPageController < Pages::BaseController
 
   def setup_options
     @options.show_assets = false
-    if action?(:show, :edit, :history)
+    if action?(:show, :edit)
       @options.show_tabs   = true
     end
   end
