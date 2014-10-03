@@ -36,7 +36,7 @@
       - if @page.user_participations.any?
         .h3= I18n.t(:people)
         %ul#people.names
-          - @page.sorted_user_participations.each do |participation|
+          - @page.sorted_user_participations.limit(31).each do |participation|
             %li
               = link_to_user_participation(participation)
 

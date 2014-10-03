@@ -132,6 +132,10 @@ class Page < ActiveRecord::Base
 
   # unique string for a page - including the id
   def friendly_url
+    # strange corner case here: during page creation we set the id to 0
+    # in order to get a meaningful page_share_path.
+    # The title is still blank at that point.
+    return id if title.blank?
     s = title.nameize
     # limit name length, and remove any half-cut trailing word
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42

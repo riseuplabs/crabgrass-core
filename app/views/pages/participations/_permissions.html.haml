@@ -15,11 +15,13 @@
       %tr{class: cycle("odd","even"), id: dom_id(gpart)}
         = render 'pages/participations/permission_row', participation: gpart
 
-  - if (uparts = @page.sorted_user_participations(page: params[:page], per_page: pagination_size, include: :user)).any?
+  - uparts = @page.sorted_user_participations
+  - if uparts.any?
     %tr{class: cycle("odd","even")}
       %td{colspan:'4'}
         %b= :users.t
 
+    - uparts = uparts.paginate(page: params[:page] || 0, per_page: pagination_size)
     - uparts.each do |upart|
       %tr{class: cycle("odd","even"), id: dom_id(upart)}
         = render 'pages/participations/permission_row', participation: upart
