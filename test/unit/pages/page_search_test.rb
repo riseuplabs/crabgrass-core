@@ -62,7 +62,7 @@ class Pages::PageSearchTest < ActiveSupport::TestCase
       searched_pages = Page.find_by_path(
         search_str, options_for_group(group, method: method, per_page: 1000)
       )
-      actual_pages = Page.find(:all).select{ |p|
+      actual_pages = Page.all.select{ |p|
         search_code.call(p) && group.may?(:view, p) && user.may?(:view, p)
       }
       assert actual_pages.any?, 'a filter with no results is a bad test (group `%s`, filter `%s`)' % [group.name, search_str]
