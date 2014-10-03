@@ -249,7 +249,7 @@ Crabgrass::Application.routes.draw do
   ##
 
   resources :contexts, path: "", only: :show do
-    resources :pages, path: "", controller: :context_pages
+    resources :pages, path: "", controller: :context_pages, except: [:index, :create]
   end
 
   scope path: ':context_id/:page_id/:controller' do

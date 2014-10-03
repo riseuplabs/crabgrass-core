@@ -30,7 +30,7 @@
 
 class ContextPagesController < DispatchController
 
-  def process(name, *args)
+  def process(*)
     super
   rescue ActiveRecord::RecordNotFound
     if logged_in? and (@group or (@user and @user == current_user))
@@ -66,8 +66,8 @@ class ContextPagesController < DispatchController
   #
 
   def find_controller
-    page_handle = params[:_page]
-    context = params[:_context]
+    page_handle = params[:id]
+    context = params[:context_id]
 
     if context
       if context =~ /\ /
@@ -148,8 +148,7 @@ class ContextPagesController < DispatchController
   #end
 
   def controller_for_page(page)
-    params[:controller] = page.controller
-    new_controller("#{params[:controller].camelcase}Controller")
+    new_controller page.controller
   end
 
   private

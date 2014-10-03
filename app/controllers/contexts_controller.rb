@@ -10,10 +10,16 @@
 
 class ContextsController < DispatchController
 
+  def process(*)
+    super
+  rescue ActiveRecord::RecordNotFound
+    raise_not_found(:page.t)
+  end
+
   protected
 
   def find_controller
-    context = params[:context_id]
+    context = params[:id]
 
     if context
       if context =~ /\ /
