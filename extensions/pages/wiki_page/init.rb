@@ -16,3 +16,10 @@ define_page_type :ArticlePage, {
   order: 4
 }
 
+
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :wiki_pages, controller: :wiki_page
+  end
+end
+

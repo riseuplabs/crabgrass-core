@@ -197,19 +197,6 @@ Crabgrass::Application.routes.draw do
     resource :trash,      only: [:edit, :update], controller: 'trash'
   end
 
-  # Page_items route. Used to directly alter items of a page.
-  # This is only meant for "hidden use" inside ajax.
-  # If you want a pretty url look at the context based route
-  # at the end of this file.
-  scope path: 'pages/:page_id/:controller' do
-    resources :page_items, path: '',
-      constraints: lambda{|request| request.xhr?} do
-      collection do
-        post :sort
-      end
-    end
-  end
-
   ##
   ## WIKI
   ##
@@ -240,13 +227,26 @@ Crabgrass::Application.routes.draw do
 
   if Crabgrass.mod_route_blocks
     Crabgrass.mod_route_blocks.each do |block|
-      block.call
+      instance_eval &block
     end
   end
 
   ##
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
+
+  # Page_items route. Used to directly alter items of a page.
+  # This is only meant for "hidden use" inside ajax.
+  # If you want a pretty url look at the context based route
+  # at the end of this file.
+  scope path: 'pages/:page_id/:controller' do
+    resources :page_items, path: '',
+      constraints: lambda{|request| request.xhr?} do
+      collection do
+        post :sort
+      end
+    end
+  end
 
   resources :contexts, path: "", only: :show do
     resources :pages, path: "", controller: :context_pages, except: [:index, :create]

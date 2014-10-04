@@ -17,7 +17,7 @@ module Pages::BeforeFilters
   # subclasses should define 'fetch_data', which this method calls.
   #
   def default_fetch_data
-    @page ||= Page.find(params[:page_id])
+    @page ||= Page.find(params[:page_id] || params[:id])
     unless @page
       raise_not_found(:thing_not_found.t(thing: :page.t))
     end
