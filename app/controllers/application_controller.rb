@@ -4,14 +4,16 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
+
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
+  hide_action :_layout_from_proc
 
   include_controllers 'common/application'
   include_helpers 'app/helpers/common/*/*.rb'
   helper :application, :modalbox
 
-  class_attribute :stylesheets
-  class_attribute :javascripts
+  class_attribute :stylesheets, instance_reader: false, instance_writer: false
+  class_attribute :javascripts, instance_reader: false, instance_writer: false
 
   protected
 

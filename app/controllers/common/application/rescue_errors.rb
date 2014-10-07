@@ -32,7 +32,8 @@ module Common::Application::RescueErrors
     base.extend ClassMethods
     base.class_eval do
 
-      class_attribute :rescue_render_map
+      class_attribute :rescue_render_map,
+        instance_writer: false, instance_reader: false
 
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, with: :render_error
