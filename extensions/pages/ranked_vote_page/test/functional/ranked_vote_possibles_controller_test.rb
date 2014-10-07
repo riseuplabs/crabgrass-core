@@ -1,0 +1,19 @@
+require 'test_helper'
+
+class RankedVotePossiblesControllerTest < ActionController::TestCase
+  fixtures :pages, :users, :user_participations, :polls, :possibles
+
+  def setup
+    user = users(:orange)
+    login_as user
+    @page = FactoryGirl.create :ranked_vote_page, created_by: user
+    @poll = @page.data
+  end
+
+  def test_add_possible
+    assert_difference '@poll.reload.possibles.count' do
+      xhr :post, :create, page_id: @page.id, possible: {name: "new option", description: ""}
+    end
+  end
+
+end

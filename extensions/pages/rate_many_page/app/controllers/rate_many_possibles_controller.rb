@@ -31,7 +31,7 @@ class RateManyPossiblesController < Pages::BaseController
 
   def destroy
     return unless @poll
-    possible = @poll.possibles.find(params[:possible])
+    possible = @poll.possibles.find(params[:id])
     possible.destroy
 
     current_user.updated @page # update modified date, and auto_summary, but do not make it unresolved
