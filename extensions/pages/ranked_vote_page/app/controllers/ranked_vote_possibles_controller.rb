@@ -43,7 +43,7 @@ class RankedVotePossiblesController < Pages::BaseController
     @possible = @poll.possibles.find(params[:id])
   end
 
-  def destroy_
+  def destroy
     possible = @poll.possibles.find(params[:id])
     possible.destroy
     render nothing: true

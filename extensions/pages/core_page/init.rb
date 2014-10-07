@@ -6,4 +6,12 @@ define_page_type :DiscussionPage, {
   order: 2
 }
 
-
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :discussions,
+      only: [:show, :edit, :update],
+      controller: :discussion_page do
+        get :print, on: :member
+      end
+  end
+end

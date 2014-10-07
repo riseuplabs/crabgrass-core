@@ -19,7 +19,9 @@ define_page_type :ArticlePage, {
 
 Crabgrass.mod_routes do
   scope path: 'pages' do
-    resources :wiki_pages, controller: :wiki_page
+    resources :wikis, controller: :wiki_page do
+        get :print, on: :member
+      end
   end
 end
 

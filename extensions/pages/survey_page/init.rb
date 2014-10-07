@@ -11,3 +11,12 @@ define_page_type :SurveyPage, {
 #
 #apply_mixin_to_model("User", SurveyUserExtension)
 
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :surveys,
+      only: [:show, :edit, :update],
+      controller: :survey_page do
+        get :print, on: :member
+      end
+  end
+end

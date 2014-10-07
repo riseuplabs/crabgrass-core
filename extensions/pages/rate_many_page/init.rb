@@ -7,3 +7,15 @@ define_page_type :RateManyPage, {
   order: 10
 }
 
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :rate_manys,
+      only: [:show, :edit, :update],
+      controller: :rate_many_page do
+        resources :possibles, controller: :rate_many_possibles,
+          only: [:create, :update, :edit, :destroy] do
+            post :sort, on: :collection
+        end
+      end
+  end
+end

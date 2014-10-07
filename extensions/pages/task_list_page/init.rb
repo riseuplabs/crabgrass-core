@@ -7,3 +7,11 @@ define_page_type :TaskListPage, {
   order: 3
 }
 
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :task_lists, controller: :task_list_page do
+      resources :tasks
+    end
+  end
+end
+
