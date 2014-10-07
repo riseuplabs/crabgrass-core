@@ -53,19 +53,6 @@ class Pages::BaseController < ApplicationController
     @page  = seed[:page]   # the page object, if already fetched
   end
 
-  ##
-  ## ACTIONS
-  ##
-
-  def show
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
   protected
 
   # to be overridden by subclasses
