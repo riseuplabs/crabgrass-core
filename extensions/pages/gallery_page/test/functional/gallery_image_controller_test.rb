@@ -8,11 +8,8 @@ class GalleryImageControllerTest < ActionController::TestCase
     # there are no galleries in fixtures yet.
     #
     @gallery = Gallery.create! title: 'gimme pictures', user: users(:blue)
-    @asset = Asset.create_from_params({
-      uploaded_data: upload_data('photo.jpg')}) do |asset|
-        asset.parent_page = @gallery
-      end
-    @gallery.add_image!(@asset, users(:blue))
+    @asset = @gallery.add_image! uploaded_data: upload_data('photo.jpg')
+    users(:blue).updated(@gallery)
     @gallery.save!
     @asset.save!
   end
@@ -105,4 +102,18 @@ class GalleryImageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_sort
+    # we need two images
+    @asset2 = Asset.create_from_params({
+      uploaded_data: upload_data('photo.jpg')}) do |asset|
+        asset.parent_page = @gallery
+      end
+    @gallery.add_image!(@asset2, users(:blue))
+    @asset2.save!
+    login_as :blue
+    xhr :post, :sort, page_id: @gallery.id,
+      sort_gallery: [@asset2.id, @asset.id]
+    assert_response :success
+    assert_equal [@asset2.id, @asset.id], @gallery.reload.images.map(&:id)
+  end
 end

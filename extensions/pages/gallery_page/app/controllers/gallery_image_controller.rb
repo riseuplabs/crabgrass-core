@@ -63,6 +63,15 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
+  # removed an non ajax fallback, azul
+  def sort
+    @page.sort_images params[:assets_list]
+    current_user.updated(@page)
+    render text: I18n.t(:order_changed), layout: false
+  rescue => exc
+    render text: I18n.t(:error_saving_new_order_message, error_message: exc.message)
+  end
+
   protected
 
   # just carrying over stuff from the old gallery controller here

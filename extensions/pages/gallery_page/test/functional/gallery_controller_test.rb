@@ -14,7 +14,7 @@ class GalleryControllerTest < ActionController::TestCase
 
   def test_show
     login_as :blue
-    get :show, page_id: @gallery.id
+    get :show, id: @gallery.id
     assert_response :success
     assert_not_nil assigns(:images)
   end
@@ -23,30 +23,15 @@ class GalleryControllerTest < ActionController::TestCase
     login_as :blue
     gallery = Gallery.create!( user: users(:blue),
       title: "Empty Gallery")
-    get :show, page_id: gallery.id
+    get :show, id: gallery.id
     assert_response :redirect
     assert_redirected_to @controller.send(:page_url, gallery, action: 'edit')
   end
 
   def test_edit
     login_as :blue
-    get :edit, page_id: @gallery.id
+    get :edit, id: @gallery.id
     assert_response :success
-  end
-
-  def test_update
-    # we need two images
-    @asset2 = Asset.create_from_params({
-      uploaded_data: upload_data('photo.jpg')}) do |asset|
-        asset.parent_page = @gallery
-      end
-    @gallery.add_image!(@asset2, users(:blue))
-    @asset2.save!
-    login_as :blue
-    xhr :post, :update, page_id: Gallery.find(:first).id,
-      sort_gallery: [@asset2.id, @asset.id]
-    assert_response :success
-    assert_equal [@asset2.id, @asset.id], @gallery.reload.images.map(&:id)
   end
 
 end
