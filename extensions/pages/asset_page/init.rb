@@ -12,9 +12,11 @@ Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :assets,
       only: [:show, :new, :edit, :update],
-      controller: :asset_page do
-        resource :versions, controller: :asset_page_versions,
-          only: [:index, :create, :destroy]
-      end
+      controller: :asset_page
+  end
+
+  scope path: 'pages/:page_id' do
+    resource :versions, controller: :asset_page_versions,
+      only: [:index, :create, :destroy]
   end
 end

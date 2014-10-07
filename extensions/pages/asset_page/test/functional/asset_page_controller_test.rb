@@ -15,7 +15,7 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_show
     page = create_page data: @asset, public: true
 
-    post :show, page_id: page.id, id: 1
+    post :show, id: page.id
     assert_response :success
     assert_template 'show'
     assert_equal @asset.private_filename, assigns(:asset).private_filename,
@@ -29,7 +29,7 @@ class AssetPageControllerTest < ActionController::TestCase
     create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
-      post 'update', page_id: @page.id,
+      post 'update', id: @page.id,
         asset: {uploaded_data: upload_data('photo.jpg')}
     end
   end
@@ -43,22 +43,10 @@ class AssetPageControllerTest < ActionController::TestCase
     assert_equal users(:blue).id, page.updated_by_id
 
     login_as :kangaroo
-    post 'update', page_id: page.id,
+    post 'update', id: page.id,
       asset: {uploaded_data: upload_data('photo.jpg')}
     assert_equal 'kangaroo', page.reload.updated_by_login
   end
-
-
-  def test_generate_preview
-    login_as :gerrard
-    create_page created_by: users(:gerrard), asset: @asset
-
-    assert_difference 'Thumbnail.count', 0,
-      "the first time an asset is shown, it should call generate preview" do
-      xhr :post, 'generate_preview', page_id: @page
-    end
-  end
-
 
   protected
   def create_page(options = {})
