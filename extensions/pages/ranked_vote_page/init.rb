@@ -10,8 +10,10 @@ define_page_type :RankedVotePage, {
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :ranked_votes,
-      only: [:show, :edit, :update],
-      controller: :ranked_vote_page
+      only: [:show, :edit,],
+      controller: :ranked_vote_page do
+        get :print, on: :member
+      end
   end
 
   scope path: 'pages/:page_id' do

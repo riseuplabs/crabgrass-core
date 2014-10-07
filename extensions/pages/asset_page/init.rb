@@ -11,7 +11,7 @@ define_page_type :AssetPage, {
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :assets,
-      only: [:show, :new, :edit, :update],
+      only: [:show, :edit, :update],
       controller: :asset_page
   end
 

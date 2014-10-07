@@ -39,7 +39,7 @@ end
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :galleries,
-      only: [:show, :edit, :update],
+      only: [:show, :edit],
       controller: :gallery
   end
 

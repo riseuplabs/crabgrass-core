@@ -47,23 +47,23 @@ Crabgrass::Application.routes.draw do
   ##
 
   namespace 'me' do
-    resources :notices
+    resources :notices, only: [:index, :show, :destroy]
     get '', to: 'notices#index', as: 'home'
-    resource  :page, only: [:new, :create]
+    # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
     get 'pages(/*path)', to: 'pages#index', as: 'pages'
-    resources :activities
-    resources :discussions, path: 'messages' do
-      resources :posts
+    resources :activities, only: [:index, :show, :create]
+    resources :discussions, path: 'messages', only: :index do
+      resources :posts, except: [:show, :new]
     end
     resource  :settings, only: [:show, :update]
     resource  :destroy, only: [:show, :update]
     resource  :password, only: [:edit, :update]
-    resources :permissions
+    resources :permissions, only: [:index, :update]
     resource  :profile, controller: 'profile', only: [:edit, :update]
     resources :requests, only: [:index, :update, :destroy, :show]
-    resources :events
-    resources :avatars
+    # resources :events, only: [:index]
+    resources :avatars, only: [:new, :create, :edit, :update]
   end
 
   ##
@@ -129,21 +129,21 @@ Crabgrass::Application.routes.draw do
     # content related
     resource  :home, only: [:show], controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'
-    resources :avatars
+    resources :avatars, only: [:new, :create, :edit, :update]
     resources :wikis, only: [:create, :index]
 
     # membership related
     resources :memberships, only: [:index, :create, :destroy]
     resources :my_memberships, only: [:create, :destroy]
-    resources :membership_requests #, only: [:index, :create]
+    resources :membership_requests , except: [:new, :edit]
     resources :invites, only: [:new, :create]
 
     # settings related
     resource  :settings, only: [:show, :update]
-    resources :requests #, only: [:index, :create]
+    resources :requests , except: [:new, :edit]
     resources :permissions, only: [:index, :update]
     resource  :profile, only: [:edit, :update]
-    resource  :structure
+    resource  :structure, only: [:show, :new, :create, :update]
  end
 
   ##
@@ -179,11 +179,11 @@ Crabgrass::Application.routes.draw do
 
 
   # base page
-  resources :pages, module: 'pages', controller: 'base' do |pages|
+  resources :pages, module: 'pages', controller: 'base', only: [] do |pages|
     resources :participations, only: [:index, :update, :create]
     #resources :changes
     resources :assets, only: [:index, :update, :create]
-    resources :tags
+    resources :tags, only: [:index, :create, :destroy, :show]
     resources :posts, only: [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:

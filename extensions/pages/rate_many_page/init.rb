@@ -10,13 +10,15 @@ define_page_type :RateManyPage, {
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :rate_manys,
-      only: [:show, :edit, :update],
-      controller: :rate_many_page
+      only: [:show],
+      controller: :rate_many_page do
+        get :print, on: :member
+      end
   end
 
   scope path: 'pages/:page_id' do
     resources :rate_many_possibles,
-      only: [:create, :update, :edit, :destroy] do
+      only: [:create, :update, :destroy] do
       post :sort, on: :collection
     end
   end

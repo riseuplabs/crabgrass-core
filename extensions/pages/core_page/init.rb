@@ -9,7 +9,7 @@ define_page_type :DiscussionPage, {
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :discussions,
-      only: [:show, :edit, :update],
+      only: [:show],
       controller: :discussion_page do
         get :print, on: :member
       end
