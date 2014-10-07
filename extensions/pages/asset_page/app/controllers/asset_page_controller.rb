@@ -8,9 +8,6 @@ class AssetPageController < Pages::BaseController
     end
   end
 
-  def new
-  end
-
   def edit
   end
 

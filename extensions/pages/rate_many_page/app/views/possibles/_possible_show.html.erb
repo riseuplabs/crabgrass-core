@@ -10,7 +10,7 @@ details_id         = "#{possible_id}_details"
 possible_show_id   = "#{possible_id}_show"
 possible_edit_id   = "#{possible_id}_edit"
 possible_edit_form = "#{possible_edit_id}_form"
-edit_url           = edit_page_item_url(possible)
+edit_url           = edit_rate_many_possible_url(possible, page_id: @page)
 edit_function      = remote_function(:url => edit_url)
 edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
              "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
@@ -29,7 +29,7 @@ end
   <div id='<%=possible_show_id%>'>
     <div style="float:right; width:5em; text-align:right;">
       <% if current_user.may? :edit, @page -%>
-        <%= link_to "delete", page_item_url(possible), method: :delete %>
+        <%= link_to "delete", rate_many_possible_url(possible, page_id: @page), method: :delete %>
       <% end -%>
     </div>
 

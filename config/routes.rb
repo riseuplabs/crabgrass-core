@@ -235,30 +235,26 @@ Crabgrass::Application.routes.draw do
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  # Page_items route. Used to directly alter items of a page.
-  # This is only meant for "hidden use" inside ajax.
-  # If you want a pretty url look at the context based route
-  # at the end of this file.
-  scope path: 'pages/:page_id/:controller' do
-    resources :page_items, path: '',
-      constraints: lambda{|request| request.xhr?} do
-      collection do
-        post :sort
-      end
-    end
-  end
-
   resources :contexts, path: "", only: :show do
-    resources :pages, path: "", controller: :context_pages, except: [:index, :create]
+    resources :pages, path: "", controller: :context_pages, except: [:index, :new, :create]
   end
 
-  scope path: ':context_id/:page_id/:controller' do
-    resources :context_page_items, path: '' do
-      collection do
-        post :sort
-      end
-    end
-  end
+  #
+  # I'm not sure we will ever want this...
+  # deeply nested routes are considered a bad practice and even though
+  # the url does not grow as much this basically boils down to using
+  # a deeply nested approach.
+  #
+  # Instead we probably want
+  # /pages/:page_id/...
+  #
+  #scope path: ':context_id/:page_id/:controller' do
+  #  resources :context_page_items, path: '' do
+  #    collection do
+  #      post :sort
+  #    end
+  #  end
+  #end
 
 end
 

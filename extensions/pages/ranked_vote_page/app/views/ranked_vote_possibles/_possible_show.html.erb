@@ -5,7 +5,7 @@
 
 possible_id        = "possible_#{possible.id}"
 details_id         = "#{possible_id}_details"
-edit_url           = edit_page_item_url(possible)
+edit_url           = edit_ranked_vote_possible_url(possible, page_id: @page)
 #edit_function      = remote_function(url: edit_url)
 #edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
 #             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"

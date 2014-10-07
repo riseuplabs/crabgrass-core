@@ -9,7 +9,7 @@ page.insert_html :bottom, 'sort_list', partial: 'possibles/possible',
 
 # makes sure the new one is sortable
 page.sortable 'sort_list', handle: 'handle',
-  url: sort_page_items_url,
+  url: sort_rate_many_possibles_url(page_id: @page),
   loading: "Element.show('progress');Element.hide('instructions')",
   complete: "Element.hide('progress'); Element.show('instructions')"
 

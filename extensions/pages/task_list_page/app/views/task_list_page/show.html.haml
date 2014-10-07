@@ -20,7 +20,7 @@
   =#  calendar_date_select_includes "silver"
 
 = sortable_element 'sort_list_pending', handle: 'handle',
-  url: sort_page_items_url
+  url: sort_tasks_url(page_id: @page)
 = sortable_element 'sort_list_completed', handle: 'handle',
-  url: sort_page_items_url
+  url: sort_tasks_url(page_id: @page)
 

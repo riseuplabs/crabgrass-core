@@ -16,7 +16,7 @@ Crabgrass.mod_routes do
   end
 
   scope path: 'pages/:page_id' do
-    resource :versions, controller: :asset_page_versions,
+    resources :versions, controller: :asset_page_versions,
       only: [:index, :create, :destroy]
   end
 end

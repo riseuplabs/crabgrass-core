@@ -38,7 +38,11 @@ module TaskListPageHelper
     else
       next_state = task.completed? ? 'pending' : 'complete'
       name = "#{task.id}_task"
-      spinbox_tag name, task_url(task), checked: task.completed?, tag: :span, method: :put, with: "'task[state]=#{next_state}'"
+      spinbox_tag name, task_url(task, page_id: task.task_list.page),
+        checked: task.completed?,
+        tag: :span,
+        method: :put,
+        with: "'task[state]=#{next_state}'"
     end
   end
 
@@ -71,7 +75,7 @@ module TaskListPageHelper
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      url: task_url(task),
+      url: task_url(task, page_id: task.task_list.page),
       method: 'delete',
       loading: show_spinner(task),
       complete: hide(task)
@@ -82,7 +86,7 @@ module TaskListPageHelper
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      url: edit_page_item_url(task, page_id: task.task_list.page),
+      url: edit_task_url(task, page_id: task.task_list.page),
       loading: show_spinner(task)
     )
     button_to_function "Edit", function
@@ -115,7 +119,7 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      url: page_item_url(task, page_id: task.task_list.page),
+      url: task_url(task, page_id: task.task_list.page),
       loading: show_spinner(task),
       html: {}
     }]
@@ -147,7 +151,7 @@ module TaskListPageHelper
 
   def options_for_new_task_form(page)
     [{
-      url: tasks_url(page),
+      url: tasks_url(page_id: page),
       html: {id: 'new-task-form'},
       loading: show_spinner('new-task'),
       complete: hide_spinner('new-task'),
@@ -155,13 +159,5 @@ module TaskListPageHelper
     }]
   end
 
-  def tasks_url(page)
-    page_items_url(page_id: page)
-  end
-
-  def task_url(task)
-    page_item_url task,
-      page_id: task.task_list.page
-  end
 end
 

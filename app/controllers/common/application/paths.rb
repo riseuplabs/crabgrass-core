@@ -99,10 +99,9 @@ module Common::Application::Paths
   #               /:context/:page
   #               /:context/:page/:controller/:id/:action
   #
-  # (2) direct -- page_item_url and friends
-  #               restful routes to
+  # (2) direct -- page specific restful routes to
   #               /pages/:page_id/:controller/:id
-  #               (restful actions so GET without :id -> index etc.)
+  #               these are defined in the page types init.rb file.
   #
   # We use the direct form when pretty doesn't matter, like ajax. The direct
   # form bypasses the dispatcher and so is slightly faster and less prone to errors.

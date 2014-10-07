@@ -189,7 +189,7 @@ module GalleryHelper
   end
 
   #form_options = {
-  #  :url => page_item_url(image)
+  #  :url => image_url(image, page_id: @page)
   #  :update => 'detail_image_title',
   #  :complete => "$('detail_image_title').show()",
   #  :pending => "$('change_title_spinner').show()"
@@ -211,7 +211,7 @@ module GalleryHelper
     nav_image = (to == :next) ? '/images/png/16/grey-arrow-right.png' : '/images/png/16/grey-arrow-left.png'
     spinner = 'load_' + to.to_s + '_image_spinner'
     id= 'load_' + to.to_s + '_image'
-    link_to image_tag(nav_image), page_item_url(image.asset_id),
+    link_to image_tag(nav_image), image_url(image.asset_id, page_id: @page),
       class: (to == :next) ? 'next button' : 'previous button',
       id: id,
       on_click: "$('#{id}').hide(); $('#{spinner}').show();",
