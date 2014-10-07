@@ -110,11 +110,11 @@ Crabgrass::Application.routes.draw do
     as: 'people_directory',
     to: 'people/directory#index'
 
-  resources :people, module: 'people' do
-    resource  :home, only: [:show], controller: 'home'
+  resources :people, module: 'people', controller: 'home', only: :show do
+    resource  :home, only: :show, controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'
-    resources :messages
-    resources :activities
+    # resources :messages
+    # resources :activities
     resource :friend_request, only: [:new, :create, :destroy]
   end
 
@@ -181,7 +181,7 @@ Crabgrass::Application.routes.draw do
   # base page
   resources :pages, module: 'pages', controller: 'base' do |pages|
     resources :participations, only: [:index, :update, :create]
-    resources :changes
+    #resources :changes
     resources :assets, only: [:index, :update, :create]
     resources :tags
     resources :posts, only: [:show, :create, :edit, :update]
@@ -213,7 +213,6 @@ Crabgrass::Application.routes.draw do
       end
     end
     resources :diffs, only: [:show]
-    resources :sections, only: [:edit, :update]
   end
 
   ##
