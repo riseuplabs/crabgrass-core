@@ -9,11 +9,11 @@ possible_id        = "possible_#{possible.id}"
 details_id         = "#{possible_id}_details"
 possible_show_id   = "#{possible_id}_show"
 possible_edit_id   = "#{possible_id}_edit"
-possible_edit_form = "#{possible_edit_id}_form"
-edit_url           = edit_rate_many_possible_url(possible, page_id: @page)
-edit_function      = remote_function(:url => edit_url)
-edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
-             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
+# possible_edit_form = "#{possible_edit_id}_form"
+# edit_url           = edit_rate_many_possible_url(possible, page_id: @page)
+# edit_function      = remote_function(:url => edit_url)
+# edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
+#              "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
 
 ## LOGIC STUFF
 
