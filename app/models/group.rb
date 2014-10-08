@@ -25,6 +25,7 @@ end
 =end
 
 class Group < ActiveRecord::Base
+  extend RouteInheritance          # subclasses use /groups routes
 
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior

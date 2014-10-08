@@ -17,19 +17,14 @@ module Pages::BeforeFilters
   # subclasses should define 'fetch_data', which this method calls.
   #
   def default_fetch_data
+    @page ||= Page.find(params[:page_id] || params[:id])
     unless @page
-      id = params[:page_id]
-      if id and id != "0"
-        @page = Page.find_by_id(id)
-        unless @page
-          raise_not_found(:thing_not_found.t(thing: :page.t))
-        end
-      end
+      raise_not_found(:thing_not_found.t(thing: :page.t))
     end
 
     if logged_in?
       # grab the current user's participation from memory
-      @upart = @page.participation_for_user(current_user) if @page
+      @upart = @page.participation_for_user(current_user)
     end
 
     # hook for subclasses to define:

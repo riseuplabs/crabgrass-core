@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AssetPageHistoryControllerTest < ActionController::TestCase
+class AssetPageVersionsControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites
 
   def setup
@@ -31,6 +31,16 @@ class AssetPageHistoryControllerTest < ActionController::TestCase
     assert !File.exist?(@version_filename)
 
     assert_equal 1, @asset.reload.versions.size
+  end
+
+  def test_generate_preview
+    login_as :gerrard
+    create_page created_by: users(:gerrard), asset: @asset
+
+    assert_difference 'Thumbnail.count', 0,
+      "the first time an asset is shown, it should call generate preview" do
+      xhr :post, 'create', page_id: @page
+    end
   end
 
   protected

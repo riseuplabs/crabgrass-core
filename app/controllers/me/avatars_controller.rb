@@ -4,11 +4,11 @@ class Me::AvatarsController < Me::BaseController
   before_filter :setup
   cache_sweeper :user_sweeper
 
+  protected
   # always enable cache, even in dev mode.
   def self.perform_caching; true; end
   def perform_caching; true; end
 
-  protected
   def setup
     @entity = current_user
     @success_url = me_settings_url

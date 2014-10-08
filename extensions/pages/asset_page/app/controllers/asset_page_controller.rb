@@ -8,9 +8,6 @@ class AssetPageController < Pages::BaseController
     end
   end
 
-  def new
-  end
-
   def edit
   end
 
@@ -24,13 +21,6 @@ class AssetPageController < Pages::BaseController
     end
   end
 
-  # xhr request
-  def generate_preview
-    @asset.generate_thumbnails
-    render :update do |page|
-      page.replace_html 'preview_area', asset_link_with_preview(@asset)
-    end
-  end
 
   protected
 
@@ -40,7 +30,7 @@ class AssetPageController < Pages::BaseController
 
   def setup_options
     @options.show_assets = false
-    if action?(:show, :edit, :history)
+    if action?(:show, :edit)
       @options.show_tabs   = true
     end
   end

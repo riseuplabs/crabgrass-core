@@ -36,3 +36,17 @@ extend_model :Asset do
 end
 
 
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :galleries,
+      only: [:show, :edit],
+      controller: :gallery
+  end
+
+  scope path: 'pages/:page_id'  do
+    resources :images, controller: :gallery_image,
+      only: [:show, :edit, :update] do
+      post :sort, on: :collection
+    end
+  end
+end

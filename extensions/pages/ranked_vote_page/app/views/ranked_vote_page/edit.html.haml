@@ -7,13 +7,10 @@
       = 'Saving...'
     #instructions
       = :ranked_vote_instructions.t
-      = form_tag page_xurl(@page, action: 'confirm') do
-        %div{style: "float:right"}= submit_tag :confirm_vote_button.t
-        %br{style: "clear:right"}/
   %h3 Voted on
   %ul#sort_list_voted.possible_list.plain
     - if @possibles_voted.any?
-      = render partial: 'possible', collection: @possibles_voted
+      = render partial: 'ranked_vote_possibles/possible', collection: @possibles_voted
       %li#none_voted{style: "display:none"}
         = :none.t
     - else
@@ -22,7 +19,7 @@
   %h3 Not voted on
   %ul#sort_list_unvoted.possible_list.plain
     - if @possibles_unvoted.any?
-      = render partial: 'possible', collection: @possibles_unvoted
+      = render partial: 'ranked_vote_possibles/possible', collection: @possibles_unvoted
       %li#none_unvoted{style: "display:none"}
         = :none.t
     - else
@@ -30,5 +27,9 @@
         = :none.t
   %ul.possible_list.plain
     %li#add_possible_link= render partial: 'new_possible'
-  = sortable_element 'sort_list_voted', handle: 'handle', containment: ['sort_list_voted', 'sort_list_unvoted'], url: page_xurl(@page, action:'sort')                 |
-  = sortable_element 'sort_list_unvoted', handle: 'handle', containment: ['sort_list_voted', 'sort_list_unvoted'], url: page_xurl(@page, action:'sort') 
+  = sortable_element 'sort_list_voted', handle: 'handle',
+    containment: ['sort_list_voted', 'sort_list_unvoted'],
+    url: sort_ranked_vote_possibles_url(page_id: @page)
+  = sortable_element 'sort_list_unvoted', handle: 'handle',
+    containment: ['sort_list_voted', 'sort_list_unvoted'],
+    url: sort_ranked_vote_possibles_url(page_id: @page)

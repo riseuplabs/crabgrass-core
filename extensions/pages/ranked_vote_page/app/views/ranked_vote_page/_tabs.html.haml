@@ -2,10 +2,10 @@
   = page_tabs do |f|
     - f.tab do |t|
       - t.label :show_results_tab.t
-      - t.url page_path(@page, action: :show)
+      - t.url url_for([@context, @page].compact)
       - t.selected params[:action] == 'show'
     - f.tab do |t|
       - t.label :edit_my_vote_tab.t
-      - t.url page_path(@page, action: :edit)
+      - t.url url_for([:edit, @context, @page].compact)
       - t.selected params[:action] == 'edit'
 %br{style: "clear:both"}

@@ -1,4 +1,7 @@
 module TaskListPagePermission
+
+  protected
+
   def authorized?
     if @page.nil?
       true

@@ -1,5 +1,5 @@
 define_page_type :AssetPage, {
-  controller: ['asset_page', 'asset_page_history'],
+  controller: ['asset_page', 'asset_page_versions'],
   creation_controller: 'create_asset_page',
   model: 'Asset',
   form_sections: ['file'],
@@ -8,3 +8,15 @@ define_page_type :AssetPage, {
   order: 10
 }
 
+Crabgrass.mod_routes do
+  scope path: 'pages' do
+    resources :assets,
+      only: [:show, :edit, :update],
+      controller: :asset_page
+  end
+
+  scope path: 'pages/:page_id' do
+    resources :versions, controller: :asset_page_versions,
+      only: [:index, :create, :destroy]
+  end
+end

@@ -4,6 +4,7 @@ class Groups::GroupsController < Groups::BaseController
   # then it changes position in the filter chain and runs after the guards, but
   # may_admin_group? requires @group to be set.
   def fetch_group() super if action? :destroy end
+  protected :fetch_group
 
   before_filter :force_type,  only: ['new', 'create']
   before_filter :initialize_group,  only: ['new', 'create']

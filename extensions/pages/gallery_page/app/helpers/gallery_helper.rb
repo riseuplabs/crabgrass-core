@@ -189,9 +189,9 @@ module GalleryHelper
   end
 
   #form_options = {
-  #  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+  #  :url => image_url(image, page_id: @page)
   #  :update => 'detail_image_title',
-  #	:complete => "$('detail_image_title').show()",
+  #  :complete => "$('detail_image_title').show()",
   #  :pending => "$('change_title_spinner').show()"
   #}
   def save_caption_form_options page, image
@@ -209,16 +209,12 @@ module GalleryHelper
 
   def nav_to_gallery_image(to, page, image)
     nav_image = (to == :next) ? '/images/png/16/grey-arrow-right.png' : '/images/png/16/grey-arrow-left.png'
-    button = (to == :next) ? 'next button' : 'previous button'
-    id = 'load_' + to.to_s + '_image'
     spinner = 'load_' + to.to_s + '_image_spinner'
-    link_to_remote(
-      image_tag(nav_image),
-      url: page_url(page,
-                      controller: :image,
-                      action: 'show',
-                      id: image.asset_id),
-      html: {class: button, id: id},
-      loading: "$('#{id}').hide(); $('#{spinner}').show();")
+    id= 'load_' + to.to_s + '_image'
+    link_to image_tag(nav_image), image_url(image.asset_id, page_id: @page),
+      class: (to == :next) ? 'next button' : 'previous button',
+      id: id,
+      on_click: "$('#{id}').hide(); $('#{spinner}').show();",
+      remote: true
   end
 end

@@ -8,13 +8,11 @@
 
 <div id='new_possible_form_container' style='<%= hide ? "display:none" : "" %>'>
   <h4><%= I18n.t(:new_possibility_heading) %></h4>
-<%= form_remote_tag(
-  :url      => page_xurl(@page, :action=>'add_possible'),
-  :html     => {:action => page_url(@page, :action=>'add_possible'), :id => 'new_possible_form'}, # non-ajax fallback
-  :loading  => show_spinner('new_possible_loading'),
-  :complete => hide_spinner('new_possible_loading'),
-  :success => "$('new_possible_form').reset()"
-) do -%>
+  <%= form_tag(rate_many_possibles_url(page_id: @page),
+               on_submit: show_spinner('new_possible_loading'),
+               remote: true,
+               id: 'new_possible_form',
+               method: :post) do -%>
    description:<br/>
    <%= text_field 'possible', 'name', :size => 60, :style => "max-width:100%;"%><br/>
    detail:<br/>

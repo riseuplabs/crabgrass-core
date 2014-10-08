@@ -2,21 +2,12 @@ class GalleryController < Pages::BaseController
 
   def show
     @images = @page.images.paginate(page: params[:page])
-    redirect_to(page_url(@page, action: 'edit')) if @images.blank?
+    redirect_to page_path(@page, action: :edit) if @images.blank?
     #@cover = @page.cover
   end
 
   def edit
     @images = @page.images.paginate(page: params[:page])
-  end
-
-  # removed an non ajax fallback, azul
-  def update
-    @page.sort_images params[:assets_list]
-    current_user.updated(@page)
-    render text: I18n.t(:order_changed), layout: false
-  rescue => exc
-    render text: I18n.t(:error_saving_new_order_message, error_message: exc.message)
   end
 
   protected

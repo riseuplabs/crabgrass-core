@@ -19,51 +19,51 @@ Crabgrass::Application.routes.draw do
   ## CRON JOBS
   ##
 
-  # TODO: add localhost constraint
   # TODO: specify http verb
-  match '/do/cron/run(/:id)', :to => 'cron#run', :format => false
+  match '/do/cron/run(/:id)', to: 'cron#run', format: false,
+    constraints: {ip: /127.0.0.1/}
 
   ##
   ## STATIC FILES AND ASSETS
   ##
 
-  resources :assets, :only => [:show, :destroy]
-  match '/assets/:id/versions/:version/*path',
-    :to => 'assets#show',
-    :as => 'asset_version'
-  match '/assets/:id(/*path)', :to => 'assets#show', :as => 'asset'
+  resources :assets, only: [:show, :destroy]
+  get '/assets/:id/versions/:version/*path',
+    to: 'assets#show',
+    as: 'asset_version'
+  get '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
 
-  scope :format => false do
-    match 'avatars/:id/:size.jpg', :to => 'avatars#show', :as => 'avatar'
-    match 'theme/:name/*file.css', :to => 'theme#show'
+  scope format: false do
+    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar'
+    get 'theme/:name/*file.css', to: 'theme#show'
   end
 
-  match 'pictures/:id1/:id2(/:geometry)',
-    :to => 'pictures#show',
-    :as => 'pictures'
+  get 'pictures/:id1/:id2(/:geometry)',
+    to: 'pictures#show',
+    as: 'pictures'
 
   ##
   ## ME
   ##
 
   namespace 'me' do
-    resources :notices
-    match '', :to => 'notices#index', :as => 'home'
-    resource  :page, :only => [:new, :create]
-    resources :recent_pages, :only => [:index]
-    match 'pages(/*path)', :to => 'pages#index', :as => 'pages'
-    resources :activities
-    resources :discussions, :path => 'messages' do
-      resources :posts
+    resources :notices, only: [:index, :show, :destroy]
+    get '', to: 'notices#index', as: 'home'
+    # resource  :page, only: [:new, :create]
+    resources :recent_pages, only: [:index]
+    get 'pages(/*path)', to: 'pages#index', as: 'pages'
+    resources :activities, only: [:index, :show, :create]
+    resources :discussions, path: 'messages', only: :index do
+      resources :posts, except: [:show, :new]
     end
-    resource  :settings, :only => [:show, :update]
-    resource  :destroy, :only => [:show, :update]
-    resource  :password, :only => [:edit, :update]
-    resources :permissions
-    resource  :profile, :controller => 'profile', :only => [:edit, :update]
-    resources :requests, :only => [:index, :update, :destroy, :show]
-    resources :events
-    resources :avatars
+    resource  :settings, only: [:show, :update]
+    resource  :destroy, only: [:show, :update]
+    resource  :password, only: [:edit, :update]
+    resources :permissions, only: [:index, :update]
+    resource  :profile, controller: 'profile', only: [:edit, :update]
+    resources :requests, only: [:index, :update, :destroy, :show]
+    # resources :events, only: [:index]
+    resources :avatars, only: [:new, :create, :edit, :update]
   end
 
   ##
@@ -72,25 +72,26 @@ Crabgrass::Application.routes.draw do
 
   # UPGRADE: this is pre rails 3 syntax. If you want to bring these
   # routes back please upgrade them
-  #  match '/invites/:action/*path', :controller => 'requests', :action => /accept/
-  #  match '/code/:id', :to => 'codes#jump'
+  #  match '/invites/:action/*path', controller: 'requests', action: /accept/
+  #  match '/code/:id', to: 'codes#jump'
 
   ##
   ## ACCOUNT
   ##
 
-  resource :account, :only => [:new, :create]
+  resource :account, only: [:new, :create]
   match 'account/reset_password(/:token)',
-    :as => 'reset_password',
-    :to => 'accounts#reset_password'
+    as: 'reset_password',
+    to: 'accounts#reset_password',
+    via: [:get, :post]
 
 
-  post  'session/language', :as => 'language', :to => 'session#language'
-  match 'session/login', :as => 'login',  :to => 'session#login'
-  post  'session/logout', :as => 'logout', :to => 'session#logout'
+  post 'session/language', as: 'language', to: 'session#language'
+  post 'session/login', as: 'login',  to: 'session#login'
+  post 'session/logout', as: 'logout', to: 'session#logout'
   # ajax login form
-  get   'session/login_form', :as => 'login_form', :to => 'session#login_form',
-    :constraints => lambda{|request| request.xhr?}
+  get   'session/login_form', as: 'login_form', to: 'session#login_form',
+    constraints: lambda{|request| request.xhr?}
 
 
   ##
@@ -98,51 +99,51 @@ Crabgrass::Application.routes.draw do
   ##
 
   # autocomplete queries, restricted to ajax
-  resources :entities, :only => [:index],
-    :constraints => lambda{|request| request.xhr?}
+  resources :entities, only: [:index],
+    constraints: lambda{|request| request.xhr?}
 
   ##
   ## PEOPLE
   ##
 
-  match 'people/directory(/*path)',
-    :as => 'people_directory',
-    :to => 'people/directory#index'
+  get 'people/directory(/*path)',
+    as: 'people_directory',
+    to: 'people/directory#index'
 
-  resources :people, :module => 'people' do
-    resource  :home, :only => [:show], :controller => 'home'
-    match 'pages(/*path)', :as => 'pages', :to => 'pages#index'
-    resources :messages
-    resources :activities
-    resource :friend_request, :only => [:new, :create, :destroy]
+  resources :people, module: 'people', controller: 'home', only: :show do
+    resource  :home, only: :show, controller: 'home'
+    get 'pages(/*path)', as: 'pages', to: 'pages#index'
+    # resources :messages
+    # resources :activities
+    resource :friend_request, only: [:new, :create, :destroy]
   end
 
   ##
   ## GROUP
   ##
 
-  match 'networks/directory(/*path)', :as => 'networks_directory', :to => 'groups/directory#index'
-  match 'groups/directory(/*path)', :as => 'groups_directory', :to => 'groups/directory#index'
+  get 'networks/directory(/*path)', as: 'networks_directory', to: 'groups/directory#index'
+  get 'groups/directory(/*path)', as: 'groups_directory', to: 'groups/directory#index'
 
-  resources :groups, :module => 'groups', :only => [:new, :create, :destroy] do
+  resources :groups, module: 'groups', only: [:new, :create, :destroy] do
     # content related
-    resource  :home, :only => [:show], :controller => 'home'
-    match 'pages(/*path)', :as => 'pages', :to => 'pages#index'
-    resources :avatars
-    resources :wikis, :only => [:create, :index]
+    resource  :home, only: [:show], controller: 'home'
+    get 'pages(/*path)', as: 'pages', to: 'pages#index'
+    resources :avatars, only: [:new, :create, :edit, :update]
+    resources :wikis, only: [:create, :index]
 
     # membership related
-    resources :memberships, :only => [:index, :create, :destroy]
-    resources :my_memberships, :only => [:create, :destroy]
-    resources :membership_requests #, :only => [:index, :create]
-    resources :invites, :only => [:new, :create]
+    resources :memberships, only: [:index, :create, :destroy]
+    resources :my_memberships, only: [:create, :destroy]
+    resources :membership_requests , except: [:new, :edit]
+    resources :invites, only: [:new, :create]
 
     # settings related
-    resource  :settings, :only => [:show, :update]
-    resources :requests #, :only => [:index, :create]
-    resources :permissions, :only => [:index, :update]
-    resource  :profile, :only => [:edit, :update]
-    resource  :structure
+    resource  :settings, only: [:show, :update]
+    resources :requests , except: [:new, :edit]
+    resources :permissions, only: [:index, :update]
+    resource  :profile, only: [:edit, :update]
+    resource  :structure, only: [:show, :new, :create, :update]
  end
 
   ##
@@ -150,78 +151,82 @@ Crabgrass::Application.routes.draw do
   ##
 
   if Rails.env.development?
-    match 'debug/become', :as => 'debug_become', :to => 'debug#become'
-    match 'debug/break', :as => 'debug_break', :to => 'debug#break'
+    post 'debug/become', as: 'debug_become', to: 'debug#become'
+    get 'debug/break', as: 'debug_break', to: 'debug#break'
   end
-  match 'debug/report/submit', :as => 'debug_report', :to => 'bugreport#submit'
+  # There's no bugreport controller right now it seems
+  # match 'debug/report/submit', as: 'debug_report', to: 'bugreport#submit'
 
   ##
   ## NORMAL PAGE ROUTES
   ##
 
   # default page creator
-  match '/pages(/:action(/:owner(/:type)))',
-    :as => 'page_creation',
-    :controller => 'pages/create',
-    :constraints => {:action => /new|create/}
+  get '/pages/create(/:owner(/:type))',
+    as: 'page_creation',
+    to: 'pages/create#new'
+  post '/pages/create(/:owner(/:type))',
+    as: 'page_creation',
+    to: 'pages/create#create'
+
+  # custom page creators
+  get '/pages/:controller/create(/:owner(/:type))',
+    as: 'custom_page_creation',
+    action: 'new'
+  post '/pages/:controller/create(/:owner(/:type))',
+    as: 'custom_page_creation',
+    action: 'create'
+
 
   # base page
-  resources :pages, :module => 'pages', :controller => 'base' do |pages|
-    resources :participations, :only => [:index, :update, :create]
-    resources :changes
-    resources :assets, :only => [:index, :update, :create]
-    resources :tags
-    resources :posts, :only => [:show, :create, :edit, :update] do
-      member do
-        match :edit
-      end
-    end
+  resources :pages, module: 'pages', controller: 'base', only: [] do |pages|
+    resources :participations, only: [:index, :update, :create]
+    #resources :changes
+    resources :assets, only: [:index, :update, :create]
+    resources :tags, only: [:index, :create, :destroy, :show]
+    resources :posts, only: [:show, :create, :edit, :update]
 
     # page sidebar/popup controllers:
-    resource :sidebar,    :only => [:show]
-    resource :share,      :only => [:show, :update],
-      :constraints => lambda{|request| request.xhr?}
-    resource :details,    :only => [:show]
-    resource :history,    :only => [:show], :controller => 'history'
-    resource :attributes, :only => [:update]
-    resource :title,      :only => [:edit, :update], :controller => 'title'
-    resource :trash,      :only => [:edit, :update], :controller => 'trash'
+    resource :sidebar,    only: [:show]
+    resource :share,      only: [:show, :update],
+      constraints: lambda{|request| request.xhr?}
+    resource :details,    only: [:show]
+    resource :history,    only: [:show], controller: 'history'
+    resource :attributes, only: [:update]
+    resource :title,      only: [:edit, :update], controller: 'title'
+    resource :trash,      only: [:edit, :update], controller: 'trash'
   end
-
-  # page subclasses, gets triggered for any controller class Pages::XxxController
-  match '/pages/:controller/:action/:page_id', :constraints => {:controller => /.*_page/ }
 
   ##
   ## WIKI
   ##
 
-  resources :wikis, :module => 'wikis', :only => [:show, :edit, :update] do
+  resources :wikis, module: 'wikis', only: [:show, :edit, :update] do
     member do
       get 'print'
     end
-    resource :lock, :only  => [:destroy, :update]
-    resources :assets, :only => [:new, :create]
-    resources :versions, :only => [:index, :show] do
+    resource :lock, only: [:destroy, :update]
+    resources :assets, only: [:new, :create]
+    resources :versions, only: [:index, :show] do
       member do
         post 'revert'
       end
     end
-    resources :diffs, :only => [:show]
-    resources :sections, :only => [:edit, :update]
+    resources :diffs, only: [:show]
   end
 
   ##
   ## OTHER ROUTES
   ##
 
-  root :to => 'root#index'
-  match '/do/static/:action/:id', :controller => 'static'
+  root to: 'root#index'
+  get '/do/static/greencloth', to: 'static#greencloth'
 
   ## ADD ROUTES FROM MODS
 
   if Crabgrass.mod_route_blocks
     Crabgrass.mod_route_blocks.each do |block|
-      block.call
+      instance_eval &block
     end
   end
 
@@ -229,6 +234,26 @@ Crabgrass::Application.routes.draw do
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  match ':_context/(:_page(/*path))', :to => 'dispatch#dispatch'
+  resources :contexts, path: "", only: :show do
+    resources :pages, path: "", controller: :context_pages, except: [:index, :new, :create]
+  end
+
+  #
+  # I'm not sure we will ever want this...
+  # deeply nested routes are considered a bad practice and even though
+  # the url does not grow as much this basically boils down to using
+  # a deeply nested approach.
+  #
+  # Instead we probably want
+  # /pages/:page_id/...
+  #
+  #scope path: ':context_id/:page_id/:controller' do
+  #  resources :context_page_items, path: '' do
+  #    collection do
+  #      post :sort
+  #    end
+  #  end
+  #end
+
 end
 
