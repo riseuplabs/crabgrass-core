@@ -1,4 +1,7 @@
 module SurveyPagePermission
+
+  protected
+
   #    :admin_may_rate
   #
   #    :edit_may_create, :edit_may_see_responses,

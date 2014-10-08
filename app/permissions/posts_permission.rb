@@ -1,5 +1,7 @@
 module PostsPermission
 
+  protected
+
   def may_create_post?
     return false unless logged_in?
     if @recipient

@@ -18,12 +18,15 @@
 
 class ThemeController < ApplicationController
 
+  protected
   ## always enable cache, even in dev mode.
   def self.perform_caching; true; end
   def perform_caching; true; end
 
   attr_accessor :cache_css
   caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
+
+  public
 
   def show
     render text: @theme.render_css(@file), content_type: 'text/css'

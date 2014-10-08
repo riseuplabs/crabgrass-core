@@ -16,6 +16,8 @@ if Rails.env.development?
       redirect_to (params[:url] || "/")
     end
 
+    protected
+
     def authorized?
       Rails.env.development?
     end
