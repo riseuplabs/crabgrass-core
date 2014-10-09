@@ -141,7 +141,7 @@ class Pages::CreateController < ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:title, :summary)
+    params.fetch(:page, {}).permit(:title, :summary)
   end
 
   def access_param
