@@ -211,11 +211,9 @@ class PageTest < ActiveSupport::TestCase
     assert_equal users(:green), page.owner
     assert users(:green).may?(:admin, page)
 
-    assert_raises ActiveModel::MassAssignmentSecurity::Error do
-      page.update_attributes({owner: users(:blue)})
-    end
+    page.update_attributes({owner: users(:blue)})
     page.reload
-    assert_equal users(:green), page.owner, 'owner should be protected'
+    assert_equal users(:blue), page.owner, 'owner can be changed'
   end
 
   def test_page_owner_and_others
