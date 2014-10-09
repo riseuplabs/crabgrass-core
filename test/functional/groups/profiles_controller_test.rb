@@ -20,9 +20,12 @@ class Groups::ProfilesControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_admin_group? do
       post :update, group_id: @group.to_param,
-        profile: {}
+        profile: {summary: 'test profile', entity_id: 1}
     end
     assert_response :redirect
+    profile = @group.profile.reload
+    assert_equal 'test profile', profile.summary
+    assert_equal @group, profile.entity
   end
 
 end

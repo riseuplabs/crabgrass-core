@@ -10,10 +10,15 @@ class Me::PasswordsController < Me::BaseController
       error :thing_required.t(thing: :password.t)
       render action: :edit
     else
-      current_user.update_attributes!(params[:user])
+      current_user.update_attributes! password_params
       success
       redirect_to edit_me_password_url
     end
   end
 
+  protected
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
 end
