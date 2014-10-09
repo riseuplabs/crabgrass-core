@@ -20,8 +20,6 @@ class Post < ActiveRecord::Base
   belongs_to :user
   belongs_to :page_terms    # if this is on a page we set page_terms so we can use path_finder
 
-  attr_accessible :user, :discussion, :body, :page_terms_id
-
   after_create :post_created
   after_destroy :post_destroyed
 

@@ -80,7 +80,6 @@ class Page < ActiveRecord::Base
   self.record_timestamps = false
   before_save :save_timestamps
 
-  attr_protected :owner
   acts_as_path_findable
 
   ##

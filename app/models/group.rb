@@ -34,8 +34,6 @@ class Group < ActiveRecord::Base
   include GroupExtension::Pages      # group <--> page behavior
   include GroupExtension::Cache      # only versioning so far
 
-  attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
-
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
 
