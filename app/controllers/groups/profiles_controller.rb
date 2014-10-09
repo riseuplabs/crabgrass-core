@@ -12,7 +12,7 @@ class Groups::ProfilesController < Groups::BaseController
       success :profile_saved.t
       redirect_to edit_group_profile_url(@group)
     else
-      @profile.save_from_params params['profile']
+      @profile.save_from_params profile_params
       if @profile.valid?
         success :profile_saved.t
         redirect_to edit_group_profile_url(@group)
@@ -29,4 +29,7 @@ class Groups::ProfilesController < Groups::BaseController
     true
   end
 
+  def profile_params
+    params.require(:profile).permit :place, :summary, {:picture => [ :upload ]}
+  end
 end

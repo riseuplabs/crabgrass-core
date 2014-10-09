@@ -51,20 +51,17 @@ module PageExtension::Assets
   #
   def add_attachment!(asset, options={})
     if asset.is_a? Hash
-      asset = Asset.build(asset.merge(parent_page: self))
-    elsif asset.is_a? Asset
-      asset.parent_page = self
+      asset = Asset.build(asset)
     end
+    asset.parent_page = self
 
     self.assets << asset
     self.cover = asset if options[:cover]
     asset.base_filename = options[:filename] if options[:filename].present?
 
-    unless asset.new_record?
-      asset.save!
-    end
+    asset.save! if asset.persisted?
 
-    unless self.new_record?
+    if self.persisted?
       self.assets.reset
       self.save! if self.cover_id_changed?
     end

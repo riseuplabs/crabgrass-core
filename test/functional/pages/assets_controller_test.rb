@@ -34,7 +34,7 @@ class Pages::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_difference '@page.assets.count' do
-      post :create, page_id: @page.id,
+      xhr :post, :create, page_id: @page.id,
         asset: {uploaded_data: upload_data('photo.jpg')}
     end
     assert_equal @page.id, Asset.last.page_id

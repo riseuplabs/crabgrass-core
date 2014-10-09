@@ -13,12 +13,8 @@ class Pages::AssetsController < Pages::SidebarsController
   end
 
   def create
-    @asset = @page.add_attachment! params[:asset], cover: params[:use_as_cover], title: params[:asset_title]
+    @asset = @page.add_attachment! asset_params
     current_user.updated(@page)
-    render(
-      template: 'pages/assets/create.js',
-      content_type: 'text/javascript'
-    )
   end
 
   protected
@@ -28,6 +24,10 @@ class Pages::AssetsController < Pages::SidebarsController
     if @page and params[:id]
       @asset = @page.assets.find_by_id params[:id]
     end
+  end
+
+  def asset_params
+    params.require(:asset).permit(:uploaded_data)
   end
 
 end

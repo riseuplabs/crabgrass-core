@@ -91,11 +91,11 @@ class AccountsController < ApplicationController
   # In this case, we already know the email, and we don't want the user to
   # be able to change it.
   def user_params
-    user_params = params[:user] || {}
+    user_params = params.fetch(:user, {})
     if session[:signup_email_address].present?
       user_params[:email] = session[:signup_email_address]
     end
-    user_params.slice :login, :email, :password, :password_confirmation,
+    user_params.permit :login, :email, :password, :password_confirmation,
       :language, :display_name
   end
 

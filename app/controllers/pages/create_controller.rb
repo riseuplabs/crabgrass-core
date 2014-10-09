@@ -31,7 +31,7 @@ class Pages::CreateController < ApplicationController
   rescue_render create: :new
 
   def new
-    @page = build_new_page! if params[:page]
+    @page = build_new_page!
     render_new_template
   end
 
@@ -103,7 +103,7 @@ class Pages::CreateController < ApplicationController
 #  def create_page
 #    begin
 #      # create basic page instance
-#      @page = build_new_page(params[:page], params[:recipients], params[:access])
+#      @page = build_new_page
 
 #      # setup the data (done by subclasses)
 #      @data = build_page_data
@@ -129,24 +129,28 @@ class Pages::CreateController < ApplicationController
   # method to build the unsaved page object, with correct access.
   # used by this controller and subclasses.
   #
-  # we may be able to remove the options arg, not sure it is ever used.
-  #
-  def build_new_page!(options={})
-    page_params = options[:page] || params[:page]
-    recipients  = options[:recipient] || params[:recipients]
-    access      = options[:access] || params[:access]
+  def build_new_page!
+    page_type.build!(build_params)
+  end
 
-    page_params = page_params.dup
-    page_params[:share_with] = recipients
-    page_params[:access] = case access
-      when 'admin' then :admin
-      when 'edit'  then :edit
-      when 'view'  then :view
-      else Conf.default_page_access
+  def build_params
+    page_params.merge access: access_param,
+      share_with: params[:recipients],
+      owner: @owner,
+      user: current_user
+  end
+
+  def page_params
+    params.require(:page).permit(:title, :summary)
+  end
+
+  def access_param
+    access = page_params[:access].to_s
+    if %w/admin edit view/.include?(access)
+      access.to_sym
+    else
+      Conf.default_page_access
     end
-    page_params[:user] = current_user
-    page_params[:owner] ||= @owner
-    page_type.build!(page_params)
   end
 
   def param_to_page_class(param)

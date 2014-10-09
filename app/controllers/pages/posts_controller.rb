@@ -23,7 +23,7 @@ class Pages::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.create! @page, current_user, params[:post]
+    @post = Post.create! @page, current_user, post_params
     current_user.updated(@page)
     # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
     render_posts_refresh @page.posts(pagination_params)
@@ -62,5 +62,8 @@ class Pages::PostsController < ApplicationController
     end
   end
 
+  def post_params
+    params.require(:post).permit(:body)
+  end
 end
 
