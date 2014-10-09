@@ -169,15 +169,6 @@ Crabgrass::Application.routes.draw do
     as: 'page_creation',
     to: 'pages/create#create'
 
-  # custom page creators
-  get '/pages/:controller/create(/:owner(/:type))',
-    as: 'custom_page_creation',
-    action: 'new'
-  post '/pages/:controller/create(/:owner(/:type))',
-    as: 'custom_page_creation',
-    action: 'create'
-
-
   # base page
   resources :pages, module: 'pages', controller: 'base', only: [] do |pages|
     resources :participations, only: [:index, :update, :create]
