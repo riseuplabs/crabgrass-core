@@ -31,7 +31,7 @@ class Pages::CreateController < ApplicationController
   rescue_render create: :new
 
   def new
-    @page = build_new_page!
+    @page = build_new_page! if page_type.present?
     render_new_template
   end
 

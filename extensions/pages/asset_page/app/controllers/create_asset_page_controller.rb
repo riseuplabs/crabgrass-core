@@ -10,7 +10,7 @@ class CreateAssetPageController < Pages::CreateController
   end
 
   def create
-    @asset = Asset.build params[:asset].merge(user: current_user)
+    @asset = Asset.build asset_params
     @asset.validate!
 
     @page = build_new_page!
@@ -25,6 +25,10 @@ class CreateAssetPageController < Pages::CreateController
 
   def page_type
     AssetPage
+  end
+
+  def asset_params
+    params.require(:asset).permit(:uploaded_data).merge(user: current_user)
   end
 
   def ensure_asset
