@@ -24,6 +24,11 @@ class Task < ActiveRecord::Base
     task_list.page.owner_name if task_list.page
   end
 
+  def state=(state)
+    completed = true  if state == 'complete'
+    completed = false if state == 'pending'
+  end
+
   def completed=(is_completed)
     if is_completed
       self.completed_at = Time.now

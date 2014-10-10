@@ -4,8 +4,8 @@ class TasksController < Pages::BaseController
   permissions 'task_list_page'
 
   def create
-    @task = Task.new(params[:task])
-    @task.name = 'untitled' unless @task.name.present?
+    @task = Task.new task_params
+    @task.name = 'untitled' if @task.name.blank?
     @task.task_list = @list
     @task.save
   end
@@ -15,20 +15,16 @@ class TasksController < Pages::BaseController
   # and it must be declared sortable like this:
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    sort_list_key = params.keys.grep(/^sort_list_/)
-    if sort_list_key.present?
-      ids = params[sort_list_key[0]]
-      ids.reject!{|i|i.to_i == 0} # only allow integers
-      @list.tasks.each do |task|
-        i = ids.index( task.id.to_s )
-        task.without_timestamps do
-          task.update_attribute('position',i+1) if i
-        end
+    ids = sort_params
+    @list.tasks.each do |task|
+      i = ids.index( task.id.to_s )
+      task.without_timestamps do
+        task.update_attribute('position',i+1) if i
       end
-      if ids.length > @list.tasks.length
-        new_ids = ids.reject {|t| @list.task_ids.include?(t.to_i) }
-        new_ids.each {|id| Task.update(id, position: ids.index(id)+1, task_list_id: @list.id) }
-      end
+    end
+    if ids.length > @list.tasks.length
+      new_ids = ids.reject {|t| @list.task_ids.include?(t.to_i) }
+      new_ids.each {|id| Task.update(id, position: ids.index(id)+1, task_list_id: @list.id) }
     end
     render nothing: true
   end
@@ -43,24 +39,14 @@ class TasksController < Pages::BaseController
   def update
     @task = @list.tasks.find(params[:id])
     state = params[:task].try.delete(:state)
-    # TODO: move to model...
     if state.present?
-      if state == 'complete'
-        @task.completed = true
-        template = 'mark_task_complete'
-      elsif state == 'pending'
-        @task.completed = false
-        template = 'mark_task_pending'
-      end
-      @task.move_to_bottom # also saves task
-      render template
+      @task.state = state
+      @task.move_to_bottom
     else
-      @task.update_attributes(params[:task])
-      # FIXME: I doubt this will be persisted.
-      # also... move to model
-      @task.name = 'untitled' unless @task.name.present?
+      @task.update_attributes task_params
       render :update do |page|
-        page.replace_html dom_id(@task), partial: 'inner_task_show', locals: {task: @task}
+        page.replace_html dom_id(@task), partial: 'inner_task_show',
+          locals: {task: @task}
       end
     end
   end
@@ -77,6 +63,19 @@ class TasksController < Pages::BaseController
   def initialize(options={})
     super(options)
     @second_nav = 'tasks'
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :description, :user_ids => [])
+  end
+
+  def sort_params
+    # we only sort one list at a time.
+    list_params.values.first.reject{|i|i.to_i == 0} # only allow integers
+  end
+
+  def list_params
+    params.permit :sort_list_pending => [], :sort_list_completed => []
   end
 
   def update_participations
@@ -106,7 +105,7 @@ class TasksController < Pages::BaseController
 
   def fetch_task_list
     return true unless @page
-    unless @page.data
+    if @page.data.blank?
       @page.data = TaskList.create
       current_user.updated @page
     end
