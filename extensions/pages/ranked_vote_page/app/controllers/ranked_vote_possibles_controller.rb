@@ -8,13 +8,10 @@ class RankedVotePossiblesController < Pages::BaseController
   # and it must be declared sortable like this:
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    @poll.votes.by_user(current_user).delete_all
-    sort_params.each_with_index do |id, rank|
-      next unless id.to_i != 0
-      possible = @poll.possibles.find(id)
-      @poll.votes.create! user: current_user, value: rank, possible: possible
-    end
+    @poll.vote(current_user, sort_params)
     find_possibles
+  rescue ActionController::ParameterMissing
+    render nothing: true
   end
 
   def create

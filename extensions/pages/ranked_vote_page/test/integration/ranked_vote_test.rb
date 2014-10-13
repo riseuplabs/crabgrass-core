@@ -47,7 +47,6 @@ class RankedVoteTest < JavascriptIntegrationTest
     click_page_tab 'Edit my vote'
     assert_content option
     vote
-    vote
     finish_voting
     assert_content 'top pick'
   end
@@ -55,6 +54,9 @@ class RankedVoteTest < JavascriptIntegrationTest
   def vote
     option_li = find('#sort_list_unvoted li.possible', match: :first)
     option_li.drag_to find('#sort_list_voted')
+    # returns the option we voted for and also makes sure
+    # the vote has been processed
+    find('#sort_list_voted li.possible', text: option_li.text)
   end
 
   def finish_voting
