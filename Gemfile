@@ -162,6 +162,13 @@ group :assets do
   gem 'uglifier',     '>= 1.0.3'
 end
 
+group :production do
+  # js runtime needed to precompile assets
+  # runs independendly - so no version restriction for now
+  # TODO: check if we want this or nodejs
+  gem 'therubyracer'
+end
+
 group :production, :development do
   # used to install crontab
   gem 'whenever', :require => false
