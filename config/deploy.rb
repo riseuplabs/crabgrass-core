@@ -63,7 +63,7 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
-set :public_children, %w(images stylesheets static)
+set :public_children, %w(images static)
 
 ##
 ## CUSTOM TASKS
