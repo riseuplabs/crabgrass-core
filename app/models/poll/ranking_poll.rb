@@ -1,6 +1,16 @@
 class RankingPoll < Poll
   has_many :votes, foreign_key: :votable_id, class_name: "RankingVote", dependent: :delete_all
 
+  def vote(user, picks)
+    votes.by_user(user).delete_all
+    picks.each_with_index do |pick, idx|
+      next if pick.to_i == 0
+      possible = possibles.find(pick)
+      next if possible.blank?
+      votes.create! user: user, value: idx, possible: possible
+    end
+  end
+
   #delegate :winners, :rank, :ranked_candidates, :to => :results
 
   # TODO: uncomment in rails2.3. still not working in rails 2.3.11

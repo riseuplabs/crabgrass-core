@@ -44,12 +44,10 @@ class Groups::GroupsController < Groups::BaseController
   protected
 
   def group_type
-    case params[:type]
-      when 'group' then :group
-      when 'network' then :network
-      when 'council' then :council
-      when 'committee' then :committee
-      else :group
+    if %w/group network council committee/.include? params[:type].to_s
+      params[:type].to_sym
+    else
+      :group
     end
   end
   helper_method :group_type
@@ -60,7 +58,6 @@ class Groups::GroupsController < Groups::BaseController
       when :network then Network
       when :committee then Committee
       when :council then Council
-      else raise 'error'
     end
   end
 
@@ -75,7 +72,6 @@ class Groups::GroupsController < Groups::BaseController
   end
 
   def initialize_group
-    group_params = params[group_type] || {}
     @group = group_class.new group_params
     @group.created_by = current_user
     # setting @network will make the form correctly report errors for networks
@@ -88,6 +84,9 @@ class Groups::GroupsController < Groups::BaseController
     end
   end
 
+  def group_params
+    permitted = [:name, :full_name, :language]
+    permitted << :initial_member_group if group_type == :network
+    params.fetch(group_type, {}).permit *permitted
+  end
 end
-
-

@@ -45,7 +45,7 @@ Crabgrass.mod_routes do
 
   scope path: 'pages/:page_id'  do
     resources :images, controller: :gallery_image,
-      only: [:show, :edit, :update] do
+      only: [:show] do
       post :sort, on: :collection
     end
   end

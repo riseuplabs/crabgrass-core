@@ -20,7 +20,6 @@ class Network < Group
   has_many :sites
 
   attr_accessor :initial_member_group
-  attr_accessible :initial_member_group
 
   validates :initial_member_group, presence: true, unless: :persisted?
   validate :validate_initial_member_group

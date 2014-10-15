@@ -15,7 +15,7 @@ class AssetPageController < Pages::BaseController
     unless params[:asset]
       raise_error :no_data_uploaded_label.t
     else
-      @asset.update_attributes! params[:asset].merge(user: current_user)
+      @asset.update_attributes! asset_params
       current_user.updated(@page)
       redirect_to page_url(@page)
     end
@@ -23,6 +23,10 @@ class AssetPageController < Pages::BaseController
 
 
   protected
+
+  def asset_params
+    params.require(:asset).permit(:uploaded_data).merge(user: current_user)
+  end
 
   def fetch_data
     @asset = @page.data if @page

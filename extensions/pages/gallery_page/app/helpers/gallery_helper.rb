@@ -88,7 +88,7 @@ module GalleryHelper
     sortable_element "assets_list",
       constraint: false,
       overlap: :horizontal,
-      url: page_url(@page, action: :update)
+      url: sort_images_url(page_id: @page)
   end
 
   def gallery_move_image_without_js(image)

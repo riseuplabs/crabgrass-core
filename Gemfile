@@ -56,6 +56,10 @@ gem 'acts-as-taggable-on', '~> 2.4.1'
 # not developed anymore. Fixing major version never the less.
 gem 'cache_digests', '~> 0.3'
 
+# protect against malicious parameters by explicitly permitting the ones we want
+# part of rails 4, looks like the rails3 version is not in active dev.
+gem 'strong_parameters', '~> 0.2'
+
 ##
 #  Required, but not included with crabgrass:
 ##

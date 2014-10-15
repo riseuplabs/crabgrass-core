@@ -18,7 +18,7 @@ class RateManyPossiblesController < Pages::BaseController
   end
 
   def create
-    @possible = @poll.possibles.create params[:possible]
+    @possible = @poll.possibles.create possible_params
     if @poll.valid? and @possible.valid?
       @page.unresolve # update modified_at, auto_summary, and make page unresolved for other participants
     else
@@ -48,6 +48,10 @@ class RateManyPossiblesController < Pages::BaseController
   end
 
   protected
+
+  def possible_params
+    params.require(:possible).permit(:name, :description)
+  end
 
   def fetch_poll
     return true unless @page

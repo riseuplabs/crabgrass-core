@@ -70,5 +70,16 @@ class Pages::CreateControllerTest < ActionController::TestCase
     end
   end
 
+  def test_create_shared_with_group
+    login_as @user
+    @group  = FactoryGirl.create(:group)
+
+    post 'create', page_id: 'me', type: 'discussion',
+      page: {title: "title", summary: ""},
+      recipients: {@group.name => {access: 'admin'}}
+    assert_equal [@group], assigns(:page).groups,
+      "page should belong to rainbow group"
+  end
+
 end
 

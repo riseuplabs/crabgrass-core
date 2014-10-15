@@ -1,5 +1,6 @@
 class RankedVotePossiblesController < Pages::BaseController
   before_filter :fetch_poll
+  before_filter :fetch_possible, only: [:edit, :update, :destroy]
   permissions 'ranked_vote_page'
 
   # returns nothing
@@ -7,23 +8,14 @@ class RankedVotePossiblesController < Pages::BaseController
   # and it must be declared sortable like this:
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    if params[:sort_list_voted].empty?
-      render nothing: true
-      return
-    else
-      @poll.votes.by_user(current_user).delete_all
-      ids = params[:sort_list_voted]
-      ids.each_with_index do |id, rank|
-        next unless id.to_i != 0
-        possible = @poll.possibles.find(id)
-        @poll.votes.create! user: current_user, value: rank, possible: possible
-      end
-      find_possibles
-    end
+    @poll.vote(current_user, sort_params)
+    find_possibles
+  rescue ActionController::ParameterMissing
+    render nothing: true
   end
 
   def create
-    @possible = @poll.possibles.create params[:possible]
+    @possible = @poll.possibles.create possible_params
     if @poll.valid? and @possible.valid?
       @page.unresolve
     else
@@ -33,27 +25,35 @@ class RankedVotePossiblesController < Pages::BaseController
     end
   end
 
-  def update
-    @possible = @poll.possibles.find(params[:id])
-    params[:possible].delete('name')
-    @possible.update_attributes(params[:possible])
+  def edit
   end
 
-  def edit
-    @possible = @poll.possibles.find(params[:id])
+  def update
+    @possible.update_attributes possible_params.permit(:description)
   end
 
   def destroy
-    possible = @poll.possibles.find(params[:id])
-    possible.destroy
+    @possible.destroy
     render nothing: true
   end
 
   protected
 
+  def possible_params
+    params.require(:possible).permit(:name, :description)
+  end
+
+  def sort_params
+    params.permit(:sort_list_voted => []).require :sort_list_voted
+  end
+
   def fetch_poll
     @poll = @page.data if @page
     true
+  end
+
+  def fetch_possible
+    @possible = @poll.possibles.find(params[:id])
   end
 
   def find_possibles
