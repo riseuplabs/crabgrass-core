@@ -25,8 +25,8 @@ class Task < ActiveRecord::Base
   end
 
   def state=(state)
-    completed = true  if state == 'complete'
-    completed = false if state == 'pending'
+    self.completed = true  if state == 'complete'
+    self.completed = false if state == 'pending'
   end
 
   def completed=(is_completed)
