@@ -31,7 +31,7 @@ class TaskTest < ActiveSupport::TestCase
     end
   end
 
-  def test_completed
+  def test_setting_state
     list = TaskList.create
     t = list.tasks.create
 
@@ -43,7 +43,6 @@ class TaskTest < ActiveSupport::TestCase
     t.state = 'pending'
     assert !t.completed?
     assert_nil t.completed_at
-
   end
 
 end
