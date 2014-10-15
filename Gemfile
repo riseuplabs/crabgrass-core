@@ -26,12 +26,6 @@ gem 'prototype-rails', '~> 3.2.1'
 gem 'prototype_legacy_helper', '0.0.0',
   :github => 'rails/prototype_legacy_helper'
 
-# another prototype addition to respond to the parent of an iframe
-# used for file uploads
-# locking in to latest major to fix API
-gem 'respond_to_parent', '~> 0.0',
-  :github => 'jmoline/respond_to_parent'
-
 ##
 # Upgrade pending
 ##
