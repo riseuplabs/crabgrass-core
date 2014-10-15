@@ -24,4 +24,5 @@ class PageTest < IntegrationTest
       end
     end
   end
+
 end
