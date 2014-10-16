@@ -1,5 +1,8 @@
-Stylesheets
+Theme Stylesheets
 ===========================
+
+These are the stylesheets configured in themes. Note that /app/assets/stylesheets also
+contains the stylesheets that can not be configured in themes.
 
 screen.scss -- main application stylesheet
 bootstrap/  -- twitter bootstrap converted to SCSS.

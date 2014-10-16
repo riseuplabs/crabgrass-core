@@ -64,9 +64,10 @@ module Common::Ui::LayoutHelper
       lines << stylesheet_link_tag('ie7')
       lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
-    if language_direction == "rtl"
-      lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
-    end
+    # we currently do not ship the right to left css
+    # if language_direction == "rtl"
+    #   lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
+    # end
     lines.join("\n").html_safe
   end
 
