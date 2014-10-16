@@ -1,3 +1,10 @@
+## Javascript
+
+# ie specific js
+Rails.application.config.assets.precompile += ['ie.js']
+
+## Stylesheets
+
 # optional gif stylesheet for ie6 and ie7
 Rails.application.config.assets.precompile += ['icon_gif.css', 'icon_png.css']
 

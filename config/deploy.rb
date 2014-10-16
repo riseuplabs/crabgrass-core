@@ -1,8 +1,5 @@
 require "bundler/capistrano"
 
-# asset pipeline precompilation
-load 'deploy/assets'
-
 ##
 ## updates the crontap on deploy if needed.
 ##
@@ -42,6 +39,12 @@ set :scm, "git"
 set :local_repository, "#{File.dirname(__FILE__)}/../"
 
 set :deploy_via, :remote_cache
+
+# asset pipeline precompilation
+load 'deploy/assets'
+
+set :assets_prefix, 'static'
+set :shared_assets_prefix, 'static'
 
 # as an alternative, if you server does NOT have direct git access to the,
 # you can deploy_via :copy, which will build a tarball locally and upload
@@ -165,12 +168,6 @@ namespace :crabgrass do
     end
   end
 
-  # TODO: use the default rails way for this
-  desc "Precompile the javascript assets"
-  task :compile_assets do
-    run "cd #{current_release}; bundle exec rake cg:compile_assets"
-  end
-
 #  desc "refresh the staging database"
 #  task :refresh do
 #    run "touch #{deploy_to}/shared/tmp/refresh.txt"
@@ -208,8 +205,7 @@ end
 
 after  "deploy:setup",   "crabgrass:create_shared"
 
-before  "crabgrass:compile_assets", "crabgrass:link_to_shared"
-before  "deploy:finalize_update", "crabgrass:compile_assets"
+before  "deploy:finalize_update", "crabgrass:link_to_shared"
 
 after  "deploy:create_symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
