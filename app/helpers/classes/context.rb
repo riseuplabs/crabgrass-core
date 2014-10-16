@@ -61,6 +61,19 @@ class Context
     self.fg_color = 'white'
   end
 
+  def self.model_name
+    @_model_name ||= wrapped_base_class.model_name.tap do |name|
+      name.singleton_class.send(:define_method, :param_key) { 'context_id' }
+      name.singleton_class.send(:define_method, :singular_route_key) { 'context' }
+    end
+  end
+
+  # class to base the model name on for using the context in url_for etc.
+  # Currently this is either Group or User.
+  def self.wrapped_base_class
+    raise "please implement wrapped_base_class in #{name}"
+  end
+
   def push_crumb(object)
     if self.breadcrumbs.nil?
       self.breadcrumbs = []
@@ -78,11 +91,8 @@ end
 
 class Context::Group < Context
 
-  def self.model_name
-    @_model_name ||= ::Group.model_name.tap do |name|
-      name.singleton_class.send(:define_method, :param_key) { 'context_id' }
-      name.singleton_class.send(:define_method, :singular_route_key) { 'context' }
-    end
+  def self.wrapped_base_class
+    ::Group
   end
 
   def define_crumbs
@@ -120,6 +130,10 @@ end
 
 class Context::User < Context
 
+  def self.wrapped_base_class
+    ::User
+  end
+
   def self.model_name
     @_model_name ||= ::User.model_name.tap do |name|
       name.singleton_class.send(:define_method, :param_key) { 'context_id' }
@@ -135,7 +149,11 @@ class Context::User < Context
   end
 end
 
-class Context::Me < Context::User
+class Context::Me < Context
+  def self.wrapped_base_class
+    ::User
+  end
+
   def define_crumbs
     push_crumb :me
   end
