@@ -1,5 +1,8 @@
 require "bundler/capistrano"
 
+# asset pipeline precompilation
+load 'deploy/assets'
+
 ##
 ## updates the crontap on deploy if needed.
 ##
@@ -162,7 +165,8 @@ namespace :crabgrass do
     end
   end
 
-  desc "Precompile the javascript and css assets"
+  # TODO: use the default rails way for this
+  desc "Precompile the javascript assets"
   task :compile_assets do
     run "cd #{current_release}; bundle exec rake cg:compile_assets"
   end
