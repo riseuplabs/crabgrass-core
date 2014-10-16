@@ -49,6 +49,11 @@ rainbow_blue:
   group_id: 3
   access: 1
 
+rainbow_own_page:
+  page_id: 1003
+  group_id: 3
+  access: 1
+
 <% for i in 1..20 %>
 networkpage_<%=i%>:
   id: 5<%= i %>

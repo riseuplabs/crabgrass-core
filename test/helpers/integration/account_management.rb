@@ -9,12 +9,12 @@ module AccountManagement
     click_on :signup_button.t
   end
 
-  def login
+  def login(user = nil)
     # Create a user wihtout the lengthy signup procedure
-    @user ||= records[:user] ||=  FactoryGirl.create(:user)
+    @user ||= records[:user] ||= user || FactoryGirl.create(:user)
     visit '/' unless page.current_path == '/'
     fill_in :login_name.t, with: @user.login
-    fill_in :login_password.t, with: @user.password
+    fill_in :login_password.t, with: @user.password || @user.login
     click_button :login_button.t
   end
 

@@ -62,6 +62,13 @@ module UserExtension::Pages
     end
   end
 
+  # this is used to retrieve pages when vising
+  #   /login/page_name
+  # for now we only display pages the user actually owns.
+  def find_page(name)
+    pages_owned.where(name: name).first
+  end
+
   ##
   ## USER PARTICIPATIONS
   ##
