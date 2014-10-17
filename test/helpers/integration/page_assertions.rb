@@ -8,4 +8,14 @@ module PageAssertions
       end
     end
   end
+
+  def assert_page_users(*users)
+    assert_equal users.map(&:display_name).join(' '),
+      find('#people.names').text
+  end
+
+  def assert_page_groups(*groups)
+    assert_equal groups.map(&:display_name).join(' '),
+      find('#groups.names').text
+  end
 end
