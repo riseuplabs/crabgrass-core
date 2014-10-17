@@ -55,9 +55,9 @@ module TaskListPageHelper
 
   def task_modification_flag(task)
     if task.created_at and last_visit < task.created_at
-      content_tag(:em," (new)")
+      content_tag(:em," (#{:new.t})")
     elsif task.updated_at and last_visit < task.updated_at
-      content_tag(:em," (modified)")
+      content_tag(:em," (#{:modified.t})")
     end
   end
 
@@ -70,7 +70,7 @@ module TaskListPageHelper
 
   # a button to hide the task detail
   def close_task_details_button(task)
-    button_to_function "Hide", hide(task, 'details')
+    button_to_function :hide.t, hide(task, 'details')
   end
 
   # a button to delete the task
@@ -81,7 +81,7 @@ module TaskListPageHelper
       loading: show_spinner(task),
       complete: hide(task)
     )
-    button_to_function "Delete", function
+    button_to_function :delete.t, function
   end
 
   # a button to replace the task detail with a tast edit form.
@@ -91,15 +91,20 @@ module TaskListPageHelper
       loading: show_spinner(task),
       method: :get
     )
-    button_to_function "Edit", function
+    button_to_function :edit.t, function
   end
 
   def no_pending_tasks(visible)
-    content_tag(:li, 'no pending tasks', id: 'no_pending_tasks', style: (visible ? nil : 'display:none'))
+    empty_list_item :no_pending_tasks, hidden: !visible
   end
 
   def no_completed_tasks(visible)
-    content_tag(:li, 'no completed tasks', id: 'no_completed_tasks', style: (visible ? nil : 'display:none'))
+    empty_list_item :no_completed_tasks, hidden: !visible
+  end
+
+  def empty_list_item(message, options = {})
+    content_tag :li, message.t, id: message,
+      style: (options[:hidden] && 'display:none')
   end
 
   ##
@@ -137,7 +142,7 @@ module TaskListPageHelper
   end
 
   def close_task_edit_button(task)
-    button_to_function "Cancel", hide(task, 'details')
+    button_to_function :cancel.t, hide(task, 'details')
   end
 
   def delete_task_edit_button(task)
@@ -145,7 +150,7 @@ module TaskListPageHelper
   end
 
   def save_task_edit_button(task)
-    submit_tag 'Save'
+    submit_tag :save.t
   end
 
   ###
