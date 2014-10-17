@@ -87,7 +87,8 @@ module TaskListPageHelper
   def edit_task_details_button(task)
     function = remote_function(
       url: edit_task_url(task, page_id: task.task_list.page),
-      loading: show_spinner(task)
+      loading: show_spinner(task),
+      method: :get
     )
     button_to_function "Edit", function
   end
@@ -121,6 +122,7 @@ module TaskListPageHelper
     [{
       url: task_url(task, page_id: task.task_list.page),
       loading: show_spinner(task),
+      method: :put,
       html: {}
     }]
   end

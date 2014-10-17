@@ -14,9 +14,18 @@ class TaskListTest < JavascriptIntegrationTest
     assert_no_tasks
     add_task
     assert_tasks_pending
-    assert_task_assigned_to(@user)
+    assert_task_assigned_to(user)
     complete_task
     assert_tasks_completed
+  end
+
+  def test_assigning_task
+    share_page_with other_user
+    add_task
+    click_on 'Done'
+    assign_task_to other_user
+    unassign_task_from user
+    assert_task_assigned_to other_user
   end
 
   def add_task(options = {})
@@ -27,6 +36,31 @@ class TaskListTest < JavascriptIntegrationTest
     fill_in 'task_description', with: options[:detail]
     click_on "Add Task"
     return options
+  end
+
+  def unassign_task_from(user)
+    edit_task
+    uncheck user.display_name
+    click_on 'Save'
+  end
+
+  def assign_task_to(user)
+    edit_task
+    check user.display_name
+    click_on 'Save'
+  end
+
+  def edit_task
+    show_task
+    within '#sort_list_pending' do
+      click_on 'Edit'
+    end
+  end
+
+  def show_task
+    within '#sort_list_pending' do
+      find('.task').click
+    end
   end
 
   def complete_task
@@ -51,9 +85,8 @@ class TaskListTest < JavascriptIntegrationTest
     end
   end
 
-  def assert_task_assigned_to(user)
-    within '.task_people' do
-      assert_content user.login
-    end
+  def assert_task_assigned_to(*users)
+    assert_selector '.task_people', exact: true,
+      text: users.map(&:login).join(', ')
   end
 end
