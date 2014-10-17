@@ -1,12 +1,15 @@
-module LastVisitHelper
+#
+# Last Visit Helper
+#
+# last_visit will return the last time the current user visited a page or group
+#
+# This can be used to highlight changes that happened later.
+#
+module Common::Utility::LastVisitHelper
 
   def last_visit
-    # do not mark anything as new if logged out
-    return Time.now unless logged_in?
-    if @page
-      @page.user_participations.where(user_id: current_user).first.viewed_at
-    elsif @group
-      @group.memberships.where(user_id: current_user).first.visited_at
-    end
+    # either the last timestamp or now so we do not mark anything as new
+    (@page || @group).last_visit_of(current_user) || Time.now
   end
+
 end

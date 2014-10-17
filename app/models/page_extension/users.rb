@@ -70,6 +70,13 @@ module PageExtension::Users
 
   public
 
+  #
+  # timestamp of the last visit of a user
+  #
+  def last_visit_of(user)
+    user_participations.where(user_id: user).first.try.viewed_at
+  end
+
   # used for sphinx index
   # e: why not just use the normal user_ids()? i guess the assumption is that
   # user_participations will always be already loaded if we are saving the page.

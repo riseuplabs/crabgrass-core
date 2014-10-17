@@ -61,6 +61,13 @@ module GroupExtension::Users
   #  end
   #end
 
+  #
+  # timestamp of the last visit of a user
+  #
+  def last_visit_of(user)
+    memberships.where(user_id: user).first.try.visited_at
+  end
+
   def user_ids
     @user_ids ||= memberships.collect{|m|m.user_id}
   end

@@ -50,14 +50,15 @@ module TaskListPageHelper
   def task_link_to_details(task)
     id = dom_id(task, 'details')
     name = task.name
-    if logged_in?
-      if task.created_at and logged_in_since < task.created_at
-        name += content_tag(:b," (new)")
-      elsif task.updated_at and logged_in_since < task.updated_at
-        name += content_tag(:b," (modified)")
-      end
-    end
     link_to_function(name, "$('%s').toggle()" % id)
+  end
+
+  def task_modification_flag(task)
+    if task.created_at and last_visit < task.created_at
+      content_tag(:em," (new)")
+    elsif task.updated_at and last_visit < task.updated_at
+      content_tag(:em," (modified)")
+    end
   end
 
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
