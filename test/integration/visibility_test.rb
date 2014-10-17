@@ -9,6 +9,14 @@ class VisibilityTest < IntegrationTest
     end
   end
 
+  # regression test for #6757
+  def test_hidden_user_can_see_own_pages
+    as_a hidden_user do |me|
+      visit "/me/pages"
+      assert_content me.display_name
+    end
+  end
+
   def test_not_visible_to_others
     as_a [friend_of(hidden_user), peer_of(hidden_user), user, visitor] do
       visit "/#{hidden_user.login}"
@@ -57,6 +65,15 @@ class VisibilityTest < IntegrationTest
     as_a [other_user, visitor] do
       visit "/#{public_user.login}"
       assert_landing_page(public_user)
+    end
+  end
+
+  # regression test for #6755
+  def test_hidden_group_not_found
+    group.revoke_access! public: :view
+    as_a user do
+      visit "/#{group.name}"
+      assert_not_found
     end
   end
 
