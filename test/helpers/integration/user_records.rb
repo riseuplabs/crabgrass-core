@@ -7,6 +7,13 @@ module UserRecords
     end
   end
 
+  def blocking_user
+    records[:blocking_user] ||= FactoryGirl.create(:user).tap do |blocking|
+      blocking.revoke_access! friends: :pester
+      blocking.revoke_access! peers: :pester
+    end
+  end
+
   def public_user
     records[:public_user] ||= FactoryGirl.create(:user).tap do |pub|
       pub.grant_access! public: :view
