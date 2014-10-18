@@ -184,19 +184,6 @@ module Common::Page::SearchHelper
     toggle_bug_links(compact_link, detailed_link)
   end
 
-  #
-  # javascript code that creates an ajax call to the server to update the list of
-  # pages if the window.location.hash changes (and it was not changed by the page
-  # search code, e.g. the user hit the back button in the browser).
-  #
-  def fire_page_search_on_location_hash_change
-    function = queued_remote_function(
-      url: page_search_path,
-      with: 'FilterPath.encode()',
-      condition: 'FilterPath.shouldUpdateServer()'
-    )
-    "LocationHash.onChange = function(){#{function}};"
-  end
 
 end
 
