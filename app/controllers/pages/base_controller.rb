@@ -32,8 +32,11 @@ class Pages::BaseController < ApplicationController
   append_before_filter :default_setup_options
   append_before_filter :load_posts
 
-  after_filter :update_viewed, only: :show
+  # after_filters are processed the inside out.
+  # So whatever is defined first will be processed last
+  # ... after all the others
   after_filter :save_if_needed, except: :create
+  after_filter :update_viewed, only: :show
   after_filter :update_view_count, only: [:show, :edit, :create]
 
   include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work?

@@ -21,7 +21,7 @@
       %td{colspan:'4'}
         %b= :users.t
 
-    - uparts = uparts.paginate(page: params[:page] || 0, per_page: pagination_size)
+    - uparts = uparts.paginate(pagination_params(per_page: pagination_size))
     - uparts.each do |upart|
       %tr{class: cycle("odd","even"), id: dom_id(upart)}
         = render 'pages/participations/permission_row', participation: upart

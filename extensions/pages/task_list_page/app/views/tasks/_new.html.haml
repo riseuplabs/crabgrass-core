@@ -3,19 +3,21 @@
   = link_to_function 'add task', show('new-task') + hide('new-task-link')
 #new-task{style: "display:none"}
   = form_remote_tag( *options_for_new_task_form(page) ) do
-    description:
     %br/
-    = text_field 'task', 'name', class: 'task_name'
+    = text_field 'task', 'name',
+      class: 'task_name',
+      placeholder: :description.t
     %br/
-    detail:
+    = text_area 'task', 'description',
+      size: '50x4',
+      class: 'task_description',
+      placeholder: :details.t
     %br/
-    = text_area 'task', 'description', size: '50x4', class: 'task_description'
+    = :assign_to.t
     %br/
-    assign to:
-    %br/
-    %ul= checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
+    = checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
     %br{style: "clear:left"}/
     %p
-      = submit_tag 'Add Task'
-      = button_to_function "Done", hide('new-task') + show('new-task-link')
+      = submit_tag :add_task.t
+      = button_to_function :done.t, hide('new-task') + show('new-task-link')
       = spinner('new-task')

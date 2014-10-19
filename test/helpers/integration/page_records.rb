@@ -40,6 +40,7 @@ module PageRecords
     file = options[:file] || fixture_file('bee.jpg')
     try_to_fill_in :title.t,      with: title
     try_to_fill_in :summary.t,    with: new_page.summary
+    click_on 'Additional Access'
     add_recipients(*options[:share_with])
     try_to_attach_file :asset_uploaded_data, file
     # workaround for having the right page title in the test record
@@ -48,12 +49,11 @@ module PageRecords
 
   def add_recipients(*recipients)
     return if recipients.blank?
-    click_on 'Additional Access'
     recipients.each do |rec|
       # TODO: find out why this misses the first letter on the
       # first attempt
-      fill_in :recipients.t, with: rec.name, visible: true
-      fill_in :recipients.t, with: rec.name, visible: true
+      fill_in :recipient_name, with: rec.name
+      fill_in :recipient_name, with: rec.name
       find('#add_recipient_button').click
     end
     # this may be in an error message or the list of shares.

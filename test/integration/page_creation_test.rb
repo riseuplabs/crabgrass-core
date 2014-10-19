@@ -21,14 +21,4 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_page_users user
     assert_page_groups group_to_pester
   end
-
-  def assert_page_users(*users)
-    assert_equal users.map(&:display_name).join(' '),
-      find('#people.names').text
-  end
-
-  def assert_page_groups(*groups)
-    assert_equal groups.map(&:display_name).join(' '),
-      find('#groups.names').text
-  end
 end
