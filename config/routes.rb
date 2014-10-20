@@ -52,6 +52,7 @@ Crabgrass::Application.routes.draw do
     # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
     get 'pages(/*path)', to: 'pages#index', as: 'pages'
+    post 'pages(/*path)', to: 'pages#index', as: 'pages'
     resources :activities, only: [:index, :show, :create]
     resources :discussions, path: 'messages', only: :index do
       resources :posts, except: [:show, :new]
@@ -113,6 +114,7 @@ Crabgrass::Application.routes.draw do
   resources :people, module: 'people', controller: 'home', only: :show do
     resource  :home, only: :show, controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'
+    post 'pages(/*path)', as: 'pages', to: 'pages#index'
     # resources :messages
     # resources :activities
     resource :friend_request, only: [:new, :create, :destroy]
@@ -129,6 +131,7 @@ Crabgrass::Application.routes.draw do
     # content related
     resource  :home, only: [:show], controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'
+    post 'pages(/*path)', as: 'pages', to: 'pages#index'
     resources :avatars, only: [:new, :create, :edit, :update]
     resources :wikis, only: [:create, :index]
 
