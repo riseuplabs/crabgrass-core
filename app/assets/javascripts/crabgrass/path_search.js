@@ -7,7 +7,9 @@ document.observe("dom:loaded", function() {
 function initPathSearch() {
   pathSearch.init();
   if (pathSearch.isEnabled()) {
-    LocationHash.onChange = pathSearch.fire;
+    LocationHash.setHandler( function() {
+      pathSearch.fire();
+    });
   }
 };
 
