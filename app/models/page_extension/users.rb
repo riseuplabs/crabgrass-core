@@ -10,6 +10,8 @@ module PageExtension::Users
     base.instance_eval do
 
       before_create :set_user
+      before_save :ensure_owner
+      before_save :denormalize
 
       belongs_to :created_by, class_name: 'User', foreign_key: 'created_by_id'
       belongs_to :updated_by, class_name: 'User', foreign_key: 'updated_by_id'
@@ -41,13 +43,43 @@ module PageExtension::Users
     end
   end
 
-    ##
-    ## CALLBACKS
-    ##
+  ##
+  ## CALLBACKS
+  ##
 
-    protected
+  protected
 
-    # when we save, we want the users association to relect whatever changes have
+  def ensure_owner
+    if Conf.ensure_page_owner?
+      self.owner ||= default_owner if default_owner.present?
+    end
+    return true
+  end
+
+  #
+  # pick the default owner based on participations and created_by
+  #
+  # This is used during page initialization. The page may not
+  # have been saved yet and we rely on the cached group_participations.
+  # So please do not rewrite this to sth. that tries to load the group from db.
+  #
+  def default_owner
+    if gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+      gp.group
+    else
+      self.created_by
+    end
+  end
+
+  # denormalize hack follows:
+  def denormalize
+    if updated_by_id_changed?
+      self.updated_by_login = (updated_by.login if updated_by)
+    end
+    true
+  end
+
+  # when we save, we want the users association to relect whatever changes have
   # been made to user_participations
   def reset_users
     self.users.reset
