@@ -109,17 +109,22 @@ function eventTarget(event) {
 var LocationHash = {
   onChange: null,   // called whenever location.hash changes
   current: '##',
+  polling: false,
   poll: function() {
     if (window.location.hash != this.current) {
       this.current = window.location.hash;
-      this.onChange();
+      if (this.onChange) { this.onChange(); }
     }
+  },
+  setHandler: function(handler) {
+    this.onChange = handler;
+    this.startPolling();
+  },
+  startPolling: function() {
+    if (!this.polling) { setInterval("LocationHash.poll()", 300) }
+    this.polling = true;
   }
 }
-
-document.observe("dom:loaded", function() {
-  if (LocationHash.onChange) {setInterval("LocationHash.poll()", 300)}
-});
 
 //
 // split panel
