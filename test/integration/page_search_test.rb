@@ -1,6 +1,7 @@
 require 'javascript_integration_test'
 
 class PageSearchTest < JavascriptIntegrationTest
+  include Integration::Search
   fixtures :users
 
   def test_initial_search

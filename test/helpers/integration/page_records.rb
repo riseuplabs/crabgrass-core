@@ -5,6 +5,8 @@ module PageRecords
     options.merge! created_by: user
     page = new_page(type, options)
     page.save
+    # ensure after_commit callbacks are triggered so sphinx indexes the page.
+    page.page_terms.committed!
     page
   end
 
@@ -17,6 +19,7 @@ module PageRecords
   def new_page(type=nil, options = {})
     options, type = type, nil  if type.is_a? Hash
     page_options = options.slice :title, :summary, :created_by, :owner
+    page_options.merge! created_at: Time.now, updated_at: Time.now
     if type
       @page = records[type] ||= FactoryGirl.build(type, page_options)
     else
