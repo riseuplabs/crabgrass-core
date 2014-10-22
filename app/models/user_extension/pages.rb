@@ -21,6 +21,7 @@ module UserExtension::Pages
 
       has_many :pages, through: :participations do
         def recent_pages
+          where(pages: {flow: FLOW[:normal]}).
           order('user_participations.changed_at DESC').limit(15)
         end
       end
