@@ -32,6 +32,7 @@ class PageSidebarTest < JavascriptIntegrationTest
   def test_trash
     path = current_path
     delete_page
+    assert_content 'Notices'
     assert_no_content own_page.title
     assert_equal '/me', current_path
     visit path
@@ -41,11 +42,14 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_content own_page.title
   end
 
-  def test_details_change_access
-    share_page_with users(:red)
-    assert_page_users user, users(:red)
-    change_access_to 'Write Ability'
-    assert_selector "#people.names .tiny_pencil_16"
+  def test_destroy
+    click_on 'Delete Page'
+    choose 'Destroy Immediately'
+    click_button 'Delete'
+    # finish deleting...
+    assert_content 'Notices'
+    assert_no_content own_page.title
+    assert_nil Page.where(id: own_page.id).first
   end
 
   def test_stars

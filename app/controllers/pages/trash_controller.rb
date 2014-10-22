@@ -8,42 +8,24 @@ class Pages::TrashController < Pages::SidebarsController
   end
 
   def update
-    case params[:type]
-      when 'move_to_trash' then move
-      when 'shred_now'     then shred
-      when 'undelete'      then undelete
-      when 'destroy'       then destroy
-      else raise_error 'unknown type'
+    if %w/delete destroy undelete/.include? params[:type]
+      @page.public_send params[:type]
+    else
+      raise_error 'unknown type'
     end
+    render(:update) {|page| page.redirect_to redirect_url}
   end
 
   protected
 
-  def undelete
-    @page.undelete
-    render(:update) {|page| page.redirect_to page_url(@page)}
+  def redirect_url
+    if params[:type] == 'undelete'
+      page_url(@page)
+    else
+      new_url
+    end
   end
-
-#  def delete
-#    url = from_url(@page)
-#    @page.delete
-#    redirect_to url
-#  end
-
-  def destroy
-    @page.destroy
-    render(:update) {|page| page.redirect_to new_url}
-  end
-
-  def move
-    @page.delete
-    render(:update) {|page| page.redirect_to new_url}
-  end
-
-  def shred
-    @page.destroy
-    render(:update) {|page| page.redirect_to new_url}
-  end
+  helper_method :redirect_url
 
   def new_url
     if @page.owner and @page.owner != current_user
