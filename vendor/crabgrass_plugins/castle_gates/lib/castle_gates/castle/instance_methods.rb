@@ -173,19 +173,18 @@ module InstanceMethods
   def gate_bitfield_for_keys(keys, holder)
     self.class.gate_bitfield_cache[self.id] ||= {}
     self.class.gate_bitfield_cache[self.id][holder.code] ||= begin
-      bitfield = Key::gate_bitfield(keys)
-      if bitfield.nil?
-        # no actual keys, so lets fall back to the defaults
-        bitfield = gate_set.default_bits(self, holder)
-        if associated_holder = holder.association_with(self)
-          bitfield |= gate_set.default_bits(self, associated_holder)
-        else
-          bitfield
-        end
-      else
-        bitfield
-      end
+      Key::gate_bitfield(keys) || default_gate_bitfield(holder)
     end
+  end
+
+  # if there are no actual keys, lets fall back to the defaults
+  def default_gate_bitfield(holder)
+    bitfield = gate_set.default_bits(self, holder)
+
+    holder.holders_accessing(self).each do |associated_holder|
+      bitfield |= gate_set.default_bits(self, associated_holder)
+    end
+    bitfield
   end
 
 end

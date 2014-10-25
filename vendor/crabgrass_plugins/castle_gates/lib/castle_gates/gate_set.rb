@@ -63,7 +63,7 @@ module CastleGates
     def default_bits(castle, holder)
       holder_name = holder.definition.name
       all_gates = self.values
-      all_gates.inject(bits) do |bits_so_far, gate|
+      all_gates.inject(0) do |bits_so_far, gate|
         bits_so_far | gate.default_bit(holder_name)
       end
     end

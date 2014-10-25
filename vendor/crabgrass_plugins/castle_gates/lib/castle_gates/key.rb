@@ -58,15 +58,11 @@ module CastleGates
     # This is not a method of the keys association because of how we do caching.
     #
     def self.gate_bitfield(keys_named_scope)
+      return nil unless keys_named_scope.any?
       if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-        bitfield = keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
+        keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
       else
-        bitfield = keys_named_scope.calculate(:bit_or, :gate_bitfield)
-      end
-      if bitfield == 0
-        nil # no actual keys, so return nil
-      else
-        bitfield
+        keys_named_scope.calculate(:bit_or, :gate_bitfield)
       end
     end
 

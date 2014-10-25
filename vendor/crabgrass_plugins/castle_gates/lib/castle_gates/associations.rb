@@ -46,7 +46,7 @@ class Association
     elsif other.is_a? Symbol
       false  # don't query the relation just to compare to Symbol
     else
-      owner.send(:relationship) == other
+      owner.send(relationship) == other
     end
   end
 

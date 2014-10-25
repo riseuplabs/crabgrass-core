@@ -130,30 +130,15 @@ class Holder
   # To repeat: this is only for fallback defaults. If there are key records, all
   # this is ignored.
   #
-  # This method returns the associated holder, if any exist.
+  # This method returns the associated holders, if any exist.
   #
-  # For this to work, the holder definition for the association must have
-  # a method that returns true if the two objects really are in association.
-  # The name of the method is the name of the holder. Here is an example:
   #
-  # holder 4, :minion_of_user, :association => User.associated(:minions) do
-  #   def minion_of_user?(minion)
-  #     minion_ids.include? minion.id
-  #   end
-  # end
-  #
-  # TODO: this is not actually used anymore, so maybe it should be ripped out.
-  #
-  def association_with(castle)
-    possible_holder = definition.associated.find do |hdef|
-      hdef.model.name == definition.model.name && hdef.model.name == castle.class.base_class.name
-    end
-    if possible_holder
-      method_name = "#{possible_holder.name}?"
-      if castle.respond_to?(method_name)
-        if castle.send(method_name, self)
-          return possible_holder
-        end
+  def holders_accessing(castle)
+    Holder.codes_to_holders(self.all_codes).select do |holder|
+      if holder.respond_to? :owner
+        holder.owner == castle
+      else
+        holder.is_a? Symbol
       end
     end
   end
