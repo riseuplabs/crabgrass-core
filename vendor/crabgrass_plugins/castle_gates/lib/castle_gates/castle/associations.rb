@@ -20,7 +20,7 @@ def self.included(base)
     #
     scope(:with_access, lambda {|args|
       holder, gates = args.first
-      holder = Holder[holder]
+      holder = Holder[holder, self]
 
       joins(:keys).
         where(conditions_for_gates(gates)).
@@ -63,7 +63,7 @@ def self.included(base)
       # finds a key for a holder, initializing it in memory if it does not exist.
       #
       def find_by_holder(holder)
-        holder = Holder[holder]
+        holder = Holder[holder, self]
         key = find_or_initialize_by_holder_code(holder.code)
         if key.new_record?
           castle = proxy_association.owner
