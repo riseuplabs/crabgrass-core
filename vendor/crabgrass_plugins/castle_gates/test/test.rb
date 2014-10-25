@@ -1,9 +1,9 @@
 require 'test/unit'
 require 'rubygems'
-require 'ruby_debug'
+require 'debugger'
 require 'logger'
-gem 'actionpack', '~> 3.0.20'
-gem 'activerecord', '~> 3.0.20'
+gem 'actionpack', '~> 3.2.19'
+gem 'activerecord', '~> 3.2.19'
 require 'active_record'
 
 ##
