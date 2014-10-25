@@ -129,12 +129,6 @@ module InstanceMethods
   protected
 
   #
-  # to be overridden optionally by castles
-  #
-  def default_open_gates(holder)
-  end
-
-  #
   # takes an access hash and validates it.
   # loops over the holder => gates pairs
   #

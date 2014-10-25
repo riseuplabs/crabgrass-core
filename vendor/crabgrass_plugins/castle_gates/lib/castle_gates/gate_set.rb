@@ -61,21 +61,6 @@ module CastleGates
     # OPTIMIZE: self.values ??
     #
     def default_bits(castle, holder)
-      #
-      # programmatic defaults
-      #
-      default_open_gates = castle.send(:default_open_gates, holder)
-      if default_open_gates && default_open_gates.any?
-        bits = self.select(default_open_gates).values.inject(0) do |bits_so_far, gate|
-          bits_so_far | gate.bit
-        end
-      else
-        bits = 0
-      end
-
-      #
-      # statically defined defaults
-      #
       holder_name = holder.definition.name
       all_gates = self.values
       all_gates.inject(bits) do |bits_so_far, gate|

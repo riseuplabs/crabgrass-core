@@ -236,14 +236,6 @@ class CastleGatesTest < Test::Unit::TestCase
     end
   end
 
-
-  def test_method_based_defaults
-    ActiveRecord::Base.transaction do
-      assert @tower.access?(User.new(name: 'sandman') => :skylight), 'gate_open? should get called'
-      raise ActiveRecord::Rollback
-    end
-  end
-
   def test_finder
     ActiveRecord::Base.transaction do
       assert_nil Fort.with_access(public: :draw_bridge).first

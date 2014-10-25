@@ -101,13 +101,6 @@ CastleGates.define do
         revoke_access! public: gates
       end
     end
-
-    def default_open_gates(holder)
-      if holder.is_a?(User) && holder.name == 'sandman'
-        [:skylight]
-      end
-    end
-
   end
 
   castle User do
