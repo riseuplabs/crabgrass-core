@@ -229,6 +229,10 @@ class CastleGatesTest < Test::Unit::TestCase
       @fort.revoke_access!(admin: :sewers)
       assert !@fort.access?(admin: :sewers), 'default should get overridden'
 
+      @fort.revoke_access!(public: :tunnel)
+      assert @fort.access?(@me => :tunnel), 'default should still be open for @me as a user'
+      assert !@fort.access?(:public => :tunnel), 'tunnel is closed for the public now'
+
       assert @me.access?(@minion => :follow), "me's minion should have access by default"
       assert !@me.access?(Minion.create! => :follow), 'other minions should NOT have access by default'
 
