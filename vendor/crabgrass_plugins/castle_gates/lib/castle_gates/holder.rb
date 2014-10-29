@@ -117,31 +117,6 @@ class Holder
      codes << self.code
   end
 
-  #
-  # When testing to see if a particular holder has default access to a castle, we
-  # sometimes want to check both the holder itself and any other holders
-  # that the holder might be associated with. Got that? Here is an example:
-  #
-  # Suppose you have a group (castle) and a user (holder). There is also a
-  # holder defined called 'members_of_group'. To see if a user has default
-  # access to the group, we should check to see if the user has direct default
-  # access and also if they have default access via the 'members_of_group'.
-  #
-  # To repeat: this is only for fallback defaults. If there are key records, all
-  # this is ignored.
-  #
-  # This method returns the associated holders, if any exist.
-  #
-  #
-  def holders_accessing(castle)
-    Holder.codes_to_holders(self.all_codes).select do |holder|
-      if holder.respond_to? :owner
-        holder.owner == castle
-      else
-        holder.is_a? Symbol
-      end
-    end
-  end
 
   ##
   ## CLASS METHODS

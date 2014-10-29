@@ -24,6 +24,12 @@ module CastleGates
 
     belongs_to :castle, polymorphic: true
 
+    # we store the codes as integers but generate them as strings.
+    # So for comparison to work let's also read them as strings
+    def holder_code
+      read_attribute(:holder_code).to_s
+    end
+
     #
     # queries keys that are associated with the holder, or any of its 'subholders'
     #
@@ -58,7 +64,7 @@ module CastleGates
     # This is not a method of the keys association because of how we do caching.
     #
     def self.gate_bitfield(keys_named_scope)
-      return nil unless keys_named_scope.any?
+      return 0 unless keys_named_scope.any?
       if ActiveRecord::Base.connection.adapter_name == 'SQLite'
         keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
       else

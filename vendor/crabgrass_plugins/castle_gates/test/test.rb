@@ -117,7 +117,7 @@ class CastleGatesTest < Test::Unit::TestCase
       assert !@fort.access?(@me => :draw_bridge), 'no access yet'
       assert @fort.access?(@me => :door), 'access to defaults'
 
-      @fort.set_access!(@me => :draw_bridge)
+      @fort.set_access!(:public => :draw_bridge)
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
       assert !@fort.access?(@me => :door), 'defaults do not apply with set'
 

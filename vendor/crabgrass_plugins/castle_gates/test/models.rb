@@ -80,8 +80,8 @@ CastleGates.define do
   castle Fort do
     gate 1, :draw_bridge
     gate 2, :sewers, default_open: :admin
-    gate 3, :tunnel, default_open: [:public, :user]
-    gate 4, :door, default_open: :user
+    gate 3, :tunnel, default_open: :public
+    gate 4, :door, default_open: :public
   end
 
   castle Tower do
@@ -122,11 +122,7 @@ CastleGates.define do
   holder 3, :clan, model: Clan
   holder_alias :clan, model: Faction
 
-  holder 4, :minion_of_user, association: User.associated(:minions) do
-    def minion_of_user?(minion)
-      minion_ids.include? minion.id
-    end
-  end
+  holder 4, :minion_of_user, association: User.associated(:minions)
 
   holder 0, :public
   holder_alias :public, model: Rabbit

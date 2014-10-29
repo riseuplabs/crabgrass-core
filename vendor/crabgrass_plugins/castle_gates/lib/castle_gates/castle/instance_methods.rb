@@ -17,15 +17,12 @@ module InstanceMethods
     holder, gate_symbol = args.first
     holder = Holder[holder, self]
 
-    keys     = keys_for_holder(holder)
-    bitfield = gate_bitfield_for_keys(keys, holder)
     gate     = gate_set.get(gate_symbol)
-
     unless gate
       raise ArgumentError.new "Gate '#{gate_symbol}' unknown"
     end
 
-    gate.opened_by? bitfield
+    gate.opened_by? bitfield_for_holder(holder)
   end
 
   #
@@ -154,6 +151,15 @@ module InstanceMethods
   ## CACHE
   ##
 
+  def bitfield_for_holder(holder)
+    self.class.gate_bitfield_cache[self.id] ||= {}
+    self.class.gate_bitfield_cache[self.id][holder.code] ||= begin
+      keys     = keys_for_holder(holder)
+      defaults = holder.all_codes - keys.map(&:holder_code)
+      gate_bitfield_for_keys(keys) | gate_bitfield_for_defaults(defaults)
+    end
+  end
+
   #
   # this does not really return the keys. it returns a named scope
   # to find the keys that correspond to this castle and the holder
@@ -170,21 +176,36 @@ module InstanceMethods
   # returns the aggregated gate_bitfield for a set of keys.
   # the result is cached on the holder.
   #
-  def gate_bitfield_for_keys(keys, holder)
-    self.class.gate_bitfield_cache[self.id] ||= {}
-    self.class.gate_bitfield_cache[self.id][holder.code] ||= begin
-      Key::gate_bitfield(keys) || default_gate_bitfield(holder)
-    end
+  def gate_bitfield_for_keys(keys)
+    Key::gate_bitfield(keys)
   end
 
-  # if there are no actual keys, lets fall back to the defaults
-  def default_gate_bitfield(holder)
-    bitfield = gate_set.default_bits(self, holder)
-
-    holder.holders_accessing(self).each do |associated_holder|
-      bitfield |= gate_set.default_bits(self, associated_holder)
+  # if there are no key records for these codes, lets fall back to the defaults
+  #
+  # When testing to see if a particular holder has default access to a castle, we
+  # sometimes want to check both the holder itself and any other holders
+  # that the holder might be associated with. Got that? Here is an example:
+  #
+  # Suppose you have a group (castle) and a user (holder). There is also a
+  # holder defined called 'members_of_group'. To see if a user has default
+  # access to the group, we should check to see if the user has direct default
+  # access and also if they have default access via the 'members_of_group'.
+  #
+  # To repeat: this is only for fallback defaults. If there are key records, all
+  # this is ignored.
+  #
+  def gate_bitfield_for_defaults(holder_codes)
+    holders = Holder.codes_to_holders(holder_codes)
+    holders.select! do |holder|
+      if holder.respond_to? :owner
+        holder.owner == self
+      else
+        holder.is_a? Symbol
+      end
     end
-    bitfield
+    holders.inject(0) do |bitfield, holder|
+      bitfield |= gate_set.default_bits(self, holder)
+    end
   end
 
 end
