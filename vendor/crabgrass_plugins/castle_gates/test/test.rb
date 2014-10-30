@@ -243,6 +243,8 @@ class CastleGatesTest < Test::Unit::TestCase
   def test_finder
     ActiveRecord::Base.transaction do
       assert_nil Fort.with_access(public: :draw_bridge).first
+      # find based on defaults
+      assert_equal [@fort], Fort.with_access(public: :tunnel)
       @fort.grant_access! public: :draw_bridge
       assert_equal [@fort], Fort.with_access(public: :draw_bridge)
 
