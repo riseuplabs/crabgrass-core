@@ -50,18 +50,30 @@ module PageRecords
     new_page.title = file.basename(file.extname) if type == :asset_page
   end
 
-  def add_recipients(*recipients)
-    return if recipients.blank?
-    recipients.each do |rec|
-      # TODO: find out why this misses the first letter on the
-      # first attempt
-      fill_in :recipient_name, with: rec.name
-      fill_in :recipient_name, with: rec.name
-      find('#add_recipient_button').click
+  #
+  # Add recipients in the page creation or share forms
+  #
+  # options:
+  #
+  # autocomplete: use the autocomplete popup. This will fail if
+  #               the user in question is not visible.
+  #
+  def add_recipients(*args)
+    options = args.extract_options!
+    return if args.blank?
+    args.each do |recipient|
+      # the space is a work around as the first letter gets
+      # cut off
+      if options[:autocomplete]
+        fill_in :recipient_name, with: ' ' + recipient.name[0]
+        find('.autocomplete em', text: recipient.name).click
+      else
+        fill_in :recipient_name, with: ' ' + recipient.name
+        find('#add_recipient_button').click
+      end
     end
     # this may be in an error message or the list of shares.
-    assert_content recipients.last.name
+    assert_content args.last.name
   end
-
 
 end

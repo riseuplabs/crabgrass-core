@@ -21,7 +21,11 @@ module UserRecords
   end
 
   def user
-    records[:user] ||= FactoryGirl.create :user
+    records[:user] ||= @user ||= FactoryGirl.create(:user)
+  end
+
+  def user=(user)
+    records[:user] = user
   end
 
   def other_user

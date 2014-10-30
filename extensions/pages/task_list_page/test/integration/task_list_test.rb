@@ -1,9 +1,11 @@
 require 'javascript_integration_test'
 
 class TaskListTest < JavascriptIntegrationTest
+  fixtures :users
 
   def setup
     super
+    @user = users(:blue)
     own_page :task_list_page
     login
     click_on own_page.title
@@ -20,12 +22,13 @@ class TaskListTest < JavascriptIntegrationTest
   end
 
   def test_assigning_task
-    share_page_with other_user
+    share_page_with users(:red)
     add_task
     click_on 'Done'
-    assign_task_to other_user
+    assign_task_to users(:red)
     unassign_task_from user
-    assert_task_assigned_to other_user
+    assert_task_not_assigned_to users(:blue)
+    assert_task_assigned_to users(:red)
   end
 
   def add_task(options = {})
@@ -82,6 +85,13 @@ class TaskListTest < JavascriptIntegrationTest
   def assert_tasks_completed
     within '#sort_list_completed' do
       assert_selector '.task'
+    end
+  end
+
+  def assert_task_not_assigned_to(*users)
+    users.each do |user|
+      assert_no_selector '.task_people',
+        text: user.login
     end
   end
 
