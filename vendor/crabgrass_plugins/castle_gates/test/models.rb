@@ -79,23 +79,36 @@ CastleGates.define do
 
   castle Fort do
     gate 1, :draw_bridge
-    gate 2, :sewers, default_open: :admin
-    gate 3, :tunnel, default_open: :public
-    gate 4, :door, default_open: :public
+    gate 2, :sewers
+    gate 3, :tunnel
+    gate 4, :door
+
+    protected
+    after_create :create_permissions
+    def create_permissions
+      grant_access! admin: :sewers
+      grant_access! public: [:door, :tunnel]
+    end
   end
 
   castle Tower do
-    gate 1, :door, default_open: true
+    gate 1, :door
     gate 2, :window
     gate 3, :skylight
 
     protected
+
+    after_create :create_permissions
+    def create_permissions
+      grant_access! public: :door
+    end
 
     def after_grant_access(holder, gates)
       if holder == :public
         grant_access! admin: gates
       end
     end
+
     def after_revoke_access(holder, gates)
       if holder == :admin
         revoke_access! public: gates
@@ -104,7 +117,14 @@ CastleGates.define do
   end
 
   castle User do
-    gate 1, :follow, default_open: :minion_of_user
+    gate 1, :follow
+
+    protected
+
+    after_create :create_permissions
+    def create_permissions
+      grant_access! minions: :follow
+    end
   end
 
   holder 1, :user, model: User do

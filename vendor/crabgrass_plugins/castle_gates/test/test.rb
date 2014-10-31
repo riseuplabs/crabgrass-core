@@ -1,57 +1,4 @@
-require 'test/unit'
-require 'rubygems'
-require 'debugger'
-require 'logger'
-gem 'actionpack', '~> 3.2.19'
-gem 'activerecord', '~> 3.2.19'
-require 'active_record'
-
-##
-## OPTIONS
-##
-
-#
-# run like so to specify arguments:
-#
-#   ruby test/tests.rb -- --rebuild
-#
-
-# set to true if schema changes.
-REBUILD_DB = ARGV.grep('--rebuild').any?
-
-# set to true if fixtures changes.
-RELOAD_FIXTURES = ARGV.grep('--reload').any?
-
-# set to :mysql to test aggregation BIT_OR
-ADAPTER = :sqlite
-
-# set to true to see all the sql commands
-SHOW_SQL = false
-
-##
-## TEST HELPERS
-##
-
-class Object
-  private
-  def after_reload(model, &block)
-    yield model
-  end
-end
-
-['../init', 'setup_db', 'models', 'fixtures'].each do |file|
-  require_relative file
-end
-
-if REBUILD_DB
-  teardown_db
-  setup_db
-  create_fixtures
-elsif RELOAD_FIXTURES
-  reset_db
-  create_fixtures
-end
-
+require_relative 'test_helper'
 ##
 ## TEST
 ##
@@ -244,7 +191,7 @@ class CastleGatesTest < Test::Unit::TestCase
     ActiveRecord::Base.transaction do
       assert_nil Fort.with_access(public: :draw_bridge).first
       # find based on defaults
-      assert_equal [@fort], Fort.with_access(public: :tunnel)
+      assert_equal [@fort, @bunker], Fort.with_access(public: :tunnel)
       @fort.grant_access! public: :draw_bridge
       assert_equal [@fort], Fort.with_access(public: :draw_bridge)
 
