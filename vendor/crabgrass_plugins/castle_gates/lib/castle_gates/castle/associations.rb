@@ -64,12 +64,7 @@ def self.included(base)
       #
       def find_by_holder(holder)
         holder = Holder[holder, self]
-        key = find_or_initialize_by_holder_code(holder.code)
-        if key.new_record?
-          castle = proxy_association.owner
-          key.gate_bitfield |= castle.gate_set.default_bits(castle, holder)
-        end
-        key
+        find_or_initialize_by_holder_code(holder.code)
       end
 
       def select_holder_codes

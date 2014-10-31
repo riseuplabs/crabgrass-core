@@ -53,22 +53,6 @@ module CastleGates
     end
 
     #
-    # returns a bitmask composed of the default position for every gate in the gate_set,
-    # for the particular holder.
-    #
-    # (position meaning open or closed)
-    #
-    # OPTIMIZE: self.values ??
-    #
-    def default_bits(castle, holder)
-      holder_name = holder.definition.name
-      all_gates = self.values
-      all_gates.inject(0) do |bits_so_far, gate|
-        bits_so_far | gate.default_bit(holder_name)
-      end
-    end
-
-    #
     # return true if any gates in this set may be opened by any of the keys
     #
     #def opened_by?(keys)

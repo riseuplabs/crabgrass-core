@@ -13,9 +13,7 @@
 #
 # The gate_bitfield of a key always has the first bit turned on. Why?
 # This allows us to quickly identify the difference between a set of keys
-# with no access and a query that returned zero keys. This distinction is
-# important for handling gate defaults.
-#
+# with no access and a query that returned zero keys.
 #
 module CastleGates
   class Key < ActiveRecord::Base

@@ -40,7 +40,7 @@ module InstanceMethods
   #
   # adds the right bits to specified holder(s) keys so that they can open the specified gate(s)
   #
-  # if the keys don't exist, they are created and the defaults will be applied.
+  # if the keys don't exist, they are created.
   #
   def grant_access!(access_hash)
     process_access_hash(access_hash) do |holder, gates|
@@ -58,7 +58,6 @@ module InstanceMethods
   # zeros out the right bits on the specified holder(s) keys so that they cannot open the specified gate(s)
   #
   # if the keys don't exist, they are created.
-  # For new keys the defaults will be applied and then the listed bits removed
   #
   def revoke_access!(access_hash)
     process_access_hash(access_hash) do |holder, gates|
@@ -78,7 +77,6 @@ module InstanceMethods
   # if the keys don't exist, they are created and set to exactly match the given bits.
   #
   # WARNING:
-  # * no defaults apply
   # * no after_grant or after_revoke callbacks will be run
   # * this can lead to inconsistencies.
   #
@@ -155,8 +153,7 @@ module InstanceMethods
     self.class.gate_bitfield_cache[self.id] ||= {}
     self.class.gate_bitfield_cache[self.id][holder.code] ||= begin
       keys     = keys_for_holder(holder)
-      defaults = holder.all_codes - keys.map(&:holder_code)
-      gate_bitfield_for_keys(keys) | gate_bitfield_for_defaults(defaults)
+      gate_bitfield_for_keys(keys)
     end
   end
 
@@ -178,34 +175,6 @@ module InstanceMethods
   #
   def gate_bitfield_for_keys(keys)
     Key::gate_bitfield(keys)
-  end
-
-  # if there are no key records for these codes, lets fall back to the defaults
-  #
-  # When testing to see if a particular holder has default access to a castle, we
-  # sometimes want to check both the holder itself and any other holders
-  # that the holder might be associated with. Got that? Here is an example:
-  #
-  # Suppose you have a group (castle) and a user (holder). There is also a
-  # holder defined called 'members_of_group'. To see if a user has default
-  # access to the group, we should check to see if the user has direct default
-  # access and also if they have default access via the 'members_of_group'.
-  #
-  # To repeat: this is only for fallback defaults. If there are key records, all
-  # this is ignored.
-  #
-  def gate_bitfield_for_defaults(holder_codes)
-    holders = Holder.codes_to_holders(holder_codes)
-    holders.select! do |holder|
-      if holder.respond_to? :owner
-        holder.owner == self
-      else
-        holder.is_a? Symbol
-      end
-    end
-    holders.inject(0) do |bitfield, holder|
-      bitfield |= gate_set.default_bits(self, holder)
-    end
   end
 
 end
