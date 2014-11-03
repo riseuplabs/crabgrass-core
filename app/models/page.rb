@@ -427,39 +427,6 @@ class Page < ActiveRecord::Base
     entity.is_a?(User) ? participation_for_user(entity) : participation_for_group(entity)
   end
 
-  protected
-
-  before_save :ensure_owner
-  def ensure_owner
-    if Conf.ensure_page_owner?
-      if owner_id
-        ## do nothing!
-      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-        self.owner = gp.group
-      elsif self.created_by
-        self.owner = self.created_by
-      else
-        # in real life, we should not get here. but in tests, we make pages a lot
-        # that don't have a group or user.
-      end
-    end
-    return true
-  end
-
-  ##
-  ## DENORMALIZATION
-  ##
-
-  protected
-
-  # denormalize hack follows:
-  before_save :denormalize
-  def denormalize
-    if updated_by_id_changed?
-      self.updated_by_login = (updated_by.login if updated_by)
-    end
-    true
-  end
 
   ##
   ## MISC. HELPERS

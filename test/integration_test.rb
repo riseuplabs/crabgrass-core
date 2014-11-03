@@ -29,6 +29,8 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     # Make sure to call super BEFORE the initialization in subclasses.
     Capybara.reset_sessions!
     Capybara.use_default_driver
+
+    truncate_page_terms
   end
 
   # this is overwritten by JavascriptIntegrationTest.
@@ -36,6 +38,16 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   def clear_session
     Capybara.reset_sessions!
     User.current = nil
+  end
+
+  #
+  # PageTerms live in an MyIsam table
+  def truncate_page_terms
+    first_dangling_term = PageTerms.joins('LEFT JOIN pages ON pages.id = page_terms.page_id').
+      where('pages.id IS NULL').order(:id).first
+    if first_dangling_term
+      PageTerms.where("id >= #{first_dangling_term.id}").delete_all
+    end
   end
 
   def group

@@ -14,7 +14,3 @@
 #permissions_tab.tab_content.tab_area{style:'display:none'}
   = render partial: 'pages/participations/permissions'
   .buttons= close_modal_button
-
--# the permission tab might require a refresh of the sidebar if the user
--# edits who has access to this page.
-= refresh_sidebar_on_close

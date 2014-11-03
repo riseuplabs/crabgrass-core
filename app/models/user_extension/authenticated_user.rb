@@ -111,15 +111,6 @@ module AuthenticatedUser
 
   protected
 
-  # backported from RAILS 3.1
-  # this is faster than update_attribute as it skips callbacks and
-  # avoids using a transaction in mysql
-  def update_column(name, value)
-    name = name.to_s
-    write_attribute name, value
-    self.class.update_all({ name => value }, self.class.primary_key => id) == 1
-  end
-
   # before filter
   def encrypt_password
     return if password.blank?

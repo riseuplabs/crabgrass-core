@@ -5,13 +5,19 @@ require_relative 'test_helper'
 class PageTermsTest < ActiveSupport::TestCase
   fixtures :users
 
-  def setup
-  end
-
   def test_create
     user = users(:blue)
     page = DiscussionPage.create! title: 'hi', user: user
     assert_equal Page.access_ids_for(user_ids: [user.id]).first, page.page_terms.access_ids
+    assert page.page_terms.delta
+  end
+
+  def test_destroy
+    user = users(:blue)
+    page = DiscussionPage.create! title: 'hi', user: user
+    assert page.page_terms(true)
+    page.destroy
+    assert_nil page.page_terms(true)
   end
 
   def test_tagging_with_odd_characters
@@ -26,7 +32,5 @@ class PageTermsTest < ActiveSupport::TestCase
       assert_equal page.id, found.id, 'the page ids should match for tag %s' % char
     end
   end
-
-  protected
 
 end

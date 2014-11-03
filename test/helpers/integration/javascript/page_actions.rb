@@ -3,7 +3,7 @@ module PageActions
 
   def share_page_with(*entities)
     click_on 'Share Page'
-    add_recipients *entities
+    add_recipients *entities, autocomplete: true
     click_on 'Share'
     # wait until sharing completed...
     find '.names', text: entities.last.display_name
