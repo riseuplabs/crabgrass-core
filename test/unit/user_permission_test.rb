@@ -41,4 +41,9 @@ class UserPermissionTest < ActiveSupport::TestCase
     assert !@me.access?(public: :view)
     assert @me.access?(peers => :view)
   end
+
+  def test_finders
+    accessible = User.with_access(@me => :pester)
+    assert accessible.where(id: @other).exists?
+  end
 end

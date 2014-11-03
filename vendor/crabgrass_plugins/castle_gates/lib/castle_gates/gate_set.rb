@@ -83,16 +83,13 @@ module CastleGates
     #
     # returns
     #
-    def gates_exist?(gate_names)
-      if gate_names == :all
-        true
-      elsif gate_names.is_a? Enumerable
-        gate_names.inject(true) {|prior, gate| prior && self[gate]}
-      #elsif gate_names.is_a? Gate
-      #  self[gate_names.name]
-      else
-        self[gate_names]
-      end
+    def invalid_gates(gate_names)
+      gate_names = Array(gate_names)
+      gate_names.select {|gate| !valid_gate?(gate)}
+    end
+
+    def valid_gate?(gate)
+      self[gate].present? || gate == :all
     end
 
     private

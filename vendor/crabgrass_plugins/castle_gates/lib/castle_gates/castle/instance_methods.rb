@@ -133,8 +133,9 @@ module InstanceMethods
     end
 
     access_hash.each_pair do |holder, gates|
-      unless gate_set.gates_exist?(gates)
-        raise ArgumentError.new('one of these is not a gate %s' % gates.inspect)
+      invalid = gate_set.invalid_gates(gates)
+      if invalid.present?
+        raise ArgumentError.new('Invalid gate(s) %s' % invalid.inspect)
       end
       holder = Holder[holder, self]
       gates = [gates] unless gates.is_a?(Array)
