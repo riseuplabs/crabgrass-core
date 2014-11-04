@@ -14,12 +14,13 @@
 module AjaxPending
 
   class Error < StandardError
-    def initialize(request)
-      @req = request
+    def initialize(requests)
+      @reqs = requests
     end
 
     def message
-      "The ajax request to #{@req.url} was not answered during the test."
+      urls = @reqs.map(&:url).to_sentence
+      "The ajax request to #{urls} was not answered during the test."
     end
   end
 
@@ -43,7 +44,10 @@ module AjaxPending
 
   def pending_ajax
     # let's not worry about missing images
-    pending_requests.detect{|req| ! req.url.end_with?('.png')}
+    pending_requests.reject do |req|
+      req.url.include?('.png') or
+      req.url.include?('.jpg')
+    end
   end
 
   def pending_requests

@@ -13,15 +13,18 @@ module EnhancedLogging
 
   def save_state
     begin
-      page.save_screenshot screenshot_path
+      page.save_screenshot logpath('.png')
     rescue Capybara::NotSupportedByDriverError
     end
-    File.open(logfile_path, 'w') do |test_log|
+    File.open(logpath, 'w') do |test_log|
       test_log.puts self.class.name
       test_log.puts "========================="
       test_log.puts __name__
       test_log.puts Time.now
       if page.current_path
+        File.open(logpath('html'), 'w') do |page_dump|
+          page_dump.puts page.html
+        end
         test_log.puts page.current_path
         test_log.puts page.status_code
         test_log.puts page.response_headers
@@ -43,12 +46,8 @@ module EnhancedLogging
   protected
 
 
-  def logfile_path
-    Rails.root + 'tmp' + "#{self.class.name.underscore}.#{__name__}.log"
-  end
-
-  def screenshot_path
-    Rails.root + 'tmp' + "#{self.class.name.underscore}.#{__name__}.png"
+  def logpath(ext = 'log')
+    Rails.root + 'tmp' + "#{self.class.name.underscore}.#{__name__}.#{ext}"
   end
 
 end

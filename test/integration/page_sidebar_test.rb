@@ -2,7 +2,6 @@ require 'javascript_integration_test'
 
 class PageSidebarTest < JavascriptIntegrationTest
   include GroupRecords
-  fixtures :users, :groups
 
   def setup
     super
@@ -15,13 +14,11 @@ class PageSidebarTest < JavascriptIntegrationTest
   def test_sharing_with_user
     share_page_with users(:red)
     assert_page_users user, users(:red)
-    wait_for_ajax # autocomplete queries might still be pending
   end
 
   def test_sharing_with_group
     share_page_with groups(:animals)
     assert_page_groups groups(:animals)
-    wait_for_ajax # autocomplete queries might still be pending
   end
 
   def test_tagging

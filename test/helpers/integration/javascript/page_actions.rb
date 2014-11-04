@@ -28,7 +28,6 @@ module PageActions
   #
   def add_recipients(*args)
     options = args.extract_options!
-    return if args.blank?
     args.each do |recipient|
       # the space is a work around as the first letter gets
       # cut off
@@ -41,11 +40,13 @@ module PageActions
       else
         fill_in :recipient_name, with: ' ' + recipient.name
         find('#add_recipient_button').click
-        wait_for_ajax
       end
+      # this may be in an error message or the list of shares.
+      assert_content recipient.name
+      # make sure all the autocomplete requests have been responded to
+      # before we move on...
+      wait_for_ajax
     end
-    # this may be in an error message or the list of shares.
-    assert_content args.last.name
   end
 
 end

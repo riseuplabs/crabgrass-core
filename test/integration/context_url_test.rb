@@ -4,7 +4,6 @@ require 'integration_test'
 # Tests for the special shortcut urls based on contexts
 #
 class ContextUrlTest < IntegrationTest
-  fixtures :users
 
   def test_group_page
     login users(:blue)
