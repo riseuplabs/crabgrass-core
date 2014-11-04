@@ -8,6 +8,7 @@ end
 
 class JavascriptIntegrationTest < IntegrationTest
   include PageActions
+  include AjaxPending
 
   Capybara.javascript_driver = :poltergeist
 

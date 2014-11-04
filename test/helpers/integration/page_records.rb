@@ -27,7 +27,7 @@ module PageRecords
     end
   end
 
-  def create_page(type, options = {})
+  def prepare_page(type, options = {})
     type_name = I18n.t "#{type}_display"
     # create page is on a hidden dropdown
     # click_on :create_page.t
@@ -35,6 +35,10 @@ module PageRecords
     click_on type_name
     new_page(type, options)
     fill_in_new_page_form(type, options)
+  end
+
+  def create_page(type, options = {})
+    prepare_page(type, options)
     click_on :create.t
   end
 
@@ -44,37 +48,8 @@ module PageRecords
     try_to_fill_in :title.t,      with: title
     try_to_fill_in :summary.t,    with: new_page.summary
     click_on 'Additional Access'
-    add_recipients(*options[:share_with])
     try_to_attach_file :asset_uploaded_data, file
     # workaround for having the right page title in the test record
     new_page.title = file.basename(file.extname) if type == :asset_page
   end
-
-  #
-  # Add recipients in the page creation or share forms
-  #
-  # options:
-  #
-  # autocomplete: use the autocomplete popup. This will fail if
-  #               the user in question is not visible.
-  #
-  def add_recipients(*args)
-    options = args.extract_options!
-    return if args.blank?
-    args.each do |recipient|
-      # the space is a work around as the first letter gets
-      # cut off
-      if options[:autocomplete]
-        fill_in :recipient_name, with: ' ' + recipient.name[0]
-        find('.autocomplete em', text: recipient.name).click
-      else
-        fill_in :recipient_name, with: ' ' + recipient.name
-        find('#add_recipient_button').click
-      end
-    end
-    # this may be in an error message or the list of shares.
-    assert_content args.last.name
-  end
-
-
 end

@@ -18,4 +18,34 @@ module PageActions
     click_on 'Add'
   end
 
+  #
+  # Add recipients in the page creation or share forms
+  #
+  # options:
+  #
+  # autocomplete: use the autocomplete popup. This will fail if
+  #               the user in question is not visible.
+  #
+  def add_recipients(*args)
+    options = args.extract_options!
+    return if args.blank?
+    args.each do |recipient|
+      # the space is a work around as the first letter gets
+      # cut off
+      if options[:autocomplete]
+        fill_in :recipient_name, with: ' ' + recipient.name[0,2]
+        # poltergeist will not keep the element focussed.
+        # But when we loose focus the autocomplete won't show.
+        execute_script("$('recipient_name').focus();")
+        find('.autocomplete em', text: recipient.name).click
+      else
+        fill_in :recipient_name, with: ' ' + recipient.name
+        find('#add_recipient_button').click
+        wait_for_ajax
+      end
+    end
+    # this may be in an error message or the list of shares.
+    assert_content args.last.name
+  end
+
 end
