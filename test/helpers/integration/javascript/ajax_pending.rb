@@ -26,7 +26,13 @@ module AjaxPending
 
   def teardown
     pending = pending_ajax
-    raise AjaxPending::Error.new(pending) if pending.present?
+    if pending.present?
+      # make sure we do not mess up the next test
+      wait_for_ajax
+      # make this test fail
+      raise AjaxPending::Error.new(pending)
+    end
+  ensure
     super
   end
 

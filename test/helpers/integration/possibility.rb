@@ -7,6 +7,7 @@ module Integration
       fill_in 'possible_name', with: description
       fill_in 'possible_description', with: detail
       click_on "Add Possibility"
+      assert_text description
       return description, detail
     end
   end

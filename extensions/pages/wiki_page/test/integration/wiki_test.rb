@@ -26,6 +26,7 @@ class WikiTest < JavascriptIntegrationTest
       assert_content versions.last
     end
     click_page_tab "Versions"
+    assert_wiki_unlocked
     assert_no_content "Version 4"
     find("span.b", text: "3", exact: false).click
     clicking "previous" do
@@ -33,4 +34,12 @@ class WikiTest < JavascriptIntegrationTest
     end
   end
 
+  def assert_wiki_unlocked
+    request_urls = page.driver.network_traffic.map(&:url)
+    assert request_urls.detect{|u| u.end_with? '/lock'}.present?
+    # the unlock request is triggered from onbeforeunload.
+    # So the response will never be registered by the page.
+    # In order to prevent the check for pending ajax from failing...
+    page.driver.clear_network_traffic
+  end
 end
