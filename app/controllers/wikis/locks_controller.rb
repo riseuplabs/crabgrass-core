@@ -21,7 +21,7 @@ class Wikis::LocksController < Wikis::BaseController
   #
   def destroy
     @wiki.release_my_lock!(@section, current_user)
-    render text: nil
+    render nothing: true
   end
 
 end

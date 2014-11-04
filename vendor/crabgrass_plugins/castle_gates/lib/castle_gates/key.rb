@@ -13,9 +13,7 @@
 #
 # The gate_bitfield of a key always has the first bit turned on. Why?
 # This allows us to quickly identify the difference between a set of keys
-# with no access and a query that returned zero keys. This distinction is
-# important for handling gate defaults.
-#
+# with no access and a query that returned zero keys.
 #
 module CastleGates
   class Key < ActiveRecord::Base
@@ -23,6 +21,12 @@ module CastleGates
     self.table_name = :castle_gates_keys
 
     belongs_to :castle, polymorphic: true
+
+    # we store the codes as integers but generate them as strings.
+    # So for comparison to work let's also read them as strings
+    def holder_code
+      read_attribute(:holder_code).to_s
+    end
 
     #
     # queries keys that are associated with the holder, or any of its 'subholders'
@@ -58,15 +62,11 @@ module CastleGates
     # This is not a method of the keys association because of how we do caching.
     #
     def self.gate_bitfield(keys_named_scope)
+      return 0 unless keys_named_scope.any?
       if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-        bitfield = keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
+        keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
       else
-        bitfield = keys_named_scope.calculate(:bit_or, :gate_bitfield)
-      end
-      if bitfield == 0
-        nil # no actual keys, so return nil
-      else
-        bitfield
+        keys_named_scope.calculate(:bit_or, :gate_bitfield)
       end
     end
 

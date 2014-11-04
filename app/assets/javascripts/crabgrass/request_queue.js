@@ -32,7 +32,7 @@ var RequestQueue = {
   //
   poll: function() {
     if (Ajax.activeRequestCount == 0) {
-      var req = this.queue.pop();
+      var req = this.queue.shift();
       if (req) {
         if (req.parameters) {req.options.parameters = eval(req.parameters)}
         new Ajax.Request(req.url, req.options);

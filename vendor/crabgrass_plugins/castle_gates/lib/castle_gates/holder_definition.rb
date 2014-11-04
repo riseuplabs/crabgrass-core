@@ -22,7 +22,6 @@ class HolderDefinition
 
   attr_reader :model            # active record class, if any
   attr_reader :association_name # name of association, like 'friends' if model has_many :friends
-  attr_reader :associated      # other holders for the same model
 
   def initialize(name, options)
     @name     = name.to_sym
@@ -32,26 +31,6 @@ class HolderDefinition
     @label    = options[:label] || @name
     @model    = options[:model]
     @association_name = options[:association_name]
-    @associated = []
-
-    #
-    # add association links (used for resolving default bitfield values)
-    #
-    if association_name
-      # if this is an association model, add to previously defined non-association defs.
-      Holder.holder_defs.each do |name, hdef|
-        if !hdef.association_name && hdef.model && (hdef.model.name == model.name)
-          hdef.associated << self
-        end
-      end
-    elsif model
-      # if this is a regular model, add to previously defined association defs.
-      Holder.holder_defs.each do |name, hdef|
-        if hdef.association_name && (hdef.model.name == model.name)
-          hdef.associated << self
-        end
-      end
-    end
   end
 
   def get_holder_from_id(id)

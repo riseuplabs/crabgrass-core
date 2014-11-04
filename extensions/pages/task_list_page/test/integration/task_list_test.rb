@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class TaskListTest < JavascriptIntegrationTest
-  fixtures :users
 
   def setup
     super

@@ -220,18 +220,19 @@ class GroupTest < ActiveSupport::TestCase
 
   end
 
-  def test_migrate_public_view
+  def test_migrate_hidden_group
     group = Group.create name: 'publicly-visible'
     assert group.valid?, "Failed to create group: #{group.errors.inspect}"
 
-    group.profiles.public.update_attributes! may_see: true
+    # groups are public by default
+    group.profiles.public.update_attributes! may_see: false
 
-    assert ! users(:blue).may?(:view, group), "initially blue shouldn't be able to view the group"
+    assert users(:blue).may?(:view, group), "initially blue should be able to view the group"
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
-    assert users(:blue).may?(:view, group), "after migration blue should be able to view the group"
+    assert !users(:blue).may?(:view, group), "after migration blue should not be able to view the group"
   end
 
   def test_migrate_open_group

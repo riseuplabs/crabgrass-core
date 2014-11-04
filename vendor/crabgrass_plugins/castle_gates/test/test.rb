@@ -1,57 +1,4 @@
-require 'test/unit'
-require 'rubygems'
-require 'ruby_debug'
-require 'logger'
-gem 'actionpack', '~> 3.0.20'
-gem 'activerecord', '~> 3.0.20'
-require 'active_record'
-
-##
-## OPTIONS
-##
-
-#
-# run like so to specify arguments:
-#
-#   ruby test/tests.rb -- --rebuild
-#
-
-# set to true if schema changes.
-REBUILD_DB = ARGV.grep('--rebuild').any?
-
-# set to true if fixtures changes.
-RELOAD_FIXTURES = ARGV.grep('--reload').any?
-
-# set to :mysql to test aggregation BIT_OR
-ADAPTER = :sqlite
-
-# set to true to see all the sql commands
-SHOW_SQL = false
-
-##
-## TEST HELPERS
-##
-
-class Object
-  private
-  def after_reload(model, &block)
-    yield model
-  end
-end
-
-['../init', 'setup_db', 'models', 'fixtures'].each do |file|
-  require_relative file
-end
-
-if REBUILD_DB
-  teardown_db
-  setup_db
-  create_fixtures
-elsif RELOAD_FIXTURES
-  reset_db
-  create_fixtures
-end
-
+require_relative 'test_helper'
 ##
 ## TEST
 ##
@@ -117,7 +64,7 @@ class CastleGatesTest < Test::Unit::TestCase
       assert !@fort.access?(@me => :draw_bridge), 'no access yet'
       assert @fort.access?(@me => :door), 'access to defaults'
 
-      @fort.set_access!(@me => :draw_bridge)
+      @fort.set_access!(:public => :draw_bridge)
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
       assert !@fort.access?(@me => :door), 'defaults do not apply with set'
 
@@ -229,6 +176,10 @@ class CastleGatesTest < Test::Unit::TestCase
       @fort.revoke_access!(admin: :sewers)
       assert !@fort.access?(admin: :sewers), 'default should get overridden'
 
+      @fort.set_access!(@me => :sewers) # create a key that has no access to tunnel
+      assert @fort.access?(:public => :tunnel), 'tunnel is open to public by default'
+      assert @fort.access?(@me => :tunnel), 'tunnel should still be open for @me as a part of the public'
+
       assert @me.access?(@minion => :follow), "me's minion should have access by default"
       assert !@me.access?(Minion.create! => :follow), 'other minions should NOT have access by default'
 
@@ -236,17 +187,11 @@ class CastleGatesTest < Test::Unit::TestCase
     end
   end
 
-
-  def test_method_based_defaults
-    ActiveRecord::Base.transaction do
-      assert @tower.access?(User.new(name: 'sandman') => :skylight), 'gate_open? should get called'
-      raise ActiveRecord::Rollback
-    end
-  end
-
   def test_finder
     ActiveRecord::Base.transaction do
       assert_nil Fort.with_access(public: :draw_bridge).first
+      # find based on defaults
+      assert_equal [@fort, @bunker], Fort.with_access(public: :tunnel)
       @fort.grant_access! public: :draw_bridge
       assert_equal [@fort], Fort.with_access(public: :draw_bridge)
 
