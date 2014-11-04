@@ -48,7 +48,7 @@ module AjaxPending
 
   def pending_requests
     # If the setup of the test failed the driver might not be a js driver
-    return unless page.driver.respond_to? :network_traffic
+    return [] unless page.driver.respond_to? :network_traffic
     page.driver.network_traffic.select{|req| req.response_parts.blank?}
   end
 end
