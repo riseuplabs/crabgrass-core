@@ -53,8 +53,7 @@ module Common::Ui::LinkToIconHelper
           end
         end
 
-        ## FIXME: no idea why this isn't html_safe? anymore.
-        link_to_remote_without_icon(name, options.merge(icon_options), html_options).html_safe
+        link_to_remote_without_icon(name, options.merge(icon_options), html_options)
       end
     end
 
@@ -64,8 +63,7 @@ module Common::Ui::LinkToIconHelper
         add_icon_class(html_options)
         args << html_options
       end
-      ## FIXME: no idea why this isn't html_safe? anymore.
-      link_to_function_without_icon(name, *args, &block).html_safe
+      link_to_function_without_icon(name, *args, &block)
     end
 
     #
@@ -85,8 +83,7 @@ module Common::Ui::LinkToIconHelper
       if html_options
         add_icon_class(html_options)
       end
-      ## FIXME: no idea why this isn't html_safe? anymore.
-      link_to_without_icon(*args, &block).html_safe
+      link_to_without_icon(*args, &block)
     end
 
     ##

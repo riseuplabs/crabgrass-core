@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'javascript_integration_test'
 
 class PageSidebarTest < JavascriptIntegrationTest
@@ -22,7 +24,7 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_tagging
-    tags = %w/some tags for this page/
+    tags = %w/some tags for this páge/
     tag_page tags
     assert_page_tags tags
   end
