@@ -27,4 +27,16 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_tags tags
   end
 
+  def test_trash
+    path = current_path
+    delete_page
+    assert_no_content own_page.title
+    assert_equal '/me', current_path
+    visit path
+    undelete_page
+    assert_content 'Delete Page'
+    click_on 'Dashboard'
+    assert_content own_page.title
+  end
+
 end

@@ -125,6 +125,7 @@ module PathFinder
       options = {
         #:controller => get_controller,
         public: false,
+        flow: :normal
       }
       if logged_in?
         options[:user_ids] = [current_user.id]

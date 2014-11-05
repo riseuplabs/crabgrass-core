@@ -21,6 +21,16 @@ class PageSearchTest < JavascriptIntegrationTest
     assert_content own_page.title
   end
 
+  def test_deleted
+    login users(:blue)
+    own_page(flow: FLOW[:deleted])
+    click_on 'Pages'
+    assert_content 'Owner'
+    assert_no_content own_page.title
+    click_on 'Deleted'
+    assert_content own_page.title
+  end
+
   def assert_text_of_all(selector, text)
     all(selector).each do |elem|
       assert_equal text, elem.text
