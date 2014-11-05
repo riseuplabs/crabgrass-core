@@ -86,6 +86,7 @@ class Page < ActiveRecord::Base
   ## NAMES SCOPES
   ##
 
+  scope :not_deleted, where("pages.flow != %s", FLOW[:deleted])
   scope :only_public, where(public: true)
   scope :only_images, where(is_image: true)
   scope :only_videos, where(is_video: true)
@@ -188,7 +189,7 @@ class Page < ActiveRecord::Base
   end
 
   def undelete
-    write_attribute(:flow, nil)
+    write_attribute(:flow, FLOW[:normal])
     self.save
   end
 
