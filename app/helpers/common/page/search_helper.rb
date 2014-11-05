@@ -149,8 +149,11 @@ module Common::Page::SearchHelper
   # this only accepts a single param, but it is in the form {:key => value}
   #
   def link_to_page_search(label, params, options = {})
+    # we need to encode the values so you can't XSS out of the js function
     name, value = params.to_a.first.map{|i| CGI.escape(i.to_s) }
-    function = "$('page_search_form').insert(new Element('input', {name:'%s', value:'%s', style:'display:none'})); $('page_search_form').submit.click();" % [name, value]
+    # we need to decode the values when they are inserted into the form so
+    # the form submission does not lead to duplicate encoding...
+    function = "$('page_search_form').insert(new Element('input', {name:decodeURIComponent('%s'), value:decodeURIComponent('%s'), style:'display:none'})); $('page_search_form').submit.click();" % [name, value]
     link_to_function(label, function)
   end
 

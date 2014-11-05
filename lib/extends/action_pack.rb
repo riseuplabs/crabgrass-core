@@ -32,7 +32,12 @@ end
 
 class ActionView::Base
   def link_to_with_pretty_plus_signs(*args)
-    link_to_without_pretty_plus_signs(*args).sub('%2B','+')
+    link = link_to_without_pretty_plus_signs(*args)
+    if link.html_safe?
+      link.sub('%2B','+').html_safe
+    else
+      link.sub('%2B','+')
+    end
   end
   alias_method_chain :link_to, :pretty_plus_signs
 end

@@ -37,7 +37,7 @@ SearchFilter.new('/tag/:tag_name/') do
       link_to_page_search tag.name, {tag_name: tag.name}, class: css_class
     end
     if tags
-      ret += tags.join(' ').html_safe
+      ret += safe_join(tags, ' ')
     else
       ret += :no_things_found.t things: :tags.t
     end
@@ -49,9 +49,9 @@ SearchFilter.new('/tag/:tag_name/') do
     if tag_name.empty?
       :tag.t + '...'
     elsif tag_name.length > 15
-      "#{:tag.t}: #{h tag_name[0..14]}..."
+      "#{:tag.t}: #{tag_name[0..14]}..."
     else
-      "#{:tag.t}: #{h tag_name}"
+      "#{:tag.t}: #{tag_name}"
     end
   end
 
