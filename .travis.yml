@@ -1,4 +1,6 @@
 language: ruby
+# only install ci and assets gems:
+bundler_args: --without production:development:test
 rvm:
   - 1.9.3
   - 2.0.0

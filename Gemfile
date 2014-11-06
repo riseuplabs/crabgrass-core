@@ -201,7 +201,7 @@ end
 
 
 ## from config/environments/test.rb
-group :test do
+group :test, :ci do
 
   ##
   ## GEMS REQUIRED FOR TESTS
