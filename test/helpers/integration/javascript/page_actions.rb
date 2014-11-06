@@ -1,6 +1,12 @@
 # These currently only work with javascript.
 module PageActions
 
+  PERMISSION_ICONS = {
+    'Write Ability' => :pencil,
+    'Read Only' => :no_pencil,
+    'Full Access' => :wrench
+  }
+
   def share_page_with(*entities)
     click_on 'Share Page'
     add_recipients *entities, autocomplete: true
@@ -16,6 +22,15 @@ module PageActions
     end
     fill_in 'add', with: tags
     click_on 'Add'
+  end
+
+  def change_access_to(permission)
+    click_on 'Page Details'
+    find('a', text: 'Permissions').click
+    select permission
+    assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
+    find('.buttons').click_on 'Close'
+    wait_for_ajax # reload sidebar
   end
 
   def delete_page(page = @page)

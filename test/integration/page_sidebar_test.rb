@@ -41,6 +41,13 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_content own_page.title
   end
 
+  def test_details_change_access
+    share_page_with users(:red)
+    assert_page_users user, users(:red)
+    change_access_to 'Write Ability'
+    assert_selector "#people.names .tiny_pencil_16"
+  end
+
   def test_stars
     star_page
     assert_page_starred
