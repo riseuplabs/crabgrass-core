@@ -29,24 +29,32 @@ module PageActions
   def add_recipients(*args)
     options = args.extract_options!
     args.each do |recipient|
-      # the space is a work around as the first letter gets
-      # cut off
-      if options[:autocomplete]
-        fill_in :recipient_name, with: ' ' + recipient.name[0,2]
-        # poltergeist will not keep the element focussed.
-        # But when we loose focus the autocomplete won't show.
-        execute_script("$('recipient_name').focus();")
-        find('.autocomplete em', text: recipient.name).click
-      else
-        fill_in :recipient_name, with: ' ' + recipient.name
-        find('#add_recipient_button').click
-      end
-      # this may be in an error message or the list of shares.
-      assert_content recipient.name
-      # make sure all the autocomplete requests have been responded to
-      # before we move on...
-      wait_for_ajax
+      add_recipient(recipient, options)
     end
+  end
+
+  def add_recipient(recipient, options = {})
+    if options[:autocomplete]
+      autocomplete :recipient_name, with: recipient.name
+    else
+      # the space is a work around as the first letter may get cut off
+      fill_in :recipient_name, with: ' ' + recipient.name
+      find('#add_recipient_button').click
+    end
+    # this may be in an error message or the list of shares.
+    assert_content recipient.name
+    # make sure all the autocomplete requests have been responded to
+    # before we move on...
+    wait_for_ajax
+  end
+
+  def autocomplete(field, options)
+    # the space is a work around as the first letter may get cut off
+    fill_in field, with: ' ' + options[:with][0,2]
+    # poltergeist will not keep the element focussed.
+    # But when we loose focus the autocomplete won't show.
+    execute_script("$('recipient_name').focus();")
+    find('.autocomplete em', text: options[:with]).click
   end
 
 end
