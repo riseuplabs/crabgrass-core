@@ -13,7 +13,7 @@ module EnhancedLogging
 
   def save_state
     begin
-      page.save_screenshot logpath('.png')
+      page.save_screenshot logpath('png')
     rescue Capybara::NotSupportedByDriverError
     end
     File.open(logpath, 'w') do |test_log|

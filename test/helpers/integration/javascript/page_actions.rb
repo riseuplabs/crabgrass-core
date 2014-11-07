@@ -18,6 +18,19 @@ module PageActions
     click_on 'Add'
   end
 
+  def delete_page(page = @page)
+    click_on 'Delete Page'
+    click_button 'Delete'
+    # ensure after_commit callbacks are triggered so sphinx indexes the page.
+    page.page_terms.committed!
+  end
+
+  def undelete_page(page = @page)
+    click_on 'Undelete'
+    # ensure after_commit callbacks are triggered so sphinx indexes the page.
+    page.page_terms.committed!
+  end
+
   #
   # Add recipients in the page creation or share forms
   #
