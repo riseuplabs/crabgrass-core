@@ -86,6 +86,8 @@ class Page < ActiveRecord::Base
   ## NAMES SCOPES
   ##
 
+  scope :deleted, where(flow: FLOW[:deleted])
+  scope :not_deleted, where("pages.flow != %s", FLOW[:deleted])
   scope :only_public, where(public: true)
   scope :only_images, where(is_image: true)
   scope :only_videos, where(is_video: true)
@@ -141,6 +143,8 @@ class Page < ActiveRecord::Base
     "#{s}+#{id}"
   end
   alias_method :to_param, :friendly_url
+  # used for caching access
+  alias_method :to_s, :friendly_url
 
   # using only knowledge of this page, returns
   # best guess uri string, sans protocol/host/port.
@@ -188,7 +192,7 @@ class Page < ActiveRecord::Base
   end
 
   def undelete
-    write_attribute(:flow, nil)
+    write_attribute(:flow, FLOW[:normal])
     self.save
   end
 

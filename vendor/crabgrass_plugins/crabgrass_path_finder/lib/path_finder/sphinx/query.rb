@@ -35,7 +35,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     super
 
     @original_path = path
-    @original_options = options
+    @original_options = options.dup
     @klass = klass # What are we searching Pages or Posts?
 
     @with = []
