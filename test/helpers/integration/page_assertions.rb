@@ -19,4 +19,13 @@ module PageAssertions
     assert_equal groups.map(&:display_name).join(' '),
       find('#groups.names').text
   end
+
+
+  def assert_page_starred
+    assert_selector '#star_li.star_16'
+  end
+
+  def assert_page_not_starred
+    assert_selector '#star_li.star_empty_dark_16'
+  end
 end

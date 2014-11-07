@@ -62,20 +62,4 @@ class PageSidebarTest < JavascriptIntegrationTest
     share_page_with users(:red)
     assert_page_starred
   end
-
-  def star_page
-    click_on 'Add Star (0)'
-  end
-
-  def assert_page_starred
-    assert_selector '#star_li.star_16'
-  end
-
-  def remove_star_from_page
-    click_on 'Remove Star (1)'
-  end
-
-  def assert_page_not_starred
-    assert_selector '#star_li.star_empty_dark_16'
-  end
 end

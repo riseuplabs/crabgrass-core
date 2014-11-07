@@ -24,6 +24,14 @@ module PageActions
     click_on 'Add'
   end
 
+  def star_page
+    click_on 'Add Star (0)'
+  end
+
+  def remove_star_from_page
+    click_on 'Remove Star (1)'
+  end
+
   def change_access_to(permission)
     click_on 'Page Details'
     find('a', text: 'Permissions').click
