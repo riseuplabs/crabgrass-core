@@ -143,6 +143,8 @@ class Page < ActiveRecord::Base
     "#{s}+#{id}"
   end
   alias_method :to_param, :friendly_url
+  # used for caching access
+  alias_method :to_s, :friendly_url
 
   # using only knowledge of this page, returns
   # best guess uri string, sans protocol/host/port.
