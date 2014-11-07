@@ -40,6 +40,8 @@ set :local_repository, "#{File.dirname(__FILE__)}/../"
 
 set :deploy_via, :remote_cache
 
+set :bundle_without, %w{development test ci}.join(' ')
+
 # asset pipeline precompilation
 load 'deploy/assets'
 
