@@ -50,7 +50,7 @@ class Pages::ParticipationsController < Pages::SidebarsController
     else
       @page.add(@participation.entity, access: params[:access]).save!
       render :update do |page|
-        page.replace_html dom_id(@participation), partial: 'pages/participation/permission_row', locals: {participation: @participation.reload}
+        page.replace_html dom_id(@participation), partial: 'pages/participations/permission_row', locals: {participation: @participation.reload}
       end
     end
   end
@@ -76,10 +76,10 @@ class Pages::ParticipationsController < Pages::SidebarsController
   protected
 
   def fetch_data
-    if params[:group]
-      @participation = GroupParticipation.find(params[:id]) if params[:id]
-    else
+    if params[:group].blank? || params[:group] == 'false'
       @participation = UserParticipation.find(params[:id]) if params[:id]
+    else
+      @participation = GroupParticipation.find(params[:id]) if params[:id]
     end
   end
 
