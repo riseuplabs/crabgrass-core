@@ -15,7 +15,7 @@ class Pages::AttributesController < Pages::SidebarsController
       @page.public = params[:public]
       @page.updated_by = current_user
       @page.save!
-      render(:update) {|page| page.replace 'public_li', publish_checkbox}
+      render(:update) {|page| page.replace 'public_li', public_line}
     elsif params[:owner]
       if params[:owner] == current_user.name
         owner = current_user
