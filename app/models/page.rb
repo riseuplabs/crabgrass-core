@@ -86,6 +86,7 @@ class Page < ActiveRecord::Base
   ## NAMES SCOPES
   ##
 
+  scope :deleted, where(flow: FLOW[:deleted])
   scope :not_deleted, where("pages.flow != %s", FLOW[:deleted])
   scope :only_public, where(public: true)
   scope :only_images, where(is_image: true)

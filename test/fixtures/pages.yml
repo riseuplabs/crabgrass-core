@@ -296,7 +296,6 @@ asset1:
   created_by_id: "4"
   id: "211"
   summary: ""
-  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "1"
@@ -322,7 +321,6 @@ asset2:
   created_by_id: "4"
   id: "212"
   summary: ""
-  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "2"
@@ -348,7 +346,6 @@ asset3:
   created_by_id: "4"
   id: "213"
   summary: ""
-  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "3"
@@ -374,7 +371,6 @@ survey1:
   message_count: "0"
   id: "214"
   summary: ""
-  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "1"
@@ -396,7 +392,6 @@ survey_blank:
   created_by_id: "4"
   id: "215"
   summary: ""
-  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "3"
