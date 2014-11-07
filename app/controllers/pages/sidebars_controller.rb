@@ -27,6 +27,10 @@ class Pages::SidebarsController < ApplicationController
     unless @page
       raise_not_found(:page.t)
     end
+    if logged_in?
+      # grab the current user's participation from memory
+      @upart = @page.participation_for_user(current_user)
+    end
   end
 
 end
