@@ -101,7 +101,8 @@ module Pages::SidebarHelper
       end
       url = page_participations_path(@page, :star => add.inspect)
       content_tag :li, :id => 'star_li' do
-        link_to_remote(label, {:url => url, :method => 'post'}, {:icon => icon})
+        link_to_remote label, {url: url, method: 'post'},
+          {id: 'star', icon: icon}
       end
     end
   end
