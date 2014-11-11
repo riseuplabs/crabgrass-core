@@ -111,6 +111,10 @@ Crabgrass::Application.routes.draw do
     as: 'people_directory',
     to: 'people/directory#index'
 
+  post 'people/directory(/*path)',
+    as: 'people_directory',
+    to: 'people/directory#index'
+
   resources :people, module: 'people', controller: 'home', only: :show do
     resource  :home, only: :show, controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'

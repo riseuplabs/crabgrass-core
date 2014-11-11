@@ -21,11 +21,11 @@ class UserFinder
 
   protected
 
-  def friends(ignored)
+  def friends(_ignored)
     @user.try.friends
   end
 
-  def peers(ignored)
+  def peers(_ignored)
     @user.try.peers
   end
 
