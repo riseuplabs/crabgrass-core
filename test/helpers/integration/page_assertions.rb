@@ -22,10 +22,10 @@ module PageAssertions
 
 
   def assert_page_starred
-    assert_selector '#star_li.star_16'
+    assert_selector '#star.star_16'
   end
 
   def assert_page_not_starred
-    assert_selector '#star_li.star_empty_dark_16'
+    assert_selector '#star.star_empty_dark_16'
   end
 end

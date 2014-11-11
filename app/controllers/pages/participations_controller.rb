@@ -35,13 +35,13 @@ class Pages::ParticipationsController < Pages::SidebarsController
   def watch
     @upart = @page.add(current_user, watch: params[:watch])
     @upart.save!
-    render(:update) {|page| page.replace 'watch_li', watch_checkbox}
+    render(:update) {|page| page.replace 'watch_li', watch_line}
   end
 
   def star
     @upart = @page.add(current_user, star: params[:star])
     @upart.save!
-    render(:update) {|page| page.replace 'star_li', star_link}
+    render(:update) {|page| page.replace 'star_li', star_line}
   end
 
   def access
