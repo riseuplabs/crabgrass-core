@@ -33,9 +33,18 @@ module Common::Ui::AutocompleteHelper
 #    javascript_tag(auto_complete_js)
 #  end
 
-  # this searches on friends and peers. if needed, we could modify
-  # this to allow the option to search all users.
-  def autocomplete_users_field_tag(field_id, options = {})
+  def autocomplete_people_field_tag(attribute, value, options = {})
+    field_id = options[:id] || attribute
+    options.reverse_merge!  autoSubmit: true,
+      container: 'autocomplete_container',
+      onkeypress: false
+    options.merge! view: 'users'
+    options.merge! value: value
+    autocomplete_entity_field_tag(attribute, options)
+  end
+
+  # this searches on recipients - people you may pester.
+  def autocomplete_recipients_field_tag(field_id, options = {})
     options.merge! view: 'recipients'
     autocomplete_entity_field_tag(field_id, options) #should this always be recipients?
   end
@@ -56,20 +65,24 @@ module Common::Ui::AutocompleteHelper
   def autocomplete_entity_field_tag(field_id, options={})
     # setup options
     options[:view] ||= 'all'
-    options[:onkeypress] ||= eat_enter
-    if options[:onselect] || options[:message] || options[:container]
-      options[:onselect] ||= 'null'
-      option_string = ", {onSelect: #{options[:onselect]}, message: '#{escape_javascript(options[:message])}', container: '#{options[:container]}'}"
-    else
-      option_string = ""
-    end
+    # set to false to disable.
+    options[:onkeypress] = eat_enter if options[:onkeypress].nil?
+    js_options = options.extract!(:view, :group, :onselect, :message, :container, :autoSubmit)
+    # create input and script tag
+    value = options.delete(:value)
+    text_field_tag(field_id, value, options) +
+      autocomplete_js_tag(options[:id] || field_id, js_options)
+  end
 
-    # create tag
-    text_field_tag(field_id, '', style: options[:style], onkeypress: options[:onkeypress]) +
-    javascript_tag("cgAutocompleteEntities('%s', '%s' %s)" % [
+  def autocomplete_js_tag(field_id, options)
+    path_options = options.extract! :view, :group
+    path_options[:format] = 'json'
+
+    options.select! { |_, v| !v.nil? }
+    javascript_tag("cgAutocompleteEntities('%s', '%s', %s)" % [
       field_id,
-      entities_path(view: options[:view], format: 'json', group: options[:group]),
-      option_string
+      entities_path(path_options),
+      options.to_json
     ])
   end
 
