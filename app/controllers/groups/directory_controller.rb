@@ -48,8 +48,8 @@ class Groups::DirectoryController < ApplicationController
   end
 
   def get_filter_from_params
-    if params[:name].present?
-      params[:name]
+    if params[:q].present?
+      params[:q]
     elsif params[:path].include? 'search/'
       params[:path].sub(/.*search\//, '')
     end

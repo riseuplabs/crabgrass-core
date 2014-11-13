@@ -33,13 +33,12 @@ module Common::Ui::AutocompleteHelper
 #    javascript_tag(auto_complete_js)
 #  end
 
-  def autocomplete_people_field_tag(attribute, value, options = {})
-    field_id = options[:id] || attribute
+  # autocomplete that submits the form on select
+  def autocomplete_input_tag(attribute, entities, options = {})
     options.reverse_merge!  autoSubmit: true,
       container: 'autocomplete_container',
       onkeypress: false
-    options.merge! view: 'users'
-    options.merge! value: value
+    options[:view] = entities
     autocomplete_entity_field_tag(attribute, options)
   end
 
