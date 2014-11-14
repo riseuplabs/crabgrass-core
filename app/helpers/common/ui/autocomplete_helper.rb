@@ -66,7 +66,7 @@ module Common::Ui::AutocompleteHelper
     options[:view] ||= 'all'
     # set to false to disable.
     options[:onkeypress] = eat_enter if options[:onkeypress].nil?
-    js_options = options.extract!(:view, :group, :onselect, :message, :container, :autoSubmit)
+    js_options = options.extract!(:url, :view, :group, :onselect, :message, :container, :autoSubmit)
     # create input and script tag
     value = options.delete(:value)
     text_field_tag(field_id, value, options) +
@@ -76,11 +76,12 @@ module Common::Ui::AutocompleteHelper
   def autocomplete_js_tag(field_id, options)
     path_options = options.extract! :view, :group
     path_options[:format] = 'json'
+    url = options[:url] || entities_path(path_options)
 
     options.select! { |_, v| !v.nil? }
     javascript_tag("cgAutocompleteEntities('%s', '%s', %s)" % [
       field_id,
-      entities_path(path_options),
+      url,
       options.to_json
     ])
   end

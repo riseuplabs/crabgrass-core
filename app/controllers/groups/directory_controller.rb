@@ -33,12 +33,22 @@ class Groups::DirectoryController < ApplicationController
   end
 
   def groups_to_display
+    if search_filter
+      groups_in_view.named_like("#{search_filter}%")
+    else
+      if my_groups?
+        groups_in_view
+      else
+        Group.none # we might want to display promoted groups here at some point
+      end
+    end
+  end
+
+  def groups_in_view
     if my_groups?
       current_user.primary_groups_and_networks
-    elsif search_filter
-      Group.with_access(current_user => :view).named_like("#{search_filter}%")
     else
-      Group.none # we might want to display promoted groups here at some point
+      Group.with_access(current_user => :view)
     end
   end
 
