@@ -117,9 +117,6 @@ class Group < ActiveRecord::Base
       filter, filter
   end
 
-  # return an empty relation so it can still be combined with order and pagination
-  scope :none, where('1=2')
-
   ##
   ## GROUP INFORMATION
   ##

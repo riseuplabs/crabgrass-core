@@ -1,4 +1,5 @@
 class UnauthenticatedUser
+
   def login
     :anonymous.t
   end
@@ -28,6 +29,18 @@ class UnauthenticatedUser
 
   def current_status
     ""
+  end
+
+  def friends
+    User.none
+  end
+
+  def peers
+    User.none
+  end
+
+  def groups
+    Group.none
   end
 
   def member_of?(group)

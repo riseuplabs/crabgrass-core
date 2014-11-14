@@ -1,7 +1,13 @@
 require 'rubygems'
 require 'active_record'
+# backported from rails 4
+require_relative 'active_record/null_relation'
 
 ActiveRecord::Base.class_eval do
+
+  class << self
+    delegate :none, to: :scoped
+  end
 
   #
   # Crabgrass uses exceptions in most places to display error messages.
@@ -215,4 +221,9 @@ module ActiveRecord::QueryMethods
     relation
   end
 
+  # backported from rails 4.
+  # Returns an emtpy set without a query and still allows chaining.
+  def none
+    extending(ActiveRecord::NullRelation)
+  end
 end
