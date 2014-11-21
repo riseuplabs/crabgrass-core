@@ -447,14 +447,19 @@ Autocomplete.prototype = {
 
   select: function(i) {
     var selectedValue = this.suggestions[i];
+    var form = this.el.form;
     if (selectedValue) {
       this.el.value = this.selectValue(selectedValue);
-      if (this.options.autoSubmit && this.el.form) {
-        if (this.el.form.readAttribute('data-remote')) {
-          this.handleRemote(this.el.form);
+      if (this.options.autoSubmit && form) {
+        if (form.readAttribute('data-remote')) {
+          this.handleRemote(form);
         }
         else {
-          this.el.form.submit();
+          if (typeof form.submit === "function") {
+            this.el.form.submit();
+          } else {
+            this.el.form.submit.click();
+          }
         }
       }
       this.ignoreValueChange = true;

@@ -17,7 +17,7 @@ module Me::DiscussionsHelper
   ## Say box
   ##
 
-  # autocomplete_users_field_tag(field_id)
+  # autocomplete_recipients_field_tag(field_id)
   #def recipient_field_tag(id)
   #  text_field_tag(id, '', :onkeypress => eat_enter) +
   #  autocomplete_entity_tag(id, :url => entities_path(:format => 'json'))

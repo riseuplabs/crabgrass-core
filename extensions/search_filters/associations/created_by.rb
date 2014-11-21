@@ -26,7 +26,7 @@ SearchFilter.new('/created-by/:user_id/') do
   html do
     content_tag(:p, id: :created_by_autocomplete) do
       content_tag(:strong, :person.tcap) + " " +
-      autocomplete_users_field_tag('user_id', container: :created_by_autocomplete)
+      autocomplete_input_tag('user_id', :users, container: :created_by_autocomplete)
     end
   end
 
