@@ -1,5 +1,5 @@
 .row.search.pull-right#user_search
-  = form_tag people_directory_path,
+  = form_tag '',
     id: 'user_search_form',
     method: :get,
     remote: true,
@@ -7,6 +7,7 @@
     #autocomplete_container.input-append
       = autocomplete_input_tag 'q', 'users',
         value: @filter,
+        url: url_for(format: 'json'),
         id: 'autocomplete_people',
         class: 'search-query',
         placeholder: "Type in a user name"

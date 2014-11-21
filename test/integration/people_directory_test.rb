@@ -10,25 +10,36 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
 
   def test_contacts
     click_on 'People'
-    assert_no_autocomplete 'user_name', with: 'red'
-    autocomplete 'user_name', with: 'orange'
-    assert_content 'Orange'
+    autocomplete 'q', with: 'orange'
+    within '#user_list' do
+      assert_no_content 'Purple!'
+      assert_content 'Orange!'
+    end
+    assert_no_autocomplete 'q', with: 'red'
   end
 
   def test_peers
     click_on 'People'
     click_on 'Peers'
-    assert_no_autocomplete 'user_name', with: 'aaron'
-    autocomplete 'user_name', with: 'red'
-    assert_content 'Red'
+    autocomplete 'q', with: 'red'
+    within '#user_list' do
+      assert_no_content 'Purple!'
+      assert_content 'Red!'
+    end
+    assert_no_autocomplete 'q', with: 'aaron'
   end
 
   def test_search
     click_on 'People'
-    click_on 'Search'
-    assert_no_autocomplete 'user_name', with: 'black'
-    autocomplete 'user_name', with: 'aaron'
-    assert_content 'Aaron'
+    find('#column_left').click_on 'Search'
+    within '#user_list' do
+      assert_no_content 'Aaron!'
+    end
+    assert_no_autocomplete 'q', with: 'black'
+    autocomplete 'q', with: 'aaron'
+    within '#user_list' do
+      assert_content 'Aaron!'
+    end
   end
 
 end
