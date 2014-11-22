@@ -101,7 +101,8 @@ class EntitiesController < ApplicationController
   protected
 
   def filter
-    params[:query].present? ? "#{params[:query].strip}%" : ""
+    @query = params[:query]
+    @query.present? ? "#{params[:query].strip}%" : ""
   end
 
   # the autocomplete will issues an empty query when first loaded.
