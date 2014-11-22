@@ -23,7 +23,7 @@ module Autocomplete
     fill_in field, with: ' ' + options[:with][0,chars]
     # poltergeist will not keep the element focussed.
     # But when we loose focus the autocomplete won't show.
-    execute_script("($('#{field}') || $$('[name=#{field}]'))[0].focus();")
+    execute_script("($('#{field}') || $$('[name=#{field}]')[0]).focus();")
     find('.autocomplete em', text: options[:with]).trigger('click')
   rescue Capybara::ElementNotFound
     chars +=1
