@@ -1,48 +1,77 @@
 class UserFinder
 
-  VALID_QUERIES = ['friends', 'peers', 'search']
+  # There can only be one scope per path.
+  # The keys are the path parts that identify the scope
+  # The values need to match methods that can be called on @user.
+  PATH_SCOPES = {contacts: :friends, peers: :peers}
 
-  def initialize(user)
+  # queries take a parameter and there could be multiple in a single path
+  # These will be called as methods in the UserFinder.
+  QUERIES = ['search']
+
+  def initialize(user, path)
     @user = user
+    @path = path
   end
 
-  def find_by_path(path, options = {})
-    options.reverse_merge! default: :friends
-    query, parts = query_from_path(path, options)
-    self.send query, parts
+  def find
+    conditions.each do |method, args|
+      self.send method, args
+    end
+    @results
   end
 
-  def query_from_path(path, options)
-    parts = path.try.split('/') || []
-    query = parts.shift
-    query = options[:default] unless VALID_QUERIES.include?(query)
-    return query.to_sym, parts
+  def scope
+    @scope ||= init_scope
+  end
+
+  def conditions
+    @conditions ||= queries.presence || { search: "" }
+  end
+
+  def queries
+    query = nil
+      @path.split('/').inject(Hash.new) do |hash, part|
+      if query.present?
+        hash[query] = part
+        query = nil
+      else
+        query = part if QUERIES.include?(part)
+      end
+      hash
+    end
+  end
+
+  def query_term
+    conditions.values.first
   end
 
   protected
 
-  def friends(ignored)
-    @user.try.friends
+  def init_scope
+    if scope_method.present?
+      @user.public_send scope_method
+    else
+      query_term.present? ? User : User.none
+    end.with_access(access)
   end
 
-  def peers(ignored)
-    @user.try.peers
+  def scope_method
+    @path.split('/').map{|part| PATH_SCOPES[part.to_sym]}.compact.first
   end
 
-  def search(terms)
-    if term = filter(terms)
-      User.named_like(term).with_access(access)
-    end
-  end
-
-  def filter(terms)
-    term = terms.try.first
+  def search(term)
+    @results ||= scope
     if term.present?
-      term.gsub('%', '\%').gsub('_', '\_') + '%'
+      @results = @results.named_like(filter(term))
     end
+  end
+
+  def filter(term)
+    term.gsub('%', '\%').gsub('_', '\_') + '%'
   end
 
   def access
-    {(@user || :public) => :view}
+    {@user => :view}
   end
 end

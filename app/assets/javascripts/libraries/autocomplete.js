@@ -447,10 +447,20 @@ Autocomplete.prototype = {
 
   select: function(i) {
     var selectedValue = this.suggestions[i];
+    var form = this.el.form;
     if (selectedValue) {
       this.el.value = this.selectValue(selectedValue);
-      if (this.options.autoSubmit && this.el.form) {
-        this.el.form.submit();
+      if (this.options.autoSubmit && form) {
+        if (form.readAttribute('data-remote')) {
+          this.handleRemote(form);
+        }
+        else {
+          if (typeof form.submit === "function") {
+            this.el.form.submit();
+          } else {
+            this.el.form.submit.click();
+          }
+        }
       }
       this.ignoreValueChange = true;
       this.hide();
@@ -500,7 +510,42 @@ Autocomplete.prototype = {
   // added crabgrass hack: allows regexp filter of selected value
   selectValue: function(value) {
     return (this.options.selectValue ? this.options.selectValue(value) : value);
+  },
+
+  // taken from prototype as there seems to be no way to trigger it from a script.
+  handleRemote: function(element) {
+    var method, url, params;
+
+    var event = element.fire("ajax:before");
+    if (event.stopped) return false;
+
+    if (element.tagName.toLowerCase() === 'form') {
+      method = element.readAttribute('method') || 'post';
+      url    = element.readAttribute('action');
+      // serialize the form with respect to the submit button that was pressed
+      params = element.serialize({ submit: element.retrieve('rails:submit-button') });
+      // clear the pressed submit button information
+      element.store('rails:submit-button', null);
+    } else {
+      method = element.readAttribute('data-method') || 'get';
+      url    = element.readAttribute('href');
+      params = {};
+    }
+
+    new Ajax.Request(url, {
+      method: method,
+      parameters: params,
+      evalScripts: true,
+
+      onCreate:   function(response) { element.fire("ajax:create",   response); },
+      onComplete: function(response) { element.fire("ajax:complete", response); },
+      onSuccess:  function(response) { element.fire("ajax:success",  response); },
+      onFailure:  function(response) { element.fire("ajax:failure",  response); }
+    });
+
+    element.fire("ajax:after");
   }
+
 
 };
 

@@ -41,3 +41,7 @@
   }
 }
 
+// input-append normally sets font-size 0 - so we need to overwrite it
+.input-append .autocomplete {
+  font-size: 12px;
+}

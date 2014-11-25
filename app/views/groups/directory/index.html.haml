@@ -1,21 +1,18 @@
 .row.search.pull-right#group_search
-  = form_tag groups_directory_path(path: 'search'),
+  = form_tag '',
     id: 'group_search_form',
     method: :get,
+    remote: true,
     class: 'form-search' do
-    .input-append
-      = text_field_tag 'name', @filter,
-        id: 'search_name_field',
+    #autocomplete_container.input-append
+      = autocomplete_input_tag 'q', 'groups',
+        value: @filter,
+        url: url_for(format: 'json'),
+        id: 'autocomplete_groups',
         class: 'search-query',
-        placeholder: 'Search all groups by name'
-      %button.btn.btn-primary(type="submit") Search
+        placeholder: :enter_name_of_group
+      %button.btn.btn-primary(type="submit")= :search.t
 
 .row.clear
 
-%ul.directory
-  - for group in @groups
-    %li.entry= render partial: 'group', locals: {group: group}
-    %li.divider
-
-.p
-  = pagination_links(@groups, params: params.except(:utf8))
+#group_list= render 'groups'

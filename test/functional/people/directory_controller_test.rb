@@ -40,5 +40,12 @@ class People::DirectoryControllerTest < ActionController::TestCase
       assert_select 'a:last-of-type', '3'
     end
   end
+
+  def test_autocomplete
+    login_as :blue
+    # leading spaces should be ignored in the query
+    get :index, query: ' a', path: 'search', format: :json
+    assert_equal [users(:aaron)], assigns(:users)
+  end
 end
 
