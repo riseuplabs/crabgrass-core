@@ -16,6 +16,8 @@ module Autocomplete
   #
   # Note that this might still return before all requests have been answered
   # in particular if the term we are looking for is preloaded.
+  # wait_for_ajax in here will NOT fix this. Sometimes the ajax request has
+  # not been created yet when wait for ajax first checks.
   #
   def autocomplete(field, options)
     chars ||= 1

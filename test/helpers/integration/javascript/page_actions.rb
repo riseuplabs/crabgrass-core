@@ -13,6 +13,9 @@ module PageActions
     click_on 'Share'
     # wait until sharing completed...
     find '.names', text: entities.last.display_name
+    # there may still be autocomplete queries pending if the entity
+    # was preloaded
+    wait_for_ajax
   end
 
   def tag_page(tags)
