@@ -28,7 +28,7 @@ module Common::Ui::AutocompleteHelper
 #        preloadedOnTop: true,
 #        rowRenderer: #{render_entity_row_function},
 #        selectValue: #{extract_value_from_entity_row_function}
-#      }, #{autocomplete_id_number});
+#      });
 #    ]
 #    javascript_tag(auto_complete_js)
 #  end
@@ -66,7 +66,7 @@ module Common::Ui::AutocompleteHelper
     options[:view] ||= 'all'
     # set to false to disable.
     options[:onkeypress] = eat_enter if options[:onkeypress].nil?
-    js_options = options.extract!(:url, :view, :group, :onselect, :message, :container, :autoSubmit)
+    js_options = options.extract!(:url, :view, :group, :onselect, :container, :autoSubmit)
     # create input and script tag
     value = options.delete(:value)
     text_field_tag(field_id, value, options) +
@@ -76,21 +76,19 @@ module Common::Ui::AutocompleteHelper
   def autocomplete_js_tag(field_id, options)
     path_options = options.extract! :view, :group
     path_options[:format] = 'json'
-    url = options[:url] || entities_path(path_options)
+    url = options.delete(:url) || entities_path(path_options)
 
     options.select! { |_, v| !v.nil? }
+    onselect = options.delete :onselect
+    option_string = options.to_json
+    if onselect.present?
+      option_string = option_string.sub(/}$/, ", onSelect: #{onselect}}")
+    end
     javascript_tag("cgAutocompleteEntities('%s', '%s', %s)" % [
-      field_id,
-      url,
-      options.to_json
-    ])
+      field_id, url, option_string ])
   end
 
   private
-
-  def autocomplete_id_number
-    rand(100000000)
-  end
 
   # called in order to render a popup row. it is a little too complicated.
   #
