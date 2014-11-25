@@ -70,3 +70,8 @@ en:
   deleted: "Deleted"
   remove: "Remove"
 
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: "Enter the name of a group or person"
+      enter_name_of_group: "Enter the name of a group"
+      enter_name_of_person: "Enter the name of a person"

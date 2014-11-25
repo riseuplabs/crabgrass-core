@@ -239,8 +239,6 @@ en:
   share_pester_error: 'Sorry, you are not allowed to share with "%{name}".'
   name_or_email_not_found: '"%{name}" does not match the name of any users or groups and is not a valid email address.'
 
-  entity_autocomplete_tip: "Enter the name of a group or person."
-
   ##!  notice_with_message: "with message %{message}"
 
   # creating

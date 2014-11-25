@@ -10,5 +10,5 @@
         url: url_for(format: 'json'),
         id: 'autocomplete_people',
         class: 'search-query',
-        placeholder: "Type in a user name"
-      %button.btn.btn-primary(type="submit") Search
+        placeholder: :enter_name_of_person
+      %button.btn.btn-primary(type="submit")= :search.t

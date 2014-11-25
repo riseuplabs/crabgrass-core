@@ -10,8 +10,8 @@
         url: url_for(format: 'json'),
         id: 'autocomplete_groups',
         class: 'search-query',
-        placeholder: 'Search all groups by name'
-      %button.btn.btn-primary(type="submit") Search
+        placeholder: :enter_name_of_group
+      %button.btn.btn-primary(type="submit")= :search.t
 
 .row.clear
 
