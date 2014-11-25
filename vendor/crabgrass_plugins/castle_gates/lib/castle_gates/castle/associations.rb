@@ -34,7 +34,10 @@ def self.included(base)
         if column_name.blank? && options.blank?
           super("#{self.quoted_table_name}.id", distinct: true)
         else
-          super(column_name, options)
+          # super causes Stack level too deep with ruby 1.9.2 here
+          # UPGRADE use super again once we are sure to use ruby >= 1.9.3
+          column_name, options = nil, column_name if column_name.is_a?(Hash)
+          calculate(:count, column_name, options)
         end
       end
     end
