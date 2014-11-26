@@ -259,7 +259,7 @@ module Common::Application::RescueErrors
       # fyi, this template will eat the alert_message
       render template: 'error/permission_denied', layout: 'notice'
     else
-      redirect_to login_path(redirect: request.path)
+      redirect_to root_path(redirect: request.path)
     end
   end
 

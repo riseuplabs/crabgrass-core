@@ -5,10 +5,10 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
   def setup
     super
     @user = users(:blue)
-    login
   end
 
   def test_contacts
+    login
     click_on 'People'
     autocomplete 'q', with: 'orange'
     within '#user_list' do
@@ -19,6 +19,7 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
   end
 
   def test_peers
+    login
     click_on 'People'
     click_on 'Peers'
     autocomplete 'q', with: 'red'
@@ -30,6 +31,7 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
   end
 
   def test_search
+    login
     click_on 'People'
     find('#column_left').click_on 'Search'
     within '#user_list' do
@@ -40,6 +42,14 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
     within '#user_list' do
       assert_content 'Aaron!'
     end
+  end
+
+  def test_logged_out
+    visit '/'
+    click_on 'People'
+    assert_content 'Search'
+    assert_no_content 'Peers'
+    assert_no_content 'Contacts'
   end
 
 end
