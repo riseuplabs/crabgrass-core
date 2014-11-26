@@ -16,6 +16,14 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_page_users user, public_user, hidden_user
   end
 
+  def test_setting_owner
+    login users(:red)
+    prepare_page :discussion_page
+    select 'rainbow', from: :page_owner
+    click_on :create.t
+    find('#banner_content').assert_text 'rainbow'
+  end
+
   def test_sharing_with_groups
     login
     prepare_page :discussion_page

@@ -68,12 +68,10 @@ class Pages::CreateController < ApplicationController
     return true
   end
 
-  #
-  # for some routes, the owner is in the page_id.
-  #
   def set_owner
-    unless params[:owner]
-      params[:owner] = params[:page_id]
+    # owner from form overwrites owner from context
+    if params[:page].present? && params[:page][:owner].present?
+      params[:owner] = params[:page][:owner]
     end
     if params[:owner] == 'me'
       @owner = current_user
