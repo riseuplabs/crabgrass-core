@@ -128,7 +128,7 @@ module PageExtension::Groups
     #
     def tags_for_group(group, current_user)
       filter = access_filter(group: group, current_user: current_user)
-      Tag.find_by_sql(%Q[
+      ActsAsTaggableOn::Tag.find_by_sql(%Q[
         SELECT tags.*, count(name) as count
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
