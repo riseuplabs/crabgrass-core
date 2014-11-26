@@ -16,6 +16,7 @@ class Pages::PostsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 1, @page.reload.posts.count
     assert_equal body, @page.posts.first.body
+    assert_equal @user, @page.updated_by
   end
 
   def test_edit_post
