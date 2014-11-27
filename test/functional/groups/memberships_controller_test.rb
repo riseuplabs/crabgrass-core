@@ -1,6 +1,7 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 class Groups::MembershipsControllerTest < ActionController::TestCase
+  fixtures :all
 
   def setup
     @user  = FactoryGirl.create(:user)
@@ -30,4 +31,10 @@ class Groups::MembershipsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_index_with_links_to_destroy
+    login_as users(:blue)
+    get :index, { group_id: groups(:warm) },
+      { language_code: 'de' }
+    assert_response :success
+  end
 end

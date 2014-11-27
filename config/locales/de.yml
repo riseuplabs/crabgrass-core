@@ -498,7 +498,7 @@ de:
   member_groups_of_network: "Gruppen im Netzwerk"
   members: BenutzerInnen
   membership: Mitgliedschaft
-  membership_destroy_confirm_message: "Bist du sicher das du '%{user}' von %{group_type} entfernen willst?"
+  membership_destroy_confirm_message: "Bist du sicher das du '%{entity}' aus %{group} entfernen willst?"
   membership_exists_error: "Mitgliedschaft besteht bereits für %{member}"
   membership_leave_message: "Du wurdest von %{group} entfernt"
   menu_admin: Admin
