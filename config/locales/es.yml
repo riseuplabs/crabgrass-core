@@ -499,7 +499,7 @@ es:
   member_groups_of_network: "Grupos Miembros"
   members: Personas
   membership: Afiliaciones
-  membership_destroy_confirm_message: "¿Tienes la certeza de que quieres retirar a '%{user}' de %{group_type}?"
+  membership_destroy_confirm_message: "¿Tienes la certeza de que quieres retirar a '%{entity}' de %{group}?"
   membership_exists_error: "Ya %{member} tiene una afiliación"
   membership_leave_message: "Te han retirado de %{group}"
   menu_admin: Admin
