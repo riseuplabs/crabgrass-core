@@ -106,7 +106,10 @@ module Common::Application::BeforeFilters
   # set the current timezone, if the user has it configured.
   #
   def set_session_timezone
-    Time.zone = current_user.time_zone if logged_in?
+    Time.zone = current_user.time_zone
+  rescue ArgumentError # invalid string
+    Rails.logger.warn "Invalid time zone #{current_user.time_zone} for user #{current_user.login}"
+    Time.zone = Time.zone_default
   end
 
   #

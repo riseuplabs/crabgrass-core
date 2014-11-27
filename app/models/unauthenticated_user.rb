@@ -60,4 +60,8 @@ class UnauthenticatedUser
     false
   end
 
+  def time_zone
+    Time.zone_default
+  end
+
 end

@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
   end
 
   def time_zone
-    read_attribute(:time_zone) || Time.zone_default
+    read_attribute(:time_zone).presence || Time.zone_default
   end
 
   #
