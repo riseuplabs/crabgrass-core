@@ -18,6 +18,7 @@ class Me::PostsController < Me::BaseController
     @other_user = @recipient
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.paginate(post_pagination_params)
+    @post = Post.new
   end
 
   def create

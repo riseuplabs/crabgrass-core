@@ -6,13 +6,13 @@
       %br
       %span{style: 'font-size:85%'}= friendly_date notice.created_at
   %td.icon.small{style: avatar_style(notice, 'small')}
-    =h embold_links notice.display_title
-    %br
-    - # TODO truncate messes up HTML, and we maybe should have a scroll bar instead of using truncate anyway.
-    - if notice.display_body_as_quote?
-      %i=h truncate(embold_links(notice.display_body), length: 512)
-    - else
-      =h truncate(embold_links(notice.display_body), length: 512)
+    %div{style: "max-height: 80px; overflow-y: auto;"}
+      =h embold_links notice.display_title
+      %br
+      - if notice.display_body_as_quote?
+        %i= embold_links(notice.display_body)
+      - else
+        = embold_links(notice.display_body)
   %td.nowrap.align_right.reflow
     = spinner(notice, align: :middle)
     - url = self.send(notice.noticable_path, notice.noticable)
