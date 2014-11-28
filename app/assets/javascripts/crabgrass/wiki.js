@@ -121,8 +121,7 @@ var wikiLock = {
     var url = this.locks.get(wikiId);
     this.locks.unset(wikiId); // <- prevent additional unlocking
     new Ajax.Request(url, {
-      method: 'delete', asynchronous: false,
-      parameters: {authenticity_token: $$('meta[name=csrf-token]')[0]}
+      method: 'delete', asynchronous: false
     });
   }
 }
