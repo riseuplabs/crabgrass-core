@@ -12,7 +12,7 @@ class WikiTest < JavascriptIntegrationTest
   end
 
   def test_writing_initial_version
-    # assert_page_tab "Edit"
+    assert_page_tab "Edit"
     content = update_wiki
     assert_content content
     assert_page_tab "Show"
