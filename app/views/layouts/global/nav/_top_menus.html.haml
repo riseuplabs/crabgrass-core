@@ -2,7 +2,8 @@
 - # The top-level global navigation drop-down menu tabs
 - # say that ten times fast.
 - #
-
+-# Template Dependency: layouts/global/nav/_people_menu
+-# Template Dependency: layouts/global/nav/_groups_menu
 - cache [current_theme, current_language, current_user, active_top_nav.try.name] do
   %ul#menu
     - @navigation[:global].each do |tab|
