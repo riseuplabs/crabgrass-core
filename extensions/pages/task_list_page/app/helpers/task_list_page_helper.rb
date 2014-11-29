@@ -150,7 +150,7 @@ module TaskListPageHelper
   end
 
   def save_task_edit_button(task)
-    submit_tag :save.t
+    submit_tag :save_button.t
   end
 
   ###
