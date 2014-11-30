@@ -16,9 +16,9 @@ edit_url           = edit_ranked_vote_possible_url(possible, page_id: @page)
     <% else -%>
       <%=h possible.name %>
     <% end -%>
-    &nbsp;<%= link_to_remote_with_icon(I18n.t(:edit), {url: edit_url}, icon:'pencil', class: 'edit') %>
+    &nbsp;<%= link_to I18n.t(:edit), edit_url, icon:'pencil', class: 'edit', remote: true, method: :get %>
   </div>
   <div class='indent possible_details' id="<%=details_id%>" style='display: none'>
-    <%= possible.description_html %>
+    <%= possible.description_html.to_s.html_safe %>
   </div>
 
