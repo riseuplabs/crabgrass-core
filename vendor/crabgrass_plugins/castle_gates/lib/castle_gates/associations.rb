@@ -2,7 +2,7 @@
 # Code that makes it easy to build holders based on Active Record associations
 # and relations.
 #
-# For example Association.new(user, :peers) refers to all the
+# For example CastleGates::Association.new(user, :peers) refers to all the
 # peers of the given user.
 #
 
@@ -20,7 +20,7 @@
 # fetching all the minions. Instead, we use @me.associated(:minions)
 # which will return an Association.
 #
-class Association
+class CastleGates::Association
   attr_reader :owner, :relationship
 
   # owner can be a class to refer to all associations of a certain type
@@ -40,7 +40,7 @@ class Association
   end
 
   def ==(other)
-    if other.is_a? Association
+    if other.is_a? CastleGates::Association
       owner == other.owner &&
         relationship = other.relationship
     elsif other.is_a? Symbol
@@ -82,7 +82,7 @@ ActiveRecord::Base.class_eval do
   #
   class << self
     def associated(symbol)
-      Association.new(self, symbol)
+      CastleGates::Association.new(self, symbol)
     end
   end
 
@@ -90,6 +90,6 @@ ActiveRecord::Base.class_eval do
   # return an association proxy proxy. double proxy!
   #
   def associated(symbol)
-    Association.new(self, symbol)
+    CastleGates::Association.new(self, symbol)
   end
 end
