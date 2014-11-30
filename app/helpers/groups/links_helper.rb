@@ -149,7 +149,7 @@ module Groups::LinksHelper
       end
 
       if req
-        link_to :request_pending.t(request: req.model_name.human),
+        link_to :request_pending.t(request: req.class.model_name.human),
           group_membership_request_path(@group, req)
       elsif may_create_expell_request?(membership)
         link_to_remote(:remove.t,
