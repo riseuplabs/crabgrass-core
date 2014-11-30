@@ -5,5 +5,5 @@ possible_show_id   = "#{possible_id}_show"
 # update the possible_edit div with the edit partial
 page.show possible_edit_id
 page.hide possible_show_id
-page.replace_html possible_edit_id, :partial => 'possible_edit', :locals => {:possible => @possible}
+page.replace_html possible_edit_id, partial: 'possible_edit', locals: {possible: @possible}
 
