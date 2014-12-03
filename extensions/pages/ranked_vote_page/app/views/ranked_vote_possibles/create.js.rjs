@@ -3,7 +3,7 @@ if @possible.persisted?
   page.insert_html :bottom, 'sort_list_unvoted', :partial => 'possible', :locals => {:possible => @possible}
 end
 
-# TODO: add error flash message on failure
+update_alert_messages(page)
 
 page.sortable 'sort_list_unvoted', :handle => 'handle',
   :containment => ['sort_list_voted', 'sort_list_unvoted'],
