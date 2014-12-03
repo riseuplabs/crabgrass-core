@@ -5,10 +5,11 @@
 
 <div id='new_possible_form_container' style='display:none'>
 <%= form_remote_tag(
-  :url      => ranked_vote_possibles_url(page_id: @page),
-  :loading  => show_spinner('new_possible_loading'),
-  :complete => hide_spinner('new_possible_loading'),
-  :success => "$('new_possible_form').reset()"
+  url:      ranked_vote_possibles_url(page_id: @page),
+  loading:  show_spinner('new_possible_loading'),
+  complete: hide_spinner('new_possible_loading'),
+  success:  "$('new_possible_form').reset()",
+  html:     {id: 'new_possible_form'}
 ) do -%>
    description:<br/>
    <%= text_field 'possible', 'name', :size => 60 %><br/>
