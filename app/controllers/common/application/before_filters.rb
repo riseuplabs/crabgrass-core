@@ -12,22 +12,11 @@ module Common::Application::BeforeFilters
     before_render :setup_context
   end
 
-  protected
-
-  # ensure that essential_initialization ALWAYS comes first
-  def process_action(method_name, *args)
-    essential_initialization
-    super
-  end
 
   private
 
   def enforce_ssl_if_needed
     request.session_options[:secure] = nil #current_site.enforce_ssl #needs to be fixed
-  end
-
-  def essential_initialization
-    # current_site
   end
 
   def header_hack_for_ie6
