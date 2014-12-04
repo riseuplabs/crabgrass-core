@@ -2,6 +2,41 @@
 // CRABGRASS FORM UTILITY
 //
 
+// ujs enhancements
+//
+// If there is a spinning wheel in a form with the class spin
+// it will be displayed when the form is submitted.
+//
+// If the form has the data attribute clear set to a valid value
+// the form will be reset after submitting it.
+//
+(function () {
+  document.observe("dom:loaded", function() {
+    function startFormSpinner(form) {
+      form.select('img.spin, span.spin').each(function(spinner) {
+        spinner.show();
+      });
+    }
+
+    function stopFormSpinner(form) {
+      form.select('img.spin, span.spin').each(function(spinner) {
+        spinner.hide();
+      });
+    }
+
+    document.on('ajax:create', 'form', function(event, form) {
+      if (form == event.findElement()) {
+        startFormSpinner(form);
+        if (form.readAttribute('data-clear')) form.reset();
+      }
+    });
+    document.on('ajax:complete', 'form', function(event, form) {
+      if (form == event.findElement()) stopFormSpinner(form);
+    });
+  });
+})();
+
+
 // Toggle the visibility of another element based on if a checkbox is checked or
 // not. Additionally, sets the focus to the first input or textarea that is visible.
 function checkboxToggle(checkbox, element) {

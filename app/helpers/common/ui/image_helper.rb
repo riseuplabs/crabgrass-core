@@ -49,6 +49,8 @@ module Common::Ui::ImageHelper
 
   #
   # returns a spinner tag.
+  # If this is in a ujs remote form it will automagically start and stop
+  # spinning as the form is submitted.
   #
   # arguments:
   #
@@ -60,18 +62,30 @@ module Common::Ui::ImageHelper
   #  :show -- if true, default the spinner to be visible
   #  :align -- override the default vertical alignment. generally, should use the default except in <TD> elements with middle vertical alignment.
   #  :class -- add css classes to the spinner
-  #  :text  -- include text with the spinner
   #  :spinner -- used a different image for the spinner
   #
-  def spinner(id, options={})
-    display = ("display:none;" unless options[:show])
+  def spinner(id = nil, options={})
+    display = ("display:none;" unless options.delete(:show))
     align = "vertical-align:#{options[:align] || 'middle'}"
-    options = {spinner: "spinner.gif", style: "#{display} #{align};", class: 'spin'}.merge(options)
-    if options[:text]
-      "<span id='#{spinner_id(id)}' style='#{display}'><img src='/images/#{options[:spinner]}' style='vertical-align:baseline' alt='' class='#{options[:class]}' /> #{h(options[:text])} </span>"
-    else
-      "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='' class='#{options[:class]}' />"
-    end.html_safe
+    options.reverse_merge! spinner: "spinner.gif",
+      style: "#{display} #{align};",
+      class: 'spin',
+      id: id && spinner_id(id),
+      alt: ''
+    options[:src] = "/images/#{options.delete(:spinner)}"
+    tag :img, options
+  end
+
+  def text_spinner(text, id, options={})
+    span_options = {
+      id: spinner_id(id),
+      style: ("display:none;" unless options.delete(:show)),
+      class: 'spin'
+    }
+    content_tag :span, span_options do
+      options[:style] = 'vertical-align:baseline'
+      spinner(nil, options) + text
+    end
   end
 
   def spinner_id(id)
