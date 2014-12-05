@@ -57,12 +57,13 @@ module PagesPermission
     page.nil? or current_user.may? :admin, page
   end
 
-  # this does not really test permissions, rather, it lets us know if something
+  # this tests page permissions and it also lets us know if something
   # horrible would happen if we removed this participation.
   # may_admin_page_without is an expensive call, so this should be used
   # sparingly. this method helps prevent removing yourself from page access,
   # although it is clumsy.
   def may_remove_participation?(part)
+    return false unless may_admin_page?
     if part.is_a?(UserParticipation)
       if part.user_id != current_user.id
         true

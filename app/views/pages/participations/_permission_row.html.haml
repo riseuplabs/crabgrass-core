@@ -1,14 +1,15 @@
-- if participation.is_a?(GroupParticipation)
-  %td
-    &nbsp;&nbsp;
+%td
+  &nbsp;&nbsp;
+  - if participation.is_a?(GroupParticipation)
     = link_to_group(participation.group)
-- else
-  %td
-    &nbsp;&nbsp;
+  - else
     = link_to_user(participation.user)
 
 %td= spinner(dom_id(participation))
-%td= show_or_edit_page_access(participation)
-
-
-
+%td
+  = display_access_icon(participation)
+  &nbsp;
+  - if may_remove_participation?(participation)
+    = edit_page_access(participation)
+  - else
+    = display_access(participation)
