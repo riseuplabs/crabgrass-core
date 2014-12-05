@@ -6,7 +6,7 @@ module Integration
       detail ||= Faker::Lorem.paragraph
       fill_in 'possible_name', with: description
       fill_in 'possible_description', with: detail
-      click_on "Add Possibility"
+      click_button "Add new possibility"
       assert_text description
       return description, detail
     end

@@ -31,7 +31,7 @@ class TaskListTest < JavascriptIntegrationTest
   end
 
   def add_task(options = {})
-    click_on 'add task' if page.has_selector?(:link, 'add task')
+    click_on 'Add Task' if page.has_selector?(:link, 'Add Task')
     options[:description] ||= Faker::Lorem.sentence
     options[:detail] ||= Faker::Lorem.paragraph
     fill_in 'task_name', with: options[:description]

@@ -8,26 +8,27 @@ class RankedVoteTest < JavascriptIntegrationTest
     super
     own_page :ranked_vote_page
     login
-    click_on own_page.title
+    click_link own_page.title
   end
 
   def test_initial_option
     assert_page_header
-    click_on 'Add new possibility'
+    click_link 'Add new possibility'
     option, description = add_possibility
-    click_on 'Done'
+    click_link 'Add new possibility' # close
     assert_no_content description
-    click_on option
+    click_link option
     assert_content description
-    # There is currently no way to delete an option
-    # and the edit button does not work.
-    # click_on 'delete'
-    # assert_no_content option
+    find('#content').click_link 'Edit'
+    click_button 'Delete'
+    assert_no_content option
+    wait_for_ajax
   end
 
   def test_voting
-    click_on 'Add new possibility'
+    click_link 'Add new possibility'
     option, description = add_possibility
+    click_link 'Add new possibility' # close
     assert_not_voted_yet
     vote
     assert_voted
@@ -37,12 +38,12 @@ class RankedVoteTest < JavascriptIntegrationTest
 
 
   def test_multiple_options
-    click_on 'Add new possibility'
+    click_link 'Add new possibility'
     add_possibility
     option, description = add_possibility
-    click_on 'Done'
+    click_link 'Add new possibility' # close
     click_page_tab 'Show results'
-    click_on option
+    click_link option
     assert_content description
     click_page_tab 'Edit my vote'
     assert_content option
@@ -76,7 +77,7 @@ class RankedVoteTest < JavascriptIntegrationTest
   end
 
   def assert_first_choice_of(user, option)
-    click_on option
+    click_link option
     assert_content "first choice of : #{user.login}"
   end
 end

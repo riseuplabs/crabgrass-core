@@ -400,6 +400,8 @@ en:
   vote:
     really_remove_this: 'Do you really want to remove this option?'
     you_have_not_ranked: 'You have not ranked yet:'
+    voted_on: 'Voted on'
+    not_voted_on: 'Not voted on'
 
   vote_good: "good"
   vote_ok: "ok"
