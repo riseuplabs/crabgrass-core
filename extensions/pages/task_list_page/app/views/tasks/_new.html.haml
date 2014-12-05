@@ -1,6 +1,10 @@
+- # TODO:
+- # you might want to consider using /items/_new_form and
+- # including the extra fields there.
+
 - @task = Task.new
 #new-task-link
-  = link_to_function 'add task', show('new-task') + hide('new-task-link')
+  = link_to_function :add_task.t, show('new-task') + hide('new-task-link')
 #new-task{style: "display:none"}
   = form_remote_tag( *options_for_new_task_form(page) ) do
     %br/

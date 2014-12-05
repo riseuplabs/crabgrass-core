@@ -9,7 +9,8 @@
 
 textarea {
   resize: vertical;
-  margin: 0;
+  // somehow pading and border seem to be counted for text areas
+  width: 220px;
 }
 
 //

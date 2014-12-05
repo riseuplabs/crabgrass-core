@@ -29,7 +29,7 @@ end
   <div id='<%=possible_show_id%>'>
     <div style="float:right; width:5em; text-align:right;">
       <% if current_user.may? :edit, @page -%>
-        <%= link_to "delete", rate_many_possible_url(possible, page_id: @page), method: :delete, data: {confirm: I18n.t("vote.really_remove_this") } %>
+        <%= link_to :delete.t, rate_many_possible_url(possible, page_id: @page), method: :delete, data: {confirm: I18n.t("vote.really_remove_this") } %>
       <% end -%>
     </div>
 
