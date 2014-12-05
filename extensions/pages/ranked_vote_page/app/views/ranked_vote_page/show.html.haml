@@ -12,7 +12,7 @@
             = I18n.t(:first_choice_of)
             \: #{@who_voted_for[possible.id].join(', ')}
   - if logged_in? and current_user.may? :edit, @page and @possibles_unvoted.any?
-    You have not ranked:
+    = I18n.t 'vote.you_have_not_ranked'
     %ul
       - @possibles_unvoted.each do |possible|
         %li
