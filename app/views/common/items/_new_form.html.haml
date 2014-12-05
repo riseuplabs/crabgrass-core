@@ -1,0 +1,25 @@
+- # expects the following locals:
+- # item - a new active record element of the item to create
+- # url  - a url to submit the form to
+
+:ruby
+  type = dom_class(item) if type.blank?
+  label = I18n.t("#{type}.add")
+
+.accordion-group[item]
+  .accordion-heading[item, :link]
+    = link_to_function label, toggle(item, :form), class: 'accordion-toggle'
+  .accordion-inner[item, :form]{style: 'display: none'}
+    = form_for item, url: url, remote: true, html: {data: {clear: true}} do |f|
+      %p= f.text_field 'name',
+        class: "#{type}_name",
+        placeholder: :description.t
+      %p= f.text_area  'description',
+        rows: '4',
+        class: "#{type}_description",
+        placeholder: :details.t
+      %p
+        %button.btn.btn-primary
+          = label
+      = spinner
+

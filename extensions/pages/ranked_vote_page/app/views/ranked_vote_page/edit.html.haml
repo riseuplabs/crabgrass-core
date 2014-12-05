@@ -26,7 +26,7 @@
       %li#none_unvoted
         = :none.t
   %ul.possible_list.plain
-    %li#add_possible_link= render partial: 'new_possible'
+    %li#add_possible_link= render 'ranked_vote_possibles/new'
   = sortable_element 'sort_list_voted', handle: 'handle',
     containment: ['sort_list_voted', 'sort_list_unvoted'],
     url: sort_ranked_vote_possibles_url(page_id: @page)

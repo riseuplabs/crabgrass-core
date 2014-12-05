@@ -1,7 +1,4 @@
 # adds a newly created task to the bottom of the possibles
-page << hide_spinner('new_possible_loading')
-page << "$('new_possible_form').reset();"
-
 # we have to specify the partial here. render @possible will try to render
 # a json representation of @possible or so.
 page.insert_html :bottom, 'sort_list', partial: 'possibles/possible',

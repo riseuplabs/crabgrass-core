@@ -116,13 +116,19 @@ module Common::Ui::JavascriptHelper
   # produces javascript to hide the given id or object
   def hide(id, extra=nil)
     id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').hide();" % id
+    "$('%s').hide();".html_safe % id
   end
 
   # produces javascript to show the given id or object
   def show(id, extra=nil)
     id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').show();" % id
+    "$('%s').show();".html_safe % id
+  end
+
+  # produces javascript to show the given id or object
+  def toggle(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').toggle();".html_safe % id
   end
 
   def hide_spinner(id)
