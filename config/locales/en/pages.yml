@@ -391,3 +391,10 @@ en:
   no_completed_tasks: 'no completed tasks'
   add_task: 'Add Task'
   assign_to: 'assign to'
+
+  ##
+  ## Votes
+  ##
+
+  vote:
+    really_remove_this: 'Do you really want to remove this option?'

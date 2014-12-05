@@ -7,13 +7,10 @@ possible_show_id     = "#{possible_id}_show"
 close_click      = "Element.hide('#{possible_edit_id}');" +
                    "Element.show('#{possible_show_id}');"
 possible_url       =  ranked_vote_possible_url(possible, page_id: @page)
-delete_click     = "Element.hide('#{possible_id}');" + remote_function(url: possible_url, method: :delete)
+delete_click     = "Element.hide('#{possible_id}');" + remote_function(url: possible_url, method: :delete, confirm: I18n.t('vote.really_remove_this')
 -%>
-<%= form_remote_tag(
-  url: possible_url,
-  method: :put,
-  loading: show_spinner(possible_edit_id),
-  html: {id: form_id}) do -%>
+<%= form_tag possible_url, remote: true, method: :put,
+  html: {id: form_id} do -%>
   <%# text_field 'possible', 'name', size: 70 %>
   <%= h possible.name %>
   <br/>
@@ -22,7 +19,7 @@ delete_click     = "Element.hide('#{possible_id}');" + remote_function(url: poss
     <%= submit_tag I18n.t(:save_button) %>
     <%= button_to_function I18n.t(:cancel_button), close_click %>
     <%= button_to_function I18n.t(:delete_button), delete_click %>
-    <%= spinner(possible_edit_id) %>
+    <%= spinner %>
   </p>
 <% end %>
 
