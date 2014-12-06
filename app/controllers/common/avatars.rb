@@ -16,7 +16,7 @@ module Common::Avatars
 
   def create
     raise ErrorMessage.new('already exists') if @entity.avatar
-    @entity.avatar = Avatar.create!(params[:avatar])
+    @entity.avatar = Avatar.create!(avatar_params)
     @entity.save!
   ensure
     redirect_to @success_url
@@ -29,13 +29,17 @@ module Common::Avatars
 
   def update
     expire_avatar(@entity.avatar)
-    @entity.avatar.update_attributes! params[:avatar]
+    @entity.avatar.update_attributes! avatar_params
     @entity.increment!(:version)
   ensure
     redirect_to @success_url
   end
 
   protected
+
+  def avatar_params
+    params[:avatar].permit(:image_file, :image_file_url)
+  end
 
   def expire_avatar(avatar)
     if avatar
