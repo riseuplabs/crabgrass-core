@@ -1,7 +1,8 @@
 class TasksController < Pages::BaseController
   before_filter :fetch_task_list, :fetch_user_participation
   after_filter :update_participations, only: [:create, :update, :destroy]
-  permissions 'task_list_page'
+
+  guard :may_edit_page?
 
   def create
     @task = Task.new task_params

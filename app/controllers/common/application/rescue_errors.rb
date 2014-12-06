@@ -123,6 +123,7 @@ module Common::Application::RescueErrors
   # show a permission denied page, or prompt for login
   #
   def render_permission_denied(exception)
+    log_exception(exception)
     respond_to do |format|
       format.html do
         render_auth_error_html(exception)
@@ -275,6 +276,11 @@ module Common::Application::RescueErrors
       hide_spinners(page)
       update_alert_messages(page)
     end
+  end
+
+  def log_exception(exception)
+    Rails.logger.debug "Rescuing from #{exception.class}."
+    Rails.logger.debug Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
   end
 
   #def flash_auth_error(mode)
