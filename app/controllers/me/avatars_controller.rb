@@ -5,9 +5,6 @@ class Me::AvatarsController < Me::BaseController
   cache_sweeper :user_sweeper
 
   protected
-  # always enable cache, even in dev mode.
-  def self.perform_caching; true; end
-  def perform_caching; true; end
 
   def setup
     @entity = current_user
