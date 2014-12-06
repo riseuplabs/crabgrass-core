@@ -1,6 +1,5 @@
 class TaskListPageController < Pages::BaseController
   before_filter :fetch_task_list, :fetch_user_participation
-  permissions 'task_list_page'
 
   def show
   end

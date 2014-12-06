@@ -10,6 +10,7 @@ class Pages::BaseController < ApplicationController
   before_filter :authorization_required
   permissions :pages
   guard :may_ACTION_page?
+  guard print: :may_show_page?
   guard update: :may_edit_page?
 
   layout 'page'

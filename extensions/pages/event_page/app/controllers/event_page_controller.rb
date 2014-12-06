@@ -1,6 +1,5 @@
 class EventPageController < Pages::BaseController
   before_filter :fetch_event
-  permissions 'event_page'
 
   def show
   end

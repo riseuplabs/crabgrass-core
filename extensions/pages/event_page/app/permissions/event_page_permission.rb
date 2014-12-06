@@ -1,6 +1,0 @@
-module EventPagePermission
-
-  protected
-
-
-end

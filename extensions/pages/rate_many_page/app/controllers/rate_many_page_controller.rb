@@ -1,9 +1,6 @@
 class RateManyPageController < Pages::BaseController
   before_filter :fetch_poll
 
-  guard :may_edit_page?
-  guard show: :may_show_page?
-
   def show
     @possibles = @poll ? @poll.possibles.sort_by{|p| p.position||0 } : []
   end

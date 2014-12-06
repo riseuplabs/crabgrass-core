@@ -1,7 +1,8 @@
 class RankedVotePossiblesController < Pages::BaseController
   before_filter :fetch_poll
   before_filter :fetch_possible, only: [:edit, :update, :destroy]
-  permissions 'ranked_vote_page'
+
+  guard :may_edit_page?
 
   # returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element

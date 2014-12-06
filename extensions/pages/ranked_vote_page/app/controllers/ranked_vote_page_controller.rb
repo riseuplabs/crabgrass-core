@@ -1,7 +1,6 @@
 class RankedVotePageController < Pages::BaseController
   before_filter :fetch_poll
   before_filter :find_possibles, only: [:show, :edit]
-  permissions 'ranked_vote_page'
 
   def show
     # we need to specify the whole page_url not just the action here
