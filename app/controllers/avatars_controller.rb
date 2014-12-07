@@ -7,8 +7,13 @@
 
 class AvatarsController < ApplicationController
 
+  protected
+  # always enable cache, even in dev mode.
+  def self.perform_caching; true; end
+  def perform_caching; true; end
   caches_page :show
 
+  public
   def show
     @image = Avatar.find_by_id params[:id]
     if @image.nil?
