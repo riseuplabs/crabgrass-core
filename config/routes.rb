@@ -143,7 +143,7 @@ Crabgrass::Application.routes.draw do
     resources :memberships, only: [:index, :create, :destroy]
     resources :my_memberships, only: [:create, :destroy]
     resources :membership_requests , except: [:new, :edit]
-    resources :invites, only: [:new, :create]
+    resource  :invite, only: [:new, :create]
 
     # settings related
     resource  :settings, only: [:show, :update]
