@@ -1,8 +1,4 @@
-.ranked_vote, .rate_many {
-  .hover {
-    background: red;
-    border: 2px solid yellow;
-  }
+.ranked-vote, .rate-many {
 
   #progress,  #instructions {
     padding: 0.5em;
@@ -27,11 +23,9 @@
       }
     }
     &.possibles {
-      margin: 1em;
+      margin: 0 1em;
       li {
-        padding: 10px 10px 14px 10px;
         clear: both;
-        padding-left: 44px;
         div.rank {
           float: left;
           display: inline;
@@ -69,14 +63,30 @@
   }
 }
 
-.rate_many {
+.ranked-vote {
+  ul.possibles {
+    margin: 1em;
+    li {
+      padding: 10px 10px 14px 44px;
+    }
+  }
+}
+
+
+
+
+.rate-many {
   ul.possibles li {
     list-style: none;
-    background: #eee;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-width: 0 2px 2px 0;
+    margin: 0.5em 0;
   }
+
+  ul.possibles li > div {
+    border: 1px solid #ddd;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+  }
+
   ul.possibles {margin-left: 0; padding-left: 0;}
   ul.possibles li h2 {margin: 0 0 2px 1.5em; font-size: 1em}
   ul.possibles label {
@@ -91,5 +101,12 @@
     vertical-align: top;
   }
   ul.possibles span {opacity: 0.25}
-  div#new_possible {background: #eee; padding: 1em; margin: 1em;}
+
+  div#new_possible {
+    background: #f5f5f5;
+    padding: 0.5em 1em;
+    margin: 0.5em 1em 2em 0;
+    border-radius: 0.5em;
+    border: 1px solid #ddd;
+  }
 }
