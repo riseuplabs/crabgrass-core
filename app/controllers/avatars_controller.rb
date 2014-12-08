@@ -6,11 +6,8 @@
 ##
 
 class AvatarsController < ApplicationController
+  include_controllers 'common/always_perform_caching'
 
-  protected
-  # always enable cache, even in dev mode.
-  def self.perform_caching; true; end
-  def perform_caching; true; end
   caches_page :show
 
   public

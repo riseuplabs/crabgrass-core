@@ -64,7 +64,7 @@ Crabgrass::Application.routes.draw do
     resource  :profile, controller: 'profile', only: [:edit, :update]
     resources :requests, only: [:index, :update, :destroy, :show]
     # resources :events, only: [:index]
-    resources :avatars, only: [:new, :create, :edit, :update]
+    resource :avatar, only: [:new, :create, :edit, :update]
   end
 
   ##
@@ -136,7 +136,7 @@ Crabgrass::Application.routes.draw do
     resource  :home, only: [:show], controller: 'home'
     get 'pages(/*path)', as: 'pages', to: 'pages#index'
     post 'pages(/*path)', as: 'pages', to: 'pages#index'
-    resources :avatars, only: [:new, :create, :edit, :update]
+    resource  :avatar, only: [:new, :create, :edit, :update]
     resources :wikis, only: [:create, :index]
 
     # membership related
