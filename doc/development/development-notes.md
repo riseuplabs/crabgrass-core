@@ -367,25 +367,6 @@ Multi-user field editing
 
 https://github.com/josephg/ShareJS
 
-questions
-===================
-
-* Why rails v3.0 and not v3.x?
-
-  We still have a lot of rails 2.3 code in crabgrass.
-  Rails 3.0 deprecated this but still supports it. We will have
-  to get rid of it all for rails 3.1 and 3.2 and have focussed
-  on other things so far. However in particular for security reasons
-  moving on to rails 3.2 is very much desired.
-  This would be a great place to contribute.
-* Why github for rails in Gemfile? (huge extra overhead to pull in entire rails repo, versus the gem)
-
-  The github repo has seen a few security fixes since the release of 3.0.20.
-  Rails 3.0 is not maintained anymore - so there will be no new release.
-  But if people care enough to fix things they are merged in the 3-0-stable branch.
-  see https://github.com/rails/rails/commits/3-0-stable
-
-
 WIKIS
 ===========================
 

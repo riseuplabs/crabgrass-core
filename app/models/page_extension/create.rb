@@ -139,7 +139,7 @@ module PageExtension::Create
           users << u
         elsif g = Group.find_by_name(entity.to_s)
           groups << g
-        elsif entity =~ RFC822::EmailAddress
+        elsif ValidatesEmailFormatOf.validate_email_format(entity.to_s).nil?
           emails << entity
         elsif entity.present?
           errors << I18n.t(:name_or_email_not_found, name: h(entity))
