@@ -43,7 +43,7 @@ module AssetExtension
         begin
           make_from_zip(param).first
         rescue Zip::ZipError
-          asset = create_from_params(:uploaded_data => param)
+          asset = create_from_params(uploaded_data: param)
           [asset]
         end
       end
@@ -64,7 +64,7 @@ module AssetExtension
             tmp_file=File.join(tmp_dir, entry.name)
             FileUtils.mkdir_p(File.dirname(tmp_file))
             zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)
-            asset = create_from_params :uploaded_data => FileData.new(tmp_file)
+            asset = create_from_params uploaded_data: FileData.new(tmp_file)
             assets << asset if asset
           rescue => exc
             logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")
@@ -85,7 +85,9 @@ module AssetExtension
 
       def ensure_temp_file(file)
         if file.is_a?(ActionController::UploadedStringIO)
-          temp_file = Tempfile.new(file.original_filename)
+          ext = File.extname(file.original_filename).sub(/^\./, '')
+          base = File.basename(file.original_filename, ext)
+          temp_file = Tempfile.new([base, ext])
 
           temp_file.write file.read
           file = temp_file
@@ -112,8 +114,16 @@ module AssetExtension
       # finalize_attachment
       #
       def uploaded_data=(file_data)
-        @data_changed = true
+        attribute_will_change!('uploaded_data') if file_data != @file_data
         @file_data = file_data
+      end
+
+      def uploaded_data
+        @file_data || @raw_data
+      end
+
+      def uploaded_data_changed?
+        changed.include? 'uploaded_data'
       end
 
       #
@@ -122,7 +132,7 @@ module AssetExtension
       # from it (the file is actually created later in finalize_attachment).
       #
       def data=(raw_data)
-        @data_changed = true
+        attribute_will_change!('uploaded_data') if raw_data != @raw_data
         @raw_data = raw_data
       end
 
@@ -132,7 +142,7 @@ module AssetExtension
       # in finalize_attachment().
       #
       def process_attachment
-        if @file_data or @raw_data
+        if uploaded_data
           # temporarily capture old filenames
           @old_files = self.all_filenames || []
 
@@ -174,12 +184,7 @@ module AssetExtension
           @temp_file = nil
           create_thumbnail_records
         end
-        @data_changed = false
         true
-      end
-
-      def uploaded_data_changed?
-        @data_changed
       end
 
       private

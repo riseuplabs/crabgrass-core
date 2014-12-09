@@ -59,7 +59,7 @@ module Crabgrass::Theme::Loader
         starting_data = @navigation_parent.navigation
       end
     end
-    starting_data ||= nil
+    starting_data ||= self.navigation
     @navigation = Crabgrass::Theme::NavigationDefinition.parse(self, starting_data, &block)
   end
 
@@ -88,7 +88,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(data_path)
       # (the file pointed to by data_path must call 'define_theme')
     else
-      define_theme(:parent => 'default')
+      define_theme(parent: 'default')
     end
 
     # load @navigation
@@ -96,7 +96,7 @@ module Crabgrass::Theme::Loader
       evaluate_ruby_file(navigation_path)
       # (the file pointed to by navigation_path must call 'define_navigation')
     else
-      define_navigation(:parent => 'default')
+      define_navigation(parent: 'default')
     end
 
     # in production, clear the cache once at startup.
@@ -107,9 +107,9 @@ module Crabgrass::Theme::Loader
     ensure_dir(@public_directory)
     if @parent
       # mirror the parent theme's image directory
-      mirror_directory_with_symlinks("#{@parent.directory}/images", "#{@directory}/images")
+      mirror_directory_with_symlinks(@parent.directory + "images", @directory + "images")
     end
-    symlink("#{@directory}/images", "#{@public_directory}/images")
+    symlink(@directory + "images", @public_directory + "images")
 
     info 'Loaded theme %s (%sms)' % [@directory, (Time.now - start_time)*1000]
   end
@@ -118,6 +118,7 @@ module Crabgrass::Theme::Loader
     if @parent
       @parent.reload!
     end
+    @navigation = nil
     info 'Reloading theme %s' % @name
     load()
   end
@@ -127,18 +128,18 @@ module Crabgrass::Theme::Loader
   #
   #def init_paths
   #  paths = []
-  #  paths << @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
-  #  paths << @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+  #  paths << @directory+'init.rb' if File.exist?(@directory+'init.rb')
+  #  paths << @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
   #  raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
   #  return paths
   #end
 
   def data_path
-    @directory+'/init.rb' if File.exist?(@directory+'/init.rb')
+    @directory+'init.rb' if File.exist?(@directory+'init.rb')
   end
 
   def navigation_path
-    @directory+'/navigation.rb' if File.exist?(@directory+'/navigation.rb')
+    @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
   end
 
   #
@@ -175,7 +176,7 @@ module Crabgrass::Theme::Loader
   # evals a file with the current binding
   #
   def evaluate_ruby_file(file)
-    eval(IO.read(file), binding, file)
+    eval(IO.read(file), binding, file.to_s)
   end
 
   #
@@ -185,11 +186,11 @@ module Crabgrass::Theme::Loader
     # these sanity checks are necessary to prevent Pathname from throwing
     # exceptions... Pathname does not act gracefully if it references bad symlinks
     # or missing files.
-    if !File.exists?(src)
+    if !File.exist?(src)
       return
     elsif File.symlink?(dst)
       FileUtils.rm(dst)
-    elsif File.exists?(dst)
+    elsif File.exist?(dst)
       raise 'For the theme to work, the file "%s" must not exist.' % dst
     end
 
@@ -219,7 +220,7 @@ module Crabgrass::Theme::Loader
 
   # ensures the directory exists
   def ensure_dir(dir)
-    unless File.exists?(dir)
+    unless File.exist?(dir)
       FileUtils.mkdir_p(dir)
     end
     unless File.directory?(dir)

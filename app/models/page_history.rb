@@ -1,7 +1,7 @@
 class PageHistory < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
-  belongs_to :object, :polymorphic => true
+  belongs_to :item, polymorphic: true
 
   validates_presence_of :user, :page
 
@@ -40,7 +40,8 @@ class PageHistory < ActiveRecord::Base
 
   def self.pending_digest_notifications_by_page
     histories = {}
-    PageHistory.find(:all, :order => "created_at desc", :conditions => {:notification_digest_sent_at => nil}).each do |page_history|
+    PageHistory.order("created_at desc")
+      .where(notification_digest_sent_at: nil).each do |page_history|
       histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
       histories[page_history.page.id] << page_history
     end
@@ -48,21 +49,22 @@ class PageHistory < ActiveRecord::Base
   end
 
   def self.pending_notifications
-    PageHistory.find :all, :conditions => {:notification_sent_at => nil}
+    PageHistory.where(notification_sent_at: nil).all
   end
 
   def self.recipients_for_page(page)
-    UserParticipation.find(:all, :conditions => {:page_id => page.id, :watch => true}).map(&:user_id)
+    UserParticipation.where(page_id: page.id, watch: true).map(&:user_id)
   end
 
   def self.recipients_for_digest_notifications(page)
-    User.find :all, :conditions => ["receive_notifications = 'Digest' and id in (?)", recipients_for_page(page)]
+    User.where("receive_notifications = 'Digest'")
+      .where(id: recipients_for_page(page)).all
   end
 
   def self.recipients_for_single_notification(page_history)
     users_watching_ids = recipients_for_page(page_history.page)
     users_watching_ids.delete(page_history.user.id)
-    User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
+    User.where("receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids).all
   end
 
   protected
@@ -89,8 +91,8 @@ class PageHistory::ChangeTitle < PageHistory
 
   def add_details
     self.details = {
-      :from => self.page.title_was,
-      :to   => self.page.title
+      from: self.page.title_was,
+      to: self.page.title
     }
   end
 end
@@ -106,76 +108,76 @@ end
 class PageHistory::GrantGroupFullAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantGroupWriteAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantGroupReadAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::RevokedGroupAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Group/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Group/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserFullAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserWriteAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::GrantUserReadAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::RevokedUserAccess < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /User/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /User/
+  validates_presence_of :item_id
 end
 
 class PageHistory::AddComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Post/
+  validates_presence_of :item_id
 end
 
 class PageHistory::UpdateComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Post/
+  validates_presence_of :item_id
 end
 
 class PageHistory::DestroyComment < PageHistory
   after_save :page_updated_at
 
-  validates_format_of :object_type, :with => /Post/
-  validates_presence_of :object_id
+  validates_format_of :item_type, with: /Post/
+  validates_presence_of :item_id
 end

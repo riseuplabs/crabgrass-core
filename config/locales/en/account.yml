@@ -3,6 +3,7 @@ en:
   ## ACCOUNT
   ##
 
+  cookie_disabled_warning: "You have cookies disabled. You will not be able to login until you enable cookies."
   signup_link: "Create New User"
   signup_email_info: "Optional: used if you forget your password"
   forgot_password_link: "Forgot Password?"

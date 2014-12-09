@@ -1,12 +1,12 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class Wikis::VersionsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
-    @wiki = @group.profiles.public.create_wiki :body => 'test'
+    @wiki = @group.profiles.public.create_wiki body: 'test'
     @wiki.body = 'more testing'
     @wiki.save
     @version = @wiki.versions.last
@@ -14,38 +14,34 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_fetching_version
-    run_before_filters :show, :wiki_id => @wiki.to_param, :id => @version.to_param
+    run_before_filters :show, wiki_id: @wiki.to_param, id: @version.to_param
     assert_equal @wiki, assigned(:wiki)
     assert_equal @version, assigned(:version)
   end
 
   def test_version_not_found
-    run_before_filters :show, :wiki_id => @wiki.to_param, :id => '123'
-    assert_nil assigned(:version)
-    assert flashed_errors.any?, "expected an error to be displayed"
+    assert_raises ErrorNotFound do
+      run_before_filters :show, wiki_id: @wiki.to_param, id: '123'
+    end
   end
 
   def test_show
     assert_permission :may_edit_wiki? do
-      get :show, :wiki_id => @wiki.to_param, :id => @version.to_param
+      get :show, wiki_id: @wiki.to_param, id: @version.to_param
     end
     assert_equal @version, assigns['version']
   end
 
   def test_index
     assert_permission :may_edit_wiki? do
-      get :index, :wiki_id => @wiki.to_param
+      get :index, wiki_id: @wiki.to_param
     end
   end
 
-  def test_destroy
-    assert_difference "@wiki.versions.count", -1 do
-      assert_permission :may_admin_wiki? do
-        delete :destroy, :wiki_id => @wiki.to_param, :id => @version.to_param
-      end
+  def test_destroy_not_possible
+    assert_raise ActionController::RoutingError do
+      delete :destroy, wiki_id: @wiki.to_param, id: @version.to_param
     end
-    assert_response :redirect
-    assert_redirected_to wiki_versions_url(@wiki)
   end
 
   def test_revert
@@ -54,7 +50,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     @wiki.save
     assert_difference "@wiki.versions.count" do
       assert_permission :may_revert_wiki_version? do
-        post :revert, :wiki_id => @wiki.to_param, :id => @version.to_param
+        post :revert, wiki_id: @wiki.to_param, id: @version.to_param
       end
     end
     assert_equal @version.body, @wiki.reload.body

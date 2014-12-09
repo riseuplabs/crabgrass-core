@@ -1,26 +1,27 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 
 class EntitiesControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :keys,
+  fixtures :users, :groups, :castle_gates_keys,
           :memberships, :user_participations, :group_participations,
           :pages, :relationships, :geo_countries, :geo_admin_codes, :geo_places
 
   def test_preloading_entities
     login_as :blue
     blue = users(:blue)
-    xhr :get, :index, :format => :json, :view => :all, :query => ''
+    xhr :get, :index, format: :json, view: :all, query: ''
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     friends_and_peers = (blue.friends + blue.peers).uniq
-    assert_equal response["suggestions"].size,
-      friends_and_peers.count + blue.all_groups.count,
+    total_count = friends_and_peers.count + blue.all_groups.count
+    assert_equal total_count, assigns(:entities).count
+    assert_equal total_count, response["suggestions"].size,
       "suggestions should contain all friends, peers and groups."
     assert_holds_entities(response, '', 5)
   end
 
   def test_querying_entities
     login_as :red
-    xhr :get, :index, :format => :json, :view => :all, :query => 'pu'
+    xhr :get, :index, format: :json, view: :all, query: 'pu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'pu')
@@ -33,7 +34,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_equal 0, users(:quentin).groups.count,
       "quentin should not be in any groups."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'an'
+    xhr :get, :index, format: :json, view: :all, query: 'an'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'an')
@@ -46,7 +47,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert_equal 0, users(:red).friends.count,
       "red should not have any friends."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'qu'
+    xhr :get, :index, format: :json, view: :all, query: 'qu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_holds_entities(response, 'qu')
@@ -56,7 +57,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :red
     assert !users(:red).member_of?(groups(:private_group)),
       "red should not be in the private group."
-    xhr :get, :index, :format => :json, :view => :all, :query => 'pri'
+    xhr :get, :index, format: :json, view: :all, query: 'pri'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
@@ -67,7 +68,7 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :green
     assert_equal ["blue"], users(:orange).friends.map(&:login)
       "orange should only have blue as a friend."
-    xhr :get, :index, :format => :json, :view => :all, :query => 're'
+    xhr :get, :index, format: :json, view: :all, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
@@ -78,22 +79,22 @@ class EntitiesControllerTest < ActionController::TestCase
     login_as :green
     assert_equal ["blue"], users(:orange).friends.map(&:login)
       "orange should only have blue as a friend."
-    xhr :get, :index, :format => :json, :view => :users, :query => 're'
+    xhr :get, :index, format: :json, view: :users, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
       "orange can't see red"
   end
 
-#  def test_querying_locations
-#    login_as :blue
-#    xhr :get, :locations, :country => 1, :query => 'yen'
-#    assert_response :success
-#    response = ActiveSupport::JSON.decode(@response.body)
-#    assert response["suggestions"].size > 0
-#  end
+  #  def test_querying_locations
+  #    login_as :blue
+  #    xhr :get, :locations, :country => 1, :query => 'yen'
+  #    assert_response :success
+  #    response = ActiveSupport::JSON.decode(@response.body)
+  #    assert response["suggestions"].size > 0
+  #  end
 
-   def assert_holds_entities(response, query=nil, min_results = 0)
+  def assert_holds_entities(response, query=nil, min_results = 0)
     assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
     assert response["suggestions"].size > min_results,

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class MembershipTest < ActiveSupport::TestCase
 
@@ -9,7 +9,7 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_memberships
-    u = create_user :login => 'membershiptester'
+    u = create_user login: 'membershiptester'
     g = Group.find 1
     oldcount = g.users.count
     oldversion = g.version
@@ -32,8 +32,8 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_deleting_memberships
-    u1 = create_user :login => 'testy_one'
-    u2 = create_user :login => 'testy_two'
+    u1 = create_user login: 'testy_one'
+    u2 = create_user login: 'testy_two'
     g = groups(:animals)
 
     membership1 = g.add_user! u1
@@ -46,8 +46,8 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_duplicate_memberships
-    u = create_user :login => 'harry-potter'
-    g = Group.create :name => 'hogwarts-academy'
+    u = create_user login: 'harry-potter'
+    g = Group.create name: 'hogwarts-academy'
 
     g.add_user! u
     assert_raises(AssociationError) do
@@ -56,13 +56,13 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_group_membership_caching
-    u = create_user :login => 'hermione'
+    u = create_user login: 'hermione'
     assert_equal [], u.group_ids, 'should be no group (id)'
     assert_equal [], u.all_group_ids, 'should be no group (all id)'
     assert_equal [], u.groups, 'should be no groups'
     assert_equal [], u.all_groups, 'should no all_groups'
 
-    g = Group.create :name => 'hogwarts-academy'
+    g = Group.create name: 'hogwarts-academy'
     g.add_user! u
 
     assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
@@ -78,9 +78,9 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_group_membership_caching_with_a_committee
-    u = create_user :login => 'ron'
+    u = create_user login: 'ron'
 
-    g = Group.create :name => 'hogwarts-academy'
+    g = Group.create name: 'hogwarts-academy'
     g.add_user! u
 
     assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
@@ -89,7 +89,7 @@ class MembershipTest < ActiveSupport::TestCase
     # u.all_groups.reload
     assert_equal [g], u.all_groups, 'should be one group (all)'
 
-    c = Committee.new :name => 'dumbledores-army'
+    c = Committee.new name: 'dumbledores-army'
     g.add_committee!(c)
 
     assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
@@ -112,10 +112,10 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_clear_id_cache
-    u = create_user :login => 'peter'
+    u = create_user login: 'peter'
 
-    g1 = Group.create :name => 'pumpkin'
-    g2 = Group.create :name => 'eaters'
+    g1 = Group.create name: 'pumpkin'
+    g2 = Group.create name: 'eaters'
     g1.add_user! u
     g2.add_user! u
 
@@ -128,12 +128,12 @@ class MembershipTest < ActiveSupport::TestCase
   end
 
   def test_create_many_groups_join_some
-    u = create_user :login => 'pippi'
+    u = create_user login: 'pippi'
 
     g = []
     to_join = [2,3,5,7,11,13,17,19]
     for i in 0..19
-      g[i] = Group.create :name => 'group-%d' % i
+      g[i] = Group.create name: 'group-%d' % i
       if to_join.include? i
         g[i].add_user! u
       end
@@ -159,10 +159,10 @@ class MembershipTest < ActiveSupport::TestCase
 
     ## create groups
     max_groups.times do |i|
-      group = Group.create(:name => ('group-%d' % i))
+      group = Group.create(name: ('group-%d' % i))
       groups << group
       (rand(max_committees_per_group+1)).times do |j|
-        group.add_committee! Committee.create( :name => ('subgroup-%d-%d' % [i, j]) )
+        group.add_committee! Committee.create( name: ('subgroup-%d-%d' % [i, j]) )
       end
     end
 
@@ -208,8 +208,8 @@ class MembershipTest < ActiveSupport::TestCase
 
   protected
     def create_user(options = {})
-      user = User.new({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
-      user.profiles.build :first_name => "Test", :last_name => "Test", :friend => true
+      user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
+      user.profiles.build first_name: "Test", last_name: "Test", friend: true
       user.save!
       user
     end

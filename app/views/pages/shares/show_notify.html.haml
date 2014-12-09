@@ -1,18 +1,1 @@
-= formy(:tabs, :class => 'flat') do |f|
-  - f.tab do |t|
-    - t.label :send_button.t
-    - t.show_tab 'notify_tab'
-    - t.selected true
-  - f.tab do |t|
-    - t.label :participation.t
-    - t.show_tab 'participation_tab'
-    - t.selected false
-
-#notify_tab.tab_content.tab_area
-  = render :partial => 'pages/shares/notify_form'
-
-#participation_tab.tab_content.tab_area{:style=>'display:none'}
-  = render :partial => 'pages/participation/participation'
-  .buttons= close_modal_button
-
-
+= render partial: 'pages/shares/notify_form'

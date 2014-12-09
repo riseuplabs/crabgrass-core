@@ -4,7 +4,7 @@ class DiscussionPageController < Pages::BaseController
   end
 
   def print
-    render :layout => "printer-friendly"
+    render layout: "printer-friendly"
   end
 
   protected

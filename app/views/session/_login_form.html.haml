@@ -1,27 +1,39 @@
--# 
+-#
 -# this login form is used inline on the login page and for the login modal popup.
--# 
+-#
 -# for the popup, the class 'nofocus' tells modalbox to skip the element for
 -# tab focus.
 -#
 
-- @login_form_already_rendered = true
-- # if this form is rendered, then we don't create one on the menubar
 
 .login_form
-  = form_tag(login_path, :id => "entry") do
-    %div
-      %label(for = 'login')= :login_name.t
-      %span= link_to(:signup_link.t, new_account_path(:redirect => params[:redirect]), :class => 'nofocus')
-      = text_field_tag 'login', params['login'], :id => 'login', :tabindex => 1
-    %div.password
-      %label(for = 'password')= :login_password.t
-      %span= link_to(:forgot_password_link.t, reset_password_path, :class => 'nofocus')
-      = password_field_tag 'password', '', {:id => 'password', :tabindex => 2}
-    %div.buttons
-      %input{ :type => 'submit', :value => :login_button.t, :tabindex => 3, :class => 'btn btn-primary' }
+  = form_tag(login_path, id: "entry") do
+    - cache current_language do
+      #cookie_warning.alert.alert-error{display: 'none'}
+        = :cookie_disabled_warning.t
+      %div
+        %label(for = 'login')= :login_name.t
+        %span= link_to(:signup_link.t, new_account_path(redirect: params[:redirect]), class: 'nofocus')
+        = text_field_tag 'login', params['login'], id: 'login', tabindex: 1
+      %div.password
+        %label(for = 'password')= :login_password.t
+        %span= link_to(:forgot_password_link.t, reset_password_path, class: 'nofocus')
+        = password_field_tag 'password', '', {id: 'password', tabindex: 2}
+      %div.buttons
+        %input{ type: 'submit', value: :login_button.t, tabindex: 3, class: 'btn btn-primary' }
     %div
       - if params[:redirect]
         = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
+
+-# TODO: move into javascript assets
+:javascript
+  document.observe("dom:loaded", function() {
+    document.cookie = "are_cookies_enabled=1; expires=" + (new Date(Date.now() + 2000)).toGMTString();
+    if (document.cookie.length == 0) {
+      $('cookie_warning').show();
+    } else {
+      $('cookie_warning').hide();
+    }
+  });
 

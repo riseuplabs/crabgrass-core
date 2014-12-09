@@ -1,0 +1,14 @@
+.row.search.pull-right#user_search
+  = form_tag '',
+    id: 'user_search_form',
+    method: :get,
+    remote: true,
+    class: 'form-search' do
+    #autocomplete_container.input-append
+      = autocomplete_input_tag 'q', 'users',
+        value: @filter,
+        url: url_for(format: 'json'),
+        id: 'autocomplete_people',
+        class: 'search-query',
+        placeholder: :enter_name_of_person
+      %button.btn.btn-primary(type="submit")= :search.t

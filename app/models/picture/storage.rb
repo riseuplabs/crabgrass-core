@@ -1,17 +1,15 @@
 class Picture
   class Storage
-    attr_accessor :id, :content_type
 
     def initialize(picture)
-      id = picture.id
-      content_type = picture.content_type
+      @picture = picture
     end
 
-    def private_path(geometry)
+    def private_path(geometry=nil)
       File.join(private_directory, file_name(geometry))
     end
 
-    def public_path(geometry)
+    def public_path(geometry=nil)
       File.join(public_directory, file_name(geometry))
     end
 
@@ -25,9 +23,13 @@ class Picture
       [(width||0).to_i, (height||0).to_i]
     end
 
+    def average_color
+      GraphicsMagickTransmogrifier.new.average_color(private_path)
+    end
+
     def destroy_files
-      FileUtils.rm_rf(private_directory) if File.exists?(private_directory)
-      FileUtils.rm(public_directory) if File.exists?(public_directory)
+      FileUtils.rm_rf(private_directory) if File.exist?(private_directory)
+      FileUtils.rm(public_directory) if File.exist?(public_directory)
     end
 
     def destroy_file(geometry)
@@ -39,7 +41,7 @@ class Picture
     # Ensures storage directory exists for this Picture
     #
     def allocate_directory
-      FileUtils.mkdir_p(private_directory) unless File.exists?(private_directory)
+      FileUtils.mkdir_p(private_directory) unless File.exist?(private_directory)
       add_symlink # for now, all Pictures are public.
     end
 
@@ -49,10 +51,10 @@ class Picture
     # this makes the picture public
     #
     def add_symlink
-      unless File.exists?(public_directory)
+      unless File.exist?(public_directory)
 
         public_directory_parent = File.dirname(public_directory)
-        unless File.exists?(public_directory_parent)
+        unless File.exist?(public_directory_parent)
           FileUtils.mkdir_p(public_directory_parent)
         end
 
@@ -69,7 +71,7 @@ class Picture
   # this makes the picture private.
   #
   def remove_symlink
-    if File.exists?(public_directory)
+    if File.exist?(public_directory)
       FileUtils.rm(public_directory)
     end
   end
@@ -83,7 +85,7 @@ class Picture
     # e.g. id of 12345 produces ['0001','2345']
     #
     def directory
-      ("%08d" % id).scan(/..../)
+      ("%08d" % @picture.id).scan(/..../)
     end
 
     #
@@ -123,7 +125,7 @@ class Picture
     # returns the file extension suitable for this content_type
     #
     def ext
-      Media::MimeType.extension_from_mime_type(content_type).to_s
+      Media::MimeType.extension_from_mime_type(@picture.content_type).to_s
     end
 
   end

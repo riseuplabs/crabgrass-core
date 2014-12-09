@@ -15,19 +15,24 @@ module Common::Ui::EntityDisplayHelper
   #
   # there are some problems with this code. in particular, it does not handle
   # it very well when the user or group changes their avatar. also, this code
-  # duplicates some code in avatar_helper, in the interest of cutting out 
+  # duplicates some code in avatar_helper, in the interest of cutting out
   # a lot of logic and method calls.
   #
-  def link_to_name(name, id=nil)
+  # If you do not specify the avatar_id no avatar will be displayed.
+  # If you use and avatar id of 0 the fallback avatar will be used instead.
+  #
+  def link_to_name(name, avatar_id=nil)
     if name
       display_name = name.length > 16 ? force_wrap(name,16) : name
-      if id.nil?
-        '<a href="/%s" title="%s">%s</a>' % [name, name, display_name]
+      if avatar_id.nil?
+        '<a href="/%s" title="%s">%s</a>'.html_safe % [name, name, h(display_name)]
       else
         # with the id, we can also display the icon
-        icon_url = '/avatars/%s/xsmall.jpg' % id
-        '<a href="/%s" title="%s" class="icon xsmall" style="background-image: url(%s)">%s</a>' % [name, name, icon_url, display_name]
+        icon_url = '/avatars/%s/xsmall.jpg' % avatar_id
+        '<a href="/%s" title="%s" class="icon xsmall single" style="background-image: url(%s)">%s</a>'.html_safe % [name, name, icon_url, h(display_name)]
       end.html_safe
+    else
+      :unknown.t
     end
   end
 
@@ -56,7 +61,7 @@ module Common::Ui::EntityDisplayHelper
     if group
       options ||= {}
       unless options[:url] or options[:remote] or options[:function]
-        options = options.merge :url => group_path(group)
+        options = options.merge url: group_path(group)
       end
     end
     display_entity(group, options)
@@ -74,7 +79,7 @@ module Common::Ui::EntityDisplayHelper
     if user
       options ||= {}
       unless options[:url] or options[:remote] or options[:function]
-        options = options.merge :url => user_path(user)
+        options = options.merge url: user_path(user)
       end
     end
     display_entity(user, options)
@@ -178,7 +183,7 @@ module Common::Ui::EntityDisplayHelper
 
     # element
 
-    element_options = {:class => classes.join(' '), :style => styles.join(';'), :title => title}
+    element_options = {class: classes.join(' '), style: styles.join(';'), title: title}
     if options[:remote]
       link_to_remote(display, options[:remote], element_options)
     elsif options[:function]
@@ -200,12 +205,12 @@ module Common::Ui::EntityDisplayHelper
   def entity_list(entities, options={})
     if entities.any?
       avatar_size = options[:avatar] || current_theme.local_sidecolumn_icon_size
-      ul_list_tag(entities, :header => options[:header], :footer => options[:footer], :class => 'entities') do |entity|
-        link_to_entity(entity, :avatar => avatar_size, :class => options[:class])
+      ul_list_tag(entities, header: options[:header], footer: options[:footer], class: 'entities') do |entity|
+        link_to_entity(entity, avatar: avatar_size, class: options[:class])
       end
     end
   end
-  
+
 
   #
   # used to display a list of entities
@@ -272,11 +277,17 @@ module Common::Ui::EntityDisplayHelper
   # used to convert the text produced by activities & requests into actual links
   #
   def expand_links(text, options=nil)
-    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
-      if options
-        content_tag(:b, link_to_entity($2, options))
-      else
-        content_tag(:b, link_to_name($2))
+    if block_given?
+      options = text if text.is_a? Hash
+      text = yield
+    end
+    with_html_safety(text) do
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+        if options
+          content_tag(:b, link_to_entity($2, options))
+        else
+          content_tag(:b, link_to_name($2))
+        end
       end
     end
   end
@@ -284,10 +295,17 @@ module Common::Ui::EntityDisplayHelper
   #
   # converts the link markers in the text of activies and requests in bolded text
   #
-  def embold_links(text)
-    text.to_s.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
-      content_tag(:b, $2)
-    end.html_safe
+  def embold_links(text = nil)
+    text = yield if block_given?
+    with_html_safety(text) do
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+        content_tag(:b, $2)
+      end
+    end
+  end
+
+  def with_html_safety(text)
+    text.html_safe? ? yield.html_safe : yield
   end
 
 end

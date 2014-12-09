@@ -1,4 +1,3 @@
-
 en:
   ##
   ## GALLERY
@@ -7,8 +6,8 @@ en:
   order_changed: Order changed.
   error_saving_new_order_message: "Error saving new order: {{error_message}}"
   successfully_removed_image: Successfully removed image!
-  image_count: Image {{number}} of {{count}}
-  image_count_total: "{{count}} Photos"
+  image_count: Image %{number} of %{count}
+  image_count_total: "%{count} Photos"
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery

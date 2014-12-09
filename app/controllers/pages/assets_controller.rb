@@ -1,25 +1,20 @@
 class Pages::AssetsController < Pages::SidebarsController
 
-  permissions 'pages'
-  guard :destroy => :may_admin_page?
+  helper 'pages/assets'
 
   def index
-    render :partial => 'pages/assets/popup'
+    render partial: 'pages/assets/popup', content_type: 'text/html'
   end
 
   def update
     @page.cover = @asset
     @page.save!
-    render :template => 'pages/reset_sidebar'
+    render template: 'pages/reset_sidebar'
   end
 
   def create
-    @asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    @asset = @page.add_attachment! asset_params
     current_user.updated(@page)
-    render(
-      :template => 'pages/assets/create.js',
-      :content_type => 'text/javascript'
-    )
   end
 
   protected
@@ -29,6 +24,10 @@ class Pages::AssetsController < Pages::SidebarsController
     if @page and params[:id]
       @asset = @page.assets.find_by_id params[:id]
     end
+  end
+
+  def asset_params
+    params.require(:asset).permit(:uploaded_data)
   end
 
 end

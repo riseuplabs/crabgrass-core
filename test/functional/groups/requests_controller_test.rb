@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Groups::RequestsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
-    @group = Group.make
+    @user  = FactoryGirl.create(:user)
+    @group  = FactoryGirl.create(:group)
   end
 
 
@@ -12,7 +12,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     @group.add_user! @user
     login_as @user
     assert_permission :may_admin_group? do
-      get :index, :group_id => @group.to_param
+      get :index, group_id: @group.to_param
     end
     assert_response :success
   end
@@ -21,7 +21,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     login_as @user
     @group.add_user! @user
       assert_difference 'RequestToDestroyOurGroup.count' do
-        get :create, :group_id => @group.to_param, :type => 'destroy_group'
+        get :create, group_id: @group.to_param, type: 'destroy_group'
       end
     assert_response :redirect
   end

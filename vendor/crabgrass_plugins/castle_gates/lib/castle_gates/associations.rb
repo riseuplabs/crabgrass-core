@@ -1,53 +1,69 @@
 #
-# Code that makes it easy to use activerecord associations as holders.
+# Code that makes it easy to build holders based on Active Record associations
+# and relations.
 #
-# We extend activerecord here, so it might break for later versions.
+# For example CastleGates::Association.new(user, :peers) refers to all the
+# peers of the given user.
 #
 
 ##
-## AssociationProxyProxy
+## Association
 ##
 
 #
-# This class is a proxy for AssociationProxy.
+# This class is a proxy for the AR relation
 #
 # This double proxy keeps us from accidently hitting the database
-# and fetching the records from the association.
+# and fetching the records from the relation.
 #
 # For example, just the simple statement {@me.minions => :x} will trigger
 # fetching all the minions. Instead, we use @me.associated(:minions)
-# which will return an AssociationProxyProxy.
+# which will return an Association.
 #
-class AssociationProxyProxy
-  attr_reader :proxy
+class CastleGates::Association
+  attr_reader :owner, :relationship
 
-  def initialize(proxy)
-    @proxy = proxy
+  # owner can be a class to refer to all associations of a certain type
+  # for instance during definition or an instance to refer to a specific
+  # association of a concrete record.
+  def initialize(owner, relationship)
+    @owner = owner
+    @relationship = relationship
   end
-  def holder_class
-    @proxy.reflection.class
+
+  def holder_type
+    "#{owner_class.name}-#{relationship}"
   end
+
   def holder_code_suffix
-    @proxy.proxy_owner.id
+    @owner.id
   end
+
   def ==(other)
-    if other.is_a? AssociationProxyProxy
-      @proxy == other.proxy
+    if other.is_a? CastleGates::Association
+      owner == other.owner &&
+        relationship = other.relationship
+    elsif other.is_a? Symbol
+      false  # don't query the relation just to compare to Symbol
     else
-      @proxy == other
+      owner.send(relationship) == other
     end
+  end
+
+  def owner_class
+    owner.is_a?(Class) ? owner : owner.class
   end
 end
 
 ##
-## Extend AssociationProxy
+## Extend CollectionProxy
 ##
 
 #
 # make the private reflection variable accessible to the
-# AssociationProxyProxy.
+# Association.
 #
-ActiveRecord::Associations::AssociationProxy.class_eval do
+ActiveRecord::Associations::CollectionProxy.class_eval do
   def reflection
     @reflection
   end
@@ -61,17 +77,19 @@ ActiveRecord::Base.class_eval do
   #
   # returns an ActiveRecord::Reflection::AssociationReflection
   #
-  # This reflection is available from the AssociationProxy
+  # This reflection is available from the CollectionProxy
   # and will have a pointer to the holder definition.
   #
   class << self
-    alias_method :associated, :reflect_on_association
+    def associated(symbol)
+      CastleGates::Association.new(self, symbol)
+    end
   end
 
   #
   # return an association proxy proxy. double proxy!
   #
   def associated(symbol)
-    AssociationProxyProxy.new(self.send(symbol));
+    CastleGates::Association.new(self, symbol)
   end
 end

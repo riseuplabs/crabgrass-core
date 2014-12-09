@@ -32,19 +32,51 @@ module Common::Utility::ContextHelper
     end.reverse
   end
 
+  def context_class
+    @context.breadcrumbs.first if @context
+  end
+
   ##
   ## BANNER
   ##
 
   def context_banner_style
-    if picture = @context.entity.profiles.public.picture
-      banner_height = current_theme.int_var(:banner_padding) * 2 + current_theme.int_var(:icon_large) + 4
-      geometry = {:max_width => banner_width, :min_width => banner_width, :max_height => banner_height, :min_height => banner_height}
-      picture.add_geometry!(geometry)
-      "background-image: url(#{picture.url(geometry)})"
-    else
-      ""
+    @context_banner_style ||= if banner_picture
+      if banner_picture.add_geometry(banner_geometry)
+        url = banner_picture.url(banner_geometry)
+        if banner_picture.average_color
+          bg = rgb_to_hex(banner_picture.average_color)
+          fg = contrasting_color(banner_picture.average_color)
+          if fg == '#fff'
+            shadow = '#000'
+            nav_shade = 'rgba(0,0,0,0.2)'
+          else
+            shadow = '#fff'
+            nav_shade = 'rgba(255,255,255,0.3)'
+          end
+          "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
+          "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 2px}\n"+
+          "ul#banner_nav_ul li.tab a.tab {background-color: #{nav_shade}}"
+        else
+          "#banner_content {background-image: url(#{url})}"
+        end
+      end
     end
+  end
+
+  def context_picture_url(geometry)
+    if banner_picture
+      banner_picture.add_geometry(geometry)
+      picture.url(geometry)
+    end
+  end
+
+  def banner_geometry
+    @banner_geometry ||= {max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height}
+  end
+
+  def banner_picture
+    @banner_picture ||= @context && @context.entity.profiles.public.picture
   end
 
   ##
@@ -65,6 +97,29 @@ module Common::Utility::ContextHelper
   end
 
   private
+
+  #
+  # e.g. [255, 0, 0] => '#ff0000'
+  #
+  def rgb_to_hex(rgb)
+    '#' + rgb.map{|color|"%02x"%color}.join
+  end
+
+  #
+  # https://gamedev.stackexchange.com/questions/38536/given-a-rgb-color-x-how-to-find-the-most-contrasting-color-y/38542#38542
+  # Luminance calculation here is an approximation because RGB is not converted to linear sRGB.
+  #
+  def contrasting_color(rgb)
+    gamma = 2.2
+    red, green, blue = rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0
+    luminance = (0.2126*(red**gamma)) + (0.7152*(green**gamma)) + (0.0722*(blue**gamma))
+    p ['luminance', luminance]
+    if luminance >= 0.5
+      '#000'
+    else
+      '#fff'
+    end
+  end
 
   def crumb_to_s(crumb)
     if crumb.is_a? Array

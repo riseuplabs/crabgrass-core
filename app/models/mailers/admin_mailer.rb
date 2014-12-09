@@ -3,7 +3,8 @@ class AdminMailer < Mailer
     setup(options)
     setup_user(user)
     @subject += options[:subject]
-    body :message => options[:body]
+    @message = options[:body]
+    mail from: @from_address, to: user.email, subject: @subject
   end
 
 
@@ -11,17 +12,17 @@ class AdminMailer < Mailer
     setup(options)
     setup_user(user)
     @subject += "Inappropriate Content"
-    body :message => options[:body], :url => link(options[:url]), :owner => options[:owner]
+    @message = options[:body]
+    @url = link(options[:url])
+    @owner = options[:owner]
+    mail from: @from_address, to: user.email, subject: @subject
   end
 
   protected
 
   def setup_user(user)
-    @recipients   = "#{user.email}"
-    @from         = @from_address
-    @subject      = @site.title + ": "
-    @sent_on      = Time.now
-    @body[:user]  = user
+    @subject    = @site.title + ": "
+    @user = user
   end
 
 end

@@ -40,12 +40,12 @@ label}</a></span>).html_safe
   ## makes this: link | link | link
   def link_line(*links)
     char = content_tag(:em, link_char(links))
-    content_tag(:div, links.compact.join(char).html_safe, :class => 'link_line')
+    content_tag(:div, links.compact.join(char).html_safe, class: 'link_line')
   end
 
   def link_span(*links)
     char = content_tag(:em, link_char(links))
-    content_tag(:span, links.compact.join(char).html_safe, :class => 'link_line')
+    content_tag(:span, links.compact.join(char).html_safe, class: 'link_line')
   end
 
   ##
@@ -113,7 +113,7 @@ label}</a></span>).html_safe
 
     if block_given?
       link_to_toggle_without_block(label, id, options) +
-        content_tag(:div, capture(&block), :id => id, :style => style)
+        content_tag(:div, capture(&block), id: id, style: style)
     else
       link_to_toggle_without_block(label, id, options)
     end

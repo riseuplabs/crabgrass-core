@@ -2,7 +2,7 @@
 
 - url = me_activities_path
 - text = current_user.current_status
-- text_area = text_area_tag('post[body]', text, :rows => '8')
+- text_area = text_area_tag('post[body]', text, rows: '8')
 - send_button = submit_tag(:set_status_button.t)
 
 = form_tag(url) do

@@ -8,12 +8,12 @@
 #
 class RequestToFriend < Request
 
-  validates_format_of :recipient_type, :with => /User/
-  validate :no_friendship_yet, :on => :create
+  validates_format_of :recipient_type, with: /User/
+  validate :no_friendship_yet, on: :create
 
   def no_friendship_yet
     if Friendship.find_by_user_id_and_contact_id(created_by_id, recipient_id)
-      errors.add_to_base('Friendship already exists')
+      errors.add(:base, 'Friendship already exists')
     end
   end
 
@@ -48,11 +48,11 @@ class RequestToFriend < Request
   end
 
   def description
-    [:request_to_friend_description, {:user => user_span(created_by), :other_user => user_span(recipient)}]
+    [:request_to_friend_description, {user: user_span(created_by), other_user: user_span(recipient)}]
   end
 
   def short_description
-    [:request_to_friend_short, {:user => user_span(created_by), :other_user => user_span(recipient)}]
+    [:request_to_friend_short, {user: user_span(created_by), other_user: user_span(recipient)}]
   end
 
 end

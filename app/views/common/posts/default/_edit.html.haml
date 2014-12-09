@@ -1,0 +1,17 @@
+-#
+-# requires:
+-#   post
+-#   post_path must be defined.
+-#
+
+%div.post_body{id: post.body_id}
+  = form_for post, url: post_path(post), remote: true, method: :put,
+    html: {onsubmit: show_spinner('edit_post')} do |f|
+    = f.text_area :body, rows: 8
+    .right_buttons
+      = spinner('edit_post')
+      = submit_tag :delete_button.t, name: 'destroy', class: 'btn btn'
+      = submit_tag :cancel_button.t, name: 'cancel', class: 'btn btn'
+      = submit_tag :save_button.t, name: 'save', class: 'btn btn-primary'
+      .float_left= formatting_reference_link
+

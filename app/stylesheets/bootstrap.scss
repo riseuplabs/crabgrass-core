@@ -1,24 +1,28 @@
 //
-// This file is responsible for loading and customizing Boostrap SCSS
+// This file is responsible for loading and customizing Bootstrap SCSS
 //
 
 //
 // SET VARIABLES
 //
 
-// boostrap var ------> crabgrass theme var
+// bootstrap var ------> crabgrass theme var
 $baseFontSize:          $font_default_size;
 $baseFontFamily:        $font_default_family;
 $baseLineHeight:        $font_default_line_height;
 $textColor:             $font_default_color;
 
-//$gridColumns:           $grid_column_count;
-//$gridColumnWidth:       $grid_column_width;
-//$gridGutterWidth:       $grid_column_gutter;
-//$gridColumnWidth1200:     70px !default;
-//$gridGutterWidth1200:     30px !default;
-//$gridColumnWidth768:      42px !default;
-//$gridGutterWidth768:      20px !default;
+$headingsFontFamily:    $font_heading_family;
+$headingsFontWeight:    $font_heading_weight;
+$headingsColor:         $font_heading_color;
+
+$gridColumns:           $grid_column_count;
+$gridColumnWidth:       $grid_column_width;
+$gridGutterWidth:       $grid_column_gutter;
+$gridColumnWidth1200:   $grid_column_width;
+$gridGutterWidth1200:   $grid_column_gutter;
+$gridColumnWidth768:    $grid_column_width;
+$gridGutterWidth768:    $grid_column_gutter;
 
 //
 // SELECTIVE BOOTSTRAP
@@ -35,10 +39,10 @@ $textColor:             $font_default_color;
 @import "bootstrap/layouts";
 
 // Base CSS
-//@import "bootstrap/type";
+@import "bootstrap/type";
 //@import "bootstrap/code";
 @import "bootstrap/forms";
-//@import "bootstrap/tables";
+@import "bootstrap/tables";
 
 // Components: common
 //@import "bootstrap/sprites";
@@ -68,8 +72,8 @@ $textColor:             $font_default_color;
 //@import "bootstrap/thumbnails";
 //@import "bootstrap/media";
 //@import "bootstrap/labels-badges";
-//@import "bootstrap/progress-bars";
-//@import "bootstrap/accordion";
+@import "bootstrap/progress-bars";
+@import "bootstrap/accordion";
 //@import "bootstrap/carousel";
 //@import "bootstrap/hero-unit";
 
@@ -127,4 +131,23 @@ input, textarea, select, .uneditable-input {
   input, textarea, select {
     border-width: 2px;
   }
+}
+
+.form-horizontal .control-label {
+  padding-top: 0;
+}
+
+//
+// In normal bootstrap, plane ul is styled, and ul.unstyled is unstyled. This is annoying, because we almost always want an unstyled ul.
+// So, we switch it. Add .styled if you want the styled version.
+//
+
+ul, ol {
+  margin-left: 0;
+  list-style: none;
+}
+
+ul.styled, ol.styled {
+  padding: 0;
+  margin: 0 0 $baseLineHeight / 2 25px;
 }

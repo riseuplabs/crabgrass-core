@@ -1,5 +1,15 @@
 class RankingPoll < Poll
-  has_many :votes, :foreign_key => :votable_id, :class_name => "RankingVote", :dependent => :delete_all
+  has_many :votes, foreign_key: :votable_id, class_name: "RankingVote", dependent: :delete_all
+
+  def vote(user, picks)
+    votes.by_user(user).delete_all
+    picks.each_with_index do |pick, idx|
+      next if pick.to_i == 0
+      possible = possibles.find(pick)
+      next if possible.blank?
+      votes.create! user: user, value: idx, possible: possible
+    end
+  end
 
   #delegate :winners, :rank, :ranked_candidates, :to => :results
 
@@ -30,7 +40,7 @@ class RankingPoll < Poll
     ## the key is the user's id and the element is an array of all their votes
     ## where each vote is [possible_name, vote_value].
     ## eg. { 5 => [["A",0],["B",1]], 22 => [["A",1],["B",0]]
-    possibles = self.possibles.find(:all, :include => {:votes => :user})
+    possibles = self.possibles.find(:all, include: {votes: :user})
 
     possibles.each do |possible|
       possible.votes.each do |vote|

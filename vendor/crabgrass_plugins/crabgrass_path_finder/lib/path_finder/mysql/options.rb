@@ -13,13 +13,13 @@ module PathFinder::Mysql::Options
 
   def self.options_for_mentor(path, options)
     options.merge({
-      :user_ids => options[:user_ids]+options[:current_user].student_ids
+      user_ids: options[:user_ids]+options[:current_user].student_ids
     })
   end
 
   def self.options_for_public(path, options)
     options.merge({
-      :public => true
+      public: true
     })
   end
 
@@ -28,8 +28,8 @@ module PathFinder::Mysql::Options
     user_id = user.is_a?(User) ? user.id : user.to_i
 
     options.merge({
-      :public => true,
-      :secondary_user_ids => [user_id]
+      public: true,
+      secondary_user_ids: [user_id]
     })
   end
 
@@ -47,8 +47,8 @@ module PathFinder::Mysql::Options
     end
 
     options.merge({
-     :public => true,
-     :secondary_group_ids => group_ids
+     public: true,
+     secondary_group_ids: group_ids
     })
   end
 
@@ -57,8 +57,8 @@ module PathFinder::Mysql::Options
     group_ids = groups.first.is_a?(Group) ? groups.collect{|g|g.id.to_i} : groups.collect{|g|g.to_i}
 
     options.merge({
-     :public => true,
-     :secondary_group_ids => group_ids
+     public: true,
+     secondary_group_ids: group_ids
     })
   end
 

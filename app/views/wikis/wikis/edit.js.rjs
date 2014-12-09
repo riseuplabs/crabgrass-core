@@ -1,5 +1,27 @@
+template = local_assigns[:mode] || 'edit'
+
+if @section == :document
+  page.replace_html dom_id(@wiki), :partial => "wikis/wikis/#{template}"
+else
+  page.replace_html dom_id(@wiki, @section.underscore), :partial => "wikis/wikis/#{template}"
+  # don't allow multiple section edits at a time:
+  page << "$$('.wiki-section-edit').invoke('hide')"
+end
+
+if template == 'edit'
+  page << create_wiki_toolbar(@wiki)
+  page << confirm_discarding_wiki_edit_text_area(@wiki)
+  page << release_lock_on_unload(@wiki, @section)
+end
+
+# hide errors, stop spinners
 standard_update(page)
-page.replace_html dom_id(@wiki), :partial => 'wikis/wikis/edit'
-page << create_wiki_toolbar(@wiki)
-page << confirm_discarding_wiki_edit_text_area
-page << release_lock_on_unload unless @wiki.new_record?
+
+# clear it any current page message
+page << "if ($('inline-page-notice')) {$('inline-page-notice').hide()}"
+
+# hide the comment box while editing, if it exists (groups don't have comments)
+page << "if ($('posts')) {$('posts').hide()}"
+
+# make sure the edit tab is active
+page << "activateTabLink('%s')" % dom_id(@wiki, 'edit_tab')

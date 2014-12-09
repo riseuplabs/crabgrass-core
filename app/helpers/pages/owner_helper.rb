@@ -4,8 +4,8 @@ module Pages::OwnerHelper
 
   def change_page_owner
     if may_admin_page?
-      html = render(:partial => 'pages/details/change_owner')
-      link_to_modal(:edit.t, :html => html, :title => :page_create_owner.tcap, :icon => 'pencil')
+      html = render(partial: 'pages/details/change_owner')
+      link_to_modal(:edit.t, html: html, title: :page_create_owner.tcap, icon: 'pencil')
     end
   end
 
@@ -26,9 +26,9 @@ module Pages::OwnerHelper
   def options_for_page_owner(options={})
     options_for_select_group(
       options.merge(
-       :include_me => true,
-       :include_committees => true,
-       :include_none => !Conf.ensure_page_owner?
+       include_me: true,
+       include_committees: true,
+       include_none: !Conf.ensure_page_owner?
       )
     )
   end

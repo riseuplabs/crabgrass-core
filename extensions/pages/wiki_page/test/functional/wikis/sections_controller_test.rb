@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
 
 class Wikis::SectionsControllerTest < ActionController::TestCase
+  tests Wikis::WikisController
+
   fixtures :pages, :users, :user_participations, :wikis
 
   def test_edit
     login_as :blue
-    xhr :get, :edit, :wiki_id => pages(:multi_section_wiki).data_id, :id => "second-oversection"
+    xhr :get, :edit, id: pages(:multi_section_wiki).data_id, section: "second-oversection"
 
     assert_response :success
 
@@ -17,8 +19,8 @@ class Wikis::SectionsControllerTest < ActionController::TestCase
     # nothing should appear locked to blue
     assert_equal wiki.all_sections, wiki.sections_open_for(users(:blue)), "no sections should look locked to blue"
     assert_equal wiki.all_sections - ['section-three', 'second-oversection', :document],
-                  wiki.sections_open_for(users(:gerrard)),
-                  "no sections except what blue has locked (and its ancestors) should look locked to gerrard"
+      wiki.sections_open_for(users(:gerrard)),
+      "no sections except what blue has locked (and its ancestors) should look locked to gerrard"
 
   end
 
@@ -30,13 +32,13 @@ class Wikis::SectionsControllerTest < ActionController::TestCase
     ## headings without a leading return. (ie "</ul><h1>" )
     ##
 
-    page = WikiPage.create! :title => 'problem text', :owner => 'blue' do |page|
-      page.data = Wiki.new(:body => "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
+    page = WikiPage.create! title: 'problem text', owner: 'blue' do |page|
+      page.data = Wiki.new(body: "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
     end
-    get :show, :wiki_id => page.data_id
+    get :show, id: page.data_id
     page = assigns(:page)
     assert_nothing_raised do
-      xhr :get, :edit, :wiki_id => page.data_id, :id => "hello"
+      xhr :get, :edit, id: page.data_id, section: "hello"
     end
 
     assert_response :success
@@ -47,9 +49,10 @@ class Wikis::SectionsControllerTest < ActionController::TestCase
     login_as :blue
     # save the new (without a header)
     xhr :put, :update,
-      :wiki_id => pages(:multi_section_wiki).data_id,
-      :id => "section-three",
-      :wiki => {:body => "a line"}
+      id: pages(:multi_section_wiki).data_id,
+      section: "section-three",
+      wiki: {body: "a line"},
+      save: true
 
     assert_response :success
     wiki = assigns(:wiki)

@@ -1,0 +1,2 @@
+tab = params[:tab]
+page.replace_html "#{tab}_tab", :partial => tab

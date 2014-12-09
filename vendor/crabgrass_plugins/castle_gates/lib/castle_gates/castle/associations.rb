@@ -20,55 +20,60 @@ def self.included(base)
     #
     scope(:with_access, lambda {|args|
       holder, gates = args.first
-      holder = Holder[holder]
-      key_condition, key_values = Key.conditions_for_holder(holder)
-      gate_condition = conditions_for_gates(gates)
-      {
-        :joins => :keys,
-        :select => "DISTINCT #{self.table_name}.*",
-        :conditions => [gate_condition + " AND " + key_condition, key_values]
-      }
+      holder = Holder[holder, self]
+
+      joins(:keys).
+        where(conditions_for_gates(gates)).
+        where("castle_gates_keys.holder_code" => holder.all_codes).
+        select("DISTINCT #{self.quoted_table_name}.*")
     }) do
-      def count
-        super :id, :distinct => true
+      # Preserve the DISTINCT in count by default
+      # Pagination needs this.
+      # UPGRADE: this can be worked around by a .distinct in newer rails versions
+      def count(column_name = nil, options = {})
+        if column_name.blank? && options.blank?
+          super("#{self.quoted_table_name}.id", distinct: true)
+        else
+          # super causes Stack level too deep with ruby 1.9.2 here
+          # UPGRADE use super again once we are sure to use ruby >= 1.9.3
+          column_name, options = nil, column_name if column_name.is_a?(Hash)
+          calculate(:count, column_name, options)
+        end
       end
     end
 
     #
-    # i could not figure out how to make self.count automatically do a distinct
-    # if scope 'with_access' is active. for now, if you want to combine 'count'
-    # with 'with_access', then you to use this distinct_count.
+    # alternative implementation of with_access using a subselect.
+    # It's faster for getting all castles. However usually there are
+    # conditions on the castles that make the join a lot faster.
     #
-    def self.distinct_count
-      calculate(:count, :id, :distinct => true)
-    end
+    scope(:all_with_access, lambda {|args|
+      holder, gates = args.first
+      subselect = subselect_for_holder_and_gates(holder, gates)
+      where("#{self.quoted_table_name}.id IN (#{subselect})")
+    })
 
     ##
     ## KEYS
     ##
 
     has_many :keys,
-             :class_name => "CastleGates::Key",
-             :as => :castle,
-             :dependent => :delete_all do
+             class_name: "CastleGates::Key",
+             as: :castle,
+             dependent: :delete_all do
 
       #
       # finds a key for a holder, initializing it in memory if it does not exist.
       #
       def find_by_holder(holder)
-        holder = Holder[holder]
-        key = find_or_initialize_by_holder_code(holder.code)
-        if key.new_record?
-          castle = proxy_owner
-          key.gate_bitfield |= castle.gate_set.default_bits(castle, holder)
-        end
-        key
+        holder = Holder[holder, self]
+        find_or_initialize_by_holder_code(holder.code)
       end
 
       def select_holder_codes
-        castle = proxy_owner
+        castle = proxy_association.owner
         sti_type = castle.store_full_sti_class ? castle.class.name : castle.class.base_class.name
-        self.connection.select_values("SELECT DISTINCT `keys`.`holder_code` FROM `keys` WHERE `keys`.`castle_type` = '%s' AND `keys`.`castle_id` = %s" % [sti_type, castle.id])
+        self.connection.select_values("SELECT DISTINCT `castle_gates_keys`.`holder_code` FROM `castle_gates_keys` WHERE `castle_gates_keys`.`castle_type` = '%s' AND `castle_gates_keys`.`castle_id` = %s" % [sti_type, castle.id])
       end
 
     end
@@ -87,7 +92,7 @@ def self.included(base)
     #          :conditions => 'holder_code IN (#{User.current.access_codes.join(", ")})',
     #          :as => :castle do
     #   def open?(locks)
-    #     proxy_owner.class.keys_open_locks?(self, locks)
+    #     proxy_association.owner.class.keys_open_locks?(self, locks)
     #   end
     #   def gate_bitfield
     #     if ActiveRecord::Base.connection.adapter_name == 'SQLite'

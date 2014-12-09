@@ -1,5 +1,7 @@
 class CreateAssetPageController < Pages::CreateController
 
+  before_filter :ensure_asset, only: :create
+
   def new
     @form_sections.unshift('file')
     @form_sections.delete('title')
@@ -8,7 +10,7 @@ class CreateAssetPageController < Pages::CreateController
   end
 
   def create
-    @asset = Asset.build params[:asset].merge(:user => current_user)
+    @asset = Asset.build asset_params
     @asset.validate!
 
     @page = build_new_page!
@@ -25,5 +27,15 @@ class CreateAssetPageController < Pages::CreateController
     AssetPage
   end
 
+  def asset_params
+    params.require(:asset).permit(:uploaded_data).merge(user: current_user)
+  end
+
+  def ensure_asset
+    if params[:asset].blank?
+      warning :select_file_to_upload.t
+      new
+    end
+  end
 end
 

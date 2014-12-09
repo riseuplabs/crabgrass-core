@@ -4,7 +4,7 @@ module Common::Application::CurrentSite
     base.class_eval do
       # make current_site available to the views
       helper_method :current_site
-      if RAILS_ENV == 'test'
+      if Rails.env.test?
         hide_action :disable_current_site, :enable_current_site
       end
     end
@@ -17,9 +17,9 @@ module Common::Application::CurrentSite
     if !@current_site_disabled
       @current_site ||= begin
         host = request.host.sub(/^staging\./, '')
-        site = Site.for_domain(host).find(:first)
+        site = Site.for_domain(host).first
         site ||= Site.default
-        site ||= Site.new(:domain => host, :name => 'custom')
+        site ||= Site.new(domain: host, name: 'custom')
         Site.current = site
         # ^^ not so nice, but required for now. used by i18n
       end
@@ -30,7 +30,7 @@ module Common::Application::CurrentSite
 
   public
 
-  if RAILS_ENV == 'test'
+  if Rails.env.test?
 
     # used for testing
     def disable_current_site

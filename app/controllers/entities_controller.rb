@@ -14,32 +14,52 @@
 
 class EntitiesController < ApplicationController
 
-  verify :xhr => true
+  before_filter :login_required
 
   LIMIT = 20
 
   def index
     @entities = case params[:view]
-      when 'recipients' then recipients();
-      when 'groups' then groups();
-      when 'users' then users();
-      when 'all' then all();
-      else all();
+      when 'recipients' then recipients
+      when 'groups' then groups
+      when 'users' then users
+      when 'members' then members
+      when 'all' then all
+      else all
     end
   end
 
   private
 
   #
+  # all the people in a group, if you are allowed to see them
+  #
+  def members
+    group = Group.find_by_name(params[:group])
+    logger.error params[:group]
+    if current_user.may?(:see_members, group)
+      if preload?
+        group.users
+      else
+        []
+      #elsif filter.present?
+      #  group.users.named_like(filter).find(:all, :limit => LIMIT)
+      end
+    else
+      []
+    end
+  end
+
+  #
   # people that the current user is allowed to pester
   #
   def recipients
     if preload?
-      User.friends_or_peers_of(current_user).with_access(current_user => :pester)
-    elsif filter.any?
+      User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
+    elsif filter.present?
       recipients = User.strangers_to(current_user)
-      recipients = recipients.with_access(:public => :pester)
-      recipients.named_like(filter).find(:all, :limit => LIMIT)
+      recipients = recipients.with_access(public: :pester)
+      recipients.named_like(filter).find(:all, limit: LIMIT)
     end
   end
 
@@ -49,10 +69,10 @@ class EntitiesController < ApplicationController
   def groups
     if preload?
       current_user.all_groups
-    elsif filter.any?
+    elsif filter.present?
       other_groups = Group.without_member(current_user)
-      other_groups = other_groups.with_access(:public => :view)
-      other_groups.named_like(filter).find :all, :limit => LIMIT
+      other_groups = other_groups.with_access(public: :view)
+      other_groups.named_like(filter).find :all, limit: LIMIT
     end
   end
 
@@ -62,11 +82,11 @@ class EntitiesController < ApplicationController
   def users
     if preload?
       # preload user's groups
-      User.friends_or_peers_of(current_user).with_access(current_user => :view)
-    elsif filter.any?
+      User.friends_or_peers_of(current_user).all_with_access(current_user => :view)
+    elsif filter.present?
       strangers = User.strangers_to(current_user)
-      strangers = strangers.with_access(:public => :view)
-      strangers.named_like(filter).find(:all, :limit => LIMIT)
+      strangers = strangers.with_access(public: :view)
+      strangers.named_like(filter).find(:all, limit: LIMIT)
     end
   end
 
@@ -81,17 +101,12 @@ class EntitiesController < ApplicationController
   protected
 
   def filter
-    @filter ||= begin
-      if params[:query].any?
-        "#{params[:query]}%"
-      else
-        ""
-      end
-    end
+    @query = params[:query]
+    @query.present? ? "#{params[:query].strip}%" : ""
   end
 
   # the autocomplete will issues an empty query when first loaded.
-  # which gives us an oppotunity to early load likely results.
+  # which gives us an opportunity to early load likely results.
   def preload?
     filter.empty? and logged_in?
   end

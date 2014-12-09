@@ -216,11 +216,13 @@ module Media
     end
 
     #def self.command_available?(command)
-    #  command.any? and File.file?(command) and File.executable?(command)
+    #  command.present? and File.file?(command) and File.executable?(command)
     #end
 
     def command_available?(command)
-      command.any? and File.file?(command) and File.executable?(command)
+      command and
+      File.file?(command) and
+      File.executable?(command)
     end
 
     ##
@@ -266,7 +268,7 @@ module Media
     def replace_extension(filename, new_extension)
       old_extension = (File.extname(filename) || '').to_s
       new_extension = new_extension.to_s
-      if old_extension.any?
+      if !old_extension.empty?
         base = File.basename(filename, old_extension)
       else
         base = filename
@@ -292,9 +294,9 @@ module Media
     def replace_file(args={})
       from = args[:from].to_s
       to   = args[:to].to_s
-      raise ArgumentError unless from.any? && to.any?
-      if File.exists?(from)
-        if File.exists?(to)
+      raise ArgumentError if from.empty? || to.empty?
+      if File.exist?(from)
+        if File.exist?(to)
           FileUtils.rm(to)
         end
         FileUtils.mv(from, to)
@@ -365,7 +367,7 @@ module Media
     #
     def restore_temporary_outfile
       if @temporary_outfile
-        replace_file :from => output_file, :to => @outfile_to_return
+        replace_file from: output_file, to: @outfile_to_return
         self.output_file = @outfile_to_return
       end
       return true

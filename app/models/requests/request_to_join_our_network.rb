@@ -5,10 +5,10 @@
 #
 class RequestToJoinOurNetwork < Request
 
-  validates_format_of :requestable_type, :with => /Group/
-  validates_format_of :recipient_type, :with => /Group/
+  validates_format_of :requestable_type, with: /Group/
+  validates_format_of :recipient_type, with: /Group/
 
-  validate :no_membership_yet, :on => :create
+  validate :no_membership_yet, on: :create
   validate :requestable_is_network
   validate :group_is_not_network
   validate :group_is_not_network_committee
@@ -37,11 +37,11 @@ class RequestToJoinOurNetwork < Request
   end
 
   def description
-    [:request_to_join_our_network_description, {:group => group_span(group), :network => group_span(network)}]
+    [:request_to_join_our_network_description, {group: group_span(group), network: group_span(network)}]
   end
 
   def short_description
-    [:request_to_join_our_network_short, {:group => group_span(group), :network => group_span(network)}]
+    [:request_to_join_our_network_short, {group: group_span(group), network: group_span(network)}]
   end
 
   def icon_entity
@@ -52,25 +52,25 @@ class RequestToJoinOurNetwork < Request
 
   def requestable_is_network
     unless requestable.type =~ /Network/
-      errors.add_to_base('requestable must be a network')
+      errors.add(:base, 'requestable must be a network')
     end
   end
 
   def no_membership_yet
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
-      errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
+      errors.add(:base, I18n.t(:membership_exists_error, member: group.name))
     end
   end
 
   def group_is_not_network
     if group.network?
-      errors.add_to_base(I18n.t(:networks_may_not_join_networks))
+      errors.add(:base, I18n.t(:networks_may_not_join_networks))
     end
   end
 
   def group_is_not_network_committee
     if group.committee? && group.parent.network?
-      errors.add_to_base(I18n.t(:network_committees_may_not_join_networks))
+      errors.add(:base, I18n.t(:network_committees_may_not_join_networks))
     end
   end
 end

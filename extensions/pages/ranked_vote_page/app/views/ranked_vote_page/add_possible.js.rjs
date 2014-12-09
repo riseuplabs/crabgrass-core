@@ -1,7 +1,0 @@
-# adds a newly created task to the bottom of the pending tasks
-page.insert_html :bottom, 'sort_list_unvoted', :partial => 'possible', :locals => {:possible => @possible}
-
-page.sortable 'sort_list_unvoted', :handle => 'handle',
-  :containment => ['sort_list_voted', 'sort_list_unvoted'],
-  :url => page_xurl(@page, :action=>'sort')
-

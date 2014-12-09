@@ -1,35 +1,22 @@
-
 module Common::Application::BeforeFilters
+  extend ActiveSupport::Concern
 
-  def self.included(base)
-    base.class_eval do
-      # the order of these filters matters. change with caution.
-      before_filter :set_session_locale
-      before_filter :set_session_timezone
-      before_filter :header_hack_for_ie6
-      before_filter :redirect_unverified_user
-      before_filter :enforce_ssl_if_needed
-      before_filter :setup_theme
-      before_render :setup_context
-    end
+  included do
+    # the order of these filters matters. change with caution.
+    before_filter :set_session_locale
+    before_filter :set_session_timezone
+    before_filter :header_hack_for_ie6
+    before_filter :redirect_unverified_user
+    before_filter :enforce_ssl_if_needed
+    before_filter :setup_theme
+    before_render :setup_context
   end
 
-  protected
-
-  # ensure that essential_initialization ALWAYS comes first
-  def process_action(method_name, *args)
-    essential_initialization
-    super
-  end
 
   private
 
   def enforce_ssl_if_needed
     request.session_options[:secure] = nil #current_site.enforce_ssl #needs to be fixed
-  end
-
-  def essential_initialization
-    # current_site
   end
 
   def header_hack_for_ie6
@@ -46,14 +33,51 @@ module Common::Application::BeforeFilters
 
   def redirect_unverified_user
     if logged_in? and current_user.unverified?
-      redirect_to account_url(:action => 'unverified')
+      redirect_to account_url(action: 'unverified')
     end
   end
 
-  # if we have login_required this will be called and check the
+  # Filter method to enforce a login requirement.
+  #
+  # By default we require login for all actions.
+  #
+  # To not require logins for specific actions, use this in your controllers:
+  #
+  #   skip_before_filter :login_required, :only => [ :view, :index ]
+  #
+  # To not require them for any action:
+  #
+  #   skip_before_filter :login_required
+  #
+  def login_required
+    process_login
+    raise_authentication_required unless logged_in?
+  end
+
+  # Filter method to enforce authorization.
+  #
+  # By default we require this for all actions.
+  #
+  # To allow actions by default use guard in your controllers:
+  #
+  #   guard :allow
+  #   guard :edit => :may_edit_robot?
+  #
+  # To not require authorization for a specific action:
+  #
+  #   guard :show => :allow
+  #
+  def authorization_required
+    raise_denied unless authorized?
+  end
+
+  #
+  # if we have authorization_required this will be called and check the
   # permissions accordingly
+  #
+  # overwrite if you want to handle permissions differently
   def authorized?
-    check_permissions!
+    check_permissions
   end
 
   #
@@ -71,7 +95,10 @@ module Common::Application::BeforeFilters
   # set the current timezone, if the user has it configured.
   #
   def set_session_timezone
-    Time.zone = current_user.time_zone if logged_in?
+    Time.zone = current_user.time_zone
+  rescue ArgumentError # invalid string
+    Rails.logger.warn "Invalid time zone #{current_user.time_zone} for user #{current_user.login}"
+    Time.zone = Time.zone_default
   end
 
   #
@@ -126,9 +153,9 @@ module Common::Application::BeforeFilters
       'en'
     elsif !logged_in? || current_user.language.empty?
       if Conf.enabled_languages.any?
-         code = request.compatible_language_from(Conf.enabled_languages)
+         code = http_accept_language.compatible_language_from(Conf.enabled_languages)
       else
-         code = request.user_preferred_languages.first
+         code = http_accept_language.user_preferred_languages.first
       end
       code ||= current_site.default_language
       code ||= 'en'

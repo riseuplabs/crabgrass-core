@@ -1,7 +1,7 @@
 About the scripts
 =======================
 
-history.js
+libraries/history.js
   A library to make HTML5 window.history work better, and also fallback
   gracefully for HTML4 browsers. It is a little heavyweight, and includes
   a bunch of features we don't need -- like storing data with history.
@@ -13,14 +13,18 @@ prototype.js
   scriptaculous effects for prototype that we also use.
 
 
-IE9.js
+ie/IE9.js
   makes all versions of IE behave pretty close to IE9
 
 
 Using scripts
 =========================
 
-The optional scripts are loaded like so:
+We currently load all scripts on all pages. The aditional javascript
+for wiki and upload functionality is so small that we might as well
+include it rather than determining what to include for every request.
+
+The optional scripts used to be loaded like so:
 
   class MyController < ApplicationController
     javascript :tasks, :wiki

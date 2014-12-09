@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class SocialUserTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :pages, :keys
+  fixtures :users, :groups, :pages, :castle_gates_keys
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
@@ -48,23 +48,28 @@ class SocialUserTest < ActiveSupport::TestCase
   end
 
   def test_pestering
-    users(:green).revoke_access! :public => :pester
+    green = users(:green)
+    kangaroo = users(:kangaroo)
+    red = users(:red)
+    green.revoke_access! public: :pester
 
-    assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
-    assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should be not be able to pester'
+    assert kangaroo.stranger_to?(green), 'must be strangers'
+    assert !kangaroo.may?(:pester, green), 'strangers should be not be able to pester'
 
-    assert users(:red).peer_of?(users(:green)), 'must be peers'
-    assert users(:red).may_pester?(users(:green)), 'peers should always be able to pester'
+    assert red.peer_of?(green), 'must be peers'
+    assert red.may?(:pester, green), 'peers should always be able to pester'
 
     #users(:green).profiles.public.may_pester = true
-    users(:green).grant_access! :public => :pester
-    assert users(:kangaroo).may_pester?(users(:green)), 'should be able to pester if set in profile'
+    green.grant_access! public: :pester
+    assert !kangaroo.may?(:pester, green), 'we cache access permissions'
+    kangaroo.clear_access_cache
+    assert kangaroo.may?(:pester, green), 'should be able to pester if set in profile'
   end
 
   protected
     def create_user(options = {})
-      user = User.new({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
-      user.profiles.build :first_name => "Test", :last_name => "Test", :friend => true
+      user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
+      user.profiles.build first_name: "Test", last_name: "Test", friend: true
       user.save!
       user
     end

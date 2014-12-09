@@ -12,28 +12,39 @@ module GroupExtension::Users
       before_destroy :destroy_memberships
 #      before_create :set_created_by
 
-      has_many :memberships, :before_add => :check_duplicate_memberships
+      has_many :memberships, before_add: :check_duplicate_memberships
 
-      has_many :users, :through => :memberships do
+      has_many :users, through: :memberships do
         def <<(*dummy)
-          raise Exception.new("don't call << on group.users");
+          raise "don't call << on group.users"
         end
         def delete(*records)
-          raise Exception.new("don't call delete on group.users");
+          raise "don't call delete on group.users"
         end
         def most_recently_active(options={})
-          find(:all, {:order => 'memberships.visited_at DESC', :limit => 10}.merge(options))
+          find(:all, {order: 'memberships.visited_at DESC', limit: 10}.merge(options))
+        end
+        # UPGRADE: This is a workaround for the lack of declaring a
+        # query DISTINCT and having that applied to the final query.
+        # it won't be needed anymore as soon as .distinct can be used
+        # with rails 4.0
+        def with_access(access)
+          super(access).only_select("DISTINCT users.*")
         end
       end
 
       # tmp hack until we have a better viewing system in place.
-      scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}
+      scope :most_visits, joins(:memberships).
+        group('groups.id').
+        order('count(memberships.total_visits) DESC')
 
-      scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
+      scope :recent_visits, joins(:memberships).
+        group('groups.id').
+        order('memberships.visited_at DESC')
 
-      scope :with_admin, lambda { |user|
-        {:conditions => ["groups.id IN (?)", user.admin_for_group_ids]}
-      }
+      def self.with_admin(user)
+        where("groups.id IN (?)", user.admin_for_group_ids)
+      end
 
     end
   end
@@ -49,6 +60,13 @@ module GroupExtension::Users
   #    return self.users
   #  end
   #end
+
+  #
+  # timestamp of the last visit of a user
+  #
+  def last_visit_of(user)
+    memberships.where(user_id: user).first.try.visited_at
+  end
 
   def user_ids
     @user_ids ||= memberships.collect{|m|m.user_id}
@@ -89,7 +107,7 @@ module GroupExtension::Users
   # all other methods will not work.
   #
   def add_user!(user)
-    self.memberships.create! :user => user
+    self.memberships.create! user: user
     user.update_membership_cache
     user.clear_peer_cache_of_my_peers
     clear_key_cache

@@ -3,13 +3,19 @@
 ##
 
 class SurveyPageResponseController < Pages::BaseController
-  stylesheet 'survey'
-  javascript :extra
-  javascript 'survey'
   helper 'survey_page'
+
+  guard show: :may_view_survey_response?,
+    list: :may_view_survey_response?,
+    update: :may_modify_survey_response?,
+    edit: :may_modify_survey_response?,
+    new: :may_create_survey_response?,
+    make: :may_create_survey_response?,
+    destroy: :may_destroy_survey_response?
+
   permissions 'survey_page'
 
-  verify :method => :post, :only => [:make, :update, :destroy]
+  before_filter :verify_post, only: [:make, :update, :destroy]
 
   def new
     @response = SurveyResponse.new
@@ -22,16 +28,16 @@ class SurveyPageResponseController < Pages::BaseController
       resp.user = current_user # (user_id is protected)
     end
     current_user.updated(@page)
-    flash_message :success => I18n.t(:survey_thanks_submit_message)
+    flash_message success: I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
+      flash_message success: I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => I18n.t(:survey_please_check_message)
+      flash_message success: I18n.t(:survey_please_check_message)
     end
-    redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
-  rescue Exception => exc
-    flash_message_now :exception => exc, :object => @response
-    render :template => 'survey_page_response/new'
+    redirect_to page_url(@page, action: 'response-show', id: @response.id)
+  rescue => exc
+    flash_message_now exception: exc, object: @response
+    render template: 'survey_page_response/new'
   end
 
   def edit
@@ -39,39 +45,40 @@ class SurveyPageResponseController < Pages::BaseController
 
   def update
     @response.update_attributes!(params[:response])
-    flash_message :success => I18n.t(:survey_thanks_submit_message)
+    flash_message success: I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
+      flash_message success: I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => I18n.t(:survey_please_check_message)
+      flash_message success: I18n.t(:survey_please_check_message)
     end
-    redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
-  rescue Exception => exc
-    flash_message_now :object => @response, :exc => exc
+    redirect_to page_url(@page, action: 'response-show', id: @response.id)
+  rescue => exc
+    flash_message_now object: @response, exc: exc
   end
 
   def destroy
     @response.destroy
     if @response.user_id == current_user.id and may_create_survey_response?
-      redirect_to page_url(@page, :action => 'response-new')
+      redirect_to page_url(@page, action: 'response-new')
     elsif may_view_survey_response?
-      redirect_to page_url(@page, :action => 'response-list')
+      redirect_to page_url(@page, action: 'response-list')
     else
-      redirect_to page_url(@page, :action => 'show')
+      redirect_to page_url(@page, action: 'show')
     end
   end
 
   def show
     @response = @survey.responses.find_by_id params[:id]
     if params[:jump]
-      redirect_to page_url(@page,  :controller => :response, :action => :show, :id => get_jump_id)
+      redirect_to page_url(@page,  controller: :response, action: :show, id: get_jump_id)
     end
   end
 
   def list
-    @responses = @survey.responses.paginate(:all,
-      :include => ['answers', 'ratings'],
-      :page => params[:page])
+    @responses = @survey.responses.paginate({
+      include: ['answers', 'ratings'],
+      page: params[:page]
+    })
   end
 
   # xhr and get
@@ -98,7 +105,7 @@ class SurveyPageResponseController < Pages::BaseController
       # don't count zero rating, but create the record so we know the user
       # didn't want to rate it:
       params[:rating] = nil if params[:rating] == "0"
-      Rating.create!(:rateable => @response, :user => current_user, :rating => params[:rating])
+      Rating.create!(rateable: @response, user: current_user, rating: params[:rating])
     end
 
     # display the current response
@@ -114,6 +121,10 @@ class SurveyPageResponseController < Pages::BaseController
 
 
   protected
+
+  def verify_post
+    raise PermissionDenied unless request.post?
+  end
 
   # called early in filter chain
   def fetch_data

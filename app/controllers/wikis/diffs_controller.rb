@@ -1,6 +1,6 @@
 class Wikis::DiffsController < Wikis::BaseController
 
-  guard :show => :may_show_wiki_diff?
+  guard show: :may_show_wiki_diff?
 
   helper 'wikis/versions'
   javascript :wiki
@@ -9,7 +9,7 @@ class Wikis::DiffsController < Wikis::BaseController
     if @old
       @diff = Crabgrass::Wiki::HTMLDiff.diff(@old.body_html, @new.body_html)
     else
-      render :template => '/wikis/versions/show'
+      render template: '/wikis/versions/show'
     end
   end
 

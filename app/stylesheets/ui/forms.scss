@@ -3,17 +3,41 @@
 //
 
 //
-// in general, horizontal resizing messes up the layout. 
+// in general, horizontal resizing messes up the layout.
 // so, if you want that, enable it explicitly.
 //
 
 textarea {
   resize: vertical;
-  margin: 0;
+  // somehow pading and border seem to be counted for text areas
+  width: 220px;
 }
 
 //
-// this seems to make form elements line up better, 
+// sometimes, we want big input fields
+//
+input.big {
+  font-size: $font_heading_h2_size !important;
+}
+
+//
+// sometimes we really want full width controls.
+// this flies in the face of what bootstrap does for control sizes, so we have
+// to step on bootstraps toes a bit to make this work.
+//
+
+input, textarea {
+  &.full_width {
+    width: 100%;
+    height: inherit;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+}
+
+//
+// this seems to make form elements line up better,
 // especially in chrome:
 //
 
@@ -27,7 +51,7 @@ textarea {
 //
 // this is an attempt to make all the form elements have widths based
 // on the entire box, not just the content.
-// 
+//
 // among other things, this allows us to do this and have it actually produce
 // an even 10px padding around the textarea:
 //
@@ -42,30 +66,28 @@ textarea {
 // see http://www.quirksmode.org/css/box.html
 //
 
-textarea, input, select {
+// textarea, input, select {
+textarea {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
 
 //
-// the button row of a form
+// the button row of a form, right aligned
 //
-// .form_buttons is deprecated.
-//
-
-.form_buttons, .buttons {
+.right_buttons {
   margin-top: 0.75em;
   text-align: right;
 
-  // button_to makes its own form+div, but we want it to dispaly inline
-  // despite this.
-  form.button-to {
-    display: inline;
-    div {
-      display: inline;
-    }
-  }
+  // // button_to makes its own form+div, but we want it to dispaly inline
+  // // despite this.
+  // form.button-to {
+  //   display: inline;
+  //   div {
+  //     display: inline;
+  //   }
+  // }
 
   //input[type=submit], input[type=button] {
   //  font-size: 1.15em;
@@ -98,22 +120,22 @@ textarea, input, select {
 // RADIO BUTTONS AND CHECK BOXES
 //
 
-// make checkboxes have a hanging indent look, like bullets.
-label.checkbox, label.radio {
-  display: block;
-  margin-left: 1.7em;
-}
-input.checkbox, input.radio {
-  // position: relative;
-  // top: 2px
-  margin-left: -1.6em;
-}
+// // make checkboxes have a hanging indent look, like bullets.
+// label.checkbox, label.radio {
+//   display: block;
+//   margin-left: 1.7em;
+// }
+// input.checkbox, input.radio {
+//   // position: relative;
+//   // top: 2px
+//   margin-left: -1.6em;
+// }
 
-// in webkit and gecko, checkboxes and radio buttons seem to look better this way
-input[type=radio], input[type=checkbox] {
-  vertical-align: top;
-  float: left;
-}
+// // in webkit and gecko, checkboxes and radio buttons seem to look better this way
+// input[type=radio], input[type=checkbox] {
+//   vertical-align: top;
+//   float: left;
+// }
 
 div.image_preview {
   width: 250px;

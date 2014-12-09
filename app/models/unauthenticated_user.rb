@@ -1,15 +1,22 @@
 class UnauthenticatedUser
+
   def login
     :anonymous.t
   end
   alias :name :login
   alias :display_name :login
 
+  def cache_key
+    "anonymous-1"
+  end
+
   def may?(access,thing)
+    # nothing but viewing for now.
+    return false unless access == :view
     case thing
     when Page
       access == :view and thing.public?
-    when Group
+    when Group, User
       thing.has_access?(access, self)
     else
       false
@@ -24,6 +31,18 @@ class UnauthenticatedUser
     ""
   end
 
+  def friends
+    User.none
+  end
+
+  def peers
+    User.none
+  end
+
+  def groups
+    Group.none
+  end
+
   def member_of?(group)
     false
   end
@@ -31,7 +50,7 @@ class UnauthenticatedUser
   def friend_of?(user)
     false
   end
-  
+
   def method_missing(method)
     raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
   end
@@ -39,6 +58,10 @@ class UnauthenticatedUser
   # authenticated users are real, we are not.
   def real?
     false
+  end
+
+  def time_zone
+    Time.zone_default
   end
 
 end

@@ -2,7 +2,7 @@
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
   ##%>
-  
+
 <% srand(314159265359) # consistent rand results %>
 
 <% for i in 1..40 %>
@@ -43,10 +43,15 @@ rainbow_deleted:
   group_id: 3
   access: 1
 
-true_levellers_video1:
+rainbow_blue:
   id: 46
-  page_id: 250
-  group_id: 1
+  page_id: 1002
+  group_id: 3
+  access: 1
+
+rainbow_own_page:
+  page_id: 1003
+  group_id: 3
   access: 1
 
 <% for i in 1..20 %>

@@ -7,10 +7,10 @@
 #
 class RequestToJoinUs < Request
 
-  validates_format_of :requestable_type, :with => /Group/
-  validates_format_of :recipient_type, :with => /User/
+  validates_format_of :requestable_type, with: /Group/
+  validates_format_of :recipient_type, with: /User/
 
-  validate :no_membership_yet, :on => :create
+  validate :no_membership_yet, on: :create
 
   def group() requestable end
 
@@ -35,11 +35,11 @@ class RequestToJoinUs < Request
   end
 
   def description
-    [:request_to_join_us_description, {:user => user_span(recipient), :group => group_span(group)}]
+    [:request_to_join_us_description, {user: user_span(recipient), group: group_span(group)}]
   end
 
   def short_description
-    [:request_to_join_us_short, {:user => user_span(recipient), :group => group_span(group)}]
+    [:request_to_join_us_short, {user: user_span(recipient), group: group_span(group)}]
   end
 
   def icon_entity
@@ -50,7 +50,7 @@ class RequestToJoinUs < Request
 
   def no_membership_yet
     if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
-      errors.add_to_base(I18n.t(:membership_exists_error, :member => recipient.name))
+      errors.add(:base, I18n.t(:membership_exists_error, member: recipient.name))
     end
   end
 

@@ -1,7 +1,7 @@
 class MenuItem < ActiveRecord::Base
 
   belongs_to :group
-  acts_as_list :scope => :group
+  acts_as_list scope: :group
 
   # this doesn't make any sense, because this is only run once at startup
   # so the values will always be english:

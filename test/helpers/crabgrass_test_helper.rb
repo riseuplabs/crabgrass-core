@@ -6,8 +6,8 @@ end
 module CrabgrassTestHelper
 
   def mailer_options
-    {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
-    :protocol => 'http://', :port => '3000', :page => @page}
+    {site: Site.new(), current_user: users(:blue), host: 'localhost',
+    protocol: 'http://', port: '3000', page: @page}
   end
 
   # make sure the associations are at least defined properly

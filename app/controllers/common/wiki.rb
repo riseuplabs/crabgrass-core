@@ -15,14 +15,12 @@ module Common::Wiki
 #      before_filter :fetch_wiki, :only => [:show, :edit, :update]
 #      before_filter :setup_wiki_rendering
 
-      stylesheet 'wiki_edit'
-
       helper 'wikis/sections'
     end
   end
 
   def show
-    render :template => '/common/wiki/show', :locals => {:preview => params['preview']}
+    render template: '/common/wiki/show', locals: {preview: params['preview']}
   end
 
   protected

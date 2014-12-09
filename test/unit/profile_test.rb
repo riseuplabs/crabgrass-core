@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :profiles, :external_videos
 
-  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  @@private = AssetExtension::Storage.private_storage = Rails.root + "tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = Rails.root + "tmp/public_assets"
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
@@ -21,16 +21,16 @@ class ProfileTest < ActiveSupport::TestCase
 
   def test_adding_profile
     u = users(:blue)
-    p = u.profiles.create :stranger => true, :first_name => 'Blue'
+    p = u.profiles.create stranger: true, first_name: 'Blue'
 
     assert p.valid?, 'profile should be created'
     assert_equal u.id, p.entity_id, 'profile should belong to blue'
 
     p.save_from_params(
-      :last_name => 'McBlue',
-      :phone_numbers => {
-        1 => {:phone_number_type => 'Home', :phone_number => '(206) 555-1111'},
-        2 => {:phone_number_type => 'Cell', :phone_number => '(206) 555-2222'}
+      last_name: 'McBlue',
+      phone_numbers: {
+        1 => {phone_number_type: 'Home', phone_number: '(206) 555-1111'},
+        2 => {phone_number_type: 'Cell', phone_number: '(206) 555-2222'}
       }
     )
     assert_equal '(206) 555-1111', p.phone_numbers.first.phone_number, 'save_from_params should update phone_numbers'
@@ -63,21 +63,21 @@ class ProfileTest < ActiveSupport::TestCase
 
   def test_single_table_inheritance
     user = users(:kangaroo)
-    p = user.profiles.create :stranger => true
+    p = user.profiles.create stranger: true
     assert_equal 'User', p.entity_type, 'polymorphic association should work even with single table inheritance'
   end
 
   def test_wiki
-    g = Group.create :name => 'trees'
+    g = Group.create name: 'trees'
     assert g.profiles.public, 'there should be a public profile'
     w = g.profiles.public.create_wiki
     assert_equal w.profile, g.profiles.public, 'wiki should have a profile'
   end
 
   def test_find_by_access
-    g = Group.create :name => 'berries'
+    g = Group.create name: 'berries'
     p1 = g.profiles.create(
-      :stranger => true
+      stranger: true
     )
     p2 = g.profiles.find_by_access(:stranger)
     p3 = g.profiles.public
@@ -88,7 +88,7 @@ class ProfileTest < ActiveSupport::TestCase
 
   def test_assets
     user = users(:blue)
-    profile = user.profiles.create :stranger => true, :first_name => user.name
+    profile = user.profiles.create stranger: true, first_name: user.name
 
     assert_difference 'Picture.count' do
       profile.save_from_params('picture' => {
@@ -101,8 +101,8 @@ class ProfileTest < ActiveSupport::TestCase
 
     if defined?(ExternalVideo)
       assert_difference 'ExternalVideo.count' do
-        profile.save_from_params(:video => {
-          :media_embed => external_videos(:beauty_is_in_the_street_video).media_embed
+        profile.save_from_params(video: {
+          media_embed: external_videos(:beauty_is_in_the_street_video).media_embed
         })
       end
     else

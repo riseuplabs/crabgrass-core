@@ -120,16 +120,16 @@ module PageExtension::Linking
   def self.included(base)
     base.instance_eval do
 
-      has_many_polymorphs :children, :as => :parent, :through => :links,
-       :order => 'position', :from => [:pages, :assets],
-       :rename_individual_collections => true, :dependent => :destroy
+      has_many_polymorphs :children, as: :parent, through: :links,
+       order: 'position', from: [:pages, :assets],
+       rename_individual_collections: true, dependent: :destroy
 
       alias_method :parents, :parents_of_children
     end
   end
 
   def add_child!(child, position = nil)
-    Link.create! :parent => self, :child => child, :position => position
+    Link.create! parent: self, child: child, position: position
     reset_links(child)
     true
   end
@@ -138,9 +138,9 @@ module PageExtension::Linking
   # the links in memory when creating a page.
   def add_child(child, position = nil)
     if child.respond_to?(:links_as_child)
-      child.links_as_child.build(:parent => self, :position => position)
+      child.links_as_child.build(parent: self, position: position)
     else
-      child.links.build(:parent => self, :position => position)
+      child.links.build(parent: self, position: position)
     end
   end
 

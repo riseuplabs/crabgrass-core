@@ -7,10 +7,10 @@
 #
 class RequestToJoinYourNetwork < Request
 
-  validates_format_of :recipient_type, :with => /Group/
-  validates_format_of :requestable_type, :with => /Group/
+  validates_format_of :recipient_type, with: /Group/
+  validates_format_of :requestable_type, with: /Group/
 
-  validate :no_federating_yet, :on => :create
+  validate :no_federating_yet, on: :create
   validate :recipient_is_network
 
   def group() requestable end
@@ -37,24 +37,24 @@ class RequestToJoinYourNetwork < Request
   end
 
   def description
-    [:request_to_join_your_network_description, {:group => group_span(group), :network => group_span(network)}]
+    [:request_to_join_your_network_description, {group: group_span(group), network: group_span(network)}]
   end
 
   def short_description
-    [:request_to_join_your_network_short, {:group => group_span(group), :network => group_span(network)}]
+    [:request_to_join_your_network_short, {group: group_span(group), network: group_span(network)}]
   end
 
   protected
 
   def recipient_is_network
     unless recipient.type =~ /Network/
-      errors.add_to_base('recipient must be a network')
+      errors.add(:base, 'recipient must be a network')
     end
   end
 
   def no_federating_yet
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
-      errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
+      errors.add(:base, I18n.t(:membership_exists_error, member: group.name))
     end
   end
 

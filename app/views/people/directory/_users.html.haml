@@ -1,0 +1,7 @@
+%ul.directory
+  - @users.each do |user|
+    %li.entry= render partial: 'user', locals: {user: user}
+    %li.divider
+
+.p
+  = pagination_links(@users)

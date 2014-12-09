@@ -1,0 +1,5 @@
+<%= {
+ :query       => (@query || params[:q]).to_s,
+ :suggestions => entities.collect{|entity| entity_autocomplete_line(entity)},
+ :data        => entities.collect{|entity| entity.avatar_id || 0}
+}.to_json.html_safe %>

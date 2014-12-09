@@ -26,19 +26,19 @@ module Common::Ui::FormHelper
 
     select_id = "select_#{select_title.gsub(/[^a-zA-Z]+/, '')}"
 
-    text_label = content_tag(:label, I18n.t(:view_label), :for => select_id) if !select_title.nil? && !select_title.blank?
+    text_label = content_tag(:label, I18n.t(:view_label), for: select_id) if !select_title.nil? && !select_title.blank?
 
     current_index = 0
     options = items.map do |title, perform|
-      selected = selected_index == current_index ? {:selected => "selected"} : {}
+      selected = selected_index == current_index ? {selected: "selected"} : {}
       current_index += 1
       perform = url_for(perform) if perform.is_a?(Hash)
       option_id = "option_#{title.gsub(/[^a-zA-Z]+/, '')}"
       value = drop_down_action(perform)
-      content_tag :option, title, {:value => value, :id => option_id}.merge(selected)
+      content_tag :option, title, {value: value, id: option_id}.merge(selected)
     end.join("\n")
 
-    content_tag(:div, text_label + select_tag(select_id, options, :onchange => "javascript: eval(this.options[this.selectedIndex].value)"), :id => "pages_view")
+    content_tag(:div, text_label + select_tag(select_id, options, onchange: "javascript: eval(this.options[this.selectedIndex].value)"), id: "pages_view")
   end
 
   def drop_down_action(perform)
@@ -71,19 +71,18 @@ module Common::Ui::FormHelper
     html.join(join)
   end
 
-  # return javascript code to confirm leaving the page if textarea
-  # has been modified. the user can click 'Cancel' and continue editing the textarea
-  # or click 'Ok' and the unsaved data in the textarea will be lost.
   #
-  # saving_selectors is a collection of selectors for elements (buttons, links)
-  # which can be clicked to leave the page without the warning.
+  # Wraps arguments in a div with class 'input-append'. This is a bootstrap css thing:
   #
-  # if the user clicks an element maching a saving_selector, the confirmation dialog
-  # will get disabled until the page is reloaded
-  def confirm_discarding_text_area(text_area_id, saving_selectors, message = nil)
-    message ||= I18n.t(:confirm_discarding_text_area, :cancel => I18n.t(:cancel))
-
-    %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect})]
+  # <div class="input-append">
+  #   <input class="span2" id="appendedInputButton" type="text">
+  #   <button class="btn" type="button">Go!</button>
+  # </div>
+  #
+  # Warning: input args are tags as html_safe.
+  #
+  def input_append(*args)
+    content_tag :div, args.join("\n").html_safe, class: 'input-append'
   end
 
 end

@@ -8,7 +8,7 @@
 -
 - blank = false if blank.nil?
 - access = 'admin' if access.nil?
-- access_options = {:blank => blank, :selected => access}
+- access_options = {blank: blank, selected: access}
 - if unsaved.nil?
   - newitem = false
 - else
@@ -23,12 +23,12 @@
 - remove_function = "$('%s').remove()" % id
 - tr_class = newitem ? 'unsaved' : ''
 
-%tr{:class => tr_class, :id => id}
-  %td{:style=>"width:100%"}
-    = display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true)
+%tr{class: tr_class, id: id}
+  %td{style:"width:100%"}
+    = display_entity(recipient, avatar: 'xsmall', format: :both, block: true)
   %td
     - if (!alter_access && participation) || !may_share_page?
-      = hidden_field_tag "recipients[#{recipient.name}]", "1", :id => id
+      = hidden_field_tag "recipients[#{recipient.name}]", "1", id: id
       = display_access(participation)
     - elsif may_select_access_participation?
       = select_page_access "recipients[#{recipient_name}][access]", access_options
@@ -41,8 +41,8 @@
       -# However you are right about hardcoding it. It should be hardcoded to not change.
       -# Currently we only use it as a per site setting - so it could even be completely
       -# hard coded. -azul
-      = hidden_field "recipients[#{recipient.name}]", :access, :value => access
+      = hidden_field "recipients[#{recipient.name}]", :access, value: access
   %td
     - if newitem
-      = link_to_function_icon('tiny_trash', remove_function, :title => I18n.t(:remove))
+      = link_to_function_icon('tiny_trash', remove_function, title: I18n.t(:remove))
 

@@ -1,6 +1,12 @@
 require "bundler/capistrano"
 
 ##
+## updates the crontap on deploy if needed.
+##
+set :whenever_command, "bundle exec whenever -f config/misc/schedule.rb"
+require "whenever/capistrano"
+
+##
 ## REMEMBER: you can see available tasks with "cap -T"
 ##
 
@@ -34,6 +40,14 @@ set :local_repository, "#{File.dirname(__FILE__)}/../"
 
 set :deploy_via, :remote_cache
 
+set :bundle_without, %w{development test ci}.join(' ')
+
+# asset pipeline precompilation
+load 'deploy/assets'
+
+set :assets_prefix, 'static'
+set :shared_assets_prefix, 'static'
+
 # as an alternative, if you server does NOT have direct git access to the,
 # you can deploy_via :copy, which will build a tarball locally and upload
 # it to the deploy server.
@@ -57,6 +71,7 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
+set :public_children, %w(images static)
 
 ##
 ## CUSTOM TASKS
@@ -86,24 +101,13 @@ end
 
 def database_configuration(db_role)
 %Q[
-login: &login
-  adapter: mysql
+production:
+  database: #{application}
+  adapter: mysql2
   encoding: utf8
   host: #{eval(db_role+"_db_host")}
   username: #{eval(db_role+"_db_user")}
   password: #{eval(db_role+"_db_pass")}
-
-development:
-  database: #{application}_development
-  <<: *login
-
-test:
-  database: #{application}_test
-  <<: *login
-
-production:
-  database: #{application}
-  <<: *login
 ]
 end
 
@@ -122,7 +126,7 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
     run "mkdir -p #{deploy_to}/#{shared_dir}/sphinx"
 
-    run "mkdir -p #{deploy_to}/#{shared_dir}/config"
+    run "mkdir -p #{deploy_to}/#{shared_dir}/config/crabgrass"
     put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml"
     put secret, "#{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt"
   end
@@ -149,6 +153,7 @@ namespace :crabgrass do
 
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_release}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt #{current_release}/config/crabgrass/secret.txt"
+    run "test -f #{deploy_to}/#{shared_dir}/config/.htpasswd && ln -nfs #{deploy_to}/#{shared_dir}/config/.htpasswd #{current_release}/config/.htpasswd"
 
     run "rm -rf #{current_release}/db/sphinx"
     run "ln -nfs #{shared_path}/sphinx #{current_release}/db/sphinx"
@@ -163,11 +168,6 @@ namespace :crabgrass do
     if timestamp
       run "echo #{timestamp} > #{current_release}/RELEASE"
     end
-  end
-
-  desc "Precompile the javascript and css assets"
-  task :compile_assets do
-    run "cd #{current_path}; bundle exec rake cg:compile_assets"
   end
 
 #  desc "refresh the staging database"
@@ -189,12 +189,27 @@ namespace :crabgrass do
   task :index do
     run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
   end
+
+  #
+  #  UPGRADE
+  #
+  desc "Upgrade to Version 0.9"
+  task :upgrade_to_0_9 do
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:upgrade:init_group_permissions cg:upgrade:migrate_group_permissions cg:upgrade:user_permissions"
+  end
+
+  desc "Cleanup old data records that have invalid associations"
+  task :cleanup_outdated_data do
+    run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:cleanup:remove_dead_participations cg:cleanup:remove_dead_federatings"
+  end
+
 end
 
 after  "deploy:setup",   "crabgrass:create_shared"
-after  "deploy:symlink", "crabgrass:link_to_shared"
-after  "deploy:symlink", "crabgrass:create_version_files"
-after  "crabgrass:create_version_files", "crabgrass:compile_assets"
+
+before  "deploy:finalize_update", "crabgrass:link_to_shared"
+
+after  "deploy:create_symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
-
+before 'crabgrass:upgrade_to_0_9', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'

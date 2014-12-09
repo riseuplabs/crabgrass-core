@@ -1,7 +1,13 @@
 require 'rubygems'
 require 'active_record'
+# backported from rails 4
+require_relative 'active_record/null_relation'
 
 ActiveRecord::Base.class_eval do
+
+  class << self
+    delegate :none, to: :scoped
+  end
 
   #
   # Crabgrass uses exceptions in most places to display error messages.
@@ -33,7 +39,7 @@ ActiveRecord::Base.class_eval do
     define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
     before_save :format_body
     define_method(:format_body) {
-      if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
+      if body.present? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
         if respond_to?('owner_name')
           self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
@@ -79,39 +85,6 @@ ActiveRecord::Base.class_eval do
     else
       define_method(new) { read_attribute(old) }
       define_method("#{new}=") { |value| write_attribute(old, value) }
-    end
-  end
-
-  # class_attribute()
-  #
-  # Used by Page in order to allow subclasses (ie Tools) to define themselves
-  # (ie icon, description, etc) by setting class attributes.
-  #
-  # <example>
-  #   class Page
-  #     class_attribute :color
-  #   end
-  #   class Wiki < Page
-  #     color 'blue'
-  #   end
-  # </example>
-  #
-  # class_inheritable_accessor is very close to what we want. However, when
-  # an attr is defined with class_inheritable_accessor, the accessor is not
-  # called when it appears in a subclass definition, and I don't understand why.
-  #
-  def self.class_attribute(*keywords)
-    for word in keywords
-      word = word.id2name
-      module_eval <<-"end_eval"
-        def self.#{word}(value=nil)
-          @#{word.sub '?',''} = value if value
-          @#{word.sub '?',''}
-        end
-        def #{word}
-          self.class.#{word.sub '?',''}
-        end
-      end_eval
     end
   end
 
@@ -201,11 +174,11 @@ module ActiveRecord
       end
       indexes = @connection.indexes(table)
       indexes.each do |index|
-        if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+        if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
           stream.puts %(  execute "ALTER TABLE #{index.table} ENGINE = MyISAM")
           stream.puts %(  execute "CREATE FULLTEXT INDEX #{index.name} ON #{index.table} (#{index.columns.join(',')})")
-        elsif index.name =~ /\d+$/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
-          lengths = index.name.match(/(_\d+)+$/).to_s.split('_').select(&:any?)
+        elsif index.name =~ /\d+$/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
+          lengths = index.name.match(/(_\d+)+$/).to_s.split('_').select(&:present?)
           index_parts = []
           index.columns.size.times do |i|
             if lengths[i] == '0'
@@ -231,5 +204,26 @@ module ActiveRecord::AttributeMethods::ClassMethods
     # FIXME: this is a hack!
     skip_time_zone_conversion_for_attributes ||= []
     time_zone_aware_attributes && !skip_time_zone_conversion_for_attributes.include?(name.to_sym) && [:datetime, :timestamp].include?(column.type)
+  end
+end
+
+module ActiveRecord::QueryMethods
+
+  # clear all other selects that might have been applied before
+  # and only select the given string.
+  #
+  # This helps to make sure distinct selects also work on associations
+  # like group.users.only_select("DISTINCT ..")
+  # UPGRADE: replace me with using .distinct in rails 4.0
+  def only_select(value)
+    relation = clone
+    relation.select_values = Array.wrap(value)
+    relation
+  end
+
+  # backported from rails 4.
+  # Returns an emtpy set without a query and still allows chaining.
+  def none
+    extending(ActiveRecord::NullRelation)
   end
 end

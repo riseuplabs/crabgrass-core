@@ -1,32 +1,33 @@
 - #
 - # Currently, this assumes the sidebox has padding on the left and right (for picture).
 - # If the theme ever supports sidebox without padding, this may need to take that into account.
-- # 
+- #
 
 -# if @group.profiles.public.picture
-  .p{:class => first(:sidebox)}
-    = picture_tag(@group.profiles.public.picture, :max_width => sidecolumn_inside_width, :min_width => sidecolumn_inside_width)
+  .p{class: first(:sidebox)}
+    = picture_tag(@group.profiles.public.picture, max_width: sidecolumn_inside_width, min_width: sidecolumn_inside_width)
 
 - if @group.committee?
-  = :this_is_committee.t(:parent_group => link_to_group(@group.parent))
+  .p{class: first(:sidebox)}
+    = :this_is_committee.t(parent_group: link_to_group(@group.parent)).html_safe
 
-- if @group.profiles.public.summary.any?
-  .p{:class => first(:sidebox)}
+- if @group.profiles.public.summary.present?
+  .p{class: first(:sidebox)}
     = @group.profiles.public.summary_html
 
-- if @group.profiles.public.place.any?
-  .p{:class => first(:sidebox)}
+- if @group.profiles.public.place.present?
+  .p{class: first(:sidebox)}
     %div
       %b= h @group.profiles.public.place
 
-%div= :group_membership_count.t(:count => @group.users.count)
+%div= :group_membership_count.t(count: @group.users.count)
 
--# Created on 
+-# Created on
 -# = friendly_date @group.created_at
 
 .p.last
   = link_span :bullet, join_group_link  #, edit_group_profile_link
 
--# if (link = edit_group_profile_link).any?
+-# if (link = edit_group_profile_link).present?
 -#  .p.last.autoclear
 -#    .float_right= link

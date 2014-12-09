@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
 
@@ -10,14 +10,17 @@ class PageTest < ActiveSupport::TestCase
 
   def teardown
     PageHistory.delete_all
+    # ensure there are no tempfiles left and getting removed
+    # some random time.
+    GC.start
   end
 
   def test_page_history_order
     user = users(:blue)
-    page = WikiPage.create! :owner => user, :title => 'history'
-    action_1 = PageHistory::AddStar.create!(:page => page, :user => user, :created_at => "2007-10-10 10:10:10")
-    action_2 = PageHistory::RemoveStar.create!(:page => page, :user => user, :created_at => "2008-10-10 10:10:10")
-    action_3 = PageHistory::StartWatching.create!(:page => page, :user => user, :created_at => "2009-10-10 10:10:10")
+    page = WikiPage.create! owner: user, title: 'history'
+    action_1 = PageHistory::AddStar.create!(page: page, user: user, created_at: "2007-10-10 10:10:10")
+    action_2 = PageHistory::RemoveStar.create!(page: page, user: user, created_at: "2008-10-10 10:10:10")
+    action_3 = PageHistory::StartWatching.create!(page: page, user: user, created_at: "2009-10-10 10:10:10")
     assert_equal action_1, page.page_histories[2]
     assert_equal action_2, page.page_histories[1]
     assert_equal action_3, page.page_histories[0]
@@ -28,11 +31,11 @@ class PageTest < ActiveSupport::TestCase
     group = groups(:rainbow)
 
     assert_nothing_raised do
-      p1 = WikiPage.create!(:title => 'title', :name => 'unique', :share_with => group, :user => user)
+      p1 = WikiPage.create!(title: 'title', name: 'unique', share_with: group, user: user)
     end
 
     assert_raises ActiveRecord::RecordInvalid, 'duplicate names should not be allowed' do
-      p2 = WikiPage.create!(:title => 'title', :name => 'unique', :share_with => group, :user => user)
+      p2 = WikiPage.create!(title: 'title', name: 'unique', share_with: group, user: user)
     end
   end
 
@@ -52,9 +55,9 @@ class PageTest < ActiveSupport::TestCase
     assert_no_difference 'Page.count', 'no new page' do
       assert_no_difference 'PageTerms.count', 'no new page terms' do
         assert_no_difference 'UserParticipation.count', 'no new user part' do
-           assert_raises ActiveRecord::RecordInvalid do
-             WikiPage.create!(params)
-           end
+          assert_raises ActiveRecord::RecordInvalid do
+            WikiPage.create!(params)
+          end
         end
       end
     end
@@ -67,7 +70,7 @@ class PageTest < ActiveSupport::TestCase
     assert_no_difference 'Page.count', 'no new page' do
       assert_no_difference 'PageTerms.count', 'no new page terms' do
         assert_no_difference 'UserParticipation.count', 'no new user part' do
-          page = WikiPage.build!(:title => 'hi', :user => user)
+          page = WikiPage.build!(title: 'hi', user: user)
         end
       end
     end
@@ -84,7 +87,7 @@ class PageTest < ActiveSupport::TestCase
   # currently, we are using a single belongs_to that is polymorphic
   # for the relationship from page -> tool.
   def disabled_test_multi_tool
-    @page = create_page :title => 'this is a very fine test page'
+    @page = create_page title: 'this is a very fine test page'
     assert @page.tools.blank?
     assert @page.tools.push(@discussion)
     assert @page.tools.push(Discussion.create)
@@ -97,9 +100,9 @@ class PageTest < ActiveSupport::TestCase
   end
 
   def test_tool
-    page = create_page :title => 'what is for lunch?'
+    page = create_page title: 'what is for lunch?'
     assert poll = Poll.create
-    assert poll.valid?, poll.errors.full_messages
+    assert poll.valid?, poll.errors.full_messages.to_s
     page.data = poll
     page.save
     assert_equal poll.page, page
@@ -107,9 +110,9 @@ class PageTest < ActiveSupport::TestCase
   end
 
   def test_discussion
-    @page = WikiPage.create! :title => 'this is a very fine test page'
+    @page = WikiPage.create! title: 'this is a very fine test page'
     assert discussion = Discussion.create
-    assert discussion.valid?, discussion.errors.full_messages
+    assert discussion.valid?, discussion.errors.full_messages.to_s
     #discussion.pages << @page
     @page.discussion = discussion
     @page.save
@@ -121,7 +124,7 @@ class PageTest < ActiveSupport::TestCase
 
 
   def test_user_associations
-    @page = create_page :title => 'this is a very fine test page'
+    @page = create_page title: 'this is a very fine test page'
     user = User.find 3
     @page.created_by = user
     @page.save
@@ -137,26 +140,29 @@ class PageTest < ActiveSupport::TestCase
 
   def test_denormalized
     group = groups(:animals)
-    page = Page.create! :owner => group, :title => 'oak tree'
+    page = Page.create! owner: group, title: 'oak tree'
     assert_equal group.name, page.owner_name, 'page should have a denormalized copy of the group name'
   end
 
   def test_destroy
-    page = RateManyPage.create! :title => 'short lived', :data => Poll.new
+    page = RateManyPage.create! title: 'short lived', data: Poll.new
     poll_id = page.data.id
     page.destroy
     assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
   def test_delete_and_undelete
-    page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
+    page = RateManyPage.create! title: 'longer lived', data: Poll.new
     poll_id = page.data.id
-    assert_equal page.flow, nil, 'a new page should have flow nil'
+    assert_equal FLOW[:normal], page.flow,
+      'a new page should have normal flow'
     page.delete
-    assert_equal page.flow, FLOW[:deleted]
-    assert_equal page.data, Poll.find_by_id(poll_id), 'the page data must be preserved when deleting the page'
+    assert_equal FLOW[:deleted], page.flow
+    assert_equal Poll.find_by_id(poll_id), page.data,
+      'the page data must be preserved when deleting the page'
     page.undelete
-    assert_equal page.flow, nil, 'undeleting a page should turn it back to flow nil'
+    assert_equal FLOW[:normal], page.flow,
+      'undeleting a page should turn it back to flow nil'
   end
 
 =begin
@@ -190,12 +196,12 @@ class PageTest < ActiveSupport::TestCase
     assert check_associations(Page)
   end
 
-#  def test_thinking_sphinx
-#    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
-#      page = Page.new :title => 'title'
-#      page.expects(:save_without_after_commit_callback)
-#      page.save
-#    else
+  #  def test_thinking_sphinx
+  #    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
+  #      page = Page.new :title => 'title'
+  #      page.expects(:save_without_after_commit_callback)
+  #      page.save
+  #    else
 #      puts "thinking sphinx is not included"
 #    end
 #  end
@@ -203,20 +209,20 @@ class PageTest < ActiveSupport::TestCase
   def test_page_owner
     page = nil
     assert_nothing_raised do
-      page = DiscussionPage.create! :title => 'x', :owner => 'green'
+      page = DiscussionPage.create! title: 'x', owner: 'green'
     end
     assert_equal users(:green), page.owner
     assert users(:green).may?(:admin, page)
 
-    page.update_attributes({:owner => users(:blue)})
+    page.update_attributes({owner: users(:blue)})
     page.reload
-    assert_equal users(:green), page.owner, 'owner should be protected'
+    assert_equal users(:blue), page.owner, 'owner can be changed'
   end
 
   def test_page_owner_and_others
     page = nil
     assert_nothing_raised do
-      page = DiscussionPage.create! :title => 'x', :user => users(:blue), :owner => 'blue', :share_with => {"green"=>{:access=>"edit"}}, :access => :view
+      page = DiscussionPage.create! title: 'x', user: users(:blue), owner: 'blue', share_with: {"green"=>{access: "edit"}}, access: :view
     end
     assert_equal users(:blue), page.owner
     assert users(:green).may?(:edit, page)
@@ -224,74 +230,17 @@ class PageTest < ActiveSupport::TestCase
 
   def test_page_default_owner
     Conf.ensure_page_owner = false
-    page = Page.create! :title => 'x', :user => users(:blue),
-      :share_with => groups(:animals), :access => :admin
+    page = Page.create! title: 'x', user: users(:blue),
+      share_with: groups(:animals), access: :admin
     assert_nil page.owner_name
     assert_nil page.owner_id
 
     Conf.ensure_page_owner = true
-    page = Page.create! :title => 'x', :user => users(:blue),
-      :share_with => groups(:animals), :access => :admin
+    page = Page.create! title: 'x', user: users(:blue),
+      share_with: groups(:animals), access: :admin
     assert_equal groups(:animals).name, page.owner_name
     assert_equal groups(:animals).id, page.owner_id
     assert_equal groups(:animals), page.owner
-  end
-
-  def test_attachments
-    page = Page.create! :title => 'page with attachments', :user => users(:blue)
-    page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-
-    assert_equal page.page_terms, page.assets.first.page_terms
-
-    assert_equal 'photo.jpg', page.assets.first.filename
-    page.assets.each do |asset|
-      assert !asset.public?
-    end
-
-    page.public = true
-    page.save
-
-    page.assets(true).each do |asset|
-      assert asset.public?
-    end
-
-    assert_difference('Page.count', -1) do
-      assert_difference('Asset.count', -1) do
-        page.destroy
-      end
-    end
-  end
-
-  def test_attachment_options
-    asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
-    page = Page.create! :title => 'page with attachments'
-    page.add_attachment! asset, :filename => 'picture', :cover => true
-
-    assert_equal 'picture.jpg', page.assets.first.filename
-    assert_equal asset, page.cover
-  end
-
-  def test_attachment_building
-    # make sure we don't create assets when we create invalid pages
-    assert_no_difference 'Page.count' do
-      assert_no_difference 'Asset.count' do
-        assert_raises ActiveRecord::RecordInvalid do
-          Page.create! do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-          end
-        end
-      end
-    end
-    assert_difference 'Page.count' do
-      assert_difference 'Asset.count' do
-        assert_nothing_raised do
-          page = Page.create!(:title => 'hi') do |page|
-            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-          end
-          assert_equal 'photo.jpg', page.assets.first.filename
-        end
-      end
-    end
   end
 
   def test_update_at_updated_by_certain_fields
@@ -324,7 +273,7 @@ class PageTest < ActiveSupport::TestCase
   end
 
   def test_even_with_timestamps_disabled_it_should_timestamp_when_create
-    page = create_page :created_at => nil, :updated_at => nil
+    page = create_page created_at: nil, updated_at: nil
     assert_not_nil page.created_at
     assert_not_nil page.updated_at
   end
@@ -332,12 +281,12 @@ class PageTest < ActiveSupport::TestCase
   protected
 
   def create_page(options = {})
-    defaults = {:title => 'untitled page', :public => false}
+    defaults = {title: 'untitled page', public: false}
     Page.create!(defaults.merge(options))
   end
 
   def build_page(options = {})
-    defaults = {:title => 'untitled page', :public => false}
+    defaults = {title: 'untitled page', public: false}
     Page.build!(defaults.merge(options))
   end
 end

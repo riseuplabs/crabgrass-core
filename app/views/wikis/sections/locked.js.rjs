@@ -1,2 +1,0 @@
-page.replace_html @section.underscore,
-  :partial => '/wikis/wikis/locked', :locals => local_assigns

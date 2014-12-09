@@ -97,8 +97,9 @@
     bottom: -(border_width($active_border));
 
     white-space: nowrap;
-    margin: 0;   // don't add margin or padding.
-    padding: 0;  // it will mess everything up.
+    // don't add margin or padding to ul. it will mess everything up.
+    margin: 0;
+    padding: 0;
 
     li.tab {
       display: block;
@@ -108,13 +109,14 @@
       a.tab {
         @include cg-hover-link;
         display: block;
-        padding: 0px 0.75em; // a reasonable default.
+         // a reasonable default padding.
+        padding: 0px 1em;
 
         // using height and line-height makes for much more consistant rendering
         // than using vertical padding. essential to prevent tabs from looking
         // horrible at different fonts sizes.
-        height: 1.75em;
-        line-height: 1.75em;
+        height: 2em;
+        line-height: 2em;
 
         // the transparent border is needed to prevent the menu from jittering
         // when the active border is applied.

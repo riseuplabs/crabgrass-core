@@ -1,20 +1,21 @@
-- content_for :right_sidebar do
-  = render :partial => 'pages/sidebar/sidebar'
 %ul.possibles.plain
   - @sorted_possibles.each do |possible|
     - winner = 'winner' if (@poll.winners.any? and @poll.winners.include? possible.id)
-    %li{:class => winner}
+    %li{class: winner}
       .rank= @poll.rank(possible.id)
-      %span.winner= "(" + :top_pick.t + ")" if winner.any?
+      %span.winner= "(" + :top_pick.t + ")" if winner.present?
       .name= possible_name(possible)
-      .indent.possible_details{:id => details_id(possible), :style => "display: none"}
+      .indent.possible_details{id: details_id(possible), style: "display: none"}
         = possible.description_html
-        - if @who_voted_for[possible.id].any?
+        - if @who_voted_for[possible.id].respond_to?('join')
           %p
             = I18n.t(:first_choice_of)
             \: #{@who_voted_for[possible.id].join(', ')}
   - if logged_in? and current_user.may? :edit, @page and @possibles_unvoted.any?
-    You have not ranked:
+    = I18n.t 'vote.you_have_not_ranked'
     %ul
       - @possibles_unvoted.each do |possible|
-        %div= possible_name(possible)
+        %li
+          %div= possible_name(possible)
+          .indent.possible_details{id: details_id(possible), style: "display: none"}
+            = possible.description_html

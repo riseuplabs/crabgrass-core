@@ -1,16 +1,18 @@
 class Groups::GroupsController < Groups::BaseController
 
-  before_filter :force_type,  :only => ['new', 'create']
-  before_filter :fetch_group, :only => 'destroy'
+  # restricting the before filter to { :only => :destroy } doesn't work, because
+  # then it changes position in the filter chain and runs after the guards, but
+  # may_admin_group? requires @group to be set.
+  def fetch_group() super if action? :destroy end
+  protected :fetch_group
+
+  before_filter :force_type,  only: ['new', 'create']
+  before_filter :initialize_group,  only: ['new', 'create']
+  before_filter :fetch_member_group, only: 'create'
 
   guard :may_ALIAS_group?
 
   def new
-    if group_type == :group
-      @group = Group.new
-    elsif group_type == :network
-      @network = Network.new
-    end
   end
 
   #
@@ -18,14 +20,7 @@ class Groups::GroupsController < Groups::BaseController
   # councils and committees are created by groups/structures
   #
   def create
-    @group = new_group_from_params
-    @network = @group
-    # ^^ what is this? setting @network will make the form correctly report errors for networks
     @group.save!
-    if @group.network? and params[:member_group_name]
-      member_group = Group.find_by_name(params[:member_group_name])
-      @group.add_group!(member_group) if current_user.may?(:admin, member_group)
-    end
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -33,12 +28,12 @@ class Groups::GroupsController < Groups::BaseController
   #
   # immediately destroy a group.
   # for destruction that requires approval, see RequestToDestroyOurGroup.
-  # unlike creation, this all destruction of all group types is handled here.
+  # unlike creation, all destruction of all group types is handled here.
   #
   def destroy
     parent = @group.parent
     @group.destroy_by(current_user)
-    success :thing_destroyed.t(:thing => @group.name)
+    success :thing_destroyed.t(thing: @group.name)
     if parent
       redirect_to group_url(parent)
     else
@@ -49,12 +44,10 @@ class Groups::GroupsController < Groups::BaseController
   protected
 
   def group_type
-    case params[:type]
-      when 'group' then :group
-      when 'network' then :network
-      when 'council' then :council
-      when 'committee' then :committee
-      else :group
+    if %w/group network council committee/.include? params[:type].to_s
+      params[:type].to_sym
+    else
+      :group
     end
   end
   helper_method :group_type
@@ -63,12 +56,9 @@ class Groups::GroupsController < Groups::BaseController
     case group_type
       when :group then Group
       when :network then Network
-      else raise 'error'
+      when :committee then Committee
+      when :council then Council
     end
-  end
-
-  def new_group_from_params
-    group_class.new params[group_type].merge(:created_by => current_user)
   end
 
   #
@@ -81,6 +71,22 @@ class Groups::GroupsController < Groups::BaseController
     end
   end
 
+  def initialize_group
+    @group = group_class.new group_params
+    @group.created_by = current_user
+    # setting @network will make the form correctly report errors for networks
+    @network = @group
+  end
+
+  def fetch_member_group
+    if @group.network? and @group.initial_member_group
+      raise_denied unless current_user.may?(:admin, @group.initial_member_group)
+    end
+  end
+
+  def group_params
+    permitted = [:name, :full_name, :language]
+    permitted << :initial_member_group if group_type == :network
+    params.fetch(group_type, {}).permit *permitted
+  end
 end
-
-

@@ -1,0 +1,190 @@
+# Keys
+#
+# As we use keys for access rights on groups we need some
+# self-referential keys for all groups. If they do not have a
+# council their permission gate_bitfield is ~0 - so all true.
+# If they do have a council they may not admin the group themselves
+# anymore so it is ~4 (:admin being the 3rd bit permission)
+#
+<%
+  group = {
+    :view => 1,
+    :pester => 2,
+    :burden => 3,
+    :spy => 4,
+    :comment => 5,
+    :edit => 6,
+    :admin => 7,
+    :see_members => 8,
+    :see_committees => 9,
+    :see_networks => 10,
+    :request_membership => 11,
+    :join => 12
+  }
+  user = {
+    :view => 1,
+    :pester => 2,
+    :burden => 3,
+    :spy => 4,
+    :comment => 5,
+    :see_contacts => 6,
+    :see_groups => 7,
+    :request_contact => 8
+  }
+  def bitfield(map, *args)
+    args.inject(1) {|prior, arg| prior |= (2**map[arg]) }
+  end
+%>
+true_levellers:
+  castle_id: 1
+  castle_type: Group
+  holder_code: 81
+  gate_bitfield: <%= ~0 %>
+
+animals:
+  castle_id: 2
+  castle_type: Group
+  holder_code: 82
+  gate_bitfield: <%= ~0 %>
+
+animals_for_public:
+  castle_id: 2
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester, :request_membership) %>
+
+rainbow:
+  castle_id: 3
+  castle_type: Group
+  holder_code: 83
+  gate_bitfield: <%= ~0 %>
+
+rainbow_for_public:
+  castle_id: 3
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester) %>
+
+warm:
+  castle_id: 31
+  castle_type: Group
+  holder_code: 831
+  gate_bitfield: <%= ~0 %>
+
+cold:
+  castle_id: 32
+  castle_type: Group
+  holder_code: 832
+  gate_bitfield: <%= ~0 %>
+
+recent_group:
+  castle_id: 33
+  castle_type: Group
+  holder_code: 833
+  gate_bitfield: <%= ~0 %>
+
+public_group:
+  castle_id: 1000
+  castle_type: Group
+  holder_code: 81000
+  gate_bitfield: <%= ~0 %>
+
+public_group_for_public:
+  castle_id: 1000
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester, :see_committees) %>
+
+public_committee:
+  castle_id: 1001
+  castle_type: Group
+  holder_code: 81001
+  gate_bitfield: <%= ~0 %>
+
+public_committee_for_public:
+  castle_id: 1001
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester, :see_members, :request_membership) %>
+
+private_committee:
+  castle_id: 1002
+  castle_type: Group
+  holder_code: 81002
+  gate_bitfield: <%= ~0 %>
+
+private_group:
+  castle_id: 2000
+  castle_type: Group
+  holder_code: 82000
+  gate_bitfield: <%= ~0 %>
+
+# these two are also the sites networks.
+cnt:
+  castle_id: 3001
+  castle_type: Group
+  holder_code: 83001
+  gate_bitfield: <%= ~0 %>
+
+cnt_for_public:
+  castle_id: 3001
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester, :request_membership) %>
+
+fai:
+  castle_id: 3002
+  castle_type: Group
+  holder_code: 83002
+  gate_bitfield: <%= ~0 %>
+
+fai_for_public:
+  castle_id: 3002
+  castle_type: Group
+  holder_code: 0
+  gate_bitfield: <%= bitfield(group, :view, :pester, :request_membership) %>
+
+# lets have another one so we can access it from within the sites.
+fau:
+  castle_id: 3003
+  castle_type: Group
+  holder_code: 83003
+  gate_bitfield: <%= ~0 %>
+
+#
+# super admin group
+#
+
+super_admin_group:
+  castle_id: 4001
+  castle_type: Group
+  holder_code: 84001
+  gate_bitfield: <%= ~0 %>
+
+##
+## User Keys:
+##
+
+<% [[1, "quentin"], [2, "aaron"], [3, "gerrard"], [4, "blue"], [5, "orange"], [6, "purple"], [7, "yellow"], [8, "red"], [9, "green"], [10, "kangaroo"], [11, "dolphin"], [12, "penguin"], [13, "iguana"]].each do |id,login| %>
+
+# friends may view and pester
+<%=login%>_friends:
+  castle_id: <%= id %>
+  castle_type: User
+  holder_code: 7<%= id %>
+  gate_bitfield: <%= bitfield(user, :view, :pester) %>
+
+# peers may view and pester
+<%=login%>_peers:
+  castle_id: <%= id %>
+  castle_type: User
+  holder_code: 9<%= id %>
+  gate_bitfield: <%= bitfield(user, :view, :pester) %>
+
+# public may view and pester
+<%=login%>_public:
+  castle_id: <%= id %>
+  castle_type: User
+  holder_code: 0
+  gate_bitfield: <%= bitfield(user, :view, :pester) %>
+<% end %>

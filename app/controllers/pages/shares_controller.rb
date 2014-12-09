@@ -24,9 +24,7 @@
 #
 class Pages::SharesController < Pages::SidebarsController
 
-  guard :update => :may_share_page?
-
-  verify :xhr => true
+  guard update: :may_share_page?
 
   helper 'pages/share', 'pages/participation'
 
@@ -34,9 +32,9 @@ class Pages::SharesController < Pages::SidebarsController
   # this returns the html, which is used to populate the modalbox
   def show
     if params[:mode] == 'share'
-      render :template => 'pages/shares/show_share'
+      render template: 'pages/shares/show_share'
     elsif params[:mode] == 'notify'
-      render :template => 'pages/shares/show_notify'
+      render template: 'pages/shares/show_notify'
     else
       raise_error 'bad mode'
     end
@@ -82,19 +80,19 @@ class Pages::SharesController < Pages::SidebarsController
       close_popup
     elsif params[:add]
       @recipients = []
-      if params[:recipient] and params[:recipient][:name].any?
+      if params[:recipient] and params[:recipient][:name].present?
         recipients_names = params[:recipient][:name].strip.split(/[, ]/)
         recipients_names.each do |recipient_name|
           @recipients << find_recipient(recipient_name, action)
         end
         @recipients.compact!
       end
-      render :partial => 'pages/shares/add_recipient', :locals => {:alter_access => action == :share}
+      render partial: 'pages/shares/add_recipient', locals: {alter_access: action == :share}
     elsif (params[:share_button] || params[:notify_button]) and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-      options[:send_notice] ||= params[:notify_button].any?
+      options[:send_notice] ||= params[:notify_button].present?
 
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
@@ -121,27 +119,33 @@ class Pages::SharesController < Pages::SidebarsController
   #
   def find_recipient(recipient_name, action=:share)
     recipient_name.strip!
-    return nil unless recipient_name.any?
+    return nil unless recipient_name.present?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
-      error(:thing_not_found.t(:thing => h(recipient_name)))
+      error(:thing_not_found.t(thing: h(recipient_name)))
       return nil
-    elsif !recipient.may_be_pestered_by?(current_user)
-      error(:share_pester_error.t(:name => recipient.name))
+    elsif !current_user.may?(:pester, recipient)
+      error(:share_pester_error.t(name: recipient.name))
       return nil
     elsif @page
       upart = recipient.participations.find_by_page_id(@page.id)
       if upart && action == :share && !upart.access.nil?
-        notice(:share_already_exists_error.t(:name => recipient.name))
+        notice(:share_already_exists_error.t(name: recipient.name))
         return nil
       elsif upart.nil? && action == :notify
         if !recipient.may?(:view, @page) and !may_share_page?
-          error(:notify_no_access_error.t(:name => recipient.name))
+          error(:notify_no_access_error.t(name: recipient.name))
           return nil
         end
       end
     end
     return recipient
+  end
+
+  # we allow for an id of 0 for pages just getting created
+  def fetch_page
+    @page = Page.new if params['page_id'] == "0"
+    @page || super
   end
 
   private

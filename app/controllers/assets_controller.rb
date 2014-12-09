@@ -1,13 +1,13 @@
 class AssetsController < ApplicationController
 
+  before_filter :authorization_required
   permissions 'assets'
   guard :may_ACTION_asset?
 
-  before_filter :public_or_login_required
-  prepend_before_filter :fetch_asset, :only => [:show, :destroy]
+  prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
-    if @asset.public? and !File.exists?(@asset.public_filename)
+    if @asset.public? and !File.exist?(@asset.public_filename)
       # update access and redirect iff asset is public AND the public
       # file is not yet in place.
       @asset.update_access
@@ -18,14 +18,14 @@ class AssetsController < ApplicationController
         return not_found
       end
     else
-      path = params[:path].first
+      path = params[:path]
       if thumb_name_from_path(path)
         thumb = @asset.thumbnail( thumb_name_from_path(path) )
         raise_not_found unless thumb
         thumb.generate
-        send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
+        send_file(private_filename(thumb), type: thumb.content_type, disposition: disposition(thumb))
       else
-        send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
+        send_file(private_filename(@asset), type: @asset.content_type, disposition: disposition(@asset))
       end
     end
   end
@@ -33,7 +33,7 @@ class AssetsController < ApplicationController
   def destroy
     @asset.destroy
     respond_to do |format|
-      format.js {render :text => 'if (initAjaxUpload) initAjaxUpload();' }
+      format.js {render text: 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
         success ['attachment deleted']
         redirect_to(page_url(@asset.page))
@@ -63,13 +63,8 @@ class AssetsController < ApplicationController
     filename =~ /#{THUMBNAIL_SEPARATOR}/
   end
 
-  def public_or_login_required
-    return true unless @asset
-    @asset.public? or login_required
-  end
-
   def thumb_name_from_path(path)
-    $~[1].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(.+)\./
+    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)\.[^\.]+$/
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.
@@ -79,6 +74,12 @@ class AssetsController < ApplicationController
     else
       'attachment'
     end
+  end
+
+  # this exists only to make the test easier. sadly, you can't mock send_file, since then
+  # rails looks for a view template.
+  def private_filename(asset_or_thumbnail)
+    asset_or_thumbnail.private_filename
   end
 
 end

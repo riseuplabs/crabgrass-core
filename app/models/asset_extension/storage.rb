@@ -41,7 +41,7 @@
 #This tells Rails to generate links to the following four hosts: assets0.example.com, assets1.example.com, assets2.example.com, and assets3.example.com.
 
 
-require 'ftools'
+require 'fileutils'
 require 'pathname'
 
 module AssetExtension # :nodoc:
@@ -58,8 +58,8 @@ module AssetExtension # :nodoc:
     end
 
     def self.make_required_dirs
-      FileUtils.mkdir_p(@@private_storage) unless File.exists?(@@private_storage)
-      FileUtils.mkdir_p(@@public_storage) unless File.exists?(@@public_storage)
+      FileUtils.mkdir_p(@@private_storage) unless File.exist?(@@private_storage)
+      FileUtils.mkdir_p(@@public_storage) unless File.exist?(@@public_storage)
     end
 
     ##
@@ -109,17 +109,14 @@ module AssetExtension # :nodoc:
     # eg /assets/55/myfile.jpg
     # or /assets/55/versions/1/myfile.jpg
     def url
-      path(public_url_path, path_id, version_path, url_escape(filename))
+      path public_url_path, path_id, version_path, CGI.escape(filename)
     end
 
     # eg /assets/55/myfile~small.jpg
     # or /assets/55/versions/1/myfile~small.jpg
     def thumbnail_url(thumbnail_name)
-      path(public_url_path, path_id, version_path, url_escape(thumbnail_filename(thumbnail_name)))
-    end
-
-    def url_escape(str)
-      str.gsub(/[^a-zA-Z0-9_\-.]/n){ sprintf("%%%02X", $&.unpack("C")[0]) }
+      path public_url_path, path_id, version_path,
+        CGI.escape(thumbnail_filename(thumbnail_name))
     end
 
     # return a list of all the files that are associated with this asset
@@ -168,7 +165,7 @@ module AssetExtension # :nodoc:
 
     def hard_link(source, dest)
       FileUtils.mkdir_p(File.dirname(dest))
-      if File.exists?(source) and !File.exists?(dest)
+      if File.exist?(source) and !File.exist?(dest)
         FileUtils.ln(source, dest)
       end
     end
@@ -183,14 +180,14 @@ module AssetExtension # :nodoc:
     def destroy_file
       if is_version?
         # just remove version directory
-        FileUtils.rm_rf(File.dirname(private_filename)) if File.exists?(File.dirname(private_filename))
+        FileUtils.rm_rf(File.dirname(private_filename)) if File.exist?(File.dirname(private_filename))
 #      elsif is_thumbnail?
 #        # just remove thumbnail
 #        FileUtils.rm(private_filename) if File.exists?(private_filename)
       else
         # remove everything
         remove_symlink
-        FileUtils.rm_rf(File.dirname(private_filename)) if File.exists?(File.dirname(private_filename))
+        FileUtils.rm_rf(File.dirname(private_filename)) if File.exist?(File.dirname(private_filename))
       end
     end
 
@@ -208,9 +205,9 @@ module AssetExtension # :nodoc:
 
     # Saves the file to the file system
     def save_to_storage(temp_path)
-      if File.exists?(temp_path)
+      if File.exist?(temp_path)
         FileUtils.mkdir_p(File.dirname(private_filename))
-        File.cp(temp_path, private_filename)
+        FileUtils.cp(temp_path, private_filename)
         File.chmod(0644, private_filename)
       end
       true
@@ -222,7 +219,7 @@ module AssetExtension # :nodoc:
 
     # creates a symlink from the private asset storage to a publicly accessible directory
     def add_symlink
-      unless File.exists?(File.dirname(public_filename))
+      unless File.exist?(File.dirname(public_filename))
         real_private_path = Pathname.new(private_filename).realpath.dirname
         real_public_path  = Pathname.new(public_storage).realpath
         public_to_private = real_private_path.relative_path_from(real_public_path)
@@ -234,7 +231,7 @@ module AssetExtension # :nodoc:
 
     # removes symlink from public directory
     def remove_symlink
-      if File.exists?(File.dirname(public_filename))
+      if File.exist?(File.dirname(public_filename))
         FileUtils.rm(File.dirname(public_filename))
       end
     end
@@ -278,7 +275,7 @@ module AssetExtension # :nodoc:
     # a utility function to remove a series of files.
     def remove_files(*files)
       files.each do |file|
-        File.unlink(file) if file and File.exists?(file)
+        File.unlink(file) if file and File.exist?(file)
       end
     end
 

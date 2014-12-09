@@ -15,11 +15,15 @@ module AssetTestHelper
   end
 
   def upload_avatar(file)
-    MockFile.new(RAILS_ROOT + '/test/fixtures/files/' + file)
+    MockFile.new(fixture_file(file))
   end
 
   def read_file(file)
-    File.read( RAILS_ROOT + '/test/fixtures/files/' + file )
+    fixture_file(file).read
+  end
+
+  def fixture_file(file)
+    Rails.root + 'test/fixtures/files' + file
   end
 
   def setup_assets

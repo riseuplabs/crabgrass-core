@@ -2,7 +2,7 @@
   = "$('post_reply').scrollToBottom();"
 
 - content_for :title do
-  .h1= link_to_user(@recipient, :avatar => 'medium')
+  .h1= link_to_user(@recipient, avatar: 'medium')
 
 -# %ul.breadcrumb
 -#   %li
@@ -12,6 +12,6 @@
 -#     = link_to :messages.t, me_discussions_path
 -#     %span.divider /
 -#   %li
--#     = link_to_user(@recipient, :avatar => 'tiny')
+-#     = link_to_user(@recipient, avatar: 'tiny')
 
-= render :partial => 'common/posts/list', :locals => {:posts => @posts}
+= render partial: 'common/posts/list', locals: {posts: @posts}

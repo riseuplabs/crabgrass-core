@@ -1,4 +1,4 @@
-define_navigation(:parent => 'default') do
+define_navigation(parent: 'default') do
 
   global_section :me do
     remove_section(:activities)

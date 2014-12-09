@@ -4,7 +4,7 @@ module Wiki::SavingTest
 
       context "A new Wiki locked by an user" do
         setup do
-          @wiki = Wiki.create :body => 'watermelon'
+          @wiki = Wiki.create body: 'watermelon'
           @wiki.lock! :document, users(:blue)
         end
 
@@ -36,7 +36,7 @@ module Wiki::SavingTest
 
       context "A new multisection Wiki locked by an user" do
         setup do
-          @wiki = Wiki.create :body => "h1. watermelon\n\nh2. seedless"
+          @wiki = Wiki.create body: "h1. watermelon\n\nh2. seedless"
           @wiki.lock! :document, users(:blue)
         end
 

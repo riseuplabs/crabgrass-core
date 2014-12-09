@@ -1,12 +1,12 @@
 class GroupGainedUserActivity < Activity
 
-  validates_format_of :subject_type, :with => /Group/
-  validates_format_of :object_type, :with => /User/
+  validates_format_of :subject_type, with: /Group/
+  validates_format_of :item_type, with: /User/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
 
   alias_attr :group, :subject
-  alias_attr :user,  :object
+  alias_attr :user,  :item
 
   before_create :set_access
   def set_access
@@ -17,9 +17,9 @@ class GroupGainedUserActivity < Activity
 
   def description(view=nil)
     I18n.t(:activity_user_joined_group,
-                :user => user_span(:user),
-                :group_type => group_class(:group),
-                :group => group_span(:group))
+                user: user_span(:user),
+                group_type: group_class(:group),
+                group: group_span(:group))
   end
 
   def icon

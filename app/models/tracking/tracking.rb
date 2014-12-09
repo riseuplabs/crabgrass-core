@@ -13,7 +13,7 @@ class Tracking < ActiveRecord::Base
   # :user         - user context
   def self.insert_delayed(things={})
     return false if things.empty?
-    delayed = RAILS_ENV == 'test' ? '' : 'DELAYED' # don't delay if testing
+    delayed = Rails.env.test? ? '' : 'DELAYED' # don't delay if testing
     execute(%(
       INSERT #{delayed} INTO trackings(current_user_id, page_id, group_id, user_id, views, edits, stars, tracked_at)
       VALUES (#{values_for_tracking(things).join(', ')})
@@ -173,7 +173,7 @@ class Tracking < ActiveRecord::Base
   end
 
   def self.last_processed_at
-    Tracking.find(:first, :order => :tracked_at).tracked_at || Time.now - 3.month
+    Tracking.order(:tracked_at).first.try.tracked_at || Time.now - 3.month
   end
 
 end

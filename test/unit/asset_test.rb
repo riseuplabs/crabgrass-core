@@ -1,8 +1,6 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
-  # fixes fixture_file_upload for Rails 2.3
-  include ActionDispatch::TestProcess
   fixtures :all
 
   def setup
@@ -19,15 +17,8 @@ class AssetTest < ActiveSupport::TestCase
     assert check_associations(Thumbnail)
   end
 
-  def test_simple_upload
-   file_to_upload = upload_data('image.png')
-   @asset = Asset.create_from_params :uploaded_data => file_to_upload
-   assert File.exists?( @asset.private_filename ), 'the private file should exist'
-   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
-  end
-
   def test_paths
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
 
     assert_equal "%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
     assert_equal "%s/0000/%04d/image_small.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_thumbnail_filename(:small)
@@ -40,7 +31,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_single_table_inheritance
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     assert_equal 'PngAsset', @asset.type, 'initial asset should be a png'
     assert_equal 'image/png', @asset.content_type, 'initial asset should be a png'
 
@@ -51,7 +42,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_versions
-    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @id = @asset.id
     @filename_for_1 = @asset.private_filename
     assert_equal 1, @asset.version, 'should be on version 1'
@@ -62,8 +53,8 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 2, @asset.version, 'should be on version 2'
     assert_equal 2, @asset.versions.size, 'there should be two versions'
 
-    assert !File.exists?(@filename_for_1), 'first non-version file should not exist'
-    assert File.exists?(@filename_for_2), 'second non-version file should exist'
+    assert !File.exist?(@filename_for_1), 'first non-version file should not exist'
+    assert File.exist?(@filename_for_2), 'second non-version file should exist'
 
     @version = @asset.versions.earliest
     assert_equal @version.class, Asset::Version
@@ -86,31 +77,31 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_rename
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @asset.base_filename = 'newimage'
     @asset.save
 
     assert_equal "%s/0000/%04d/newimage.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
-    assert File.exists?(@asset.private_filename)
-    assert !File.exists?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
+    assert File.exist?(@asset.private_filename)
+    assert !File.exist?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
   end
 
   def test_file_cleanup_on_destroy
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     @asset.update_access
     @asset.destroy
 
-    assert !File.exists?(@asset.private_filename), 'private file should not exist'
-    assert !File.exists?(File.dirname(@asset.private_filename)), 'dir for private file should not exist'
-    assert !File.exists?(@asset.public_filename), 'public file should not exist'
+    assert !File.exist?(@asset.private_filename), 'private file should not exist'
+    assert !File.exist?(File.dirname(@asset.private_filename)), 'dir for private file should not exist'
+    assert !File.exist?(@asset.public_filename), 'public file should not exist'
   end
 
   def test_access
-    @asset = Asset.create :uploaded_data => upload_data('image.png')
+    @asset = FactoryGirl.create :png_asset
     assert @asset.public?
     @asset.update_access
 
-    assert File.exists?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
+    assert File.exist?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
     assert File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should be a symlink'
     @asset.instance_eval do
       def public?
@@ -118,13 +109,13 @@ class AssetTest < ActiveSupport::TestCase
       end
     end
     @asset.update_access
-    assert !File.exists?(@asset.public_filename), 'public file should NOT exist'
+    assert !File.exist?(@asset.public_filename), 'public file should NOT exist'
     assert !File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should NOT be a symlink'
   end
 
   def test_thumbnails
     start_thumb_count = Thumbnail.count
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = FactoryGirl.create :image_asset
     assert @asset.thumbdefs.any?, 'asset should have thumbdefs'
     assert @asset.thumbnails.any?, 'asset should have thumbnail objects'
 
@@ -132,8 +123,8 @@ class AssetTest < ActiveSupport::TestCase
 
     @thumb1 = @asset.private_thumbnail_filename(:small)
     @thumb_v1 = @asset.versions.latest.private_thumbnail_filename(:small)
-    assert File.exists?(@thumb1), '%s should exist' % @thumb1
-    assert File.exists?(@thumb_v1), '%s should exist' % @thumb_v1
+    assert File.exist?(@thumb1), '%s should exist' % @thumb1
+    assert File.exist?(@thumb_v1), '%s should exist' % @thumb_v1
 
     @asset.uploaded_data = upload_data('image.png')
     @asset.save
@@ -149,16 +140,16 @@ class AssetTest < ActiveSupport::TestCase
     @thumb2 = @asset.private_thumbnail_filename(:small)
     @thumb_v2 = @asset.versions.latest.private_thumbnail_filename(:small)
 
-    assert File.exists?(@thumb2), '%s should exist (new thumb)' % @thumb2
-    assert File.exists?(@thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
-    assert !File.exists?(@thumb1), '%s should NOT exist (old filename)' % @thumb1
+    assert File.exist?(@thumb2), '%s should exist (new thumb)' % @thumb2
+    assert File.exist?(@thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
+    assert !File.exist?(@thumb1), '%s should NOT exist (old filename)' % @thumb1
 
     end_thumb_count = Thumbnail.count
     assert_equal start_thumb_count+9, end_thumb_count, 'there should be exactly 9 more thumbnail objects'
   end
 
   def test_type_changes
-    @asset = Asset.create_from_params :uploaded_data => upload_data('bee.jpg')
+    @asset = FactoryGirl.create :image_asset
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -167,14 +158,20 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
     assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
-    assert_equal 5, @asset.thumbnails.count
+    assert_equal 6, @asset.thumbnails.count
 
     # change back
     @asset = Asset.find(@asset.id)
-    @asset.uploaded_data = upload_data('bee.jpg')
+    @asset.uploaded_data = upload_data('gears.jpg')
     @asset.save
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
+  end
+
+  def test_simple_upload
+   @asset = FactoryGirl.create :png_asset
+   assert File.exist?( @asset.private_filename ), 'the private file should exist'
+   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
   def test_dimensions
@@ -182,9 +179,9 @@ class AssetTest < ActiveSupport::TestCase
       puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
       return
     end
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
-    assert_equal 500, @asset.width, 'width must match file'
-    assert_equal 321, @asset.height, 'height must match file'
+    @asset = FactoryGirl.create :small_image_asset
+    assert_equal 64, @asset.width, 'width must match file'
+    assert_equal 64, @asset.height, 'height must match file'
     @asset.uploaded_data = upload_data('bee.jpg')
     @asset.save
     assert_equal 333, @asset.width, 'width must match after new upload'
@@ -200,6 +197,8 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 43, @asset.versions.latest.thumbnail(:small).width, 'actual width of versioned thumb should be 43'
     assert_equal 64, @asset.versions.latest.thumbnail(:small).height, 'actual height of versioned thumb should be 64'
 
+    assert_equal ["43","64"], Media.dimensions(@asset.thumbnail(:small).private_filename)
+    assert_equal ["133","200"], Media.dimensions(@asset.thumbnail(:medium).private_filename)
   end
 
   def test_doc
@@ -215,7 +214,7 @@ class AssetTest < ActiveSupport::TestCase
       return
     end
 
-    @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
+    @asset = Asset.create_from_params uploaded_data: upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
 
@@ -227,14 +226,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_binary
-    @asset = Asset.create_from_params :uploaded_data => upload_data('raw_file.bin')
+    @asset = Asset.create_from_params uploaded_data: upload_data('raw_file.bin')
     assert_equal Asset, @asset.class, 'asset should be an Asset'
     assert_equal 'Asset', @asset.versions.earliest.versioned_type, 'version should by of type Asset'
   end
 
   def test_failure_on_corrupted_file
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -245,7 +244,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_failure
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { false })
     Media::Transmogrifier.suppress_errors = true
-    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -263,7 +262,7 @@ class AssetTest < ActiveSupport::TestCase
     data1 = '<b>this is some very interesting data</b>'
     data2 = '<i>but not this</i>'
 
-    asset = Asset.create!(:data => '<b>this is some very interesting data</b>', :content_type => 'text/html', :filename => 'data')
+    asset = Asset.create!(data: '<b>this is some very interesting data</b>', content_type: 'text/html', filename: 'data')
     assert_equal data1, File.read(asset.private_filename)
 
     asset.data = data2
@@ -274,16 +273,27 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_user_versions
-    asset = Asset.create! :data => 'hi', :filename => 'x'
-    asset.update_attributes :data => 'bye', :user => users(:blue)
+    asset = Asset.create! data: 'hi', filename: 'x'
+    asset.update_attributes data: 'bye', user: users(:blue)
     assert_nil asset.versions.first.user
     assert_equal users(:blue), asset.versions.last.user
   end
 
   def test_build_asset
-    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata
-    assert asset.filename.any?
+    assert asset.filename.present?
+  end
+
+  def test_search
+    user = users(:kangaroo)
+    correct_ids = Asset.find(:all).collect do |asset|
+      asset.page_terms = asset.page.page_terms
+      asset.save
+      asset.id if user.may?(:view, asset.page)
+    end.compact.sort
+    ids = Asset.visible_to(user).media_type(:image).find(:all).collect{|asset| asset.id}
+    assert_equal correct_ids, ids.sort
   end
 
   protected

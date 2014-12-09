@@ -76,7 +76,6 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
     outline: $banner_border;
     display: block;
     float: left;
-
     //img {
     //  border: $banner_avatar_spacer;
     //  outline: $banner_border;
@@ -149,7 +148,11 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
   #context_banner {
     $ul_id: 'banner_nav_ul';
     @include cutout_menu($ul_id, 0, $background_color, $banner_border);
-    a.tab.active {color: inherit;}
+    a.tab.active {
+      color: inherit;
+      // override any text shadow that might be applied because of the banner background:
+      text-shadow: inherit !important;
+    }
     margin-bottom: gutter();
   }
 }

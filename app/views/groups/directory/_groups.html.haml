@@ -1,0 +1,7 @@
+%ul.directory
+  - for group in @groups
+    %li.entry= render partial: 'group', locals: {group: group}
+    %li.divider
+
+.p
+  = pagination_links(@groups, params: params.except(:utf8))

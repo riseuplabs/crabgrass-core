@@ -28,7 +28,7 @@ en:
   cancel_button: "Cancel"
   create_button: "Create"
   ok_button: "OK"
-  ##!  done_button: "Done"
+  done: "Done"
   show_button: "Show"
   show_thing: "Show %{thing}"
   confirm: "Confirm"
@@ -70,3 +70,8 @@ en:
   deleted: "Deleted"
   remove: "Remove"
 
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: "Enter the name of a group or person"
+      enter_name_of_group: "Enter the name of a group"
+      enter_name_of_person: "Enter the name of a person"

@@ -15,7 +15,7 @@ module PathFinder::Sphinx::Options
 
   def self.options_for_public(path, options)
     options.merge({
-      :public => true
+      public: true
     })
   end
 
@@ -24,8 +24,8 @@ module PathFinder::Sphinx::Options
     user_id = user.is_a?(User) ? user.id : user.to_i
 
     options.merge({
-      :public => true,
-      :secondary_user_ids => [user_id]
+      public: true,
+      secondary_user_ids: [user_id]
     })
   end
 
@@ -43,8 +43,8 @@ module PathFinder::Sphinx::Options
     end
 
     options.merge({
-     :public => true,
-     :secondary_group_ids => group_ids
+     public: true,
+     secondary_group_ids: group_ids
     })
   end
 

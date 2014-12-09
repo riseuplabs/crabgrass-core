@@ -1,7 +1,8 @@
-= render :partial => 'gallery_navigation'
+= render partial: 'gallery_navigation'
 
 %h2=h @image.caption
-.gallery-item
-  = render :partial => 'show_image'
+.gallery-item{align: "center"}
+  = render partial: 'show_image'
 
-%span= gallery_display_image_position
+%span
+  %p.meta.image-counting{align: "center"}= gallery_display_image_position

@@ -8,12 +8,15 @@
 
 class RequestToRemoveUser < Request
 
-  validates_format_of :recipient_type,   :with => /Group/
-  validates_format_of :requestable_type, :with => /User/
+  validates_format_of :recipient_type,   with: /Group/
+  validates_format_of :requestable_type, with: /User/
 
   alias_attr :group, :recipient
   alias_attr :user,  :requestable
 
+  def self.existing(options)
+    pending.with_requestable(options[:user]).for_recipient(options[:group]).first
+  end
 
   #
   # permissions
@@ -25,7 +28,7 @@ class RequestToRemoveUser < Request
   end
 
   def self.may_create?(options)
-    self.new(:user => options[:user], :group => options[:group]).may_create?(options[:current_user])
+    self.new(user: options[:user], group: options[:group]).may_create?(options[:current_user])
   end
 
   def may_approve?(current_user)
@@ -48,19 +51,19 @@ class RequestToRemoveUser < Request
 
   def description
     [:request_to_remove_user_description, {
-      :user => user_span(created_by),
-      :member => user_span(user),
-      :group_type => group.group_type.downcase,
-      :group => group_span(group)
+      user: user_span(created_by),
+      member: user_span(user),
+      group_type: group.group_type.downcase,
+      group: group_span(group)
     }]
   end
 
   def short_description
     [:request_to_remove_user_short, {
-      :user => user_span(created_by),
-      :member => user_span(user),
-      :group_type => group.group_type.downcase,
-      :group => group_span(group)
+      user: user_span(created_by),
+      member: user_span(user),
+      group_type: group.group_type.downcase,
+      group: group_span(group)
     }]
   end
 

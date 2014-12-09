@@ -15,13 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class TokenTest < ActiveSupport::TestCase
   fixtures :tokens, :users
 
   def test_create
-    token = Token.new(:user => users(:blue))
+    token = Token.new(user: users(:blue))
     token.save
     assert_equal 20, token.value.length
     assert !token.expired?

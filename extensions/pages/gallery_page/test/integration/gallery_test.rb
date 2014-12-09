@@ -1,30 +1,25 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+# encoding: UTF-8
+require 'javascript_integration_test'
 
-class GalleryTest < ActionController::IntegrationTest
+class GalleryTest < JavascriptIntegrationTest
+  include Integration::Navigation
+
   def test_create_gallery_with_images
-    login 'purple'
-
-    visit '/me/pages'
-    click_link I18n.t(:contribute_content_link) 
-    click_link 'Gallery'
-
-    # within is not necessary (since the fields names are unique)
-    # but is here as an example of how to restrict the scope of actions on a page
-    within(".create_page table.form") do |scope|
-      scope.fill_in 'Title', :with => 'my pictures'
-
-      scope.select 'rainbow', :from => 'Page Owner'
-      # TODO: attach_file with a multi item input name is broken.
-      # figure out how to fix this
-      # might have to wait until Rails 2.3
-
-      # scope.attach_file 'assets[]', "#{RAILS_ROOT}/test/fixtures/assets/0000/0001/bee.jpg", "image/jpeg"
-      # scope.attach_file 'assets[]', "#{RAILS_ROOT}/test/fixtures/assets/0000/0002/photo.jpg", "image/jpeg"
-    end
-    click_button 'Create Page »'
-
-    assert_contain 'my pictures'
-    # assert_contain %r{bee\s*photo}
-    # assert_contain %r{Groups\s*rainbow\s*People\s*Purple!}
+    login
+    create_page :gallery,  title: 'my pictures'
+    assert_content 'my pictures'
+    attach_file 'upload-input', fixture_file('beé.jpg')
+    attach_file 'upload-input', fixture_file('photo.jpg')
+    assert_content 'photo'
+    click_page_tab 'Show'
+    first('.image_asset .thumbnail').click
+    assert_content 'Image 1 of 2'
+    find('.right-arrow a').click
+    assert_content 'Image 2 of 2'
+    src = find('.gallery-item img')['src']
+    assert_equal 'be%C3%A9_large.jpg', src.split('/').last
+    find('.up-arrow a').click
+    assert_content 'Click thumbnail to see full image.'
   end
+
 end

@@ -10,7 +10,7 @@ class Pages::TitleController < Pages::SidebarsController
     @old_name = @page.name
     @page.title   = params[:page][:title]
     @page.summary = params[:page][:summary]
-    @page.name    = params[:page][:name].to_s.nameize if params[:page][:name].any?
+    @page.name    = params[:page][:name].to_s.nameize if params[:page][:name].present?
     @page.updated_by = current_user
     @new_name = @page.name
     @page.save!

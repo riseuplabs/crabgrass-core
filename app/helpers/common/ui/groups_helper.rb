@@ -19,14 +19,20 @@ module Common::Ui::GroupsHelper
   #
   def options_for_select_group(options={})
 
-    if options[:as_admin]
-      items = current_user.primary_groups_and_networks.with_admin(current_user)
+    if options[:without_networks]
+      items = current_user.primary_groups
     else
       items = current_user.primary_groups_and_networks
     end
 
-    items.sort! { |a, b| a.name <=> b.name }
-    items.collect! {|group| {:value => group.name, :label => group.name, :group => group} }
+    if options[:as_admin]
+      items = items.with_admin(current_user)
+    end
+
+    items.order(:name)
+
+    # make sure to act on a copy so we do not alter the relation
+    items = items.map {|group| {value: group.name, label: group.name, group: group} }
 
     selected_item = nil
 
@@ -42,18 +48,18 @@ module Common::Ui::GroupsHelper
     end
 
     if options[:include_none]
-      items.unshift(:value => '', :label => :none.t, :style => 'font-style: italic')
+      items.unshift(value: '', label: :none.t, style: 'font-style: italic')
       selected_item ||= ''
     end
 
     if options[:include_me]
-      items.unshift(:value => current_user.name, :label => "%s (%s)" % [I18n.t(:only_me), current_user.name], :style => 'font-style: italic')
+      items.unshift(value: current_user.name, label: "%s (%s)" % [I18n.t(:only_me), current_user.name], style: 'font-style: italic')
       selected_item ||= current_user.name
     end
 
     unless items.detect{|i| i[:value] == selected_item}
       # we have a problem: item list does not include the one that is supposed to be selected. so, add it.
-      items.unshift(:value => selected_item, :label => selected_item)
+      items.unshift(value: selected_item, label: selected_item)
     end
 
     html = []
@@ -62,21 +68,21 @@ module Common::Ui::GroupsHelper
       selected = ('selected' if item[:value] == selected_item)
       html << content_tag(
         :option,
-        truncate(item[:label], :length => 40),
-        :value => item[:value],
-        :class => 'spaced',
-        :selected => selected,
-        :style => item[:style]
+        truncate(item[:label], length: 40),
+        value: item[:value],
+        class: 'spaced',
+        selected: selected,
+        style: item[:style]
       )
       if item[:group] and options[:include_committees]
         item[:group].committees.each do |committee|
           selected = ('selected' if committee.name == selected_item)
           html << content_tag(
             :option,
-            "&nbsp; + ".html_safe + truncate(committee.short_name, :length => 40),
-            :value => committee.name,
-            :class => 'indented',
-            :selected => selected
+            "&nbsp; + ".html_safe + truncate(committee.short_name, length: 40),
+            value: committee.name,
+            class: 'indented',
+            selected: selected
           )
         end
       end

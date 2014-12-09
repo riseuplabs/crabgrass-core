@@ -1,0 +1,4 @@
+= label_tag dom_id(user, :task), class: [:checkbox, :inline] do
+  = check_box_tag dom_id(user, :task), user.id, selected.include?(user.id),
+    name: "task[user_ids][]"
+  = user.display_name

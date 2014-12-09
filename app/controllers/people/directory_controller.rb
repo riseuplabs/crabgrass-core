@@ -1,34 +1,45 @@
 class People::DirectoryController < ApplicationController
 
-  skip_before_filter :login_required
-  stylesheet 'directory'
+  before_filter :prepare_path
+
+  guard :allow
 
   def index
-    @users = users_to_display.alphabetized(nil).paginate(pagination_params)
+    @query ||= finder.query_term
+    @users = finder.find
+    @users = @users.paginate(pagination_params)
   end
 
   protected
 
-#  VIEW_KEYWORDS = ['friends', 'peers']
+  attr_writer :path
+  def path
+    @path ||= params[:path] || default_path
+  end
 
-  def users_to_display
-    if !logged_in?
-      User.with_access(:public => :view)
-    elsif friends?
-      current_user.friends
-    elsif peers?
-      current_user.peers
-    else
-      User.with_access(current_user => :view)
+  def prepare_path
+    @query = params[:q] || params[:query]
+    if @query.present?
+      self.path += '/'       unless path.ends_with? '/'
+      self.path += "search/" unless path.ends_with? 'search/'
+      self.path += @query.strip
     end
   end
 
-  def friends?
-    params[:path].try.include? 'contacts'
+  def finder
+    @user_finder ||= UserFinder.new(current_user, path)
   end
 
-  def peers?
-    params[:path].try.include? 'peers'
+  def default_path
+    if !logged_in?
+      'search'
+    elsif current_user.friends.any?
+      'contacts'
+    elsif current_user.peers.any?
+      'peers'
+    else
+      'search'
+    end
   end
 
 end

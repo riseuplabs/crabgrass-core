@@ -1,0 +1,112 @@
+#MB_content hr {
+  width: 140%;
+  margin-left: -2em; }
+
+#add_file_field {
+  margin-top: -10px; }
+
+#title {
+  span {
+    a {
+      font-size: 11px;
+      font-weight: normal;
+      text-decoration: none;
+      color: #5a98c8;
+      margin-left: 15px;
+      &:hover {
+        text-decoration: underline; } } } }
+
+.cover {
+  margin-bottom: 1em;
+  .thumbnail {
+    margin: 0 auto; } }
+
+h2.title {
+  height: 48px;
+  line-height: 2.6; }
+
+.info-edit-gallery {
+  font-style: italic;
+  padding-bottom: 14px;
+  padding-left: 60px;
+  margin-top: -20px; }
+
+#gallery-container {
+  .info {
+    padding-top: 14px;
+    padding-left: 0;
+    margin: 0; } }
+
+.gallery-item img {
+  margin-top: 15px; }
+
+.action {
+  margin-bottom: 20px;
+  margin-top: 20px; }
+
+#show-image {
+  margin-bottom: 20px; }
+
+#save_caption_buttons {
+  display: block; }
+
+#gallery-navigation {
+  ul {
+    width: 70px;
+    height: 28px;
+    position: relative;
+    li {
+      width: 24px;
+      height: 22px;
+      position: absolute;
+      &.right-arrow {
+        right: 0; }
+      &.up-arrow {
+        right: 24px; }
+      &.left-arrow {
+        right: 48px; } } } }
+
+.pencil_16 {
+  &:hover {
+    text-decoration: none; }
+  color: #534741; }
+
+.spinner {
+  background: url(/images/spinner-big.gif) 50% 50% no-repeat;
+  width: 500px;
+  height: 81px; }
+
+// TODO: this should go somewhere else as it is general purpose
+
+ul.floating {
+  li {
+    float: left;
+  }
+}
+
+// trying to have sth. similar to the bootstrap spanX
+// MB_content is 574 wide. 3 spans in there:
+.span {
+  margin-left: 20px;
+  width: 170px;
+  float: left;
+}
+
+//
+// an asset box
+//
+// * fixed height boxes so they work without rows
+// * this is probably duplicated by bootstrap.
+// * this is used by the page attachments popup as well.
+//
+.box {
+  list-style: none;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+  padding: 10px;
+  border: solid lightgray 1px;
+  border-radius: 4px;
+  background: white;
+  // box-shadow: 1px 1px 4px #CCC9C3;
+}

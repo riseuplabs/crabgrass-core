@@ -1,9 +1,9 @@
 -#
 -# All groups of all types are created via this partial.
 -#
--# This is used by the creation code in both groups/group_controller 
+-# This is used by the creation code in both groups/group_controller
 -# and groups/structures_controller.
--# 
+-#
 -# requires:
 -#
 -#   group_type -- symbol of :group, :network, :committee, :council
@@ -20,7 +20,7 @@
   - thing = group_type
 
 - content_for :title do
-  %h1= :create_a_new_thing.t(:thing => thing.t.downcase)
+  %h1= :create_a_new_thing.t(thing: thing.t.downcase)
 
 = form_tag url do
 
@@ -28,35 +28,35 @@
 
   = formy(:table_form) do |f|
 
-    - f.label content_tag(:p, "#{group_type}_description".to_sym.t, :class => "p icon medium #{group_type}_48")
+    - f.label content_tag(:p, "#{group_type}_description".to_sym.t, class: "p icon medium #{group_type}_48")
 
     - f.row do |r|
       - r.label :name.t
-      - r.input text_field(group_type, 'name', :size => 40, :maxlength => 40)
+      - r.input text_field(group_type, 'name', size: 40, maxlength: 40)
       - r.info "(#{:required.t}) "
       - r.info :link_name_description.t
 
     - f.row do |r|
       - r.label :display_name.t
       - r.label_for 'group_full_name'
-      - r.input text_field(group_type, 'full_name', :size => 40, :maxlength => 100)
+      - r.input text_field(group_type, 'full_name', size: 40, maxlength: 100)
       - r.info "(#{:optional.t}) "
       - r.info I18n.t(:descriptive_name_for_display)
 
     - if group_type == :network
       - f.row do |r|
         - r.label :group.t
-        - r.input select_tag('member_group_name', options_for_select_group(:as_admin => true), :class => 'full_width')
-        - r.info "(#{:optional.t}) "
+        - r.input select(group_type, 'initial_member_group', options_for_select_group(as_admin: true, without_networks: true, selected: @network.initial_member_group), class: 'full_width')
+        - r.info "(#{:required.t}) "
         - r.info :network_initial_member.t
-     
+
     - f.row do |r|
       - r.label I18n.t(:language)
       - r.label_for 'group_language'
-      - r.input select(group_type, 'language', all_languages_for_select, {:include_blank => true})
+      - r.input select(group_type, 'language', all_languages_for_select, {include_blank: true})
       - r.info "(#{:optional.t}) "
-      - r.info :group_language.t(:group => group_type.t.downcase)
+      - r.info :group_language.t(group: group_type.t.downcase)
 
       -# adding avatar wasn't working, and seems okay for now to have it added under settings
 
-    - f.buttons submit_tag(:create_button.t, :class => 'btn btn-primary')
+    - f.buttons submit_tag(:create_button.t, class: 'btn btn-primary')

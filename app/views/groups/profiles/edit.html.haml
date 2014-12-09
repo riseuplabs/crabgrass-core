@@ -1,19 +1,18 @@
 
-= form_tag(group_profile_path(@group), :method => 'put', :multipart => true) do
-  = formy(:table_form) do |f|
-
-    - f.heading I18n.t(:information)
+= form_tag(group_profile_path(@group), method: 'put', multipart: true) do
+  = formy(:horizontal_form) do |f|
+    - f.label :information.t
     - f.row do |r|
-      - r.label :place.tcap
+      - r.label :place.t
       - r.input text_field(:profile, :place)
     - f.row do |r|
-      - r.label :summary.tcap
-      - r.input text_area(:profile, :summary, :rows => 5)
-    - if @profile.summary_html.any?
+      - r.label :summary.t
+      - r.input text_area(:profile, :summary, rows: 5)
+    - if @profile.summary_html.present?
       - f.row do |r|
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
         - r.input @profile.summary_html
-
+    - f.label :banner.t
     - banner_field(f)
-    - f.buttons submit_tag(:save_button.t, :name => 'save')
+    - f.button submit_tag(:save_button.t, name: 'save', class: 'btn btn-primary')
 

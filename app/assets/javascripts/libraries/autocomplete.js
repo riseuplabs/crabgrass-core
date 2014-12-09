@@ -8,8 +8,19 @@
  *
  */
 
+// simple fallback when sessionStorage is not available
+if(! ('sessionStorage' in window)) {
+  window.sessionStorage = {};
+}
+
 var Autocomplete = function(el, options, id){
   this.el = $(el);
+  if(! (this.el instanceof Element)) {
+    // quickly opening / closing "share" or "notify" dialogs will cause the element
+    // to disappear before Autocomplete has been initialized. In this case we can
+    // just stop here, to prevent further JS errors.
+    return;
+  }
   this.id = id ? id : this.el.identify();
   this.el.setAttribute('autocomplete','off');
   this.suggestions = [];
@@ -20,7 +31,6 @@ var Autocomplete = function(el, options, id){
   this.intervalId = 0;
   this.preloadedSuggestions = 0;
   this.renderedQuery = "";
-  this.cachedResponse = [];
   this.instanceId = null;
   this.onChangeInterval = null;
   this.ignoreValueChange = false;
@@ -38,6 +48,16 @@ var Autocomplete = function(el, options, id){
     preloadedOnTop:false
   };
   if(options){ Object.extend(this.options, options); }
+
+  // load cached response from session storage
+  try {
+    this.cachedResponse = JSON.parse(sessionStorage['autocomplete-' + this.serviceUrl]);
+  } catch(e) {};
+
+  if(typeof(this.cachedResponse) !== 'object') {
+    this.cachedResponse = {};
+  }
+
   if(Autocomplete.isDomLoaded){
     this.initialize();
   }else{
@@ -112,7 +132,9 @@ Autocomplete.prototype = {
     }
     this.instanceId = Autocomplete.instances.push(this) - 1;
     /* I think we should trigger a preloading request from here */
-    this.requestSuggestions("");
+    if(! this.cachedResponse[""]) {
+      this.requestSuggestions("");
+    }
   },
 
   fixPosition: function() {
@@ -287,7 +309,7 @@ Autocomplete.prototype = {
         }
       });
     }
-    return {data:data, query:this.currentValue, suggestions:suggest};
+    return {data:data, query:this.currentValue, suggestions:suggest, preloading: response.query === ''};
   },
 
   isBadQuery: function(q) {
@@ -304,10 +326,19 @@ Autocomplete.prototype = {
     this.container.hide();
   },
 
+  loading: function() {
+    this.container.show();
+    this.container.innerHTML = '<img src="/images/spinner.gif">';
+  },
+
   suggest: function() {
     var content = [];
     if (this.suggestions.length === 0) {
-      this.hide();
+      if(Object.keys(this.cachedResponse).length === 0 && this.pending > 0) {
+        this.loading();
+      } else {
+        this.hide();
+      }
       return;
     }
     this.suggestions.each(function (value, i) {
@@ -346,8 +377,11 @@ Autocomplete.prototype = {
     this.data = this.data.concat(response.data);
   },
 
+  pending: 0,
+
   requestSuggestions: function(query) {
-    new Ajax.Request(this.serviceUrl, {
+    this.pending++;
+    RequestQueue.add(this.serviceUrl, {
           parameters: { query: query },
           onComplete: this.processResponse.bind(this),
           method: 'get'
@@ -355,12 +389,17 @@ Autocomplete.prototype = {
   },
 
   processResponse: function(xhr) {
+    this.pending--;
     var response;
     try {
       response = xhr.responseText.evalJSON();
       if (!Object.isArray(response.data)) { response.data = []; }
     } catch (err) { return; }
     this.cachedResponse[response.query] = response;
+
+    // store new cache in session storage, so it is available after a refresh
+    sessionStorage['autocomplete-' + this.serviceUrl] = JSON.stringify(this.cachedResponse);
+
     if (this.currentValue.indexOf(response.query) === 0 &&
         response.query.length >= this.renderedQuery.length) {
       this.updateSuggestions(this.filterResponse(response));
@@ -380,7 +419,7 @@ Autocomplete.prototype = {
       this.appendSuggestions(filtered); /*adding preloaded suggestions*/
     }
     this.preloadedSuggestions=this.suggestions.length
-    if (response != "") {
+    if (response != "" && (! response.preloading)) {
       this.appendSuggestions(response);
       this.renderedQuery=response.query;
     }
@@ -408,10 +447,20 @@ Autocomplete.prototype = {
 
   select: function(i) {
     var selectedValue = this.suggestions[i];
+    var form = this.el.form;
     if (selectedValue) {
       this.el.value = this.selectValue(selectedValue);
-      if (this.options.autoSubmit && this.el.form) {
-        this.el.form.submit();
+      if (this.options.autoSubmit && form) {
+        if (form.readAttribute('data-remote')) {
+          this.handleRemote(form);
+        }
+        else {
+          if (typeof form.submit === "function") {
+            this.el.form.submit();
+          } else {
+            this.el.form.submit.click();
+          }
+        }
       }
       this.ignoreValueChange = true;
       this.hide();
@@ -461,7 +510,42 @@ Autocomplete.prototype = {
   // added crabgrass hack: allows regexp filter of selected value
   selectValue: function(value) {
     return (this.options.selectValue ? this.options.selectValue(value) : value);
+  },
+
+  // taken from prototype as there seems to be no way to trigger it from a script.
+  handleRemote: function(element) {
+    var method, url, params;
+
+    var event = element.fire("ajax:before");
+    if (event.stopped) return false;
+
+    if (element.tagName.toLowerCase() === 'form') {
+      method = element.readAttribute('method') || 'post';
+      url    = element.readAttribute('action');
+      // serialize the form with respect to the submit button that was pressed
+      params = element.serialize({ submit: element.retrieve('rails:submit-button') });
+      // clear the pressed submit button information
+      element.store('rails:submit-button', null);
+    } else {
+      method = element.readAttribute('data-method') || 'get';
+      url    = element.readAttribute('href');
+      params = {};
+    }
+
+    new Ajax.Request(url, {
+      method: method,
+      parameters: params,
+      evalScripts: true,
+
+      onCreate:   function(response) { element.fire("ajax:create",   response); },
+      onComplete: function(response) { element.fire("ajax:complete", response); },
+      onSuccess:  function(response) { element.fire("ajax:success",  response); },
+      onFailure:  function(response) { element.fire("ajax:failure",  response); }
+    });
+
+    element.fire("ajax:after");
   }
+
 
 };
 

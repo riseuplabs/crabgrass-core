@@ -1,23 +1,25 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526071659) do
+ActiveRecord::Schema.define(:version => 20140829095525) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
     t.string   "subject_type"
     t.string   "subject_name"
-    t.integer  "object_id"
-    t.string   "object_type"
-    t.string   "object_name"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.string   "item_name"
     t.string   "type"
     t.string   "extra"
     t.integer  "key"
@@ -83,6 +85,15 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.binary  "image_file_data", :limit => 2147483647
     t.boolean "public",                                :default => false
   end
+
+  create_table "castle_gates_keys", :force => true do |t|
+    t.integer "castle_id"
+    t.string  "castle_type"
+    t.integer "holder_code"
+    t.integer "gate_bitfield", :default => 1
+  end
+
+  add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
 
   create_table "categories", :force => true do |t|
   end
@@ -315,15 +326,6 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
 
-  create_table "keys", :force => true do |t|
-    t.integer "castle_id"
-    t.string  "castle_type"
-    t.integer "holder_code"
-    t.integer "gate_bitfield", :default => 1
-  end
-
-  add_index "keys", ["castle_id", "castle_type", "holder_code"], :name => "index_keys_on_castle_id_and_castle_type_and_holder_code"
-
   create_table "locations", :force => true do |t|
     t.integer "profile_id"
     t.boolean "preferred",     :default => false
@@ -399,15 +401,14 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.integer  "page_id"
     t.string   "type"
     t.datetime "created_at"
-    t.integer  "object_id"
-    t.string   "object_type"
+    t.integer  "item_id"
+    t.string   "item_type"
     t.datetime "notification_sent_at"
     t.datetime "notification_digest_sent_at"
     t.string   "details"
   end
 
   add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
-  add_index "page_histories", ["object_id", "object_type"], :name => "index_page_histories_on_object_id_and_object_type"
   add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", :force => true do |t|
@@ -421,7 +422,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.boolean  "resolved"
     t.integer  "rating"
     t.integer  "contributors_count"
-    t.integer  "flow"
+    t.integer  "flow",                                     :default => 0
     t.string   "created_by_login"
     t.string   "updated_by_login"
     t.integer  "created_by_id"
@@ -433,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.integer  "stars_count",                              :default => 0
     t.integer  "views_count",                              :default => 0, :null => false
     t.string   "owner_name"
+    t.integer  "owner_id"
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
@@ -465,7 +467,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.string   "name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
-    t.integer  "flow"
+    t.integer  "flow",                                     :default => 0
     t.integer  "stars_count",                              :default => 0
     t.integer  "views_count",                              :default => 0,    :null => false
     t.integer  "owner_id"
@@ -486,6 +488,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
+  add_index "pages", ["data_id", "data_type"], :name => "index_pages_on_data_id_and_data_type"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id"
@@ -503,6 +506,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
     t.string  "credit"
     t.string  "dimensions"
     t.boolean "public"
+    t.string  "average_color"
   end
 
   create_table "polls", :force => true do |t|
@@ -588,6 +592,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "profiles", ["wiki_id", "entity_id"], :name => "profiles_for_wikis"
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",                      :default => 0
@@ -831,6 +836,7 @@ ActiveRecord::Schema.define(:version => 20120526071659) do
   end
 
   add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true
+  add_index "user_participations", ["user_id", "changed_at"], :name => "recent_changes"
 
   create_table "user_settings", :force => true do |t|
     t.integer  "user_id"

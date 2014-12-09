@@ -12,8 +12,8 @@
     background-color: $background_color;
   }
 
-  padding: gutter();
-  padding-top: 0;
+  padding-left: gutter();
+  padding-right: gutter();
 
   // TODO: move the spacing between masthead and middle to
   //@if $masthead_nav_style != 'cutout' {

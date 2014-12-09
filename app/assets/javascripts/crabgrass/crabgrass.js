@@ -4,8 +4,17 @@
 // stuff that doesn't go anywhere else.
 //
 
+//
 // hides all spinners. this is called by default by most rjs templates.
-function hideSpinners() {$$('.spin').invoke('hide');}
+//
+function hideSpinners() {
+  $$('.spin').invoke('hide');
+  $$('html').invoke('removeClassName', 'busy');
+}
+
+function showSpinner() {
+  $$('html').invoke('addClassName', 'busy');
+}
 
 // opens the greencloth editing reference.
 function quickRedReference() {
@@ -17,29 +26,6 @@ function quickRedReference() {
     "resizable=0,scrollbars=1,status=1,toolbar=0"
   );
   return false;
-}
-
-//
-// AUTOCOMPLETE
-//
-
-function cgAutocompleteEntities(id, url, opts) {
-   var random_id = Math.floor(Math.random() * 1000000000);
-   var options = {serviceUrl:url, minChars:2, maxHeight:400, width:300, onSelect: null, message: '', container: '', preloadedOnTop: true, rowRenderer: autoCompleteRowRenderer, selectValue: autoCompleteSelectValue};
-   if (opts) {
-     if (opts.message)   {options.message   = opts.message}
-     if (opts.container) {options.container = opts.container}
-     if (opts.onSelect)  {options.onSelect  = opts.onSelect}
-   }
-   new Autocomplete(id, options, random_id);
-}
-
-function autoCompleteRowRenderer(value, re, data) {
-  return "<p class='icon xsmall' style='background-image: url(/avatars/" + data + "/xsmall.jpg)'>" + value.replace(/^<em>(.*)<\/em>(<br\/>(.*))?$/gi, function(m, m1, m2, m3){return "<em>" + Autocomplete.highlight(m1,re) + "</em>" + (m3 ? "<br/>" + Autocomplete.highlight(m3, re) : "")}) + "</p>";
-}
-
-function autoCompleteSelectValue(value){
-  return value.replace(/<em>(.*)<\/em>.*/g,'$1');
 }
 
 //
@@ -100,17 +86,22 @@ function eventTarget(event) {
 var LocationHash = {
   onChange: null,   // called whenever location.hash changes
   current: '##',
+  polling: false,
   poll: function() {
     if (window.location.hash != this.current) {
       this.current = window.location.hash;
-      this.onChange();
+      if (this.onChange) { this.onChange(); }
     }
+  },
+  setHandler: function(handler) {
+    this.onChange = handler;
+    this.startPolling();
+  },
+  startPolling: function() {
+    if (!this.polling) { setInterval("LocationHash.poll()", 300) }
+    this.polling = true;
   }
 }
-
-document.observe("dom:loaded", function() {
-  if (LocationHash.onChange) {setInterval("LocationHash.poll()", 300)}
-});
 
 //
 // split panel
@@ -127,7 +118,7 @@ function activatePanelRow(row_id) {
     $('panel_left_'+row_id).addClassName('active');
     var halfHeight = $('panel_left_'+row_id).getHeight() / 2 + "px";
     var borderWidthStr = "#{top} #{right} #{bottom} #{left}".interpolate({top: halfHeight, right:"0px", bottom: halfHeight, left:"10px"});
-    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'}); 
+    $('panel_arrow_'+row_id).setStyle({borderWidth: borderWidthStr, display: 'block'});
 
     // position and show right panel row
     var offset = $('panel_left_'+row_id).offsetTop + 'px';

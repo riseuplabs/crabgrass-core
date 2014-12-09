@@ -21,11 +21,11 @@ module Crabgrass
         # ^^ only validating the handle :on => :save currently breaks the tests,
         #    as they use 'create' instead of 'save', and possibly allows creating
         #    stuff without validating the handle.
-        configuration = { :with => nil }
+        configuration = { with: nil }
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|
-          unless value
+          unless value.present?
             record.errors.add(attr_name, 'must exist')
             next #can't use return cause it raises a LocalJumpError
           end
@@ -47,17 +47,17 @@ module Crabgrass
           # TODO: make this dynamic so this function can be
           # used over any set of classes (instead of just User, Group)
           if record.instance_of? User
-            if User.exists?(['login = ? and id <> ?', value, record.id||-1])
+            if User.exists?(['login = ? and `users`.id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
-            if Group.exists?({:name => value})
+            if Group.exists?({name: value})
               record.errors.add(attr_name, 'is already taken')
             end
           elsif record.kind_of? Group
-            if Group.exists?(['name = ? and id <> ?', value, record.id||-1])
+            if Group.exists?(['name = ? and `groups`.id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
-            if User.exists?({:login => value})
+            if User.exists?({login: value})
               record.errors.add(attr_name, 'is already taken')
             end
           end

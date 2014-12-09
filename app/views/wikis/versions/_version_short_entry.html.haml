@@ -1,7 +1,0 @@
-- avatar_size = local_assigns[:avatar_size] || 'small'
-= avatar_for(version.user, avatar_size)
-= embold_links short_description(version)
-%br/
-%i= friendly_date(version.updated_at)
-- if @wiki.versions.count > 1
-  =version_diff_link(version)

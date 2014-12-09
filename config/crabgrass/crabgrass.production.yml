@@ -9,7 +9,7 @@
 # See doc/CONFIGURATION for more details.
 #
 
-title: "Crabgrass Production"
+title: "Crabgrass"
 
 #
 # LANGUAGE
@@ -44,6 +44,15 @@ email_sender: "robot@$current_host"
 #
 
 available_page_types:
+  - AssetPage
+  - DiscussionPage
+  - WikiPage
+#  - EventPage #removing for mvs https://labs.riseup.net/code/issues/3349
+  - RateManyPage
+  - TaskListPage
+  - RankedVotePage
+  - SurveyPage # we will make available here, but set in its init file that new surveys cannot be added.
+  - Gallery
 
 #
 # GROUPS

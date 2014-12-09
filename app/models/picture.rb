@@ -55,7 +55,8 @@ class Picture < ActiveRecord::Base
 
   URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root,'public'),'')
 
-  serialize :dimensions
+  serialize :dimensions      # Hash
+  serialize :average_color   # Array
   after_destroy :destroy_files
   after_create :save_uploaded_file
 
@@ -83,8 +84,11 @@ class Picture < ActiveRecord::Base
 
   #
   # returns [width, height] for a given geometry
+  # as a side effect, the self.dimensions hash is updated with that geometry.
+  # it is only saved to the db if later self.save is called.
   #
   def size(geometry=nil)
+    geometry = Geometry[geometry]
     dimensions[geometry.to_s] ||= storage.dimensions(geometry)
   end
 
@@ -95,16 +99,20 @@ class Picture < ActiveRecord::Base
   # You must add a geometry definition before you can display
   # a picture resized to a given dimensions.
   #
+  def add_geometry(geometry)
+    add_geometry!(geometry)
+    return geometry
+  rescue ErrorMessage => exc
+    return nil
+  end
+
   def add_geometry!(geometry)
-    if geometry.any?
-      geometry = to_geometry(geometry)
-      geo_key = geometry.to_s
-      self.dimensions ||= {}
-      if dimensions[geo_key].nil?
-        resize(geometry)
-        size(geometry) # stores size in dimensions
-        save!
-      end
+    geometry = Geometry[geometry]
+    self.dimensions ||= {}
+    if self.dimensions[geometry.to_s].nil?
+      resize(geometry)  # generates a file with said geometry
+      size(geometry)    # stores geometry in self.dimensions
+      save!
     end
   end
 
@@ -112,7 +120,7 @@ class Picture < ActiveRecord::Base
   # removes a geometry from this picture, and the associated image files
   #
   def remove_geometry!(geometry)
-    geometry = to_geometry(geometry)
+    geometry = Geometry[geometry]
     if geometry.any?
       geo_key = geometry.to_s
       self.dimensions ||= {}
@@ -144,7 +152,7 @@ class Picture < ActiveRecord::Base
   #
   def render(geometry)
     # ensure the file has been rendered
-    unless File.exists?(storage.private_path(geometry))
+    unless File.exist?(storage.private_path(geometry))
       resize(geometry)
     end
     # ensure symlink to public dir exists
@@ -175,13 +183,6 @@ class Picture < ActiveRecord::Base
 
   private
 
-  #
-  # Convert geometry specified as Hash, Array, or String into Geometry.
-  #
-  def to_geometry(geometry)
-    geometry.is_a?(Geometry) ? geometry : Geometry.new(geometry)
-  end
-
   def storage
     @storage ||= Storage.new(self)
   end
@@ -198,10 +199,10 @@ class Picture < ActiveRecord::Base
     File.open(private_file_path, "wb") do |f|
       f.write(@uploaded_file.read)
     end
-    # save the height & width for the 'full' image (indexed as 'full' in geometry hash)
-    add_geometry! nil
+    self.average_color = storage.average_color # will get saved by add_geometry!
+    self.add_geometry! nil                     # save the height & width for the 'full' image
+                                               # (indexed as 'full' in geometry hash)
   end
-
 
   #
   # Destroys the all files for this picture
@@ -217,20 +218,18 @@ class Picture < ActiveRecord::Base
     storage.destroy_file(geometry)
   end
 
-
-
   #
   # render a new file with the specified geometry
   #
   def resize(geometry)
-    geometry = to_geometry(geometry)
+    geometry = Geometry[geometry]
     input_path = private_file_path
     output_path = storage.private_path(geometry)
     status = GraphicsMagickTransmogrifier.new(
-      :input_file => input_path,
-      :output_file => output_path,
-      :size => geometry.gm_size_param_from(self.size),
-      :crop => geometry.gm_crop_param
+      input_file: input_path,
+      output_file: output_path,
+      size: geometry.gm_size_param_from(self.size),
+      crop: geometry.gm_crop_param
     ).try.run
     if status != :success
       raise ErrorMessage.new('invalid image')

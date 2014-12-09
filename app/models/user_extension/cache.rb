@@ -53,6 +53,27 @@ module UserExtension
       base.extend ClassMethods
     end
 
+
+    # For groups and users we have two cache keys:
+    # * the version based for relationships of the user.
+    # * the normal one based on updated_at for the user itself
+    #
+    # So for example a users own top menu is cached based on
+    # the version cache_key so it refreshes when one of the
+    # users groups changes.
+    #
+    # The display of a different user inside that top menu is
+    # based on that users normal cache key. It changes when the
+    # other user itself changes.
+    def version_cache_key
+      if new_record?
+        cache_key
+      else
+        "#{self.class.model_name.cache_key}/#{id}-#{version}"
+      end
+    end
+
+
     #
     # friendly access, in a more railsy form
     #
@@ -74,11 +95,11 @@ module UserExtension
       clear_access_cache
       direct, all, admin_for = get_group_ids
       peer = get_peer_ids(direct)
-      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
-        :direct_group_id_cache => direct,
-        :all_group_id_cache    => all,
-        :admin_for_group_id_cache    => admin_for,
-        :peer_id_cache         => peer
+      update_attributes version: (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
+        direct_group_id_cache: direct,
+        all_group_id_cache: all,
+        admin_for_group_id_cache: admin_for,
+        peer_id_cache: peer
     end
 
     #
@@ -127,9 +148,9 @@ module UserExtension
     # or directly when a new contact is added
     def update_contacts_cache()
       friend,foe = get_contact_ids
-      update_attributes :version => (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
-        :friend_id_cache => friend,
-        :foe_id_cache    => foe
+      update_attributes version: (version||-1) +1, # this fixes if version is nil, but probably we should get at the root of that.
+        friend_id_cache: friend,
+        foe_id_cache: foe
     end
 
     # include direct memberships, committees, and networks
@@ -210,24 +231,21 @@ module UserExtension
     end
 
     def update_tag_cache
-      # this query sucks and should be optimized
-      # see http://dev.mysql.com/doc/refman/5.0/en/in-subquery-optimization.html
       # TODO: acts_as_taggable_on includes the user_id in every tagging,
       # thus making it easy to find all the tags you have made. maybe this is
       # what we should return here instead?
       if self.id
-        ids = Tag.connection.select_values(%Q[
-          SELECT tags.id FROM tags
-          INNER JOIN taggings ON tags.id = taggings.tag_id
-          WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
-           (SELECT pages.id FROM pages
-            INNER JOIN user_participations ON pages.id = user_participations.page_id
-            WHERE user_participations.user_id = #{id})
+        ids = ActsAsTaggableOn::Tag.connection.select_values(%Q[
+          SELECT taggings.tag_id FROM taggings
+          INNER JOIN user_participations
+            ON taggings.taggable_id = user_participations.page_id
+          WHERE taggings.taggable_type = 'Page'
+          AND user_participations.user_id = #{id}
         ])
       else
         ids = []
       end
-      update_attributes :version => version+1, :tag_id_cache => ids
+      update_attributes version: version+1, tag_id_cache: ids
     end
 
     def clear_tag_cache
@@ -264,11 +282,7 @@ module UserExtension
       # version increment for that is already handled elsewhere.
       def increment_version(ids)
         return unless ids.any?
-        self.connection.execute(
-          quote_sql(
-            ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
-          )
-        )
+        self.where(id: ids).update_all('version = version+1')
       end
 
       ## serialize_as
@@ -291,11 +305,11 @@ module UserExtension
           word = word.id2name
           module_eval <<-"end_eval"
             def #{word}=(value)
-              @#{word} = #{klass.to_s}.new(value)
+              @#{word} = #{klass}.new(value)
               write_attribute('#{word}', @#{word}.to_s)
             end
             def #{word}
-              @#{word} ||= #{klass.to_s}.new( read_attribute('#{word}') )
+              @#{word} ||= #{klass}.new( read_attribute('#{word}') )
             end
           end_eval
         end

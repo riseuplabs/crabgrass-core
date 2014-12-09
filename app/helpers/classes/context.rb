@@ -40,8 +40,17 @@ class Context
   attr_accessor :bg_image
   attr_accessor :bg_image_position
 
+  delegate :to_param, to: :entity
+  delegate :id, to: :entity
+
   #attr_accessor :links
   #attr_accessor :form
+
+  # returns the correct context for the given entity.
+  def self.find(entity)
+    return nil if entity.blank?
+    "Context::#{entity.class}".constantize.new(entity)
+  end
 
   def initialize(entity)
     self.entity = entity
@@ -52,17 +61,25 @@ class Context
     self.fg_color = 'white'
   end
 
+  def self.model_name
+    @_model_name ||= wrapped_base_class.model_name.tap do |name|
+      name.singleton_class.send(:define_method, :param_key) { 'context_id' }
+      name.singleton_class.send(:define_method, :singular_route_key) { 'context' }
+    end
+  end
+
+  # class to base the model name on for using the context in url_for etc.
+  # Currently this is either Group or User.
+  def self.wrapped_base_class
+    raise "please implement wrapped_base_class in #{name}"
+  end
+
   def push_crumb(object)
     if self.breadcrumbs.nil?
       self.breadcrumbs = []
       self.tab = object
     end
     self.breadcrumbs << object
-  end
-
-  # returns the correct context for the given entity.
-  def self.find(entity)
-    "Context::#{entity.class}".constantize.new(entity)
   end
 
   protected
@@ -73,6 +90,10 @@ class Context
 end
 
 class Context::Group < Context
+
+  def self.wrapped_base_class
+    ::Group
+  end
 
   def define_crumbs
     push_crumb :groups
@@ -107,13 +128,19 @@ end
 class Context::Council < Context::Committee
 end
 
-class Context::Me < Context
-  def define_crumbs
-    push_crumb :me
-  end
-end
-
 class Context::User < Context
+
+  def self.wrapped_base_class
+    ::User
+  end
+
+  def self.model_name
+    @_model_name ||= ::User.model_name.tap do |name|
+      name.singleton_class.send(:define_method, :param_key) { 'context_id' }
+      name.singleton_class.send(:define_method, :singular_route_key) { 'context' }
+    end
+  end
+
   def define_crumbs
     push_crumb :people
     if self.entity and !self.entity.new_record?
@@ -122,4 +149,13 @@ class Context::User < Context
   end
 end
 
+class Context::Me < Context
+  def self.wrapped_base_class
+    ::User
+  end
+
+  def define_crumbs
+    push_crumb :me
+  end
+end
 

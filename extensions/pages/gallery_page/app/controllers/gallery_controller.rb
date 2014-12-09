@@ -1,26 +1,13 @@
 class GalleryController < Pages::BaseController
 
-  stylesheet 'upload', :only => :edit
-  stylesheet 'gallery'
-# included in base for now  javascript :upload, :only => :edit
-
   def show
-    @images = @page.images.paginate(:page => params[:page])
-    redirect_to(page_url(@page, :action => 'edit')) if @images.blank?
+    @images = @page.images.paginate(page: params[:page])
+    redirect_to page_path(@page, action: :edit) if @images.blank?
     #@cover = @page.cover
   end
 
   def edit
-    @images = @page.images.paginate(:page => params[:page])
-  end
-
-  # removed an non ajax fallback, azul
-  def update
-    @page.sort_images params[:assets_list]
-    current_user.updated(@page)
-    render :text => I18n.t(:order_changed), :layout => false
-  rescue => exc
-    render :text => I18n.t(:error_saving_new_order_message, :error_message => exc.message)
+    @images = @page.images.paginate(page: params[:page])
   end
 
   protected
@@ -98,7 +85,7 @@ class GalleryController < Pages::BaseController
   # this is no longer used but is here for legacy reasons, temporarily
   def paginate_images
     params[:page] ||= 1
-    Asset.visible_to(current_user).paginate(:page => params[:page], :conditions => ['assets.id IN (?)', @page.image_ids])
+    Asset.visible_to(current_user).paginate(page: params[:page], conditions: ['assets.id IN (?)', @page.image_ids])
   end
 
 end

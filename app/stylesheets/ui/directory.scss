@@ -1,0 +1,45 @@
+
+@import "bootstrap/mixins";
+@import "bootstrap/variables";
+
+.directory {
+  .divider {
+    @include nav-divider;
+  }
+
+  .entry {
+    overflow: auto; // self-clear
+
+    .avatar {
+      float: left;
+     }
+    .text {
+      margin-left: $icon_medium + 7px;
+      // remove unnecessary scrollbar in ff
+      // margin-bottom: 1px;
+     }
+    .info {
+      font-style: italic;
+      margin-top: 4px;
+    }
+    .name {
+      font-size: 1.3em;
+      //overflow: hidden;
+      font-weight: bold;
+    }
+    .display-name {
+      font-weight: bold;
+    }
+    .summary {
+      margin-top: 4px;
+      &, & p {
+        font-size: 11px;
+        line-height: 13px;
+      }
+    }
+    .committees .avatar {
+      margin-top: 4px;
+      margin-right: 5px;
+    }
+  }
+}

@@ -7,17 +7,24 @@ module PageExtension::Groups
     base.extend(ClassMethods)
     base.instance_eval do
 
-      has_many :group_participations, :dependent => :destroy
-      has_many :groups, :through => :group_participations
+      has_many :group_participations,
+        dependent: :destroy,
+        inverse_of: :page
+      has_many :groups, through: :group_participations
 
-      has_many :namespace_groups, :class_name => 'Group', :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
-
-      remove_method :namespace_group_ids  # override the ActiveRecord
-      remove_method :group_ids            # created method so we can used cached copy.
+      has_many :namespace_groups, class_name: 'Group', finder_sql: lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
 
       attr_accessor :groups_changed       # set to true of group_participations has changed.
     end
   end
+
+
+  def self.for_group(group)
+    ids = Group.namespace_ids(group.id)
+    joins(:group_participations).
+      where(group_participations: {group_id: ids})
+  end
+
 
   # returns the owner if the owner happens to be a group
   def group
@@ -98,8 +105,8 @@ module PageExtension::Groups
     #
     def month_counts(options)
       field = case options[:field]
-        when 'created': 'created_at'
-        when 'updated': 'updated_at'
+        when 'created' then 'created_at'
+        when 'updated' then 'updated_at'
         else 'error'
       end
 
@@ -110,18 +117,18 @@ module PageExtension::Groups
       Page.connection.select_all(sql)
     end
 
-    # 
+    #
     # tags are potentially sensitive information. we don't want to show visitors to a group
     # all the tags from all the pages for that group.
-    # 
+    #
     # we ONLY want to show them tags for pages that the group owns and that the user has access to see.
     #
     # So, in order to do that, we need to use page_terms. Currently, this query includes pages the group
     # has access to but is not the owner of. It would be slower to limit it to owned pages, so we don't yet.
     #
     def tags_for_group(group, current_user)
-      filter = access_filter(:group => group, :current_user => current_user)
-      Tag.find_by_sql(%Q[
+      filter = access_filter(group: group, current_user: current_user)
+      ActsAsTaggableOn::Tag.find_by_sql(%Q[
         SELECT tags.*, count(name) as count
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'

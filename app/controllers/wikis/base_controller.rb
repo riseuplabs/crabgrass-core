@@ -3,7 +3,7 @@ class Wikis::BaseController < ApplicationController
   before_filter :fetch_wiki
 
   permissions 'wikis'
-  before_filter :login_required
+  before_filter :login_required, :authorization_required
   guard :may_edit_wiki?
 
   permission_helper 'groups/memberships', 'groups/base'
@@ -11,9 +11,17 @@ class Wikis::BaseController < ApplicationController
   helper 'wikis/base'
 
   protected
+
   def fetch_wiki
     @wiki = Wiki.find(params[:wiki_id] || params[:id])
     @page = @wiki.page
+    if params[:section]
+      @section = params[:section]
+      @body = @wiki.get_body_for_section(@section)
+    else
+      @section = :document
+      @body = @wiki.body
+    end
   end
 
   def setup_context

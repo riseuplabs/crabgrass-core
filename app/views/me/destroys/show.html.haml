@@ -1,4 +1,4 @@
-= form_tag(me_destroy_path, :method => :put) do
+= form_tag(me_destroy_path, method: :put) do
   = formy(:simple_form) do |f|
     - f.label :remove_your_account.t
     - f.row do |r|
@@ -9,4 +9,4 @@
       - r.input check_box_tag :scrub_comments
       - r.label :destroy_comments.t
       - r.info :destroy_comments_info.t
-    - f.button submit_tag(:destroy.t, :confirm => :confirm_account_removal.t, :class => 'btn btn-danger')
+    - f.button submit_tag(:destroy.t, confirm: :confirm_account_removal.t, class: 'btn btn-danger')

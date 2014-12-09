@@ -13,7 +13,7 @@ module TaskListPageHelper
     else
       list.tasks
     end
-    tasks.any? == true ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
+    tasks.any? ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
   end
 
   def options_for_task_list
@@ -34,12 +34,15 @@ module TaskListPageHelper
   def task_checkbox(task)
     disabled = !current_user.may?(:edit, task.task_list.page)
     if (disabled)
-      content_tag :li, task.name, :class => 'icon checkoff'
+      content_tag :li, task.name, class: 'icon checkoff'
     else
       next_state = task.completed? ? 'pending' : 'complete'
-      url =  page_xurl(task.task_list.page, :action => 'mark_task_'+next_state, :id => task.id)
       name = "#{task.id}_task"
-      spinbox_tag name, url, :checked => task.completed?, :tag => :span
+      spinbox_tag name, task_url(task, page_id: task.task_list.page),
+        checked: task.completed?,
+        tag: :span,
+        method: :put,
+        with: "'task[state]=#{next_state}'"
     end
   end
 
@@ -47,53 +50,61 @@ module TaskListPageHelper
   def task_link_to_details(task)
     id = dom_id(task, 'details')
     name = task.name
-    if logged_in?
-      if task.created_at and logged_in_since < task.created_at
-        name += content_tag(:b," (new)")
-      elsif task.updated_at and logged_in_since < task.updated_at
-        name += content_tag(:b," (modified)")
-      end
-    end
     link_to_function(name, "$('%s').toggle()" % id)
+  end
+
+  def task_modification_flag(task)
+    if task.created_at and last_visit < task.created_at
+      content_tag(:em," (#{:new.t})")
+    elsif task.updated_at and last_visit < task.updated_at
+      content_tag(:em," (#{:modified.t})")
+    end
   end
 
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
   def task_link_to_people(task)
     links = task.users.collect{|user|
-      link_to_user(user, :action => 'tasks', :class => 'hov')
-    }.join(', ')
+      link_to_user(user, action: 'tasks', class: 'hov')
+    }.join(', ').html_safe
   end
 
   # a button to hide the task detail
   def close_task_details_button(task)
-    button_to_function "Hide", hide(task, 'details')
+    button_to_function :hide.t, hide(task, 'details')
   end
 
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(task.task_list.page, :action=>'destroy_task', :id=>task.id),
-      :loading => show_spinner(task),
-      :complete => hide(task)
+      url: task_url(task, page_id: task.task_list.page),
+      method: 'delete',
+      loading: show_spinner(task),
+      complete: hide(task)
     )
-    button_to_function "Delete", function
+    button_to_function :delete.t, function
   end
 
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(task.task_list.page, :action=>'edit_task', :id=>task.id),
-      :loading => show_spinner(task)
+      url: edit_task_url(task, page_id: task.task_list.page),
+      loading: show_spinner(task),
+      method: :get
     )
-    button_to_function "Edit", function
+    button_to_function :edit.t, function
   end
 
   def no_pending_tasks(visible)
-    content_tag(:li, 'no pending tasks', :id => 'no_pending_tasks', :style => (visible ? nil : 'display:none'))
+    empty_list_item :no_pending_tasks, hidden: !visible
   end
 
   def no_completed_tasks(visible)
-    content_tag(:li, 'no completed tasks', :id => 'no_completed_tasks', :style => (visible ? nil : 'display:none'))
+    empty_list_item :no_completed_tasks, hidden: !visible
+  end
+
+  def empty_list_item(message, options = {})
+    content_tag :li, message.t, id: message,
+      style: (options[:hidden] && 'display:none')
   end
 
   ##
@@ -115,19 +126,23 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      :url => page_xurl(task.task_list.page, :action=>'update_task', :id => task.id),
-      :loading  => show_spinner(task),
-      :html => {}
+      url: task_url(task, page_id: task.task_list.page),
+      loading: show_spinner(task),
+      method: :put,
+      html: {}
     }]
   end
 
   def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
     page ||= task.task_list.page
-    collection_multiple_select('task', 'user_ids', possible_users(task, page), :id, :login, :outer_class=>'plain floatlist', :selected_items => selected)
+    render partial: 'tasks/assigned_checkbox',
+      collection: possible_users(task, page),
+      as: :user,
+      locals: {selected: selected}
   end
 
   def close_task_edit_button(task)
-    button_to_function "Cancel", hide(task, 'details')
+    button_to_function :cancel.t, hide(task, 'details')
   end
 
   def delete_task_edit_button(task)
@@ -135,7 +150,7 @@ module TaskListPageHelper
   end
 
   def save_task_edit_button(task)
-    submit_tag 'Save'
+    submit_tag :save_button.t
   end
 
   ###
@@ -144,11 +159,11 @@ module TaskListPageHelper
 
   def options_for_new_task_form(page)
     [{
-      :url      => page_xurl(page, :action => 'create_task'),
-      :html     => {:action => page_url(page, :action => 'create_task'), :id => 'new-task-form'}, # non-ajax fallback
-      :loading  => show_spinner('new-task'),
-      :complete => hide_spinner('new-task'),
-      :success => reset_form('new-task-form')
+      url: tasks_url(page_id: page),
+      html: {id: 'new-task-form'},
+      loading: show_spinner('new-task'),
+      complete: hide_spinner('new-task'),
+      success: reset_form('new-task-form')
     }]
   end
 

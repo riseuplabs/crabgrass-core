@@ -6,16 +6,20 @@ class Pages::BaseController < ApplicationController
 
   public
 
-  layout 'page'
+  before_filter :login_required, except: :show
+  before_filter :authorization_required
   permissions :pages
   guard :may_ACTION_page?
-  guard :update => :may_edit_page?
-  javascript 'upload'
-  stylesheet 'upload', 'gallery'
+  guard print: :may_show_page?
+  guard update: :may_edit_page?
+
+  layout 'page'
+
+  permission_helper 'posts'
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups.
-  permission_helper 'groups/memberships', 'groups/base'
+  permission_helper 'groups/memberships', 'groups/base', 'me'
 
   helper 'pages/base', 'pages/sidebar', 'pages/post'
 
@@ -24,15 +28,17 @@ class Pages::BaseController < ApplicationController
   ## (the order matters!)
   ##
 
-  prepend_before_filter :default_fetch_data, :except => :new
+  prepend_before_filter :default_fetch_data, except: :new
 
-  append_before_filter :login_or_public_page_required
   append_before_filter :default_setup_options
   append_before_filter :load_posts
 
-  after_filter :update_viewed, :only => :show
-  after_filter :save_if_needed, :except => :create
-  after_filter :update_view_count, :only => [:show, :edit, :create]
+  # after_filters are processed the inside out.
+  # So whatever is defined first will be processed last
+  # ... after all the others
+  after_filter :save_if_needed, except: :create
+  after_filter :update_viewed, only: :show
+  after_filter :update_view_count, only: [:show, :edit, :create]
 
   include "pages/before_filters".camelize.constantize  # why doesn't "include Pages::BeforeFilters" work?
 
@@ -40,6 +46,7 @@ class Pages::BaseController < ApplicationController
   ## CONSTRUCTOR
   ##
 
+  hide_action :initialize
   # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
@@ -48,19 +55,6 @@ class Pages::BaseController < ApplicationController
     @user  = seed[:user]   # the user context, if any
     @group = seed[:group]  # the group context, if any
     @page  = seed[:page]   # the page object, if already fetched
-  end
-
-  ##
-  ## ACTIONS
-  ##
-
-  def show
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   protected

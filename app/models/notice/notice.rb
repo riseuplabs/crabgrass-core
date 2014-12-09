@@ -1,7 +1,7 @@
 class Notice < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :noticable, :polymorphic => true
+  belongs_to :noticable, polymorphic: true
   belongs_to :avatar
 
   serialize :data
@@ -10,24 +10,24 @@ class Notice < ActiveRecord::Base
   ## CLASS METHODS
   ##
 
-  scope(:for_user, lambda {|user|
-    {:conditions => {:user_id => user.id}}
-  })
+  def self.for_user(user)
+    where(user_id: user)
+  end
 
-  scope(:for_noticable, lambda{|noticable|
-    {:conditions => {:noticable_id => noticable.id, :noticable_type => type_field(noticable)}}
-  })
+  def self.for_noticable(noticable)
+    where(noticable_id: noticable, noticable_type: type_field(noticable))
+  end
 
-  scope(:dismissed, lambda{|boolean|
-    {:conditions => {:dismissed => boolean}}
-  })
+  def self.dismissed(boolean)
+    where(dismissed: boolean)
+  end
 
   def self.find_all_by_noticable(noticable)
-    find(:all, :conditions => {:noticable_id => noticable.id, :noticable_type => type_field(noticable)})
+    for_noticable(noticable).all
   end
 
   def self.destroy_all_by_noticable(noticable)
-    destroy_all(:noticable_id => noticable.id, :noticable_type => type_field(noticable))
+    destroy_all(noticable_id: noticable.id, noticable_type: type_field(noticable))
   end
 
   #
@@ -99,7 +99,7 @@ class Notice < ActiveRecord::Base
       if data[attr].is_a? Array
         I18n.t(*data[attr])
       else
-        I18n.t(data[attr])
+        I18n.t(data[attr], count: 1)
       end
     end
   end

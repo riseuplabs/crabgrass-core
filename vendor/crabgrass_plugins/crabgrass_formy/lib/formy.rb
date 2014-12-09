@@ -17,7 +17,9 @@ require 'formy/buffer'
 
 require 'formy/simple_form'
 require 'formy/horizontal_form'
+require 'formy/tab'
 require 'formy/tabs'
+require 'formy/cutout_tabs'
 require 'formy/toggle_bugs'
 
 module Formy

@@ -11,7 +11,7 @@ module PageExtension::Index
   def self.included(base)
     base.extend(ClassMethods)
     base.instance_eval do
-      has_one :page_terms, :dependent => :destroy
+      has_one :page_terms, dependent: :destroy
       before_save :update_page_terms_in_background
       include InstanceMethods
     end
@@ -41,9 +41,17 @@ module PageExtension::Index
     def access_ids_for(args={})
       id_array = []
       id_array += ["0001"] if args[:public]
-      id_array += args[:group_ids].collect {|id| "%04d" % "8#{id}"} if args[:group_ids]
-      id_array += args[:user_ids].collect  {|id| "%04d" % "1#{id}"} if args[:user_ids]
+      id_array += args[:group_ids].collect {|id| encode_group_id(id)} if args[:group_ids]
+      id_array += args[:user_ids].collect  {|id| encode_user_id(id)} if args[:user_ids]
       return id_array
+    end
+
+    def encode_user_id(id)
+      "%04d" % "1#{id}"
+    end
+
+    def encode_group_id(id)
+      "%04d" % "8#{id}"
     end
 
     # converts a tag list array into a tag list array suitable for searching a
@@ -105,7 +113,7 @@ module PageExtension::Index
             PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
           end
           # fire off background task
-          MiddleMan.worker(:indexing_worker).async_update_page_terms(:arg => self.id)
+          MiddleMan.worker(:indexing_worker).async_update_page_terms(arg: self.id)
         rescue BackgrounDRb::NoServerAvailable => err
           logger.error "Warning: #{err}; performing synchronous update of page index"
           update_page_terms
@@ -138,6 +146,11 @@ module PageExtension::Index
 
       # access control
       terms.access_ids = self.access_ids()
+      if self.owner_type == 'User'
+        terms.owner_id = Page.encode_user_id(self.owner_id)
+      else
+        terms.owner_id = Page.encode_group_id(self.owner_id)
+      end
 
       # additional hook for subclasses
       custom_page_terms(terms)
@@ -150,9 +163,9 @@ module PageExtension::Index
     # :nodoc:
     def access_ids
       Page.access_ids_for(
-        :public => public?,
-        :group_ids => group_ids,
-        :user_ids => user_ids
+        public: public?,
+        group_ids: group_ids,
+        user_ids: user_ids
       ).join(' ')
     end
 

@@ -65,7 +65,7 @@ module PathFinder
     # access options for pages current_user has access to
     def options_for_me(args={})
       default_options.merge(
-        :callback => :options_for_me
+        callback: :options_for_me
       ).merge(args)
     end
 
@@ -73,22 +73,22 @@ module PathFinder
     # access options for pages current_users students have access to
     def options_for_mentor(args={})
       default_options.merge(
-        :callback => :options_for_mentor
+        callback: :options_for_mentor
       ).merge(args)
     end
 
     # access options for all public pages (only)
     def options_for_public(args={})
       default_options.merge(
-        :callback => :options_for_public
+        callback: :options_for_public
       ).merge(args)
     end
 
     # access options for pages in my inbox
     def options_for_inbox(args={})
       default_options.merge(
-        :callback => :options_for_inbox,
-        :method => :sql
+        callback: :options_for_inbox,
+        method: :sql
       ).merge(args)
     end
 
@@ -96,8 +96,8 @@ module PathFinder
     # and that +group+ has participated in.
     def options_for_group(group,args={})
       default_options.merge(
-        :callback => :options_for_group,
-        :callback_arg_group => group
+        callback: :options_for_group,
+        callback_arg_group: group
       ).merge(args)
     end
 
@@ -105,8 +105,8 @@ module PathFinder
     # and that +group+ has participated in.
     def options_for_groups(groups,args={})
       default_options.merge(
-        :callback => :options_for_groups,
-        :callback_arg_groups => groups
+        callback: :options_for_groups,
+        callback_arg_groups: groups
       ).merge(args)
     end
 
@@ -114,8 +114,8 @@ module PathFinder
     # and that +user+ has participated in.
     def options_for_user(user,args={})
       default_options.merge(
-        :callback => :options_for_user,
-        :callback_arg_user => user
+        callback: :options_for_user,
+        callback_arg_user: user
       ).merge(args)
     end
 
@@ -124,7 +124,8 @@ module PathFinder
     def default_options   # :nodoc:
       options = {
         #:controller => get_controller,
-        :public => false,
+        public: false,
+        flow: :normal
       }
       if logged_in?
         options[:user_ids] = [current_user.id]

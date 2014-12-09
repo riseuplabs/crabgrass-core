@@ -62,7 +62,7 @@ module Common::Ui::JavascriptHelper
 
     # argument 1: url
     url_options = options[:url]
-    url_options = url_options.merge(:escape => false) if url_options.is_a?(Hash)
+    url_options = url_options.merge(escape: false) if url_options.is_a?(Hash)
     function << "'#{escape_javascript(url_for(url_options))}'"
 
     # argument 2: options
@@ -116,13 +116,24 @@ module Common::Ui::JavascriptHelper
   # produces javascript to hide the given id or object
   def hide(id, extra=nil)
     id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').hide();" % id
+    "$('%s').hide();".html_safe % id
   end
 
   # produces javascript to show the given id or object
   def show(id, extra=nil)
     id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').show();" % id
+    "$('%s').show();".html_safe % id
+  end
+
+  # produces javascript to show the given id or object
+  def toggle(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').toggle();".html_safe % id
+  end
+
+  def remove(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').remove();".html_safe % id
   end
 
   def hide_spinner(id)
@@ -138,15 +149,16 @@ module Common::Ui::JavascriptHelper
                load_url_function
              when Proc
                url = load_url_function.call(item)
-               remote_function(:url => url, :method => :get) + ";\n"
+               remote_function(url: url, method: :get) + ";\n"
              else
                ''
              end
-    loader + "activatePanelRow('#{dom_id(item)}');"
+    loader + "activatePanelRow('#{dom_id(item)}');".html_safe
   end
 
   #
   # called when a user clicks on a row in a 'sliding list'
+  # sliding list is currently deprecated
   #
 
   def activate_sliding_row(url)
@@ -162,8 +174,8 @@ module Common::Ui::JavascriptHelper
   # we'll hopefully migrate to jquery soon - so i don't feel like
   # cleaning this mess up now.
   def tab_remote_function(options, tab = nil)
-    options.reverse_merge! :method => :get,
-      :success => ''
+    options.reverse_merge! method: :get,
+      success: ''
     options[:success] += 'tabLink.removeClassName("spinner_icon icon");'
     return <<-EOJS
       var tabLink = #{get_dom_element(tab, :tab)};
@@ -253,6 +265,10 @@ module Common::Ui::JavascriptHelper
 
   def hide_default_value
     "if(this.value==this.defaultValue) this.value='';"
+  end
+
+  def focus_form(id)
+    javascript_tag "Form.focusFirstElement('#{id}');"
   end
 
   # toggle all checkboxes off and then toggle a subset of them on

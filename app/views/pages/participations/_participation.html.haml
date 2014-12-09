@@ -1,0 +1,26 @@
+- pagination_size = 15
+- uparts = @page.user_participations.paginate(page: params[:page], per_page: pagination_size, include: :user, order: 'users.login ASC')
+-
+
+%table.styled{width:'100%'}
+  %tr
+    %th= :user.t
+    %th= :viewed.t
+    %th= :contributed.t
+    %th &nbsp;
+
+  - uparts.each do |upart|
+    - next unless upart.user
+    %tr{class: cycle("odd","even")}
+      %td= upart.user.login
+      %td= friendly_date(upart.viewed_at)
+      %td= friendly_date(upart.changed_at)
+      %td
+        = upart.viewed? ? I18n.t(:read) : I18n.t(:unread)
+        = icon_tag "tiny_pending" unless upart.resolved?
+        = icon_tag "tiny_star" if upart.star?
+
+  - if uparts.total_entries > pagination_size
+    %tr{class: cycle("odd","even")}
+      %td{colspan:'4'}
+        = participation_pagination_links(uparts)

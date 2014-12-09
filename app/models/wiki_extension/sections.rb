@@ -3,15 +3,8 @@ module WikiExtension
 
     class SectionNotFoundError < ArgumentError
       def initialize(section = 'document', options = {})
-        message = :cant_find_wiki_section.t(:section => section)
+        message = :cant_find_wiki_section.t(section: section)
         super(message)
-      end
-    end
-
-    class OtherSectionLockedError
-      def initialize(section, options = {})
-        message = :other_section_locked_error.t :section => section
-        super(message, options)
       end
     end
 

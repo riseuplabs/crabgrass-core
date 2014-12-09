@@ -7,19 +7,13 @@
 
 class Pages::ParticipationsController < Pages::SidebarsController
 
-  guard :may_show_page?, :actions => [:update, :create]
+  guard :may_show_page?, actions: [:update, :create]
   helper 'pages/participation', 'pages/share'
+
+  before_filter :fetch_data
 
   # this is used for ajax pagination
   def index
-    tab = params[:tab] == 'permissions' ? 'permissions_tab' : 'participation_tab'
-    render :update do |page|
-      if params[:tab] == 'permissions'
-        page.replace_html 'permissions_tab', :partial => 'pages/participation/permissions'
-      elsif params[:tab] == 'participation'
-        page.replace_html 'participation_tab', :partial => 'pages/participation/participation'
-      end
-    end
   end
 
   def update
@@ -39,13 +33,13 @@ class Pages::ParticipationsController < Pages::SidebarsController
   protected
 
   def watch
-    @upart = @page.add(current_user, :watch => params[:watch])
+    @upart = @page.add(current_user, watch: params[:watch])
     @upart.save!
     render(:update) {|page| page.replace 'watch_li', watch_line}
   end
 
   def star
-    @upart = @page.add(current_user, :star => params[:star])
+    @upart = @page.add(current_user, star: params[:star])
     @upart.save!
     render(:update) {|page| page.replace 'star_li', star_line}
   end
@@ -54,9 +48,9 @@ class Pages::ParticipationsController < Pages::SidebarsController
     if params[:access] == 'remove'
       destroy
     else
-      @page.add(@participation.entity, :access => params[:access]).save!
+      @page.add(@participation.entity, access: params[:access]).save!
       render :update do |page|
-        page.replace_html dom_id(@participation), :partial => 'pages/participation/permission_row', :locals => {:participation => @participation.reload}
+        page.replace_html dom_id(@participation), partial: 'pages/participations/permission_row', locals: {participation: @participation.reload}
       end
     end
   end
@@ -82,10 +76,10 @@ class Pages::ParticipationsController < Pages::SidebarsController
   protected
 
   def fetch_data
-    if params[:group]
-      @participation = GroupParticipation.find(params[:id]) if params[:id]
-    else
+    if params[:group].blank? || params[:group] == 'false'
       @participation = UserParticipation.find(params[:id]) if params[:id]
+    else
+      @participation = GroupParticipation.find(params[:id]) if params[:id]
     end
   end
 

@@ -6,16 +6,16 @@ module Crabgrass::Page
       # works if both fields are included.
       base.scope :visible_to, lambda { |*args|
         access_filter = PageTerms.access_filter_for(*args)
-        { :select => "#{base.table_name}.*", :joins => :page_terms,
-          :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
+        { select: "#{base.table_name}.*", joins: :page_terms,
+          conditions: ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
         }
       }
 
-      base.scope :most_recent, :order => 'updated_at DESC'
+      base.scope :most_recent, order: 'updated_at DESC'
 
       base.scope :exclude_ids, lambda {|ids|
         if ids.any? and ids.is_a? Array
-          {:conditions => ["#{base.table_name}.id NOT IN (?)", ids]}
+          {conditions: ["#{base.table_name}.id NOT IN (?)", ids]}
         else
           {}
         end
@@ -23,7 +23,7 @@ module Crabgrass::Page
 
       # ruby has unexpected syntax for checking if Page is a superclass of base
       unless base <= Page
-        base.has_many :pages, :as => :data
+        base.has_many :pages, as: :data
         base.belongs_to :page_terms
         base.class_eval do
           def page; pages.first; end

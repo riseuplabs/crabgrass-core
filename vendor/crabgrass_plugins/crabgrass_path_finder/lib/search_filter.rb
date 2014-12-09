@@ -92,7 +92,7 @@ class SearchFilter
   end
 
   def has_control_ui?
-    self.section.any?
+    self.section.present?
   end
 
   def options
@@ -143,7 +143,7 @@ class SearchFilter
   end
 
   def html(options={},&block)
-    self.html_options = {:submit_button => true}.merge(options)
+    self.html_options = {submit_button: true}.merge(options)
     self.html_block = block
   end
 
@@ -217,7 +217,7 @@ class SearchFilter
   end
 
   def has_label?
-    @label_block.any? or @label.any?
+    @label_block.present? or @label.present?
   end
 
   # returns the label for this filter, given a particular path.

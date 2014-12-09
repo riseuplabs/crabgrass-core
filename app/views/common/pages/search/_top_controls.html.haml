@@ -1,6 +1,6 @@
 -#
 -# this is a partial for the top search controls.
--# which contain a text filter field and view controls. 
+-# which contain a text filter field and view controls.
 -#
 -# REQUIREMENTS
 -#
@@ -9,7 +9,7 @@
 -# NOTES
 -#
 -#   form_remote_tag does not support the :with option, so we must use some other method.
--#   (here we use link_to_remote). 
+-#   (here we use link_to_remote).
 -#
 -#   because we are not using form_remote_tag, we eat the return key and trigger a click
 -#   to the submit link.
@@ -24,24 +24,22 @@
 -#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
 - with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
-- text_filter_submit_options = {:url => page_search_path, :with => with}
-- clear_filter_options = {:url => page_search_path(:remove => '/text/:text'), :with => 'FilterPath.encode()'}
+- text_filter_submit_options = {url: page_search_path, with: with}
+- clear_filter_options = {url: page_search_path(remove: '/text/:text'), with: 'FilterPath.encode()'}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
-%table#page_search_table
-  %tr
-    %td
-      = search_view_toggle_links(page_search_path)
-      = spinner('view_toggle')
-    %td
-      = form_tag '', :id => 'page_search_form' do
-        %table.page_text_search
-          %tr
-            %td.x
-              = link_to_remote_icon 'tiny_clear', clear_filter_options
-            %td.text
-              = text_field_tag 'text', '', :id => 'search_text_field', :onkeypress => key_pressed
-            %td.search
-              = link_to_remote_icon 'magnifier', text_filter_submit_options, :id => 'search_submit'
+.row#page_search_table
+  %div
+    = # search_view_toggle_links(page_search_path)
+    = spinner('view_toggle')
+  %div
+    = form_tag '', id: 'page_search_form' do
+      %span.page_text_search.pull-right
+        %span.x{style: "display:inline-block"}
+          = link_to_remote_icon 'tiny_clear', clear_filter_options
+        %span.text{style: "display:inline-block"}
+          = text_field_tag 'text', '', id: 'search_text_field', onkeypress: key_pressed
+        %span.search{style: "display:inline-block"}
+          = link_to_remote_icon 'magnifier', text_filter_submit_options, id: 'search_submit'
 
-= javascript_tag "Form.focusFirstElement('page_search_form');"
+= focus_form 'page_search_form'

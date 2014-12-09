@@ -12,15 +12,17 @@ module ProfileHelper
         r.label I18n.t(:file)
         r.label_for 'profile_picture_upload'
         r.input file_field_tag('profile[picture][upload]',
-                               :id => 'profile_picture_upload')
-        #r.info :banner_info.t
+                               id: 'profile_picture_upload')
+        r.info :banner_info.t(
+          optimal_dimensions: "#{banner_width.to_i} x #{banner_height.to_i}"
+        )
       end
     end
   end
 
   def clear_banner_input
     [ picture_tag(@profile.picture, :medium),
-      submit_tag("Clear", :name => 'clear_photo')
+      submit_tag("Clear", name: 'clear_photo')
     ].join '<br/>'
   end
 end

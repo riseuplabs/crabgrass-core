@@ -18,14 +18,13 @@ module Mailers::Group
     @from = email_sender.gsub('$current_host', domain)
 
     @subject = I18n.t(:group_destroyed_subject,
-                        :group_type => @group.group_type,
-                        :group => @group.full_name,
-                        :user => @user.try.display_name)
+                        group_type: @group.group_type,
+                        group: @group.full_name,
+                        user: @user.try.display_name)
 
-    @body[:group_type] = @group.group_type
-    @body[:group] = @group.full_name
+    mail from: @from, to: @recipients, subject: @subject
     # TODO: include this link in the email body and have a directory for destroyed groups
     # why do we want that?
-    # @body[:destroyed_group_directory_url] = groups_directory_url(:action => 'index', :view => 'destroyed', :host => domain)
+    # @destroyed_group_directory_url = groups_directory_url(:action => 'index', :view => 'destroyed', :host => domain)
   end
 end

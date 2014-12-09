@@ -11,7 +11,7 @@
 // table style
 //
 
-.post_list.table {
+.post_list.default {
   table.posts {
     width: 100%;
     border: $posts_border;
@@ -62,11 +62,11 @@
 
   // make the 'send message' button appear on the left,
   // and the 'editing reference' appear on the right.
-  .form_buttons {
-    margin-top: 0.5em;
-  }
-  .reference {
-    float: right;
-    text-align: right;
-  }
+  //.form_buttons {
+  //  margin-top: 0.5em;
+  //}
+  //.reference {
+  //  float: right;
+  //  text-align: right;
+  //}
 }

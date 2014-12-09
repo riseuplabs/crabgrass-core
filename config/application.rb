@@ -1,27 +1,18 @@
-require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
+require_relative "../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-
-  ## THE FOLLOWING LINE WAS ADDED BY rails 3.2 GENERATOR. REMOVE THE COMMENT ONCE
-  ## YOU'RE UPGRADING!
-  #Bundler.require(*Rails.groups(:assets => %w(development test)))
-  Bundler.require(:default, Rails.env)
-
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-RAILS_ROOT = File.expand_path('../..', __FILE__)
-RAILS_ENV = Rails.env
-
-require File.expand_path("../directories.rb", __FILE__)
-require File.expand_path("../../lib/crabgrass/boot.rb", __FILE__)
+require_relative "../lib/crabgrass/boot.rb"
 
 module Crabgrass
   class Application < Rails::Application
@@ -50,13 +41,27 @@ module Crabgrass
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
+    #
+    # We use strong parameters instead like rails4 does.
     #config.active_record.whitelist_attributes = true
 
     config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
-    :request_to_destroy_our_group_observer, :request_observer, :page_observer
+    :group_observer, :relationship_observer, :post_observer,
+    :request_to_destroy_our_group_observer, :request_observer, :page_observer,
+    "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
+    "tracking/user_participation_observer", "tracking/group_participation_observer"
 
-    config.session_store :cookie_store #:mem_cache_store # :p_store
+    config.session_store :cookie_store,
+      :key => 'crabgrass_session'
+
+    config.secret_token = Conf.secret
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+    # We serve assets from /static because /assets is already used
+    config.assets.prefix = '/static'
 
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
@@ -84,16 +89,17 @@ module Crabgrass
 
     # allow plugins in more places
     [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
-      config.paths.vendor.plugins << path
+      config.paths['vendor/plugins'] << path
     end
 
   end
 
   ## FIXME: require these, where they are actually needed (or fix autoloading).
-  require Rails.root.join('lib/int_array')
-  require Rails.root.join('lib/crabgrass/validations')
-  require Rails.root.join('lib/crabgrass/page/class_proxy')
-  require Rails.root.join('lib/crabgrass/page/class_registrar')
-  require Rails.root.join('lib/crabgrass/page/data')
+  require 'int_array'
+  require 'crabgrass/validations'
+  require 'crabgrass/page/class_proxy'
+  require 'crabgrass/page/class_registrar'
+  require 'crabgrass/page/data'
+  require 'crabgrass/mod_routes'
 
 end

@@ -7,9 +7,9 @@
 #
 class RequestToJoinYou < Request
 
-  validates_format_of :recipient_type, :with => /Group/
+  validates_format_of :recipient_type, with: /Group/
 
-  validate :no_membership_yet, :on => :create
+  validate :no_membership_yet, on: :create
 
   def group() recipient end
 
@@ -34,18 +34,18 @@ class RequestToJoinYou < Request
   end
 
   def description
-    [:request_to_join_you_description, {:user => user_span(created_by), :group => group_span(group)}]
+    [:request_to_join_you_description, {user: user_span(created_by), group: group_span(group)}]
   end
 
   def short_description
-    [:request_to_join_you_short, {:user => user_span(created_by), :group => group_span(group)}]
+    [:request_to_join_you_short, {user: user_span(created_by), group: group_span(group)}]
   end
 
   protected
 
   def no_membership_yet
     if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
-      errors.add_to_base("You are already a member")
+      errors.add(:base, "You are already a member")
     end
   end
 

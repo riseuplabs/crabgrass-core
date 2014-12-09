@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 #  require File.dirname(__FILE__) + '/wiki/locking_test.rb'
 #  require File.dirname(__FILE__) + '/wiki/rendering_test.rb'
@@ -16,11 +16,11 @@ class WikiTest < ActiveSupport::TestCase
 
   def self.raw_structure_for_n_byte_body(n)
     {
-      :name => nil,
-      :children => [],
-      :start_index => 0,
-      :end_index => n - 1,
-      :heading_level => 0
+      name: nil,
+      children: [],
+      start_index: 0,
+      end_index: n - 1,
+      heading_level: 0
     }
   end
 
@@ -65,9 +65,21 @@ class WikiTest < ActiveSupport::TestCase
   end
 
   def test_group_association
-    group = Group.make
-    wiki = group.profiles.public.create_wiki :body => "bla"
+    group = FactoryGirl.create(:group)
+    wiki = group.profiles.public.create_wiki body: "bla"
     assert_equal group, wiki.group
+  end
+
+  def test_wiki_body_html_is_not_nil
+    wiki = Wiki.new
+    assert_equal "", wiki.body_html
+  end
+
+  def test_body_html_not_nil_despite_raw_structure
+    wiki = Wiki.new
+    wiki.body_html # generates raw_structure
+    wiki.body_html = nil
+    assert_equal "", wiki.body_html
   end
 
 end

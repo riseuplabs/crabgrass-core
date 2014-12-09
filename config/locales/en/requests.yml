@@ -74,6 +74,7 @@ en:
   request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
   request_to_remove_user_description: "The user %{user} has proposed to remove %{member} from %{group_type} %{group}."
 
+
   ##
   ## MEMBERSHIP REQUESTS
   ##
@@ -86,6 +87,7 @@ en:
   ##!  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
+  you_are_invited: "You are invited to join."
 
   ##
   ## FRIENDS

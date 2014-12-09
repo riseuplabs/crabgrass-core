@@ -1,0 +1,25 @@
+require 'javascript_integration_test'
+
+class DiscussionTest < JavascriptIntegrationTest
+  include Integration::Comments
+
+  def setup
+    super
+    own_page
+    login
+    click_on own_page.title
+  end
+
+  def test_posting
+    comment = post_comment "It is a discussion. So let us comment some."
+    assert_content comment
+  end
+
+  def test_editing_own_comment
+    comment = post_comment "It is a discussion. So let us comment some."
+    new = edit_comment comment, "It is a discussion. So what?"
+    assert_content new
+    assert_no_content comment
+  end
+
+end

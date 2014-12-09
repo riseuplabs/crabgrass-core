@@ -28,21 +28,35 @@ module Common::Ui::AutocompleteHelper
 #        preloadedOnTop: true,
 #        rowRenderer: #{render_entity_row_function},
 #        selectValue: #{extract_value_from_entity_row_function}
-#      }, #{autocomplete_id_number});
+#      });
 #    ]
 #    javascript_tag(auto_complete_js)
 #  end
 
-  # this searches on friends and peers. if needed, we could modify
-  # this to allow the option to search all users.
-  def autocomplete_users_field_tag(field_id, options = {})
-    options.merge! :view => 'recipients'
+  # autocomplete that submits the form on select
+  def autocomplete_input_tag(attribute, entities, options = {})
+    options.reverse_merge!  autoSubmit: true,
+      container: 'autocomplete_container',
+      onkeypress: false
+    options[:view] = entities
+    autocomplete_entity_field_tag(attribute, options)
+  end
+
+  # this searches on recipients - people you may pester.
+  def autocomplete_recipients_field_tag(field_id, options = {})
+    options.merge! view: 'recipients'
     autocomplete_entity_field_tag(field_id, options) #should this always be recipients?
   end
 
   # just for groups
   def autocomplete_groups_field_tag(field_id, options = {})
-    options.merge! :view => 'groups'
+    options.merge! view: 'groups'
+    autocomplete_entity_field_tag(field_id, options)
+  end
+
+  # just for group members
+  def autocomplete_members_field_tag(field_id, options = {})
+    options.merge! view: 'members'
     autocomplete_entity_field_tag(field_id, options)
   end
 
@@ -50,28 +64,35 @@ module Common::Ui::AutocompleteHelper
   def autocomplete_entity_field_tag(field_id, options={})
     # setup options
     options[:view] ||= 'all'
-    options[:onkeypress] ||= eat_enter
-    if options[:onselect] || options[:message] || options[:container]
-      options[:onselect] ||= 'null'
-      option_string = ", {onSelect: #{options[:onselect]}, message: '#{escape_javascript(options[:message])}', container: '#{options[:container]}'}"
-    else
-      option_string = ""
+    if options[:placeholder].is_a? Symbol
+      key = "autocomplete.placeholder.#{options[:placeholder]}"
+      options[:placeholder] = I18n.t(key, cascade: true)
     end
+    # set to false to disable.
+    options[:onkeypress] = eat_enter if options[:onkeypress].nil?
+    js_options = options.extract!(:url, :view, :group, :onselect, :container, :autoSubmit)
+    # create input and script tag
+    value = options.delete(:value)
+    text_field_tag(field_id, value, options) +
+      autocomplete_js_tag(options[:id] || field_id, js_options)
+  end
 
-    # create tag
-    text_field_tag(field_id, '', :style => options[:style], :onkeypress => options[:onkeypress]) +
-    javascript_tag("cgAutocompleteEntities('%s', '%s' %s)" % [
-      field_id,
-      entities_path(:view => options[:view], :format => 'json'),
-      option_string
-    ])
+  def autocomplete_js_tag(field_id, options)
+    path_options = options.extract! :view, :group
+    path_options[:format] = 'json'
+    url = options.delete(:url) || entities_path(path_options)
+
+    options.select! { |_, v| !v.nil? }
+    onselect = options.delete :onselect
+    option_string = options.to_json
+    if onselect.present?
+      option_string = option_string.sub(/}$/, ", onSelect: #{onselect}}")
+    end
+    javascript_tag("cgAutocompleteEntities('%s', '%s', %s)" % [
+      field_id, url, option_string ])
   end
 
   private
-
-  def autocomplete_id_number
-    rand(100000000)
-  end
 
   # called in order to render a popup row. it is a little too complicated.
   #

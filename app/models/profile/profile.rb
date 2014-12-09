@@ -56,7 +56,7 @@ class Profile < ActiveRecord::Base
   ## RELATIONSHIPS TO USERS AND GROUPS
   ##
 
-  belongs_to :entity, :polymorphic => true
+  belongs_to :entity, polymorphic: true
   def user; entity; end
   def group; entity; end
 
@@ -73,7 +73,7 @@ class Profile < ActiveRecord::Base
 
   # approval - user requests to join, group members approce (the default)
   # open - anyone can join the group
-  MEMBERSHIP_POLICY = {:approval => 0, :open => 1}.freeze
+  MEMBERSHIP_POLICY = {approval: 0, open: 1}.freeze
 
   ##
   ## BASIC ATTRIBUTES
@@ -113,45 +113,58 @@ class Profile < ActiveRecord::Base
   ## ASSOCIATED ATTRIBUTES
   ##
 
-  belongs_to :wiki, :dependent => :destroy
+  belongs_to :wiki, dependent: :destroy
   belongs_to :wall,
-   :class_name => 'Discussion',
-   :foreign_key => 'discussion_id',
-   :dependent => :destroy
+   class_name: 'Discussion',
+   foreign_key: 'discussion_id',
+   dependent: :destroy
 
   # belongs_to :photo, :class_name => "Asset", :dependent => :destroy
-  belongs_to :picture, :dependent => :destroy
-  belongs_to :video, :class_name => "ExternalVideo", :dependent => :destroy
+  belongs_to :picture, dependent: :destroy
+  belongs_to :video, class_name: "ExternalVideo", dependent: :destroy
 
   has_many :locations,
-    :class_name => '::ProfileLocation',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfileLocation',
+    dependent: :destroy, order: "preferred desc"
 
   has_many :email_addresses,
-    :class_name => '::ProfileEmailAddress',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfileEmailAddress',
+    dependent: :destroy, order: "preferred desc"
 
   has_many :im_addresses,
-    :class_name => '::ProfileImAddress',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfileImAddress',
+    dependent: :destroy, order: "preferred desc"
 
   has_many :phone_numbers,
-    :class_name => '::ProfilePhoneNumber',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfilePhoneNumber',
+    dependent: :destroy, order: "preferred desc"
 
   has_many :websites,
-    :class_name => '::ProfileWebsite',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfileWebsite',
+    dependent: :destroy, order: "preferred desc"
 
   has_many :notes,
-    :class_name => '::ProfileNote',
-    :dependent => :destroy, :order => "preferred desc"
+    class_name: '::ProfileNote',
+    dependent: :destroy, order: "preferred desc"
 
   #has_many :crypt_keys,
   #  :class_name => '::ProfileCryptKey',
   #  :dependent => :destroy, :order => "preferred desc"
 
   belongs_to :geo_location
+
+  # UNTESTED!
+  #
+  # you can be as specific as needed. From just the country down to
+  # specifying the city id.
+  def self.in_location(options)
+    location_conditions = {
+      country_id: options[:country_id],
+      geo_admin_code_id: options[:state_id],
+      geo_place_id: options[:city_id]
+    }.delete_if{|k,v| v.blank?}
+    joins(:geo_location).where(geo_location: location_conditions)
+  end
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -176,7 +189,7 @@ class Profile < ActiveRecord::Base
 
     # save nil if value is an empty string:
     params.each do |key,value|
-      params[key] = nil unless value.any?
+      params[key] = value.presence
     end
 
     # build objects from params
@@ -194,9 +207,9 @@ class Profile < ActiveRecord::Base
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
     geo_location_options = {
-      :geo_country_id => params.delete('country_id'),
-      :geo_admin_code_id => params.delete('state_id'),
-      :geo_place_id => params.delete('city_id'),
+      geo_country_id: params.delete('country_id'),
+      geo_admin_code_id: params.delete('state_id'),
+      geo_place_id: params.delete('city_id'),
     }
     if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
       if self.geo_location.nil?
@@ -234,6 +247,54 @@ class Profile < ActiveRecord::Base
   def city_id
     return nil if self.geo_location.nil?
     self.geo_location.geo_place_id
+  end
+
+  # UPGRADE FUNCTIONALITY
+
+  def to_gates
+    if self.entity.is_a? User
+      self.to_user_gates
+    elsif self.entity.is_a? Group
+      self.to_group_gates
+    end
+  end
+
+  def to_user_gates
+    gates = [:view, :see_groups, :see_contacts, :pester, :request_contact]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see)
+      profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+      self.send profile_flag
+    }
+  end
+
+  def to_group_gates
+    gates = [
+      :view,
+      :pester,
+      :burden,
+      :spy,
+      :join,
+      :request_membership,
+      :see_members,
+      :see_committees,
+      :see_networks
+    ]
+    gates.select { |gate_name|
+      # all gates correspond to may_* flags in the profile
+      # (except for :view -> may_see and :join which replaces the membership_policy)
+      if gate_name == :join
+        self.membership_policy_is? :open
+      else
+        profile_flag = (gate_name == :view ? "may_see" : "may_#{gate_name}")
+        self.send profile_flag
+      end
+    }
+  end
+
+  def summary_html
+    super.try :html_safe
   end
 
   # DEPRECATED

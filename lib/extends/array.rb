@@ -15,7 +15,7 @@ class Array
   # option shown to be localized.
   # eg ['hi','bye'] --> [[I18n.t(:hi),'hi'],[I18n.t(:bye),'bye']]
   def to_localized_select
-    self.collect{|a| [I18n.t(a.to_sym, :default => a.to_s), a] }
+    self.collect{|a| [I18n.t(a.to_sym, default: a.to_s), a] }
   end
 
   # [1,2,3].to_h {|i| [i, i*2]}

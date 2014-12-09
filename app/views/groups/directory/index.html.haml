@@ -1,14 +1,18 @@
--# .directory.two_column_float
--#   - for group in @groups
--#     .column_item
--#       = render :partial => 'group', :locals => {:group => group}
+.row.search.pull-right#group_search
+  = form_tag '',
+    id: 'group_search_form',
+    method: :get,
+    remote: true,
+    class: 'form-search' do
+    #autocomplete_container.input-append
+      = autocomplete_input_tag 'q', 'groups',
+        value: @filter,
+        url: url_for(format: 'json'),
+        id: 'autocomplete_groups',
+        class: 'search-query',
+        placeholder: :enter_name_of_group
+      %button.btn.btn-primary(type="submit")= :search.t
 
-.directory.grid
-  - @groups.in_groups_of(2, false) do |pair|
-    .row
-      = render :partial => 'group', :collection => pair
-.p
-  = pagination_links(@groups)
+.row.clear
 
-
-
+#group_list= render 'groups'

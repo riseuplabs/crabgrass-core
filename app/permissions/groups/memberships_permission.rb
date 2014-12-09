@@ -18,6 +18,19 @@ module Groups::MembershipsPermission
     !current_user.direct_member_of?(group)
   end
 
+  #
+  # may the current user add someone directly to a group without sending them an invite first?
+  #
+  # currently, this is possible only if the group is a committee and the user is in the parent group.
+  #
+  def may_create_membership?(group=@group, user=@user)
+    logged_in? and
+    group and
+    group.parent and
+    current_user.may?(:admin, group) and
+    ((user && user.member_of?(group.parent)) || user.nil?)
+  end
+
   ##
   ## DESTRUCTION
   ##
@@ -36,18 +49,24 @@ module Groups::MembershipsPermission
 
   #
   # permission for immediately removing someone from a group.
-  # this is possible if there is a council, the current_user is
-  # in the council, but the other user is not.
+  # this is possible if one of two conditions is true:
+  #
+  # (1) there is a council, the current_user is in the council, but the other user is not.
+  # (2) the group in question is a committee, and current_user may admin parent group
   #
   # for most other cases, use may_create_expell_request?
   #
   def may_destroy_membership?(membership = @membership)
     group = membership.group
     user = membership.user
-
-    current_user.council_member_of?(group) and
-    !user.council_member_of?(group) and
-    user != current_user
+    (
+      current_user.council_member_of?(group) &&
+      !user.council_member_of?(group) &&
+      user != current_user
+    ) || (
+      group.committee? &&
+      current_user.may?(:admin, group.parent)
+    )
   end
 
   ##
@@ -75,12 +94,18 @@ module Groups::MembershipsPermission
   #
   # may request to kick someone out of the group?
   #
+  # currently, this ability is limited to 'longterm' members.
+  # see RequestToRemoveUser.may_create?
+  #
   def may_create_expell_request?(membership=@membership)
     group = membership.group
     user = membership.user
-    current_user.may?(:admin, group) and
-    not RequestToRemoveUser.existing(:user => user, :group => group) and
-      RequestToRemoveUser.may_create?(:current_user => current_user, :user => user, :group => group)
+    current_user.may?(:admin, group) && (
+      group.committee? || (
+        !RequestToRemoveUser.existing(user: user, group: group) &&
+        RequestToRemoveUser.may_create?(current_user: current_user, user: user, group: group)
+      )
+    )
   end
 
 end

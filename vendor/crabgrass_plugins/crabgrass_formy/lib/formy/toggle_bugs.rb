@@ -2,23 +2,19 @@ module Formy
 
   class ToggleBugs < Tabs
 
-    class Bug < Formy::Tabs::Tab
+    class Bug < Formy::Tab
       protected
 
       def put_item
-        selected = 'active' if @selected
-        first = 'first' if @options[:index] == 0
-        @class = [@class, 'btn', selected, first].compact.join(' ')
+        first = 'first' if @opts[:index] == 0
+        @class = [@class, 'btn', first].compact.join(' ')
         puts build_link
       end
     end
 
-
     sub_element ToggleBugs::Bug
 
     def open_group
-      # the data-toggle is bootstrap js standart - we'll start using
-      # it once we switched to jquery
       puts '<div class="btn-group" data-toggle="buttons-radio">'
     end
 

@@ -16,7 +16,7 @@ module PageExtension::Starring
       limit = options[:limit] || nil
       order = options[:order] || "stars_count DESC"
       at_least = options[:at_least] || 0
-      find :all, :order => order, :limit => limit, :conditions => ["stars_count >= ?", at_least]
+      find :all, order: order, limit: limit, conditions: ["stars_count >= ?", at_least]
     end
 
     #
@@ -37,7 +37,7 @@ module PageExtension::Starring
     # updates the star count for this page.
     # called in after_save of user_participation when :star is changed.
     def update_star_count
-      new_count = self.user_participations.count(:all, :conditions => {:star => true})
+      new_count = self.user_participations.count(:all, conditions: {star: true})
       if new_count != self.stars_count
         self.update_attribute(:stars_count, new_count)
       end

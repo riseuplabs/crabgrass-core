@@ -66,7 +66,11 @@ module Crabgrass::Theme::Renderer
     end
     sass << ""
     sass << '// FILE FROM %s' % sass_source_path(file)
-    sass << File.read( sass_source_path(file) )
+    begin
+      sass << File.read( sass_source_path(file) )
+    rescue Errno::ENOENT => e
+      sass << "// ERROR: #{e}"
+    end
     if @style and file == Crabgrass::Theme::CORE_CSS_SHEET
       sass << '// CUSTOM CSS FROM THEME'
       sass << @style
@@ -75,16 +79,19 @@ module Crabgrass::Theme::Renderer
   end
 
   #
-  # when definiting sass variables, it matters a lot whether the value
+  # When definiting sass variables, it matters a lot whether the value
   # is quoted or not, because this is passed on to css.
   # see http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
   #
-  # this method determines if we should puts quotes or not.
+  # This method determines if we should puts quotes or not.
   #
-  # For CSS, when generally don't ever need quotes. However,
+  # For CSS, we generally don't ever need quotes. However,
   # because all theme variables get defined as sass variables, even
   # ones that are not used for CSS, we need to make sure we quote
   # anything that would require quotes in CSS.
+  #
+  # This is really hacky and prone to error. I don't like it, but I am not sure
+  # what better to do.
   #
   def quote_sass_variable?(value)
     if value =~ /^#/
@@ -94,11 +101,13 @@ module Crabgrass::Theme::Renderer
     elsif value =~ /[\(\)]/
       false
     elsif value =~ /^\dpx (solid|dotted)/
-      # looks like a boder definition
+      # looks like a border definition
       false
     elsif value =~ /aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|light|dark/
       value =~ / /
     elsif value =~ /serif/
+      false
+    elsif value =~ /normal|bold|bolder|lighter/
       false
     elsif value.is_a? String
       true
@@ -161,7 +170,7 @@ module Crabgrass::Theme::Renderer
   #   'screen' => '/usr/apps/crabgrass/app/stylesheets/screen.sass'
 
   def sass_source_path(sheet_name)
-    File.join(Crabgrass::Theme::SASS_ROOT, sheet_name + '.scss')
+    Crabgrass::Theme::SASS_ROOT + "#{sheet_name}.scss"
   end
 
   # given a css sheet name, return the corresponding themed css file
@@ -175,12 +184,12 @@ module Crabgrass::Theme::Renderer
   # http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#options
   def sass_options
     {
-      :load_paths => [Crabgrass::Theme::SASS_ROOT],
-      :debug_info => false,
-      :style => :nested,
-      :line_comments => false,
-      :syntax => :scss,
-      :cache => false
+      load_paths: [Crabgrass::Theme::SASS_ROOT],
+      debug_info: false,
+      style: :nested,
+      line_comments: false,
+      syntax: :scss,
+      cache: false
     }
   end
 

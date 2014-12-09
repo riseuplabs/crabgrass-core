@@ -12,7 +12,7 @@ define_theme {
   grid {
     column {
       count 12
-      width '40px'
+      width '64px'
       gutter '20px'
       side_gutter '20px'
     }
@@ -52,10 +52,12 @@ define_theme {
     }
     heading {
       family "verdana, 'bitstream vera sans', helvetica, sans-serif"
-      h1_size '2.10em'
-      h2_size '1.125em'
-      h3_size '1em'
-      h4_size '1em'
+      weight 'normal'
+      color '#000'
+      h1_size "#{var(:font_default_size).to_i * 2.25}px"
+      h2_size "#{var(:font_default_size).to_i * 1.75}px"
+      h3_size "#{var(:font_default_size).to_i * 1.25}px"
+      h4_size var(:font_default_size)
     }
   }
 
@@ -101,7 +103,7 @@ define_theme {
       padding_top "10px"
 
       padding "1g"
-      html { content_tag :div, current_site.title, :id => 'masthead_title' }
+      html { content_tag :div, current_site.title, id: 'masthead_title' }
     }
     nav {
       style 'cutout'  # accepts [cutout | bar]
@@ -126,7 +128,7 @@ define_theme {
 
   banner {
     # unfortunately, banner padding must be specified in pixels.
-    padding "16px"
+    padding "20px"
     border "1px solid #888"
     border_dark "1px solid #000"
     default_background '#999'
@@ -192,13 +194,15 @@ define_theme {
     column_count 3
     content {
       #padding '1g'
-      html :partial => 'layouts/global/default_footer_content'
+      html partial: 'layouts/global/default_footer_content'
     }
   }
 
   # all the various z-index values are defined here.
   # these should not ever need to be changed.
   zindex {
+    banner_tabs 9      # context banner navigation tabs
+    banner_avatar 10   # context banner avatar icon
     menu 99            # masthead navigation menus
     modalbox 200       # modal dialog boxes
     tooltip 300        #

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Me::DestroysControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
+    @user  = FactoryGirl.create(:user)
   end
 
   def test_not_logged_in
@@ -21,8 +21,9 @@ class Me::DestroysControllerTest < ActionController::TestCase
 
   def test_update_scrub_name
     login_as @user
-    post :update, :scrub_name => 1
-    assert_nil @user.reload.display_name
+    post :update, scrub_name: 1
+    # we will only have a UserGhost if we load the user again...
+    assert_nil User.find(@user.id).read_attribute :display_name
   end
 
 end

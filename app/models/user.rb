@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   include Crabgrass::Validations
   validates_handle :login
 
-  validates_presence_of :email, :if => :should_validate_email
 
   before_validation :validates_receive_notifications
 
@@ -27,55 +26,76 @@ class User < ActiveRecord::Base
     self.receive_notifications = nil if ! ['Single', 'Digest'].include?(self.receive_notifications)
   end
 
-  validates_as_email :email
-  before_validation 'self.email = nil if email.empty?'
-  # ^^ makes the validation succeed if email == ''
+  validates :email,
+    email_format: {allow_blank: true},
+    presence: {if: :should_validate_email}
 
   def should_validate_email
-    should_validate = if Site.current
+    if Site.current
       Site.current.require_user_email
     else
       Conf.require_user_email
     end
-    should_validate
   end
 
   ##
   ## NAMED SCOPES
   ##
 
-  scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", 2.weeks.ago ]
+  scope :recent, order('users.created_at DESC').
+   where("users.created_at > ?", 2.weeks.ago)
 
+  # this is a little mysql magic to get what we want:
+  # We want to sort by display_name.presence || login
+  # if the display_name is NULL
+  #   CONCAT is null and we get login from COALESCE
+  # if the display_name is ""
+  #   CONCAT gives us the login
+  # if the display name is present
+  #   CONCAT gives display_name + login which will sort by display name basically.
   # alphabetized and (optional) limited to +letter+
-  scope :alphabetized, lambda {|letter|
-    opts = {
-      :order => 'LOWER(COALESCE(users.display_name, users.login)) ASC'
-    }
+
+  def self.alphabetic_order
+    order <<-EOSQL
+      LOWER(
+        COALESCE(
+          CONCAT(users.display_name, users.login),
+          users.login
+        )
+      ) ASC
+    EOSQL
+  end
+
+  def self.alphabetized(letter = nil)
     if letter == '#'
-      opts[:conditions] = ['login REGEXP ?', "^[^a-z]"]
+      conditions = ['login REGEXP ?', "^[^a-z]"]
     elsif not letter.blank?
-      opts[:conditions] = ['login LIKE ?', "#{letter}%"]
+      conditions = ['login LIKE ?', "#{letter}%"]
     end
+    where(conditions).alphabetic_order
+  end
 
-    opts
-  }
-
-  scope :named_like, lambda {|filter|
-    { :conditions => ["users.login LIKE ? OR users.display_name LIKE ?",
-      filter, filter] }
-  }
+  def self.named_like(filter)
+    where "users.login LIKE ? OR users.display_name LIKE ?",
+      filter, filter
+  end
 
   # select only logins
-  scope :logins_only, :select => 'login'
+  scope :logins_only, select('login')
 
 
   ##
   ## USER IDENTITY
   ##
 
-  belongs_to :avatar, :dependent => :destroy
 
-  validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
+  def cache_key
+    "user/#{id}-#{version}"
+  end
+
+  belongs_to :avatar, dependent: :destroy
+
+  validates_format_of :login, with: /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   before_validation :clean_names
 
   def clean_names
@@ -84,6 +104,15 @@ class User < ActiveRecord::Base
     t_name = read_attribute(:display_name)
     if t_name
       write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
+    end
+  end
+
+  before_save :display_name_update
+
+  def display_name_update
+    if display_name_changed?
+      increment :version
+      Group.increment_version(group_ids)
     end
   end
 
@@ -102,7 +131,7 @@ class User < ActiveRecord::Base
 
   # the user's custom display name, could be anything.
   def display_name
-    read_attribute('display_name').any? ? read_attribute('display_name') : login
+    read_attribute('display_name').presence || login
   end
 
   # the user's handle, in same namespace as group name,
@@ -111,7 +140,7 @@ class User < ActiveRecord::Base
 
   # displays both display_name and name
   def both_names
-    if read_attribute('display_name').any? and read_attribute('display_name') != name
+    if read_attribute('display_name').present? && read_attribute('display_name') != name
       '%s (%s)' % [display_name,name]
     else
       name
@@ -134,7 +163,7 @@ class User < ActiveRecord::Base
 
   def banner_style
     #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
-    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
+    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
   end
 
   def online?
@@ -142,14 +171,14 @@ class User < ActiveRecord::Base
   end
 
   def time_zone
-    read_attribute(:time_zone) || Time.zone_default
+    read_attribute(:time_zone).presence || Time.zone_default
   end
 
   #
   # returns this user, as a ghost.
   #
   def ghostify!
-    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself. 
+    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself.
     return User.find(self.id)
   end
 
@@ -157,7 +186,7 @@ class User < ActiveRecord::Base
   ## PROFILE
   ##
 
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
 
   def profile(reload=false)
     @profile = nil if reload
@@ -168,7 +197,7 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
-  has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
+  has_one :setting, class_name: 'UserSetting', dependent: :destroy
 
   # allow us to call user.setting.x even if user.setting is nil
   def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
@@ -187,29 +216,29 @@ class User < ActiveRecord::Base
   # and email when someone sends them a page notification
   # message.
   def wants_notification_email?
-    self.email.any?
+    self.email.present?
   end
 
   ##
   ## ASSOCIATED DATA
   ##
 
-  has_many :task_participations, :dependent => :destroy
-  has_many :tasks, :through => :task_participations do
+  has_many :task_participations, dependent: :destroy
+  has_many :tasks, through: :task_participations do
     def pending
-      self.find(:all, :conditions => 'assigned == TRUE AND completed_at IS NULL')
+      self.find(:all, conditions: 'assigned == TRUE AND completed_at IS NULL')
     end
     def completed
-      self.find(:all, :conditions => 'completed_at IS NOT NULL')
+      self.find(:all, conditions: 'completed_at IS NOT NULL')
     end
     def priority
-      self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
+      self.find(:all, conditions: ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
 
-  has_many :posts, :dependent => :destroy
+  has_many :posts, dependent: :destroy
 
-  has_many :notices, :dependent => :destroy
+  has_many :notices, dependent: :destroy
 
   after_destroy :destroy_requests
   def destroy_requests
@@ -232,7 +261,7 @@ class User < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  # keyring_code used by acts_as_locked and pathfinder
+  # keyring_code used by castle_gates and pathfinder
   def keyring_code
     "%04d" % "1#{id}"
   end
@@ -268,11 +297,17 @@ class User < ActiveRecord::Base
   def may!(perm, protected_thing)
     return false if protected_thing.nil?
     return true if protected_thing.new_record?
-    key = "#{protected_thing.to_s}"
+    # users may perform all actions on themselves
+    return true if self == protected_thing
+    key = "#{protected_thing}"
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
-      result = protected_thing.has_access!(perm, self) rescue false
+      begin
+        result = protected_thing.has_access!(perm, self)
+      rescue PermissionDenied
+        result = false
+      end
       # has_access? might call clear_access_cache, so we need to rebuild it
       # after it has been called.
       @access ||= {}
@@ -291,23 +326,27 @@ class User < ActiveRecord::Base
     @access = nil
   end
 
-  # as special call used in special places: This should only be called if you
-  # know for sure that you can't use user.may?(:admin,thing).
-  # Significantly, this does not return true for new records.
-  def may_admin?(thing)
-    begin
-      thing.has_access!(:admin,self)
-    rescue PermissionDenied
-      false
+  # Migrate permissions from pre-CastleGates databases to CastleGates.
+  # Called from cg:upgrade:user_permissions task.
+  def migrate_permissions!
+    # get holders
+    print '.' if id % 10 == 0
+    public_holder = CastleGates::Holder[:public]
+    friends_holder = CastleGates::Holder[associated(:friends)]
+    peers_holder = CastleGates::Holder[associated(:peers)]
+
+    public_gates  = profiles.public.to_gates
+    private_gates = profiles.private.to_gates
+    friends_gates = (private_gates + public_gates).uniq
+    set_access! public_holder => public_gates
+    set_access! friends_holder => friends_gates
+    if profiles.private.peer?
+      set_access! peers_holder => friends_gates
+    else
+      set_access! peers_holder => public_gates
     end
   end
 
-  ##
-  ## DEPRECATED
-  ##
 
-  # TODO: this does not belong here, should be in the mod, but it was not working
-  # there.
-  include UserExtension::SuperAdmin rescue NameError
-  include UserExtension::Moderator  rescue NameError
+  acts_as_extensible
 end

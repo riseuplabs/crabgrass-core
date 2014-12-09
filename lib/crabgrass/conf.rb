@@ -12,8 +12,8 @@ class Conf
   ##
 
   TEXT_EDITOR = Hash.new(0).merge({
-    :greencloth_only => 0,        :html_only => 1,
-    :greencloth_preferred => 2,   :html_preferred => 3
+    greencloth_only: 0,        html_only: 1,
+    greencloth_preferred: 2,   html_preferred: 3
   }).freeze
 
   ##
@@ -153,7 +153,7 @@ class Conf
 
   def self.load(filename)
     self.load_defaults
-    self.configuration_filename = "#{CRABGRASS_CONFIG_DIRECTORY}/#{filename}"
+    self.configuration_filename = CRABGRASS_CONFIG_DIRECTORY + filename
     hsh = YAML.load_file(configuration_filename) || {}
     hsh.each do |key, value|
       method = key.to_s + '='
@@ -169,7 +169,7 @@ class Conf
     attr = ("TEXT_EDITOR").downcase
     if self.send(attr).is_a? String
       unless const.has_key? self.send(attr).to_sym
-        raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
+        raise '%s of "%s" is not recognized' % [attr, self.send(attr)]
       end
       self.send(attr+'=', const[self.send(attr).to_sym])
     end

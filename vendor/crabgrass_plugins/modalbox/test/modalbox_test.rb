@@ -8,7 +8,7 @@ class DummyRequest
   def initialize
     @get = true
     @params = {}
-    @symbolized_path_parameters = { :controller => 'foo', :action => 'bar' }
+    @symbolized_path_parameters = { controller: 'foo', action: 'bar' }
   end
 
   def get?
@@ -77,21 +77,21 @@ class ModalboxTest < ActiveSupport::TestCase
   end
 
   def test_link_to_confirm
-    url = url_for({:controller => 'controller', :action => 'action', :id => 'id'})
+    url = url_for({controller: 'controller', action: 'action', id: 'id'})
 
     ##
     ## what it is normally
     ##
 
     html = %(<a href="#{url}" onclick="return confirm('are you sure?');">label</a>)
-    assert_dom_equal html, link_to_without_confirm('label', {:controller => 'controller', :action => 'action', :id => 'id'}, :confirm => 'are you sure?')
+    assert_dom_equal html, link_to_without_confirm('label', {controller: 'controller', action: 'action', id: 'id'}, confirm: 'are you sure?')
 
     ##
     ## what it is with modalbox helper
     ##
 
     html = %(<a href="#" onclick="Modalbox.confirm(&quot;are you sure?&quot;, {method:&quot;post&quot;, action:&quot;#{url}&quot;, token:&quot;token&quot;, title:&quot;label&quot;, ok:&quot;OK&quot;, cancel:&quot;Cancel&quot;}); return false;">label</a>)
-    assert_dom_equal html, link_to('label', {:controller => 'controller', :action => 'action', :id => 'id'}, :confirm => 'are you sure?')
+    assert_dom_equal html, link_to('label', {controller: 'controller', action: 'action', id: 'id'}, confirm: 'are you sure?')
   end
 
 end

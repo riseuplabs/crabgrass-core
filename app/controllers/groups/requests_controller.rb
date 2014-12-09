@@ -11,9 +11,9 @@ class Groups::RequestsController < Groups::BaseController
 
   # guard defaults to may_admin_group?
   # permissions handled by model:
-  guard :create => :allow, :update => :allow, :destroy => :allow
+  guard create: :allow, update: :allow, destroy: :allow
 
-  rescue_render :create => :index
+  rescue_render create: :index
 
   def index
     @requests = Request.
@@ -21,7 +21,7 @@ class Groups::RequestsController < Groups::BaseController
       send(current_view, @group).
       by_updated_at.
       paginate(pagination_params)
-    render :template => 'common/requests/index'
+    render template: 'common/requests/index'
   end
 
   #
@@ -29,9 +29,9 @@ class Groups::RequestsController < Groups::BaseController
   # RequestToCreateCouncil
   #
   def create
-    req = requested_class.create! :recipient => @group,
-      :requestable => @group,
-      :created_by => current_user
+    req = requested_class.create! recipient: @group,
+      requestable: @group,
+      created_by: current_user
     success req
     redirect_to request_path(req)
   end

@@ -4,39 +4,39 @@
   %tr
     %td
       .p.icon.medium.group_48
-        %b= link_to :organizations.t, new_group_path(:type => 'group')
+        %b= link_to :organizations.t, new_group_path(type: 'group')
         %br
         = :group_description.t
       .p.align_right
-        = link_to (:create_a_new_thing.t(:thing => :organization.t) + ' &raquo;').html_safe, new_group_path(:type => 'group'), :class => 'btn'
+        = link_to (:create_a_new_thing.t(thing: :organization.t) + ' &raquo;').html_safe, new_group_path(type: 'group'), class: 'btn'
 
   - if Conf.networks
     %tr
       %td
         .p.icon.medium.network_48
-          %b= link_to :networks.t, new_group_path(:type => 'network')
+          %b= link_to :networks.t, new_group_path(type: 'network')
           %br
           = :network_description.t
         .p.align_right
-          = link_to (:create_a_new_thing.t(:thing => :network.t) + ' &raquo;').html_safe, new_group_path(:type => 'network'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(thing: :network.t) + ' &raquo;').html_safe, new_group_path(type: 'network'), class: 'btn'
 
   - if Conf.committees and current_user.groups_and_networks.any?
     %tr
       %td
         .p.icon.medium.committee_48
-          %b= link_to :committees.t, new_group_path(:type => 'committee')
+          %b= link_to :committees.t, new_group_path(type: 'committee')
           %br
           = :committee_description.t
         .p.align_right
-          = link_to (:create_a_new_thing.t(:thing => :committee.t) + ' &raquo;').html_safe, new_group_path(:type => 'committee'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(thing: :committee.t) + ' &raquo;').html_safe, new_group_path(type: 'committee'), class: 'btn'
 
   - if Conf.councils and current_user.groups_and_networks.any?
     %tr
       %td
         .p.icon.medium.council_48
-          %b= link_to :councils.t, new_group_path(:type => 'council')
+          %b= link_to :councils.t, new_group_path(type: 'council')
           %br
           = :council_description.t
         .p.align_right
-          = link_to (:create_a_new_thing.t(:thing => :council.t) + ' &raquo;').html_safe, new_group_path(:type => 'council'), :class => 'btn'
+          = link_to (:create_a_new_thing.t(thing: :council.t) + ' &raquo;').html_safe, new_group_path(type: 'council'), class: 'btn'
 

@@ -47,16 +47,16 @@ class PageTerms < ActiveRecord::Base
       ## text fields ##
 
       # general fields
-      indexes :title,     :sortable => true
-      indexes :page_type, :sortable => true
+      indexes :title,     sortable: true
+      indexes :page_type, sortable: true
       indexes :tags
       indexes :body
       indexes :comments
 
       # denormalized names
-      indexes :created_by_login, :sortable => true
-      indexes :updated_by_login, :sortable => true
-      indexes :owner_name,       :sortable => true
+      indexes :created_by_login, sortable: true
+      indexes :updated_by_login, sortable: true
+      indexes :owner_name,       sortable: true
 
       ## attributes ##
 
@@ -67,9 +67,9 @@ class PageTerms < ActiveRecord::Base
       # ids
       has :created_by_id
       has :updated_by_id
+      has :owner_id
       # has :updated_by_ids, :type => :multi
       # has :watched_by_ids, :type => :multi
-      # has :owner_id (encoded)
 
       # counts
       has :views_count
@@ -77,14 +77,15 @@ class PageTerms < ActiveRecord::Base
 
       # flags and access
       has :resolved
-      has :access_ids, :type => :multi # multi: indexes as an array of ints
-      has :media, :type => :multi
+      has :access_ids, type: :multi # multi: indexes as an array of ints
+      has :media, type: :multi
+      has :flow
 
       # index options
-      set_property :delta => true
-      set_property :field_weights => {:tags => 12, :title => 8, :body => 4, :comments => 2}
+      set_property delta: true
+      set_property field_weights: {tags: 12, title: 8, body: 4, comments: 2}
     rescue
-      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
+      ::Rails.logger.warn "failed to index page #{self.id} for sphinx search"
     end
   end
 
@@ -122,13 +123,13 @@ class PageTerms < ActiveRecord::Base
     args.each do |arg|
       if arg.is_a? User
         user = arg
-        access_ids = Page.access_ids_for(:user_ids => [user.id], :group_ids => user.group_ids)
+        access_ids = Page.access_ids_for(user_ids: [user.id], group_ids: user.group_ids)
       elsif arg.is_a? Group
         group = arg
         # include the ids of committees, but do not include networks
-        access_ids = Page.access_ids_for(:group_ids => group.group_and_committee_ids)
+        access_ids = Page.access_ids_for(group_ids: group.group_and_committee_ids)
       elsif arg == :public
-        access_ids = Page.access_ids_for(:public => true)
+        access_ids = Page.access_ids_for(public: true)
       else
         access_ids = nil
       end

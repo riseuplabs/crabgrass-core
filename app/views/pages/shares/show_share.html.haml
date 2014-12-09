@@ -1,4 +1,4 @@
-= formy(:tabs, :class => 'flat') do |f|
+= formy(:tabs, class: 'flat') do |f|
   - f.tab do |t|
     - t.label :share.t
     - t.show_tab 'share_tab'
@@ -9,12 +9,8 @@
     - t.selected false
 
 #share_tab.tab_content.tab_area
-  = render :partial => 'pages/shares/share_form'
+  = render partial: 'pages/shares/share_form'
 
-#permissions_tab.tab_content.tab_area{:style=>'display:none'}
-  = render :partial => 'pages/participation/permissions'
+#permissions_tab.tab_content.tab_area{style:'display:none'}
+  = render partial: 'pages/participations/permissions'
   .buttons= close_modal_button
-
--# the permission tab might require a refresh of the sidebar if the user
--# edits who has access to this page.
-= refresh_sidebar_on_close

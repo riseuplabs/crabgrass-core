@@ -24,17 +24,11 @@ end
 #
 # trim load_path #2
 #
-#   in production mode, load only en.yml and not locales/en/*.yml.
-#   in other modes, do the opposite. (rake cg:i18n:bundle to generate en.yml)
+#   for English only load files from locales/en/*.yml, not en.yml.
+#   en.yml is only needed for transiflex (rake cg:i18n:bundle to generate en.yml)
 #
-if Rails.env == 'production'
-  load_path = load_path.select do |path|
-    !path.include?('/en/')
-  end
-else
-  load_path = load_path.select do |path|
-    !path.include?('en.yml')
-  end
+load_path = load_path.select do |path|
+  !path.include?('en.yml')
 end
 
 #

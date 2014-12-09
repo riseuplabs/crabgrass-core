@@ -6,7 +6,9 @@
 //
 
 #footer {
-  width: 100%;
+  padding: gutter();
+  padding-top: 15px; // what variable should be used here?
+
   @if $footer_border { border-top: $footer_border; }
   #footer_content {
     @if $footer_column_count == 1 {

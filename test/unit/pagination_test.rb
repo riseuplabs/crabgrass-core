@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class PaginationTest < ActiveSupport::TestCase
   fixtures :users, :groups, :memberships, :relationships, :pages, :sites, :page_terms
@@ -18,12 +18,12 @@ class PaginationTest < ActiveSupport::TestCase
       # last page gets only 1 view
       # lets us test that pagination sorts them properly
       (all_pages.size - index).times do
-        Tracking.insert_delayed(:current_user => user,
-          :user => user,
-          :group => group,
-          :page => page,
-          :action => :view,
-          :time => Time.now - 2.days)
+        Tracking.insert_delayed(current_user: user,
+          user: user,
+          group: group,
+          page: page,
+          action: :view,
+          time: Time.now - 2.days)
       end
     end
 
@@ -32,14 +32,14 @@ class PaginationTest < ActiveSupport::TestCase
 
     # pagination group options
     paginate_options = {
-      :public => false,
-      :callback => :options_for_group,
-      :callback_arg_group => group,
-      :user_ids => [user.id],
-      :current_user => user,
-      :group_ids => [group.id],
-      :per_page => per_page,
-      :page => 1}
+      public: false,
+      callback: :options_for_group,
+      callback_arg_group: group,
+      user_ids: [user.id],
+      current_user: user,
+      group_ids: [group.id],
+      per_page: per_page,
+      page: 1}
 
     pages = Page.paginate_by_path(["most-views-in", "30", "days"], paginate_options)
 

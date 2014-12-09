@@ -9,8 +9,8 @@
 
 module Common::Application::Guard
 
-  ACTION_ALIASES = HashWithIndifferentAccess.new(:update => :edit,
-                                                 :new    => :create)
+  ACTION_ALIASES = HashWithIndifferentAccess.new(update: :edit,
+                                                 new: :create)
 
   def self.included(base)
     base.extend ClassMethods
@@ -48,7 +48,7 @@ module Common::Application::Guard
     def permission_for_action(action)
       method = action_map[action]
       if !method
-        if RAILS_ENV=='development'
+        if Rails.env.development?
           raise ArgumentError.new("No Permission defined for #{action}")
         end
         return false
@@ -89,13 +89,9 @@ module Common::Application::Guard
       @permission_cache ||= HashWithIndifferentAccess.new
     end
 
-    # working around a bug in HashWithIndifferentAccess here
-    # see https://rails.lighthouseapp.com/projects/8994/tickets/5724-subclasses-of-hashwithindifferentaccess-dup-the-wrong-class
     def inherit_action_map
       if superclass.respond_to?(:action_map)
-        superclass.action_map.dup.tap do |map|
-          map.default = superclass.action_map.default
-        end
+        superclass.action_map.dup
       else
         HashWithIndifferentAccess.new
       end

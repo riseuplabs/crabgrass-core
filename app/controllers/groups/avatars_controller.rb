@@ -1,14 +1,14 @@
 class Groups::AvatarsController < Groups::BaseController
 
   include_controllers 'common/avatars'
+  include_controllers 'common/always_perform_caching'
   before_filter :setup
   skip_before_filter :login_required
+  cache_sweeper :group_sweeper
+
+  guard :allow
 
   protected
-
-  # always enable cache, even in dev mode.
-  def self.perform_caching; true; end
-  def perform_caching; true; end
 
   def setup
     @entity = @group

@@ -1,15 +1,9 @@
 - @local_layout = 'sidebar'
-= render :partial => 'common/pages/search/top_controls'
+= render partial: 'common/pages/search/top_controls'
 
-#search_results
-  - if @path.any?
-    = render :partial => 'common/pages/list', :locals => local_assigns
+#search_results{data: {search: 'path', href: page_search_path}}
+  - if @path.present?
+    = render partial: 'common/pages/list', locals: local_assigns
   - else
     = big_spinner
-
--#
--# fire a new ajax request any time the location hash changes.
--#
-- content_for :script do
-  = fire_page_search_on_location_hash_change
 

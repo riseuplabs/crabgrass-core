@@ -33,6 +33,14 @@ class Picture
       set_limits *limits_from_source(source)
     end
 
+    def self.[](geo)
+      if geo.class == self
+        return geo
+      else
+        return new(geo)
+      end
+    end
+
     def limits_from_source(source=nil)
       case source
       when Hash
@@ -62,7 +70,7 @@ class Picture
     end
 
     def any?
-      min_width or max_width or min_height or max_height
+      min_width || max_width || min_height || max_height
     end
 
     def to_s

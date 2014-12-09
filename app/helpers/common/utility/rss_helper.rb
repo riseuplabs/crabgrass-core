@@ -8,7 +8,7 @@ module Common::Utility::RssHelper
 
   def group_search_rss
     '<link rel="alternate" href="%s" title="%s" type="application/rss+xml" />' % [
-       url_for(group_search_url(:action => params[:action], :path => current_rss_path)),
+       url_for(group_search_url(action: params[:action], path: current_rss_path)),
        I18n.t(:rss_feed)
     ]
   end
@@ -24,7 +24,7 @@ module Common::Utility::RssHelper
   def handle_rss(locals)
     if rss_request?
       response.headers['Content-Type'] = 'application/rss+xml'
-      render :partial => '/pages/rss', :locals => locals
+      render partial: '/pages/rss', locals: locals
       return true
     else
       return false

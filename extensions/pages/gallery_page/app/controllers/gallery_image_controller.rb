@@ -4,13 +4,13 @@ class GalleryImageController < Pages::BaseController
 
   # show and edit use base page permissions
   guard :may_edit_page?
-  guard :show => :may_show_page?
+  guard show: :may_show_page?
 
   # default_fetch_data is disabled for new in Pages::BaseController
-  prepend_before_filter :fetch_page_for_new, :only => :new
+  prepend_before_filter :fetch_page_for_new, only: :new
 
   def show
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @showing = @page.showings.find_by_asset_id(params[:id], include: 'asset')
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
@@ -19,48 +19,23 @@ class GalleryImageController < Pages::BaseController
     @previous = @showing.higher_item
   end
 
-  def edit
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
-    @image = @showing.asset
-    @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
-    if request.xhr?
-      render :layout => false
-    end
-  end
+  # cleaned out unused edit and update actions here.
+  # They were quite powerful. Uploading a number of images at once
+  # and supporting zip upload.
+  # But now we use the general purpose assets controller instead.
+  # That one supports multi file upload and drag&drop.
+  #
+  # If you want to bring back some of the old features you might be
+  # interested in looking at the git history
 
-  def update
-    # whoever may edit the gallery, may edit the assets too.
-    raise PermissionDenied unless current_user.may?(:edit, @page)
-    @image = @page.images.find(params[:id])
-    if params[:assets] #and request.xhr?
-      begin
-        @image.change_source_file(params[:assets].first)
-        # reload might not work if the class changed...
-        @image = Asset.find(@image.id)
-        responds_to_parent do
-          render :update do |page|
-            page.replace_html 'show-image', :partial => 'show_image',
-              :locals => {:size => 'medium', :no_link => true}
-            page.hide('progress')
-            page.hide('update_message')
-          end
-        end
-      rescue Exception => exc
-        responds_to_parent do
-          render :update do |page|
-            page.hide('progress')
-            page.replace_html 'update_message', $!
-          end
-        end
-      end
-    # params[:image] would be something like {:cover => 1} or {:title => 'some title'}
-    elsif params[:image] and @image.update_attributes!(params[:image])
-      @image.reload
-      respond_to do |format|
-        format.html { redirect_to page_url(@page,:action=>'show') }
-        format.js { render :partial => 'update', :locals => {:params => params[:image]} }
-      end
-    end
+
+  # removed an non ajax fallback, azul
+  def sort
+    @page.sort_images params[:assets_list]
+    current_user.updated(@page)
+    render text: I18n.t(:order_changed), layout: false
+  rescue => exc
+    render text: I18n.t(:error_saving_new_order_message, error_message: exc.message)
   end
 
   protected

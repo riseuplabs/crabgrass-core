@@ -3,13 +3,13 @@
 -#  style -- one of table, rows, grid, blog. if not set, we use @path to
 -#           which one to use.
 
-- style_from_path = case @path.try.arg_for('view'); when 'compact' then 'table'; when 'detailed' then 'rows'; when 'grid' then 'grid'; end
+- style_from_path = case @path.try(:arg_for, 'view'); when 'compact' then 'table'; when 'detailed' then 'rows'; when 'grid' then 'grid'; end
 - style = local_assigns[:style] || style_from_path || 'table'
 - pages = local_assigns[:pages] ||= @pages
 - paginate = false # pages.respond_to?(:total_entries)
 - paginate_options ||= {}
 
-%section{:class => "page_list #{style}"}
-  = render :partial => "/common/pages/list_as_#{style}", :locals => local_assigns
+%section{class: "page_list #{style}"}
+  = render partial: "/common/pages/list_as_#{style}", locals: local_assigns
   - if paginate
     = pagination_links( pages, paginate_options )

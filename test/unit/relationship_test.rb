@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class RelationshipTest < ActiveSupport::TestCase
   fixtures :users
@@ -63,7 +63,7 @@ class RelationshipTest < ActiveSupport::TestCase
       a.add_contact!(b)
     end
 
-    assert_equal 1, Relationship.count(:conditions => ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
+    assert_equal 1, Relationship.count(conditions: ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
   end
 
   def test_different_types

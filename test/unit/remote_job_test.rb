@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
 
@@ -19,7 +19,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_doc
     if remote_available?
-      asset = TextAsset.create! :uploaded_data => upload_data('msword.doc')
+      asset = TextAsset.create! uploaded_data: upload_data('msword.doc')
       thumbnail = asset.thumbnails.select{|thumb|thumb.name == 'pdf'}.first
       thumbnail.generate
     end
@@ -38,7 +38,7 @@ class AssetTest < ActiveSupport::TestCase
     begin
       RemoteJob.find(:all)
     rescue Errno::ECONNREFUSED => exc
-      info 'skipping remote_job_test: cg-processor is not running'
+      skip('cg-processor is not running.')
       return false
     end
     return true

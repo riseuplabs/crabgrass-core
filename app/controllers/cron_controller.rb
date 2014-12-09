@@ -15,7 +15,7 @@ class CronController < ActionController::Base
   def run
     case params[:id]
     when 'notices_send'
-      PageHistory.send_single_pending_notifications  
+      PageHistory.send_single_pending_notifications
     when 'notices_send_digests'
       PageHistory.send_digest_pending_notifications
     when 'tracking_update_hourlies'
@@ -33,7 +33,7 @@ class CronController < ActionController::Base
     else
       raise 'no such cron action'
     end
-    render :text => '', :layout => false
+    render text: '', layout: false
   end
 
   protected
@@ -44,7 +44,7 @@ class CronController < ActionController::Base
   #
   def allow_only_requests_from_localhost
     unless request.remote_addr == '127.0.0.1'
-      render :text => 'not allowed'
+      render text: 'not allowed'
     end
   end
 

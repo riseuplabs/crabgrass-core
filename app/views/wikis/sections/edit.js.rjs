@@ -1,5 +1,0 @@
-standard_update(page)
-page.replace_html @section.underscore, :partial => 'edit'
-page << release_lock_on_unload unless @wiki.new_record?
-page << confirm_discarding_wiki_edit_text_area
-page << create_wiki_toolbar(@wiki)

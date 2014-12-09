@@ -5,11 +5,11 @@ class SpreadsheetAsset < Asset
   end
 
   define_thumbnails(
-    :csv    => {:ext => 'csv', :remote => true},
-    :pdf    => {:ext => 'pdf', :remote => true},
-    :small  => {:size => '64x64>',   :ext => 'jpg', :depends => :pdf, :title => 'Small Thumbnail'},
-    :medium => {:size => '200x200>', :ext => 'jpg', :depends => :pdf, :title => 'Medium Thumbnail'},
-    :large  => {:size => '500x500>', :ext => 'jpg', :depends => :pdf, :title => 'Large Thumbnail'}
+    csv: {ext: 'csv', remote: true},
+    pdf: {ext: 'pdf', remote: true},
+    small: {size: '64x64>',   ext: 'jpg', depends: :pdf, title: 'Small Thumbnail'},
+    medium: {size: '200x200>', ext: 'jpg', depends: :pdf, title: 'Medium Thumbnail'},
+    large: {size: '500x500>', ext: 'jpg', depends: :pdf, title: 'Large Thumbnail'}
   )
 
 end

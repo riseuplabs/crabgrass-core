@@ -22,7 +22,7 @@ class RequestModelTest < ActiveSupport::TestCase
 
  def test_mark_as_approved_checks_permission
    user = User.new
-   request = Request.new :state => 'pending'
+   request = Request.new state: 'pending'
    request.stubs(:new_record?).returns(false)
    assert_raises PermissionDenied do
      request.expects(:may_approve?).with(user).returns(false)
@@ -32,8 +32,8 @@ class RequestModelTest < ActiveSupport::TestCase
 
  def test_mark_as_rejected_checks_permission
    user = User.new
-   request = Request.new :state => 'pending'
-   request = Request.new :state => 'pending'
+   request = Request.new state: 'pending'
+   request = Request.new state: 'pending'
    request.stubs(:new_record?).returns(false)
    assert_raises PermissionDenied do
      request.expects(:may_approve?).with(user).returns(false)

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 require 'mailer'
 
 class MailerPageHistoryTest < ActiveSupport::TestCase
@@ -7,15 +7,22 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    @user_a = User.make :login => "miguel", :display_name => "Miguel Bakunin"
-    @user_b = User.make :login => "anselme", :display_name => "Anselme Belgarin"
+    @user   = FactoryGirl.create(:user)
+    @user_a = FactoryGirl.create(:user, login: "miguel", display_name: "Miguel Bakunin")
+    @user_b = FactoryGirl.create(:user, login: "anselme", display_name: "Anselme Belgarin")
+
     User.current = @user
-    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1)
-    @site = Site.make :domain => "crabgrass.org",
-      :title => "Crabgrass Social Network",
-      :email_sender => "robot@$current_host",
-      :default => true,
-      :name => 'cg'
+
+    @page = FactoryGirl.create(:page)
+    @page.owner = @user
+    @page.user_participations.create user: @user, access: 1
+
+    @site = FactoryGirl.create(:site, domain: "crabgrass.org",
+                               title: "Crabgrass Social Network",
+                               email_sender: "robot@$current_host",
+                               default: true,
+                               name: 'cg'
+                              )
     enable_site_testing 'cg'
   end
 
@@ -24,8 +31,8 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
   end
 
   def test_send_single_notification
-    page_history = PageHistory::AddStar.create!(:user => @user_a, :page => @page)
-    message = Mailer.create_page_history_single_notification(@user_b, page_history)
+    page_history = PageHistory::AddStar.create!(user: @user_a, page: @page)
+    message = Mailer.page_history_single_notification(@user_b, page_history)
     assert_equal "Crabgrass Social Network : #{@page.title}", message.subject
     assert_equal [@user_b.email], message.to
     assert_equal ["robot@crabgrass.org"], message.from
@@ -36,8 +43,8 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
   end
 
   def test_send_single_notification_paranoid_emails_enabled
-    page_history = PageHistory::AddStar.create!(:user => @user_a, :page => @page)
-    message = Mailer.create_page_history_single_notification_paranoid(@user_b, page_history)
+    page_history = PageHistory::AddStar.create!(user: @user_a, page: @page)
+    message = Mailer.page_history_single_notification_paranoid(@user_b, page_history)
     assert_equal "Crabgrass Social Network : A page has been modified", message.subject
     assert_equal [@user_b.email], message.to
     assert_equal ["robot@crabgrass.org"], message.from
@@ -51,9 +58,9 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
 
   def test_send_digest_notification
     page_histories = []
-    page_histories << PageHistory::AddStar.create!(:user => @user_a, :page => @page)
-    page_histories << PageHistory::RemoveStar.create!(:user => @user_b, :page => @page)
-    message = Mailer.create_page_history_digest_notification(@user_a, @page, page_histories)
+    page_histories << PageHistory::AddStar.create!(user: @user_a, page: @page)
+    page_histories << PageHistory::RemoveStar.create!(user: @user_b, page: @page)
+    message = Mailer.page_history_digest_notification(@user_a, @page, page_histories)
     assert_equal "Crabgrass Social Network : #{@page.title}", message.subject
     assert_equal [@user_a.email], message.to
     assert message.body.match(/Hello Miguel Bakunin/)
@@ -66,9 +73,9 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
 
   def test_send_digest_notification_paranoid_enabled
     page_histories = []
-    page_histories << PageHistory::AddStar.create!(:user => @user_a, :page => @page)
-    page_histories << PageHistory::RemoveStar.create!(:user => @user_b, :page => @page)
-    message = Mailer.create_page_history_digest_notification_paranoid(@user_a, @page, page_histories)
+    page_histories << PageHistory::AddStar.create!(user: @user_a, page: @page)
+    page_histories << PageHistory::RemoveStar.create!(user: @user_b, page: @page)
+    message = Mailer.page_history_digest_notification_paranoid(@user_a, @page, page_histories)
     assert_equal "Crabgrass Social Network : A page has been modified", message.subject
     assert_equal [@user_a.email], message.to
     assert message.body.match(/Hello Miguel Bakunin/)

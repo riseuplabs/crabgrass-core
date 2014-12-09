@@ -11,6 +11,21 @@ module Common::Ui::LayoutHelper
   end
 
   ##
+  ## CLASS
+  ##
+
+  def local_class
+    case
+    when @page
+      @page.definition.url
+    when @group
+      @group.type.try.underscore || 'group'
+    when @user
+      @user.class.name.underscore
+    end
+  end
+
+  ##
   ## STYLESHEET
   ##
 
@@ -19,7 +34,7 @@ module Common::Ui::LayoutHelper
   # only included if they are needed. See Application#stylesheet()
 
   def optional_stylesheets
-    stylesheet = controller.class.stylesheet || {}
+    stylesheet = controller.class.stylesheets || {}
     return [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
   end
 
@@ -35,9 +50,12 @@ module Common::Ui::LayoutHelper
     lines << optional_stylesheets.collect do |sheet|
        stylesheet_link_tag( current_theme.stylesheet_url(sheet) )
     end
-    lines << '<style type="text/css">'
-      lines << @content_for_style
-    lines << '</style>'
+    if context_banner_style || @content_for_style
+      lines << '<style type="text/css">'
+        lines << @content_for_style
+        lines << context_banner_style
+      lines << '</style>'
+    end
     lines << '<!--[if IE 6]>'
       lines << stylesheet_link_tag('ie6')
       lines << stylesheet_link_tag('icon_gif')
@@ -46,9 +64,10 @@ module Common::Ui::LayoutHelper
       lines << stylesheet_link_tag('ie7')
       lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
-    if language_direction == "rtl"
-      lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
-    end
+    # we currently do not ship the right to left css
+    # if language_direction == "rtl"
+    #   lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
+    # end
     lines.join("\n").html_safe
   end
 
@@ -71,8 +90,8 @@ module Common::Ui::LayoutHelper
   # See ApplicationController#javascript for details.
   #
   def javascript_include_tags
-    scripts = controller.class.javascript || {}
-    files = [:prototype, :libraries, :crabgrass]
+    scripts = controller.class.javascripts || {}
+    files = [:application] # asset pipeline js
     files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
 
     includes = []
@@ -106,6 +125,11 @@ module Common::Ui::LayoutHelper
       lines << '<!--[if IE]>'
       lines << "<script type='text/javascript' src='http://getfirebug.com/firebug-lite-beta.js'></script>"
       lines << '<![endif]-->'
+    end
+
+    # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
+    unless logged_in?
+      lines.push('<script type="text/javascript">if(sessionStorage.length > 0) sessionStorage.clear();</script>')
     end
 
     lines.join("\n").html_safe
@@ -247,7 +271,7 @@ module Common::Ui::LayoutHelper
   # the helper can be used wherever a normal helper would be.
   #
   def haml(name=nil, *args, &block)
-    if name && name.any?
+    if name.present?
       if args.empty? and block.nil?
         haml_concat name
       else
@@ -273,7 +297,7 @@ module Common::Ui::LayoutHelper
   # joins an array of elements together using commas.
   #
   def comma_join(*args)
-    args.select(&:any?).join(', ')
+    args.select(&:present?).join(', ')
   end
 
   #
@@ -293,57 +317,18 @@ module Common::Ui::LayoutHelper
   #end
 
   ##
-  ## CUSTOMIZED STUFF
-  ##
-
-  # build a masthead, using a custom image if available
- # def custom_masthead_site_title
- #   appearance = current_site.custom_appearance
- #   if appearance and appearance.masthead_asset
- #     # use an image
- #     content_tag :div, '', :id => 'site_logo_wrapper' do
- #       content_tag :a, :href => '/', :alt => current_site.title do
- #         image_tag(appearance.masthead_asset.url, :id => 'site_logo')
- #       end
- #     end
- #   else
-      # no image
- #     content_tag :h2, current_site.title
-      # <h2><%= current_site.title %></h2>
- #   end
- # end
-
- # def masthead_container
- #   locals = {}
-#    appearance = current_site.custom_appearance
-#    if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
-#      height = appearance.masthead_asset.height
-#      bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
-#      bgcolor = bgcolor+appearance.masthead_background_parameter
-#      locals[:section_style] = "height: #{height}px"
-#      locals[:style] = "background: url(#{appearance.masthead_asset.url}) no-repeat; height: #{height}px;"
-#      locals[:render_title] = false
-#    else
- #     locals[:section_style] = ''
- #     locals[:style] = ''
- #     locals[:render_title] = true
-#    end
- #   render :partial => 'layouts/base/masthead', :locals => locals
- # end
-
-  ##
   ## declare strings used for logins
   ##
   def login_context
     @login_context ||={
-      :strings => {
-        :login           => I18n.t(:login),
-        :username        => I18n.t(:username),
-        :password        => I18n.t(:password),
-        :forgot_password => I18n.t(:forgot_password_link),
-        :create_account  => I18n.t(:signup_link),
-        :redirect        => params[:redirect] || request.request_uri,
-        :token           => form_authenticity_token
+      strings: {
+        login: I18n.t(:login),
+        username: I18n.t(:username),
+        password: I18n.t(:password),
+        forgot_password: I18n.t(:forgot_password_link),
+        create_account: I18n.t(:signup_link),
+        redirect: params[:redirect] || request.request_uri,
+        token: form_authenticity_token
       }
     }
   end

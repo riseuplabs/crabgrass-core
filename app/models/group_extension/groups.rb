@@ -11,23 +11,31 @@ module GroupExtension::Groups
 
     base.instance_eval do
 
-      has_many :federatings, :dependent => :destroy
-      has_many :networks, :through => :federatings
-      belongs_to :council, :class_name => 'Group', :dependent => :destroy
+      has_many :federatings, dependent: :destroy
+      has_many :networks, through: :federatings
+      belongs_to :council, class_name: 'Group'
 
       # Committees are children! They must respect their parent group.
       # This uses crabgrass_acts_as_tree, which allows callbacks.
       acts_as_tree(
-        :order => 'name',
-        :after_add => :org_structure_changed,
-        :after_remove => :org_structure_changed
+        order: 'name',
+        after_add: :org_structure_changed,
+        after_remove: :org_structure_changed
       )
       alias_method :committees, :children
 
       has_many :real_committees,
-        :foreign_key => 'parent_id',
-        :class_name => 'Committee',
-        :conditions => {:type => 'Committee'}
+        foreign_key: 'parent_id',
+        class_name: 'Committee',
+        conditions: {type: 'Committee'} do
+        # UPGRADE: This is a workaround for the lack of declaring a
+        # query DISTINCT and having that applied to the final query.
+        # it won't be needed anymore as soon as .distinct can be used
+        # with rails 4.0
+        def with_access(access)
+          super(access).only_select("DISTINCT groups.*")
+        end
+      end
 
     end
   end
@@ -101,19 +109,22 @@ module GroupExtension::Groups
       committee.parent_id = self.id
       committee.parent_name_changed
       if make_council
-        add_council(committee)
+        committee = add_council(committee)
       elsif self.council == committee
         # downgrade the council to a committee
         committee.destroy_permissions
         committee.type = "Committee"
+        committee.becomes(Committee)
         self.council = nil
       end
       committee.save!
-      committee.create_permissions
 
       self.org_structure_changed
       self.save!
       self.committees.reset
+
+      # make sure we actually have the right class.
+      Group.find(committee.id).create_permissions
     end
 
     def add_council!(council)
@@ -127,13 +138,13 @@ module GroupExtension::Groups
     # use it on its own as you'll have a committee without
     # a group afterwards.
     def remove_committee!(committee)
+      committee.destroy_permissions
       committee.parent_id = nil
       if council_id == committee.id
         self.council = nil
         committee.type = "Committee"
       end
       committee.save!
-      committee.destroy_permissions
       self.org_structure_changed
       self.save!
       self.committees.reset
@@ -177,8 +188,9 @@ module GroupExtension::Groups
       if has_a_council?
         council.update_attribute(:type, "Committee")
       end
-      self.council = committee
       committee.type = "Council"
+      committee.becomes(Council)
+      self.council = committee
       self.save!
 
       # creating a new council for a new group
@@ -186,6 +198,8 @@ module GroupExtension::Groups
       if self.memberships.count < 2
         committee.full_council_powers = true
       end
+
+      return committee
     end
   end
 

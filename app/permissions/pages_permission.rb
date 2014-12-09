@@ -7,9 +7,11 @@ module PagesPermission
   ##
 
   def may_show_page?(page = @page)
-    # public pages are dealt with in login_or_public_page_required
-    # in the controller, so we don't need to test for that here.
-    !page or current_user.may?(:view, page)
+    # public pages do not require a login in the controller
+    # but the permission will still be checked here.
+    # So we need to make sure users who do not have explicit
+    # access the page can still see it if it's public.
+    !page or page.public? or current_user.may?(:view, page)
   end
 
   def may_edit_page?(page = @page)
@@ -55,12 +57,13 @@ module PagesPermission
     page.nil? or current_user.may? :admin, page
   end
 
-  # this does not really test permissions, rather, it lets us know if something
+  # this tests page permissions and it also lets us know if something
   # horrible would happen if we removed this participation.
   # may_admin_page_without is an expensive call, so this should be used
   # sparingly. this method helps prevent removing yourself from page access,
   # although it is clumsy.
   def may_remove_participation?(part)
+    return false unless may_admin_page?
     if part.is_a?(UserParticipation)
       if part.user_id != current_user.id
         true
@@ -80,35 +83,6 @@ module PagesPermission
     else
       false
     end
-  end
-
-  ##
-  ## POSTS
-  ##
-
-  def may_create_post?
-    if !logged_in?
-      false
-    elsif current_user.may?(:edit, @page)
-      true
-    elsif current_user.may?(:view, @page) and @page.public_comments?
-      true
-    elsif @page.public and @page.public_comments?
-      false
-    end
-  end
-
-  def may_edit_post?(post=@post)
-    logged_in? and
-    post and
-    post.user_id == current_user.id
-  end
-
-  def may_twinkle_posts?(post=@post)
-    logged_in? and
-    post.discussion.page and
-    current_user.may?(:view, post.discussion.page) and
-    current_user.id != post.user_id
   end
 
 end

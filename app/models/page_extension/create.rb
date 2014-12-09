@@ -64,12 +64,19 @@ module PageExtension::Create
           yield(page) if block_given?
           if user
             if recipients
-              user.share_page_with!(page, recipients, :access => access,
-                                    :send_notice => inbox)
+              user.share_page_with!(page, recipients, access: access,
+                                    send_notice: inbox)
             end
-            unless user.may_admin?(page)
-              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
-            end
+            # Page#owner= creates a user participation for the owner. Creating it
+            # here is only needed, if the page is created for a different owner.
+            # Also the participation may have been created through share_page_with!.
+            # In either case we want "access" to be set to "admin" and "changed_at"
+            # set as well (so the page shows up under "Recent Pages" on the dash)
+            participation = page.user_participations.select { |part|
+              part.user == user
+            }.first || page.user_participations.build(user_id: user.id)
+            participation.access = ACCESS[:admin]
+            participation.changed_at = Time.now
           end
           page
         end
@@ -115,7 +122,7 @@ module PageExtension::Create
       elsif recipients.is_a? Array
         entities = recipients
       elsif recipients.is_a? String
-        entities = recipients.split(/[\s,]/)
+        entities = recipients.split(/[\s,]+/)
       else
         entities = [recipients]
       end
@@ -132,10 +139,10 @@ module PageExtension::Create
           users << u
         elsif g = Group.find_by_name(entity.to_s)
           groups << g
-        elsif entity =~ RFC822::EmailAddress
+        elsif ValidatesEmailFormatOf.validate_email_format(entity.to_s).nil?
           emails << entity
-        elsif entity.any?
-          errors << I18n.t(:name_or_email_not_found, :name => h(entity))
+        elsif entity.present?
+          errors << I18n.t(:name_or_email_not_found, name: h(entity))
         end
       end
 

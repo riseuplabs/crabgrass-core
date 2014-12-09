@@ -17,7 +17,10 @@ require 'action_controller'
 class ActionView::Base
   alias_method :rails_submit_tag, :submit_tag
   def submit_tag(value = "Save changes", options = {})
-    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
+    # disable buttons on submit by default
+    options[:data] ||= {}
+    options[:data].reverse_merge! disable_with: value
+    options.update(onclick: "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
     rails_submit_tag(value, options)
   end
 end
@@ -32,7 +35,12 @@ end
 
 class ActionView::Base
   def link_to_with_pretty_plus_signs(*args)
-    link_to_without_pretty_plus_signs(*args).sub('%2B','+')
+    link = link_to_without_pretty_plus_signs(*args)
+    if link.html_safe?
+      link.sub('%2B','+').html_safe
+    else
+      link.sub('%2B','+')
+    end
   end
   alias_method_chain :link_to, :pretty_plus_signs
 end
@@ -57,3 +65,14 @@ end
 #end
 
 
+# UPGRADE: this moved into ActionView with rails4
+module ActionController::RecordIdentifier
+  #
+  # let's make sure the dom_id matches what haml creates when using
+  # [record, prefix] for a new record
+  #
+  def dom_id(record, prefix = nil)
+    record_id = record_key_for_dom_id(record) || NEW
+    "#{dom_class(record, prefix)}#{JOIN}#{record_id}"
+  end
+end

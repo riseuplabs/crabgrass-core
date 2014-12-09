@@ -157,7 +157,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       # do nothing, site scope is optional, so missing data is skipped.
       return nil
     elsif locale == :en
-      if RAILS_ENV != "production" && (RAILS_ENV == 'test' ? Conf.raise_i18n_exceptions : true )
+      if !Rails.env.production? && Conf.raise_i18n_exceptions
         # raise exceptions when running in development mode
         raise exception
       else
@@ -168,7 +168,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       options[:locale] = :en
       return I18n.translate(key, options)
     end
-  elsif exception.is_a? I18n::MissingTranslation
+  elsif exception.is_a? I18n::InvalidLocale
     # the language was not found... default to english
     #options[:locale] = :en
     #return I18n.translate(key, options) #this was getting in endless loop

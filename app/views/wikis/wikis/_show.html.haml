@@ -1,0 +1,11 @@
+-# %pre= @wiki.section_locks.locks
+
+- wiki = @wiki || local_assigns[:wiki]
+- if (notice = wiki_notice()).present?
+  -# give it an id so we can hide it with javascript
+  #inline-page-notice= notice
+%div.wiki
+  - if may_edit_wiki?(wiki)
+    = decorate_wiki_sections(wiki)
+  - else
+    = wiki.body_html

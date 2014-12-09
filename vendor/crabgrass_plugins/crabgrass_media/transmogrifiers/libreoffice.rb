@@ -11,7 +11,7 @@ require 'tmpdir'
 
 unless defined?(LIBREOFFICE_COMMAND)
   cmd = `which libreoffice`.chomp
-  if cmd.any?
+  if cmd.chars.any?
     LIBREOFFICE_COMMAND = cmd
   else
     LIBREOFFICE_COMMAND = false
@@ -63,12 +63,12 @@ class LibreOfficeTransmogrifier < Media::Transmogrifier
       # run command
       ext = extension(output_type)
       if ext
-        arguments = [LIBREOFFICE_COMMAND, '-headless', '-convert-to', extension(output_type), '-outdir', work_directory, input_file]
+        arguments = [LIBREOFFICE_COMMAND, '--headless', '-convert-to', extension(output_type), '-outdir', work_directory, input_file]
         status = run_command(*arguments, &block)
 
         # we cannot specify the name of the output file, so grab what it generated and move it to self.output_file
         libreoffice_output = work_directory + '/' + replace_extension(input_file, extension(output_type))
-        replace_file :from => libreoffice_output, :to => output_file
+        replace_file from: libreoffice_output, to: output_file
       else
         yield('could not find extension for type %s' % output_type) if block_given?
         return :failure
@@ -108,8 +108,8 @@ LibreOfficeTransmogrifier.new
 #  end
 #end
 
-  #cmd = `which openoffice`.chomp unless cmd.any?
-  #cmd = `which openoffice.org`.chomp unless cmd.any?
+  #cmd = `which openoffice`.chomp unless cmd.present?
+  #cmd = `which openoffice.org`.chomp unless cmd.present?
 
 #  def try_starting_daemon
 #    log 'attempting to start libreoffice in daemon mode'

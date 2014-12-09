@@ -1,3 +1,3 @@
-unless defined? RAILS_ROOT
-  RAILS_ROOT = File.dirname(__FILE__) + '/../../..'
+unless defined? Rails
+  Rails = stub(root: Pathname.new(__FILE__) + '../../../..' )
 end

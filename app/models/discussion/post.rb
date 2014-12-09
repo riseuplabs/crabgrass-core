@@ -10,7 +10,6 @@
 #  end
 
 class Post < ActiveRecord::Base
-  #extend PathFinder::FindByPath
 
   ##
   ## ASSOCIATIONS
@@ -21,8 +20,6 @@ class Post < ActiveRecord::Base
   belongs_to :user
   belongs_to :page_terms    # if this is on a page we set page_terms so we can use path_finder
 
-  attr_accessible :user, :discussion, :body, :page_terms_id
-
   after_create :post_created
   after_destroy :post_destroyed
 
@@ -30,9 +27,11 @@ class Post < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope :visible, :conditions => 'deleted_at IS NULL'
+  acts_as_path_findable
 
-  scope :by_created_at, :order => 'created_at DESC'
+  scope :visible, where('deleted_at IS NULL')
+
+  scope :by_created_at, order('created_at DESC')
 
   ##
   ## ATTIBUTES
@@ -137,10 +136,21 @@ class Post < ActiveRecord::Base
   end
 
   # These are currently only used from moderation mod.
+  #
+  # We implement a similar interface as for pages to ease things there.
+
+  def flow=(value)
+    value.to_i == FLOW[:deleted] ? self.delete : self.undelete
+  end
+
   def delete
     update_attribute :deleted_at, Time.now
     post_destroyed(true)
   end
+
+  def deleted? ; !!deleted_at ; end
+
+  def deleted_changed? ; deleted_at_changed? ; end
 
   def undelete
     update_attribute :deleted_at, nil
@@ -179,6 +189,8 @@ class Post < ActiveRecord::Base
     decrement = force_decrement || self.deleted_at.nil?
     discussion.post_destroyed(self, decrement) if discussion
   end
+
+  acts_as_extensible
 
 end
 

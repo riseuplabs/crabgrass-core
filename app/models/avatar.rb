@@ -58,10 +58,10 @@ class Avatar < ActiveRecord::Base
   end
 
   def image_file_url=(url)
-    if url.any?
+    if url.present?
       begin
         self.image_file_data = resize_from_blob(open(url).read, 'huge') # from 'open-uri'
-      rescue Exception => exc
+      rescue => exc
         raise ErrorMessage.new(exc.to_s)
       end
     end
@@ -82,11 +82,11 @@ class Avatar < ActiveRecord::Base
   def resize_from_file(filename, size, content_type = 'image/jpeg')
     dimensions = Avatar.pixels(size) + '^' # ie '32x32^', forces each dimension to be at least 32px
     crop = Avatar.pixels(size)
-    if !File.exists?(filename)
+    if !File.exist?(filename)
       IO.read(default_file(size))
     else
       Media::TempFile.open(nil,content_type) do |dest_file|
-        status = GraphicsMagickTransmogrifier.new(:input_file => filename, :output_file => dest_file, :size => dimensions, :crop => crop, :background => 'white').try.run
+        status = GraphicsMagickTransmogrifier.new(input_file: filename, output_file: dest_file, size: dimensions, crop: crop, background: 'white').try.run
         if status == :success
           return IO.read(dest_file.path)
         else

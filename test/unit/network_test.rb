@@ -1,12 +1,19 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class NetworkTest < ActiveSupport::TestCase
   fixtures :federatings, :groups, :users, :memberships
 
   def test_creation
-    assert_nothing_raised do
-      Network.create! :name => 'robot-federation'
-    end
+    network = Network.create! name: 'robot-federation', initial_member_group: groups(:rainbow)
+
+    assert groups(:rainbow).member_of?(network)
+  end
+
+  def test_creation_without_initial_member_group_doesnt_work
+    network = Network.create name: 'robot-federation'
+
+    assert ! network.valid?
+    assert_equal ["can't be blank"], network.errors['initial_member_group']
   end
 
   def test_member_of
@@ -55,7 +62,7 @@ class NetworkTest < ActiveSupport::TestCase
     group   = groups(:rainbow)
     delegation = groups(:warm)
 
-    network.add_committee!(Committee.create(:name => 'spokescouncil'), true)
+    network.add_committee!(Committee.create(name: 'spokescouncil'), true)
     network.add_group!(group, delegation)
 
   end
@@ -85,14 +92,14 @@ class NetworkTest < ActiveSupport::TestCase
     user = users(:gerrard)
     group = groups(:true_levellers)
 
-    committee = Committee.create! :name => 'fai+committee'
+    committee = Committee.create! name: 'fai+committee'
     parent_network.add_committee!(committee)
 
     assert user.member_of?(group)
     assert child_network.groups.include?(group)
     assert user.member_of?(child_network)
     assert !user.direct_member_of?(child_network)
-    assert committee.parent, parent_network
+    assert committee.parent == parent_network
 
     assert_raises ActiveRecord::RecordInvalid do
       parent_network.add_group!(child_network)

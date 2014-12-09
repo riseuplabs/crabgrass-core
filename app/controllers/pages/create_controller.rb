@@ -4,33 +4,34 @@
 #
 # Routes:
 #
-#  GET new
-#     new_page_path
-#     /pages/new/:owner/:type
-#
-#  POST create
-#     create_page_path
+#  GET new_page_path
 #     /pages/create/:owner/:type
 #
+#  POST create_page_path
+#     /pages/create/:owner/:type
+#
+# (the two paths are the same... the action destinct.)
 
 class Pages::CreateController < ApplicationController
 
-  before_filter :login_required, :init_options, :set_owner, :catch_cancel
+  before_filter :login_required, :authorization_required
+  before_filter :init_options, :set_owner, :catch_cancel
   helper 'pages/share', 'pages/owner', 'pages/creation'
   permissions :pages
   guard :may_ACTION_page?
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
-  # so, we must load the appropriate permissions from groups.
-  permission_helper 'groups/memberships', 'groups/base'
+  # so, we must load the appropriate permissions from groups and me.
+  permission_helper 'groups/memberships', 'groups/base', 'me'
 
   #
   # if there is any error in the 'create' action, call the 'new' action
   # to setup and display the view. useful for subclassing.
   #
-  rescue_render :create => lambda { new }
+  rescue_render create: :new
 
   def new
+    @page = build_new_page! if page_type.present?
     render_new_template
   end
 
@@ -51,7 +52,7 @@ class Pages::CreateController < ApplicationController
   #
   def catch_cancel
     if params[:cancel]
-      redirect_to new_page_url(:owner => params[:owner])
+      redirect_to new_page_url(owner: params[:owner])
       return false
     else
       return true
@@ -67,16 +68,14 @@ class Pages::CreateController < ApplicationController
     return true
   end
 
-  #
-  # for some routes, the owner is in the page_id.
-  #
   def set_owner
-    unless params[:owner]
-      params[:owner] = params[:page_id]
+    # owner from form overwrites owner from context
+    if params[:page].present? && params[:page][:owner].present?
+      params[:owner] = params[:page][:owner]
     end
     if params[:owner] == 'me'
       @owner = current_user
-    elsif params[:owner].any?
+    elsif params[:owner].present?
       @owner = Group.find_by_name(params[:owner])
     end
   end
@@ -96,13 +95,13 @@ class Pages::CreateController < ApplicationController
   helper_method :page_type
 
   def render_new_template
-    render :template => 'pages/create/new'
+    render template: 'pages/create/new'
   end
 
 #  def create_page
 #    begin
 #      # create basic page instance
-#      @page = build_new_page(params[:page], params[:recipients], params[:access])
+#      @page = build_new_page
 
 #      # setup the data (done by subclasses)
 #      @data = build_page_data
@@ -115,7 +114,7 @@ class Pages::CreateController < ApplicationController
 #      # success!
 #      return redirect_to(page_url(@page))
 
-#    rescue Exception => exc
+#    rescue exc
 #      # failure!
 #      destroy_page_data
 #      # in case page gets saved before the exception happens
@@ -128,24 +127,28 @@ class Pages::CreateController < ApplicationController
   # method to build the unsaved page object, with correct access.
   # used by this controller and subclasses.
   #
-  # we may be able to remove the options arg, not sure it is ever used.
-  #
-  def build_new_page!(options={})
-    page_params = options[:page] || params[:page]
-    recipients  = options[:recipient] || params[:recipients]
-    access      = options[:access] || params[:access]
+  def build_new_page!
+    page_type.build!(build_params)
+  end
 
-    page_params = page_params.dup
-    page_params[:share_with] = recipients
-    page_params[:access] = case access
-      when 'admin' then :admin
-      when 'edit'  then :edit
-      when 'view'  then :view
-      else Conf.default_page_access
+  def build_params
+    page_params.merge access: access_param,
+      share_with: params[:recipients],
+      owner: @owner,
+      user: current_user
+  end
+
+  def page_params
+    params.fetch(:page, {}).permit(:title, :summary)
+  end
+
+  def access_param
+    access = page_params[:access].to_s
+    if %w/admin edit view/.include?(access)
+      access.to_sym
+    else
+      Conf.default_page_access
     end
-    page_params[:user] = current_user
-    page_params[:owner] ||= @owner
-    page_type.build!(page_params)
   end
 
   def param_to_page_class(param)
@@ -168,7 +171,7 @@ class Pages::CreateController < ApplicationController
 #  # subclasses override this to build their own data objects
 #  def build_page_data
 #    # if something goes terribly wrong with the data do this:
-#    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
+#    # @page.errors.add :base, I18n.t(:terrible_wrongness)
 #    # raise ActiveRecord::RecordInvalid.new(@page)
 #    # return new data if everything goes well
 #  end

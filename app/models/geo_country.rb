@@ -5,7 +5,7 @@ class GeoCountry < ActiveRecord::Base
   has_many :geo_places
 
   scope :with_public_profile,
-    :joins => 'as gc join geo_locations as gl on gc.id = gl.geo_country_id',
-    :select => 'gc.name, gc.id'
+    joins('AS gc JOIN geo_locations AS gl ON gc.id = gl.geo_country_id').
+    select('gc.name, gc.id')
 
 end

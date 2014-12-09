@@ -71,21 +71,32 @@ CastleGates.define do
     protected
 
     #
+    # Setup the default permissions
+    #
+    after_create :create_permissions
+    def create_permissions
+      grant_access! friends: [:view, :pester, :burden, :comment, :see_contacts, :see_groups, :request_contact]
+      grant_access! peers: [:pester, :burden, :comment, :request_contact]
+      grant_access! public: [:pester, :request_contact]
+    end
+
+
+    #
     # Setting public for anything also sets peer and friend access.
     #
-    def after_grant_access(holder, gate)
+    def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! self.associated(:friends) => gate
-        grant_access! self.associated(:peers) => gate
+        grant_access! self.associated(:friends) => gates
+        grant_access! self.associated(:peers) => gates
       end
     end
 
     #
     # Removing peer or friend access automatically removes public.
     #
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == self.associated(:friends) || holder == self.associated(:peers)
-        revoke_access! :public => gate
+        revoke_access! :public => gates
       end
     end
 
@@ -127,7 +138,7 @@ CastleGates.define do
 
   castle Group do
     # entity gates
-    gate 1, :view,    :default_open => :public
+    gate 1, :view
     gate 2, :pester
     gate 3, :burden
     gate 4, :spy
@@ -139,13 +150,14 @@ CastleGates.define do
     gate 8,  :see_members
     gate 9,  :see_committees
     gate 10, :see_networks
-    gate 11, :request_membership, :default_open => :user
+    gate 11, :request_membership
     gate 12, :join
 
     protected
 
     def create_permissions
       grant_access! self => :all
+      grant_access! public: [:view, :request_membership]
       if council? && parent
         # councils steal admin rights
         parent.revoke_access! parent => :admin
@@ -166,11 +178,12 @@ CastleGates.define do
     #
     # Removing peer or friend access automatically removes public.
     #
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == :public
-        if gate == :view
+        if gates.include?(:view)
           revoke_access! :public => [:see_members, :see_committees, :see_networks, :request_membership]
-        elsif gate == :request_membership
+        end
+        if gates.include?(:request_membership)
           revoke_access! :public => :join
         end
       end

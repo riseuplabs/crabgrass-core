@@ -59,41 +59,20 @@ module Common::Application::ContextNavigation
       # then find by page id. (the url actually looks like "my-page+52", but
       # pluses are interpreted as spaces). find by id will always return a
       #  globally unique page so we can ignore context
-      page = find_page_by_id( $~[1] )
+      page = Page.find( $~[1] )
     elsif group
       # find just pages with the name that are owned by the group
       # no group should have multiple pages with the same name
-      page = find_page_by_group_and_name(group, page_name)
+      page = Page.for_group(group).where(name: name).first
     elsif user and !allow_multiple_results
-      page = find_page_by_user_and_name(user, page_name)
+      page = user.pages.where(name: name).first
     elsif user and allow_multiple_results
-      page = find_pages_by_user_and_name(user, page_name)
+      page = user.pages.where(name: name).all
     end
 
     raise ActiveRecord::RecordNotFound.new unless page
 
     return [(group||user), page]
-  end
-
-  private
-
-  def find_page_by_id(id)
-    Page.find_by_id(id.to_i, :include => nil)
-  end
-
-  # almost every page is fetched using this function.
-  # Page names should be unique across all the groups in the namespace.
-  def find_page_by_group_and_name(group, name)
-    ids = Group.namespace_ids(group.id)
-    Page.find(:first, :conditions => ['pages.name = ? AND group_participations.group_id IN (?)', name, ids], :joins => :group_participations)
-  end
-
-  def find_page_by_user_and_name(user, name)
-    user.pages.find(:first, :conditions => ['pages.name = ?',name])
-  end
-
-  def find_pages_by_user_and_name(user, name)
-    user.pages.find(:all, :conditions => ['pages.name = ?',name])
   end
 
 end

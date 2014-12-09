@@ -28,7 +28,7 @@ module Pages::ShareHelper
       end
       option = page_access_options.find{|option| option[1] == access}
       if option
-        content_tag :span, option[0], :class => access
+        content_tag :span, option[0], class: access
       end
     end
   end
@@ -64,8 +64,8 @@ module Pages::ShareHelper
       selected = participation.access_sym
     end
 
-    options = options.reverse_merge(:blank => true, :expand => false, :remove => false, :class => 'access')
-    select_options = page_access_options(:blank => options[:blank], :remove => options.delete(:remove))
+    options = options.reverse_merge(blank: true, expand: false, remove: false, class: 'access')
+    select_options = page_access_options(blank: options[:blank], remove: options.delete(:remove))
     if options.delete(:blank)
       selected ||= ''
     else
@@ -85,10 +85,10 @@ module Pages::ShareHelper
       "$('recipient[access]').value" :
       "'#{Conf.default_page_access}'"
     {
-      :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
-      :with => %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
-      :loading => spinner_icon_on('spacer', spinner_id),
-      :complete => spinner_icon_off('spacer', spinner_id)
+      url: {controller: 'base_page/share', action: 'update', page_id: nil, add: true},
+      with: %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
+      loading: spinner_icon_on('spacer', spinner_id),
+      complete: spinner_icon_off('spacer', spinner_id)
       }
   end
 
@@ -96,10 +96,10 @@ module Pages::ShareHelper
   # the popup item is selected).
   def widget_add_action(action, add_button_id, access_value)
     {
-      :url => {:controller => 'base_page/share', :action => action, :page_id => @page.id, :add => true},
-      :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}},
-      :loading => spinner_icon_on('plus', add_button_id),
-      :complete => spinner_icon_off('plus', add_button_id)
+      url: {controller: 'base_page/share', action: action, page_id: @page.id, add: true},
+      with: %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}},
+      loading: spinner_icon_on('plus', add_button_id),
+      complete: spinner_icon_off('plus', add_button_id)
     }
   end
 
@@ -114,15 +114,15 @@ module Pages::ShareHelper
     after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
 
     autocomplete_entity_tag('recipient_name',
-                        :onselect => after_update_function,
-                        :message => I18n.t(:entity_autocomplete_tip),
-                        :container => 'autocomplete_container')
+                        onselect: after_update_function,
+                        message: I18n.t(:entity_autocomplete_tip),
+                        container: 'autocomplete_container')
   end
 
   def add_recipient_widget_key_press_function(add_action)
     eat_enter = "return(!enterPressed(event));"
     only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
-    remote_function(add_action.merge(:condition => only_on_enter_press)) + eat_enter;
+    remote_function(add_action.merge(condition: only_on_enter_press)) + eat_enter;
   end
 
 end

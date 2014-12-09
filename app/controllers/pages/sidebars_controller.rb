@@ -5,7 +5,7 @@
 class Pages::SidebarsController < ApplicationController
 
   before_filter :fetch_page
-  before_filter :login_required
+  before_filter :authorization_required
   permissions :pages
   guard :may_edit_page?
   layout nil
@@ -13,20 +13,23 @@ class Pages::SidebarsController < ApplicationController
   helper 'pages/base', 'pages/sidebar'
 
   def show
-    render :template => 'pages/sidebar/reset'
+    render template: 'pages/sidebar/reset'
   end
 
   protected
 
   def close_popup
-    render :template => 'pages/sidebar/reset'
+    render template: 'pages/sidebar/reset'
   end
 
   def fetch_page
-    id = params[:page_id]
-    @page = Page.find_by_id(id)
+    @page = Page.find params[:page_id]
     unless @page
-      raise_not_found(:thing_not_found.t(:thing => :page.t))
+      raise_not_found(:page.t)
+    end
+    if logged_in?
+      # grab the current user's participation from memory
+      @upart = @page.participation_for_user(current_user)
     end
   end
 

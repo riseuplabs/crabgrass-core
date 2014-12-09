@@ -3,14 +3,17 @@
 
 class ApplicationController < ActionController::Base
 
-  prepend_view_path "app/common/views"
   protect_from_forgery
+
   layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
+  hide_action :_layout_from_proc
 
   include_controllers 'common/application'
   include_helpers 'app/helpers/common/*/*.rb'
   helper :application, :modalbox
-  permissions :application
+
+  class_attribute :stylesheets, instance_reader: false, instance_writer: false
+  class_attribute :javascripts, instance_reader: false, instance_writer: false
 
   protected
 
@@ -20,18 +23,20 @@ class ApplicationController < ActionController::Base
   def controller(); self; end
 
   def current_theme
-    @theme ||= if Rails.env == 'development'
-      # in dev mode, allow switching themes. maybe allow anyone to switch themes...
-      session[:theme] = params[:theme] || session[:theme] || current_site.theme
-      unless Crabgrass::Theme.exists?(session[:theme])
-        session[:theme] = current_site.theme
-      end
-      Crabgrass::Theme[session[:theme]]
-    else
-      Crabgrass::Theme[current_site.theme]
-    end
+    @theme ||= Crabgrass::Theme[select_theme]
   end
   helper_method :current_theme
+
+  def select_theme
+    switch_theme || current_site.theme
+  end
+
+  # in dev mode, allow switching themes. maybe allow anyone to switch themes...
+  def switch_theme
+    return unless Rails.env.development?
+    theme = params[:theme] || session[:theme]
+    session[:theme] = theme if Crabgrass::Theme.exists?(theme)
+  end
 
   # view() method lets controllers have access to the view helpers.
   def view
@@ -54,11 +59,11 @@ class ApplicationController < ActionController::Base
       sub('$user_name', current_user.display_name).
       sub('$site_title', current_site.title)
     opts = {
-     :site => current_site,   :current_user => current_user,
-     :host => request.host,   :protocol => request.protocol,
-     :page => @page,          :from_address => from_address,
-     :from_name => from_name }
-    opts[:port] = request.port_string.sub(':','') if request.port_string.any?
+     site: current_site,   current_user: current_user,
+     host: request.host,   protocol: request.protocol,
+     page: @page,          from_address: from_address,
+     from_name: from_name }
+    opts[:port] = request.port_string.sub(':','') if request.port_string.present?
     return opts
   end
 
@@ -66,46 +71,54 @@ class ApplicationController < ActionController::Base
   ## CLASS METHODS
   ##
 
-  # rather than include every stylesheet in every request, some stylesheets are
-  # only included "as needed". A controller can set a custom stylesheet
-  # using 'stylesheet' in the class definition:
+  # We currently include all stylesheets in screen.css as it's cached,
+  # hardly expires and the optional stylesheets do not add much weight
+  # anyway.
+  #
+  # Still keeping this here though in case we need it again.
+  #
+  # rather than include every stylesheet in every request,
+  # we used to only include some stylesheets "as needed".
+  # A controller can set a custom stylesheet using 'stylesheet'
+  # in the class definition:
   #
   # for example:
   #
   #   stylesheet 'gallery', 'images'
   #   stylesheet 'page_creation', :action => :create
   #
+  # They'll be accessible in the class_attribute stylesheets
+  #
   # as needed stylesheets are kept in public/stylesheets/as_needed
   #
   def self.stylesheet(*css_files)
-    if css_files.any?
-      options = css_files.last.is_a?(Hash) ? css_files.pop : {}
-      sheets  = read_inheritable_attribute("stylesheet") || {}
-      index   = options[:action] || :all
-      sheets[index] ||= []
-      sheets[index] << css_files
-      write_inheritable_attribute "stylesheet", sheets
-    else
-      read_inheritable_attribute "stylesheet"
-    end
+    self.stylesheets = merge_requirements(self.stylesheets, *css_files)
   end
 
+  # We currently include all javascript in application.js as it's cached,
+  # hardly expires and the optional javascripts do not add much weight
+  # anyway.
+  #
+  # Still keeping this here though in case we need it again.
+  #
   # let controllers require extra javascript
   # for example:
   #
   #   javascript 'wiki_edit', :action => :edit
   #
+  # They'll be accessible in the class_attribute javascripts
+  #
   def self.javascript(*js_files)
-    if js_files.any?
-      options = js_files.last.is_a?(Hash) ? js_files.pop : {}
-      scripts  = read_inheritable_attribute("javascript") || {}
-      index   = options[:action] || :all
-      scripts[index] ||= []
-      scripts[index] << js_files
-      write_inheritable_attribute "javascript", scripts
-    else
-      read_inheritable_attribute "javascript"
-    end
+    self.javascripts = merge_requirements(self.javascripts, *js_files)
+  end
+
+  def self.merge_requirements(current, *new_files)
+    current ||= {}
+    options = new_files.extract_options!
+    index   = options[:action] || :all
+    value   = current[index] || []
+    value += new_files
+    current.merge index => value.uniq
   end
 
 end

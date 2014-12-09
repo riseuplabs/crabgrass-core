@@ -4,20 +4,20 @@ module Me::DiscussionsHelper
     caption = if (post.created_by == current_user)
       I18n.t(:message_you_wrote_caption)
     else
-      I18n.t(:message_user_wrote_caption, :user => post.created_by.try.display_name)
+      I18n.t(:message_user_wrote_caption, user: post.created_by.try.display_name)
     end
 
     # remove surrounding <p> from body_html
     html = post.body_html.try.gsub(/(\A\s*<p>)|(<\/p>\s*\Z)/, "")
-    content_tag(:em, caption, :class => "author_caption") + " \n" +
-    content_tag(:span, truncate(strip_links(html), :length => 300), :class => "post_body")
+    content_tag(:em, caption, class: "author_caption") + " \n" +
+    content_tag(:span, truncate(strip_links(html), length: 300), class: "post_body")
   end
 
   ##
   ## Say box
   ##
 
-  # autocomplete_users_field_tag(field_id)
+  # autocomplete_recipients_field_tag(field_id)
   #def recipient_field_tag(id)
   #  text_field_tag(id, '', :onkeypress => eat_enter) +
   #  autocomplete_entity_tag(id, :url => entities_path(:format => 'json'))

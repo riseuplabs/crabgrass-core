@@ -31,7 +31,7 @@ en:
   group_creation_info: "There are four types of groups:"
   group_description: "Organizations are groups that are autonomous and have people as members."
   network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
-  committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network."
+  committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network. A user added to the committee from outside the organization or network will only have access to the committee."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
@@ -62,7 +62,7 @@ en:
 
   ##
   ## EMAIL
-  ## 
+  ##
 
   group_invite_subject: 'Invitation to join group "%{group}"'
   group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
@@ -74,7 +74,7 @@ en:
   ##
 
   group_wiki: "Group Wiki"
-  
+
   ##!  create_group_wiki: "Create Group Wiki"
   create_public_group_wiki: "Public"
   create_private_group_wiki: "Private"
@@ -128,8 +128,6 @@ en:
   group_wiki: Group Wiki
   rss_feed: RSS Feed
   ##!  group_has_no_public_profile: This group does not have a public profile.
-  pending_tasks: 'pending tasks'
-  completed_tasks: 'completed tasks'
   ##!  no_committees: no committees
   ##!  category: Category
   ##!  founded: Founded
@@ -187,7 +185,7 @@ en:
   ##!  view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
-  add_members_to_committee: "Add group members to this committee"
+  add_members_to_committee: "Add a group member to this committee. To add people not in the parent group, send an invite instead."
   ##!  destroy_group_link: "Destroy %{group_type}"
   ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
   ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
@@ -237,7 +235,7 @@ en:
 
   # networks
 
-  network_initial_member: "Choose a group to be an initial member of this network."
+  network_initial_member: "Choose an organization to be an initial member of this network."
 
   # menu items
 

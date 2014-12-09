@@ -35,26 +35,26 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     super
 
     @original_path = path
-    @original_options = options
+    @original_options = options.dup
     @klass = klass # What are we searching Pages or Posts?
 
     @with = []
     if options[:group_ids] or options[:user_ids] or options[:public]
       @with << access_limit(
-        :public => options[:public],
-        :group_ids => options[:group_ids],
-        :user_ids => options[:user_ids]
+        public: options[:public],
+        group_ids: options[:group_ids],
+        user_ids: options[:user_ids]
       )
     end
     if options[:secondary_group_ids] or options[:secondary_user_ids]
       @with << access_limit(
-        :group_ids => options[:secondary_group_ids],
-        :user_ids => options[:secondary_user_ids]
+        group_ids: options[:secondary_group_ids],
+        user_ids: options[:secondary_user_ids]
       )
     end
     if options[:site_ids]
       @with << access_limit(
-        :site_ids => options[:site_ids]
+        site_ids: options[:site_ids]
       )
     end
 
@@ -64,9 +64,11 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     @search_text  = ""
     @per_page    = options[:per_page] || PathFinder.default_pagination_size
     @page        = options[:page] || 1
+    @flow        = options.delete(:flow)
 
     apply_filters_from_path(path)
-    @order = nil unless @order.any?
+    apply_flow
+    @order = @order.presence
   end
 
   def apply_filter(filter, args)
@@ -84,7 +86,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     # the default sort is '@relevance DESC', but this can create rather odd
     # results because you might get relevent pages from years ago. So, if there
     # is no explicit order set, we want to additionally sort by page_updated_at.
-    if @order.nil?
+    if @order.blank?
       @sort_mode = :extended
       @order = "@relevance DESC, page_updated_at DESC"
     end
@@ -95,9 +97,9 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
     page_terms = PageTerms.search @search_text,
-      :page => @page,   :per_page => @per_page,  :include => :page,
-      :with => @with,   :without => @without, :conditions => @conditions,
-      :order => @order, :sort_mode => @sort_mode
+      page: @page,   per_page: @per_page,  include: :page,
+      with: @with,   without: @without, conditions: @conditions,
+      order: @order, sort_mode: @sort_mode
 
     # page_terms has all of the will_paginate magic included, it just needs to
     # actually have the pages, which we supply with page_terms.replace(pages).
@@ -109,28 +111,33 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       # but sometimes it does, and if it does we don't want to bomb out.
     end
     page_terms.replace(pages)
+    return page_terms
   end
 
   def find
     search
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).find     # fall back to mysql
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.find
   end
 
   def paginate
     search # sphinx search *always* paginates
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).paginate     # fall back to mysql
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.paginate
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without,
-      :page => @page, :per_page => @per_page, :conditions => @conditions,
-      :order => @order, :include => :page).size
-  rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).count        # fall back to mysql
+    PageTerms.search_for_ids(@search_text, with: @with, without: @without,
+      page: @page, per_page: @per_page, conditions: @conditions,
+      order: @order, include: :page).size
+  rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
+    fallback.count
   end
-  
+
+  def fallback
+    PathFinder::Mysql::Query.new(@original_path, @original_options, @klass)
+  end
+
   ##
   ## utility methods called by SearchFilter classes
   ##
@@ -144,7 +151,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   end
 
   def add_public
-    @with << access_limit(:public => true)
+    @with << access_limit(public: true)
   end
 
   def add_tag_constraint(tag)
@@ -191,6 +198,10 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     end
   end
 
+  def set_flow_constraint(flow)
+    @flow = flow
+  end
+
   def cleanup_sort_column(column)
     column = case column
       when 'updated_at' then 'page_updated_at'
@@ -219,5 +230,16 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   def access_limit(access_hash)
     ['access_ids', Page.access_ids_for(access_hash)]
   end
+
+  #
+  # possible flows are :normal, :deleted, :announcement.
+  # symbols can converted to integers via FLOW constant
+  #
+  def apply_flow
+    if @flow
+      add_attribute_constraint('flow', FLOW[@flow])
+    end
+  end
+
 end
 

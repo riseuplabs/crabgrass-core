@@ -1,0 +1,3 @@
+update_alert_messages(page)  # will clear it if there are none.
+page << "if ( $('autocomplete_people') )  $('autocomplete_people').focus();"
+page.replace_html(:user_list, render('users'))

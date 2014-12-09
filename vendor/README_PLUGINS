@@ -39,30 +39,6 @@ routing_filter
   allows you to wrap a black box around the rails routing code to modify the
   behavior as you see fit. fun and powerful!  
 
-ActiveRecord Plugins
---------------------
-
-acts_as_list:
-  Once part of rails core. Lets you have an ordered list of things.
-  Used by tasks.
-  updated Aug 2010
-
-acts_as_rateable
-  Adds ratings to activerecords. Used to rate comments.
-  
-acts_as_state_machine
-  Makes an active_record into a simple state machine. Used by requests.  
-
-better_acts_as_tree
-  A slightly modified version of standard acts as tree. 
-  This modification allows association callbacks. 
-
-acts_as_versioned
-  used to do wiki versioning.
-
-will_paginate
-  Adds paginate() to activerecord. 
-
 ActionController Plugins
 -------------------------
 
@@ -97,9 +73,6 @@ UI Plugins
 
 calendar_date_select
   javascript calendar widget 
-
-multiple_select
-  widget for habtm checkboxes and selection tree.
 
 mested_layouts
   lets you enclose one layout in another.

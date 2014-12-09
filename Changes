@@ -1,3 +1,19 @@
+Changes since Crabgrass 0.5
+---------------------------
+
+New theming engine
+
+Permission system reworked
+
+UI works better on different screen sizes
+
+Updated dependencies
+
+* Rails 3.0 and counting
+* Ruby 1.9
+* Bootstrap
+* No more compass and Susy
+* Using bundler
 
 Upgrading to Crabgrass 1.0 from earlier versions
 ------------------------------------------------
@@ -17,5 +33,6 @@ configuration changes
   enabled_tools is now enabled_pages
   added login_redirect_url
 
-
+config/database.yml
+  "mysql" must be replaced with "mysql2"
 

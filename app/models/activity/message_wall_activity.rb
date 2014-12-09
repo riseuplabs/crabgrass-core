@@ -1,17 +1,17 @@
 class MessageWallActivity < Activity
   include ActionView::Helpers::TagHelper
 
-  validates_format_of :subject_type, :with => /User/
-  validates_format_of :object_type, :with => /User/
+  validates_format_of :subject_type, with: /User/
+  validates_format_of :item_type, with: /User/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
   validates_presence_of :extra
 
   serialize :extra
 
   alias_attr :user,     :subject
-  alias_attr :author,   :object
-  alias_attr :avatar,   :object
+  alias_attr :author,   :item
+  alias_attr :avatar,   :item
   alias_attr :post_id,  :related_id
 
   def post=(post)
@@ -31,17 +31,17 @@ class MessageWallActivity < Activity
 
   def description(view=nil)
     if extra[:type] == "status"
-      txt = '%{user} %{message}' % {:user => user_span(:author), :message => extra[:snippet]}
+      txt = '%{user} %{message}' % {user: user_span(:author), message: extra[:snippet]}
     elsif user_id != author_id
       author_html = user_span(:author)
       user_html = user_span(:user)
-      message_html = content_tag(:span, extra[:snippet],:class => 'message')
+      message_html = content_tag(:span, extra[:snippet],class: 'message')
 
-      txt = I18n.t(:activity_wall_message, :user => user_html, :author => author_html, :message => message_html)
+      txt = I18n.t(:activity_wall_message, user: user_html, author: author_html, message: message_html)
     else
       author_html = user_span(:author)
-      message_html = content_tag(:span,extra[:snippet], :class => 'message')
-      txt = I18n.t(:activity_message, :author => author_html, :message => message_html)
+      message_html = content_tag(:span,extra[:snippet], class: 'message')
+      txt = I18n.t(:activity_message, author: author_html, message: message_html)
     end
 #    if txt[-3..-1] == '...'
 #      @link = content_tag(:a, I18n.t(:see_more_link), :href => "/messages/#{user_id}/show/#{post_id}")
@@ -53,7 +53,7 @@ class MessageWallActivity < Activity
 
   def link
     if user == User.current
-      {:controller => '/me/public_messages', :id => post_id, :action => 'show'}
+      {controller: '/me/public_messages', id: post_id, action: 'show'}
     else
       nil
       # we currently have no single message view it seems

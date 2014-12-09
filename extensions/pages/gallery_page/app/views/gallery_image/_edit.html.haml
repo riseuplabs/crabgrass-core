@@ -1,5 +1,5 @@
-#update_message{:style => "color: red;"}
-#show-image= render :partial => 'show_image', :locals => {:size => 'medium', :no_link => true}
+#update_message{style: "color: red;"}
+#show-image= render partial: 'show_image', locals: {size: 'medium', no_link: true}
 #upload-new-image
   = render_image_form_with_progress
 .gallery_item

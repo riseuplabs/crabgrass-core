@@ -48,39 +48,20 @@ module Common::Ui::PaginationHelper
     return unless things.respond_to?(:total_pages)
 
     defaults = {
-     :previous_label => ("&laquo; %s" % :pagination_previous.t).html_safe,
-     :next_label => ("%s &raquo;" % :pagination_next.t).html_safe,
-     :inner_window => 2,
-     :outer_window => 0
+     previous_label: ("&laquo; %s" % :pagination_previous.t).html_safe,
+     next_label: ("%s &raquo;" % :pagination_next.t).html_safe,
+     inner_window: 2,
+     outer_window: 0,
+     renderer: pagination_link_renderer
     }
-
-    if defined? page_search_path
-      if xhr_page_search?
-        defaults[:renderer] = LinkRenderer::AjaxPages
-      else
-        defaults[:renderer] = LinkRenderer::Pages
-      end
-    elsif request.xhr?
-      defaults[:renderer] = (current_template_format == :html) ?
-       LinkRenderer::ModalAjax :
-       LinkRenderer::Ajax
-    else
-      defaults[:renderer] = LinkRenderer::Dispatch
-    end
     will_paginate(things, defaults.merge(options))
-  end
-
-  def current_template_format
-    ## FIXME: this is likely going to break during the next rails upgrade.
-    ##   We should figure out a better way to choose the link renderer.
-    @renderer.instance_variable_get("@template").mime_type.symbol
   end
 
   #
   # returns true if the array of things is actually paginated
   #
   def paginated?(things)
-    things.is_a?(WillPaginate::Collection) and things.total_entries > things.per_page
+    things.respond_to?(:total_entries) && things.total_entries > things.per_page
   end
 
   #
@@ -89,7 +70,7 @@ module Common::Ui::PaginationHelper
   #
   def top_pagination_links(things, options={})
     if paginated?(things)
-      content_tag(:div, :class => 'p first') do
+      content_tag(:div, class: 'p first') do
         pagination_links(things,options)
       end
     end
@@ -100,7 +81,7 @@ module Common::Ui::PaginationHelper
   #
   def bottom_pagination_links(things, options={})
     if paginated?(things)
-      content_tag(:div, :class => 'p last') do
+      content_tag(:div, class: 'p last') do
         pagination_links(things,options)
       end
     end

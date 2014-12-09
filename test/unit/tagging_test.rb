@@ -1,9 +1,9 @@
-require File.dirname(__FILE__) + '/test_helper'
+require_relative 'test_helper'
 
 class TaggingTest < ActiveSupport::TestCase
   fixtures :pages, :users
   def setup
-    @objs = Page.find(:all, :limit => 2)
+    @objs = Page.find(:all, limit: 2)
 
     @obj1 = @objs[0]
     @obj1.tag_list = "pale"
@@ -19,23 +19,23 @@ class TaggingTest < ActiveSupport::TestCase
     assert_equal ["hoppy", "pilsner"], @obj2.tag_list
   end
 
-  def test_find_tagged_with
+  def test_tagged_with
     @obj1.tag_list = "seasonal, lager, ipa"
     @obj1.save
     @obj2.tag_list = "lager, stout, fruity, seasonal"
     @obj2.save
 
     result1 = [@obj1]
-    assert_equal Page.find_tagged_with("ipa", :on => :tags), result1
+    assert_equal Page.tagged_with("ipa", on: :tags), result1
 
     result2 = [@obj1.id, @obj2.id].sort
-    assert_equal result2, Page.find_tagged_with("seasonal", :on => :tags).map(&:id).sort
-    assert_equal result2, Page.find_tagged_with(["seasonal", "lager"], :on => :tags).map(&:id).sort
+    assert_equal result2, Page.tagged_with("seasonal", on: :tags).map(&:id).sort
+    assert_equal result2, Page.tagged_with(["seasonal", "lager"], on: :tags).map(&:id).sort
   end
 
   def test_users_tag_cache
-    user = User.make :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx'
-    page = Page.make :title => 'hi'
+    user = FactoryGirl.create(:user)
+    page = FactoryGirl.create(:page, title: 'hi')
     page.tag_list = 'one, two'
     page.save!
 
@@ -62,7 +62,7 @@ class TaggingTest < ActiveSupport::TestCase
   def test_create_with_tags
     page = nil
     assert_nothing_raised do
-      page = DiscussionPage.create! :title => 'tag me!', :tag_list => 'one,two,three'
+      page = DiscussionPage.create! title: 'tag me!', tag_list: 'one,two,three'
     end
     assert page.tag_list.include?('one')
     page = Page.find(page.id)

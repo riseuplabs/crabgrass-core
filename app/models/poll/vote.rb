@@ -3,14 +3,14 @@ class Vote < ActiveRecord::Base
 
   belongs_to :possible
   belongs_to :user
-  belongs_to :votable, :polymorphic => :true
+  belongs_to :votable, polymorphic: :true
 
-  scope :by_user, lambda { |user|
-    {:conditions => {:user_id => user.id}}
-  }
+  def self.by_user(user)
+    where(user_id: user)
+  end
 
-  scope :for_possible, lambda { |possible|
-    {:conditions => {:possible_id => possible.id}}
-  }
+  def self.for_possible(possible)
+    where(possible_id: possible)
+  end
 
 end

@@ -28,16 +28,16 @@ class Wiki < ActiveRecord::Base
   include WikiExtension::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
-  has_many :pages, :as => :data
+  has_many :pages, as: :data
   has_one :profile
-  has_one :group, :through => :profile, :source => :entity, :source_type => 'Group'
+  has_one :group, through: :profile, source: :entity, source_type: 'Group'
   attr_accessor :private # marks private group wikis during creation
 
-  has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
+  has_one :section_locks, class_name: "WikiLock", dependent: :destroy
 
   serialize :raw_structure, Hash
 
-  acts_as_versioned :if => :create_new_version? do
+  acts_as_versioned if: :create_new_version? do
     def self.included(base)
       base.belongs_to :user
       base.serialize :raw_structure, Hash
@@ -56,14 +56,14 @@ class Wiki < ActiveRecord::Base
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
-  # constant for length to show preview rather than full wiki
-  PREVIEW_CHARS = 500
+  # see description below.
+  after_save :save_page_after_save
 
   # section locks should never be nil
   alias_method :existing_section_locks, :section_locks
   def section_locks(force_reload = false)
     # current section_locks or create a new one if it doesn't exist
-    locks = (existing_section_locks(force_reload) || build_section_locks(:wiki => self))
+    locks = (existing_section_locks(force_reload) || build_section_locks(wiki: self))
     # section_locks should always have self as its wiki instance
     # in case self.body is updated (and section names get changed)
     locks.wiki = self
@@ -71,7 +71,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def label
-    return :create_a_new_thing.t(:thing => 'Wiki') if self.new_record?
+    return :create_a_new_thing.t(thing: 'Wiki') if self.new_record?
     if self.profile
       self.profile.public? ? :public_group_wiki : :private_group_wiki
     else
@@ -79,16 +79,20 @@ class Wiki < ActiveRecord::Base
     end
   end
 
-  def update_document!(user, current_version, text)
-    check_and_unlock_section!(:document, user, current_version)
-    self.user = user
-    self.body = text
-    self.save!
+  # after the wiki text has been updated the page terms need to be rebuilt, so the
+  # search index gets updated. For some reason this doesn't happen automatically
+  # when saving the wiki, so we trigger a page save here.
+  def save_page_after_save
+    if page && page.type == 'WikiPage' && page.valid?
+      page.save!
+    end
   end
 
+  #
   # similar to update_attributes!, but only for text
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
+  #
   def update_section!(section, user, current_version, text)
     check_and_unlock_section!(section, user, current_version)
     self.user = user
@@ -115,12 +119,7 @@ class Wiki < ActiveRecord::Base
   # will render if not up to date
   def body_html
     update_body_html_and_structure
-
     read_attribute(:body_html).html_safe
-  end
-
-  def preview_html
-    render_preview(PREVIEW_CHARS)
   end
 
   # will calculate structure if not up to date
@@ -147,15 +146,12 @@ class Wiki < ActiveRecord::Base
     write_attribute(:raw_structure, render_raw_structure)
   end
 
-  # returns true if wiki body is fresher than body_html
+  # whenever we set body, we reset body_html to nil, so this condition will
+  # be true whenever body is changed
+  # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
   def needs_rendering?
-    html = read_attribute(:body_html)
-    rs = read_attribute(:raw_structure)
-
-    # whenever we set body, we reset body_html to nil, so this condition will
-    # be true whenever body is changed
-    # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
-    (html.blank? != body.blank?) or rs.blank?
+    read_attribute(:body_html).blank? or
+    read_attribute(:raw_structure).blank?
   end
 
   # reload the association
@@ -220,11 +216,15 @@ class Wiki < ActiveRecord::Base
 
   protected
 
+  #
+  # Check to make sure that user may unlock the section and
+  # that the version has not changed. If the user still has a valid lock
+  # we allow saving even if the version has changed.
+  #
   def check_and_unlock_section!(section, user, current_version)
     if sections_locked_for(user).include? section
-      raise SectionLockedOnSaveError.new(section)
+      raise SectionLockedOnSaveError.new(section, locker_of(section))
     end
-
     if current_version and self.version > current_version.to_i
       # our version might be outdated but if the last edit
       # was in a different section we still have the lock
@@ -233,17 +233,7 @@ class Wiki < ActiveRecord::Base
         raise VersionExistsError.new(self.versions.last)
       end
     end
-
-    unlock!(section, user)
-  end
-
-  def render_preview(length)
-    return unless content = truncated_body(length)
-    if @render_body_html_proc
-      @render_body_html_proc.call(content)
-    else
-      GreenCloth.new(content, link_context, [:outline]).to_html
-    end
+    release_my_lock!(section, user)
   end
 
   # # used when wiki is rendered for deciding the prefix for some link urls
@@ -273,20 +263,12 @@ class Wiki < ActiveRecord::Base
     GreenCloth.new(body.to_s).to_structure
   end
 
-  def truncated_body(length)
-    return nil if body.nil?
-    return body if body.length < length
-    cut = body.to_s[0...length-3] + '...'
-    cut.gsub! /^\[\[toc\]\]$/, ''
-    cut
-  end
-
   class Version < ActiveRecord::Base
 
 
     before_destroy :confirm_existance_of_other_version
 
-    scope :most_recent, :order => 'version DESC'
+    scope :most_recent, order('version DESC')
 
     self.per_page = 10
 
@@ -304,6 +286,10 @@ class Wiki < ActiveRecord::Base
 
     def diff_id
       "#{previous.to_param}-#{self.to_param}"
+    end
+
+    def body_html
+      read_attribute(:body_html).try :html_safe
     end
 
   end

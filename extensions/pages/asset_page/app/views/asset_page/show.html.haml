@@ -1,9 +1,9 @@
 #preview_wrapper
-  #preview_area{:class => preview_area_class(@asset)}
-    - if @asset.embedding_partial.any?
-      = render :partial => @asset.embedding_partial
+  #preview_area{class: preview_area_class(@asset)}
+    - if @asset.embedding_partial.present?
+      = render partial: @asset.embedding_partial
     - else
       = asset_link_with_preview(@asset) 
 
-= render :partial => 'information'
+= render partial: 'information'
 

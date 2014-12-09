@@ -1,5 +1,5 @@
 class VideoLinkAnswer < SurveyAnswer
-  belongs_to :external_video, :dependent => :destroy
+  belongs_to :external_video, dependent: :destroy
 
   validate :validate_video
 

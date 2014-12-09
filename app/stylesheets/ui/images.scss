@@ -2,7 +2,11 @@
 //
 // thumbnail for the page sidebar.
 // this might be page specific, and should perhaps be moved to pages/images.scss
-// 
+//
+
+//
+// bootstrap has img-polaroid class that is similar. that might be better to use, although its padding is much bigger.
+//
 
 a.thumbnail {
   display: block;

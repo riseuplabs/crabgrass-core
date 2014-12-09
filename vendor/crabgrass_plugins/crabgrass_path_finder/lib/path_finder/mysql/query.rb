@@ -71,20 +71,20 @@ class PathFinder::Mysql::Query < PathFinder::Query
     ##  together in the query).
     if options[:group_ids] or options[:user_ids] or options[:public]
       @access_me_clause = "+(%s)" % Page.access_ids_for(
-        :public    => options[:public],
-        :group_ids => options[:group_ids],
-        :user_ids  => options[:user_ids]
+        public: options[:public],
+        group_ids: options[:group_ids],
+        user_ids: options[:user_ids]
       ).join(' ')
     end
     if options[:secondary_group_ids] or options[:secondary_user_ids]
       @access_target_clause = "+(%s)" % Page.access_ids_for(
-        :group_ids => options[:secondary_group_ids],
-        :user_ids  => options[:secondary_user_ids]
+        group_ids: options[:secondary_group_ids],
+        user_ids: options[:secondary_user_ids]
       ).join(' ')
     end
     if options[:site_ids]
       @access_site_clause = "+(%s)" % Page.access_ids_for(
-        :site_ids => options[:site_ids]
+        site_ids: options[:site_ids]
       ).join(' ')
     end
 
@@ -135,7 +135,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def paginate
-    @klass.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
+    @klass.paginate options_for_find.merge(page: @page, per_page: @per_page)
   end
 
   def count
@@ -144,16 +144,16 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def ids
-    @klass.find_ids options_for_find.merge(:select => 'pages.id')
+    @klass.find_ids options_for_find.merge(select: 'pages.id')
   end
 
   ##
   ## utility methods called by SearchFilter classes
   ##
 
-  def add_sql_condition(condition, value)
+  def add_sql_condition(condition, value = nil)
     @conditions << condition
-    @values << value
+    @values << value if value
   end
 
   # and a condition based on an attribute of the page
@@ -167,11 +167,15 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def add_public
-    add_access_constraint(:public => true)
+    add_access_constraint(public: true)
   end
-  
+
   def add_tag_constraint(tag)
     @tags << "+" + Page.searchable_tag_list([tag]).first
+  end
+
+  def set_flow_constraint(flow)
+    @flow = flow
   end
 
   def add_order(order_sql)
@@ -264,16 +268,17 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
     # make the hash
     find_opts = {
-      :conditions => conditions,
-      :joins => sql_for_joins(conditions),
-      :limit => @limit,         # \ manual offset or limit
-      :offset => @offset,       # /
-      :order => order,
-      :include => @include,
-      :select => @select || @selects.join(", "),
+      conditions: conditions,
+      joins: sql_for_joins(conditions),
+      order: order,
+      include: @include,
+      select: @select || @selects.join(", "),
     }
+    # setting limit to nil will keep will_paginate from setting its own limit
+    find_opts[:limit]  = @limit  if @limit   # manual limit
+    find_opts[:offset] = @offset if @offset  # manual offset
 
-    find_opts[:group] = sql_for_group(order)
+    find_opts[:group]  = sql_for_group(order)
     find_opts[:having] = sql_for_group(order)
 
     return find_opts
@@ -349,19 +354,15 @@ class PathFinder::Mysql::Query < PathFinder::Query
         cond << cond_for_flow(f)
       end
       @conditions << "(" + cond.join(' OR ') + ")"
-    else
+    elsif flow
       @conditions << cond_for_flow(flow)
     end
   end
 
   def cond_for_flow(flow)
-    if flow.nil?
-      return 'pages.flow IS NULL'
-    elsif flow.instance_of? Symbol
-      raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
-      @values << FLOW[flow]
-      return 'pages.flow = ?'
-    end
+    raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
+    @values << FLOW[flow]
+    return 'pages.flow = ?'
   end
 
   def sql_for_conditions()
@@ -371,6 +372,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
+    return nil if @and_clauses.blank?
     Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end
 end

@@ -17,7 +17,7 @@ begin
   require "./config/directories"
 
   def clean_dir(dir)
-    Dir.glob(dir + '/*').each do |filename|
+    Dir.glob(dir + '*').each do |filename|
       File.unlink(filename) if File.exists?(filename) && !File.directory?(filename)
     end
   end
@@ -26,13 +26,13 @@ begin
     environment = Sprockets::Environment.new
     environment.append_path from
     FileUtils.mkdir_p(to)
-    input_files = Dir.glob(from + '/*.js')
+    input_files = Dir.glob(from + '*.js')
     input_files.each do |file|
-      filename = to + '/' + File.basename(file)
+      filename = to + File.basename(file)
       File.open(filename, 'w') do |f|
         f.write(JSMin.minify(environment[file].to_s))
       end
-      if `which gzip`.any?
+      if `which gzip`.chars.any?
         `gzip --stdout #{filename} > #{filename}.gz`
       end
     end

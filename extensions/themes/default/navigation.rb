@@ -24,10 +24,10 @@ define_navigation do
     # visible { logged_in? }
     url     { logged_in? ? me_home_path : '/' }
     active  { context?(:me) || controller?(:account, :session, :root) }
-    html    :partial => '/layouts/global/nav/me_menu'
+    html    partial: '/layouts/global/nav/me_menu'
 
     context_section :create_page do
-      label   { :create_thing.t(:thing => :page.t) }
+      label   { :create_thing.t(thing: :page.t) }
       url     { new_page_path }
       active  false
       icon    :plus
@@ -141,34 +141,33 @@ define_navigation do
 
   global_section :people do
     label  { :people.t }
-    url    :controller => 'people/directory'
+    url    controller: 'people/directory'
     active { controller?('people/') or context?(:user) }
-    html    :partial => '/layouts/global/nav/people_menu'
+    html    partial: '/layouts/global/nav/people_menu'
 
     context_section :no_context do
       visible { context?(:none) }
       active  { context?(:none) }
 
-      local_section :all do
-        label { :all.t }
-        url { people_directory_path }
-        active { params[:path].empty? }
-      end
-
-      local_section :friends do
+      local_section :contacts do
         visible { logged_in? }
-        label { :friends.t }
-        url { people_directory_path(:path => ['contacts']) }
-        active { params[:path].try.include?('contacts') }
+        label { :contacts.t }
+        url { people_directory_path(path: ['contacts']) }
+        active { params[:path].try(:include?, 'contacts') }
       end
 
       local_section :peers do
         visible { logged_in? }
         label { :peers.t }
-        url { people_directory_path(:path => ['peers']) }
-        active { params[:path].try.include?('peers') }
+        url { people_directory_path(path: ['peers']) }
+        active { params[:path].try(:include?, 'peers') }
       end
 
+      local_section :search do
+        label { :search.t }
+        url { people_directory_path(path: ['search']) }
+        active { params[:path].try(:include?, 'search') }
+      end
     end
 
     context_section :home do
@@ -194,8 +193,8 @@ define_navigation do
   global_section :group do
     label  { :groups.t }
     url    { groups_directory_path }
-    active { controller?('groups/') or @group or context?(:group) }
-    html    :partial => '/layouts/global/nav/groups_menu'
+    active { controller?('groups/') or context?(:group) }
+    html    partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do
       #visible { context?(:none) and controller?('groups/directory') }
@@ -204,21 +203,21 @@ define_navigation do
       visible { context?(:none) }
       active  { context?(:none) }
 
-      local_section :all do
-        label { :all.t }
-        url { groups_directory_path }
-        active { controller?('groups/directory') and params[:path].empty? }
-      end
-
       local_section :mygroups do
         visible { logged_in? }
         label { :my_groups.t }
-        url { groups_directory_path(:path => ['my']) }
-        active { controller?('groups/directory') and params[:path].try.include?('my') }
+        url { groups_directory_path(path: ['my']) }
+        active { controller?('groups/directory') and params[:path].try(:include?, 'my') }
+      end
+
+      local_section :search do
+        label { :search.t }
+        url { groups_directory_path(path: ['search']) }
+        active { controller?('groups/directory') and params[:path].try(:include?, 'search') }
       end
 
       local_section :create do
-        label   { :create_thing.t(:thing => :group.t) }
+        label   { :create_thing.t(thing: :group.t) }
         url     { new_group_path }
         active  { controller?('groups/groups') }
         icon    :plus
@@ -264,7 +263,7 @@ define_navigation do
       local_section :groups do
         visible { may_list_memberships? and @group.network? }
         label   { :groups.t }
-        url     { group_memberships_path(@group, :view => 'groups') }
+        url     { group_memberships_path(@group, view: 'groups') }
         active  { controller?('groups/memberships') and params[:view] == 'groups' }
       end
 
@@ -282,10 +281,10 @@ define_navigation do
         active  { controller?('groups/membership_requests') }
       end
 
-      local_section :leave_group_link do
-        visible { may_leave_group? }
-        html    { leave_group_link }
-      end
+      #local_section :leave_group_link do
+      #  visible { may_leave_group? }
+      #  html    { leave_group_link }
+      #end
 
       #local_section :membership_settings do
       #  visible { may_edit_group? }

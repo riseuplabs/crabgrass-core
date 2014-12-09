@@ -37,8 +37,8 @@ module Common::Page::FormHelper
     page_groupings.uniq!
     tree = []
     page_groupings.each do |grouping|
-      entry = {:name => grouping, :display => display_page_class_grouping(grouping),
-         :url => grouping.gsub(':','-')}
+      entry = {name: grouping, display: display_page_class_grouping(grouping),
+         url: grouping.gsub(':','-')}
       entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
        !page_klass.internal && !page_klass.forbid_new && available_page_classes.include?(page_klass.full_class_name)
       }.sort_by{|page_klass| page_klass.order }

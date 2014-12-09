@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# this requires ActionView::Helpers::TagHelper
 #
 # Four different alert methods:
 #
@@ -50,7 +49,6 @@ require 'active_support/multibyte/chars'
 
 module Common::Application::AlertMessages
 
-  FADE_TIMEOUT = 5;
 
   def self.included(base)
     base.class_eval do
@@ -63,13 +61,6 @@ module Common::Application::AlertMessages
       helper_method :raise_not_found
       helper_method :raise_denied
 
-      # display
-      helper_method :alert_messages?
-      helper_method :alert_messages_have_errors?
-      helper_method :display_alert_messages
-      helper_method :inline_alert_messages
-      helper_method :clear_alert_messages
-      helper_method :update_alert_messages
     end
   end
 
@@ -114,75 +105,6 @@ module Common::Application::AlertMessages
     flash[:messages] = flash.now[:messages]
   end
 
-  ##
-  ## DISPLAYING ALERTS
-  ##
-
-  #
-  # generates the html for the floating alert messages
-  #
-  def display_alert_messages
-    # the id alert_messages is required by the showAlertMessage
-    # javascript function. it is important to include this html
-    # even if ther are not currently any messages to display.
-    content_tag(:div, :class => 'alert_message_container') do
-      content_tag(:div, :id => 'alert_messages') do
-        if alert_messages?
-          flash[:messages].collect {|message| message_html(message)}.join.html_safe
-        else
-          ""
-        end
-      end
-    end
-  end
-
-  #
-  # generates html for the inline alert messages
-  #
-  def inline_alert_messages
-    if alert_messages?
-      html = flash[:messages].collect do |message|
-        message_html(message, false)
-      end.join
-      clear_alert_messages # if display inline, we want ensure they are not also floating.
-      html
-    else
-      ""
-    end
-  end
-
-  def alert_messages?
-    flash[:messages].any?
-  end
-
-  def alert_messages_have_errors?
-    flash[:messages].any? and flash[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
-  end
-
-  def clear_alert_messages
-    if Rails.env == 'test'
-      # for testing it is useful to have the messages.
-      flash[:hidden_messages] = flash[:messages]
-    end
-    flash[:messages] = nil
-  end
-
-  #
-  # A helper for rjs templates. Put this at the top of the template:
-  #
-  #  update_alert_messages(page)
-  #
-  # in order to show any messages that might be set, or to hide the message
-  # area if there are none set.
-  #
-  def update_alert_messages(page)
-    if alert_messages?
-      page.call 'showAlertMessage', display_alert_messages
-    else
-      page.call 'showAlertMessage', ''
-    end
-  end
-
   def raise_error(message)
     if message.is_a? ActiveRecord::Base
       raise ActiveRecord::RecordInvalid.new(message)
@@ -191,7 +113,7 @@ module Common::Application::AlertMessages
     end
   end
 
-  def raise_not_found(thing)
+  def raise_not_found(thing="")
     raise ErrorNotFound.new(thing)
   end
 
@@ -224,7 +146,7 @@ module Common::Application::AlertMessages
   end
 
   def add_flash_message(type, message)
-    [{:type => type, :text => message}]
+    [{type: type, text: message}]
   end
 
   def add_flash_default(type)
@@ -238,17 +160,19 @@ module Common::Application::AlertMessages
 
   def add_flash_exception(exception)
     if exception.is_a? PermissionDenied
-      [{:type => :warning, :text => [:alert_permission_denied.t, :permission_denied_description.t]}]
+      [{type: :warning, text: [:alert_permission_denied.t, :permission_denied_description.t]}]
     elsif exception.is_a? AuthenticationRequired
-      [{:type => :notice, :text => [:login_required.t, :login_required_description.t]}]
+      [{type: :notice, text: [:login_required.t, :login_required_description.t]}]
     elsif exception.is_a? ErrorMessages
       exception.errors.collect do |msg|
-        {:type => :error, :text => msg}
+        {type: :error, text: msg}
       end
     elsif exception.is_a? ActiveRecord::RecordInvalid
       add_flash_record(exception.record)
+    elsif exception.is_a? CrabgrassException
+      [{type: exception.options[:type] || :error, text: exception.message}]
     else
-      [{:type => :error, :text => exception.to_s}]
+      [{type: :error, text: exception.to_s}]
     end
   end
 
@@ -257,12 +181,12 @@ module Common::Application::AlertMessages
       options[:count] ||= 1
       [ record.flash_message(options) ]
     elsif record.errors.any?
-      [{ :type => :error,
-         :text => [:alert_not_saved.t, :alert_field_errors.t],
-         :list => record.errors.full_messages }]
+      [{ type: :error,
+         text: [:alert_not_saved.t, :alert_field_errors.t],
+         list: record.errors.full_messages }]
     else
-      [{ :type => :success,
-         :text => :alert_saved.t }]
+      [{ type: :success,
+         text: :alert_saved.t }]
     end
   end
 
@@ -293,57 +217,6 @@ module Common::Application::AlertMessages
     end
   end
 
-  ##
-  ## DISPLAY
-  ##
-
-  #
-  # generate html for a single message line.
-  #
-  # message is a hash with these keys:
-  #
-  #  :type -- one of :error, :warning, :notice, :success
-  #  :text -- a string or array of strings to display. (optional)
-  #  :list -- an array of strings to be used in a bulleted list
-  #  :fade -- if true, force fading of this message
-  #  :quick -- faster fading
-  #  :nofade -- if true, force no fade
-  #
-  # if allow_fade is false, then we ignore :fade and :nofade options
-  #
-  def message_html(message, allow_fade = true)
-    icon_class = case message[:type]
-      when :error   then 'caution_16'
-      when :warning then 'exclamation_16'
-      when :notice  then 'lightbulb_16'
-      when :success then 'ok_16'
-    end
-    message_id = "alert_message_#{rand(100_000_000)}"
-    text = if message[:text].is_a?(Array)
-      if message[:text].size > 1
-        content_tag(:p, message[:text][0], :class => 'first') +
-        content_tag(:p, message[:text][1..-1])
-      else
-        message[:text].first
-      end
-    else
-      message[:text]
-    end
-    html = []
-    html << view.link_to_function('×', "hideAlertMessage('#{message_id}')", :class => 'close')
-    html << content_tag(:div, text, :class => "text #{icon_class}")
-    if message[:list]
-      html << content_tag(:ul, message[:list].collect{|item|content_tag(:li, item)})
-    end
-    if allow_fade
-      if message[:fade] || message[:quick] || ((message[:type] == :success || message[:type] == :notice) && !message[:nofade])
-        timeout = message[:quick] ? 0.5 : FADE_TIMEOUT
-        html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});".html_safe)
-      end
-    end
-    content_tag(:div, html.join.html_safe, :class => "message #{message[:type]}", :id => message_id)
-  end
-
 #  def exception_detailed_message(exception=nil)
 #    return "Warning: Trying to get detailed message but no exception given." unless exception
 #    message = exception.clean_message
@@ -366,6 +239,5 @@ module Common::Application::AlertMessages
 #    end
 #    message
 #  end
-
 end
 

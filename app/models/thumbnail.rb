@@ -24,13 +24,13 @@ class Thumbnail < ActiveRecord::Base
   #   self.parent_id = id of the version
   #   self.parent_type = "Asset::Version"
   #
-  belongs_to :parent, :polymorphic => true
+  belongs_to :parent, polymorphic: true
 
   after_destroy :rm_file
   def rm_file
     unless proxy?
       fname = parent.private_thumbnail_filename(filename)
-      FileUtils.rm(fname) if File.exists?(fname) and File.file?(fname)
+      FileUtils.rm(fname) if File.exist?(fname) and File.file?(fname)
     end
   end
 
@@ -55,7 +55,7 @@ class Thumbnail < ActiveRecord::Base
   def generate(force=false)
     if proxy?
       return
-    elsif !force and File.exists?(private_filename) and File.size(private_filename) > 0
+    elsif !force and File.exist?(private_filename) and File.size(private_filename) > 0
       return
     else
       if depends_on
@@ -70,9 +70,9 @@ class Thumbnail < ActiveRecord::Base
       output_file = private_filename
 
       options = {
-        :size => thumbdef.size,
-        :input_file  => input_file,  :input_type => input_type,
-        :output_file => output_file, :output_type => output_type
+        size: thumbdef.size,
+        input_file: input_file,  input_type: input_type,
+        output_file: output_file, output_type: output_type
       }
 
       if thumbdef.remote and RemoteJob.site
@@ -117,7 +117,9 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def thumbdef
-    parent.thumbdefs[self.name.to_sym]
+    definition = parent.thumbdefs[self.name.to_sym]
+    return definition if definition
+    raise RuntimeError.new("No thumbnail definition found for #{name} #{id}")
   end
 
   def ok?
@@ -196,7 +198,7 @@ class Thumbnail < ActiveRecord::Base
     # by the time we figure out what the thumbnail dimensions are,
     # the duplicate thumbnails for the version have already been created.
     # so, when our dimensions change, update the versioned thumb as well.
-    if (vthumb = versioned()).any?
+    if (vthumb = versioned()).present?
       vthumb.width, vthumb.height = [self.width, self.height]
       vthumb.save
     end

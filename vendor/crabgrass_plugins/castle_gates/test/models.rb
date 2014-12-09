@@ -4,10 +4,10 @@
 
 class User < ActiveRecord::Base
   has_many :allegiances
-  has_many :minions, :through => :allegiances
+  has_many :minions, through: :allegiances
 
   has_many :memberships
-  has_many :clans, :through => :memberships
+  has_many :clans, through: :memberships
 
   # def self.current
   #   @current
@@ -19,7 +19,7 @@ end
 
 class Minion < ActiveRecord::Base
   has_many :allegiances
-  has_many :users, :through => :allegiances
+  has_many :users, through: :allegiances
 end
 class Allegiance < ActiveRecord::Base
   belongs_to :user
@@ -28,7 +28,7 @@ end
 
 class Clan < ActiveRecord::Base
   has_many :memberships
-  has_many :users, :through => :memberships
+  has_many :users, through: :memberships
 end
 class Membership < ActiveRecord::Base
   belongs_to :user
@@ -47,6 +47,7 @@ class Fort < ActiveRecord::Base
   #add_gate 1, :draw_bridge
   #add_gate 2, :sewers, :default_open => :admin
   #add_gate 3, :tunnel, :default_open => [:public, :user]
+  #add_gate 4, :door, :default_open => :user
 end
 
 class Bunker < Fort
@@ -56,14 +57,14 @@ class Tower < ActiveRecord::Base
   #acts_as_castle
   #add_gate 1, :door, :default_open => true
   #add_gate 2, :window
-  # def after_grant_access(holder, gate)
+  # def after_grant_access(holder, gates)
   #   if holder == :public
-  #     grant_access! :admin => gate
+  #     grant_access! :admin => gates
   #   end
   # end
-  # def after_revoke_access(holder, gate)
+  # def after_revoke_access(holder, gates)
   #   if holder == :admin
-  #     revoke_access! :public => gate
+  #     revoke_access! :public => gates
   #   end
   # end
 end
@@ -78,63 +79,73 @@ CastleGates.define do
 
   castle Fort do
     gate 1, :draw_bridge
-    gate 2, :sewers, :default_open => :admin
-    gate 3, :tunnel, :default_open => [:public, :user]
+    gate 2, :sewers
+    gate 3, :tunnel
+    gate 4, :door
+
+    protected
+    after_create :create_permissions
+    def create_permissions
+      grant_access! admin: :sewers
+      grant_access! public: [:door, :tunnel]
+    end
   end
 
   castle Tower do
-    gate 1, :door, :default_open => true
+    gate 1, :door
     gate 2, :window
     gate 3, :skylight
 
     protected
 
-    def after_grant_access(holder, gate)
+    after_create :create_permissions
+    def create_permissions
+      grant_access! public: :door
+    end
+
+    def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! :admin => gate
+        grant_access! admin: gates
       end
     end
-    def after_revoke_access(holder, gate)
+
+    def after_revoke_access(holder, gates)
       if holder == :admin
-        revoke_access! :public => gate
+        revoke_access! public: gates
       end
     end
-
-    def default_open_gates(holder)
-      if holder.is_a?(User) && holder.name == 'sandman'
-        [:skylight]
-      end
-    end
-
   end
 
   castle User do
-    gate 1, :follow, :default_open => :minion_of_user
+    gate 1, :follow
+
+    protected
+
+    after_create :create_permissions
+    def create_permissions
+      grant_access! minions: :follow
+    end
   end
 
-  holder 1, :user, :model => User do
+  holder 1, :user, model: User do
     def holder_codes
-      [:public, {:holder => :clan, :ids => self.clan_ids}]
+      [:public, {holder: :clan, ids: self.clan_ids}]
     end
   end
 
-  holder 2, :minion, :model => Minion do
+  holder 2, :minion, model: Minion do
     def holder_codes
-      {:holder => :minion_of_user, :ids => self.user_ids}
+      {holder: :minion_of_user, ids: self.user_ids}
     end
   end
 
-  holder 3, :clan, :model => Clan
-  holder_alias :clan, :model => Faction
+  holder 3, :clan, model: Clan
+  holder_alias :clan, model: Faction
 
-  holder 4, :minion_of_user, :association => User.associated(:minions) do
-    def minion_of_user?(minion)
-      minion_ids.include? minion.id
-    end
-  end
+  holder 4, :minion_of_user, association: User.associated(:minions)
 
   holder 0, :public
-  holder_alias :public, :model => Rabbit
+  holder_alias :public, model: Rabbit
 
   holder 6, :admin
 

@@ -64,7 +64,9 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
       arguments << '-crop' << options[:crop]+'+0+0'
     end
     arguments << input_file << output_file
-    run_command(*arguments, &block)
+    status = run_command(*arguments, &block)
+    FileUtils.chmod 0644, output_file.to_s if File.exist? output_file.to_s
+    return status
   end
 
   def dimensions(filename)
@@ -81,6 +83,30 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
         return nil
       end
     end
+  end
+
+  #
+  # returns the average color of an image, as represented by an array of red, green, blue values, integers
+  # in the range 0..255
+  #
+  # note: it is important that the geometry is "1x1!" ... without the ! this function might die a fiery death.
+  #
+  def average_color(filename)
+    if available?
+      args = [gm_command, 'convert', '-resize', '1x1!', filename, 'text:-']
+      color = nil
+      status = run_command(*args) do |output|
+        color = output
+      end
+      if status == :success
+        match = color.match(/^0,0: \(\s*(?<red>\d+),\s*(?<green>\d+),\s*(?<blue>\d+)\)/)
+        if match
+          return [match['red'].to_i, match['green'].to_i, match['blue'].to_i]
+        end
+      end
+    end
+    #if something goes wrong, assume white:
+    return [256,256,256]
   end
 
   # this override is just used for test, at the moment.

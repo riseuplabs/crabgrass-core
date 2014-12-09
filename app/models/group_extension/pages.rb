@@ -7,15 +7,42 @@ module GroupExtension::Pages
 
   def self.included(base)
     base.instance_eval do
-      has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all, :order => :featured_position
-      has_many :pages, :through => :participations do
-        def pending
-          find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-        end
-      end
+      has_many :participations,
+        class_name: 'GroupParticipation',
+        dependent: :delete_all,
+        order: :featured_position,
+        inverse_of: :group
+      has_many :pages, through: :participations
 
-      has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
+      has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
     end
+  end
+
+  # Almost every page is retrieved from the database using this method.
+  # (1) first, we attempt to load the page using the page owner directly.
+  # (2) if that fails, then we resort to searching the entire
+  #     namespace of the group
+  #
+  # Suppose two groups share a page. Only one can be the owner.
+  #
+  # When linking to the page from the owner's home, we just
+  # do /owner-name/page-name. No problem, everyone is happy.
+  #
+  # But what link do we use for the non-owner's home? /non-owner-name/page-name.
+  # This makes it so the banner will belong to the non-owner and it will not
+  # be jarring click on a link from the non-owner's home and get teleported to
+  # some other group.
+  #
+  # In order to make this work, we need the second query that includes all the
+  # group participation objects.
+  #
+  # It is true that we could just do without the first query. It makes it slower
+  # when the owner is not the context. However, this first query is much faster
+  # and is likely to be used much more often than the second query.
+  #
+  def find_page(name)
+    pages_owned.where(name: name).first ||
+      pages.where(name: name).first
   end
 
   #
@@ -28,7 +55,7 @@ module GroupExtension::Pages
     if participation
       participation.attributes = attributes
     else
-      participation = page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
+      participation = page.group_participations.build attributes.merge(page_id: page.id, group_id: id)
     end
     page.association_will_change(:groups)
     page.groups_changed = true
@@ -43,6 +70,7 @@ module GroupExtension::Pages
     page
   end
 
+  # DEPRECATED
   def may?(perm, page)
     begin
        may!(perm,page)
@@ -51,6 +79,7 @@ module GroupExtension::Pages
     end
   end
 
+  # DEPRECATED
   # perm one of :view, :edit, :admin
   # this is still a basic stub. see User.may!
   def may!(perm, page)

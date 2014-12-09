@@ -31,8 +31,8 @@ class InkscapeTransmogrifier < Media::Transmogrifier
       return status if status != :success
       magick_transmog = magick.class.new(
         options.merge({
-          :input_file => png_output_file,  :input_type => "image/png",
-          :output_file => output_file,     :output_type => output_type
+          input_file: png_output_file,  input_type: "image/png",
+          output_file: output_file,     output_type: output_type
         })
       )
       magick_transmog.run(&block)
@@ -41,7 +41,7 @@ class InkscapeTransmogrifier < Media::Transmogrifier
 
 #=begin
 #    def dimensions(filename)
-#      if INKSCAPE_COMMAND.any?
+#      if INKSCAPE_COMMAND.present?
 #        args = [INKSCAPE_COMMAND, '--query-height', filename]
 #        success_h, height = cmd(*args)
 #        args = [INKSCAPE_COMMAND, '--query-width', filename]

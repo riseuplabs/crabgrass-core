@@ -23,7 +23,7 @@
 #
 # The use of 'raise ErrorMessage.new' is more like a goto, and could lead to problems.
 # In some cases, however, it is nice to put sanity checking deep in the models where
-# it would be impractical to expose an api for testing the validity of every oject.
+# it would be impractical to expose an api for testing the validity of every object.
 #
 
 module Common::Application::RescueErrors
@@ -31,14 +31,18 @@ module Common::Application::RescueErrors
   def self.included(base)
     base.extend ClassMethods
     base.class_eval do
+
+      class_attribute :rescue_render_map,
+        instance_writer: false, instance_reader: false
+
       # order of precedence is bottom to top.
-      rescue_from ActiveRecord::RecordInvalid, :with => :render_error
-      rescue_from CrabgrassException,          :with => :render_error
-      rescue_from ActiveRecord::RecordNotFound,:with => :render_not_found
-      rescue_from ErrorNotFound,               :with => :render_not_found
-      rescue_from AuthenticationRequired,      :with => :render_authentication_required
-      rescue_from PermissionDenied,            :with => :render_permission_denied
-      rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
+      rescue_from ActiveRecord::RecordInvalid, with: :render_error
+      rescue_from CrabgrassException,          with: :render_error
+      rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
+      rescue_from ErrorNotFound,               with: :render_not_found
+      rescue_from AuthenticationRequired,      with: :render_authentication_required
+      rescue_from PermissionDenied,            with: :render_permission_denied
+      rescue_from ActionController::InvalidAuthenticityToken, with: :render_csrf_error
 
       #helper_method :rescues_path
       #alias_method_chain :rescue_action_locally, :js
@@ -71,9 +75,12 @@ module Common::Application::RescueErrors
     #
     def rescue_render(hsh=nil)
       if hsh
-        write_inheritable_attribute "rescue_render", HashWithIndifferentAccess.new(hsh)
+        # this has to be a copy so the super class is not affected.
+        # see http://apidock.com/rails/v4.0.2/Class/class_attribute
+        map = rescue_render_map || HashWithIndifferentAccess.new
+        self.rescue_render_map = map.merge(hsh)
       else
-        read_inheritable_attribute "rescue_render"
+        rescue_render_map
       end
     end
   end
@@ -94,7 +101,7 @@ module Common::Application::RescueErrors
   # handles suspected "cross-site request forgery" errors
   #
   def render_csrf_error(exception=nil)
-    render :template => 'account/csrf_error', :layout => 'notice'
+    render template: 'account/csrf_error', layout: 'notice'
   end
 
   #
@@ -116,6 +123,7 @@ module Common::Application::RescueErrors
   # show a permission denied page, or prompt for login
   #
   def render_permission_denied(exception)
+    log_exception(exception)
     respond_to do |format|
       format.html do
         render_auth_error_html(exception)
@@ -126,7 +134,7 @@ module Common::Application::RescueErrors
       format.xml do
         headers["Status"]           = "Unauthorized"
         headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-        render :text => "Could not authenticate you", :status => '401 Unauthorized'
+        render text: "Could not authenticate you", status: '401 Unauthorized'
       end
     end
   end
@@ -167,7 +175,7 @@ module Common::Application::RescueErrors
   # the data required to render the page.
   #
   def render_alert
-    render :template => 'error/alert', :layout => 'notice'
+    render template: 'error/alert', layout: 'notice'
   end
 
   #
@@ -179,7 +187,7 @@ module Common::Application::RescueErrors
 #  def rescue_action_locally_with_js(exception)
 #    respond_to do |format|
 #      format.html do
-#        if RAILS_ENV == "production" or RAILS_ENV == "development"
+#        if Rails.env.production? or Rails.env.development?
 #          rescue_action_locally_without_js(exception)
 #        else
 #          render :text => exception
@@ -212,26 +220,26 @@ module Common::Application::RescueErrors
     begin
       if !performed? and !@performed_render
         if options[:template]
-          render :template => options[:template], :status => options[:status]
+          render template: options[:template], status: options[:status]
         elsif options[:action]
-          render :action => options[:action], :status => options[:status]
+          render action: options[:action], status: options[:status]
         elsif self.class.rescue_render && self.class.rescue_render[params[:action]]
           action = self.class.rescue_render[params[:action]]
           if action.is_a?(Symbol)
             if action == :alert
               render_alert
             else
-              render :action => action
+              render action: action
             end
           elsif action.is_a?(Proc)
             self.instance_eval(&action)
           end
         elsif params[:action] == 'update'
-          render :action => 'edit'
+          render action: 'edit'
         elsif params[:action] == 'create'
-          render :action => 'new'
+          render action: 'new'
         elsif params[:action]
-          render :action => params[:action]  # this is generally a bad idea. it probably means
+          render action: params[:action]  # this is generally a bad idea. it probably means
                                              # that a GET request resulted in an error.
         end
       end
@@ -250,14 +258,14 @@ module Common::Application::RescueErrors
     alert_message exception, :later
     if logged_in?
       # fyi, this template will eat the alert_message
-      render :template => 'error/permission_denied', :layout => 'notice'
+      render template: 'error/permission_denied', layout: 'notice'
     else
-      redirect_to login_path(:redirect => request.path)
+      redirect_to root_path(redirect: request.path)
     end
   end
 
   def render_not_found_html(exception)
-    render :template => 'error/not_found', :status => :not_found, :layout => 'notice', :locals => {:exception => exception}
+    render template: 'error/not_found', status: :not_found, layout: 'notice', locals: {exception: exception}
   end
 
   def render_error_js(exception=nil, options={})
@@ -268,6 +276,11 @@ module Common::Application::RescueErrors
       hide_spinners(page)
       update_alert_messages(page)
     end
+  end
+
+  def log_exception(exception)
+    Rails.logger.debug "Rescuing from #{exception.class}."
+    Rails.logger.debug Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
   end
 
   #def flash_auth_error(mode)

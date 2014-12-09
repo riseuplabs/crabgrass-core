@@ -21,7 +21,7 @@ module Common::Page::ListingRowHelper
   # render the cover of the page if it exists
   #
   def page_cover(page)
-    thumbnail_img_tag(page.cover, :medium, :scale => '64x64') if page.cover
+    thumbnail_img_tag(page.cover, :medium, scale: '64x64') if page.cover
   end
 
   #
@@ -48,7 +48,7 @@ module Common::Page::ListingRowHelper
 #        star_icon = page.stars_count > 0 ? icon_tag('star') : icon_tag('star_empty')
 #        locals.merge!(:stars_count => content_tag(:span, "%s %s" % [star_icon, page.stars_count]))
 #      end
-#      locals.merge!(:contributors =>  content_tag(:span, "%s %s" % [image_tag('ui/person-dark.png'), page.stars_count])) if options[:columns].include?(:contributors)
+#      locals.merge!(:contributors =>  content_tag(:span, "%s %s" % [image_tag('/images/ui/person-dark.png'), page.stars_count])) if options[:columns].include?(:contributors)
 #    end
 
 #    render :partial => 'pages/information_box', :locals => locals
@@ -63,7 +63,7 @@ module Common::Page::ListingRowHelper
 
 
   def page_summary(page)
-    text_with_more(page.summary, :length => 300)
+    text_with_more(page.summary, length: 300)
   end
 
   #def owner_image(page, options={})

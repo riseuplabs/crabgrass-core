@@ -48,41 +48,7 @@ module CastleGates
           end
         end
       else
-        new_gate_set = self.select(gate_names)
-        if new_gate_set.any?
-          new_gate_set.bits
-        end
-      end
-    end
-
-    #
-    # returns a bitmask composed of the default position for every gate in the gate_set,
-    # for the particular holder.
-    #
-    # (position meaning open or closed)
-    #
-    # OPTIMIZE: self.values ??
-    #
-    def default_bits(castle, holder)
-      #
-      # programmatic defaults
-      #
-      default_open_gates = castle.send(:default_open_gates, holder)
-      if default_open_gates && default_open_gates.any?
-        bits = self.select(default_open_gates).values.inject(0) do |bits_so_far, gate|
-          bits_so_far | gate.bit
-        end
-      else
-        bits = 0
-      end
-
-      #
-      # statically defined defaults
-      #
-      holder_name = holder.definition.name
-      all_gates = self.values
-      all_gates.inject(bits) do |bits_so_far, gate|
-        bits_so_far | gate.default_bit(holder_name)
+        self.select(gate_names).bits
       end
     end
 
@@ -106,6 +72,8 @@ module CastleGates
         gate_names.each do |gate_name|
           if gate = self[gate_name]
             result[gate_name] = gate
+          else
+            raise ArgumentError.new 'bad gate name: %s' % gate_name
           end
         end
         result
@@ -115,16 +83,13 @@ module CastleGates
     #
     # returns
     #
-    def gates_exist?(gate_names)
-      if gate_names == :all
-        true
-      elsif gate_names.is_a? Enumerable
-        gate_names.inject(true) {|prior, gate| prior && self[gate]}
-      #elsif gate_names.is_a? Gate
-      #  self[gate_names.name]
-      else
-        self[gate_names]
-      end
+    def invalid_gates(gate_names)
+      gate_names = Array(gate_names)
+      gate_names.select {|gate| !valid_gate?(gate)}
+    end
+
+    def valid_gate?(gate)
+      self[gate].present? || gate == :all
     end
 
     private

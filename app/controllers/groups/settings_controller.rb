@@ -4,7 +4,7 @@ class Groups::SettingsController < Groups::BaseController
   end
 
   def update
-    @group.update_attributes!(params[:group])
+    @group.update_attributes! group_params
     success
     redirect_to group_settings_url(@group)
   end
@@ -16,4 +16,7 @@ class Groups::SettingsController < Groups::BaseController
   end
   helper_method :group_type
 
+  def group_params
+    params.require(:group).permit :name, :full_name, :language
+  end
 end

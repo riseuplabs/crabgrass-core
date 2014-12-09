@@ -6,7 +6,6 @@ class SessionController < ApplicationController
 
   layout 'notice'
   skip_before_filter :redirect_unverified_user
-  verify :method => :post, :only => [:language, :logout]
 
   def login
     return unless request.post?
@@ -28,7 +27,7 @@ class SessionController < ApplicationController
       #  }
       #end
 
-      if self.current_user.language.any?
+      if self.current_user.language.present?
         session[:language_code] = self.current_user.language.to_sym
       else
         session[:language_code] = previous_language
@@ -67,7 +66,7 @@ class SessionController < ApplicationController
   # returns login form without layout.
   # used for ajax login form.
   def login_form
-    render :partial => 'session/login_form', :layout => false
+    render partial: 'session/login_form', layout: false, content_type: "text/html"
   end
 
   protected
@@ -75,7 +74,7 @@ class SessionController < ApplicationController
   # where to go when the user logs in?
   def redirect_successful_login
     if params[:redirect].is_a?(String) && !params[:redirect].index(':')
-      redirect_to params[:redirect], :only_path => true
+      redirect_to params[:redirect], only_path: true
     else
       redirect_to current_site.login_redirect(current_user)
     end

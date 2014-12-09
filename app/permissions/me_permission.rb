@@ -7,24 +7,9 @@ module MePermission
     logged_in?
   end
 
-  ##
-  ## POSTS
-  ##
-
-  def may_create_post?
-    current_user.may?(:pester, @recipient)
-  end
-
-  def may_edit_post?(post=@post)
-    logged_in? and
-    post and
-    post.user_id == current_user.id
-  end
-
-  alias_method :may_update_post?, :may_edit_post?
-
-  def may_index_post?
-    true
+  # disabled in some sites to remove
+  def may_message?
+    may_access_me?
   end
 
 end

@@ -1,12 +1,8 @@
-= refresh_sidebar_on_close
-- assets = @page.assets
-%h2.first{:class => (:hidden if assets.blank?)}= :current_attachments.t
-%ul#assets_list
-  = render :partial => '/common/assets/asset_as_li', :collection => assets
-%br.clear
-
-%h2= :add_new_attachment.t
-= asset_upload_form_for(@page)
-.buttons
-  - # this used to include some ajax form to change the page cover.
-  = close_modal_button
+= formy(:simple_form) do |f|
+  - f.label :current_attachments.t
+  - f.row do |r|
+    - r.input popup_attachment_list(@page.assets)
+  - f.label :add_new_attachment.t
+  - f.row do |r|
+    - r.input asset_upload_form_for(@page)
+  - f.button close_modal_button

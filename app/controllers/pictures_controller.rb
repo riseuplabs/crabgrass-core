@@ -20,7 +20,7 @@ class PicturesController < ApplicationController
       # prevent generation of a new geometry
       @picture.render(@geometry)
     end
-    send_file(@picture.private_file_path(@geometry), :type => @picture.content_type, :disposition => 'inline')
+    send_file(@picture.private_file_path(@geometry), type: @picture.content_type, disposition: 'inline')
   end
 
   protected
@@ -28,7 +28,7 @@ class PicturesController < ApplicationController
   def fetch_picture
     id = params[:id1] + params[:id2]
     @picture  = Picture.find id.to_i
-    @geometry = @picture.to_geometry params[:geometry]
+    @geometry = Picture::Geometry[params[:geometry]]
   end
 
 end

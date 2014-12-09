@@ -18,21 +18,21 @@ module UserExtension::Groups
   def self.included(base)
     base.instance_eval do
 
-      has_many :memberships, :foreign_key => 'user_id',
-        :dependent => :destroy,
-        :before_add => :check_duplicate_memberships
+      has_many :memberships, foreign_key: 'user_id',
+        dependent: :destroy,
+        before_add: :check_duplicate_memberships
 
-      has_many :groups, :foreign_key => 'user_id', :through => :memberships do
+      has_many :groups, foreign_key: 'user_id', through: :memberships do
         def <<(*dummy)
-          raise Exception.new("don't call << on user.groups");
+          raise "don't call << on user.groups"
         end
         def delete(*records)
           super(*records)
           records.each do |group|
             group.increment!(:version)
           end
-          proxy_owner.clear_peer_cache_of_my_peers
-          proxy_owner.update_membership_cache
+          proxy_association.owner.clear_peer_cache_of_my_peers
+          proxy_association.owner.update_membership_cache
         end
         def normals
           self.select{|group|group.normal?}
@@ -48,7 +48,8 @@ module UserExtension::Groups
         end
         def recently_active(options={})
           options[:limit] ||= 13
-          find(:all, :limit => options[:limit], :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
+          limit(options[:limit]).order('memberships.visited_at DESC')
+            .where('groups.type IS NULL').all
         end
       end
 
@@ -59,62 +60,47 @@ module UserExtension::Groups
       # 'primary groups' is useful when you want to list of the user's groups,
       # including committees only when necessary. primary_groups_and_networks is the same
       # but it includes networks in addition to just groups.
-      has_many(:primary_groups, :class_name => 'Group', :through => :memberships,
-       :source => :group, :conditions => PRIMARY_GROUPS_CONDITION) do
+      has_many(:primary_groups, class_name: 'Group', through: :memberships,
+       source: :group, conditions: PRIMARY_GROUPS_CONDITION) do
 
          # most active should return a list of groups that we are most interested in.
          # this includes groups we have recently visited, and groups that we visit the most.
          def most_active
-           max_visit_count = find(:first, :select => 'MAX(memberships.total_visits) as id').id || 1
+           max_visit_count = select('MAX(memberships.total_visits) as id').first.id || 1
            select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+           limit(13).select(select).order('last_visit_weight + total_visits_weight DESC').all
          end
       end
 
-      has_many(:primary_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_NETWORKS_CONDITION) do
+      has_many(:primary_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_NETWORKS_CONDITION) do
          # most active should return a list of groups that we are most interested in.
          # in the case of networks this should not include the site network
          # this includes groups we have recently visited, and groups that we visit the most.
          def most_active(site=nil)
            site_sql = (!site.nil? and !site.network_id.nil?) ? "groups.id != #{site.network_id}" : ''
-           max_visit_count = find(:first, :select => 'MAX(memberships.total_visits) as id').id || 1
+           max_visit_count = select('MAX(memberships.total_visits) as id').first.id || 1
            select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-           find(:all, :limit => 13, :select => select, :conditions => site_sql, :order => 'last_visit_weight + total_visits_weight DESC')
+           limit(13).select(select).order('last_visit_weight + total_visits_weight DESC').all
          end
       end
 
-      has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_G_AND_N_CONDITION
+      has_many :primary_groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_G_AND_N_CONDITION
 
       # just groups and networks the user is a member of, no committees.
-      has_many :groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => GROUPS_AND_NETWORKS_CONDITION
-
-      # all groups, including groups we have indirect access to even when there
-      # is no membership join record. (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group',
-         :finder_sql => lambda { "SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})" } do
-        def normals
-          self.select{|group|group.normal?}
-        end
-        def networks
-          self.select{|group|group.network?}
-        end
-        def committees
-          self.select{|group|group.committee?}
-        end
-      end
+      has_many :groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: GROUPS_AND_NETWORKS_CONDITION
 
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
 
       initialized_by :update_membership_cache,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
-
-      # this seems to be the only way to override the A/R created methods.
-      # new accessor defined in user_extension/cache.rb
-      remove_method :all_group_ids
-      remove_method :group_ids
-      #remove_method :admin_for_group_ids
     end
+  end
+
+  # all groups, including groups we have indirect access to even when there
+  # is no membership join record. (ie committees and networks)
+  def all_groups
+    Group.where(id: all_group_id_cache)
   end
 
   # is this user a member of the group?
@@ -152,9 +138,9 @@ module UserExtension::Groups
   #
   def longterm_member_of?(group)
     if group.created_at > 1.week.ago
-      true
-    else
-      group.memberships.find_by_user_id(self.id).try(:created_at) < 1.week.ago
+      member_of?(group)
+    elsif membership = group.memberships.find_by_user_id(self.id)
+      membership.created_at < 1.week.ago
     end
   end
 
@@ -166,9 +152,9 @@ module UserExtension::Groups
 
   private
 
-  PRIMARY_GROUPS_CONDITION      = lambda { "(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
+  PRIMARY_GROUPS_CONDITION      = lambda { |a| "(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
   PRIMARY_NETWORKS_CONDITION    = '(type = \'Network\')'
-  PRIMARY_G_AND_N_CONDITION     = lambda { "(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
+  PRIMARY_G_AND_N_CONDITION     = lambda { |a| "(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
   GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 

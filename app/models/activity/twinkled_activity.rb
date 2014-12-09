@@ -1,17 +1,17 @@
 class TwinkledActivity < Activity
   include ActionView::Helpers::TagHelper
 
-  validates_format_of :subject_type, :with => /User/
-  validates_format_of :object_type, :with => /User/
+  validates_format_of :subject_type, with: /User/
+  validates_format_of :item_type, with: /User/
   validates_presence_of :subject_id
-  validates_presence_of :object_id
+  validates_presence_of :item_id
   validates_presence_of :extra
 
   serialize :extra
 
   alias_attr :user,       :subject
-  alias_attr :twinkler,   :object
-  alias_attr :avatar,     :object
+  alias_attr :twinkler,   :item
+  alias_attr :avatar,     :item
   alias_attr :post,       :extra
 
   before_create :set_access
@@ -21,11 +21,11 @@ class TwinkledActivity < Activity
 
   def description(view=nil)
     I18n.t(:activity_twinkled,
-              :user => user_span(:twinkler), :post => post_span(post))
+              user: user_span(:twinkler), post: post_span(post))
   end
 
   def post_span(post)
-    content_tag :a, h(post[:snippet]), :href => "/posts/jump/#{post[:id]}"
+    content_tag :a, h(post[:snippet]), href: "/posts/jump/#{post[:id]}"
   end
 
   def icon

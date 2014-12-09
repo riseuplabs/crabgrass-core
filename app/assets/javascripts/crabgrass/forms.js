@@ -2,6 +2,41 @@
 // CRABGRASS FORM UTILITY
 //
 
+// ujs enhancements
+//
+// If there is a spinning wheel in a form with the class spin
+// it will be displayed when the form is submitted.
+//
+// If the form has the data attribute clear set to a valid value
+// the form will be reset after submitting it.
+//
+(function () {
+  document.observe("dom:loaded", function() {
+    function startFormSpinner(form) {
+      form.select('img.spin, span.spin').each(function(spinner) {
+        spinner.show();
+      });
+    }
+
+    function stopFormSpinner(form) {
+      form.select('img.spin, span.spin').each(function(spinner) {
+        spinner.hide();
+      });
+    }
+
+    document.on('ajax:create', 'form', function(event, form) {
+      if (form == event.findElement()) {
+        startFormSpinner(form);
+        if (form.readAttribute('data-clear')) form.reset();
+      }
+    });
+    document.on('ajax:complete', 'form', function(event, form) {
+      if (form == event.findElement()) stopFormSpinner(form);
+    });
+  });
+})();
+
+
 // Toggle the visibility of another element based on if a checkbox is checked or
 // not. Additionally, sets the focus to the first input or textarea that is visible.
 function checkboxToggle(checkbox, element) {
@@ -101,39 +136,3 @@ function submitNestedResourceForm(resource_id_field, resource_url_template,
     input.value; form.action = resource_url_template.gsub('__ID__',
         resource_id); form.submit(); } }
 
-
-// starts watching the textarea when window.onbeforeunload event happens it
-// will ask the user if they want to leave the unsaved form everything that
-// matches savingSelectors will permenantly disable the confirm message when
-// clicked this a way to exclude "Save" and "Cancel" buttons from raising the
-// "Do you want to discard this?" dialog
-
-function confirmDiscardingTextArea(textAreaId, discardingMessage,
-    savingSelectors) {
-
-  var textArea = $(textAreaId);
-  var confirmActive = true;
-  var originalValue = textArea.value;
-
-  window.onbeforeunload = function(ev) {
-    if(confirmActive) {
-      var newValue = textArea.value;
-      if(newValue != originalValue) {
-        return discardingMessage;
-      }
-    }
-  };
-
-  // toggle off the confirmation when saving or explicitly discarding the text
-  // area (clicking 'cancel' for example)
-  savingSelectors.each(function(savingSelector) {
-    var savingElements = $$(savingSelector);
-    savingElements.each(function(savingElement) {
-      savingElement.observe('click', function() {
-        // user clicked 'save', 'cancel' or something similar
-        // we should no longer display confirmation when leaving page
-        confirmActive = false;
-      })
-    });
-  });
-}

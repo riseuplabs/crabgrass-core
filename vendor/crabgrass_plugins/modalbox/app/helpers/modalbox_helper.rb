@@ -34,7 +34,6 @@ module ModalboxHelper
   #
   def link_to_modal(label, options={}, html_options={})
     options[:title] ||= label
-    html = options[:html].any?
     icon = options.delete(:icon) || html_options.delete(:icon)
     if options[:html]
       static_html = true
@@ -59,9 +58,9 @@ module ModalboxHelper
         # skip these ajax options if we are just directly showing some
         # static content.
         options.merge!(
-          :loading => spinner_icon_on(icon, html_options[:id]),
-          :complete => spinner_icon_off(icon, html_options[:id]),
-          :showAfterLoading => true
+          loading: spinner_icon_on(icon, html_options[:id]),
+          complete: spinner_icon_off(icon, html_options[:id]),
+          showAfterLoading: true
         )
       end
       function = modalbox_function(contents, options)
@@ -75,7 +74,7 @@ module ModalboxHelper
 
   # close the modal box
   def close_modal_button(label=nil)
-    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();')
+    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();', class: 'btn')
   end
 
   def cancel_modal_button()
@@ -103,8 +102,8 @@ module ModalboxHelper
 
   def localize_modalbox_strings
     "Modalbox.setStrings(%s)" % {
-       :ok => I18n.t(:ok_button), :cancel => I18n.t(:cancel_button), :close => I18n.t(:close_button),
-       :alert => I18n.t(:alert), :confirm => I18n.t(:confirm), :loading => I18n.t(:loading_progress)
+       ok: I18n.t(:ok_button), cancel: I18n.t(:cancel_button), close: I18n.t(:close_button),
+       alert: I18n.t(:alert), confirm: I18n.t(:confirm), loading: I18n.t(:loading_progress)
      }.to_json
   end
 
@@ -201,6 +200,7 @@ module ModalboxHelper
         action = options
         message = html_options.delete(:confirm)
         method = html_options.delete(:method)
+        options = html_options
       else
         message = nil
       end

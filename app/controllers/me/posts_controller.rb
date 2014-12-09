@@ -7,13 +7,18 @@ class Me::PostsController < Me::BaseController
   include_controllers 'common/posts'
 
   prepend_before_filter :fetch_data
+
+  before_filter :authorization_required
+  permissions 'posts'
   guard :may_ALIAS_post?
+  guard index: :allow
 
   # /me/discussions/green/posts
   def index
     @other_user = @recipient
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.paginate(post_pagination_params)
+    @post = Post.new
   end
 
   def create
@@ -44,9 +49,8 @@ class Me::PostsController < Me::BaseController
   private
 
   def post_pagination_params
-    #default_page = params[:page].blank? ? @discussion.last_page : params[:page]
-    #pagination_params(:page => default_page)
-    pagination_params
+    default_page = params[:page].blank? ? @discussion.last_page : params[:page]
+    pagination_params(page: default_page)
   end
 
   #

@@ -1,17 +1,17 @@
 !!!
-%html{:dir=>language_direction}
+%html{dir:language_direction}
   %head
     %title
       =h html_title
     %style
       a.anchor, a.shy {display:none;}
-  %body{:class=>language_direction}
+  %body{class:language_direction}
     %h3
       =h html_title
     %article#content
       = yield
-    - if @posts && @posts.any?
+    -# if @posts.present?
       %div.comments
         %h2
           = :comments.t
-        = render :partial => 'pages/posts/printer_friendly', :collection => @posts
+        = render partial: 'pages/posts/printer_friendly', collection: @posts

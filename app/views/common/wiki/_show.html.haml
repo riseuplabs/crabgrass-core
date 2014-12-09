@@ -1,9 +1,0 @@
--# This is also used after cancelling when there is no wiki to show
-- if @wiki
-  %div.wiki
-    - if local_assigns[:preview]
-      = @wiki.preview_html
-      = wiki_more_link # only shows for group wikis
-    - else
-      = wiki_body_html
-      = wiki_less_link # only shows for group wikis

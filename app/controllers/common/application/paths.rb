@@ -35,7 +35,7 @@ module Common::Application::Paths
   ##
   ## ENTITY PATHS
   ##
- 
+
   def entity_path(entity)
     if entity.is_a? String
       "/"+name
@@ -58,7 +58,7 @@ module Common::Application::Paths
   def direct_group_path(group,options={})
     "/groups/" + group.name + build_query_string(options)
   end
-  
+
   ##
   ## PAGE PATHS
   ##
@@ -69,25 +69,20 @@ module Common::Application::Paths
   #
 
   def new_page_path(options={})
-    options[:action] = 'new'
-    options[:owner] ||= params[:owner]
+    options[:owner] ||= params[:owner] || :me
     custom_create_path(options) || page_creation_path(options)
   end
-
-  def create_page_path(options={})
-    options[:action] = 'create'
-    options[:owner] ||= params[:owner]
-    custom_create_path(options) || page_creation_path(options)
-  end
+  alias_method :create_page_path, :new_page_path
 
   #
   # if page definition has a custom constroller, return a path for it.
   # otherwise, returns nil and modifies options hash as needed.
   #
   def custom_create_path(options={})
-    if (page_type = options.delete(:page_type)).any?
-      if (controller = page_type.definition.creation_controller).any?
-        return "/pages/#{controller}/#{options[:action]}/#{options[:owner]}"
+    if (page_type = options.delete(:page_type)).present?
+      if (controller = page_type.definition.creation_controller).present?
+        url_for controller: "/#{controller}", action: :new,
+          owner: options[:owner]
       else
         options[:type] = page_type.url
         return nil
@@ -101,11 +96,12 @@ module Common::Application::Paths
   # That is no good. We want page paths in these forms:
   #
   # (1) pretty -- page_path and page_url
-  #               /:context/:page/:action/:id
-  #               /:context/:page/:controller/:action/:id
+  #               /:context/:page
+  #               /:context/:page/:controller/:id/:action
   #
-  # (2) direct -- page_xpath and page_xurl
-  #               /pages/:controller/:action/:page_id
+  # (2) direct -- page specific restful routes to
+  #               /pages/:page_id/:controller/:id
+  #               these are defined in the page types init.rb file.
   #
   # We use the direct form when pretty doesn't matter, like ajax. The direct
   # form bypasses the dispatcher and so is slightly faster and less prone to errors.
@@ -145,40 +141,18 @@ module Common::Application::Paths
     end
     path << controller
 
-    # (3) action
-    action = options.delete(:action)
-    if action == 'show' and !options[:id]
-      action = nil
-    end
-    path << action
-
-    # (4) id
+    # (3) id
     path << options.delete(:id)
 
-    return ('/' + path.select(&:any?).join('/') + build_query_string(options))
+    # (4) action
+    action = options.delete(:action)
+    path << action if [:sort, :new, :edit].include? action.to_sym
+
+    return ('/' + path.select(&:present?).join('/') + build_query_string(options))
   end
 
   def page_url(page, options={})
     urlize page_path(page, options)
-  end
-
-  #
-  # direct page path
-  #
-  def page_xpath(page, options={})
-    controller = options.delete(:controller) || page.controller
-    if controller.is_a?(Symbol)
-       controller = page.controller + '_' + controller.to_s
-       if Rails.env == 'development' and !page.controllers.include?(controller)
-        raise 'controller %s not defined for page type %s' % [controller, page.class.name]
-      end
-    end
-    options[:action] ||= 'index'
-    '/pages/' + [controller, options.delete(:action), page.id].join('/') + build_query_string(options)
-  end
-
-  def page_xurl(page, options={})
-    urlize page_xpath(page,options)
   end
 
   ##

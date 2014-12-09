@@ -16,7 +16,7 @@ module Crabgrass::Page
 
     def self.add(name, options)
       info 'adding page %s' % name, 2
-      self.proxies[name] = ClassProxy.new(options.merge(:class_name => name))
+      self.proxies[name] = ClassProxy.new(options.merge(class_name: name))
     end
 
     def self.list

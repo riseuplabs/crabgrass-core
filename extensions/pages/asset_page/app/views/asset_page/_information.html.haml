@@ -1,6 +1,6 @@
 .p
   = friendly_size(@asset.size) + ","
-  = I18n.t(@asset.format_description.to_sym, :default => @asset.format_description) 
+  = I18n.t(@asset.format_description.to_sym, default: @asset.format_description) 
   - if @asset.ext
     = "(" + @asset.ext + ")"
 
@@ -8,11 +8,11 @@
   - if previews.any?
     %br
       = :preview.t + ':'
-      = previews.collect{|preview| link_to preview.name, preview.url}.join(', ')
+      = previews.collect{|preview| link_to preview.name, preview.url}.join(', ').html_safe
 
 - if @page.updated_by
   .p
     = :updated_by.t
-    = link_to_user(@page.updated_by, :avatar => 'tiny', :class => 'inline')
+    = link_to_user(@page.updated_by, avatar: 'tiny', class: 'inline')
     = friendly_date(@page.updated_at)
 

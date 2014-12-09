@@ -2,7 +2,7 @@
 #
 # schema:
 #
-#   create_table :keys do |p|
+#   create_table :castle_gates_keys do |p|
 #     p.integer :castle_id
 #     p.string  :castle_type
 #     p.integer :holder_code
@@ -13,19 +13,30 @@
 #
 # The gate_bitfield of a key always has the first bit turned on. Why?
 # This allows us to quickly identify the difference between a set of keys
-# with no access and a query that returned zero keys. This distinction is
-# important for handling gate defaults.
-#
+# with no access and a query that returned zero keys.
 #
 module CastleGates
   class Key < ActiveRecord::Base
-    belongs_to :castle, :polymorphic => true
+
+    self.table_name = :castle_gates_keys
+
+    belongs_to :castle, polymorphic: true
+
+    # we store the codes as integers but generate them as strings.
+    # So for comparison to work let's also read them as strings
+    def holder_code
+      read_attribute(:holder_code).to_s
+    end
 
     #
     # queries keys that are associated with the holder, or any of its 'subholders'
     #
     scope(:for_holder, lambda { |holder|
-      { :conditions => conditions_for_holder(Holder[holder]) }
+      where holder_code: Holder[holder].all_codes
+    })
+
+    scope(:with_gate_bits, lambda { |bits|
+      where("(#{bits} & ~castle_gates_keys.gate_bitfield) = 0")
     })
 
     #
@@ -41,7 +52,7 @@ module CastleGates
         # the value it is compared to must be a string. MySQL allows you to compare with
         # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
         # As noted above, this is not very optimized.
-      { :conditions => ['substr(keys.holder_code,1,1) IN (?)', holder_codes] }
+      { conditions: ['substr(castle_gates_keys.holder_code,1,1) IN (?)', holder_codes] }
     })
 
     #
@@ -51,15 +62,11 @@ module CastleGates
     # This is not a method of the keys association because of how we do caching.
     #
     def self.gate_bitfield(keys_named_scope)
+      return 0 unless keys_named_scope.any?
       if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-        bitfield = keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
+        keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
       else
-        bitfield = keys_named_scope.calculate(:bit_or, :gate_bitfield)
-      end
-      if bitfield == 0
-        nil # no actual keys, so return nil
-      else
-        bitfield
+        keys_named_scope.calculate(:bit_or, :gate_bitfield)
       end
     end
 
@@ -70,8 +77,7 @@ module CastleGates
     #
     def add_gates!(gates)
       self.gate_bitfield |= (1 | bits_for_gates(gates))
-      save!
-      self
+      changed? && save!
     end
 
     #
@@ -90,8 +96,7 @@ module CastleGates
     #
     def remove_gates!(gates)
       self.gate_bitfield &= ~ bits_for_gates(gates)
-      save!
-      self
+      changed? && save!
     end
 
     #
@@ -101,23 +106,7 @@ module CastleGates
       "#<Key id:#{id}, castle_id:#{castle_id}, castle_type:#{castle_type}, holder_code:#{holder_code}, gate_bitfield:#{gate_bitfield.to_s(2)}>"
     end
 
-    def self.conditions_for_holder(holder)
-      conditions_for_holder_codes(holder.all_codes)
-    end
-
     private
-
-    def self.conditions_for_holder_codes(codes)
-      if codes.length == 1
-        if codes.first.any?
-          ["keys.holder_code = ?", codes.first]
-        else
-          "keys.holder_code IS NULL"
-        end
-      else
-        ["keys.holder_code IN (?)", codes]
-      end
-    end
 
     #
     # Returns the bitmask for a set of gate names.

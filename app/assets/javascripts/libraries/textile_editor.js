@@ -484,13 +484,12 @@ Control.TextArea.ToolBar = Class.create(	{
 // --- ACTUAL CUSTOM CODE BEGINS HERE ---
 
 // add the toolbar controlling wiki body
-// This will add a toolbar to #wiki_body
-// - which is the default name for the body in wiki forms.
-// Only one wiki editor can be used per screen.
-function wikiEditAddToolbar(button_id_suffix, image_popup_func)
+// This will add a toolbar to specified text area
+function wikiEditAddToolbar(textAreaId, image_popup_func)
 {
   //setup
-  var textarea = new Control.TextArea('wiki_body');
+  var buttonIdSuffix = textAreaId;
+  var textarea = new Control.TextArea(textAreaId);
   var toolbar = new Control.TextArea.ToolBar(textarea);
 
   toolbar.container.addClassName('markdown_toolbar'); //for css styles
@@ -501,14 +500,14 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           this.wrapSelection('_','_');
   },{
           'class': 'markdown_italics_button',
-          id: 'markdown_italics_button-' + button_id_suffix
+          id: 'markdown_italics_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Strong emphasis',function(){
           this.wrapSelection('*','*');
   },{
           'class': 'markdown_bold_button',
-          id: 'markdown_bold_button-' + button_id_suffix
+          id: 'markdown_bold_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Link',function(){
@@ -519,7 +518,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
   },{
           'class': 'markdown_link_button',
-          id: 'markdown_link_button-' + button_id_suffix
+          id: 'markdown_link_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Image',function(){
@@ -527,7 +526,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           image_popup_func();
   },{
           'class': 'markdown_image_button',
-          id: 'markdown_image_button-' + button_id_suffix
+          id: 'markdown_image_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Heading',function(){
@@ -537,7 +536,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           this.replaceSelection("\nh1. " + selection + "\n");
   },{
           'class': 'markdown_heading_button',
-          id: 'markdown_heading_button-' + button_id_suffix
+          id: 'markdown_heading_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Unordered List',function(event){
@@ -546,7 +545,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           });
   },{
           'class': 'markdown_unordered_list_button',
-          id: 'markdown_unordered_list_button-' + button_id_suffix
+          id: 'markdown_unordered_list_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Ordered List',function(event){
@@ -556,7 +555,7 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           });
   },{
           'class': 'markdown_ordered_list_button',
-          id: 'markdown_ordered_list_button-' + button_id_suffix
+          id: 'markdown_ordered_list_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Block Quote',function(event){
@@ -565,19 +564,19 @@ function wikiEditAddToolbar(button_id_suffix, image_popup_func)
           });
   },{
           'class': 'markdown_quote_button',
-          id: 'markdown_quote_button-' + button_id_suffix
+          id: 'markdown_quote_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Code Block',function(event){
           this.wrapSelection('<code>', '</code>');
   },{
           'class': 'markdown_code_button',
-          id: 'markdown_code_button-' + button_id_suffix
+          id: 'markdown_code_button-' + buttonIdSuffix
   });
 
   toolbar.addButton('Help',quickRedReference,{
           'class': 'markdown_help_button',
-          id: 'markdown_help_button-' + button_id_suffix
+          id: 'markdown_help_button-' + buttonIdSuffix
   });
 }
 

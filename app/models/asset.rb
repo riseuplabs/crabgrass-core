@@ -17,11 +17,6 @@ Assets use a lot of classes to manage a particular uploaded file:
 
   Asset::Versions have the latter two included as well.
 
-  Additional modules used by assets:
-    Media::MimeType -- where all the mime magicky stuff happens, including
-                       determining which Asset subclass to create.
-    Media::Process  -- processors for creating thumbnails.
-
 TODO:
 
   * Image assets that are smaller than the thumbnails should not get thumbnails,
@@ -83,7 +78,7 @@ class Asset < ActiveRecord::Base
 
   # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
   # it always picks "Asset". So, we hardcode what the query should be:
-  POLYMORPH_AS_PARENT = lambda { "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
+  POLYMORPH_AS_PARENT = lambda { |a| "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
 
   # fields in assets table not in asset_versions
   NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
@@ -91,7 +86,7 @@ class Asset < ActiveRecord::Base
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include AssetExtension::Upload
-  validates_presence_of :filename, :unless => 'new_record?'
+  validates_presence_of :filename, unless: 'new_record?'
 
 
   ##
@@ -99,6 +94,8 @@ class Asset < ActiveRecord::Base
   ##
 
   # checks wether the given `user' has permission `perm' on this Asset.
+  #
+  # This does not include checking if the asset is public.
   #
   # there is only one way that a user may have access to an asset:
   #
@@ -147,13 +144,13 @@ class Asset < ActiveRecord::Base
     !showing.nil? && showing.is_cover
   end
 
-  scope :not_attachment, :conditions => ['is_attachment = ?',false]
+  scope :not_attachment, where('is_attachment = ?',false)
 
   # one of :image, :audio, :video, :document
-  scope :media_type, lambda {|type|
+  def self.media_type(type)
     raise TypeError.new unless [:image,:audio,:video,:document].include?(type)
-    {:conditions => ["is_#{type} = ?",true]}
-  }
+    where("is_#{type} = ?",true)
+  end
 
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
@@ -164,8 +161,8 @@ class Asset < ActiveRecord::Base
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
       base.belongs_to :user
-      base.has_many :thumbnails, :class_name => '::Thumbnail',
-        :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT do
+      base.has_many :thumbnails, class_name: '::Thumbnail',
+        dependent: :destroy, finder_sql: POLYMORPH_AS_PARENT do
         def preview_images
           small, medium, large = nil
           self.each do |tn|
@@ -219,7 +216,7 @@ class Asset < ActiveRecord::Base
   def type_as_parent; self.type; end
 
   versioned_class.class_eval do
-    delegate :page, :public?, :has_access!, :to => :asset
+    delegate :page, :public?, :has_access!, to: :asset
 
     # all our paths will have version info inserted into them
     def version_path
@@ -263,7 +260,7 @@ class Asset < ActiveRecord::Base
 
   # an asset might have two different types of associations to a page. it could
   # be the data of page (1), or it could be an attachment of the page (2).
-  belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
+  belongs_to :parent_page, foreign_key: 'page_id', class_name: 'Page' # (2)
   def page()
     page = page_id ? parent_page : pages.first
     return page
@@ -273,15 +270,15 @@ class Asset < ActiveRecord::Base
     # run validations so filname gets set
     self.valid?
     page_params = {
-      :title => self.basename,
-      :summary =>"Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
-      :tag_list => "",
-      :user => user,
-      :access => "admin",
-      :data => self
+      title: self.basename,
+      summary: "Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
+      tag_list: "",
+      user: user,
+      access: "admin",
+      data: self
     }
     if group
-      page_params.merge! :share_with => {group.name => {:access =>  "1"}}
+      page_params.merge! share_with: {group.name => {access: "1"}}
     end
     self.parent_page = AssetPage.create!(page_params)
   end
@@ -320,16 +317,6 @@ class Asset < ActiveRecord::Base
   # creates an Asset of the appropriate subclass (ie ImageAsset).
   #
   def self.create_from_params(attributes = nil, &block)
-    begin
-      return self.create_from_params!(attributes, &block)
-    rescue Exception => exc
-      puts 'Error creating asset: ' + exc.to_s
-      puts exc.clean_backtrace
-      return nil
-    end
-  end
-
-  def self.create_from_params!(attributes = nil, &block)
     asset_class(attributes).create!(attributes, &block)
   end
 
@@ -384,7 +371,7 @@ class Asset < ActiveRecord::Base
   # returns a mime type of the file_data
   #
   def self.mime_type_from_data(file_data)
-    if file_data and file_data.any?
+    if file_data.present?
       file_data.content_type || Media::MimeType.mime_type_from_extension(file_data.original_filename)
     end
   end

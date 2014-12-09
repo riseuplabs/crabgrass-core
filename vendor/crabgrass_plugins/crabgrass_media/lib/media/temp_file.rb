@@ -1,16 +1,6 @@
 require 'tempfile'
-require 'ftools'
+require 'fileutils'
 require 'pathname'
-
-Tempfile.class_eval do
-  #
-  # overwrite so that Tempfile will retain the file extension of the basename.
-  #
-  def make_tmpname(basename, n)
-    ext = nil
-    sprintf("%s%d-%d%s", basename.to_s.gsub(/\.\w+$/) { |s| ext = s; '' }, $$, n, ext)
-  end
-end
 
 #
 # media processing requires a different type of tempfile... because we use command
@@ -61,7 +51,7 @@ module Media
         @tmpfile = TempFile.create_from_content_type(content_type)
       elsif data.respond_to?(:path)
         # we are dealing with an uploaded file object
-        @tmpfile = TempFile.create_from_file(data.path, content_type, {:mode => :move})
+        @tmpfile = TempFile.create_from_file(data.path, content_type, {mode: :move})
       elsif data.is_a?(StringIO)
         data.rewind
         @tmpfile = TempFile.create_from_data(data.read, content_type)
@@ -118,7 +108,7 @@ module Media
     # creates a tempfile filled with the given binary data
     #
     def self.create_from_data(data, content_type=nil)
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf = new_for_content_type(content_type)
       tf.binmode
       tf.write(data)
       tf.close
@@ -129,7 +119,7 @@ module Media
     # create an empty temp file with an extension to match the content_type
     #
     def self.create_from_content_type(content_type)
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+      tf = new_for_content_type(content_type)
       tf.close
       tf
     end
@@ -137,8 +127,8 @@ module Media
     #
     # create a tmp file that is a copy of another file.
     #
-    def self.create_from_file(filepath, content_type, options)
-      tf = Tempfile.new(content_type_basename(content_type), tempfile_path)
+    def self.create_from_file(filepath, content_type, options = {})
+      tf = new_for_content_type(content_type)
       tf.close
       if options[:mode] == :move
         FileUtils.mv filepath, tf.path
@@ -148,13 +138,19 @@ module Media
       tf
     end
 
+    def self.new_for_content_type(content_type)
+      Tempfile.new content_type_basename(content_type),
+        tempfile_path,
+        mode: 022
+    end
+
     #
     # create a filename with a file extension from the content_type
     #
     def self.content_type_basename(content_type)
       if content_type
-        extension = Media::MimeType.extension_from_mime_type(content_type) || 'bin'
-        "%s.%s" % ['media_temp_file', extension]
+        extension = Media::MimeType.extension_from_mime_type(content_type) || :bin
+        ['media_temp_file', ".#{extension}"]
       else
         'media_temp_file'
       end
@@ -163,5 +159,5 @@ module Media
   end
 end
 
-FileUtils.mkdir_p(Media::TempFile.tempfile_path) unless File.exists?(Media::TempFile.tempfile_path)
+FileUtils.mkdir_p(Media::TempFile.tempfile_path) unless File.exist?(Media::TempFile.tempfile_path)
 

@@ -1,36 +1,29 @@
-- class_display_name = :page.t
-- type = 'send' if type.nil?
-- url = page_share_path(@page, :mode => 'notify')
-- id = 'notify_page_form'
-- form_options = {:url => url, :loading => show_spinner('popup'), :html => {:id => id}, :method => 'put'}
-
-- form_remote_tag(form_options) do
-
+= page_popup_form('notify') do
   %table.notify
     %tr
-      %td{:colspan=>2}
+      %td{colspan:2}
         %h2.first= I18n.t(:recipients)
     %tr
-      %td{:colspan=>2}
-        = render :partial => 'add_recipient_widget', :locals => {:empty_box => true, :mode => 'notify'}
+      %td{colspan:2}
+        = render partial: 'add_recipient_widget', locals: {empty_box: true, mode: 'notify'}
 
     - if (@page.contributors_count || 0) > 0
       %tr.gap
         %td.check= check_box 'recipients', ':contributors'
-        %td= label 'recipients', ':contributors', I18n.t(:notify_contribution)
+        %td= label 'recipients', ':contributors', I18n.t(:notify_contribution).html_safe
 
     %tr.gap
       %td.check= check_box 'recipients', ':participants'
-      %td= label 'recipients', ':participants', I18n.t(:notify_current_access)
+      %td= label 'recipients', ':participants', I18n.t(:notify_current_access).html_safe
 
     %tr
-      %td{:colspan=>2}
+      %td{colspan:2}
         %h2= I18n.t(:notification_message)
 
-    = render :partial => 'notification_message_form', :locals => {:forced_send => true}
+    = render partial: 'notification_message_form', locals: {forced_send: true}
 
   .buttons
     = spinner 'popup'
     = close_modal_button(:cancel)
-    = submit_tag I18n.t(:notify_page_link), :name => 'notify_button'
+    = submit_tag I18n.t(:notify_page_link), name: 'notify_button'
 

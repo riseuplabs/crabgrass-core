@@ -9,7 +9,7 @@
 
 namespace :cg do
   desc "converts mysql tables to use unicode. specifying utf8 in database.yml is not enough."
-  task(:convert_to_unicode => :environment) do
+  task(convert_to_unicode: :environment) do
     charset = 'utf8'
     collation = 'utf8_general_ci'
     @connection = ActiveRecord::Base.connection

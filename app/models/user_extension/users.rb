@@ -21,32 +21,15 @@ module UserExtension::Users
       ## PEERS
       ##
 
-      has_many :peers, :class_name => 'User' do
-        # overwrites ActiveRecord::Associations::HasManyAssociation#construct_scope
-        # to specify the entire conditions without using :finder_sql
-        def construct_scope
-          { :find => {
-              :conditions => "users.id IN (#{@owner.peer_id_cache.to_sql})",
-              :readonly => true,
-              :order => @reflection.options[:order],
-              :limit => @reflection.options[:limit],
-              :include => @reflection.options[:include]
-            },
-            :create => {}
-          }
-        end
+      def self.peers_of(user)
+        where('users.id in (?)', user.peer_id_cache)
       end
-
-      # same as results as user.peers, but chainable with other named scopes
-      scope(:peers_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.peer_id_cache]}
-      end)
 
       ##
       ## USER'S STATUS / PUBLIC WALL
       ##
 
-      has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
+      has_one :wall_discussion, as: :commentable, dependent: :destroy, class_name: "Discussion"
 
       before_destroy :save_relationships
       attr_reader :peers_before_destroy, :contacts_before_destroy
@@ -55,37 +38,37 @@ module UserExtension::Users
       ## RELATIONSHIPS
       ##
 
-      has_many :relationships, :dependent => :destroy do
+      has_many :relationships, dependent: :destroy do
         def with(user) find_by_contact_id(user.id) end
       end
 
-      has_many :discussions, :through => :relationships, :order => 'discussions.replied_at DESC'
-      has_many :contacts,    :through => :relationships
+      has_many :discussions, through: :relationships, order: 'discussions.replied_at DESC'
+      has_many :contacts,    through: :relationships
 
-      has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
+      has_many :friends, through: :relationships, conditions: "relationships.type = 'Friendship'", source: :contact do
         def most_active(options = {})
           options[:limit] ||= 13
-          max_visit_count = find(:first, :select => 'MAX(relationships.total_visits) as id').id || 1
+          max_visit_count = select('MAX(relationships.total_visits) as id').first.id || 1
           select = "users.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-          find(:all, :limit => options[:limit], :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+          limit(options[:limit]).select(select).order('last_visit_weight + total_visits_weight DESC').all
         end
       end
 
       # same result as user.friends, but chainable with other named scopes
-      scope(:friends_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache]}
-      end)
+      def self.friends_of(user)
+        where('users.id in (?)', user.friend_id_cache)
+      end
 
-      scope(:friends_or_peers_of, lambda do |user|
-        {:conditions => ['users.id in (?)', user.friend_id_cache + user.peer_id_cache]}
-      end)
+      def self.friends_or_peers_of(user)
+        where('users.id in (?)', user.friend_id_cache + user.peer_id_cache)
+      end
 
       # neither friends nor peers
       # used for autocomplete when we preloaded the friends and peers
-      scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)',
-          user.friend_id_cache + user.peer_id_cache + [user.id]]}
-      end)
+      def self.strangers_to(user)
+        where 'users.id NOT IN (?)',
+          user.friend_id_cache + user.peer_id_cache + [user.id]
+      end
 
       ##
       ## CACHE
@@ -95,15 +78,13 @@ module UserExtension::Users
       initialized_by :update_contacts_cache, :friend_id_cache, :foe_id_cache
       initialized_by :update_membership_cache, :peer_id_cache
 
-      # this seems to be the only way to override the A/R created methods.
-      # new accessor defined in user_extension/cache.rb
-      remove_method :friend_ids
-      #remove_method :foe_ids
-      #remove_method :peer_ids
     end
   end
 
   module InstanceMethods
+    def peers
+      User.peers_of(self).readonly
+    end
 
     ##
     ## STATUS / PUBLIC WALL
@@ -111,7 +92,10 @@ module UserExtension::Users
 
     # returns the users current status by returning their latest status_posts.body
     def current_status
-      @current_status ||= self.wall_discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
+      @current_status ||= self.wall_discussion.posts
+        .where('type' => 'StatusPost')
+        .order('created_at DESC')
+        .first.try.body || ""
     end
 
     ##
@@ -136,13 +120,13 @@ module UserExtension::Users
       type = 'Friendship' if type == :friend
 
       unless relationship = other_user.relationships.with(self)
-        relationship = Relationship.new(:user => other_user, :contact => self)
+        relationship = Relationship.new(user: other_user, contact: self)
       end
       relationship.type = type
       relationship.save!
 
       unless relationship = self.relationships.with(other_user)
-        relationship = Relationship.new(:user => self, :contact => other_user)
+        relationship = Relationship.new(user: self, contact: other_user)
       end
       relationship.type = type
       relationship.save!
@@ -246,29 +230,6 @@ module UserExtension::Users
     ##
     ## PERMISSIONS
     ##
-
-    def may_be_pestered_by?(user)
-      begin
-        may_be_pestered_by!(user)
-      rescue PermissionDenied
-        false
-      end
-    end
-
-    def may_be_pestered_by!(user)
-      if has_access? :pester, user
-        return true
-      else
-        raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
-      end
-    end
-
-    def may_pester?(entity)
-      entity.may_be_pestered_by? self
-    end
-    def may_pester!(entity)
-      entity.may_be_pestered_by! self
-    end
 
     def may_show_status_to?(user)
       return true if user==self

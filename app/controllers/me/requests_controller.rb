@@ -8,7 +8,7 @@ class Me::RequestsController < Me::BaseController
       send(current_view, current_user).
       by_updated_at.
       paginate(pagination_params)
-    render :template => 'common/requests/index'
+    render template: 'common/requests/index'
   end
 
   protected

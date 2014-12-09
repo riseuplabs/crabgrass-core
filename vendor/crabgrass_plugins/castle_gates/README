@@ -55,7 +55,7 @@ Gates:
 
 Keys:
 
-  * Keys are ActiveRecord models stored in the database in the table 'gate_keys'.
+  * Keys are ActiveRecord models stored in the database in the table 'castle_gates_keys'.
   * A key instance has a set of gates it will open for a particular castle.
   * Castles have many keys, one for each holder with access to any of its gates.
 
@@ -80,7 +80,7 @@ one works or they are denied access.
 Castle Gates is very flexible, but has a few important limitation:
 
   (1) The number of gates a castle can have is limited to the bit
-      length of gate_keys.gate_bitfield
+      length of castle_gates_keys.gate_bitfield
 
   (2) System-wide, there can only be nine types of holders.
 
@@ -131,14 +131,14 @@ class Permissions < CastleGates::Permissions do
   castle Tower do
     gate 1, :door, :default_open => true
     gate 2, :window
-    def after_grant_access(holder, gate)
+    def after_grant_access(holder, gates)
       if holder == :public
-        grant_access! :admin => gate
+        grant_access! :admin => gates
       end
     end
-    def after_revoke_access(holder, gate)
+    def after_revoke_access(holder, gates)
       if holder == :admin
-        revoke_access! :public => gate
+        revoke_access! :public => gates
       end
     end
   end

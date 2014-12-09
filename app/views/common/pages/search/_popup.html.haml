@@ -15,22 +15,22 @@
 -# notes:
 -#
 -# form_remote_tag does not support the :with option, so we must use submit_to_remote.
--# 
+-#
 -# when we specify :with, it overrides the default parameters used by submit_to_remote.
 -# therefore, we must manually specify Form.serialize.
--# 
+-#
 -# When calculating the path, params submitted in this form are used to substitute
--# into the path. For example, 
+-# into the path. For example,
 -#
 -#   if params['user_id']  --> 'green', then
 -#   /created-by/:user_id/ --> /created-by/green/
 -#
 
 - with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
-- @filter_submit_options = {:url => url, :with => with, :loading => show_spinner('search_filter'), :complete => close_modal_function}
+- @filter_submit_options = {url: url, with: with, loading: show_spinner('search_filter'), complete: close_modal_function}
 
-= form_tag(url, :id => 'page_search_form') do
-  - if filter.description.any?
+= form_tag(url, id: 'page_search_form') do
+  - if filter.description.present?
     .tip.info_16
       = filter.description.t
   = self.instance_eval(&filter.html_block)
@@ -40,6 +40,6 @@
       = close_modal_button
       = submit_to_remote 'submit', :search.t, @filter_submit_options
     - else
-      = spinner('search_filter', :text => 'loading...')
-      = submit_to_remote 'submit', '', @filter_submit_options.merge({:html=>{:style => 'display:none'}})
+      = text_spinner('loading...', 'search_filter')
+      = submit_to_remote 'submit', '', @filter_submit_options.merge({html:{style: 'display:none'}})
 

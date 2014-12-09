@@ -25,14 +25,14 @@ end
 =end
 
 class Group < ActiveRecord::Base
+  extend RouteInheritance          # subclasses use /groups routes
 
   # core group extentions
   include GroupExtension::Groups     # group <--> group behavior
   include GroupExtension::Users      # group <--> user behavior
   include GroupExtension::Featured   # this makes this group's pages featureable
   include GroupExtension::Pages      # group <--> page behavior
-
-  attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
+  include GroupExtension::Cache      # only versioning so far
 
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
@@ -46,78 +46,76 @@ class Group < ActiveRecord::Base
 
   # find groups that do not contain the given user
   # used in autocomplete where the users groups are all preloaded
-  scope :without_member, lambda { |user|
+  def self.without_member(user)
     group_ids = user.all_group_ids
     group_ids.any? ?
-      {:conditions => ["NOT groups.id IN (?)", group_ids]} :
-      {}
-  }
+      where("NOT groups.id IN (?)", group_ids) :
+      self
+  end
 
   # finds groups that are of type Group (but not Committee or Network)
-  scope :only_groups, :conditions => 'groups.type IS NULL'
+  scope :only_groups, where('groups.type IS NULL')
 
-  scope(:only_type, lambda do |*args|
+  def self.only_type(*args)
     group_type = args.first.to_s.capitalize
     if group_type == 'Group'
-      {:conditions => 'groups.type IS NULL'}
-    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
-      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
+      only_groups
     else
-      {:conditions => ['groups.type = ?', group_type]}
+      where(type: group_type)
     end
-  end)
+  end
 
-  scope :groups_and_networks, :conditions => "groups.type IS NULL OR groups.type = 'Network'"
+  scope :groups_and_networks,
+    where("groups.type IS NULL OR groups.type = 'Network'")
 
-  scope :all_networks_for, lambda { |user|
-    {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
-  }
+  def self.all_networks_for(user)
+    only_type('Network').
+      where(id: user.all_group_id_cache)
+  end
 
-  scope :alphabetized, lambda { |letter|
-    opts = {
-      # make sure this works with unset full_name as well as mixed case
-      # should work in both mysql and postgres
-      :order => 'LOWER(COALESCE(groups.full_name, groups.name)) ASC'
-    }
-
+  # alphabetized and (optional) limited to +letter+
+  def self.alphabetized(letter)
     if letter == '#'
-      opts[:conditions] = ['(groups.full_name REGEXP ? OR groups.name REGEXP ?)', "^[^a-z]", "^[^a-z]"]
-    elsif not letter.blank?
-      opts[:conditions] = ['(groups.full_name LIKE ? OR groups.name LIKE ?)', "#{letter}%", "#{letter}%"]
+      where('name REGEXP ?', "^[^a-z]").alphabetical_order
+    elsif letter.present?
+      where('name LIKE ?', "#{letter}%").alphabetical_order
+    else
+      alphabetical_order
     end
+  end
 
-    opts
-  }
+  # this is a little mysql magic to get what we want:
+  # We want to sort by display_name.presence || name
+  # if the display_name is NULL
+  #   CONCAT is null and we get name from COALESCE
+  # if the display_name is ""
+  #   CONCAT gives us the name
+  # if the display name is present
+  #   CONCAT gives display_name + name which will sort by display name basically.
+  scope :alphabetical_order, order(<<-EOSQL
+      LOWER(
+        COALESCE(
+          CONCAT(groups.full_name, groups.name),
+          groups.name
+        )
+      ) ASC
+    EOSQL
+   )
 
-  scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_TIME.ago]
-  scope :by_created_at, :order => 'groups.created_at DESC'
+  def self.recent
+    by_created_at.where("groups.created_at > ?", RECENT_TIME.ago)
+  end
 
-  scope :names_only, :select => 'full_name, name'
+  scope :by_created_at, order('groups.created_at DESC')
+
+  scope :names_only, select('full_name, name')
 
   # filters the groups based on their name and full name
   # filter is a sql query string
-  scope :named_like, lambda { |filter|
-    { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
-            filter, filter] }
-  }
-
-  scope :in_location, lambda { |options|
-    country_id = options[:country_id]
-    admin_code_id = options[:state_id]
-    city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
-    end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
-    end
-    { :joins => "join geo_locations as gl",
-      :conditions => conditions
-    }
-  }
+  def self.named_like(filter)
+    where "(groups.name LIKE ? OR groups.full_name LIKE ? )",
+      filter, filter
+  end
 
   ##
   ## GROUP INFORMATION
@@ -142,8 +140,8 @@ class Group < ActiveRecord::Base
   # the code shouldn't call find_by_name directly, because the group name
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
-    return nil unless name.any?
-    Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
+    return nil unless name.present?
+    Group.where(name: name.gsub(' ','+')).first
   end
 
   # keyring_code used by acts_as_locked and pathfinder
@@ -153,7 +151,7 @@ class Group < ActiveRecord::Base
 
   # name stuff
   def to_param; name; end
-  def display_name; full_name.any? ? full_name : name; end
+  def display_name; full_name.presence || name; end
   def short_name; name; end
   def cut_name; name[0..20]; end
   def both_names
@@ -163,7 +161,7 @@ class Group < ActiveRecord::Base
 
   # visual identity
   def banner_style
-    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
+    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
   end
 
   #
@@ -193,16 +191,24 @@ class Group < ActiveRecord::Base
   ## PROFILE
   ##
 
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-  has_many :wikis, :through => :profiles
-  has_one :public_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.stranger' => true}
-  has_one :private_wiki,
-    :through => :profiles,
-    :source => :wiki,
-    :conditions => {'profiles.friend' => true}
+  has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
+  has_many :wikis, through: :profiles
+
+  def public_wiki
+    profiles.where(stranger: true).first.try.wiki
+  end
+
+  def public_wiki=(wiki)
+    profiles.public.wiki = wiki
+  end
+
+  def private_wiki
+    profiles.where(friend: true).first.try.wiki
+  end
+
+  def private_wiki=(wiki)
+    profiles.private.wiki = wiki
+  end
 
   def profile
     self.profiles.visible_by(User.current)
@@ -212,7 +218,7 @@ class Group < ActiveRecord::Base
   ## MENU_ITEMS
   ##
 
-  has_many :menu_items, :dependent => :destroy, :order => :position do
+  has_many :menu_items, dependent: :destroy, order: :position do
 
     def update_order(menu_item_ids)
       menu_item_ids.each_with_index do |id, position|
@@ -226,7 +232,7 @@ class Group < ActiveRecord::Base
 
   # creates a menu item for the group and returns it.
   def add_menu_item(params)
-    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
+    item = MenuItem.create!(params.merge(group_id: self.id, position: self.menu_items.count))
   end
 
 
@@ -241,7 +247,7 @@ class Group < ActiveRecord::Base
 
   public
 
-  belongs_to :avatar, :dependent => :destroy
+  belongs_to :avatar, dependent: :destroy
 
   protected
 
@@ -259,7 +265,12 @@ class Group < ActiveRecord::Base
   def destroy_by(user)
     # needed for the activity
     self.destroyed_by = user
-    self.children.each {|committee| committee.destroyed_by = user}
+    # first we remove all the children in a clean way.
+    self.children.each {|committee| committee.destroy_by(user)}
+    # then we make sure they are not cached anymore so
+    # dependent: destroy does not get triggered.
+    # It would try to .destroy them which is a protected method.
+    self.reload
     self.destroy
   end
 
@@ -292,22 +303,6 @@ class Group < ActiveRecord::Base
   ##
   ## PERMISSIONS
   ##
-
-  public
-
-  def may_be_pestered_by?(user)
-    has_access?(:pester, user)
-  end
-
-  def may_be_pestered_by!(user)
-    if has_access?(:pester, user)
-      return true
-    else
-      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
-    end
-  end
-
-  protected
 
   #
   # These callbacks are responsible for setting up and tearing down
@@ -348,6 +343,17 @@ class Group < ActiveRecord::Base
     template_data[section]
   end
 
+
+  # migrate permissions from pre-CastleGates databases to CastleGates.
+  # Called from cg:upgrade:migrate_group_permissions task.
+  def migrate_permissions!
+    print '.' if id % 10 == 0
+    # get holders
+    public_holder = CastleGates::Holder[:public]
+    public_gates = profiles.public.to_gates
+    set_access! public_holder => public_gates
+  end
+
   protected
 
   after_save :update_name_copies
@@ -367,4 +373,5 @@ class Group < ActiveRecord::Base
     end
   end
 
+  acts_as_extensible
 end

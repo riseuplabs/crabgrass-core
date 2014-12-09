@@ -1,9 +1,9 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require_relative '../../test_helper'
 
 class Groups::GroupsControllerTest < ActionController::TestCase
 
   def setup
-    @user = User.make
+    @user = FactoryGirl.create(:user)
   end
 
   def test_new_group_requires_login
@@ -17,13 +17,50 @@ class Groups::GroupsControllerTest < ActionController::TestCase
       get :new
     end
     assert_response :success
+    assert_template :choose_group_type
+  end
+
+  def test_new_committee
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'committee'
+    end
+    assert_response :success
+    assert_template :choose_parent_group
+  end
+
+  def test_new_council
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'council'
+    end
+    assert_response :success
+    assert_template :choose_parent_group
+  end
+
+  def test_new_group
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'group'
+    end
+    assert_response :success
+    assert_template 'groups/structures/_new_form'
+  end
+
+  def test_new_network
+    login_as @user
+    assert_permission :may_create_group? do
+      get :new, type: 'network'
+    end
+    assert_response :success
+    assert_template 'groups/structures/_new_form'
   end
 
   def test_create_group
     login_as @user
     assert_difference 'Group.count' do
       assert_permission :may_create_group? do
-        post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!"}
+        post :create, group: {name: 'test-create-group', full_name: "Group for Testing Group Creation!"}
       end
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
@@ -34,23 +71,46 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   def test_create_no_group_without_name
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, :group => {:name => ''}
+      post :create, group: {name: ''}
       assert_error_message
     end
   end
 
   def test_create_no_group_with_duplicate_name
-    Group.make(:name => 'flowers')
+    FactoryGirl.create(:group, name: 'flowers')
     login_as @user
     assert_no_difference 'Group.count' do
-      post :create, :group => {:name => 'flowers'}
+      post :create, group: {name: 'flowers'}
+      assert_error_message
+    end
+  end
+
+  def test_create_no_network_with_network_member
+    group = FactoryGirl.create(:group, name: 'pine')
+    group.add_user! @user
+    login_as @user
+    assert_difference 'Network.count' do
+      post :create, type: 'network',
+        group: { name: 'trees'},
+        member_group_name: group.name
+    end
+  end
+
+  def test_create_no_network_with_network_member
+    network = FactoryGirl.create(:group, name: 'pine')
+    network.add_user! @user
+    login_as @user
+    assert_no_difference 'Group.count' do
+      post :create, type: 'network',
+        group: { name: 'trees'},
+        member_group_name: network.name
       assert_error_message
     end
   end
 
 #  def test_destroy_group
-#    user = User.make
-#    group = Group.make
+#    user  = FactoryGirl.create(:user)
+#    group  = FactoryGirl.create(:group)
 #    group.add_user!(user)
 #    login_as user
 #    assert_difference 'Group.count', -1 do

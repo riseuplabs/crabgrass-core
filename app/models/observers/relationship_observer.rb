@@ -19,9 +19,9 @@ class RelationshipObserver < ActiveRecord::Observer
       if activity = FriendActivity.find_twin(relationship.user, relationship.contact)
         key = activity.key
       else
-        key = rand(Time.now)
+        key = rand(Time.now.to_i)
       end
-      FriendActivity.create!(:user => relationship.user, :other_user => relationship.contact, :key => key)
+      FriendActivity.create!(user: relationship.user, other_user: relationship.contact, key: key)
     end
   end
 

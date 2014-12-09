@@ -7,7 +7,10 @@ module Groups::BasePermission
 
   # used from the home controller
   def may_show_group?(group = @group)
-    current_user.may? :view, group
+    return true if current_user.may? :view, group
+    # let's make sure this looks like a failing dispatch
+    @group = nil
+    raise_not_found(:page.t)
   end
 
   def may_edit_group?(group = @group)

@@ -3,27 +3,22 @@ require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 class WikiPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :wikis
 
-  def setup
-    #HTMLDiff.log_to_stdout = false # set to true for debugging
-  end
 
   def test_show
     login_as :orange
-
     # existing page
-    get :show, :page_id => pages(:wiki).id
+    get :show, id: pages(:wiki)
     assert_response :success
   end
 
   def test_deny_show_without_login
     # existing page
-    get :show, :page_id => pages(:wiki).id
-    assert_response :redirect
-    assert_redirected_to :controller => :session, :action => :login
+    get :show, id: pages(:wiki)
+    assert_login_required
   end
 
   def test_show_without_login
-    get :show, :page_id => pages(:public_wiki).id
+    get :show, id: pages(:public_wiki)
     assert_response :success
   end
 
@@ -48,14 +43,6 @@ last seen date for this to work.
     assert_not_nil assigns(:last_seen), 'last_seen should be set, since the page has changed'
   end
 =end
-
-  def test_print
-    login_as :orange
-
-    get :print, :page_id => pages(:wiki).id
-    assert_response :success
-#    assert_template 'print'
-  end
 
   def test_preview
     # TODO:  write action and test

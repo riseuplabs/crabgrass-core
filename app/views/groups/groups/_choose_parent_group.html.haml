@@ -1,7 +1,7 @@
 - content_for :title do
-  %h1= :create_a_new_thing.t(:thing => group_type.t.downcase)
+  %h1= :create_a_new_thing.t(thing: group_type.t.downcase)
 
-.p.icon.medium{:class => "#{group_type}_48"}
+.p.icon.medium{class: "#{group_type}_48"}
   = "#{group_type}_description".to_sym.t
 
 .p
@@ -18,4 +18,4 @@
         - url = new_group_committee_path(group)
       - elsif group_type == :council
         - url = new_group_council_path(group)
-      .p= link_to_group(group, :url => url, :avatar => 'xsmall')
+      .p= link_to_group(group, url: url, avatar: 'xsmall')

@@ -13,22 +13,22 @@ module Pages::SidebarHelper
 
   def link_to_user_participation(upart)
     icon = case upart.access_sym
-      when :admin : 'tiny_wrench_16'
-      when :edit : 'tiny_pencil_16'
-      when :view : ''
+      when :admin then 'tiny_wrench_16'
+      when :edit then 'tiny_pencil_16'
+      when :view then ''
     end
-    label = content_tag :span, upart.user.display_name, :class => icon
-    link_to_entity(upart.user, :avatar => 'xsmall', :label => label)
+    label = content_tag :span, upart.user.display_name, class: icon
+    link_to_entity(upart.user, avatar: 'xsmall', label: label)
   end
 
   def link_to_group_participation(gpart)
     icon = case gpart.access_sym
-      when :admin : 'tiny_wrench_16'
-      when :edit : 'tiny_pencil_16'
-      when :view : ''
+      when :admin then 'tiny_wrench_16'
+      when :edit then 'tiny_pencil_16'
+      when :view then ''
     end
-    label = content_tag :span, gpart.group.display_name, :class => icon
-    link_to_entity(gpart.group, :avatar => 'xsmall', :label => label)
+    label = content_tag :span, gpart.group.display_name, class: icon
+    link_to_entity(gpart.group, avatar: 'xsmall', label: label)
   end
 
   ##
@@ -39,8 +39,8 @@ module Pages::SidebarHelper
     icon = checked ? 'check_on' : 'check_off'
     link_to_remote(
       text,
-      {:url => url, :method => options[:method], :complete => ''},
-      {:icon => icon, :id => options[:id], :title => options[:title]}
+      {url: url, method: options[:method], complete: ''},
+      {icon: icon, id: options[:id], title: options[:title]}
     )
   end
 
@@ -101,7 +101,8 @@ module Pages::SidebarHelper
       end
       url = page_participations_path(@page, :star => add.inspect)
       content_tag :li, :id => 'star_li' do
-        link_to_remote(label, {:url => url, :method => 'post'}, {:icon => icon})
+        link_to_remote label, {url: url, method: 'post'},
+          {id: 'star', icon: icon}
       end
     end
   end
@@ -146,9 +147,9 @@ module Pages::SidebarHelper
 
   def page_attachments
     if @page.assets.any?
-      @page.assets.collect do |asset|
+      safe_join @page.assets.collect { |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
-      end
+      }
       #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_edit_page?
       ''
@@ -165,7 +166,7 @@ module Pages::SidebarHelper
   # the function, when called, will remove itself.
   #
   def refresh_sidebar_on_close
-    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(:url => page_sidebar_path(@page), :method => :get))
+    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(url: page_sidebar_path(@page), method: :get))
   end
 
   #
@@ -175,7 +176,7 @@ module Pages::SidebarHelper
   def popup_line(options)
     options[:after_hide] =
       "if (typeof(afterHide) != 'undefined' || afterHide != null) { afterHide(); }"
-    content_tag :li, :id => options.delete(:id) do
+    content_tag :li, id: options.delete(:id) do
       link_to_modal(
         options.delete(:label),
         options
@@ -184,23 +185,23 @@ module Pages::SidebarHelper
   end
 
   def edit_attachments_line
-    if may_show_page?
-      popup_line :name => 'assets',
-        :label => :edit_attachments_link.t,
-        :icon => 'attach',
-        :title => :edit_attachments.t,
-        :url => page_assets_path(@page),
-        :after_load => 'initAjaxUpload();'
+    if may_edit_page?
+      popup_line name: 'assets',
+        label: :edit_attachments_link.t,
+        icon: 'attach',
+        title: :edit_attachments.t,
+        url: page_assets_path(@page),
+        after_load: 'initAjaxUpload();'
     end
   end
 
   def edit_tags_line
     if may_edit_page?
       popup_line(
-        :id => 'tag_li',
-        :icon => 'tag',
-        :label => I18n.t(:edit_tags_link),
-        :url => page_tags_path(@page)
+        id: 'tag_li',
+        icon: 'tag',
+        label: I18n.t(:edit_tags_link),
+        url: page_tags_path(@page)
       )
     end
   end
@@ -208,10 +209,10 @@ module Pages::SidebarHelper
   def share_line
     if may_admin_page?
       popup_line(
-        :id => 'share_li',
-        :icon => 'group',
-        :label => I18n.t(:share_page_link, :page_class => :page.t),
-        :url => page_share_path(@page, :mode => 'share')
+        id: 'share_li',
+        icon: 'group',
+        label: I18n.t(:share_page_link, page_class: :page.t),
+        url: page_share_path(@page, mode: 'share')
       )
     end
   end
@@ -219,10 +220,10 @@ module Pages::SidebarHelper
   def notify_line
     if may_edit_page?
       popup_line(
-        :id => 'notify_li',
-        :icon => 'whistle',
-        :label => I18n.t(:notify_page_link),
-        :url => page_share_path(@page, :mode => 'notify')
+        id: 'notify_li',
+        icon: 'whistle',
+        label: I18n.t(:notify_page_link),
+        url: page_share_path(@page, mode: 'notify')
       )
     end
   end
@@ -230,10 +231,10 @@ module Pages::SidebarHelper
   def delete_line
     if may_admin_page?
       popup_line(
-        :id => 'trash_li',
-        :icon => 'trash',
-        :label => I18n.t(:delete_page_link, :page_class => :page.t),
-        :url => edit_page_trash_path(@page)
+        id: 'trash_li',
+        icon: 'trash',
+        label: I18n.t(:delete_page_link, page_class: :page.t),
+        url: edit_page_trash_path(@page)
       )
     end
   end
@@ -241,10 +242,10 @@ module Pages::SidebarHelper
   def details_line
     if may_edit_page?
       popup_line(
-        :id => 'details_li',
-        :icon => 'page_admin',
-        :label => I18n.t(:page_details_link, :page_class => :page.t),
-        :url => page_details_path(@page)
+        id: 'details_li',
+        icon: 'page_admin',
+        label: I18n.t(:page_details_link, page_class: :page.t),
+        url: page_details_path(@page)
       )
     end
   end

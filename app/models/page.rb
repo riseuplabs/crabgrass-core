@@ -63,6 +63,8 @@ schema
 =end
 
 class Page < ActiveRecord::Base
+  extend RouteInheritance          # subclasses use /pages routes
+
   include PageExtension::Users     # page <> users relationship
   include PageExtension::Groups    # page <> group relationship
   include PageExtension::Assets    # page <> asset relationship
@@ -78,34 +80,101 @@ class Page < ActiveRecord::Base
   self.record_timestamps = false
   before_save :save_timestamps
 
-  attr_protected :owner
   acts_as_path_findable
 
   ##
   ## NAMES SCOPES
   ##
 
-  scope :only_public, :conditions => {:public => true}
-  scope :only_images, :conditions => {:is_image => true}
-  scope :only_videos, :conditions => {:is_video => true}
+  scope :deleted, where(flow: FLOW[:deleted])
+  scope :not_deleted, where("pages.flow != %s", FLOW[:deleted])
+  scope :only_public, where(public: true)
+  scope :only_images, where(is_image: true)
+  scope :only_videos, where(is_video: true)
+  scope :pending, where(resolved: false).order(:happens_at)
 
   ##
   ## PAGE NAMING
   ##
+
+  # flexible finder. Finds pages by id or param
+  def self.find(*args)
+    if args.count != 1 || args.first.to_s =~ /^\d+$/
+      super
+    else
+      find_by_param(args.first)
+    end
+  end
+
+  # find pages by id attached to a string or by name
+  def self.find_by_param(param)
+    # param contains id
+    if param =~ /[ +](\d+)$/
+      find($~[1])
+    else
+      find_by_name(param)
+    end
+  end
 
   validate :unique_name_in_context
   def unique_name_in_context
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       context = self.owner || self.created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
-    elsif name_changed? and name.any?
+    elsif name_changed? and name.present?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
 
+  # string identifying a page within its context
   def name_url
-    name.any? ? name : friendly_url
+    name.presence || friendly_url
   end
+
+  # unique string for a page - including the id
+  def friendly_url
+    # strange corner case here: during page creation we set the id to 0
+    # in order to get a meaningful page_share_path.
+    # The title is still blank at that point.
+    return id if title.blank?
+    s = title.nameize
+    # limit name length, and remove any half-cut trailing word
+    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42
+    "#{s}+#{id}"
+  end
+  alias_method :to_param, :friendly_url
+  # used for caching access
+  alias_method :to_s, :friendly_url
+
+  # using only knowledge of this page, returns
+  # best guess uri string, sans protocol/host/port.
+  # ie /rainbows/what-a-fine-page+5234
+  def uri
+    owner_name.present? ? [owner_name, name_url].path : ['page', friendly_url].path
+  end
+
+  #
+  # returns a string that is guaranteed to change if the page is updated.
+  # used for caching.
+  #
+  def update_hash
+    self.updated_at.utc.hash.to_s(36)
+  end
+
+  # returns true if self's unique page name is already in use by the same owner.
+  def name_taken?
+    return false unless self.name.present?
+    if self.owner
+      pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
+    else
+      pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
+    end
+    pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
+  end
+
+  ##
+  ## Livecycle
+  ##
 
   def flow= flow
     if flow.kind_of?(Integer) || flow.nil?
@@ -123,7 +192,7 @@ class Page < ActiveRecord::Base
   end
 
   def undelete
-    write_attribute(:flow, nil)
+    write_attribute(:flow, FLOW[:normal])
     self.save
   end
 
@@ -131,30 +200,9 @@ class Page < ActiveRecord::Base
     flow == FLOW[:deleted]
   end
 
-  def friendly_url
-    s = title.nameize
-    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
-    "#{s}+#{id}"
+  def deleted_changed?
+    flow_changed? && [flow_was, flow].include?(FLOW[:deleted])
   end
-
-  # using only knowledge of this page, returns
-  # best guess uri string, sans protocol/host/port.
-  # ie /rainbows/what-a-fine-page+5234
-  def uri
-    owner_name.any? ? [owner_name, name_url].path : ['page', friendly_url].path
-  end
-
-  # returns true if self's unique page name is already in use by the same owner.
-  def name_taken?
-    return false unless self.name.any?
-    if self.owner
-      pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
-    else
-      pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
-    end
-    pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
-  end
-
   ##
   ## TAGGING
   ##
@@ -180,7 +228,7 @@ class Page < ActiveRecord::Base
   ## RELATIONSHIP TO PAGE DATA
   ##
 
-  belongs_to :data, :polymorphic => true, :dependent => :destroy
+  belongs_to :data, polymorphic: true, dependent: :destroy
 
   validates_presence_of :title
   validates_associated :data
@@ -294,7 +342,7 @@ class Page < ActiveRecord::Base
   public
 
   # every page is owned by a person or group.
-  belongs_to :owner, :polymorphic => true
+  belongs_to :owner, polymorphic: true
 
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
@@ -349,10 +397,10 @@ class Page < ActiveRecord::Base
       elsif entity.is_a? User
         self.owner_type = "User"
       else
-        raise Exception.new('must be user or group')
+        raise 'must be user or group'
       end
       part = most_privileged_participation_for(entity)
-      self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+      self.add(entity, access: :admin) unless part and part.access == ACCESS[:admin]
       return self.owner
     end
   end
@@ -383,39 +431,6 @@ class Page < ActiveRecord::Base
     entity.is_a?(User) ? participation_for_user(entity) : participation_for_group(entity)
   end
 
-  protected
-
-  before_save :ensure_owner
-  def ensure_owner
-    if Conf.ensure_page_owner?
-      if owner_id
-        ## do nothing!
-      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-        self.owner = gp.group
-      elsif self.created_by
-        self.owner = self.created_by
-      else
-        # in real life, we should not get here. but in tests, we make pages a lot
-        # that don't have a group or user.
-      end
-    end
-    return true
-  end
-
-  ##
-  ## DENORMALIZATION
-  ##
-
-  protected
-
-  # denormalize hack follows:
-  before_save :denormalize
-  def denormalize
-    if updated_by_id_changed?
-      self.updated_by_login = (updated_by.login if updated_by)
-    end
-    true
-  end
 
   ##
   ## MISC. HELPERS
@@ -442,4 +457,6 @@ class Page < ActiveRecord::Base
   def save_timestamps
     self.created_at = self.updated_at = Time.now if self.new_record?
   end
+
+  acts_as_extensible
 end

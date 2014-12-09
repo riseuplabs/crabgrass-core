@@ -1,21 +1,5 @@
 require 'yaml'
 
-# this Hash hack taken from:
-# http://snippets.dzone.com/posts/show/5811
-class Hash
-  # Replacing the to_yaml function so it'll serialize hashes sorted (by their keys)
-  # Original function is in /usr/lib/ruby/1.8/yaml/rubytypes.rb
-  def to_sorted_yaml( opts = {} )
-    YAML::quick_emit( object_id, opts ) do |out|
-      out.map( taguri, to_yaml_style ) do |map|
-        sort.each do |k, v|   # <-- here's my addition (the 'sort')
-          map.add( k, v )
-        end
-      end
-    end
-  end
-end
-
 #
 # For thinking_sphinx / sphinxsearch to index pages in crabgrass, we need to have
 # a page_terms table with an entry for each page.  This rake task makes sure that
@@ -28,11 +12,12 @@ end
 namespace :cg do
   namespace :test do
     desc "refreshes the auto-generated fixtures"
-    task :update_fixtures => :environment do
+    task update_fixtures: :environment do
       #
       # load existing fixtures
       #
       Rake::Task["db:fixtures:load"].invoke
+      PageTerms.delete_all
 
       #
       # regenerate page terms in the database
@@ -50,12 +35,12 @@ namespace :cg do
       ActiveRecord::Base.establish_connection
       tables.each do |table_name|
         i = "000"
-        File.open("#{RAILS_ROOT}/test/fixtures/#{table_name}.yml", 'w') do |file|
+        File.open(Rails.root + "test/fixtures/#{table_name}.yml", 'w') do |file|
           data = ActiveRecord::Base.connection.select_all(sql % table_name)
           file.write data.inject({}) { |hash, record|
             hash["#{table_name}_#{i.succ!}"] = record
             hash
-          }.to_sorted_yaml
+          }.to_yaml
         end
       end
 

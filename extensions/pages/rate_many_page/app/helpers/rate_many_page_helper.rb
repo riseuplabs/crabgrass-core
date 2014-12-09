@@ -13,24 +13,20 @@ module RateManyPageHelper
 
   # value a string, one of 'good', 'ok', 'bad', 'no'
   def button_row(possible, vote, value)
-    voters_list = @allvotes[value].to_sentence if @allvotes[value]
     button = radio_button_tag(
       "vote[#{possible.id}]",   # name
       map(value),               # value
       value == map(vote.value), # checked?
-      :disabled => !current_user.may?(:edit, @page),
-      :onclick => remote_function(
-        :url => page_xurl(@page, :action => 'vote_one', :id => possible.id, :value => map(value)),
-        :loading => show_spinner("possible_%s" % possible.id)
+      disabled: !current_user.may?(:edit, @page),
+      onclick: remote_function(
+        url: rate_many_possible_url(possible, page_id: @page, value: map(value)),
+        method: :put,
+        loading: show_spinner("possible_%s" % possible.id)
        )
     )
 
-    translated_value = I18n.t("vote_#{value}".to_sym)
-    %Q+
-    <tr>
-      <td><label class='not_handle'>#{button}#{translated_value}</label></td>
-      <td><span>&mdash;</span> #{voters_list}</td>
-    </tr>
-    +
+    render 'rate_many_page/button', button: button,
+      value: value,
+      id: "vote_#{possible.id}_#{map(value)}"
   end
 end

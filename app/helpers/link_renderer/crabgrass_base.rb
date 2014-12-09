@@ -14,7 +14,7 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
       li_class = 'active'
     end
     attributes[:class] = nil
-    @template.content_tag(:li, :class => li_class) do
+    @template.content_tag(:li, class: li_class) do
       @template.link_to(text, '#', attributes)
     end
   end
@@ -34,7 +34,7 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
     if page && class_names !~ /current/
       page_link page, text
     else
-      page_span page, text, :class => class_names
+      page_span page, text, class: class_names
     end
   end
 
@@ -60,7 +60,7 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
         ''
       end
     end.join(@options[:separator]).html_safe
-    @template.content_tag(:div, :class => @options[:class]) do
+    @template.content_tag(:div, class: @options[:class]) do
       (html_before + @template.content_tag(:ul) do
         links_html
       end + html_after).html_safe
@@ -76,7 +76,11 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
   end
 
   def url_for(page)
-    "?#{param_name}=#{page}"
+    if @options[:params]
+      @template.url_for(@options[:params].merge({param_name => page}))
+    else
+      "?#{param_name}=#{page}"
+    end
   end
 
 end

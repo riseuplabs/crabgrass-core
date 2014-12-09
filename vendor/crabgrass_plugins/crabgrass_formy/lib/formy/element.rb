@@ -9,15 +9,16 @@ module Formy
   class Element
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::JavaScriptHelper
+    #include ActionView::Helpers::UrlHelper
 
     def initialize(form,options={})
       @base = form
-      @options = options
-      if @options[:hide]
-        @options[:style] = ['display:none;', @options[:style]].combine
+      @opts = options
+      if @opts[:hide]
+        @opts[:style] = ['display:none;', @opts[:style]].combine
       end
-      if @options[:disabled]
-        @options[:class] = ['disabled', @options[:class]].combine
+      if @opts[:disabled]
+        @opts[:class] = ['disabled', @opts[:class]].combine
       end
       @elements = []                     # sub elements held by this element
       @element_count = 0
@@ -43,13 +44,13 @@ module Formy
     end
 
     def open
-      puts "<!-- begin #{self.classname} -->" if @options[:annotate]
+      puts "<!-- begin #{self.classname} -->" if @opts[:annotate]
       push
     end
 
     def close
       pop
-      puts "<!-- end #{self.classname} -->" if @options[:annotate]
+      puts "<!-- end #{self.classname} -->" if @opts[:annotate]
     end
 
     def classname
@@ -93,7 +94,7 @@ module Formy
     end
 
     def tag(element_tag, value, options={})
-      content_tag(element_tag, value, {:style => @options[:style], :class => @options[:class], :id => @options[:id]})
+      content_tag(element_tag, value, {style: @opts[:style], class: @opts[:class], id: @opts[:id]})
     end
 
     def self.sub_element(*class_names)
@@ -146,20 +147,6 @@ module Formy
     # work around rails 2.3.5 to_json circular reference problem
     def to_json
       self.inspect
-    end
-
-    def method_missing(method_name, *args, &block)
-      word = method_name.id2name
-      #e = @current_element.last
-      #return unless e
-      e = self
-      unless e.respond_to? word
-        @base.puts "<!-- FORM ERROR: '" + e.classname + "' does not have a '#{word}' -->"
-        return
-      end
-      return e.send(word,args,&block) if block_given?
-      return e.send(word,args) if args
-      return e.send(word)
     end
 
   end

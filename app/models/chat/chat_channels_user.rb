@@ -2,7 +2,7 @@ class ChatChannelsUser < ActiveRecord::Base
   set_table_name 'channels_users'
 
   belongs_to :chat_channel
-  belongs_to :channel, :class_name => 'ChatChannel', :foreign_key => 'channel_id'
+  belongs_to :channel, class_name: 'ChatChannel', foreign_key: 'channel_id'
   belongs_to :user
 
   validates_presence_of :channel, :user
@@ -12,7 +12,7 @@ class ChatChannelsUser < ActiveRecord::Base
   end
 
   def join_message
-    channel.messages.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", user.id])
+    channel.messages.order("id DESC").where("sender_id = ?", user.id).first
   end
 
   def record_user_action(action = nil)
