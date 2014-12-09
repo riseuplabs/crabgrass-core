@@ -131,6 +131,11 @@ module Common::Ui::JavascriptHelper
     "$('%s').toggle();".html_safe % id
   end
 
+  def remove(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').remove();".html_safe % id
+  end
+
   def hide_spinner(id)
     "$('%s').hide();" % spinner_id(id)
   end
