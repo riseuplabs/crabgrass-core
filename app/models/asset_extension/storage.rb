@@ -109,17 +109,14 @@ module AssetExtension # :nodoc:
     # eg /assets/55/myfile.jpg
     # or /assets/55/versions/1/myfile.jpg
     def url
-      path(public_url_path, path_id, version_path, url_escape(filename))
+      path public_url_path, path_id, version_path, CGI.escape(filename)
     end
 
     # eg /assets/55/myfile~small.jpg
     # or /assets/55/versions/1/myfile~small.jpg
     def thumbnail_url(thumbnail_name)
-      path(public_url_path, path_id, version_path, url_escape(thumbnail_filename(thumbnail_name)))
-    end
-
-    def url_escape(str)
-      str.gsub(/[^a-zA-Z0-9_\-.]/n){ sprintf("%%%02X", $&.unpack("C")[0]) }
+      path public_url_path, path_id, version_path,
+        CGI.escape(thumbnail_filename(thumbnail_name))
     end
 
     # return a list of all the files that are associated with this asset
