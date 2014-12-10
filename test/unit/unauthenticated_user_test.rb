@@ -6,12 +6,10 @@ class UnauthenticatedUserTest < ActiveSupport::TestCase
     @user = UnauthenticatedUser.new
   end
 
-  def test_should_be_able_to_view_public_page
-    assert @user.may?(:view, Page.new(public: true))
-  end
-
+  # User.may? checks for access through participations.
+  # If the page is public should be checked separately
   def test_should_not_be_able_to_view_public_page
-    assert !@user.may?(:view, Page.new(public: false))
+    assert !@user.may?(:view, Page.new(public: true))
   end
 
   def test_method_missing_raises_permission_denied

@@ -7,7 +7,7 @@ class Pages::PostsController < ApplicationController
   helper 'pages/post'
 
   prepend_before_filter :fetch_data
-  before_filter :login_required
+  before_filter :login_required, except: :show
   before_filter :authorization_required
   guard :may_ALIAS_post?
   guard show: :may_show_page?
