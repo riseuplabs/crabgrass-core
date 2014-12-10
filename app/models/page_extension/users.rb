@@ -106,6 +106,7 @@ module PageExtension::Users
   # timestamp of the last visit of a user
   #
   def last_visit_of(user)
+    return nil unless user.real?
     user_participations.where(user_id: user).first.try.viewed_at
   end
 
