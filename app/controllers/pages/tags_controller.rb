@@ -1,6 +1,5 @@
 class Pages::TagsController < Pages::SidebarsController
 
-  permissions 'pages'
   helper 'pages/tags'
 
   def index

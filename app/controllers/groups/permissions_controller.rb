@@ -1,6 +1,5 @@
 class Groups::PermissionsController < Groups::BaseController
 
-  before_filter :login_required
   helper 'castle_gates'
 
   def index

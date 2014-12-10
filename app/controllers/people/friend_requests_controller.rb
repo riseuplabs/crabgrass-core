@@ -2,9 +2,9 @@ class People::FriendRequestsController < People::BaseController
 
   before_filter :login_required
 
-  guard create: may_request_contact?,
-    new: may_request_contact?,
-    destroy: may_remove_contact?
+  guard create: :may_request_contact?,
+    new: :may_request_contact?,
+    destroy: :may_remove_contact?
 
   def new
   end
