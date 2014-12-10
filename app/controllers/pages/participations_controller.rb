@@ -22,6 +22,7 @@ class Pages::ParticipationsController < Pages::SidebarsController
     elsif params[:star]
       star
     elsif params[:access]
+      raise_denied unless may_admin_page?
       access
     end
   end
