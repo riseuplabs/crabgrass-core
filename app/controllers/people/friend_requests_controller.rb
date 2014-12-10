@@ -1,5 +1,11 @@
 class People::FriendRequestsController < People::BaseController
 
+  before_filter :login_required
+
+  guard create: may_request_contact?,
+    new: may_request_contact?,
+    destroy: may_remove_contact?
+
   def new
   end
 
@@ -22,17 +28,6 @@ class People::FriendRequestsController < People::BaseController
     current_user.remove_contact!(@user)
     success
     redirect_to entity_url(@user)
-  end
-
-  protected
-
-  def authorized?
-    if action?('create', 'new')
-      may_request_contact?
-    elsif action?('destroy')
-      logged_in? &&
-        current_user.friend_of?(@user)
-    end
   end
 
 end
