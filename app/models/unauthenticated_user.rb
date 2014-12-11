@@ -14,8 +14,6 @@ class UnauthenticatedUser
     # nothing but viewing for now.
     return false unless access == :view
     case thing
-    when Page
-      access == :view and thing.public?
     when Group, User
       thing.has_access?(access, self)
     else

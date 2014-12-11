@@ -143,7 +143,6 @@ module UserExtension::Pages
   #  :all_resolved -- everyone's participation is resolved.
   #
   def updated(page, options={})
-    raise PermissionDenied.new unless self.may?(:edit, page)
     now = Time.now
 
     unless page.contributor?(self)

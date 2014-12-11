@@ -19,4 +19,8 @@ module PeoplePermission
       current_user != @user
   end
 
+  def may_remove_contact?
+    current_user.friend_of?(@user)
+  end
+
 end
