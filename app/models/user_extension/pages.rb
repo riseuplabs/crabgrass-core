@@ -143,6 +143,7 @@ module UserExtension::Pages
   #  :all_resolved -- everyone's participation is resolved.
   #
   def updated(page, options={})
+    return if page.blank?
     now = Time.now
 
     unless page.contributor?(self)

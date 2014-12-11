@@ -32,6 +32,7 @@ class AssetsController < ApplicationController
 
   def destroy
     @asset.destroy
+    current_user.updated(@asset.page)
     respond_to do |format|
       format.js {render text: 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
