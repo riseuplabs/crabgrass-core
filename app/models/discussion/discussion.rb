@@ -143,8 +143,11 @@ class Discussion < ActiveRecord::Base
       last_post: post,
       replied_by_id: post.user_id,
       replied_at: post.updated_at )
-    PrivateMessageNotice.create!(user: post.discussion.user_talking_to(post.user), message: post.body_html, from: post.user) if post.private?
-
+    if post.private?
+      PrivateMessageNotice.create! from: post.user,
+        user: post.discussion.user_talking_to(post.user),
+        message: post.body_html
+    end
   end
 
   #

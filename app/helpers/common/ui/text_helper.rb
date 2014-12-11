@@ -49,6 +49,7 @@ module Common::Ui::TextHelper
     truncate(text, length: length, omission: omission + link)
   end
 
+
 #  def linked_activity_description(activity)
 #    description = activity.try.safe_description(self)
 #    expand_links(description)
