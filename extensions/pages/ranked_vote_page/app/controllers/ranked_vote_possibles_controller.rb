@@ -10,6 +10,7 @@ class RankedVotePossiblesController < Pages::BaseController
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
     @poll.vote(current_user, sort_params)
+    current_user.updated(@page)
     find_possibles
   rescue ActionController::ParameterMissing
     render nothing: true
@@ -19,6 +20,7 @@ class RankedVotePossiblesController < Pages::BaseController
     @possible = @poll.possibles.create possible_params
     if @poll.valid? and @possible.valid?
       @page.unresolve
+      current_user.updated(@page)
     else
       @poll.possibles.delete(@possible)
       warning @possible unless @possible.valid?
@@ -31,10 +33,12 @@ class RankedVotePossiblesController < Pages::BaseController
 
   def update
     @possible.update_attributes possible_params.permit(:description)
+    current_user.updated(@page)
   end
 
   def destroy
     @possible.destroy
+    current_user.updated(@page)
     render nothing: true
   end
 
