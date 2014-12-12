@@ -1,7 +1,7 @@
 class RequestNotice < Notice
 
   alias_attr :request, :noticable
-  
+
   class << self
     alias_method :find_all_by_request, :find_all_by_noticable
     alias_method :destroy_all_by_request, :destroy_all_by_noticable
@@ -23,7 +23,7 @@ class RequestNotice < Notice
         else
           create!(request: request, user: request.recipient)
         end
-      end  
+      end
     end
 
   end
@@ -31,7 +31,7 @@ class RequestNotice < Notice
   def button_text
     :show_thing.t(thing: :request.t)
   end
- 
+
   def display_label
     :request.t
   end
@@ -53,7 +53,9 @@ class RequestNotice < Notice
 
   before_create :set_avatar
   def set_avatar
-    self.avatar_id = request.icon_entity.avatar_id if request.icon_entity
+    # we always display the person issuing the request.
+    # That way it matches the message notification
+    self.avatar_id = request.created_by.avatar_id
   end
 
 end
