@@ -29,7 +29,7 @@ class PrivateMessageNotice < Notice
     true
   end
 
-  def body_html
+  def display_body
     data[:message]
   end
 
