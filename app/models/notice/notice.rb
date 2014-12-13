@@ -102,6 +102,10 @@ class Notice < ActiveRecord::Base
         I18n.t(data[attr], count: 1)
       end
     end
+  rescue
+    Rails.logger.error "Invalid attribute #{attr} in Notice ##{id}."
+    Rails.logger.debug "value: " + data[attr].inspect
+    raise
   end
 
 end
