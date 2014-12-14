@@ -200,9 +200,9 @@ class Profile < ActiveRecord::Base
       end || [] rescue []
     end
 
-    if params['picture']
-      picture = params.delete('picture')
-      params['picture'] = Picture.new(picture) if picture['upload']
+    picture_params = params.delete('picture')
+    if picture_params && picture_params['upload']
+      params['picture'] = Picture.new(picture_params)
     end
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
