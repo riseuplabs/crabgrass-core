@@ -5,7 +5,7 @@ class AssetsControllerTest < ActionController::TestCase
   def test_get_permissions
     ImageAsset.any_instance.stubs(:public?).returns(false)
     asset = FactoryGirl.create :image_asset
-    get :show, id: asset.id, path: asset.filename
+    get :show, id: asset.id, path: asset.basename
     assert_login_required
   end
 
@@ -14,9 +14,9 @@ class AssetsControllerTest < ActionController::TestCase
     asset = FactoryGirl.create :image_asset
     @controller.stubs(:authorized?).returns(true)
     @controller.expects(:private_filename).returns(asset.private_filename)
-    get :show, id: asset.id, path: asset.filename
+    get :show, id: asset.id, path: asset.basename
     @controller.expects(:private_filename).returns(thumbnail(asset.private_filename))
-    get :show, id: asset.id, path: thumbnail(asset.filename)
+    get :show, id: asset.id, path: thumbnail(asset.basename)
   end
 
   def test_destroy
@@ -34,7 +34,8 @@ class AssetsControllerTest < ActionController::TestCase
   private
 
   def thumbnail(path)
-    path.sub('.jpg', '_small.jpg')
+    ext = File.extname(path)
+    path.sub(/#{ext}$/, "_small#{ext}")
   end
 
 end
