@@ -119,7 +119,7 @@ class Wiki < ActiveRecord::Base
   # will render if not up to date
   def body_html
     update_body_html_and_structure
-    read_attribute(:body_html).html_safe
+    read_attribute(:body_html).try.html_safe
   end
 
   # will calculate structure if not up to date
@@ -289,7 +289,7 @@ class Wiki < ActiveRecord::Base
     end
 
     def body_html
-      read_attribute(:body_html).try :html_safe
+      read_attribute(:body_html).try.html_safe
     end
 
   end

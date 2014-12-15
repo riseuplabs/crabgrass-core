@@ -6,7 +6,7 @@
 .task{id: "#{dom_id(task,'details')}", style: "display:none"}
   %table
     %tr
-      %td{colspan: "2"}= task.description_html.to_s.html_safe
+      %td{colspan: "2"}= task.description_html
     %tr
       %td Created: #{friendly_date(task.created_at)}
       %td &nbsp; Completed: #{friendly_date(task.completed_at)}
