@@ -4,7 +4,7 @@
 
 class ProfileImAddress < ActiveRecord::Base
 
-  set_table_name 'im_addresses'
+  self.table_name = 'im_addresses'
 
   validates_presence_of :im_type
   validates_presence_of :im_address

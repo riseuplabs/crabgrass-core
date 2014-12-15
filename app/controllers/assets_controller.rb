@@ -65,7 +65,7 @@ class AssetsController < ApplicationController
   end
 
   def thumb_name_from_path(path)
-    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)\.[^\.]+$/
+    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.
