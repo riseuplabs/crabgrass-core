@@ -56,7 +56,7 @@ module Common::Utility::ContextHelper
           end
           "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
           "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 2px}\n"+
-          "ul#banner_nav_ul li.tab a.tab {background-color: #{nav_shade}}"
+          "ul#banner_nav_ul li.tab a.tab {color: #{fg}; background-color: #{nav_shade}}"
         else
           "#banner_content {background-image: url(#{url})}"
         end
