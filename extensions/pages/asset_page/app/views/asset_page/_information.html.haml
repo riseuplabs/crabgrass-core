@@ -1,6 +1,6 @@
 .p
   = friendly_size(@asset.size) + ","
-  = I18n.t(@asset.format_description.to_sym, default: @asset.format_description) 
+  = I18n.t(@asset.format_description.to_sym, default: @asset.format_description)
   - if @asset.ext
     = "(" + @asset.ext + ")"
 
@@ -8,7 +8,13 @@
   - if previews.any?
     %br
       = :preview.t + ':'
-      = previews.collect{|preview| link_to preview.name, preview.url}.join(', ').html_safe
+      = previews.collect{|p| link_to p.name, p.url}.join(', ').html_safe
+
+  - formats = @asset.thumbnails.other_formats
+  - if formats.any?
+    %br
+      = :other_formats.t + ':'
+      = formats.collect{|f| link_to f.name, f.url}.join(', ').html_safe
 
 - if @page.updated_by
   .p
