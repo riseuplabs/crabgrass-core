@@ -8,7 +8,7 @@
 
 - if entities.present?
   %div{style:"display: none", class: columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
-    - cache current_language do
+    - cache [current_language, id] do
       .h3.first
         = heading
         %small
