@@ -223,8 +223,13 @@ class Profile < ActiveRecord::Base
     end
 
     self.update_attributes( params )
-    self.reload
+    self.reload # huh? why is this needed?
     self
+  rescue ErrorMessage
+    # In case the picture update did not work... let's keep the old one.
+    self.picture_id = self.picture_id_was
+    # still raise the error message
+    raise
   end
 
   def cover
