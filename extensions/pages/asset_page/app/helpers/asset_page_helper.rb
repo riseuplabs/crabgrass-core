@@ -3,7 +3,7 @@ module AssetPageHelper
   def asset_link_with_preview(asset)
     thumbnail = asset.thumbnail(:large)
     if thumbnail.nil?
-      link_to( image_tag(asset.big_icon), asset.url )
+      link_to( icon_for(asset), asset.url )
     elsif !thumbnail.exists?
       load_preview_tag + javascript_tag(create_preview_javascript)
     else
