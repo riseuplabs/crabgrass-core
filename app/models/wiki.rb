@@ -134,6 +134,10 @@ class Wiki < ActiveRecord::Base
     @structure ||= WikiExtension::WikiStructure.new(raw_structure, body.to_s)
   end
 
+  def edit_sections?
+    structure.sections.present?
+  end
+
   # sets the block used for rendering the body to html
   def render_body_html_proc &block
     @render_body_html_proc = block
@@ -249,7 +253,7 @@ class Wiki < ActiveRecord::Base
   end
 
   # returns html for wiki body
-  # user render_body_html_proc if available
+  # uses render_body_html_proc if available
   # or default GreenCloth rendering otherwise
   def render_body_html
     if @render_body_html_proc
@@ -261,6 +265,10 @@ class Wiki < ActiveRecord::Base
 
   def render_raw_structure
     GreenCloth.new(body.to_s).to_structure
+  rescue GreenClothException => e
+    Rails.logger.error e
+    # let's return a dummy structure at least.
+    GreenCloth.new('').to_structure
   end
 
   class Version < ActiveRecord::Base

@@ -318,7 +318,7 @@ in: |-
   [# Heading anchor -> head_anchor #]
   -----------------------------------
 
-  h2. Anchor within [# heading -> head_anchor #]
+  h2. Anchor _within_ [# heading -> head_anchor #]
 
   Dots ...
   --------
@@ -336,7 +336,7 @@ out: |-
   <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
   <h2><a name="table"></a><del>table</del><a class="anchor" href="#table">&para;</a></h2>
   <h2><a name="heading-anchor"></a><a name="head_anchor">Heading anchor</a><a class="anchor" href="#heading-anchor">&para;</a></h2>
-  <h2><a name="anchor-within-heading"></a>Anchor within <a name="head_anchor">heading</a><a class="anchor" href="#anchor-within-heading">&para;</a></h2>
+  <h2><a name="anchor-within-heading"></a>Anchor <em>within</em> <a name="head_anchor">heading</a><a class="anchor" href="#anchor-within-heading">&para;</a></h2>
   <h2><a name="dots"></a>Dots &#8230;<a class="anchor" href="#dots">&para;</a></h2>
 
 ---

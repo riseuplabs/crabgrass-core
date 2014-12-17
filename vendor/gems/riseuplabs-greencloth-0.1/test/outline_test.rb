@@ -189,7 +189,7 @@ class TestHeadings < Test::Unit::TestCase
       'code' => "@code@\n------\n\n",
       'table' => "h2. [-table-]\n\n",
       'heading-anchor' => "[# Heading anchor -> head_anchor #]\n-----------------------------------\n\n",
-      'anchor-within-heading' => "h2. Anchor within [# heading -> head_anchor #]\n\n",
+      'anchor-within-heading' => "h2. Anchor _within_ [# heading -> head_anchor #]\n\n",
       'dots' => "Dots ...\n--------"
     }
 
