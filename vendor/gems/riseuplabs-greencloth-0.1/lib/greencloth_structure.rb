@@ -16,22 +16,11 @@ module GreenclothStructure
   # but be warned that to_html will mangled the string and it will not the
   # original!
   def green_tree
-    begin
-      unless @green_tree
-        extract_headings
-        @green_tree = convert_to_tree(@headings)
-      else
-        @green_tree
-      end
-    rescue GreenClothException => exc
-      logger.error exc.message if defined? logger and logger.respond_to? :error
-      return GreenTree.from_hash({
-        :children => [],
-        :name => nil,
-        :start_index => 0,
-        :end_index => self.size - 1,
-        :heading_level => 0},
-        self)
+    unless @green_tree
+      extract_headings
+      @green_tree = convert_to_tree(@headings)
+    else
+      @green_tree
     end
   end
 
@@ -40,7 +29,8 @@ module GreenclothStructure
   # called by the formatter whenever it encounters h1..h4 tags
   def add_heading(indent,text)
     text = extract_offtags(text.dup)
-    formatter.clean_html(text, {}) # strip ALL markup, modifies variable text.
+    # strip ALL markup, modifies variable text.
+    formatter.clean_html(text, {})
     @headings ||= []
     @heading_names ||= {}
     if text
