@@ -4,7 +4,7 @@ module Wikis::SectionsHelper
     doc = Hpricot(wiki.body_html)
     doc.search('h4 a.anchor, h3 a.anchor, h2 a.anchor, h1 a.anchor').each do |anchor|
       subsection = anchor['href'].sub(/^.*#/, '')
-      add_edit_link_to_heading(wiki, anchor, subsection)
+      add_edit_link_to_heading(wiki, anchor, subsection) if wiki.edit_sections?
       wrap_in_div(wiki, doc, subsection, section == :document)
     end
     doc.to_html.html_safe

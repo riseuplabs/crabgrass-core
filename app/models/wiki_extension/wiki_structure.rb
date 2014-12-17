@@ -17,6 +17,10 @@ module WikiExtension
       [:document] + green_tree.section_names
     end
 
+    def sections
+      green_tree.section_names
+    end
+
     def update_body(section, section_body)
       find(section).sub_markup(section_body)
     end
