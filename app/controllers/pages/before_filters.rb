@@ -74,6 +74,16 @@ module Pages::BeforeFilters
     end
   end
 
+  # ensure the page will be reloaded when navigated to in browser history
+  # why? because we use a bunch of ajax on the pages - for example when
+  # adding comments. It's really odd if these disappear when you navigate
+  # back.
+  def bust_cache
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
+
   ##
   ## AFTER FILTERS
   ##
