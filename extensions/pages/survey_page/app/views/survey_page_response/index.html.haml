@@ -1,4 +1,4 @@
-= pagination_links @responses, params: {controller: :response, action: :list}
+= pagination_links @responses
 %table#survey_answers.pretty
   %tr
     %th user
@@ -24,5 +24,5 @@
               = link_to(:see_whole_response_link.t, url)
           - else
             \—
-= pagination_links @responses, params: {controller: :response, action: :list}
+= pagination_links @responses
 %br/
