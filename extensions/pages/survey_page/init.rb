@@ -14,9 +14,13 @@ define_page_type :SurveyPage, {
 Crabgrass.mod_routes do
   scope path: 'pages' do
     resources :surveys,
-      only: [:show, :edit],
+      only: [:show],
       controller: :survey_page do
-#        get :print, on: :member
+        get :print, on: :member
       end
+  end
+
+  scope path: 'pages/:page_id' do
+    resources :responses, only: [:show, :index]
   end
 end
