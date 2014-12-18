@@ -9,15 +9,11 @@ class Me::ProfileController < Me::BaseController
   def update
     if params[:clear_photo]
       @profile.picture.destroy
-      success :profile_saved.t
-      redirect_to edit_me_profile_path
     else
-      @profile.save_from_params params['profile']
-      if @profile.valid?
-        success :profile_saved.t
-        redirect_to edit_me_profile_path
-      end
+      @profile.save_from_params profile_params
     end
+    success :profile_saved.t
+    redirect_to edit_me_profile_path
   end
 
   protected
@@ -26,5 +22,9 @@ class Me::ProfileController < Me::BaseController
     @profile = current_user.profiles.public
   end
 
+  def profile_params
+    params[:profile].permit :place, :organization, :role, :summary,
+      {:picture => [:upload]}
+  end
 end
 
