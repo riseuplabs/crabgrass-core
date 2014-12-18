@@ -2,8 +2,13 @@ module Common::Ui::HelpHelper
 
   protected
 
-  def formatting_reference_link
-    (%Q{<a class="icon help_16" href="/do/static/greencloth" onclick="quickRedReference(); return false;">%s</a>} % :formatting_reference_link.t).html_safe
+  def formatting_reference_link(options = {})
+    options.reverse_merge class: "icon help_16",
+      href: "/do/static/greencloth",
+      onclick: "quickRedReference(); return false;"
+    content_tag(:a, options) do
+      :formatting_reference_link.t
+    end
   end
 
   # returns the related help string, but only if it is translated.
