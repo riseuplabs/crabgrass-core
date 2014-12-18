@@ -21,6 +21,7 @@ Crabgrass.mod_routes do
   end
 
   scope path: 'pages/:page_id' do
-    resources :responses, only: [:show, :index]
+    resources :responses, only: [:show, :index],
+      controller: :survey_page_response
   end
 end
