@@ -131,6 +131,9 @@ en:
   email_link_expires: "This link will expire in %{days} days."
   page_notice_title: '<user>%{from}</user> sent you page "%{page_title}"'
   page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}" with the message:'
+  page_updated: '<user>%{from}</user> updated the page "%{page_title}"'
+  page_update: "Page Update"
+
 
   ##!  page_notice_message: "%{user} notified you about this page on %{date}"
   ##!  page_with_message: "with message"
