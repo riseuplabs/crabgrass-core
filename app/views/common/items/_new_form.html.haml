@@ -1,10 +1,12 @@
-- # expects the following locals:
-- # item - a new active record element of the item to create
-- # url  - a url to submit the form to
-
+- # Expects the following locals:
+- #   item - a new active record element of the item to create
+- #   url  - a url to submit the form to
+- # You can also yield additional form elements.
+- # for an example see
+- #   /extensions/pages/task_list_page/app/views/tasks/_new.html.haml
 :ruby
   type = dom_class(item) if type.blank?
-  label = I18n.t("#{type}.add")
+  label = I18n.t("actions.#{type}.add")
 
 .accordion-group[item]
   .accordion-heading[item, :link]
@@ -18,8 +20,9 @@
         rows: '4',
         class: "#{type}_description",
         placeholder: :details.t
+      = yield if block_given?
       %p
-        %button.btn.btn-primary
+        %button.btn.btn-primary{data: {"disable-with" => label}}
           = label
       = spinner
 

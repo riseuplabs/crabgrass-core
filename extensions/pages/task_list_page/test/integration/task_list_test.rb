@@ -14,16 +14,18 @@ class TaskListTest < JavascriptIntegrationTest
     assert_page_header
     assert_no_tasks
     add_task
+    add_task
     assert_tasks_pending
     assert_task_assigned_to(user)
     complete_task
     assert_tasks_completed
+    assert_tasks_pending
   end
 
   def test_assigning_task
     share_page_with users(:red)
     add_task
-    click_on 'Done'
+    close_task_form
     assign_task_to users(:red)
     unassign_task_from user
     assert_task_not_assigned_to users(:blue)
@@ -31,12 +33,12 @@ class TaskListTest < JavascriptIntegrationTest
   end
 
   def add_task(options = {})
-    click_on 'Add Task' if page.has_selector?(:link, 'Add Task')
     options[:description] ||= Faker::Lorem.sentence
     options[:detail] ||= Faker::Lorem.paragraph
+    open_task_form
     fill_in 'task_name', with: options[:description]
     fill_in 'task_description', with: options[:detail]
-    click_on "Add Task"
+    click_button "Add new Task"
     return options
   end
 
@@ -63,6 +65,14 @@ class TaskListTest < JavascriptIntegrationTest
     within '#sort_list_pending' do
       find('.task').click
     end
+  end
+
+  def open_task_form
+    click_link 'Add new Task' unless page.has_button? 'Add new Task'
+  end
+
+  def close_task_form
+    click_link 'Add new Task' if page.has_button? 'Add new Task'
   end
 
   def complete_task

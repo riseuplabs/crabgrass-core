@@ -12,9 +12,7 @@ class RateManyPageTest < JavascriptIntegrationTest
 
   def test_initial_option
     assert_page_header
-    click_link 'Add new possibility'
     option, description = add_possibility
-    click_link 'Add new possibility' # close
     assert_content option
     assert_no_content description
     click_on option
@@ -24,9 +22,7 @@ class RateManyPageTest < JavascriptIntegrationTest
   end
 
   def test_voting
-    click_link 'Add new possibility'
     option, description = add_possibility
-    click_link 'Add new possibility' # close
     choose 'good'
     within('.possibles') do
       assert_content @user.login

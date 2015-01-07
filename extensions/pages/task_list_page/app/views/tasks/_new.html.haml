@@ -1,27 +1,7 @@
-- # TODO:
-- # you might want to consider using /items/_new_form and
-- # including the extra fields there.
-
-- @task = Task.new
-#new-task-link
-  = link_to_function :add_task.t, show('new-task') + hide('new-task-link')
-#new-task{style: "display:none"}
-  = form_remote_tag( *options_for_new_task_form(page) ) do
-    %br/
-    = text_field 'task', 'name',
-      class: 'task_name',
-      placeholder: :description.t
-    %br/
-    = text_area 'task', 'description',
-      size: '50x4',
-      class: 'task_description',
-      placeholder: :details.t
-    %br/
-    = :assign_to.t
-    %br/
-    = checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
-    %br{style: "clear:left"}/
-    %p
-      = submit_tag :add_task.t
-      = button_to_function :done.t, hide('new-task') + show('new-task-link')
-      = spinner('new-task')
+- locals = {item: Task.new, url: tasks_url(page_id: @page)}
+= render layout: 'common/items/new_form', locals: locals do
+  %br/
+  = :assign_to.t
+  %br/
+  = checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
+  %br{style: "clear:left"}/

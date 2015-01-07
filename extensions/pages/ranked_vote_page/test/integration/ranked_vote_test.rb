@@ -13,9 +13,7 @@ class RankedVoteTest < JavascriptIntegrationTest
 
   def test_initial_option
     assert_page_header
-    click_link 'Add new possibility'
     option, description = add_possibility
-    click_link 'Add new possibility' # close
     assert_no_content description
     click_link option
     assert_content description
@@ -26,9 +24,7 @@ class RankedVoteTest < JavascriptIntegrationTest
   end
 
   def test_voting
-    click_link 'Add new possibility'
     option, description = add_possibility
-    click_link 'Add new possibility' # close
     assert_not_voted_yet
     vote
     assert_voted
@@ -38,10 +34,8 @@ class RankedVoteTest < JavascriptIntegrationTest
 
 
   def test_multiple_options
-    click_link 'Add new possibility'
     add_possibility
     option, description = add_possibility
-    click_link 'Add new possibility' # close
     click_page_tab 'Show results'
     click_link option
     assert_content description
