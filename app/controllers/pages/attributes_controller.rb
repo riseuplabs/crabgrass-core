@@ -22,7 +22,7 @@ class Pages::AttributesController < Pages::SidebarsController
       else
         owner = Group.find_by_name params[:owner]
       end
-      raise_not_found('owner') unless owner
+      raise_not_found(:owner.t) unless owner
       @page.owner = owner
       @page.save!
       redirect_to page_path(@page)
