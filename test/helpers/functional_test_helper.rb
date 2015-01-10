@@ -17,6 +17,10 @@ module FunctionalTestHelper
     assert_redirected_to root_path(redirect: @request.path)
   end
 
+  def assert_not_found
+    assert_response :not_found
+  end
+
   # can pass either a regexp of the flash error string,
   # or the error symbol
   def assert_error_message(arg=nil)

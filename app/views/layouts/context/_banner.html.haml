@@ -22,7 +22,7 @@
   #context_banner can have one of three classes: large, medium, or small.
   This is used to determine the position of the first tab.
 
-- if @context
+- if visible_context?
   %header#context_banner.large.gap-under-masthead{class: (banner_picture ? 'dark_border' : 'light_border')}
     %div#banner_content
       - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)

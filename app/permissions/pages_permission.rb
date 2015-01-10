@@ -11,7 +11,7 @@ module PagesPermission
     # but the permission will still be checked here.
     # So we need to make sure users who do not have explicit
     # access the page can still see it if it's public.
-    !page or page.public? or current_user.may?(:view, page)
+    page.public? || current_user.may?(:view, page)
   end
 
   def may_edit_page?(page = @page)
