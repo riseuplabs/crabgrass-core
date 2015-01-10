@@ -18,7 +18,7 @@ module Pages::BeforeFilters
   #
   def default_fetch_data
     @page ||= Page.find(params[:page_id] || params[:id])
-    unless @page
+    unless @page && may_show_page?
       raise_not_found(:thing_not_found.t(thing: :page.t))
     end
 

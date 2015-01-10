@@ -8,7 +8,7 @@ module Common::Application::BeforeFilters
     before_filter :header_hack_for_ie6
     before_filter :redirect_unverified_user
     before_filter :enforce_ssl_if_needed
-    before_filter :setup_theme
+    before_render :setup_theme
     before_render :setup_context
   end
 
@@ -77,7 +77,7 @@ module Common::Application::BeforeFilters
   #
   # overwrite if you want to handle permissions differently
   def authorized?
-    check_permissions
+    @authorized ||= check_permissions
   end
 
   #

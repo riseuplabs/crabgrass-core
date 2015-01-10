@@ -1,4 +1,13 @@
 module Common::Utility::ContextHelper
+
+  # we only show the context if you either:
+  # * are allowed to do what you are doing
+  # * can see the context entity anyway (for error messages)
+  def visible_context?
+    @context &&
+      ( @authorized || current_user.may?(:view, @context.entity) )
+  end
+
   #
   # sets up the navigation variables from the current theme.
   #
