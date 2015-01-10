@@ -4,12 +4,12 @@ module PageRecords
     options, type = type, nil  if type.is_a? Hash
     options.merge! created_by: user
     page = new_page(type, options)
-    if page.new_record?
-      page.save
-      # ensure after_commit callbacks are triggered so sphinx indexes the page.
-      page.page_terms.committed!
-    end
-    page
+    save_and_index(page)
+  end
+
+  def public_page
+    page = new_page public: true
+    save_and_index(page)
   end
 
   def with_page(types)
@@ -20,7 +20,7 @@ module PageRecords
 
   def new_page(type=nil, options = {})
     options, type = type, nil  if type.is_a? Hash
-    page_options = options.slice :title, :summary, :created_by, :owner, :flow
+    page_options = options.slice :title, :summary, :created_by, :owner, :flow, :public
     page_options.merge! created_at: Time.now, updated_at: Time.now
     if type
       @page = records[type] ||= FactoryGirl.build(type, page_options)
@@ -53,5 +53,14 @@ module PageRecords
     try_to_attach_file :asset_uploaded_data, file
     # workaround for having the right page title in the test record
     new_page.title = file.basename(file.extname) if type == :asset_page
+  end
+
+  def save_and_index(page)
+    if page.new_record?
+      page.save
+      # ensure after_commit callbacks are triggered so sphinx indexes the page.
+      page.page_terms.committed!
+    end
+    page
   end
 end

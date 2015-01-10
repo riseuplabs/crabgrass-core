@@ -28,4 +28,13 @@ module PageAssertions
   def assert_page_not_starred
     assert_selector '#star.star_empty_dark_16'
   end
+
+  def assert_page_watched
+    assert_selector '#watch_checkbox.check_on_16'
+  end
+
+  def assert_page_not_watched
+    assert_selector '#watch_checkbox.check_off_16'
+  end
+
 end

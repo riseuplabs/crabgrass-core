@@ -59,6 +59,13 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_not_starred
   end
 
+  def test_watch
+    watch_page
+    assert_page_watched
+    unwatch_page
+    assert_page_not_watched
+  end
+
   # regression test for #7834
   def test_sharing_preserves_stars
     star_page

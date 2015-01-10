@@ -59,6 +59,12 @@ class UserParticipation < ActiveRecord::Base
     write_attribute(:access, value)
   end
 
+  def grants_access?(perm)
+    asked_access_level = ACCESS[perm] || ACCESS[:view]
+    return false unless self.access
+    self.access <= asked_access_level
+  end
+
   protected
 
   def clear_tag_cache
