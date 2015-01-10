@@ -14,8 +14,6 @@ class PageAccessTest < JavascriptIntegrationTest
     page.save
     visit_page(page)
     assert_content 'Not Found'
-    visit '/'
-    assert_no_content page.title
   end
 
   def visit_page(page)

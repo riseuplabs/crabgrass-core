@@ -19,6 +19,7 @@ class GroupParticipation < ActiveRecord::Base
   # this includes the ability to find featured-pages in GroupParticipation
   # include GroupParticipationExtension::Featured
   include GroupParticipationExtension::PageHistory
+  include ParticipationAccess
 
   belongs_to :page, inverse_of: :group_participations
   belongs_to :group, inverse_of: :participations
@@ -29,30 +30,6 @@ class GroupParticipation < ActiveRecord::Base
 
   def entity
     group
-  end
-
-  def access_sym
-    ACCESS_TO_SYM[self.access]
-  end
-
-  # can only be used to increase access, not remove it.
-  def grant_access=(value)
-    value = ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
-    if value
-      if read_attribute(:access)
-        if read_attribute(:access) > value
-          write_attribute(:access, value)
-        end
-      else
-        write_attribute(:access, value)
-      end
-    end
-  end
-
-  # can be used to add or remove access
-  def access=(value)
-    value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
-    write_attribute(:access, value)
   end
 
 end
