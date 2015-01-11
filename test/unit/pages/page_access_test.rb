@@ -14,7 +14,7 @@ class PageAccessTest < ActiveSupport::TestCase
     page = create_page title: 'private page'
 
     assert !user.may?(:view, page), 'user should NOT be able to view page'
-    page.add(group)
+    page.add(group, access: :view)
     assert !user.may?(:view, page), 'we cache may? queries'
     user.clear_access_cache
     assert user.may?(:view, page), 'user should BE able to view page'

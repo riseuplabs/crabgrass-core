@@ -35,6 +35,14 @@ module PageActions
     click_on 'Remove Star (1)'
   end
 
+  def watch_page
+    click_on 'Watch For Updates'
+  end
+
+  def unwatch_page
+    click_on 'Watch For Updates'
+  end
+
   def change_access_to(permission)
     click_on 'Page Details'
     find('a', text: 'Permissions').click

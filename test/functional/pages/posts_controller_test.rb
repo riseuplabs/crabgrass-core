@@ -32,10 +32,9 @@ class Pages::PostsControllerTest < ActionController::TestCase
     assert_successfully_posted_to public_page
     # let's make sure posting a comment does not grant more access...
     assert_nil public_page.user_participations.where(user_id: @user).first.access
-    # if you commented once you can view the page independently of it being
-    # public
+    # despite commenting you can only view the page because it is public
     @user.clear_access_cache
-    assert @user.may?(:view, public_page)
+    assert !@user.may?(:view, public_page)
   end
 
   def assert_successfully_posted_to(page)
