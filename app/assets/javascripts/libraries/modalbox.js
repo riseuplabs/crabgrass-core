@@ -432,7 +432,10 @@ Modalbox.Methods = {
 
   event: function(eventName) {
     try {
-      if(this.options[eventName]) {
+      // cg addition: fire events like for ajax requests.
+      // these are easy to hook into.
+      var ev = this.MBwindow.fire("modal:" + eventName);
+      if(this.options[eventName] && !ev.stopped) {
         var returnValue = this.options[eventName](); // Executing callback
         this.options[eventName] = null; // Removing callback after execution
         if(returnValue != undefined)
