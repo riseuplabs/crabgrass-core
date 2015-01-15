@@ -82,6 +82,10 @@ class Context
     self.breadcrumbs << object
   end
 
+  def banner_partial
+    '/layouts/context/normal_banner_content'
+  end
+
   protected
 
   def define_crumbs()
@@ -123,6 +127,11 @@ class Context::Committee < Context::Group
       push_crumb self.entity
     end
   end
+
+  def banner_partial
+    '/layouts/context/nested_banner_content'
+  end
+
 end
 
 class Context::Council < Context::Committee
@@ -147,6 +156,17 @@ class Context::User < Context
       push_crumb self.entity
     end
   end
+end
+
+class Context::UserGhost < Context::User
+  def define_crumbs
+    push_crumb :people
+  end
+
+  def banner_partial
+    '/layouts/context/hidden_banner_content'
+  end
+
 end
 
 class Context::Me < Context

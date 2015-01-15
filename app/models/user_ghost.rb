@@ -46,6 +46,11 @@ class UserGhost < User
   end
   #handle_asynchronously :destroy_comments!
 
+  # can't do anything with a user_ghost
+  def has_access!(_perm, _user)
+    false
+  end
+
   private
 
   def clean_attributes
