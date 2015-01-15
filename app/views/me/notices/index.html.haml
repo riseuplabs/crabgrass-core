@@ -8,5 +8,5 @@
     = render partial: 'notice', collection: @notices
   = bottom_pagination_links @notices
 
-.h2=:recent_pages.t
+= render 'layouts/section/heading_with_info', section: :recent_pages
 = render partial: 'common/pages/list', locals: {style: 'table'}
