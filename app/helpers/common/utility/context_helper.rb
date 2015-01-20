@@ -42,7 +42,7 @@ module Common::Utility::ContextHelper
   end
 
   def context_class
-    @context.breadcrumbs.first if @context
+    @context.breadcrumbs.first if visible_context?
   end
 
   ##
