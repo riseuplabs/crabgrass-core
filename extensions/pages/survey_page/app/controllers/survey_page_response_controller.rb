@@ -20,7 +20,7 @@ class SurveyPageResponseController < Pages::BaseController
   def show
     @response = @survey.responses.find_by_id params[:id]
     if params[:jump]
-      redirect_to page_url(@page,  controller: :response, action: :show, id: get_jump_id)
+      redirect_to response_path(get_jump_id, page_id: @page.id)
     end
   end
 

@@ -7,7 +7,7 @@
     - (questions=@survey.questions[0..0]).each do |question|
       %th= truncate(question.label)
   - @responses.each do |resp|
-    - url = page_url(@page, controller: :response, action: :show, id: resp.id)
+    - url = response_path(resp, page_id: @page)
     %tr{class: cycle("odd","even")}
       %td= resp.user.login if resp.user_id
       %td= friendly_date resp.created_at
