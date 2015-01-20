@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   ##
 
   include Crabgrass::Validations
-  validates_handle :login
+  validates_handle :login, unless: :ghost?
 
 
   before_validation :validates_receive_notifications
@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
     presence: {if: :should_validate_email}
 
   def should_validate_email
+    return false if ghost?
     if Site.current
       Site.current.require_user_email
     else
@@ -180,6 +181,11 @@ class User < ActiveRecord::Base
   def ghostify!
     self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself.
     return User.find(self.id)
+  end
+
+  # overwritten in user_ghost
+  def ghost?
+    false
   end
 
   ##
