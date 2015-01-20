@@ -1,14 +1,8 @@
 class UserGhost < User
 
-  def name
-    if read_attribute(:display_name).nil?
-      :anonymous.t
-    else
-      read_attribute(:display_name)
-    end
+  def login
+    read_attribute(:login).presence || :anonymous.t
   end
-  alias :login :name
-  alias :display_name :login
 
   #
   # retire this user.
@@ -18,7 +12,6 @@ class UserGhost < User
   # 3. removes user data like profiles
   #
   def retire!
-    clean_attributes
     avatar.destroy if avatar
     profiles.each { |p| p.destroy }
     # setting.destroy #TODO not sure if settings are ever used.
@@ -26,6 +19,7 @@ class UserGhost < User
     participations.each { |p| p.destroy }
     memberships.each { |m| m.destroy } # should we use remove_user! ?
     relationships.each { |relationship| self.remove_contact!(User.find(relationship.contact_id)) }
+    clean_attributes
     clear_cache
   end
   #handle_asynchronously :retire!
@@ -34,7 +28,7 @@ class UserGhost < User
   # gets rid of the users name
   #
   def anonymize!
-    self.update_attribute(:display_name, nil)
+    self.update_attributes(display_name: nil, login: nil)
   end
   #handle_asynchronously :anonymize!
 
@@ -46,21 +40,28 @@ class UserGhost < User
   end
   #handle_asynchronously :destroy_comments!
 
+  # can't do anything with a user_ghost
+  def has_access!(_perm, _user)
+    false
+  end
+
+  def ghost?
+    true
+  end
+
+  def password_required?
+    false
+  end
+
   private
 
   def clean_attributes
-    #
-    # use update_attribute to bypass the validations
-    #
-    attrs_to_nil_out = %w(
-      crypted_password salt time_zone email
-      login created_at version
-      last_seen_at language remember_token remember_token_expires_at
-      updated_at
-    ) # updated_at should be last so it isn't re-set
-    attrs_to_nil_out.each do |attr|
-      update_attribute(attr, nil)
-    end
+    attrs_to_keep = %w(id type login display_name)
+    clean_attrs = attributes.except(*attrs_to_keep)
+    clean_attrs.each { |k, _v| clean_attrs[k] = nil }
+    update_attributes clean_attrs
+    # updated_at should be last so it isn't re-set
+    update_attribute("updated_at", nil)
   end
 
 end

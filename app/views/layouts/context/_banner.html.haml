@@ -25,9 +25,6 @@
 - if visible_context?
   %header#context_banner.large.gap-under-masthead{class: (banner_picture ? 'dark_border' : 'light_border')}
     %div#banner_content
-      - if @context.entity.is_a?(Committee) or @context.entity.is_a?(Council)
-        = render partial: '/layouts/context/nested_banner_content'
-      - else
-        = render partial: '/layouts/context/normal_banner_content'
+      = render @context.banner_partial
 
     = render partial: '/layouts/context/nav/banner_menu'

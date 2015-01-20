@@ -174,6 +174,7 @@ define_navigation do
       label  { :home.t }
       icon   :house
       url    { entity_path(@user) }
+      visible { current_user.may?(:view, @user) }
       active { controller?('people/home') }
     end
 
@@ -181,6 +182,7 @@ define_navigation do
       label  { :pages.t }
       icon   :page_white_copy
       url    { person_pages_path(@user) }
+      visible { current_user.may?(:view, @user) }
       active { page_controller? }
     end
 

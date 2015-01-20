@@ -84,9 +84,13 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
     // }
   }
 
-  a.title {
+  .title {
     color: $banner_default_foreground;
     font-size: $banner_font_size;
+    line-height: 1.8;
+  }
+
+  a.title {
     @include cg-hover-link;
   }
 }
@@ -172,7 +176,9 @@ $base_margin: ($avatar_border_width * 2) + (($banner_padding - border_width($ban
     //  height: 32px;
     //  width: 32px;
     //}
-    a.title {font-size: 1.1em;}
+    .title {
+      font-size: 1.1em;
+    }
 
     // the avatar icon is always small
     &.large  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}

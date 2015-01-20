@@ -38,7 +38,7 @@ module AuthenticatedUser
       # the current site (set tmp on a per-request basis)
       attr_accessor :current_site
 
-      validates_presence_of     :login
+      validates_presence_of     :login,                  unless: :ghost?
       validates_presence_of     :password,                   if: :password_required?
       validates_presence_of     :password_confirmation,      if: :password_required?
       validates_confirmation_of :password,                   if: :password_required?
