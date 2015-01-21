@@ -13,12 +13,13 @@ class UserGhost < User
   #
   def retire!
     avatar.destroy if avatar
-    profiles.each { |p| p.destroy }
     # setting.destroy #TODO not sure if settings are ever used.
-    task_participations.each { |t| t.destroy }
-    participations.each { |p| p.destroy }
-    memberships.each { |m| m.destroy } # should we use remove_user! ?
+    profiles.destroy_all
+    task_participations.destroy_all
+    participations.destroy_all
+    memberships.destroy_all # should we use remove_user! ?
     relationships.each { |relationship| self.remove_contact!(User.find(relationship.contact_id)) }
+    keys.destroy_all
     clean_attributes
     clear_cache
   end
