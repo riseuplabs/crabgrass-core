@@ -50,12 +50,6 @@ module Common::Ui::LayoutHelper
     lines << optional_stylesheets.collect do |sheet|
        stylesheet_link_tag( current_theme.stylesheet_url(sheet) )
     end
-    if context_banner_style || @content_for_style
-      lines << '<style type="text/css">'
-        lines << @content_for_style
-        lines << context_banner_style
-      lines << '</style>'
-    end
     lines << '<!--[if IE 6]>'
       lines << stylesheet_link_tag('ie6')
       lines << stylesheet_link_tag('icon_gif')

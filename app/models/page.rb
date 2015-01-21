@@ -277,11 +277,11 @@ class Page < ActiveRecord::Base
   # This method should never be called directly. It should only be called
   # from User#may?()
   #
-  # possible permissions:
+  # possible access levels on participation objects:
+  #   :none  -- always returns false
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
-  #   :none  -- always returns false
   #
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
@@ -297,16 +297,9 @@ class Page < ActiveRecord::Base
     ## END TEMP HACKS
     #########################################################
 
-    asked_access_level = ACCESS[perm] || ACCESS[:view]
     participation = most_privileged_participation_for(user)
-    allowed = if participation.nil?
-      false
-    else
-      actual_access_level = participation.access || ACCESS[:view]
-      asked_access_level >= actual_access_level
-    end
-
-    allowed ? true : raise(PermissionDenied.new)
+    allowed = participation.present? && participation.grants_access?(perm)
+    allowed || raise(PermissionDenied.new)
   end
 
   # returns the participation object for entity with the highest access level.

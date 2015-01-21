@@ -30,9 +30,7 @@ class PrivateMessageNotice < Notice
   end
 
   def display_body
-    # this is now post.body_html
-    # it's html safe because it's the Greencloth output.
-    data[:message].html_safe
+    data[:message]
   end
 
   def button_text

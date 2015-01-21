@@ -10,7 +10,7 @@
       =h embold_links notice.display_title
       %br
       - if notice.display_body_as_quote?
-        %i= embold_links(notice.display_body)
+        %i= strip_tags(notice.display_body).truncate(300).html_safe
       - else
         = embold_links(notice.display_body)
   %td.nowrap.align_right.reflow

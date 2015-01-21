@@ -8,7 +8,9 @@ class TasksController < Pages::BaseController
     @task = Task.new task_params
     @task.name = 'untitled' if @task.name.blank?
     @task.task_list = @list
-    @task.save
+    if @task.save
+      current_user.updated(@page)
+    end
   end
 
   # ajax only, returns nothing
@@ -50,12 +52,14 @@ class TasksController < Pages::BaseController
           locals: {task: @task}
       end
     end
+    current_user.updated(@page)
   end
 
   def destroy
     @task = @list.tasks.find(params[:id])
     @task.remove_from_list
     @task.destroy
+    current_user.updated(@page)
     render nothing: true
   end
 

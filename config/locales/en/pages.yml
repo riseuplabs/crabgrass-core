@@ -3,8 +3,6 @@ en:
   pages: "Pages"
   recent_pages: "Recent Pages"
   #group_pages: "Group Pages"
-  #search_input_caption: "Search for pages"
-  #search_description: "Search through all pages you have access to"
 
   #my_pages: "My Pages"
   #view_work_pages_option: "All My Work Pages"
@@ -131,6 +129,9 @@ en:
   email_link_expires: "This link will expire in %{days} days."
   page_notice_title: '<user>%{from}</user> sent you page "%{page_title}"'
   page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}" with the message:'
+  page_updated: '<user>%{from}</user> updated the page "%{page_title}"'
+  page_update: "Page Update"
+
 
   ##!  page_notice_message: "%{user} notified you about this page on %{date}"
   ##!  page_with_message: "with message"
@@ -389,7 +390,6 @@ en:
   completed_tasks: 'completed tasks'
   no_pending_tasks: 'no pending tasks'
   no_completed_tasks: 'no completed tasks'
-  add_task: 'Add Task'
   assign_to: 'assign to'
 
 
@@ -411,8 +411,6 @@ en:
 
   ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom. When you are done, press confirm to record your vote."
 
-  possible:
-    add: "Add new possibility"
 
   confirm_vote_button: "Confirm Vote"
   edit_my_vote_tab: "Edit my vote"

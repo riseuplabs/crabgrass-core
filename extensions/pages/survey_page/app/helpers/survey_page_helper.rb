@@ -51,17 +51,10 @@ module SurveyPageHelper
 
   def show_answers_for_question(response, question)
     # filter answers for this response and ignore unchecked checkboxes
-    answers = @response.answers.select {|a| a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED }
-
-    tags = answers.collect do |answer|
-      if answer.asset
-        render_asset(answer.asset, answer.value)
-      else
-        content_tag(:div, answer.display_value, class: 'answer')
-      end
+    answers = @response.answers.select do |a|
+      a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED
     end
-
-    tags.join("\n")
+    render partial: 'survey_page_response/answer', collection: answers
   end
 
   def render_asset(asset, name)

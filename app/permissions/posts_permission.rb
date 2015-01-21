@@ -3,17 +3,15 @@ module PostsPermission
   protected
 
   def may_create_post?
-    return false unless logged_in?
     if @recipient
       current_user.may?(:pester, @recipient)
     elsif @page
-      current_user.may?(:edit, @page) or
-      ( current_user.may?(:view, @page) and @page.public_comments? )
+      current_user.may?(:view, @page) or
+      ( @page.public? && @page.public_comments? && logged_in? )
     end
   end
 
   def may_edit_post?(post=@post)
-    logged_in? and
     post and
     post.user_id == current_user.id
   end
@@ -21,7 +19,6 @@ module PostsPermission
   alias_method :may_update_post?, :may_edit_post?
 
   def may_twinkle_posts?(post=@post)
-    logged_in? and
     post.discussion.page and
     current_user.may?(:view, post.discussion.page) and
     current_user.id != post.user_id

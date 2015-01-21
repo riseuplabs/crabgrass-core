@@ -8,6 +8,7 @@ class Pages::BaseController < ApplicationController
 
   before_filter :login_required, except: :show
   before_filter :authorization_required
+  before_filter :bust_cache, only: :show
   permissions :pages
   guard :may_ACTION_page?
   guard print: :may_show_page?

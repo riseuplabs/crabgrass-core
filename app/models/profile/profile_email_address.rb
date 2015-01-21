@@ -4,7 +4,7 @@
 
 class ProfileEmailAddress < ActiveRecord::Base
 
-  set_table_name 'email_addresses'
+  self.table_name = 'email_addresses'
 
   validates_presence_of :email_type
   validates :email_address, presence: true

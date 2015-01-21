@@ -373,8 +373,15 @@ Autocomplete.prototype = {
    * display.
    */
   appendSuggestions: function(response) {
-    this.suggestions = this.suggestions.concat(response.suggestions);
-    this.data = this.data.concat(response.data);
+    var suggestions = this.suggestions;
+    var data = this.data;
+    response.suggestions.each( function(value, i) {
+      var previous = suggestions.indexOf(value);
+      if (previous == -1) {
+        suggestions.push(value);
+        data.push(response.data[i]);
+      }
+    });
   },
 
   pending: 0,

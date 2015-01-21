@@ -6,7 +6,7 @@ class SurveyPageResponseController < Pages::BaseController
   helper 'survey_page'
 
   guard show: :may_view_survey_response?,
-    list: :may_view_survey_response?,
+    index: :may_view_survey_response?,
     update: :may_modify_survey_response?,
     edit: :may_modify_survey_response?,
     new: :may_create_survey_response?,
@@ -16,6 +16,23 @@ class SurveyPageResponseController < Pages::BaseController
   permissions 'survey_page'
 
   before_filter :verify_post, only: [:make, :update, :destroy]
+
+  def show
+    @response = @survey.responses.find_by_id params[:id]
+    if params[:jump]
+      redirect_to response_path(get_jump_id, page_id: @page.id)
+    end
+  end
+
+  def index
+    @responses = @survey.responses.paginate({
+      include: ['answers', 'ratings'],
+      page: params[:page]
+    })
+  end
+
+=begin
+
 
   def new
     @response = SurveyResponse.new
@@ -67,20 +84,6 @@ class SurveyPageResponseController < Pages::BaseController
     end
   end
 
-  def show
-    @response = @survey.responses.find_by_id params[:id]
-    if params[:jump]
-      redirect_to page_url(@page,  controller: :response, action: :show, id: get_jump_id)
-    end
-  end
-
-  def list
-    @responses = @survey.responses.paginate({
-      include: ['answers', 'ratings'],
-      page: params[:page]
-    })
-  end
-
   # xhr and get
   # The user may either rate the current response, or skip it. The response
   # has either been rated already or not. If it has been rated already, it may
@@ -119,6 +122,7 @@ class SurveyPageResponseController < Pages::BaseController
     end
   end
 
+=end
 
   protected
 

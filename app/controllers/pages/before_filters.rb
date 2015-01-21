@@ -18,8 +18,8 @@ module Pages::BeforeFilters
   #
   def default_fetch_data
     @page ||= Page.find(params[:page_id] || params[:id])
-    unless @page
-      raise_not_found(:thing_not_found.t(thing: :page.t))
+    unless @page && may_show_page?
+      raise_not_found(:page.t)
     end
 
     if logged_in?
@@ -72,6 +72,16 @@ module Pages::BeforeFilters
         @post = Post.new
       end
     end
+  end
+
+  # ensure the page will be reloaded when navigated to in browser history
+  # why? because we use a bunch of ajax on the pages - for example when
+  # adding comments. It's really odd if these disappear when you navigate
+  # back.
+  def bust_cache
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
   ##

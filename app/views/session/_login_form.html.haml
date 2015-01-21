@@ -9,7 +9,7 @@
 .login_form
   = form_tag(login_path, id: "entry") do
     - cache current_language do
-      #cookie_warning.alert.alert-error{display: 'none'}
+      .cookie_warning.alert.alert-error{style: "display: none"}
         = :cookie_disabled_warning.t
       %div
         %label(for = 'login')= :login_name.t
@@ -25,15 +25,3 @@
       - if params[:redirect]
         = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"
-
--# TODO: move into javascript assets
-:javascript
-  document.observe("dom:loaded", function() {
-    document.cookie = "are_cookies_enabled=1; expires=" + (new Date(Date.now() + 2000)).toGMTString();
-    if (document.cookie.length == 0) {
-      $('cookie_warning').show();
-    } else {
-      $('cookie_warning').hide();
-    }
-  });
-

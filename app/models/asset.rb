@@ -178,6 +178,9 @@ class Asset < ActiveRecord::Base
           medium = nil if small && medium && medium.size == small.size
           [small, medium, large].compact
         end
+        def other_formats
+          self.select{|t| !['small', 'medium', 'large'].include?(t.name)}
+        end
       end
       base.define_thumbnails( {} ) # root Asset class has no thumbnails
     end

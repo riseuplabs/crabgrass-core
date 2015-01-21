@@ -142,7 +142,7 @@ define_navigation do
   global_section :people do
     label  { :people.t }
     url    controller: 'people/directory'
-    active { controller?('people/') or context?(:user) }
+    active { controller?('people/') or (context?(:user) && visible_context?) }
     html    partial: '/layouts/global/nav/people_menu'
 
     context_section :no_context do
@@ -174,6 +174,7 @@ define_navigation do
       label  { :home.t }
       icon   :house
       url    { entity_path(@user) }
+      visible { current_user.may?(:view, @user) }
       active { controller?('people/home') }
     end
 
@@ -181,6 +182,7 @@ define_navigation do
       label  { :pages.t }
       icon   :page_white_copy
       url    { person_pages_path(@user) }
+      visible { current_user.may?(:view, @user) }
       active { page_controller? }
     end
 
@@ -193,7 +195,7 @@ define_navigation do
   global_section :group do
     label  { :groups.t }
     url    { groups_directory_path }
-    active { controller?('groups/') or context?(:group) }
+    active { controller?('groups/') or (context?(:group) && visible_context?) }
     html    partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do

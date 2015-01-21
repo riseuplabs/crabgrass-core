@@ -15,7 +15,8 @@
       - r.label :updated.tcap
     - r.input link_to_user(@page.updated_by, avatar: 'tiny')
     - r.input friendly_time(@page.updated_at)
-  - f.row do |r|
-    - r.label :statistics.t
-    - r.input render(partial: 'stats')
+  - if current_site.tracking?
+    - f.row do |r|
+      - r.label :statistics.t
+      - r.input render(partial: 'stats')
 

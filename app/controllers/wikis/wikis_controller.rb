@@ -55,6 +55,7 @@ class Wikis::WikisController < Wikis::BaseController
       if params[:save] || params[:force_save]
         version = params[:save] ? params[:wiki][:version] : nil # disable version checked if force save
         @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
+        current_user.updated(@page)
         success
       end
     end

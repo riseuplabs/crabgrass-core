@@ -193,12 +193,14 @@ class GreenTree < Array
 
   # modifies markup
   # finds the location for each heading in the markup
-  def prepare_markup_start_index!(markup)
+  def prepare_markup_start_index!(markup, offset = 0)
     # recurse over children first, this way we're guaranteed
     # to find every occurance of any title text in left-to-right (or top-to-bottom in a greencloth text)
     # order
+    # children have a higher offset, let's keep it separate from our own.
+    child_offset = offset
     children.each do |node|
-      node.prepare_markup_start_index!(markup)
+      child_offset = node.prepare_markup_start_index!(markup, child_offset)
     end
 
     # assume the node markup starts at the begining of the document
@@ -208,15 +210,16 @@ class GreenTree < Array
 
     if self.text
       # find the first occurance of this node in the markup
-      self.start_index = markup.index(self.markup_regexp)
+      self.start_index = markup.index(self.markup_regexp, offset)
       if self.start_index.nil?
-        raise GreenClothException, "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
+        raise GreenClothException, "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup '#{markup}' with regexp: '#{markup_regexp}'"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
         markup[self.start_index] = "\000"
       end
     end
+    return self.start_index
   end
 
   def prepare_markup_end_index!(markup)
@@ -244,24 +247,23 @@ class GreenTree < Array
     # take out carriage returns
     heading_text = Regexp.escape(self.text.gsub(/\r\n/, "\n"))
 
+    # look for the words - but allow special chars in between
+    heading_text = heading_text.gsub(/\\\s/, '[\W_](.*[\W_])?')
     # remove html entities, and let them match one to several characters
     heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.{1,3}')
 
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
 
-    # allowed formatting characters around heading text
-    # /[\.\[\]\^\s_\*\+\?\-~]/
 
     Regexp.union(
       /^
-      [ \.\[\]\^@_\*\+\?\-~]*
-      #{heading_text}[\.\[\]\^@\s_\*\+\?\-~]*
-      \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
+      [^\n]*#{heading_text}[^\n]*\s*
+      \n[=-]+\s*?(\r?\n\r?\n?|$)
       /x,
       /^
       h#{heading_level}\.\s+
-      [\.\[\]\^@\s_\*\+\?\-~]*#{heading_text}[\.\[\]\^@\s_\*\+\?\-~]*
+      [^\n]*#{heading_text}[^\n]*
       \s*?(\r?\n\r?\n?|$)
       /x
     )

@@ -4,7 +4,7 @@
 
 class ProfileLocation < ActiveRecord::Base
 
-  set_table_name 'locations'
+  self.table_name = 'locations'
 
   belongs_to  :profile
 

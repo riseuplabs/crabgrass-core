@@ -7,10 +7,9 @@ module Me::DiscussionsHelper
       I18n.t(:message_user_wrote_caption, user: post.created_by.try.display_name)
     end
 
-    # remove surrounding <p> from body_html
-    html = post.body_html.try.gsub(/(\A\s*<p>)|(<\/p>\s*\Z)/, "")
+    preview = strip_tags(post.body_html).truncate(300).html_safe
     content_tag(:em, caption, class: "author_caption") + " \n" +
-    content_tag(:span, truncate(strip_links(html), length: 300), class: "post_body")
+    content_tag(:span, preview, class: "post_body")
   end
 
   ##

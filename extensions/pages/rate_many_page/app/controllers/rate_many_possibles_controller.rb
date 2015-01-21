@@ -20,7 +20,8 @@ class RateManyPossiblesController < Pages::BaseController
   def create
     @possible = @poll.possibles.create possible_params
     if @poll.valid? and @possible.valid?
-      @page.unresolve # update modified_at, auto_summary, and make page unresolved for other participants
+      current_user.updated(@page)
+      @page.unresolve
     else
       @poll.possibles.delete(@possible)
       flash_message_now object: @possible unless @possible.valid?
@@ -33,9 +34,7 @@ class RateManyPossiblesController < Pages::BaseController
     return unless @poll
     possible = @poll.possibles.find(params[:id])
     possible.destroy
-
-    current_user.updated @page # update modified date, and auto_summary, but do not make it unresolved
-
+    current_user.updated @page
     redirect_to page_url(@page, action: 'show')
   end
 

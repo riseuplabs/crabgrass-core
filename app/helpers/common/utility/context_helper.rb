@@ -1,4 +1,13 @@
 module Common::Utility::ContextHelper
+
+  # we only show the context if you either:
+  # * are allowed to do what you are doing
+  # * can see the context entity anyway (for error messages)
+  def visible_context?
+    @context &&
+      ( @authorized || current_user.may?(:view, @context.entity) )
+  end
+
   #
   # sets up the navigation variables from the current theme.
   #
@@ -33,7 +42,7 @@ module Common::Utility::ContextHelper
   end
 
   def context_class
-    @context.breadcrumbs.first if @context
+    @context.breadcrumbs.first if visible_context?
   end
 
   ##
@@ -56,7 +65,7 @@ module Common::Utility::ContextHelper
           end
           "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
           "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 2px}\n"+
-          "ul#banner_nav_ul li.tab a.tab {background-color: #{nav_shade}}"
+          "ul#banner_nav_ul li.tab a.tab {color: #{fg}; background-color: #{nav_shade}}"
         else
           "#banner_content {background-image: url(#{url})}"
         end

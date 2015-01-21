@@ -32,6 +32,7 @@ class AssetsController < ApplicationController
 
   def destroy
     @asset.destroy
+    current_user.updated(@asset.page)
     respond_to do |format|
       format.js {render text: 'if (initAjaxUpload) initAjaxUpload();' }
       format.html do
@@ -64,7 +65,7 @@ class AssetsController < ApplicationController
   end
 
   def thumb_name_from_path(path)
-    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)\.[^\.]+$/
+    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.

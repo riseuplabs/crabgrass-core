@@ -11,12 +11,12 @@ class Me::DestroysControllerTest < ActionController::TestCase
     assert_login_required
   end
 
-  # following tests fail as updating of type in ghostify! doesn't now work in testing environment.
   def test_update
     login_as @user
     post :update
     assert_equal @user.display_name, @user.reload.display_name
     assert_nil @user.reload.crypted_password
+    assert_equal [], @user.keys
   end
 
   def test_update_scrub_name

@@ -200,9 +200,9 @@ class Profile < ActiveRecord::Base
       end || [] rescue []
     end
 
-    if params['picture']
-      picture = params.delete('picture')
-      params['picture'] = Picture.new(picture) if picture['upload']
+    picture_params = params.delete('picture')
+    if picture_params && picture_params['upload']
+      params['picture'] = Picture.new(picture_params)
     end
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
@@ -223,8 +223,13 @@ class Profile < ActiveRecord::Base
     end
 
     self.update_attributes( params )
-    self.reload
+    self.reload # huh? why is this needed?
     self
+  rescue ErrorMessage
+    # In case the picture update did not work... let's keep the old one.
+    self.picture_id = self.picture_id_was
+    # still raise the error message
+    raise
   end
 
   def cover

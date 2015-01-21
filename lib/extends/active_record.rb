@@ -25,7 +25,8 @@ ActiveRecord::Base.class_eval do
   #
   #    format_attribute :description
   #
-  # Will save an html copy in description_html. This other column must exist
+  # Will save an html copy in description_html. This other column must exist.
+  # The other column will return html_safe values.
   #
   #    format_attribute :summary, :options => [:lite_mode]
   #
@@ -34,20 +35,23 @@ ActiveRecord::Base.class_eval do
   def self.format_attribute(attr_name, flags={})
     flags[:options] ||= []
     #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
-    define_method(:body)       { read_attribute attr_name }
-    define_method(:body_html)  { read_attribute "#{attr_name}_html" }
-    define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
-    before_save :format_body
-    define_method(:format_body) {
-      if body.present? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
-        body.strip!
-        if respond_to?('owner_name')
-          self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
-        else
-          self.body_html = GreenCloth.new(body, 'page', flags[:options]).to_html
-        end
-      end
+    define_method("#{attr_name}_html") {
+      super().try.html_safe
     }
+    before_save :"format_#{attr_name}"
+    define_method("format_#{attr_name}") {
+      return unless formatted_attribute_needs_update?(attr_name)
+      plain = send("#{attr_name}").strip
+      context = respond_to?('owner_name') ? owner_name : 'page'
+      value = GreenCloth.new(plain, context, flags[:options]).to_html
+      send("#{attr_name}_html=", value)
+    }
+  end
+
+  def formatted_attribute_needs_update?(attr_name)
+    return false if send("#{attr_name}").blank?
+    return true if send("#{attr_name}_html").blank?
+    send("#{attr_name}_changed?") && !send("#{attr_name}_html_changed?")
   end
 
   # used to give a default value to serializable attributes

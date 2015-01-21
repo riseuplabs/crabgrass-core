@@ -88,7 +88,7 @@ module Crabgrass
     ]
 
     # allow plugins in more places
-    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY, WIDGETS_DIRECTORY].each do |path|
+    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY].each do |path|
       config.paths['vendor/plugins'] << path
     end
 

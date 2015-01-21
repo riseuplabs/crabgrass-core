@@ -36,6 +36,28 @@
   });
 })();
 
+// submit enhancements
+//
+// submit a form with ctrl+enter
+//
+
+(function() {
+  function keyHandler (event, element){
+    var key = event.which || event.keyCode;
+    var input = element || event.currentTarget;
+    var button = input.form.select('.btn-primary').first();
+    switch (key) {
+      default:
+      break;
+      case Event.KEY_RETURN:
+      if (event.ctrlKey) button.click();
+      break;
+    }
+  }
+
+  document.on('keydown', 'form textarea', keyHandler)
+})();
+
 
 // Toggle the visibility of another element based on if a checkbox is checked or
 // not. Additionally, sets the focus to the first input or textarea that is visible.
