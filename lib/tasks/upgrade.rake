@@ -37,7 +37,7 @@ namespace :cg do
 
     desc "Set created_at timestamps where it is not set"
     task :init_created_at => :environment do
-      [Membership, Tagging, Task, Profile].each do |model|
+      [Membership, ActsAsTaggableOn::Tagging, Task, Profile].each do |model|
         puts "- #{model.name}"
         oldest = model.order(:created_at).where("created_at IS NOT NULL").first
         older = oldest.created_at - 1.week
