@@ -1,3 +1,4 @@
+$body_css: false !default;
 
 body {
   @if $footer_background_color {
@@ -5,6 +6,7 @@ body {
   } @else {
     background-color: $background_color;
   }
+  @if $body_css { @include body_css; }
 }
 
 #middle_container, #footer_container {

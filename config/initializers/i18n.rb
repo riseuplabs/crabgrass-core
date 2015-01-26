@@ -12,7 +12,7 @@ load_path = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
 #
 #   select only locales enabled in crabgrass conf
 #   (if there are any configured)
-# 
+#
 if Conf.enabled_languages.any?
   load_path = load_path.select do |path|
     Conf.enabled_languages.detect do |enabled_lang_code|
@@ -34,7 +34,7 @@ end
 #
 # put override paths last
 #
-Dir[File.join(LOCALE_OVERRIDE_DIRECTORY, '*.yml')].each do |path|
+Dir[File.join(LOCALE_OVERRIDE_DIRECTORY, '**', '*.yml')].each do |path|
   load_path << path
 end
 
