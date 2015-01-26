@@ -150,4 +150,5 @@ ul, ol {
 ul.styled, ol.styled {
   padding: 0;
   margin: 0 0 $baseLineHeight / 2 25px;
+  list-style: inherit;
 }

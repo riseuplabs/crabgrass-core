@@ -1,0 +1,43 @@
+.row-fluid
+  = language_select_tag
+
+.row-fluid
+  %span.span5.pull-left
+    %img{src: '/theme/riseup/images/riseup.png', style: 'padding: 10px;'}
+    %div{style: 'font-size: 1.1em; line-height: 1.5;'}
+      =t 'riseup.run_by_html', description: t('riseup.description'),
+        provider: link_to('riseup.net', 'https://riseup.net')
+      %ul.styled
+        %li= link_to t('riseup.privacy_policy'),
+          "https://help.riseup.net/policy/privacy-policy/"
+        %li= link_to t('riseup.about_us'),
+          "https://help.riseup.net/"
+        %li= link_to t('riseup.email_accounts'),
+          "https://mail.riseup.net/"
+        %li= link_to t('riseup.mailing_lists'),
+          "https://lists.riseup.net/"
+        %li= link_to t('riseup.system_status'),
+          "https://status.riseup.net/"
+        %li= link_to t('riseup.donate'),
+          "https://riseup.net/donate/"
+  %span.span1.pull-left
+  %span.span5.pull-left
+    %img{src: '/images/crabgrass.png', style: 'padding: 10px;'}
+    %div{style: 'font-size: 1.1em; line-height: 1.5;'}
+      =t 'crabgrass.powered_by_html',
+        description: t('crabgrass.description_html')
+      %ul.styled
+        %li= link_to t('crabgrass.report_a_bug'),
+          "https://labs.riseup.net/report-a-bug"
+        %li= link_to t('crabgrass.request_a_feature'),
+          "https://labs.riseup.net/request-a-feature"
+        %li= link_to t('crabgrass.help_pages'),
+          "https://we.riseup.net/crabgrass/table-of-contents"
+        %li= link_to t('crabgrass.get_involved'),
+          "https://we.riseup.net/cgdev/get-involved"
+  %span.span1.pull-left
+
+- if Rails.env.development? && false
+  .row-fluid
+    = render partial: 'common/debug/footer'
+

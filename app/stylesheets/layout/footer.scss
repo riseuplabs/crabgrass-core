@@ -41,6 +41,12 @@
         //@include center-span;
       }
     }
+    ul.styled > li {
+      line-height: 1.5em;
+    }
+    a {
+      color: #000;
+    }
   }
 }
 
