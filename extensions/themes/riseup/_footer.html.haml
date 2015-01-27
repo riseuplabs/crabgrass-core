@@ -6,7 +6,8 @@
     %img{src: '/theme/riseup/images/riseup.png', style: 'padding: 10px;'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
       =t 'riseup.run_by_html', description: t('riseup.description'),
-        provider: link_to('riseup.net', 'https://riseup.net')
+        provider: link_to('riseup.net', 'https://riseup.net'),
+        default: 'Run by riseup.net'
       %ul.styled
         %li= link_to t('riseup.privacy_policy'),
           "https://help.riseup.net/policy/privacy-policy/"
@@ -25,7 +26,8 @@
     %img{src: '/images/crabgrass.png', style: 'padding: 10px;'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
       =t 'crabgrass.powered_by_html',
-        description: t('crabgrass.description_html')
+        description: t('crabgrass.description_html'),
+        default: 'Powered by crabgrass'
       %ul.styled
         %li= link_to t('crabgrass.report_a_bug'),
           "https://labs.riseup.net/report-a-bug"
