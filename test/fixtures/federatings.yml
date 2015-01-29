@@ -32,10 +32,3 @@ federation5:
   group_id: 31 #warm
   network_id: 3001
 
-federation3003:
-  group_id: 3003 #fau
-  network_id: 3001
-
-federation3003b:
-  group_id: 3003 #fau
-  network_id: 3002  # on both sites so the animals can join.

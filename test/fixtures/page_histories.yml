@@ -1,0 +1,4 @@
+# We do not use page_history fixtures yet.
+#
+# Never the less we still keep this file so that rake db:fixtures:load 
+# clears the page_histories table.
