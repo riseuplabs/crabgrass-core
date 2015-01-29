@@ -1,5 +1,4 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
-  id: 1
-another:
-  id: 2
+# We do not use vote fixtures yet.
+#
+# Never the less we still keep this file so that rake db:fixtures:load 
+# clears the votes table.
