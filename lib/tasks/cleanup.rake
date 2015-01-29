@@ -16,7 +16,8 @@ namespace :cg do
       :remove_lost_memberships,
       :remove_empty_posts,
       :remove_unused_tags,
-      :merge_duplicate_tags
+      :merge_duplicate_tags,
+      :dump_duplicate_taggings
     ]
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -77,6 +78,20 @@ namespace :cg do
       end
       puts "Redirected #{count} taggings."
       Rake::Task["cg:cleanup:remove_unused_tags"].invoke
+    end
+
+    desc "Dump duplicate taggings"
+    task(:dump_duplicate_taggings => :environment) do
+      dup_join = <<-EOSQL
+        JOIN taggings AS dups
+          ON  dups.tag_id = taggings.tag_id
+          AND dups.taggable_id = taggings.taggable_id
+          AND dups.taggable_type = taggings.taggable_type
+        EOSQL
+      dups = ActsAsTaggableOn::Tagging.joins(dup_join).
+        where("dups.id > taggings.id").select("dups.id").map(&:id)
+      count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
+      puts "Dropped #{count} duplicate taggings"
     end
 
 =begin

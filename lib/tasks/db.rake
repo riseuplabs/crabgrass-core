@@ -9,6 +9,7 @@ namespace :db do
       ActiveRecord::Base.subclasses.
 #        reject { |type| type.to_s.include? '::' }. # subclassed classes are not our own models
         each do |type|
+          puts "Validating #{type}"
           begin
             type.find_each do |record|
               unless record.valid?
