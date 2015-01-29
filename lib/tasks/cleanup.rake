@@ -17,7 +17,8 @@ namespace :cg do
       :remove_empty_posts,
       :remove_unused_tags,
       :merge_duplicate_tags,
-      :dump_duplicate_taggings
+      :dump_duplicate_taggings,
+      :drop_invalid_email_addresses
     ]
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -92,6 +93,16 @@ namespace :cg do
         where("dups.id > taggings.id").select("dups.id").map(&:id)
       count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
       puts "Dropped #{count} duplicate taggings"
+    end
+
+    desc "Drop all invalid email addresses"
+    task(:drop_invalid_email_addresses) do
+      invalid = User.where("email IS NOT NULL").select do |u|
+        # validate_email_format returns errors - check if there are any
+        ValidatesEmailFormatOf.validate_email_format(u.email).present?
+      end
+      count = User.where(id: invalid.map(&:id)).update_all(email: nil)
+      puts "Cleared #{count} invalid email addresses." if count > 0
     end
 
 =begin
