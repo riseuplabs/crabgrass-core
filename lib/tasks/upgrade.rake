@@ -73,12 +73,21 @@ namespace :cg do
       puts "Converting #{convert_ids.count} to DiscussionPages."
       MessagePage.where(id: convert_ids).update_all type: "DiscussionPage"
 
+      with_assets = MessagePage.
+        joins(:assets).
+        select("DISTINCT pages.id").
+        map(&:id)
+      puts "Converting #{with_assets.count} with assets to DiscussionPages."
+      MessagePage.where(id: with_assets).update_all type: "DiscussionPage"
+
       pages = MessagePage.all
       puts "#{pages.count} Message pages left."
       puts "Converting to Messages."
       pages.each do |page|
+        print '.' if id % 10 == 0
         page.convert
       end
+      PrivateMessageNotice.update_all dismissed: true, dismissed_at: Time.now
     end
 
   end
