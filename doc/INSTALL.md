@@ -10,7 +10,8 @@ Install basic ruby environment
 
 On a debian-based system:
 
-    sudo apt-get install ruby1.9.1 ruby1.9.1-dev mysql-server git make
+    sudo apt-get install ruby1.9.1 ruby1.9.1-dev rake mysql-server
+    mysql-client libmysqld-dev git make libssl-dev g++ sphinxsearch
 
 Depending on what you are running, you might need to install `git-core`
 instead of `git`. You might also need libopenssl-ruby.
@@ -157,7 +158,7 @@ This should be run after deploying a new version of the codebase:
 configure apache
 -----------------------
 
-See doc/apache.txt for information on deploying for production with apache.
+See doc/deployment/apache for information on deploying for production with apache.
 
 set up crontab
 -----------------------
