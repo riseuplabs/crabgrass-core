@@ -5,6 +5,7 @@ tmp
 .AppleDouble
 :2eDS_Store
 :2e_*
+config/sphinx/*.conf
 config/sphinx/*.sphinx.conf
 config/crabgrass/secret.txt
 doc/api
@@ -32,10 +33,9 @@ webrat-*.png
 webrat-*.html
 *#
 #*
-vendor/crabgrass_plugins/crabgrass_acts_as_locked/test/tests.sqlite
+vendor/crabgrass_plugins/castle_gates/test/tests.sqlite
 *.swp
 config/database.yml
-vendor/plugins/haml/init.rb
+vendor/bundle
 .bundle
 bin/
-config/sphinx/*.conf
