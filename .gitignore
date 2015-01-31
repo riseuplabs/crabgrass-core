@@ -1,7 +1,5 @@
-log/*.log
-log/searchd.*
-tmp/**/*
-tmp/*
+log
+tmp
 .DS_Store
 .idea
 .AppleDouble
