@@ -17,8 +17,9 @@ namespace :cg do
       :remove_empty_posts,
       :remove_unused_tags,
       :merge_duplicate_tags,
-      :dump_duplicate_taggings,
-      :drop_invalid_email_addresses
+      :remove_duplicate_taggings,
+      :clear_invalid_email_addresses,
+      :remove_dangling_page_histories
     ]
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -81,8 +82,8 @@ namespace :cg do
       Rake::Task["cg:cleanup:remove_unused_tags"].invoke
     end
 
-    desc "Dump duplicate taggings"
-    task(:dump_duplicate_taggings => :environment) do
+    desc "Remove duplicate taggings"
+    task(:remove_duplicate_taggings => :environment) do
       dup_join = <<-EOSQL
         JOIN taggings AS dups
           ON  dups.tag_id = taggings.tag_id
@@ -92,17 +93,23 @@ namespace :cg do
       dups = ActsAsTaggableOn::Tagging.joins(dup_join).
         where("dups.id > taggings.id").select("dups.id").map(&:id)
       count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
-      puts "Dropped #{count} duplicate taggings"
+      puts "Removed #{count} duplicate taggings"
     end
 
-    desc "Drop all invalid email addresses"
-    task(:drop_invalid_email_addresses) do
+    desc "Clear all invalid email addresses"
+    task(:clear_invalid_email_addresses => :environment) do
       invalid = User.where("email IS NOT NULL").select do |u|
         # validate_email_format returns errors - check if there are any
         ValidatesEmailFormatOf.validate_email_format(u.email).present?
       end
       count = User.where(id: invalid.map(&:id)).update_all(email: nil)
       puts "Cleared #{count} invalid email addresses." if count > 0
+    end
+
+    desc "Remove page histories where the page is gone"
+    task(:remove_dangling_page_histories => :environment) do
+      count = PageHistory.where(dead_entity_sql('page')).delete_all
+      puts "Removed #{count} page history records without a page"
     end
 
 =begin

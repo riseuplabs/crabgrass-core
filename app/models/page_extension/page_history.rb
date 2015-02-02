@@ -1,7 +1,10 @@
 module PageExtension::PageHistory
+
   def self.included(base)
     base.instance_eval do
-      has_many :page_histories, dependent: :destroy, order: "page_histories.id desc"
+      has_many :page_histories,
+        dependent: :delete_all,
+        order: "page_histories.id desc"
     end
   end
 

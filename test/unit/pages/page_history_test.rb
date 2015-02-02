@@ -212,6 +212,18 @@ class PageHistoryTest < ActiveSupport::TestCase
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_c)
   end
 
+  def test_destroy_page_leave_no_history
+    post = Post.create! @page, @user, body: "content"
+    @page.destroy
+    assert_equal 0, PageHistory.count
+  end
+
+  def test_delete_page_leaves_history
+    post = Post.create! @page, @user, body: "content"
+    @page.delete
+    assert_equal 1, PageHistory::Deleted.count
+  end
+
   def test_send_pending_notifications
     user_a = FactoryGirl.create(:user, receive_notifications: "Single")
     User.current = user_a

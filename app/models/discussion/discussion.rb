@@ -24,8 +24,10 @@ class Discussion < ActiveRecord::Base
   # i think this is currently unused?
   has_one :profile, foreign_key: 'discussion_id'
 
+  # remove all posts without creating PageHistory::DestroyComment
+  # if we clean up the whole discussion.
   has_many :posts, order: 'posts.created_at',
-    dependent: :destroy
+    dependent: :delete_all
 
   has_many :visible_posts, order: 'posts.created_at',
     class_name: 'Post', conditions: {deleted_at: nil}
