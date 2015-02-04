@@ -14,7 +14,9 @@ namespace :cg do
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_lost_memberships,
-      :remove_empty_posts
+      :remove_empty_posts,
+      :remove_unused_tags,
+      :merge_duplicate_tags
     ]
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -54,6 +56,7 @@ namespace :cg do
       puts "Removed #{count} empty posts"
     end
 
+<<<<<<< HEAD
 =begin
 
 under development
@@ -61,12 +64,40 @@ under development
     desc "Merge duplicate tags"
     task(:merge_dup_tags => :environment) do
       puts "Merging duplicate tags"
+=======
+    desc "Remove unused tags"
+    task(:remove_unused_tags => :environment) do
+      puts "Deleting all unused tags."
+      ActsAsTaggableOn::Tag.
+        where("id NOT IN (SELECT tag_id FROM taggings)").
+        delete_all
+    end
+
+    desc "Merge duplicate tags"
+    task(:merge_duplicate_tags => :environment) do
+>>>>>>> develop
       map = ActsAsTaggableOn::Tag.
         joins("JOIN tags AS dup ON tags.name = dup.name").
         where("dup.id > tags.id").
         select("dup.*, tags.id AS target")
+<<<<<<< HEAD
     end
 
+=======
+      puts "Merging #{map.count} duplicate tags"
+      count = 0
+      map.each do |dup|
+        count += dup.taggings.update_all tag_id: dup.target
+      end
+      puts "Redirected #{count} taggings."
+      Rake::Task["cg:cleanup:remove_unused_tags"].invoke
+    end
+
+=begin
+
+under development
+
+>>>>>>> develop
 
     desc "Remove all empty groups with duplicate names"
     task(:remove_empty_duplicate_groups => :environment) do
