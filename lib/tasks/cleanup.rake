@@ -11,6 +11,8 @@ namespace :cg do
   namespace :cleanup do
     desc "Run all cleanup tasks"
     task all: [
+      :remove_groups_ending_in_plus,
+      :remove_group_dups,
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_lost_memberships,
@@ -21,6 +23,33 @@ namespace :cg do
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories
     ]
+
+    # There are 6 of these on we.riseup.net from a certain timespan
+    # looks like this was caused by a bug that is now fixed.
+    desc "Remove groups with names ending in +"
+    task(:remove_groups_ending_in_plus => :environment) do
+      count = Group.where("name LIKE '%+'").delete_all
+      puts "Removed #{count} groups that ended in '+'"
+    end
+
+    desc "Remove duplicate groups"
+    task(:remove_group_dups => :environment) do
+      empty_dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
+        where("groups.id NOT IN (SELECT group_id FROM group_participations)")
+      later = empty_dups.where("groups.id > dup.id").
+        select("groups.id")
+      count = Group.where(id: later.map(&:id)).delete_all
+      puts "Removed #{count} empty group duplicates that were created later"
+      early = empty_dups.where("groups.id < dup.id").
+        select("groups.id")
+      count = Group.where(id: early.map(&:id)).delete_all
+      puts "Removed #{count} empty group duplicates that were created first"
+      dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
+        where("groups.id > dup.id")
+      count = Group.where(id: dups.map(&:id)).count
+      Group.destroy_all(id: dups.map(&:id))
+      puts "#{count} group duplicates deleted that were not empty."
+    end
 
     desc "Remove all participations where the entity does not exist anymore"
     task(:remove_dead_participations => :environment) do
@@ -53,7 +82,6 @@ namespace :cg do
 
     desc "Remove empty posts"
     task(:remove_empty_posts => :environment) do
-      puts "Deleting all empty posts"
       count = Post.where(body: nil).delete_all
       count += Post.where(body: '').delete_all
       puts "Removed #{count} empty posts"
@@ -61,10 +89,10 @@ namespace :cg do
 
     desc "Remove unused tags"
     task(:remove_unused_tags => :environment) do
-      puts "Deleting all unused tags."
-      ActsAsTaggableOn::Tag.
+      count = ActsAsTaggableOn::Tag.
         where("id NOT IN (SELECT tag_id FROM taggings)").
         delete_all
+      puts "Deleted #{count} unused tags."
     end
 
     desc "Merge duplicate tags"
@@ -111,6 +139,7 @@ namespace :cg do
       count = PageHistory.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} page history records without a page"
     end
+
 
 =begin
 
