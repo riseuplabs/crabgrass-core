@@ -17,8 +17,11 @@ require "whenever/capistrano"
 set :application, "crabgrass"
 set :user, "crabgrass"
 
-set :repository, "git://labs.riseup.net/crabgrass-core.git"
-set :branch, "develop"
+# set :repository, "git://labs.riseup.net/crabgrass-core.git"
+# set :branch, "develop"
+
+set :repository, "https://github.com/azul/crabgrass-core.git"
+set :branch, "service/cleanup-invalid-records"
 
 deploy_host = ""
 staging_host = "we.dev.riseup.net"
@@ -153,6 +156,7 @@ namespace :crabgrass do
 
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_release}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass/secret.txt #{current_release}/config/crabgrass/secret.txt"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass/crabgrass.production.yml #{current_release}/config/crabgrass/crabgrass.production.yml"
     run "test -f #{deploy_to}/#{shared_dir}/config/.htpasswd && ln -nfs #{deploy_to}/#{shared_dir}/config/.htpasswd #{current_release}/config/.htpasswd"
 
     run "rm -rf #{current_release}/db/sphinx"
