@@ -13,6 +13,7 @@ namespace :cg do
     task all: [
       :remove_groups_ending_in_plus,
       :remove_group_dups,
+      :remove_user_dups,
       :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
@@ -55,6 +56,25 @@ namespace :cg do
       puts "#{count} group duplicates deleted that were not empty."
     end
 
+    desc "Remove duplicate users that have no groups or pages"
+    task(:remove_user_dups => :environment) do
+      puts "Removing duplicate users. This may take some time."
+      dups = User.joins("JOIN users AS dups ON dups.login = users.login").
+        where("users.created_at = users.updated_at")
+      count = dups.where("users.id > dups.id").
+        select{|u| u.groups.empty?}.
+        select{|u| u.pages.empty?}.
+        each{|u| u.destroy}.count
+      count += dups.where("users.id < dups.id").
+        select{|u| u.groups.empty?}.
+        select{|u| u.pages.empty?}.
+        each{|u| u.destroy}.count
+      puts "Removed #{count} empty duplicated users."
+      count = dups.where("users.id > dups.id").
+        each{|u| u.destroy}.count
+      puts "Removed #{count} duplicated users with pages and/or groups."
+    end
+
     desc "Turn committees without a parent into normal groups"
     task(:committees_without_parent => :environment) do
       Committee.where(parent_id: nil).update_all(type: nil)
@@ -86,7 +106,7 @@ namespace :cg do
 
     def dead_entity_sql(type, table = nil)
       table ||= type + 's';
-      "#{type}_id NOT IN (SELECT id FROM #{table})"
+      "(#{type}_id NOT IN (SELECT id FROM #{table})) OR (#{type}_id IS NULL)"
     end
 
     desc "Remove empty posts"
