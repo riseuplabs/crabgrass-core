@@ -278,6 +278,10 @@ class Group < ActiveRecord::Base
 
   # make destroy protected
   # callers should use destroy_by
+  # TODO: this brakes Group.destroy_all - which is helpful for cleanup.
+  # I see how it can be useful to hide this from the api.
+  # But maybe we should do so by having a clear api and not by breaking
+  # the default rails api.
   def destroy
     super
   end

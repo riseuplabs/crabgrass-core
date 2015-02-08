@@ -33,6 +33,10 @@ namespace :cg do
       puts "Removed #{count} groups that ended in '+'"
     end
 
+    # This will leave invalid records behind such as GroupParticipations
+    # and Memberships whose group does not exist anymore.
+    # Rather than instantiating all the groups and calling the depended hooks
+    # we clean them up afterwards in other rake tasks.
     desc "Remove duplicate groups"
     task(:remove_group_dups => :environment) do
       empty_dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
@@ -47,8 +51,7 @@ namespace :cg do
       puts "Removed #{count} empty group duplicates that were created first"
       dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
         where("groups.id > dup.id")
-      count = Group.where(id: dups.map(&:id)).count
-      Group.destroy_all(id: dups.map(&:id))
+      count = Group.where(id: dups.map(&:id)).delete_all
       puts "#{count} group duplicates deleted that were not empty."
     end
 
