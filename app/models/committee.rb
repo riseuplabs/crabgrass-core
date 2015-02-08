@@ -1,5 +1,8 @@
 class Committee < Group
 
+
+  validates :parent, presence: true
+
   ##
   ## NAMING
   ##

@@ -13,6 +13,7 @@ namespace :cg do
     task all: [
       :remove_groups_ending_in_plus,
       :remove_group_dups,
+      :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_lost_memberships,
@@ -49,6 +50,11 @@ namespace :cg do
       count = Group.where(id: dups.map(&:id)).count
       Group.destroy_all(id: dups.map(&:id))
       puts "#{count} group duplicates deleted that were not empty."
+    end
+
+    desc "Turn committees without a parent into normal groups"
+    task(:committees_without_parent => :environment) do
+      Committee.where(parent_id: nil).update_all(type: nil)
     end
 
     desc "Remove all participations where the entity does not exist anymore"
