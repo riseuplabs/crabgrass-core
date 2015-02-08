@@ -56,15 +56,6 @@ namespace :cg do
       puts "Removed #{count} empty posts"
     end
 
-<<<<<<< HEAD
-=begin
-
-under development
-
-    desc "Merge duplicate tags"
-    task(:merge_dup_tags => :environment) do
-      puts "Merging duplicate tags"
-=======
     desc "Remove unused tags"
     task(:remove_unused_tags => :environment) do
       puts "Deleting all unused tags."
@@ -75,15 +66,10 @@ under development
 
     desc "Merge duplicate tags"
     task(:merge_duplicate_tags => :environment) do
->>>>>>> develop
       map = ActsAsTaggableOn::Tag.
         joins("JOIN tags AS dup ON tags.name = dup.name").
         where("dup.id > tags.id").
         select("dup.*, tags.id AS target")
-<<<<<<< HEAD
-    end
-
-=======
       puts "Merging #{map.count} duplicate tags"
       count = 0
       map.each do |dup|
@@ -97,7 +83,6 @@ under development
 
 under development
 
->>>>>>> develop
 
     desc "Remove all empty groups with duplicate names"
     task(:remove_empty_duplicate_groups => :environment) do
