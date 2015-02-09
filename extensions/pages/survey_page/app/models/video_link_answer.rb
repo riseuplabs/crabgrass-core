@@ -22,8 +22,9 @@ class VideoLinkAnswer < SurveyAnswer
   end
 
   def update_external_video
-    self.external_video ||= ExternalVideo.new
-    external_video.update_attribute(:media_embed, value)
+    # There's no more ExternalVideo class
+    # self.external_video ||= ExternalVideo.new
+    # external_video.update_attribute(:media_embed, value)
   end
 
   def value=(val)
