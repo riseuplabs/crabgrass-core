@@ -22,6 +22,7 @@ test:
   port: 3313
   address: localhost
   morphology: stem_en
+  version: 2.0.4
 
 production:
   <<: *common

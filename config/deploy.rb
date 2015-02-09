@@ -17,11 +17,8 @@ require "whenever/capistrano"
 set :application, "crabgrass"
 set :user, "crabgrass"
 
-# set :repository, "git://labs.riseup.net/crabgrass-core.git"
-# set :branch, "develop"
-
-set :repository, "https://github.com/azul/crabgrass-core.git"
-set :branch, "service/cleanup-invalid-records"
+set :repository, "git://labs.riseup.net/crabgrass-core.git"
+set :branch, "develop"
 
 deploy_host = ""
 staging_host = "we.dev.riseup.net"
