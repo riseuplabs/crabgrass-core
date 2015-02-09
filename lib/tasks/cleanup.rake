@@ -23,7 +23,8 @@ namespace :cg do
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
       :clear_invalid_email_addresses,
-      :remove_dangling_page_histories
+      :remove_dangling_page_histories,
+      :remove_invalid_federation_requests
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -169,6 +170,18 @@ namespace :cg do
       puts "Removed #{count} page history records without a page"
     end
 
+    desc "Remove invites to join a network with another network"
+    task(:remove_invalid_federation_requests => :environment) do
+      invalid = RequestToJoinOurNetwork.
+        joins("JOIN groups ON groups.id = recipient_id").
+        where(groups: {type: 'Network'}).
+        where("state != 'approved'").
+        select("requests.id")
+      count = RequestToJoinOurNetwork.
+        where(id: invalid.map(&:id)).
+        delete_all
+      puts "Removed #{count} requests to join a network with another network."
+    end
 
 =begin
 
