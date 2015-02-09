@@ -14,27 +14,27 @@ Depending on what mode rails is run in, the appropriate <tt>crabgrass.*.yml</tt>
 
 = Global Options
 
-=== Plugins
+=== Extensions
 
-Crabgrass has two custom plugin folders <tt>~/mods/</tt> and <tt>~/tools/</tt>. You can control which plugins are loaded with the <tt>enabled_mods</tt> and <tt>enabled_tools</tt> options:
+Crabgrass has extension folders in <tt>~/extensions/</tt>. You can control which plugins are loaded with the <tt>enabled_mods</tt> and <tt>enabled_pages</tt> options:
 
-Enabled plugins stored in the <tt>~/mods/</tt> directory:
+Enabled plugins stored in the <tt>~/extensions/mods/</tt> directory:
 
   enabled_mods:
     - super_admin
 
 If <tt>enabled_mods</tt> is left blank, then no mods are loaded.
 
-Enable plugins stored in the <tt>~/tools/</tt> directory:
+Enable plugins stored in the <tt>~/extensions/pages/</tt> directory:
 
-  enabled_tools:
+  enabled_pages:
     - asset_tool
     - core_tools
     - rate_many_tool
     - task_list_tool
     - wiki_tool
 
-If <tt>enabled_tools</tt> is left blank, then all tools are enabled.
+If <tt>enabled_pages</tt> is left blank, then all tools are enabled.
 
 === Languages
 
@@ -239,7 +239,7 @@ Unfrequently modified options:
     - DiscussionPage
   enabled_mods:
     - super_admin
-  enabled_tools:
+  enabled_pages:
     - core_tools
     - wiki_tool
   enabled_languages:
@@ -274,10 +274,10 @@ Unfrequently modified options:
   enabled_mods:
     - super_admin
 
-  ## enable plugins stored in the tools/ directory
+  ## enable plugins stored in the pages/ directory
   ## (to enable all tools, leave this empty)
 
-  enabled_tools:
+  enabled_pages:
     - asset_tool
     - core_tools
     - event_tool
@@ -286,9 +286,6 @@ Unfrequently modified options:
     - task_list_tool
     - wiki_tool
     - gallery_tool
-    - external_video_tool
-    - announcement_tool
-    - feed_tool
 
   ## enable languages
   ## (to enable all languages, leave this empty)

@@ -25,8 +25,8 @@ class Federating < ActiveRecord::Base
   validates :group, presence: true
   validates :network, presence: true
 
-  validate :group_is_not_network
-  validate :group_is_not_network_committee
+  validate :group_is_not_network, on: :create
+  validate :group_is_not_network_committee, on: :create
 
 
   # optional

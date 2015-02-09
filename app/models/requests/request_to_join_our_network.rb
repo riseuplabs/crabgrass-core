@@ -10,8 +10,8 @@ class RequestToJoinOurNetwork < Request
 
   validate :no_membership_yet, on: :create
   validate :requestable_is_network
-  validate :group_is_not_network
-  validate :group_is_not_network_committee
+  validate :group_is_not_network, unless: :approved?
+  validate :group_is_not_network_committee, unless: :approved?
 
   def network() requestable end
   def group() recipient end

@@ -11,13 +11,75 @@ namespace :cg do
   namespace :cleanup do
     desc "Run all cleanup tasks"
     task all: [
+      :remove_groups_ending_in_plus,
+      :remove_group_dups,
+      :remove_user_dups,
+      :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_lost_memberships,
       :remove_empty_posts,
       :remove_unused_tags,
-      :merge_duplicate_tags
+      :merge_duplicate_tags,
+      :remove_duplicate_taggings,
+      :clear_invalid_email_addresses,
+      :remove_dangling_page_histories,
+      :remove_invalid_federation_requests
     ]
+
+    # There are 6 of these on we.riseup.net from a certain timespan
+    # looks like this was caused by a bug that is now fixed.
+    desc "Remove groups with names ending in +"
+    task(:remove_groups_ending_in_plus => :environment) do
+      count = Group.where("name LIKE '%+'").delete_all
+      puts "Removed #{count} groups that ended in '+'"
+    end
+
+    # This will leave invalid records behind such as GroupParticipations
+    # and Memberships whose group does not exist anymore.
+    # Rather than instantiating all the groups and calling the depended hooks
+    # we clean them up afterwards in other rake tasks.
+    desc "Remove duplicate groups"
+    task(:remove_group_dups => :environment) do
+      empty_dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
+        where("groups.id NOT IN (SELECT group_id FROM group_participations)")
+      later = empty_dups.where("groups.id > dup.id").
+        select("groups.id")
+      count = Group.where(id: later.map(&:id)).delete_all
+      puts "Removed #{count} empty group duplicates that were created later"
+      early = empty_dups.where("groups.id < dup.id").
+        select("groups.id")
+      count = Group.where(id: early.map(&:id)).delete_all
+      puts "Removed #{count} empty group duplicates that were created first"
+      dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
+        where("groups.id > dup.id")
+      count = Group.where(id: dups.map(&:id)).delete_all
+      puts "#{count} group duplicates deleted that were not empty."
+    end
+
+    desc "Remove duplicate users that have no groups or pages"
+    task(:remove_user_dups => :environment) do
+      puts "Removing duplicate users. This may take some time."
+      dups = User.joins("JOIN users AS dups ON dups.login = users.login").
+        where("users.created_at = users.updated_at")
+      count = dups.where("users.id > dups.id").
+        select{|u| u.groups.empty?}.
+        select{|u| u.pages.empty?}.
+        each{|u| u.destroy}.count
+      count += dups.where("users.id < dups.id").
+        select{|u| u.groups.empty?}.
+        select{|u| u.pages.empty?}.
+        each{|u| u.destroy}.count
+      puts "Removed #{count} empty duplicated users."
+      count = dups.where("users.id > dups.id").
+        each{|u| u.destroy}.count
+      puts "Removed #{count} duplicated users with pages and/or groups."
+    end
+
+    desc "Turn committees without a parent into normal groups"
+    task(:committees_without_parent => :environment) do
+      Committee.where(parent_id: nil).update_all(type: nil)
+    end
 
     desc "Remove all participations where the entity does not exist anymore"
     task(:remove_dead_participations => :environment) do
@@ -45,45 +107,30 @@ namespace :cg do
 
     def dead_entity_sql(type, table = nil)
       table ||= type + 's';
-      "#{type}_id NOT IN (SELECT id FROM #{table})"
+      "(#{type}_id NOT IN (SELECT id FROM #{table})) OR (#{type}_id IS NULL)"
     end
 
     desc "Remove empty posts"
     task(:remove_empty_posts => :environment) do
-      puts "Deleting all empty posts"
       count = Post.where(body: nil).delete_all
       count += Post.where(body: '').delete_all
       puts "Removed #{count} empty posts"
     end
 
-<<<<<<< HEAD
-=begin
-
-under development
-
-    desc "Merge duplicate tags"
-    task(:merge_dup_tags => :environment) do
-      puts "Merging duplicate tags"
-=======
     desc "Remove unused tags"
     task(:remove_unused_tags => :environment) do
-      puts "Deleting all unused tags."
-      ActsAsTaggableOn::Tag.
+      count = ActsAsTaggableOn::Tag.
         where("id NOT IN (SELECT tag_id FROM taggings)").
         delete_all
+      puts "Deleted #{count} unused tags."
     end
 
     desc "Merge duplicate tags"
     task(:merge_duplicate_tags => :environment) do
->>>>>>> develop
       map = ActsAsTaggableOn::Tag.
         joins("JOIN tags AS dup ON tags.name = dup.name").
         where("dup.id > tags.id").
         select("dup.*, tags.id AS target")
-<<<<<<< HEAD
-    end
-
-=======
       puts "Merging #{map.count} duplicate tags"
       count = 0
       map.each do |dup|
@@ -93,11 +140,53 @@ under development
       Rake::Task["cg:cleanup:remove_unused_tags"].invoke
     end
 
+    desc "Remove duplicate taggings"
+    task(:remove_duplicate_taggings => :environment) do
+      dup_join = <<-EOSQL
+        JOIN taggings AS dups
+          ON  dups.tag_id = taggings.tag_id
+          AND dups.taggable_id = taggings.taggable_id
+          AND dups.taggable_type = taggings.taggable_type
+        EOSQL
+      dups = ActsAsTaggableOn::Tagging.joins(dup_join).
+        where("dups.id > taggings.id").select("dups.id").map(&:id)
+      count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
+      puts "Removed #{count} duplicate taggings"
+    end
+
+    desc "Clear all invalid email addresses"
+    task(:clear_invalid_email_addresses => :environment) do
+      invalid = User.where("email IS NOT NULL").select do |u|
+        # validate_email_format returns errors - check if there are any
+        ValidatesEmailFormatOf.validate_email_format(u.email).present?
+      end
+      count = User.where(id: invalid.map(&:id)).update_all(email: nil)
+      puts "Cleared #{count} invalid email addresses." if count > 0
+    end
+
+    desc "Remove page histories where the page is gone"
+    task(:remove_dangling_page_histories => :environment) do
+      count = PageHistory.where(dead_entity_sql('page')).delete_all
+      puts "Removed #{count} page history records without a page"
+    end
+
+    desc "Remove invites to join a network with another network"
+    task(:remove_invalid_federation_requests => :environment) do
+      invalid = RequestToJoinOurNetwork.
+        joins("JOIN groups ON groups.id = recipient_id").
+        where(groups: {type: 'Network'}).
+        where("state != 'approved'").
+        select("requests.id")
+      count = RequestToJoinOurNetwork.
+        where(id: invalid.map(&:id)).
+        delete_all
+      puts "Removed #{count} requests to join a network with another network."
+    end
+
 =begin
 
 under development
 
->>>>>>> develop
 
     desc "Remove all empty groups with duplicate names"
     task(:remove_empty_duplicate_groups => :environment) do

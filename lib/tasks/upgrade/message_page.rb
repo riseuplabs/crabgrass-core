@@ -2,12 +2,8 @@
 class MessagePage < Page
 
   def convert
-    if assets.any?
-      update_attributes! type: "DiscussionPage"
-    else
-      turn_into_messages
-      destroy
-    end
+    turn_into_messages
+    destroy
   end
 
   protected

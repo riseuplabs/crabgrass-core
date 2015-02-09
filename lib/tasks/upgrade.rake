@@ -2,7 +2,7 @@
 #
 # Some data structures have changed over years. These tasks help upgrade them.
 #
-# They only need to be run once and only when migrating from older versions. 
+# They only need to be run once and only when migrating from older versions.
 # However, when adding tasks make sure running them again won't hurt.
 #
 #
@@ -10,6 +10,16 @@
 
 namespace :cg do
   namespace :upgrade do
+    desc "Complete upgrade to crabgrass 0.6"
+    task :to_0_6 => [
+      'db:migrate',
+      'cg:upgrade:init_group_permissions',
+      'cg:upgrade:migrate_group_permissions',
+      'cg:upgrade:user_permissions',
+      'cg:upgrade:init_created_at',
+      'cg:upgrade:convert_message_pages'
+    ]
+
     # This will grant a group's access to its members.
     # This is for the migration to core's castle_gates permission system to work
     # with data created before this system was added.
@@ -63,14 +73,23 @@ namespace :cg do
       puts "Converting #{convert_ids.count} to DiscussionPages."
       MessagePage.where(id: convert_ids).update_all type: "DiscussionPage"
 
+      with_assets = MessagePage.
+        joins(:assets).
+        select("DISTINCT pages.id").
+        map(&:id)
+      puts "Converting #{with_assets.count} with assets to DiscussionPages."
+      MessagePage.where(id: with_assets).update_all type: "DiscussionPage"
+
       pages = MessagePage.all
       puts "#{pages.count} Message pages left."
       puts "Converting to Messages."
       pages.each do |page|
+        print '.' if id % 10 == 0
         page.convert
       end
+      PrivateMessageNotice.update_all dismissed: true, dismissed_at: Time.now
     end
-    
+
   end
 end
 

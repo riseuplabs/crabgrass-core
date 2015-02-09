@@ -1,5 +1,6 @@
 class Committee < Group
 
+
   ##
   ## NAMING
   ##
