@@ -25,8 +25,9 @@ namespace :cg do
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
       :remove_invalid_federation_requests,
+      :remove_empty_tasks,
       :fix_activity_types,
-      :remove_empty_tasks
+      :fix_invalid_request_states
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -186,18 +187,26 @@ namespace :cg do
       puts "Removed #{count} requests to join a network with another network."
     end
 
-    desc "Fix type column in activities so the classes actually exist"
-    task(:fix_activity_types => :environment) do
-      count = Activity.where(type: 'UserRemovedFromGroupActivity').
-        update_all(type: 'UserLeftGroupActivity')
-      puts "fixed #{count} Activities to have an existing type."
-    end
-
     desc "Remove tasks that have no name and no description"
     task(:remove_empty_tasks => :environment) do
       count = Task.where(name: '', description: '').delete_all
       puts "Removed #{count} tasks that lacked a name and a description"
     end
+
+    desc "Fix type column in activities so the classes actually exist"
+    task(:fix_activity_types => :environment) do
+      count = Activity.where(type: 'UserRemovedFromGroupActivity').
+        update_all(type: 'UserLeftGroupActivity')
+      puts "Fixed #{count} Activities by setting an existing type."
+    end
+
+    desc "Fix invalid states of requests"
+    task(:fix_invalid_request_states => :environment) do
+      count = Request.where(state: 'ignored').
+        update_all(state: 'pending')
+      puts "Fixed #{count} Requests by setting a valid state."
+    end
+
 
 =begin
 
