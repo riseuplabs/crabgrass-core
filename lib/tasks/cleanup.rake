@@ -48,17 +48,15 @@ namespace :cg do
     task(:remove_group_dups => :environment) do
       empty_dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
         where("groups.id NOT IN (SELECT group_id FROM group_participations)")
-      later = empty_dups.where("groups.id > dup.id").
-        select("groups.id")
-      count = Group.where(id: later.map(&:id)).delete_all
+      later = empty_dups.where("groups.id > dup.id").pluck(:id)
+      count = Group.where(id: later).delete_all
       puts "Removed #{count} empty group duplicates that were created later"
-      early = empty_dups.where("groups.id < dup.id").
-        select("groups.id")
-      count = Group.where(id: early.map(&:id)).delete_all
+      early = empty_dups.where("groups.id < dup.id").pluck(:id)
+      count = Group.where(id: early).delete_all
       puts "Removed #{count} empty group duplicates that were created first"
       dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
-        where("groups.id > dup.id")
-      count = Group.where(id: dups.map(&:id)).delete_all
+        where("groups.id > dup.id").pluck(:id)
+      count = Group.where(id: dups).delete_all
       puts "#{count} group duplicates deleted that were not empty."
     end
 
@@ -161,7 +159,7 @@ namespace :cg do
           AND dups.taggable_type = taggings.taggable_type
         EOSQL
       dups = ActsAsTaggableOn::Tagging.joins(dup_join).
-        where("dups.id > taggings.id").select("dups.id").map(&:id)
+        where("dups.id > taggings.id").pluck("dups.id")
       count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
       puts "Removed #{count} duplicate taggings"
     end
@@ -188,9 +186,9 @@ namespace :cg do
         joins("JOIN groups ON groups.id = recipient_id").
         where(groups: {type: 'Network'}).
         where("state != 'approved'").
-        select("requests.id")
+        pluck(:id)
       count = RequestToJoinOurNetwork.
-        where(id: invalid.map(&:id)).
+        where(id: invalid).
         delete_all
       puts "Removed #{count} requests to join a network with another network."
     end
@@ -202,7 +200,7 @@ namespace :cg do
         select{|r| ValidatesEmailFormatOf::validate_email_format(r.email)}.
         map(&:id)
       count = RequestToJoinUsViaEmail.
-        where(id: invalid.map(&:id)).
+        where(id: invalid).
         delete_all
       puts "Removed #{count} requests via invalid email adresses."
     end
