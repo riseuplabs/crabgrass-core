@@ -17,8 +17,9 @@ namespace :cg do
       :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
-      :remove_lost_memberships,
+      :remove_dead_memberships,
       :remove_empty_posts,
+      :remove_dead_posts,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
@@ -105,7 +106,7 @@ namespace :cg do
     end
 
     desc "Remove all federatings where the group does not exist anymore"
-    task(:remove_lost_memberships => :environment) do
+    task(:remove_dead_memberships => :environment) do
       count = Membership.where(dead_entity_sql('group')).delete_all
       puts "Removed #{count} Memberships with outdated groups."
     end
@@ -120,6 +121,12 @@ namespace :cg do
       count = Post.where(body: nil).delete_all
       count += Post.where(body: '').delete_all
       puts "Removed #{count} empty posts"
+    end
+
+    desc "Remove posts of users that do not exist anymore"
+    task(:remove_dead_posts => :environment) do
+      count = Post.where(dead_entity_sql('user')).delete_all
+      puts "Removed #{count} posts with a blank user"
     end
 
     desc "Remove unused tags"
