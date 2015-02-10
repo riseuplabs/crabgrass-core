@@ -25,6 +25,7 @@ namespace :cg do
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
       :remove_invalid_federation_requests,
+      :remove_invalid_email_requests,
       :remove_empty_tasks,
       :fix_activity_types,
       :fix_invalid_request_states
@@ -185,6 +186,18 @@ namespace :cg do
         where(id: invalid.map(&:id)).
         delete_all
       puts "Removed #{count} requests to join a network with another network."
+    end
+
+    desc "Remove email requests with invalid email"
+    task(:remove_invalid_email_requests => :environment) do
+      invalid = RequestToJoinUsViaEmail.
+        where(state: 'pending').select("id, email").all.
+        select{|r| ValidatesEmailFormatOf::validate_email_format(r.email)}.
+        map(&:id)
+      count = RequestToJoinUsViaEmail.
+        where(id: invalid.map(&:id)).
+        delete_all
+      puts "Removed #{count} requests via invalid email adresses."
     end
 
     desc "Remove tasks that have no name and no description"
