@@ -25,7 +25,8 @@ namespace :cg do
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
       :remove_invalid_federation_requests,
-      :fix_activity_types
+      :fix_activity_types,
+      :remove_empty_tasks
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -190,6 +191,12 @@ namespace :cg do
       count = Activity.where(type: 'UserRemovedFromGroupActivity').
         update_all(type: 'UserLeftGroupActivity')
       puts "fixed #{count} Activities to have an existing type."
+    end
+
+    desc "Remove tasks that have no name and no description"
+    task(:remove_empty_tasks => :environment) do
+      count = Task.where(name: '', description: '').delete_all
+      puts "Removed #{count} tasks that lacked a name and a description"
     end
 
 =begin
