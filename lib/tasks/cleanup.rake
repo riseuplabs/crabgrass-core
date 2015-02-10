@@ -24,7 +24,8 @@ namespace :cg do
       :remove_duplicate_taggings,
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
-      :remove_invalid_federation_requests
+      :remove_invalid_federation_requests,
+      :fix_activity_types
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -78,7 +79,8 @@ namespace :cg do
 
     desc "Turn committees without a parent into normal groups"
     task(:committees_without_parent => :environment) do
-      Committee.where(parent_id: nil).update_all(type: nil)
+      count = Committee.where(parent_id: nil).update_all(type: nil)
+      puts "Turned #{count} committees without parent into groups"
     end
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -181,6 +183,13 @@ namespace :cg do
         where(id: invalid.map(&:id)).
         delete_all
       puts "Removed #{count} requests to join a network with another network."
+    end
+
+    desc "Fix type column in activities so the classes actually exist"
+    task(:fix_activity_types => :environment) do
+      count = Activity.where(type: 'UserRemovedFromGroupActivity').
+        update_all(type: 'UserLeftGroupActivity')
+      puts "fixed #{count} Activities to have an existing type."
     end
 
 =begin
