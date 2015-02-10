@@ -17,14 +17,19 @@ namespace :cg do
       :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
-      :remove_lost_memberships,
+      :remove_dead_memberships,
       :remove_empty_posts,
+      :remove_dead_posts,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
-      :remove_invalid_federation_requests
+      :remove_invalid_federation_requests,
+      :remove_invalid_email_requests,
+      :remove_empty_tasks,
+      :fix_activity_types,
+      :fix_invalid_request_states
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -43,17 +48,15 @@ namespace :cg do
     task(:remove_group_dups => :environment) do
       empty_dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
         where("groups.id NOT IN (SELECT group_id FROM group_participations)")
-      later = empty_dups.where("groups.id > dup.id").
-        select("groups.id")
-      count = Group.where(id: later.map(&:id)).delete_all
+      later = empty_dups.where("groups.id > dup.id").pluck(:id)
+      count = Group.where(id: later).delete_all
       puts "Removed #{count} empty group duplicates that were created later"
-      early = empty_dups.where("groups.id < dup.id").
-        select("groups.id")
-      count = Group.where(id: early.map(&:id)).delete_all
+      early = empty_dups.where("groups.id < dup.id").pluck(:id)
+      count = Group.where(id: early).delete_all
       puts "Removed #{count} empty group duplicates that were created first"
       dups = Group.joins("JOIN groups AS dup ON groups.name = dup.name").
-        where("groups.id > dup.id")
-      count = Group.where(id: dups.map(&:id)).delete_all
+        where("groups.id > dup.id").pluck(:id)
+      count = Group.where(id: dups).delete_all
       puts "#{count} group duplicates deleted that were not empty."
     end
 
@@ -78,7 +81,8 @@ namespace :cg do
 
     desc "Turn committees without a parent into normal groups"
     task(:committees_without_parent => :environment) do
-      Committee.where(parent_id: nil).update_all(type: nil)
+      count = Committee.where(parent_id: nil).update_all(type: nil)
+      puts "Turned #{count} committees without parent into groups"
     end
 
     desc "Remove all participations where the entity does not exist anymore"
@@ -100,7 +104,7 @@ namespace :cg do
     end
 
     desc "Remove all federatings where the group does not exist anymore"
-    task(:remove_lost_memberships => :environment) do
+    task(:remove_dead_memberships => :environment) do
       count = Membership.where(dead_entity_sql('group')).delete_all
       puts "Removed #{count} Memberships with outdated groups."
     end
@@ -115,6 +119,12 @@ namespace :cg do
       count = Post.where(body: nil).delete_all
       count += Post.where(body: '').delete_all
       puts "Removed #{count} empty posts"
+    end
+
+    desc "Remove posts of users that do not exist anymore"
+    task(:remove_dead_posts => :environment) do
+      count = Post.where(dead_entity_sql('user')).delete_all
+      puts "Removed #{count} posts with a blank user"
     end
 
     desc "Remove unused tags"
@@ -149,7 +159,7 @@ namespace :cg do
           AND dups.taggable_type = taggings.taggable_type
         EOSQL
       dups = ActsAsTaggableOn::Tagging.joins(dup_join).
-        where("dups.id > taggings.id").select("dups.id").map(&:id)
+        where("dups.id > taggings.id").pluck("dups.id")
       count = ActsAsTaggableOn::Tagging.where(id: dups).delete_all
       puts "Removed #{count} duplicate taggings"
     end
@@ -176,12 +186,45 @@ namespace :cg do
         joins("JOIN groups ON groups.id = recipient_id").
         where(groups: {type: 'Network'}).
         where("state != 'approved'").
-        select("requests.id")
+        pluck(:id)
       count = RequestToJoinOurNetwork.
-        where(id: invalid.map(&:id)).
+        where(id: invalid).
         delete_all
       puts "Removed #{count} requests to join a network with another network."
     end
+
+    desc "Remove email requests with invalid email"
+    task(:remove_invalid_email_requests => :environment) do
+      invalid = RequestToJoinUsViaEmail.
+        where(state: 'pending').select("id, email").all.
+        select{|r| ValidatesEmailFormatOf::validate_email_format(r.email)}.
+        map(&:id)
+      count = RequestToJoinUsViaEmail.
+        where(id: invalid).
+        delete_all
+      puts "Removed #{count} requests via invalid email adresses."
+    end
+
+    desc "Remove tasks that have no name and no description"
+    task(:remove_empty_tasks => :environment) do
+      count = Task.where(name: '', description: '').delete_all
+      puts "Removed #{count} tasks that lacked a name and a description"
+    end
+
+    desc "Fix type column in activities so the classes actually exist"
+    task(:fix_activity_types => :environment) do
+      count = Activity.where(type: 'UserRemovedFromGroupActivity').
+        update_all(type: 'UserLeftGroupActivity')
+      puts "Fixed #{count} Activities by setting an existing type."
+    end
+
+    desc "Fix invalid states of requests"
+    task(:fix_invalid_request_states => :environment) do
+      count = Request.where(state: 'ignored').
+        update_all(state: 'pending')
+      puts "Fixed #{count} Requests by setting a valid state."
+    end
+
 
 =begin
 
