@@ -21,6 +21,7 @@ namespace :cg do
       :remove_empty_posts,
       :remove_dead_posts,
       :remove_dead_chat_messages,
+      :remove_dead_chat_channels,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
@@ -133,6 +134,12 @@ namespace :cg do
     task(:remove_dead_chat_messages => :environment) do
       count = ChatMessage.where(dead_entity_sql('sender', 'users')).delete_all
       puts "Removed #{count} chat messages with a blank sender"
+    end
+
+    desc "Remove Chat Channels of groups that do not exist anymore"
+    task(:remove_dead_chat_channels => :environment) do
+      count = ChatChannel.where(dead_entity_sql('group')).delete_all
+      puts "Removed #{count} chat channels of former groups"
     end
 
     desc "Remove unused tags"
