@@ -193,6 +193,8 @@ namespace :cg do
     task(:remove_dangling_page_histories => :environment) do
       count = PageHistory.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} page history records without a page"
+      count = PageHistory.where(dead_entity_sql('user')).delete_all
+      puts "Removed #{count} page history records without a user"
     end
 
     desc "Remove invites to join a network with another network"
