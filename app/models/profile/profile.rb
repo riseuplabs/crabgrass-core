@@ -121,9 +121,7 @@ class Profile < ActiveRecord::Base
 
   # belongs_to :photo, :class_name => "Asset", :dependent => :destroy
   belongs_to :picture, dependent: :destroy
-
-  # There's no more ExternalVideo class
-  #belongs_to :video, class_name: "ExternalVideo", dependent: :destroy
+  belongs_to :video, class_name: "ExternalVideo", dependent: :destroy
 
   has_many :locations,
     class_name: '::ProfileLocation',
@@ -206,8 +204,7 @@ class Profile < ActiveRecord::Base
     if picture_params && picture_params['upload']
       params['picture'] = Picture.new(picture_params)
     end
-    # There's no more ExternalVideo class
-    # params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
+    params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
     geo_location_options = {
       geo_country_id: params.delete('country_id'),
