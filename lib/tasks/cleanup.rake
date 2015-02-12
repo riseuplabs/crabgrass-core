@@ -243,40 +243,5 @@ namespace :cg do
     end
 
 
-=begin
-
-under development
-
-
-    desc "Remove all empty groups with duplicate names"
-    task(:remove_empty_duplicate_groups => :environment) do
-      puts "Deleting newer empty group duplicates."
-      new_dups = duplicates.where("other_group.id < groups.id")
-      destroy_empty_groups(new_dups)
-      puts "Deleting older empty group duplicates."
-      early_dups = duplicates.where("other_group.id > groups.id")
-      destroy_empty_groups(early_dups)
-    end
-
-    def duplicates
-      Group.joins("JOIN groups as other_group ON other_group.name = groups.name")
-    end
-
-    def destroy_empty_groups(query)
-      puts "Found #{query.count} duplicate groups."
-      query.each do |group|
-        destroy_if_empty(group)
-      end
-      puts "#{query.count} duplicate groups left."
-    end
-
-    def destroy_if_empty(group)
-      return if group.users.count > 1
-      return if group.pages.any?
-      return if group.version > 1
-      group.send(:destroy)
-    end
-
-=end
   end
 end
