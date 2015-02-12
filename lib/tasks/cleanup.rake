@@ -20,6 +20,8 @@ namespace :cg do
       :remove_dead_memberships,
       :remove_empty_posts,
       :remove_dead_posts,
+      :remove_dead_chat_messages,
+      :remove_dead_chat_channels,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
@@ -63,13 +65,14 @@ namespace :cg do
     desc "Remove duplicate users that have no groups or pages"
     task(:remove_user_dups => :environment) do
       puts "Removing duplicate users. This may take some time."
-      dups = User.joins("JOIN users AS dups ON dups.login = users.login").
-        where("users.created_at = users.updated_at")
+      dups = User.joins("JOIN users AS dups ON dups.login = users.login")
       count = dups.where("users.id > dups.id").
+        where("users.created_at = users.updated_at").
         select{|u| u.groups.empty?}.
         select{|u| u.pages.empty?}.
         each{|u| u.destroy}.count
       count += dups.where("users.id < dups.id").
+        where("users.created_at = users.updated_at").
         select{|u| u.groups.empty?}.
         select{|u| u.pages.empty?}.
         each{|u| u.destroy}.count
@@ -127,6 +130,18 @@ namespace :cg do
       puts "Removed #{count} posts with a blank user"
     end
 
+    desc "Remove Chat Messages of users that do not exist anymore"
+    task(:remove_dead_chat_messages => :environment) do
+      count = ChatMessage.where(dead_entity_sql('sender', 'users')).delete_all
+      puts "Removed #{count} chat messages with a blank sender"
+    end
+
+    desc "Remove Chat Channels of groups that do not exist anymore"
+    task(:remove_dead_chat_channels => :environment) do
+      count = ChatChannel.where(dead_entity_sql('group')).delete_all
+      puts "Removed #{count} chat channels of former groups"
+    end
+
     desc "Remove unused tags"
     task(:remove_unused_tags => :environment) do
       count = ActsAsTaggableOn::Tag.
@@ -178,6 +193,8 @@ namespace :cg do
     task(:remove_dangling_page_histories => :environment) do
       count = PageHistory.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} page history records without a page"
+      count = PageHistory.where(dead_entity_sql('user')).delete_all
+      puts "Removed #{count} page history records without a user"
     end
 
     desc "Remove invites to join a network with another network"
@@ -226,40 +243,5 @@ namespace :cg do
     end
 
 
-=begin
-
-under development
-
-
-    desc "Remove all empty groups with duplicate names"
-    task(:remove_empty_duplicate_groups => :environment) do
-      puts "Deleting newer empty group duplicates."
-      new_dups = duplicates.where("other_group.id < groups.id")
-      destroy_empty_groups(new_dups)
-      puts "Deleting older empty group duplicates."
-      early_dups = duplicates.where("other_group.id > groups.id")
-      destroy_empty_groups(early_dups)
-    end
-
-    def duplicates
-      Group.joins("JOIN groups as other_group ON other_group.name = groups.name")
-    end
-
-    def destroy_empty_groups(query)
-      puts "Found #{query.count} duplicate groups."
-      query.each do |group|
-        destroy_if_empty(group)
-      end
-      puts "#{query.count} duplicate groups left."
-    end
-
-    def destroy_if_empty(group)
-      return if group.users.count > 1
-      return if group.pages.any?
-      return if group.version > 1
-      group.send(:destroy)
-    end
-
-=end
   end
 end

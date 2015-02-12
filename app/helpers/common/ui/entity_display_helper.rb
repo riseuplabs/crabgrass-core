@@ -79,12 +79,15 @@ module Common::Ui::EntityDisplayHelper
     if user
       options ||= {}
       unless options[:url] or options[:remote] or options[:function]
-        options = options.merge url: user_path(user)
+        if user.ghost?
+          options[:class] = 'ghost'
+        else
+          options[:url] = user_path(user)
+        end
       end
     end
     display_entity(user, options)
   end
-
 
   #def link_to_user_avatar(arg, options={})
   #  login, path, display_name = login_and_path_for_user(arg,options)

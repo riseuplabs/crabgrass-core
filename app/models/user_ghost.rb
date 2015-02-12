@@ -1,7 +1,11 @@
 class UserGhost < User
 
   def login
-    read_attribute(:login).presence || :anonymous.t
+    read_attribute(:login).presence || 'none'
+  end
+
+  def display_name
+    read_attribute(:display_name).presence || :deleted.t
   end
 
   #

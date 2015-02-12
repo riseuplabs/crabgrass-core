@@ -5,7 +5,7 @@
 #
 unless defined?(FORBIDDEN_NAMES)
   FORBIDDEN_NAMES = %w{
-    account admin anonymous assets avatars chat code debug do groups
+    account admin none assets avatars chat code debug do groups
     javascripts me networks page pages people pictures places posts
     issues session static stats stylesheets theme wikis
   }
