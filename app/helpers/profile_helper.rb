@@ -5,7 +5,7 @@ module ProfileHelper
 
     if @profile.picture
       formy.row(class: :current_banner) do |r|
-        r.input picture_tag(@profile.picture, :medium)
+        r.input picture_tag(@profile.picture, banner_geometry)
       end
     end
     formy.row do |r|
