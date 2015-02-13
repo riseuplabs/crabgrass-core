@@ -17,7 +17,9 @@ namespace :cg do
       'cg:upgrade:migrate_group_permissions',
       'cg:upgrade:user_permissions',
       'cg:upgrade:init_created_at',
-      'cg:upgrade:convert_message_pages'
+      'cg:upgrade:convert_message_pages',
+      'cg:upgrade:owner_id_in_page_terms',
+      'ts:index'
     ]
 
     # This will grant a group's access to its members.
@@ -88,6 +90,16 @@ namespace :cg do
         page.convert
       end
       PrivateMessageNotice.update_all dismissed: true, dismissed_at: Time.now
+    end
+
+    desc "Add owner_id to page terms so we can search pages by owner"
+    task :owner_id_in_page_terms => :environment do
+      PageTerms.update_all <<-EOSQL
+        owner_id = (
+          SELECT CONCAT(IF(pages.owner_type="User",1,8),pages.owner_id)
+          FROM pages WHERE page_id = pages.id
+        )
+      EOSQL
     end
 
   end
