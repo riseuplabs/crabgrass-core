@@ -29,6 +29,7 @@ class Me::PagesControllerTest < ActionController::TestCase
     xhr :post, :index, add: "owned-by-me"
     assert_response :success
     assert pages = assigns(:pages)
+    assert pages.any?
     assert_nil pages.detect{|page| page.owner != users(:blue)}
   end
 
