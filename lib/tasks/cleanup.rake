@@ -14,7 +14,7 @@ namespace :cg do
       :remove_groups_ending_in_plus,
       :remove_group_dups,
       :remove_user_dups,
-      :committees_without_parent,
+#      :committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_dead_memberships,
