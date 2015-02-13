@@ -1,5 +1,7 @@
 class Picture::Storage
 
+  URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root,'public'),'')
+
   def initialize(picture)
     @picture = picture
   end

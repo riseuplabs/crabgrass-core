@@ -53,8 +53,6 @@ MAX_WIDTH = 1024
 
 class Picture < ActiveRecord::Base
 
-  URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root,'public'),'')
-
   serialize :dimensions      # Hash
   serialize :average_color   # Array
   after_destroy :destroy_files
