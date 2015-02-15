@@ -1,11 +1,13 @@
 !!!
 %html{dir:language_direction}
-  %head
+  %head      
     %title
       =h html_title
     %style
       a.anchor, a.shy {display:none;}
+      @media print { .noPrint {display: none}}
   %body{class:language_direction}
+    %button{:onclick => 'window.history.back()', :class => 'noPrint'} back
     %h3
       =h html_title
     %article#content
