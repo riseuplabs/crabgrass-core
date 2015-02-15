@@ -1,86 +1,17 @@
-known bugs
-==============================
-
-upgrade to latest thinking sphinx
-
-deleting a page tag causes the discussions to get loaded for the ajax request.
-this should not be the case.
-
-destroying groups
-  needs a lot of work
-  what to do with orphaned pages?
-  all the pages that have cached the owner_name should get cleared out.
-    (or maybe not, instead link to 'anonymous'?)
-  what about everywhere else? create GroupGhost with the same id but with no content?
-
-when notices are rendered as pages, they still fade.
-
-i18n blows up if the session language is set to swedish.
-
-alert messages don't stack for modalbox
-
-confirmation before destroy contact
-
-page search:
-  should be 'watching' instead of 'watched'
-  once active, needs to indicate i clicked on 'my pages -> own'.
-  need ajaxy history
-
-the split panel is not something that we should keep, unless it can
-  be made to work when the screen gets small.
-
-wiki:
-  need history
-
-pages:
-  need 'show print' option.
-
-remote processing
-==============================
-
-what happens when we do remote_job.destroy?
-  what happens to the background thread on the cg-processor doing the work?
-  what happens to the files it spits out?
+Ideas
+=====
 
 assets & documents
-=======================
+------------------
 
 integrate documentcloud.org for displaying pdfs and docs.
 
 things to work on
 ============================
 
-Misc Quick
-* grouphome: summary links break left column formatting
-* remove details from page feeds for now
-
-Misc
-* banner width problems: https://labs.riseup.net/code/issues/4360
-* Speed Problems Across App
-* Search
-
-Pages
-* gallery > show formatting problems
-* tasklist text doesnt line up with checkboxes
-* survey page formatting and error message: https://labs.riseup.net/code/issues/4362
-* wiki - versioning is a mess, full page edit form is too narrow, trying to open multiple sections for editing isnt working (see issue)
-
-groups
-* destroying group
-* request to expell
-
-directory
-* group
-* person
-
 account
 * reset lost password
 * cracklib
-
-sphinx
-* new sphinx
-* better fields for sphinx
-* get rid of page_terms
 
 pages
 * history
@@ -89,8 +20,6 @@ pages
 * asset page
 * folder page
 
-plugins
-* write new plugin system
 
 themes
 * add more themes
@@ -101,7 +30,6 @@ tests
 
 i18n
 * identify used and unused keys
-* a system to translate
 * better en.yml organization
 
 misc
@@ -149,8 +77,12 @@ it is really random what columns are indexed by page_terms and pages:
    page_updated_at, created_by_id, updated_by_id, views_count, stars_count.
 
 this should be cleaned up. i think a lot of these are unused, yet others may be needed. why do we have
-created_by_login as a sortable index, but not contributors_count? do we really use the owner_name
-indexes?
+created_by_login as a sortable index, but not contributors_count?
+Why is there no index for pages updated_by? we need to expire those when the user image changes or the user is deleted.
+
+Do we really use the owner_name indexes?
+-> Yes - they are used for page lookup from the dispatch controller. Pages now live in 
+/owner_name/Page_name. So it's really fast to find them this way.
 
 mailing list integration
 =============================
@@ -395,10 +327,6 @@ sections
 
 - #- if @wiki.section_open_for?(@section || :document, current_user)
 
-todo
------
-
-* new page creation tab is 'show' should be 'edit'
 
 
 scenarios
