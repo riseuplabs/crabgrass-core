@@ -77,6 +77,7 @@ class Conf
   cattr_accessor :networks
   cattr_accessor :transifex_user
   cattr_accessor :transifex_password
+  cattr_accessor :log_level
 
 
   # set automatically from site.admin_group
@@ -149,6 +150,7 @@ class Conf
     self.committees = true
     self.councils = true
     self.networks = true
+    self.log_level = nil # use rails defaults
   end
 
   def self.load(filename)

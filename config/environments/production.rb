@@ -30,6 +30,9 @@ Crabgrass::Application.configure do
   ## LOGGING
   ## use syslog if available, trying gems 'logging' and 'SyslogLogger'
   ##
+  
+  # fall back to rails3 default - rails4 has debug
+  config.log_level = Conf.log_level || :info
 
   # try gem 'logging'
   begin
