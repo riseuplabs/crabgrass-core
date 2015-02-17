@@ -2,48 +2,12 @@
 ======
 
 0.6 is the current series. It mainly consists of the core rewrite that braught two streams of development back together.
+0.6.2 contains all the fixes that need to be applied before going live with the new server.
 
 bugfixes
 --------
 
 0.6.2 will follow up on bugs reported during the testing phase of the new core rework
-
-These bugs were listed in the development notes: They need to be confirmed and evtl. fixed:
-* deleting a page tag causes the discussions to get loaded for the ajax request.
-  this should not be the case.
-* i18n blows up if the session language is set to swedish.
-* page search:
-  ** should be 'watching' instead of 'watched'
-  ** once active, needs to indicate i clicked on 'my pages -> own'.
-  ** need ajaxy history
-* when notices are rendered as pages, they still fade.
-* alert messages don't stack for modalbox
-* pages need 'show print' option.
-* new page creation tab is 'show' should be 'edit'
-* grouphome: summary links break left column formatting
-* remove details from page feeds for now
-* banner width problems: https://labs.riseup.net/code/issues/4360
-* gallery > show formatting problems
-* tasklist text doesnt line up with checkboxes
-* survey page formatting and error message: https://labs.riseup.net/code/issues/4362
-* wiki:
-  ** versioning is a mess
-  ** full page edit form is too narrow
-  ** trying to open multiple sections for editing isnt working (see issue)
-
-main regressions to fix
------------------------
-
-wiki:
-  need history
-
-
-minor features
---------------
-
-* confirmation before destroy contact
-* the split panel is not something that we should keep, unless it can
-  be made to work when the screen gets small.
 
 log evaluation
 --------------
@@ -52,6 +16,55 @@ We'll keep a close eye on the logs during the test phase in order to:
 * look for crashes and fix them
 * look for speedup possibilities
 * track invalid records and fix them and their causes
+
+permission fixes
+----------------
+
+* ensure committees of hidden groups are hidden.
+
+
+0.6.3
+=====
+
+0.6.3 contains fixes for issues found after going live with the new server. We'll also target some issues that were tabled for 0.6.2
+
+These bugs were listed in the development notes:
+
+confirmed:
+* pages other than wiki need 'show print' option
+
+unclear:
+* alert messages don't stack for modalbox
+  ** azul> where is this needed? 
+     I was able to confirm in the share page modal. If you try two names that do
+     not exist only the latter will replace the former - which makes sense.
+* when notices are rendered as pages, they still fade.
+  ** azul> ???
+* grouphome: summary links break left column formatting
+  ** azul> have not been able to reproduce this
+* remove details from page feeds for now
+  ** azul> I think they are gone. Are they?
+
+performance tweaks:
+* deleting a page tag causes the discussions to get loaded for the ajax request.
+  this should not be the case.
+
+main regressions to fix
+-----------------------
+
+wiki:
+  need history functions (diff, delete version, restore)
+
+
+minor features
+--------------
+
+* confirmation before destroy contact
+* page search:
+  ** should include 'watching' filter (used to be 'watched' - is gone right now)
+* the split panel is not something that we should keep, unless it can
+  be made to work when the screen gets small.
+* allow opening multiple sections for editing (see issue)
 
 
 0.7.0
