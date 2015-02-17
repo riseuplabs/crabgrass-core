@@ -39,7 +39,7 @@ namespace :cg do
 
     desc "Create keys to the groups based on their old profile settings; for use once in upgrading data to cg 1.0"
     task(:migrate_group_permissions => :environment) do
-      Group.includes(:keys, :public_profile).find_each(&:migrate_permissions!)
+      Group.includes(:keys, :public_profile, :parent).find_each(&:migrate_permissions!)
     end
 
     desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
