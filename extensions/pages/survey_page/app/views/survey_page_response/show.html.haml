@@ -2,7 +2,7 @@
 - if @response
   - if @response.user_id != current_user.id
     - links << link_to(:pagination_previous.t, response_path(@response, page_id: @page, jump: 'prev'))
-    - links << link_to(:return_link.t, responses_path(page_id: @page)
+    - links << link_to(:return_link.t, responses_path(page_id: @page))
     - links << link_to(:pagination_next.t, response_path(@response.id, @page, jump: 'next'))
   = link_line(*links)
   = render partial: 'show_response'
