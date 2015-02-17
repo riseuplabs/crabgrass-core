@@ -39,12 +39,12 @@ namespace :cg do
 
     desc "Create keys to the groups based on their old profile settings; for use once in upgrading data to cg 1.0"
     task(:migrate_group_permissions => :environment) do
-      Group.all.each(&:migrate_permissions!)
+      Group.includes(:keys, :public_profile).find_each(&:migrate_permissions!)
     end
 
     desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
     task :user_permissions => :environment do
-      User.all.each(&:migrate_permissions!)
+      User.includes(:keys, :public_profile, :private_profile).find_each(&:migrate_permissions!)
     end
 
     desc "Set created_at timestamps where it is not set"

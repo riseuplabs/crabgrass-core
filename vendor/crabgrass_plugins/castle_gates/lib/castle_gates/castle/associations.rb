@@ -67,7 +67,13 @@ def self.included(base)
       #
       def find_by_holder(holder)
         holder = Holder[holder, self]
-        find_or_initialize_by_holder_code(holder.code)
+        code = holder.code
+        # let's use preloaded keys if possible
+        if loaded?
+          key = detect{|k| k.holder_code = code}
+          return key if key
+        end
+        where(holder_code: code).first_or_initialize
       end
 
       def select_holder_codes
