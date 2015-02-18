@@ -32,7 +32,7 @@ namespace :cg do
     #
     desc "Gives groups self access; for use once in upgrading data to cg 1.0"
     task(:init_group_permissions => :environment) do
-      Group.all.each do |group|
+      Group.includes(:keys, :parent).find_each do |group|
         group.send(:create_permissions)
       end
     end
