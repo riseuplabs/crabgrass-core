@@ -1,0 +1,10 @@
+es:
+  riseup:
+    run_by_html: "Esta pagina está funciona con %{provider}%{description}"
+    description: ", tu amable autónomo collectivo technico desde 1999."
+    privacy_policy: "principios de proteccion de datos"
+    about_us: "sobre nosotr@s"
+    email_accounts: "e-mail accesos"
+    mailing_lists: "lista de direcciones"
+    system_status: "estado de sistema"
+    donate: "donar a riseup"

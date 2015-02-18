@@ -1,0 +1,10 @@
+"no":
+  riseup:
+    run_by_html: "Denne siden driftes av %{provider}%{description}"
+    description: ", ditt vennlige autonome tech-kollektiv siden 1999."
+    privacy_policy: "Personvern"
+    about_us: "Om oss"
+    email_accounts: "E-postkontoer"
+    mailing_lists: "E-postlister"
+    system_status: "Systemstatus"
+    donate: "Støtt riseup"
