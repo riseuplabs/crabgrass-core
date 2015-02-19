@@ -70,7 +70,7 @@ def self.included(base)
         code = holder.code
         # let's use preloaded keys if possible
         if loaded?
-          key = detect{|k| k.holder_code = code}
+          key = detect{|k| k.holder_code == code}
           return key if key
         end
         where(holder_code: code).first_or_initialize
