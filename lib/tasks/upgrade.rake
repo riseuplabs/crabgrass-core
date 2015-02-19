@@ -86,10 +86,7 @@ namespace :cg do
       pages = MessagePage.all
       puts "#{pages.count} Message pages left."
       puts "Converting to Messages."
-      pages.each do |page|
-        print '.' if id % 10 == 0
-        page.convert
-      end
+      pages.each(&:convert)
       PrivateMessageNotice.update_all dismissed: true, dismissed_at: Time.now
     end
 

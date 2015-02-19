@@ -341,8 +341,6 @@ class User < ActiveRecord::Base
   def migrate_permissions!
     private_gates = []
     public_gates = []
-    # get holders
-    print '.' if id % 10 == 0
 
     if public_profile
       public_gates = public_profile.to_user_gates
