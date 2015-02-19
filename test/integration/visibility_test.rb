@@ -69,8 +69,8 @@ class VisibilityTest < IntegrationTest
   end
 
   # regression test for #6755
-  def test_hidden_group_not_found
-    group.revoke_access! public: :view
+  def test_new_group_not_found
+    group
     as_a user do
       visit "/#{group.name}"
       assert_not_found

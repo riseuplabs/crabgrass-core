@@ -27,14 +27,15 @@ class PageCreationTest < JavascriptIntegrationTest
   def test_sharing_with_groups
     login
     prepare_page :discussion_page
-    add_recipients group, group_to_pester, autocomplete: true
-    add_recipients hidden_group
+    add_recipients public_group, public_group_to_pester, autocomplete: true
+    add_recipients group_to_pester
+    add_recipients group
     click_on :create.t
-    assert_page_groups group_to_pester
-    # can't share with hidden group
-    assert_no_content hidden_group.display_name
+    assert_page_groups group_to_pester, public_group_to_pester
     # can't share with group by default
     assert_no_content group.display_name
+    # can't share with public_group by default
+    assert_no_content public_group.display_name
     assert_page_users user
   end
 end
