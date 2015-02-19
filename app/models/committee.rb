@@ -54,9 +54,8 @@ class Committee < Group
   # migrate permissions from pre-CastleGates databases to CastleGates.
   # Called from cg:upgrade:migrate_group_permissions task.
   def migrate_permissions!
-    print '.' if id % 10 == 0
-    public_gates = public_profile.to_group_gates
-    parent_gates = parent.public_profile.to_group_gates
+    public_gates = public_profile.try.to_group_gates || []
+    parent_gates = parent.public_profile.try.to_group_gates || []
     set_access! public: (public_gates & parent_gates)
   end
 

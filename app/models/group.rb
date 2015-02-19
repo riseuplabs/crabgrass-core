@@ -354,8 +354,11 @@ class Group < ActiveRecord::Base
   # Called from cg:upgrade:migrate_group_permissions task.
   # Overwritten by Committee to take into account parent permissions
   def migrate_permissions!
-    print '.' if id % 10 == 0
-    set_access! public: public_profile.to_group_gates
+    if public_profile
+      set_access! public: public_profile.to_group_gates
+    else
+      set_access! public: []
+    end
   end
 
   protected
