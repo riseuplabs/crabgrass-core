@@ -13,6 +13,7 @@ namespace :cg do
     desc "Complete upgrade to crabgrass 0.6"
     task :to_0_6 => [
       'db:migrate',
+      'cg:cleanup:remove_committees_without_parent',
       'cg:upgrade:init_group_permissions',
       'cg:upgrade:migrate_group_permissions',
       'cg:upgrade:user_permissions',
