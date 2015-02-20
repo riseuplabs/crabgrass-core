@@ -157,7 +157,6 @@ CastleGates.define do
 
     def create_permissions
       grant_access! self => :all
-      grant_access! public: [:view, :request_membership]
       if council? && parent
         # councils steal admin rights
         parent.revoke_access! parent => :admin

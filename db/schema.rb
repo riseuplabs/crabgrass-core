@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140829095525) do
+ActiveRecord::Schema.define(:version => 20150219152452) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -570,7 +570,7 @@ ActiveRecord::Schema.define(:version => 20140829095525) do
     t.text     "summary",                :limit => 2147483647
     t.integer  "wiki_id"
     t.integer  "layout_id"
-    t.boolean  "may_see",                                      :default => true
+    t.boolean  "may_see"
     t.boolean  "may_see_committees"
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
