@@ -18,7 +18,7 @@ class UserFinder
     conditions.each do |method, args|
       self.send method, args
     end
-    @results
+    @search_results || accessible_results
   end
 
   def scope
@@ -26,7 +26,7 @@ class UserFinder
   end
 
   def conditions
-    @conditions ||= queries.presence || { search: "" }
+    @conditions ||= queries.presence || {}
   end
 
   def queries
@@ -50,20 +50,29 @@ class UserFinder
 
   def init_scope
     if scope_method.present?
-      @user.public_send scope_method
+      scope = @user.public_send scope_method
     else
-      query_term.present? ? User : User.none
-    end.with_access(access)
+      User
+    end
   end
 
   def scope_method
     @path.split('/').map{|part| PATH_SCOPES[part.to_sym]}.compact.first
   end
 
+  def accessible_results
+    # With more than 100 records the query takes too long and it is not useful
+    # to search with pagination anyway.
+    if scope.count < 100
+      scope.with_access(access)
+    else 
+      User.none
+    end
+  end
+
   def search(term)
-    @results ||= scope
     if term.present?
-      @results = @results.named_like(filter(term))
+      @search_results = scope.with_access(access).named_like(filter(term))
     end
   end
 
