@@ -48,7 +48,10 @@ class RequestNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {body: request.description, title: request.name}
+    self.data = { 
+      body: request.description, 
+      title: request.i18n_key_with_scope
+    }
   end
 
   before_create :set_avatar
