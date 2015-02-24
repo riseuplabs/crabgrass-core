@@ -13,6 +13,7 @@ namespace :cg do
     desc "Complete upgrade to crabgrass 0.6"
     task :to_0_6 => [
       'db:migrate',
+      'cg:cleanup:remove_committees_without_parent',
       'cg:upgrade:init_group_permissions',
       'cg:upgrade:migrate_group_permissions',
       'cg:upgrade:user_permissions',
@@ -32,19 +33,19 @@ namespace :cg do
     #
     desc "Gives groups self access; for use once in upgrading data to cg 1.0"
     task(:init_group_permissions => :environment) do
-      Group.all.each do |group|
+      Group.includes(:keys, :parent).find_each do |group|
         group.send(:create_permissions)
       end
     end
 
     desc "Create keys to the groups based on their old profile settings; for use once in upgrading data to cg 1.0"
     task(:migrate_group_permissions => :environment) do
-      Group.all.each(&:migrate_permissions!)
+      Group.includes(:keys, :public_profile, :parent).find_each(&:migrate_permissions!)
     end
 
     desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
     task :user_permissions => :environment do
-      User.all.each(&:migrate_permissions!)
+      User.includes(:keys, :public_profile, :private_profile).find_each(&:migrate_permissions!)
     end
 
     desc "Set created_at timestamps where it is not set"
@@ -85,10 +86,7 @@ namespace :cg do
       pages = MessagePage.all
       puts "#{pages.count} Message pages left."
       puts "Converting to Messages."
-      pages.each do |page|
-        print '.' if id % 10 == 0
-        page.convert
-      end
+      pages.each(&:convert)
       PrivateMessageNotice.update_all dismissed: true, dismissed_at: Time.now
     end
 

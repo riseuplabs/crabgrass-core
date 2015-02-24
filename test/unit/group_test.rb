@@ -220,19 +220,28 @@ class GroupTest < ActiveSupport::TestCase
 
   end
 
-  def test_migrate_hidden_group
+  def test_group_hidden_by_default
+    group = Group.create name: 'hidden-from-the-world'
+    assert !users(:blue).may?(:view, group), "new groups should be hidden"
+    group.migrate_permissions!
+    assert !users(:blue).may?(:view, group), "new groups should remain hidden"
+  end
+
+  def test_migrate_public_group
     group = Group.create name: 'publicly-visible'
     assert group.valid?, "Failed to create group: #{group.errors.inspect}"
 
-    # groups are public by default
-    group.profiles.public.update_attributes! may_see: false
+    # groups are hidden by default
+    group.profiles.public.update_attributes! may_see: true
 
-    assert users(:blue).may?(:view, group), "initially blue should be able to view the group"
+    assert !users(:blue).may?(:view, group), 
+      "initially blue should not be able to view the group"
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
-    assert !users(:blue).may?(:view, group), "after migration blue should not be able to view the group"
+    assert users(:blue).may?(:view, group), 
+      "after migration blue should not be able to view the group"
   end
 
   def test_migrate_open_group
@@ -271,18 +280,18 @@ class GroupTest < ActiveSupport::TestCase
     group = Group.create name: 'not-even-allowing-requests'
     assert group.valid?
 
-    group.profiles.public.update_attributes! may_request_membership: false
+    group.profiles.public.update_attributes! may_request_membership: true
 
     # defaults in effect
     assert ! users(:blue).may?(:join, group)
-    assert users(:blue).may?(:request_membership, group)
+    assert ! users(:blue).may?(:request_membership, group)
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
     # defaults overwritten to match profile setting
     assert ! users(:blue).may?(:join, group)
-    assert ! users(:blue).may?(:request_membership, group)
+    assert users(:blue).may?(:request_membership, group)
   end
 
 end

@@ -1,0 +1,10 @@
+de:
+  riseup:
+    run_by_html: "Diese Seite wird betrieben von %{provider}%{description}"
+    description: "- deinem freundlichen autonomen Technik-Kollektiv (seit 1999)."
+    privacy_policy: "Datenschutz-Richtlinie"
+    about_us: "Über uns"
+    email_accounts: "E-Mail Konten"
+    mailing_lists: "Mailinglisten"
+    system_status: "Systemstatus"
+    donate: "Spende an riseup"

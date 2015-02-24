@@ -5,9 +5,11 @@ tmp
 .AppleDouble
 :2eDS_Store
 :2e_*
+config/crabgrass/secret.txt
+config/crabgrass/crabgrass.production.yml
+config/database.yml
 config/sphinx/*.conf
 config/sphinx/*.sphinx.conf
-config/crabgrass/secret.txt
 doc/api
 doc/app
 doc/coverage
@@ -35,7 +37,6 @@ webrat-*.html
 #*
 vendor/crabgrass_plugins/castle_gates/test/tests.sqlite
 *.swp
-config/database.yml
 vendor/bundle
 .bundle
 bin/

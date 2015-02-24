@@ -4,7 +4,7 @@
 
 You can run a single test at a time like so:
 
-  ruby test/unit/user_test.rb --name test_user_name
+  ruby -I test test/unit/user_test.rb --name test_user_name
 
 When you use 'rdebug' instead of 'ruby' you can put 'debugger'
 lines in you code and it will stop on the line.

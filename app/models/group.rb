@@ -121,6 +121,10 @@ class Group < ActiveRecord::Base
   ## GROUP INFORMATION
   ##
 
+  def public?
+    access? public: :view
+  end
+
   include Crabgrass::Validations
   validates_handle :name
   before_validation :clean_names
@@ -192,10 +196,14 @@ class Group < ActiveRecord::Base
   ##
 
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
+  has_one :public_profile, as: 'entity', class_name: "Profile",
+    conditions: {stranger: true}
+  has_one :private_profile, as: 'entity', class_name: "Profile",
+    conditions: {friend: true}
   has_many :wikis, through: :profiles
 
   def public_wiki
-    profiles.where(stranger: true).first.try.wiki
+    public_profile.try.wiki
   end
 
   def public_wiki=(wiki)
@@ -203,7 +211,7 @@ class Group < ActiveRecord::Base
   end
 
   def private_wiki
-    profiles.where(friend: true).first.try.wiki
+    private_profile.try.wiki
   end
 
   def private_wiki=(wiki)
@@ -350,12 +358,13 @@ class Group < ActiveRecord::Base
 
   # migrate permissions from pre-CastleGates databases to CastleGates.
   # Called from cg:upgrade:migrate_group_permissions task.
+  # Overwritten by Committee to take into account parent permissions
   def migrate_permissions!
-    print '.' if id % 10 == 0
-    # get holders
-    public_holder = CastleGates::Holder[:public]
-    public_gates = profiles.public.to_gates
-    set_access! public_holder => public_gates
+    if public_profile
+      set_access! public: public_profile.to_group_gates
+    else
+      set_access! public: []
+    end
   end
 
   protected

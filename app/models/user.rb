@@ -193,6 +193,10 @@ class User < ActiveRecord::Base
   ##
 
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
+  has_one :public_profile, as: 'entity', class_name: 'Profile',
+    conditions: {stranger: true}
+  has_one :private_profile, as: 'entity', class_name: 'Profile',
+    conditions: {friend: true}
 
   def profile(reload=false)
     @profile = nil if reload
@@ -335,21 +339,22 @@ class User < ActiveRecord::Base
   # Migrate permissions from pre-CastleGates databases to CastleGates.
   # Called from cg:upgrade:user_permissions task.
   def migrate_permissions!
-    # get holders
-    print '.' if id % 10 == 0
-    public_holder = CastleGates::Holder[:public]
-    friends_holder = CastleGates::Holder[associated(:friends)]
-    peers_holder = CastleGates::Holder[associated(:peers)]
+    private_gates = []
+    public_gates = []
 
-    public_gates  = profiles.public.to_gates
-    private_gates = profiles.private.to_gates
-    friends_gates = (private_gates + public_gates).uniq
-    set_access! public_holder => public_gates
-    set_access! friends_holder => friends_gates
-    if profiles.private.peer?
-      set_access! peers_holder => friends_gates
-    else
-      set_access! peers_holder => public_gates
+    if public_profile
+      public_gates = public_profile.to_user_gates
+      set_access! public: public_gates
+    end
+    if private_profile
+      private_gates = private_profile.to_user_gates
+      friends_gates = (private_gates + public_gates).uniq
+      set_access! friends: friends_gates
+      if private_profile.peer?
+        set_access! peers: friends_gates
+      elsif public_gates.present?
+        set_access! peers: public_gates
+      end
     end
   end
 

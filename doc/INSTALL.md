@@ -31,16 +31,15 @@ Alternately, do a shallow clone. This will only check out a copy of the most rec
 
     git clone --depth 1 https://github.com/riseuplabs/crabgrass-core.git
 
-Install bundler
+Install bundler (as root)
 
-    gem install bundler
+    sudo gem install bundler
 
 Alternatively you can install bundler with your package manager.
 
 Install rails and required gems
 
     cd crabgrass-core
-    git checkout develop
     bundle install
 
 Create a secret
@@ -54,6 +53,8 @@ Create the database:
     rake db:schema:load
     rake db:fixtures:load
 
+You might have to adjust config/database.yml according to your mysql setup.
+
 Install helper applications:
 
 On Debian / Ubuntu:
@@ -66,7 +67,6 @@ On RHEL/CentOS:
 
 Run server:
 
-    cd crabgrass-core
     BOOST=1 bundle exec rails server thin
 
 Connect to the web application from your browser:
@@ -75,7 +75,8 @@ Connect to the web application from your browser:
     login: blue
     password: blue
 
-See doc/development_tips for information on the arguments to script/server
+The first request will be slow because the server compiles the stylesheets  for the themes.
+See doc/development/* for more notes on development.
 
 Install for testing
 ====================================================

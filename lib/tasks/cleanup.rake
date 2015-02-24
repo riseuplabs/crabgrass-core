@@ -14,7 +14,11 @@ namespace :cg do
       :remove_groups_ending_in_plus,
       :remove_group_dups,
       :remove_user_dups,
-#      :committees_without_parent,
+      :remove_committees_without_parent,
+#
+# since there seem to be no meaningful committees without a parent on the
+# production server we remove all of them rather than turning them into groups
+#      :convert_committees_without_parent,
       :remove_dead_participations,
       :remove_dead_federatings,
       :remove_dead_memberships,
@@ -83,9 +87,15 @@ namespace :cg do
     end
 
     desc "Turn committees without a parent into normal groups"
-    task(:committees_without_parent => :environment) do
+    task(:convert_committees_without_parent => :environment) do
       count = Committee.where(parent_id: nil).update_all(type: nil)
       puts "Turned #{count} committees without parent into groups"
+    end
+
+    desc "Remove committees without a parent into normal groups"
+    task(:remove_committees_without_parent => :environment) do
+      count = Committee.where(parent_id: nil).delete_all
+      puts "Deleted #{count} committees without parent"
     end
 
     desc "Remove all participations where the entity does not exist anymore"

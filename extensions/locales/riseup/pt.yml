@@ -1,0 +1,10 @@
+pt:
+  riseup:
+    run_by_html: "Este site é tocado por %{provider}%{description}"
+    description: ", o seu coletivo tech autônomo e amigável desde 1999."
+    privacy_policy: "políticas de privacidade"
+    about_us: "sobre a gente"
+    email_accounts: "contas de email"
+    mailing_lists: "listas de email"
+    system_status: "status do sistema"
+    donate: "faça uma doação para riseup"

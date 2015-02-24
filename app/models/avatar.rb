@@ -17,6 +17,12 @@
 require 'open-uri'
 
 class Avatar < ActiveRecord::Base
+  
+  # This is only used in singular resources and avatar_path.
+  # So we use this workaround for form_for paths:
+  # https://github.com/rails/rails/issues/1769#issuecomment-41025758
+  model_name.instance_variable_set(:@route_key, 'avatar')
+
 
   DEFAULT_DIR = "#{Rails.root}/public/images/default"
 

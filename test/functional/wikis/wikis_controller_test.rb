@@ -78,18 +78,23 @@ biggie
   end
 
   def test_show_public_group_wiki_to_stranger
+    @group.grant_access! public: :view
+    @pub = @group.profiles.public.create_wiki body: 'public'
+    @priv = @group.profiles.private.create_wiki body: 'private'
     assert_permission :may_show_wiki? do
       xhr :get, :show, id: @wiki.id
     end
     assert_response :success
-    assert_equal @wiki, assigns['wiki']
+    assert_equal @pub, assigns['wiki']
   end
 
   def test_do_not_show_private_group_wiki_to_stranger
+    @group.grant_access! public: :view
     @priv = @group.profiles.private.create_wiki body: 'private'
     assert_permission(:may_show_wiki?, false) do
       xhr :get, :show, id: @priv.id
     end
+    assert_permission_denied
   end
 
   ##
