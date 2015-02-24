@@ -48,11 +48,10 @@ module GroupExtension::Users
         where("groups.id IN (?)", user.admin_for_group_ids)
       end
 
-      scope :large,
-        :join => :memberships,
-        :group => 'groups.id',
-        :select => 'groups.*',
-        :having => "count(memberships.id) > #{LARGE_GROUP_SIZE}"
+      scope :large, joins(:memberships).
+        group('groups.id').
+        select('groups.*').
+        having("count(memberships.id) > #{LARGE_GROUP_SIZE}")
 
     end
   end
