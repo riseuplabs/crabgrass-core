@@ -158,6 +158,10 @@ class Request < ActiveRecord::Base
     self.class.name.underscore
   end
 
+  def i18n_key_with_scope
+    [self.class.i18n_scope, :models, self.class.model_name.i18n_key].join('.')
+  end
+
   #
   # Allows Request.create(..., :message => 'hi')
   #
