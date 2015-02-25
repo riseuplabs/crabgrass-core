@@ -35,7 +35,8 @@ namespace :cg do
       :remove_invalid_email_requests,
       :remove_empty_tasks,
       :fix_activity_types,
-      :fix_invalid_request_states
+      :fix_invalid_request_states,
+      :reset_peer_caches
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -252,6 +253,10 @@ namespace :cg do
       puts "Fixed #{count} Requests by setting a valid state."
     end
 
-
+    desc "Reset peer caches so changes to the peer definition can have an effect"
+    task(:reset_peer_caches => :environment) do
+      count = User.update_all(peer_id_cache: nil)
+      "Reset the peers for #{count} users."
+    end
   end
 end
