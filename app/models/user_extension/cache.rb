@@ -111,10 +111,7 @@ module UserExtension
     #
     def clear_peer_cache_of_my_peers(membership=nil)
       if peer_id_cache.any?
-        self.class.connection.execute(%Q[
-          UPDATE users SET peer_id_cache = NULL
-          WHERE id IN (#{peer_id_cache.join(',')})
-        ])
+        User.where(id: peer_id_cache).update_all(peer_id_cache: nil)
       end
     end
 
@@ -127,13 +124,14 @@ module UserExtension
     # invalidated the cache. For example, adding or removing a commmittee.
     #
     def clear_cache
-       self.class.connection.execute(%Q[
-         UPDATE users SET
-         tag_id_cache = NULL, direct_group_id_cache = NULL, foe_id_cache = NULL,
-         peer_id_cache = NULL, friend_id_cache = NULL, all_group_id_cache = NULL,
-         admin_for_group_id_cache = NULL
-         WHERE id = #{self.id}
-       ])
+       # UPGRADE: use update_columns from rails4 on:
+       User.where(id: self).update_all tag_id_cache: nil,
+         direct_group_id_cache: nil,
+         foe_id_cache: nil,
+         peer_id_cache: nil,
+         friend_id_cache: nil,
+         all_group_id_cache: nil,
+         admin_for_group_id_cache: nil
        write_attribute(:tag_id_cache, nil)
        write_attribute(:foe_id_cache, nil)
        write_attribute(:peer_id_cache, nil)
@@ -156,45 +154,31 @@ module UserExtension
     # include direct memberships, committees, and networks
     def get_group_ids
       if self.id
-        direct = Group.connection.select_values(%Q[
-          SELECT groups.id FROM groups
-          INNER JOIN memberships ON groups.id = memberships.group_id
-          WHERE (memberships.user_id = #{self.id})
-        ])
+        direct = self.groups.pluck(:id)
       else
         direct = []
       end
       if direct.any?
-        committee = Group.connection.select_values(%Q[
-          SELECT groups.id FROM groups
-          WHERE groups.parent_id IN (#{direct.join(',')})
-          AND groups.type = 'Committee'
-        ])
-        network = Group.connection.select_values(%Q[
-          SELECT groups.id FROM groups
-          INNER JOIN federatings ON groups.id = federatings.network_id
-          WHERE federatings.group_id IN (#{direct.join(',')})
-        ])
+        committee = Group.where(type: 'Committee', parent_id: direct).pluck(:id)
+        network = Network.
+          joins(:federatings).
+          where(federatings: {group_id: direct}).
+          pluck(:id)
         if network.any?
-          # look for networks that our direct networks might be a member of
-          network += Group.connection.select_values(%Q[
-            SELECT groups.id FROM groups
-            INNER JOIN federatings ON groups.id = federatings.network_id
-            WHERE federatings.group_id IN (#{network.join(',')})
-          ])
-          committee += Group.connection.select_values(%Q[
-            SELECT groups.id FROM groups
-            WHERE groups.parent_id IN (#{network.join(',')})
-            AND groups.type = 'Committee'
-          ])
+          # we still have networks inside networks on the live server
+          network += Network.
+            joins(:federatings).
+            where(federatings: {group_id: network}).
+            pluck(:id)
+          committee += Group.where(type: 'Committee', parent_id: network).pluck(:id)
         end
-        admin_for = Group.connection.select_values(%Q[
-          SELECT groups.id FROM groups
-          WHERE groups.id IN (#{(direct + committee + network).join(',')})
-          AND (
-            groups.council_id IN (#{direct.join(',')}) OR
-            groups.council_id IS NULL )
-        ])
+        # admin for the own groups where either one is a member of the council or
+        # there is no council - so the council_id is nil
+        # TODO: isn't this missing the groups where one is only a member of the
+        # council?
+        admin_for = Group.where(id: (direct + committee + network)).
+          where(council_id: (direct + [nil])).
+          pluck(:id)
       else
         committee, network, admin_for = [],[],[]
       end
@@ -206,27 +190,18 @@ module UserExtension
 
     def get_peer_ids(group_ids)
       return [] unless self.id
-      # site networks are broad umbrella networks every user of the
-      # site is a member of - thus they should not be considered for
-      # determining who is a peer.
-      ## TODO: exclude all networks
-      site_networks = Site.find(:all).collect{|s| s.network_id}
-      group_ids -= site_networks
-      User.connection.select_values( %Q[
-        SELECT DISTINCT users.id FROM users
-        INNER JOIN memberships ON users.id = memberships.user_id
-        WHERE users.id != #{id}
-        AND memberships.group_id IN (#{ group_ids.any? ? group_ids.join(',') : 'NULL'})
-      ])
+      # Exclude large groups from calculating peer relationships
+      group_ids -= Group.large.pluck(:id)
+      ids = User.joins(:memberships).
+        where(memberships: {group_id: group_ids}).
+        pluck('DISTINCT users.id')
+      ids - [self.id]
     end
 
     def get_contact_ids()
       return [[],[]] unless self.id
       foe = [] # no foes yet.
-      friend = Relationship.connection.select_values( %Q[
-        SELECT relationships.contact_id FROM relationships
-        WHERE relationships.type = 'Friendship' AND relationships.user_id = #{self.id}
-      ])
+      friend = self.friends.pluck(:id)
       [friend,foe]
     end
 
@@ -235,13 +210,14 @@ module UserExtension
       # thus making it easy to find all the tags you have made. maybe this is
       # what we should return here instead?
       if self.id
-        ids = ActsAsTaggableOn::Tag.connection.select_values(%Q[
-          SELECT taggings.tag_id FROM taggings
+        participation_join = <<-EOSQL
           INNER JOIN user_participations
-            ON taggings.taggable_id = user_participations.page_id
-          WHERE taggings.taggable_type = 'Page'
-          AND user_participations.user_id = #{id}
-        ])
+          ON taggings.taggable_id = user_participations.page_id
+        EOSQL
+        ids = ActsAsTaggableOn::Tagging.joins(participation_join).
+          where(taggable_type: 'Page').
+          where("user_participations.user_id = #{id}").
+          pluck(:tag_id)
       else
         ids = []
       end
@@ -258,12 +234,9 @@ module UserExtension
       # of those users. however, the peer cache is not NULLed.
       def clear_membership_cache(ids)
         return unless ids.any?
-        self.connection.execute(%Q[
-          UPDATE users SET
-          direct_group_id_cache = NULL, all_group_id_cache = NULL,
-          admin_for_group_id_cache = NULL
-          WHERE id IN (#{ ids.join(',') })
-        ])
+        User.where(id: ids).update_all direct_group_id_cache: nil,
+          all_group_id_cache: nil,
+          admin_for_group_id_cache: nil
       end
 
       #
@@ -271,7 +244,7 @@ module UserExtension
       # the tags have changed.
       #
       def clear_tag_cache(user_ids)
-        self.connection.execute("UPDATE users SET tag_id_cache = NULL WHERE id IN (#{user_ids.join(',')})")
+        User.where(id: user_ids).update_all tag_id_cache: nil
       end
 
       # Takes an array of user ids and increments the version of all these

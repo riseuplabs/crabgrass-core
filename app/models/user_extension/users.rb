@@ -54,7 +54,7 @@ module UserExtension::Users
         end
       end
 
-      # same result as user.friends, but chainable with other named scopes
+      # same result as user.friends, but makes use of cache.
       def self.friends_of(user)
         where('users.id in (?)', user.friend_id_cache)
       end

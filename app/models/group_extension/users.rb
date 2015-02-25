@@ -4,6 +4,8 @@
 # Handles all the group <> user relationships
 #
 module GroupExtension::Users
+  # large groups will be ignored when calculating peers.
+  LARGE_GROUP_SIZE=50
 
   def self.included(base)
     base.instance_eval do
@@ -45,6 +47,11 @@ module GroupExtension::Users
       def self.with_admin(user)
         where("groups.id IN (?)", user.admin_for_group_ids)
       end
+
+      scope :large, joins(:memberships).
+        group('groups.id').
+        select('groups.*').
+        having("count(memberships.id) > #{LARGE_GROUP_SIZE}")
 
     end
   end
