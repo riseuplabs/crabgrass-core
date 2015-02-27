@@ -152,28 +152,29 @@ end
 #
 def crabgrass_i18n_exception_handler(exception, locale, key, options)
   exception = exception.to_exception if exception.respond_to? :to_exception
-  if exception.is_a? I18n::MissingTranslationData
-    # key was not found
-    if I18n.site_scope && options[:scope].try.first == I18n.site_scope
-      # do nothing, site scope is optional, so missing data is skipped.
-      return nil
-    elsif locale == :en
-      if !Rails.env.production? && Conf.raise_i18n_exceptions
-        # raise exceptions when running in development mode
-        raise exception
-      else
-        return key.to_s.humanize
-      end
-    else
-      # grap the english version of the key
-      options[:locale] = :en
-      return I18n.translate(key, options)
-    end
-  elsif exception.is_a? I18n::InvalidLocale
-    # the language was not found... default to english
-    #options[:locale] = :en
-    #return I18n.translate(key, options) #this was getting in endless loop
-    return
+  raise exception unless exception.is_a? I18n::ArgumentError
+
+  # site scope is optional, so let's try without it.
+  if I18n.site_scope && options[:scope].try.first == I18n.site_scope
+    return nil
   end
-  raise exception
+
+  # log issues other than just a missing translation
+  unless exception.is_a? I18n::MissingTranslationData
+    Rails.logger.error exception
+  end
+
+  # fall back to english version of the key
+  if locale != :en
+    options[:locale] = :en
+    return I18n.translate(key, options)
+  end
+
+  # raise exceptions when running in development mode
+  if !Rails.env.production? && Conf.raise_i18n_exceptions
+    raise exception
+  end
+ 
+  # use the humanized version of the key as a fallback
+  key.to_s.humanize
 end
