@@ -43,7 +43,7 @@ module Common::Posts
   #
   def destroy
     @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(thing: @request.class.model_name.human), :later
+    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
     render(:update) {|page| page.redirect_to requests_path}
   end
 

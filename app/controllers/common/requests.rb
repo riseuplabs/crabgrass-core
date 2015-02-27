@@ -38,7 +38,7 @@ module Common::Requests
       elsif mark == :reject
         msg = :rejected_by_entity.t(entity: current_user.name)
       end
-      success @request.class.model_name.human, msg
+      success I18n.t(@request.name), msg
     end
     render template: 'common/requests/update'
   end
@@ -49,7 +49,7 @@ module Common::Requests
   #
   def destroy
     @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(thing: @request.class.model_name.human), :later
+    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
     render(:update) {|page| page.redirect_to requests_path}
   end
 
