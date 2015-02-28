@@ -161,6 +161,12 @@ namespace :cg do
       puts "Removed #{count} chat messages without a channel"
     end
 
+    desc "Remove dead taggings"
+    task(:remove_dead_taggings => :environment) do
+      count = ActsAsTaggableOn::Tagging.where(taggable_id: nil).delete_all
+      puts "Deleted #{count} blank taggings."
+    end
+
     desc "Remove unused tags"
     task(:remove_unused_tags => :environment) do
       count = ActsAsTaggableOn::Tag.
