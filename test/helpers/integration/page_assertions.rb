@@ -1,7 +1,8 @@
 module PageAssertions
 
   def assert_page_tags(tags)
-    tags.split(',') if tags.respond_to? :split
+    # split a string but not an array
+    tags = tags.split(',') unless tags.respond_to? :each
     within '.tags' do
       tags.each do |tag|
         assert_content tag

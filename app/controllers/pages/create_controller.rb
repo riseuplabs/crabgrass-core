@@ -139,7 +139,7 @@ class Pages::CreateController < ApplicationController
   end
 
   def page_params
-    params.fetch(:page, {}).permit(:title, :summary)
+    params.fetch(:page, {}).permit(:title, :summary, :tag_list)
   end
 
   def access_param

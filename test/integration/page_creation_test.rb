@@ -3,7 +3,7 @@ require 'javascript_integration_test'
 class PageCreationTest < JavascriptIntegrationTest
   include GroupRecords
 
-  def test_sharing_with_users
+  def test_share_with_users
     login
     prepare_page :discussion_page
     add_recipients public_user, autocomplete: true
@@ -16,7 +16,7 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_page_users user, public_user, hidden_user
   end
 
-  def test_setting_owner
+  def test_set_owner
     login users(:red)
     prepare_page :discussion_page
     select 'rainbow', from: :page_owner
@@ -24,7 +24,7 @@ class PageCreationTest < JavascriptIntegrationTest
     find('#banner_content').assert_text 'rainbow'
   end
 
-  def test_sharing_with_groups
+  def test_share_with_groups
     login
     prepare_page :discussion_page
     add_recipients public_group, public_group_to_pester, autocomplete: true
@@ -38,4 +38,13 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_no_content public_group.display_name
     assert_page_users user
   end
+  
+  def test_add_tags
+    login users(:red)
+    prepare_page :discussion_page
+    fill_in 'Tags', with: "a, few, tags"
+    click_on :create.t
+    assert_page_tags "a, few, tags"
+  end
+
 end
