@@ -121,12 +121,28 @@ module I18n
         site_specific_translation = translate_without_site_scope(key, site_options)
       end
     ensure
-      return site_specific_translation unless site_specific_translation.blank?
+      return site_specific_translation if site_specific_translation.present?
       return translate_without_site_scope(*args)
     end
 
+    def translate_with_exception_handler(*args)
+      translate_without_exception_handler(*args)
+    rescue ArgumentError => exception
+      # MissingTranlationData is already handled in translate.
+      # If it shows up here the handler already reraised and so do we.
+      raise if exception.is_a? MissingTranslationData
+      options  = args.last.is_a?(Hash) ? args.pop.dup : {}
+      key      = args.shift
+      locale   = options.delete(:locale) || config.locale
+      handling = options.delete(:throw) && :throw || options.delete(:raise) && :raise 
+      handle_exception(handling, exception, locale, key, options)
+    end
+
     alias_method_chain :translate, :site_scope
-    alias_method :t, :translate_with_site_scope
+    alias_method_chain :translate, :exception_handler
+
+    # this alias will include both chains
+    alias_method :t, :translate_with_exception_handler
 
     protected
 
