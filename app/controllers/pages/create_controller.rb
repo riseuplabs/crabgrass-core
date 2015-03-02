@@ -52,7 +52,7 @@ class Pages::CreateController < ApplicationController
   #
   def catch_cancel
     if params[:cancel]
-      redirect_to new_page_url(owner: params[:owner])
+      redirect_to new_page_url(params.slice(:owner))
       return false
     else
       return true
@@ -69,15 +69,14 @@ class Pages::CreateController < ApplicationController
   end
 
   def set_owner
-    # owner from form overwrites owner from context
-    if params[:page].present? && params[:page][:owner].present?
-      params[:owner] = params[:page][:owner]
-    end
-    if params[:owner] == 'me'
-      @owner = current_user
-    elsif params[:owner].present?
-      @owner = Group.find_by_name(params[:owner])
-    end
+    # owner from form 
+    owner_param = params[:page].delete(:owner) if params[:page].present? 
+    
+    # owner from context
+    owner_param ||= params[:owner]
+    
+    @owner = current_user if owner_param == 'me'
+    @owner ||= Group.find_by_name(owner_param) if owner_param.present?
   end
 
   #
@@ -139,7 +138,7 @@ class Pages::CreateController < ApplicationController
   end
 
   def page_params
-    params.fetch(:page, {}).permit(:title, :summary)
+    params.fetch(:page, {}).permit(:title, :summary, :tag_list)
   end
 
   def access_param
@@ -183,13 +182,11 @@ class Pages::CreateController < ApplicationController
 #  end
 
   def setup_context
-    if params[:owner] and params[:owner] != 'me'
-      @group = Group.find_by_name(params[:owner])
-    end
-    if @group
-      @context = Context::Group.new(@group)
-    else
+    case @owner
+    when current_user
       @context = Context::Me.new(current_user)
+    when Group
+      @context = Context::Group.new(@owner)
     end
     super
   end
