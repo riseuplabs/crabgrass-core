@@ -15,7 +15,7 @@ class Wikis::BaseController < ApplicationController
   def fetch_wiki
     @wiki = Wiki.find(params[:wiki_id] || params[:id])
     @page = @wiki.page
-    if params[:section]
+    if params[:section].present?
       @section = params[:section]
       @body = @wiki.get_body_for_section(@section)
     else
