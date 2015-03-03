@@ -1,33 +1,17 @@
 class AssetsController < ApplicationController
 
   before_filter :authorization_required
+  before_filter :symlink_public_asset, only: :show
   permissions 'assets'
   guard :may_ACTION_asset?
 
   prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
-    if @asset.public? and !File.exist?(@asset.public_filename)
-      # update access and redirect iff asset is public AND the public
-      # file is not yet in place.
-      @asset.update_access
-      @asset.generate_thumbnails
-      if @asset.thumbnails.any?
-        redirect_to # redirect to the same url again, but next time they will get the symlinks
-      else
-        return not_found
-      end
-    else
-      path = params[:path]
-      if thumb_name_from_path(path)
-        thumb = @asset.thumbnail( thumb_name_from_path(path) )
-        raise_not_found unless thumb
-        thumb.generate
-        send_file(private_filename(thumb), type: thumb.content_type, disposition: disposition(thumb))
-      else
-        send_file(private_filename(@asset), type: @asset.content_type, disposition: disposition(@asset))
-      end
-    end
+    file = file_to_send(params[:path])
+    send_file private_filename(file), 
+      type: file.content_type, 
+      disposition: disposition(file)
   end
 
   def destroy
@@ -44,6 +28,8 @@ class AssetsController < ApplicationController
 
   protected
 
+  ## Before Filters
+
   def fetch_asset
     if params[:version]
       @asset = Asset.find_by_id(params[:id]).versions.find_by_version(params[:version])
@@ -52,6 +38,37 @@ class AssetsController < ApplicationController
     end
     raise_not_found unless @asset
     true
+  end
+
+  # Update access and redirect to the same path - which will now have a 
+  # symlink in public
+  # This only applies iff asset is public AND the public file is not in place.
+  def symlink_public_asset
+    return unless @asset.public? and !File.exist?(@asset.public_filename)
+    @asset.update_access
+    @asset.generate_thumbnails
+    if @asset.thumbnails.any?
+      redirect_to # redirect to the same url again, but next time they will get the symlinks
+    else
+      return not_found
+    end
+  end
+
+  ## Helper Methods
+
+  def file_to_send(path)
+    thumb_name = thumb_name_from_path(path)
+    if thumb_name
+      thumb = @asset.thumbnail(thumb_name)
+      raise_not_found(:file.t) unless thumb
+      thumb.generate
+      thumb
+    else
+      @asset
+    end
+  rescue Errno::ENOENT => e
+    Rails.logger.warn "WARNING: Asset not found: #{thumb_name}"
+    raise_not_found :file.t
   end
 
   #
