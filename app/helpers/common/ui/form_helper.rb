@@ -50,25 +50,23 @@ module Common::Ui::FormHelper
   end
 
   #
-  # add some radio buttons, using a similar api to select and select_tag
+  # add a row of radio buttons with labels
+  # using a similar api to select and select_tag
   #
   # choices: array of choices in the form [[label, id],[label, id]]
   #
   # options:
-  #  * :separator - will be used to separate the buttons
-  #  * :selected - id of the selected button
-  #  ... all others will be handed over to the radio_button_tag.
+  #  * :selected  - id of the selected option(s)
+  #   all others will be handed over to the radio_button_tag.
   #
-  def radio_buttons_tag(name, choices, options={})
-    join = options.delete(:separator) || ' '
-    selected = options.delete(:selected) || choices.first[1]
-    html = []
-    choices.each do |label, id|
-      checked = selected == id
-      html << radio_button_tag(name, id, checked, options) +
-              label_tag("%s_%s" % [name, id], label)
-    end
-    html.join(join)
+  def inline_radio_buttons(name, choices, options = {})
+    render partial: 'ui/form/inline_radio_button', 
+      collection: choices,
+      locals: {
+        name: name, 
+        selected: options.delete(:selected) || choices.first[1],
+        options: options
+      }
   end
 
   #
