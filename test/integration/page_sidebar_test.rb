@@ -13,22 +13,38 @@ class PageSidebarTest < JavascriptIntegrationTest
     click_on own_page.title
   end
 
-  def test_sharing_with_user
+  def test_watch
+    watch_page
+    assert_page_watched
+    unwatch_page
+    assert_page_not_watched
+  end
+
+  def test_stars
+    star_page
+    assert_page_starred
+    remove_star_from_page
+    assert_page_not_starred
+  end
+
+  def test_share_with_user
     share_page_with users(:red)
     assert_page_users user, users(:red)
   end
 
-  def test_sharing_with_group
+  def test_share_with_group
     share_page_with groups(:animals)
     assert_page_groups groups(:animals)
   end
 
-  def test_tagging
-    tags = %w/some tags for this páge/
-    tag_page tags
-    assert_page_tags tags
+  # regression test for #7834
+  def test_sharing_preserves_stars
+    star_page
+    assert_page_starred
+    share_page_with users(:red)
+    assert_page_starred
   end
-
+  
   def test_trash
     path = current_path
     delete_page
@@ -52,25 +68,14 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_nil Page.where(id: own_page.id).first
   end
 
-  def test_stars
-    star_page
-    assert_page_starred
-    remove_star_from_page
-    assert_page_not_starred
+  def test_tag
+    tags = %w/some tags for this páge/
+    tag_page tags
+    assert_page_tags tags
   end
 
-  def test_watch
-    watch_page
-    assert_page_watched
-    unwatch_page
-    assert_page_not_watched
-  end
-
-  # regression test for #7834
-  def test_sharing_preserves_stars
-    star_page
-    assert_page_starred
-    share_page_with users(:red)
-    assert_page_starred
+  def test_attach_file
+    attach_file_to_page
+    assert_selector '#attachments a.thumbnail'
   end
 end

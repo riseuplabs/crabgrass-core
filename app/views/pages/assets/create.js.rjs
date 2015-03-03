@@ -1,5 +1,7 @@
+page.replace 'page_sidebar', :partial => 'pages/sidebar/sidebar'
 page.replace_html 'assets_list', :partial => '/common/assets/asset_as_li', :collection => @page.assets
 page << 'initAjaxUpload();'
+
 page << <<-EOJS
 if (document.getElementById('MB_window')) { Modalbox.updatePosition(); }
 var list = document.getElementById('assets_list');

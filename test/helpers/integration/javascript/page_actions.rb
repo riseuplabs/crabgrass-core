@@ -48,7 +48,7 @@ module PageActions
     find('a', text: 'Permissions').click
     select permission
     assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
-    find('.buttons').click_on 'Close'
+    close_popup
     wait_for_ajax # reload sidebar
   end
 
@@ -63,6 +63,21 @@ module PageActions
     click_on 'Undelete'
     # ensure after_commit callbacks are triggered so sphinx indexes the page.
     page.page_terms.committed!
+  end
+
+  def attach_file_to_page(file = fixture_file('photo.jpg'), page = @page)
+    within '#attachments' do
+      click_on 'Edit'
+    end
+    attach_file 'upload-input', file
+    assert_selector '#assets_list li.asset'
+    close_popup
+  end
+
+  
+  def close_popup
+    find('#MB_content').click_on 'Close'
+    assert_no_selector '#MB_window'
   end
 
   #
