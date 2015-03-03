@@ -37,6 +37,11 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_groups groups(:animals)
   end
 
+  def test_share_with_committee
+    share_page_with groups(:cold)
+    assert_page_groups groups(:cold)
+  end
+
   # regression test for #7834
   def test_sharing_preserves_stars
     star_page

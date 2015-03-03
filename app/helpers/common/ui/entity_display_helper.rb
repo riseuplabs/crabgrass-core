@@ -202,7 +202,7 @@ module Common::Ui::EntityDisplayHelper
   # used when generating json to return for autocomplete popups
   #
   def entity_autocomplete_line(entity)
-    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+    "<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
   end
 
   def entity_list(entities, options={})
