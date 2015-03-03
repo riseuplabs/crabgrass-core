@@ -3,7 +3,7 @@
   = formy(:simple_form) do |f|
     - f.row(class: 'float_left') do |r|
       - r.label :preview_selected_image.t
-      - r.input image_preview_box
+      - r.input content_tag(:div, '', class: 'image_preview')
     - f.row do |r|
       - r.label :size.t
       - r.input image_size_buttons

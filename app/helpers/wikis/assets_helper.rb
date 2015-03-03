@@ -13,13 +13,6 @@ module Wikis::AssetsHelper
     check_box_tag('link_to_image', 'true', false) + :include_full_checkbox.t
   end
 
-  def image_preview_box
-    return unless @images.any?
-    content_tag(:div,
-      thumbnail_img_tag(@images.first, :medium),
-      class: 'image_preview')
-  end
-
   def image_select_buttons
     return unless @images.any?
     render partial: 'select_buttons'

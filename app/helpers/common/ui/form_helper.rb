@@ -57,16 +57,15 @@ module Common::Ui::FormHelper
   #
   # options:
   #  * :selected  - id of the selected option(s)
+  #                 false to select none
   #   all others will be handed over to the radio_button_tag.
   #
   def inline_radio_buttons(name, choices, options = {})
+    selected = options.delete(:selected) 
+    selected = choices.first[1] if selected.nil?
     render partial: 'ui/form/inline_radio_button', 
       collection: choices,
-      locals: {
-        name: name, 
-        selected: options.delete(:selected) || choices.first[1],
-        options: options
-      }
+      locals: { name: name, selected: selected, options: options }
   end
 
   #

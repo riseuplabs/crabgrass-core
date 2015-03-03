@@ -18,7 +18,7 @@ class Wikis::AssetsController < Wikis::BaseController
     @images = Asset.visible_to(current_user, @wiki.context).
       media_type(:image).
       most_recent.
-      paginate(pagination_params(per_page: 4))
+      paginate(pagination_params(per_page: 3))
   end
 
 end
