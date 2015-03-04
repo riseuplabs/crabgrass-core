@@ -77,6 +77,13 @@ module Crabgrass
     # It will automatically turn deliveries on
     config.action_mailer.perform_deliveries = false
 
+    # we need a lambda because exceptions_controller is not initialized
+    # during config. 
+    # https://coderwall.com/p/w3ghqq/rails-3-2-error-handling-with-exceptions_app
+    config.exceptions_app = lambda do |env|
+      ExceptionsController.action(:show).call(env)
+    end
+
     ##
     ## PLUGINS
     ##

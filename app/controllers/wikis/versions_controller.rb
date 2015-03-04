@@ -32,8 +32,7 @@ class Wikis::VersionsController < Wikis::BaseController
     @version = @wiki.find_version(params[:id])
   rescue Wiki::VersionNotFoundError => ex
     error ex
-    raise ErrorNotFound.new('Version')
-    return false
+    raise_not_found
   end
 
 end

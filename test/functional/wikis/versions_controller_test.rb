@@ -20,7 +20,7 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_version_not_found
-    assert_raises ErrorNotFound do
+    assert_raises ActionController::RoutingError do
       run_before_filters :show, wiki_id: @wiki.to_param, id: '123'
     end
   end

@@ -11,7 +11,10 @@
 #
 # For not found, use:
 #
-#   raise_not_found(I18n.t(:invite))
+#   raise_not_found
+#
+# Or simply use ActiveRecord finders that raise ActiveRecord::RecordNotFound
+# It will have the same effect.
 #
 # Some people might consider this bad programming style, since it uses exceptions
 # for error messages and they consider exceptions to be only for the unexpected.
@@ -38,8 +41,6 @@ module Common::Application::RescueErrors
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, with: :render_error
       rescue_from CrabgrassException,          with: :render_error
-      rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
-      rescue_from ErrorNotFound,               with: :render_not_found
       rescue_from AuthenticationRequired,      with: :render_authentication_required
       rescue_from PermissionDenied,            with: :render_permission_denied
       rescue_from ActionController::InvalidAuthenticityToken, with: :render_csrf_error
@@ -102,23 +103,6 @@ module Common::Application::RescueErrors
   #
   def render_csrf_error(exception=nil)
     render template: 'account/csrf_error', layout: 'notice'
-  end
-
-  #
-  # shows a generic not found page or error message, customized
-  # by any message in the exception.
-  #
-  def render_not_found(exception=nil)
-    # Claim something was not found when people may not access it
-    exception = ErrorNotFound.new(:page.t) if exception.is_a? PermissionDenied
-    respond_to do |format|
-      format.html do
-        render_not_found_html(exception)
-      end
-      format.js do
-        render_error_js(exception)
-      end
-    end
   end
 
   #
@@ -266,10 +250,6 @@ module Common::Application::RescueErrors
       after_login = url_for params.merge(only_path: true)
       redirect_to root_path(redirect: after_login)
     end
-  end
-
-  def render_not_found_html(exception)
-    render template: 'error/not_found', status: :not_found, layout: 'notice', locals: {exception: exception}
   end
 
   def render_error_js(exception=nil, options={})

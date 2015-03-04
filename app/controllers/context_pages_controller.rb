@@ -33,25 +33,26 @@ class ContextPagesController < DispatchController
   def process(*)
     super
   rescue ActiveRecord::RecordNotFound
-    if logged_in? and (@group or (@user and @user == current_user))
-      url = create_page_url 'type' => 'wiki',
-        'page[owner]' => (@group || @user),
-        'page[title]' => params[:id].split('+').first
-      logger.info("Redirect to #{url}")
-      warning :thing_not_found.t(:thing => :page.t)
-
-      # FIXME: this controller isn't fully set-up yet (because usually the request
-      #   will be completed in a new controller instance), so redirect_to etc.
-      #   won't work.
-      return [302, { 'Location' => url }, []]
-    else
-      #set_language do
-      # is it required to set the language here?
-      raise_not_found(:page.t)
-    end
+    redirect_to_new_page || raise_not_found
   end
 
   protected
+ 
+  def redirect_to_new_page 
+    return unless logged_in?
+
+    new_page_owner = @group || (@user if (@user == current_user ))
+    return unless new_page_owner
+
+    url = create_page_url :type => 'wiki', 
+      page: { owner: new_page_owner, title: params[:_page] }
+    logger.info("Redirect to #{url}")
+
+    # FIXME: this controller isn't fully set-up yet (because usually the request
+    #   will be completed in a new controller instance), so redirect_to etc.
+    #   won't work.
+    return [302, { 'Location' => url }, []]
+  end
 
   #
   # attempt to find a page by its name, and return a new instance of the
