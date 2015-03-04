@@ -25,5 +25,8 @@ function autoCompleteRowRenderer(value, re, data) {
 }
 
 function autoCompleteSelectValue(value){
-  return value.replace(/<em>(.*)<\/em>.*/g,'$1');
+  // if there are two rows pick the second one
+  row = value.replace(/.*<br\/>(.*)/g,'$1');
+  // encode text without the tags 
+  return encodeURIComponent(row.replace(/<[^>]*>/g,''));
 }

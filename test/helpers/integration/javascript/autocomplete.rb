@@ -22,11 +22,12 @@ module Autocomplete
   def autocomplete(field, options)
     chars ||= 1
     # the space is a work around as the first letter may get cut off
-    fill_in field, with: ' ' + options[:with][0,chars]
+    fill_in field, with: ' '
+    fill_in field, with: options[:with][0,chars]
     # poltergeist will not keep the element focussed.
     # But when we loose focus the autocomplete won't show.
     execute_script("($('#{field}') || $$('[name=#{field}]')[0]).focus();")
-    find('.autocomplete em', text: options[:with]).trigger('click')
+    find('.autocomplete p', text: options[:with]).trigger('click')
   rescue Capybara::ElementNotFound
     chars +=1
     raise if chars > 3

@@ -16,7 +16,6 @@
 - newitem = true if @page and @page.new_record?
 - alter_access = true if alter_access.nil?
 - 
-- recipient_name = recipient.name.gsub(/\+/,"%2b")   # encode + as %2b
 - participation = (@page.participation_for(recipient) if @page)
 - 
 - id = "share_recipient_%s" % recipient.name
@@ -31,7 +30,7 @@
       = hidden_field_tag "recipients[#{recipient.name}]", "1", id: id
       = display_access(participation)
     - elsif may_select_access_participation?
-      = select_page_access "recipients[#{recipient_name}][access]", access_options
+      = select_page_access "recipients[#{recipient.name}][access]", access_options
     - else
       -# why is this included as a hidden field if you are not allowed to set the access level?
       -# perhaps if may_select_access_participations is false, then a default should be hard coded? -elijah
