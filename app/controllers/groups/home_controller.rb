@@ -2,6 +2,8 @@ class Groups::HomeController < Groups::BaseController
 
   skip_before_filter :login_required
   guard :may_show_group?
+  rescue_from PermissionDenied, with: :render_not_found
+
   before_filter :fetch_wikis
 
   layout 'sidecolumn'

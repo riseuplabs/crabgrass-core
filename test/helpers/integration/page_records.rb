@@ -7,8 +7,9 @@ module PageRecords
     save_and_index(page)
   end
 
-  def public_page
-    page = new_page public: true
+  def public_page(options = {})
+    options[:public] = true
+    page = new_page options
     save_and_index(page)
   end
 
