@@ -16,6 +16,14 @@ class PageAccessTest < JavascriptIntegrationTest
     assert_content 'Not Found'
   end
 
+  def test_public_page_of_hidden_group
+    # groups are hidden by default
+    page = public_page owner: group
+    visit_page(page)
+    assert_content page.title
+    assert_no_content 'Pages'
+  end
+
   def visit_page(page)
     visit "/pages/#{page.name_url}"
   end

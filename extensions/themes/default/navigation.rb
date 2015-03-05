@@ -228,6 +228,7 @@ define_navigation do
     end
 
     context_section :home do
+      visible { may_show_group? }
       label  { :home.t }
       icon   :house
       url    { entity_path(@group) }
@@ -235,6 +236,7 @@ define_navigation do
     end
 
     context_section :pages do
+      visible { may_show_group? }
       label  { :pages.t }
       icon   :page_white_copy
       url    { group_pages_path(@group) }

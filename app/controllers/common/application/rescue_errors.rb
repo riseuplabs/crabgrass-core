@@ -109,6 +109,8 @@ module Common::Application::RescueErrors
   # by any message in the exception.
   #
   def render_not_found(exception=nil)
+    # Claim something was not found when people may not access it
+    exception = ErrorNotFound.new(:page.t) if exception.is_a? PermissionDenied
     respond_to do |format|
       format.html do
         render_not_found_html(exception)
