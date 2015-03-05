@@ -127,7 +127,7 @@ module Common::Application::AlertMessages
   # Maybe they just typed it wrong. So we better leave it there.
   #
   def raise_not_found
-    raise ActionController::RoutingError.new('Not Found')
+    raise ActiveRecord::RecordNotFound
   end
 
   def raise_denied(message=nil)
@@ -135,7 +135,7 @@ module Common::Application::AlertMessages
   end
 
   def raise_authentication_required
-    raise AuthenticationRequired.new
+    raise AuthenticationRequired
   end
 
   private

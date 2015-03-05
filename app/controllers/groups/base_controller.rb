@@ -15,6 +15,7 @@ class Groups::BaseController < ApplicationController
   def fetch_group
     # group might be preloaded by DispatchController
     @group ||= Group.find_by_name(params[:group_id] || params[:id])
+    raise_not_found unless may_show_group?
   end
 
   def setup_context

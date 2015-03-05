@@ -99,8 +99,7 @@ class ContextPagesController < DispatchController
       end
     end
 
-    raise ActiveRecord::RecordNotFound.new unless @page
-    return controller_for_page(@page)
+    controller_for_page(@page) || raise_not_found
   end
 
   def find_pages_with_unknown_context(name)
@@ -120,6 +119,7 @@ class ContextPagesController < DispatchController
   #end
 
   def controller_for_page(page)
+    return unless page
     new_controller page.controller
   end
 
