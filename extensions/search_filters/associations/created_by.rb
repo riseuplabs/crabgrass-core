@@ -16,7 +16,7 @@ SearchFilter.new('/created-by/:user_id/') do
 
   label do |opts|
     if opts[:user_id]
-      :created_by_user.t(user: user_login(opts[:user_id]).capitalize)
+      :created_by_user.t(user: opts[:user_id].capitalize)
     else
       :created_by_dotdotdot.t
     end

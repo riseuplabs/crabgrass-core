@@ -14,7 +14,7 @@ SearchFilter.new('/group/:group_id/') do
 
   label do |opts|
     if opts[:group_id]
-      "#{:group.t}: #{group_name(opts[:group_id])}"
+      "#{:group.t}: #{opts[:group_id]}"
     else
       :group.t + '...'
     end

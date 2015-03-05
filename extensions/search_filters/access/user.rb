@@ -14,7 +14,7 @@ SearchFilter.new('/user/:user_id/') do
 
   label do |opts|
     if opts[:user_id]
-      "#{:user.t}: #{user_login(opts[:user_id])}"
+      "#{:user.t}: #{opts[:user_id]}"
     else
       :user.t + '...'
     end

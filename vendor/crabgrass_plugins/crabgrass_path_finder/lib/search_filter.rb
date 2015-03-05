@@ -154,44 +154,13 @@ class SearchFilter
   protected
 
   def user_id(id)
-    if id =~ /^\d*$/
-      id
-    else
-      user = User.find_by_login(id)
-      raise ErrorNotFound.new("#{:user.t} #{id.inspect}") unless user
-      user.id
-    end
-  end
-
-  def user_login(id)
-    if id =~ /^\d*$/
-      user = User.find_by_id(id)
-      raise ErrorNotFound.new("#{:user.t} #{id.inspect}") unless user
-      user.login
-    else
-      id.nameize # don't let invalid names through.
-                 # The user might have given us dangerious input.
-    end
+    User.where(login: id).limit(1).pluck(:id).first || 
+      raise(ErrorNotFound.new("#{:user.t} #{id.inspect}"))
   end
 
   def group_id(id)
-    if id =~ /^\d*$/
-      id
-    else
-      group = Group.find_by_name(id)
-      raise ErrorNotFound.new("#{:group.t} #{id.inspect}") unless group
-      group.id
-    end
-  end
-
-  def group_name(id)
-    if id =~ /^\d*$/
-      group = Group.find_by_id(id)
-      raise ErrorNotFound.new("#{:group.t} #{id.inspect}") unless group
-      group.name
-    else
-      id.nameize # don't let invalid names through.
-    end
+    Group.where(name: id).limit(1).pluck(:id).first ||
+      raise(ErrorNotFound.new("#{:group.t} #{id.inspect}"))
   end
 
   ##
