@@ -13,6 +13,7 @@ if defined?(Bundler)
 end
 
 require_relative "../lib/crabgrass/boot.rb"
+require_relative "../lib/crabgrass/public_exceptions.rb"
 
 module Crabgrass
   class Application < Rails::Application
@@ -77,12 +78,7 @@ module Crabgrass
     # It will automatically turn deliveries on
     config.action_mailer.perform_deliveries = false
 
-    # we need a lambda because exceptions_controller is not initialized
-    # during config. 
-    # https://coderwall.com/p/w3ghqq/rails-3-2-error-handling-with-exceptions_app
-    config.exceptions_app = lambda do |env|
-      ExceptionsController.action(:show).call(env)
-    end
+    config.exceptions_app = Crabgrass::PublicExceptions.new(Rails.public_path)
 
     ##
     ## PLUGINS
