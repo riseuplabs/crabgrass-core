@@ -10,7 +10,7 @@
     = :create_a_new_thing.t(thing: :page.t.downcase)
     .h2= page_type.class_display_name
   - if @group
-    = :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,@group.display_name))
+    = :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,h(@group.display_name))).html_safe
 
 .create_page
   = form_tag(create_page_path(page_type: page_type), multipart: @multipart) do
