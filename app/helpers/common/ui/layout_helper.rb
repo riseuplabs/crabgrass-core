@@ -102,11 +102,6 @@ module Common::Ui::LayoutHelper
     lines << '<script type="text/javascript">'
     #lines << localize_modalbox_strings
       lines << content_for(:script) if content_for?(:script)
-      if content_for?(:dom_loaded)
-        lines << 'document.observe("dom:loaded",function(){'
-        lines << content_for(:dom_loaded)
-        lines << '});'
-      end
     lines << '</script>'
 
     # make all IEs behave like IE 9
