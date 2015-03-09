@@ -40,6 +40,7 @@ class UnauthenticatedUser
   def groups
     Group.none
   end
+  alias_method :all_groups, :groups
 
   def member_of?(group)
     false
@@ -48,6 +49,9 @@ class UnauthenticatedUser
   def friend_of?(user)
     false
   end
+
+  def friend_ids; [] ; end
+  def peer_ids;   [] ; end
 
   def method_missing(method)
     raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
