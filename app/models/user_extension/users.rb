@@ -56,18 +56,18 @@ module UserExtension::Users
 
       # same result as user.friends, but makes use of cache.
       def self.friends_of(user)
-        where('users.id in (?)', user.friend_id_cache)
+        where('users.id in (?)', user.friend_ids)
       end
 
       def self.friends_or_peers_of(user)
-        where('users.id in (?)', user.friend_id_cache + user.peer_id_cache)
+        where('users.id in (?)', user.friend_ids + user.peer_ids)
       end
 
       # neither friends nor peers
       # used for autocomplete when we preloaded the friends and peers
       def self.strangers_to(user)
         where 'users.id NOT IN (?)',
-          user.friend_id_cache + user.peer_id_cache + [user.id]
+          user.friend_ids + user.peer_ids + [user.id]
       end
 
       ##

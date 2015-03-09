@@ -65,25 +65,23 @@ class EntitiesControllerTest < ActionController::TestCase
   end
 
   def test_entities_respect_user_privacy
-    login_as :green
-    assert_equal ["blue"], users(:orange).friends.map(&:login)
-      "orange should only have blue as a friend."
+    login_as :gerrard
+    users(:red).revoke_access! public: :view
     xhr :get, :index, format: :json, view: :all, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
-      "orange can't see red"
+      "gerrard can't see red after it removed public access"
   end
 
   def test_people_respect_user_privacy
-    login_as :green
-    assert_equal ["blue"], users(:orange).friends.map(&:login)
-      "orange should only have blue as a friend."
+    login_as :gerrard
+    users(:red).revoke_access! public: :view
     xhr :get, :index, format: :json, view: :users, query: 're'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
-      "orange can't see red"
+      "gerrard can't see red after it removed public access"
   end
 
   #  def test_querying_locations

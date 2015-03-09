@@ -41,9 +41,7 @@ class EntitiesController < ApplicationController
       if preload?
         group.users
       else
-        []
-      #elsif filter.present?
-      #  group.users.named_like(filter).find(:all, :limit => LIMIT)
+        group.users.named_like(filter).limit(LIMIT)
       end
     else
       []
@@ -57,9 +55,8 @@ class EntitiesController < ApplicationController
     if preload?
       User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
     elsif filter.present?
-      recipients = User.strangers_to(current_user)
-      recipients = recipients.with_access(public: :pester)
-      recipients.named_like(filter).find(:all, limit: LIMIT)
+      recipients = User.with_access(current_user => :pester)
+      recipients.named_like(filter).limit(LIMIT)
     end
   end
 
@@ -70,9 +67,8 @@ class EntitiesController < ApplicationController
     if preload?
       current_user.all_groups
     elsif filter.present?
-      other_groups = Group.without_member(current_user)
-      other_groups = other_groups.with_access(public: :view)
-      other_groups.named_like(filter).find :all, limit: LIMIT
+      visible_groups = Group.with_access(current_user => :view)
+      visible_groups.named_like(filter).limit(LIMIT)
     end
   end
 
@@ -84,9 +80,8 @@ class EntitiesController < ApplicationController
       # preload user's groups
       User.friends_or_peers_of(current_user).all_with_access(current_user => :view)
     elsif filter.present?
-      strangers = User.strangers_to(current_user)
-      strangers = strangers.with_access(public: :view)
-      strangers.named_like(filter).find(:all, limit: LIMIT)
+      visible_users = User.with_access(current_user => :view)
+      visible_users.named_like(filter).limit(LIMIT)
     end
   end
 
