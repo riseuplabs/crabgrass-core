@@ -9,6 +9,11 @@
   / begin scripts
   = crabgrass_javascripts
   / end scripts
+- if content_for?(:dom_loaded)
+  :javascript
+    document.observe("dom:loaded",function(){
+      #{content_for(:dom_loaded)}
+    });
 = csrf_meta_tag
 - if context_banner_style || @content_for_style
   :css
