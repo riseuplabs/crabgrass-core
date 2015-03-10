@@ -56,11 +56,4 @@ module PageExtension::Comments
 
   protected
 
-  # handled by discussion now...
-  #def update_posts_count
-  #  if posts_count_changed? # trigger by post.rb, page.post_count_will_change!
-  #    self.posts_count = self.discussion.posts_count if self.discussion
-  #  end
-  #end
-
 end

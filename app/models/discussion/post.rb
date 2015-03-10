@@ -64,7 +64,6 @@ class Post < ActiveRecord::Base
   #   page = options.delete(:page)
   #   page.discussion ||= Discussion.create!(:page => page)
   #   post = page.discussion.posts.build(options)
-  #   page.posts_count_will_change!
   #   post.page_terms_id = page.page_terms_id
   #   return post
   # end

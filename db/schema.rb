@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150219152452) do
+ActiveRecord::Schema.define(:version => 20150310063037) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -463,7 +463,6 @@ ActiveRecord::Schema.define(:version => 20150219152452) do
     t.integer  "data_id"
     t.string   "data_type"
     t.integer  "contributors_count",                       :default => 0
-    t.integer  "posts_count",                              :default => 0
     t.string   "name"
     t.string   "updated_by_login"
     t.string   "created_by_login"

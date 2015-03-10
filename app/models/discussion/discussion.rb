@@ -139,7 +139,6 @@ class Discussion < ActiveRecord::Base
   #
   def post_created(post)
     self.posts_count += 1
-    page.update_attribute(:posts_count, posts_count) if page
     update_attributes!(
       posts_count: posts_count,
       last_post: post,
@@ -158,7 +157,6 @@ class Discussion < ActiveRecord::Base
   def post_destroyed(post, decrement=true)
     if decrement
       self.posts_count -= 1
-      page.update_attribute(:posts_count, posts_count) if page
     end
     update_attributes!(
       posts_count: posts_count,

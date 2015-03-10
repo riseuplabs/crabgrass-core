@@ -35,7 +35,6 @@ class DiscussionTest < ActiveSupport::TestCase
     assert_equal 2, page.discussion.reload.posts_count
     assert_equal 2, page.discussion.posts.size
 
-    assert_equal 2, page.reload.posts_count
     assert_equal user, page.discussion.replied_by
     assert_equal post, page.discussion.last_post
   end
