@@ -67,7 +67,7 @@ module Pages::BeforeFilters
 
   def load_posts
     if @options.show_posts and request.get? and !@page.nil?
-      @posts = @page.posts(page: params[:posts]) # use params[:posts] for pagination
+      @posts = @page.posts(page: params[:posts], include: :user) # use params[:posts] for pagination
       if @options.show_reply
         @post = Post.new
       end
