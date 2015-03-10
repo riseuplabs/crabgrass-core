@@ -27,8 +27,8 @@ module PageExtension::Assets
       has_many   :assets, dependent: :destroy
       belongs_to :cover, class_name: "Asset"
 
-      before_save :update_media_flags
-      after_save :update_attachment_access
+      before_save :update_media_flags, if: :data_id_changed?
+      after_save :update_attachment_access, if: :public_changed?
     end
   end
 
@@ -88,9 +88,7 @@ module PageExtension::Assets
 
   # update attachment permissions
   def update_attachment_access
-    if public_changed?
-      assets.each { |asset| asset.update_access }
-    end
+    assets.each { |asset| asset.update_access }
     true
   end
 
