@@ -19,7 +19,7 @@ module PageExtension::Comments
 
   def posts(options={})
     return [] unless self.discussion
-    options = {order: "created_at ASC", per_page: Conf.pagination_size, include: :ratings}.merge(options)
+    options = {order: "created_at ASC", per_page: Conf.pagination_size}.merge(options)
     options[:page] ||= discussion.last_page # for now, always paginate.
     if options[:page]
       Post.visible.scoped_by_discussion_id(discussion.id).paginate(options)
@@ -28,6 +28,12 @@ module PageExtension::Comments
     end
   end
 
+  def add_post(user, post_attributes)
+    Post.create! self, user, post_attributes
+    user.updated(self)
+    save
+  end
+    
   #
   # use Post.create! instead.
   #
@@ -49,12 +55,5 @@ module PageExtension::Comments
   #end
 
   protected
-
-  # handled by discussion now...
-  #def update_posts_count
-  #  if posts_count_changed? # trigger by post.rb, page.post_count_will_change!
-  #    self.posts_count = self.discussion.posts_count if self.discussion
-  #  end
-  #end
 
 end

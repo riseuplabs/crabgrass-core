@@ -18,7 +18,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     @user = FactoryGirl.create(:user, login: "pepe")
     User.current = @user
 
-    @page = FactoryGirl.create(:page, owner: @user)
+    @page = FactoryGirl.create(:page, created_by: @user)
 
     @site = FactoryGirl.create(:site, domain: "crabgrass.org",
                                title: "Crabgrass Social Network",

@@ -10,7 +10,7 @@ module PageExtension::Users
     base.instance_eval do
 
       before_create :set_user
-      before_save :ensure_owner
+      after_validation :ensure_owner, on: :create
       before_save :denormalize
 
       belongs_to :created_by, class_name: 'User', foreign_key: 'created_by_id'

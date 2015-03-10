@@ -30,7 +30,6 @@ schema
     t.integer  "data_id",            :limit => 11
     t.string   "data_type"
     t.integer  "contributors_count", :limit => 11, :default => 0
-    t.integer  "posts_count",        :limit => 11, :default => 0
     t.string   "name"
     t.string   "updated_by_login"
     t.string   "created_by_login"

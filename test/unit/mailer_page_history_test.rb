@@ -2,6 +2,7 @@ require_relative 'test_helper'
 require 'mailer'
 
 class MailerPageHistoryTest < ActiveSupport::TestCase
+
   def setup
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
@@ -11,11 +12,7 @@ class MailerPageHistoryTest < ActiveSupport::TestCase
     @user_a = FactoryGirl.create(:user, login: "miguel", display_name: "Miguel Bakunin")
     @user_b = FactoryGirl.create(:user, login: "anselme", display_name: "Anselme Belgarin")
 
-    User.current = @user
-
-    @page = FactoryGirl.create(:page)
-    @page.owner = @user
-    @page.user_participations.create user: @user, access: 1
+    @page = FactoryGirl.create(:page, created_by: @user)
 
     @site = FactoryGirl.create(:site, domain: "crabgrass.org",
                                title: "Crabgrass Social Network",

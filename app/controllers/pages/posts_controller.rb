@@ -23,9 +23,7 @@ class Pages::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.create! @page, current_user, post_params
-    current_user.updated(@page)
-    @page.save
+    @post = @page.add_post(current_user, post_params)
     # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
     render_posts_refresh @page.posts(pagination_params)
   end
