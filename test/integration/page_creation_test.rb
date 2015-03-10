@@ -27,6 +27,11 @@ class PageCreationTest < JavascriptIntegrationTest
   def test_share_with_groups
     login
     prepare_page :discussion_page
+    # TODO: move back to fixtures
+    # otherwise we have to preload the groups so they are not created during ui
+    # interaction
+    group
+    group_to_pester
     add_recipients public_group, public_group_to_pester, autocomplete: true
     add_recipients group_to_pester
     add_recipients group
