@@ -28,6 +28,12 @@ module PageExtension::Comments
     end
   end
 
+  def add_post(user, post_attributes)
+    Post.create! self, user, post_attributes
+    user.updated(self)
+    save
+  end
+    
   #
   # use Post.create! instead.
   #
