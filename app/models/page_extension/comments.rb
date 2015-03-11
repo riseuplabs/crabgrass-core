@@ -17,15 +17,11 @@ module PageExtension::Comments
 
   public
 
-  def posts(options={})
+  def posts(pagination_options={})
     return [] unless self.discussion
-    options = {order: "created_at ASC", per_page: Conf.pagination_size}.merge(options)
-    options[:page] ||= discussion.last_page # for now, always paginate.
-    if options[:page]
-      Post.visible.scoped_by_discussion_id(discussion.id).paginate(options)
-    else
-      Post.visible.find_by_discussion_id(discussion.id, options)
-    end
+    pagination_options.reverse_merge! per_page: Conf.pagination_size,
+      page: discussion.last_page         # for now, always paginate.
+    self.discussion.visible_posts.includes(:user).paginate(pagination_options)
   end
 
   def add_post(user, post_attributes)

@@ -193,7 +193,7 @@ module PageExtension::Index
     # Returns text that should be weighted low.
     # Defaults to all the comments, but can be overriden by the page subclass.
     def comment_terms
-      discussion ? discussion.posts * "\n" : ""
+      discussion ? discussion.visible_posts.includes(:user) * "\n" : ""
     end
 
     # Returns the text that should be included with the body in the page index.
