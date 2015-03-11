@@ -14,7 +14,9 @@ class People::DirectoryController < ApplicationController
 
   attr_writer :path
   def path
-    @path ||= params[:path] || default_path
+    # make sure to set the param here so it is respected in navigation
+    params[:path] ||= default_path
+    @path ||= params[:path]
   end
 
   def prepare_path
