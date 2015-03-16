@@ -7,10 +7,9 @@ class DiscussionPage < Page #:nodoc:
 
   # indexing hooks
 
-  def body_terms
-    discussion ? discussion.posts * "\n" : ""
-  end
-
+  # comments are the body of this page
+  alias_method :body_terms, :comment_terms
+  
   def comment_terms
     ""
   end
