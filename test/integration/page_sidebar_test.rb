@@ -80,7 +80,12 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_attach_file
+    assert_no_selector '#attachments a.thumbnail'
     attach_file_to_page
-    assert_selector '#attachments a.thumbnail'
+    page.find("#attachments a.thumbnail img").synchronize do
+      unless evaluate_script("$$('#attachments a.thumbnail img').first().naturalWidth != 0")  
+        raise Capybara::ExpectationNotMet.new("Thumbnail could not be loaded") 
+      end
+    end
   end
 end
