@@ -22,22 +22,6 @@ class ApplicationController < ActionController::Base
   # they can always just reference controller().
   def controller(); self; end
 
-  def current_theme
-    @theme ||= Crabgrass::Theme[select_theme]
-  end
-  helper_method :current_theme
-
-  def select_theme
-    switch_theme || current_site.theme
-  end
-
-  # in dev mode, allow switching themes. maybe allow anyone to switch themes...
-  def switch_theme
-    return unless Rails.env.development?
-    theme = params[:theme] || session[:theme]
-    session[:theme] = theme if Crabgrass::Theme.exists?(theme)
-  end
-
   # view() method lets controllers have access to the view helpers.
   def view
     self.class.helpers

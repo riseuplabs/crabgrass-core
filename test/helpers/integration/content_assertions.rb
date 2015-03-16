@@ -11,6 +11,7 @@ module ContentAssertions
 
   def assert_landing_page(owner)
     assert_content owner.display_name
+    assert_local_tab 'Home'
   end
 
   def assert_not_found(thing = nil)
@@ -36,6 +37,12 @@ module ContentAssertions
     end
   end
 
+  def assert_local_tab(active)
+    within "#banner_nav li.tab a.tab.active" do
+      assert_content active
+    end
+  end
+  
   def assert_page_tab(active)
     within "#page_tabs li.tab.active" do
       assert_content active
