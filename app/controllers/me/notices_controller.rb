@@ -6,7 +6,7 @@ class Me::NoticesController < Me::BaseController
     @notices = Notice.for_user(current_user).
       dismissed(params[:view] == 'old').
       paginate(pagination_params.merge(order: "created_at desc"))
-    @pages = current_user.pages.not_deleted.recent_pages
+    @pages = current_user.pages.not_deleted.order('pages.updated_at desc').limit(30)
   end
 
   def show

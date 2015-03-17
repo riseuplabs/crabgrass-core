@@ -1,4 +1,4 @@
-- cache [current_language, page] do
+- cache [current_language, page, short_date(page.updated_at)] do
   %tr
     %td.owner
       = link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)

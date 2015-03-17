@@ -28,42 +28,31 @@ module Common::Utility::TimeHelper
 
   def friendly_date(time)
     return '' if time.nil?
-    @today ||= Time.zone.today
-    date = time.to_date
-
-    if date == @today
-      # 4:30PM
-      str = time.strftime("%I:%M<span>%p</span>")
-    elsif @today > date and (@today-date) < 7
-      # I18n.t(:wednesday) => Wednesday
-      str = I18n.t(WeekdaySymbols[time.wday])
-    elsif date.year != @today.year
-      str = I18n.l date
-      # 7/Mar/08
-      #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
-    else
-      str = I18n.l date, format: :short
-      # 7/Mar
-      #str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
-    end
-    #"<label class='date' title='#{ full_time(time) }'>#{str}</label>"
-    return str.html_safe
+    content_tag(:label, short_date(time), class: :date, title: l(time))
   end
 
   def friendly_time(time, format = :long)
     I18n.l time, format: format
   end
 
-  # localized short date (or time if timestamp is from today).
- # def short_date(time)
-    #@today ||= Time.zone.today
-    #date = time.to_date
-    #if date == @today
-    #  I18n.l time, :format => :short
-    #else
-    #  I18n.l time.to_date, :format => :short
-    #end
-  #end
+  def short_date(time)
+    @today ||= Time.zone.today
+    date = time.to_date
+
+    if date == @today
+      # 4:30PM
+      time.strftime("%l:%M<span>%p</span>").html_safe
+    elsif @today > date and (@today-date) < 7
+      # I18n.t(:wednesday) => Wednesday
+      I18n.t(WeekdaySymbols[time.wday])
+    elsif date.year != @today.year
+      # 7/Mar/08
+      I18n.l date
+    else
+      # 7/Mar
+      I18n.l date, format: :short
+    end
+  end
 
   def localize_month(month)
     # for example => :month_short_january
