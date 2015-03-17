@@ -18,7 +18,7 @@ class UserFinder
     conditions.each do |method, args|
       self.send method, args
     end
-    @search_results || accessible_results
+    @search_results || find_without_search_term
   end
 
   def scope
@@ -60,12 +60,11 @@ class UserFinder
     @path.split('/').map{|part| PATH_SCOPES[part.to_sym]}.compact.first
   end
 
-  def accessible_results
-    # With more than 100 records the query takes too long and it is not useful
-    # to search with pagination anyway.
-    if scope.count < 100
+  def find_without_search_term
+    if scope_method.present?
       scope.with_access(access)
     else 
+      # do not list all users
       User.none
     end
   end
