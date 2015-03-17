@@ -13,7 +13,9 @@ class Me::DiscussionsController < Me::BaseController
   # GET /me/messages
   # we currently lack pagination and filtering for unread
   def index
-    @posts = current_user.private_messages.
+    @posts = Post.private_messages(current_user).
+      last_in_discussion.
+      visible.
       order("created_at DESC").
       includes(:discussion)
   end
