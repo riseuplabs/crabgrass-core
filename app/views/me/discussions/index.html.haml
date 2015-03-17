@@ -3,9 +3,9 @@
 
 %div.list_as_table.p
   %div.list_header
-    = pagination_links(@discussions)
+    = pagination_links(@posts)
   %table
-    = render partial: 'discussion', collection: @discussions
+    = render partial: 'post', collection: @posts
   %div.list_footer
-    = pagination_links(@discussions)
+    = pagination_links(@posts)
 

@@ -87,6 +87,14 @@ module UserExtension::Users
     end
 
     ##
+    ## PRIVATE MESSAGES
+    ##
+
+    def private_messages
+      Post.where(discussion_id: self.discussions.pluck(:id)).group(:discussion_id)
+    end
+
+    ##
     ## STATUS / PUBLIC WALL
     ##
 
