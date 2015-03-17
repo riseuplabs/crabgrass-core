@@ -28,20 +28,21 @@ module Common::Utility::TimeHelper
 
   def friendly_date(time)
     return '' if time.nil?
-    content_tag(:label, short_date(time), class: :date, title: l(time))
+    content_tag(:label, short_date(time, true), class: :date, title: l(time))
   end
 
   def friendly_time(time, format = :long)
     I18n.l time, format: format
   end
 
-  def short_date(time)
+  def short_date(time, html = false)
     @today ||= Time.zone.today
     date = time.to_date
 
     if date == @today
       # 4:30PM
-      time.strftime("%l:%M<span>%p</span>").html_safe
+      format = html ? "%l:%M<span>%p</span>" : "%l:%M %p"
+      time.strftime(format).html_safe
     elsif @today > date and (@today-date) < 7
       # I18n.t(:wednesday) => Wednesday
       I18n.t(WeekdaySymbols[time.wday])
