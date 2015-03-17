@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150310063037) do
+ActiveRecord::Schema.define(:version => 20150317162636) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -615,6 +615,7 @@ ActiveRecord::Schema.define(:version => 20150310063037) do
   end
 
   add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
+  add_index "relationships", ["discussion_id"], :name => "index_relationships_on_discussion_id"
 
   create_table "requests", :force => true do |t|
     t.integer  "created_by_id"
