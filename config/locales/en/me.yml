@@ -57,6 +57,10 @@ en:
 
   ##!  me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
+  notification_select:
+    none: "No: no emails for changes"
+    single: "Yes: an email per change"
+    digest: "Yes: a daily summary of changes"
 
   send_message_link: "Send Message"
   messages_with: "Conversation with %{other_user}"
