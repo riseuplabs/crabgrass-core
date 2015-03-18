@@ -23,7 +23,10 @@
     - f.row do |r|
       - r.label :notice.t
       - r.info :do_you_want_to_receive_email_notifications.t
-      - r.input select('user', 'receive_notifications', [["No", ""], ["Yes: an email per change","Single"], ["Yes: just a summary email","Digest"]])
+      - r.input select 'user', 'receive_notifications', 
+        [ [I18n.t('notification_select.none'), ""], 
+          [I18n.t('notification_select.single'), "Single"], 
+          [I18n.t('notification_select.digest'), "Digest"] ]
     - f.label :locale.t
     - f.row do |r|
       - r.label :language.t
