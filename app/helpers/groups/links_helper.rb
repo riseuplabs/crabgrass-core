@@ -94,13 +94,13 @@ module Groups::LinksHelper
       if RequestToDestroyOurGroup.already_exists?(group: @group)
         "" # i guess do nothing?
       elsif may_destroy_group?
-        link_to_with_confirm(:destroy_thing.t(thing: @group.group_type),
-          {confirm: :destroy_confirmation.t(thing: @group.group_type.downcase),
-           url: direct_group_path(@group), method: :delete }, class: 'btn')
+        link_to_with_confirm(:destroy_thing.t(thing: @group.display_name),
+          {confirm: :destroy_confirmation.t(thing: @group.name),
+           url: direct_group_path(@group), method: :delete }, class: 'btn btn-danger')
       elsif may_create_destroy_request?
-        link_to(:destroy_thing.t(thing: @group.group_type),
+        link_to(:destroy_thing.t(thing: @group.display_name),
           group_requests_path(@group, type: 'destroy_group'),
-          method: 'post', class: 'btn')
+          method: 'post', class: 'btn btn-danger')
       end
     end
   end
@@ -116,9 +116,9 @@ module Groups::LinksHelper
       if req = RequestToCreateCouncil.existing(group: @group)
         link_to(:request_pending.t(request: :request_to_create_council.t.capitalize), group_request_path(@group, req))
       elsif may_create_council?
-        link_to(:create_a_new_thing.t(thing: :council.t.downcase), new_group_council_path(@group))
+        link_to(:create_a_new_thing.t(thing: :council.t), new_group_council_path(@group))
       elsif may_create_council_request?
-        link_to(:create_a_new_thing.t(thing: :council.t.downcase),
+        link_to(:create_a_new_thing.t(thing: :council.t),
           group_requests_path(@group, type: 'create_council'),
           method: 'post')
       end
