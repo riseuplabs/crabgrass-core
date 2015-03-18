@@ -7,7 +7,7 @@
       a.anchor, a.shy {display:none;}
       @media print { .screen-only {display: none}}
   %body{class:language_direction}
-    %button.screen-only{:onclick => 'window.history.back()',}back
+    %button.screen-only{:onclick => 'window.history.back()',}= :back.t
     %h3
       =h html_title
     %article#content
