@@ -9,16 +9,7 @@ class UserFinderTest < ActiveSupport::TestCase
     assert_same_entities [users(:aaron)], finder.find
   end
 
-  def test_list_of_all_users_on_small_install
-    finder = UserFinder.new(users(:blue), 'search')
-    assert_nil finder.query_term
-    assert_same_entities User.all, finder.find
-  end
-
-  # We do not display a list of ALL users if there are more than 100.
-  # The list should either be limited to friends / peers or by a search.
-  def test_no_list_of_all_users_on_large_install
-    User.stubs(:count).returns(101)
+  def test_no_list_of_all_users
     finder = UserFinder.new(users(:blue), 'search')
     assert_nil finder.query_term
     assert_same_entities [], finder.find

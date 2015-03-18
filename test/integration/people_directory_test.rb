@@ -35,17 +35,17 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
     click_on 'People'
     find('#column_left').click_on 'Search'
     within '#user_list' do
-      # very few users so they are listed.
-      assert_content 'Aaron!'
+      assert_no_content 'Blue!'
     end
     assert_no_autocomplete 'q', with: 'black'
     autocomplete 'q', with: 'blue'
     within '#user_list' do
-      assert_no_content 'Aaron!'
+      assert_content 'Blue!'
     end
     autocomplete 'q', with: 'aaron'
     within '#user_list' do
       assert_content 'Aaron!'
+      assert_no_content 'Blue!'
     end
   end
 
