@@ -92,11 +92,20 @@ class Wiki < ActiveRecord::Base
   # similar to update_attributes!, but only for text
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
+  # it will also mark the corresponding page as updated for page wikis
   #
   def update_section!(section, user, current_version, text)
     check_and_unlock_section!(section, user, current_version)
     self.user = user
     save_section!(section, text)
+    update_context
+  end
+
+  def update_context
+    if page
+      user.updated(page)
+      page.save!
+    end
   end
 
   # updating body will invalidate body_html

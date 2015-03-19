@@ -179,7 +179,7 @@ module UserExtension::Pages
 
   public
 
-  # share_page_with(page, recipients, options)
+  # share_page_with(page, recipients, options = {})
   #
   # This is the only method that should ever be used when a user is sharing a page
   # with people/groups or sending a notification to people/groups.
@@ -219,7 +219,7 @@ module UserExtension::Pages
   # the new participation objects. BasePageController has an after_filter that
   # auto saves the @page if has been changed.)
   #
-  def share_page_with!(page, recipients, options)
+  def share_page_with!(page, recipients, options = {})
     return true unless recipients
     options = HashWithIndifferentAccess.new(options)
 
