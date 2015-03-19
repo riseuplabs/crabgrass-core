@@ -18,10 +18,10 @@ module PageExtension::Users
       has_many :user_participations, dependent: :destroy, inverse_of: :page
       has_many :users, through: :user_participations do
         def with_access
-          find(:all, conditions: 'access IS NOT NULL')
+          where('access IS NOT NULL')
         end
         def contributed
-          find(:all, conditions: 'changed_at IS NOT NULL')
+          where('changed_at IS NOT NULL')
         end
       end
 
@@ -136,7 +136,7 @@ module PageExtension::Users
 
   # returns true if +user+ has contributed to the page
   def contributor?(user)
-    participation_for_user(user).try(:changed_at)
+    participation_for_user(user).try(:changed_at).present?
   end
 
   def unread_by?(user)

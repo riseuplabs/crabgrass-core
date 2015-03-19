@@ -36,7 +36,8 @@ namespace :cg do
       :remove_empty_tasks,
       :fix_activity_types,
       :fix_invalid_request_states,
-      :reset_peer_caches
+      :reset_peer_caches,
+      :fix_contributors_count
     ]
 
     # There are 6 of these on we.riseup.net from a certain timespan
@@ -271,6 +272,17 @@ namespace :cg do
     task(:reset_peer_caches => :environment) do
       count = User.update_all(peer_id_cache: nil)
       "Reset the peers for #{count} users."
+    end
+
+    desc "Fix contributors count for pages"
+    task(:fix_contributors_count => :environment) do
+      count = Page.update_all <<-EOSQL
+        contributors_count = (
+          SELECT COUNT(user_participations.id) FROM user_participations
+          WHERE user_participations.page_id = pages.id
+          AND user_participations.changed_at IS NOT NULL
+        )
+      EOSQL
     end
   end
 end
