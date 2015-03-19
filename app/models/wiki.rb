@@ -28,7 +28,7 @@ class Wiki < ActiveRecord::Base
   include WikiExtension::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
-  has_many :pages, as: :data
+  has_one :page, as: :data
   has_one :profile
   has_one :group, through: :profile, source: :entity, source_type: 'Group'
   attr_accessor :private # marks private group wikis during creation
@@ -197,21 +197,6 @@ class Wiki < ActiveRecord::Base
       owner.id,
       owner.class.base_class.name
     ]))
-  end
-
-  ##
-  ## RELATIONSHIP TO PAGES
-  ##
-
-  # returns the page associated with this wiki, if any.
-  def page
-    # we do this so that we can access the page even before page or wiki are saved
-    return pages.first if pages.any?
-    return @page
-  end
-
-  def page=(p) #:nodoc:
-    @page = p
   end
 
   ##
