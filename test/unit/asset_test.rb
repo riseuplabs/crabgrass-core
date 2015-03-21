@@ -202,9 +202,9 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_doc
-    # must have OO installed
+    # must have LO installed
     if !LibreOfficeTransmogrifier.new.available?
-      skip "OpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
+      skip "LibreOffice converter is not available. Either LibreOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
 
