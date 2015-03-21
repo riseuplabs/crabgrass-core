@@ -219,8 +219,13 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
 
     @asset.generate_thumbnails
+
+    # pdf's are the basis for the other thumbnails. So let's check that first.
+    assert @asset.thumbnail_exists?('pdf'),
+      "Could not find #{@asset.private_thumbnail_filename('pdf')}"
+
     @asset.thumbnails.each do |thumb|
-      assert_equal false, thumb.failure?, 'generating thumbnail "%s" should have succeeded' % thumb.name
+      assert thumb.ok?, 'generating thumbnail "%s" should have succeeded' % thumb.name
       assert thumb.private_filename, 'thumbnail "%s" should exist' % thumb.name
     end
   end
@@ -236,7 +241,7 @@ class AssetTest < ActiveSupport::TestCase
     @asset = Asset.create_from_params uploaded_data: upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
-      assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
+      assert thumb.failure?, 'generating the thumbnail should have failed'
     end
     Media::Transmogrifier.suppress_errors = false
   end
