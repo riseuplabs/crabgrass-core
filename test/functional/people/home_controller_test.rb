@@ -9,11 +9,11 @@ class People::HomeControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_show
+  def test_show_hidden_self
     login_as :blue
     blue = users(:blue)
-    blue.revoke_access! CastleGates::Holder[blue.associated(:friends)] => :view
-    blue.revoke_access! CastleGates::Holder[blue.associated(:peers)] => :view
+    blue.revoke_access! friends: :view
+    blue.revoke_access! peers: :view
     blue.revoke_access! public: :view
     get :show, person_id: 'blue'
     assert_response :success
