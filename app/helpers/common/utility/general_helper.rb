@@ -126,7 +126,7 @@ module Common::Utility::GeneralHelper
   def safe_call(method, *args)
     if method.is_a? Proc
       method.call(*args)
-    elsif method.is_a?(Symbol) && self.respond_to?(method)
+    elsif method.is_a?(Symbol) && self.respond_to?(method, true)
       send(method, *args)
     else
       false
