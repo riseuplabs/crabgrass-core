@@ -71,7 +71,16 @@ class LibreOfficeTransmogrifier < Media::Transmogrifier
         if File.exist?(libreoffice_output)
           replace_file from: libreoffice_output, to: output_file
         else
-          yield('could not find libreoffice output %s' % output_file) if block_given?
+          msg = ["Error: Could not find libreoffice output %s \n" % output_file]
+          msg << arguments.join(' ')
+          msg += Dir[work_directory + '/*']
+          if command_output.present?
+            msg << 'LibreOffice said:'
+            msg << command_output
+          end
+          msg = msg.join("\n")
+          log_error msg
+          yield(msg) if block_given?
           return :failure
         end
       else
