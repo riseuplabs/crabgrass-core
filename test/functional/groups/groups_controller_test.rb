@@ -91,19 +91,17 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     login_as @user
     assert_difference 'Network.count' do
       post :create, type: 'network',
-        group: { name: 'trees'},
-        member_group_name: group.name
+        network: { name: 'trees', initial_member_group: group.name }
     end
   end
 
   def test_create_no_network_with_network_member
-    network = FactoryGirl.create(:group, name: 'pine')
+    network = FactoryGirl.create(:network, name: 'flowers')
     network.add_user! @user
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, type: 'network',
-        group: { name: 'trees'},
-        member_group_name: network.name
+        network: { name: 'trees', initial_member_group: network.name }
       assert_error_message
     end
   end
