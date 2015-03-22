@@ -200,7 +200,8 @@ group :test, :development do
   gem 'debugger', :platforms => :mri_19
   # use byebug on new versions of ruby
   # and make sure bundler does not die if it does not know them yet.
-  if Bundler::current_ruby.respond_to? :mri_21?
+  if Bundler.respond_to?(:current_ruby) &&
+    Bundler.current_ruby.respond_to?(:mri_21?)
     gem 'byebug', :platforms => [:mri_20, :mri_21]
   end
 end
