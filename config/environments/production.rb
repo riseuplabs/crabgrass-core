@@ -4,9 +4,7 @@ Crabgrass::Application.configure do
   ##
 
   config.cache_classes = true
-  config.consider_all_requests_local = true
   config.action_controller.perform_caching             = true
-  #config.action_view.cache_template_loading            = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -23,16 +21,26 @@ Crabgrass::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  ##
+  ## EXPOSED CONFIG OPTIONS
+  ##
+  ## These are config options we fetch from crabgrasses own Conf so you can
+  ## set them in config/crabgrass/*_config.rb
+
+  # fall back to rails3 default - rails4 has debug
+  config.log_level = Conf.log_level || :info
+  config.consider_all_requests_local = Conf.show_exceptions
+
+  # Force all access to the app over TLS, use Strict-Transport-Security,
+  # and use secure cookies.
+  # You will want to set this even if you have redirects to enforce TLS
+  # because of the secure cookies
+  config.force_ssl = Conf.enforce_ssl
 
   ##
   ## LOGGING
   ## use syslog if available, trying gems 'logging' and 'SyslogLogger'
   ##
-  
-  # fall back to rails3 default - rails4 has debug
-  config.log_level = Conf.log_level || :info
 
   # try gem 'logging'
   begin
@@ -51,6 +59,16 @@ Crabgrass::Application.configure do
     rescue LoadError => exc
     end
   end
+
+  # we filter almost everything. Logs are only detailed for performance
+  # analysis.
+  # For debugging having the ids of the records should suffice.
+  config.filter_parameters += [:body, :description, :name, :summary, :comment]
+  config.filter_parameters += [:caption, :code, :email, :location, :im_address]
+  config.filter_parameters += [:street, :city, :state, :title, :content, :data]
+  config.filter_parameters += [:details, :phone_number, :organization, :role]
+  config.filter_parameters += [:value, :sms, :login]
+
 
   ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
 end
