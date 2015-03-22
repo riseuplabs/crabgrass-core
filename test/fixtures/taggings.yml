@@ -18,3 +18,19 @@
   context: "tags"
 <% end %>
 <% end %>
+
+
+# we rely on having a page with these two tags accessible by blue
+# in page search tests
+
+extra_tag_for_blue_anticipation:
+  tag: anticipation
+  taggable_id: 33
+  taggable_type: Page
+  context: "tags"
+
+extra_tag_for_blue_surprise:
+  tag: surprise
+  taggable_id: 33
+  taggable_type: Page
+  context: "tags"

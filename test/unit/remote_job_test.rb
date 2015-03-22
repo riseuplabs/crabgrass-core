@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-class AssetTest < ActiveSupport::TestCase
+class RemoteJobTest < ActiveSupport::TestCase
 
   include ActionDispatch::TestProcess
 

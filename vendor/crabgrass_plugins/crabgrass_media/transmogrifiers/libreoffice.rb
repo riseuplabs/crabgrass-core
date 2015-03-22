@@ -68,7 +68,21 @@ class LibreOfficeTransmogrifier < Media::Transmogrifier
 
         # we cannot specify the name of the output file, so grab what it generated and move it to self.output_file
         libreoffice_output = work_directory + '/' + replace_extension(input_file, extension(output_type))
-        replace_file from: libreoffice_output, to: output_file
+        if File.exist?(libreoffice_output)
+          replace_file from: libreoffice_output, to: output_file
+        else
+          msg = ["Error: Could not find libreoffice output %s \n" % output_file]
+          msg << arguments.join(' ')
+          msg += Dir[work_directory + '/*']
+          if command_output.present?
+            msg << 'LibreOffice said:'
+            msg << command_output
+          end
+          msg = msg.join("\n")
+          log_error msg
+          yield(msg) if block_given?
+          return :failure
+        end
       else
         yield('could not find extension for type %s' % output_type) if block_given?
         return :failure

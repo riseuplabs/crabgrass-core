@@ -11,7 +11,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     assert_login_required
   end
 
-  def test_new_group
+  def test_choose_group_type
     login_as @user
     assert_permission :may_create_group? do
       get :new
@@ -85,25 +85,23 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     end
   end
 
-  def test_create_no_network_with_network_member
+  def test_create_network_with_group_member
     group = FactoryGirl.create(:group, name: 'pine')
     group.add_user! @user
     login_as @user
     assert_difference 'Network.count' do
       post :create, type: 'network',
-        group: { name: 'trees'},
-        member_group_name: group.name
+        network: { name: 'trees', initial_member_group: group.name }
     end
   end
 
   def test_create_no_network_with_network_member
-    network = FactoryGirl.create(:group, name: 'pine')
+    network = FactoryGirl.create(:network, name: 'flowers')
     network.add_user! @user
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, type: 'network',
-        group: { name: 'trees'},
-        member_group_name: network.name
+        network: { name: 'trees', initial_member_group: network.name }
       assert_error_message
     end
   end

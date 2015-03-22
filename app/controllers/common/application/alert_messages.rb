@@ -87,7 +87,7 @@ module Common::Application::AlertMessages
   end
 
   def alert_message(*args)
-    options = Hash[args.collect {|i|i.is_a?(Symbol) ? [i,true] : nil}]
+    options = Hash[args.collect {|i| [i, true] if i.is_a?(Symbol)}.compact]
     type = determine_type(options)
     flsh = determine_flash(type, options)
     flsh[:messages] ||= []

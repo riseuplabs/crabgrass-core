@@ -45,12 +45,16 @@ module InstanceMethods
   def grant_access!(access_hash)
     process_access_hash(access_hash) do |holder, gates|
       key = keys.find_by_holder(holder)
-      if key.add_gates!(gates) && self.respond_to?(:after_grant_access)
+      if key.add_gates!(gates)
         after_grant_access(holder, gates)
       end
     end
     clear_key_cache
   end
+
+  # overwrite this in your own class
+  def after_grant_access(holder, gates); end
+  protected :after_grant_access
 
   #
   # remove access to gates
@@ -62,12 +66,16 @@ module InstanceMethods
   def revoke_access!(access_hash)
     process_access_hash(access_hash) do |holder, gates|
       key = keys.find_by_holder(holder)
-      if key.remove_gates!(gates) && self.respond_to?(:after_revoke_access)
+      if key.remove_gates!(gates)
         after_revoke_access(holder, gates)
       end
     end
     clear_key_cache
   end
+
+  # overwrite this in your own class
+  def after_revoke_access(holder, gates); end
+  protected :after_revoke_access
 
   #
   # set access to gates

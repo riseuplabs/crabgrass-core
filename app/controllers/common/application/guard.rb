@@ -90,7 +90,7 @@ module Common::Application::Guard
     end
 
     def inherit_action_map
-      if superclass.respond_to?(:action_map)
+      if superclass.respond_to?(:action_map, true)
         superclass.action_map.dup
       else
         HashWithIndifferentAccess.new

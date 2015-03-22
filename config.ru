@@ -3,5 +3,10 @@
 require ::File.expand_path('../config/environment',  __FILE__)
 
 use Rails::Rack::LogTailer unless Rails.env.test?
-use Rails::Rack::Debugger if Rails.env.development?
+
+# byebug fails with this - so make sure we only load if with Debugger
+if defined?(Debugger) && Rails.env.development?
+  use Rails::Rack::Debugger
+end
+
 run Crabgrass::Application
