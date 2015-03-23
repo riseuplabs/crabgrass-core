@@ -3,7 +3,7 @@ module Common::Ui::HelpHelper
   protected
 
   def formatting_reference_link(options = {})
-    options.reverse_merge class: "icon help_16",
+    options.reverse_merge! class: "icon help_16",
       href: "/do/static/greencloth",
       onclick: "quickRedReference(); return false;"
     content_tag(:a, options) do

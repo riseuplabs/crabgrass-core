@@ -1,0 +1,12 @@
+-# layout for static pages.
+-# Currently only used by the greencloth formatting doc
+
+!!!
+%html
+  %head
+    %title
+      = content_for :title
+    %style
+      = content_for :style
+  %body
+    = yield
