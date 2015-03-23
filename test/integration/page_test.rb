@@ -9,6 +9,7 @@ class PageTest < IntegrationTest
     PAGE_TYPES.each do |type|
       create_page type
       assert_page_header
+      assert_html_title_with @page.title
     end
   end
 

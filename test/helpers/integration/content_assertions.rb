@@ -30,6 +30,11 @@ module ContentAssertions
     end
   end
 
+  def assert_html_title_with(start_term)
+    assert page.title.lstrip.start_with?(start_term.lstrip),
+      "Expected #{page.title} to start with #{start_term}"
+  end
+
   def assert_success(message)
     message ||= "Changes saved"
     within "#alert_messages .ok_16" do
@@ -42,7 +47,7 @@ module ContentAssertions
       assert_content active
     end
   end
-  
+
   def assert_page_tab(active)
     within "#page_tabs li.tab.active" do
       assert_content active

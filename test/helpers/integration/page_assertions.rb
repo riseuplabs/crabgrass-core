@@ -37,5 +37,4 @@ module PageAssertions
   def assert_page_not_watched
     assert_selector '#watch_checkbox.check_off_16'
   end
-
 end
