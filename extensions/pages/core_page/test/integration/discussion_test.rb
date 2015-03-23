@@ -22,4 +22,12 @@ class DiscussionTest < JavascriptIntegrationTest
     assert_no_content comment
   end
 
+  def test_format_help
+    find('.new_post').click_on 'Editing Help'
+    help = windows.last
+    within_window help do
+      assert_content 'GreenCloth'
+    end
+  end
+
 end

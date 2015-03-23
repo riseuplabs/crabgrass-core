@@ -19,6 +19,14 @@ class WikiTest < JavascriptIntegrationTest
     assert_success "Changes saved"
   end
 
+  def test_format_help
+    find('.edit_wiki').click_on 'Editing Help'
+    help = windows.last
+    within_window help do
+      assert_content 'GreenCloth'
+    end
+  end
+
   def test_versioning
     versions = []
     3.times do
