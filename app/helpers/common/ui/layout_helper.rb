@@ -7,7 +7,7 @@ module Common::Ui::LayoutHelper
   ##
 
   def html_title
-    ([@html_title] + context_titles + [current_site.title]).compact.join(' - ')
+    ([@options.try.title] + context_titles + [current_site.title]).compact.join(' - ')
   end
 
   ##

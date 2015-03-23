@@ -37,6 +37,8 @@ module PageRecords
     visit '/pages/create/me'
     click_on type_name
     new_page(type, options)
+    # let's make it easy to tell which page type we are testing
+    new_page.title = "#{type} - #{new_page.title}"
     fill_in_new_page_form(type, options)
   end
 
@@ -46,14 +48,16 @@ module PageRecords
   end
 
   def fill_in_new_page_form(type, options)
-    title = options[:title] || "#{type} - #{new_page.title}"
+    title = options[:title] || new_page.title
     file = options[:file] || fixture_file('bee.jpg')
     try_to_fill_in :title.t,      with: title
     try_to_fill_in :summary.t,    with: new_page.summary
     click_on 'Additional Access'
     try_to_attach_file :asset_uploaded_data, file
     # workaround for having the right page title in the test record
-    new_page.title = file.basename(file.extname) if type == :asset_page
+    if type == :asset_page
+      new_page.title = file.basename(file.extname).to_s.nameize
+    end
   end
 
   def save_and_index(page)
