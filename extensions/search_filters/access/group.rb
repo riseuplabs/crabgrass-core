@@ -24,7 +24,10 @@ SearchFilter.new('/group/:group_id/') do
   html do
     content_tag(:p, id: :group_autocomplete) do
       content_tag(:strong, :group.tcap) + " " +
-      autocomplete_groups_field_tag('group_id', container: :group_autocomplete)
+      autocomplete_groups_field_tag('group_id',
+        container: :group_autocomplete,
+        onkeydown: submit_form('page_search_form')
+      )
     end
   end
 

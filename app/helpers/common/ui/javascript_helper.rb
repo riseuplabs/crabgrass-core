@@ -251,6 +251,12 @@ module Common::Ui::JavascriptHelper
     # "Form.getInputs($('#{id}'), 'submit').each(function(x){x.disabled=false}.bind(this));"
   end
 
+  # submits the named formed and eats the event.
+  # e.g. :onkeydown => submit_form(x)
+  def submit_form(id)
+    "if (enterPressed(event)) {$('#{id}').submit.click(); event.stop();}"
+  end
+
   # add to text area or input field onkeypress attribute
   # to keep Enter key from submiting the form
   def eat_enter
