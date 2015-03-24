@@ -13,6 +13,12 @@ class RequestToDestroyOurGroup < Request
 
   alias_attr :group, :recipient
 
+  # once the group has been deleted we do not require it anymore.
+  def recipient_required?
+    !approved?
+  end
+  alias_method :requestable_required?, :recipient_required?
+
   def self.already_exists?(options)
     pending.from_group(options[:group]).exists?
   end
@@ -36,18 +42,21 @@ class RequestToDestroyOurGroup < Request
     group.destroy_by(created_by)
   end
 
+  # these are hacky workaround for the fact that we have no
+  # access to the group itself anymore.
+  # TODO: link the request to the activity which still remembers the group name
   def description
     [:request_to_destroy_our_group_description, {
-      group: group_span(group),
-      group_type: group.group_type.downcase,
+      group: I18n.t(:group),
+      group_type: I18n.t(:deleted),
       user: user_span(created_by)
     }]
   end
 
   def short_description
     [:request_to_destroy_our_group_short, {
-      group: group_span(group),
-      group_type: group.group_type.downcase,
+      group: I18n.t(:group),
+      group_type: I18n.t(:deleted),
       user: user_span(created_by)
     }]
   end
