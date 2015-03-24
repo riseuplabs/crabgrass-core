@@ -31,6 +31,7 @@ namespace :cg do
       :remove_duplicate_taggings,
       :clear_invalid_email_addresses,
       :remove_dangling_page_histories,
+      :remove_dead_requests,
       :remove_invalid_federation_requests,
       :remove_invalid_email_requests,
       :remove_empty_tasks,
@@ -221,6 +222,15 @@ namespace :cg do
       puts "Removed #{count} page history records without a page"
       count = PageHistory.where(dead_entity_sql('user')).delete_all
       puts "Removed #{count} page history records without a user"
+    end
+
+    desc "Remove requests for a group that is gone"
+    task(:remove_dead_requests => :environment) do
+      no_requestable_group = Request.
+        where(requestable_type: 'Group').
+        where("(requestable_id NOT IN (SELECT id FROM groups))")
+      count = no_requestable_group.delete_all
+      puts "Removed #{count} requests to groups that are gone."
     end
 
     desc "Remove invites to join a network with another network"

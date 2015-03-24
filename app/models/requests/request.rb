@@ -352,8 +352,7 @@ class Request < ActiveRecord::Base
   # destroy all requests relating to this group
   # except the request to destroy the group
   def self.destroy_for_group(group)
-    destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
-    destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+    regarding_group(group).where("type != 'RequestToDestroyOurGroup'").destroy_all
   end
 
 
