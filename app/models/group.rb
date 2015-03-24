@@ -300,6 +300,7 @@ class Group < ActiveRecord::Base
 
   protected
 
+  # TODO: why don't we use an association with dependend: :destroy?
   after_destroy :destroy_requests
   def destroy_requests
     Request.destroy_for_group(self)
