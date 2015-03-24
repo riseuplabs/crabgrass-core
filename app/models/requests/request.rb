@@ -55,9 +55,9 @@ class Request < ActiveRecord::Base
   # so that each person has a distinct 'ignore'/'non-ignore' state
   has_many :votes, as: :votable, class_name: "RequestVote", dependent: :delete_all
 
-  validates_presence_of :created_by_id
-  validates_presence_of :recipient_id,   if: :recipient_required?
-  validates_presence_of :requestable_id, if: :requestable_required?
+  validates_presence_of :created_by
+  validates_presence_of :recipient,   if: :recipient_required?
+  validates_presence_of :requestable, if: :requestable_required?
 
   validate :no_duplicate, on: :create
   validate :check_create_permission, on: :create
@@ -352,8 +352,7 @@ class Request < ActiveRecord::Base
   # destroy all requests relating to this group
   # except the request to destroy the group
   def self.destroy_for_group(group)
-    destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
-    destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+    regarding_group(group).where("type != 'RequestToDestroyOurGroup'").destroy_all
   end
 
 
