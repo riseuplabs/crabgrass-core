@@ -1,3 +1,9 @@
-#middle_container {
-  margin-top: $grid_column_gutter;
+#middle {
+  background-color: $background_color;
 }
+
+#middle_container {
+  padding-top: $grid_column_gutter;
+  padding-bottom: $grid_column_gutter;
+}
+

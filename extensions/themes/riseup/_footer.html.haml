@@ -1,29 +1,30 @@
-.row-fluid
-  = language_select_tag
+- available_help_locales =  [:en, :zh, :es, :pt, :ru, :de, :fr, :it, :pl, :el, :ca]
+- locale = available_help_locales.include?(I18n.locale) ? I18n.locale : :en
 
-.row-fluid
-  %span.span5.pull-left
-    %img{src: '/theme/riseup/images/riseup.png', style: 'padding: 10px;'}
+.row
+  .col-xs-offset-4.col-xs-4
+    = language_select_tag
+
+.row
+  .col-xs-offset-1.col-xs-5
+    %img{src: '/theme/riseup/images/riseup.png', style: 'padding-top: 30px; padding-bottom: 4px'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
       =t 'riseup.run_by_html', description: t('riseup.description'),
         provider: link_to('riseup.net', 'https://riseup.net'),
         default: 'Run by riseup.net'
       %ul.styled
         %li= link_to t('riseup.privacy_policy'),
-          "https://help.riseup.net/policy/privacy-policy/"
+          "https://help.riseup.net/#{locale}/privacy-policy"
         %li= link_to t('riseup.about_us'),
-          "https://help.riseup.net/"
+          "https://help.riseup.net/#{locale}"
         %li= link_to t('riseup.email_accounts'),
           "https://mail.riseup.net/"
         %li= link_to t('riseup.mailing_lists'),
           "https://lists.riseup.net/"
-        %li= link_to t('riseup.system_status'),
-          "https://status.riseup.net/"
         %li= link_to t('riseup.donate'),
-          "https://riseup.net/donate/"
-  %span.span1.pull-left
-  %span.span5.pull-left
-    %img{src: '/images/crabgrass.png', style: 'padding: 10px;'}
+          "https://help.riseup.net/#{locale}/donate"
+  .col-xs-5
+    %img{src: '/theme/riseup/images/crabgrass.png', style: 'padding-top: 13px; padding-bottom: 4px'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
       =t 'crabgrass.powered_by_html',
         description: t('crabgrass.description_html'),
@@ -37,9 +38,4 @@
           "https://we.riseup.net/crabgrass/table-of-contents"
         %li= link_to t('crabgrass.get_involved'),
           "https://we.riseup.net/cgdev/get-involved"
-  %span.span1.pull-left
-
-- if Rails.env.development? && false
-  .row-fluid
-    = render partial: 'common/debug/footer'
 
