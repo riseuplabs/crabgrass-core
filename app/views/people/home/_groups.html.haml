@@ -1,6 +1,6 @@
 - cache [current_language, @user.version_cache_key] do
   = entity_list(@user.groups.recently_active(limit: 10),
     {link_options: {avatar: 'small'},
-    header: content_tag(:h3, :groups.t),
+    header: content_tag(:b, :groups.t),
     after: ''})
 
