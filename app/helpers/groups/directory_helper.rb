@@ -14,8 +14,8 @@ module Groups::DirectoryHelper
     end
 
     haml do
-      haml '.name', link_to_group(group)
-      haml '.display-name', group.display_name if group.display_name != group.name
+      haml '.display-name', link_to_group(group)
+      haml '.name', group.name if group.display_name != group.name
       haml '.info', comma_join(place, count)
       if summary && summary.chars.any?
         haml '.summary.plain', strip_tags(summary)

@@ -148,7 +148,7 @@ module Common::Ui::EntityDisplayHelper
   #
   def display_entity(entity, options={})
     options  ||= {}
-    format   = options[:format] || :short
+    format   = options[:format] || :full
     styles   = [options[:style]]
     classes  = [options[:class], 'entity']
 
