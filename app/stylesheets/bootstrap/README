@@ -1,9 +1,0 @@
-Eventually, we want to migrate more of the CSS over to using "Bootstrap"
-
-  http://twitter.github.com/bootstrap
-
-In this directories is a copy of bootstrap converted to SCSS:
-
-  https://github.com/jlong/sass-twitter-bootstrap
-
-To update these bootstrap files, copy the files from lib/*.scss of that repo to this directory.

@@ -1,13 +1,19 @@
 
 //
 // TOP MENUS
+// This uses the bootstrap css, but not the bootstrap js
 //
-
+// Structure:
+//
+//   %li.top-menu#menu_me
+//     %a Me
+//     %ul.dropdown-menu
+//
 var DropMenu = Class.create({
   initialize: function(menu_id) {
     if(!$(menu_id)) return;
     this.trigger = $(menu_id);
-    this.menu = $(menu_id).down('.menu_items');
+    this.menu = $(menu_id).down('.dropdown-menu');
     this.timeout = null;
     if(!this.trigger) return;
     if(!this.menu) return;
@@ -17,7 +23,7 @@ var DropMenu = Class.create({
   },
 
   menuIsOpen: function() {
-    return($$('.menu_items').detect(function(e){return e.visible()}) != null);
+    return($$('.dropdown-menu').detect(function(e){return e.visible()}) != null);
   },
 
   clearEvents: function(event) {
@@ -42,21 +48,20 @@ var DropMenu = Class.create({
   },
 
   showMenu: function() {
-    this.menu.show();
-    this.trigger.addClassName('menu_visible');
+    this.menu.show()
+    this.trigger.addClassName('menu-visible');
   },
 
   hideMenu: function() {
     this.menu.hide();
-    this.trigger.removeClassName('menu_visible');
+    this.trigger.removeClassName('menu-visible');
   }
 
 });
 DropMenu.instances = [];
 
-
 document.observe('dom:loaded', function() {
-  $$(".drop_menu").each(function(element){
+  $$(".top-menu").each(function(element){
     new DropMenu(element.id);
   })
 });

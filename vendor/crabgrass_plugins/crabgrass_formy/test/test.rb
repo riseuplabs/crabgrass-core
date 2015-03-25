@@ -1,15 +1,13 @@
 $: << File.dirname(__FILE__) + '/../lib'
 
 require 'rubygems'
-#gem 'activesupport', '> 2.3.0', '< 3.0'
-#gem 'actionpack', '> 2.3.0', '< 3.0'
 require 'active_support'
 require 'action_view'
 
 require 'formy'
 require 'formy/helper'
 
-class Rails
+module Rails
   def self.env
     'development'
   end
@@ -60,6 +58,13 @@ class Testr
         r.label 'email address', 'user_email'
         r.input text_field 'user', 'email'
       end
+      f.row do |c|
+        c.label 'user is active'
+        c.input check_box 'user', 'active'
+        c.info 'if checked, the user is left handed'
+      end
+      f.button '<input type="submit">Save</input>'
+      f.button '<input type="submit">Cancel</input>'
     end
   end
 

@@ -7,7 +7,7 @@ module Formy
 
       def put_item
         first = 'first' if @opts[:index] == 0
-        @class = [@class, 'btn', first].compact.join(' ')
+        @class = [@class, 'btn', 'btn-default', first].compact.join(' ')
         puts build_link
       end
     end

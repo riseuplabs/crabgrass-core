@@ -1,7 +1,11 @@
-%ul.directory
-  - for group in @groups
-    %li.entry= render partial: 'group', locals: {group: group}
-    %li.divider
+.directory
+  - @groups.count.times do |i|
+    - group = @groups[i]
+    - if group
+      .entry
+        = render partial: 'group', locals: {group: group}
+    - if @groups[i+1]
+      .divider
 
-.p
-  = pagination_links(@groups, params: params.except(:utf8))
+= pagination_links(@groups, params: params.except(:utf8))
+

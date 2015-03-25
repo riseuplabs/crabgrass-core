@@ -115,6 +115,7 @@
   }
 
   &.small {
+    font-size: 100%;
     padding-left: $icon_small + 8px !important;
     min-height: $icon_small;
     &.single {

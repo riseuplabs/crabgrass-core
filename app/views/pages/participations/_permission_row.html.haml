@@ -6,7 +6,7 @@
     = link_to_user(participation.user)
 
 %td= spinner(dom_id(participation))
-%td
+%td.form-inline
   = display_access_icon(participation)
   &nbsp;
   - if may_remove_participation?(participation)

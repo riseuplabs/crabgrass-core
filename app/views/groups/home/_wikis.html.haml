@@ -37,7 +37,7 @@
     #public_panel.tab_content{'data-wiki' => @public_wiki.try(:id), style: ("display: none" if active_tab == 'private')}
       - if @public_wiki
         - if edit_mode
-          = formy(:tabs) do |f|
+          = formy(:tabs, class: 'space') do |f|
             = wiki_tabs(f, @public_wiki, show_print: false, active: wiki_tab)
         = render file: "wikis/wikis/#{wiki_tab}", locals: {wiki: @public_wiki, mode: local_assigns[:mode]}
       - elsif may_edit_group?
@@ -50,7 +50,7 @@
     #private_panel.tab_content{'data-wiki' => @private_wiki.try(:id), style: ("display: none" if active_tab == 'public')}
       - if @private_wiki
         - if edit_mode
-          = formy(:tabs) do |f|
+          = formy(:tabs, class: 'space') do |f|
             = wiki_tabs(f, @private_wiki, show_print: false, active: wiki_tab)
         = render file: "wikis/wikis/#{wiki_tab}", locals: {wiki: @private_wiki, mode: local_assigns[:mode]}
       - else

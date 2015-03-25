@@ -7,6 +7,7 @@
   clear: left;
   padding: 1em;
   border: 1px solid #DDD;
+  border-top: none;
   .buttons {
     margin-top: 0;
     background: white;
@@ -14,7 +15,15 @@
 }
 
 .tab_content {
-  margin-bottom: 2em;
+  // margin-bottom: 2em;
+}
+
+.nav-tabs.space {
+  margin-bottom: 10px;
+}
+
+.nav-tabs > li > a {
+  cursor: pointer; // why is this needed?
 }
 
 // modifying bootstrap tabs to work with our low height menu tabs

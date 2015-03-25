@@ -5,7 +5,7 @@ module Common::Ui::LanguageHelper
       @language_form_already_rendered = true
       content_tag :form, method: 'post', action: language_path, style: 'display: inline' do
         ("<input name=\"authenticity_token\" type=\"hidden\" value=\"#{form_authenticity_token}\" />" +
-          select_tag('id', options_for_language, onchange: 'this.form.submit();', id: nil)).html_safe
+          select_tag('id', options_for_language, onchange: 'this.form.submit();', id: nil, class: 'form-control')).html_safe
       end
     end
   end

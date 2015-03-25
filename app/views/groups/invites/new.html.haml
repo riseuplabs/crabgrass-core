@@ -3,10 +3,11 @@
 - else
   = I18n.t(:invite_info, group_type: @group.group_type.downcase)
 
-%em= I18n.t(:recipient_tip)
+%p
+  %em= I18n.t(:recipient_tip)
 
-- text_area = text_area_tag 'recipients', params[:recipients], rows: 4, cols: 50
-- send_button = submit_tag(:send_invites_button.t(name: 'send'))
+- text_area = text_area_tag 'recipients', params[:recipients], rows: 4, class: 'form-control'
+- send_button = submit_tag(:send_invites_button.t(name: 'send'), class: 'btn btn-primary')
 
 = form_tag(group_invite_path(@group), method: :post) do
   = formy(:simple_form) do |f|

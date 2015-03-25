@@ -42,6 +42,7 @@ module Common::Ui::GizmoHelper
       links.collect do |link|
         link[:class] = [
           'btn',
+          'btn-default',
           link[:active] ? 'active' : '',
           link == links.first ? 'first' : '',
           link == links.last ? 'last' : ''

@@ -1,0 +1,14 @@
+//
+// The default display for bootstrap's .pagination is line-block.
+// but inline-block elements are not allowed to collapse margins.
+// I am not sure what the advantage of inline-block was.
+// Setting this to block allows margins to collapse nicely, but the
+// clearfix is needed because of all the floats on the li elements.
+//
+// This hack seems to work reliably in firefox and chrome. Not
+// yet tested in IE.
+//
+.pagination {
+  display: block;
+  @include clearfix;
+}

@@ -3,10 +3,10 @@
   %ul.shaded
     %li= :none.t
 - else
-  = top_pagination_links @notices
+  = pagination_links @notices
   %table#notice_list.shaded
     = render partial: 'notice', collection: @notices
-  = bottom_pagination_links @notices
+  = pagination_links @notices
 
 = render 'layouts/section/heading_with_info', section: :recent_pages
 = render partial: 'common/pages/list', locals: {style: 'table'}

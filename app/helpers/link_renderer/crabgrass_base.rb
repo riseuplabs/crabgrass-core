@@ -60,11 +60,8 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
         ''
       end
     end.join(@options[:separator]).html_safe
-    @template.content_tag(:div, class: @options[:class]) do
-      (html_before + @template.content_tag(:ul) do
-        links_html
-      end + html_after).html_safe
-    end
+    ul = @template.content_tag(:ul, class: @options[:class]) {links_html}
+    (html_before + ul + html_after).html_safe
   end
 
   # may be overridden by subclasses

@@ -14,11 +14,11 @@
       %div
         %label(for = 'login')= :login_name.t
         %span= link_to(:signup_link.t, new_account_path(redirect: params[:redirect]), class: 'nofocus')
-        = text_field_tag 'login', params['login'], id: 'login', tabindex: 1
+        = text_field_tag 'login', params['login'], id: 'login', tabindex: 1, class: 'form-control'
       %div.password
         %label(for = 'password')= :login_password.t
         %span= link_to(:forgot_password_link.t, reset_password_path, class: 'nofocus')
-        = password_field_tag 'password', '', {id: 'password', tabindex: 2}
+        = password_field_tag 'password', '', {id: 'password', tabindex: 2, class: 'form-control'}
       %div.buttons
         %input{ type: 'submit', value: :login_button.t, tabindex: 3, class: 'btn btn-primary' }
     %div

@@ -1,8 +1,8 @@
 - options = {selected: @page.owner}
 
 = form_tag(page_attributes_path(@page), method: :put) do
-  = select_tag('owner', options_for_page_owner(options), size: 16, style: 'width:100%')
-  .buttons
+  = select_tag('owner', options_for_page_owner(options), size: 16, class: 'form-control')
+  .buttons-right
     = close_modal_button(:cancel)
-    = submit_tag('Change Owner')
+    = submit_tag('Change Owner', class: 'btn btn-primary')
 

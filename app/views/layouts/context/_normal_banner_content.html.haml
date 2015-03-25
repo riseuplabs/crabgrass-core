@@ -2,11 +2,11 @@
 -# this is the partial for the content of a normal banner
 -#
 
-.big_screen
-  - if @context.avatar
-    %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'large')}
-  = link_to_banner_title(@context.entity)
-.small_screen
+- if @context.avatar
+  %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'large')}
+= link_to_banner_title(@context.entity)
+
+-# .small_screen
   - if @context.avatar
     %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'small')}
   = link_to_banner_title(@context.entity)

@@ -19,9 +19,7 @@
 
 - center_span = center_span_class(@local_layout)
 - side_span   = side_span_class(@local_layout)
-- classes = ['row-fluid', @local_layout]
-- unless @context
-  - classes << 'gap-under-masthead'
+- classes = [@local_layout]
 - if @navigation[:local].present?
   - content_for(:left_column) do
     = render partial: 'layouts/local/side_navigation'

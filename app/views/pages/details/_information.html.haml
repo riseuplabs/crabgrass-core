@@ -1,8 +1,7 @@
-= formy(:table_form) do |f|
+= formy(:horizontal_form) do |f|
   - f.row do |r|
     - r.label :page_create_owner.tcap
-    - r.label '<br/>' + content_tag(:div, change_page_owner, class: 'not_label')
-    - r.input link_to_entity @page.owner, avatar: 'small', class: 'single'
+    - r.input link_to_entity(@page.owner, avatar: 'small', class: 'single nofocus') + content_tag(:div, change_page_owner, class: 'space')
     - r.info help(:page_owner)
   - f.row do |r|
     - r.label :created.tcap

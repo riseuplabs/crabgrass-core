@@ -27,14 +27,14 @@
 -#
 
 - with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
-- @filter_submit_options = {url: url, with: with, loading: show_spinner('search_filter'), complete: close_modal_function}
+- @filter_submit_options = {url: url, with: with, loading: show_spinner('search_filter'), complete: close_modal_function, html: {class: 'btn btn-primary'}}
 
 = form_tag(url, id: 'page_search_form') do
   - if filter.description.present?
     .tip.info_16
       = filter.description.t
   = self.instance_eval(&filter.html_block)
-  .buttons
+  .buttons-right
     - if filter.options[:submit_button]
       = spinner('search_filter')
       = close_modal_button

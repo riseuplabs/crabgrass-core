@@ -14,28 +14,27 @@
 }
 
 .drop {
-  border:lightgray dotted 3px; 
-  padding:30px;
+  border:lightgray dotted 3px;
+  padding:10px;
   color:#888;
   display:block;
-  font-size: 2em; 
   border-radius: 10px;
-  margin: 20px;
+  margin: 10px;
 }
 
 
 .drop.dragging {
-  border:gray dotted 3px; 
+  border:gray dotted 3px;
 }
 
 .file.handler {
   opacity: 0;
-  position: absolute; 
+  position: absolute;
   font-size: 20px;
   height: 50px;
-  top: -5px; 
-  right: 0px; 
+  top: -5px;
+  right: 0px;
   width: 440px;
-  z-index: 1; 
+  z-index: 1;
   cursor: pointer;
 }

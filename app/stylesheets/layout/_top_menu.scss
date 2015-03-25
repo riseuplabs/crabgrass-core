@@ -1,0 +1,84 @@
+//
+// Top level global navigation menus.
+//
+// Structure:
+//
+//  #menu
+//    %li.top-menu#menu_me
+//      %a Me
+//      %ul.dropdown-menu
+//
+
+.navbar-brand {
+  background: url($masthead_logo) 50% 50% no-repeat;
+  width: 50px;
+}
+
+#menu {
+  margin-bottom: 0px;
+  border-radius: 0px;
+  border-left: none;
+  border-right: none;
+  background: $masthead_nav_background;
+
+  li.top-menu > a {
+    color: $masthead_nav_tab_color;
+  }
+
+  // this class is dynamically added by js
+  // when the dropdown menu is visible
+  li.top-menu.menu-visible {
+    background: $masthead_nav_tab_visible_background;
+    & > a {
+      color: $masthead_nav_tab_visible_color;
+    }
+  }
+
+  li.top-menu.active {
+    background: $masthead_nav_tab_active_background;
+    & > a {
+      color: $masthead_nav_tab_active_color;
+    }
+  }
+}
+
+// override bootstrap default
+.navbar-right {
+  margin-right: 0;
+}
+
+//
+// The dropdown menus
+//
+// to debug, you may want to make them visible by default.
+// this can be controlled in layouts/menu/boxes by setting:
+//
+//   %ul.dropdown-menu(style="display: block")
+//
+
+.dropdown-menu li a.icon {
+  padding: 6px 0px 6px 36px !important;
+  background-position: 16px 45% !important;
+}
+
+.dropdown-menu {
+  display: block; // override the default in bootstrap
+                  // that hides dropdown-menus by default.
+                  // this is so we can use menu.show() and menu.hide()
+                  // in javascript. when switching to jquery we can
+                  // remove this.
+}
+
+// center the global search form. there should be a better
+// way to do this.
+#global-search-form {
+  margin-top: 5px;
+  input {
+    background-color: #444;
+    border-color: #000;
+    color: #fff;
+  }
+  input[type=submit] {
+    background-color: #333;
+  }
+}
