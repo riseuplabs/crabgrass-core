@@ -19,7 +19,7 @@ class PageSearchTest < JavascriptIntegrationTest
     click_on 'Pages'
     click_on 'Own'
     assert_content 'Owned By Me'
-    assert_text_of_all 'td.owner', user.login
+    assert_text_of_all 'td.owner', user.display_name
     assert_content own_page.title
   end
 

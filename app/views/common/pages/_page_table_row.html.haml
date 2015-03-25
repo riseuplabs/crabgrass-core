@@ -1,13 +1,13 @@
 - cache [current_language, page, short_date(page.updated_at)] do
   %tr
     %td.owner
-      = link_to_name(page.owner_name, page.owner.try(:avatar_id) || 0)
+      = link_to_entity(page.owner, avatar: :xsmall)
     %td.page_icon
       = page_icon(page)
     %td.title
       = cell_title(page)
     %td.updated_by
-      = link_to_name(page.updated_by_login, page.updated_by.try(:avatar_id) || 0)
+      = link_to_entity(page.updated_by, avatar: :xsmall)
     %td.nowrap.updated_at
       = friendly_date(page.updated_at)
     %td.contributors
