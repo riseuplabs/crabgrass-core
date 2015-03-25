@@ -1,7 +1,7 @@
-define_theme(parent: 'blueberry') {
+define_theme(parent: 'default') {
 
-  body {
-    css "background: $background_color url(images/crows.png) no-repeat center bottom"
+  masthead {
+    logo url('logo')
   }
 
   footer {
@@ -10,5 +10,27 @@ define_theme(parent: 'blueberry') {
     }
   }
 
+}
 
+style %{
+  body {
+    background-color: #555;
+  }
+  #middle {
+    border-bottom: 1px solid #000;
+  }
+  #footer {
+    select {
+      border: 1px solid #000;
+      color: #000;
+      background-color: #999;
+    }
+    background: url("/theme/riseup/images/crows.png") 50% 6em no-repeat;
+    padding-top: 20px;
+    color: #ddd;
+    a {
+      color: #eee;
+      //text-decoration: underline;
+    }
+  }
 }
