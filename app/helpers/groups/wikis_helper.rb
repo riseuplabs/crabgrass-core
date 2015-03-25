@@ -9,7 +9,7 @@ module Groups::WikisHelper
         edit_mode: (edit_mode ? "off" : "on")
       ),
       remote: true,
-      class: ['btn', ('active wiki_away' if edit_mode)].join(' '),
+      class: ['btn', 'btn-default', ('active wiki_away' if edit_mode)].join(' '),
       id: 'edit_mode_button'
     )
   end

@@ -1,25 +1,32 @@
 #image_popup.image_popup
-  -# :insert_image_instructrions.t
-  = formy(:simple_form) do |f|
-    - f.row(class: 'float_left') do |r|
-      - r.label :preview_selected_image.t
-      - r.input content_tag(:div, '', class: 'image_preview')
-    - f.row do |r|
-      - r.label :size.t
-      - r.input image_size_buttons
-    - f.row do |r|
-      - r.label :options.t
-      - r.input image_full_size_link_checkbox
-    - f.row(class: 'clear') do |r|
-      - r.label :media_images.t
-      - r.info :image_select_info.t
-      - r.input image_select_buttons
-    - f.row(class: 'clear') do |r|
-      - r.label :upload_new_image.t
-      - r.info :image_upload_info.t
-      - r.input asset_upload_form_for(@wiki, single: true)
+  .form-group
+    = :preview_selected_image.t
+    %div.image_preview
+  .radio
+    .b= :size.t
+    = image_size_buttons
+  .checkbox
+    %label
+      = image_full_size_link_checkbox
+
+  = formy(:tabs) do |f|
+    - f.tab do |t|
+      - t.label :media_images.t
+      - t.show_tab 'popup_images_tab'
+      - t.selected true
+    - f.tab do |t|
+      - t.label :upload_new_image.t
+      - t.show_tab 'popup_upload_tab'
+      - t.selected false
+
+  #popup_images_tab.tab_content.tab_area
+    .help-block= :image_select_info.t
+    = image_select_buttons
+
+  #popup_upload_tab.tab_content.tab_area{style:'display:none'}
+    .help-block= :image_upload_info.t
+    = asset_upload_form_for(@wiki, single: true)
 
   .buttons
     = close_modal_button(:cancel)
     = insert_image_button
-

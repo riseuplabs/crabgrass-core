@@ -9,30 +9,31 @@
     - f.label :display.t
     - f.row do |r|
       - r.label :username.t
-      - r.input text_field('user','login')
+      - r.input text_field('user','login', class: 'form-control')
     - f.row do |r|
       - r.label :display_name.t
-      - r.input text_field('user','display_name')
+      - r.input text_field('user','display_name', class: 'form-control')
     - f.row do |r|
       - r.label :icon.t
       - r.input avatar_field(current_user)
     - f.label :notification.t
     - f.row do |r|
       - r.label :email.t
-      - r.input text_field('user','email')
+      - r.input text_field('user','email', class: 'form-control')
     - f.row do |r|
       - r.label :notice.t
       - r.info :do_you_want_to_receive_email_notifications.t
       - r.input select 'user', 'receive_notifications', 
         [ [I18n.t('notification_select.none'), ""], 
           [I18n.t('notification_select.single'), "Single"], 
-          [I18n.t('notification_select.digest'), "Digest"] ]
+          [I18n.t('notification_select.digest'), "Digest"] ],
+        {}, class: 'form-control'
     - f.label :locale.t
     - f.row do |r|
       - r.label :language.t
-      - r.input select('user', 'language', all_languages_for_select, { include_blank: true })
+      - r.input select('user', 'language', all_languages_for_select, { include_blank: true }, class: 'form-control')
     - f.row do |r|
       - r.label :time_zone.t
-      - r.input time_zone_select('user', 'time_zone', nil, include_blank: true)
+      - r.input time_zone_select('user', 'time_zone', nil, {include_blank: true}, {class: 'form-control'})
     - f.button submit_tag(:save_button.t, class: 'btn btn-primary')
 

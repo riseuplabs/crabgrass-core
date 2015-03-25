@@ -1,6 +1,6 @@
 - @local_layout = 'sidebar'
 - content_for :title do
-  = render 'layouts/section/heading_with_info', section: :page_search
+  = render 'layouts/section/heading_with_info', section: :page_search, first: true
 = render 'common/pages/search/top_controls'
 
 #search_results{data: {search: 'path', href: page_search_path}}

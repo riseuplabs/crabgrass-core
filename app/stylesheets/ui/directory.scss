@@ -1,7 +1,4 @@
 
-@import "bootstrap/mixins";
-@import "bootstrap/variables";
-
 .directory {
   .divider {
     @include nav-divider;

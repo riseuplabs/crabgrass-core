@@ -9,11 +9,11 @@
     = :uploaded_image_cropped.t
   .p
     %label= :select_image_file.t
-    .bq= f.file_field :image_file
+    = f.file_field :image_file
   .p
     %label= :or_image_url.t
-    .bq= f.text_field :image_file_url
+    = f.text_field :image_file_url, class: 'form-control'
   .buttons.reverse
-    = submit_tag :upload_image.t
+    = submit_tag :upload_image.t, class: 'btn btn-primary'
     = close_modal_button :cancel
 

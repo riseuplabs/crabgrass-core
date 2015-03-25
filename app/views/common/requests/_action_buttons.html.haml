@@ -12,7 +12,7 @@
 
     - # APPROVAL / REJECTION
     - if may_approve
-      = button_to_remote(:approve.t, 
+      = button_to_remote(:approve.t,
         {url: approve_url, method: :put, loading: show_spinner(spin_id)},
         {class: 'btn btn-success'})
       = button_to_remote(:reject.t,
@@ -21,6 +21,6 @@
 
     - # DESTRUCTION
     - if may_destroy
-      = button_to_remote(:delete_thing.t(thing: :request.t), 
+      = button_to_remote(:delete_thing.t(thing: :request.t),
         {url: request_path(request), method: :delete, loading: show_spinner(spin_id)},
-        {class: 'btn btn-inverse'})
+        {class: 'btn btn-default'})

@@ -1,9 +1,9 @@
 -# requires: @available_page_types
 
 - content_for :title do
-  %h1
+  %h1.first
     = I18n.t(:create_a_new_thing, thing: I18n.t(:page).downcase)
   - if @group
-    = I18n.t(:page_added_to_group, group_type: @group.group_type.downcase, group_name: content_tag(:b, @group.display_name)) 
+    = I18n.t(:page_added_to_group, group_type: @group.group_type.downcase, group_name: content_tag(:b, @group.name)).html_safe
 
 = column_layout 2, page_creation_links, class: 'layout'

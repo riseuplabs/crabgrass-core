@@ -28,18 +28,18 @@
 - clear_filter_options = {url: page_search_path(remove: '/text/:text'), with: 'FilterPath.encode()'}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
-.row#page_search_table
+#page_search_table
   %div
     = # search_view_toggle_links(page_search_path)
     = spinner('view_toggle')
-  %div
-    = form_tag '', id: 'page_search_form' do
-      %span.page_text_search.pull-right
-        %span.x{style: "display:inline-block"}
-          = link_to_remote_icon 'tiny_clear', clear_filter_options
-        %span.text{style: "display:inline-block"}
-          = text_field_tag 'text', '', id: 'search_text_field', onkeypress: key_pressed
-        %span.search{style: "display:inline-block"}
-          = link_to_remote_icon 'magnifier', text_filter_submit_options, id: 'search_submit'
+  %div.p
+    = form_tag '', id: 'page_search_form', class: 'form-inline' do
+      .input-group
+        %span.input-group-btn
+          = link_to_remote icon_tag('tiny_clear'), clear_filter_options, class: 'btn btn-default btn-sm'
+          -# = link_to_remote '<span class="close">&times;</span>', clear_filter_options, :class => 'btn btn-default btn-sm'
+        = text_field_tag 'text', '', size: 40, id: 'search_text_field', onkeypress: key_pressed, placeholder: :search.t, class: 'form-control input-sm'
+        %span.input-group-btn
+          = link_to_remote icon_tag('magnifier'), text_filter_submit_options, id: 'search_submit', class: 'btn btn-default btn-sm'
 
 = focus_form 'page_search_form'

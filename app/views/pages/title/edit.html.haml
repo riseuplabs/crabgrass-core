@@ -4,14 +4,15 @@
   = formy(:simple_form) do |f|
     - f.row do |r|
       - r.label :title.t
-      - r.input text_field('page', 'title', class: 'big full_width')
+      - r.input text_field('page', 'title', class: 'big form-control')
     - f.row do |r|
       - r.label :page_name_description.t
-      - r.input text_field('page', 'name', class: 'full_width')
+      - r.input text_field('page', 'name', class: 'form-control')
     - f.row do |r|
       - r.label :summary.t
-      - r.input text_area('page', 'summary', size: '50x6', class: 'full_width')
-    - f.button spinner('save_title')
-    - f.button close_modal_button(:cancel)
-    - f.button submit_tag(:save_button.t, name: 'save', class: 'btn')
+      - r.input text_area('page', 'summary', rows: '6', class: 'form-control')
+  .buttons-right.first
+    = spinner('save_title')
+    = close_modal_button(:cancel)
+    = submit_tag(:save_button.t, name: 'save', class: 'btn btn-primary')
 

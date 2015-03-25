@@ -73,8 +73,8 @@ networks: true
 # APPEARANCE
 #
 
-# pagination_size: 3
-theme: blueberry
+pagination_size: 10
+theme: default
 
 #
 # SECURITY

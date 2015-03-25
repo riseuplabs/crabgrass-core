@@ -23,6 +23,6 @@
     @include border-right-radius($ui_border_radius);
   }
   .round {
-    @include border-radius($ui_border_radius);
+    border-radius: $ui_border_radius;
   }
 }

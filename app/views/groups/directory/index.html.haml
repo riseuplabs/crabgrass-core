@@ -1,18 +1,3 @@
-.row.search.pull-right#group_search
-  = form_tag '',
-    id: 'group_search_form',
-    method: :get,
-    remote: true,
-    class: 'form-search' do
-    #autocomplete_container.input-append
-      = autocomplete_input_tag 'q', 'groups',
-        value: @filter,
-        url: url_for(format: 'json'),
-        id: 'autocomplete_groups',
-        class: 'search-query',
-        placeholder: :enter_name_of_group
-      %button.btn.btn-primary(type="submit")= :search.t
-
-.row.clear
-
-#group_list= render 'groups'
+= render 'autocomplete'
+#group_list
+  = render 'groups'

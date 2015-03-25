@@ -156,8 +156,8 @@ Modalbox.Methods = {
       '<p>#{message}</p>' +
       '<form #{form_attrs} class="buttons">' +
         '<img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> ' +
-        '<input type="button" onclick="Modalbox.back()" value="#{cancel}" />' +
-        '<input type="button" onclick="#{ok_function}" value="#{ok}" />' +
+        '<input type="button" class="btn btn-default" onclick="Modalbox.back()" value="#{cancel}" />' +
+        '<input type="button" class="btn btn-primary" onclick="#{ok_function}" value="#{ok}" />' +
         hidden_fields +
       '</form>' +
     '</div>';

@@ -41,7 +41,7 @@ module Crabgrass::Theme::Loader
       end
     end
     starting_data ||= {}
-    @data = Crabgrass::Theme::Options.parse(starting_data, &block)
+    @data = Crabgrass::Theme::Options.parse(self, starting_data, &block)
   end
 
   #

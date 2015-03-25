@@ -3,8 +3,8 @@
 
 - text = ""
 - recipient_name = ""
-- text_area = text_area_tag('post[body]', text, id: 'post_body', rows: '8')
-- send_button = button_to_function(:send_button.t, send_message_function(recipient_name))
+- text_area = text_area_tag('post[body]', text, id: 'post_body', rows: '8', class: 'form-control')
+- send_button = button_to_function(:send_button.t, send_message_function(recipient_name), class: 'btn btn-primary')
 
 = form_tag('', id: 'say_form') do
   = formy(:simple_form) do |f|

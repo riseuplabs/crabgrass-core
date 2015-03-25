@@ -3,16 +3,16 @@
     - f.label :information.t
     - f.row do |r|
       - r.label :place.tcap
-      - r.input text_field(:profile, :place)
+      - r.input text_field(:profile, :place, class: 'form-control')
     - f.row do |r|
       - r.label :organization.tcap
-      - r.input text_field(:profile, :organization)
+      - r.input text_field(:profile, :organization, class: 'form-control')
     - f.row do |r|
       - r.label :organizational_role.tcap
-      - r.input text_field(:profile, :role)
+      - r.input text_field(:profile, :role, class: 'form-control')
     - f.row do |r|
       - r.label :summary.tcap
-      - r.input text_area(:profile, :summary, rows: 5)
+      - r.input text_area(:profile, :summary, rows: 5, class: 'form-control')
     - if @profile.summary_html.present?
       - f.row do |r|
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
@@ -20,7 +20,7 @@
     - f.label :banner.t
     - banner_field(f)
     - f.button submit_tag(:save_button.t, name: 'save', class: 'btn btn-primary')
-    - f.button link_to(:view_profile.t, entity_path(@current_user), class: 'btn')
+    - f.button link_to(:view_profile.t, entity_path(@current_user), class: 'btn btn-default')
 
 
 -# graveyard

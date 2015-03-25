@@ -17,7 +17,7 @@ module CastleGatesHelper
   # display checkboxes for a castle gate, one checkbox for each possible holder.
   #
   def castle_gate_tag(castle, gate, holders, options = {})
-    content_tag :ul do
+    content_tag :ul, class: 'list-unstyled' do
       holders.collect do |holder|
         castle_gate_checkbox(castle, gate, holder, options)
       end.join.html_safe

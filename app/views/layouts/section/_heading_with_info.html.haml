@@ -1,6 +1,11 @@
 -# if there is only one section in your content you might want to
 -# render this partial in the title (content_for :title do...)
-%h2
+-# locals:
+-#  - section: the name of the section.
+-#  - first: true or false. should be true if this is the first section on the page.
+-#
+- klass = local_assigns[:first] ? 'first' : ''
+%h2{:class => klass}
   =t section, scope: :headings, cascade: true
   %small
     =t section, scope: "headings.info", default: ""

@@ -45,11 +45,11 @@ module Formy
 
     def open
       puts "<!-- begin #{self.classname} -->" if @opts[:annotate]
-      push
+      @base.current_element.push(self)
     end
 
     def close
-      pop
+      @base.current_element.pop
       puts "<!-- end #{self.classname} -->" if @opts[:annotate]
     end
 

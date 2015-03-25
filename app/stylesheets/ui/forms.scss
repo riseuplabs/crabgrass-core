@@ -76,10 +76,12 @@ textarea {
 //
 // the button row of a form, right aligned
 //
-.right_buttons {
-  margin-top: 0.75em;
+.buttons-right {
+  margin-top: 15px;
   text-align: right;
-
+  input[type=submit], input[type=button] {
+    margin-left: 10px;
+  }
   // // button_to makes its own form+div, but we want it to dispaly inline
   // // despite this.
   // form.button-to {
@@ -88,15 +90,24 @@ textarea {
   //     display: inline;
   //   }
   // }
-
-  //input[type=submit], input[type=button] {
-  //  font-size: 1.15em;
-  //  margin-left: 1em;
-  //}
-  //&.right  {text-align: right;}
-  //&.left   {text-align: left;}
-  //&.center {text-align: center;}
 }
+
+//
+// the button row of a form, left aligned
+//
+.buttons {
+  margin-top: 15px;
+  text-align: left;
+  input[type=submit], input[type=button] {
+    margin-right: 10px;
+  }
+}
+
+// sometimes we need to eat the margin.
+.buttons.first, .buttons-right.first {
+  margin-top: 0 !important;
+}
+
 
 //
 // the order of submit tags matters. although there is no requirement in html
@@ -138,18 +149,21 @@ textarea {
 // }
 
 div.image_preview {
-  width: 250px;
-  height: 200px;
-  overflow: auto;
+  height: 202px;
+  overflow: hidden;
   text-align: center;
   font-size: .4em;
+  background: #f6f6f6;
+  border: 2px solid #fff;
+  outline: 1px solid #ccc;
 }
 
 div.image_selector {
   float: left;
-  padding: .5em;
-  margin: .2em;
+  padding: 2px;
+  margin: 4px;
   border: 1px solid lightgray;
+  cursor: pointer;
 }
 
 .image_select_list{
@@ -164,4 +178,14 @@ div.image_selector {
 iframe#upload_frame {
   width: 1px;
   height: 1px;
+}
+
+//
+// permissions forms look better if the help text is indented.
+//
+#permissions_area .help-block {
+  display: block;
+  margin-left: 20px;
+  margin-top: 0px;
+  margin-bottom: 20px;
 }

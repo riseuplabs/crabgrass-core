@@ -75,6 +75,7 @@ module Pages::ShareHelper
       options[:size] = select_options.size
     end
     options[:style] = "width: auto"
+    options[:class] = 'form-control'
     select_tag name, options_for_select(select_options, selected.to_s), options
   end
 

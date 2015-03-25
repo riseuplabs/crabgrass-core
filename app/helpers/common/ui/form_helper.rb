@@ -61,25 +61,11 @@ module Common::Ui::FormHelper
   #   all others will be handed over to the radio_button_tag.
   #
   def inline_radio_buttons(name, choices, options = {})
-    selected = options.delete(:selected) 
+    selected = options.delete(:selected)
     selected = choices.first[1] if selected.nil?
-    render partial: 'ui/form/inline_radio_button', 
+    render partial: 'ui/form/inline_radio_button',
       collection: choices,
       locals: { name: name, selected: selected, options: options }
-  end
-
-  #
-  # Wraps arguments in a div with class 'input-append'. This is a bootstrap css thing:
-  #
-  # <div class="input-append">
-  #   <input class="span2" id="appendedInputButton" type="text">
-  #   <button class="btn" type="button">Go!</button>
-  # </div>
-  #
-  # Warning: input args are tags as html_safe.
-  #
-  def input_append(*args)
-    content_tag :div, args.join("\n").html_safe, class: 'input-append'
   end
 
 end

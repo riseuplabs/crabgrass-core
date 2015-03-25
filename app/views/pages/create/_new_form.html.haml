@@ -7,10 +7,11 @@
 
 - content_for :title do
   %div.icon.multi.medium{class: "#{page_type.icon}_48"}
-    = :create_a_new_thing.t(thing: :page.t.downcase)
-    .h2= page_type.class_display_name
+    .h2.first
+      .small= :create_a_new_thing.t(thing: :page.t.downcase)
+      = page_type.class_display_name
   - if @group
-    = :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,h(@group.display_name))).html_safe
+    %p= :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,@group.name)).html_safe
 
 .create_page
   = form_tag(create_page_path(page_type: page_type), multipart: @multipart) do
@@ -23,9 +24,10 @@
         - else
           = render partial: "pages/create/#{section}", locals: {form: form}
       = render partial: 'pages/create/sharing', locals: {form: form}
-    .form-actions.reverse
+    .buttons-right.reverse
       = submit_tag (:create_button.t + ' &raquo;').html_safe, name: 'create', class: 'btn btn-primary'
-      = submit_tag ('&laquo; ' + I18n.t(:back_button)).html_safe, name: 'cancel', class: 'btn'
+      = link_to(('&laquo; ' + I18n.t(:back_button)).html_safe, new_page_path(owner: @group, type: page_type), class: 'btn btn-default')
+
 
 :javascript
   if ($("page_title"))

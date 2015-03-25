@@ -3,8 +3,8 @@
     - f.label :change_password.t
     - f.row do |r|
       - r.label :new_password.t
-      - r.input password_field('user', 'password')
+      - r.input password_field('user', 'password', class: 'form-control')
     - f.row do |r|
       - r.label :confirm_new_password.t
-      - r.input password_field('user', 'password_confirmation')
+      - r.input password_field('user', 'password_confirmation', class: 'form-control')
     - f.button submit_tag(:save_button.t, class: 'btn btn-primary')

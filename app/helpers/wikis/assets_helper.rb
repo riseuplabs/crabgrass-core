@@ -26,7 +26,7 @@ module Wikis::AssetsHelper
 
   def img_selector_tag(image)
     content_tag(:div,
-      thumbnail_img_tag(image, :medium, scale: '120x120'),
+      thumbnail_img_tag(image, :small),
       class: 'image_selector')
   end
 
@@ -45,6 +45,7 @@ module Wikis::AssetsHelper
   end
 
   def insert_image_button(options = {})
+    options[:class] = 'btn btn-primary'
     button_to_function :insert_image.t,
       insert_image_function + close_modal_function,
       options

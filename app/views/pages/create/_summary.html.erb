@@ -2,7 +2,7 @@
   form.row do |r|
     r.label :summary.t
     r.label_for 'page_summary'
-    r.input text_area('page', 'summary', :rows => 4)
+    r.input text_area('page', 'summary', :rows => 4, class: 'form-control')
     r.info help(:summary)
   end
 %>

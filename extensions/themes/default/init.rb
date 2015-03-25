@@ -8,6 +8,7 @@ define_theme {
 
   favicon_png 'favicon.png'
   favicon_ico 'favicon.ico'
+  logo 'logo.png'
 
   grid {
     column {
@@ -69,7 +70,7 @@ define_theme {
   }
 
   background {
-    color '#e6e6e6'
+    color '#fff'
   }
 
   #
@@ -85,10 +86,13 @@ define_theme {
     style 'full'   # accepts [full | grid]
                    # full -- the masthead stretches the full width of the screen
                    # grid -- the masthead stops at the edge of the grid.
-    border $border
+    border {
+      color "#000"
+    }
     height '100px'
     css "background-color: #f9f9f9;"
     bottom_gap '1g'
+    logo url('logo')
 
 #    css %{
 #      @include linear-gradient(color-stops(green, red));
@@ -106,40 +110,45 @@ define_theme {
       html { content_tag :div, current_site.title, id: 'masthead_title' }
     }
     nav {
-      style 'cutout'  # accepts [cutout | bar]
-                     # cutout -- creates tabs cut out from masthead
-                     # bar -- creates a separate menu nav bar
+      # height '40px'
+      background '#222'
       tab {
-        padding '1px 14px'
-        css false
-        active_css false
-        inactive_css false
-      }
-      dropdown {
-        background_color 'white'
-        border_color '#999'
+        color '#999'
         hover {
-          background_color var(:color_hover)
-          border '1px solid #cc9'
+          color '#fff'
+        }
+        visible {
+          color '#fff'
+          background '#333'
+        }
+        active {
+          color '#fff'
+          background '#000'
         }
       }
     }
   }
 
   banner {
-    # unfortunately, banner padding must be specified in pixels.
-    padding "20px"
-    border "1px solid #888"
-    border_dark "1px solid #000"
-    default_background '#999'
+    padding "30px"
+    border "1px solid #000"
+    default_background '#3465A4'
     default_foreground '#fff'
     vertical_align 'default'  # [center | top | default]
     font {
       size "36px" # var(:font_heading_h1_size)
     }
+    avatar {
+      border "2px solid #fff"
+    }
     nav {
-      style 'cutout' # [cutout | inset | none]
       padding '6px'
+      color '#fff'
+      background 'rgba(0,0,0,0.2)'
+      active {
+        color '#000'
+        background var(:background_color)
+      }
     }
     css false
     shadow false
@@ -184,16 +193,15 @@ define_theme {
     border "1px solid #ddd"
     odd_background var(:color_lighter)
     even_background var(:local_content_background)
-    padding "10px"
+    padding "15px"
   }
 
   footer {
     border false
     background_color false
     color 'white'
-    column_count 3
     content {
-      #padding '1g'
+      space '20px'
       html partial: 'layouts/global/default_footer_content'
     }
   }

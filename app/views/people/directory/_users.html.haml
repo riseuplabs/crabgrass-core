@@ -1,7 +1,10 @@
-%ul.directory
-  - @users.each do |user|
-    %li.entry= render partial: 'user', locals: {user: user}
-    %li.divider
+.directory
+  - @users.count.times do |i|
+    - user = @users[i]
+    - if user
+      .entry
+        = render partial: 'user', locals: {user: user}
+    - if @users[i+1]
+      .divider
 
-.p
-  = pagination_links(@users)
+= pagination_links(@users, params: params.except(:utf8))

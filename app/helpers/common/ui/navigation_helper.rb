@@ -16,11 +16,11 @@ module Common::Ui::NavigationHelper
 
   protected
 
-  def global_nav_class
-    if active_top_nav
-      "#{active_top_nav.name}-active"
-    end
-  end
+  # def global_nav_class
+  #   if active_top_nav
+  #     "#{active_top_nav.name}-active"
+  #   end
+  # end
 
   def active_top_nav
     current_theme.navigation.root.currently_active_item
