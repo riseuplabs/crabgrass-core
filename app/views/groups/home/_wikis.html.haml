@@ -1,7 +1,9 @@
 - content_for :dom_loaded do
   showTabByHash();
 
-- active_tab = local_assigns['profile'] || (@group.public? ? 'public' : 'private')
+- active_tab = local_assigns['profile']
+- active_tab ||= 'private' if may_edit_group? && @private_wiki.try.body.present?
+- active_tab ||= 'public'
 - edit_mode = local_assigns['edit_mode'] && may_edit_group?
 - wiki_tab = edit_mode ? 'edit' : 'show'
 
