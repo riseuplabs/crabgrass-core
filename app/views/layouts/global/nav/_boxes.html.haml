@@ -3,23 +3,10 @@
 -# This markup and css may seem odd, but it works in all browsers.
 -# this is used for groups and people menu.
 -# so we need to include the entities type in the cache key.
-- ul_class = '' if ul_class.nil?
-- columns = split_entities_into_columns(entities)
-
 - if entities.present?
-  %div{style:"display: none", class: columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
-    - cache [current_language, id] do
-      .h3.first
-        = heading
-        %small
-          = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
+  %ul.dropdown-menu(style="display:none")
+    %li
+      = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
     - cache [current_user.version_cache_key, entities.first.class] do
-      %div.leftcol
-        %ul
-          - for entity in columns[:left_col]
-            %li= link_to_entity(entity, avatar: 'small', format: :full, class: 'single')
-      - if columns[:right_col].present?
-        %div.rightcol
-          %ul
-            - for entity in columns[:right_col]
-              %li= link_to_entity(entity, avatar: 'small', format: :full, class: 'single')
+      - for entity in entities
+        %li= link_to_entity(entity, avatar: 'tiny')

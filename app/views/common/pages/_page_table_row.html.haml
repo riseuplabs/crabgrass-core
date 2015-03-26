@@ -1,6 +1,6 @@
 - cache [current_language, page, short_date(page.updated_at)] do
   %tr
-    %td.owner
+    %td.owner.hidden-xs
       = link_to_entity(page.owner, avatar: :xsmall)
     %td.page_icon
       = page_icon(page)
@@ -10,7 +10,7 @@
       = link_to_entity(page.updated_by, avatar: :xsmall)
     %td.nowrap.updated_at
       = friendly_date(page.updated_at)
-    %td.contributors
+    %td.contributors.hidden-xs
       = page.contributors_count
   -# we hide the details for now with .shy
   -# TODO: bring them back in a good looking non cluttered way.

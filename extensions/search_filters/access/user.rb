@@ -24,7 +24,10 @@ SearchFilter.new('/user/:user_id/') do
   html do
     content_tag(:p, id: :user_autocomplete) do
       content_tag(:strong, :user.tcap) + " " +
-      autocomplete_input_tag('user_id', :users, container: :user_autocomplete)
+      autocomplete_input_tag('user_id', :users,
+        container: :user_autocomplete,
+        onkeydown: submit_form('page_search_form')
+      )
     end
   end
 

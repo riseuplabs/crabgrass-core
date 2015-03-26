@@ -1,5 +1,6 @@
-.entry.span4
-  .avatar= avatar_link(user, 'medium')
+.entry
+  .avatar
+    = avatar_link(user, 'medium')
   .text
     .display-name= link_to_user(user)
     - if user.display_name != user.name

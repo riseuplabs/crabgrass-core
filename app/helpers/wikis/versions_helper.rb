@@ -33,7 +33,7 @@ module Wikis::VersionsHelper
   def list_versions_link
     label = :list_things.t(things: :versions.t)
     url = wiki_versions_path(@wiki)
-    link_to_remote_with_icon(label, {url: url, method: :get}, {class: 'btn', icon: 'left'})
+    link_to_remote_with_icon(label, {url: url, method: :get}, {class: 'btn btn-default', icon: 'left'})
   end
 
   def next_version_link
@@ -41,9 +41,9 @@ module Wikis::VersionsHelper
     if version <= @wiki.versions.count
       link_to_remote :next.t,
         {url: wiki_version_path(@wiki, version), method: :get},
-        {class: 'btn', icon: 'left'}
+        {class: 'btn btn-default', icon: 'left'}
     else
-      "<span class='btn disabled icon left_16'>#{:next.t}</span>".html_safe
+      "<span class='btn btn-default disabled icon left_16'>#{:next.t}</span>".html_safe
     end
   end
 
@@ -52,9 +52,9 @@ module Wikis::VersionsHelper
     if version >= 1
       link_to_remote :previous.t,
         {url: wiki_version_path(@wiki, version), method: :get},
-        {class: 'btn right', icon: 'right'}
+        {class: 'btn btn-default right', icon: 'right'}
     else
-      "<span class='btn disabled icon right_16 right'>#{:previous.t}</span>".html_safe
+      "<span class='btn btn-default disabled icon right_16 right'>#{:previous.t}</span>".html_safe
     end
   end
 

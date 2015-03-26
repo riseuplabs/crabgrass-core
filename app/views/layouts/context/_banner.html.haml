@@ -17,14 +17,8 @@
   eventually, we want the user to be able to personally customize the appearance
   of their context banner, as well as the navigation and links.
 
-  NOTES
-
-  #context_banner can have one of three classes: large, medium, or small.
-  This is used to determine the position of the first tab.
-
 - if visible_context?
-  %header#context_banner.large.gap-under-masthead{class: (banner_picture ? 'dark_border' : 'light_border')}
+  %header#context_banner
     %div#banner_content
       = render @context.banner_partial
-
-    = render partial: '/layouts/context/nav/banner_menu'
+      = render partial: '/layouts/context/nav/banner_menu'

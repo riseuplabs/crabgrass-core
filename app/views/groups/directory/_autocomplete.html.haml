@@ -1,0 +1,15 @@
+= form_tag '',
+  id: 'group_search_form',
+  method: :get,
+  remote: true,
+  class: 'form-search margin-bottom' do
+  .input-group.col-md-6.col-sm-9
+    = autocomplete_input_tag 'q', 'groups',
+      value: @filter,
+      url: url_for(format: 'json'),
+      id: 'autocomplete_groups',
+      class: 'search-query',
+      placeholder: :enter_name_of_group
+    %span.input-group-btn
+      %button.btn.btn-primary(type="submit")
+        = :search.t

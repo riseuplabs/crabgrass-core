@@ -6,15 +6,16 @@ class Crabgrass::Theme::Options
 
   attr_reader :data
 
-  def self.parse(data, &block)
-    opts = Crabgrass::Theme::Options.new(data)
+  def self.parse(theme, data, &block)
+    opts = Crabgrass::Theme::Options.new(theme, data)
     if block
       opts.instance_eval(&block)
     end
     return opts.data
   end
 
-  def initialize(data={})
+  def initialize(theme, data={})
+    @theme = theme
     @data = data
     @namespace = []
   end
@@ -42,6 +43,11 @@ class Crabgrass::Theme::Options
   # this conflicts with a rake dsl otherwise
   def link(*args, &block)
     self.method_missing :link, *args, &block
+  end
+
+  def url(image_name)
+    filename = @data[image_name.to_sym] || image_name
+    File.join('','theme', @theme.name, 'images', filename)
   end
 
   def html(*args, &block)

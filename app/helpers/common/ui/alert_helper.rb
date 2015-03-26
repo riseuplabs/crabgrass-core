@@ -100,11 +100,17 @@ module Common::Ui::AlertHelper
   # if allow_fade is false, then we ignore :fade and :nofade options
   #
   def message_html(message, allow_fade = true)
-    icon_class = case message[:type]
-      when :error   then 'caution_16'
-      when :warning then 'exclamation_16'
-      when :notice  then 'lightbulb_16'
-      when :success then 'ok_16'
+    #icon_class = case message[:type]
+    #  when :error   then 'caution_16'
+    #  when :warning then 'exclamation_16'
+    #  when :notice  then 'lightbulb_16'
+    #  when :success then 'ok_16'
+    #end
+    alert_class = case message[:type]
+      when :error   then 'alert alert-danger'
+      when :warning then 'alert alert-warning'
+      when :notice  then 'alert alert-info'
+      when :success then 'alert alert-success'
     end
     message_id = "alert_message_#{rand(100_000_000)}"
     text = if message[:text].is_a?(Array)
@@ -119,7 +125,7 @@ module Common::Ui::AlertHelper
     end
     html = []
     html << link_to_function('×', "hideAlertMessage('#{message_id}')", class: 'close')
-    html << content_tag(:div, text, class: "text #{icon_class}")
+    html << content_tag(:div, text, class: "text")
     if message[:list]
       html << content_tag(:ul,
         safe_join(message[:list].collect{|item|
@@ -133,7 +139,7 @@ module Common::Ui::AlertHelper
         html << content_tag(:script, "hideAlertMessage('#{message_id}', #{timeout});".html_safe)
       end
     end
-    content_tag(:div, html.join.html_safe, class: "message #{message[:type]}", id: message_id)
+    content_tag(:div, html.join.html_safe, class: alert_class, id: message_id)
   end
 
 end

@@ -1,27 +1,28 @@
 %div#page_sidebar
   - if logged_in?
     - if @page.deleted?
-      %ul.side_list.commands
+      %ul.side_list
         = undelete_line
         = destroy_line
         = details_line
         =# history_line
     - else
-      %ul.side_list.commands
-        = public_line
-      %ul.side_list.commands.rule
-        = watch_line
-        = star_line
-      - access_changing_commands = [share_line, notify_line].compact
-      - if access_changing_commands.present?
-        %ul.side_list.commands.rule
-          = access_changing_commands.join.html_safe
-      %ul.side_list.commands.rule
-        = delete_line
-        =# move_line
-        = details_line
-        =# history_line
-        =# view_line
+      %ul.side_list
+        - if (lines = [watch_line, star_line].compact).any?
+          - prior = true
+          - lines.each do |line|
+            = line
+        - if (lines = [public_line, share_line, notify_line].compact).any?
+          - if prior
+            %hr
+          - prior = true
+          - lines.each do |line|
+            = line
+        - if (lines = [delete_line, details_line].compact).any?
+          - if prior
+            %hr
+          - lines.each do |line|
+            = line
     =# call_hook :page_sidebar_actions
 
   -#
@@ -31,7 +32,7 @@
     .h3= I18n.t(:tags)
     %div.tags
       = page_tags
-    %ul
+    %ul.list-unstyled
       = edit_tags_line
 
   -#
@@ -42,7 +43,7 @@
       .h3= I18n.t(:attachments)
       .attachments
         = attachment_content
-      %ul
+      %ul.list-unstyled
         = edit_attachments_line
 
   -#

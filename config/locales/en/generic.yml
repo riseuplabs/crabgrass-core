@@ -5,6 +5,7 @@ en:
   ##
 
   search: "Search"
+  go: "Go"
   thing_not_found: "%{thing} not found"
   no_things_found: "No %{things} found."
   no_search_results: "No Results"

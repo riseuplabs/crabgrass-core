@@ -18,7 +18,7 @@ SearchFilter.new('/tag/:tag_name/') do
   #
   html(delayed: true, submit_button: false) do
     ret = content_tag(:p) do
-      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name', nil, onkeydown: "if (enterPressed(event)) {$('page_search_form').submit.click(); event.stop();}")
+      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name', nil, class: 'form-control', onkeydown: submit_form('page_search_form'))
     end
     ret += "\n"
 

@@ -5,8 +5,8 @@
 
 = form_for([target, Asset.new], upload_form_options(local_assigns)) do |f|
   #upload-drop.drop(style="text-align:center")
-    %p(style="font-size: 20px")= :drop_files_here.t
-    %p=:or.t
+    %p= :drop_files_here.t
+    %p= :or.t
     #file-select.upload.btn.btn-primary.hook
       %input#upload-input.file.handler{type:"file",
         name: "our-file",

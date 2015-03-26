@@ -115,6 +115,7 @@
   }
 
   &.small {
+    font-size: 100%;
     padding-left: $icon_small + 8px !important;
     min-height: $icon_small;
     &.single {
@@ -146,6 +147,10 @@
     padding-right: $icon_tiny + 4px !important;
     padding-left: 12px !important; // 12px is a magic number. It is what default bootstrap buttons are.
   }
+}
+
+td.icon {
+  display: table-cell;
 }
 
 //
@@ -218,8 +223,8 @@ i.page_icon {
 // mobi icons are used to transform some text into icons when the
 // screen gets very small. by default, these elements are hidden.
 //
-
-.mobi_icon {
-  display: none;
-}
+//
+//.mobi_icon {
+//  display: none;
+//}
 

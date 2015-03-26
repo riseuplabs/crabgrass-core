@@ -17,13 +17,13 @@
   = f.hidden_field :version
   = hidden_field_tag :section, section if section && section != :document
   - if @error_message
-    .alert.alert-error= @error_message.to_s
-  = text_area_tag('wiki[body]', h(body), {rows: wiki_textarea_rows(body), class: 'full_width', id: dom_id(wiki, 'textarea'), tabindex: 1})
-  .right_buttons.p
+    .alert.alert-danger= @error_message.to_s
+  = text_area_tag('wiki[body]', h(body), {rows: wiki_textarea_rows(body), class: 'form-control', id: dom_id(wiki, 'textarea'), tabindex: 1})
+  .buttons-right.p
     -# NOTE: there is an event listener on input.wiki_button
     = spinner(spinner_id)
     = f.submit :cancel_button.t, name: 'cancel', tabindex: 3,
-      class: 'btn wiki_button'
+      class: 'btn btn-default wiki_button'
     - if @show_force_save_button
       = f.submit :force_save_button.t, name: 'force_save', tabindex: 2,
         class: 'btn btn-primary wiki_button'

@@ -31,7 +31,9 @@ module Crabgrass::Theme::Renderer
     if !exception.sass_filename.nil? and exception.sass_filename !~ /screen/
       print_sass_source(txt, File.read(exception.sass_filename).split("\n"))
     end
-    print_sass_source(txt, exception.sass_template.split("\n"))
+    if exception.sass_template
+      print_sass_source(txt, exception.sass_template.split("\n"))
+    end
     txt << "</body></html>"
     txt.join("\n")
   end

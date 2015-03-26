@@ -45,7 +45,7 @@ module Common::Ui::PaginationHelper
   #   :container    => true
   #
   def pagination_links(things, options={})
-    return unless things.respond_to?(:total_pages)
+    return unless paginated?(things)
 
     defaults = {
      previous_label: ("&laquo; %s" % :pagination_previous.t).html_safe,
@@ -64,27 +64,5 @@ module Common::Ui::PaginationHelper
     things.respond_to?(:total_entries) && things.total_entries > things.per_page
   end
 
-  #
-  # used at the top of a page where you want a little space after the pagination links,
-  # but only if there are any pagination links.
-  #
-  def top_pagination_links(things, options={})
-    if paginated?(things)
-      content_tag(:div, class: 'p first') do
-        pagination_links(things,options)
-      end
-    end
-  end
-
-  #
-  # useful for the bottom of the page.
-  #
-  def bottom_pagination_links(things, options={})
-    if paginated?(things)
-      content_tag(:div, class: 'p last') do
-        pagination_links(things,options)
-      end
-    end
-  end
 end
 

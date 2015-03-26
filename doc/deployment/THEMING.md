@@ -7,6 +7,10 @@ The structure of the folder is like this:
       init.rb        -- main theme definition
       navigation.rb  -- navigation definition
 
+## Choose a theme
+
+Set the `theme` property in the main configuration yaml file.
+
 ## Assets
 
 The "images" is a directory to hold the files that should be publicly available for this theme. The images directory will be available at the url /theme/<themename>/images. If you want to generate a path for a file extensions/themes/themename/images/icon.png, you would do url('icon.png') in init.rb or current_theme.url('icon.png') elsewhere.

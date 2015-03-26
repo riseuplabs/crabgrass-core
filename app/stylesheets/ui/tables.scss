@@ -1,7 +1,7 @@
 //
 // in a few places, we use a table to display stuff in a layout grid.
 // i suppose this should be replaced by divs eventually.
-// 
+//
 
 table.layout td {
   vertical-align: top;
@@ -73,7 +73,7 @@ table.fancy {
 // SHADED TABLE
 //
 // This looks just like a shaded list, but is actually a table.
-// A shaded table is not intended for use with any headers. 
+// A shaded table is not intended for use with any headers.
 // It looks like a list, but allows you to use columns for alignment.
 //
 // Add class 'reflow' to td in order to make that td stack vertically
@@ -100,5 +100,5 @@ table.shaded {
     border-top: 1px solid $ui_border_color;
     padding: 8px;
   }
-  margin-bottom: 2.5em;
+  //margin-bottom: 2.5em;
 }

@@ -93,7 +93,8 @@ ul.list_as_cols {
 ul.clickable {
   @extend ul.shaded;
   @extend .round;
-  @extend .unstyled;
+  @extend .list-unstyled;
+  margin-bottom: 20px;
 
   & > li {
     cursor: pointer;
@@ -108,11 +109,12 @@ ul.clickable {
 //
 
 ul.shaded {
+  @extend .list-unstyled;
   border: 1px solid $ui_border_color;
   @if $ui_border_radius { @extend .round }
   & > li {
     border-top: 1px solid $ui_border_color;
-    padding: 8px;
+    padding: 10px;
     @extend .ui_light_fade;
   }
   & > li:first-child {

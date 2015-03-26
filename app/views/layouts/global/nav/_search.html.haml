@@ -1,0 +1,14 @@
+-#
+-# the global search box in the navbar
+-#
+-# form-control elements normally have "z-index: 2", but this messes with our alert overlay.
+-#
+- if logged_in?
+  - classes = 'navbar-form navbar-right hidden-xs'
+  - onsubmit = %[if ($('global-search-input').value) {this.action += '#/text/' + encodeURIComponent($('global-search-input').value)}]
+  = form_tag(me_pages_path, id: 'global-search-form', class: classes, role: 'search', onsubmit: onsubmit) do
+    .input-group
+      %input#global-search-input.form-control.input-sm{:type => "text", :placeholder => :search.t, :style => "z-index:0"}
+      %span.input-group-btn
+        = submit_tag(:go.t, class: 'btn btn-default btn-sm')
+        -#= submit_tag(icon_tag('magnifier'), class: 'btn btn-default btn-sm')

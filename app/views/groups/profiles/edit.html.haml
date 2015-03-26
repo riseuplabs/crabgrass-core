@@ -1,13 +1,13 @@
 
 = form_tag(group_profile_path(@group), method: 'put', multipart: true) do
   = formy(:horizontal_form) do |f|
-    - f.label :information.t
+    - f.label :information.tcap
     - f.row do |r|
-      - r.label :place.t
-      - r.input text_field(:profile, :place)
+      - r.label :place.tcap
+      - r.input text_field(:profile, :place, class: 'form-control')
     - f.row do |r|
-      - r.label :summary.t
-      - r.input text_area(:profile, :summary, rows: 5)
+      - r.label :summary.tcap
+      - r.input text_area(:profile, :summary, rows: 5, class: 'form-control')
     - if @profile.summary_html.present?
       - f.row do |r|
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]

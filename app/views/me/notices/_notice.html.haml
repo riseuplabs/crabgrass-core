@@ -1,12 +1,11 @@
 
 %tr{id: dom_id(notice)}
   %td.nowrap
-    .big_screen
-      %span.label= notice.display_label
-      %br
-      %span{style: 'font-size:85%'}= friendly_date notice.created_at
+    .hidden-xs
+      %span.label.label-primary= notice.display_label
+      .small= friendly_date notice.created_at
   %td.icon.small{style: avatar_style(notice, 'small')}
-    %div{style: "max-height: 80px; overflow-y: auto;"}
+    %div
       =h embold_links notice.display_title
       %br
       - if notice.display_body_as_quote?
@@ -16,6 +15,6 @@
   %td.nowrap.align_right.reflow
     = spinner(notice, align: :middle)
     - url = self.send(notice.noticable_path, notice.noticable)
-    = link_to notice.button_text, url, class: 'btn btn-mini', onclick: show_spinner(notice)
-    = link_to(:dismiss.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-mini'})
+    = link_to notice.button_text, url, class: 'btn btn-sm btn-default'
+    = link_to(:dismiss.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-sm btn-default'})
 

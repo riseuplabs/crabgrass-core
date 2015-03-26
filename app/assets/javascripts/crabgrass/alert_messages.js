@@ -32,8 +32,8 @@ function hideAlertMessage(target, fade_seconds) {
   target = $(target);
   if (!target)
     return;
-  if (!target.hasClassName('message'))
-    target = target.up('.message');
+  if (!target.hasClassName('alert'))
+    target = target.up('.alert');
   if (fade_seconds) {
     Element.fade.delay(fade_seconds, target);
   } else {

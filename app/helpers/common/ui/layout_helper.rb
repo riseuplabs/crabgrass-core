@@ -131,12 +131,12 @@ module Common::Ui::LayoutHelper
   def center_span_class(column_type)
     side_column_count = current_theme["local_#{column_type}_width"]
     center_column_count = current_theme.grid_column_count - side_column_count
-    "span#{center_column_count}"
+    "col-xs-#{center_column_count}"
   end
 
   def side_span_class(column_type)
     column_count = current_theme["local_#{column_type}_width"]
-    "span#{column_count}"
+    "col-xs-#{column_count}"
   end
 
   ##

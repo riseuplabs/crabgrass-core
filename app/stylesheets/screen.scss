@@ -5,12 +5,11 @@
 // it is likely to break something.
 //
 
-@import "lib/mixins";
+@import "mixins";
 @import "bootstrap/mixins";
-@import "reset";
 @import "colors";
 @import "bootstrap";
-@import "lib/column-span";
+@import "bootstrap_overrides";
 @import "layout";
 @import "ui";
 @import "pages";

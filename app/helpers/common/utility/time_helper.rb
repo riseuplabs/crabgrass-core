@@ -28,7 +28,7 @@ module Common::Utility::TimeHelper
 
   def friendly_date(time)
     return '' if time.nil?
-    content_tag(:label, short_date(time, true), class: :date, title: l(time))
+    content_tag(:span, short_date(time, true), class: :date, title: l(time))
   end
 
   def friendly_time(time, format = :long)

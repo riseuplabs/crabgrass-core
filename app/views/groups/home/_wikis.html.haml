@@ -2,8 +2,11 @@
   showTabByHash();
 
 - active_tab = local_assigns['profile']
-- active_tab ||= 'private' if may_edit_group? && @private_wiki.try.body.present?
-- active_tab ||= 'public'
+- if active_tab.nil?
+  - if !@group.public? || (may_edit_group? && @private_wiki.try.body.present?)
+    - active_tab = 'private'
+  - else
+    - active_tab = 'public'
 - edit_mode = local_assigns['edit_mode'] && may_edit_group?
 - wiki_tab = edit_mode ? 'edit' : 'show'
 
@@ -26,8 +29,12 @@
             - b.label :private_wiki.t
             - b.show_tab 'private_panel'
             - b.selected active_tab == 'private'
-      - else
-        %h2= :private_wiki.t
+      - elsif @private_wiki.try.body.present?
+        = formy(:toggle_bugs) do |f|
+          - f.bug do |b|
+            - b.label :private_wiki.t
+            - b.show_tab 'private_panel'
+            - b.selected true
 
   -#
   -# PUBLIC WIKI
@@ -37,7 +44,7 @@
     #public_panel.tab_content{'data-wiki' => @public_wiki.try(:id), style: ("display: none" if active_tab == 'private')}
       - if @public_wiki
         - if edit_mode
-          = formy(:tabs) do |f|
+          = formy(:tabs, class: 'space') do |f|
             = wiki_tabs(f, @public_wiki, show_print: false, active: wiki_tab)
         = render file: "wikis/wikis/#{wiki_tab}", locals: {wiki: @public_wiki, mode: local_assigns[:mode]}
       - elsif may_edit_group?
@@ -50,7 +57,7 @@
     #private_panel.tab_content{'data-wiki' => @private_wiki.try(:id), style: ("display: none" if active_tab == 'public')}
       - if @private_wiki
         - if edit_mode
-          = formy(:tabs) do |f|
+          = formy(:tabs, class: 'space') do |f|
             = wiki_tabs(f, @private_wiki, show_print: false, active: wiki_tab)
         = render file: "wikis/wikis/#{wiki_tab}", locals: {wiki: @private_wiki, mode: local_assigns[:mode]}
       - else

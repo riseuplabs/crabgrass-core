@@ -2,7 +2,7 @@
   form.row do |r|
     r.label :tags.t
     r.label_for 'page_tag_list'
-    r.input text_field('page', 'tag_list')
+    r.input text_field('page', 'tag_list', class: 'form-control')
     r.info [help(:tags), :separate_tags.t].join(' ')
   end
 %>

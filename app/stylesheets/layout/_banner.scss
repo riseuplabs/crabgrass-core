@@ -1,0 +1,91 @@
+//
+// BANNER
+//
+
+#context_banner {
+  background: $banner_default_background;
+}
+
+//
+// BANNER BORDER
+//
+
+#context_banner {
+  border-bottom: $banner_border;
+  //@if $ui_border_radius {
+  //  @include border-radius($ui_border_radius);
+  //}
+  //&.dark_border {
+  //  border: $banner_border_dark;
+  //  a.avatar {
+  //    outline: $banner_border_dark;
+  //  }
+  //  //
+  //  // this way of setting border on tabs is hackish and may
+  //  // need to change if the implementation of cutout_menu() changes
+  //  //
+  //  ul#banner_nav_ul li.tab a.tab.active {
+  //    border: $banner_border_dark;
+  //    border-bottom: 0;
+  //  }
+  //}
+}
+
+//
+// BANNER CONTENT
+//
+
+#banner_content {
+  @if $banner_css { @include banner_css; }
+  padding: $banner_padding;
+  overflow: auto; // to catch floated a.avatar
+
+  background-size: cover;
+
+  //@if $ui_border_radius {
+  //  @include border-radius($ui_border_radius);
+  //}
+
+  a.avatar {
+    margin-right: $banner_padding;
+    border: $banner_avatar_border;
+    outline: $banner_border;
+    display: block;
+    float: left;
+  }
+
+  .title {
+    color: $banner_default_foreground;
+    font-size: $banner_font_size;
+    line-height: 1.8;
+  }
+
+  a.title {
+    @include cg-hover-link;
+  }
+}
+
+//
+// cutout menus
+//
+
+#banner_nav {
+  float: left;
+}
+
+#context_banner {
+  @include cutout_menu(
+    $ul_id: 'banner_nav_ul',
+    $tab_margin: 0px,
+    $active_color: $banner_nav_active_color,
+    $active_background: $banner_nav_active_background,
+    $active_border: $banner_border,
+    $inactive_color: $banner_nav_color,
+    $inactive_background: $banner_nav_background);
+
+  a.tab.active {
+    color: inherit;
+    // override any text shadow that might be applied because of the banner background:
+    text-shadow: inherit !important;
+  }
+}

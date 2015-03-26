@@ -12,33 +12,16 @@
 }
 
 
-
-
-
-
-
-//
-// i am not sure about this selector. 
-// currently, it is used for the entity list on the group home.
-// it is temporary.
-// todo: harmonize with pages/sidebar.scss 
-//
-
-/*
-.entity_list {
-  ul.entities {
-    border-bottom: 1px solid #ccc;
-    li {
-      border-top: 1px solid #ccc;
-      padding: 3px 0;
-    }
+ul.entities {
+  @extend .list-unstyled;
+  li {
+    padding: 3px 0;
   }
 }
-*/
 
 //
 // A vertical 1-column list of entities displayed against the
-// theme's background. 
+// theme's background.
 //
 
 /*

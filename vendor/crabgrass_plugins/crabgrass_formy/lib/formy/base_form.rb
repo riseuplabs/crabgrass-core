@@ -21,30 +21,13 @@ module Formy
     def open(css_class=nil)
       super()
       if css_class
-        puts '<fieldset class="%s">' % css_class
+        puts_push '<fieldset class="%s">' % css_class
       else
-        puts '<fieldset>'
+        puts_push '<fieldset>'
       end
     end
 
     def close
-      @elements.each {|e| raw_puts e}
-      if @buttons
-        puts_push '<div class="form-actions">'
-        #if @control_group
-        #  puts_push '<div class="control-group">'
-        #  puts_push '<div class="controls">'
-        #end
-        @buttons.each do |button|
-          puts button
-        end
-        #if @control_group
-        #  puts_pop '</div>'
-        #  puts_pop '</div>'
-        #end
-        puts_pop '</div>'
-      end
-      puts "</fieldset>"
       super
     end
 

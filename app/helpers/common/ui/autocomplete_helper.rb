@@ -64,12 +64,14 @@ module Common::Ui::AutocompleteHelper
   def autocomplete_entity_field_tag(field_id, options={})
     # setup options
     options[:view] ||= 'all'
+    options[:class] = 'form-control'
     if options[:placeholder].is_a? Symbol
       key = "autocomplete.placeholder.#{options[:placeholder]}"
       options[:placeholder] = I18n.t(key, cascade: true)
     end
-    # set to false to disable.
-    options[:onkeypress] = eat_enter if options[:onkeypress].nil?
+    if options[:onkeypress].nil? && options[:onkeydown].nil? && options[:autoSubmit].nil?
+      options[:onkeypress] = eat_enter
+    end
     js_options = options.extract!(:url, :view, :group, :onselect, :container, :autoSubmit)
     # create input and script tag
     value = options.delete(:value)
