@@ -7,7 +7,6 @@ class MessageTest < JavascriptIntegrationTest
     msg = "Here is my Message"
     login users(:blue)
     click_on 'Messages'
-    click_on 'Send Message'
     fill_in 'Recipient', with: 'red'
     fill_in 'Message', with: msg
     click_on 'Send'

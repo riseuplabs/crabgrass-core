@@ -9,7 +9,7 @@ class TopNavigationTest < IntegrationTest
       'Create Page' => 'Create a new page',
       'Dashboard' => 'Recent Pages',
       'Pages' => 'Active Filters',
-      'Messages' => 'Send Message',
+      'Messages' => 'Recipient',
       'Settings' => 'Account Settings'
     }
     entries.each do |k, v|
