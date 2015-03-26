@@ -11,7 +11,7 @@ var FilterPath = {
 
   //
   // returns a string snippet suitable for adding to a url.
-  // for example: 
+  // for example:
   //   remote_function(:url => me_pages_path, :with => 'FilterPath.encode()')
   //
   encode: function() {
@@ -47,13 +47,13 @@ var FilterPath = {
   //
   // returns true if we need to send a request to the server
   // to update the search based on the window.location.hash.
-  // we only do this if the window.location.hash was changed by 
+  // we only do this if the window.location.hash was changed by
   // means other than FilterPath
   //
   shouldUpdateServer: function() {
-    if (window.console) { //Only log to console if there is a window.console to log to
-      console.log('shouldUpdateServer ' + (Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash));
-    }
+    //if (window.console) { //Only log to console if there is a window.console to log to
+    //  console.log('shouldUpdateServer ' + (Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash));
+    //}
     return(Ajax.activeRequestCount == 0 && this.location_hash != window.location.hash);
   }
 }

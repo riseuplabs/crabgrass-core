@@ -64,7 +64,7 @@ module Common::Utility::ContextHelper
             nav_shade = 'rgba(255,255,255,0.3)'
           end
           "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
-          "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 0 0 2px}\n"+
+          "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 1px 1px 1px}\n"+
           "ul#banner_nav_ul li.tab a.tab {color: #{fg}; background-color: #{nav_shade}}"
         else
           "#banner_content {background-image: url(#{url})}"
@@ -122,7 +122,6 @@ module Common::Utility::ContextHelper
     gamma = 2.2
     red, green, blue = rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0
     luminance = (0.2126*(red**gamma)) + (0.7152*(green**gamma)) + (0.0722*(blue**gamma))
-    p ['luminance', luminance]
     if luminance >= 0.5
       '#000'
     else
