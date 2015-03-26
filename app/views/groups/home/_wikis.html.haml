@@ -2,8 +2,11 @@
   showTabByHash();
 
 - active_tab = local_assigns['profile']
-- active_tab ||= 'private' if may_edit_group? && @private_wiki.try.body.present?
-- active_tab ||= 'public'
+- if active_tab.nil?
+  - if !@group.public? || (may_edit_group? && @private_wiki.try.body.present?)
+    - active_tab = 'private'
+  - else
+    - active_tab = 'public'
 - edit_mode = local_assigns['edit_mode'] && may_edit_group?
 - wiki_tab = edit_mode ? 'edit' : 'show'
 
@@ -26,8 +29,12 @@
             - b.label :private_wiki.t
             - b.show_tab 'private_panel'
             - b.selected active_tab == 'private'
-      - else
-        %h2= :private_wiki.t
+      - elsif @private_wiki.try.body.present?
+        = formy(:toggle_bugs) do |f|
+          - f.bug do |b|
+            - b.label :private_wiki.t
+            - b.show_tab 'private_panel'
+            - b.selected true
 
   -#
   -# PUBLIC WIKI
