@@ -30,20 +30,3 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
     @include cg-hover-link;
   }
 }
-
-// bootstrap users <small> for this:
-// h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
-//   .more {
-//     padding-left: 1em;
-//     font-size: 0.8em; // $grid_font_size;
-//   }
-//}
-
-// h2.dim, h3.dim, h4.dim {
-//   color: $color_dim;
-// }
-
-// h1, .h1 {font-size: $font_heading_h1_size;}
-// h2, .h2 {font-size: $font_heading_h2_size;}
-// h3, .h3 {font-size: $font_heading_h3_size;}
-// h4, .h4 {font-size: $font_heading_h4_size;}

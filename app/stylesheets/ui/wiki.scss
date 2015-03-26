@@ -6,7 +6,6 @@ article {
 
     overflow: auto;
 
-
     //
     // CODE BLOCKS
     //
@@ -127,25 +126,6 @@ article {
       }
     }
 
-
-    //  .wiki_section {
-      //    position: relative;
-      //    .editsection {
-        //      position: absolute;
-        //      right: 0;
-        //      top: 0;
-        //      //line-height= !body_text_line_height {}
-        //      text: {
-          //        transform: none;
-        //        decoration: none; };
-        //      font: {
-          //        //size= !body_text_font_size {}
-          //        variant: normal;
-          //        weight: normal;
-          //        style: normal;
-        //      };
-      //    }
-    //  }
   }
 
   .post {
@@ -180,39 +160,11 @@ article {
   // WIKI EDITING
   //
 
-  //div.formatting_reference {
-    //  margin-top: 0.5em;
-  //  float: right; }
-
-  //div.wiki_buttons {
-    //  margin-top: 0.5em;
-    //  input {
-      //    font-size: 1.25em;
-      //    padding: 0.1em 0.5em;
-  //    margin-right: 0.5em; } }
-
   a.edit {
     font-size: $font_default_size;
     font-weight: normal;
     float: right;
-    //  display: inline;
-    //  margin-left: 6px;
-    //  opacity: 0;
-    //  //position: absolute
-    //  // a hack to make .small_icon_button work as inline
-    //  background-repeat: no-repeat;
-    //  background-position: 0 70%;
-    //  padding-left: 16px;
-    //  // end hack
   }
-
-  //a.edit:hover {
-  //  opacity: 1 !important; }
-  //
-  //h1:hover a.edit,
-  //h2:hover a.edit,
-  //h3:hover a.edit {
-  //  opacity: 0.6; }
 
   //
   // WYSIWYG EDITOR
@@ -248,40 +200,6 @@ article {
 
   .statusBarWidgetContainer {
   display: none; }
-
-  //.html_editor_instance
-  //  padding: 4px
-  //  border-top: 1px solid #ddd
-  //  outline: 0
-  //  min-height: 10em
-  //  max-height: 30em
-  //  overflow-y: auto
-  //  cursor: text
-  //  &:focus
-  //    background-color: #ffe
-
-  //.html_editor_panel
-  //  border-bottom: 1px solid #666
-  //  border-top: 1px solid white
-
-  //.nicEdit-panelContain
-  //  border: 0 !important
-
-  //.nicEdit-selectContain
-  //  width: 120px !important
-
-  //.nicEdit-selectTxt
-  //  width: 90px !important
-
-  //.nicEdit-pane
-  //  h1
-  //    font-size: 1.55em
-  //  h2
-  //    font-size: 1.1em
-  //  h3
-  //    font-size: 1em
-  //  h4
-  //    font-size: 0.8em
 
   //
   // table of contents

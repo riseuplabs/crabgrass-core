@@ -30,16 +30,6 @@
   max-width: 100%;
 }
 
-//  :background-color #EFEFEF
-// :color #000
-// .buttons
-//   text-align: right
-//   margin-top: 1em
-//   input
-//     margin-left: 1em
-// blockquote
-//   margin: 0
-
 #MB_window[id] {
   position: fixed !important; }
 
@@ -47,9 +37,6 @@
   position: relative;
   background-color: $modalbox_background_color;
 }
-
-// this is disable for crabgrass.
-//  :height 100%
 
 #MB_header {
   margin: 0;
@@ -67,7 +54,6 @@
 
 #MB_caption {
   font: bold 85% "Lucida Grande", Arial, sans-serif;
-  // text-shadow: white 0 1px 0;
   text-align: left;
   font-size: 20px;
   color: white;
@@ -128,9 +114,6 @@
     background: #ebeae6;
     border-top: 1px solid white;
     text-align: right;
-    //input {
-    //  margin-left: 0.5em;
-    //}
   }
   .simple_form {
     max-width: inherit;

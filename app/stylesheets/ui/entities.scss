@@ -18,36 +18,3 @@ ul.entities {
     padding: 3px 0;
   }
 }
-
-//
-// A vertical 1-column list of entities displayed against the
-// theme's background.
-//
-
-/*
-.on_background {
-  ul.entities {
-    li:first-child {
-      border-top: 0;
-    }
-    li {
-      padding: 6px;
-      //border-top: 1px dotted darken($background_color, 5%);
-      border-top: 1px solid $background_color;
-      //border-top: 2px solid white;
-      background-color: lighten($background_color, 7%);
-      span {
-        background-position: 100% 0;
-        background-repeat: no-repeat;
-        padding-right: 20px;
-        margin-right: -20px;
-      }
-    }
-  }
-}
-*/
-
-//
-// options for styling entities
-//
-

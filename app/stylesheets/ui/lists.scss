@@ -124,10 +124,4 @@ ul.shaded {
   & > li:last-child {
     @if $ui_border_radius { @extend .round-bottom }
   }
-  //& > li:hover .hover-btn-primary {
-  //  @extend .btn-primary
-  //}
-  //& > li:hover .hover-btn-inverse {
-  //  @extend .btn-inverse
-  //}
 }

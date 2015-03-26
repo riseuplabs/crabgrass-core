@@ -82,14 +82,6 @@ textarea {
   input[type=submit], input[type=button] {
     margin-left: 10px;
   }
-  // // button_to makes its own form+div, but we want it to dispaly inline
-  // // despite this.
-  // form.button-to {
-  //   display: inline;
-  //   div {
-  //     display: inline;
-  //   }
-  // }
 }
 
 //
@@ -131,23 +123,6 @@ textarea {
 //
 // RADIO BUTTONS AND CHECK BOXES
 //
-
-// // make checkboxes have a hanging indent look, like bullets.
-// label.checkbox, label.radio {
-//   display: block;
-//   margin-left: 1.7em;
-// }
-// input.checkbox, input.radio {
-//   // position: relative;
-//   // top: 2px
-//   margin-left: -1.6em;
-// }
-
-// // in webkit and gecko, checkboxes and radio buttons seem to look better this way
-// input[type=radio], input[type=checkbox] {
-//   vertical-align: top;
-//   float: left;
-// }
 
 div.image_preview {
   height: 202px;
