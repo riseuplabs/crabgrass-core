@@ -25,6 +25,23 @@
 //  }
 //}
 
+$title_box_padding: $ui_padding;
+
+#title_box.page {
+  margin-bottom: $title_box_padding;
+  background-color: $color_light;
+  border: 1px solid $nav-tabs-border-color;
+  #title {
+    padding: $title_box_padding;
+  }
+  &.with_tabs {
+    border-bottom: none;
+    .nav-tabs li.first {
+      margin-left: $title_box_padding;
+    }
+  }
+}
+
 #title {
   h1, h2, .h1, .h2 {
     margin-top: 0px;
@@ -35,9 +52,9 @@
   h1 {
     margin-top: 0px;
   }
-  .summary {
-    margin-bottom: 20px;
-  }
+  //.summary {
+  //  margin-bottom: 20px;
+  //}
 }
 
 // #title.page_title {

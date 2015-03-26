@@ -9,7 +9,7 @@
 .login_form
   = form_tag(login_path, id: "entry") do
     - cache current_language do
-      .cookie_warning.alert.alert-error{style: "display: none"}
+      .cookie_warning.alert.alert-danger{style: "display: none"}
         = :cookie_disabled_warning.t
       %div
         %label(for = 'login')= :login_name.t

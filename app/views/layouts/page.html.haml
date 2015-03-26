@@ -15,7 +15,7 @@
 - # #title handles text & padding
 - #
 - content_for(:before_content) do
-  #title_box{class: [(@options.show_tabs ? 'with_tabs' : ''), 'round-top']}
+  #title_box{class: [(@options.show_tabs ? 'with_tabs' : ''), 'round', 'page']}
     = render "common/pages/title"
     - if @options.show_tabs
       = render partial: "#{@page.controller}/tabs"
