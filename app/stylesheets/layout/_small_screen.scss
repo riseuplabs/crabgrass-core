@@ -1,0 +1,43 @@
+//
+// if height OR width is small
+//
+
+$banner_padding_small: 10px;
+$avatar_size: $icon_large;
+$avatar_parent_size: $icon_medium;
+$avatar_child_size: $icon_medium - 8px;
+$banner_shrink: 1.5;
+
+@media (max-width: 600px), (max-height: 600px) {
+
+  #banner_content {
+    padding: $banner_padding_small;
+    a.avatar {
+      margin-right: $banner_padding_small;
+      background-size: 100%;
+
+      height: $avatar_size/$banner_shrink !important;
+      width: $avatar_size/$banner_shrink !important;
+      &.child {
+        height: $avatar_child_size/$banner_shrink !important;
+        width: $avatar_child_size/$banner_shrink !important;
+      }
+      &.parent {
+        height: $avatar_parent_size/$banner_shrink !important;
+        width: $avatar_parent_size/$banner_shrink !important;
+      }
+      &.offset {
+        margin-left: 16px !important;
+        margin-top: 16px !important;
+      }
+    }
+    .title {
+      font-size: $banner_font_size/$banner_shrink;
+    }
+    #banner_nav_ul {
+      font-size: 10px;
+    }
+  }
+
+}
+

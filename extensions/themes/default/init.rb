@@ -150,8 +150,8 @@ define_theme {
         background var(:background_color)
       }
     }
-    css false
-    shadow false
+    # slight inset shadow on the top only
+    css "box-shadow: inset 0 6px 6px -5px rgba(0,0,0,0.5);"
   }
 
   local {

@@ -4,9 +4,6 @@
 
 #context_banner {
   background: $banner_default_background;
-
-  //@if $banner_css { @include banner_css; }
-  //@if $banner_shadow { @include banner_shadow; }
 }
 
 //
@@ -39,6 +36,7 @@
 //
 
 #banner_content {
+  @if $banner_css { @include banner_css; }
   padding: $banner_padding;
   overflow: auto; // to catch floated a.avatar
 
@@ -91,41 +89,3 @@
     text-shadow: inherit !important;
   }
 }
-
-//
-// small screen
-//
-
-//@media only screen and (max-width: 590px), only screen and (max-height: 400px) {
-  //
-  // i dont know what to do about the context banner tabs, they dont work
-  // look very nice on small screen. this is a hacky attempt to squish them.
-  //
-  //#context_banner {
-    //a.avatar img {
-    //  // it would be better to instead make visible a version with 32px size.
-    //  height: 32px;
-    //  width: 32px;
-    //}
-    //.title {
-    //  font-size: 1.1em;
-    //}
-
-    // the avatar icon is always small
-    //&.large  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
-    //&.medium {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
-    //&.small  {ul#banner_nav_ul li.tab.first {margin-left: $icon_small + $base_margin;}}
-
-    // replace text with icons
-    //ul#banner_nav_ul {
-    //  li.tab a.tab {
-    //    padding: 0px;
-    //    line-height: inherit;
-    //    height: inherit;
-    //    .text { display: none }
-    //    .mobi_icon { display: block; }
-    //  }
-    //}
-  //}
-//}
-
