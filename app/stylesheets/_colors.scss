@@ -1,0 +1,4 @@
+
+.ui_light_fade {
+  @include gradient-vertical(#fff, $ui_fade_color);
+}
