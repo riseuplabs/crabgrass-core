@@ -80,6 +80,7 @@ define_theme {
     border_radius '4px'
     border_color var(:color_grey)
     fade_color var(:color_lighter)
+    padding '15px'
   }
 
   masthead {
@@ -193,7 +194,7 @@ define_theme {
     border "1px solid #ddd"
     odd_background var(:color_lighter)
     even_background var(:local_content_background)
-    padding "15px"
+    padding var(:ui_padding)
   }
 
   footer {

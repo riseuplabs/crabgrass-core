@@ -123,7 +123,8 @@ textarea {
   overflow: auto; // self clear
   input[type=submit], input[type=button], img {
     float: right;
-    margin-left: 1em;
+    margin-left: 10px;
+    margin-right: 0px;
   }
 }
 

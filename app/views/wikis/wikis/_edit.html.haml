@@ -17,7 +17,7 @@
   = f.hidden_field :version
   = hidden_field_tag :section, section if section && section != :document
   - if @error_message
-    .alert.alert-error= @error_message.to_s
+    .alert.alert-danger= @error_message.to_s
   = text_area_tag('wiki[body]', h(body), {rows: wiki_textarea_rows(body), class: 'form-control', id: dom_id(wiki, 'textarea'), tabindex: 1})
   .buttons-right.p
     -# NOTE: there is an event listener on input.wiki_button

@@ -1,11 +1,11 @@
 
 %tr{id: dom_id(notice)}
   %td.nowrap
-    .big_screen
+    .hidden-xs
       %span.label.label-primary= notice.display_label
       .small= friendly_date notice.created_at
   %td.icon.small{style: avatar_style(notice, 'small')}
-    %div{style: "max-height: 80px; overflow-y: auto;"}
+    %div
       =h embold_links notice.display_title
       %br
       - if notice.display_body_as_quote?

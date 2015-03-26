@@ -25,4 +25,10 @@
   .round {
     border-radius: $ui_border_radius;
   }
+  table.round {
+    border-collapse: separate;
+    // collapse is not compatible with border radius.
+    // if you really want collapse, this is how to do it:
+    // http://stackoverflow.com/questions/628301/css3s-border-radius-property-and-border-collapsecollapse-dont-mix-how-can-i
+  }
 }
