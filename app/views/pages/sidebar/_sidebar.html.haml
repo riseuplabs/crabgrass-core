@@ -8,16 +8,21 @@
         =# history_line
     - else
       %ul.side_list
-        = public_line
-        = watch_line
-        = star_line
-        = share_line
-        = notify_line
-        = delete_line
-        =# move_line
-        = details_line
-        =# history_line
-        =# view_line
+        - if (lines = [watch_line, star_line].compact).any?
+          - prior = true
+          - lines.each do |line|
+            = line
+        - if (lines = [public_line, share_line, notify_line].compact).any?
+          - if prior
+            %hr
+          - prior = true
+          - lines.each do |line|
+            = line
+        - if (lines = [delete_line, details_line].compact).any?
+          - if prior
+            %hr
+          - lines.each do |line|
+            = line
     =# call_hook :page_sidebar_actions
 
   -#
