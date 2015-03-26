@@ -1,0 +1,37 @@
+//
+// loaded before any bootstrap is loaded
+//
+
+// bootstrap var ------> crabgrass theme var
+//$font-size-base:        $font_default_size;
+//$font-family-base:      $font_default_family;
+//$line-height-base:      $font_default_line_height;
+//$text-color:            $font_default_color;
+//$link-color:
+
+//$heading-font-family:    $font_heading_family;
+//$headings-font-weight:   $font_heading_weight;
+//$headings-color:         $font_heading_color;
+
+//$grid-columns:           $grid_column_count;
+//$grid-gutter-width:      $grid_column_gutter;
+
+//// no longer supported
+////$grid-ColumnWidth:       $grid_column_width;
+////$gridColumnWidth1200:   $grid_column_width;
+////$gridGutterWidth1200:   $grid_column_gutter;
+////$gridColumnWidth768:    $grid_column_width;
+////$gridGutterWidth768:    $grid_column_gutter;
+
+// Container sizes
+//$container-tablet:             (720px + $grid-gutter-width) !default;
+//$container-sm:                 $container-tablet !default;
+//$container-desktop:            (940px + $grid-gutter-width) !default;
+//$container-md:                 $container-desktop !default;
+//$container-large-desktop:      (1140px + $grid-gutter-width) !default;
+//$container-lg:                 $container-large-desktop !default;
+
+$navbar-height: 40px;
+
+// when the nav bar starts to wrap. default is 768px
+$grid-float-breakpoint: 300px;

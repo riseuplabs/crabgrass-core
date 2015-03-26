@@ -1,43 +1,55 @@
-//
-// SET VARIABLES
-//
+@import "bootstrap_customization/before";
 
-// bootstrap var ------> crabgrass theme var
-//$font-size-base:        $font_default_size;
-//$font-family-base:      $font_default_family;
-//$line-height-base:      $font_default_line_height;
-//$text-color:            $font_default_color;
-//$link-color:
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap_customization/during";
+@import "bootstrap/mixins";
 
-//$heading-font-family:    $font_heading_family;
-//$headings-font-weight:   $font_heading_weight;
-//$headings-color:         $font_heading_color;
+// Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+//@import "bootstrap/glyphicons";
 
-//$grid-columns:           $grid_column_count;
-//$grid-gutter-width:      $grid_column_gutter;
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
 
-//// no longer supported
-////$grid-ColumnWidth:       $grid_column_width;
-////$gridColumnWidth1200:   $grid_column_width;
-////$gridGutterWidth1200:   $grid_column_gutter;
-////$gridColumnWidth768:    $grid_column_width;
-////$gridGutterWidth768:    $grid_column_gutter;
+// Components
+//@import "bootstrap/component-animations";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+//@import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+//@import "bootstrap/jumbotron";
+//@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+//@import "bootstrap/progress-bars";
+//@import "bootstrap/media";
+@import "bootstrap/list-group";
+//@import "bootstrap/panels";
+//@import "bootstrap/responsive-embed";
+//@import "bootstrap/wells";
+//@import "bootstrap/close";
 
-// Container sizes
-//$container-tablet:             (720px + $grid-gutter-width) !default;
-//$container-sm:                 $container-tablet !default;
-//$container-desktop:            (940px + $grid-gutter-width) !default;
-//$container-md:                 $container-desktop !default;
-//$container-large-desktop:      (1140px + $grid-gutter-width) !default;
-//$container-lg:                 $container-large-desktop !default;
+// Components w/ JavaScript
+//@import "bootstrap/modals";
+//@import "bootstrap/tooltip";
+//@import "bootstrap/popovers";
+//@import "bootstrap/carousel";
 
-$navbar-height: 40px;
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
 
-// when the nav bar starts to wrap. default is 768px
-$grid-float-breakpoint: 300px;
-
-//
-// IMPORT BOOTSTRAP
-//
-
-@import "bootstrap-3.3.3"
+@import "bootstrap_customize/after";

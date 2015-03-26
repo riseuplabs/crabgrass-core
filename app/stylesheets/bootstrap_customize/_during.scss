@@ -1,0 +1,8 @@
+//
+// loaded after bootstrap variables, but before anything else.
+//
+
+$alert-success-bg:  rgba($state-success-bg, 0.9);
+$alert-info-bg:     rgba($state-info-bg, 0.9);
+$alert-warning-bg:  rgba($state-warning-bg, 0.9);
+$alert-danger-bg:   rgba($state-danger-bg, 0.9);

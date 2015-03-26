@@ -5,15 +5,10 @@
 // it is likely to break something.
 //
 
-@import "mixins";
-@import "bootstrap/mixins";
-@import "colors";
 @import "bootstrap";
-@import "bootstrap_overrides";
+@import "mixins";
 @import "layout";
 @import "ui";
 @import "pages";
 @import "page_types";
-
-// these overrides should go last:
-@import "layout/small_screen";
+@import "small_screen"; // should go last
