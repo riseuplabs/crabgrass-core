@@ -50,14 +50,6 @@ module Common::Ui::LayoutHelper
     lines << optional_stylesheets.collect do |sheet|
        stylesheet_link_tag( current_theme.stylesheet_url(sheet) )
     end
-    lines << '<!--[if IE 6]>'
-      lines << stylesheet_link_tag('ie6')
-      lines << stylesheet_link_tag('icon_gif')
-    lines << '<![endif]-->'
-    lines << '<!--[if IE 7]>'
-      lines << stylesheet_link_tag('ie7')
-      lines << stylesheet_link_tag('icon_gif')
-    lines << '<![endif]-->'
     # we currently do not ship the right to left css
     # if language_direction == "rtl"
     #   lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
@@ -103,11 +95,6 @@ module Common::Ui::LayoutHelper
     #lines << localize_modalbox_strings
       lines << content_for(:script) if content_for?(:script)
     lines << '</script>'
-
-    # make all IEs behave like IE 9
-    lines << '<!--[if lt IE 9]>'
-      lines << javascript_include_tag(SPROCKETS_PREFIX + 'ie')
-    lines << '<![endif]-->'
 
     # run firebug lite in dev mode for ie
     if Rails.env == 'development'
