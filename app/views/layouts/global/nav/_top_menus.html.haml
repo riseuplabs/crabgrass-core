@@ -13,12 +13,11 @@
     %a.navbar-brand(href="/")
     -# %img{:src => current_theme.url('logo.png')}
   %ul.nav.navbar-nav
-    - cache [current_theme, current_language, current_user, active_top_nav.try.name] do
-      - @navigation[:global].each do |tab|
-        - if tab.visible
-          %li{class: "#{:active if tab.active} top-menu", id: "menu_#{tab.name}"}
-            = link_to(tab.label, tab.url)
-            = theme_render(tab.html)
+    - @navigation[:global].each do |tab|
+      - if tab.visible
+        %li{class: "#{:active if tab.active} top-menu", id: "menu_#{tab.name}"}
+          = link_to(tab.label, tab.url)
+          = theme_render(tab.html)
   %ul.nav.navbar-nav.navbar-right
     - if logged_in?
       %li.tab.account.last
