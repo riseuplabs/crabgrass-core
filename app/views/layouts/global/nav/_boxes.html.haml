@@ -7,6 +7,5 @@
   %ul.dropdown-menu(style="display:none")
     %li
       = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
-    - cache [current_user.version_cache_key, entities.first.class] do
-      - for entity in entities
-        %li= link_to_entity(entity, avatar: 'tiny')
+    - for entity in entities
+      %li= link_to_entity(entity, avatar: 'tiny')
