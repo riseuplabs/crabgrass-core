@@ -19,6 +19,7 @@ class Groups::HomeController < Groups::BaseController
   def show
     @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',
       options_for_group(@group), pagination_params
+    track
   end
 
   protected
