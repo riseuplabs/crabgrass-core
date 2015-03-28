@@ -143,7 +143,7 @@ class AccountsController < ApplicationController
       Mailer.reset_password(@user, mailer_options).deliver
       @token.destroy
       success :password_reset.t, :password_reset_ok_text.t, :nofade
-      redirect_to login_path
+      redirect_to root_path
     else
       error @user
       render_alert
