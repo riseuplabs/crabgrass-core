@@ -37,7 +37,7 @@ module ContentAssertions
 
   def assert_success(message)
     message ||= "Changes saved"
-    within "#alert_messages .ok_16" do
+    within "#alert_messages .alert-success" do
       assert_content message
     end
   end
@@ -49,7 +49,7 @@ module ContentAssertions
   end
 
   def assert_page_tab(active)
-    within "#page_tabs li.tab.active" do
+    within "#title_box .nav-tabs li.active" do
       assert_content active
     end
   end
