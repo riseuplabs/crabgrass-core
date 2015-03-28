@@ -208,7 +208,7 @@ class MembershipTest < ActiveSupport::TestCase
 
   protected
     def create_user(options = {})
-      user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
+      user = FactoryGirl.build :user, options
       user.profiles.build first_name: "Test", last_name: "Test", friend: true
       user.save!
       user

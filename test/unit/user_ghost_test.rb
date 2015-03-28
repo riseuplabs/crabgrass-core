@@ -7,7 +7,8 @@ class UserGhostTest < ActiveSupport::TestCase
   # Ghosts do not require a login or a password
   #
   def test_valid_without_attributes
-    assert UserGhost.new.valid?
+    ghost = UserGhost.new
+    assert ghost.valid?, ghost.errors.full_messages.join(', ')
   end
 
   def test_retire_user

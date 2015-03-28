@@ -32,7 +32,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   def test_should_require_password_confirmation_on_signup
     assert_no_difference 'User.count' do
-      post_signup_form(user: {password_confirmation: nil})
+      post_signup_form(user: {password_confirmation: ''})
       assert assigns(:user).errors[:password_confirmation]
       assert_response :success
     end
@@ -94,11 +94,11 @@ class AccountsControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_difference 'Token.count', -1 do
-      post :reset_password, token: token.value, new_password: "abcde", password_confirmation: "abcde"
+      post :reset_password, token: token.value, new_password: "abcdefgh", password_confirmation: "abcdefgh"
       assert_response :redirect # test for success message
 
     end
-    assert_equal users(:quentin), User.authenticate('quentin', 'abcde')
+    assert_equal users(:quentin), User.authenticate('quentin', 'abcdefgh')
 
   end
 
@@ -132,12 +132,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   def post_signup_form(options = {})
     post(:create, {
-      user: {
-         login: 'quire',
-         email: 'quire@lvh.me',
-         password: 'quire',
-         password_confirmation: 'quire'
-      }.merge(options.delete(:user) || {}),
+      user: FactoryGirl.attributes_for(:user, options.delete(:user)),
       usage_agreement_accepted: "1"
     }.merge(options))
   end

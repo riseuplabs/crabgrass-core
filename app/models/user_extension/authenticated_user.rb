@@ -38,15 +38,20 @@ module AuthenticatedUser
       # the current site (set tmp on a per-request basis)
       attr_accessor :current_site
 
-      validates_presence_of     :login,                  unless: :ghost?
-      validates_presence_of     :password,                   if: :password_required?
-      validates_presence_of     :password_confirmation,      if: :password_required?
-      validates_confirmation_of :password,                   if: :password_required?
-      validates_format_of       :login, with: /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-      validates_length_of       :login, within: 3..40
-      # uniqueness is validated elsewhere
-      #validates_uniqueness_of   :login, :case_sensitive => false
-      before_save :encrypt_password
+      with_options unless: :ghost? do |alive|
+        alive.validates :login, presence: true,
+          length: { within: 3..40 },
+          format: { with: /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/ }
+
+        alive.validates :password, confirmation: true,
+          length: {within: 8..72, allow_blank: true}
+
+        before_validation :encrypt_password
+        alive.validates :crypted_password, presence: true
+        alive.validates :salt, presence: true
+
+        # uniqueness is validated elsewhere
+      end
     end
   end
 
@@ -116,10 +121,6 @@ module AuthenticatedUser
     return if password.blank?
     self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{login}--") if new_record?
     self.crypted_password = encrypt(password)
-  end
-
-  def password_required?
-    crypted_password.blank? || !password.blank?
   end
 
 end
