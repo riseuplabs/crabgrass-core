@@ -26,10 +26,9 @@ FactoryGirl.define do
 
   factory :user do
     login
-    display_name
     email
-    password "foobar"
-    password_confirmation "foobar"
+    password "foobarbaz"
+    password_confirmation "foobarbaz"
   end
 
   factory :group do

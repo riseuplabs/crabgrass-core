@@ -59,13 +59,15 @@ class UserTest < ActiveSupport::TestCase
   ## ensure that a user and a group cannot have the same handle
   def test_namespace
     assert_no_difference 'User.count' do
-      u = create_user(login: 'groups')
+      u = FactoryGirl.build :user, login: 'groups'
+      assert !u.valid?
       assert u.errors[:login]
     end
 
     g = Group.create name: 'robot-overlord'
     assert_no_difference 'User.count' do
-      u = create_user(login: 'robot-overlord')
+      u = FactoryGirl.build :user, login: 'robot-overlord'
+      assert !u.valid?
       assert u.errors[:login]
     end
   end
@@ -97,7 +99,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_removal_deletes_chat_channels_users
-    user = create_user
+    user = FactoryGirl.create :user
     user_id = user.id
 
     group1 = groups(:true_levellers)
@@ -162,11 +164,5 @@ class UserTest < ActiveSupport::TestCase
   #    user = User.make
   #  end
   #end
-
-  protected
-
-  def create_user(options = {})
-    User.create({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
-  end
 
 end

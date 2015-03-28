@@ -221,7 +221,7 @@ module UserExtension
       else
         ids = []
       end
-      update_attributes version: version+1, tag_id_cache: ids
+      update_attributes version: version.to_i + 1, tag_id_cache: ids
     end
 
     def clear_tag_cache

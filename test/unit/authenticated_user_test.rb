@@ -17,7 +17,7 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
   def test_create_user
     assert_difference 'User.count' do
       user = create_user
-      assert !user.new_record?, "#{user.errors.full_messages.join(', ')}"
+      assert !user.new_record?, user.errors.full_messages.join(', ')
     end
   end
 
@@ -37,7 +37,7 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
 
   def test_require_password_confirmation
     assert_no_difference 'User.count' do
-      u = create_user(password_confirmation: nil)
+      u = create_user(password_confirmation: '')
       assert u.errors[:password_confirmation]
     end
   end
@@ -54,7 +54,7 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
   def test_change_login_without_password_rehash
     user = users(:quentin)
     user.update_attributes(login: 'quentin2')
-    assert user.save
+    assert user.save, user.errors.full_messages.join(', ')
     assert_equal 'quentin2', user.login
     assert_equal users(:quentin), User.authenticate('quentin2', 'quentin')
   end
@@ -77,7 +77,11 @@ class AuthenticatedUserTest < ActiveSupport::TestCase
   end
 
   protected
-    def create_user(options = {})
-      User.create({ login: 'quire', email: 'quire@example.com', password: 'quire', password_confirmation: 'quire' }.merge(options))
+
+  # just like User.create this will return the user even if it's invalid
+  def create_user(attrs = {})
+    FactoryGirl.build(:user, attrs).tap do |u|
+      u.save
     end
+  end
 end
