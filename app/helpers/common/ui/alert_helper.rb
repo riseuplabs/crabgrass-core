@@ -69,7 +69,7 @@ module Common::Ui::AlertHelper
   #
   def update_alert_messages(page)
     if alert_messages?
-      page.call 'showAlertMessage', display_alert_messages
+      page.call 'showAlertMessage', safe_join(alert_message_strings)
     else
       page.call 'showAlertMessage', ''
     end
