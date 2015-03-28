@@ -20,7 +20,6 @@ class ActionView::Base
     # disable buttons on submit by default
     options[:data] ||= {}
     options[:data].reverse_merge! disable_with: value
-    options.update(onclick: "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
     rails_submit_tag(value, options)
   end
 end
