@@ -1,0 +1,52 @@
+//
+// Here are all the various margin variables used in the crabgrass
+// stylesheets. I am torn between using the bootstrap formulas,
+// and allowing direct overrides from the theme.
+//
+// Currently, we just use the constants configured in the theme.
+//
+
+//
+// The margin used under paragraphs.
+//
+// Bootstrap forumula: $line-height-computed / 2;
+//
+// Default value: 10px;
+//
+$p-margin: $margin_p;
+
+//
+// This is the space between ui elements, like buttons and
+// margin around text areas.
+//
+// Bootstrap formula: $grid-gutter-width / 2
+//
+// Default value: 15px;
+//
+$ui-margin: $margin_ui;
+
+//
+// This is the space between major elements, like layout sections.
+// Like grid-gutter-width, but we use a smaller default value.
+//
+// Bootstrap formula: $grid-gutter-width (which is 30px by default)
+//  or maybe $line-height-computed (which is 20px by default)
+//
+// Bootstrap uses $line-height-computed for top margin of headings.
+//
+// default value: 20px;
+//
+$gap-margin: $margin_gap;
+
+//
+// Some other variables which might be useful.
+//
+//$padding-base-vertical:     6px !default;
+//$padding-base-horizontal:   12px !default;
+//$padding-large-vertical:    10px !default;
+//$padding-large-horizontal:  16px !default;
+//$padding-small-vertical:    5px !default;
+//$padding-small-horizontal:  10px !default;
+//$padding-xs-vertical:       1px !default;
+//$padding-xs-horizontal:     5px !default;
+//

@@ -1,5 +1,9 @@
 module Groups::WikisHelper
 
+  def should_render_group_wiki?
+    @private_wiki.try.body.present? || @public_wiki.try.body.present?
+  end
+
   def edit_mode_button(edit_mode)
     spinner('edit_mode') + ' ' +
     link_to(

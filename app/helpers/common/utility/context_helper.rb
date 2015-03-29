@@ -80,8 +80,20 @@ module Common::Utility::ContextHelper
     end
   end
 
+  #
+  # we used to do fancy things to calculate this, but now we just hard code the geometry and
+  # let the css expand or shrink the banner as needed.
+  #
   def banner_geometry
-    @banner_geometry ||= {max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height}
+    {max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height}
+  end
+
+  def banner_width
+    current_theme['banner_width'].to_i
+  end
+
+  def banner_height
+    current_theme['banner_height'].to_i
   end
 
   def banner_picture

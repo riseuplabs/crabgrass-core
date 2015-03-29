@@ -3,7 +3,26 @@
 }
 
 #middle_container {
-  padding-top: $grid_column_gutter;
-  padding-bottom: $grid_column_gutter;
+  padding-top: $gap-margin;
+  padding-bottom: $gap-margin;
 }
 
+// a simple max-width centered blocks.
+// used for things like login, sign up, 404, etc.
+
+.col-xl-center {
+  @extend .center-block;
+  max-width: 45em;
+}
+.col-lg-center {
+  @extend .center-block;
+  max-width: 35em;
+}
+.col-sm-center {
+  @extend .center-block;
+  max-width: 25em;
+}
+.col-xs-center {
+  @extend .center-block;
+  max-width: 15em;
+}

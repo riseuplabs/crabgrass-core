@@ -1,9 +1,5 @@
 - exception ||= nil
-
-- content_for :title do
+.col-lg-center
   .h1= :not_found.tcap
-
-.bq
   - if exception
-    = exception.to_s
-
+    .p= exception.to_s

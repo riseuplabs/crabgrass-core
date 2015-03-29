@@ -3,7 +3,6 @@
   signup_link: Lag ny bruker
   signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
   forgot_password_link: Glemt passordet?
-  signup_info: Velg brukernavn og passord, og klikk på %{sign_up}
   login_failure_reason: Brukernavn eller passord er feil.
   signup_success_message: Takk for registreringen!
   login_name: Brukernavn

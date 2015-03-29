@@ -3,7 +3,6 @@ nl:
   signup_link: Een nieuwe gebruiker / gebruikster opstellen
   signup_email_info: 'Optionaal: Werd gebruikt als jij je wachtwoord vergeet.'
   forgot_password_link: Wachtwoord vergeten?
-  signup_info: Kiez een login-naam en een wachtwoord en klik dan op %{sign_up}
   login_failure_reason: Naam of wachtwoord is niet correct.
   signup_success_message: Dank je wel voor je registratie!
   login_name: Gebruikers naam / Gebruiksters naam

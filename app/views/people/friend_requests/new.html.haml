@@ -6,5 +6,5 @@
   .p= #text_area_tag 'message', '', rows: 4, style: 'width:100%'
   .buttons
     = close_modal_button(:cancel)
-    = submit_tag I18n.t(:send_request_button), name: 'send'
+    = submit_tag I18n.t(:send_request_button), name: 'send', class: 'btn btn-success'
 

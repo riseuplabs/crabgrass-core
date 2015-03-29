@@ -5,7 +5,10 @@
   -# give it an id so we can hide it with javascript
   #inline-page-notice= notice
 %div.wiki
-  - if may_edit_wiki?(wiki)
-    = decorate_wiki_sections(wiki)
-  - else
-    = wiki.body_html
+  -# the indentation for wikis must be preserved exactly, or
+  -# <pre> blocks get indented by haml.
+  = preserve do
+    - if may_edit_wiki?(wiki)
+      = decorate_wiki_sections(wiki)
+    - else
+      = wiki.body_html

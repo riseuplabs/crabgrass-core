@@ -1,15 +1,17 @@
--# 
--# this template is used when you want to show an error message but you don't
+-#
+-# this template is used when you want to show an alert message but you don't
 -# render anything about the page that triggered this error, typically for security reasons.
 -#
 -# this template lists all the alert messages inline, instead of floating.
--#  
+-#
 -# this page is triggered like so:
 -#
--#   error 'oh now, something bad happened'  
+-#   error 'oh now, something bad happened'
 -#   render_error_page
 -#
-
-.inline_message_list
-  = inline_alert_messages
+-# It is not just for errors, can be success alerts too.
+-#
+.col-lg-center.margin-top
+  .inline_message_list
+    = inline_alert_messages
 

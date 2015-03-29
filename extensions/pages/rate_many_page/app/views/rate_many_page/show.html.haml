@@ -1,0 +1,8 @@
+%ul#sort_list.list-unstyled
+  = render @possibles
+
+- if current_user.may? :edit, @page
+  #new_possible
+    = render 'rate_many_possibles/new'
+
+= sortable_element 'sort_list', handle: 'handle', url: sort_rate_many_possibles_url(page_id: @page)

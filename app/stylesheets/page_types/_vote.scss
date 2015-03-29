@@ -1,0 +1,18 @@
+.ranked-vote, .rate-many {
+  .handle {
+    cursor: move;
+  }
+  .radio {
+    margin: 2px 0;
+  }
+  .panel {
+    // give the border some transparency, since the panel
+    // itself will change colors.
+    border-color: rgba(0,0,0,0.2);
+    margin-bottom: $ui-margin;
+    .panel-heading {
+      background-color: rgba(0,0,0,0.1);
+      border-color: rgba(0,0,0,0.1);
+    }
+  }
+}

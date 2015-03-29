@@ -1,11 +1,6 @@
 
 
 .login_form {
-  max-width: 20em;
-  width: 100%;
-  //padding: 10px;
-  //border: 1px solid #ccc;
-  //background: #efefef;
   label {
     font-weight: bold;
     display: block;
@@ -19,12 +14,12 @@
   div.password {
     margin-top: 1em;
   }
-  input[type=text], input[type=password] {
-    width: 100%;
-  }
-  input[type=submit] {
-    padding: 4px 10px;
-  }
+  //input[type=text], input[type=password] {
+  //  width: 100%;
+  //}
+  //input[type=submit] {
+  //  padding: 4px 10px;
+  //}
 }
 
 // center the login form, if displayed in #center

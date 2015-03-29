@@ -3,6 +3,9 @@
 -#
 -# @local_layout must be one of: 'sidebar', 'sidecolumn', 'sidecontent'
 -#
+-# If there is no :left_column or :right_column content, then we fall
+-# back to a single column.
+-#
 -# it produces one of these:
 -#
 -# #local
@@ -39,6 +42,7 @@
       = yield :right_column
 
 - else
+  - center_class = "col-xs-#{current_theme['local_single_width']}"
   #local.full_width{class: classes}
-    #column_center
+    #column_center{class: center_class}
       = render partial: 'layouts/local/content'

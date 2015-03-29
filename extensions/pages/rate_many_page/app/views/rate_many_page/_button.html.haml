@@ -1,8 +1,8 @@
 %tr
   %td
-    %label.not_handle{for: id}
-      = button
-      =t "vote_#{value}".to_sym
+    .radio
+      %label.not_handle{for: id}
+        = button
+        =t "vote_#{value}".to_sym
   %td
-    %span &mdash;
-    = @allvotes[value].try(:to_sentence)
+    = "&nbsp;&mdash;&nbsp;".html_safe + (@allvotes[value].try(:to_sentence)||"")

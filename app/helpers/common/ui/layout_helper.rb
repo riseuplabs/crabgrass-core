@@ -178,9 +178,9 @@ module Common::Ui::LayoutHelper
     if options[:balanced]
       width= (100.to_f/cols.to_f).to_i
     end
-    lines << "<table class='#{options[:class]}'>" unless options[:skip_table_tag]
+    lines << "<table class='#{options[:class]}' style='#{options[:style]}'>" unless options[:skip_table_tag]
     if options[:header]
-      lines << options[:header]
+      lines << "<tr><th colspan='#{cols}'>#{options[:header]}</th></tr>"
     end
     for r in 1..rows
       lines << ' <tr>'

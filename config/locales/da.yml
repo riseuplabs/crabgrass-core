@@ -1,5 +1,5 @@
---- 
-da: 
+---
+da:
   add_contact_info: "Når en anden bruger er i din kontakt liste vil de have mulighed for at se når du er logget ind og se din fulde profil. Når du bliver en kontakt til en anden person, bliver de automatisk også din kontakt."
   already_contacts_info: "Du er allerede i kontakt med denne person."
   approve_contact_info: "En kontakt ansøgning findes allerede for denne bruger. Vil du godkende den?"
@@ -29,7 +29,6 @@ da:
   signup_confirm_password: "Bekræft Kodeord"
   signup_email: "Din Email"
   signup_email_info: "Valgfrit: brugt hvis du glemmer dit kodeord"
-  signup_info: "Vælg dit brugernavn og kodeord, og klik så på \"%{sign_up}\""
   signup_link: "Brug for en ny profil?"
   signup_login_name: "Dit brugernavn"
   signup_password: "Dit Kodeord"
