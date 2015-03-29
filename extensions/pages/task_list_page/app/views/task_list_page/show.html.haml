@@ -2,22 +2,21 @@
   = render partial: 'pages/sidebar/sidebar'
 
 %h2= I18n.t(:pending_tasks).capitalize
-%ul{id:'sort_list_pending',class:'task_list'}
+%ul#sort_list_pending.list-group.stripe
   = render @list.pending
-  = no_pending_tasks(@list.pending.empty?)
+%ul#no_pending_tasks.list-group{:style => ('display:none' if @list.pending.any?)}
+  %li.list-group-item
+    = :no_pending_tasks.tcap
 
 - if current_user.may?(:edit, @page)
-  %ul.task_list
-    %li#add_task_link
-      = render partial: 'tasks/new', locals: {page: @page}
+  = render partial: 'tasks/new', locals: {page: @page}
 
 %h2= I18n.t(:completed_tasks).capitalize
-%ul{id:'sort_list_completed', class:'task_list'}
+%ul#sort_list_completed.list-group.stripe
   = render @list.completed
-  = no_completed_tasks(@list.completed.empty?)
-
-- content_for :end_tags do
-  =#  calendar_date_select_includes "silver"
+%ul#no_completed_tasks.list-group{:style => ('display:none' if @list.completed.any?)}
+  %li.list-group-item
+    = :no_completed_tasks.tcap
 
 = sortable_element 'sort_list_pending', handle: 'handle',
   url: sort_tasks_url(page_id: @page)

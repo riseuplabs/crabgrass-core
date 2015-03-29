@@ -11,7 +11,7 @@ en:
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
-  edit_gallery_explaination: "Add new images or drag images to rearrange their order."
+  edit_gallery_explanation: "Add new images or drag images to rearrange their order."
   edit_image: Edit Image
   show_gallery_explaination: "Click thumbnail to see full image."
   back_to_gallery_link: "Back to Gallery"
@@ -59,4 +59,4 @@ en:
   edit_image_header: "Edit Image and Audio"
   upload_images_and_zip_files_help: "Optional: Select image or zip files to upload."
   close_and_reload_gallery: 'Close and reload gallery'
-  
+

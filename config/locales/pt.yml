@@ -134,7 +134,7 @@ pt:
   image_count: Imagem %{number} de %{count}
   image_count_total: '%{count} Fotos'
   show_gallery: Mostrar Galeria
-  edit_gallery_explaination: Adicione novas imagens ou arraste imagens para rearranjar a sua ordem.
+  edit_gallery_explanation: Adicione novas imagens ou arraste imagens para rearranjar a sua ordem.
   edit_image: Editar Imagem
   show_gallery_explaination: Clique na miniatura para ver a imagem completa.
   add_images_or_zips: Adicione Imagens ou um Arquivo Zipado

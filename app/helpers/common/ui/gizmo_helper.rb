@@ -79,7 +79,7 @@ module Common::Ui::GizmoHelper
   #
   # Options:
   #
-  #  :label, :checked, :with, :method, :success, :tag
+  #  :label, :checked, :with, :method, :success
   #
   # TODO: make this actually work with functions, not just remote ajax calls.
   #
@@ -90,13 +90,10 @@ module Common::Ui::GizmoHelper
   #
   def spinbox_tag(name, url, options = {})
     icon = options[:checked] ? 'check_on' : 'check_off'
-    options[:tag] ||= :li
     options = options.merge(url: url, id: "#{name}_spinbox", icon: icon)
 
     function = queued_remote_function(spinbox_function_options(options))
-    content_tag(options[:tag]) do
-      spinbox_link_to_function(function, options)
-    end
+    spinbox_link_to_function(function, options)
   end
 
   private
@@ -115,9 +112,9 @@ module Common::Ui::GizmoHelper
 
   def spinbox_link_to_function(function, options)
     if options[:label].blank?
-      link_to_function_icon(options[:icon], function, options.slice(:url, :id, :title))
+      link_to_function_icon(options[:icon], function, options.slice(:url, :id, :title, :class))
     else
-      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon, :title))
+      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon, :title, :class))
     end
   end
 

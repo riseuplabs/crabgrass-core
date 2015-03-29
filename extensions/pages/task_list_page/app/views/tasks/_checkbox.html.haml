@@ -1,0 +1,17 @@
+- if !current_user.may?(:edit, task.task_list.page)
+  %label.checkbox-inline
+    %input{:type => 'checkbox', :disabled => 'disabled'}
+- else
+  - next_state = task.completed? ? 'pending' : 'complete'
+  - url = task_url(task, page_id: task.task_list.page)
+  = spinbox_tag dom_id(task, :task), url,
+    label: '',
+    class: 'inline',
+    checked: task.completed?, method: :put,
+    with: "'task[state]=#{next_state}'"
+= task_link_to_details(task)
+%span
+  = task_modification_flag(task)
+%span
+  = task_link_to_people(task)
+

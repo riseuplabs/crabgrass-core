@@ -8,10 +8,10 @@
   type = dom_class(item) if type.blank?
   label = I18n.t("actions.#{type}.add")
 
-.accordion-group[item]
-  .accordion-heading.space[item, :link]
+%div[item]
+  .space-ui[item, :link]
     = link_to_toggle(label, dom_id(item, :form), class: 'btn btn-default')
-  .accordion-inner.space[item, :form]{style: 'display: none'}
+  .space-ui[item, :form]{style: 'display: none'}
     = form_for item, url: url, remote: true, html: {data: {clear: true}} do |f|
       %p= f.text_field 'name',
         class: "#{type}_name form-control",

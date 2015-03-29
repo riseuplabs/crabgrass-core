@@ -134,7 +134,7 @@ it:
   image_count: Immagine %{number} di %{count}
   image_count_total: '%{count} Immagini'
   show_gallery: Mostra Galleria
-  edit_gallery_explaination: Aggiungi nuove immagini o trascina le immagini per riordinarle
+  edit_gallery_explanation: Aggiungi nuove immagini o trascina le immagini per riordinarle
   edit_image: Modifica immagine
   show_gallery_explaination: Click sulla miniatura per vedere l'immagine ingrandita
   add_images_or_zips: Aggiungi Immagini o File Zip

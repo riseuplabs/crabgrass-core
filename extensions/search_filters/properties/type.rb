@@ -14,7 +14,7 @@ SearchFilter.new('/type/:type_name/') do
 
   html do
     content_tag(:p) do
-      select_tag :type_name, options_for_select_page_type, size: 8, style: 'width:100%'
+      select_tag :type_name, options_for_select_page_type, size: 10, class: 'form-control'
     end
   end
 

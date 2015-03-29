@@ -3,9 +3,9 @@ module AccountManagement
     @user ||= FactoryGirl.build :user
     @user.display_name = nil
     click_on :signup_link.t
-    fill_in :signup_login_name.t, with: @user.login
-    fill_in :signup_password.t, with: @user.password
-    fill_in :signup_confirm_password.t, with: @user.password
+    fill_in 'user_login', with: @user.login
+    fill_in 'user_password', with: @user.password
+    fill_in 'user_password_confirmation', with: @user.password
     click_on :signup_button.t
   end
 

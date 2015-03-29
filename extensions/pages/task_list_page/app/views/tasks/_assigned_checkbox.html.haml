@@ -1,4 +1,5 @@
-= label_tag dom_id(user, :task), class: [:checkbox, :inline] do
+%label.checkbox-inline{:id => dom_id(user, :task)}
   = check_box_tag dom_id(user, :task), user.id, selected.include?(user.id),
-    name: "task[user_ids][]"
-  = user.display_name
+  name: "task[user_ids][]"
+  %span{:title => h(user.display_name)}
+    = user.name

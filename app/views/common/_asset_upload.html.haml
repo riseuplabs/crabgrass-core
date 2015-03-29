@@ -1,7 +1,7 @@
 - # use the asset_upload_form_for helper to use this partial!
 
 - # status messages and progress bar go here:
-#upload-progress.alert.hide{'data-pending_message' => :files_pending.t}
+#upload-progress.alert.alert-info.hide{'data-pending_message' => :files_pending.t}
 
 = form_for([target, Asset.new], upload_form_options(local_assigns)) do |f|
   #upload-drop.drop(style="text-align:center")

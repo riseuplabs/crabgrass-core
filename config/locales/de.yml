@@ -122,7 +122,7 @@ de:
   image_count: Bild %{number} von %{count}
   image_count_total: '%{count} Bilder'
   show_gallery: Galerie anzeigen
-  edit_gallery_explaination: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
+  edit_gallery_explanation: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
   edit_image: Bild bearbeiten
   show_gallery_explaination: Klick auf Miniaturbild um das Bild in voller Größe zu sehen.
   add_images_or_zips: Füge Bilder oder Zip-Dateien hinzu

@@ -118,7 +118,7 @@ fr:
   image_count: Image %{number} de %{count}
   image_count_total: '%{count} Images'
   show_gallery: Afficher la galerie
-  edit_gallery_explaination: Ajouter de nouvelles images ou glisser les images pour les réordonner
+  edit_gallery_explanation: Ajouter de nouvelles images ou glisser les images pour les réordonner
   edit_image: Modifier l'image
   show_gallery_explaination: Cliquer sur la vignette pour voir l'image complète
   add_images_or_zips: Ajouter des images ou une archive Zip

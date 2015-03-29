@@ -1,7 +1,4 @@
 - locals = {item: Task.new, url: tasks_url(page_id: @page)}
 = render layout: 'common/items/new_form', locals: locals do
-  %br/
-  = :assign_to.t
-  %br/
+  %div= :assign_to.tcap
   = checkboxes_for_assign_people_to_task(@task, [current_user.id], page)
-  %br{style: "clear:left"}/

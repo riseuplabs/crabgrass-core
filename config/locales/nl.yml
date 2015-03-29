@@ -138,7 +138,7 @@ nl:
   image_count: Afbeelding %{number} van %{count}
   image_count_total: '%{count} foto''s'
   show_gallery: Laat me galerij zien
-  edit_gallery_explaination: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
+  edit_gallery_explanation: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
   edit_image: Afbeelding editeren
   show_gallery_explaination: Klik op kleine afbeeldingen om de heele afbeelding te zien.
   add_images_or_zips: Voeg afbeeldingen of Zipfiles toe

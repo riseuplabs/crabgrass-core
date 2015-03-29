@@ -23,15 +23,6 @@ i {
 // MARGINS
 //
 
-.p {
-  margin-bottom: $p-margin;
-}
-
-.space {
-  margin-top: $ui-margin;
-  margin-bottom: $ui-margin;
-}
-
 // simulate a blockquote.
 
 .bq {
@@ -59,18 +50,6 @@ i {
 .legend.first {
   line-height: 1em;
   padding-bottom: 8px;
-}
-
-.nomargin {
-  margin: 0;
-}
-
-.margin-top {
-  margin-top: $gap-margin;
-}
-
-.margin-bottom {
-  margin-bottom: $gap-margin;
 }
 
 //

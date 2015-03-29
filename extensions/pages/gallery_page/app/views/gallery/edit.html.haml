@@ -1,14 +1,7 @@
-%h2.icon.medium.page_gallery_48.title
-  = I18n.t :edit_gallery
-
-.info-edit-gallery
-  = I18n.t :edit_gallery_explaination
+.alert.alert-info
+  = I18n.t :edit_gallery_explanation
 
 = render partial: 'gallery/draggable_images'
 
-- # TODO: implement extraction of zip files
-- # %p.info
-%h3(style="margin-top:20px;")
-  = I18n.t :add_images_to_gallery_link
-
+%h3= I18n.t :add_images_to_gallery_link
 = asset_upload_form_for(@page)

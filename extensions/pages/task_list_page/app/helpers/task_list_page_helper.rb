@@ -33,8 +33,11 @@ module TaskListPageHelper
   # creates a checkbox tag for a task
   def task_checkbox(task)
     disabled = !current_user.may?(:edit, task.task_list.page)
-    if (disabled)
-      content_tag :li, task.name, class: 'icon checkoff'
+    if true
+      content_tag(:label, class: 'checkbox-inline') do
+        content_tag(:input, '',type: 'checkbox', disabled: 'disabled') +
+        h(task.name)
+      end
     else
       next_state = task.completed? ? 'pending' : 'complete'
       name = "#{task.id}_task"
@@ -48,16 +51,19 @@ module TaskListPageHelper
 
   # creates a link that expands to display the task details.
   def task_link_to_details(task)
+    name = h(task.name)
     id = dom_id(task, 'details')
-    name = task.name
     link_to_function(name, "$('%s').toggle()" % id)
+    #link_to_toggle('&nbsp;'.html_safe, id, class: 'btn btn-default btn-xs')
   end
 
   def task_modification_flag(task)
     if task.created_at and last_visit < task.created_at
-      content_tag(:em," (#{:new.t})")
+      content_tag(:span, :new.t, class: 'label label-success')
     elsif task.updated_at and last_visit < task.updated_at
-      content_tag(:em," (#{:modified.t})")
+      content_tag(:span, :modified.t, class: 'label label-primary')
+    else
+      "&bull;".html_safe
     end
   end
 
@@ -81,7 +87,7 @@ module TaskListPageHelper
       loading: show_spinner(task),
       complete: hide(task)
     )
-    button_to_function :delete.t, function
+    button_to_function :delete.t, function, class: 'btn btn-danger'
   end
 
   # a button to replace the task detail with a tast edit form.
@@ -91,21 +97,21 @@ module TaskListPageHelper
       loading: show_spinner(task),
       method: :get
     )
-    button_to_function :edit.t, function
+    button_to_function :edit.t, function, class: 'btn btn-primary'
   end
 
-  def no_pending_tasks(visible)
-    empty_list_item :no_pending_tasks, hidden: !visible
-  end
+  #def no_pending_tasks(visible)
+  #  empty_list_item :no_pending_tasks, hidden: !visible
+  #end
 
-  def no_completed_tasks(visible)
-    empty_list_item :no_completed_tasks, hidden: !visible
-  end
+  #def no_completed_tasks(visible)
+  #  empty_list_item :no_completed_tasks, hidden: !visible
+  #end
 
-  def empty_list_item(message, options = {})
-    content_tag :li, message.t, id: message,
-      style: (options[:hidden] && 'display:none')
-  end
+  #def empty_list_item(message, options = {})
+  #  content_tag :li, message.t, id: message,
+  #    style: (options[:hidden] && 'display:none')
+  #end
 
   ##
   ## edit task form
@@ -142,7 +148,7 @@ module TaskListPageHelper
   end
 
   def close_task_edit_button(task)
-    button_to_function :cancel.t, hide(task, 'details')
+    button_to_function :cancel.t, hide(task, 'details'), class: 'btn btn-default'
   end
 
   def delete_task_edit_button(task)
@@ -150,7 +156,7 @@ module TaskListPageHelper
   end
 
   def save_task_edit_button(task)
-    submit_tag :save_button.t
+    submit_tag :save_button.t, class: 'btn btn-primary'
   end
 
   ###

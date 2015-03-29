@@ -1,4 +1,4 @@
-.p
+.space-ui
   = friendly_size(@asset.size) + ","
   = I18n.t(@asset.format_description.to_sym, default: @asset.format_description)
   - if @asset.ext
@@ -17,7 +17,7 @@
       = formats.collect{|f| link_to f.name, f.url}.join(', ').html_safe
 
 - if @page.updated_by
-  .p
+  .space-ui
     = :updated_by.t
     = link_to_user(@page.updated_by, avatar: 'tiny', class: 'inline')
     = friendly_date(@page.updated_at)

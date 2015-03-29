@@ -1,7 +1,12 @@
 //
 // Here are all the various margin variables used in the crabgrass
-// stylesheets. I am torn between using the bootstrap formulas,
-// and allowing direct overrides from the theme.
+// stylesheets.
+//
+// This stylesheet is included after bootstrap variables are loaded,
+// but before other boostrap css is defined.
+//
+// I am torn between using the bootstrap formulas or allowing direct
+// overrides from the theme.
 //
 // Currently, we just use the constants configured in the theme.
 //
@@ -39,6 +44,46 @@ $ui-margin: $margin_ui;
 $gap-margin: $margin_gap;
 
 //
+// UTILITY CLASSES
+//
+
+.p {
+  margin-bottom: $p-margin;
+}
+.p-top {
+  margin-top: $p-margin;
+}
+
+.space-ui {
+  margin-top: $ui-margin;
+  margin-bottom: $ui-margin;
+}
+
+.space-ui-top {
+  margin-top: $ui-margin;
+}
+
+.space-ui-bottom {
+  margin-bottom: $ui-margin;
+}
+
+.space-ui-right {
+  margin-right: $ui-margin;
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.margin-top {
+  margin-top: $gap-margin;
+}
+
+.margin-bottom {
+  margin-bottom: $gap-margin;
+}
+
+//
 // Some other variables which might be useful.
 //
 //$padding-base-vertical:     6px !default;
@@ -50,3 +95,4 @@ $gap-margin: $margin_gap;
 //$padding-xs-vertical:       1px !default;
 //$padding-xs-horizontal:     5px !default;
 //
+

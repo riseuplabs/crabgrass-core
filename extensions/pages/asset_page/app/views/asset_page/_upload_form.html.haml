@@ -1,5 +1,6 @@
 - url ||= page_url(@page)
 = form_tag url, method: :put, multipart: true do
   = file_field_tag 'asset[uploaded_data]'
-  = submit_tag :upload.t
+  .space-ui
+    = submit_tag :upload.t, class: 'btn btn-primary'
 

@@ -152,12 +152,13 @@ module Common::Ui::ImageHelper
       options[:crop] ||= options[:crop!]
       if options[:crop] or options[:scale]
         target_width, target_height = (options[:crop]||options[:scale]).split(/x/).map(&:to_f)
-        if target_width >= thumbnail.width and target_height >= thumbnail.height
+        if target_width > thumbnail.width || target_height > thumbnail.height
           # thumbnail is actually _smaller_ than our target area
-          margin_x = ((target_width - thumbnail.width) / 2)
-          margin_y = ((target_height - thumbnail.height) / 2)
+          border_width = 1
+          margin_x = ((target_width - thumbnail.width) / 2) - border_width
+          margin_y = ((target_height - thumbnail.height) / 2) - border_width
           img = image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
-            style: "padding: #{margin_y}px #{margin_x}px;"))
+            style: "margin: #{margin_y}px #{margin_x}px;"))
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max

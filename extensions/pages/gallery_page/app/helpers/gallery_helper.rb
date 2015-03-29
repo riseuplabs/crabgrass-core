@@ -207,14 +207,26 @@ module GalleryHelper
      loading: "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
 
-  def nav_to_gallery_image(to, page, image)
-    nav_image = (to == :next) ? '/images/png/16/grey-arrow-right.png' : '/images/png/16/grey-arrow-left.png'
-    spinner = 'load_' + to.to_s + '_image_spinner'
-    id= 'load_' + to.to_s + '_image'
-    link_to image_tag(nav_image), image_url(image.asset_id, page_id: @page),
-      class: (to == :next) ? 'next button' : 'previous button',
-      id: id,
-      on_click: "$('#{id}').hide(); $('#{spinner}').show();",
-      remote: true
+  def next_image_link
+    if @next
+      url = image_url(@next.asset_id, page_id: @page)
+      link_to_remote :next.t,
+        {url: url, method: :get},
+        {class: 'btn btn-default', icon: 'right'}
+    else
+      "<span class='btn btn-default disabled icon right_16'>#{:next.t}</span>".html_safe
+    end
   end
+
+  def previous_image_link
+    if @previous
+      url = image_url(@previous.asset_id, page_id: @page)
+      link_to_remote :previous.t,
+        {url: url, method: :get},
+        {class: 'btn btn-default', icon: 'left'}
+    else
+      "<span class='btn btn-default disabled icon left_16'>#{:previous.t}</span>".html_safe
+    end
+  end
+
 end
