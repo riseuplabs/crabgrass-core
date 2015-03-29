@@ -150,7 +150,6 @@ module Pages::SidebarHelper
       safe_join @page.assets.collect { |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
       }
-      #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_edit_page?
       ''
     end

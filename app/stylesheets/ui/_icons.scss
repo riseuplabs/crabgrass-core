@@ -147,6 +147,12 @@
     padding-right: $icon_tiny + 4px !important;
     padding-left: 12px !important; // 12px is a magic number. It is what default bootstrap buttons are.
   }
+
+  // icon inside bootstrap button
+  &.btn {
+    padding-left: $icon_tiny + 4px + 12px !important;
+    background-position: 12px 50% !important;
+  }
 }
 
 td.icon {
@@ -180,6 +186,7 @@ a.small_icon_button {
   padding: 0;
   background-repeat: no-repeat;
   background-position: 0 0;
+  vertical-align: middle; // really needed
 }
 
 //

@@ -5,13 +5,13 @@
 -#   @multipart     -- if true, make form multipart
 -#
 
-- content_for :title do
-  %div.icon.multi.medium{class: "#{page_type.icon}_48"}
-    .h2.first
-      .small= :create_a_new_thing.t(thing: :page.t.downcase)
-      = page_type.class_display_name
-  - if @group
-    %p= :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,@group.name)).html_safe
+%div.icon.multi.medium{class: "#{page_type.icon}_48"}
+  .h2.first
+    .small= :create_a_new_thing.t(thing: :page.t.downcase)
+    = page_type.class_display_name
+- if @group
+  %p= :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,@group.name)).html_safe
+%hr
 
 .create_page
   = form_tag(create_page_path(page_type: page_type), multipart: @multipart) do

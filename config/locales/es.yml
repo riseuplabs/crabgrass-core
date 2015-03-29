@@ -3,7 +3,6 @@ es:
   signup_link: ¿Necesitas una nueva cuenta?
   signup_email_info: 'Opcional: Usado si olvidas tu contraseña'
   forgot_password_link: Olvidé mi contraseña
-  signup_info: Elige tu nombre de usari@ y tu contraseña, después haz click en %{sign_up}
   login_failure_reason: Nombre de usari@ o contraseña está incorrecto.
   signup_success_message: ¡Muchas gracias para apuntarte!
   login_name: Nombre de usari@

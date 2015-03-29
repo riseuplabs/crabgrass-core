@@ -1,0 +1,38 @@
+- ## DOM STUFF
+- possible_id        = "possible_#{possible.id}"
+- details_id         = "#{possible_id}_details"
+- possible_show_id   = "#{possible_id}_show"
+- possible_edit_id   = "#{possible_id}_edit"
+-
+- ## LOGIC STUFF
+- vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
+- vote ||= RatingVote.new
+- @allvotes = {}
+- possible.votes.each do |v|
+  - (@allvotes[map(v.value)] ||= []) << v.user.login
+
+.panel.panel-default{:id => possible_show_id, :style => "background-color: ##{possible.color}"}
+  .panel-heading
+    - if current_user.may? :edit, @page
+      .pull-right
+        = link_to_icon 'trash', rate_many_possible_url(possible, page_id: @page), method: :delete, data: {confirm: I18n.t("vote.really_remove_this") }
+        -# link_to_function(image_tag('actions/pencil.png'), edit_click, :class => 'edit')
+    -# if possible.description.present?
+    -#  = link_to_function possible.name, "Element.toggle('#{details_id}')", :class => 'dotted'
+    .panel-title
+      = h possible.name
+      = spinner(possible_id)
+  .panel-body
+    - if possible.description.present?
+      .p{:id => details_id}
+        = possible.description_html
+    %table
+      = button_row(possible, vote, 'good')
+      = button_row(possible, vote, 'ok')
+      = button_row(possible, vote, 'bad')
+      = button_row(possible, vote, 'no')
+  -#
+  -#<div id='<%=possible_edit_id%>' class='indent possible_edit' style='display: none'>
+  -#  <%# spinner(spinner_edit, :show=>true) -%> <%= I18n.t(:loadingdotdotdot) %>
+  -#</div>
+

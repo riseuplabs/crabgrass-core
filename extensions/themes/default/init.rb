@@ -13,10 +13,12 @@ define_theme {
     column {
       count 12
       width '64px'
-      gutter '20px'
-      side_gutter '20px'
     }
   }
+
+  margin_p '10px'
+  margin_ui '15px'
+  margin_gap '20px'
 
   # avatar sizes
   icon {
@@ -79,7 +81,6 @@ define_theme {
     border_radius '4px'
     border_color var(:color_grey)
     fade_color var(:color_lighter)
-    padding '15px'
   }
 
   masthead {
@@ -130,6 +131,8 @@ define_theme {
   }
 
   banner {
+    width "1200px"  # \ used when processing the
+    height "200px"  # / uploaded image.
     padding "30px"
     border "1px solid #000"
     default_background '#3465A4'
@@ -172,6 +175,9 @@ define_theme {
     sidecontent {
       width 4
     }
+    single {
+      width 12
+    }
     nav {
       style 'tabs'
       padding '1g'
@@ -193,7 +199,6 @@ define_theme {
     border "1px solid #ddd"
     odd_background var(:color_lighter)
     even_background var(:local_content_background)
-    padding var(:ui_padding)
   }
 
   footer {

@@ -1,11 +1,4 @@
-#gallery-navigation{align: 'right'}
-  %ul
-    %li.up-arrow= link_to(image_tag('/images/png/16/grey-arrow-up.png'), page_url(@page) )
-    - if @previous
-      %li.left-arrow
-        = nav_to_gallery_image(:previous, @page, @previous)
-        = spinner('load_previous_image')
-    - if @next
-      %li.right-arrow
-        = nav_to_gallery_image(:next, @page, @next)
-        = spinner('load_next_image')
+.space-ui
+  = previous_image_link
+  = link_to_with_icon(:return.tcap, page_url(@page), class: 'btn btn-default', icon: 'sort_up')
+  = next_image_link

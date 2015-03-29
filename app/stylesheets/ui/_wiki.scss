@@ -14,15 +14,17 @@ article {
     // Browser specific (not valid) styles to make preformatted text wrap
     pre {
       white-space: pre-wrap;
-      white-space: -moz-pre-wrap;
-      white-space: -pre-wrap;
-      white-space: -o-pre-wrap;
       word-wrap: break-word;
-      code {
+
+      // remove bootstrap defaul pre styling:
+      background-color: transparent;
+      border: none;
+      padding: 0px;
+      margin: 0px 0px $p-margin 0px;
+
+      & > code {
         display: block;
-        background: #fff6dd;
-        border: solid 1px;
-        border-color: #ffe8a9;
+        border: solid 1px #ffe8a9;
         padding: 0.5em;
       }
     }
@@ -223,9 +225,9 @@ article {
 
   ul.toc {
     display: table;
-    background-color: #f9f9f9;
-    border: 1px solid #e6e6e6;
-    padding: 0.5em;
+    //background-color: #f9f9f9;
+    //border: 1px solid #e6e6e6;
+    //padding: 0.5em;
     margin: 0 0 0.5em 0;
     list-style-type: none;
     list-style-image: none;

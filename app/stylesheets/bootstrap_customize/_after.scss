@@ -15,4 +15,5 @@
 .pagination {
   display: block;
   @include clearfix;
+  margin: $ui-margin 0;
 }

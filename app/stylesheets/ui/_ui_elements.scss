@@ -98,6 +98,14 @@
 }
 
 //
+// drag and drop
+//
+
+.handle {
+  cursor: move;
+}
+
+//
 // time styling - display timestamps in a more beautiful way.
 // timestamps of today have the format hh:mm <span>AM/PM</span>
 //

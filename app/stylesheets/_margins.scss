@@ -1,0 +1,98 @@
+//
+// Here are all the various margin variables used in the crabgrass
+// stylesheets.
+//
+// This stylesheet is included after bootstrap variables are loaded,
+// but before other boostrap css is defined.
+//
+// I am torn between using the bootstrap formulas or allowing direct
+// overrides from the theme.
+//
+// Currently, we just use the constants configured in the theme.
+//
+
+//
+// The margin used under paragraphs.
+//
+// Bootstrap forumula: $line-height-computed / 2;
+//
+// Default value: 10px;
+//
+$p-margin: $margin_p;
+
+//
+// This is the space between ui elements, like buttons and
+// margin around text areas.
+//
+// Bootstrap formula: $grid-gutter-width / 2
+//
+// Default value: 15px;
+//
+$ui-margin: $margin_ui;
+
+//
+// This is the space between major elements, like layout sections.
+// Like grid-gutter-width, but we use a smaller default value.
+//
+// Bootstrap formula: $grid-gutter-width (which is 30px by default)
+//  or maybe $line-height-computed (which is 20px by default)
+//
+// Bootstrap uses $line-height-computed for top margin of headings.
+//
+// default value: 20px;
+//
+$gap-margin: $margin_gap;
+
+//
+// UTILITY CLASSES
+//
+
+.p {
+  margin-bottom: $p-margin;
+}
+.p-top {
+  margin-top: $p-margin;
+}
+
+.space-ui {
+  margin-top: $ui-margin;
+  margin-bottom: $ui-margin;
+}
+
+.space-ui-top {
+  margin-top: $ui-margin;
+}
+
+.space-ui-bottom {
+  margin-bottom: $ui-margin;
+}
+
+.space-ui-right {
+  margin-right: $ui-margin;
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.margin-top {
+  margin-top: $gap-margin;
+}
+
+.margin-bottom {
+  margin-bottom: $gap-margin;
+}
+
+//
+// Some other variables which might be useful.
+//
+//$padding-base-vertical:     6px !default;
+//$padding-base-horizontal:   12px !default;
+//$padding-large-vertical:    10px !default;
+//$padding-large-horizontal:  16px !default;
+//$padding-small-vertical:    5px !default;
+//$padding-small-horizontal:  10px !default;
+//$padding-xs-vertical:       1px !default;
+//$padding-xs-horizontal:     5px !default;
+//
+

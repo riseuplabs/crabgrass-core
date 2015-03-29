@@ -3,7 +3,6 @@ de:
   signup_link: Neues Konto erstellen
   signup_email_info: 'Optional: Wird gebraucht, falls du dein Passwort vergisst'
   forgot_password_link: Passwort vergessen?
-  signup_info: Wähle deinen Nick und dein Passwort, und klicke dann auf "%{sign_up}"
   login_failure_reason: Nutzer_innenname oder Passwort falsch.
   signup_success_message: Danke für die Registrierung!
   login_name: Nutzer_innenname
@@ -123,7 +122,7 @@ de:
   image_count: Bild %{number} von %{count}
   image_count_total: '%{count} Bilder'
   show_gallery: Galerie anzeigen
-  edit_gallery_explaination: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
+  edit_gallery_explanation: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
   edit_image: Bild bearbeiten
   show_gallery_explaination: Klick auf Miniaturbild um das Bild in voller Größe zu sehen.
   add_images_or_zips: Füge Bilder oder Zip-Dateien hinzu

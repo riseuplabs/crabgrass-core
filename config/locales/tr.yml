@@ -1,5 +1,5 @@
---- 
-tr: 
+---
+tr:
   about_me: Hakkımda
   accept_usage_agreement: "Kullanım anlaşmasını kabul ediyorum"
   access: Erişim
@@ -222,9 +222,9 @@ tr:
   group_information: "%{group_type} Bilgiler"
   group_invite_email: |-
       %{from_user} sizi "%{group}" grubuna katılmaya davet etti.
-      
+
       Bu gruba katılmak istiyorsanız, buraya tıklayın:
-      
+
         %{accept_invite_link}
   group_invite_subject: "\"%{group}\" grubuna katılmak için davet"
   group_join_chat: "Konuşmaya Katıl"
@@ -600,7 +600,6 @@ tr:
   signup_confirm_password: "Şifreyi Onayla"
   signup_email: "Email Adresiniz"
   signup_email_info: "İsteğe bağlı: şifrenizi unuttuğunuz zaman kullanılır"
-  signup_info: "Kullanıcı adı ve şifrenizi seçip ardından \"%{sign_up}\" tuşuna basınız"
   signup_link: "Yeni bir kullanıcı hesabına ihtiyacınız var mı?"
   signup_login_name: "Kullanıcı adınız"
   signup_password: Şifreniz

@@ -14,7 +14,7 @@ module ProfileHelper
       r.input file_field_tag('profile[picture][upload]',
                              id: 'profile_picture_upload')
       r.info :banner_info.t(
-        optimal_dimensions: "#{banner_width.to_i} x #{banner_height.to_i}"
+        optimal_dimensions: "#{banner_width} x #{banner_height}"
       )
     end
   end

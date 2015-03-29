@@ -17,7 +17,7 @@ class ErrorFlowTest < IntegrationTest
     assert_content 'Login Required'
     fill_in 'login', with: 'blue'
     fill_in 'password', with: 'blue'
-    click_button 'Login'
+    click_button :login_button.t
     assert_equal '/me/pages', current_path
   end
 

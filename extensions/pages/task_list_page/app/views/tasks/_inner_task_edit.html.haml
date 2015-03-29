@@ -1,19 +1,13 @@
-= task_checkbox(task)
-%span.task= task_link_to_details(task)
-%span.task_people= task_link_to_people(task)
-.task{id:  "#{dom_id(task,'details')}"}
+= render 'tasks/checkbox', task: task
+
+.space-ui-top{id: "#{dom_id(task,'details')}"}
   = form_remote_tag( *options_for_task_edit_form(task) ) do
-    %table
-      %tr
-        %td= text_field 'task', 'name', class: 'task_name'
-      %tr
-        %td= text_area  'task', 'description', size: '50x4', class: 'task_description'
-      %tr
-        %td
-          %ul= checkboxes_for_assign_people_to_task(task, task.user_ids)
-      %tr
-        %td
-          = delete_task_edit_button(task)
-          = close_task_edit_button(task)
-          = save_task_edit_button(task)
-          = spinner(task)
+    .form-group= text_field 'task', 'name', class: 'form-control'
+    .form-group= text_area  'task', 'description', rows: 4, class: 'form-control'
+    .form-group= checkboxes_for_assign_people_to_task(task, task.user_ids)
+    .buttons
+      = close_task_edit_button(task)
+      = delete_task_edit_button(task)
+      = save_task_edit_button(task)
+      = spinner(task)
+

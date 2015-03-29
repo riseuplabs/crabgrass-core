@@ -697,7 +697,6 @@ pl:
   signup_confirm_password: "Potwierdź hasło"
   signup_email: "Twój mejl"
   signup_email_info: "Nie jest to wymagane ale przydatne jeśli zapomnisz hasła."
-  signup_info: "Wybierz sobie login oraz hasło i kliknij \"%{sign_up}\""
   signup_link: "Potrzebujesz nowego konta?"
   signup_login_name: "Twój login"
   signup_password: "Twoje hasło"

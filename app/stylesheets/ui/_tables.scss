@@ -1,10 +1,9 @@
 //
-// in a few places, we use a table to display stuff in a layout grid.
-// i suppose this should be replaced by divs eventually.
+// currently only used by 'choose page class' partial, afaik.
 //
-
 table.layout td {
   vertical-align: top;
+  padding: 4px;
 }
 
 //

@@ -3,7 +3,6 @@
   signup_link: Lag ny bruker
   signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
   forgot_password_link: Glemt passordet?
-  signup_info: Velg brukernavn og passord, og klikk på %{sign_up}
   login_failure_reason: Brukernavn eller passord er feil.
   signup_success_message: Takk for registreringen!
   login_name: Brukernavn
@@ -126,7 +125,7 @@
   image_count: Bilde %{number} av %{count}
   image_count_total: '%{count} Fotoer'
   show_gallery: Vis galleri
-  edit_gallery_explaination: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
+  edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
   edit_image: Rediger bilde
   add_images_or_zips: Legg bilder til zipfil
   add_images_or_zips_explaination: Zipfil blir automatisk pakket ut og lagt til galleriet

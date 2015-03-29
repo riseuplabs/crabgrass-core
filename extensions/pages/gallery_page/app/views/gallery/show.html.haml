@@ -1,13 +1,11 @@
 - if @images.any?
+  -# id 'gallery-container' used for rjs
   #gallery-container
-
-    .info
-      = I18n.t :show_gallery_explaination
-
-    %ul#show_gallery
+    .thumbnails
       = render partial: 'image', collection: @images
-      %br{style: 'clear:both'}/
+    .pagination-links
       = pagination_links @images
 - else
-  = I18n.t :no_images_in_gallery
+  .space-ui
+    = I18n.t :no_images_in_gallery
 

@@ -1,7 +1,7 @@
 module Pages::AssetsHelper
 
   def popup_attachment_list(assets)
-    content_tag :ul, id: 'assets_list', class: 'attachments' do
+    content_tag :ul, id: 'assets_list', class: 'list-inline' do
       if assets.empty?
         content_tag :li, :none.t
       else

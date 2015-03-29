@@ -74,13 +74,15 @@ textarea {
 }
 
 //
-// the button row of a form, right aligned
+// The button row of a form, right aligned
+// I am not sure where the 4px comes from, but to make it
+// visually appear as $ui-margin gap, it needs to be 4px less.
 //
 .buttons-right {
-  margin-top: 15px;
+  margin-top: $ui-margin;
   text-align: right;
   input[type=submit], input[type=button] {
-    margin-left: 10px;
+    margin-left: $ui-margin - 4px;
   }
 }
 
@@ -88,10 +90,10 @@ textarea {
 // the button row of a form, left aligned
 //
 .buttons {
-  margin-top: 15px;
+  margin-top: $ui-margin;
   text-align: left;
   input[type=submit], input[type=button] {
-    margin-right: 10px;
+    margin-right: $ui-margin - 4px;
   }
 }
 

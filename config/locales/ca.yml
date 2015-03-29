@@ -685,7 +685,6 @@ ca:
   signup_confirm_password: "Confirmació de Contrasenya"
   signup_email: "El teu Correu Electrònic"
   signup_email_info: "Opcional: utilitzat si te n'oblides de la teva contrasenya"
-  signup_info: "Tria un nom d'usuari i una contrasenya i fes clic al \"%{sign_up}\""
   signup_link: "Nou compte"
   signup_login_name: "El teu nom d'usuari"
   signup_password: "La teva contrasenya"

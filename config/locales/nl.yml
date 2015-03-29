@@ -3,7 +3,6 @@ nl:
   signup_link: Een nieuwe gebruiker / gebruikster opstellen
   signup_email_info: 'Optionaal: Werd gebruikt als jij je wachtwoord vergeet.'
   forgot_password_link: Wachtwoord vergeten?
-  signup_info: Kiez een login-naam en een wachtwoord en klik dan op %{sign_up}
   login_failure_reason: Naam of wachtwoord is niet correct.
   signup_success_message: Dank je wel voor je registratie!
   login_name: Gebruikers naam / Gebruiksters naam
@@ -139,7 +138,7 @@ nl:
   image_count: Afbeelding %{number} van %{count}
   image_count_total: '%{count} foto''s'
   show_gallery: Laat me galerij zien
-  edit_gallery_explaination: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
+  edit_gallery_explanation: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
   edit_image: Afbeelding editeren
   show_gallery_explaination: Klik op kleine afbeeldingen om de heele afbeelding te zien.
   add_images_or_zips: Voeg afbeeldingen of Zipfiles toe

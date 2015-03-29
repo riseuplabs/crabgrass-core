@@ -3,7 +3,6 @@ pt:
   signup_link: Criar uma nova conta
   signup_email_info: 'Opcional: usado no caso de você esquecer sua senha'
   forgot_password_link: Esqueceu sua senha?
-  signup_info: Escolha seu nome de login e senha, em seguida clique em %{sign_up}
   login_failure_reason: O nome de usuária ou senha está incorreto.
   signup_success_message: Obrigada por se inscrever!
   login_name: Nome de usuária
@@ -135,7 +134,7 @@ pt:
   image_count: Imagem %{number} de %{count}
   image_count_total: '%{count} Fotos'
   show_gallery: Mostrar Galeria
-  edit_gallery_explaination: Adicione novas imagens ou arraste imagens para rearranjar a sua ordem.
+  edit_gallery_explanation: Adicione novas imagens ou arraste imagens para rearranjar a sua ordem.
   edit_image: Editar Imagem
   show_gallery_explaination: Clique na miniatura para ver a imagem completa.
   add_images_or_zips: Adicione Imagens ou um Arquivo Zipado

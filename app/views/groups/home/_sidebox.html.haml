@@ -1,17 +1,18 @@
 - if @group.committee?
-  .p{class: first(:sidebox)}
+  .margin-bottom
     = :this_is_committee.t(parent_group: link_to_group(@group.parent)).html_safe
 
 - if @group.profiles.public.summary.present?
-  .p{class: first(:sidebox)}
+  .profile-text
     = @group.profiles.public.summary_html
 
 - if @group.profiles.public.place.present?
-  .p{class: first(:sidebox)}
+  .margin-bottom
     %div
       %b= h @group.profiles.public.place
 
-%div= :group_membership_count.t(count: @group.users.count)
+.margin-bottom
+  = :group_membership_count.t(count: @group.users.count)
 
-.p.last
-  = link_span :bullet, join_group_link  #, edit_group_profile_link
+%div
+  = join_group_link

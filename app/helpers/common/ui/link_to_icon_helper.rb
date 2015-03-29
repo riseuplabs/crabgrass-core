@@ -52,8 +52,9 @@ module Common::Ui::LinkToIconHelper
             icon_options[:complete] = [spinner_icon_off(icon, id), options[:complete]].combine(';')
           end
         end
-
-        link_to_remote_without_icon(name, options.merge(icon_options), html_options)
+        # ugly, but 'link_to_remote_with_confirm' is needed because modalbox helper is loaded
+        # after this helper
+        link_to_remote_with_confirm(name, options.merge(icon_options), html_options)
       end
     end
 

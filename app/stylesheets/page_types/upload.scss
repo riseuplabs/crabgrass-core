@@ -10,18 +10,20 @@
 }
 
 #upload-progress {
-  margin: 20px;
+  margin: $ui-margin;
+  .progress {
+    margin-bottom: $p-margin;
+  }
 }
 
 .drop {
-  border:lightgray dotted 3px;
-  padding:10px;
-  color:#888;
-  display:block;
+  border: lightgray dotted 3px;
+  padding: $ui-margin;
+  color: #888;
+  display: block;
   border-radius: 10px;
-  margin: 10px;
+  margin: $ui-margin;
 }
-
 
 .drop.dragging {
   border:gray dotted 3px;

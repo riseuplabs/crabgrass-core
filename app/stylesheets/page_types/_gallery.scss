@@ -1,0 +1,30 @@
+#gallery-container {
+  .thumbnails {
+    @include clearfix();
+    margin-top: $ui-margin;
+    margin-bottom: $ui-margin - 8px; // there is an 8px margin under every thumbnail
+  }
+  .pagination-links {
+    margin-bottom: $ui-margin;
+    .pagination {
+      margin-top: 0;
+    }
+  }
+}
+
+//
+// an asset box
+//
+// * fixed height boxes so they work without rows
+// * this is probably duplicated by bootstrap.
+// * this is used by the page attachments popup as well.
+//
+.box {
+  margin-right: $p-margin;
+  margin-bottom: $p-margin;
+  padding: $p-margin !important;
+  border: solid lightgray 1px;
+  border-radius: 4px;
+  background: #f9f9f9;
+  // box-shadow: 1px 1px 4px #CCC9C3;
+}

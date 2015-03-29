@@ -125,3 +125,20 @@ ul.shaded {
     @if $ui_border_radius { @extend .round-bottom }
   }
 }
+
+//
+// SOME BOOTSTRAP MODIFICATIONS
+//
+
+.list-group {
+  margin-bottom: $ui-margin;
+  .list-group-item {
+    padding: $p-margin;
+  }
+}
+
+.list-group.stripe {
+  .list-group-item:nth-child(odd) {
+    background-color: $color_lighter;
+  }
+}

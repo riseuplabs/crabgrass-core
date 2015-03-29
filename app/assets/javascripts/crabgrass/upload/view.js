@@ -15,9 +15,10 @@ ajaxUpload.view = {
     } else {
       pending = ''
     }
+    // markup specific to bootstrap 3
     var html = '<div id="upload-filename" class="left">#{filename}</div>' +
-               '<div class="progress progress-striped progress-active">' +
-               '<div class="bar" style="width: #{percent}%;"></div>' +
+               '<div class="progress">' +
+                 '<div class="progress-bar progress-bar-striped progress-info" style="width: #{percent}%"></div>' +
                '</div>'+
                '#{pending}';
     var file = ajaxUpload.upload.getFile();

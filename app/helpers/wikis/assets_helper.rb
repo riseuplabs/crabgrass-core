@@ -1,9 +1,8 @@
 module Wikis::AssetsHelper
 
   def image_size_buttons
-    sizes = [:small, :medium, :large, :full]
-    translated_sizes = sizes.map{|size| [size.t, size.to_s]}
-    inline_radio_buttons 'image_size', translated_sizes,
+    entries = [[:small.t, "small"], [:medium.t, "medium"], [:large.t, "large"], [:full.t, "full"]]
+    inline_radio_buttons 'image_size', entries,
       id: 'image_size',
       selected: 'medium',
       onchange: "updatePreview();"

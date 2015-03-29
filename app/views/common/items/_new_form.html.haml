@@ -8,21 +8,21 @@
   type = dom_class(item) if type.blank?
   label = I18n.t("actions.#{type}.add")
 
-.accordion-group[item]
-  .accordion-heading[item, :link]
-    = link_to_function label, toggle(item, :form), class: 'accordion-toggle'
-  .accordion-inner[item, :form]{style: 'display: none'}
+%div[item]
+  .space-ui[item, :link]
+    = link_to_toggle(label, dom_id(item, :form), class: 'btn btn-default')
+  .space-ui[item, :form]{style: 'display: none'}
     = form_for item, url: url, remote: true, html: {data: {clear: true}} do |f|
       %p= f.text_field 'name',
-        class: "#{type}_name",
+        class: "#{type}_name form-control",
         placeholder: :description.t
       %p= f.text_area  'description',
         rows: '4',
-        class: "#{type}_description",
+        class: "#{type}_description form-control",
         placeholder: :details.t
       = yield if block_given?
-      %p
-        %button.btn.btn-primary{data: {"disable-with" => label}}
+      .buttons
+        %button.btn.btn-success{data: {"disable-with" => label}}
           = label
-      = spinner
+        = spinner
 

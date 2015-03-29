@@ -1,9 +1,10 @@
 - content_for :left_column do
   = render partial: 'sidecolumn'
 
-= render partial: 'wikis'
+- if should_render_group_wiki?
+  = render partial: 'wikis'
 
-%h2= :recent_pages.t
+%h2.first= :recent_pages.t
 .without_owner
   = render partial: 'common/pages/list'
 

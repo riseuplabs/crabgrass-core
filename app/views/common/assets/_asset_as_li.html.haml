@@ -1,6 +1,9 @@
 - asset = asset_as_li || @asset
-%li.asset.box[asset]
-  = link_to_asset asset, :small, crop: '70x70'
-  = remove_asset_button asset
-  .clear
-  = link_to h(truncate(asset.basename, length: 20)), asset.url
+- handle = local_assigns[:draggable] ? 'handle' : ''
+%li.asset.box[asset]{:class => handle}
+  %div
+    = link_to_asset asset, :small, crop: '64x64'
+    = remove_asset_button asset
+  %div.small
+    = link_to h(truncate(asset.basename, length: 20)), asset.url
+

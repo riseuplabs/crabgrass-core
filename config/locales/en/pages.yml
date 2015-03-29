@@ -386,12 +386,12 @@ en:
   ## Task List Page
   ##
 
-  pending_tasks: 'pending tasks'
-  completed_tasks: 'completed tasks'
-  no_pending_tasks: 'no pending tasks'
-  no_completed_tasks: 'no completed tasks'
-  assign_to: 'assign to'
-
+  pending_tasks: 'Pending tasks'
+  completed_tasks: 'Completed tasks'
+  no_pending_tasks: 'No pending tasks'
+  no_completed_tasks: 'No completed tasks'
+  assign_to: 'Assign to'
+  completed: 'Completed'
 
   ##
   ## RANKED VOTE & RATE MANY
@@ -409,8 +409,7 @@ en:
   vote_none: "none"
   vote_no: "no"
 
-  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom. When you are done, press confirm to record your vote."
-
+  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom."
 
   confirm_vote_button: "Confirm Vote"
   edit_my_vote_tab: "Edit my vote"

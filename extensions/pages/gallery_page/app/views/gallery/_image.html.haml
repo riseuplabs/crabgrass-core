@@ -1,7 +1,6 @@
-%li[image]
-  %div[image, :control]
-    = link_to_asset image, :medium, crop: '90x90',
-      url: image_url(image, page_id: @page),
-      remote: true,
-      method: :get,
-      title: h(image.caption)
+%div[image, :control]
+  = link_to_asset image, :medium,  crop: '128x128',
+    url: image_url(image, page_id: @page),
+    remote: true,
+    method: :get,
+    title: h(image.caption)

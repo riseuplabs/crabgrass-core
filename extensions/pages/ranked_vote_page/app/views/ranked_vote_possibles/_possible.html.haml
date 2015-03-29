@@ -1,0 +1,10 @@
+- possible_id        = "possible_#{possible.id}"
+- possible_edit_id   = "#{possible_id}_edit"
+- possible_show_id   = "#{possible_id}_show"
+- spinner_edit       = "#{possible_id}_edit"
+
+%li.list-group-item.handle{:id => possible_id}
+  %div{:id => possible_show_id}
+    = render :partial => 'ranked_vote_possibles/possible_show', :locals => {:possible => possible}
+  %div{:id => possible_edit_id, :style => 'display: none'}
+

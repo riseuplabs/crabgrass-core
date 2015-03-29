@@ -40,15 +40,14 @@
 
 #MB_header {
   margin: 0;
-  padding: 0.5em;
+  padding: $ui-margin;
   background: #999999 none repeat scroll 0 0;
   border-bottom: 1px solid #777777;
-  margin: 0;
 }
 
 #MB_content {
   overflow: hidden;
-  padding: 1em;
+  padding: $ui-margin;
   border-top: 1px solid #cccccc;
 }
 

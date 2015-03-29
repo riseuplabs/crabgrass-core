@@ -1,0 +1,16 @@
+- # this html is its own partial because it is used by both
+- # _possible.rhtml and update_possible.rjs
+- possible_id = "possible_#{possible.id}"
+- details_id  = "#{possible_id}_details"
+- edit_url    = edit_ranked_vote_possible_url(possible, page_id: @page)
+
+.pull-right
+  = link_to I18n.t(:edit), edit_url, icon:'pencil', class: 'edit', remote: true, method: :get
+
+- if possible.description.present?
+  = link_to_function possible.name, "Element.toggle('#{details_id}')", class: 'dotted'
+  %div.space-ui-top{:id => details_id, :style => 'display: none'}
+    = possible.description_html
+- else
+  =h possible.name
+

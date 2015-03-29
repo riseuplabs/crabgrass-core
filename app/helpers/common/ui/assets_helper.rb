@@ -7,20 +7,20 @@ module Common::Ui::AssetsHelper
   end
 
   def remove_asset_button(asset)
-    remove_asset_link(asset, {icon: nil}, {class: 'btn btn-danger btn-mini'})
+    remove_asset_link(asset, {class: 'btn btn-danger btn-mini'})
   end
 
   def remove_asset_link(asset, options = {}, html_options = {})
+    icon ||= 'trash'
     options.reverse_merge!({
       url: asset_path(asset.id),
       method: :delete,
-      complete: hide(dom_id(asset)),
-      icon: 'minus'
+      complete: hide(dom_id(asset))
     })
     html_options.reverse_merge!({
       confirm: :destroy_confirmation.t(thing: 'attachment')
     })
-    link = link_to_remote("remove", options, html_options)
+    link_to_remote_icon(icon, options, html_options)
   end
 
   def update_cover_asset_checkbox(asset)
