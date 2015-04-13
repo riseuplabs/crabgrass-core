@@ -72,6 +72,6 @@ class RankedVoteTest < JavascriptIntegrationTest
 
   def assert_first_choice_of(user, option)
     click_link option
-    assert_content "first choice of : #{user.login}"
+    assert_content "first choice of #{user.login}"
   end
 end

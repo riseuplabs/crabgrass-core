@@ -11,14 +11,11 @@
 - possible.votes.each do |v|
   - (@allvotes[map(v.value)] ||= []) << v.user.login
 
-.panel.panel-default{:id => possible_show_id, :style => "background-color: ##{possible.color}"}
+.panel.panel-default{style: "background-color: ##{possible.color}"}
   .panel-heading
     - if current_user.may? :edit, @page
       .pull-right
         = link_to_icon 'trash', rate_many_possible_url(possible, page_id: @page), method: :delete, data: {confirm: I18n.t("vote.really_remove_this") }
-        -# link_to_function(image_tag('actions/pencil.png'), edit_click, :class => 'edit')
-    -# if possible.description.present?
-    -#  = link_to_function possible.name, "Element.toggle('#{details_id}')", :class => 'dotted'
     .panel-title
       = h possible.name
       = spinner(possible_id)

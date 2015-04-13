@@ -14,17 +14,21 @@ class RateManyPageTest < JavascriptIntegrationTest
     assert_page_header
     option, description = add_possibility
     assert_content option
-    assert_no_content description
-    click_on option
     assert_content description
-    click_on 'Delete'
+  end
+
+  def test_delete
+    assert_page_header
+    option, description = add_possibility
+    assert_content option
+    find('.possible .trash_16').click
     assert_no_content option
   end
 
   def test_voting
     option, description = add_possibility
     choose 'good'
-    within('.possibles') do
+    within('li.possible') do
       assert_content @user.login
     end
   end
