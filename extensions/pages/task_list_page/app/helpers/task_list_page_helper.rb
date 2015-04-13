@@ -53,7 +53,7 @@ module TaskListPageHelper
   def task_link_to_details(task)
     name = h(task.name)
     id = dom_id(task, 'details')
-    link_to_function(name, "$('%s').toggle()" % id)
+    link_to_function(name, "$('%s').toggle()" % id, class: 'toggle')
     #link_to_toggle('&nbsp;'.html_safe, id, class: 'btn btn-default btn-xs')
   end
 

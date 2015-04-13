@@ -10,8 +10,8 @@
     checked: task.completed?, method: :put,
     with: "'task[state]=#{next_state}'"
 = task_link_to_details(task)
-%span
+%span.modified
   = task_modification_flag(task)
-%span
+%span.people
   = task_link_to_people(task)
 

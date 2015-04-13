@@ -12,14 +12,15 @@ class GalleryTest < JavascriptIntegrationTest
     attach_file 'upload-input', fixture_file('photo.jpg')
     assert_content 'photo'
     click_page_tab 'Show'
-    first('.image_asset .thumbnail').click
+    first('.control_image_asset .thumbnail').click
     assert_content 'Image 1 of 2'
-    find('.right-arrow a').click
+    find('.next a').click
     assert_content 'Image 2 of 2'
     src = find('.gallery-item img')['src']
     assert_equal 'be%C3%A9_large.jpg', src.split('/').last
-    find('.up-arrow a').click
-    assert_content 'Click thumbnail to see full image.'
+    find('.up a').click
+    assert_no_content 'Image'
+    # assert_content 'Click thumbnail to see full image.'
   end
 
 end
