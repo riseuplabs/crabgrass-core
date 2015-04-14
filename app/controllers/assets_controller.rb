@@ -3,25 +3,26 @@ class AssetsController < ApplicationController
   before_filter :authorization_required
   before_filter :symlink_public_asset, only: :show
   permissions 'assets'
+  permission_helper 'pages'
   guard :may_ACTION_asset?
 
   prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
     file = file_to_send(params[:path])
-    send_file private_filename(file), 
-      type: file.content_type, 
+    send_file private_filename(file),
+      type: file.content_type,
       disposition: disposition(file)
   end
 
   def destroy
     @asset.destroy
-    current_user.updated(@asset.page)
+    current_user.updated(@page)
     respond_to do |format|
-      format.js {render text: 'if (initAjaxUpload) initAjaxUpload();' }
+      format.js {render 'common/assets/destroy' }
       format.html do
         success ['attachment deleted']
-        redirect_to(page_url(@asset.page))
+        redirect_to(page_url(@page))
       end
     end
   end
@@ -37,10 +38,11 @@ class AssetsController < ApplicationController
       @asset = Asset.find_by_id(params[:id])
     end
     raise_not_found unless @asset
+    @page = @asset.page
     true
   end
 
-  # Update access and redirect to the same path - which will now have a 
+  # Update access and redirect to the same path - which will now have a
   # symlink in public
   # This only applies iff asset is public AND the public file is not in place.
   def symlink_public_asset

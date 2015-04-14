@@ -85,6 +85,22 @@ module PageActions
     close_popup
   end
 
+  def remove_file_from_page
+    within '#attachments' do
+      click_on 'Edit'
+    end
+    find('#assets_list li.asset .trash_16').click
+    click_on 'OK'
+  end
+
+  # verify that the little thumbnail image actually gets displayed
+  def check_attachment_thumbnail
+    find("#attachments a.thumbnail img").synchronize do
+      unless evaluate_script("$$('#attachments a.thumbnail img').first().naturalWidth != 0")
+        raise Capybara::ExpectationNotMet.new("Thumbnail could not be loaded")
+      end
+    end
+  end
 
   def close_popup
     find('#MB_content').click_on 'Close'
