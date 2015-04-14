@@ -10,6 +10,16 @@ module PageAssertions
     end
   end
 
+  def assert_no_page_tags(tags)
+    # split a string but not an array
+    tags = tags.split(',') unless tags.respond_to? :each
+    within '.tags' do
+      tags.each do |tag|
+        assert_no_content tag
+      end
+    end
+  end
+
   def assert_page_users(*users)
     user_names = users.map(&:display_name).join(' ')
     names_text = find('#people.names').text

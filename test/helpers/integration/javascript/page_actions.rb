@@ -27,6 +27,17 @@ module PageActions
     click_on 'Add'
   end
 
+  def remove_page_tag(tag)
+    within '#tag_li' do
+      click_on 'Edit'
+    end
+    find('span', text: tag).hover
+    within ".shy_parent:hover" do
+      click_on 'Remove'
+    end
+    click_button 'Close'
+  end
+
   def star_page
     click_on 'Add Star (0)'
   end
@@ -74,7 +85,23 @@ module PageActions
     close_popup
   end
 
-  
+  def remove_file_from_page
+    within '#attachments' do
+      click_on 'Edit'
+    end
+    find('#assets_list li.asset .trash_16').click
+    click_on 'OK'
+  end
+
+  # verify that the little thumbnail image actually gets displayed
+  def check_attachment_thumbnail
+    find("#attachments a.thumbnail img").synchronize do
+      unless evaluate_script("$$('#attachments a.thumbnail img').first().naturalWidth != 0")
+        raise Capybara::ExpectationNotMet.new("Thumbnail could not be loaded")
+      end
+    end
+  end
+
   def close_popup
     find('#MB_content').click_on 'Close'
     assert_no_selector '#MB_window'

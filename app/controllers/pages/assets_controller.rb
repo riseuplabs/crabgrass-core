@@ -9,7 +9,7 @@ class Pages::AssetsController < Pages::SidebarsController
   def update
     @page.cover = @asset
     @page.save!
-    render template: 'pages/reset_sidebar'
+    refresh_sidebar
   end
 
   def create
