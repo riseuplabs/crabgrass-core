@@ -36,6 +36,10 @@ class Token < ActiveRecord::Base
     Token.delete_all ["action <> 'feeds' AND created_at < ?", Time.now - @@validity_time]
   end
 
+  def to_s
+    value
+  end
+
   private
 
   def self.generate_token_value
