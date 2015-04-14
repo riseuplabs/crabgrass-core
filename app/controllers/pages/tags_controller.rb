@@ -11,6 +11,7 @@ class Pages::TagsController < Pages::SidebarsController
     @page.updated_by = current_user
     @page.tags_will_change!
     @page.save!
+    # we do not update the popup yet - so let's just close it.
     close_popup
   end
 
@@ -19,7 +20,7 @@ class Pages::TagsController < Pages::SidebarsController
     @page.updated_by = current_user
     @page.tags_will_change!
     @page.save!
-    render nothing: true
+    refresh_sidebar
   end
 
 end

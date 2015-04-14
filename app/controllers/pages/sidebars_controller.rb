@@ -20,7 +20,11 @@ class Pages::SidebarsController < ApplicationController
   protected
 
   def close_popup
-    render template: 'pages/sidebar/reset'
+    render template: 'pages/sidebar/close_popup'
+  end
+
+  def refresh_sidebar
+   render template: 'pages/sidebar/reset'
   end
 
   def fetch_page
