@@ -38,6 +38,7 @@ module AuthenticatedUser
       # the current site (set tmp on a per-request basis)
       attr_accessor :current_site
 
+      before_validation :encrypt_password
       with_options unless: :ghost? do |alive|
         alive.validates :login, presence: true,
           length: { within: 3..40 },
@@ -46,7 +47,6 @@ module AuthenticatedUser
         alive.validates :password, confirmation: true,
           length: {within: 8..72, allow_blank: true}
 
-        before_validation :encrypt_password
         alive.validates :crypted_password, presence: true
         alive.validates :salt, presence: true
 
@@ -119,7 +119,7 @@ module AuthenticatedUser
   # before filter
   def encrypt_password
     return if password.blank?
-    self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{login}--") if new_record?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{login}--")
     self.crypted_password = encrypt(password)
   end
 
