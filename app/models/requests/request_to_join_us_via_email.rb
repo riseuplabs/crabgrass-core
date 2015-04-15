@@ -52,18 +52,13 @@ class RequestToJoinUsViaEmail < Request
   ## code handling
   ##
 
-  def self.redeem_code!(user, code, email)
-    request = find_by_code_and_email(code,email)
-    if request
-      if request.state != 'pending'
-        raise ErrorMessage.new(I18n.t(:invite_error_redeemed))
-      end
-      request.recipient = user
-      request.save!
-      return request
-    else
-      raise ErrorNotFound.new(I18n.t(:invite))
+  def redeem_code!(user)
+    if state != 'pending'
+      raise ErrorMessage.new(I18n.t(:invite_error_redeemed))
     end
+    self.recipient = user
+    save!
+    return self
   end
 
   before_validation :set_code, on: :create

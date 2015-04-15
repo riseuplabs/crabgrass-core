@@ -12,17 +12,16 @@ module Common::Requests
       helper_method :current_state
       helper_method :request_path
       helper_method :requests_path
-      before_filter :login_required
       before_filter :fetch_request, only: [:update, :destroy, :show]
     end
   end
 
-  # 
+  #
   # show the details of a request
-  # 
+  #
   # this is needed for the case when a user visits a person or group profile
   # and sees that a request is pending and wants to click on a link for more information.
-  # 
+  #
   def show
     render template: 'common/requests/show'
   end
@@ -79,12 +78,17 @@ module Common::Requests
     raise 'you forgot to override this method'
   end
 
-  #
-  # this looks dangerous, but is not, because requests
-  # have their own model-based permission system.
-  #
   def fetch_request
-    @request = Request.find(params[:id])
+    @request = request_context.find(params[:id])
+    @request.try.redeem_code!(current_user) if params[:code]
+  end
+
+  def request_context
+    if params[:code]
+      Request.where(code: params[:code])
+    else
+      Request.visible_to(current_user)
+    end
   end
 
   def mark

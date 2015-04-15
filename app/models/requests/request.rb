@@ -135,6 +135,12 @@ class Request < ActiveRecord::Base
     where(requestable_id: requestable)
   end
 
+  def self.visible_to(user)
+    where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
+      user.id, user.all_group_ids, user.id
+  end
+
+
   MEMBERSHIP_TYPES = [
     'RequestToJoinOurNetwork',
     'RequestToJoinUs',

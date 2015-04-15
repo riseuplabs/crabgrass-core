@@ -1,6 +1,7 @@
-<%=I18n.t :group_invite_email,
+<%=I18n.t(:group_invite_email,
   from_user: @user.display_name,
   group: @group.display_name,
-  accept_invite_link: group_request_url(@group, @request, code: @request.code),
+  accept_invite_link: me_request_url(@request, code: @request.code),
   group_home_link: group_url(@group)
+  )
 %>

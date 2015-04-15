@@ -135,16 +135,13 @@ class RequestTest < ActiveSupport::TestCase
     assert req.valid?, 'request should be valid: %s' % req.errors.full_messages.to_s
     assert req.code.length >= 6
 
-    assert_nothing_raised do
-      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@example.org')
-    end
+    req = RequestToJoinUsViaEmail.where(code: req.code).find(req.id)
+    req.redeem_code!(outsider)
 
-    assert_nothing_raised do
-      req.approve_by!(outsider)
-    end
+    req.approve_by!(outsider)
 
     assert_raises ErrorMessage, 'should only be able to redeem pending requests' do
-      req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@example.org')
+      req.redeem_code!(outsider)
     end
 
     assert outsider.member_of?(group), 'outsider should be added to group'

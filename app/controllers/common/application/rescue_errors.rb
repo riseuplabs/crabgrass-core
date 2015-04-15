@@ -262,7 +262,9 @@ module Common::Application::RescueErrors
       # fyi, this template will eat the alert_message
       render template: 'error/permission_denied', layout: 'notice'
     else
-      redirect_to root_path(redirect: request.path)
+      # request.path does not keep query params. But we need them in some cases.
+      after_login = url_for params.merge(only_path: true)
+      redirect_to root_path(redirect: after_login)
     end
   end
 
