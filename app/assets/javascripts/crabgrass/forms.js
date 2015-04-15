@@ -4,34 +4,38 @@
 
 // ujs enhancements
 //
-// If there is a spinning wheel in a form with the class spin
-// it will be displayed when the form is submitted.
+// Display spinning wheels and reset forms
+//
+// If there is a spinning wheel in a form or a div.buttons
+// it will be displayed when an ajax request is triggered from within
 //
 // If the form has the data attribute clear set to a valid value
 // the form will be reset after submitting it.
 //
 (function () {
   document.observe("dom:loaded", function() {
-    function startFormSpinner(form) {
-      form.select('img.spin, span.spin').each(function(spinner) {
+    function startSpinner(wrapper) {
+      wrapper.select('img.spin, span.spin').each(function(spinner) {
         spinner.show();
       });
     }
 
-    function stopFormSpinner(form) {
-      form.select('img.spin, span.spin').each(function(spinner) {
+    function stopSpinner(wrapper) {
+      wrapper.select('img.spin, span.spin').each(function(spinner) {
         spinner.hide();
       });
     }
 
     document.on('ajax:create', 'form', function(event, form) {
       if (form == event.findElement()) {
-        startFormSpinner(form);
+        startSpinner(form);
         if (form.readAttribute('data-clear')) form.reset();
       }
+      if (wrapper = form.up('div.buttons')) startSpinner(wrapper);
     });
     document.on('ajax:complete', 'form', function(event, form) {
-      if (form == event.findElement()) stopFormSpinner(form);
+      if (form == event.findElement()) stopSpinner(form);
+      if (wrapper = form.up('div.buttons')) stopSpinner(wrapper);
     });
   });
 })();
