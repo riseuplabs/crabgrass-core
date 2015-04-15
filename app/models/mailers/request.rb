@@ -1,5 +1,18 @@
 module Mailers::Request
 
+  #
+  # Send an email to invite some one to a group via email.
+  #
+  def invite_to_join_us(request, options)
+    setup(options)
+    @request = request
+    @group = request.requestable
+    @user = request.created_by
+    @recipients = request.email
+    @subject = I18n.t(:group_invite_subject, group: @group.display_name)
+    mail from: @from, to: @recipients, subject: @subject
+  end
+
   ###
   #  UPGRADE: These have not been ported over to core yet.
   #
@@ -14,22 +27,6 @@ module Mailers::Request
   #    call mail with subject, to, from at the end.
   #
   ###
-
-  #
-  # Send an email letting the user know that a page has been 'sent' to them.
-  #
-
-  def request_to_join_us(request, options)
-    # setup(options)
-    # accept_link = url_for(:controller => 'requests', :action => 'accept',
-    #    :path => [request.code, request.email.gsub('@','_at_')])
-    # group_home = url_for(:controller => request.group.name) # tricky way to get url /groupname
-
-    # recipients request.email
-    # subject I18n.t(:group_invite_subject, :group => request.group.display_name)
-    # body({ :from_user => @current_user, :group => request.group, :link => accept_link,
-    #    :group_home => group_home })
-  end
 
   def request_to_destroy_our_group(request, user)
     # @group = request.group

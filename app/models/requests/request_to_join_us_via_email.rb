@@ -71,11 +71,6 @@ class RequestToJoinUsViaEmail < Request
     self.code = Password.random(8)
   end
 
-  #after_create :send_invite_code
-  #def send_invite_code
-  #  Mailer::Request.deliver_invite_code(self) if recipient && recipient.receives_email_on('messages')
-  #end
-
   protected
 
   # we allow duplicate email invitations
