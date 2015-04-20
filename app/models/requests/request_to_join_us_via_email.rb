@@ -58,7 +58,6 @@ class RequestToJoinUsViaEmail < Request
     end
     self.recipient = user
     save!
-    return self
   end
 
   before_validation :set_code, on: :create

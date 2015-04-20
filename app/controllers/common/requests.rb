@@ -80,7 +80,9 @@ module Common::Requests
 
   def fetch_request
     @request = request_context.find(params[:id])
-    @request.try.redeem_code!(current_user) if params[:code]
+    if params[:code] && @request.recipient != current_user
+      @request.try.redeem_code!(current_user)
+    end
   end
 
   def request_context
