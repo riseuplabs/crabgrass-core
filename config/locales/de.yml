@@ -3,6 +3,7 @@ de:
   signup_link: Neues Konto erstellen
   signup_email_info: 'Optional: Wird gebraucht, falls du dein Passwort vergisst'
   forgot_password_link: Passwort vergessen?
+  signup_info: Wähle deinen Nick und dein Passwort, und klicke dann auf "%{sign_up}"
   login_failure_reason: Nutzer_innenname oder Passwort falsch.
   signup_success_message: Danke für die Registrierung!
   login_name: Nutzer_innenname
@@ -21,7 +22,7 @@ de:
   forgot_password_mail_greeting: '%{user}, um Dein Passwort zurückzusetzen besuche bitte'
   forgot_password_mail_expiry: Dieser Link behält seine Gültigkeit für 24 Stunden. Willst Du Dein Passwort später rücksetzen musst Du Dir auf der "Passwort vergessen"-Seite einen neuen Link zuschicken lassen.
   reset_password_mail_greeting: '%{user}, dein Passwort wurde auf deinen Wunsch zurückgesetzt.'
-  reset_password_mail_warning: Wenn du keine Anfrage gestellt hast, dein Passwort zurückzusetzen, kontaktiere uns bitte.
+  reset_password_mail_warning: Wenn du keine Passwortänderung angefragt hast, kontaktiere uns bitte.
   your_login: Dein Login
   invalid_email_text: Die von dir angegebene E-Mailadresse ist ungültig.
   reset_password: Passwort zurücksetzen
@@ -48,7 +49,7 @@ de:
   anonymize_display_name: Anonymisiere deinen Anzeige-Namen
   anonymize_display_name_info: Ersetzt überall deinen Anzeige-Namen mit 'Anonym'
   destroy_comments: Kommentare vernichten
-  destroy_comments_info: Alle deine Kommentare zu Seiten werden gelöscht. Dadurch könnte es schwierig werden, die übrigen Kommentare von anderen zu verstehen.
+  destroy_comments_info: 'Alle deine zu Seiten erstellten Kommentare werden gelöscht. Dadurch könnte es schwierig werden, die verbleibenden Kommentare von anderen zu verstehen. '
   confirm_account_removal: Bist du sicher, dass du dein Konto löschen willst? Dieser Schritt kann nicht rückgängig gemacht werden und deine Daten werden gelöscht.
   account_successfully_removed: Dein Zugang wurde gelöscht. Wir werden ihn und alle damit in Verbindung stehenden Daten aus unserer Datenbank entfernen.
   crabgrass:
@@ -85,7 +86,7 @@ de:
   ok_button: OK
   done: Fertig
   show_button: Zeige
-  show_thing: Zeige %{thing}
+  show_thing: '%{thing} zeigen'
   confirm: Bestätigen
   alert: Warnung
   loading_progress: Lade...
@@ -122,7 +123,7 @@ de:
   image_count: Bild %{number} von %{count}
   image_count_total: '%{count} Bilder'
   show_gallery: Galerie anzeigen
-  edit_gallery_explanation: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
+  edit_gallery_explaination: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
   edit_image: Bild bearbeiten
   show_gallery_explaination: Klick auf Miniaturbild um das Bild in voller Größe zu sehen.
   add_images_or_zips: Füge Bilder oder Zip-Dateien hinzu
@@ -200,7 +201,7 @@ de:
   permissions: Berechtigungen
   notification: Benachrichtigung
   notice: Ankündigung
-  notices: Ankündigungen
+  notices: Hinweise
   dismiss: Ablehnen
   locale: Lokalisierung
   description: Beschreibung
@@ -220,7 +221,7 @@ de:
   hide: Verstecken
   display: Zeigen
   message: Nachricht
-  private_message_notice: Ankündigung von Privatnachrichten
+  private_message_notice: Hinweis auf Privatnachrichten
   visits: Besuche
   group: Gruppe
   groups: Gruppen
@@ -244,7 +245,7 @@ de:
   network_committees_may_not_join_networks: Arbeitsgruppen von anderen Netzwerken dürfen nicht beitreten.
   networks_may_not_join_networks: Netzwerke können anderen Netzwerken nicht beitreten.
   may_request_membership_description: Ein "%{group} beitreten"-Link wird auf deiner Gruppenseite erscheinen. Dadurch können Mitgliedschaftsanfragen an deine Gruppe geschickt werden, welche entweder angenommen oder abgelehnt werden können.
-  open_group: Offene Gruppe
+  open_group: Offene %{group}
   open_group_description: Nutzer_Innen werden der %{group} sofort hinzugefügt - Anfragen müssen nicht erst freigeschaltet werden.
   membership_requests: Mitgliedschaftsanfragen
   group_membership_count: '%{count} Mitglieder'
@@ -277,7 +278,7 @@ de:
   my_groups: Meine Gruppen
   basic_settings: Grundeinstellungen
   send_invites: Einladungen senden
-  view_requests: Anfragen zeigen
+  view_requests: Anfragen ansehen
   add_members_to_committee: Füge ein neues Mitglied der Gruppe dieser Arbeitsgruppe hinzu. Um Leute hinzuzufügen, die nicht zur übergeordneten Gruppe gehören, schicke ihnen stattdessen eine Einladung.
   join_group_link: '%{group_type} beitreten'
   leave_group_link: Verlasse %{group_type}
@@ -294,7 +295,7 @@ de:
     recent_pages: Aktuelle Seiten
     info:
       page_search: Finde alle Seiten, zu denen du direkt oder über deine Gruppen Zugang hast
-      recent_pages: Du hast zu diesen Seiten etwas beigetragen oder sie wurden mit dir geteilt
+      recent_pages: Seiten, zu denen du etwas beigetragen hast oder die mit dir geteilt wurden
   my_dashboard: Meine Übersicht
   uploaded_image_cropped: Hochgeladenes Bild wird auf 202 Pixel im Quadrat zugeschnitten/gestreckt.
   select_image_file: Wähle Bilddatei
@@ -307,12 +308,16 @@ de:
   language: Sprache
   time_zone: Zeitzone
   do_you_want_to_receive_email_notifications: Möchtest du E-Mailbenachrichtigungen zu Seiten erhalten, die du 'beobachtest'?
+  notification_select:
+    none: 'Nein, ich möchte keine eMails bei Änderungen.'
+    single: 'Ja, ich möchte eine eMail pro Änderung bekommen.'
+    digest: 'Ja, ich möchte eine tägliche Zusammenfassung aller Änderungen bekommen.'
   send_message_link: Nachricht absenden
   messages_with: Konversation mit %{other_user}
   message_to_self_error: Selbstgespräche sind nicht möglich
   message_you_wrote_caption: 'Du hast geschrieben:'
   message_user_wrote_caption: '%{user} schrieb:'
-  unread_private_message: Du hast eine ungelesene private Nachricht von %{user}
+  unread_private_message: Du hast eine ungelesene Privatnachricht von %{user}
   menu_me: Ich
   menu_groups: Gruppen
   menu_home: Start
@@ -330,7 +335,7 @@ de:
   properties: Eigenschaften
   popular_pages: Beliebte Seiten
   advanced: Erweitert
-  access: Zugang
+  access: Zugriff
   active_filters: Aktive Filter
   all_pages: Alle Seiten
   created_by_me: Erstellt
@@ -345,11 +350,11 @@ de:
   edited_by_user: Bearbeitet von %{user}
   owned_by_me: Eigene
   owned_by_user: Gehört %{user}
-  most_active: Am Aktivsten
+  most_active: Am aktivsten
   most_stars: Mit den meisten Sternchen versehen
   most_viewed: Meistangeschaut
-  filter_user_description: Suche nach Seiten zu denen ein_e bestimmte_r Nutzer_in Zugang hat.
-  filter_group_description: Suche nach Seiten zu denen eine bestimmte Gruppe Zugang hat.
+  filter_user_description: Suche nach Seiten, zu denen ein_e bestimmte_r Nutzer_in Zugang hat.
+  filter_group_description: Suche nach Seiten, zu denen eine bestimmte Gruppe Zugang hat.
   starred: Mit Sternchen versehen
   viewed: Angesehen
   edited: Bearbeitet
@@ -400,11 +405,11 @@ de:
   page_access_edit: Schreibrechte
   page_access_none: Kein Zugriff
   page_access_view: Nur Leserechte
-  share_page_link: Teile %{page_class}
-  share_page_recipients: Teile diese %{page_class} mit
+  share_page_link: '%{page_class} teilen'
+  share_page_recipients: Seite teilen mit
   notify_page_link: Schicke Eine Benachrichtigung
   notify_contribution: <b>Mitwirkende:</b> Benachrichtige Leute, die an dieser Seite <b>mitgewirkt</b> haben.
-  notify_current_access: <b>Teilnehmer_innen:</b> benachrichtige Leute, die bereits Zugang zu dieser Seite haben.
+  notify_current_access: <b>Teilnehmer_innen:</b> benachrichtige Andere, die bereits Zugang zu dieser Seite haben.
   notification_message: Benachrichtigung
   send_only_with_encryption: Nur senden, wenn verschlüsselte Auslieferung möglich ist
   share_send_notification: Sende Benachrichtigung
@@ -432,12 +437,12 @@ de:
   page_history_deleted_page: '%{user_name} hat die Seite gelöscht'
   page_history_destroyed_comment: '%{user_name} hat einen Kommentar vernichtet'
   page_history_details_change_title: 'Von: "%{from}" An: "%{to}"'
-  page_history_granted_group_full_access: '%{user_name} hat Vollzugriff auf die Gruppe %{item_name} erhalten'
-  page_history_granted_group_read_access: '%{user_name} hat Lesezugriff auf die Gruppe %{item_name} erhalten'
-  page_history_granted_group_write_access: '%{user_name} hat Schreibzugriff auf die Gruppe %{item_name} erhalten'
-  page_history_granted_user_full_access: '%{user_name} erlaubte %{item_name} Vollzugriff'
-  page_history_granted_user_read_access: '%{user_name} erlaubte %{item_name} Lesezugriff'
-  page_history_granted_user_write_access: '%{user_name} erlaubte %{item_name} Schreibzugriff'
+  page_history_granted_group_full_access: '%{user_name} hat der Gruppe %{item_name} Vollzugriff erteilt'
+  page_history_granted_group_read_access: '%{user_name} hat der Gruppe %{item_name} Leserechte erteilt'
+  page_history_granted_group_write_access: '%{user_name} hat der Gruppe %{item_name} Schreibrechte erteilt'
+  page_history_granted_user_full_access: '%{user_name} hat dem_der Nutzer_in %{item_name} Vollzugriff erteilt'
+  page_history_granted_user_read_access: '%{user_name} hat dem_der Nutzer_in %{item_name} Leserechte erteilt'
+  page_history_granted_user_write_access: '%{user_name} hat dem_der Nutzer_in %{item_name} Schreibrechte erteilt'
   page_history_make_private: '%{user_name} hat die Option abgewählt, diese Seite öffentlich zu machen'
   page_history_make_public: '%{user_name} hat diese Seite öffentlich gemacht'
   page_history_remove_star: '%{user_name} hat ein Sternchen entfernt'
@@ -476,8 +481,8 @@ de:
   page_group_text: Texte und Diskussionen
   page_group_media: Multimedia
   page_group_planning: Planungswerkzeuge
-  pending_tasks: offene Aufgaben.
-  completed_tasks: erledigte Aufgaben
+  pending_tasks: Offene Aufgaben
+  completed_tasks: Erledigte Aufgaben
   no_pending_tasks: keine offenen Aufgaben
   no_completed_tasks: keine erledigten Aufgaben
   assign_to: übertragen an
@@ -547,14 +552,14 @@ de:
   friends_description: Deine Freunde
   may_view_label: Wer darf dein Profil sehen?
   may_view_description: Wenn diese Option nicht angeklickt ist, wird dein Profil komplett versteckt.
-  may_see_contacts_label: Wer darf meine Kontakte sehen?
-  may_see_contacts_description: Zeige deine Kontakte öffentlich.
+  may_see_contacts_label: Wer darf deine Kontakte sehen?
+  may_see_contacts_description: Erlaube Anderen, deine Kontakte zu sehen.
   may_see_groups_label: Wer darf deine Gruppen sehen?
-  may_see_groups_description: Zeige deine Gruppen öffentlich.
-  may_pester_label: Wer darf was mit dir teilen?
-  may_pester_description: Erlaube Leuten dir Nachrichten zu schicken, Seiten mit dir zu teilen oder dir Einladungen zu schicken.
+  may_see_groups_description: Erlaube Anderen, deine Gruppen zu sehen.
+  may_pester_label: Wer darf etwas mit dir teilen?
+  may_pester_description: Erlaube Anderen, dir Nachrichten zu schicken, Seiten mit dir zu teilen oder dir Einladungen zu schicken.
   may_request_contact_label: Kontaktanfrage?
-  may_request_contact_description: Erlaube Leuten dir eine Kontaktanfrage zu schicken.
+  may_request_contact_description: Erlaube Anderen, dir eine Kontaktanfrage zu schicken.
   sharing_and_requests: Teilen und Anfragen
   view_profile: Profil ansehen
   profile_member_since: Mitglied seit
@@ -564,7 +569,7 @@ de:
   organizational_role: Organisatorische Rolle
   phone_number: Telefonnummer
   email_addresses: E-Mail Adressen
-  post_message: Poste Nachricht
+  post_message: Nachricht versenden
   request_friend_link: Zu meinen Kontakten hinzufügen
   remove_friend_link: Aus meinen Kontakten entfernen
   edit_profile_link: Profil bearbeiten
@@ -598,15 +603,17 @@ de:
       request_to_remove_user: Anfrage Mitglied zu entfernen
   request_to_friend: Kontaktanfrage stellen
   request_to_friend_short: Soll %{user} ein Kontakt von %{other_user} werden?
-  request_to_friend_description: '%{user} würde gerne %{other_user} zu seinen_ihren Kontakten hinzufügen'
+  request_to_friend_description: '%{user} würde %{other_user} gerne zu seinen_ihren Kontakten hinzufügen'
   request_to_destroy_our_group: Anfrage Gruppe zu vernichten
   request_to_join_our_network_short: Soll %{group} dem Netzwerk %{network} beitreten?
   request_to_join_our_network_description: Gruppe %{group} wurde eingeladen, sich dem Netzwerk %{network} anzuschließen
   request_to_join_us:
+    one: Einladung beizutreten
     other: Einladungen beizutreten
   request_to_join_us_short: Soll %{user} %{group} beitreten?
   request_to_join_us_description: '%{user} wurde eingeladen, sich der Gruppe %{group} anzuschließen'
   request_to_join_us_via_email:
+    one: Einladung beizutreten
     other: Einladungen beizutreten
   request_to_join_us_via_email_short: Soll %{email} %{group} beitreten?
   request_to_join_us_via_email_description: Die E-Mailadresse %{email} wurde eingeladen, sich %{group} anzuschließen
@@ -639,7 +646,7 @@ de:
   files: Dateien
   photo: Foto
   caption: Überschrift
-  photo_credit: Photocredit
+  photo_credit: Bildnachweis
   video_embed: Eingebettet
   size: Größe
   illegal_redirect: Ungültige Weiterleitung
@@ -667,8 +674,8 @@ de:
   activity_group_destroyed: '%{group} wurde durch %{user} vernichtet'
   activity_wall_message: '%{author} schrieb an %{user}: %{message}'
   activity_message: '%{author} schrieb: %{message}'
-  activity_unread: Du hast %{count} ungelesene [private Nachrichten]
-  activity_unread_singular: Du hast eine ungelesene [private Nachricht]
+  activity_unread: Du hast %{count} ungelesene [Privatnachrichten]
+  activity_unread_singular: Du hast eine ungelesene [Privatnachricht]
   activity_user_left_site: '%{user} hat %{group} verlassen'
   activity_message_received: 'Du hast eine %{message_tag} von %{other_user} erhalten: %{title}'
   activity_twinkled: '%{user} hat deinen Beitrag "%{post}" mit Sternchen versehen.'
@@ -710,7 +717,7 @@ de:
   drag_and_drop_to_rearrange_photos: Benutze Drag&amp;Drop um die Reihenfolge der Bilder zu verändern
   no_images_in_gallery: In dieser Galerie befinden sich noch keine Bilder
   add_existing_image: Bild hinzufügen
-  add_photo_to_gallery: Bild anklicken um es hinzuzufügen
+  add_photo_to_gallery: Bild anklicken, um es hinzuzufügen
   cancel_link: Abbrechen
   file_must_be_image_error: Nur Bilddateien können zur Galerie hinzugefügt werden.
   add_another_file: Weitere Datei hinzufügen
@@ -742,8 +749,8 @@ de:
   my_contacts: Meine Kontakte
   anonymous: anonym
   login_required: Login erforderlich
-  login_required_description: Logge dich bitte ein um diese Aktion auszuführen.
-  permission_denied_description: Du hast keine ausreichenden Berechtigungen um diese Aktion auszuführen.
+  login_required_description: Logge dich bitte ein, um diese Aktion auszuführen.
+  permission_denied_description: Du hast keine ausreichenden Berechtigungen, um diese Aktion auszuführen.
   permission_denied: Zugriff verweigert
   chat: Chat
   left_the_chatroom: hat den Chatroom verlassen
@@ -755,7 +762,7 @@ de:
   add_tags: Tags hinzufügen
   current_tags: Aktuelle Tags
   welcome_title: Willkommen auf %{site_title}
-  welcome_message: Crabgrass erm&ouml;glicht es am sozialen Wandel interessierten Organisationen Dinge anzupacken, sich zu Koordinieren und zu Netzwerken.
+  welcome_message: Crabgrass erm&ouml;glicht es am sozialen Wandel interessierten Organisationen Dinge anzupacken, sich zu koordinieren und zu netzwerken.
   wiki: Wiki
   public_wiki: Öffentliches Wiki
   private_wiki: Privates Wiki

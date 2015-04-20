@@ -3,6 +3,7 @@
   signup_link: Lag ny bruker
   signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
   forgot_password_link: Glemt passordet?
+  signup_info: Velg brukernavn og passord, og klikk på %{sign_up}
   login_failure_reason: Brukernavn eller passord er feil.
   signup_success_message: Takk for registreringen!
   login_name: Brukernavn
@@ -56,12 +57,19 @@
   login_password: Passord
   signup_password: Ditt passord
   remove_your_account: Fjern din brukerkonto
+  anonymize_display_name: Anonymiser visningsnavn
   anonymize_display_name_info: Erstatter ditt navn med 'Anonym' overalt
   destroy_comments: Destruer kommentarer
   destroy_comments_info: Dette fjerner alle dine kommentarer på sider. Det kan gjøre det vanskelig å forstå andres kommentarer som står igjen.
   confirm_account_removal: Er du sikker på at du vil fjerne din brukerkonto? Dette kan ikke gjøres om og dine data vil gå tapt.
   account_successfully_removed: Din konto er nå fjernet. Vi vil slette kontoen og alle assosierte data fra vår database.
   crabgrass:
+    powered_by_html: 'Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
+
+      '
     report_a_bug: rapporter en bug
     request_a_feature: etterspør en funksjon
     help_pages: crabgrass hjelp
@@ -125,8 +133,9 @@
   image_count: Bilde %{number} av %{count}
   image_count_total: '%{count} Fotoer'
   show_gallery: Vis galleri
-  edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
+  edit_gallery_explaination: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
   edit_image: Rediger bilde
+  show_gallery_explaination: Klikk på miniatyrbilde for å se bildet i full størrelse.
   add_images_or_zips: Legg bilder til zipfil
   add_images_or_zips_explaination: Zipfil blir automatisk pakket ut og lagt til galleriet
   confirm_image_delete: Vil du virkelig slette dette bildet? Denne handlingen kan ikke gjøres om.
@@ -165,6 +174,7 @@
   pagination_previous: Forrige
   see_more_link: Mer
   see_less_link: Mindre
+  list_things: List %{things}
   thing_was_sent:
     one: '%{thing} ble sendt til %{recipient}.'
     other: '%{count} %{thing} ble sendt.'
@@ -188,6 +198,7 @@
   me: Meg
   back: Tilbake
   share: Del
+  contributed: Bidratt
   profile: Profil
   content: Innhold
   comments: Kommentarer
@@ -293,6 +304,7 @@
       page_search: Finn alle sider du har tilgang til direkte eller via dine grupper
       recent_pages: Du bidro til disse sidene eller de har blitt delt med deg
   my_dashboard: Kontrollpanel
+  uploaded_image_cropped: Bildet vil bli beskjært og strukket til 202 piksler i høyde og bredde.
   select_image_file: velg bildefil
   or_image_url: eller bilde-URL
   upload_image_link: last opp bilde
@@ -639,7 +651,10 @@
   photo: Foto
   caption: Bildetekst
   photo_credit: Bildekreditering
+  video_embed: Bygg inn
   size: Størrelse
+  illegal_redirect: Uautorisert videresending
+  redirect_to_foreign_domain: Du har blitt forsøkt videresendt til et fremmed domene (%{url}) etter å ha logget inn. Av sikkerhetsgrunner har vi tatt bort denne delen av URLen.
   save_wiki_before_adding_image: Vennligst lagre wikien før du legger til et bilde i den.
   preview_selected_image: Forhåndsvisning av valgt bilde
   image_size_info: Velg størrelse på bildet som skal settes inn
@@ -678,6 +693,7 @@
   created_on: Opprettet
   file_size: Filstørrelse
   format: Format
+  regenerate: generer miniatyrbilder på nytt
   version_number: versjon %{version}
   upload_image: Last opp bilde
   asset_version_list_version_heading: versjon

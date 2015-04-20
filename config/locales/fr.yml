@@ -3,6 +3,7 @@ fr:
   signup_link: Créer un nouveau compte ?
   signup_email_info: 'Optionnel: utilisé si vous oubliez votre mot de passe'
   forgot_password_link: J'ai oublié mon mot de passe
+  signup_info: Choisissez votre nom d'utilisateur et votre mot de passe avant de cliquer sur %{sign_up}
   login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
   signup_success_message: Merci de votre inscription !
   login_name: Nom d'utilisateur
@@ -63,6 +64,17 @@ fr:
   destroy_comments_info: Cela va détruire tous les commentaires que vous avez fait sur les pages, Cela peut rendre difficile la compréhension des commentaires restant des autres personnes.
   confirm_account_removal: Êtes-vous certain-e de vouloir supprimer votre compte ? Cette action est définitive et vos données seront perdues.
   account_successfully_removed: Votre compte a bien été supprimé. Nous allons le supprimer ainsi que toutes les informations associées dans la base de donnée.
+  crabgrass:
+    powered_by_html: 'Ce site est propulsé par <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux.
+
+      '
+    report_a_bug: signaler une anomalie
+    request_a_feature: demander une fonctionnalité
+    help_pages: pages d'aide de crabgrass
+    get_involved: s'impliquer
   destroy_confirmation: Êtes vous certain de vouloir effacer ce %{thing}? Cette opération est définitive.
   confirmation: Êtes-vous sûr-e ?
   cancel: Annuler
@@ -115,10 +127,15 @@ fr:
       enter_name_of_group_or_person: Indiquer le nom d'un groupe ou d'une personne
       enter_name_of_group: Indiquer le nom d'un groupe
       enter_name_of_person: Indiquer le nom d'une personne
+  actions:
+    task:
+      add: Ajouter une nouvelle tâche
+    possible:
+      add: Ajouter une nouvelle possibilité
   image_count: Image %{number} de %{count}
   image_count_total: '%{count} Images'
   show_gallery: Afficher la galerie
-  edit_gallery_explanation: Ajouter de nouvelles images ou glisser les images pour les réordonner
+  edit_gallery_explaination: Ajouter de nouvelles images ou glisser les images pour les réordonner
   edit_image: Modifier l'image
   show_gallery_explaination: Cliquer sur la vignette pour voir l'image complète
   add_images_or_zips: Ajouter des images ou une archive Zip
@@ -140,11 +157,6 @@ fr:
   edit_image_header: Modifier l'image et le fichier audio
   upload_images_and_zip_files_help: 'Optionnel: Sélectionner une image ou une archive Zip à téléverser'
   close_and_reload_gallery: Fermer et recharger la galerie
-  audio_updated: Audio mis à jour
-  audio_selected: Audio sélectionné pour l'image
-  audio_updated_successfully: L'audio pour cette image a été mis à jour avec succès
-  audio_selected_successfully: Vous avez sélectionné une nouvelle piste audio pour cette image
-  audio_attached: Cette image a une piste audio associée, le chargement peut prendre un peu de temps.
   search: Rechercher
   thing_not_found: '%{thing} non trouvé-e'
   no_things_found: '%{things} non trouvé-es.'
@@ -290,6 +302,12 @@ fr:
   descriptive_name_for_display: Un nom explicite utilisé pour l'affichage
   this_is_committee: Cette commission fait partie de %{parent_group}.
   network_initial_member: Choisissez un groupe comme membre initial de ce réseau.
+  headings:
+    page_search: Chercher dans les pages
+    recent_pages: Pages récentes
+    info:
+      page_search: Trouver toutes les pages accessibles directement ou via vos groupes
+      recent_pages: Vous avez contribué à ces pages ou elles ont été partagées avec vous
   my_dashboard: Mon tableau de bord
   uploaded_image_cropped: Les images téléversées seront réduites à un carré de 96 pixels de côté.
   select_image_file: Sélectionner le fichier image
@@ -302,6 +320,10 @@ fr:
   language: Langue
   time_zone: Fuseau Horaire
   do_you_want_to_receive_email_notifications: Voulez-vous recevoir des notifications par mail sur les modifications des pages que vous 'surveillez' ?
+  notification_select:
+    none: 'Non: pas de mails pour les modifications'
+    single: 'Oui: un mail par modification'
+    digest: 'Oui: un résumé quotidien des modifications'
   send_message_link: Envoyer un message
   messages_with: 'Conversation avec '
   message_to_self_error: Ne peut parler à soi-même
@@ -355,7 +377,7 @@ fr:
   no_change: aucun changement
   updated: Mise à jour
   created: créé
-  unread: marquer comme non lu
+  unread: non lu
   read: lu
   page_name_description: nom unique optionnel (utilisé pour créer l'URL de cette page)
   filter_tag_description: Rechercher les pages avec une étiquette en particulier.
@@ -367,6 +389,8 @@ fr:
   email_link_expires: Ce lien expirera dans %{days} jours.
   page_notice_title: <user>%{from}</user> vous a envoyé la page "%{page_title}"
   page_notice_title_with_message: '<user>%{from}</user> vous a envoyé la page "%{page_title}" avec le message:'
+  page_updated: <user>%{from}</user> a mis à jour la page "%{page_title}"
+  page_update: Page modifiée
   watch_checkbox: Suivre les mises à jour
   add_star_link: Ajouter une étoile (%{star_count})
   remove_star_link: Retirer l'étoile (%{star_count})
@@ -473,8 +497,69 @@ fr:
   completed_tasks: Tâches accomplies
   no_pending_tasks: Aucune tâche en cours
   no_completed_tasks: Aucune tâche accomplie
-  add_task: Ajouter une tâche
   assign_to: Confier à
+  vote:
+    really_remove_this: Voulez-vous vraiment retirer cette option ?
+    you_have_not_ranked: 'Vous n''avez pas encore classé:'
+    voted_on: A voté sur
+    not_voted_on: N'a pas voté sur
+  vote_good: bien
+  vote_ok: ok
+  vote_bad: mauvais-e
+  vote_none: aucun•e
+  vote_no: 'Non'
+  ranked_vote_instructions: 'Glisser les objets dans la liste suivante pour les ordonner du préféré en haut au moins apprécié en bas.
+
+    Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix.'
+  confirm_vote_button: Confirmer le Vote
+  edit_my_vote_tab: Modifier mon vote
+  show_results_tab: Voir les résultats
+  top_pick: premier choix
+  first_choice_of: premier choix de
+  save_survey_button: Sauvegarder l'enquête
+  survey_may_create_response: Créer une réponse ?
+  survey_may_see_responses: Voir les réponses ?
+  survey_may_rate: Évaluer des réponses ?
+  survey_may_see_ratings: Voir les réponses ?
+  survey_question_label: 'Question :'
+  survey_description_heading: Description
+  survey_description_explaination: Ce texte va être affiché en introduction, et sera la première chose que le ou la sondé•e va voir.
+  select_many_choices_label: 'Sélectionner plusieurs réponses:'
+  select_one_choices_label: 'Sélectionner une seule réponse:'
+  video_embed_code_description: Ce n'est pas l'adresse du site web. C'est un code délimité par < et > que le site vidéo – youtube, etc. – met à disposition pour afficher la vidéo sur d'autres sites.
+  private_question_label: Question privée
+  their_answer_goes_here_label: Leur réponse va ici...
+  survey_response_by: Réponse de %{login}
+  see_whole_response_link: voir la réponse complète
+  survey_average_rating_heading: 'Note moyenne:'
+  survey_previous_result: précédemment
+  survey_rated_by_1_person_caption: Évalué par une personne
+  survey_rated_by_x_people_caption: Évalué par %{count} personnes.
+  survey_respond_button: Répondre
+  survey_rate_this_response_heading: Évaluer cette réponse
+  survey_select_a_rating_message: Choisir une note pour voir l'objet suivant.
+  survey_skip_next_link: Passer à la suite
+  survey_you_already_rated_response_with_rating_heading: Vous avez déjà évalué cette réponse - vous y avez donné un %{rating}.
+  survey_you_previousely_rated_message: Vous avez évalué cet objet à %{rating}.
+  survey_your_rating_heading: 'Votre évaluation de cette réponse'
+  survey_questions: Questions
+  add_long_text_question_link: Longue réponse
+  add_select_many_question_link: Sélectionner Plusieurs Réponses
+  add_select_one_question_link: Sélectionner Une Réponse
+  add_short_text_question_link: Courte Réponse
+  upload_image_question_link: Télécharger une image
+  video_link_question_link: Lien vidéo
+  survey_introduction_tab: Introduction
+  survey_list_all_tab: Lister les Réponses
+  survey_my_response_tab: Ma réponse
+  survey_please_check_and_rate_message: Vérifiez votre réponse et évaluez les réponses des autres personnes.
+  survey_please_check_message: Merci de passer vos réponses en revue.
+  survey_thanks_submit_message: Merci de votre réponse.
+  drag_to_move_tip: Déplacer
+  each_line_is_a_choice_caption: (chaque ligne est un choix possible)
+  no_data_uploaded_label: Aucune donnée téléchargée
+  current_video_sources: 'Actuellement supportés: youtube, blip.tv, google video et vimeo.'
+  video_embed_code_prompt: Code importé depuis une source vidéo extérieure.
   permissions_key: Clé
   public_description: Tout le monde sur l'Internet
   peers_description: Les membres de vos groupes
@@ -494,7 +579,7 @@ fr:
   profile_member_since: Membre Depuis
   home: Accueil
   banner: Bannière
-  banner_info: La taille optimale est 872 x 100 pixels
+  banner_info: La taille optimale est %{optimal_dimensions} pixels
   organizational_role: rôle organisationnel
   phone_number: Numéro de téléphone
   email_addresses: Adresses Mail
@@ -674,66 +759,6 @@ fr:
   alert_saved: Modifications effectuées
   alert_permission_denied: Autorisation refusée
   csrf_error_message: 'Votre demande de connexion ressemble à une tentative de piratage de ce site. Pas d''inquiétude: cette erreur arrive fréquemment même pour des demandes anodines. Nous sommes simplement particulièrement paranoïaques. Tout ce que vous avez à faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:'
-  ranked_vote_instructions: 'Glisser les objets dans la liste suivante pour les ordonner du préféré en haut au moins apprécié en bas.
-
-    Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix.'
-  add_new_possibility_link: Ajouter une nouvelle possibilité
-  add_possibility_button: Ajouter une possibilité
-  new_possibility_heading: Nouvelle possibilité
-  confirm_vote_button: Confirmer le Vote
-  edit_my_vote_tab: Modifier mon vote
-  show_results_tab: Voir les résultats
-  top_pick: premier choix
-  first_choice_of: premier choix de
-  vote_good: bien
-  vote_ok: ok
-  vote_bad: mauvais-e
-  vote_none: aucun•e
-  vote_no: 'Non'
-  save_survey_button: Sauvegarder l'enquête
-  survey_may_create_response: Créer une réponse ?
-  survey_may_see_responses: Voir les réponses ?
-  survey_may_rate: Évaluer des réponses ?
-  survey_may_see_ratings: Voir les réponses ?
-  survey_question_label: 'Question :'
-  survey_description_heading: Description
-  survey_description_explaination: Ce texte va être affiché en introduction, et sera la première chose que le ou la sondé•e va voir.
-  select_many_choices_label: 'Sélectionner plusieurs réponses:'
-  select_one_choices_label: 'Sélectionner une seule réponse:'
-  video_embed_code_description: Ce n'est pas l'adresse du site web. C'est un code délimité par < et > que le site vidéo – youtube, etc. – met à disposition pour afficher la vidéo sur d'autres sites.
-  private_question_label: Question privée
-  their_answer_goes_here_label: Leur réponse va ici...
-  survey_response_by: Réponse de %{login}
-  see_whole_response_link: voir la réponse complète
-  survey_average_rating_heading: 'Note moyenne:'
-  survey_previous_result: précédemment
-  survey_rated_by_1_person_caption: Évalué par une personne
-  survey_rated_by_x_people_caption: Évalué par %{count} personnes.
-  survey_respond_button: Répondre
-  survey_rate_this_response_heading: Évaluer cette réponse
-  survey_select_a_rating_message: Choisir une note pour voir l'objet suivant.
-  survey_skip_next_link: Passer à la suite
-  survey_you_already_rated_response_with_rating_heading: Vous avez déjà évalué cette réponse - vous y avez donné un %{rating}.
-  survey_you_previousely_rated_message: Vous avez évalué cet objet à %{rating}.
-  survey_your_rating_heading: 'Votre évaluation de cette réponse'
-  survey_questions: Questions
-  add_long_text_question_link: Longue réponse
-  add_select_many_question_link: Sélectionner Plusieurs Réponses
-  add_select_one_question_link: Sélectionner Une Réponse
-  add_short_text_question_link: Courte Réponse
-  upload_image_question_link: Télécharger une image
-  video_link_question_link: Lien vidéo
-  survey_introduction_tab: Introduction
-  survey_list_all_tab: Lister les Réponses
-  survey_my_response_tab: Ma réponse
-  survey_please_check_and_rate_message: Vérifiez votre réponse et évaluez les réponses des autres personnes.
-  survey_please_check_message: Merci de passer vos réponses en revue.
-  survey_thanks_submit_message: Merci de votre réponse.
-  drag_to_move_tip: Déplacer
-  each_line_is_a_choice_caption: (chaque ligne est un choix possible)
-  no_data_uploaded_label: Aucune donnée téléchargée
-  current_video_sources: 'Actuellement supportés: youtube, blip.tv, google video et vimeo.'
-  video_embed_code_prompt: Code importé depuis une source vidéo extérieure.
   set_status_button: Rafraîchir le statut
   my_contacts: Contacts
   anonymous: anonyme
