@@ -48,7 +48,7 @@ module Common::Requests
   #
   def destroy
     @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
+    notice request_destroyed_message, :later
     render(:update) {|page| page.redirect_to requests_path}
   end
 
@@ -60,6 +60,10 @@ module Common::Requests
       when 'rejected' then :rejected;
       else :pending;
     end
+  end
+
+  def request_destroyed_message
+    :thing_destroyed.tcap thing: I18n.t(@request.name, count: 1)
   end
 
   #def left_id(request)
