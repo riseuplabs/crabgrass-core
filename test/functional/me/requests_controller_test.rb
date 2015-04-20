@@ -43,4 +43,10 @@ class Me::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_other_requests_hidden
+    @user  = FactoryGirl.create(:user)
+    login_as @user
+    get :show, id: Request.last
+    assert_not_found
+  end
 end

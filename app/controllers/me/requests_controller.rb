@@ -1,7 +1,7 @@
 class Me::RequestsController < Me::BaseController
 
   include_controllers 'common/requests'
-  
+
   def index
     @requests = Request.
       having_state(current_state).
@@ -28,5 +28,5 @@ class Me::RequestsController < Me::BaseController
   def requests_path(*args)
     me_requests_path(*args)
   end
-  
+
 end

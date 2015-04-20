@@ -7,6 +7,9 @@ module AccountManagement
     fill_in 'user_password', with: @user.password
     fill_in 'user_password_confirmation', with: @user.password
     click_on :signup_button.t
+    assert_no_content :signup_button.t
+    # make sure the id is set but also keep the password instance var
+    @user.id = User.where(login: @user.login).pluck(:id).first
   end
 
   def login(user = nil)

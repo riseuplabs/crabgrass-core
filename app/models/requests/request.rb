@@ -135,6 +135,12 @@ class Request < ActiveRecord::Base
     where(requestable_id: requestable)
   end
 
+  def self.visible_to(user)
+    where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
+      user.id, user.all_group_ids, user.id
+  end
+
+
   MEMBERSHIP_TYPES = [
     'RequestToJoinOurNetwork',
     'RequestToJoinUs',
@@ -275,7 +281,8 @@ class Request < ActiveRecord::Base
     # WARNING: don't pass the whole 'options' hash here, as 'human' will
     #     add :default and :scope options, which break our translations.
     thing = self.class.model_name.human(count: options[:count])
-    options.merge!(thing: thing, recipient: self.recipient.display_name)
+    options.merge! thing: thing,
+      recipient: recipient.try.display_name || email
     if self.errors.any?
       { type: :error,
         text: :thing_was_not_sent.t(options),

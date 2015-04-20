@@ -1,10 +1,10 @@
 class GroupObserver < ActiveRecord::Observer
 
+  # TODO: We should have Activities for groups not one per current member
   def before_destroy(group)
     key = rand(Time.now.to_i)
     group.users_before_destroy.each do |recipient|
       GroupDestroyedActivity.create!(groupname: group.name, recipient: recipient, destroyed_by: group.destroyed_by, key: key)
-      Mailer.group_destroyed_notification(recipient, group).deliver
     end
   end
 
