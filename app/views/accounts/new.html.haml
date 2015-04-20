@@ -3,7 +3,7 @@
   = form_for(:user, url: account_path, html: {id: 'signup_form'}) do |user|
     = formy(:simple_form) do |f|
       - f.row do |r|
-        - r.label :login.t
+        - r.label :username.t
         - r.input user.text_field(:login, class: 'form-control')
       - f.row do |r|
         - r.label :password.t
