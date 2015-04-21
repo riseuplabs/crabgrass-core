@@ -39,7 +39,7 @@
 .images_16 {background-image: url(/images/png/16/images.png)}
 .inbox_16 {background-image: url(/images/png/16/inbox.png)}
 .info_16 {background-image: url(/images/png/16/info.png)}
-.key_16 {background-image: url(/images/png/16/key.png)}
+.key_16, .btn.active.key_16 {background-image: url(/images/png/16/key.png)}
 .left_16 {background-image: url(/images/png/16/left.png)}
 .lightbulb_16 {background-image: url(/images/png/16/lightbulb.png)}
 .lightning_16 {background-image: url(/images/png/16/lightning.png)}
@@ -141,7 +141,7 @@
 .weather_sun_16 {background-image: url(/images/png/16/weather_sun.png)}
 .week_16 {background-image: url(/images/png/16/week.png)}
 .whistle_16 {background-image: url(/images/png/16/whistle.png)}
-.world_16 {background-image: url(/images/png/16/world.png)}
+.world_16, .world_16.btn.active {background-image: url(/images/png/16/world.png)}
 .wrench_16 {background-image: url(/images/png/16/wrench.png)}
 .announce_48 {background-image: url(/images/png/48/announce.png)}
 .beehive_48 {background-image: url(/images/png/48/beehive.png)}

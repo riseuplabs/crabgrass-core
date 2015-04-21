@@ -232,7 +232,7 @@ define_navigation do
       label  { :home.t }
       icon   :house
       url    { entity_path(@group) }
-      active { controller?('groups/home', 'groups/wikis', 'wikis/versions', 'wikis/diffs') }
+      active { controller?('groups/home') }
     end
 
     context_section :pages do
@@ -304,7 +304,7 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures', 'groups/requests') }
+      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures', 'groups/requests', 'groups/wikis', 'wikis/versions', 'wikis/diffs') }
 
       local_section :settings do
         visible { may_admin_group? }
@@ -325,6 +325,13 @@ define_navigation do
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
         active { controller?('groups/profiles') }
+      end
+
+      local_section :wiki do
+        visible { may_admin_group? }
+        label  { :wiki.t }
+        url    { group_wikis_path(@group) }
+        active { controller?('groups/wikis', 'wikis/versions', 'wikis/diffs') }
       end
 
       local_section :structure do
