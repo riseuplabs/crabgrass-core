@@ -24,7 +24,7 @@ module GroupExtension::Users
           raise "don't call delete on group.users"
         end
         def most_recently_active(options={})
-          find(:all, {order: 'memberships.visited_at DESC', limit: 10}.merge(options))
+          order('memberships.visited_at DESC')
         end
         # UPGRADE: This is a workaround for the lack of declaring a
         # query DISTINCT and having that applied to the final query.
