@@ -16,6 +16,8 @@ require_relative "../lib/crabgrass/boot.rb"
 
 module Crabgrass
   class Application < Rails::Application
+    # TODO fix deprecations and turn them back on.
+    ActiveSupport::Deprecation.silenced = true
     info "LOAD CONFIG BLOCK"
 
     config.autoload_paths << "#{Rails.root}/lib"
@@ -36,6 +38,8 @@ module Crabgrass
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
     config.active_record.schema_format = :sql
+
+    config.active_support.deprecation = :notify
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
