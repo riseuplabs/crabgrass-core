@@ -22,9 +22,9 @@ module Groups::WikisHelper
   # profile: [private|public]
   #
   def create_group_wiki_link(profile)
-    link_to_remote :create_thing.t(thing: :group_wiki.t),
-      {url: group_wikis_path(@group, profile: profile), method: :post},
-      {icon: 'plus'}
+    link_to :create_thing.t(thing: :group_wiki.t),
+      group_wikis_path(@group, profile: profile),
+      method: :post, icon: :plus
   end
 
 end

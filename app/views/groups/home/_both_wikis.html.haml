@@ -1,0 +1,36 @@
+- content_for :dom_loaded do
+  showTabByHash();
+
+- active_tab = local_assigns['profile'] || 'private'
+
+#group_home_wiki_area.margin-bottom
+  -#
+  -# TOP BUTTONS
+  -#
+  .p.first
+    - if @group.public?
+      = formy(:toggle_bugs) do |f|
+        - f.bug do |b|
+          - b.icon :key
+          - b.label :private_wiki.t
+          - b.show_tab 'private_panel'
+          - b.selected active_tab == 'private'
+          - b.class 'btn-lg'
+        - f.bug do |b|
+          - b.icon :world
+          - b.label :public_wiki.t
+          - b.show_tab 'public_panel'
+          - b.selected active_tab == 'public'
+          - b.class 'btn-lg'
+
+  -#
+  -# PRIVATE WIKI
+  -#
+  #private_panel.tab_content{style: ("display: none" if active_tab == 'public')}
+    = render file: "wikis/wikis/show", locals: {wiki: @private_wiki}
+
+  -#
+  -# PUBLIC WIKI
+  -#
+  #public_panel.tab_content{style: ("display: none" if active_tab == 'private')}
+    = render file: "wikis/wikis/show", locals: {wiki: @public_wiki}
