@@ -57,9 +57,9 @@ module Common::Ui::EntityDisplayHelper
   #
   # creates a link to a group. see display_entity for options
   #
-  def link_to_group(group, options={})
+  def link_to_group(group, options=nil)
+    options = (options || {}).dup
     if group
-      options ||= {}
       unless options[:url] or options[:remote] or options[:function]
         options = options.merge url: group_path(group)
       end
@@ -75,9 +75,9 @@ module Common::Ui::EntityDisplayHelper
   #
   # creates a link to a user. see display entity for options
   #
-  def link_to_user(user, options={})
+  def link_to_user(user, options=nil)
+    options = (options || {}).dup
     if user
-      options ||= {}
       unless options[:url] or options[:remote] or options[:function]
         if user.ghost?
           options[:class] = 'ghost'
