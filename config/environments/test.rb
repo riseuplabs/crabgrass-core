@@ -13,8 +13,6 @@ Crabgrass::Application.configure do
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => "localhost" }
 
-  config.active_support.deprecation = :log
-
   ## Rails 3.1
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true

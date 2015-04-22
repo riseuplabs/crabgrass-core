@@ -39,6 +39,8 @@ module Crabgrass
     config.active_support.escape_html_entities_in_json = true
     config.active_record.schema_format = :sql
 
+    config.active_support.deprecation = :notify
+
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible

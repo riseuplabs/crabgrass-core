@@ -30,8 +30,6 @@ Crabgrass::Application.configure do
   ## FIXME: when reloading plugins is enabled, SearchFilter.filters will be
   ##        empty after the first request.
   config.reload_plugins = false
-  config.active_support.deprecation = :log
-
 
   ##
   ## Upgrade to Rails 3.2
