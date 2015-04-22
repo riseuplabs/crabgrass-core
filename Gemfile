@@ -61,7 +61,7 @@ gem 'strong_parameters', '~> 0.2'
 
 # translating strings for the user interface
 # locking in to latest major to fix API
-gem 'i18n', '~> 0.6'
+gem 'i18n', '~> 0.7'
 
 # improved gem to access mysql database
 # locking in to latest major to fix API

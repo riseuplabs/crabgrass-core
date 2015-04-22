@@ -3,6 +3,9 @@ require_relative 'test_helper'
 class I18nTest < ActiveSupport::TestCase
 
   def setup
+    # this test uses local 'bw' - 'backward'
+    # it's not available by default. So let's turn off that check
+    I18n.enforce_available_locales = false
     I18n.backend = I18n::Backend::Simple.new
     #I18n.backend.stubs(:initialized?).returns(true)
     I18n.locale = :en
@@ -35,6 +38,7 @@ class I18nTest < ActiveSupport::TestCase
   end
 
   def teardown
+    I18n.enforce_available_locales = true
     I18n.backend = nil
     I18n.locale = :en
   end
