@@ -13,7 +13,7 @@ class Groups::WikisController < Groups::BaseController
     end
     wiki = @profile.create_wiki version: 0, body: '', user: current_user
     params[:edit_mode] = 'on'
-    index()
+    redirect_to action: :index
   end
 
   def index

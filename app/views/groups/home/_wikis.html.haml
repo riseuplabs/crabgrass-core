@@ -1,6 +1,6 @@
 - if @private_wiki.try.body.present? && @public_wiki.try.body.present?
   = render 'both_wikis'
 - else
-  - wiki = @private_wiki.body.present? ? @private_wiki : @public_wiki
+  - wiki = @private_wiki.try.body.present? ? @private_wiki : @public_wiki
   %h2{id: wiki.label}= I18n.t wiki.label
   = render file: "wikis/wikis/show", locals: {wiki: wiki}
