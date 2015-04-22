@@ -16,6 +16,8 @@ require_relative "../lib/crabgrass/boot.rb"
 
 module Crabgrass
   class Application < Rails::Application
+    # TODO fix deprecations and turn them back on.
+    ActiveSupport::Deprecation.silenced = true
     info "LOAD CONFIG BLOCK"
 
     config.autoload_paths << "#{Rails.root}/lib"
