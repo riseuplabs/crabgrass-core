@@ -8,6 +8,15 @@ class UserGhost < User
     read_attribute(:display_name).presence || :deleted.t
   end
 
+  # work around has_secure_password validation
+  def password_digest
+    'ghosts cannot log in.'
+  end
+
+  def authenticate(_password)
+    false
+  end
+
   #
   # retire this user.
   #
