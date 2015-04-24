@@ -2,10 +2,11 @@ en:
   riseup:
     run_by_html: "This site is run by %{provider}%{description}"
     description: ", your friendly autonomous tech collective since 1999."
-    privacy_policy: "privacy policy"
-    about_us: "about us"
-    email_accounts: "email accounts"
-    mailing_lists: "mailing lists"
-    system_status: "system status"
-    donate: "donate to riseup"
+    privacy_policy: "Privacy Policy"
+    terms_of_service: "Terms of Service"
+    about_us: "About Us"
+    email_accounts: "Email Accounts"
+    mailing_lists: "Mailing Lists"
+    system_status: "System Status"
+    donate: "Donate to Riseup"
 

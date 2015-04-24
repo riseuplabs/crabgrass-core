@@ -1,1 +1,1 @@
-An example theme with an avian theme, used by we.riseup.net.
+An example theme with an avian scheme, used by we.riseup.net.

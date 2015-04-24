@@ -10,6 +10,12 @@ define_theme(parent: 'default') {
     }
   }
 
+  home {
+    content {
+      html partial: 'themes/riseup/home'
+    }
+  }
+
 }
 
 style %{

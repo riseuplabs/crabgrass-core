@@ -1,0 +1,10 @@
+
+.row.margin-top
+  .col-sm-8.col-sm-push-4
+    %h1= h(:welcome_title.t(site_title: 'we.riseup.net'))
+    =t 'crabgrass.powered_by_html', description: t('crabgrass.description_html'), default: 'Powered by crabgrass'
+    .margin-top(style = "max-width: 20em")
+      = render partial: 'session/login_form'
+  .col-sm-4.col-sm-pull-8
+    %img{src: '/theme/riseup/images/g42.jpg', style: 'margin-right: 20px', align: 'right'}
+
