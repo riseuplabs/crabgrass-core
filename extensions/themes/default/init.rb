@@ -139,7 +139,7 @@ define_theme {
   banner {
     width "1200px"  # \ used when processing the
     height "200px"  # / uploaded image.
-    padding "30px"
+    padding "20px"
     border "1px solid #000"
     default_background '#3465A4'
     default_foreground '#fff'
