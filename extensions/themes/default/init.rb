@@ -211,6 +211,12 @@ define_theme {
     }
   }
 
+  home {
+    content {
+      html partial: 'session/welcome'
+    }
+  }
+
   # all the various z-index values are defined here.
   # these should not ever need to be changed.
   zindex {

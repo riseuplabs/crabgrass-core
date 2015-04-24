@@ -1,4 +1,6 @@
-
-= render partial: 'session/welcome'
+- if current_theme.home_content_html
+  = theme_render(current_theme.home_content_html)
+- else
+  = render partial: 'session/welcome'
 
 
