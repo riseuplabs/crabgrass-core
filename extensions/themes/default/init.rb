@@ -45,15 +45,21 @@ define_theme {
     hover '#ffd'
   }
 
+  #
+  # font examples:
+  #
+  # * bootstrap default: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+  # * linux friendly: '"Liberation Sans", sans-serif'
+  # * prior crabgrass: 'Verdana, 'Bitstream Vera Sans', Helvetica, sans-serif'
+  #
   font {
     default {
       color '#000'
-      family "verdana, 'bitstream vera sans', helvetica, sans-serif"
+      family 'Verdana, "Liberation Sans", Arial, sans-serif'
       size '13px'
-      line_height '18px'
     }
     heading {
-      family "verdana, 'bitstream vera sans', helvetica, sans-serif"
+      family 'Verdana, "Liberation Sans", Arial, sans-serif'
       weight 'normal'
       color '#000'
       h1_size "#{var(:font_default_size).to_i * 2.25}px"

@@ -42,20 +42,23 @@ article {
     // HEADINGS
     //
 
-    h1 {
-      font-size: 24pt;
+    h1, h2, h3, h4, h5 {
+      font-family: $font_heading_family;
+      font-weight: bold;
       line-height: 1.25em;
+    }
+
+    h1 {
+      font-size: 30px;
       color: #666666;
       border-bottom: 2px dotted #999999;
-      font-family: $font_default_family;
       margin: 0.67em 0;
       &:first-child, &.first {
         margin-top: 0;
       }
     }
     h2 {
-      font-size: 14pt;
-      line-height: 1.25em;
+      font-size: 18px;
       border-bottom: 1px dashed #cccccc;
       margin: 0.83em 0;
       &:first-child, &.first {
@@ -63,8 +66,12 @@ article {
       }
     }
     h3 {
-      font-size: 1.1em;
+      font-size: 16px;
+      font-weight: bold;
       margin: 0.75em 0;
+    }
+    h4 {
+      font-weight: bold;
     }
 
     //
