@@ -51,7 +51,7 @@ namespace :cg do
 
     desc "Upgrade passwords to bcrypt(sha1) digests"
     task(:secure_password => :environment) do
-      User.where(password_digest: nil, type: nil).find_each(&:wrap_old_password)
+      User.where(password_digest: nil, type: nil).find_each(&:bcrypt_legacy_password_hash)
     end
 
     desc "Set created_at timestamps where it is not set"

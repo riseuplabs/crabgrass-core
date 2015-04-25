@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags
   include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
+  include UserExtension::LegacyPasswords
 
   ##
   ## VALIDATIONS

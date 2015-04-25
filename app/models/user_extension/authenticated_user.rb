@@ -18,7 +18,6 @@
 #  avatar_id                 :integer(11)
 #
 
-require 'digest/sha1'
 module UserExtension
 module AuthenticatedUser
   #set_table_name 'users'
@@ -27,8 +26,6 @@ module AuthenticatedUser
     base.extend   ClassMethods
     base.instance_eval do
       has_secure_password
-
-      include SecurePasswordWithOldPasswords
 
       # the current site (set tmp on a per-request basis)
       attr_accessor :current_site
@@ -49,12 +46,7 @@ module AuthenticatedUser
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
-      user = find_by_login(login).try.authenticate(password)
-      return unless user
-      # migrate the user to plain has_secure_password if they still use the
-      # wrapped old sha1 digest
-      user.password = password if user.salt.present?
-      return user
+      find_by_login(login).try.authenticate(password)
     end
 
     def find_for_forget(email)
@@ -65,66 +57,6 @@ module AuthenticatedUser
     def current; Thread.current[:user]; end
     def current=(user); Thread.current[:user] = user; end
 
-    # DEPRECATED
-    # SHA1 hash the given password with the salt.
-    # we use has_secure_password now which uses bcrypt.
-    # but we still need sha1 for old passwords for which we use bcrypt(sha1)
-    def encrypt(password, salt)
-      Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-    end
-
-  end
-
-  # we use has_secure_password (bcrypt) by default but fall back to
-  # bcrypt(sha1) in case the user has an old sha1 password wrapped with bcrypt
-  module SecurePasswordWithOldPasswords
-    def password=(new_password)
-      super
-      self.salt=nil
-    end
-
-    def authenticate(password)
-      return false if password_digest.blank?
-      if salt
-        super(encrypt(password))
-      else
-        super
-      end
-    end
-
-    # migrate old sha1 password to bcrypt(sha1)
-    def wrap_old_password
-      # do not overwrite new password digests
-      return if password_digest
-      return unless salt && crypted_password
-      # create a bcrypt digest of the old crypted_password keeping the salt
-      self.password, self.salt = crypted_password, salt
-      raise 'Could not create bcrypt digest' unless password_digest
-      self.crypted_password = nil
-      save if persisted?
-    end
-
-    protected
-
-    # DEPRECATED
-    # We still use this to test compatibility with old passwords.
-    # Since we do not have access to old plaintext we use
-    #   bcrypt(sha1(password))
-    # for them.
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{login}--")
-      self.crypted_password = encrypt(password)
-    end
-
-
-    # DEPRECATED
-    # SHA1 Encrypts the password with the user salt
-    # We now use has_secure_password which uses bcrypt
-    def encrypt(password)
-      self.class.encrypt(password, salt)
-    end
-
   end
 
   def remember_token?
@@ -134,7 +66,7 @@ module AuthenticatedUser
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
     self.remember_token_expires_at = 2.weeks.from_now.utc
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
+    self.remember_token            = SecureRandom.hex
     save(validate: false)
   end
 
