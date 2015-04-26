@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150317162636) do
+ActiveRecord::Schema.define(:version => 20150423085826) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -896,6 +896,7 @@ ActiveRecord::Schema.define(:version => 20150317162636) do
     t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
     t.string   "type"
+    t.string   "password_digest"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

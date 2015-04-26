@@ -17,6 +17,7 @@ namespace :cg do
       'cg:upgrade:init_group_permissions',
       'cg:upgrade:migrate_group_permissions',
       'cg:upgrade:user_permissions',
+      'cg:upgrade:secure_password',
       'cg:upgrade:init_created_at',
       'cg:upgrade:convert_message_pages',
       'cg:upgrade:owner_id_in_page_terms',
@@ -46,6 +47,11 @@ namespace :cg do
     desc "Creates keys to the user based on settings found in their old profile; also for use once upgrading data to cg 1.0"
     task :user_permissions => :environment do
       User.includes(:keys, :public_profile, :private_profile).find_each(&:migrate_permissions!)
+    end
+
+    desc "Upgrade passwords to bcrypt(sha1) digests"
+    task(:secure_password => :environment) do
+      User.where(password_digest: nil, type: nil).find_each(&:bcrypt_legacy_password_hash)
     end
 
     desc "Set created_at timestamps where it is not set"

@@ -21,9 +21,7 @@ class Me::PasswordsControllerTest < ActionController::TestCase
     login_as @user
     post :update, user: {password: 'sdofi33si', password_confirmation: 'sdofi33si'}
     @user.reload
-    hashed = @user.encrypt('sdofi33si')
-    assert_equal hashed, @user.crypted_password,
-      "password should have been updated."
+    assert @user.authenticate('sdofi33si')
   end
 
   def test_password_fail

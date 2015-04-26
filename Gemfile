@@ -13,6 +13,11 @@ gem 'rails', '~> 3.2.19'
 # locking in to latest major to fix API
 gem 'rake', '~> 10.0', :require => false
 
+# Bcrypt for has_secure_password
+# version 3.0.x required for rails 3.2
+gem 'bcrypt-ruby', '~> 3.0.0'
+# gem 'bcrypt-ruby', '~> 3.1.7' for rails 4.2
+
 ##
 # Prototype - yes. we still use it.
 # these will be replaced by jquery equivalents at some point:
