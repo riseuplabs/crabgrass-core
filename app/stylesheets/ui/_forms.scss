@@ -95,6 +95,12 @@ textarea {
   input[type=submit], input[type=button] {
     margin-right: $ui-margin - 4px;
   }
+  form.button_to {
+    display: inline-block;
+    div {
+      display: inline-block;
+    }
+  }
 }
 
 // sometimes we need to eat the margin.

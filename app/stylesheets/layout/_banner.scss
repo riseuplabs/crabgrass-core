@@ -54,10 +54,18 @@
     float: left;
   }
 
+  .avatar-placeholder {
+    float: left;
+    display: block;
+  }
+
   .title {
     color: $banner_default_foreground;
     font-size: $banner_font_size;
-    line-height: 1.8;
+    // I have not good justification for the values, except
+    // that it seems to make it look better.
+    line-height: $banner_font_size + 10px;
+    margin-left: -3px;
   }
 
   a.title {
@@ -81,11 +89,30 @@
     $active_background: $banner_nav_active_background,
     $active_border: $banner_border,
     $inactive_color: $banner_nav_color,
-    $inactive_background: $banner_nav_background);
+    $inactive_background: transparent);
 
   a.tab.active {
     color: inherit;
     // override any text shadow that might be applied because of the banner background:
     text-shadow: inherit !important;
   }
+
+  //
+  // round the first and last tab, because we can.
+  //
+  ul#banner_nav_ul {
+    li:first-child {
+      border-radius: 5px 0 0 0;
+    }
+    li:last-child {
+      border-radius: 0 5px 0 0;
+    }
+    li {
+      background: $banner_nav_background;
+      a.tab.active {
+        border-radius: 5px 5px 0 0;
+      }
+    }
+  }
+
 }

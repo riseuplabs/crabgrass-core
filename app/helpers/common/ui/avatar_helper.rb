@@ -45,12 +45,16 @@ module Common::Ui::AvatarHelper
   end
 
   def square_avatar_style(entity, size='medium')
-    avatar_border = current_theme.banner_avatar_border.to_i * 2
     "background-image: url(%s); width: %spx; height: %spx;" % [
       avatar_url_for(entity, size),
-      Avatar.pixel_width(size)+avatar_border,
-      Avatar.pixel_width(size)+avatar_border
+      avatar_height(size),
+      avatar_height(size)
     ]
+  end
+
+  # full height/width of avatar + avatar-border in banner
+  def avatar_height(size='medium')
+    Avatar.pixel_width(size) + (current_theme.banner_avatar_border.to_i * 2)
   end
 
   def avatar_field(entity)

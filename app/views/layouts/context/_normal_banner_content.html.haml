@@ -2,7 +2,10 @@
 -# this is the partial for the content of a normal banner
 -#
 
-- if @context.avatar && @avatar_in_banner != false
-  %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'large')}
+- if @context.avatar
+  - if @avatar_in_banner != false
+    %a.avatar{href: entity_path(@context.entity), style: square_avatar_style(@context.entity, 'large')}
+  - else
+    %span.avatar-placeholder{style: "height: #{avatar_height('large')}px"}
 = link_to_banner_title(@context.entity)
 

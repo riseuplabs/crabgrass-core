@@ -12,7 +12,7 @@ $banner_shrink: 1.5;
 
   #banner_content {
     padding: $banner_padding_small;
-    a.avatar {
+    a.avatar, .avatar-placeholder {
       margin-right: $banner_padding_small;
       background-size: 100%;
 
@@ -31,9 +31,13 @@ $banner_shrink: 1.5;
         margin-top: 16px !important;
       }
     }
+    .avatar-placeholder {
+      width: 1px !important;
+    }
     .title {
       font-size: $banner_font_size/$banner_shrink;
       line-height: 1em;
+      margin-left: -1px;
     }
     #banner_nav_ul {
       font-size: 10px;

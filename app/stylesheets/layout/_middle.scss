@@ -2,7 +2,13 @@
   background-color: $background_color;
 }
 
+//
+// The gutter width is typically 30px, so each column gets 15px side margins.
+// We want the actual outside margin to be 20px ($gap-margin).
+//
 #middle_container {
+  padding-left: $gap-margin - $grid-gutter-width/2;
+  padding-right: $gap-margin - $grid-gutter-width/2;
   padding-top: $gap-margin;
   padding-bottom: $gap-margin;
 }

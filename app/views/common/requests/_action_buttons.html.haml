@@ -7,8 +7,6 @@
   .p.first= display_request(request, short: true)
 
   .buttons
-    = spinner
-
     - # APPROVAL / REJECTION
     - if may_approve
       = button_to :approve.t, approve_url,
@@ -26,3 +24,5 @@
         class: 'btn btn-default',
         method: :delete,
         remote: true
+
+    = spinner
