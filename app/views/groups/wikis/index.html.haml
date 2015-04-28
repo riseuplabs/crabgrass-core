@@ -1,17 +1,20 @@
--if @group.public?
-  #public_wiki.wiki.public
-    %h2= :public_wiki.t
-    - if @public_wiki
-      = formy(:tabs, class: 'space-ui') do |f|
-        - wiki_tabs(f, @public_wiki, active: 'show')
-      = render file: "wikis/wikis/show", locals: {wiki: @public_wiki}
-    - else
-      .p= create_group_wiki_link('public')
-#private_wiki.wiki.private
-  %h2= :private_wiki.t
+- content_for :dom_loaded do
+  showTabByHash();
+
+= group_wiki_toggles
+
+#private_panel.tab_content
   - if @private_wiki
     = formy(:tabs, class: 'space-ui') do |f|
       - wiki_tabs(f, @private_wiki, active: 'show')
     = render file: "wikis/wikis/show", locals: {wiki: @private_wiki}
   - else
     .p= create_group_wiki_link('private')
+#public_panel.tab_content{style: "display: none"}
+  - if @public_wiki
+    = formy(:tabs, class: 'space-ui') do |f|
+      - wiki_tabs(f, @public_wiki, active: 'show')
+    = render file: "wikis/wikis/show", locals: {wiki: @public_wiki}
+  - else
+    .p= create_group_wiki_link('public')
+

@@ -10,14 +10,11 @@ document.on('ajax:complete', 'a.wiki_tab', function(event) {
   hideSpinners();
 });
 
-document.on('ajax:create', '#edit_mode_button', function(event) {
-  var request = event.memo.request;
-  request.url += '&profile=' + window.location.hash.slice(1);
-  $('edit_mode_spinner').show();
-});
-
-document.on('ajax:complete', '#edit_mode_button', function(event) {
-  $('edit_mode_spinner').hide();
+document.on('click', 'a[data-preserve="fragment"]', function(event) {
+  href = event.element().href;
+  href += '#' + window.location.hash.slice(1);
+  window.location.href = href;
+  event.stop();
 });
 
 //

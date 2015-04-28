@@ -25,10 +25,10 @@ class Groups::HomeController < Groups::BaseController
   protected
 
   def fetch_wikis
-    if may_edit_group?
+    if may_edit_group? && @group.private_wiki.try.body.present?
       @private_wiki = @group.private_wiki
     end
-    @public_wiki = @group.public_wiki
+    @public_wiki = @group.public_wiki if @group.public_wiki.try.body.present?
   end
 
   #helper_method :coming_from_wiki?

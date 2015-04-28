@@ -19,9 +19,10 @@ class GroupWikiTest < JavascriptIntegrationTest
     visit '/groups/rainbow/wikis'
     create_group_wiki :public
     edit_group_wiki :public
-    fill_in "wiki[body]", with: "h2. test content"
+    fill_in "wiki[body]", with: "h2. test content\n\n"
     click_on 'Save'
     assert_content 'Changes saved'
+    assert_selector '.wiki h2', text: 'test content'
     click_on 'Home'
     assert_selector '.wiki h2', text: 'test content'
   end
@@ -29,13 +30,13 @@ class GroupWikiTest < JavascriptIntegrationTest
   protected
 
   def create_group_wiki(type)
-    within "##{type}_wiki" do
-      click_on 'Create Group Wiki'
-    end
+    find("##{type}_link").click
+    click_on 'Create Group Wiki'
   end
 
   def edit_group_wiki(type)
-    find("##{type}_wiki").click_on 'Edit'
+    find("##{type}_link").click
+    click_on 'Edit'
   end
 
 end

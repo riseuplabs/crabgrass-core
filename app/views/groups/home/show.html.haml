@@ -4,7 +4,8 @@
 - if should_render_group_wiki?
   = render partial: 'wikis'
 
-%h2.pages= :recent_pages.t
+%h2.pages{class: first(:heading)}
+  = :recent_pages.t
 .without_owner
   = render partial: 'common/pages/list'
 

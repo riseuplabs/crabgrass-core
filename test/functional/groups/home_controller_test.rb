@@ -6,8 +6,8 @@ class Groups::HomeControllerTest < ActionController::TestCase
     @user  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
-    @pub = @group.profiles.public.create_wiki
-    @priv = @group.profiles.private.create_wiki
+    @pub = @group.profiles.public.create_wiki body: 'hello'
+    @priv = @group.profiles.private.create_wiki body: 'pssst'
     Group.stubs(:find_by_name).with(@group.to_param).returns(@group)
   end
 
