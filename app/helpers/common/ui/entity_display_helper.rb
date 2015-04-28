@@ -219,7 +219,7 @@ module Common::Ui::EntityDisplayHelper
   def footer_with_more(entities, options)
     return unless options[:limit]
     if options[:more] && entities.count > options[:limit]
-      options[:footer] ||= link_to :see_more_link.t, options[:more]
+      options[:footer] ||= link_to((:see_all_link.t + '&nbsp;&raquo;').html_safe, options[:more])
     end
   end
 

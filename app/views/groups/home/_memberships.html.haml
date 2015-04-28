@@ -1,5 +1,5 @@
 - cache [current_language, @group.version_cache_key] do
   - users = @group.users.most_recently_active
   = entity_list users, header: :members.t,
-    limit: 5,
+    limit: 20,
     more: group_memberships_path(@group)
