@@ -2,5 +2,8 @@
   = render 'both_wikis'
 - else
   - wiki = @private_wiki.try.body.present? ? @private_wiki : @public_wiki
-  %h2{id: wiki.label}= I18n.t wiki.label
+  %h2.shy_parent{id: wiki.label, class: first(:heading)}
+    = I18n.t wiki.label
+    - if may_edit_group?
+      = link_to :edit.t, group_wikis_path(@group), icon: :pencil, class: 'shy edit'
   = render file: "wikis/wikis/show", locals: {wiki: wiki}

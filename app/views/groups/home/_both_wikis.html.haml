@@ -3,25 +3,21 @@
 
 - active_tab = local_assigns['profile'] || 'private'
 
-#group_home_wiki_area.margin-bottom
+#group_home_wiki_area.margin-bottom{class: first(:heading)}
   -#
   -# TOP BUTTONS
   -#
-  .p.first
-    - if @group.public?
-      = formy(:toggle_bugs) do |f|
-        - f.bug do |b|
-          - b.icon :key
-          - b.label :private_wiki.t
-          - b.show_tab 'private_panel'
-          - b.selected active_tab == 'private'
-          - b.class 'btn-lg'
-        - f.bug do |b|
-          - b.icon :world
-          - b.label :public_wiki.t
-          - b.show_tab 'public_panel'
-          - b.selected active_tab == 'public'
-          - b.class 'btn-lg'
+  .p.first.shy_parent
+    = formy(:toggle_bugs) do |f|
+      - f.bug do |b|
+        - b.label :private_wiki.t
+        - b.show_tab 'private_panel'
+        - b.selected active_tab == 'private'
+      - f.bug do |b|
+        - b.label :public_wiki.t
+        - b.show_tab 'public_panel'
+        - b.selected active_tab == 'public'
+    = link_to :edit.t, group_wikis_path(@group), icon: :pencil, class: 'shy edit'
 
   -#
   -# PRIVATE WIKI
