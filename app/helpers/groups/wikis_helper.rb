@@ -4,20 +4,6 @@ module Groups::WikisHelper
     @private_wiki.try.body.present? || @public_wiki.try.body.present?
   end
 
-  def edit_mode_button(edit_mode)
-    spinner('edit_mode') + ' ' +
-    link_to(
-      :edit_wiki.t,
-      group_wikis_path(
-        @group,
-        edit_mode: (edit_mode ? "off" : "on")
-      ),
-      remote: true,
-      class: ['btn', 'btn-default', ('active wiki_away' if edit_mode)].join(' '),
-      id: 'edit_mode_button'
-    )
-  end
-
   #
   # profile: [private|public]
   #
@@ -27,4 +13,32 @@ module Groups::WikisHelper
       method: :post, icon: :plus
   end
 
+  def group_wiki_heading_or_toggles
+    if @private_wiki.try.body.present? && @public_wiki.try.body.present?
+      group_wiki_toggles
+    else
+      wiki = @private_wiki.try.body.present? ? @private_wiki : @public_wiki
+      group_wiki_heading(wiki)
+    end
+  end
+
+  def group_wiki_toggles
+    formy(:toggle_bugs) do |f|
+      f.bug do |b|
+        b.label :private_wiki.t
+        b.show_tab 'private_panel'
+        b.selected true
+      end
+      f.bug do |b|
+        b.label :public_wiki.t
+        b.show_tab 'public_panel'
+      end
+    end
+  end
+
+  def group_wiki_heading(wiki)
+    content_tag :h2, id: wiki.label, class: :first do
+      I18n.t wiki.label
+    end
+  end
 end

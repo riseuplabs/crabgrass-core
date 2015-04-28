@@ -1,9 +1,17 @@
-- if @private_wiki.try.body.present? && @public_wiki.try.body.present?
-  = render 'both_wikis'
-- else
-  - wiki = @private_wiki.try.body.present? ? @private_wiki : @public_wiki
-  %h2.shy_parent{id: wiki.label, class: first(:heading)}
-    = I18n.t wiki.label
+- content_for :dom_loaded do
+  showTabByHash();
+#group_home_wiki_area
+  .p.shy_parent{class: first(:heading)}
     - if may_edit_group?
-      = link_to :edit.t, group_wikis_path(@group), icon: :pencil, class: 'shy edit'
-  = render file: "wikis/wikis/show", locals: {wiki: wiki}
+      = link_to :edit.t, group_wikis_path(@group),
+        icon: :pencil,
+        class: 'shy edit',
+        data: {preserve: :fragment}
+    = group_wiki_heading_or_toggles
+
+  - if @private_wiki
+    #private_panel.tab_content
+      = render file: "wikis/wikis/show", locals: {wiki: @private_wiki}
+  - if @public_wiki
+    #public_panel.tab_content{style: "display: none"}
+      = render file: "wikis/wikis/show", locals: {wiki: @public_wiki}
