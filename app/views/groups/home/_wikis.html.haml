@@ -9,9 +9,9 @@
         data: {preserve: :fragment}
     = group_wiki_heading_or_toggles
 
-  - if @private_wiki
+  - if @private_wiki.present?
     #private_panel.tab_content
       = render file: "wikis/wikis/show", locals: {wiki: @private_wiki}
-  - if @public_wiki
-    #public_panel.tab_content{style: "display: none"}
+  - if @public_wiki.present?
+    #public_panel.tab_content{style: ("display: none" if @private_wiki.present?)}
       = render file: "wikis/wikis/show", locals: {wiki: @public_wiki}

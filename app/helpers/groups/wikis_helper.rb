@@ -1,7 +1,7 @@
 module Groups::WikisHelper
 
   def should_render_group_wiki?
-    @private_wiki.try.body.present? || @public_wiki.try.body.present?
+    @private_wiki.present? || @public_wiki.present?
   end
 
   #
@@ -14,10 +14,10 @@ module Groups::WikisHelper
   end
 
   def group_wiki_heading_or_toggles
-    if @private_wiki.try.body.present? && @public_wiki.try.body.present?
+    if @private_wiki.present? && @public_wiki.present?
       group_wiki_toggles
     else
-      wiki = @private_wiki.try.body.present? ? @private_wiki : @public_wiki
+      wiki = @private_wiki.present? ? @private_wiki : @public_wiki
       group_wiki_heading(wiki)
     end
   end
