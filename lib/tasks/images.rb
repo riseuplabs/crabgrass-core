@@ -47,27 +47,6 @@ namespace :cg do
       end
     end
 
-    desc "update the gif icons by converting the png icons (require graphicsmagick)"
-    task :update_gif do
-      white_png = images_dir + '/png/white.png'
-      Dir.chdir(images_dir) do
-        Dir.chdir('png') do
-          ['16','48'].each do |dir|
-            Dir.chdir(dir) do
-              Dir.glob('*.png') do |png_file|
-                gif_file = "%s/gif/%s/%s" % [images_dir,dir, png_file.sub('.png','.gif')]
-                putc '.'; STDOUT.flush;
-                width, height = `gm identify -format '%wx%h' #{png_file}`.gsub(/\s/,'').split('x')
-                system('gm', 'composite', png_file, white_png, '-geometry', "#{width}x#{height}", 'temp_file.png')
-                system('gm', 'convert', 'temp_file.png', '-transparent', '#fff', gif_file)
-                File.unlink('temp_file.png')
-              end
-            end
-          end
-        end
-      end
-    end
-
     desc "render doc/image-sources/*.svg to public/images/png (requires inkscape)"
     task :render_svg do
       Dir.chdir(svg_dir) do

@@ -1,11 +1,43 @@
-In keeping with the new Rails 3 system, this folder is for
-javascript and stylesheets.
+Javascripts
+==============================================
 
 Javascript are served using the Sprockets gem for asset pipelining.
 
-See ./javascripts/README
+About these scripts
+----------------------------------------------
 
-Stylesheets use an entirely custom system in order to support theming.
+app/javascripts/libraries/history.js
 
-See ./stylesheets/README
+  A library to make HTML5 window.history work better, and also fallback
+  gracefully for HTML4 browsers. It is a little heavyweight, and includes
+  a bunch of features we don't need -- like storing data with history.
+  https://github.com/balupton/History.js/
 
+
+app/javascripts/prototype.js
+
+  core additions to javascript. included in prototype directory are the
+  scriptaculous effects for prototype that we also use.
+
+
+Using scripts
+----------------------------------------------
+
+We currently load all scripts on all pages (e.g. there is nothing in
+as_needed). If you want an 'as_needed' script that is only loaded for a
+particular controller:
+
+  class MyController < ApplicationController
+    javascript :tasks, :wiki
+    javascript :extra, :action => :index
+  end
+
+
+Stylesheets
+==============================================
+
+Most stylesheets are in app/stylesheets and are generated different
+for each theme.
+
+However, stylesheets in app/assets/stylesheets will be compiled and
+will use the normal rails asset pipeline.
