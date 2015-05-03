@@ -54,14 +54,14 @@ FactoryGirl.define do
     views_count { rand(100) }
     resolved    { generate(:boolean) }
 
-    factory(:wiki_page, class: WikiPage)             {}
+#    factory(:wiki_page, class: WikiPage)             {}
     factory(:discussion_page, class: DiscussionPage) {}
-    factory(:gallery, class: Gallery)                {}
-    factory(:showing, class: Showing)                {}
-    factory(:asset_page, class: AssetPage)           {}
-    factory(:rate_many_page, class: RateManyPage)         {}
-    factory(:ranked_vote_page, class: RankedVotePage)     {}
-    factory(:task_list_page, class: TaskListPage)         {}
+#    factory(:gallery, class: Gallery)                {}
+#    factory(:showing, class: Showing)                {}
+#    factory(:asset_page, class: AssetPage)           {}
+#    factory(:rate_many_page, class: RateManyPage)         {}
+#    factory(:ranked_vote_page, class: RankedVotePage)     {}
+#    factory(:task_list_page, class: TaskListPage)         {}
   end
 
   factory :asset do

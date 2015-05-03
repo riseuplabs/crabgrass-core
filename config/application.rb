@@ -92,10 +92,16 @@ module Crabgrass
     ]
 
     # allow plugins in more places
-    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY].each do |path|
+    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY].each do |path|
       config.paths['vendor/plugins'] << path
     end
 
+    config.before_configuration do
+      Dir.glob(PAGES_DIRECTORY + '*/lib/*_page.rb').each do |page|
+        info "LOAD #{File.basename(page, '.rb').humanize}"
+        require page
+      end
+    end
   end
 
   ## FIXME: require these, where they are actually needed (or fix autoloading).
