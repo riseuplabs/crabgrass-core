@@ -407,6 +407,4 @@ class Asset < ActiveRecord::Base
     self.width > self.height ? :landscape : :portrait
   end
 
-  acts_as_extensible
-
 end

@@ -111,16 +111,6 @@ FactoryGirl.define do
     user
   end
 
-  if Conf.mod_enabled? 'moderation'
-    factory :moderation do
-      reason_flagged     "language"
-      sequence(:comment) { |n| Faker::Lorem.paragraph }
-      created_at         { generate(:updated_date) } # this should be newer than the page
-      type               { "ModeratedFlag" }
-      user
-    end
-  end
-
   factory :profile do
     factory :public_profile do
       stranger true
