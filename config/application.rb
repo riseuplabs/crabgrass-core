@@ -102,6 +102,13 @@ module Crabgrass
         require page
       end
     end
+
+    initializer "crabgrass_page.freeze_pages" do |app|
+      require 'crabgrass/page/class_registrar'
+      ::PAGES = Crabgrass::Page::ClassRegistrar.proxies.dup.freeze
+      Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
+    end
+
   end
 
   ## FIXME: require these, where they are actually needed (or fix autoloading).
