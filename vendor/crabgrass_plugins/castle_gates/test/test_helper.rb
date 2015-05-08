@@ -1,6 +1,10 @@
 require 'test/unit'
 require 'rubygems'
-require 'debugger'
+begin
+  require 'byebug'
+rescue LoadError  # ruby < 2.0.0
+  require 'debugger'
+end
 require 'logger'
 gem 'actionpack', '~> 3.2.19'
 gem 'activerecord', '~> 3.2.19'
@@ -16,22 +20,18 @@ require 'active_record'
 #   ruby test/tests.rb --rebuild
 #
 
-options = {}
+TEST_OPTIONS = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: ruby test/tests.rb [options]"
+  # set to true if schema changes.
   opts.on("-b", "--rebuild", "Rebuild schema") do |b|
-    options[:rebuild] = b
+    TEST_OPTIONS[:rebuild] = b
   end
+  # set to true if fixtures changes.
   opts.on("-r", "--reload", "Reload fixtures") do |r|
-    options[:reload] = r
+    TEST_OPTIONS[:reload] = r
   end
 end.parse!
-
-# set to true if schema changes.
-REBUILD_DB = options[:rebuild]
-
-# set to true if fixtures changes.
-RELOAD_FIXTURES = options[:reload]
 
 # set to :mysql to test aggregation BIT_OR
 ADAPTER = :sqlite
@@ -54,11 +54,11 @@ end
   require_relative file
 end
 
-if REBUILD_DB
+if TEST_OPTIONS[:rebuild]
   teardown_db
   setup_db
   create_fixtures
-elsif RELOAD_FIXTURES
+elsif TEST_OPTIONS[:reload]
   reset_db
   create_fixtures
 end

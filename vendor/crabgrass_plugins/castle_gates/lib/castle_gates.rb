@@ -1,3 +1,7 @@
+# Tests have a dummy after_reload implementation
+unless Object.private_methods.include? :after_reload
+  require 'after_reload'
+end
 
 module CastleGates
   class LockError < StandardError

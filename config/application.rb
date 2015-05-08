@@ -83,10 +83,8 @@ module Crabgrass
     ## PLUGINS
     ##
 
-    # we must load crabgrass_mods and load_model_callback first.
+    # we must load crabgrass_path_finder first.
     config.plugins = [
-      :crabgrass_mods,
-      :after_reload,
       :crabgrass_path_finder,
       :all
     ]
