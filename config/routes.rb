@@ -20,14 +20,15 @@ Crabgrass::Application.routes.draw do
   ##
 
   # TODO: specify http verb
-  match '/do/cron/run(/:id)', to: 'cron#run', format: false,
+  post '/do/cron/run(/:id)', to: 'cron#run', format: false,
     constraints: {ip: /127.0.0.1/}
 
   ##
   ## STATIC FILES AND ASSETS
   ##
 
-  resources :assets, only: [:show, :destroy]
+  # same as the asset_path without
+  resources :assets, only: [:destroy], as: 'destroy_asset'
   get '/assets/:id/versions/:version/*path',
     to: 'assets#show',
     as: 'asset_version'
@@ -51,8 +52,7 @@ Crabgrass::Application.routes.draw do
     get '', to: 'notices#index', as: 'home'
     # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
-    get 'pages(/*path)', to: 'pages#index', as: 'pages'
-    post 'pages(/*path)', to: 'pages#index', as: 'pages'
+    match 'pages(/*path)', to: 'pages#index', as: 'pages', via: [:get, :post]
     resources :activities, only: [:index, :show, :create]
     resources :discussions, path: 'messages', only: :index do
       resources :posts, except: [:show, :new]
@@ -107,18 +107,14 @@ Crabgrass::Application.routes.draw do
   ## PEOPLE
   ##
 
-  get 'people/directory(/*path)',
+  match 'people/directory(/*path)',
     as: 'people_directory',
-    to: 'people/directory#index'
-
-  post 'people/directory(/*path)',
-    as: 'people_directory',
-    to: 'people/directory#index'
+    to: 'people/directory#index',
+    via: [:get, :post]
 
   resources :people, module: 'people', controller: 'home', only: :show do
     resource  :home, only: :show, controller: 'home'
-    get 'pages(/*path)', as: 'pages', to: 'pages#index'
-    post 'pages(/*path)', as: 'pages', to: 'pages#index'
+    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
     # resources :messages
     # resources :activities
     resource :friend_request, only: [:new, :create, :destroy]
@@ -134,8 +130,7 @@ Crabgrass::Application.routes.draw do
   resources :groups, module: 'groups', only: [:new, :create, :destroy] do
     # content related
     resource  :home, only: [:show], controller: 'home'
-    get 'pages(/*path)', as: 'pages', to: 'pages#index'
-    post 'pages(/*path)', as: 'pages', to: 'pages#index'
+    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
     resource  :avatar, only: [:create, :edit, :update]
     resources :wikis, only: [:create, :index]
 
@@ -169,12 +164,10 @@ Crabgrass::Application.routes.draw do
   ##
 
   # default page creator
-  get '/pages/create(/:owner(/:type))',
+  match '/pages/create(/:owner(/:type))',
     as: 'page_creation',
-    to: 'pages/create#new'
-  post '/pages/create(/:owner(/:type))',
-    as: 'page_creation',
-    to: 'pages/create#create'
+    to: 'pages/create#new',
+    via: [:get, :post]
 
   # base page
   resources :pages, module: 'pages', controller: 'base', only: [] do |pages|
