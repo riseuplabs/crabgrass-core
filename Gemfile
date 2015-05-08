@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 # Rails is the framework we use.
 # use the 3.2 series including all security fixes
-gem 'rails', '~> 3.2.22'
+gem 'rails', '~> 4.0.13'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -25,7 +25,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # main part of prototype
 # locking so it matches rails version
-gem 'prototype-rails', '~> 3.2.1'
+gem 'prototype-rails', '~> 4.0.1'
 
 # legacy helper for form_remote_for and link_to_remote
 # there's only a 0.0.0 version out there it seems
@@ -54,17 +54,9 @@ gem 'ts-delayed-delta', '~> 2.0'
 # So we should run the migration and upgrade now that we are on rails 3.2
 gem 'acts-as-taggable-on', '~> 2.4.1'
 
-##
-#  Backported from rails 4
-##
-
-# add a digest of a template and its dependencies to the cache key
-# not developed anymore. Fixing major version never the less.
-gem 'cache_digests', '~> 0.3'
-
-# protect against malicious parameters by explicitly permitting the ones we want
-# part of rails 4, looks like the rails3 version is not in active dev.
-gem 'strong_parameters', '~> 0.2'
+# Page Caching has been removed from rails 4.
+# migrate it and drop this.
+gem 'actionpack-page_caching'
 
 ##
 #  Required, but not included with crabgrass:
@@ -76,7 +68,7 @@ gem 'i18n', '~> 0.7'
 
 # improved gem to access mysql database
 # locking in to latest major to fix API
-gem 'mysql2', '~> 0.3.10'
+gem 'mysql2', '~> 0.3.18'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
@@ -85,6 +77,7 @@ gem 'json', '~> 1.8'
 # Markup language that uses indent to indicate nesting
 # locking in to latest major to fix API
 gem 'haml', '~> 4.0'
+gem 'haml-rails', '~> 0.9.0'
 
 # Extendet scriptable CSS language
 # locking in to latest major to fix API
@@ -173,14 +166,6 @@ gem 'rubyzip', '~> 1.1.0', require: false
 # TODO: use the new zip api and remove gem zip-zip
 gem 'zip-zip', require: 'zip'
 
-# Assets group according to migration guide:
-# http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-3-1-to-rails-3-2
-group :assets do
-  gem 'sass-rails',   '~> 3.2.6'
-  gem 'coffee-rails', '~> 3.2.2'
-  gem 'uglifier',     '>= 1.0.3'
-end
-
 group :production do
   # js runtime needed to precompile assets
   # runs independendly - so no version restriction for now
@@ -238,6 +223,8 @@ group :test, :ci do
 
   gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
+
+  # 4.2 is required by rails 4.0.13
   gem 'minitest', '~> 4.7', require: false
   gem 'mocha', '~> 1.1', require: false
   #
