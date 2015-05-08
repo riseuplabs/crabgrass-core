@@ -3,6 +3,7 @@ Crabgrass::Application.configure do
   ## STANDARD RAILS OPTIONS
   ##
 
+  config.eager_load = true
   config.cache_classes = true
   config.action_controller.perform_caching             = true
 
