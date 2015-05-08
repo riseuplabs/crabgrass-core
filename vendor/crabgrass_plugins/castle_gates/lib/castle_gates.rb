@@ -4,6 +4,9 @@ unless Object.private_methods.include? :after_reload
 end
 
 module CastleGates
+  class Engine < ::Rails::Engine
+  end
+
   class LockError < StandardError
   end
   mattr_accessor :exception_class
