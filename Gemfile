@@ -14,9 +14,7 @@ gem 'rails', '~> 4.0.13'
 gem 'rake', '~> 10.0', require: false
 
 # Bcrypt for has_secure_password
-# version 3.0.x required for rails 3.2
-gem 'bcrypt-ruby', '~> 3.0.0'
-# gem 'bcrypt-ruby', '~> 3.1.7' for rails 4.2
+gem 'bcrypt', '~> 3.1.7'
 
 ##
 # Prototype - yes. we still use it.
@@ -154,9 +152,6 @@ gem 'delayed_job_active_record', '~> 4.0'
 
 # delayed job runner as a deamon
 gem 'daemons'
-
-# ?
-gem 'rails3_before_render'
 
 # unpack file uploads
 # TODO: why is this locked to 1.1. ?
