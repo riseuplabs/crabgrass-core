@@ -69,18 +69,11 @@ end
 ## some special rules for integration tests
 ##
 
-# ActiveSupport will define this, if it doesn't find it.
-# It uses StandardError as the superclass though, instead of Exception,
-# so that will generate a "superclass mismatch" error.
-if Mocha.const_defined? :ExpectationError
-  Mocha.__send__ :remove_const, :ExpectationError
-end
-
 #
 # mocha must be required last.
 # the libraries that it patches must be loaded before it is.
 #
-require 'mocha'
+require 'mocha/mini_test'
 
 # ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
 # on all values. This happens when assembling 'assigns' in tests.
