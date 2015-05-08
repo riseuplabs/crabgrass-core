@@ -40,13 +40,6 @@ module Crabgrass
 
     config.active_support.deprecation = :notify
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    #
-    # We use strong parameters instead like rails4 does.
-    #config.active_record.whitelist_attributes = true
 
     config.session_store :cookie_store,
       :key => 'crabgrass_session'
