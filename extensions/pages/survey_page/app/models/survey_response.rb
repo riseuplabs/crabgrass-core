@@ -11,8 +11,6 @@
 class SurveyResponse < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # to truncate
 
-  attr_accessible :answers_attributes
-
   belongs_to :user
   belongs_to :survey, counter_cache: :responses_count
   has_many(:answers, dependent: :destroy,
