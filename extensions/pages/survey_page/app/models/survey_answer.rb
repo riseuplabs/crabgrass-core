@@ -11,8 +11,6 @@
 class SurveyAnswer < ActiveRecord::Base
   CHOICE_FOR_UNCHECKED = "__UNCHECKED"
 
-  attr_accessible :question_id, :asset_id, :value
-
   belongs_to :question, class_name: 'SurveyQuestion'
   belongs_to :response, class_name: 'SurveyResponse'
   belongs_to :asset
