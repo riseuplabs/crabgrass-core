@@ -12,7 +12,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
 
   def test_star
     assert_difference 'PageHistory::AddStar.count' do
-      post :update, page_id: @page, id: @upart, star: true
+      xhr :post, :update, page_id: @page, id: @upart, star: true
     end
     assert @upart.reload.star
   end
@@ -29,7 +29,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
 
   def test_watch
     assert_difference 'PageHistory::StartWatching.count' do
-      post :update, page_id: @page, id: @upart, watch: true
+      xhr :post, :update, page_id: @page, id: @upart, watch: true
     end
     assert @upart.reload.watch
   end
@@ -38,7 +38,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
     @upart.access = :view
     @upart.save
     assert_no_difference 'PageHistory.count' do
-      post :update, page_id: @page, id: @upart, access: :admin
+      xhr :post, :update, page_id: @page, id: @upart, access: :admin
     end
     assert_equal :view, @upart.reload.access_sym
   end

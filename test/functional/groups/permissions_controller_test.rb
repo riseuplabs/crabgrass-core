@@ -28,7 +28,7 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
     public_code = @controller.send(:key_holders, :public).first.code
     login_as @user
     assert_permission :may_admin_group? do
-      post :update,
+      xhr :post, :update,
         group_id: @group.to_param,
         id: public_code,
         gate: 'view',
