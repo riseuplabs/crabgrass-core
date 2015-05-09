@@ -11,17 +11,17 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_star
-    post :update, page_id: @page, id: @upart, star: true
+    xhr :post, :update, page_id: @page, id: @upart, star: true
     assert @upart.reload.star
   end
 
   def test_watch
-    post :update, page_id: @page, id: @upart, watch: true
+    xhr :post, :update, page_id: @page, id: @upart, watch: true
     assert @upart.reload.watch
   end
 
   def test_prevent_increasing_access
-    post :update, page_id: @page, id: @upart, access: :admin
+    xhr :post, :update, page_id: @page, id: @upart, access: :admin
     assert_equal :view, @upart.reload.access_sym
   end
 end
