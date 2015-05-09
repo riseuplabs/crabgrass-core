@@ -20,10 +20,6 @@ class Me::PermissionsController < Me::BaseController
     # render
     @holders = key_holders(:public, current_user.associated(:peers), current_user.associated(:friends))
     success :saved.t, :quick
-    render :update do |page|
-      standard_update(page)
-      page.replace_html 'permissions_area', file: 'me/permissions/index'
-    end
   end
 
   protected

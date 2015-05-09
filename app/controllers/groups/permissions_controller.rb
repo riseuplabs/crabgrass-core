@@ -34,14 +34,9 @@ class Groups::PermissionsController < Groups::BaseController
       @group.revoke_access!(holder => gate.name)
     end
 
-    # render
+    # set state for render
     @holders = key_holders(:public)
     success :saved.t, :quick
-    render :update do |page|
-      standard_update(page)
-      page.replace_html 'permissions_area', file: 'groups/permissions/index'
-    end
-
   end
 
   protected

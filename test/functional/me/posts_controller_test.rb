@@ -25,4 +25,15 @@ class Me::PostsControllerTest < ActionController::TestCase
     assert_redirected_to me_discussions_url
   end
 
+  def test_delete_post
+    me = users(:blue)
+    you = users(:red)
+    post = me.send_message_to! you, "test message"
+    login_as me
+    assert_difference "Post.count", -1 do
+      xhr :delete, :destroy, discussion_id: you.login, id: post
+      assert_response :success
+    end
+  end
+
 end

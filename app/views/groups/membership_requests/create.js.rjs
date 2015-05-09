@@ -1,0 +1,4 @@
+standard_update(page)
+page.replace dom_id(membership),
+  partial: "groups/memberships/membership",
+  locals: {membership: membership}

@@ -1,0 +1,3 @@
+page.replace @post.body_id,
+  partial: 'common/posts/default/edit',
+  locals: {post: @post}

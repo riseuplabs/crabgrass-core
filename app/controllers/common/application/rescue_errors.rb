@@ -268,10 +268,7 @@ module Common::Application::RescueErrors
     end
     log_exception(exception)
     return if performed?  # error in after_filter
-    render :update, options do |page|
-      hide_spinners(page)
-      update_alert_messages(page)
-    end
+    render template: 'error/alert', locals: {exception: exception}    
   end
 
   def log_exception(exception)

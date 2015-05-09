@@ -16,9 +16,7 @@
 module Common::Posts
 
   def edit
-    render(:update) do |page|
-      page.replace(@post.body_id, partial: 'common/posts/default/edit', locals: {post: @post})
-    end
+    render template: 'common/posts/edit'
   end
 
   def update
@@ -30,9 +28,7 @@ module Common::Posts
 
   def destroy
     @post.destroy
-    render :update do |page|
-      page.hide dom_id(@post)
-    end
+    render template: 'common/posts/destroy'
   end
 
 end

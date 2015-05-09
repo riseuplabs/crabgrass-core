@@ -29,9 +29,6 @@ class Groups::MembershipsController < Groups::BaseController
   #
   def destroy
     @group.remove_user! @user # memberships must be destroyed via group.remove_user!
-    render :update do |page|
-      page.hide dom_id(@membership)
-    end
   end
 
   #
@@ -42,10 +39,6 @@ class Groups::MembershipsController < Groups::BaseController
     @group.add_user! @user
     index # load @memberships
     success
-    render :update do |page|
-      standard_update(page)
-      page.replace 'group_membership_list', partial: 'groups/memberships/list'
-    end
   end
 
   protected
