@@ -82,10 +82,6 @@ class Groups::MembershipRequestsController < Groups::BaseController
       raise_error
     end
     success req
-    render :update do |page|
-      standard_update(page)
-      page.replace(dom_id(membership), partial: "groups/memberships/membership", locals: {membership: membership})
-    end
   end
 
 end
