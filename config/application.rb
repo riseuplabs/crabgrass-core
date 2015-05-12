@@ -92,8 +92,21 @@ module Crabgrass
     ]
 
     # allow plugins in more places
-    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY, PAGES_DIRECTORY].each do |path|
+    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY].each do |path|
       config.paths['vendor/plugins'] << path
+    end
+
+    config.before_configuration do
+      Dir.glob(PAGES_DIRECTORY + '*/lib/*_page.rb').each do |page|
+        info "LOAD #{File.basename(page, '.rb').humanize}"
+        require page
+      end
+    end
+
+    initializer "crabgrass_page.freeze_pages" do |app|
+      require 'crabgrass/page/class_registrar'
+      ::PAGES = Crabgrass::Page::ClassRegistrar.proxies.dup.freeze
+      Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
     end
 
   end

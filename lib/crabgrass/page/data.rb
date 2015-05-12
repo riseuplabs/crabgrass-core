@@ -22,7 +22,7 @@ module Crabgrass::Page
       }
 
       # ruby has unexpected syntax for checking if Page is a superclass of base
-      unless base <= Page
+      unless base <= ::Page
         base.has_many :pages, as: :data
         base.belongs_to :page_terms
         base.class_eval do
