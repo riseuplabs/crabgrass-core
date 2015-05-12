@@ -4,56 +4,64 @@
 # Handles all the group <> user relationships
 #
 module GroupExtension::Users
+  extend ActiveSupport::Concern
   # large groups will be ignored when calculating peers.
   LARGE_GROUP_SIZE=50
 
-  def self.included(base)
-    base.instance_eval do
+  included do
 
-      attr :users_before_destroy
-      before_destroy :destroy_memberships
-#      before_create :set_created_by
+    attr :users_before_destroy
+    before_destroy :destroy_memberships
+    #      before_create :set_created_by
 
-      has_many :memberships, before_add: :check_duplicate_memberships
+    has_many :memberships, before_add: :check_duplicate_memberships
 
-      has_many :users, through: :memberships do
-        def <<(*dummy)
-          raise "don't call << on group.users"
-        end
-        def delete(*records)
-          raise "don't call delete on group.users"
-        end
-        def most_recently_active(options={})
-          order('memberships.visited_at DESC')
-        end
-        # UPGRADE: This is a workaround for the lack of declaring a
-        # query DISTINCT and having that applied to the final query.
-        # it won't be needed anymore as soon as .distinct can be used
-        # with rails 4.0
-        def with_access(access)
-          super(access).only_select("DISTINCT users.*")
-        end
+    has_many :users, through: :memberships do
+      def <<(*dummy)
+        raise "don't call << on group.users"
       end
+      def delete(*records)
+        raise "don't call delete on group.users"
+      end
+      def most_recently_active(options={})
+        order('memberships.visited_at DESC')
+      end
+      # UPGRADE: This is a workaround for the lack of declaring a
+      # query DISTINCT and having that applied to the final query.
+      # it won't be needed anymore as soon as .distinct can be used
+      # with rails 4.0
+      def with_access(access)
+        super(access).only_select("DISTINCT users.*")
+      end
+    end
+  end
 
-      # tmp hack until we have a better viewing system in place.
-      scope :most_visits, joins(:memberships).
+  module ClassMethods
+
+    # tmp hack until we have a better viewing system in place.
+    def most_visits
+      joins(:memberships).
         group('groups.id').
         order('count(memberships.total_visits) DESC')
+    end
 
-      scope :recent_visits, joins(:memberships).
+    def recent_visits
+      joins(:memberships).
         group('groups.id').
         order('memberships.visited_at DESC')
+    end
 
-      def self.with_admin(user)
-        where("groups.id IN (?)", user.admin_for_group_ids)
-      end
+    def with_admin(user)
+      where("groups.id IN (?)", user.admin_for_group_ids)
+    end
 
-      scope :large, joins(:memberships).
+    def large
+      joins(:memberships).
         group('groups.id').
         select('groups.*').
         having("count(memberships.id) > #{LARGE_GROUP_SIZE}")
-
     end
+
   end
 
   # commented out... removing a council member from a group is no big deal,

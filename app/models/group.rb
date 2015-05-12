@@ -54,7 +54,9 @@ class Group < ActiveRecord::Base
   end
 
   # finds groups that are of type Group (but not Committee or Network)
-  scope :only_groups, where('groups.type IS NULL')
+  def self.only_groups
+    where(type: nil)
+  end
 
   def self.only_type(*args)
     group_type = args.first.to_s.capitalize
@@ -65,8 +67,9 @@ class Group < ActiveRecord::Base
     end
   end
 
-  scope :groups_and_networks,
+  def self.groups_and_networks
     where("groups.type IS NULL OR groups.type = 'Network'")
+  end
 
   def self.all_networks_for(user)
     only_type('Network').
@@ -92,7 +95,8 @@ class Group < ActiveRecord::Base
   #   CONCAT gives us the name
   # if the display name is present
   #   CONCAT gives display_name + name which will sort by display name basically.
-  scope :alphabetical_order, order(<<-EOSQL
+  def self.alphabetical_order
+    order <<-EOSQL
       LOWER(
         COALESCE(
           CONCAT(groups.full_name, groups.name),
@@ -100,15 +104,19 @@ class Group < ActiveRecord::Base
         )
       ) ASC
     EOSQL
-   )
+  end
 
   def self.recent
     by_created_at.where("groups.created_at > ?", RECENT_TIME.ago)
   end
 
-  scope :by_created_at, order('groups.created_at DESC')
+  def self.by_created_at
+    order('groups.created_at DESC')
+  end
 
-  scope :names_only, select('full_name, name')
+  def self.names_only
+    select('full_name, name')
+  end
 
   # filters the groups based on their name and full name
   # filter is a sql query string
