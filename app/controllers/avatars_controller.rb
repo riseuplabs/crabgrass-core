@@ -29,7 +29,9 @@ class AvatarsController < ApplicationController
 
   # if public/avatars is a symlink resolve it and use it's parent dir
   def self.page_cache_directory
-    (Pathname.new(super) + self.controller_name).realpath.dirname
+    default = super
+    cache_dir = (Pathname.new(default) + self.controller_name)
+    cache_dir.exist? ? cache_dir.realpath.dirname : default
   end
 
 end
