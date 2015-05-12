@@ -64,13 +64,15 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_destroy
+    path = current_path
     click_on 'Delete Page'
     choose 'Destroy Immediately'
     click_button 'Delete'
     # finish deleting...
     assert_content 'Notices'
     assert_no_content own_page.title
-    assert_nil Page.where(id: own_page.id).first
+    visit path
+    assert_content 'Page not found'
   end
 
   def test_tag

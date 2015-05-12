@@ -34,15 +34,16 @@ class ContextPagesController < DispatchController
     super
   rescue ActiveRecord::RecordNotFound
     if logged_in? and (@group or (@user and @user == current_user))
-      url = create_page_url(:type => 'wiki', 'page[owner]' => (@group || @user), 'page[title]' => params[:_page])
+      url = create_page_url 'type' => 'wiki',
+        'page[owner]' => (@group || @user),
+        'page[title]' => params[:id].split('+').first
       logger.info("Redirect to #{url}")
+      warning :thing_not_found.t(:thing => :page.t)
 
       # FIXME: this controller isn't fully set-up yet (because usually the request
       #   will be completed in a new controller instance), so redirect_to etc.
       #   won't work.
       return [302, { 'Location' => url }, []]
-
-      #warning :thing_not_found.t(:thing => :page.t)
     else
       #set_language do
       # is it required to set the language here?
