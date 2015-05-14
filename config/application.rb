@@ -91,11 +91,10 @@ module Crabgrass
       :all
     ]
 
-    # allow plugins in more places
-    [CRABGRASS_PLUGINS_DIRECTORY, MODS_DIRECTORY].each do |path|
-      config.paths['vendor/plugins'] << path
-    end
+    # allow plugins in CRABGRASS_PLUGINS_DIRECTORY
+    config.paths['vendor/plugins'] << CRABGRASS_PLUGINS_DIRECTORY
 
+    # TODO: respect Conf.enabled_pages, ENV['PAGE'] 'page' and ENV['PAGE'] ALL
     config.before_configuration do
       Dir.glob(PAGES_DIRECTORY + '*/lib/*_page.rb').each do |page|
         info "LOAD #{File.basename(page, '.rb').humanize}"

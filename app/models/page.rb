@@ -450,5 +450,4 @@ class Page < ActiveRecord::Base
     self.created_at = self.updated_at = Time.now if self.new_record?
   end
 
-  acts_as_extensible
 end

@@ -387,5 +387,4 @@ class Group < ActiveRecord::Base
     end
   end
 
-  acts_as_extensible
 end

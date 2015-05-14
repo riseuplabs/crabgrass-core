@@ -33,14 +33,14 @@ class Post < ActiveRecord::Base
 
   scope :by_created_at, order('created_at DESC')
 
-  def self.private_messages(user) 
-    where discussion_id: user.discussions.pluck(:id) 
+  def self.private_messages(user)
+    where discussion_id: user.discussions.pluck(:id)
   end
 
   def self.last_in_discussion
-    where <<-EOSQL 
-      posts.created_at = ( 
-        SELECT MAX(other_posts.created_at) FROM posts AS other_posts 
+    where <<-EOSQL
+      posts.created_at = (
+        SELECT MAX(other_posts.created_at) FROM posts AS other_posts
         WHERE other_posts.discussion_id = posts.discussion_id
         AND other_posts.deleted_at <=> posts.deleted_at
       )
@@ -199,8 +199,6 @@ class Post < ActiveRecord::Base
     decrement = force_decrement || self.deleted_at.nil?
     discussion.post_destroyed(self, decrement) if discussion
   end
-
-  acts_as_extensible
 
 end
 
