@@ -1,3 +1,4 @@
+require 'modalbox'
 
 # load the locale files
 

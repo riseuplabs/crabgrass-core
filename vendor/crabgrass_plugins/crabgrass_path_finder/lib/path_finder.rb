@@ -1,7 +1,17 @@
+require 'path_finder/controller_extension'
+require 'path_finder/find_by_path'
+require 'path_finder/parsed_path'
+require 'path_finder/query'
+
 #
 # :include:path_finder/README
 #
 module PathFinder
+  extend ActiveSupport::Autoload
+
+  autoload :Mysql
+  autoload :Postgres
+  autoload :Sphinx
 
   #
   # configure as you see fit

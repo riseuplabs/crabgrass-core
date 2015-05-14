@@ -16,12 +16,13 @@ module GroupExtension::Groups
       belongs_to :council, class_name: 'Group'
 
       # Committees are children! They must respect their parent group.
-      # This uses crabgrass_acts_as_tree, which allows callbacks.
-      acts_as_tree(
+      belongs_to :parent, class_name: 'Group'
+      has_many :children, class_name: 'Group',
+        foreign_key: :parent_id,
         order: 'name',
         after_add: :org_structure_changed,
-        after_remove: :org_structure_changed
-      )
+        after_remove: :org_structure_changed,
+        dependent: :destroy
       alias_method :committees, :children
 
       has_many :real_committees,

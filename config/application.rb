@@ -16,8 +16,6 @@ require_relative "../lib/crabgrass/boot.rb"
 
 module Crabgrass
   class Application < Rails::Application
-    # TODO fix deprecations and turn them back on.
-    ActiveSupport::Deprecation.silenced = true
     info "LOAD CONFIG BLOCK"
 
     config.autoload_paths << "#{Rails.root}/lib"
@@ -83,21 +81,16 @@ module Crabgrass
     ## PLUGINS
     ##
 
-    # we must load crabgrass_mods and load_model_callback first.
-    config.plugins = [
-      :crabgrass_mods,
-      :after_reload,
-      :crabgrass_path_finder,
-      :all
-    ]
-
-    # allow plugins in CRABGRASS_PLUGINS_DIRECTORY
-    config.paths['vendor/plugins'] << CRABGRASS_PLUGINS_DIRECTORY
-
-    # TODO: respect Conf.enabled_pages, ENV['PAGE'] 'page' and ENV['PAGE'] ALL
     config.before_configuration do
-      Dir.glob(PAGES_DIRECTORY + '*/lib/*_page.rb').each do |page|
-        info "LOAD #{File.basename(page, '.rb').humanize}"
+      Pathname.glob(CRABGRASS_PLUGINS_DIRECTORY + '*').each do |plugin|
+        info "LOAD #{plugin.basename.to_s.humanize}"
+        $:.unshift plugin + 'lib'
+        require plugin + 'init.rb'
+      end
+
+      # TODO: respect Conf.enabled_pages, ENV['PAGE'] 'page' and ENV['PAGE'] ALL
+      Pathname.glob(PAGES_DIRECTORY + '*/lib/*_page.rb').each do |page|
+        info "LOAD #{page.basename('.rb').to_s.humanize}"
         require page
       end
     end
