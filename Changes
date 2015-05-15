@@ -1,3 +1,28 @@
+Changes in Crabgrass 0.6.1
+--------------------------
+
+Lot's of tests and bugfixes happened since 0.6.0. We've also seen great support
+from the we.riseup.net communitee in translating the new user interface to a
+lot of languages. Elijah reworked the ui and ported it to use bootstrap 3.
+
+Updated dependencies:
+
+* bootstrap 3
+* works with ruby 2.1
+
+Changes in Crabgrass 0.6.0
+--------------------------
+
+This is the first full release after the rework of the crabgrass codebase.
+Some years ago the crabgrass codebase had diverged into different
+incompatible development trees. We're about bringing the different forks
+back together in a streamlined version.
+
+Updated dependencies:
+
+* Rails 3.2
+
+
 Changes since Crabgrass 0.5
 ---------------------------
 
@@ -15,11 +40,8 @@ Updated dependencies
 * No more compass and Susy
 * Using bundler
 
-Upgrading to Crabgrass 1.0 from earlier versions
+Upgrading to Crabgrass 0.6.n from earlier versions
 ------------------------------------------------
-
-todo: when crabgrass core stabilizes, work out instructions
-for how to upgrade and put them here.
 
 directory changes
 
@@ -36,3 +58,13 @@ configuration changes
 config/database.yml
   "mysql" must be replaced with "mysql2"
 
+migrations
+
+  Please make sure to run all the migrations
+
+upgrade rake tasks
+
+  cg:upgrade:to_0_6 is your friend for the essential updates
+  cg:cleanup:all should cleanup invalid data from back in the days
+  db:data:validate will run validations for ALL records
+    this takes some time but saves you lots of trouble with invalid data

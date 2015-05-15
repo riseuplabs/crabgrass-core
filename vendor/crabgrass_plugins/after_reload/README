@@ -1,3 +1,0 @@
-This plugin will allow you to register methods that get called whenever rails reloads a model in development mode.
-
-Useful for writing code that modifies models. This way, your modifying code can get called again when it needs to be.

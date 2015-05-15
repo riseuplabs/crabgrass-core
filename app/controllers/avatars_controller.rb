@@ -10,7 +10,6 @@ class AvatarsController < ApplicationController
 
   caches_page :show
 
-  public
   def show
     @image = Avatar.find_by_id params[:id]
     if @image.nil?
@@ -24,6 +23,15 @@ class AvatarsController < ApplicationController
       response.headers['Cache-Control'] = 'public, max-age=86400'
       send_data data, type: content_type, disposition: 'inline'
     end
+  end
+
+  protected
+
+  # if public/avatars is a symlink resolve it and use it's parent dir
+  def self.page_cache_directory
+    default = super
+    cache_dir = (Pathname.new(default) + self.controller_name)
+    cache_dir.exist? ? cache_dir.realpath.dirname : default
   end
 
 end

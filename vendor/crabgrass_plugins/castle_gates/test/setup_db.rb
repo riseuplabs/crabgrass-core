@@ -5,7 +5,7 @@
 if (ADAPTER == :sqlite)
   DB_FILE = "#{File.dirname(__FILE__)}/test.sqlite"
   if !File.exist?(DB_FILE)
-    REBUILD_DB = true
+    TEST_OPTIONS[:rebuild] = true
   end
   ActiveRecord::Base.establish_connection(
     adapter: "sqlite3",

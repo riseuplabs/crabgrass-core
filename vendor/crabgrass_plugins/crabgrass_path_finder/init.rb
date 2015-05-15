@@ -1,5 +1,7 @@
 require 'active_record'
 require 'action_controller'
+require 'path_finder'
+require 'search_filter'
 
 # uncomment when debugging:
 # reloadable

@@ -1,5 +1,5 @@
 class ChatChannel < ActiveRecord::Base
-  set_table_name 'channels'
+  self.table_name = 'channels'
 
   belongs_to :group
   validates_presence_of :group

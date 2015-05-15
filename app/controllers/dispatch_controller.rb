@@ -50,5 +50,5 @@ class DispatchController < ApplicationController
     request.parameters.merge! options
     @_params = nil
   end
-    
+
 end

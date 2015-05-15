@@ -1,0 +1,7 @@
+fr:
+  riseup:
+    run_by_html: "Ce site est géré par %{provider}%{description}"
+    description: ", collectif technique autonome depuis 1999, pour vous servir."
+    about_us: "à propos de nous"
+    system_status: "état des sytèmes"
+    donate: "faire un don à riseup.net"

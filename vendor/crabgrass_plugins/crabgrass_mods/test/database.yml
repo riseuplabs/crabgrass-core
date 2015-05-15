@@ -1,5 +1,0 @@
-sqlite3:
-  :adapter: sqlite3
-  :database: vendor/plugins/crabgrass_mods/test/test.sqlite3.db
-
-
