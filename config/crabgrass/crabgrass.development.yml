@@ -21,10 +21,6 @@ default_language: en
 enabled_languages: ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es']
 raise_i18n_exceptions: true
 
-# TODO: remove this
-transifex_user: 'riseuplabs'
-transifex_password: 'SET_ME'
-
 #
 # EMAIL
 #

@@ -10,6 +10,7 @@ config/crabgrass/crabgrass.production.yml
 config/database.yml
 config/sphinx/*.conf
 config/sphinx/*.sphinx.conf
+config/transifex.netrc
 doc/api
 doc/app
 doc/coverage
