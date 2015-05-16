@@ -1,6 +1,0 @@
-%ul.nav
-  - ['index','icons'].each do |file|
-    - active = params[:file] == file
-    %li{class: (active ? 'active' : '')}
-      = link_to_active(file, {file: file}, active)
-

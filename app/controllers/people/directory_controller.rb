@@ -1,4 +1,9 @@
 class People::DirectoryController < ApplicationController
+  before_filter :login_required
+  # ^^ for now, disable public directories. The old behavior was to require
+  #    authentication to browse the directory, so we don't want to change this
+  #    unexpectedly without either giving people some warning or adding an
+  #    additional level to the permissions.
 
   before_filter :prepare_path
 

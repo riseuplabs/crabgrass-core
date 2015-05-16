@@ -220,14 +220,6 @@ Crabgrass::Application.routes.draw do
   root to: 'root#index'
   get '/do/static/greencloth', to: 'static#greencloth'
 
-  ## ADD ROUTES FROM MODS
-
-  if Crabgrass.mod_route_blocks
-    Crabgrass.mod_route_blocks.each do |block|
-      instance_eval &block
-    end
-  end
-
   ##
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##

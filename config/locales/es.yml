@@ -3,6 +3,7 @@ es:
   signup_link: ¿Necesitas una nueva cuenta?
   signup_email_info: 'Opcional: Usado si olvidas tu contraseña'
   forgot_password_link: Olvidé mi contraseña
+  signup_info: Elige tu nombre de usari@ y tu contraseña, después haz click en %{sign_up}
   login_failure_reason: Nombre de usari@ o contraseña está incorrecto.
   signup_success_message: ¡Muchas gracias para apuntarte!
   login_name: Nombre de usari@
@@ -26,6 +27,7 @@ es:
   invalid_email_text: La dirección electrónica que has insertado no es válida.
   reset_password: Restablecer la contraseña
   reset_password_email_sent: Si esta dirección electrónica es asociada con un nombre de usari@, hemos enviado un e-mail con instruciones para reinicializar tu contraseña.
+  invalid_token: Inválido Token
   invalid_token_text: El link para reinicializar tu contraseña que has especificado no está valido. Cabe suponer que ya habia usado o está expirado.
   password_reset: Reinicialización de contraseña
   password_reset_ok_text: Tu contraseña está exitosamente reinicializada. Puedes iniciar sesión ahora con tu nueva contraseña.
@@ -36,6 +38,19 @@ es:
   confirm_new_password: Confirmar contraseña nueva
   congratulations_you_have_signed_up: ¡Felicidades! Te has registrado en %{site_title}.
   you_should_receive_instructions_email: Deberías recibir un correo electrónico con instrucciones para terminar de crear tu cuenta.
+  email_verification_body: 'Que se haya registrado para %{site_title} (%{host}).
+
+
+    Antes de poder iniciar sesión debe comprobar que esta es tu correo electrónico.
+
+
+    Haga clic en el enlace de abajo o copie y péguelo en su navegador:
+
+
+    %{verify_email_link}
+
+
+    Si no desea unirse, simplemente ignorar este mensaje.'
   change_password: Cambiar contraseña
   password: Contraseña
   password_confirmation: Confirmación de contraseña
@@ -46,61 +61,130 @@ es:
   anonymize_display_name: Anonimizar nombre mostrado
   anonymize_display_name_info: Reemplaza tu nombre mostrado von "Anónim@" en todas partes
   destroy_comments: Destruir comentarios
+  destroy_comments_info: Esto eliminará todos los comentarios realizados en páginas. Podría hacer que sea difícil de entender restante comentarios por otros.
+  confirm_account_removal: ¿Seguro que desea eliminar su cuenta? Este paso no se puede deshacer y se perderán los datos.
+  account_successfully_removed: Su cuenta se ha eliminado con éxito. Vamos a aclararlo y todo lo que está asociado los datos de la base de datos.
+  crabgrass:
+    powered_by_html: 'Este sitio es alimentado por <a href="https://we.riseup.net/crabgrass">crabgrass</a> % {description}
+
+      '
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL software libre</a> para la organización de la red.
+
+      '
+    report_a_bug: Reportar un error
+    request_a_feature: solicitar una función
+    help_pages: páginas crabgrass ayuda
+    get_involved: involucrarse
   destroy_confirmation: ¿Quieres eliminar este(a) %{thing}? Esta acción no se puede deshacer.
+  confirmation: Estás seguro?
   cancel: Cancelar
+  optional: Opcional
+  required: Necesario
+  thing_required: '%{thing} Lo Necesario'
   edit: Editar
   upload: Cargar
+  select_files: Seleccione los archivos
+  drop_files_here: Soltar archivos aquí
+  files_pending: '#{pending} archivo(s) pendiente'
+  return_link: Retorno
   back_button: Volver
+  send_button: Enviar
+  close_button: Cerca
   share_button: Compartir
   save_button: Guardar
+  add_button: Añadir
   cancel_button: Cancelar
   create_button: Crear
   ok_button: OK
+  done: Hecho
   show_button: Mostrar
+  show_thing: Mostrar %{thing}
+  confirm: Confirmar
   alert: Alerta
   loading_progress: Cargando...
   loadingdotdotdot: Cargando...
   create_a_new_thing: Crear nuevo %{thing}
+  create_thing: Crear %{thing}
   created_by: Creado por
+  updated_by: Actualizado por
   created_by_user_on: creado %{when} por %{user}
   approve: aprobar
   reject: rechazar
+  pending: Pendiente
+  rejected: Rechazado
+  approved: Aprobado
+  saved: Guardado
   destroy: destruir
+  thing_destroyed: '%{thing} destruida'
+  destroy_thing: Destruye %{thing}
+  delete_thing: Eliminar %{thing}
   delete: Eliminar
   delete_button: Eliminar
   deleted: Borrado
   remove: eliminar
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Escriba el nombre de un grupo o persona
+      enter_name_of_group: Escriba el nombre de un grupo
+      enter_name_of_person: Introduzca el nombre de una persona
+  actions:
+    task:
+      add: Añadir nuevo Grupo
+    possible:
+      add: Añadir nuevo Posibilidad
+  image_count: Imagen %{number} de %{count}
   image_count_total: '%{count} imágenes'
   show_gallery: Mostrar Álbum de fotos
+  edit_gallery_explaination: Añadir nuevas imágenes o arrastrar para cambiar su orden.
+  edit_image: Edición de imagen
+  show_gallery_explaination: Haga clic en la miniatura para ver la imagen completa.
+  add_images_or_zips: Añadir imágenes o archivo zip
+  add_images_or_zips_explaination: Archivo zip automáticamente se extrae y se puso en la galería
+  confirm_image_delete: ¿De verdad quiere eliminar esta imagen? Esta acción no se puede deshacer.
   no_title_given: (no tiene titulo)
+  add_images: Añadir Imágenes
+  edit_images: Editar Imágenes
   upload_new_image: cargar nueva imagen
   type_your_messages_here: Escriba aquí sus mensajes y pulse ENTER ...
   group_not_allowed_to_view_image_error: El grupo propietario de esta página no tiene permisos para ver esta imagen.
   add_comment: Añadir comentario
   image_title: 'Título de la imagen: %{title}'
   upload_zip_file_link: Subir un archivo Zip
+  add_images_to_gallery_link: Añadir imágenes a la galería
   too_tall_image_error: La imagen subida es demasiado grande (%{count} pixeles es la altura máxima)
   too_wide_image_error: La imagen subida deber ser de %{count} píxeles de ancho
   cant_detect_image_height_error: No se puede detectar la altura de la imagen. O la imagen está dañada o el servidor tuvo un error
+  edit_image_header: Editar Imagen y música
+  upload_images_and_zip_files_help: 'Opcional: Seleccione los archivos zip para subir o imagen.'
+  close_and_reload_gallery: Cierre y recarga galería
   search: Buscar
   thing_not_found: '%{thing} no se encuentra'
+  no_things_found: No hay %{thing} encontraron.
   no_search_results: No hay resultados
   not_found: No Encontrado
   see_all_link: Ver Todos
   total: '%{count} en total'
   all: Todos
   none: ninguno/a
+  or: o
+  new: nuevo
+  modified: modificado
   unknown: desconocido
   next: próxima
   previous: Anterior
   pagination_next: próxima
   pagination_previous: Anterior
   see_more_link: Más
+  see_less_link: Menos
+  list_things: Lista %{things}
   user: Usuario
   users: Usuarias
   people: Gente
+  person: Persona
   name: Nombre
   recipients: destinatarios
+  recipient: Beneficiario
+  owner: Propietario
   contacts: Contactos
   friends: Contactos
   member_groups_of_network: Grupos Miembros
@@ -110,6 +194,7 @@ es:
   share: Compartir
   contributed: Aportado
   profile: Perfil
+  content: Contenido
   comments: Comentarios
   statistics: Estadísticas
   summary: Resumen
@@ -117,7 +202,13 @@ es:
   public: Publico
   options: Opciones
   permissions: Permisos
+  notification: Notificación
+  notice: Aviso
+  notices: Avisos
+  dismiss: Despedir
+  locale: Lugar
   description: Descripción
+  details: Detalles
   invite: Invitar
   membership: Afiliaciones
   visibility: Visibilidad
@@ -130,10 +221,15 @@ es:
   text_message: Mensaje de texto
   print: Imprimir
   show: Mostrar
+  hide: Ocultar
+  display: Visualización
   message: mensaje
+  private_message_notice: Aviso Mensaje Privado
+  visits: Visitas
   group: Grupo
   groups: Grupos
   organization: organización
+  organizations: Organizaciones
   network: Red
   networks: Redes
   committee: Comité
@@ -141,9 +237,20 @@ es:
   council: Consejo
   councils: Consejos
   members: Personas
+  structure: Estructura
+  group_creation_info: 'Hay cuatro tipos de grupos:'
+  group_description: Las organizaciones son grupos que son autónomos y tienen las personas como miembros.
+  network_description: Las redes son grupos que pueden tener organizaciones como miembros. Una red se puede utilizar como una asociación de múltiples organizaciones, o un lugar para dos organizaciones a colaborar.
+  committee_description: Comités son grupos dentro de una organización o red. Un comité es totalmente subordinado a su organización matriz o red. Un usuario añadido a la comisión de fuera de la organización o red sólo tendrá acceso a la comisión.
+  council_description: Consejos son grupos con poderes administrativos especiales. Cada organización o red pueden tener un consejo. Si lo hace, la gente en el Consejo tendrá poder sobre la red u organización.
+  council_description_details: Por defecto, todos los miembros pueden modificar el% {grupo}. Si desea restringir los poderes administrativos a ciertos usuarios, crear un consejo y añadir usuarios a la misma.
+  committee_choose_group: 'Elija un grupo de este comité:'
+  network_committees_may_not_join_networks: Comités de otras redes no pueden unirse.
+  networks_may_not_join_networks: Las redes pueden no unirse a otras redes.
   may_request_membership_description: Un enlace "Unirse al grupo" aparecerá en la página de tu grupo. Esto enviará una solicitud de membresía a tu grupo que puede ser aceptada o rechazada.
   open_group: Abrir Grupo
   open_group_description: Las usuarias se agregan inmediatamente al grupo - la solicitud no tiene que ser aprobada
+  membership_requests: Las solicitudes de afiliación
   group_membership_count: '%{count} personas'
   membership_exists_error: Ya %{member} tiene una afiliación
   membership_destroy_confirm_message: ¿Tienes la certeza de que quieres retirar a '%{user}' de %{group_type}?
@@ -158,12 +265,15 @@ es:
   private_group_wiki: Privado
   group_publicly_visible: Hacer %{group} visible publicamente
   committee_publicly_visible: Hacer comités públicos
+  networks_publicly_visible: Hacer Redes públicamente visible
   allow_membership_requests: Permitir solicitudes de afiliación
   group_successfully_created: 'El grupo ha sido creado con éxito. '
   group_publicly_visible_description: 'El grupo aparece en el directorio público y su <i>perfil</i> puede ser visto por personas no inscritas en el mismo.'
   committee_publicly_visible_description: Los comités son visibles a personas no afiliadas a %{domain}/nombredelgrupo
+  networks_publicly_visible_description: Las redes son visibles para los no miembros en% {dominio} / yourgroupname
   group_members_publicly_visible: Hacer pública la lista de integrantes del grupo
   group_members_publicly_visible_description: Quienes no son parte del grupo %{domain}/yourgroupname pueden ver la lista de integrantes. Y, el nombre del grupo será mostrado en el perfil de todas las personas inscritas (%{domain} / nombre de usuario)
+  members_may_edit_wiki: Todos los miembros pueden editar el wiki
   rss_feed: 'RSS Feed '
   group_language: El idioma principal de este %{group}.
   my_networks: Mis Redes
@@ -171,14 +281,22 @@ es:
   basic_settings: Configuración básica
   send_invites: Enviar invitaciones
   view_requests: ver solicitudes
+  add_members_to_committee: Añadir un miembro del grupo a este comité. Para agregar no en el grupo de padres de personas, enviar una invitación en su lugar.
   join_group_link: Unirse a %{group_type}
   leave_group_link: Dejar %{group_type}
   request_join_group_link: Solicitud para unirse %{group_type}
+  request_exists: Su solicitud para unirse a está a la espera para su aprobación.
   link_name_description: Este nombre es cómo va a referirse a este grupo en los enlaces y direcciones URL. Debe tener sólo caracteres alfanuméricos, no se permite espacios.
   descriptive_name_for_display: Un nombre descriptivo para mostrar
   this_is_committee: Este comité es parte de %{parent_group}.
+  network_initial_member: Elija una organización para ser un miembro inicial de esta red.
   headings:
+    page_search: Búsqueda de páginas
     recent_pages: Paginas Recientes
+    info:
+      page_search: Encuentra todas las páginas que tiene acceso directamente oa través de sus grupos
+      recent_pages: Usted contribuyó a estas páginas o que fueron compartidas con usted
+  my_dashboard: Salpicadero
   uploaded_image_cropped: La foto cargada será recortada y estirada a 96 píxeles cuadrados.
   select_image_file: seleccionar archivo de foto
   or_image_url: o URL de la foto
@@ -190,6 +308,10 @@ es:
   language: Idioma
   time_zone: Zona Horaria
   do_you_want_to_receive_email_notifications: ¿Deseas recibir notificaciones por correo electrónico de cambios a las páginas que estás observando?
+  notification_select:
+    none: 'No: no hay mensajes de correo electrónico para los cambios'
+    single: 'Sí: un correo electrónico por cada cambio'
+    digest: 'Sí: un resumen diario de cambios'
   send_message_link: Enviar Mensaje
   message_to_self_error: No puedes hablar contigo misma
   message_you_wrote_caption: 'Tu escribiste:'
@@ -202,21 +324,34 @@ es:
   menu_networks: Redes
   menu_link_logout: Cerrar sesión
   menu_admin: Admin
+  account_settings: Configuración de la cuenta
+  back_to_page: Volver a la página
   back_to_group: volver a %{group_name}
   pages: Páginas
   recent_pages: Paginas Recientes
   my_pages: Mis Páginas
+  properties: Propiedades
+  popular_pages: Páginas Populares
   advanced: Avanzado
   access: Acceso
+  active_filters: Activar filtros
+  all_pages: Todas las páginas
   created_by_me: creado
+  created_by_user_description: Búsqueda de páginas creadas por una persona en particular.
+  created_by_dotdotdot: Creado Por ...
   starred_by_me: estrellado
+  watched_by_me: Watching
   edited_by_me: Editado
+  owned_by_me: Propio
   most_active: Más activo
   most_stars: Más votado (estrellas)
   most_viewed: Más Vistos
+  filter_user_description: Búsqueda de páginas con el acceso de un usuario en particular.
+  filter_group_description: Búsqueda de páginas con el acceso de un grupo en particular.
   starred: estrellado
   viewed: Visto(s)
   edited: Editado
+  type: Tipo
   all_page_types: todos los tipos de páginas
   edit_title: editar título
   data_for_page_missing: Los datos de esta página no están disponibles.
@@ -226,11 +361,14 @@ es:
   unread: No leído
   read: leer
   page_name_description: Nombre único opcional (usado para crear la URL de esta página)
+  filter_tag_description: Busca páginas con una etiqueta en particular.
+  page_notice: Aviso Página
   email_notice_subject: Examinar la página "%{title}"
   email_notice_hello_with_message: 'Hola, %{from} te enviado una página web con el siguiente mensaje: %{mensaje}'
   email_notice_hello: Hola, %{from} te ha enviado una página web.
   email_notice_access: 'Puedes acceder a esta página en:'
   email_link_expires: Este enlace expirará en %{days} días.
+  page_update: Página Actualización
   watch_checkbox: Observar los cambios
   add_star_link: Añadir Estrella (%{star_count})
   remove_star_link: Eliminar Estrella (%{star_count})
@@ -311,6 +449,7 @@ es:
   gallery_display: Galería
   asset_page_description: Subir una imagen, documento, hoja de cálculo, presentación, o cualquier archivo.
   asset_page_display: Archivo
+  select_file_to_upload: Seleccione un archivo para cargar.
   discussion_page_description: Debate sobre un tema en particular.
   discussion_page_display: Debate de Grupo
   ranked_vote_page_description: 'Posibilidades clasificadas en orden de preferencia.
@@ -328,6 +467,14 @@ es:
   page_group_planning: Herramientas de planificación
   pending_tasks: tareas pendientes
   completed_tasks: tareas terminadas
+  no_pending_tasks: no hay tareas pendientes
+  no_completed_tasks: tareas no completadas
+  assign_to: asignar a
+  vote:
+    really_remove_this: ¿De verdad quiere eliminar esta opción?
+    you_have_not_ranked: 'Aún no ha clasificado:'
+    voted_on: Votado en
+    not_voted_on: No votada
   vote_good: bueno
   vote_ok: ok
   vote_bad: malo
@@ -389,8 +536,25 @@ es:
 
     '
   video_embed_code_prompt: Código incrustado en el video procedente de fuente externa
+  permissions_key: Clave
+  public_description: Todo el mundo en Internet
+  peers_description: Los miembros de los grupos
+  friends_description: Tus amigos
+  may_view_label: Ver mi perfil?
+  may_view_description: Si no se controla, su perfil se ocultará por completo.
+  may_see_contacts_label: Ver mis contactos?
+  may_see_contacts_description: Permitir que la gente vea que sus contactos son.
+  may_see_groups_label: Ver mis grupos?
+  may_see_groups_description: Permitir que la gente vea lo que los grupos que usted es un miembro de.
+  may_pester_label: Comparte conmigo?
+  may_pester_description: Permitir que las personas que envían mensajes, páginas, e invitaciones.
+  may_request_contact_label: Solicitud de contacto?
+  may_request_contact_description: Permitir que las personas solicitan ser tu contacto.
+  sharing_and_requests: Compartir y Solicitudes
+  view_profile: Ver Perfil
   profile_member_since: En el sitio desde
   home: Inicio
+  banner: Bandera
   organizational_role: rol en la organización
   phone_number: Número de teléfono
   email_addresses: Direcciones de Correo Electrónico
@@ -400,6 +564,7 @@ es:
   edit_profile_link: Editar Perfil
   profile_saved: ' Su perfil se ha guardado. '
   requests: Solicitudes
+  request: Solicitud
   incoming: Entrante
   outgoing: Saliente
   not_allowed_to_respond_to_request: '%{user} no tiene autorizado %{command} la solicitud'
@@ -407,6 +572,10 @@ es:
   send_request_button: Enviar Solicitud
   send_invites_button: Enviar invitaciones
   all_requests: Todas las solicitudes
+  activerecord:
+    models:
+      request_to_friend: Solicitud para convertirse en Contactos
+  request_to_friend: Solicitud para convertirse en Contactos
   request_to_friend_description: '%{user} quiere ser el contacto de %{other_user}'
   request_to_join_our_network_description: grupo %{group} fue invitado a unirse a la red %{network}
   request_to_join_us_description: '%{user} fue invitado a unirse %{group}'

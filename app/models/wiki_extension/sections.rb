@@ -1,7 +1,7 @@
 module WikiExtension
   module Sections
 
-    class SectionNotFoundError < ArgumentError
+    class SectionNotFoundError < ErrorNotFound
       def initialize(section = 'document', options = {})
         message = :cant_find_wiki_section.t(section: section)
         super(message)

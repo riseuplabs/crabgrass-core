@@ -16,18 +16,11 @@ Dir.glob(APP_ROOT + "lib/extends/*.rb").each do |file|
   require file
 end
 
-# load the mods plugin first, it modifies how the plugin loading works
-#require "#{CRABGRASS_PLUGINS_DIRECTORY}/crabgrass_mods/rails/boot"
-
 # load Crabgrass::Initializer early, it is used in environment.rb
 #require File.dirname(__FILE__) + '/initializer'
 
 # load configuration file
 Conf.load("crabgrass.#{Rails.env}.yml")
-
-# control which plugins get loaded and are reloadable
-#Mods.plugin_enabled_callback = Conf.method(:plugin_enabled?)
-#Mods.plugin_reloadable_callback = Conf.method(:plugin_reloadable?)
 
 begin
   Conf.secret = File.read(CRABGRASS_SECRET_FILE).chomp

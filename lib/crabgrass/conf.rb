@@ -203,51 +203,11 @@ class Conf
   end
 
   ##
-  ## PLUGINS
-  ##
-
-  # This is a callback method that we set in lib/crabgrass/boot.rb.
-  # We should return true if we want the plugin to be loaded, false otherwise.
-  def self.plugin_enabled?(plugin_path)
-    if plugin_path =~ /^#{Regexp.escape(MODS_DIRECTORY)}\/[^\/]+$/
-      self.mod_enabled?( File.basename(plugin_path) )
-    elsif plugin_path =~ /^#{Regexp.escape(PAGES_DIRECTORY)}\/[^\/]+$/
-      self.page_enabled?( File.basename(plugin_path) )
-    else
-      true
-    end
-  end
-
-  ##
   ## LANGUAGE
   ##
 
   def self.language_enabled?(lang_code)
     self.enabled_languages_hash[lang_code]
-  end
-
-  private
-
-  # a mod will be enabled if explicitly configured to be so, or if
-  # ENV['MOD'] is set.
-  def self.mod_enabled?(mod_name)
-    self.enabled_mods.include?(mod_name) or
-    ENV['MOD'] == mod_name or
-    ENV['MOD'] == 'ALL'
-  end
-
-  # page definitions are like mods, except that the default is to enable them all.
-  # unless only some are enabled.
-  def self.page_enabled?(page_name)
-    enabled_list = self.enabled_pages || self.enabled_tools
-    enabled_list.empty? or enabled_list.include?(page_name) or ENV['PAGE'] == page_name
-  end
-
-  public
-
-  # in development mode, allow all pages to be reloadable
-  def self.plugin_reloadable?(plugin_path)
-    plugin_path.starts_with?(PAGES_DIRECTORY)
   end
 
   ##

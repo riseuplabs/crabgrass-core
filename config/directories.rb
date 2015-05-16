@@ -22,7 +22,6 @@ dirs << LOCALE_OVERRIDE_DIRECTORY = EXTENSION_DIRECTORY + "locales"
 
 # plugins
 
-dirs << MODS_DIRECTORY              = EXTENSION_DIRECTORY + "mods"
 dirs << PAGES_DIRECTORY             = EXTENSION_DIRECTORY + "pages"
 dirs << CRABGRASS_PLUGINS_DIRECTORY = APP_ROOT + "vendor/crabgrass_plugins"
 

@@ -2,9 +2,15 @@
 .row.margin-top
   .col-sm-8.col-sm-push-4
     %h1= h(:welcome_title.t(site_title: 'we.riseup.net'))
-    =t 'crabgrass.powered_by_html', description: t('crabgrass.description_html'), default: 'Powered by crabgrass'
-    .margin-top(style = "max-width: 20em")
+    %p=t 'crabgrass.powered_by_html', description: t('crabgrass.description_html'), default: 'Powered by crabgrass'
+    .space-ui(style = "max-width: 20em")
       = render partial: 'session/login_form'
+    %p
+      = t('riseup.accounts_note',
+        {riseup_black: content_tag(:b, link_to(t('riseup.riseup_black'), 'https://black.riseup.net')),
+        riseup_red: content_tag(:b, link_to(t('riseup.riseup_red'), 'https://user.riseup.net'))})
+
+
   .col-sm-4.col-sm-pull-8
     %img{src: '/theme/riseup/images/g42.jpg', style: 'margin-right: 20px', align: 'right', title:'artwork by alpuerto'}
 

@@ -9,4 +9,9 @@ en:
     mailing_lists: "Mailing Lists"
     system_status: "System Status"
     donate: "Donate to Riseup"
-
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+      NOTE: The user accounts for this website are independent of other
+      riseup.net services. In other words, you cannot use your
+      %{riseup_black} or %{riseup_red} accounts to sign into this website.
