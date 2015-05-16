@@ -52,9 +52,7 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
   def test_logged_out
     visit '/'
     click_on 'People'
-    assert_content 'Search'
-    assert_no_content 'Peers'
-    assert_no_content 'Contacts'
+    assert_content 'Login Required'
   end
 
 end
