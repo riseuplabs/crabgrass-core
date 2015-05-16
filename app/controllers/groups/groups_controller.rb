@@ -35,8 +35,8 @@ class Groups::GroupsController < Groups::BaseController
     @group.destroy_by(current_user)
     success :thing_destroyed.t(thing: @group.name)
     # TODO: write a wrapper for mailer that does the iteration
-    group.users_before_destroy.each do |recipient|
-      Mailer.group_destroyed_notification(recipient, group, mailer_options).deliver
+    @group.users_before_destroy.each do |recipient|
+      Mailer.group_destroyed_notification(recipient, @group, mailer_options).deliver
     end
     if parent
       redirect_to group_url(parent)
