@@ -93,8 +93,9 @@ module AssetExtension
         return name if name =~ /#{THUMBNAIL_SEPARATOR}/  # we might have been passed an already resolved thumbnail_filename
         thumbdef = name if name.is_a? ThumbDef
         thumbdef ||= thumbdefs[name.to_sym]
-        return nil unless thumbdef
-        if thumbdef.proxy and thumbdef.mime_type == self.content_type
+        if thumbdef.nil?
+          return "#{self.basename}#{THUMBNAIL_SEPARATOR}#{name}.#{name}"
+        elsif thumbdef.proxy and thumbdef.mime_type == self.content_type
           self.filename
         else
           "#{self.basename}#{THUMBNAIL_SEPARATOR}#{thumbdef.name}.#{thumbdef.ext}" if thumbdef
