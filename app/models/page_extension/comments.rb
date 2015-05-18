@@ -19,8 +19,8 @@ module PageExtension::Comments
 
   def posts(pagination_options={})
     return [] unless self.discussion
-    pagination_options.reverse_merge! per_page: Conf.pagination_size,
-      page: discussion.last_page         # for now, always paginate.
+    pagination_options[:per_page] ||= Conf.pagination_size
+    pagination_options[:page] ||= discussion.last_page
     self.discussion.visible_posts.includes(:user).paginate(pagination_options)
   end
 
@@ -29,7 +29,7 @@ module PageExtension::Comments
     user.updated(self)
     save
   end
-    
+
   #
   # use Post.create! instead.
   #
