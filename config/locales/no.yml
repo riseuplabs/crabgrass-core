@@ -3,17 +3,13 @@
   signup_link: Lag ny bruker
   signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
   forgot_password_link: Glemt passordet?
-  signup_info: Velg brukernavn og passord, og klikk på %{sign_up}
   login_failure_reason: Brukernavn eller passord er feil.
   signup_success_message: Takk for registreringen!
   login_name: Brukernavn
   signup_success: Registreringen var vellykket
   logout_success: Ha det!
   logout_success_message: Du er nå logget ut.
-  signup_button: Registrer deg
   login_failed: Kunne ikke logge inn
-  signup_login_name: Ditt brukernavn
-  login_button: Innlogging
   login: Innlogging
   signup_title: Opprett konto
   signup_email: Din e-post
@@ -70,10 +66,6 @@
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
 
       '
-    report_a_bug: rapporter en bug
-    request_a_feature: etterspør en funksjon
-    help_pages: crabgrass hjelp
-    get_involved: involver deg
   destroy_confirmation: Er du sikker på at du vil slette %{thing}? Denne handlingen kan ikke gjøres om.
   confirmation: Er du sikker?
   cancel: Avbryt
@@ -133,7 +125,7 @@
   image_count: Bilde %{number} av %{count}
   image_count_total: '%{count} Fotoer'
   show_gallery: Vis galleri
-  edit_gallery_explaination: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
+  edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
   edit_image: Rediger bilde
   show_gallery_explaination: Klikk på miniatyrbilde for å se bildet i full størrelse.
   add_images_or_zips: Legg bilder til zipfil
@@ -172,6 +164,7 @@
   previous: Forrige
   pagination_next: Neste
   pagination_previous: Forrige
+  return: Gå tilbake
   see_more_link: Mer
   see_less_link: Mindre
   list_things: List %{things}
@@ -486,11 +479,6 @@
   page_group_text: Tekst og diskusjoner
   page_group_media: Multimedia
   page_group_planning: Planleggingsverktøy
-  pending_tasks: oppgaver som venter
-  completed_tasks: fullførte oppgaver
-  no_pending_tasks: ingen oppgaver venter
-  no_completed_tasks: ingen fullførte oppgaver
-  assign_to: gi til
   vote:
     really_remove_this: Vil du virkelig fjerne denne valgmuligheten?
     you_have_not_ranked: 'Du har ikke rangert enda:'
@@ -501,7 +489,6 @@
   vote_bad: dårlig
   vote_none: ingen
   vote_no: 'nei'
-  ranked_vote_instructions: Dra og slipp hvert punkt på den følgende listen til de er i rekkefølge fra det du mest foretrekker på toppen og det du minst foretrekker på bunnen. Når du er ferdig, trykk bekreft for å registrere din stemme.
   confirm_vote_button: Bekreft min stemme
   edit_my_vote_tab: Rediger min stemme
   show_results_tab: Vis resultater

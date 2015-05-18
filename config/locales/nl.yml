@@ -3,17 +3,13 @@ nl:
   signup_link: Een nieuwe gebruiker / gebruikster opstellen
   signup_email_info: 'Optionaal: Werd gebruikt als jij je wachtwoord vergeet.'
   forgot_password_link: Wachtwoord vergeten?
-  signup_info: Kiez een login-naam en een wachtwoord en klik dan op %{sign_up}
   login_failure_reason: Naam of wachtwoord is niet correct.
   signup_success_message: Dank je wel voor je registratie!
   login_name: Gebruikers naam / Gebruiksters naam
   signup_success: Registratie was succesvol
   logout_success: Tot ziens!
   logout_success_message: Je bent uitgelogd nu.
-  signup_button: Registratie
   login_failed: Je kan niet ingelogd worden
-  signup_login_name: Je login-naam
-  login_button: Login
   login: Login
   signup_title: Je toegang opstellen
   signup_email: Je email
@@ -75,10 +71,6 @@ nl:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL vrije software</a> voor de organisatie van netwerken.
 
       '
-    report_a_bug: een bug melden
-    request_a_feature: een functie opvragen
-    help_pages: de hulp paginas van crabgrass
-    get_involved: meedoen
   destroy_confirmation: Bent je zeker, dat je deze %{thing} wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
   confirmation: Bent je zeker?
   cancel: Afbreken
@@ -139,7 +131,7 @@ nl:
   image_count: Afbeelding %{number} van %{count}
   image_count_total: '%{count} foto''s'
   show_gallery: Laat me galerij zien
-  edit_gallery_explaination: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
+  edit_gallery_explanation: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
   edit_image: Afbeelding editeren
   show_gallery_explaination: Klik op kleine afbeeldingen om de heele afbeelding te zien.
   add_images_or_zips: Voeg afbeeldingen of Zipfiles toe
@@ -178,6 +170,7 @@ nl:
   previous: Vorig
   pagination_next: Volgend
   pagination_previous: Vorig
+  return: Teruggaan
   see_more_link: Meer
   see_less_link: Minder
   list_things: Een List van alle %{things} opmaken
@@ -495,11 +488,6 @@ nl:
   page_group_text: Tekst en discussies
   page_group_media: Multimedia
   page_group_planning: Plaan werktuigen
-  pending_tasks: ongedaan taken
-  completed_tasks: afgelopen taken
-  no_pending_tasks: geen ongedaan taken
-  no_completed_tasks: geen afgelopen taken
-  assign_to: toewijzen aan
   vote:
     really_remove_this: Wil je echt deze optie verwijderen?
     you_have_not_ranked: 'Je heeft nog niet gewaarderd:'
@@ -510,7 +498,6 @@ nl:
   vote_bad: slecht
   vote_none: geen
   vote_no: 'nee'
-  ranked_vote_instructions: Trek de items van de volgende lijst en laat ze vallen tot ze in de orde van meest geprefereerd bovenaan naar minst geprefereerd onderaan zijn. Wanneer je klaar bent klik bevestigen om je stemming vast te leggen.
   confirm_vote_button: Stemming vast leggen
   edit_my_vote_tab: Mijn stemming editeren
   show_results_tab: Laat resultaaten zien

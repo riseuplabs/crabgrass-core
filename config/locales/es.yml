@@ -1,31 +1,31 @@
 es:
-  cookie_disabled_warning: No aceptas cookies. No fueres capaz de iniciar sesión si no permitas cookies.
-  signup_link: ¿Necesitas una nueva cuenta?
-  signup_email_info: 'Opcional: Usado si olvidas tu contraseña'
-  forgot_password_link: Olvidé mi contraseña
-  signup_info: Elige tu nombre de usari@ y tu contraseña, después haz click en %{sign_up}
-  login_failure_reason: Nombre de usari@ o contraseña está incorrecto.
-  signup_success_message: ¡Muchas gracias para apuntarte!
-  login_name: Nombre de usari@
-  signup_success: Inscripción exitosa
+  cookie_disabled_warning: Las cookies están bloqueadas por tu navegador. No puedes iniciar sesión hasta que les actives.
+  signup_link: ¿Necesitas una cuenta?
+  signup_email_info: 'Opcional: se usará si olvidas tu contaseña'
+  forgot_password_link: ¿Olvidaste tu contraseña?
+  login_failure_reason: Nombre de usari@ o contraseña incorrecta.
+  signup_success_message: ¡Gracias por inscribirte!
+  login_name: Usuari@
+  signup_success: Registro exitoso
   logout_success: Adiós
-  logout_success_message: Estás salido del sistema.
-  signup_button: Registrar
+  logout_success_message: Te has desconectado.
+  signup_button: Inscríbete
   login_failed: No puedes ingresar
-  signup_login_name: Tu nombre de usari@
-  login_button: Ingresar
+  signup_login_name: Tu usuari@
+  login_button: Acceder
   login: Ingresar
-  signup_title: Crear tu acceso
+  sign_in: Acceder
+  signup_title: Crea tu cuenta
   signup_email: Tu e-mail
-  forgot_password_text: Si has olvidado tu contraseña para iniciar la sesión, podemos enviarte un e-mail link con lo que puedes generarte una nueva.
-  reset_password_text: Hola, %{user}. Si has olvidado tu contraseña para iniciar una sesión, puedes crear otra aquí.
+  forgot_password_text: Si has olvidado tu contraseña, podemos enviarte un link por e-mailcon el que puedes generar una nueva.
+  reset_password_text: Hola, %{user}. Si has olvidado tu contraseña, puedes crear una nueva aquí.
   forgot_password_mail_greeting: '%{user}, para restablecer tu contraseña, por favor visita'
-  forgot_password_mail_expiry: Este link va a sigue ser válido para 24 horas. Si necesitas reinicializar tu contraseña después, tienes que visitar la pagina de la contraseña olvidada otra vez y pedir nuevo link.
-  reset_password_mail_greeting: '%{user}, su contraseña fue restablecida como lo solicito.'
-  reset_password_mail_warning: Si no ha solicitado que su contraseña sea cambiada, póngase en contacto con nosotros.
+  forgot_password_mail_expiry: Este link es válido por 24 horas. Si necesitas reiniciar tu contraseña transcurrido ese tiempo, deberás visitar nuevamente la pagina para recuperar tu contraseña y pedir un nuevo link.
+  reset_password_mail_greeting: '%{user}, su contraseña fue restablecida como lo solicitó.'
+  reset_password_mail_warning: Si no has solicitado cambiar tu contraseña, por favor contáctanos.
   your_login: Tu login
-  invalid_email_text: La dirección electrónica que has insertado no es válida.
-  reset_password: Restablecer la contraseña
+  invalid_email_text: La dirección de email no es válida.
+  reset_password: Restablecer contraseña
   reset_password_email_sent: Si esta dirección electrónica es asociada con un nombre de usari@, hemos enviado un e-mail con instruciones para reinicializar tu contraseña.
   invalid_token: Inválido Token
   invalid_token_text: El link para reinicializar tu contraseña que has especificado no está valido. Cabe suponer que ya habia usado o está expirado.
@@ -71,10 +71,9 @@ es:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL software libre</a> para la organización de la red.
 
       '
-    report_a_bug: Reportar un error
-    request_a_feature: solicitar una función
-    help_pages: páginas crabgrass ayuda
-    get_involved: involucrarse
+    report_a_bug: Infórmanos un fallo
+    get_involved: Participa
+    help_translate: Ayúdanos a traducir
   destroy_confirmation: ¿Quieres eliminar este(a) %{thing}? Esta acción no se puede deshacer.
   confirmation: Estás seguro?
   cancel: Cancelar
@@ -135,7 +134,7 @@ es:
   image_count: Imagen %{number} de %{count}
   image_count_total: '%{count} imágenes'
   show_gallery: Mostrar Álbum de fotos
-  edit_gallery_explaination: Añadir nuevas imágenes o arrastrar para cambiar su orden.
+  edit_gallery_explanation: Añadir nuevas imágenes o arrastrar para cambiar su orden.
   edit_image: Edición de imagen
   show_gallery_explaination: Haga clic en la miniatura para ver la imagen completa.
   add_images_or_zips: Añadir imágenes o archivo zip
@@ -158,6 +157,7 @@ es:
   upload_images_and_zip_files_help: 'Opcional: Seleccione los archivos zip para subir o imagen.'
   close_and_reload_gallery: Cierre y recarga galería
   search: Buscar
+  go: Ir
   thing_not_found: '%{thing} no se encuentra'
   no_things_found: No hay %{thing} encontraron.
   no_search_results: No hay resultados
@@ -174,6 +174,7 @@ es:
   previous: Anterior
   pagination_next: próxima
   pagination_previous: Anterior
+  return: Retorno
   see_more_link: Más
   see_less_link: Menos
   list_things: Lista %{things}
@@ -185,6 +186,9 @@ es:
   recipients: destinatarios
   recipient: Beneficiario
   owner: Propietario
+  created_by_entity: Creado por %{entity}
+  approved_by_entity: Aprobado por %{entity}
+  rejected_by_entity: Rechazado por %{entity}
   contacts: Contactos
   friends: Contactos
   member_groups_of_network: Grupos Miembros
@@ -284,8 +288,10 @@ es:
   add_members_to_committee: Añadir un miembro del grupo a este comité. Para agregar no en el grupo de padres de personas, enviar una invitación en su lugar.
   join_group_link: Unirse a %{group_type}
   leave_group_link: Dejar %{group_type}
+  leave_group_confirmation: ¿Estás segur@ que deseas abandonar este %{group_type}?
   request_join_group_link: Solicitud para unirse %{group_type}
   request_exists: Su solicitud para unirse a está a la espera para su aprobación.
+  join_group_confirmation: ¿Estás segur@ que deseas ingresar a este %{group_type}?
   link_name_description: Este nombre es cómo va a referirse a este grupo en los enlaces y direcciones URL. Debe tener sólo caracteres alfanuméricos, no se permite espacios.
   descriptive_name_for_display: Un nombre descriptivo para mostrar
   this_is_committee: Este comité es parte de %{parent_group}.
@@ -313,9 +319,11 @@ es:
     single: 'Sí: un correo electrónico por cada cambio'
     digest: 'Sí: un resumen diario de cambios'
   send_message_link: Enviar Mensaje
+  messages_with: Conversación con %{other_user}
   message_to_self_error: No puedes hablar contigo misma
   message_you_wrote_caption: 'Tu escribiste:'
   message_user_wrote_caption: '%{user} escribió:'
+  unread_private_message: Tienes un mensaje privado sin leer de %{user}
   menu_me: Solo Yo
   menu_groups: Grupos
   menu_home: Inicio
@@ -337,11 +345,13 @@ es:
   active_filters: Activar filtros
   all_pages: Todas las páginas
   created_by_me: creado
+  created_by_user: Creado por %{user}
   created_by_user_description: Búsqueda de páginas creadas por una persona en particular.
   created_by_dotdotdot: Creado Por ...
   starred_by_me: estrellado
   watched_by_me: Watching
   edited_by_me: Editado
+  edited_by_user: Editado por %{user}
   owned_by_me: Propio
   most_active: Más activo
   most_stars: Más votado (estrellas)
@@ -465,11 +475,6 @@ es:
   page_group_text: Texto
   page_group_media: Multimedia
   page_group_planning: Herramientas de planificación
-  pending_tasks: tareas pendientes
-  completed_tasks: tareas terminadas
-  no_pending_tasks: no hay tareas pendientes
-  no_completed_tasks: tareas no completadas
-  assign_to: asignar a
   vote:
     really_remove_this: ¿De verdad quiere eliminar esta opción?
     you_have_not_ranked: 'Aún no ha clasificado:'
@@ -480,7 +485,6 @@ es:
   vote_bad: malo
   vote_none: nada
   vote_no: 'no'
-  ranked_vote_instructions: Arrastrar y soltar los temas de la siguiente lista hasta que se encuentren en orden desde el más preferido situado en la parte superior al menos preferido en la parte inferior. Cuando haya terminado, confirmar para registrar su voto.
   confirm_vote_button: Confirma tu voto
   edit_my_vote_tab: Editar mi voto
   show_results_tab: Mostrar resultados
@@ -597,8 +601,12 @@ es:
   caption: Título
   photo_credit: Crédito de la foto
   video_embed: Insertado
+  size: Tamaño
   illegal_redirect: Redirección no autorizada
   redirect_to_foreign_domain: Usted está tratando de redirigir a un sitio extranjero (%{url}) después de su ingreso. Por razones de seguridad hemos eliminado este parámetro de la URL.
+  save_wiki_before_adding_image: Por favor, guarda los cambios en el Wiki antes de añadir una imagen.
+  preview_selected_image: Vista previa de la imagen seleccionada
+  image_size_info: Elige el tamaño de la imagen a insertar
   small: pequeño
   medium: medio
   large: grande
@@ -680,6 +688,7 @@ es:
   date_today: Hoy
   date_this_week: Esta semana
   date_this_month: Este Mes
+  date_this_year: Este año
   date_all_time: Todo el Tiempo
   alert_not_saved: Los cambios no han podido ser guardados
   alert_field_errors: Hay problemas con los siguientes campos
@@ -695,6 +704,7 @@ es:
   permission_denied: Permiso denegado
   chat: Charla
   left_the_chatroom: 'salido de la sala de chat '
+  tag: Etiqueta
   tags: Etiquetas
   no_tags: No existen etiquetas
   add_one_or_more_tags: Agrega una o más etiquetas, separadas por comas
@@ -703,8 +713,12 @@ es:
   current_tags: Etiquetas actuales
   welcome_title: Bienvenido a %{site_title}
   welcome_message: Crabgrass permite que organizaciones que trabajan en asuntos de cambio social ejecutan acciones, promovan, colaboren y crean redes.
+  public_wiki: Wiki Público
+  private_wiki: Wiki Privado
+  edit_wiki: Editar Wiki
   break_lock_button: Romper el bloqueo
   versions: versiones
+  version: Versión
   comparing_changes_header: Comparando cambios hechos por %{user} en fecha %{when} de %{old_version} a %{new_version}
   prev_change: cambio anterior
   next_change: próximo cambio
@@ -712,6 +726,7 @@ es:
   version_doesnt_exist: No hay versión %{version}
   you_are_viewing_version: Usted está viendo la versión %{version} by %{usuario}
   diff_link: Ver cambios
+  version_link: ver versión
   wiki_section_edit: Corrija esta sección
   wiki_revert_version: Invierta a la versión %{version}
   wiki_version_creator_heading: persona

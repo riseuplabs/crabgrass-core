@@ -1,20 +1,20 @@
 pl:
-  cookie_disabled_warning: Masz wyłączoną obsługę plików cookies. Nie będziesz w stanie się zalogować jeśli jej nie włączysz.
+  cookie_disabled_warning: You have cookies disabled. You will not be able to login until you enable cookies.
   signup_link: Stwórz nowe konto
   signup_email_info: 'Nie jest to wymagane ale przydatne jeśli zapomnisz hasło.'
   forgot_password_link: Odzyskiwanie hasła
-  signup_info: Wybierz sobie login oraz hasło i kliknij "%{sign_up}"
   login_failure_reason: Złe hasło lub nazwa użytkownika.
   signup_success_message: Witamy!
-  login_name: Login
+  login_name: Imię Użytkownika/Użytkowniczki
   signup_success: Twój profil został utworzony
   logout_success: Do zobaczenia!
   logout_success_message: Wylogowano z systemu.
-  signup_button: Dołącz
+  signup_button: Zarejestruj się
   login_failed: Nie udało się zalogować
   signup_login_name: Twój login
   login_button: Zaloguj się
   login: Login
+  sign_in: Zaloguj się
   signup_title: Stwórz swoje konto
   signup_email: Twój mejl
   forgot_password_text: Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło.
@@ -40,6 +40,7 @@ pl:
   confirm_new_password: Powtórz nowe hasło
   congratulations_you_have_signed_up: Gratulacje! Pomyślnie zarejestrowano na %{site_title}.
   you_should_receive_instructions_email: Powinien przyjść do ciebie email z instrukcjami jak zakończyć rejestrację twojego konta.
+  email_verification_body: "Zarejestrowano twoje konto na %{site_title} (% {host}).\n\nZanim się zalogujesz musisz potwierdzić ze to twój adres meblowy. \n\nKliknij poniższy link albo skopiuj i wklej go do swojej przeglądarki:\n\n%{verify_email_link}\n\nJeśli nie chcesz dołączyć, po prostu zignoruj tego mejla."
   change_password: Zmiana hasła
   password: Hasło
   password_confirmation: Potwierdzenie hasła
@@ -54,13 +55,17 @@ pl:
   confirm_account_removal: Czy na pewno chcesz usunąć konto? Tego kroku nie da się cofnąć a dane zostaną bezpowrotnie usunięte.
   account_successfully_removed: Twoje konto zostało usunięte. Usuniemy je i wszystkie powiązane z nim dane z bazy danych.
   crabgrass:
+    powered_by_html: 'Stronę napędza <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">wolne oprogramowanie AGPL</a> do organizacji sieciowej.
 
       '
-    report_a_bug: zgłoś błąd
-    request_a_feature: poproś o nowe opcje
-    help_pages: strony pomocy crabgrass
-    get_involved: zaangażuj się
+    report_a_bug: Zgłoś błąd
+    request_a_feature: Zaproponuj funkcję
+    help_pages: Strony pomocy Crabgrassa
+    get_involved: Zaangażuj się
+    help_translate: Pomóż w tłumaczeniu
   destroy_confirmation: Czy jeteś pewien/a że chcesz zlikwidować %{thing} ? To działanie nie bedzie mogło być odwrócone.
   confirmation: Na pewno?
   cancel: Anuluj
@@ -123,7 +128,7 @@ pl:
   image_count: Zdjęcie %{number} z %{count}
   image_count_total: '%{count} Zdjęć'
   show_gallery: Pokaż Galerię
-  edit_gallery_explaination: Dodaj nowe grafiki lub przeciągnij je do pożądanej kolejności.
+  edit_gallery_explanation: Dodaj nowe grafiki lub przeciągnij je do pożądanej kolejności.
   edit_image: Edytuj grafikę
   show_gallery_explaination: Kliknij na miniaturę żeby zobaczyć całą grafikę.
   add_images_or_zips: Dodaj grafiki lub plik .zip
@@ -146,6 +151,7 @@ pl:
   upload_images_and_zip_files_help: 'Opcjonalne: wybierz grafikę lub pliki zip do załadowania.'
   close_and_reload_gallery: Zamknij i przeładuj galerię
   search: Szukaj
+  go: Dajesz!
   thing_not_found: '%{thing} nie ma'
   no_things_found: Nie znaleziono %{things}.
   no_search_results: Brak wyników
@@ -153,7 +159,7 @@ pl:
   see_all_link: Zobacz Wszystkie
   total: 'w sumie %{things}'
   all: Wszystko
-  none: nic
+  none: Brak
   or: lub
   new: nowe
   modified: zmodyfikowano
@@ -162,9 +168,18 @@ pl:
   previous: wcześniejsze
   pagination_next: kolejny
   pagination_previous: wcześniejsze
+  return: Powrót
   see_more_link: Więcej
   see_less_link: Mniej
   list_things: 'Lista '
+  thing_was_sent:
+    one: 'Do %{recipient} wysłano %{thing}.'
+    few: 'Wysłano %{count} %{thing}.'
+    other: 'Wysłano %{count} %{thing}.'
+  thing_was_not_sent:
+    one: '%{thing} do %{recipient} nie został/a wysłana.'
+    few: 'Nie udało się wysłać %{count} %{thing}.'
+    other: 'Nie udało się wysłać %{count} %{thing}.'
   user: Użytkownik/Użytkowniczka
   users: Użytkownicy/Użytkowniczki
   people: Ludzie
@@ -177,10 +192,10 @@ pl:
   approved_by_entity: Zatwierdzone przez %{entity}
   rejected_by_entity: Odrzucone przez %{entity}
   contacts: Kontakty
-  friends: Znajomi
+  friends: Kontakty
   member_groups_of_network: Grupy członkowie
-  peers: Zanajomi
-  me: Tylko Ja
+  peers: Współpracownicy
+  me: Ja
   back: Wróć
   share: Współużytkowuj
   contributed: Udział
@@ -192,7 +207,7 @@ pl:
   private: Prywatne
   public: Publiczne
   options: Opcje
-  permissions: Pozwolenia
+  permissions: Uprawnienia
   notification: Powiadomienie
   notice: Informacja
   notices: Informacje
@@ -204,7 +219,7 @@ pl:
   membership: 'Uczestnictwo '
   visibility: Widoczność
   administration: Zarządzanie
-  settings: ustawienia
+  settings: Ustawienia
   messages: Wiadomości
   page: Strona
   title: Tytuł
@@ -215,6 +230,7 @@ pl:
   hide: Ukryj
   display: Wyświetl
   message: wiadomość
+  private_message_notice: Powiadomienie o prywatnej wiadomości
   visits: Wizyt
   group: grupa
   groups: Grupy
@@ -226,7 +242,7 @@ pl:
   committees: Komitety
   council: Rada
   councils: Rady
-  members: Uczestnicy i uczestniczki
+  members: Osoby
   structure: Struktura
   group_creation_info: 'Istnieją cztery typy grup:'
   group_description: Organizacje są autonomicznymi grupami których członkami są ludzie.
@@ -237,19 +253,23 @@ pl:
   committee_choose_group: 'Wybierz do której grupy ma należeć ten komitet:'
   network_committees_may_not_join_networks: Komitety innych sieci nie mogą dołączyć.
   networks_may_not_join_networks: Sieci nie mogą być częścią innych sieci.
+  may_request_membership_description: Na stronie twojej grupy pojawi się link "dołącz do %{group}". Przycisk ten będzie wysyłał prośbę o dołączenie którą można przyjąć albo odrzucić.
   open_group: Otwórz %{group}
+  open_group_description: Wszyscy mogą od razu dołączyć do %{group} - nie trzeba potwierdzić żadnych próśb.
   membership_requests: Membership Requests
   group_membership_count: '%{count} Uczestników i uczestniczki'
   membership_exists_error: '%{member} już jest członkiem.'
   membership_destroy_confirm_message: Czy na pewno chcesz usunąć %{entity} z %{group}?
   group_invite_subject: Zaproszenie do grupy "%{group}"
   group_invite_email: "%{from_user} zaprasza cię do grupy \"%{group}\".\n\nJeśli chcesz do niej dołączyć, kliknij tutaj:\n\n  %{accept_invite_link}\n\nStrona domowa tej grupy znajduje się tutaj:\n\n  %{group_home_link}\n\nJeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.\n"
+  group_destroyed_subject: '%{user} zdecydował/a o osunięciu %{group_type} %{group}!'
+  group_destroyed_email: 'Skasowano %{group_type} %{group}!'
   group_wiki: Grupowe Wiki
   create_public_group_wiki: Publiczny
   create_private_group_wiki: Prywatne
   public_group_wiki: Publiczny
   private_group_wiki: Prywatne
-  group_publicly_visible: '%{group} będzie publicznie widoczne'
+  group_publicly_visible: Grupa będzie publicznie widoczna.
   committee_publicly_visible: Komitety będą publicznie widoczne
   networks_publicly_visible: Uczyń sieci widocznymi publicznie
   allow_membership_requests: Pozwól na prośby o członkostwo
@@ -265,9 +285,10 @@ pl:
   group_language: Główny język %{group}.
   my_networks: moje sieci
   my_groups: Moje Grupy
-  basic_settings: Podstawowe Ustawienia
-  send_invites: wyślij zaproszenia
+  basic_settings: Podstawowe ustawienia
+  send_invites: Wyślij zaproszenia
   view_requests: przejrzyj prośby
+  add_members_to_committee: Dodaj członków/członkinie grupy do tej rady. Żeby dodać osoby nie należące do nadrzędnej grupy, wyślij zaproszenie.
   join_group_link: Dołącz %{group_type}
   leave_group_link: opuść %{group_type}
   leave_group_confirmation: Czy na pewno chcesz opuścić %{group_type}?
@@ -283,6 +304,7 @@ pl:
     recent_pages: Ostatnie Strony
     info:
       page_search: Znajdź wszystkie strony do których masz dostęp bezpośrednio, lub poprzez grupy w których uczestniczysz.
+      recent_pages: Masz udział w edycji tych stron lub zostały ci one udostępnione
   my_dashboard: 'Mój panel
 
     '
@@ -296,6 +318,7 @@ pl:
   email: Mejl
   language: Język
   time_zone: Strefa Czasowa
+  do_you_want_to_receive_email_notifications: Czy chcesz otrzymywać mejlowe powiadomienia o zmianach w 'obserwowanych' przez ciebie stronach?
   notification_select:
     none: 'Nie: żadnych mejli przy zmianach'
     single: 'Tak: mejl co zmianę'
@@ -359,11 +382,15 @@ pl:
   read: czytaj
   page_name_description: Dodatkowa unikalna nazwa (użyta do stworzenia URL dla tej strony)
   filter_tag_description: Szukaj stron z konkretnym tagiem.
+  page_notice: Powiadomienia strony
   email_notice_subject: Sprawdź stronę "%{title}"
   email_notice_hello_with_message: 'Cześć, %{from} wysłał/wysłała Ci stronę web z następującą wiadomością: %{message}'
   email_notice_hello: Cześć, %{from} wysłał/wysłała Ci stronę web.
   email_notice_access: 'Możesz wejść na tą stronę tutaj: '
   email_link_expires: Ten link wygaśnie po %{days} dniach.
+  page_notice_title: <user>%{from}</user> przesyła ci stronę "%{page_title}"
+  page_notice_title_with_message: '<user>%{from}</user> przesyła ci stronę "%{page_title}" wraz z następującą wiadomością:'
+  page_updated: Strona "%{page_title}" została zaktualizowana przez <user>%{from}</user>
   page_update: Aktualizacja strony
   watch_checkbox: Obserwuj uaktualnienia
   add_star_link: Dodaj gwiazdkę (%{star_count})
@@ -412,7 +439,7 @@ pl:
   contribute_content_link: Udziel się
   page_create_owner: 'Osoba Zarządzająca Stroną '
   create_page: Stwórz stronę
-  only_me: Tylko Ja
+  only_me: Ja
   page_added_to_group: Ta strona będzie dodana do %{group_type} %{group_name}.
   additional_page_access: 'Rozszerzony Dostęp '
   page_owner_error: Pole właściciela/właścicielki strony nie może być puste.
@@ -469,11 +496,12 @@ pl:
   page_group_text: Tekst i Dyskusje
   page_group_media: Multimedia
   page_group_planning: Narzędzia Do Planowania
-  pending_tasks: zadanie w toku.
-  completed_tasks: wykonane zadania
-  no_pending_tasks: brak oczekujących zadań
-  no_completed_tasks: brak wykonanych zadań
-  assign_to: przypisz
+  pending_tasks: Oczekujące zadania
+  completed_tasks: Wykonane zadania
+  no_pending_tasks: Żadnych oczekujących zadań
+  no_completed_tasks: Żadnych wykonanych zadań
+  assign_to: Przypisz
+  completed: Wykonane
   vote:
     really_remove_this: Na prawdę chcesz usunąć tą opcję?
     you_have_not_ranked: 'Jeszcze nie ocenione przez ciebie:'
@@ -484,20 +512,23 @@ pl:
   vote_bad: źle
   vote_none: brak
   vote_no: 'nie'
-  ranked_vote_instructions: 'Przeciągnij i upuść dane na tej liście aż znajdą się one w kolejności od najbardziej pożądanych na górze do najmniejpożądanych na dole.
-
-    Kiedy skończyć, naciśnij potwierdź by nagrać swój głos.'
+  ranked_vote_instructions: Przeciągnij i upuść pozycje na liście tak żeby uzyskać pożądaną kolejność; od najbardziej do najmniej pożądanych.
   confirm_vote_button: Potwierdź głos
   edit_my_vote_tab: Edytuj oddany głos
   show_results_tab: Pokaż wyniki
   top_pick: najpopularniejszy wybór
   first_choice_of: pierwszy wybór
   save_survey_button: Zapisz ankietę
+  survey_may_create_response: Czy może tworzyć odpowiedzi?
   survey_may_see_responses: Czy pokazywać odpowiedzi?
   survey_may_rate: 'Czy klasyfikować odpowiedzi? '
   survey_may_see_ratings: 'Czy pokazywać klasyfikację? '
   survey_question_label: 'Pytanie:'
   survey_description_heading: opis
+  survey_description_explaination: Ten tekst będzie wyświetlany w zakładce wprowadzenia, i będzie pierwszym co zobaczą osoby biorące udział w ankiecie.
+  select_many_choices_label: 'Wybierz wiele odpowiedzi:'
+  select_one_choices_label: 'Wybierz jedną odpowiedź:'
+  video_embed_code_description: To nie adres strony. Chodzi o kod otoczony < i > który strony video (np. Youtube) udostępniają żeby wstawiać video na inne strony.
   private_question_label: Prywatne pytanie
   their_answer_goes_here_label: Tu trafi ich odpowiedź
   survey_response_by: Odpowiedź %{login}
@@ -505,10 +536,13 @@ pl:
   survey_average_rating_heading: 'Średnia ocen:'
   survey_previous_result: Wcześniej
   survey_rated_by_1_person_caption: Ocenione przez jedną osobę.
+  survey_rated_by_x_people_caption: Ocenione przez %{count}.
   survey_respond_button: Odpowiedz
   survey_rate_this_response_heading: Oceń odpowiedź
   survey_select_a_rating_message: Wybierz ocenę żeby zobaczyć kolejną pozycję.
   survey_skip_next_link: Przeskocz do następnych
+  survey_you_already_rated_response_with_rating_heading: Ta odpowiedź została już przez ciebie oceniona, na %{rating}.
+  survey_you_previousely_rated_message: To zostało już przez ciebie ocenione, na %{rating}.
   survey_your_rating_heading: 'Twoja ocena:'
   survey_questions: Pytania
   add_long_text_question_link: Długa odpowiedź
@@ -544,9 +578,10 @@ pl:
   may_request_contact_description: Pozwala ludziom wysłać ci zaproszenie do kontaktów.
   sharing_and_requests: Udostępnianie i Prośby
   view_profile: Zobacz profil
-  profile_member_since: Członek/Członkini od
+  profile_member_since: W grupie od
   home: Strona startowa
   banner: Baner
+  banner_info: Optymalne rozmiary to %{optimal_dimensions} pikseli
   organizational_role: funkcja w organizacji
   phone_number: Numer telefonu
   email_addresses: Adres mejlowy
@@ -560,6 +595,7 @@ pl:
   incoming: Przychodzące
   outgoing: Wysłane
   request_pending: '%{request} oczekuje'
+  not_allowed_to_respond_to_request: '%{user} nie ma uprawnień do zastosowania działania %{command} '
   try_again: Spróbuj Ponownie
   send_request_button: Wyślij zgłoszenie
   send_invites_button: Wyślij zaproszenia
@@ -582,25 +618,46 @@ pl:
         other: Zaproszenia do dołączenia
       request_to_join_you: Prośba o dołącznie
       request_to_join_your_network: Prośba o dołącznie
+      request_to_create_council: Prośba o stworzenie rady
+      request_to_remove_user: Prośba o usunięcie użytkownika/użytkowniczki
   request_to_friend: Wyślij zaproszenie do kontaktów
+  request_to_friend_short: Czy dodać %{user} do kontaktów %{other_user}?
   request_to_friend_description: '%{user} chce zostać dodana/y do kontaktów %{other_user}'
   request_to_destroy_our_group: Poproś o skasowanie grupy
-  request_to_join_our_network_description: grupa %{group} została zaproszona do sieci %{network}
+  request_to_join_our_network_short: Czy %{group} ma dołączyć do %{network}?
+  request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}
   request_to_join_us:
     other: Zaproszenia do dołączenia
-  request_to_join_us_description: '%{user} otrzymał/a zaproszenie do %{group}'
+  request_to_join_us_short: Czy %{user} ma dołączyć do %{group}?
+  request_to_join_us_description: '%{user} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email:
     other: Zaproszenia do dołączenia
+  request_to_join_us_via_email_short: Czy %{email} ma dołączyć do %{group}?
   request_to_join_us_via_email_description: '%{email} otrzyma zaproszenie do %{group}'
   request_to_join_you: Prośba o dołącznie
+  request_to_join_you_short: Czy %{user} ma dołączyć do %{group}?
   request_to_join_you_description: '%{user} prosi o dodanie do %{group}'
   request_to_join_your_network: Prośba o dołącznie
+  request_to_join_your_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_your_network_description: '%{group} prosi o włączenie do sieci %{network}'
+  request_to_destroy_our_group_short: Czy grupa %{group} ma zostać skasowana?
+  request_to_destroy_our_group_description: '%{user} proponuje skasowanie '
+  request_to_create_council: Prośba o stworzenie rady
+  request_to_create_council_short: Czy %{group} ma mieć rady?
+  request_to_create_council_description: '%{user} proponuje stworzenie rady dla %{group_type} %{group}.'
+  request_to_remove_user: Prośba o usunięcie członka/członkini
+  request_to_remove_user_short: Usunąć %{member} z %{group}?
+  request_to_remove_user_description: '%{user} proponuje usunięcie %{member} z %{group_type} %{group}.'
   invite_info: Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w %{group_type}.
   invite_error_redeemed: Zaproszenie zostało już umorzone.
   invite_error_already_member: Już jesteś uczestnikiem/uczestniczką tej grupy.
+  request_exists_error: Prośba do %{recipient} już istnieje
   network_invite_info: Wprowadź nazwy grup które chcesz zaprosić do tej sieci.
   recipient_tip: Możesz oddzielić poszczególnych odbiorców przecinkami, spacjami lub nowymi liniami.
+  you_are_invited: Masz zaproszenie do dołączenia.
+  friend_request_message_label: Daj znać %{user} czemu chcesz być w ich kontaktach.
+  friend_remove_confirmation: Czy na pewno chcesz usunąć kontakt %{user}?
+  place: miejsce
   icon: Ikona
   file: plik
   files: Pliki
@@ -608,12 +665,20 @@ pl:
   caption: Nagłówek
   photo_credit: Uznanie Zdjęcia
   video_embed: Osadzone
+  size: Rozmiar
+  illegal_redirect: niewykonywalne przekierowanie
   redirect_to_foreign_domain: Próbujesz dokonać przekierowania na zagraniczną domenę %{url} po zalogowaniu się. Ze względów bezpieczeństwa usunięto ten parametr z URL.
+  save_wiki_before_adding_image: Proszę zapisz wiki przed dodaniem grafiki
+  preview_selected_image: Podgląd wybranej grafiki
+  image_size_info: Określ rozmiar grafiki przed jej wprowadzeniem
   small: mały
   medium: średni
   large: powiększ
   full: pełne
+  image_options_info: Czy grafika wstawiona w wiki powinna linkować do pełnego rozmiaru?
   include_full_checkbox: włącz link do pełnego obrazu
+  image_select_info: Wybierz grafikę do wstawienia z wcześniej załadowanych do tej grupy.
+  image_upload_info: Załaduj nową grafikę do grupy, tak żeby mogła zostać wykorzystana w tym wiki.
   a_message_link: wiadomość
   a_reply_link: odpowiedź
   confirm_discarding_text_area: Cała Twoja niezapisana praca zostanie utracona. Naciśnij %{cancel} aby kontynuować edytowanie.
@@ -629,6 +694,7 @@ pl:
   activity_unread: Masz %{count} nieprzeczytanych [private messages]
   activity_unread_singular: Masz nieprzeczytaną [private message]
   activity_user_left_site: '%{user} opuszcza %{group}'
+  activity_message_received: 'Masz %{message_tag} od %{other_user}: %{title}'
   activity_twinkled: 'twój post "%{post}" został wyróżniony przez %{user}'
   media_image: Obraz
   media_images: Obrazy
@@ -699,12 +765,12 @@ pl:
 
     '
   set_status_button: Ustaw Status
-  my_contacts: moi znajomi
+  my_contacts: Moje kontakty
   anonymous: anonim
   login_required: Wymagany login
   login_required_description: Proszę zaloguj się aby wykonać tą czynność.
-  permission_denied_description: Nie posiadasz wystarczającego pozwolenia na wykonanie tej czynności.
-  permission_denied: Odmowa pozwolenia
+  permission_denied_description: Nie posiadasz wystarczających uprawnień do wykonania tej czynności.
+  permission_denied: Odmowa dostępu
   chat: Czat
   left_the_chatroom: opuść pokój czatów
   tag: Tag
@@ -720,8 +786,12 @@ pl:
   public_wiki: Publiczne wiki
   private_wiki: Prywatne wiki
   edit_wiki: Edytuj wiki
+  wiki_existed_new_version_created: To wiki zostało już przez kogoś stworzone. Twoje zmiany zostaną zapisane jako nowa wersja.
   wiki_is_locked: To wiki jest obecnie zablokowane przez %{user}
+  wiki_section_is_locked: Sekcja %{section} jest obecnie zablokowana przez %{user}.
   leave_editing_wiki_page_warning: Jeśli opuścisz tą stronę bez zapisania wiki lub anulowania edytowania, wtedy inni użytkownicy/inne użytkowniczki dostaną komunikat, że ta strona jest zablokowana przez Ciebie i nie będzie można jej edytować. Również, jeśli nie zapiszesz wiki, stracisz zmiany, które zostały przez Ciebie wprowadzone.
+  cant_edit_section: Nie można edytować %{section}.
+  user_locked_section: '%{user} zablokował/a %{section}.'
   can_still_save: Możesz jeszcze zapisać
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
   other_section_locked_error: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już %{section}.
@@ -735,6 +805,7 @@ pl:
   next_change: Następna Zamiana
   formatting_reference_link: ściągawka z formatowania
   version_doesnt_exist: Nie ma takiej wersji %{version}
+  version_exists_error: Wiki jest zablokowane ponieważ dopiero co zapisano nowe zmiany %{user}. Możesz zapisać swoje zmiany mimo tego, ale nadpisze to najnowszą wersję.
   you_are_viewing_version: Oglądasz wersję %{version} %{user}
   diff_link: różnica
   version_link: zobacz wersję

@@ -3,17 +3,13 @@ fr:
   signup_link: Créer un nouveau compte ?
   signup_email_info: 'Optionnel: utilisé si vous oubliez votre mot de passe'
   forgot_password_link: J'ai oublié mon mot de passe
-  signup_info: Choisissez votre nom d'utilisateur et votre mot de passe avant de cliquer sur %{sign_up}
   login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
   signup_success_message: Merci de votre inscription !
   login_name: Nom d'utilisateur
   signup_success: Enregistrement réussi
   logout_success: Au revoir
   logout_success_message: Vous avez été déconnecté-e.
-  signup_button: S'inscrire
   login_failed: Connexion impossible
-  signup_login_name: Votre identifiant
-  login_button: Connexion
   login: Connexion
   signup_title: Créez votre compte
   signup_email: Votre Mail
@@ -71,10 +67,6 @@ fr:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux.
 
       '
-    report_a_bug: signaler une anomalie
-    request_a_feature: demander une fonctionnalité
-    help_pages: pages d'aide de crabgrass
-    get_involved: s'impliquer
   destroy_confirmation: Êtes vous certain de vouloir effacer ce %{thing}? Cette opération est définitive.
   confirmation: Êtes-vous sûr-e ?
   cancel: Annuler
@@ -135,7 +127,7 @@ fr:
   image_count: Image %{number} de %{count}
   image_count_total: '%{count} Images'
   show_gallery: Afficher la galerie
-  edit_gallery_explaination: Ajouter de nouvelles images ou glisser les images pour les réordonner
+  edit_gallery_explanation: Ajouter de nouvelles images ou glisser les images pour les réordonner
   edit_image: Modifier l'image
   show_gallery_explaination: Cliquer sur la vignette pour voir l'image complète
   add_images_or_zips: Ajouter des images ou une archive Zip
@@ -174,6 +166,7 @@ fr:
   previous: Précédent
   pagination_next: Suivant
   pagination_previous: Précédent
+  return: Retour
   see_more_link: Plus
   see_less_link: Moins
   list_things: Lister les %{things}
@@ -493,11 +486,7 @@ fr:
   page_group_text: Texte et Discussions
   page_group_media: Multimédia
   page_group_planning: Outils de Planification
-  pending_tasks: tâches en cours
-  completed_tasks: Tâches accomplies
-  no_pending_tasks: Aucune tâche en cours
-  no_completed_tasks: Aucune tâche accomplie
-  assign_to: Confier à
+  completed: Complétées
   vote:
     really_remove_this: Voulez-vous vraiment retirer cette option ?
     you_have_not_ranked: 'Vous n''avez pas encore classé:'
@@ -508,9 +497,6 @@ fr:
   vote_bad: mauvais-e
   vote_none: aucun•e
   vote_no: 'Non'
-  ranked_vote_instructions: 'Glisser les objets dans la liste suivante pour les ordonner du préféré en haut au moins apprécié en bas.
-
-    Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix.'
   confirm_vote_button: Confirmer le Vote
   edit_my_vote_tab: Modifier mon vote
   show_results_tab: Voir les résultats

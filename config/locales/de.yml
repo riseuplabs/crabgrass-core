@@ -3,17 +3,13 @@ de:
   signup_link: Neues Konto erstellen
   signup_email_info: 'Optional: Wird gebraucht, falls du dein Passwort vergisst'
   forgot_password_link: Passwort vergessen?
-  signup_info: Wähle deinen Nick und dein Passwort, und klicke dann auf "%{sign_up}"
   login_failure_reason: Nutzer_innenname oder Passwort falsch.
   signup_success_message: Danke für die Registrierung!
   login_name: Nutzer_innenname
   signup_success: Registrierung erfolgreich
   logout_success: Auf Wiedersehn
   logout_success_message: Du hast dich abgemeldet.
-  signup_button: Registrieren
   login_failed: Anmeldung fehlgeschlagen
-  signup_login_name: Dein Nick
-  login_button: Anmelden
   login: Anmelden
   signup_title: Erstelle dein Konto
   signup_email: Deine E-Mailadresse
@@ -59,10 +55,6 @@ de:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL freie Software</a> für die Organisierung von Netzwerken.
 
       '
-    report_a_bug: einen Fehler melden
-    request_a_feature: eine Funktion vorschlagen
-    help_pages: Crabgrass Hilfe-Seiten
-    get_involved: mitmachen
   destroy_confirmation: Du bist dabei diese %{thing} zu löschen. Bist du sicher dass du dies tun willst? Dieser Vorgang kann nicht rückgängig gemacht werden.
   confirmation: Sicher?
   cancel: Abbrechen
@@ -123,7 +115,7 @@ de:
   image_count: Bild %{number} von %{count}
   image_count_total: '%{count} Bilder'
   show_gallery: Galerie anzeigen
-  edit_gallery_explaination: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
+  edit_gallery_explanation: Füge neue Bilder hinzu oder ziehe Bilder hin und her um ihre Reihenfolge zu verändern.
   edit_image: Bild bearbeiten
   show_gallery_explaination: Klick auf Miniaturbild um das Bild in voller Größe zu sehen.
   add_images_or_zips: Füge Bilder oder Zip-Dateien hinzu
@@ -162,6 +154,7 @@ de:
   previous: Vorherige
   pagination_next: Weiter
   pagination_previous: Vorherige
+  return: Zurück
   see_more_link: Mehr
   see_less_link: Weniger
   list_things: Liste %{things} auf
@@ -481,11 +474,6 @@ de:
   page_group_text: Texte und Diskussionen
   page_group_media: Multimedia
   page_group_planning: Planungswerkzeuge
-  pending_tasks: Offene Aufgaben
-  completed_tasks: Erledigte Aufgaben
-  no_pending_tasks: keine offenen Aufgaben
-  no_completed_tasks: keine erledigten Aufgaben
-  assign_to: übertragen an
   vote:
     really_remove_this: Willst du diese Option wirklich entfernen?
     you_have_not_ranked: 'Du hast bisher noch nicht eingeordnet:'
@@ -496,7 +484,6 @@ de:
   vote_bad: schlecht
   vote_none: nichts
   vote_no: 'nein'
-  ranked_vote_instructions: Ziehe die Elemente von der folgenden Liste solange hin und her, bis sie in der gewünschten Reihenfolge sind. Die am meisten bevorzugte Möglichkeit steht am oberen, die am wenigsten bevorzugte Möglichkeit am unteren Ende der Liste. Wenn du fertig bist, drücke Bestätigen, um deine Stimme abzugeben.
   confirm_vote_button: Abstimmung bestätigen
   edit_my_vote_tab: Meine Abstimmung bearbeiten
   show_results_tab: Ergebnisse anzeigen
