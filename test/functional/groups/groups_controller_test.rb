@@ -106,17 +106,17 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     end
   end
 
-#  def test_destroy_group
-#    user  = FactoryGirl.create(:user)
-#    group  = FactoryGirl.create(:group)
-#    group.add_user!(user)
-#    login_as user
-#    assert_difference 'Group.count', -1 do
-#      assert_permission :may_destroy_group? do
-#        delete :destroy, :id => group.name
-#      end
-#    end
-#  end
+  def test_destroy_group
+    user  = FactoryGirl.create(:user)
+    group  = FactoryGirl.create(:group)
+    group.add_user!(user)
+    login_as user
+    assert_difference 'Group.count', -1 do
+      assert_permission :may_destroy_group? do
+        delete :destroy, :id => group.to_param
+      end
+    end
+  end
 
 end
 

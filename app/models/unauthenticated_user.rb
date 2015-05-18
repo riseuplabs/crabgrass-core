@@ -6,6 +6,10 @@ class UnauthenticatedUser
   alias :name :login
   alias :display_name :login
 
+  def id
+    nil
+  end
+
   def cache_key
     "anonymous-1"
   end

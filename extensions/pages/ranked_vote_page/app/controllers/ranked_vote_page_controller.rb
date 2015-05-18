@@ -30,18 +30,20 @@ class RankedVotePageController < Pages::BaseController
 
   def setup_options
     # @options.show_print = true
-    @options.show_tabs = true
+    @options.show_tabs = logged_in?
   end
 
   def find_possibles
     @possibles_voted = []
     @possibles_unvoted = []
 
-    @poll.possibles.each do |pos|
-      if pos.votes.by_user(current_user).first
-        @possibles_voted << pos
-      else
-        @possibles_unvoted << pos
+    if logged_in?
+      @poll.possibles.each do |pos|
+        if pos.votes.by_user(current_user).first
+          @possibles_voted << pos
+        else
+          @possibles_unvoted << pos
+        end
       end
     end
 
