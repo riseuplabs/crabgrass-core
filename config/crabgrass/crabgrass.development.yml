@@ -18,7 +18,7 @@ title: "Crabgrass Development"
 default_language: en
 
 # ordered as in transifex (% covered, english language name alphabetically)
-enabled_languages: ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es']
+enabled_languages: ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es', 'pl']
 raise_i18n_exceptions: true
 
 #

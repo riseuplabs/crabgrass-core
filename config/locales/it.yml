@@ -3,17 +3,13 @@ it:
   signup_link: Vuoi creare un nuovo account?
   signup_email_info: 'Opzionale: usato se dimentichi la tua password'
   forgot_password_link: Ho dimenticato la mia password.
-  signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "%{sign_up}"
   login_failure_reason: Nome utente o password non corretti.
   signup_success_message: Grazie per esserti registrato!
-  login_name: Nome utente
+  login_name: Nome Utente
   signup_success: Registrazione eseguita con successo
   logout_success: Arrivederci
   logout_success_message: Disconnessione effettuata con successo.
-  signup_button: Registrati
   login_failed: Impossibile accedere
-  signup_login_name: Il tuo nome utente
-  login_button: Entra
   login: Accesso
   signup_title: Crea il tuo account
   signup_email: La tua e-mail
@@ -71,10 +67,6 @@ it:
     description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> un software libero AGPL </a> organizzarsi in rete.
 
       '
-    report_a_bug: segnala un bug
-    request_a_feature: richiedi una funzione
-    help_pages: le pagine di aiuto per crabgrass
-    get_involved: partecipare
   destroy_confirmation: Sei sicuro che vuoi cancellare questo %{thing}? Questa azione non può essere annullata.
   confirmation: Sei sicuro?
   cancel: Annulla
@@ -135,7 +127,7 @@ it:
   image_count: Immagine %{number} di %{count}
   image_count_total: '%{count} Immagini'
   show_gallery: Mostra Galleria
-  edit_gallery_explaination: Aggiungi nuove immagini o trascina le immagini per riordinarle
+  edit_gallery_explanation: Aggiungi nuove immagini o trascina le immagini per riordinarle
   edit_image: Modifica immagine
   show_gallery_explaination: Click sulla miniatura per vedere l'immagine ingrandita
   add_images_or_zips: Aggiungi Immagini o File Zip
@@ -174,6 +166,7 @@ it:
   previous: precedente
   pagination_next: successivo
   pagination_previous: precedente
+  return: Indietro
   see_more_link: Di Più
   see_less_link: Di meno
   list_things: Elenca %{things}
@@ -489,11 +482,6 @@ it:
   page_group_text: Testo e discussioni
   page_group_media: Multimedia
   page_group_planning: Strumenti di Pianificazione
-  pending_tasks: compiti pendenti.
-  completed_tasks: compiti svolti
-  no_pending_tasks: nessun compito da svolgere
-  no_completed_tasks: nessun compito completato
-  assign_to: assegna a
   vote:
     really_remove_this: Vuoi davvero eliminare questa opzione?
     you_have_not_ranked: 'Non hai ancora messo in classifica:'
@@ -504,9 +492,6 @@ it:
   vote_bad: male
   vote_none: nulla
   vote_no: 'no'
-  ranked_vote_instructions: 'Trascina e rilascia gli elementi della lista per metterli nell''ordine che preferisci.
-
-    Quando hai finito, fai click su Conferma per registrare il tuo voto.'
   confirm_vote_button: Conferma il Voto
   edit_my_vote_tab: Modifica il mio voto
   show_results_tab: Mostra i risultati

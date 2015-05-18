@@ -66,6 +66,11 @@ module Common::Ui::AvatarHelper
 
     return avatar_for(entity,'large') + "&nbsp;".html_safe +
       link_to_modal(:upload_image_link.t, link_options, class: 'inline')
+  rescue NoMethodError
+    Rails.logger.info "context: " + context.inspect
+    Rails.logger.info "entity: " + entity.inspect
+    Rails.logger.info "@group: " + @group.inspect
+    raise
   end
 end
 
