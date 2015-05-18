@@ -4,10 +4,9 @@ class AudioAsset < Asset
     self.is_audio = true
   end
 
-  # embed the audio file using JW Player
-  # (a CC licensed Flash player, http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
+  # no audio preview currently
   def embedding_partial
-    'assets/audio_preview'
+    false
   end
 
   define_thumbnails(
