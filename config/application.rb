@@ -109,6 +109,5 @@ module Crabgrass
   require 'crabgrass/page/class_proxy'
   require 'crabgrass/page/class_registrar'
   require 'crabgrass/page/data'
-  require 'crabgrass/mod_routes'
 
 end
