@@ -60,8 +60,7 @@ module Common::Ui::AvatarHelper
   def avatar_field(entity)
     action = entity.avatar ? :edit : :new
     context = (entity == current_user) ? :me : entity
-    url = polymorphic_path [context, entity.avatar || :avatar],
-      action: action
+    url = polymorphic_path [context, :avatar], action: action
     link_options = {url: url, icon: 'picture_edit'}
 
     return avatar_for(entity,'large') + "&nbsp;".html_safe +
