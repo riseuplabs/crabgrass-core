@@ -58,18 +58,22 @@ module Common::Ui::AvatarHelper
   end
 
   def avatar_field(entity)
-    action = entity.avatar ? :edit : :new
-    context = (entity == current_user) ? :me : entity
-    url = polymorphic_path [context, :avatar], action: action
-    link_options = {url: url, icon: 'picture_edit'}
+    avatar_for(entity, 'large') + "&nbsp;".html_safe +
+      upload_avatar_link(entity)
+  end
 
-    return avatar_for(entity,'large') + "&nbsp;".html_safe +
-      link_to_modal(:upload_image_link.t, link_options, class: 'inline')
-  rescue NoMethodError
-    Rails.logger.info "context: " + context.inspect
-    Rails.logger.info "entity: " + entity.inspect
-    Rails.logger.info "@group: " + @group.inspect
-    raise
+  def upload_avatar_link(entity)
+    link_to_modal :upload_image_link.t,
+      { url: edit_avatar_path(entity), icon: 'picture_edit' },
+      { class: 'inline' }
+  end
+
+  def edit_avatar_path(entity)
+    if entity == current_user
+      edit_me_avatar_path
+    else
+      edit_group_avatar_path(entity)
+    end
   end
 end
 
