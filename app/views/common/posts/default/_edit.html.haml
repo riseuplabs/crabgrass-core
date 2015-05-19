@@ -5,7 +5,7 @@
 -#
 
 %div.post_body{id: post.body_id}
-  = form_for post, url: post_path(post), remote: true, method: :put,
+  = form_for post.becomes(Post), url: post_path(post), remote: true, method: :put,
     html: {onsubmit: show_spinner('edit_post')} do |f|
     = f.text_area :body, rows: 8, class: 'form-control'
     .buttons-right
