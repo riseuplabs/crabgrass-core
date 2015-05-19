@@ -9,11 +9,6 @@ module Common::Avatars
   ## ACTIONS
   ##
 
-  def new
-    @avatar = Avatar.new
-    render template: 'common/avatars/edit'
-  end
-
   def create
     raise ErrorMessage.new('already exists') if @entity.avatar
     @entity.avatar = Avatar.create!(avatar_params)
@@ -23,7 +18,7 @@ module Common::Avatars
   end
 
   def edit
-    @avatar = @entity.avatar
+    @avatar = @entity.avatar || Avatar.new
     render template: 'common/avatars/edit'
   end
 
