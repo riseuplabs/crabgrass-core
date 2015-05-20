@@ -19,7 +19,7 @@ class Groups::PermissionsControllerTest < ActionController::TestCase
 
   def test_index_no_access
     login_as @other_user
-    assert_permission_denied do
+    assert_not_found do
       get :index, group_id: @group.to_param
     end
   end

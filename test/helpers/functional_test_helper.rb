@@ -17,8 +17,17 @@ module FunctionalTestHelper
     assert_redirected_to root_path(redirect: @request.path)
   end
 
-  def assert_not_found
-    assert_response :not_found
+  NOT_FOUND_ERRORS = [
+    ActiveRecord::RecordNotFound
+  ]
+  def assert_not_found(&block)
+    if block_given?
+      assert_raises *NOT_FOUND_ERRORS do
+        yield
+      end
+    else
+      assert_response :not_found
+    end
   end
 
   # can pass either a regexp of the flash error string,
