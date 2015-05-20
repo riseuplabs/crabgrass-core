@@ -37,7 +37,7 @@ class AssetsController < ApplicationController
     else
       @asset = Asset.find_by_id(params[:id])
     end
-    raise_not_found unless @asset
+    raise_not_found(:file.t) unless @asset
     @page = @asset.page
     true
   end
@@ -49,11 +49,10 @@ class AssetsController < ApplicationController
     return unless @asset.public? and !File.exist?(@asset.public_filename)
     @asset.update_access
     @asset.generate_thumbnails
-    if @asset.thumbnails.any?
-      redirect_to # redirect to the same url again, but next time they will get the symlinks
-    else
-      return not_found
-    end
+    raise_not_found(:file.t) unless @asset.thumbnails.any?
+
+    # redirect to the same url again, but next time they will get the symlinks
+    redirect_to
   end
 
   ## Helper Methods

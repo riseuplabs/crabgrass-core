@@ -5,6 +5,7 @@ class SpreadsheetAsset < Asset
   end
 
   define_thumbnails(
+    ods: {ext: 'ods', remote: true},
     csv: {ext: 'csv', remote: true},
     pdf: {ext: 'pdf', remote: true},
     small: {size: '64x64>',   ext: 'jpg', depends: :pdf, title: 'Small Thumbnail'},
