@@ -2,6 +2,7 @@ language: ruby
 # only install ci and assets gems:
 bundler_args: --without production:development:test
 sudo: false
+cache: bundler
 env:
   - RAKE_TASK=test
   - RAKE_TASK=test:pages:all
