@@ -5,7 +5,7 @@ pl:
   forgot_password_link: Odzyskiwanie hasła
   login_failure_reason: Złe hasło lub nazwa użytkownika.
   signup_success_message: Witamy!
-  login_name: Imię Użytkownika/Użytkowniczki
+  login_name: Login
   signup_success: Twój profil został utworzony
   logout_success: Do zobaczenia!
   logout_success_message: Wylogowano z systemu.
@@ -94,27 +94,25 @@ pl:
   alert: Alert
   loading_progress: Sie ładuje...
   loadingdotdotdot: Sie ładuje...
-  create_a_new_thing: Stwórz %{thing}
+  create_a_new_thing: Nowa %{thing}
   create_thing: Stwórz %{thing}
   created_by: Stworzone przez
   updated_by: Zaktualizowane przez
   created_by_user_on: Stworzone  %{when} przez %{user}.
-  approve: zatwierdź
-  reject: odrzuć
-  pending: w toku
-  rejected: 'odrzucone
-
-    '
-  approved: zatwierdzone
+  approve: Zatwierdź
+  reject: Odrzuć
+  pending: W toku
+  rejected: Odrzucone
+  approved: Zatwierdzone
   saved: Zapisane
-  destroy: zniszcz
+  destroy: Skasuj
   thing_destroyed: 'skasowano %{thing} '
   destroy_thing: Skasuj %{thing}
   delete_thing: Usuń %{thing}
   delete: Usuń
   delete_button: Usuń
   deleted: Usuń
-  remove: usuń
+  remove: Usuń
   autocomplete:
     placeholder:
       enter_name_of_group_or_person: Wprowadź login osoby lub nazwę grupy
@@ -134,13 +132,13 @@ pl:
   add_images_or_zips: Dodaj grafiki lub plik .zip
   add_images_or_zips_explaination: Plik zip zostanie automatyczni rozpakowany i wstawiony do galerii.
   confirm_image_delete: 'Czy na pewno chcesz skasować ten obraz? Tego działania nie da się cofnąć. '
-  no_title_given: (no title given)
+  no_title_given: (bez tytułu)
   add_images: Dodaj grafiki
   edit_images: Edytuj grafiki
-  upload_new_image: załaduj nowy obraz
-  type_your_messages_here: Tu wpisz swoją wiadomość i naciśnij enter...
+  upload_new_image: Załaduj nową grafikę
+  type_your_messages_here: Wpisz tu swoją wiadomość i naciśnij enter...
   group_not_allowed_to_view_image_error: Grupa do której należy ta strona nie ma uprawnień do oglądania tej grafiki.
-  add_comment: dodaj komentarz
+  add_comment: Dodaj komentarz
   image_title: 'Obraz title: %{title}'
   upload_zip_file_link: Załaduj plik ZIP
   add_images_to_gallery_link: Dodaj grafikę do galerii
@@ -155,7 +153,7 @@ pl:
   thing_not_found: '%{thing} nie ma'
   no_things_found: Nie znaleziono %{things}.
   no_search_results: Brak wyników
-  not_found: Nie Ma
+  not_found: Brak wyników
   see_all_link: Zobacz Wszystkie
   total: 'w sumie %{things}'
   all: Wszystko
@@ -163,11 +161,11 @@ pl:
   or: lub
   new: nowe
   modified: zmodyfikowano
-  unknown: nieznany
-  next: kolejny
-  previous: wcześniejsze
-  pagination_next: kolejny
-  pagination_previous: wcześniejsze
+  unknown: Nieznany
+  next: Kolejne
+  previous: Wcześniejsze
+  pagination_next: Kolejne
+  pagination_previous: Wcześniejsze
   return: Powrót
   see_more_link: Więcej
   see_less_link: Mniej
@@ -229,12 +227,12 @@ pl:
   show: Pokaż
   hide: Ukryj
   display: Wyświetl
-  message: wiadomość
+  message: Wiadomość
   private_message_notice: Powiadomienie o prywatnej wiadomości
   visits: Wizyt
-  group: grupa
+  group: Grupa
   groups: Grupy
-  organization: organizacja
+  organization: Organizacja
   organizations: Organizacje
   network: Sieć
   networks: Sieci
@@ -245,52 +243,52 @@ pl:
   members: Osoby
   structure: Struktura
   group_creation_info: 'Istnieją cztery typy grup:'
-  group_description: Organizacje są autonomicznymi grupami których członkami są ludzie.
-  network_description: Sieci są grupami których członkami mogą być organizacje. Sieć może by używana jako zgromadzenie wielu organizacji, lub przestrzeń współpracy dwóch organizacji.
-  committee_description: 'Komitety to grupy wewnątrz organizacji lub sieci. Komitet jest podporządkowany nadrzędnej organizacji lub sieci. Użytkownicy dodani do komitetu, nienależący do organizacji lub sieci, będą mieli dostęp wyłącznie do treści tego komitetu.  '
+  group_description: Organizacje są autonomicznymi grupami składającymi się z ludzi.
+  network_description: Sieci są grupami do których mogą należeć organizacje. Sieć może by używana jako zgromadzenie wielu organizacji, lub przestrzeń współpracy dwóch organizacji.
+  committee_description: Komitety to grupy wewnątrz organizacji lub sieci. Komitet jest w pełni podporządkowany nadrzędnej organizacji lub sieci. Osoby dodane do komitetu, nie należące do nadrzędnej organizacji lub sieci, będą miały dostęp wyłącznie do treści opublikowanych w tym komitecie.
   council_description: 'Rady to grupy ze specjalnymi uprawnieniami administracyjnymi. Każda organizacja lub sieć może mieć radę. Jeśli ją ma, osoby z tej rady będą miały kontrolę administracyjną nad siecią lub organizacją. '
-  council_description_details: Domyślnie każda osoba należąca do niej osoba może modyfikować %{group}. Jeżeli chcesz ograniczyć uprawnienia administracyjne do określonych osób, stwórz radę i dodaj do niej użytkowników.
+  council_description_details: Domyślnie każda osoba należąca do niej osoba może modyfikować %{group}. Jeżeli chcesz ograniczyć uprawnienia administracyjne do określonych osób, stwórz radę i dodaj do niej osoby które mają mieć takie uprawnienia.
   committee_choose_group: 'Wybierz do której grupy ma należeć ten komitet:'
   network_committees_may_not_join_networks: Komitety innych sieci nie mogą dołączyć.
   networks_may_not_join_networks: Sieci nie mogą być częścią innych sieci.
   may_request_membership_description: Na stronie twojej grupy pojawi się link "dołącz do %{group}". Przycisk ten będzie wysyłał prośbę o dołączenie którą można przyjąć albo odrzucić.
   open_group: Otwórz %{group}
   open_group_description: Wszyscy mogą od razu dołączyć do %{group} - nie trzeba potwierdzić żadnych próśb.
-  membership_requests: Membership Requests
-  group_membership_count: '%{count} Uczestników i uczestniczki'
-  membership_exists_error: '%{member} już jest członkiem.'
+  membership_requests: Zgłoszenia do grup
+  group_membership_count: '%{count} osób'
+  membership_exists_error: '%{member} już uczestniczy.'
   membership_destroy_confirm_message: Czy na pewno chcesz usunąć %{entity} z %{group}?
   group_invite_subject: Zaproszenie do grupy "%{group}"
   group_invite_email: "%{from_user} zaprasza cię do grupy \"%{group}\".\n\nJeśli chcesz do niej dołączyć, kliknij tutaj:\n\n  %{accept_invite_link}\n\nStrona domowa tej grupy znajduje się tutaj:\n\n  %{group_home_link}\n\nJeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.\n"
   group_destroyed_subject: '%{user} zdecydował/a o osunięciu %{group_type} %{group}!'
   group_destroyed_email: 'Skasowano %{group_type} %{group}!'
   group_wiki: Grupowe Wiki
-  create_public_group_wiki: Publiczny
+  create_public_group_wiki: Publiczne
   create_private_group_wiki: Prywatne
-  public_group_wiki: Publiczny
+  public_group_wiki: Publiczne
   private_group_wiki: Prywatne
   group_publicly_visible: Grupa będzie publicznie widoczna.
   committee_publicly_visible: Komitety będą publicznie widoczne
   networks_publicly_visible: Uczyń sieci widocznymi publicznie
-  allow_membership_requests: Pozwól na prośby o członkostwo
+  allow_membership_requests: Pozwól na prośby o dołączenie
   group_successfully_created: Grupa została utworzona.
   group_publicly_visible_description: 'Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem %{domain}/nazwatwojejgrupy.'
   committee_publicly_visible_description: Komitety będą widoczne dla zalogowanych osób pod adresem %{domain}/nazwatwojejgrupy
   networks_publicly_visible_description: Sieci są widoczne dla osób niebędących członkami pod adresem %{domain}/nazwagrupy
-  group_members_publicly_visible: Udostępnij publicznie listę uczestników i uczestniczek
-  group_members_publicly_visible_description: Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem %{domain}/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników (%{domain}/użytkownik).
+  group_members_publicly_visible: Udostępnij publicznie listę uczestniczących osób
+  group_members_publicly_visible_description: Lista uczestniczących osób będzie widoczna dla niezarejestrowanych pod adresem %{domain}/nazwatwojejgrupy. Poza tym nazwa grupy %{group} może być wyświetlana w profilach uczestniczących w niej osób osób (%{domain}/username).
   members_may_edit_wiki: Wszystkie osoby należące do grupy mogą edytować wiki
-  members_may_edit_wiki_description: Jeśli nie zaznaczone, tylko członkowie rady mogą edytować wiki %{group}.
-  rss_feed: Zasilacz RSS
+  members_may_edit_wiki_description: Jeśli nie zaznaczone, tylko osoby należące do rady mogą edytować wiki %{group}.
+  rss_feed: Feed RSS
   group_language: Główny język %{group}.
-  my_networks: moje sieci
+  my_networks: Moje sieci
   my_groups: Moje Grupy
   basic_settings: Podstawowe ustawienia
   send_invites: Wyślij zaproszenia
-  view_requests: przejrzyj prośby
-  add_members_to_committee: Dodaj członków/członkinie grupy do tej rady. Żeby dodać osoby nie należące do nadrzędnej grupy, wyślij zaproszenie.
+  view_requests: Przejrzyj prośby
+  add_members_to_committee: Dodaj osoby należące do grupy do tego komitetu. Żeby dodać osoby nie należące do nadrzędnej grupy, wyślij zaproszenie.
   join_group_link: Dołącz %{group_type}
-  leave_group_link: opuść %{group_type}
+  leave_group_link: Opuść %{group_type}
   leave_group_confirmation: Czy na pewno chcesz opuścić %{group_type}?
   request_join_group_link: Zgłoś Prośbę o Przystąpienie do %{group_type}
   request_exists: Twoja prośba oczekuje na zatwierdzenie.
@@ -301,13 +299,11 @@ pl:
   network_initial_member: Wybierz organizację która będzie pierwszym członkiem tej sieci.
   headings:
     page_search: Szukaj stron
-    recent_pages: Ostatnie Strony
+    recent_pages: Ostatnie strony
     info:
       page_search: Znajdź wszystkie strony do których masz dostęp bezpośrednio, lub poprzez grupy w których uczestniczysz.
       recent_pages: Masz udział w edycji tych stron lub zostały ci one udostępnione
-  my_dashboard: 'Mój panel
-
-    '
+  my_dashboard: Panel
   uploaded_image_cropped: Załadowany obraz będzie obcięty i rozciągnięty do kwadratu 96 pixeli.
   select_image_file: wybierz plik z obrazem
   or_image_url: albo obraz URL
@@ -339,9 +335,9 @@ pl:
   menu_admin: Admin
   account_settings: Ustawienia konta
   back_to_page: Z powrotem do strony
-  back_to_group: powrót do grupy %{group_name}
+  back_to_group: Powrót do grupy %{group_name}
   pages: Strony
-  recent_pages: Ostatnie Strony
+  recent_pages: Ostatnie strony
   my_pages: Moje Strony
   properties: Właściwości
   popular_pages: Popularne strony
@@ -353,11 +349,11 @@ pl:
   created_by_user: Stworzone przez %{user}
   created_by_user_description: Szukaj stron stworzonych przez konkretną osobę.
   created_by_dotdotdot: Stworzone przez...
-  starred_by_me: ogwiazdkowane
+  starred_by_me: Wyróżnione
   starred_by_user: Wyróżnione przez %{user}
   watched_by_me: Obserwujący
   watched_by_user: Obserwowane przez %{user}
-  edited_by_me: Zredagowane
+  edited_by_me: Edytowane
   edited_by_user: Edytowane przez %{user}
   owned_by_me: Własne
   owned_by_user: Własność %{user}
@@ -366,7 +362,7 @@ pl:
   most_viewed: Najczęściej pzreglądane
   filter_user_description: Szukaj stron dostępnych dla konkretnych użytkowników.
   filter_group_description: Szukaj stron dostępnych dla konkretnych grup.
-  starred: ogwiazdkowane
+  starred: Wyróżnione
   viewed: Przeglądane
   edited: Zredagowane
   type: Typ
@@ -376,9 +372,7 @@ pl:
   no_change: bez zmiany
   updated: zaktualizowane
   created: stworzone
-  unread: 'nieprzeczytane
-
-    '
+  unread: nieprzeczytane
   read: czytaj
   page_name_description: Dodatkowa unikalna nazwa (użyta do stworzenia URL dla tej strony)
   filter_tag_description: Szukaj stron z konkretnym tagiem.
@@ -436,14 +430,14 @@ pl:
   share_already_exists_error: '"%{name}" już ma dostęp do tej strony.'
   share_pester_error: Przykro mi, ale nie masz uprawnień by współużytkować to z "%{name}".
   name_or_email_not_found: '"%{name}" nie pasuje do nazwy żadnego użytkownika/żadnej użytkowniczki czy grupy i nie jest poprawnym adresem e-mail.'
-  contribute_content_link: Udziel się
+  contribute_content_link: Stwórz stronę
   page_create_owner: 'Osoba Zarządzająca Stroną '
   create_page: Stwórz stronę
   only_me: Ja
   page_added_to_group: Ta strona będzie dodana do %{group_type} %{group_name}.
   additional_page_access: 'Rozszerzony Dostęp '
   page_owner_error: Pole właściciela/właścicielki strony nie może być puste.
-  action: akcja
+  action: Akcja
   page_history_add_star: '%{user_name} dodał/dodała gwiazdeczkę'
   page_history_added_comment: '%{user_name} zamieścił/zamieściła komentarz'
   page_history_change_title: '%{user_name} zmienił/zmieniła nazwę strony'
@@ -479,23 +473,23 @@ pl:
   wiki_page_description: Niesformatowany dokument tekstowy.
   wiki_page_display: Wiki
   gallery_description: Kolekjcja obrazów.
-  gallery_display: galeria
+  gallery_display: Galeria
   asset_page_description: Załadowany plik
   asset_page_display: Plik
   select_file_to_upload: 'Wybierz plik do załadowania. '
   discussion_page_description: Dyskusja grupy na konkretny temat
   discussion_page_display: Dyskusja Grupy
   ranked_vote_page_description: Sklasyfikowuj możliwości w zależności od preferencji.
-  ranked_vote_page_display: Sklasyfikowane głosy
+  ranked_vote_page_display: Klasyfikowane głosy
   survey_page_display: Ankieta
   rate_many_page_description: Zatwierdzenie lub odrzucenie każdej możliwości.
-  rate_many_page_display: głos poparcia
+  rate_many_page_display: Ranking poparcia
   task_list_page_description: Lista wszystkich danych.
   task_list_page_display: Lista zadań
-  page_group_vote: Ankiety i Głosowania
-  page_group_text: Tekst i Dyskusje
+  page_group_vote: Ankiety i głosowania
+  page_group_text: Tekst i dyskusje
   page_group_media: Multimedia
-  page_group_planning: Narzędzia Do Planowania
+  page_group_planning: Narzędzia do planowania
   pending_tasks: Oczekujące zadania
   completed_tasks: Wykonane zadania
   no_pending_tasks: Żadnych oczekujących zadań
@@ -524,7 +518,7 @@ pl:
   survey_may_rate: 'Czy klasyfikować odpowiedzi? '
   survey_may_see_ratings: 'Czy pokazywać klasyfikację? '
   survey_question_label: 'Pytanie:'
-  survey_description_heading: opis
+  survey_description_heading: Opis
   survey_description_explaination: Ten tekst będzie wyświetlany w zakładce wprowadzenia, i będzie pierwszym co zobaczą osoby biorące udział w ankiecie.
   select_many_choices_label: 'Wybierz wiele odpowiedzi:'
   select_one_choices_label: 'Wybierz jedną odpowiedź:'
@@ -560,11 +554,11 @@ pl:
   drag_to_move_tip: przeciągnij żeby przemieścić
   each_line_is_a_choice_caption: (każda linia to możliwy wybór)
   no_data_uploaded_label: Nie załadowano żadnych danych
-  current_video_sources: 'obecnie obsługiwane: youtube, blip.tv, google video, vimeo'
+  current_video_sources: 'Obecnie obsługiwane: youtube, blip.tv, google video, vimeo'
   video_embed_code_prompt: Osadzone kody z zewnętrznego źródła wideo
   permissions_key: Klucz
   public_description: Wszyscy w internecie
-  peers_description: Członkowie twoich grup
+  peers_description: Osoby należące do twoich grup
   friends_description: Twoi przyjaciele
   may_view_label: Widoczność profilu?
   may_view_description: Jeśli odznaczone, twój profil będzie zupełnie ukryty.
@@ -582,7 +576,7 @@ pl:
   home: Strona startowa
   banner: Baner
   banner_info: Optymalne rozmiary to %{optimal_dimensions} pikseli
-  organizational_role: funkcja w organizacji
+  organizational_role: Funkcja w organizacji
   phone_number: Numer telefonu
   email_addresses: Adres mejlowy
   post_message: Wyślij wiadomość
@@ -659,11 +653,11 @@ pl:
   friend_remove_confirmation: Czy na pewno chcesz usunąć kontakt %{user}?
   place: miejsce
   icon: Ikona
-  file: plik
+  file: Plik
   files: Pliki
   photo: Zdjęcie
   caption: Nagłówek
-  photo_credit: Uznanie Zdjęcia
+  photo_credit: Autorstwo
   video_embed: Osadzone
   size: Rozmiar
   illegal_redirect: niewykonywalne przekierowanie
@@ -756,7 +750,7 @@ pl:
   date_this_week: Zeszły tydzień
   date_this_month: Ten Miesiąc
   date_this_year: Tego roku
-  date_all_time: Cały Czas
+  date_all_time: Kiedykolwiek
   alert_not_saved: Zmiany nie mogły zostać zapisane
   alert_field_errors: Przy następujących polach wystąpiły problemy
   alert_saved: Zmiany zostały zapisane
@@ -772,7 +766,7 @@ pl:
   permission_denied_description: Nie posiadasz wystarczających uprawnień do wykonania tej czynności.
   permission_denied: Odmowa dostępu
   chat: Czat
-  left_the_chatroom: opuść pokój czatów
+  left_the_chatroom: opuścił/a pokój
   tag: Tag
   tags: Tagi
   no_tags: brak tagów
@@ -803,17 +797,17 @@ pl:
   changes_made: Zmiany dokonano %{when}.
   prev_change: Wcześniejsza zmiana
   next_change: Następna Zamiana
-  formatting_reference_link: ściągawka z formatowania
+  formatting_reference_link: Ściągawka z formatowania
   version_doesnt_exist: Nie ma takiej wersji %{version}
   version_exists_error: Wiki jest zablokowane ponieważ dopiero co zapisano nowe zmiany %{user}. Możesz zapisać swoje zmiany mimo tego, ale nadpisze to najnowszą wersję.
   you_are_viewing_version: Oglądasz wersję %{version} %{user}
   diff_link: różnica
   version_link: zobacz wersję
-  wiki_section_edit: Edytuj Ten Dział
+  wiki_section_edit: Edytuj ten dział
   wiki_revert_version: Powróć Do Wersji %{version}
   wiki_version_creator_heading: osoba
   wiki_version_revert_link: cofnij
   insert_image: Wstaw grafikę
-  preview: Przegląd
+  preview: Podgląd
   save_or_cancel_edit_lock_wiki_error: To wiki zostało pzrez Ciebie zablokowane. Inni użytkownicy i użytkowniczki nie będę mogły edytować dopóki nie klikniesz na %{save_button} lub %{cancel_button} ,by zakończyć edytowanie.
   cant_find_wiki_section: Nie mogę znaleźć sekcji %{section}

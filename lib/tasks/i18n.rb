@@ -50,6 +50,19 @@ def load_data()
   return [en, keys, orphaned, missing, duplicates]
 end
 
+# This assumes you're already in a directory with a transifex.netrc
+# Typically this would be the config dir.
+def download_from_transifex(lang, resources)
+  api_url = 'https://www.transifex.com/api/2/'
+  auth = '--netrc-file transifex.netrc'
+
+  puts "downloading #{lang}"
+  resources.each do |resource, target|
+    path = "project/crabgrass/resource/#{resource}/translation/#{lang}/?file"
+    `curl -L #{auth} -X GET '#{api_url}#{path}' > #{target}`
+  end
+end
+
 namespace :cg do
   namespace :i18n do
 
@@ -171,8 +184,9 @@ namespace :cg do
         end
         Conf.enabled_languages.each do |lang|
           next if lang == 'en'
-          puts "downloading #{lang}"
-          `curl -L --netrc-file transifex.netrc -X GET 'https://www.transifex.com/api/2/project/crabgrass/resource/develop/translation/#{lang}/?file' > locales/#{lang}.yml`
+          download_from_transifex lang,
+            develop: "locales/#{lang}.yml",
+            riseup: "../extensions/locales/riseup/#{lang}.yml"
         end
       end
     end
