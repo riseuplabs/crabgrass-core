@@ -1,6 +1,7 @@
 language: ruby
 # only install ci and assets gems:
 bundler_args: --without production:development:test
+sudo: false
 env:
   - RAKE_TASK=test
   - RAKE_TASK=test:pages:all
@@ -11,14 +12,15 @@ matrix:
   fast_finish: true
 #  allow_failures:
 #    - rvm: 2.0.0
+addons:
+  apt:
+    packages:
+      - graphicsmagick
+      - libreoffice-writer
+      - sphinxsearch
+      - inkscape
 before_install:
   - "bundle --version"
-  - sudo add-apt-repository ppa:libreoffice/libreoffice-4-3 -y
-  - sudo apt-get update -q
-  - sudo apt-get install -y graphicsmagick
-  - sudo apt-get install -y libreoffice-writer
-  - sudo apt-get install -y sphinxsearch
-  - sudo apt-get install -y inkscape
   - libreoffice --version
 before_script:
   - "bundle exec rake create_a_secret"
