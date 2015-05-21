@@ -1,7 +1,7 @@
 require 'rubygems'
-require 'ruby-debug'
+require 'minitest/autorun'
+require 'byebug'
 require 'yaml'
-require 'test/unit'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
@@ -12,7 +12,7 @@ else
   nil
 end
 
-class TestMarkup < Test::Unit::TestCase
+class TestMarkup < MiniTest::Test
 
   def setup
     files = SINGLE_FILE_OVERRIDE || Dir[File.dirname(__FILE__) + "/fixtures/*.yml"]
@@ -41,7 +41,7 @@ class TestMarkup < Test::Unit::TestCase
   end
 
   def test_outline
-    return unless @fixtures['outline.yml']
+    assert @fixtures['outline.yml']
     @fixtures['outline.yml'].each do |doc|
       assert_markup('outline.yml', doc, GreenCloth.new(doc['in'], '', [:outline]).to_html)
     end

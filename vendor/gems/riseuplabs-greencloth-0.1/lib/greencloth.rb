@@ -535,7 +535,7 @@ class GreenCloth < RedCloth::TextileDoc
     html.gsub!(MACROTAG_RE) do |m|
       macrotag = self.offtags[$1.to_i-1]
       method = 'symbol_'+macrotag[0]
-      if self.respond_to?(method)
+      if self.respond_to?(method, true)
         self.send(method)
       else
         "<p>#{macrotag[1]}</p>"

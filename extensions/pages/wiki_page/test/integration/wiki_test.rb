@@ -42,6 +42,20 @@ class WikiTest < JavascriptIntegrationTest
     end
   end
 
+  def test_wiki_toc
+    content = update_wiki <<-EOWIKI
+[[toc]]
+
+h1. test table of content
+
+h2. with nested section
+
+and some content
+    EOWIKI
+    assert_content 'table of content'
+    assert_selector 'li.toc1'
+  end
+
   def assert_wiki_unlocked
     request_urls = page.driver.network_traffic.map(&:url)
     assert request_urls.detect{|u| u.end_with? '/lock'}.present?
@@ -50,4 +64,5 @@ class WikiTest < JavascriptIntegrationTest
     # In order to prevent the check for pending ajax from failing...
     page.driver.clear_network_traffic
   end
+
 end

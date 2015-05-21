@@ -1,12 +1,12 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'rubygems'
-require 'ruby-debug'
 require 'yaml'
+require 'byebug'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
 
-class TestHeadings < Test::Unit::TestCase
+class TestHeadings < MiniTest::Test
 
   def setup
     testfile = File.dirname(__FILE__) + '/fixtures/outline.yml'
@@ -231,7 +231,7 @@ class TestHeadings < Test::Unit::TestCase
   def in_texts(name)
     name = name.to_s.gsub('_',' ')
     text = (@fixtures[name]||{})['in']
-    assert_not_nil text, 'could not find fixture data "%s"' % name
+    assert text, 'could not find fixture data "%s"' % name
     return text
   end
 

@@ -1,10 +1,12 @@
 require 'rubygems'
-require 'test/unit'
+require 'minitest/autorun'
+require 'yaml'
+require 'byebug'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
 
-class TestLiteMode < Test::Unit::TestCase
+class TestLiteMode < MiniTest::Test
 
   def setup
   end
