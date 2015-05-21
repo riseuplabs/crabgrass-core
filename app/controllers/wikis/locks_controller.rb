@@ -21,7 +21,9 @@ class Wikis::LocksController < Wikis::BaseController
   #
   def destroy
     @wiki.release_my_lock!(@section, current_user)
-    render nothing: true
+    head :accepted
+  rescue Wiki::SectionNotFound
+    head :not_found
   end
 
 end
