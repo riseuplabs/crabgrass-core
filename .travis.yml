@@ -17,12 +17,9 @@ addons:
   apt:
     packages:
       - graphicsmagick
-      - libreoffice-writer
-      - sphinxsearch
       - inkscape
 before_install:
   - "bundle --version"
-  - libreoffice --version
 before_script:
   - "bundle exec rake create_a_secret"
   - "cp config/database.yml.example config/database.yml"
