@@ -2,7 +2,6 @@ class Groups::PagesController < Groups::BaseController
 
   skip_before_filter :login_required
   guard :may_show_group?
-  rescue_from PermissionDenied, with: :render_not_found
   
   include_controllers 'common/page_search'
 

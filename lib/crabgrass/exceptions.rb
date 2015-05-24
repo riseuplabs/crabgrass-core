@@ -33,20 +33,6 @@ class AssociationError < CrabgrassException; end
 # just report the error
 class ErrorMessage < CrabgrassException; end
 
-# report a not found error and return 404
-class ErrorNotFound < CrabgrassException
-  def initialize(thing, options={})
-    @thing = thing
-    super("",options)
-  end
-  def to_s
-    I18n.t(:thing_not_found, thing: @thing).capitalize
-  end
-  def status
-    :not_found
-  end
-end
-
 # a list of errors with a title. oooh lala!
 class ErrorMessages < ErrorMessage
   attr_accessor :title, :errors

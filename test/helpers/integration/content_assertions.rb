@@ -14,9 +14,15 @@ module ContentAssertions
     assert_local_tab 'Home'
   end
 
-  def assert_not_found(thing = nil)
-    thing ||= :page.t
-    assert_content :thing_not_found.t(thing: thing)
+  NOT_FOUND_ERRORS = [
+    ActiveRecord::RecordNotFound
+  ]
+  # We use a Rack middleware to render the 404 page. It can't be tested
+  # in RackTest directly. So we just make sure a 404 is returned.
+  # The page rendered will be a verbose error page in test env but a
+  # simple 'Page not found' error page in production
+  def assert_not_found(&block)
+    assert_equal 404, page.status_code
   end
 
   def assert_login_failed

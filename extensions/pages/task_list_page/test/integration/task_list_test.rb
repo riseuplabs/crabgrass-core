@@ -77,7 +77,7 @@ class TaskListTest < JavascriptIntegrationTest
 
   def complete_task
     within '#sort_list_pending' do
-      find('.check_off_16').click
+      first('.check_off_16').click
     end
   end
 

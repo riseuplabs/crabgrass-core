@@ -3,58 +3,34 @@
 # destinguish between the two different Controllers used for groups and people somewhere.
 # DispatchController to the rescue.
 #
-# This Controller handles routes of the form /:context_id
-# :context_id can be a group name or user login
+# This Controller handles routes of the form /:id
+# :id can be a group name or user login
 # It will try to find the corresponding group or user and load their controller.
 #
 
 class ContextsController < DispatchController
 
-  def process(*)
-    super
-  rescue ActiveRecord::RecordNotFound
-    raise_not_found(:page.t)
-  end
-
   protected
 
   def find_controller
-    context = params[:id]
-
-    if context
-      if context =~ /\ /
-        # we are dealing with a committee!
-        context.sub!(' ','+')
-      end
-      @group = Group.find_by_name(context)
-      @user  = User.find_by_login(context) unless @group
-    end
-    return controller_for_group(@group) if @group
-    return controller_for_people if @user
-    raise ActiveRecord::RecordNotFound.new
+    name = params[:id]
+    controller_for_group(name)
+  rescue ActiveRecord::RecordNotFound
+    controller_for_person(name)
   end
 
-  def controller_for_group(group)
-    params[:group_id] = params[:context_id]
+  def controller_for_group(name)
+    # we are dealing with a committee!
+    name.sub!(' ','+') if name =~ /\ /
+      
+    @group = Group.where(name: name).first!
+    params[:group_id] = params[:id]
     new_controller 'groups/home'
-
-    #
-    # we used to have different controllers for groups and networks.
-    # we might again someday.
-    #
-    #if group.instance_of? Network
-    #  if current_site.network and current_site.network == group
-    #    new_controller 'site_network'
-    #  else
-    #    new_controller 'groups/networks'
-    #  end
-    #else
-    #  new_controller 'groups/home'
-    #end
   end
 
-  def controller_for_people
-    params[:person_id] = params[:context_id]
+  def controller_for_person(login)
+    @user = User.where(login: login).first!
+    params[:person_id] = params[:id]
     new_controller 'people/home'
   end
 end

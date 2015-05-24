@@ -69,14 +69,13 @@ class Pages::CreateController < ApplicationController
   end
 
   def set_owner
-    # owner from form 
-    owner_param = params[:page].delete(:owner) if params[:page].present? 
-    
+    # owner from form
+    owner_param = params[:page].delete(:owner) if params[:page].present?
+
     # owner from context
     owner_param ||= params[:owner]
-    
-    @owner = current_user if owner_param == 'me'
-    @owner ||= Group.find_by_name(owner_param) if owner_param.present?
+
+    @owner = Group.find_by_name(owner_param) if owner_param.present?
   end
 
   #

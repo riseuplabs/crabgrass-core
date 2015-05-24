@@ -51,7 +51,9 @@ class Groups::HomeControllerTest < ActionController::TestCase
     login_as FactoryGirl.create(:user)
     @group.revoke_access! public: :view
     assert_permission :may_show_group?, false do
-      get :show, group_id: @group.to_param
+      assert_not_found do
+        get :show, group_id: @group.to_param
+      end
     end
   end
 

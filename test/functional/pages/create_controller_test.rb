@@ -1,6 +1,7 @@
 require_relative '../../test_helper'
 
 class Pages::CreateControllerTest < ActionController::TestCase
+  fixtures :all
 
   def setup
     @user  = FactoryGirl.create(:user)
@@ -9,9 +10,16 @@ class Pages::CreateControllerTest < ActionController::TestCase
   def test_new_page_view
     login_as @user
     get :new, owner: 'me', type: "wiki"
-    assert_equal assigns(:owner), @user
+    # if the owner is the current user we do not set it.
+    assert_nil assigns(:owner)
   end
 
+  def test_new_group_page_view
+    login_as users(:blue)
+    get :new, owner: 'rainbow', type: "wiki"
+    # if the owner is the current user we do not set it.
+    assert_equal groups(:rainbow), assigns(:owner)
+  end
 
   def test_create_page_for_myself
     login_as @user

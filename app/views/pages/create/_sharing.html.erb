@@ -1,6 +1,6 @@
 <%
   ## PAGE OWNER
-  if @owner and @owner != current_user
+  if @owner.present?
     form.hidden hidden_field_tag('page[owner]', @owner.name)
     form.row do |r|
       r.label :page_create_owner.t

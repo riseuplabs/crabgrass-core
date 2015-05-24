@@ -11,8 +11,9 @@ class Entity
 
   # returns a user or group with +name+ and throws a not found exception otherwise.
   def self.find_by_name!(name)
-    entity = User.find_by_login(name) || Group.find_by_name(name)
-    entity or raise ErrorNotFound.new("<strong>#{h name}</strong>")
+    User.where(login: name).first!
+  rescue ActiveRecord::RecordNotFound
+    Group.where(name: name).first!
   end
 
 end

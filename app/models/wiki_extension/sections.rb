@@ -1,7 +1,7 @@
 module WikiExtension
   module Sections
 
-    class SectionNotFoundError < ErrorNotFound
+    class SectionNotFoundError < CrabgrassException
       def initialize(section = 'document', options = {})
         message = :cant_find_wiki_section.t(section: section)
         super(message)

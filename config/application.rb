@@ -13,6 +13,7 @@ if defined?(Bundler)
 end
 
 require_relative "../lib/crabgrass/boot.rb"
+require_relative "../lib/crabgrass/public_exceptions.rb"
 
 module Crabgrass
   class Application < Rails::Application
@@ -76,6 +77,8 @@ module Crabgrass
     # Define your email configuration in email.yml instead.
     # It will automatically turn deliveries on
     config.action_mailer.perform_deliveries = false
+
+    config.exceptions_app = Crabgrass::PublicExceptions.new(Rails.public_path)
 
     ##
     ## PLUGINS

@@ -22,15 +22,17 @@ class People::HomeControllerTest < ActionController::TestCase
   def test_new_user_hidden
     user = FactoryGirl.create :user
     login_as :blue
-    get :show, person_id: user.login
-    assert_no_user_found
+    assert_not_found do
+      get :show, person_id: user.login
+    end
     user.destroy
   end
 
   def test_missing_user
     login_as :blue
-    get :show, person_id: "missinguserlogin"
-    assert_no_user_found
+    assert_not_found do
+      get :show, person_id: "missinguserlogin"
+    end
   end
 
   def test_new_user_visible_to_friends
@@ -43,11 +45,4 @@ class People::HomeControllerTest < ActionController::TestCase
     user.destroy
   end
 
-  # there should be no difference between a hidden user
-  # and a user not found...
-  def assert_no_user_found
-    assert_response 404
-    assert_nil assigns[:user]
-    assert_nil assigns[:group]
-  end
 end

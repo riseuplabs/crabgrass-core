@@ -35,16 +35,13 @@ class Groups::MembershipsController < Groups::BaseController
   # add someone directly to a group
   #
   def create
-    if @group && @user
-      @group.add_user! @user
-      index # load @memberships
-      success
-      render :update do |page|
-        standard_update(page)
-        page.replace 'group_membership_list', partial: 'groups/memberships/list'
-      end
-    else
-      raise_not_found params[:user_name]
+    raise_not_found unless @group && @user
+    @group.add_user! @user
+    index # load @memberships
+    success
+    render :update do |page|
+      standard_update(page)
+      page.replace 'group_membership_list', partial: 'groups/memberships/list'
     end
   end
 

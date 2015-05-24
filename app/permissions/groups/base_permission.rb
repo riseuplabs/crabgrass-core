@@ -5,7 +5,7 @@ module Groups::BasePermission
   # allow immediate destruction for groups no larger than:
   MAX_SIZE_FOR_QUICK_DESTROY_GROUP = 3
 
-  # used from the home controller
+  # used from the home and pages controller
   def may_show_group?(group = @group)
     current_user.may? :view, group
   end
