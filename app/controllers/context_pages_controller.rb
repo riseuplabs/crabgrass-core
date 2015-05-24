@@ -42,7 +42,8 @@ class ContextPagesController < DispatchController
   def redirect_to_new_page
     return unless logged_in?
 
-    new_page_owner = @group || (@user if (@user == current_user ))
+    new_page_owner = @group if may_edit_group?
+    new_page_owner ||= (@user if (@user == current_user ))
     return unless new_page_owner
 
     title = params[:id].split('+')[0...-1].join(' ').humanize
