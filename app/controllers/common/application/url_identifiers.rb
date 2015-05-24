@@ -145,7 +145,7 @@ module Common::Application::UrlIdentifiers
   end
 
   def controller_symbol
-    @controller_symbol ||= params[:controller].gsub(/^\//,'').gsub('/','_').to_sym
+    @controller_symbol ||= controller_string.gsub('/','_').to_sym
   end
 
   def action_string
