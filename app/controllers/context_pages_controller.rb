@@ -33,25 +33,29 @@ class ContextPagesController < DispatchController
   def process(*)
     super
   rescue ActiveRecord::RecordNotFound
-    if logged_in? and (@group or (@user and @user == current_user))
-      url = create_page_url 'type' => 'wiki',
-        'page[owner]' => (@group || @user),
-        'page[title]' => params[:id].split('+').first
-      logger.info("Redirect to #{url}")
-      warning :thing_not_found.t(:thing => :page.t)
-
-      # FIXME: this controller isn't fully set-up yet (because usually the request
-      #   will be completed in a new controller instance), so redirect_to etc.
-      #   won't work.
-      return [302, { 'Location' => url }, []]
-    else
-      #set_language do
-      # is it required to set the language here?
-      raise_not_found(:page.t)
-    end
+    warning :thing_not_found.t(thing: :page.t)
+    redirect_to_new_page || raise_not_found
   end
 
   protected
+
+  def redirect_to_new_page
+    return unless logged_in?
+
+    new_page_owner = @group || (@user if (@user == current_user ))
+    return unless new_page_owner
+
+    title = params[:id].split('+')[0...-1].join(' ').humanize
+    url = page_creation_url owner: new_page_owner,
+      type: :wiki,
+      page: { title: params[:id].humanize }
+    logger.info("Redirect to #{url}")
+
+    # FIXME: this controller isn't fully set-up yet (because usually the request
+    #   will be completed in a new controller instance), so redirect_to etc.
+    #   won't work.
+    return [302, { 'Location' => url }, []]
+  end
 
   #
   # attempt to find a page by its name, and return a new instance of the
@@ -98,8 +102,7 @@ class ContextPagesController < DispatchController
       end
     end
 
-    raise ActiveRecord::RecordNotFound.new unless @page
-    return controller_for_page(@page)
+    controller_for_page(@page) || raise_not_found
   end
 
   def find_pages_with_unknown_context(name)
@@ -119,6 +122,7 @@ class ContextPagesController < DispatchController
   #end
 
   def controller_for_page(page)
+    return unless page
     new_controller page.controller
   end
 

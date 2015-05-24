@@ -10,12 +10,8 @@ class People::BaseController < ApplicationController
 
   def fetch_person
     # person might be preloaded by DispatchController
-    @user ||= User.find_by_login(params[:person_id] || params[:id])
-    unless current_user.may?(:view, @user)
-      # let's make sure this looks like a failing dispatch
-      @user = nil
-      raise_not_found(:page.t)
-    end
+    @user ||= User.where(login: (params[:person_id] || params[:id])).first!
+    raise_not_found unless current_user.may?(:view, @user)
   end
 
   def setup_context

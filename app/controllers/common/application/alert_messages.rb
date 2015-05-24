@@ -113,8 +113,21 @@ module Common::Application::AlertMessages
     end
   end
 
-  def raise_not_found(thing="")
-    raise ErrorNotFound.new(thing)
+  #
+  # We use the default rails error to trigger the ErrorApp middleware.
+  # This will then in turn call ExceptionsController#show as defined in
+  # config.exceptions_app
+  #
+  # Why?
+  # Because we need to get rid of all Controller state.
+  #  * Instance variables may leak information.
+  #  * Controller functions like setup_navigation may crash.
+  #
+  # At the same time redirect would alter the url in the users browser.
+  # Maybe they just typed it wrong. So we better leave it there.
+  #
+  def raise_not_found
+    raise ActiveRecord::RecordNotFound
   end
 
   def raise_denied(message=nil)
@@ -122,7 +135,7 @@ module Common::Application::AlertMessages
   end
 
   def raise_authentication_required
-    raise AuthenticationRequired.new
+    raise AuthenticationRequired
   end
 
   private

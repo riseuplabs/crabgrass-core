@@ -20,9 +20,9 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_version_not_found
-    assert_raises ErrorNotFound do
-      run_before_filters :show, wiki_id: @wiki.to_param, id: '123'
-    end
+    get :show, wiki_id: @wiki.to_param, id: '123'
+    assert_response :redirect
+    assert_redirected_to action: :index
   end
 
   def test_show

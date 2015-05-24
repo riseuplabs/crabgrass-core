@@ -13,7 +13,7 @@ class PageAccessTest < JavascriptIntegrationTest
     page.public = false
     page.save
     visit_page(page)
-    assert_content 'Not Found'
+    assert_not_found
   end
 
   def test_public_page_of_hidden_group

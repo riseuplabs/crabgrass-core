@@ -12,9 +12,10 @@ class WikiPageControllerTest < ActionController::TestCase
   end
 
   def test_not_found_without_login
-    # existing page
-    get :show, id: pages(:wiki)
-    assert_not_found
+    assert_not_found do
+      # existing page
+      get :show, id: pages(:wiki)
+    end
   end
 
   def test_show_without_login

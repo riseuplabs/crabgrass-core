@@ -1,0 +1,7 @@
+en:
+  exception:
+    not_found: Not Found
+    title:
+      not_found: Not Found
+    description:
+      not_found: Sorry, we could not find what you were looking for.

@@ -8,7 +8,7 @@ class Groups::MyMembershipsControllerTest < ActionController::TestCase
   end
 
   def test_create
-    @group.grant_access! public: :join
+    @group.grant_access! public: [:join, :view]
     login_as @user
     assert_permission :may_join_group? do
       assert_difference '@group.users.count' do

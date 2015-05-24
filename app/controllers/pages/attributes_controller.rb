@@ -16,17 +16,22 @@ class Pages::AttributesController < Pages::SidebarsController
       @page.updated_by = current_user
       @page.save!
       render(:update) {|page| page.replace 'public_li', public_line}
-    elsif params[:owner]
-      if params[:owner] == current_user.name
-        owner = current_user
-      else
-        owner = Group.find_by_name params[:owner]
-      end
-      raise_not_found(:owner.t) unless owner
+    elsif owner
       @page.owner = owner
       @page.save!
       redirect_to page_path(@page)
       success
+    end
+  end
+
+  protected
+
+  def owner
+    return unless params[:owner]
+    if params[:owner] == current_user.name
+      current_user
+    else
+      Group.where(name: params[:owner]).first!
     end
   end
 

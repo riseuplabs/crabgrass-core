@@ -29,9 +29,6 @@ class Pages::SidebarsController < ApplicationController
 
   def fetch_page
     @page = Page.find params[:page_id]
-    unless @page
-      raise_not_found(:page.t)
-    end
     if logged_in?
       # grab the current user's participation from memory
       @upart = @page.participation_for_user(current_user)

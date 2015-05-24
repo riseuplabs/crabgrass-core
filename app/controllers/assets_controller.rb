@@ -61,7 +61,7 @@ class AssetsController < ApplicationController
     thumb_name = thumb_name_from_path(path)
     if thumb_name
       thumb = @asset.thumbnail(thumb_name)
-      raise_not_found(:file.t) unless thumb
+      raise_not_found unless thumb
       thumb.generate
       thumb
     else
@@ -69,7 +69,7 @@ class AssetsController < ApplicationController
     end
   rescue Errno::ENOENT => e
     Rails.logger.warn "WARNING: Asset not found: #{thumb_name}"
-    raise_not_found :file.t
+    raise_not_found
   end
 
   #
