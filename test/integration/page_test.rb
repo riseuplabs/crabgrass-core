@@ -21,8 +21,7 @@ class PageTest < IntegrationTest
         visit "/#{page.owner_name}/#{page.name_url}"
         assert_equal other_user, page.reload.owner
         assert !page.public?
-        assert_content "Not Found"
-        assert_no_content other_user.display_name
+        assert_not_found
       end
     end
   end

@@ -37,7 +37,8 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     login_as :orange
     # should fail gracefully for non-existant version
     get :show, wiki_id: wiki.id, id: 7
-    assert_response 404
+    assert_response :redirect
+    assert_redirected_to action: :index
   end
 
   def test_revert

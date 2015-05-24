@@ -24,8 +24,9 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_may_not_show
     login_as :red
-    xhr :get, :show, id: @asset.id, page_id: @gallery.id
-    assert_permission_denied
+    assert_not_found do
+      xhr :get, :show, id: @asset.id, page_id: @gallery.id
+    end
   end
 
   def test_may_show

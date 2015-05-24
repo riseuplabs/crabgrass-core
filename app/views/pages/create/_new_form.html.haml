@@ -9,14 +9,13 @@
   .h2.first
     .small= :create_a_new_thing.t(thing: :page.t.downcase)
     = page_type.class_display_name
-- if @group
-  %p= :page_added_to_group.t(group_type: @group.group_type.downcase, group_name: content_tag(:b,@group.name)).html_safe
+- if @owner.present?
+  %p= :page_added_to_group.t(group_type: @owner.group_type.downcase, group_name: content_tag(:b,@owner.name)).html_safe
 %hr
 
 .create_page
   = form_tag(create_page_path(page_type: page_type), multipart: @multipart) do
     = hidden_field_tag 'page_type', page_type
-    = hidden_field_tag('group', params[:group]) if params[:group]
     = formy(:horizontal_form) do |form|
       - @form_sections.each do |section|
         - if section =~ /\//

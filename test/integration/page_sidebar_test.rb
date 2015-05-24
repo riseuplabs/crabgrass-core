@@ -73,6 +73,8 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_content own_page.title
     visit path
     assert_content 'Page not found'
+    # the additional user selector loads autocomplete
+    wait_for_ajax
   end
 
   def test_tag
