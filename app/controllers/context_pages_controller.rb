@@ -42,7 +42,7 @@ class ContextPagesController < DispatchController
   def redirect_to_new_page
     return unless logged_in?
 
-    new_page_owner = @group if may_edit_group?
+    new_page_owner = @group if current_user.may?(:edit, @group)
     new_page_owner ||= (@user if (@user == current_user ))
     return unless new_page_owner
 
