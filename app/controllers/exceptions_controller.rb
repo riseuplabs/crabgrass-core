@@ -11,7 +11,7 @@ class ExceptionsController < ApplicationController
       format.html { render :show, status: @status_code, layout: !request.xhr? }
       format.xml  { render xml: details, root: "error", status: @status_code }
       format.json { render json: {error: details}, status: @status_code }
-      format.js   { render_error_js(exception) }
+      format.js   { render_error_js(@exception) }
     end
   end
 
