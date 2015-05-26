@@ -49,4 +49,8 @@ class GalleryImageController < Pages::BaseController
     end
   end
 
+  # do not display comments
+  def setup_options
+    @options.show_posts = false
+  end
 end
