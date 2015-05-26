@@ -35,7 +35,7 @@ class Group < ActiveRecord::Base
   include GroupExtension::Cache      # only versioning so far
 
   # not saved to database, just used by activity feed:
-  attr_accessor :created_by, :destroyed_by
+  attr_accessor :created_by
 
   # group <--> chat channel relationship
   has_one :chat_channel
@@ -262,36 +262,6 @@ class Group < ActiveRecord::Base
   before_save :save_avatar_if_needed
   def save_avatar_if_needed
     avatar.save if avatar and avatar.changed?
-  end
-
-  ##
-  ## DESTROY
-  ##
-
-  public
-
-  def destroy_by(user)
-    # needed for the activity
-    self.destroyed_by = user
-    # first we remove all the children in a clean way.
-    self.children.each {|committee| committee.destroy_by(user)}
-    # then we make sure they are not cached anymore so
-    # dependent: destroy does not get triggered.
-    # It would try to .destroy them which is a protected method.
-    self.reload
-    self.destroy
-  end
-
-  protected
-
-  # make destroy protected
-  # callers should use destroy_by
-  # TODO: this brakes Group.destroy_all - which is helpful for cleanup.
-  # I see how it can be useful to hide this from the api.
-  # But maybe we should do so by having a clear api and not by breaking
-  # the default rails api.
-  def destroy
-    super
   end
 
   ##

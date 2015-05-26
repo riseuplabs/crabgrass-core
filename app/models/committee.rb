@@ -98,8 +98,4 @@ class Committee < Group
     true
   end
 
-  def parent=(p)
-    raise 'call group.add_committee! instead'
-  end
-
 end

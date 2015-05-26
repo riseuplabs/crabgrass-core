@@ -164,7 +164,7 @@ class RequestTest < ActiveSupport::TestCase
     req = RequestToJoinUs.create(
       created_by: insider, recipient: outsider, requestable: group)
 
-    group.destroy_by(insider)
+    group.destroy
     assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
       Request.find(req.id)
     end

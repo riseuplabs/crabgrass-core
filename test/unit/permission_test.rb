@@ -45,7 +45,7 @@ class PermissionTest < ActiveSupport::TestCase
     # destroy the council
     council.remove_user!(user)
     assert !user.may?(:admin, group), 'should be booted from council'
-    council.destroy_by(user)
+    council.destroy
     user.clear_access_cache
     assert user.may?(:admin, group), 'should be able to admin group again'
   end

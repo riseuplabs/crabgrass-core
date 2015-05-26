@@ -31,21 +31,51 @@ class Groups::GroupsController < Groups::BaseController
   # unlike creation, all destruction of all group types is handled here.
   #
   def destroy
-    parent = @group.parent
-    @group.destroy_by(current_user)
+    @group.destroy
     success :thing_destroyed.t(thing: @group.name)
-    # TODO: write a wrapper for mailer that does the iteration
-    @group.users_before_destroy.each do |recipient|
+    redirect_to group_destroyed_redirect
+  end
+
+  before_filter :fetch_associations, only: :destroy
+  after_filter :create_activity, only: :destroy
+  after_filter :notify_via_mail, only: :destroy
+  after_filter :notify, only: :destroy
+
+  protected
+
+  # load all associations we need after the group was destroyed
+  def fetch_associations
+    @group = Group.where(id: @group.id).includes(:users, :parent).first
+  end
+
+  # TODO: write a wrapper for mailer that does the iteration
+  def notify_via_mail
+    @group.users.each do |recipient|
       Mailer.group_destroyed_notification(recipient, @group, mailer_options).deliver
-    end
-    if parent
-      redirect_to group_url(parent)
-    else
-      redirect_to me_url
     end
   end
 
-  protected
+  def notify
+    # implement me
+  end
+
+  def create_activity
+    key = rand(Time.now.to_i)
+    @group.users.each do |recipient|
+      GroupDestroyedActivity.create! groupname: @group.name,
+        recipient: recipient,
+        destroyed_by: current_user,
+        key: key
+    end
+  end
+
+  def group_destroyed_redirect
+    if @group.parent
+      group_url(@group.parent)
+    else
+      me_url
+    end
+  end
 
   def group_type
     if %w/group network council committee/.include? params[:type].to_s

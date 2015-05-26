@@ -64,7 +64,7 @@ class CouncilTest < ActiveSupport::TestCase
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
-    council.destroy_by(users(:blue))
+    council.destroy
 
     g.reload
     assert_nil g.council
@@ -76,7 +76,7 @@ class CouncilTest < ActiveSupport::TestCase
     council = Council.create!(name: 'council')
     council.add_user!(users(:blue))
     network.add_committee!(council)
-    council.destroy_by(users(:blue))
+    council.destroy
 
     network.reload
     assert_nil network.council
@@ -91,7 +91,7 @@ class CouncilTest < ActiveSupport::TestCase
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
-    g.destroy_by(users(:blue))
+    g.destroy
 
     assert_raises ActiveRecord::RecordNotFound do
       council.reload

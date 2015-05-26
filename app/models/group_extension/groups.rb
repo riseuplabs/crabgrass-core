@@ -16,13 +16,15 @@ module GroupExtension::Groups
       belongs_to :council, class_name: 'Group'
 
       # Committees are children! They must respect their parent group.
-      belongs_to :parent, class_name: 'Group'
+      belongs_to :parent, class_name: 'Group',
+        inverse_of: :children
       has_many :children, class_name: 'Group',
         foreign_key: :parent_id,
         order: 'name',
         after_add: :org_structure_changed,
         after_remove: :org_structure_changed,
-        dependent: :destroy
+        dependent: :destroy,
+        inverse_of: :parent
       alias_method :committees, :children
 
       has_many :real_committees,
@@ -107,7 +109,7 @@ module GroupExtension::Groups
     # should be used.
     def add_committee!(committee, make_council=false)
       make_council = true if committee.council?
-      committee.parent_id = self.id
+      committee.parent = self
       committee.parent_name_changed
       if make_council
         committee = add_council(committee)
