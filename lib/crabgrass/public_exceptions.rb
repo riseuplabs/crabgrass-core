@@ -15,13 +15,19 @@ module Crabgrass
       return unless status == '404'
       ExceptionsController.action(:show).call(env)
     rescue Exception => controller_error
-      $stderr.puts <<-EOERR
+      $stderr.puts error_log(controller_error)
+      Rails.logger.error error_log(controller_error)
+      return false
+    end
+
+    private
+
+    def error_log(controller_error)
+      return <<-EOERR
 ERROR: ExceptionsController raised:
   #{controller_error}.
   #{controller_error.backtrace * "\n  "}
 EOERR
-      return false
     end
- 
   end
 end
