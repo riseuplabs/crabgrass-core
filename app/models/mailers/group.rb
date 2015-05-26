@@ -1,14 +1,14 @@
 module Mailers::Group
   def group_destroyed_notification(recipient, group, options)
     setup(options)
-    setup_destroyed_email(recipient, group)
+    setup_destroyed_email(recipient, group, options)
   end
 
   protected
 
-  def setup_destroyed_email(recipient, group)
+  def setup_destroyed_email(recipient, group, options)
     # @user may be nil
-    @user = group.destroyed_by
+    @user = options[:current_user]
     @group = group
     @recipients = "#{recipient.email}"
     @subject = I18n.t(:group_destroyed_subject,

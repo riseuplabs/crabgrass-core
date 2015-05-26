@@ -32,12 +32,13 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_group_destroyed
-    groupname = @group.name
-    @group.destroy_by(@joe)
-
+    GroupDestroyedActivity.create! groupname: @group.name,
+      recipient: @joe,
+      destroyed_by: @joe,
+      key: rand(Time.now.to_i)
     acts = Activity.for_all(@joe).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
-    assert_equal groupname, act.groupname
+    assert_equal @group.name, act.groupname
     assert_in_description(act, @group)
   end
 

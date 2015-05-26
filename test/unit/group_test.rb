@@ -167,7 +167,7 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal page.owner, g
 
     assert_difference 'Membership.count', -2 do
-      g.destroy_by(users(:blue))
+      g.destroy
     end
 
     assert_nil page.reload.owner_id
@@ -175,11 +175,6 @@ class GroupTest < ActiveSupport::TestCase
     red = users(:red)
     assert_nil GroupLostUserActivity.for_all(red).find(:first),
       "there should be no user left group message"
-
-    destroyed_act = GroupDestroyedActivity.for_all(red).unique.find(:first)
-    assert destroyed_act, "there should exist a group destroyed activity message"
-
-    assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"
   end
 
   def test_avatar
@@ -215,7 +210,7 @@ class GroupTest < ActiveSupport::TestCase
     assert group.avatar.image_file_data.size > 0
 
     assert_difference 'Avatar.count', -1 do
-      group.destroy_by(users(:red))
+      group.destroy
     end
 
   end
@@ -234,13 +229,13 @@ class GroupTest < ActiveSupport::TestCase
     # groups are hidden by default
     group.profiles.public.update_attributes! may_see: true
 
-    assert !users(:blue).may?(:view, group), 
+    assert !users(:blue).may?(:view, group),
       "initially blue should not be able to view the group"
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
-    assert users(:blue).may?(:view, group), 
+    assert users(:blue).may?(:view, group),
       "after migration blue should not be able to view the group"
   end
 
