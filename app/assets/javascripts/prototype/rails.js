@@ -163,6 +163,12 @@
   }
 
   document.on('click', 'a[data-confirm], a[data-remote], a[data-method]', function(event, link) {
+
+    // do not mess with other buttons then left...
+    if (event.button != 0) {
+      return true;
+    }
+
     if (!allowAction(link)) {
       event.stop();
       return false;

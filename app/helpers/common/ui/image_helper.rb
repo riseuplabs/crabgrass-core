@@ -187,7 +187,7 @@ module Common::Ui::ImageHelper
   # links to an asset with a thumbnail preview
   def link_to_asset(asset, thumbnail_name, options={})
     thumbnail = asset.thumbnail(thumbnail_name)
-    img = thumbnail_img_tag(asset, thumbnail_name,options)
+    img = thumbnail_img_tag(asset, thumbnail_name, options)
     if size = (options[:crop]||options[:scale]||options[:crop!])
       target_width, target_height = size.split(/x/).map(&:to_f)
     elsif thumbnail and thumbnail.width and thumbnail.height

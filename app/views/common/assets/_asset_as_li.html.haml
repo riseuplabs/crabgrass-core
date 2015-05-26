@@ -4,6 +4,6 @@
   %div
     = link_to_asset asset, :small, crop: '64x64'
     = remove_asset_button asset
-  %div.small
+  %div.small.clear
     = link_to h(truncate(asset.basename, length: 20)), asset.url
 
