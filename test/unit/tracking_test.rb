@@ -55,13 +55,16 @@ class TrackingTest < ActiveSupport::TestCase
         Daily.update
       end
     end
+    # we create trackings for the day before yesterday here
+    # - so they should be counted.
+    # And we add another day for caution because Hourlies store the timestamp at the end
+    # of the hour they were tracked in. So this will be on the next day in the hour
+    # before midnight.
     assert_difference 'Daily.count' do
-      # we create trackings for the day before yesterday here
-      # - so they should be counted.
+      # Hourly should be created for the tracked view
+      # but then removed after being processed for daily.
       assert_no_difference 'Hourly.count' do
-        # Hourly should be created for the tracked view
-        # but then removed after being processed for daily.
-        assert_tracking(user, group, page, action, Time.now - 2.days)
+        assert_tracking(user, group, page, action, Time.now - 3.days)
         Tracking.process
         Daily.update
       end

@@ -23,7 +23,7 @@ class PaginationTest < ActiveSupport::TestCase
           group: group,
           page: page,
           action: :view,
-          time: Time.now - 2.days)
+          time: Time.now - 3.days)  # make sure trackings will be processed into dailies
       end
     end
 
