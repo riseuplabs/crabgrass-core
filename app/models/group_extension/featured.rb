@@ -68,30 +68,23 @@ end
 
 module GroupParticipationExtension
   module Featured
+    extend ActiveSupport::Concern
 
-    def self.included(base)
-      # base.extend ClassMethods
-      base.send :include, InstanceMethods
-      base.instance_eval do |t|
-        ##
-        ## NAMED SCOPES
-        ##
-        scope :featured, where(static: true)
-        scope :with_pages, include(:page)
+    module ClassMethods
+      def featured
+        where(static: true)
       end
     end
 
-    module InstanceMethods
+    def feature!
+      # find and increment the higest sibling position
+      position = self.group.participations.maximum(:featured_position).to_i + 1
+      self.update_attributes!({static: true, featured_position: position})
+    end
 
-      def feature!
-        # find and increment the higest sibling position
-        position = self.group.participations.maximum(:featured_position).to_i + 1
-        self.update_attributes!({static: true, featured_position: position})
-      end
-
-      def unfeature!
-        self.update_attributes!({static: false, featured_position: nil})
-      end
+    def unfeature!
+      self.update_attributes!({static: false, featured_position: nil})
+    end
 
 
       ##
@@ -145,7 +138,6 @@ module GroupParticipationExtension
       #     raise ArgumentError.new(I18n.t(:page_is_not_static))
       #   end
       # end
-    end
 
   end
 end

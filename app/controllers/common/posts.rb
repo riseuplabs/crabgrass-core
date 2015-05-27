@@ -16,25 +16,16 @@
 module Common::Posts
 
   def edit
-    render(:update) do |page|
-      page.replace(@post.body_id, partial: 'common/posts/default/edit', locals: {post: @post})
-    end
+    render template: 'common/posts/edit'
   end
 
   def update
     if params[:destroy]
       @post.destroy
-      render :update do |page|
-        page.hide @post.dom_id
-      end
-    else
-      if params[:save]
+    elsif params[:save]
         @post.update_attribute('body', params[:post][:body])
-      end
-      render :update do |page|
-        page.replace(@post.body_id, partial: 'common/posts/default/body', locals: {post: @post})
-      end
     end
+    render template: 'common/posts/update'
   end
 
   #
@@ -44,17 +35,14 @@ module Common::Posts
   def destroy
     @request.destroy_by!(current_user)
     notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
-    render(:update) {|page| page.redirect_to requests_path}
+    render template: 'common/posts/destroy'
   end
 
   protected
 
   def render_posts_refresh(posts)
     @post = Post.new # for the reply form
-    render :update do |page|
-      standard_update(page)
-      page.replace('posts', partial: 'common/posts/list', locals: {posts: posts})
-    end
+    render template: 'common/posts/refresh'
   end
 
 end

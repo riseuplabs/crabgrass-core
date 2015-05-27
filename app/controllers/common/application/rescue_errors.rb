@@ -256,10 +256,7 @@ module Common::Application::RescueErrors
     if exception
       alert_message :error, exception
     end
-    render :update do |page|
-      hide_spinners(page)
-      update_alert_messages(page)
-    end
+    render template: 'error/alert', locals: {exception: exception}
   end
 
   def log_exception(exception)

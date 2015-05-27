@@ -36,13 +36,11 @@ class Pages::ParticipationsController < Pages::SidebarsController
   def watch
     @upart = @page.add(current_user, watch: params[:watch])
     @upart.save!
-    render(:update) {|page| page.replace 'watch_li', watch_line}
   end
 
   def star
     @upart = @page.add(current_user, star: params[:star])
     @upart.save!
-    render(:update) {|page| page.replace 'star_li', star_line}
   end
 
   def access
@@ -50,9 +48,6 @@ class Pages::ParticipationsController < Pages::SidebarsController
       destroy
     else
       @page.add(@participation.entity, access: params[:access]).save!
-      render :update do |page|
-        page.replace_html dom_id(@participation), partial: 'pages/participations/permission_row', locals: {participation: @participation.reload}
-      end
     end
   end
 
@@ -68,9 +63,6 @@ class Pages::ParticipationsController < Pages::SidebarsController
       end
     else
       raise ErrorMessage.new(:remove_access_error.t)
-    end
-    render :update do |page|
-      page.hide dom_id(@participation)
     end
   end
 

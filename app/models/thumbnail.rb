@@ -75,11 +75,7 @@ class Thumbnail < ActiveRecord::Base
         output_file: output_file, output_type: output_type
       }
 
-      if thumbdef.remote and RemoteJob.site
-        queue_remote_job(options)
-      else
-        generate_now(options)
-      end
+      generate_now(options)
       save if changed?
     end
   end
@@ -146,34 +142,6 @@ class Thumbnail < ActiveRecord::Base
   end
 
   private
-
-  def queue_remote_job(options)
-    if !RemoteJob.local?
-      # the remote processor is on another server, so we don't pass it file paths
-      if !thumbdef.binary
-        # if we don't have binary data, then we might as well pass it along
-        options[:input_data] = File.read(options[:input_file])
-      end
-      options[:input_file] = nil
-      options[:output_file] = nil
-    end
-    job = RemoteJob.create!(options)
-    if job
-      #self.job_id = job.id
-      #self.state  = 'processing'
-    else
-      self.failure = true
-    end
-    save
-    if !RemoteJob.local? and thumbdef.binary
-      # the remote job is on another server, and wants binary data.
-      # we can't push this binary data via the ActiveResource api,
-      # so we push it using a multipart binary encoded POST,
-      # after the RemoteJob has been created.
-
-      # TODO: implement me....
-    end
-  end
 
   def generate_now(options)
     trans = Media.transmogrifier(options)

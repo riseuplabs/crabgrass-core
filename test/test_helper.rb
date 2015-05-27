@@ -54,6 +54,8 @@ class ActiveSupport::TestCase
   set_fixture_class tags: ActsAsTaggableOn::Tag
 end
 
+require 'factory_girl'
+
 class FactoryGirl::SyntaxRunner
   # for fixture_file_upload
   include ActionDispatch::TestProcess
