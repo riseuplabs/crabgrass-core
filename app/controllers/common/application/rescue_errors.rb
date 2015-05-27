@@ -45,6 +45,11 @@ module Common::Application::RescueErrors
       rescue_from PermissionDenied,            with: :render_permission_denied
       rescue_from ActionController::InvalidAuthenticityToken, with: :render_csrf_error
 
+      # Use the ExceptionApp with ExceptionsController for these:
+      # ( this is the default for errors that do not inherit from
+      #   one of the above)
+      rescue_from ErrorNotFound,               with: :raise
+
       #helper_method :rescues_path
       #alias_method_chain :rescue_action_locally, :js
     end

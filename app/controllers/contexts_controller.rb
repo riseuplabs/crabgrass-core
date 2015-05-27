@@ -22,7 +22,7 @@ class ContextsController < DispatchController
   def controller_for_group(name)
     # we are dealing with a committee!
     name.sub!(' ','+') if name =~ /\ /
-      
+
     @group = Group.where(name: name).first!
     params[:group_id] = params[:id]
     new_controller 'groups/home'
