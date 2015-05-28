@@ -38,8 +38,7 @@ class Groups::GroupsController < Groups::BaseController
 
   before_filter :fetch_associations, only: :destroy
   after_filter :create_activity, only: :destroy
-  after_filter :notify_via_mail, only: :destroy
-  after_filter :notify, only: :destroy
+  after_filter :notify_former_users, only: :destroy
 
   protected
 
@@ -48,15 +47,10 @@ class Groups::GroupsController < Groups::BaseController
     @group = Group.where(id: @group.id).includes(:users, :parent).first
   end
 
-  # TODO: write a wrapper for mailer that does the iteration
-  def notify_via_mail
-    @group.users.each do |recipient|
-      Mailer.group_destroyed_notification(recipient, @group, mailer_options).deliver
-    end
-  end
-
-  def notify
-    # implement me
+  def notify_former_users
+    notification = Notification.new(:group_destroyed, group: @group, user: current_user)
+    notification.deliver_mails_to(@group.users, mailer_options)
+    notification.create_notices_for(@group.users)
   end
 
   def create_activity
