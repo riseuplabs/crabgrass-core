@@ -18,9 +18,10 @@ module FunctionalTestHelper
   end
 
   NOT_FOUND_ERRORS = [
-    ActiveRecord::RecordNotFound
+    ActiveRecord::RecordNotFound,
+    ErrorNotFound
   ]
-  def assert_not_found(&block)
+  def assert_not_found
     if block_given?
       assert_raises *NOT_FOUND_ERRORS do
         yield

@@ -33,6 +33,27 @@ class AssociationError < CrabgrassException; end
 # just report the error
 class ErrorMessage < CrabgrassException; end
 
+# ErrorNotFound is similar to ActiveRecord::RecordNotFound - but it allows
+# specifying the type of thing that was not found for more detailed error
+# messages.
+#
+# For the translations we use cascading translations. So say a group was not
+# found... we will lookup the following:
+# exception.title.group.not_found
+# exception.title.not_found
+# exception.not_found
+# not_found
+#
+# For all of these %{thing} will be interpolated with a translation of :group.
+# If there is no translation for the given class of things it will be an empty
+# string.
+#
+class ErrorNotFound < CrabgrassException
+  def initialize(thing)
+    super nil, thing: thing
+  end
+end
+
 # a list of errors with a title. oooh lala!
 class ErrorMessages < ErrorMessage
   attr_accessor :title, :errors

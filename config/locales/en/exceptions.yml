@@ -1,7 +1,18 @@
+#
+# Translations of error messages.
+#
+# These can be very generic or fine grained. So some of them are marked as optional.
+#
 en:
   exception:
-    not_found: Not Found
     title:
-      not_found: Not Found
+      # %{thing} is optional here. Please make sure the string works without it.
+      not_found: "%{thing} Not Found"
+      # optional - falls back to translation of not_found
+      group:
+        not_found: Group Not Found
     description:
       not_found: Sorry, we could not find what you were looking for.
+      # optional - falls back to exception.description.not_found
+      group:
+        not_found: Sorry, we could not find the group you were looking for.

@@ -8,7 +8,9 @@ class ExceptionsController < ApplicationController
     @rescue_response = ActionDispatch::ExceptionWrapper.rescue_responses[@exception.class.name]
 
     respond_to do |format|
-      format.html { render :show, status: @status_code, layout: !request.xhr? }
+      format.html {
+        render :show, status: @status_code, layout: (!request.xhr? && 'notice')
+      }
       format.xml  { render xml: details, root: "error", status: @status_code }
       format.json { render json: {error: details}, status: @status_code }
       format.js   { render_error_js(@exception) }
@@ -19,10 +21,16 @@ class ExceptionsController < ApplicationController
 
   def details
     @details ||= {
-      title:       I18n.t(@rescue_response, scope: "exception.title", cascade: true),
-      description: I18n.t(@rescue_response, scope: "exception.description", cascade: true)
+      title:       translation(:title),
+      description: translation(:description)
     }
   end
   helper_method :details
 
+  def translation(scope)
+    options = @exception.respond_to?(:options) ? @exception.options : {}
+    scope = [:exception, scope, options[:thing]].compact
+    thing = I18n.t(options[:thing], default: '')
+    I18n.t @rescue_response, scope: scope, thing: thing, cascade: true
+  end
 end

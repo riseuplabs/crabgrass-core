@@ -47,6 +47,11 @@ I18n.exception_handler = :crabgrass_i18n_exception_handler
 
 I18n.load_path.flatten!
 
+
+# let's enable the use of cascade
+I18n::Backend::Simple.send(:include, I18n::Backend::Cascade)
+
+
 #
 # Turn off reloading of .yml files after every request if in BOOST mode.
 # Makes everything much much faster!!

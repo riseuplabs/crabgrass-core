@@ -126,11 +126,8 @@ module Common::Application::AlertMessages
   # At the same time redirect would alter the url in the users browser.
   # Maybe they just typed it wrong. So we better leave it there.
   #
-  # For now we ignore the _thing parameter. Anything that has not been found
-  # will result in a 'Page not found' message. We'll want to use a custom error
-  # with an attribute storing the type of thing later.
-  def raise_not_found(_thing=nil)
-    raise ActiveRecord::RecordNotFound
+  def raise_not_found(thing=nil)
+    raise ErrorNotFound.new(thing)
   end
 
   def raise_denied(message=nil)

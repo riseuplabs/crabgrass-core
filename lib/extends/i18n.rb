@@ -81,50 +81,6 @@ module I18n
     #  @languages.values.compact.sort_by(&:id)
     #end
 
-    def site_scope
-      scope_name = Site.current.try.name.try.to_sym
-      # default is reserved word
-      scope_name == :default ? nil : scope_name
-    end
-
-    def scope_on_site(scope)
-      case scope
-      when Array
-        scope.dup.unshift(site_scope)
-      when nil
-        [site_scope]
-      else
-        [site_scope, scope]
-      end
-    end
-    private :scope_on_site
-
-    #
-    # We allow site specific translations.
-    #
-    # just create a scope for the site in your locales and put them there.
-    #
-    # If a site_scope is set translations are looked up like this:
-    # * site specific translation for current locale
-    # * translation for current locale
-    # * :default option specified
-    # * site specific english translation
-    # * english translation
-
-    def translate_with_site_scope(*args)
-      key = args.first
-      options = args[1] || {}
-      if site_scope
-        site_options = options.dup
-        site_options.delete(:default)
-        site_options[:scope] = scope_on_site(options[:scope])
-        site_specific_translation = translate_without_site_scope(key, site_options)
-      end
-    ensure
-      return site_specific_translation if site_specific_translation.present?
-      return translate_without_site_scope(*args)
-    end
-
     def translate_with_exception_handler(*args)
       translate_without_exception_handler(*args)
     rescue ArgumentError => exception
@@ -134,15 +90,14 @@ module I18n
       options  = args.last.is_a?(Hash) ? args.pop.dup : {}
       key      = args.shift
       locale   = options.delete(:locale) || config.locale
-      handling = options.delete(:throw) && :throw || options.delete(:raise) && :raise 
+      handling = options.delete(:throw) && :throw || options.delete(:raise) && :raise
       handle_exception(handling, exception, locale, key, options)
     end
 
-    alias_method_chain :translate, :site_scope
     alias_method_chain :translate, :exception_handler
 
-    # this alias will include both chains
-    alias_method :t, :translate_with_exception_handler
+    # refresh the alias to include the chain
+    alias_method :t, :translate
 
     protected
 
@@ -170,11 +125,6 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
   exception = exception.to_exception if exception.respond_to? :to_exception
   raise exception unless exception.is_a? I18n::ArgumentError
 
-  # site scope is optional, so let's try without it.
-  if I18n.site_scope && options[:scope].try.first == I18n.site_scope
-    return nil
-  end
-
   # log issues other than just a missing translation
   unless exception.is_a? I18n::MissingTranslationData
     Rails.logger.error exception
@@ -190,7 +140,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
   if !Rails.env.production? && Conf.raise_i18n_exceptions
     raise exception
   end
- 
+
   # use the humanized version of the key as a fallback
   key.to_s.humanize
 end
