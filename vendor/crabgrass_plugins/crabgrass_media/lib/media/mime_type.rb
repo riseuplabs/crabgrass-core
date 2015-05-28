@@ -166,9 +166,9 @@ module Media
       'application/vnd.oasis.opendocument.text-web'     =>
         [:html,:oo_html,:doc_asset, 'OpenDocument Webpage'],
       'application/vnd.oasis.opendocument.text'         =>
-        [:odt,:oo_text,:doc_asset, 'OpenDocument Text'],
+        [:odt,:oo_document,:doc_asset, 'OpenDocument Text'],
       'application/vnd.oasis.opendocument.text-master'  =>
-        [:odm,:oo_text,:doc_asset, 'OpenDocument Master'],
+        [:odm,:oo_document,:doc_asset, 'OpenDocument Master'],
 
       'application/vnd.oasis.opendocument.presentation-template' =>
         [:otp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
@@ -177,7 +177,7 @@ module Media
       'application/vnd.oasis.opendocument.spreadsheet-template'  =>
         [:ots,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
       'application/vnd.oasis.opendocument.text-template'         =>
-        [:ott,:oo_text,:doc_asset, 'OpenDocument Text'],
+        [:ott,:oo_document,:doc_asset, 'OpenDocument Text'],
 
       'packages/'        => [nil,:archive,nil,'Archive'],
       'multipart/zip'    => [:zip,:archive,nil,'Archive'],
