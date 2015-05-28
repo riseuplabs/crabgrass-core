@@ -15,6 +15,13 @@ class WikiPageController < Pages::BaseController
     end
   end
 
+  def print
+    if @page.try.discussion
+      @posts = @page.try.discussion.visible_posts.includes(:user)
+    end
+    render template: 'wikis/wikis/print', layout: 'printer_friendly'
+  end
+
   protected
 
   # called during BasePage::create

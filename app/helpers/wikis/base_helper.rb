@@ -42,7 +42,7 @@ module Wikis::BaseHelper
       if options[:show_print].nil? || options[:show_print]
         formy.tab do |t|
           t.label :print.t
-          t.url print_wiki_url(wiki)
+          t.url wiki.page ? url_for(action: :print) : print_wiki_url(wiki)
         end
       end
     end
