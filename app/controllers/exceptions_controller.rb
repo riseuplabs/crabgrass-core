@@ -7,6 +7,8 @@ class ExceptionsController < ApplicationController
     @status_code     = ActionDispatch::ExceptionWrapper.new(env, @exception).status_code
     @rescue_response = ActionDispatch::ExceptionWrapper.rescue_responses[@exception.class.name]
 
+    Rails.logger.info "#{@status_code} - referrer: #{request.referrer}" if request.referrer
+
     respond_to do |format|
       format.html {
         render :show, status: @status_code, layout: (!request.xhr? && 'notice')
