@@ -21,6 +21,8 @@ class Groups::GroupsController < Groups::BaseController
   #
   def create
     @group.save!
+    current_user.reload # may have gained access to new group
+    @group.add_user!(current_user) unless @group.network? && may_admin_group?
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end

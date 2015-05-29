@@ -81,6 +81,7 @@ class Pages::CreateControllerTest < ActionController::TestCase
   def test_create_shared_with_group
     login_as @user
     @group  = FactoryGirl.create(:group)
+    @group.add_user! @user
 
     post 'create', page_id: 'me', type: 'discussion',
       page: {title: "title", summary: ""},

@@ -93,6 +93,11 @@ class Groups::GroupsControllerTest < ActionController::TestCase
       post :create, type: 'network',
         network: { name: 'trees', initial_member_group: group.name }
     end
+    network = Network.last
+    assert !@user.direct_member_of?(network),
+      "user should not become member of their groups new network"
+    assert @user.may?(:admin, network),
+      "user should be able to admin network through group"
   end
 
   def test_create_no_network_with_network_member
