@@ -104,8 +104,6 @@ class Groups::GroupsController < Groups::BaseController
   def initialize_group
     @group = group_class.new group_params
     @group.created_by = current_user
-    # setting @network will make the form correctly report errors for networks
-    @network = @group
   end
 
   def fetch_member_group
@@ -117,6 +115,6 @@ class Groups::GroupsController < Groups::BaseController
   def group_params
     permitted = [:name, :full_name, :language]
     permitted << :initial_member_group if group_type == :network
-    params.fetch(group_type, {}).permit *permitted
+    params.fetch(:group, {}).permit *permitted
   end
 end
