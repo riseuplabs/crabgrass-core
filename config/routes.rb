@@ -34,7 +34,7 @@ Crabgrass::Application.routes.draw do
   get '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
 
   scope format: false do
-    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar'
+    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar', constraints: {size: /#{Avatar::SIZES.keys.join('|')}/}
     get 'theme/:name/*file.css', to: 'theme#show'
   end
 
