@@ -21,6 +21,7 @@ class Groups::GroupsController < Groups::BaseController
     @group.save!
     current_user.reload # may have gained access to new group
     @group.add_user!(current_user) unless @group.network? && may_admin_group?
+    Activity.track :group_created, group: @group, user: current_user
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -37,7 +38,6 @@ class Groups::GroupsController < Groups::BaseController
   end
 
   before_filter :fetch_associations, only: :destroy
-  after_filter :create_activity, only: :destroy
   after_filter :notify_former_users, only: :destroy
 
   protected
@@ -51,16 +51,6 @@ class Groups::GroupsController < Groups::BaseController
     notification = Notification.new(:group_destroyed, group: @group, user: current_user)
     notification.deliver_mails_to(@group.users, mailer_options)
     notification.create_notices_for(@group.users)
-  end
-
-  def create_activity
-    key = rand(Time.now.to_i)
-    @group.users.each do |recipient|
-      GroupDestroyedActivity.create! groupname: @group.name,
-        recipient: recipient,
-        destroyed_by: current_user,
-        key: key
-    end
   end
 
   def group_destroyed_redirect
@@ -90,14 +80,14 @@ class Groups::GroupsController < Groups::BaseController
     @group.initial_member_group = member_group if group_type == :network
   end
 
+  def group_params
+    params.fetch(:group, {}).permit :name, :full_name, :language
+  end
+
   def member_group
     name = params.fetch(:group, {})[:initial_member_group]
     Group.where(name: name).first.tap do |group|
       current_user.may!(:admin, group)
     end
-  end
-
-  def group_params
-    params.fetch(:group, {}).permit :name, :full_name, :language
   end
 end

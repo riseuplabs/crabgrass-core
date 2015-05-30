@@ -32,6 +32,7 @@
 
     - f.row do |r|
       - r.label :name.t
+      - r.label_for :group_name
       - r.input text_field(:group, 'name', class: 'form-control')
       - r.info "(#{:required.t}) "
       - r.info :link_name_description.t
@@ -46,6 +47,7 @@
     - if group_type == :network
       - f.row do |r|
         - r.label :group.t
+        - r.label_for :group_initial_member_group
         - r.input select(:group, 'initial_member_group', options_for_select_group(as_admin: true, without_networks: true, selected: @group.initial_member_group), {}, class: 'form-control')
         - r.info "(#{:required.t}) "
         - r.info :network_initial_member.t

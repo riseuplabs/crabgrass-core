@@ -23,6 +23,7 @@ class Groups::StructuresController < Groups::SettingsController
       assign_params_to(@committee, params[:committee])
       @committee.save!
       @group.add_committee!(@committee)
+      Activity.track :group_created, group: @committee, user: current_user
       redirect_to group_url(@committee)
     elsif group_type == :council
       raise_denied unless may_create_council?
@@ -30,6 +31,7 @@ class Groups::StructuresController < Groups::SettingsController
       assign_params_to(@council, params[:council])
       @council.save!
       @group.add_committee!(@council)
+      Activity.track :group_created, group: @council, user: current_user
       redirect_to group_url(@council)
     end
     success

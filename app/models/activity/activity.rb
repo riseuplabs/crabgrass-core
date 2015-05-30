@@ -37,6 +37,15 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true  # the "subject" is typically the actor who is doing something.
   belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
 
+  EVENT_ACTIVITY_CLASSES = {
+    group_created: [::GroupCreatedActivity, ::UserCreatedGroupActivity]
+  }
+
+  def self.track(event, options = {})
+    options[:key] ||= rand(Time.now.to_i)
+    EVENT_ACTIVITY_CLASSES[event].each{ |klass| klass.create! options }
+  end
+
   before_create :set_defaults
   def set_defaults # :nodoc:
     # the key is used to filter out twin activities so that we don't show
