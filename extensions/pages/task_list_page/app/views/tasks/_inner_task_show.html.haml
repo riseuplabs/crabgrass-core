@@ -1,17 +1,4 @@
-= render 'tasks/checkbox', task: task
+= render 'tasks/checkbox', task: task, mode: :show
 
 .space-ui-top{id: "#{dom_id(task,'details')}", style: "display:none"}
-  .p= task.description_html
-  .p
-    .label.label-success.space-ui-right
-      = :created.tcap
-      = friendly_date(task.created_at)
-    - if task.completed_at
-      .label.label-primary
-        = :completed.tcap
-        = friendly_date(task.completed_at)
-  .buttons
-    = close_task_edit_button(task)
-    = delete_task_edit_button(task)
-    = edit_task_details_button(task)
-    = spinner(task)
+  = spinner(task)

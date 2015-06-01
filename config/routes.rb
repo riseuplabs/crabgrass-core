@@ -65,6 +65,7 @@ Crabgrass::Application.routes.draw do
     resources :requests, only: [:index, :update, :destroy, :show]
     # resources :events, only: [:index]
     resource :avatar, only: [:create, :edit, :update]
+    resources :tasks, only: [:index]
   end
 
   ##

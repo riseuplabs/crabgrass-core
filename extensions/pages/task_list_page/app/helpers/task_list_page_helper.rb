@@ -50,11 +50,23 @@ module TaskListPageHelper
   end
 
   # creates a link that expands to display the task details.
-  def task_link_to_details(task)
+  # options must include :show or :toggle
+  def task_link_to_details(task, *options)
     name = h(task.name)
     id = dom_id(task, 'details')
-    link_to_function(name, "$('%s').toggle()" % id, class: 'toggle')
-    #link_to_toggle('&nbsp;'.html_safe, id, class: 'btn btn-default btn-xs')
+    if options.include?(:show)
+      link_to_function(
+        name,
+        show(id) + edit_task_details_function(task),
+        class: 'toggle'
+      )
+    elsif options.include?(:toggle)
+      link_to_function(
+        name,
+        toggle(id),
+        class: 'toggle'
+      )
+    end
   end
 
   def task_modification_flag(task)
@@ -91,13 +103,18 @@ module TaskListPageHelper
   end
 
   # a button to replace the task detail with a tast edit form.
-  def edit_task_details_button(task)
-    function = remote_function(
+  #def edit_task_details_button(task)
+  #  button_to_function :edit.t,
+  #    edit_task_details_function(task),
+  #    class: 'btn btn-primary'
+  #end
+
+  def edit_task_details_function(task)
+    remote_function(
       url: edit_task_url(task, page_id: task.task_list.page),
       loading: show_spinner(task),
       method: :get
     )
-    button_to_function :edit.t, function, class: 'btn btn-primary'
   end
 
   #def no_pending_tasks(visible)

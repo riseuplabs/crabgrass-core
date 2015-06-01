@@ -89,6 +89,24 @@ define_navigation do
       icon   :page_message
     end
 
+    context_section :tasks do
+      visible { current_site.available_page_types.include? 'TaskListPage' }
+      label  { :tasks.t }
+      url    { me_tasks_path }
+      active { controller?('me/tasks') }
+      icon   :page_task
+      local_section :pending do
+        label  { :pending.t }
+        url    { me_tasks_path }
+        active { controller?('me/tasks') and params[:view] != 'completed' }
+      end
+      local_section :completed do
+        label  { :completed.t }
+        url    { me_tasks_path('view' => 'completed') }
+        active { controller?('me/tasks') and params[:view] == 'completed' }
+      end
+    end
+
     context_section :settings do
       label  { :settings.t }
       url    { me_settings_path }

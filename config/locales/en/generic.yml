@@ -138,7 +138,7 @@ en:
   ##!  discussions: "Discussions"
   tags: "Tags"
   ##!  archive: "Archive"
-  ##!  tasks: "Tasks"
+  tasks: "Tasks"
   title: "Title"
   summary: "Summary"
   body: "Body"
