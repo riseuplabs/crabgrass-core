@@ -56,9 +56,6 @@ class TaskListTest < JavascriptIntegrationTest
 
   def edit_task
     show_task
-    within '#sort_list_pending' do
-      click_on 'Edit'
-    end
   end
 
   def show_task

@@ -1,3 +1,8 @@
+-#
+-# The task checkbox with task name and list of people.
+-#
+-# requires local: 'mode', which must be either :show or :toggle
+-#
 - if !current_user.may?(:edit, task.task_list.page)
   %label.checkbox-inline
     %input{:type => 'checkbox', :disabled => 'disabled'}
@@ -9,7 +14,7 @@
     class: 'inline',
     checked: task.completed?, method: :put,
     with: "'task[state]=#{next_state}'"
-= task_link_to_details(task)
+= task_link_to_details(task, mode)
 %span.modified
   = task_modification_flag(task)
 %span.people

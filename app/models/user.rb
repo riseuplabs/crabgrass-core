@@ -237,14 +237,14 @@ class User < ActiveRecord::Base
   has_many :task_participations, dependent: :destroy
   has_many :tasks, through: :task_participations do
     def pending
-      self.find(:all, conditions: 'assigned == TRUE AND completed_at IS NULL')
+      where('completed_at IS NULL')
     end
     def completed
-      self.find(:all, conditions: 'completed_at IS NOT NULL')
+      where('completed_at IS NOT NULL')
     end
-    def priority
-      self.find(:all, conditions: ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
-    end
+    #def priority
+    #  self.find(:all, conditions: ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
+    #end
   end
 
   has_many :posts, dependent: :destroy

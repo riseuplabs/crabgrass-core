@@ -9,7 +9,12 @@ module Common::Utility::LastVisitHelper
 
   def last_visit
     # either the last timestamp or now so we do not mark anything as new
-    (@page || @group).last_visit_of(current_user) || Time.now
+    context = @page || @group
+    if context
+      context.last_visit_of(current_user) || Time.now
+    else
+      Time.now
+    end
   end
 
 end
