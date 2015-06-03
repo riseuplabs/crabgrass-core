@@ -22,7 +22,7 @@
 - content_for :title do
   %h1= :create_a_new_thing.t(thing: thing.t.downcase)
 
-= form_tag url do
+= form_for(@committee || @group, url: url) do |form|
 
   = hidden_field_tag 'type', params[:type]
 
@@ -33,14 +33,14 @@
     - f.row do |r|
       - r.label :name.t
       - r.label_for :group_name
-      - r.input text_field(:group, 'name', class: 'form-control')
+      - r.input form.text_field('name', class: 'form-control')
       - r.info "(#{:required.t}) "
       - r.info :link_name_description.t
 
     - f.row do |r|
       - r.label :display_name.t
       - r.label_for 'group_full_name'
-      - r.input text_field(:group, 'full_name', class: 'form-control')
+      - r.input form.text_field('full_name', class: 'form-control')
       - r.info "(#{:optional.t}) "
       - r.info I18n.t(:descriptive_name_for_display)
 
@@ -48,14 +48,14 @@
       - f.row do |r|
         - r.label :group.t
         - r.label_for :group_initial_member_group
-        - r.input select(:group, 'initial_member_group', options_for_select_group(as_admin: true, without_networks: true, selected: @group.initial_member_group), {}, class: 'form-control')
+        - r.input form.select('initial_member_group', options_for_select_group(as_admin: true, without_networks: true, selected: @group.initial_member_group), {}, class: 'form-control')
         - r.info "(#{:required.t}) "
         - r.info :network_initial_member.t
 
     - f.row do |r|
       - r.label I18n.t(:language)
       - r.label_for 'group_language'
-      - r.input select(:group, 'language', all_languages_for_select, {include_blank: true}, {class: 'form-control'})
+      - r.input form.select('language', all_languages_for_select, {include_blank: true}, {class: 'form-control'})
       - r.info "(#{:optional.t}) "
       - r.info :group_language.t(group: group_type.t.downcase)
 

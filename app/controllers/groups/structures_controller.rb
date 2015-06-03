@@ -6,35 +6,21 @@ class Groups::StructuresController < Groups::SettingsController
   end
 
   def new
-    if group_type == :committee
-      @committee = Committee.new
-    elsif group_type == :council
-      @council = Council.new
-    end
+    @committee = group_class.new
   end
 
-  #
-  # not very DRY, but we need properly named @var for the create form to work.
-  #
   def create
     if group_type == :committee
       raise_denied unless may_create_committee?
-      @committee = Committee.new
-      assign_params_to(@committee, params[:committee])
-      @committee.save!
-      @group.add_committee!(@committee)
-      Activity.track :group_created, group: @committee, user: current_user
-      redirect_to group_url(@committee)
-    elsif group_type == :council
+    else
       raise_denied unless may_create_council?
-      @council = Council.new
-      assign_params_to(@council, params[:council])
-      @council.save!
-      @group.add_committee!(@council)
-      Activity.track :group_created, group: @council, user: current_user
-      redirect_to group_url(@council)
     end
-    success
+    @committee = group_class.create group_params
+    @group.add_committee!(@committee)
+    @committee.add_user!(current_user) if @committee.council?
+    Activity.track :group_created, group: @committee, user: current_user
+    success :group_successfully_created.t
+    redirect_to group_url(@committee)
   end
 
   protected
@@ -56,11 +42,7 @@ class Groups::StructuresController < Groups::SettingsController
     end
   end
 
-  def assign_params_to(structure, options)
-    options.slice(:name, :full_name, :language).each do |k, v|
-      structure.public_send("#{k}=", v) if v.present?
-    end
-    structure.created_by = current_user
+  def group_params
+    params.fetch(:group, {}).permit :name, :full_name, :language
   end
-
 end

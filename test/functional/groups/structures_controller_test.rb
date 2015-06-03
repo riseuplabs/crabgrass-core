@@ -26,7 +26,7 @@ class Groups::StructuresControllerTest < ActionController::TestCase
         get :create,
           group_id: @group.to_param,
           type: 'committee',
-          committee: FactoryGirl.attributes_for(:committee)
+          group: FactoryGirl.attributes_for(:committee)
       end
     end
     assert_response :redirect
@@ -48,8 +48,8 @@ class Groups::StructuresControllerTest < ActionController::TestCase
       assert_difference '@group.committees.count' do
         get :create,
           group_id: @group.to_param,
-          council: FactoryGirl.attributes_for(:council),
-          type: 'council'
+          type: 'council',
+          group: FactoryGirl.attributes_for(:committee)
       end
     end
     assert_response :redirect
