@@ -38,12 +38,12 @@ class Activity < ActiveRecord::Base
   belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
 
   EVENT_ACTIVITY_CLASSES = {
-    create_group: [::GroupCreatedActivity, ::UserCreatedGroupActivity]
+    create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity']
   }
 
   def self.track(event, options = {})
     options[:key] ||= rand(Time.now.to_i)
-    EVENT_ACTIVITY_CLASSES[event].each{ |klass| klass.create! options }
+    EVENT_ACTIVITY_CLASSES[event].each{ |klass| klass.constantize.create! options }
   end
 
   before_create :set_defaults
