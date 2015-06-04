@@ -22,29 +22,21 @@ module Common::Posts
   end
 
   def update
-    if params[:destroy]
-      @post.destroy
-      render :update do |page|
-        page.hide @post.dom_id
-      end
-    else
-      if params[:save]
-        @post.update_attribute('body', params[:post][:body])
-      end
-      render :update do |page|
-        page.replace(@post.body_id, partial: 'common/posts/default/body', locals: {post: @post})
-      end
+    if params[:save]
+      @post.update_attribute('body', params[:post][:body])
+    end
+    render :update do |page|
+      page.replace @post.body_id,
+        partial: 'common/posts/default/body',
+        locals: {post: @post}
     end
   end
 
-  #
-  # destroy a request.
-  # uses model permissions.
-  #
   def destroy
-    @request.destroy_by!(current_user)
-    notice :thing_destroyed.tcap(thing: I18n.t(@request.name)), :later
-    render(:update) {|page| page.redirect_to requests_path}
+    @post.destroy
+    render :update do |page|
+      page.hide @post.dom_id
+    end
   end
 
   protected

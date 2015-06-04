@@ -16,7 +16,7 @@ module PostsPermission
     post.user_id == current_user.id
   end
 
-  alias_method :may_update_post?, :may_edit_post?
+  alias_method :may_destroy_post?, :may_edit_post?
 
   def may_twinkle_posts?(post=@post)
     post.discussion.page and

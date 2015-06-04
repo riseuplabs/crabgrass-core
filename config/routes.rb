@@ -183,7 +183,7 @@ Crabgrass::Application.routes.draw do
     #resources :changes
     resources :assets, only: [:index, :update, :create]
     resources :tags, only: [:index, :create, :destroy, :show]
-    resources :posts, only: [:show, :create, :edit, :update]
+    resources :posts, except: [:index, :new]
 
     # page sidebar/popup controllers:
     resource :sidebar,    only: [:show]
