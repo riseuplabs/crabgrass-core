@@ -7,6 +7,10 @@ class Groups::GroupsController < Groups::BaseController
   protected :fetch_group
 
   before_filter :initialize_group,  only: ['new', 'create']
+  before_filter :fetch_associations, only: :destroy
+
+  after_filter :track_activity, only: [:create]
+  after_filter :notify_former_users, only: :destroy
 
   guard :may_ALIAS_group?
 
@@ -21,7 +25,6 @@ class Groups::GroupsController < Groups::BaseController
     @group.save!
     current_user.reload # may have gained access to new group
     @group.add_user!(current_user) unless @group.network? && may_admin_group?
-    Activity.track :group_created, group: @group, user: current_user
     success :group_successfully_created.t
     redirect_to group_url(@group)
   end
@@ -36,9 +39,6 @@ class Groups::GroupsController < Groups::BaseController
     success :thing_destroyed.t(thing: @group.name)
     redirect_to group_destroyed_redirect
   end
-
-  before_filter :fetch_associations, only: :destroy
-  after_filter :notify_former_users, only: :destroy
 
   protected
 

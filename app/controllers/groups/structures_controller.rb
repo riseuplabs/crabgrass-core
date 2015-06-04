@@ -2,6 +2,8 @@ class Groups::StructuresController < Groups::SettingsController
 
   guard :may_edit_group_structure?, actions: [:new, :create, :destroy]
 
+  after_filter :track_activity, only: [:create]
+
   def show
   end
 
@@ -44,5 +46,9 @@ class Groups::StructuresController < Groups::SettingsController
 
   def group_params
     params.fetch(:group, {}).permit :name, :full_name, :language
+  end
+
+  def track_activity
+    super("#{action_string}_group", group: @committee)
   end
 end

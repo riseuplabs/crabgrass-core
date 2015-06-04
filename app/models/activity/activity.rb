@@ -38,7 +38,7 @@ class Activity < ActiveRecord::Base
   belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
 
   EVENT_ACTIVITY_CLASSES = {
-    group_created: [::GroupCreatedActivity, ::UserCreatedGroupActivity]
+    create_group: [::GroupCreatedActivity, ::UserCreatedGroupActivity]
   }
 
   def self.track(event, options = {})
