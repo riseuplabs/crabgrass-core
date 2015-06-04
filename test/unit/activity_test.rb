@@ -31,24 +31,9 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal username, act.username
   end
 
-  def test_group_destroyed
-    GroupDestroyedActivity.create! groupname: @group.name,
-      recipient: @joe,
-      destroyed_by: @joe,
-      key: rand(Time.now.to_i)
-    acts = Activity.for_all(@joe).find(:all)
-    act = acts.detect{|a|a.class == GroupDestroyedActivity}
-    assert_equal @group.name, act.groupname
-    assert_in_description(act, @group)
-  end
-
   def test_group_created
-    group = Group.create! do |group|
-      group.name = "plants"
-      group.full_name = "All the plants"
-      group.avatar = Avatar.new
-      group.created_by = @ann
-    end
+    group = FactoryGirl.create :group, created_by: @ann
+    Activity.track :group_created, group: group, user: @ann
     act = GroupCreatedActivity.find(:last)
     assert_activity_for_user_group(act, @ann, group)
 
