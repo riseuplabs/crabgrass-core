@@ -8,6 +8,10 @@ class UserCreatedGroupActivity < Activity
   alias_attr :user,  :subject
   alias_attr :group, :item
 
+  # when build via Activity.track from the controller, the user who created
+  # the group will be current_user
+  alias_method :current_user=, :user=
+
   def description(view=nil)
     I18n.t(:activity_group_created,
         user: user_span(:user),

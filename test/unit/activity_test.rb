@@ -33,7 +33,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_group_created
     group = FactoryGirl.create :group, created_by: @ann
-    Activity.track :create_group, group: group, user: @ann
+    Activity.track :create_group, group: group, current_user: @ann
     act = GroupCreatedActivity.find(:last)
     assert_activity_for_user_group(act, @ann, group)
 
@@ -45,9 +45,10 @@ class ActivityTest < ActiveSupport::TestCase
     assert_in_description(act, @ann)
   end
 
-  def test_membership
+  def test_create_membership
     ruth = FactoryGirl.create(:user)
     @group.add_user!(ruth)
+    Activity.track :create_membership, group: @group, user: ruth
 
     assert_nil UserJoinedGroupActivity.for_all(@ann).find_by_subject_id(ruth.id),
       "The new peers don't get UserJoinedGroupActivities."
@@ -63,21 +64,24 @@ class ActivityTest < ActiveSupport::TestCase
     # users own activity should always show up:
     act = UserJoinedGroupActivity.for_all(ruth).last
     assert_equal @group.id, act.group.id
+  end
 
-    ##
-    ## Remove the user
-    ##
 
-    @group.remove_user!(ruth)
+  ##
+  ## Remove the user
+  ##
+  def test_destroy_membership
+    @group.remove_user!(@joe)
+    Activity.track :destroy_membership, group: @group, user: @joe
 
     act = GroupLostUserActivity.for_all(@ann).last
-    assert_activity_for_user_group(act, ruth, @group)
+    assert_activity_for_user_group(act, @joe, @group)
 
     act = GroupLostUserActivity.for_group(@group, @ann).last
-    assert_activity_for_user_group(act, ruth, @group)
+    assert_activity_for_user_group(act, @joe, @group)
 
-    act = UserLeftGroupActivity.for_all(ruth).last
-    assert_activity_for_user_group(act, ruth, @group)
+    act = UserLeftGroupActivity.for_all(@joe).last
+    assert_activity_for_user_group(act, @joe, @group)
   end
 
   def test_deleted_subject
@@ -99,6 +103,7 @@ class ActivityTest < ActiveSupport::TestCase
     @joe.add_contact!(@ann, :friend)
     @joe.send_message_to!(@ann, "hi @ann")
     new_group.add_user!(@joe)
+    Activity.track :create_membership, group: new_group, user: @joe
 
     friend_act = FriendActivity.find_by_subject_id(@joe.id)
     user_joined_act = UserJoinedGroupActivity.find_by_subject_id(@joe.id)
