@@ -40,8 +40,7 @@ class Activity < ActiveRecord::Base
   EVENT_CREATES_ACTIVITIES = {
     create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity'],
     create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
-    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
-    create_post: ['MessageWallActivity']
+    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity']
   }
 
   def self.track(event, options = {})
