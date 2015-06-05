@@ -45,7 +45,10 @@ class Activity < ActiveRecord::Base
 
   def self.track(event, options = {})
     options[:key] ||= rand(Time.now.to_i)
-    EVENT_CREATES_ACTIVITIES[event].each{ |klass| klass.constantize.create! options }
+    EVENT_CREATES_ACTIVITIES[event].each do |class_name|
+      klass = class_name.constantize
+      klass.create! options.select{|k,v| klass.method_defined? "#{k}="}
+    end
   end
 
   before_create :set_defaults
