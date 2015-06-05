@@ -7,6 +7,8 @@ class MessageWallActivity < Activity
   validates_presence_of :item_id
   validates_presence_of :extra
 
+  belongs_to :post, foreign_key: :related_id
+
   serialize :extra
 
   alias_attr :user,     :subject
@@ -14,12 +16,19 @@ class MessageWallActivity < Activity
   alias_attr :avatar,   :item
   alias_attr :post_id,  :related_id
 
-  def post=(post)
-    self.post_id = post.id
+  # This is likely created via Activity.track with controller options.
+  # The controller options like user may not be what we want...
+  # We only trust the post.
+  before_validation :extract_attrs_from_post
+  def extract_attrs_from_post
+    return true unless post
     self.extra = {}
     self.extra[:snippet] = GreenCloth.new(post.body[0..140], 'page', [:lite_mode]).to_html
     self.extra[:snippet] += '...' if post.body.length > 140
     self.extra[:type] = 'status' if post.is_a? StatusPost
+    self.user = post.recipient
+    self.author = post.user
+    self.access = 2 if post.default?
   end
 
   before_create :set_access

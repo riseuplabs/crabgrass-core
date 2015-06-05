@@ -37,15 +37,16 @@ class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true  # the "subject" is typically the actor who is doing something.
   belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
 
-  EVENT_ACTIVITY_CLASSES = {
+  EVENT_CREATES_ACTIVITIES = {
     create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity'],
     create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
-    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity']
+    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
+    create_post: ['MessageWallActivity']
   }
 
   def self.track(event, options = {})
     options[:key] ||= rand(Time.now.to_i)
-    EVENT_ACTIVITY_CLASSES[event].each{ |klass| klass.constantize.create! options }
+    EVENT_CREATES_ACTIVITIES[event].each{ |klass| klass.constantize.create! options }
   end
 
   before_create :set_defaults

@@ -13,6 +13,8 @@ class Me::PostsController < Me::BaseController
   guard :may_ALIAS_post?
   guard index: :allow
 
+  after_filter :track_activity, only: :create
+
   # /me/discussions/green/posts
   def index
     @other_user = @recipient
@@ -72,4 +74,7 @@ class Me::PostsController < Me::BaseController
   end
   helper_method :posts_path
 
+  def track_activity
+    super(post: @post)
+  end
 end

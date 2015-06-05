@@ -37,6 +37,7 @@
 module Common::Application::ActivityTracking
 
   def track_activity(event = nil, options = {})
+    event, options = nil, event if options.nil? && event.is_a?(Hash)
     event ||= "#{action_string}_#{controller_name}"
     event_options = options.reverse_merge current_user: current_user,
       group: @group,
