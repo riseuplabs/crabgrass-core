@@ -13,6 +13,7 @@ module Common::Requests
       helper_method :request_path
       helper_method :requests_path
       before_filter :fetch_request, only: [:update, :destroy, :show]
+      after_filter :track_activity, if: :approved?
     end
   end
 
@@ -32,12 +33,7 @@ module Common::Requests
   def update
     if mark
       @request.mark!(mark, current_user)
-      if mark == :approve
-        msg = :approved_by_entity.t(entity: current_user.name)
-      elsif mark == :reject
-        msg = :rejected_by_entity.t(entity: current_user.name)
-      end
-      success I18n.t(@request.name), msg
+      success I18n.t(@request.name), success_message
     end
     render template: 'common/requests/update'
   end
@@ -104,5 +100,20 @@ module Common::Requests
     end
   end
 
+  def success_message
+    if approved?
+      msg = :approved_by_entity.t(entity: current_user.name)
+    elsif mark == :reject
+      msg = :rejected_by_entity.t(entity: current_user.name)
+    end
+  end
+
+  def track_activity
+    super request.event, request: @request, approved_by: current_user
+  end
+
+  def approved?
+    mark == :approve
+  end
 end
 

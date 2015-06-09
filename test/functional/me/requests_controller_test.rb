@@ -17,7 +17,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_update_group_request
+  def test_approve_group_request
     @user  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
     @group.add_user! @user
@@ -25,7 +25,9 @@ class Me::RequestsControllerTest < ActionController::TestCase
     requesting = FactoryGirl.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
       recipient: @group
-    xhr :post, :update, id: request.id
+    assert_difference 'Activity.count', 2 do
+      xhr :post, :update, id: request.id, mark: 'approve'
+    end
     assert_response :success
   end
 

@@ -263,6 +263,7 @@ class Request < ActiveRecord::Base
   ## TO OVERRIDE
   ##
 
+  def event() end
   def description() end
   def short_description() end
   def votable?() false end
@@ -379,6 +380,8 @@ class Request < ActiveRecord::Base
   end
 
   def check_create_permission
+    # created_by has it's own validations - so let's not bomb out
+    return if created_by.blank?
     unless may_create?(created_by)
       errors.add(:base, I18n.t(:permission_denied))
     end
