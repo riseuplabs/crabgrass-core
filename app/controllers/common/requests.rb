@@ -109,7 +109,7 @@ module Common::Requests
   end
 
   def track_activity
-    super request.event, request: @request, approved_by: current_user
+    super @request.event, @request.event_attrs
   end
 
   def approved?

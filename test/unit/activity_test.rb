@@ -33,7 +33,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_group_created
     group = FactoryGirl.create :group, created_by: @ann
-    Activity.track :create_group, group: group, current_user: @ann
+    Activity.track :create_group, group: group, user: @ann
     act = GroupCreatedActivity.find(:last)
     assert_activity_for_user_group(act, @ann, group)
 

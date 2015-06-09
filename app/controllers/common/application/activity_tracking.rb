@@ -41,7 +41,7 @@ module Common::Application::ActivityTracking
     event ||= "#{action_string}_#{controller_name}"
     event_options = options.reverse_merge current_user: current_user,
       group: @group,
-      user: @user,
+      user: @user || current_user,
       page: @page
     Activity.track event.to_sym, event_options
   end

@@ -5,7 +5,7 @@
 # requestable: the group
 # created_by: person who sent the invite
 #
-class RequestToJoinUs < Request
+class RequestToJoinUs < MembershipRequest
 
   validates_format_of :requestable_type, with: /Group/
   validates_format_of :recipient_type, with: /User/
@@ -13,6 +13,7 @@ class RequestToJoinUs < Request
   validate :no_membership_yet, on: :create
 
   def group() requestable end
+  def user()  recipient end
 
   def may_create?(user)
     user.may?(:admin,group)
@@ -28,10 +29,6 @@ class RequestToJoinUs < Request
 
   def may_view?(user)
     may_create?(user) or may_approve?(user)
-  end
-
-  def after_approval
-    group.add_user! recipient
   end
 
   def description

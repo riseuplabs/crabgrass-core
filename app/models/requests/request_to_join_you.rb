@@ -5,13 +5,14 @@
 # requestable: not used
 # created_by: person who wants in
 #
-class RequestToJoinYou < Request
+class RequestToJoinYou < MembershipRequest
 
   validates_format_of :recipient_type, with: /Group/
 
   validate :no_membership_yet, on: :create
 
   def group() recipient end
+  def user()  created_by end
 
   def may_create?(user)
     created_by == user
