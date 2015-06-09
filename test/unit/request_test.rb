@@ -34,6 +34,18 @@ class RequestTest < ActiveSupport::TestCase
     end
   end
 
+  def test_request_notice
+    u1 = users(:kangaroo)
+    u2 = users(:iguana)
+    req = RequestToFriend.create! created_by: u1,
+      recipient: u2,
+      message: 'hi, lets be friends'
+    assert_equal req, req.notice.request
+    assert_difference 'Notice.count', -1 do
+      req.destroy
+    end
+  end
+
   def test_request_to_join_us
     insider  = users(:dolphin)
     outsider = users(:gerrard)

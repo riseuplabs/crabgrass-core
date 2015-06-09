@@ -15,8 +15,4 @@ class RequestObserver < ActiveRecord::Observer
     end
   end
 
-  def after_destroy(request)
-    RequestNotice.destroy_all_by_request(request)
-  end
-
 end

@@ -46,6 +46,8 @@ class Request < ActiveRecord::Base
   belongs_to :shared_discussion, class_name: 'Discussion', dependent: :destroy
   belongs_to :private_discussion, class_name: 'Discussion', dependent: :destroy
 
+  has_one :notice, as: :noticable, dependent: :delete, class_name: 'RequestNotice'
+
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
   # some requests (ex: RequestToDestroyOurGroup) are approved only
