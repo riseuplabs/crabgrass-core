@@ -13,7 +13,9 @@ module Common::Requests
       helper_method :request_path
       helper_method :requests_path
       before_filter :fetch_request, only: [:update, :destroy, :show]
-      after_filter :track_activity, if: :approved?
+      after_filter :track_activity, if: :approved?, only: :update
+      after_filter :create_notices, only: :create
+      after_filter :dismiss_notices, only: :update
     end
   end
 
@@ -32,8 +34,8 @@ module Common::Requests
   #
   def update
     if mark
-      @request.mark!(mark, current_user)
-      success I18n.t(@request.name), success_message
+      @req.mark!(mark, current_user)
+      success I18n.t(@req.name), success_message
     end
     render template: 'common/requests/update'
   end
@@ -43,7 +45,7 @@ module Common::Requests
   # uses model permissions.
   #
   def destroy
-    @request.destroy_by!(current_user)
+    @req.destroy_by!(current_user)
     notice request_destroyed_message, :later
     render(:update) {|page| page.redirect_to requests_path}
   end
@@ -59,7 +61,7 @@ module Common::Requests
   end
 
   def request_destroyed_message
-    :thing_destroyed.tcap thing: I18n.t(@request.name, count: 1)
+    :thing_destroyed.tcap thing: I18n.t(@req.name, count: 1)
   end
 
   #def left_id(request)
@@ -79,9 +81,9 @@ module Common::Requests
   end
 
   def fetch_request
-    @request = request_context.find(params[:id])
-    if params[:code] && @request.recipient != current_user
-      @request.try.redeem_code!(current_user)
+    @req = request_context.find(params[:id])
+    if params[:code] && @req.recipient != current_user
+      @req.try.redeem_code!(current_user)
     end
   end
 
@@ -109,7 +111,15 @@ module Common::Requests
   end
 
   def track_activity
-    super @request.event, @request.event_attrs
+    super @req.event, @req.event_attrs
+  end
+
+  def create_notices
+    RequestNotice.create! @req
+  end
+
+  def dismiss_notices
+    RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
   end
 
   def approved?

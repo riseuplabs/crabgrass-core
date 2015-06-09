@@ -40,7 +40,8 @@ class RequestTest < ActiveSupport::TestCase
     req = RequestToFriend.create! created_by: u1,
       recipient: u2,
       message: 'hi, lets be friends'
-    assert_equal req, req.notice.request
+    RequestNotice.create request: req
+    assert_equal req, req.notices.first.request
     assert_difference 'Notice.count', -1 do
       req.destroy
     end

@@ -30,14 +30,8 @@ class Notice < ActiveRecord::Base
     destroy_all(noticable_id: noticable.id, noticable_type: type_field(noticable))
   end
 
-  #
-  # marks all notices associated with the noticable as dismissed.
-  #
-  def self.dismiss_all(noticable)
-    connection.execute(
-      "UPDATE notices SET dismissed = 1 WHERE noticable_type = '%s' AND noticable_id = %s" %
-      [type_field(noticable), noticable.id]
-    )
+  def self.dismiss_all
+    where(dismissed: false).update_all dismissed: true, dismissed_at: Time.now
   end
 
   ##

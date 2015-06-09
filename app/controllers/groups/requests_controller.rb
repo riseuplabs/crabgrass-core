@@ -29,11 +29,11 @@ class Groups::RequestsController < Groups::BaseController
   # RequestToCreateCouncil
   #
   def create
-    req = requested_class.create! recipient: @group,
+    @req = requested_class.create! recipient: @group,
       requestable: @group,
       created_by: current_user
-    success req
-    redirect_to request_path(req)
+    success @req
+    redirect_to request_path(@req)
   end
 
   protected
