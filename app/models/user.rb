@@ -179,9 +179,12 @@ class User < ActiveRecord::Base
   #
   # returns this user, as a ghost.
   #
+  # Note that we load the user from scratch so the attributes are separate
+  # This way you can modify the ghost without touching the original user.
+  #
   def ghostify!
-    self.update_attribute(:type, "UserGhost") # in testing environment, fails with response that `type=' is undefined method, but works fine in code itself.
-    return User.find(self.id)
+    update_attribute :type, 'UserGhost'
+    User.find(self.id)
   end
 
   # overwritten in user_ghost

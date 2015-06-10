@@ -20,17 +20,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal @ann, act.other_user
   end
 
-  def test_user_destroyed
-
-    assert @joe.peer_of?(@ann)
-    username = @ann.name
-    @ann.destroy
-
-    act = UserDestroyedActivity.for_all(@joe).find(:first)
-    assert act, 'there should be a user destroyed activity created'
-    assert_equal username, act.username
-  end
-
   def test_group_created
     group = FactoryGirl.create :group, created_by: @ann
     Activity.track :create_group, group: group, user: @ann

@@ -27,6 +27,15 @@ class Notification
   end
 
   def create_notices_for(recipients, notice_options = {})
-    # implement me
+    recipients.map do |recipient|
+      create_notice notice_options.merge(user: recipient)
+    end
+  rescue NameError
+    Rails.logger.warn "Warning: Notice class for '#{event}' is not defined."
+  end
+
+  def create_notice(attrs = {})
+    class_name = "#{event}_notice"
+    class_name.classify.constantize.create attrs
   end
 end
