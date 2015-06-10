@@ -47,6 +47,14 @@ class RequestToFriend < Request
     recipient.add_contact!(created_by, :friend)
   end
 
+  def event
+    :create_friendship
+  end
+
+  def event_attrs
+    { user: recipient, other_user: created_by }
+  end
+
   def description
     [:request_to_friend_description, {user: user_span(created_by), other_user: user_span(recipient)}]
   end

@@ -9,6 +9,8 @@ class FriendActivity < Activity
   alias_attr :other_user, :item
 
   before_create :set_access
+  after_create :create_twin
+
   def set_access
     # this has a weird side effect of creating public and private
     # profiles if they don't already exist.
@@ -21,15 +23,28 @@ class FriendActivity < Activity
     end
   end
 
+  def create_twin
+    twin.first_or_create do |other|
+      other.key = self.key
+    end
+  end
+
   def description(view=nil)
     I18n.t(:activity_contact_created,
             user: user_span(:user),
             other_user: user_span(:other_user))
   end
 
-  def self.find_twin(user, other_user)
-    where(subject_id: other_user, subject_type: 'User').
-      where(item_id: user, item_type: 'User').first
+  # Warning: Do not use self.class or even FriendActivity here...
+  # Why? It seems the scope of self is kept in that case.
+  # So activity.twin.twin would always return nil because it tries to
+  # fullfill both conditions (those for the twin and for the twin of that twin)
+  # at the same time.
+  # UPGRADE: Check if this is fixed
+  def twin
+    Activity.where(type: self.type).
+      where(subject_id: item_id, subject_type: 'User').
+      where(item_id: subject_id, item_type: 'User')
   end
 
   def icon

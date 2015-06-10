@@ -13,7 +13,9 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_contact
-    @joe.add_contact!(@ann, :friend)
+    assert_difference 'Activity.count', 2 do
+      Activity.track :create_friendship, user: @joe, other_user: @ann
+    end
     act = FriendActivity.for_me(@joe).find(:first)
     assert act, 'there should be a friend activity created'
     assert_equal @joe, act.user
@@ -75,6 +77,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_deleted_subject
     @joe.add_contact!(@ann, :friend)
+    Activity.track :create_friendship, user: @joe, other_user: @ann
     act = FriendActivity.for_me(@joe).find(:first)
     former_name = @ann.name
     @ann.destroy
@@ -90,6 +93,7 @@ class ActivityTest < ActiveSupport::TestCase
     new_group = FactoryGirl.create(:group)
 
     @joe.add_contact!(@ann, :friend)
+    Activity.track :create_friendship, user: @joe, other_user: @ann
     @joe.send_message_to!(@ann, "hi @ann")
     new_group.add_user!(@joe)
     Activity.track :create_membership, group: new_group, user: @joe
