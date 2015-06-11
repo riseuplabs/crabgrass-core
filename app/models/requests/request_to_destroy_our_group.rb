@@ -42,6 +42,14 @@ class RequestToDestroyOurGroup < Request
     group.destroy
   end
 
+  def event
+    :destroy_group
+  end
+
+  def event_attrs
+    { groupname: group.name, recipient: created_by, destroyed_by: approved_by }
+  end
+
   def description
     [:request_to_destroy_our_group_description, description_args]
   end
