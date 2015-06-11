@@ -325,12 +325,17 @@ class Request < ActiveRecord::Base
 
   #
   # used by subclass's description()
-  # the text is not html escaped, so please don't change this to display_name
+  # the text is not html escaped, so please don't change these to display_name
   #
-  def user_span(user)
+  def user_span(user = nil)
+    user ||= self.user
+    return nil if user.blank?
     ('<user>%s</user>' % user.name).html_safe
   end
-  def group_span(group)
+
+  def group_span(group = nil)
+    group ||= self.group
+    return nil if group.blank?
     ('<group>%s</group>' % group.name).html_safe
   end
 
