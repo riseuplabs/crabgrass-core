@@ -110,8 +110,9 @@ module Common::Requests
     end
   end
 
-  def track_activity
-    super @req.event, @req.event_attrs
+  def track_activity(event = nil, options = {})
+    event ||= @req.event
+    super event, @req.event_attrs.merge(options)
   end
 
   def create_notices

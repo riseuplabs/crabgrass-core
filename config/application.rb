@@ -49,7 +49,6 @@ module Crabgrass
     #config.active_record.whitelist_attributes = true
 
     config.active_record.observers = :relationship_observer,
-      :request_to_destroy_our_group_observer,
       "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
       "tracking/user_participation_observer", "tracking/group_participation_observer"
 

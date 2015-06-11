@@ -41,6 +41,7 @@ class Activity < ActiveRecord::Base
     create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity'],
     create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
     destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
+    request_to_destroy_group: ['UserProposedToDestroyGroupActivity'],
     create_friendship: ['FriendActivity']
   }
 
