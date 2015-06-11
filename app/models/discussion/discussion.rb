@@ -35,7 +35,7 @@ class Discussion < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
 
   # if we are a private discussion (or 'messages')
-  has_many :relationships do
+  has_many :relationships, inverse_of: :discussion do
     def for_user(user)
       self.detect {|relationship| relationship.user_id == user.id}
     end

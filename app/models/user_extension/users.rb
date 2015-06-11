@@ -167,7 +167,7 @@ module UserExtension::Users
     #
     def send_message_to!(other_user, body, in_reply_to = nil)
       relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
-      discussion = relationship.get_or_create_discussion
+      discussion = relationship.discussion
 
       if in_reply_to
         if in_reply_to.user_id == self.id
