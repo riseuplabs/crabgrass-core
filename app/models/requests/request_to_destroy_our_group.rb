@@ -42,23 +42,18 @@ class RequestToDestroyOurGroup < Request
     group.destroy_by(created_by)
   end
 
-  # these are hacky workaround for the fact that we have no
-  # access to the group itself anymore.
-  # TODO: link the request to the activity which still remembers the group name
   def description
-    [:request_to_destroy_our_group_description, {
-      group: I18n.t(:group),
-      group_type: I18n.t(:deleted),
-      user: user_span(created_by)
-    }]
+    [:request_to_destroy_our_group_description, description_args]
   end
 
   def short_description
-    [:request_to_destroy_our_group_short, {
-      group: I18n.t(:group),
-      group_type: I18n.t(:deleted),
-      user: user_span(created_by)
-    }]
+    [:request_to_destroy_our_group_description, description_args]
+  end
+
+  def description_args
+    { group:      group_span,
+      group_type: group.group_type,
+      user:       user_span(created_by) }
   end
 
   protected
