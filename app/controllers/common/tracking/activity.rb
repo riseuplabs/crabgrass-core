@@ -34,7 +34,7 @@
 #     super("#{action}_group", group: @committee)
 #   end
 
-module Common::Application::ActivityTracking
+module Common::Tracking::Activity
 
   def track_activity(event = nil, options = {})
     event, options = nil, event if options.nil? && event.is_a?(Hash)

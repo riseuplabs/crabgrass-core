@@ -1,4 +1,5 @@
 class Groups::StructuresController < Groups::SettingsController
+  include Common::Tracking::Activity
 
   guard :may_edit_group_structure?, actions: [:new, :create, :destroy]
 

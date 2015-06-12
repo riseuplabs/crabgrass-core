@@ -5,6 +5,7 @@
 #
 
 class Groups::MembershipsController < Groups::BaseController
+  include Common::Tracking::Activity
 
   guard index: :may_list_memberships?,
         destroy: :may_destroy_membership?,

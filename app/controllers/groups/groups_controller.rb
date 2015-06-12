@@ -1,4 +1,5 @@
 class Groups::GroupsController < Groups::BaseController
+  include Common::Tracking::Activity
 
   # restricting the before filter to { :only => :destroy } doesn't work, because
   # then it changes position in the filter chain and runs after the guards, but

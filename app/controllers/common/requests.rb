@@ -6,6 +6,7 @@
 # requests_path(*args) -- used for request index.
 #
 module Common::Requests
+  include Common::Tracking::Activity
 
   def self.included(base)
     base.class_eval do
