@@ -84,11 +84,12 @@ class RelationshipTest < ActiveSupport::TestCase
     a = users(:red)
     b = users(:green)
 
+    rel = a.add_contact!(b)
     assert_difference 'Discussion.count' do
-      a.add_contact!(b)
+      rel.send_message 'hi'
     end
 
-    discussion = a.relationships.with(b).discussion
+    discussion = rel.discussion
     assert_no_difference 'Discussion.count' do
       assert_equal discussion, b.relationships.with(a).discussion
     end

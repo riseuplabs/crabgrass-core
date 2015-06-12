@@ -22,34 +22,24 @@ class Relationship < ActiveRecord::Base
     self.update_attribute(:unread_count, new_unread_count) if new_unread_count
   end
 
-  def send_message(body, in_reply_to)
-    create_discussion if discussion.blank?
+  def send_message(body, in_reply_to = nil)
+    ensure_discussion
 
-    in_reply_to = nil if in_reply_to.user_id == id
-
-    if in_reply_to && in_reply_to.user_id != contact_id
-        # we should never get here normally, this is just a sanity check
-        raise ErrorMessage.new("Ugh. The user and the post you are replying to don't match.")
-    end
+    in_reply_to = nil if in_reply_to.try.user_id == id
 
     discussion.increment_unread_for!(contact)
-    discussion.create_post body: body,
+    PrivatePost.create body: body,
       in_reply_to: in_reply_to,
-      type: "PrivatePost",
+      discussion: discussion,
       recipient: contact,
-      user: self
+      user: user
   end
 
-  def discussion=(val)
-    super
-    inverse.discussion = val
-  end
-
-  before_save :sync_inverse
-
-  def sync_inverse
-    if discussion_id_changed?
-      inverse.save
+  def ensure_discussion(*attrs)
+    return if discussion.present?
+    create_discussion.tap do |discuss|
+      inverse.update_attribute :discussion, discuss
+      save
     end
   end
 
