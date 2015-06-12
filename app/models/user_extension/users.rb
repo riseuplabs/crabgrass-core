@@ -111,11 +111,6 @@ module UserExtension::Users
     # This method can be used to either add a new relationship or to update an
     # an existing one
     #
-    # RelationshipObserver creates a new Discussion that is shared between the two relationship objects
-    #
-    # RelationshipObserver creates a new FriendActivity when a friendship is created.
-    # As a side effect, this will create a profile for 'self' if it does not
-    # already exist.
     def add_contact!(other_user, type=nil)
       type = 'Friendship' if type == :friend
 
@@ -166,30 +161,9 @@ module UserExtension::Users
     # notification on the user's wall.
     #
     def send_message_to!(other_user, body, in_reply_to = nil)
-      relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
-      discussion = relationship.discussion
-
-      if in_reply_to
-        if in_reply_to.user_id == self.id
-          # you cannot reply to oneself
-          in_reply_to = nil
-        elsif in_reply_to.user_id != other_user.id
-          # we should never get here normally, this is just a sanity check
-          raise ErrorMessage.new("Ugh. The user and the post you are replying to don't match.")
-        end
-      end
-
-      discussion.increment_unread_for!(other_user)
-      post = discussion.posts.create do |post|
-        post.body = body
-        post.user = self
-        post.in_reply_to = in_reply_to
-        post.type = "PrivatePost"
-        post.recipient = other_user
-      end
-      post
+      relationship = relationships.with(other_user) || add_contact!(other_user)
+      relationship.send_message(body, in_reply_to)
     end
-
 
     def stranger_to?(user)
       !peer_of?(user) and !contact_of?(user)
