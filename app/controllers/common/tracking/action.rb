@@ -40,11 +40,7 @@
 #   end
 
 module Common::Tracking::Action
-
-  def self.track_actions(*actions)
-    options = actions.extract_options!
-    after_filter :track_action, options.merge(only: actions)
-  end
+  extend ActiveSupport::Concern
 
   def track_action(event = nil, options = {})
     event, options = nil, event if options.nil? && event.is_a?(Hash)
@@ -54,6 +50,13 @@ module Common::Tracking::Action
       user: @user || current_user,
       page: @page
     Tracking::Action.track event.to_sym, event_options
+  end
+
+  module ClassMethods
+    def track_actions(*actions)
+      options = actions.extract_options!
+      after_filter :track_action, options.merge(only: actions)
+    end
   end
 
 end

@@ -6,20 +6,20 @@
 # requests_path(*args) -- used for request index.
 #
 module Common::Requests
+  extend ActiveSupport::Concern
+
   include Common::Tracking::Action
 
-  def self.included(base)
-    base.class_eval do
-      helper_method :current_state
-      helper_method :request_path
-      helper_method :requests_path
-      before_filter :fetch_request, only: [:update, :destroy, :show]
+  included do
+    helper_method :current_state
+    helper_method :request_path
+    helper_method :requests_path
+    before_filter :fetch_request, only: [:update, :destroy, :show]
 
-      track_actions :update, if: :approved?
+    track_actions :update, if: :approved?
 
-      after_filter :create_notices, only: :create
-      after_filter :dismiss_notices, only: :update
-    end
+    after_filter :create_notices, only: :create
+    after_filter :dismiss_notices, only: :update
   end
 
   #
