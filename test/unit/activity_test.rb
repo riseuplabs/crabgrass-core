@@ -14,7 +14,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_contact
     assert_difference 'Activity.count', 2 do
-      Activity.track :create_friendship, user: @joe, other_user: @ann
+      FriendActivity.create! user: @joe, other_user: @ann
     end
     act = FriendActivity.for_me(@joe).find(:first)
     assert act, 'there should be a friend activity created'
@@ -23,23 +23,17 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def test_group_created
-    group = FactoryGirl.create :group, created_by: @ann
-    Activity.track :create_group, group: group, user: @ann
-    act = GroupCreatedActivity.find(:last)
-    assert_activity_for_user_group(act, @ann, group)
+    act = GroupCreatedActivity.new group: @group, user: @ann
+    assert_activity_for_user_group(act, @ann, @group)
 
-    act = UserCreatedGroupActivity.find(:last)
-    assert_activity_for_user_group(act, @ann, group)
-    assert_equal group.id, act.group.id
-    assert_equal @ann.id, act.user.id
-    assert_in_description(act, group)
-    assert_in_description(act, @ann)
+    act = UserCreatedGroupActivity.new group: @group, user: @ann
+    assert_activity_for_user_group(act, @ann, @group)
   end
 
   def test_create_membership
     ruth = FactoryGirl.create(:user)
     @group.add_user!(ruth)
-    Activity.track :create_membership, group: @group, user: ruth
+    Tracking::Action.track :create_membership, group: @group, user: ruth
 
     assert_nil UserJoinedGroupActivity.for_all(@ann).find_by_subject_id(ruth.id),
       "The new peers don't get UserJoinedGroupActivities."
@@ -63,7 +57,7 @@ class ActivityTest < ActiveSupport::TestCase
   ##
   def test_destroy_membership
     @group.remove_user!(@joe)
-    Activity.track :destroy_membership, group: @group, user: @joe
+    Tracking::Action.track :destroy_membership, group: @group, user: @joe
 
     act = GroupLostUserActivity.for_all(@ann).last
     assert_activity_for_user_group(act, @joe, @group)
@@ -77,7 +71,7 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_deleted_subject
     @joe.add_contact!(@ann, :friend)
-    Activity.track :create_friendship, user: @joe, other_user: @ann
+    Tracking::Action.track :create_friendship, user: @joe, other_user: @ann
     act = FriendActivity.for_me(@joe).find(:first)
     former_name = @ann.name
     @ann.destroy
@@ -93,10 +87,10 @@ class ActivityTest < ActiveSupport::TestCase
     new_group = FactoryGirl.create(:group)
 
     @joe.add_contact!(@ann, :friend)
-    Activity.track :create_friendship, user: @joe, other_user: @ann
+    Tracking::Action.track :create_friendship, user: @joe, other_user: @ann
     @joe.send_message_to!(@ann, "hi @ann")
     new_group.add_user!(@joe)
-    Activity.track :create_membership, group: new_group, user: @joe
+    Tracking::Action.track :create_membership, group: new_group, user: @joe
 
     friend_act = FriendActivity.find_by_subject_id(@joe.id)
     user_joined_act = UserJoinedGroupActivity.find_by_subject_id(@joe.id)
