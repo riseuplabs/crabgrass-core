@@ -6,7 +6,7 @@
 # requests_path(*args) -- used for request index.
 #
 module Common::Requests
-  include Common::Tracking::Activity
+  include Common::Tracking::Action
 
   def self.included(base)
     base.class_eval do
@@ -14,7 +14,9 @@ module Common::Requests
       helper_method :request_path
       helper_method :requests_path
       before_filter :fetch_request, only: [:update, :destroy, :show]
-      after_filter :track_activity, if: :approved?, only: :update
+
+      track_actions :update, if: :approved?
+
       after_filter :create_notices, only: :create
       after_filter :dismiss_notices, only: :update
     end
@@ -111,7 +113,7 @@ module Common::Requests
     end
   end
 
-  def track_activity(event = nil, options = {})
+  def track_action(event = nil, options = {})
     event ||= @req.event
     super event, @req.event_attrs.merge(options)
   end
