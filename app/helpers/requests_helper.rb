@@ -2,7 +2,7 @@ require_relative 'comment_proxy_helper'
 
 module RequestsHelper
 
-  def posts_for_request(request = @request)
+  def posts_for_request(request = @req)
     [request_display_post(request), request_actions_post(request)].compact
   end
 

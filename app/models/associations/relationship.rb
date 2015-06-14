@@ -3,7 +3,7 @@
 class Relationship < ActiveRecord::Base
   belongs_to :user
   belongs_to :contact, class_name: 'User', foreign_key: :contact_id
-  belongs_to :discussion, dependent: :destroy
+  belongs_to :discussion, dependent: :destroy, inverse_of: :relationships
 
   # mark as read or unread the discussion on this relationship
   def mark!(as)
@@ -22,12 +22,28 @@ class Relationship < ActiveRecord::Base
     self.update_attribute(:unread_count, new_unread_count) if new_unread_count
   end
 
-  def get_or_create_discussion
-    unless discussion
-      self.create_discussion
-      self.save
-    end
-    discussion
+  def send_message(body, in_reply_to = nil)
+    ensure_discussion
+
+    in_reply_to = nil if in_reply_to.try.user_id == id
+
+    discussion.increment_unread_for!(contact)
+    PrivatePost.create body: body,
+      in_reply_to: in_reply_to,
+      discussion: discussion,
+      recipient: contact,
+      user: user
   end
 
+  def ensure_discussion(*attrs)
+    return if discussion.present?
+    create_discussion.tap do |discuss|
+      inverse.update_attribute :discussion, discuss
+      save
+    end
+  end
+
+  def inverse
+    @inverse ||= Relationship.where(user_id: contact, contact_id: user).first
+  end
 end

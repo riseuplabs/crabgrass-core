@@ -6,17 +6,30 @@ class Me::DestroysController < Me::BaseController
   end
 
   def update
-    @user = current_user.ghostify!
-    @user.retire!
-    if params[:scrub_name]
-      @user.anonymize!
-    end
-    if params[:scrub_comments]
-      @user.destroy_comments!
-    end
-    logout!
+    # these will be cleared after retire!
+    users_to_notify = @user.friends.all
+    @user.retire! params.slice(:scrub_name, :scrub_comments)
+    notify users_to_notify
     success :account_successfully_removed.t
+    logout!
     redirect_to '/'
+  end
+
+  protected
+
+  # fetch user as a UserGhost
+  def fetch_user
+    if action?(:update)
+      @user = current_user.ghostify!
+    else
+      super
+    end
+  end
+
+  def notify(users_to_notify)
+    # current_user still has a name.
+    notification = Notification.new(:user_destroyed, username: current_user.name)
+    notification.create_notices_for(users_to_notify)
   end
 
 end

@@ -13,6 +13,8 @@ class Groups::RequestsController < Groups::BaseController
   # permissions handled by model:
   guard create: :allow, update: :allow, destroy: :allow
 
+  after_filter :track_activity, only: :create
+
   rescue_render create: :index
 
   def index
@@ -29,20 +31,27 @@ class Groups::RequestsController < Groups::BaseController
   # RequestToCreateCouncil
   #
   def create
-    req = requested_class.create! recipient: @group,
+    @req = requested_class.create! recipient: @group,
       requestable: @group,
       created_by: current_user
-    success req
-    redirect_to request_path(req)
+    success @req
+    redirect_to request_path(@req)
   end
 
   protected
 
+  REQUEST_TYPES = {
+    destroy_group: 'RequestToDestroyOurGroup',
+    create_council: 'RequestToCreateCouncil'
+  }.with_indifferent_access
+
   def requested_class
-    if params[:type] == 'destroy_group'
-      RequestToDestroyOurGroup
-    elsif params[:type] == 'create_council'
-      RequestToCreateCouncil
+    REQUEST_TYPES[params[:type]].try.constantize
+  end
+
+  def track_activity
+    if REQUEST_TYPES.has_key? params[:type]
+      super "request_to_#{params[:type]}"
     end
   end
 

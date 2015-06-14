@@ -13,10 +13,18 @@ class PrivatePostActivity < Activity
   alias_attr :snippet, :extra
   alias_attr :reply, :flag
 
-  def post=(post)
-    self.post_id = post.id
+  belongs_to :post, foreign_key: :related_id
+
+  # This is likely created via Activity.track with controller options.
+  # The controller options like user may not be what we want...
+  # We only trust the post.
+  before_validation :extract_attrs_from_post
+  def extract_attrs_from_post
+    return true unless post
     self.snippet = GreenCloth.new(post.body[0..140], 'page', [:lite_mode]).to_html
     self.snippet += '...' if post.body.length > 140
+    self.user = post.recipient
+    self.author = post.user
   end
 
   protected

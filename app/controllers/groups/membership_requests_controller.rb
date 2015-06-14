@@ -64,8 +64,8 @@ class Groups::MembershipRequestsController < Groups::BaseController
 
   def create_join_request
     if !params[:cancel]
-      req = RequestToJoinYou.create recipient: @group, created_by: current_user
-      alert_message req
+      @req = RequestToJoinYou.create recipient: @group, created_by: current_user
+      alert_message @req
     end
     redirect_to entity_url(@group)
   end
@@ -73,18 +73,20 @@ class Groups::MembershipRequestsController < Groups::BaseController
   def create_destroy_request
     @entity = Entity.find_by_name!(params[:entity])
     if @entity.is_a? User
-      req = RequestToRemoveUser.create! user: @entity, group: @group, created_by: current_user
+      @req = RequestToRemoveUser.create! user: @entity, group: @group, created_by: current_user
       membership = @group.memberships.find_by_user_id(@entity.id)
     elsif @entity.is_a? Group
-      req = RequestToRemoveGroup.create! group: @entity, network: @group, created_by: current_user
+      @req = RequestToRemoveGroup.create! group: @entity, network: @group, created_by: current_user
       membership = @group.federatings.find_by_group_id(@entity.id)
     else
       raise_error
     end
-    success req
+    success @req
     render :update do |page|
       standard_update(page)
-      page.replace(dom_id(membership), partial: "groups/memberships/membership", locals: {membership: membership})
+      page.replace dom_id(membership),
+        partial: "groups/memberships/membership",
+        locals: {membership: membership}
     end
   end
 

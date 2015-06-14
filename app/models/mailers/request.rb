@@ -45,7 +45,7 @@ module Mailers::Request
     #                 :group_type => @group.group_type.downcase,
     #                 :user => @created_by.display_name)
 
-    # @request_link = url_for(:controller => 'me/requests/', :id => request.id)
+    # @req_link = url_for(:controller => 'me/requests/', :id => request.id)
     # @body[:user] = @created_by
     # @body[:group] = @group
   end

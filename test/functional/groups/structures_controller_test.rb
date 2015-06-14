@@ -1,6 +1,7 @@
 require_relative '../../test_helper'
 
 class Groups::StructuresControllerTest < ActionController::TestCase
+  fixtures :all
 
   def setup
     @user  = FactoryGirl.create(:user)
@@ -26,7 +27,21 @@ class Groups::StructuresControllerTest < ActionController::TestCase
         get :create,
           group_id: @group.to_param,
           type: 'committee',
-          committee: FactoryGirl.attributes_for(:committee)
+          group: committee_attributes
+      end
+    end
+    assert_response :redirect
+  end
+
+  # two committees of different groups can have the same name.
+  def test_create_committee_namespace
+    login_as @user
+    assert_permission :may_edit_group_structure? do
+      assert_difference '@group.committees.count' do
+        get :create,
+          group_id: @group.to_param,
+          type: 'committee',
+          group: committee_attributes(name: 'the-warm-colors')
       end
     end
     assert_response :redirect
@@ -42,16 +57,21 @@ class Groups::StructuresControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_create
+  def test_create_council
     login_as @user
     assert_permission :may_edit_group_structure? do
       assert_difference '@group.committees.count' do
         get :create,
           group_id: @group.to_param,
-          council: FactoryGirl.attributes_for(:council),
-          type: 'council'
+          type: 'council',
+          group: committee_attributes
       end
     end
     assert_response :redirect
   end
+
+  def committee_attributes(attrs = {})
+    FactoryGirl.attributes_for(:committee).merge(attrs)
+  end
+
 end

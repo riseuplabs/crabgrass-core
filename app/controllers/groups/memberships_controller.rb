@@ -5,10 +5,15 @@
 #
 
 class Groups::MembershipsController < Groups::BaseController
+  include Common::Tracking::Activity
 
   guard index: :may_list_memberships?,
         destroy: :may_destroy_membership?,
         create: :may_create_membership?
+
+  after_filter :track_activity,
+    only: [:create, :destroy],
+    unless: :federation_view?
 
   #
   # list all the memberships
@@ -25,7 +30,7 @@ class Groups::MembershipsController < Groups::BaseController
   # immediately destroy a membership
   #
   def destroy
-    @membership.group.remove_user! @membership.user # memberships must be destroyed via group.remove_user!
+    @group.remove_user! @user # memberships must be destroyed via group.remove_user!
     render :update do |page|
       page.hide dom_id(@membership)
     end
@@ -54,6 +59,7 @@ class Groups::MembershipsController < Groups::BaseController
         @membership = @group.federatings.find(params[:id])
       else
         @membership = @group.memberships.find(params[:id])
+        @user = @membership.user
       end
     elsif action?(:create)
       if params[:user_name]

@@ -17,10 +17,25 @@ class UserGhostTest < ActiveSupport::TestCase
     user.retire!
     user.reload
     user.attributes.except("id", "type", "login", "display_name").each do |k, v|
-      assert_nil v, "expected #{k} to be cleared"
+      assert_blank v, "expected #{k} to be cleared"
     end
     assert_equal "Blue!", user.display_name
     assert_equal "blue", user.name
     assert_equal [], user.keys
+  end
+
+  def test_ghostified_user
+    user = users(:blue)
+    ghost = user.ghostify!
+    assert_equal UserGhost, ghost.class
+    assert ghost.retire!, ghost.errors.full_messages.join(', ')
+  end
+
+  def test_ghost_user
+    user = users(:blue)
+    ghost = user.ghostify!
+    assert ghost.save, ghost.errors.full_messages.join(', ')
+    ghost = User.find(ghost.id)
+    assert ghost.retire!, ghost.errors.full_messages.join(', ')
   end
 end

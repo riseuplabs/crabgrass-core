@@ -91,8 +91,13 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     login_as @user
     assert_difference 'Network.count' do
       post :create, type: 'network',
-        network: { name: 'trees', initial_member_group: group.name }
+        group: { name: 'trees', initial_member_group: group.name }
     end
+    network = Network.last
+    assert !@user.direct_member_of?(network),
+      "user should not become member of their groups new network"
+    assert @user.may?(:admin, network),
+      "user should be able to admin network through group"
   end
 
   def test_create_no_network_with_network_member
@@ -101,7 +106,7 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, type: 'network',
-        network: { name: 'trees', initial_member_group: network.name }
+        group: { name: 'trees', initial_member_group: network.name }
       assert_error_message
     end
   end

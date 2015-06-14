@@ -34,6 +34,19 @@ class RequestTest < ActiveSupport::TestCase
     end
   end
 
+  def test_request_notice
+    u1 = users(:kangaroo)
+    u2 = users(:iguana)
+    req = RequestToFriend.create! created_by: u1,
+      recipient: u2,
+      message: 'hi, lets be friends'
+    RequestNotice.create request: req
+    assert_equal req, req.notices.first.request
+    assert_difference 'Notice.count', -1 do
+      req.destroy
+    end
+  end
+
   def test_request_to_join_us
     insider  = users(:dolphin)
     outsider = users(:gerrard)
@@ -164,7 +177,7 @@ class RequestTest < ActiveSupport::TestCase
     req = RequestToJoinUs.create(
       created_by: insider, recipient: outsider, requestable: group)
 
-    group.destroy_by(insider)
+    group.destroy
     assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
       Request.find(req.id)
     end

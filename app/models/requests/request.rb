@@ -46,6 +46,10 @@ class Request < ActiveRecord::Base
   belongs_to :shared_discussion, class_name: 'Discussion', dependent: :destroy
   belongs_to :private_discussion, class_name: 'Discussion', dependent: :destroy
 
+  has_many :notices, as: :noticable,
+    dependent: :delete_all,
+    class_name: 'RequestNotice'
+
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
   # some requests (ex: RequestToDestroyOurGroup) are approved only
@@ -263,6 +267,7 @@ class Request < ActiveRecord::Base
   ## TO OVERRIDE
   ##
 
+  def event() end
   def description() end
   def short_description() end
   def votable?() false end
@@ -379,6 +384,8 @@ class Request < ActiveRecord::Base
   end
 
   def check_create_permission
+    # created_by has it's own validations - so let's not bomb out
+    return if created_by.blank?
     unless may_create?(created_by)
       errors.add(:base, I18n.t(:permission_denied))
     end

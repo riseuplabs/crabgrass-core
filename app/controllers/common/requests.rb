@@ -6,6 +6,7 @@
 # requests_path(*args) -- used for request index.
 #
 module Common::Requests
+  include Common::Tracking::Activity
 
   def self.included(base)
     base.class_eval do
@@ -13,6 +14,9 @@ module Common::Requests
       helper_method :request_path
       helper_method :requests_path
       before_filter :fetch_request, only: [:update, :destroy, :show]
+      after_filter :track_activity, if: :approved?, only: :update
+      after_filter :create_notices, only: :create
+      after_filter :dismiss_notices, only: :update
     end
   end
 
@@ -31,13 +35,8 @@ module Common::Requests
   #
   def update
     if mark
-      @request.mark!(mark, current_user)
-      if mark == :approve
-        msg = :approved_by_entity.t(entity: current_user.name)
-      elsif mark == :reject
-        msg = :rejected_by_entity.t(entity: current_user.name)
-      end
-      success I18n.t(@request.name), msg
+      @req.mark!(mark, current_user)
+      success I18n.t(@req.name), success_message
     end
     render template: 'common/requests/update'
   end
@@ -47,7 +46,7 @@ module Common::Requests
   # uses model permissions.
   #
   def destroy
-    @request.destroy_by!(current_user)
+    @req.destroy_by!(current_user)
     notice request_destroyed_message, :later
     render(:update) {|page| page.redirect_to requests_path}
   end
@@ -63,7 +62,7 @@ module Common::Requests
   end
 
   def request_destroyed_message
-    :thing_destroyed.tcap thing: I18n.t(@request.name, count: 1)
+    :thing_destroyed.tcap thing: I18n.t(@req.name, count: 1)
   end
 
   #def left_id(request)
@@ -83,9 +82,9 @@ module Common::Requests
   end
 
   def fetch_request
-    @request = request_context.find(params[:id])
-    if params[:code] && @request.recipient != current_user
-      @request.try.redeem_code!(current_user)
+    @req = request_context.find(params[:id])
+    if params[:code] && @req.recipient != current_user
+      @req.try.redeem_code!(current_user)
     end
   end
 
@@ -104,5 +103,29 @@ module Common::Requests
     end
   end
 
+  def success_message
+    if approved?
+      msg = :approved_by_entity.t(entity: current_user.name)
+    elsif mark == :reject
+      msg = :rejected_by_entity.t(entity: current_user.name)
+    end
+  end
+
+  def track_activity(event = nil, options = {})
+    event ||= @req.event
+    super event, @req.event_attrs.merge(options)
+  end
+
+  def create_notices
+    RequestNotice.create! @req
+  end
+
+  def dismiss_notices
+    RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
+  end
+
+  def approved?
+    mark == :approve
+  end
 end
 

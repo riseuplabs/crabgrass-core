@@ -210,6 +210,19 @@ class PageSharingTest < ActiveSupport::TestCase
     end
   end
 
+  def test_cleanup_notify_message_on_page_delete
+    creator = users(:blue)
+    additional_user = users(:kangaroo)
+    page = Page.create!(title: 'title', user: creator, access: 'admin')
+    creator.share_page_with!(page, additional_user, send_notice: true, send_message: 'hi')
+    page.save!
+
+    assert_difference 'PageNotice.count', -1 do
+      page.destroy
+    end
+  end
+
+  # share with a committee you are a member of, but you are not a member of the parent group.
   # share with a committee you are a member of, but you are not a member of the parent group.
   def test_share_with_committee
     owner = users(:penguin)

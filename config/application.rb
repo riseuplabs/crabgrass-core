@@ -48,11 +48,9 @@ module Crabgrass
     # We use strong parameters instead like rails4 does.
     #config.active_record.whitelist_attributes = true
 
-    config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :relationship_observer, :post_observer,
-    :request_to_destroy_our_group_observer, :request_observer, :page_observer,
-    "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
-    "tracking/user_participation_observer", "tracking/group_participation_observer"
+    config.active_record.observers =
+      "tracking/page_observer", "tracking/post_observer", "tracking/wiki_observer",
+      "tracking/user_participation_observer", "tracking/group_participation_observer"
 
     config.session_store :cookie_store,
       :key => 'crabgrass_session'

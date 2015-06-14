@@ -116,11 +116,6 @@ class UserTest < ActiveSupport::TestCase
     assert ChatChannelsUser.find(:all, conditions: {user_id: user_id}).empty?
   end
 
-  def test_new_user_has_discussion
-    u = FactoryGirl.create :user, login: '2unlimited', password: '3qasdb43!sdaAS...', password_confirmation: '3qasdb43!sdaAS...'
-    assert !u.reload.wall_discussion.new_record?
-  end
-
   def test_friends_or_peers_with_access
     red = users(:red)
     blue = users(:blue)

@@ -7,7 +7,10 @@
 # requestable: the group
 # created_by: person who sent the invite
 #
-class RequestToJoinUsViaEmail < Request
+# The after_approval action of a MembershipRequest assumes that the code has
+# been redeemed and an account created and that account is set to recipient.
+
+class RequestToJoinUsViaEmail < MembershipRequest
 
   validates_format_of :requestable_type, with: /Group/
   validates :email, presence: true,
@@ -16,6 +19,7 @@ class RequestToJoinUsViaEmail < Request
 
   def recipient_required?() false end
   def group() requestable end
+  def user()  recipient end
 
   def may_create?(user)
     user.may?(:admin,group)
@@ -32,12 +36,6 @@ class RequestToJoinUsViaEmail < Request
 
   def may_view?(user)
     may_create?(user) or may_approve?(user)
-  end
-
-  # this assumes that the code has been redeemed and an account created
-  # and that account is set to recipient.
-  def after_approval
-    group.add_user! recipient
   end
 
   def description

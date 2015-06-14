@@ -71,5 +71,4 @@ class Me::PostsController < Me::BaseController
     me_discussion_posts_path(@recipient, *args)
   end
   helper_method :posts_path
-
 end

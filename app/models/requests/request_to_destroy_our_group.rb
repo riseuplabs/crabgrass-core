@@ -39,7 +39,15 @@ class RequestToDestroyOurGroup < Request
   alias_method :may_destroy?, :may_create?
 
   def after_approval
-    group.destroy_by(created_by)
+    group.destroy
+  end
+
+  def event
+    :destroy_group
+  end
+
+  def event_attrs
+    { groupname: group.name, recipient: created_by, destroyed_by: approved_by }
   end
 
   def description

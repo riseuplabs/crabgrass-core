@@ -54,6 +54,7 @@ class Post < ActiveRecord::Base
 
   format_attribute :body
   validates_presence_of :user, :body
+  validate :in_reply_to_matches_recipient
 
   alias :created_by :user
 
@@ -200,5 +201,16 @@ class Post < ActiveRecord::Base
     discussion.post_destroyed(self, decrement) if discussion
   end
 
+  #
+  # VALIDATIONS
+  #
+
+  def in_reply_to_matches_recipient
+    return if in_reply_to.blank?
+    if in_reply_to.user_id != recipient.id
+      errors.add :in_reply_to,
+        "Ugh. The user and the post you are replying to don't match."
+    end
+  end
 end
 

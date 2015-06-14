@@ -81,7 +81,7 @@ textarea {
 .buttons-right {
   margin-top: $ui-margin;
   text-align: right;
-  input[type=submit], input[type=button] {
+  input[type=submit], input[type=button], .btn {
     margin-left: $ui-margin - 4px;
   }
 }
@@ -92,7 +92,7 @@ textarea {
 .buttons {
   margin-top: $ui-margin;
   text-align: left;
-  input[type=submit], input[type=button] {
+  input[type=submit], input[type=button], .btn {
     margin-right: $ui-margin - 4px;
   }
   form.button_to {
@@ -121,7 +121,7 @@ textarea {
 
 .reverse {
   overflow: auto; // self clear
-  input[type=submit], input[type=button], img {
+  input[type=submit], input[type=button], img, .btn {
     float: right;
     margin-left: 10px;
     margin-right: 0px;

@@ -7,7 +7,6 @@ class PageNotice < Notice
   attr_accessor :from
 
   class << self
-    alias_method :destroy_all_by_page, :destroy_all_by_noticable
     alias_method :for_page, :for_noticable
 
     #

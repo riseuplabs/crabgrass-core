@@ -75,6 +75,10 @@ class Page < ActiveRecord::Base
   include PageExtension::Tracking  # page tracking views, edits and stars
   include PageExtension::PageHistory
 
+
+  has_many :page_notices, as: :noticable, dependent: :delete_all
+
+
   # disable timestamps, we set the updated_at field through certain PageHistory subclasses
   self.record_timestamps = false
   before_save :save_timestamps
