@@ -13,6 +13,7 @@ class Pages::PostsControllerTest < ActionController::TestCase
       body: body
     }
     assert_successfully_posted_to @page
+    assert_history_tracked 'AddComment', Post.last
   end
 
   def test_edit_post
@@ -42,6 +43,13 @@ class Pages::PostsControllerTest < ActionController::TestCase
     assert_equal 1, page.reload.posts.count
     assert_equal body, page.posts.first.body
     assert_equal @user, page.updated_by
+  end
+
+  def assert_history_tracked(subclass_string, item = nil)
+    assert history = @page.page_histories.last, "Missing history record"
+    assert_equal @user, history.user
+    assert_equal "PageHistory::#{subclass_string}", history.class.name
+    assert_equal item, history.item if item.present?
   end
 
   def body

@@ -261,6 +261,8 @@ module Common::Application::RescueErrors
     if exception
       alert_message :error, exception
     end
+    log_exception(exception)
+    return if performed?  # error in after_filter
     render :update do |page|
       hide_spinners(page)
       update_alert_messages(page)

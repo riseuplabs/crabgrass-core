@@ -200,35 +200,6 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @pepe, PageHistory.last.user
   end
 
-  def test_add_comment
-    Post.create! @page, @pepe, body: "Some nice comment"
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::AddComment, PageHistory.last.class
-    assert_equal Post, PageHistory.last.item.class
-    assert_equal Post.last, PageHistory.last.item
-  end
-
-  def test_edit_comment
-    Post.create! @page, @pepe, body: "Some nice comment"
-    @post = Post.last
-    @post.update_attribute("body", "Some nice comment, congrats!")
-    assert_equal @last_count + 2, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::UpdateComment, PageHistory.last.class
-    assert_equal Post, PageHistory.last.item.class
-    assert_equal Post.last, PageHistory.last.item
-  end
-
-  def test_delete_comment
-    Post.create! @page, @pepe, body: "Some nice comment"
-    @post = Post.last
-    @post.destroy
-    assert_equal @last_count + 2, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::DestroyComment, PageHistory.last.class
-  end
-
   def test_page_destroyed
     # hmm we need to figure out another way to store this action
     # to be notified since when the page record is destroyed all

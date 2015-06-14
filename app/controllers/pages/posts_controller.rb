@@ -1,4 +1,5 @@
 class Pages::PostsController < ApplicationController
+  include Common::Tracking::Action
 
   include_controllers 'common/posts'
 
@@ -11,6 +12,8 @@ class Pages::PostsController < ApplicationController
   before_filter :authorization_required
   guard :may_ALIAS_post?
   guard show: :may_show_page?
+
+  track_actions :create, :update, :destroy
 
   # if something goes wrong with create, redirect to the page url.
   rescue_render create: lambda { |controller| redirect_to(page_url(@page)) }
@@ -63,6 +66,10 @@ class Pages::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:body)
+  end
+
+  def track_action
+    super item: @post
   end
 end
 

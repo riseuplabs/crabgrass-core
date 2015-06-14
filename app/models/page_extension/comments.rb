@@ -25,9 +25,10 @@ module PageExtension::Comments
   end
 
   def add_post(user, post_attributes)
-    Post.create! self, user, post_attributes
-    user.updated(self)
-    save
+    Post.create!(self, user, post_attributes).tap do
+      user.updated(self)
+      save
+    end
   end
 
   #

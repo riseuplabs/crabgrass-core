@@ -5,10 +5,14 @@ module Tracking::Action
     create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
     destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
     request_to_destroy_group: ['UserProposedToDestroyGroupActivity'],
-    create_friendship: ['FriendActivity']
+    create_friendship: ['FriendActivity'],
+    create_post: ['PageHistory::AddComment'],
+    update_post: ['PageHistory::UpdateComment'],
+    destroy_post: ['PageHistory::DestroyComment']
   }
 
   def self.track(event, options = {})
+    # Activities have keys to link the different activities for the same event
     options[:key] ||= rand(Time.now.to_i)
     EVENT_CREATES_ACTIVITIES[event].each do |class_name|
       klass = class_name.constantize

@@ -43,8 +43,8 @@ module Common::Tracking::Action
   extend ActiveSupport::Concern
 
   def track_action(event = nil, options = {})
-    event, options = nil, event if options.nil? && event.is_a?(Hash)
-    event ||= "#{action_string}_#{controller_name}"
+    event, options = nil, event if options.blank? && event.is_a?(Hash)
+    event ||= "#{action_string}_#{controller_name.singularize}"
     event_options = options.reverse_merge current_user: current_user,
       group: @group,
       user: @user || current_user,

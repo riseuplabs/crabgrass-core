@@ -42,7 +42,6 @@ module Common::Posts
   protected
 
   def render_posts_refresh(posts)
-    @post = Post.new # for the reply form
     render :update do |page|
       standard_update(page)
       page.replace('posts', partial: 'common/posts/list', locals: {posts: posts})
