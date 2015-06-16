@@ -81,6 +81,21 @@ class PageHistory::MakePrivate    < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
 
+# Factory class for the different page updates
+class PageHistory::Update < PageHistory
+  def initialize(attrs = {}, options = {}, &block)
+    page = attrs[:page]
+    klass_for_update(page).new(attrs, options, &block)
+  end
+
+  def class_for_update(page)
+    return PageHistory::MakePrivate if page.marked_as_private?
+    return PageHistory::MakePublic if page.marked_as_public?
+    # return PageHistory::ChangeOwner if page.owner_id_changed?
+  end
+end
+
+
 class PageHistory::PageCreated < PageHistory
   after_save :page_updated_at
 end
@@ -90,9 +105,13 @@ class PageHistory::ChangeTitle < PageHistory
   after_save :page_updated_at
 
   def add_details
-    self.details = {
-      from: self.page.title_was,
-      to: self.page.title
+    self.details = details_from_page
+  end
+
+  def details_from_page
+    {
+      from: page.previous_changes["title"].first,
+      to: page.title
     }
   end
 end

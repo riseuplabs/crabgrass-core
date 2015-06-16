@@ -19,6 +19,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     User.current = @user
 
     @page = FactoryGirl.create(:page, created_by: @user)
+    PageHistory::PageCreated.create page: @page, user: @user
 
     @site = FactoryGirl.create(:site, domain: "crabgrass.org",
                                title: "Crabgrass Social Network",
@@ -37,9 +38,9 @@ class PageHistoryTest < ActiveSupport::TestCase
   end
 
   def test_validations
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: nil, page: nil) end
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: @user, page: nil) end
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: nil, page: @page) end
+    assert_invalid_attrs user: nil, page: nil
+    assert_invalid_attrs user: @user, page: nil
+    assert_invalid_attrs user: nil, page: @page
   end
 
   def test_associations
@@ -121,6 +122,7 @@ class PageHistoryTest < ActiveSupport::TestCase
   def test_change_title_saves_old_and_new_value
     page = FactoryGirl.create(:page, title: "Bad title")
     page.update_attribute :title, "Nice title"
+    Tracking::Action.track :update_title, user: @user, page: page
     page_history = PageHistory::ChangeTitle.find :first, conditions: {page_id: page.id}
     assert_equal "Bad title", page_history.details[:from]
     assert_equal "Nice title", page_history.details[:to]
@@ -212,18 +214,6 @@ class PageHistoryTest < ActiveSupport::TestCase
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_c)
   end
 
-  def test_destroy_page_leave_no_history
-    post = Post.create! @page, @user, body: "content"
-    @page.destroy
-    assert_equal 0, PageHistory.count
-  end
-
-  def test_delete_page_leaves_history
-    post = Post.create! @page, @user, body: "content"
-    @page.delete
-    assert_equal 1, PageHistory::Deleted.count
-  end
-
   def test_send_pending_notifications
     user_a = FactoryGirl.create(:user, receive_notifications: "Single")
     User.current = user_a
@@ -246,6 +236,12 @@ class PageHistoryTest < ActiveSupport::TestCase
   end
 
   private
+
+  def assert_invalid_attrs(attrs)
+    history = PageHistory.new attrs
+    assert !history.valid?,
+      "These attributes should be invalid for a Page History: #{attrs.inspect}"
+  end
 
   def assert_change_updated_at(page, page_history)
     page.reload

@@ -21,14 +21,6 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count, @page.page_histories.count
   end
 
-  def test_change_page_title
-    @page.title = "Other title"
-    @page.save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::ChangeTitle, PageHistory.last.class
-  end
-
   def test_add_star
     @upart = @page.add(@pepe, star: true ).save!
     @page.reload
@@ -46,29 +38,6 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal PageHistory::RemoveStar, PageHistory.last.class
   end
 
-  def test_mark_as_public
-    @page.public = true
-    @page.save
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::MakePublic, PageHistory.last.class
-  end
-
-  def test_mark_as_private
-    @page.public = false
-    @page.save
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::MakePrivate, PageHistory.last.class
-  end
-
-  def test_page_deleted
-    @page.delete
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::Deleted, PageHistory.last.class
-  end
-
   def test_add_tag
     true
   end
@@ -83,13 +52,6 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def test_remove_attachment
     true
-  end
-
-  def test_create_page
-    page = FactoryGirl.create(:page, owner: @pepe)
-    page.reload
-    assert_equal PageHistory::PageCreated, page.page_histories.first.class
-    assert_equal PageHistory::GrantUserFullAccess, page.page_histories.last.class
   end
 
   def test_start_watching

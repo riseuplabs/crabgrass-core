@@ -13,12 +13,14 @@
 # (the two paths are the same... the action destinct.)
 
 class Pages::CreateController < ApplicationController
+  include Common::Tracking::Action
 
   before_filter :login_required, :authorization_required
   before_filter :init_options, :set_owner, :catch_cancel
   helper 'pages/share', 'pages/owner', 'pages/creation'
   permissions :pages
   guard :may_ACTION_page?
+  track_actions :create
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
   # so, we must load the appropriate permissions from groups and me.
@@ -76,6 +78,10 @@ class Pages::CreateController < ApplicationController
     owner_param ||= params[:owner]
 
     @owner = Group.find_by_name(owner_param) if owner_param.present?
+  end
+
+  def track_action
+    super :create_page, group: @owner
   end
 
   #

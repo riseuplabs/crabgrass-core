@@ -7,6 +7,7 @@
 class Pages::AttributesController < Pages::SidebarsController
 
   before_filter :login_required
+  track_actions :update
 
   guard update: :may_admin_page?
 
@@ -25,6 +26,10 @@ class Pages::AttributesController < Pages::SidebarsController
   end
 
   protected
+
+  def track_action
+    super 'update_page'
+  end
 
   def owner
     return unless params[:owner]

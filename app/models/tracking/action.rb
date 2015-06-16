@@ -8,7 +8,13 @@ module Tracking::Action
     create_friendship: ['FriendActivity'],
     create_post: ['PageHistory::AddComment'],
     update_post: ['PageHistory::UpdateComment'],
-    destroy_post: ['PageHistory::DestroyComment']
+    destroy_post: ['PageHistory::DestroyComment'],
+    update_page: ['PageHistory::Update'],
+    create_page: ['PageHistory::PageCreated'],
+    destroy_page: [],
+    delete_page: ['PageHistory::Deleted'],
+    undelete_page: [],
+    update_title: ['PageHistory::ChangeTitle']
   }
 
   def self.track(event, options = {})
