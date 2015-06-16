@@ -58,63 +58,48 @@ class PageHistoryTest < ActiveSupport::TestCase
     PageHistory.create!(user: @user, page: page)
     assert_not_change_updated_at page
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::PageCreated.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdatedContent.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::ChangeTitle.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::Deleted.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::AddComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdateComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::DestroyComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupFullAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupWriteAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupReadAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedGroupAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserFullAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserWriteAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserReadAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedUserAccess.create!(user: @user, page: page, item: user)
   end
