@@ -9,8 +9,9 @@ class GalleryTest < JavascriptIntegrationTest
     create_page :gallery,  title: 'my pictures'
     assert_content 'my pictures'
     attach_file 'upload-input', fixture_file('photo.jpg')
-    attach_file 'upload-input', fixture_file('beé.jpg')
     assert_content 'photo'
+    attach_file 'upload-input', fixture_file('beé.jpg')
+    assert_content 'beé'
     click_page_tab 'Show'
     first('.control_image_asset .thumbnail').click
     assert_content 'Image 1 of 2'
