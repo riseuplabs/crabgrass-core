@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class PageSharingTest < ActiveSupport::TestCase
+class Page::SharingTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships, :user_participations
 

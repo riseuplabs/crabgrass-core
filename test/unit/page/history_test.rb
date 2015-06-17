@@ -7,7 +7,7 @@ require 'test_helper'
 # the tests some counts for example seems to not have sense, but this is because of that already created data.
 #
 
-class PageHistoryTest < ActiveSupport::TestCase
+class Page::HistoryTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all

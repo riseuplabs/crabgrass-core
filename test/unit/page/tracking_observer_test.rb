@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class PageTrackingObserverTest < ActiveSupport::TestCase
+class Page::TrackingObserverTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all
