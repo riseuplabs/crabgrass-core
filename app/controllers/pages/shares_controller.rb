@@ -28,6 +28,9 @@ class Pages::SharesController < Pages::SidebarsController
 
   helper 'pages/share', 'pages/participation'
 
+  before_filter :close_popup, only: :update, if: :cancel_update?
+  before_filter :add_recipients, only: :update, if: :add_recipients?
+
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
   def show
@@ -42,7 +45,9 @@ class Pages::SharesController < Pages::SidebarsController
   # there are four ways to submit the forms:
   #
   #   (1) cancel button (params[:cancel_button]==true)
+  #       -> before_filter :close_popup
   #   (2) add button or return in add field (params[:add]==true)
+  #       -> before_filter :add_recipients
   #   (3) share button (params[:share_button]==true)
   #   (3) notify button (params[:notify_button]==true)
   #
@@ -62,58 +67,62 @@ class Pages::SharesController < Pages::SidebarsController
 
   protected
 
-  SUCCESS_MESSAGES = { share: :shared_page_success, notify: :notify_success }
-
-  def notify_or_share_message
-    SUCCESS_MESSAGES[mode_param]
-  end
-
-  def mode_param
-    mode = params[:mode]
-    raise_error 'bad mode' unless ['notify', 'share'].include? mode
-    mode.to_sym
-  end
-
-  def share?
-    mode_param == :share
-  end
-
+  #
+  # Main Update Task
+  #
   def notify_or_share
-    if params[:cancel_button]
-      close_popup
-    elsif params[:add]
-      @recipients = []
-      if params[:recipient] and params[:recipient][:name].present?
-        recipients_names = params[:recipient][:name].strip.split(/[, ]/)
-        recipients_names.each do |recipient_name|
-          @recipients << find_recipient(recipient_name, mode_param)
-        end
-        @recipients.compact!
-      end
-      render partial: 'pages/shares/add_recipient', locals: {alter_access: share?}
-    elsif (params[:share_button] || params[:notify_button]) and params[:recipients]
-      options = params[:notification] || HashWithIndifferentAccess.new
-      convert_checkbox_boolean(options)
-      options[:mailer_options] = mailer_options()
-      options[:send_notice] ||= params[:notify_button].present?
+    if (params[:share_button] || params[:notify_button]) and params[:recipients]
 
-      current_user.share_page_with!(@page, params[:recipients], options)
+      current_user.share_page_with!(@page, params[:recipients], share_options)
       @page.save!
       success(@success_msg)
-
-      close_popup
-    else
-      close_popup
     end
+    close_popup
   end
 
-  ##
-  ## UI METHODS FOR THE SHARE & NOTIFY FORMS
-  ##
+  def share_options
+    options = params[:notification] || HashWithIndifferentAccess.new
+    convert_checkbox_boolean(options)
+    options[:send_notice] ||= params[:notify_button].present?
+    options.reverse_merge mailer_options: mailer_options
+  end
 
-  #def show_error_message
-  #  render :template => 'base_page/show_errors'
-  #end
+  #
+  # Before Filters
+  #
+
+  # we allow for an id of 0 for pages just getting created
+  def fetch_page
+    @page = Page.new if params['page_id'] == "0"
+    @page || super
+  end
+
+  def cancel_update?
+    params[:cancel_button]
+  end
+
+  def add_recipients
+    @recipients = build_recipient_array
+    render partial: 'pages/shares/add_recipient', locals: {alter_access: share?}
+  end
+
+  def add_recipients?
+    params[:add]
+  end
+
+  #
+  # Handling recipients
+  #
+  def build_recipient_array
+    if params[:recipient] and params[:recipient][:name].present?
+      recipients_names = params[:recipient][:name].strip.split(/[, ]/)
+      recipients_names.map do |recipient_name|
+        find_recipient(recipient_name, mode_param)
+      end.compact
+    else
+      []
+    end
+  end
 
   #
   # given a recipient name, we try to find an appriopriate user or group object.
@@ -145,13 +154,26 @@ class Pages::SharesController < Pages::SidebarsController
     return recipient
   end
 
-  # we allow for an id of 0 for pages just getting created
-  def fetch_page
-    @page = Page.new if params['page_id'] == "0"
-    @page || super
+  private
+
+  #
+  # Utility Methods
+  #
+  SUCCESS_MESSAGES = { share: :shared_page_success, notify: :notify_success }
+
+  def notify_or_share_message
+    SUCCESS_MESSAGES[mode_param]
   end
 
-  private
+  def mode_param
+    mode = params[:mode]
+    raise_error 'bad mode' unless ['notify', 'share'].include? mode
+    mode.to_sym
+  end
+
+  def share?
+    mode_param == :share
+  end
 
   # convert {:checkbox => '1'} to {:checkbox => true}
   def convert_checkbox_boolean(hsh)
