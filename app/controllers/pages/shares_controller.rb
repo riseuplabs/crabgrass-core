@@ -31,13 +31,7 @@ class Pages::SharesController < Pages::SidebarsController
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
   def show
-    if params[:mode] == 'share'
-      render template: 'pages/shares/show_share'
-    elsif params[:mode] == 'notify'
-      render template: 'pages/shares/show_notify'
-    else
-      raise_error 'bad mode'
-    end
+    render template: "pages/shares/show_#{mode_param}"
   end
 
   # there are two modes:
@@ -62,20 +56,29 @@ class Pages::SharesController < Pages::SidebarsController
   #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
-    if params[:mode] == 'share'
-      @success_msg = I18n.t(:shared_page_success)
-      notify_or_share(:share)
-    elsif params[:mode] == 'notify'
-      @success_msg = I18n.t(:notify_success)
-      notify_or_share(:notify)
-    else
-      raise_error 'bad mode'
-    end
+    @success_message = I18n.t(notify_or_share_message)
+    notify_or_share
   end
 
   protected
 
-  def notify_or_share(action)
+  SUCCESS_MESSAGES = { share: :shared_page_success, notify: :notify_success }
+
+  def notify_or_share_message
+    SUCCESS_MESSAGES[mode_param]
+  end
+
+  def mode_param
+    mode = params[:mode]
+    raise_error 'bad mode' unless ['notify', 'share'].include? mode
+    mode.to_sym
+  end
+
+  def share?
+    mode_param == :share
+  end
+
+  def notify_or_share
     if params[:cancel_button]
       close_popup
     elsif params[:add]
@@ -83,11 +86,11 @@ class Pages::SharesController < Pages::SidebarsController
       if params[:recipient] and params[:recipient][:name].present?
         recipients_names = params[:recipient][:name].strip.split(/[, ]/)
         recipients_names.each do |recipient_name|
-          @recipients << find_recipient(recipient_name, action)
+          @recipients << find_recipient(recipient_name, mode_param)
         end
         @recipients.compact!
       end
-      render partial: 'pages/shares/add_recipient', locals: {alter_access: action == :share}
+      render partial: 'pages/shares/add_recipient', locals: {alter_access: share?}
     elsif (params[:share_button] || params[:notify_button]) and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
