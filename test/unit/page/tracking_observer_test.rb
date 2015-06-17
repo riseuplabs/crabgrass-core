@@ -111,8 +111,10 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     @pepe.share_page_with!(@page, group, access: 1)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupFullAccess, PageHistory.last.class
+    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
     assert_equal Group, PageHistory.last.item.class
+    assert_equal 'page_history_granted_group_full_access',
+      PageHistory.last.description_key
   end
 
   def test_share_page_with_group_assigning_write_access
@@ -121,8 +123,10 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     @pepe.share_page_with!(@page, group, access: 2)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupWriteAccess, PageHistory.last.class
+    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
     assert_equal Group, PageHistory.last.item.class
+    assert_equal 'page_history_granted_group_write_access',
+      PageHistory.last.description_key
   end
 
   def test_share_page_with_group_assigning_read_access
@@ -131,8 +135,10 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     @pepe.share_page_with!(@page, group, access: 3)
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupReadAccess, PageHistory.last.class
+    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
     assert_equal Group, PageHistory.last.item.class
+    assert_equal 'page_history_granted_group_read_access',
+      PageHistory.last.description_key
   end
 
   def test_share_page_with_group_removing_access

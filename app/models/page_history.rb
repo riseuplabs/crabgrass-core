@@ -162,28 +162,51 @@ class PageHistory::UpdatedContent < PageHistory
 end
 
 class PageHistory::GrantGroupAccess < PageHistory
-  before_save :add_details
   after_save :page_updated_at
-
-  attr_accessor :participation
 
   validates_format_of :item_type, with: /Group/
   validates_presence_of :item_id
 
   # there always should be a participation given what this tracks granting
   # access. However in tests this is currently not the case.
-  def add_details
-    participation ||= page.participation_for(item)
-    self.details = {
-      access: participation.try.access_sym
-    }
+  def initialize(attrs = {}, options = {}, &block)
+    part = attrs.delete :participation
+    attrs.reverse_merge! access: access_from_participation(part),
+      item: part.try.group
+    super
+  end
+
+  # participations use a different naming scheme for access levels
+  # TODO: unify these.
+  ACCESS_FROM_PARTICIPATION_SYM = {
+    view:  :read,
+    edit:  :write,
+    admin: :full
+  }
+  def access_from_participation(participation = nil)
+    ACCESS_FROM_PARTICIPATION_SYM[participation.try.access_sym]
   end
 
   def description_key
-    super.sub('grant', 'granted')
+    key = super
+    key.sub!('group_access', "group_#{access}_access") if access.present?
+    key.sub!('grant', 'granted')
+  end
+
+  def access
+    details[:access]
+  end
+
+  def access=(value)
+    self.details ||= {}
+    self.details[:access] = value
   end
 end
 
+#
+# DEPRECATED:
+#
+# please use PageHistory::GrantGroupAccess and hand in the
 class PageHistory::GrantGroupFullAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupWriteAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupReadAccess < PageHistory::GrantGroupAccess; end
