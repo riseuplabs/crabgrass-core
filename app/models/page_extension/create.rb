@@ -18,9 +18,6 @@ module PageExtension::Create
   #  :access -- what access to grant them (defaults to :admin)
   #  :inbox -- send page to inbox?
   #
-  # if anything goes wrong, an exception is raised, so watch out.
-  # see UserExtension::Sharing#may_share_page_with!
-  #
   # There are two versions create!() and create(). Both might throw exceptions
   # caused by bad sharing, but the first one will also throw exceptions if the
   # attributes don't validate.
@@ -71,7 +68,7 @@ module PageExtension::Create
             end
             # Page#owner= creates a user participation for the owner. Creating it
             # here is only needed, if the page is created for a different owner.
-            # Also the participation may have been created through share_page_with!.
+            # Also the participation may have been created by PageShare#with.
             # In either case we want "access" to be set to "admin" and "changed_at"
             # set as well (so the page shows up under "Recent Pages" on the dash)
             participation = page.user_participations.select { |part|

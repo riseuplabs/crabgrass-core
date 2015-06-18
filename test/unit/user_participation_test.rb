@@ -94,9 +94,9 @@ class UserParticipationTest < ActiveSupport::TestCase
       upart = page.participation_for_user(user)
       assert !user.may_admin_page_without?(page, upart), 'cannot remove upart and still have access'
 
-      user.share_page_with! page, group, access: :admin
+      gpart = page.add group, access: :admin
+      gpart.save!
 
-      gpart = page.participation_for_group(group)
       assert user.may_admin_page_without?(page, gpart), 'can remove gpart'
       assert user.may_admin_page_without?(page, upart), 'can remove upart'
     end

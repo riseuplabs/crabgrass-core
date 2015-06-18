@@ -4,7 +4,7 @@ class Page::SharingTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships, :user_participations
 
-  def test_group_sharing_takes_precedence
+  def test_better_permission_takes_precedence
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
@@ -16,13 +16,13 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert_equal false, red.may?(:view, page), 'user red should not see the page'
 
     # share with user
-    creator.share_page_with!(page, "red", message: "hi red", grant_access: :view)
+    page.add(red, access: :view).save!
     red.clear_access_cache
     assert_equal true, red.may?(:view, page), 'user red should see the page'
     assert_equal false, red.may?(:edit, page), 'user red should not be able to edit the page'
 
     # share with group
-    creator.share_page_with!(page, "rainbow", message: "hi rainbow", grant_access: :edit)
+    page.add(rainbow, access: :edit).save!
     red.clear_access_cache
     assert_equal true, red.may?(:edit, page), 'user red should be able to edit the page'
     assert_equal true, rainbow.may?(:edit, page), 'group rainbow should be able to edit the page'
@@ -35,10 +35,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
     assert group.may?(:admin, page), 'group be able to admin group'
 
-    assert_nothing_raised do
-      user.share_page_with!(page, "animals", message: 'hey you', grant_access: :view)
-    end
-
+    page.add(group, grant_access: :view).save
     assert group.may?(:admin, page), 'group should still be able to admin group'
   end
 
@@ -47,9 +44,10 @@ class Page::SharingTest < ActiveSupport::TestCase
     other_user = users(:dolphin)
     group = groups(:animals)
     recipients = [group]
-    page = Page.create!(title: 'an unkindness of ravens', user: user, share_with: recipients, access: :view)
-
-    #user.share_page_with!(page, recipients, :access => :view)
+    page = Page.create! title: 'an unkindness of ravens',
+      user: user,
+      share_with: recipients,
+      access: :view
 
     assert group.may?(:view, page), 'group must have view access'
     assert !group.may?(:admin, page), 'group must not have admin access'
@@ -64,26 +62,31 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert user_in_other_group.member_of?(other_group)
     assert !user_in_other_group.member_of?(group)
 
-    page = Page.create!(title: 'an unkindness of ravens', user: user, share_with: group, access: :view)
+    page = Page.create! title: 'an unkindness of ravens',
+      user: user,
+      share_with: group,
+      access: :view
 
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
 
-    user.share_page_with!(page, other_user, access: :admin, send_notice: true)
+    page.add(other_user, access: :admin).save
     #assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
     assert_equal true, other_user.may?(:admin, page), 'should have admin access'
 
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
-    user.share_page_with!(page, other_group, access: :view)
+    page.add(other_group, access: :view).save
     page.save!
     assert user_in_other_group.may?(:view, page)
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
 
-    user.share_page_with!(page, other_group, send_notice: true)
+    user.share_page_with_group!(page, other_group, send_notice: true)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     #assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
-    assert_equal false, page.user_participations.find_by_user_id(user_in_other_group.id).viewed?, 'should be marked unread'
+    assert_equal false,
+      page.user_participations.find_by_user_id(user_in_other_group.id).viewed?,
+      'should be marked unread'
   end
 
   def test_add_page
@@ -128,10 +131,13 @@ class Page::SharingTest < ActiveSupport::TestCase
     end
   end
 
-  def test_notify_group
+  def test_notify_group_creates_participations
     creator = users(:kangaroo)
+    group = groups(:animals)
     page = Page.create!(title: 'title', user: creator, share_with: 'animals', access: 'admin')
-    creator.share_page_with!(page, 'animals', send_notice: true, send_message: 'hi')
+    creator.share_page_with_group! page, group,
+      send_notice: true,
+      send_message: "here's a page for you"
     page.save!
     page.reload
     assert_equal groups(:animals).users.count, page.user_participations.count
@@ -145,7 +151,9 @@ class Page::SharingTest < ActiveSupport::TestCase
     page = Page.create!(title: 'title', user: creator, share_with: users, access: 'admin')
 
     assert_difference 'PageNotice.count' do
-      creator.share_page_with!(page, additional_user, send_notice: true, send_message: 'hi')
+      creator.share_page_with_user! page,
+        additional_user,
+        send_notice: true, send_message: 'hi'
       page.save!
     end
   end
@@ -154,7 +162,10 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:blue)
     additional_user = users(:kangaroo)
     page = Page.create!(title: 'title', user: creator, access: 'admin')
-    creator.share_page_with!(page, additional_user, send_notice: true, send_message: 'hi')
+    creator.share_page_with_user! page,
+      additional_user,
+      send_notice: true,
+      send_message: 'hi'
     page.save!
 
     assert_difference 'PageNotice.count', -1 do
@@ -163,36 +174,13 @@ class Page::SharingTest < ActiveSupport::TestCase
   end
 
   # share with a committee you are a member of, but you are not a member of the parent group.
-  # share with a committee you are a member of, but you are not a member of the parent group.
   def test_share_with_committee
     owner = users(:penguin)
     page = Page.create!(title: 'title', user: owner)
     committee = groups(:cold)
     assert owner.member_of?(committee)
-    assert_nothing_raised do
-      owner.share_page_with!(page, 'rainbow+the-cold-colors', {})
-    end
-  end
-
-  # send notification to special symbols :participants or :contributors
-  def test_notify_special
-    owner = users(:kangaroo)
-    userlist = [users(:dolphin), users(:penguin), users(:iguana)]
-    page = Page.create!(title: 'title', user: owner, share_with: userlist, access: :edit)
-
-    # send notice to participants
-    assert_difference('PageNotice.count', 4) do
-      owner.share_page_with!(page, ':participants', send_notice: true)
-    end
-
-    # send notice to contributors
-    page.add(users(:penguin),changed_at: Time.now) # simulate contribution
-    page.add(users(:kangaroo),changed_at: Time.now)
-    page.save!
-    assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
-    assert_difference('PageNotice.count', 2) do
-      owner.share_page_with!(page, ':contributors', send_notice: true)
-    end
+    owner.share_page_with_group! page, committee
+    assert page.groups.include? committee
   end
 
   protected

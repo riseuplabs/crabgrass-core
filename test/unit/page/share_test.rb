@@ -64,6 +64,28 @@ class Page::ShareTest < ActiveSupport::TestCase
     assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
   end
 
+  # send notification to special symbols :participants or :contributors
+  def test_notify_special
+    owner = users(:kangaroo)
+    userlist = [users(:dolphin), users(:penguin), users(:iguana)]
+    page = Page.create!(title: 'title', user: owner, share_with: userlist, access: :edit)
+    share = PageShare.new(page, owner, send_notice: true)
+
+    # send notice to participants
+    assert_difference('PageNotice.count', 4) do
+      share.with ':participants'
+    end
+
+    # send notice to contributors
+    page.add(users(:penguin),changed_at: Time.now) # simulate contribution
+    page.add(users(:kangaroo),changed_at: Time.now)
+    page.save!
+    assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
+    assert_difference('PageNotice.count', 2) do
+      share.with ':contributors'
+    end
+  end
+
   protected
 
   def create_page(options = {})
