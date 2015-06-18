@@ -64,8 +64,10 @@ module PageExtension::Create
           yield(page) if block_given?
           if user
             if recipients
-              user.share_page_with!(page, recipients, access: access,
-                                    send_notice: inbox)
+              share = PageShare.new page, user,
+                access: access,
+                send_notice: inbox
+              share.with recipients
             end
             # Page#owner= creates a user participation for the owner. Creating it
             # here is only needed, if the page is created for a different owner.

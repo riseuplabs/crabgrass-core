@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Page::SharingTest < ActiveSupport::TestCase
+class Page::ShareTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships, :user_participations
 
@@ -8,9 +8,10 @@ class Page::SharingTest < ActiveSupport::TestCase
     user = users(:kangaroo)
     group = groups(:animals)
     user2 = users(:red)
-
     page = Page.create(title: 'x', user: user, access: :admin)
-    user.share_page_with!(page, {'animals' => {access: "edit"}, 'red' => {access: "edit"}}, {})
+
+    share = PageShare.new page, user
+    share.with "animals" => {access: "edit"}, "red" => {access: "edit"}
 
     assert group.may?(:edit, page)
     assert !group.may?(:admin, page)
@@ -22,10 +23,12 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
-
     page = Page.create!(title: 'title', user: creator, share_with: ['red', 'rainbow', 'animals'], access: :admin)
 
-    creator.share_page_with!(page, ['red', 'rainbow', 'animals'], send_notice: true, send_message: 'hi')
+    share = PageShare.new page, creator,
+      send_notice: true,
+      send_message: 'hi'
+    share.with ['red', 'rainbow', 'animals']
     page.save!
     page.reload
 
@@ -40,17 +43,17 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
-
     page = Page.create!(title: 'title', user: creator,
      share_with: {"rainbow"=>{"access"=>"admin"}, "red"=>{"access"=>"admin"}},
      access: :view)
     assert rainbow.may?(:admin, page)
 
-    creator.share_page_with!(
-      page,
-      {"rainbow"=>{"send_notice"=>"1"}, "red"=>{"send_notice"=>"1"}},
-      {"send_notice"=>true, "send_message"=>"", "send_email"=>false}
-    )
+    share = PageShare.new page, creator,
+      "send_notice"=>true,
+      "send_message"=>"",
+      "send_email"=>false
+    share.with "rainbow" => {"send_notice"=>"1"}, "red"=> {"send_notice"=>"1"}
+
     page.save!
     page.reload
 

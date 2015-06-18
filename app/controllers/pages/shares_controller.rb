@@ -73,7 +73,8 @@ class Pages::SharesController < Pages::SidebarsController
   def notify_or_share
     if (params[:share_button] || params[:notify_button]) and params[:recipients]
 
-      current_user.share_page_with!(@page, params[:recipients], share_options)
+      share = PageShare.new(@page, current_user, share_options)
+      share.with params[:recipients]
       @page.save!
       success(@success_msg)
     end

@@ -73,7 +73,7 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_full_access
-    @pepe.share_page_with!(@page, [@manu.login], {access: 1})
+    @pepe.share_page_with!(@page, @manu.login, {access: 1})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserFullAccess, PageHistory.last.class
@@ -81,7 +81,7 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_write_access
-    @pepe.share_page_with!(@page, [@manu.login], {access: 2})
+    @pepe.share_page_with!(@page, @manu.login, {access: 2})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserWriteAccess, PageHistory.last.class
@@ -89,7 +89,7 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_assigning_read_access
-    @pepe.share_page_with!(@page, [@manu.login], {access: 3})
+    @pepe.share_page_with!(@page, @manu.login, {access: 3})
     assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::GrantUserReadAccess, PageHistory.last.class
@@ -97,7 +97,7 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
   end
 
   def test_share_page_with_user_removing_access
-    @pepe.share_page_with!(@page, [@manu.login], {access: 3})
+    @pepe.share_page_with!(@page, @manu.login, {access: 3})
     @page.user_participations.last.destroy
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
