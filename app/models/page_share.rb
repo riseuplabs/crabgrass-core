@@ -11,7 +11,7 @@
 #
 # Usage:
 # share = PageShare.new page, sender, defaults
-# share.with recipients, options = {}
+# share.with recipients
 #
 # This is the only method that should ever be used when a user is sharing a page
 # with a user or group and/or sending a notification. It will make sure mails
@@ -65,9 +65,8 @@ class PageShare
     @defaults = defaults.with_indifferent_access
   end
 
-  def with(recipients, options = {})
-    options = defaults.merge options
-    users_to_email = share_with_recipients!(page, recipients, options)
+  def with(recipients)
+    users_to_email = share_with_recipients!(page, recipients)
     if options[:send_notice] and options[:mailer_options] and options[:send_email]
       send_notification_emails users_to_email,
         options.slice(:send_message, :mailer_options)
@@ -76,11 +75,11 @@ class PageShare
 
   protected
 
-  def share_with_recipients!(page, recipients, options)
+  def share_with_recipients!(page, recipients)
     if recipients.is_a?(Hash)
-      share_with_recipient_hash!(page, recipients, options)
+      share_with_recipient_hash!(page, recipients)
     else
-      share_with_recipient_array!(page, recipients, options)
+      share_with_recipient_array!(page, recipients)
     end
   end
 
@@ -130,13 +129,13 @@ class PageShare
   # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
   # must be HashWithIndifferentAccess. You have been warned.
   #
-  def share_with_recipient_hash!(page, recipients, global_options=HashWithIndifferentAccess.new)
+  def share_with_recipient_hash!(page, recipients)
     users = []
-    recipients.each do |recipient,local_options|
-      if local_options == "0"
+    recipients.each do |recipient, options|
+      if options == "0"
         next # skip unchecked checkboxes
       else
-        options = local_options.is_a?(Hash) ? global_options.merge(local_options) : global_options
+        options = options.is_a?(Hash) ? defaults.merge(options) : defaults
         users.concat share_with_recipient_array!(page, recipient, options)
       end
     end
