@@ -256,17 +256,25 @@ module UserExtension::Pages
   #
   def may_share_with_user!(page, user, options)
     access = options[:access] || options[:grant_access] || :view
+    error = page_sharing_error(page, user, access)
+    if error
+      message = I18n.t error, name: user.login
+      raise PermissionDenied.new(message)
+    end
+  end
+
+  def page_sharing_error(page, user, access)
     if page.public? and !self.may?(:pester, user)
-      raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
+      :share_pester_error
     elsif access.nil?
       if !user.may?(:view,page)
-        raise PermissionDenied.new(I18n.t(:share_grant_required_error, name: user.login))
+        :share_grant_required_error
       end
     elsif !user.may?(access, page)
       if !self.may?(:admin,page)
-        raise PermissionDenied.new(I18n.t(:share_permission_denied_error))
+        :share_permission_denied_error
       elsif !self.may?(:pester, user)
-        raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
+        :share_pester_error
       end
     end
   end
