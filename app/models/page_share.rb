@@ -66,7 +66,7 @@ class PageShare
   end
 
   def with(recipients)
-    users_to_email = share_with_recipients!(page, recipients)
+    users_to_email = share_with_recipients!(recipients)
     if options[:send_notice] and options[:mailer_options] and options[:send_email]
       send_notification_emails users_to_email,
         options.slice(:send_message, :mailer_options)
@@ -75,11 +75,11 @@ class PageShare
 
   protected
 
-  def share_with_recipients!(page, recipients)
+  def share_with_recipients!(recipients)
     if recipients.is_a?(Hash)
-      share_with_recipient_hash!(page, recipients)
+      share_with_recipient_hash! recipients
     else
-      share_with_recipient_array!(page, recipients)
+      share_with_recipient_array! recipients
     end
   end
 
@@ -93,13 +93,13 @@ class PageShare
 
   # share the page, given an array of recipients, or an individual recipient.
   # returns: a list of users to notify.
-  def share_with_recipient_array!(page, recipients, options)
+  def share_with_recipient_array!(recipients, options)
     users, groups, emails, specials = Page.parse_recipients!(recipients)
     users_to_email = []
 
     ## special recipients
     specials.each do |special|
-      handle_special_recipient(special, page, users, groups)
+      handle_special_recipient(special, users, groups)
     end
 
     ## add users to page
@@ -129,14 +129,14 @@ class PageShare
   # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
   # must be HashWithIndifferentAccess. You have been warned.
   #
-  def share_with_recipient_hash!(page, recipients)
+  def share_with_recipient_hash!(recipients)
     users = []
     recipients.each do |recipient, options|
       if options == "0"
         next # skip unchecked checkboxes
       else
         options = options.is_a?(Hash) ? defaults.merge(options) : defaults
-        users.concat share_with_recipient_array!(page, recipient, options)
+        users.concat share_with_recipient_array!(recipient, options)
       end
     end
     return users
@@ -147,7 +147,7 @@ class PageShare
   # in general, we have a big performance problem when trying to share/notify
   # a page with hundreds of people.
   #
-  def handle_special_recipient(recipient, page, users, groups)
+  def handle_special_recipient(recipient, users, groups)
     if recipient == ':participants'
       groups.concat page.groups
       users.concat page.users
@@ -242,8 +242,8 @@ class PageShare
 
   def may_share_with_group!(group, options)
     access = options[:access] || options[:grant_access] || :view
-    unless group.may?(access,page)
-      unless sender.may?(:admin,page) and sender.may?(:pester, group)
+    unless group.may?(access, page)
+      unless sender.may?(:admin, page) and sender.may?(:pester, group)
         raise PermissionDenied.new(I18n.t(:share_pester_error, name: group.name))
       end
     end
