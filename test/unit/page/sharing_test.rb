@@ -80,7 +80,8 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert user_in_other_group.may?(:view, page)
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
 
-    user.share_page_with_group!(page, other_group, send_notice: true)
+    share = PageShare.new(page, user, send_notice: true)
+    share.with other_group
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     #assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
@@ -135,9 +136,11 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     group = groups(:animals)
     page = Page.create!(title: 'title', user: creator, share_with: 'animals', access: 'admin')
-    creator.share_page_with_group! page, group,
+    share = PageShare.new page, creator,
       send_notice: true,
       send_message: "here's a page for you"
+    share.with group
+
     page.save!
     page.reload
     assert_equal groups(:animals).users.count, page.user_participations.count
@@ -149,11 +152,10 @@ class Page::SharingTest < ActiveSupport::TestCase
     additional_user = users(:kangaroo)
 
     page = Page.create!(title: 'title', user: creator, share_with: users, access: 'admin')
+    share = PageShare.new(page, creator, send_notice: true, send_message: 'hi')
 
     assert_difference 'PageNotice.count' do
-      creator.share_page_with_user! page,
-        additional_user,
-        send_notice: true, send_message: 'hi'
+      share.with additional_user
       page.save!
     end
   end
@@ -162,10 +164,8 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:blue)
     additional_user = users(:kangaroo)
     page = Page.create!(title: 'title', user: creator, access: 'admin')
-    creator.share_page_with_user! page,
-      additional_user,
-      send_notice: true,
-      send_message: 'hi'
+    share = PageShare.new(page, creator, send_notice: true, send_message: 'hi')
+    share.with additional_user
     page.save!
 
     assert_difference 'PageNotice.count', -1 do
@@ -177,9 +177,10 @@ class Page::SharingTest < ActiveSupport::TestCase
   def test_share_with_committee
     owner = users(:penguin)
     page = Page.create!(title: 'title', user: owner)
+    share = PageShare.new(page, owner)
     committee = groups(:cold)
     assert owner.member_of?(committee)
-    owner.share_page_with_group! page, committee
+    share.with committee
     assert page.groups.include? committee
   end
 

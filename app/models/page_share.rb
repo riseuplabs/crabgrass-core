@@ -105,14 +105,14 @@ class PageShare
 
     ## add users to page
     users.each do |user|
-      if sender.share_page_with_user!(page, user, options)
+      if share_with_user!(user, options)
         users_to_email << user if user.wants_notification_email?
       end
     end
 
     ## add groups to page
     groups.each do |group|
-      users_to_pester = sender.share_page_with_group!(page, group, options)
+      users_to_pester = share_with_group!(group, options)
       users_to_pester.each do |user|
         users_to_email << user if user.wants_notification_email?
       end
@@ -156,6 +156,97 @@ class PageShare
       users.concat page.users.contributed
     elsif recipient == ':all'
       # todo
+    end
+  end
+
+  #
+  # From controllers please use PageShare#with. This will also send emais
+  # if needed.
+  # This method is used in tests though to setup shares.
+  #
+  def share_with_user!(user, options={})
+    may_share_with_user!(user, options)
+    attrs = {}
+    if options[:send_notice]
+      attrs[:viewed] = false
+      PageNotice.create!(user: user, page: page, from: sender, message: options[:send_message])
+    end
+
+    default_access_level = :none
+    if options.key?(:access) # might be nil
+      attrs[:access] = options[:access]
+    else
+      options[:grant_access] ||= default_access_level
+      unless user.may?(options[:grant_access], page)
+        attrs[:grant_access] = options[:grant_access] || default_access_level
+      end
+    end
+    page.add(user, attrs).tap do |upart|
+      upart.save! unless page.changed?
+    end
+  end
+
+  def share_with_group!(group, options={})
+    may_share_with_group!(group, options)
+    if options.key?(:access) # might be nil
+      gpart = page.add(group, access: options[:access])
+    else
+      options[:grant_access] ||= :view
+      gpart = page.add(group, grant_access: options[:grant_access])
+    end
+    gpart.save! unless page.changed?
+
+    # when we get here, the group should be able to view the page.
+
+    attrs = {}
+    users_to_pester = []
+    if options[:send_notice]
+      attrs[:viewed] = false
+      users_to_pester = group.users.with_access(sender => :pester)
+      users_to_pester.each do |user|
+        upart = page.add(user, attrs)
+        upart.save! unless page.changed?
+      end
+      PageNotice.create!(recipients: users_to_pester, page: page, from: sender, message: options[:send_message])
+    end
+
+    users_to_pester # returns users to pester so they can get an email, maybe.
+  end
+
+  # Check that +self+ may pester user and has admin access if sharing requires
+  # granting new access.
+  #
+  def may_share_with_user!(user, options)
+    access = options[:access] || options[:grant_access] || :view
+    error = page_sharing_error(user, access)
+    if error
+      message = I18n.t error, name: user.login
+      raise PermissionDenied.new(message)
+    end
+  end
+
+  def page_sharing_error(user, access)
+    if page.public? and !sender.may?(:pester, user)
+      :share_pester_error
+    elsif access.nil?
+      if !user.may?(:view,page)
+        :share_grant_required_error
+      end
+    elsif !user.may?(access, page)
+      if !sender.may?(:admin,page)
+        :share_permission_denied_error
+      elsif !sender.may?(:pester, user)
+        :share_pester_error
+      end
+    end
+  end
+
+  def may_share_with_group!(group, options)
+    access = options[:access] || options[:grant_access] || :view
+    unless group.may?(access,page)
+      unless sender.may?(:admin,page) and sender.may?(:pester, group)
+        raise PermissionDenied.new(I18n.t(:share_pester_error, name: group.name))
+      end
     end
   end
 
