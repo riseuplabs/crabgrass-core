@@ -177,47 +177,13 @@ module UserExtension::Pages
   ## PAGE SHARING
   ##
 
-  # Check that +self+ may pester user and has admin access if sharing requires
-  # granting new access.
-  #
-  def may_share!(page,entity,options)
-    user  = entity if entity.is_a? User
-    group = entity if entity.is_a? Group
-    access = options[:access] || options[:grant_access] || :view
-    if user
-      if page.public? and !self.may?(:pester, user)
-        raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
-      elsif access.nil?
-        if !user.may?(:view,page)
-          raise PermissionDenied.new(I18n.t(:share_grant_required_error, name: user.login))
-        end
-      elsif !user.may?(access, page)
-        if !self.may?(:admin,page)
-          raise PermissionDenied.new(I18n.t(:share_permission_denied_error))
-        elsif !self.may?(:pester, user)
-          raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
-        end
-      end
-    elsif group
-      unless group.may?(access,page)
-        unless self.may?(:admin,page) and self.may?(:pester, group)
-          raise PermissionDenied.new(I18n.t(:share_pester_error, name: group.name))
-        end
-      end
-    end
-  end
-
-  public
-
-
-
   #
   # From controllers please use PageShare#with. This will also send emais
   # if needed.
   # This method is used in tests though to setup shares.
   #
   def share_page_with_user!(page, user, options={})
-    may_share!(page,user,options)
+    may_share_with_user!(page, user, options)
     attrs = {}
     if options[:send_notice]
       attrs[:viewed] = false
@@ -233,12 +199,13 @@ module UserExtension::Pages
         attrs[:grant_access] = options[:grant_access] || default_access_level
       end
     end
-    upart = page.add(user, attrs)
-    upart.save! unless page.changed?
+    page.add(user, attrs).tap do |upart|
+      upart.save! unless page.changed?
+    end
   end
 
   def share_page_with_group!(page, group, options={})
-    may_share!(page,group,options)
+    may_share_with_group!(page, group, options)
     if options.key?(:access) # might be nil
       gpart = page.add(group, access: options[:access])
     else
@@ -280,6 +247,37 @@ module UserExtension::Pages
       result = false
     end
     result
+  end
+
+  protected
+
+  # Check that +self+ may pester user and has admin access if sharing requires
+  # granting new access.
+  #
+  def may_share_with_user!(page, user, options)
+    access = options[:access] || options[:grant_access] || :view
+    if page.public? and !self.may?(:pester, user)
+      raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
+    elsif access.nil?
+      if !user.may?(:view,page)
+        raise PermissionDenied.new(I18n.t(:share_grant_required_error, name: user.login))
+      end
+    elsif !user.may?(access, page)
+      if !self.may?(:admin,page)
+        raise PermissionDenied.new(I18n.t(:share_permission_denied_error))
+      elsif !self.may?(:pester, user)
+        raise PermissionDenied.new(I18n.t(:share_pester_error, name: user.login))
+      end
+    end
+  end
+
+  def may_share_with_group!(page, group, options)
+    access = options[:access] || options[:grant_access] || :view
+    unless group.may?(access,page)
+      unless self.may?(:admin,page) and self.may?(:pester, group)
+        raise PermissionDenied.new(I18n.t(:share_pester_error, name: group.name))
+      end
+    end
   end
 
 end
