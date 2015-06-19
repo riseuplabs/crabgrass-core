@@ -20,8 +20,10 @@ class Groups::InvitesController < Groups::BaseController
   # RequestToJoinUsViaEmail
   #
   def create
-    users, groups, emails = Page.parse_recipients!(params[:recipients])
-    groups = [] unless @group.network?
+    recipients = Recipients.new(params[:recipients])
+    users  = recipients.users
+    groups = @group.network? ? recipients.groups : []
+    emails = recipients.emails
 
     reqs = []; mailers = []
     unless users.any? or emails.any? or groups.any?
