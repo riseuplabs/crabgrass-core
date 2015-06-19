@@ -30,6 +30,7 @@ class Pages::SharesController < Pages::SidebarsController
 
   before_filter :close_popup, only: :update, if: :cancel_update?
   before_filter :add_recipients, only: :update, if: :add_recipients?
+  track_actions :update
 
   # display the share or notify forms.
   # this returns the html, which is used to populate the modalbox
@@ -74,7 +75,7 @@ class Pages::SharesController < Pages::SidebarsController
     if (params[:share_button] || params[:notify_button]) and params[:recipients]
 
       share = PageShare.new(@page, current_user, share_options)
-      share.with params[:recipients]
+      @uparts, @gparts = share.with params[:recipients]
       @page.save!
       success(@success_msg)
     end
@@ -112,6 +113,14 @@ class Pages::SharesController < Pages::SidebarsController
   end
 
   #
+  # After Filters
+  #
+
+  def track_action(event = nil, options = {})
+    super uparts: @uparts, gparts: @gparts
+  end
+
+  #
   # Handling recipients
   #
   def build_recipient_array
@@ -127,8 +136,8 @@ class Pages::SharesController < Pages::SidebarsController
 
   #
   # given a recipient name, we try to find an appriopriate user or group object.
-  # a lot can go wrong: the name might not exist, you may not have permission, the user might
-  # already have access, etc.
+  # a lot can go wrong: the name might not exist, you may not have permission,
+  # the user might already have access, etc.
   #
   def find_recipient(recipient_name, action=:share)
     recipient_name.strip!
