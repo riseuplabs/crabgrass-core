@@ -161,18 +161,16 @@ class PageHistory::UpdatedContent < PageHistory
   after_save :page_updated_at
 end
 
-class PageHistory::GrantGroupAccess < PageHistory
-  after_save :page_updated_at
-
-  validates_format_of :item_type, with: /Group/
-  validates_presence_of :item_id
+# Module for the methods shared between
+# GrantGroupAccess and GrantUserAccess.
+module PageHistory::GrantAccess
+  extend ActiveSupport::Concern
 
   # there always should be a participation given that this tracks granting
   # access. However in tests this is currently not the case.
   def initialize(attrs = {}, options = {}, &block)
     part = attrs.delete :participation
-    attrs.reverse_merge! access: access_from_participation(part),
-      item: part.try.group
+    attrs.reverse_merge! access: access_from_participation(part)
     super
   end
 
@@ -189,7 +187,6 @@ class PageHistory::GrantGroupAccess < PageHistory
 
   def description_key
     key = super
-    key.sub!('group_access', "group_#{access}_access") if access.present?
     key.sub!('grant', 'granted')
   end
 
@@ -200,6 +197,24 @@ class PageHistory::GrantGroupAccess < PageHistory
   def access=(value)
     self.details ||= {}
     self.details[:access] = value
+  end
+end
+
+class PageHistory::GrantGroupAccess < PageHistory
+  include GrantAccess
+  after_save :page_updated_at
+
+  validates_presence_of :item_id
+  validates_format_of :item_type, with: /Group/
+
+  def initialize(attrs = {}, options = {}, &block)
+    part = attrs[:participation]
+    attrs.reverse_merge! item: part.try.group
+    super
+  end
+
+  def description_key
+    access.blank? ? super : super.sub('group_access', "group_#{access}_access")
   end
 end
 
@@ -220,16 +235,28 @@ class PageHistory::RevokedGroupAccess < PageHistory
 end
 
 class PageHistory::GrantUserAccess < PageHistory
+  include GrantAccess
   after_save :page_updated_at
 
-  validates_format_of :item_type, with: /User/
   validates_presence_of :item_id
+  validates_format_of :item_type, with: /User/
+
+  def initialize(attrs = {}, options = {}, &block)
+    part = attrs[:participation]
+    attrs.reverse_merge! item: part.try.user
+    super
+  end
 
   def description_key
-    super.sub('grant', 'granted')
+    access.blank? ? super : super.sub('user_access', "user_#{access}_access")
   end
 end
 
+#
+# DEPRECATED:
+#
+# please use PageHistory::GrantUserAccess and hand in the participation
+# to determine the level of access.
 class PageHistory::GrantUserFullAccess < PageHistory::GrantUserAccess; end
 class PageHistory::GrantUserWriteAccess < PageHistory::GrantUserAccess; end
 class PageHistory::GrantUserReadAccess < PageHistory::GrantUserAccess; end
