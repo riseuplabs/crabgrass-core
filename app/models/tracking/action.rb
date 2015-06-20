@@ -14,7 +14,8 @@ module Tracking::Action
     destroy_page: [],
     delete_page: ['PageHistory::Deleted'],
     undelete_page: [],
-    update_shares: ['PageHistory::GrantGroupAccess', 'PageHistory::GrantUserAccess'],
+    update_group_access: ['PageHistory::GrantGroupAccess'],
+#    update_user_access: ['PageHistory::GrantUserAccess'],
     update_title: ['PageHistory::ChangeTitle']
   }
 

@@ -117,7 +117,12 @@ class Pages::SharesController < Pages::SidebarsController
   #
 
   def track_action(event = nil, options = {})
-    super uparts: @uparts, gparts: @gparts
+    @uparts.each do |part|
+      super('update_user_access', participation: part) if part.access_changed?
+    end
+    @gparts.each do |part|
+      super('update_group_access', participation: part) if part.access_changed?
+    end
   end
 
   #

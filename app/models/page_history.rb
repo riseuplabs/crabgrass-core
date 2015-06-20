@@ -167,7 +167,7 @@ class PageHistory::GrantGroupAccess < PageHistory
   validates_format_of :item_type, with: /Group/
   validates_presence_of :item_id
 
-  # there always should be a participation given what this tracks granting
+  # there always should be a participation given that this tracks granting
   # access. However in tests this is currently not the case.
   def initialize(attrs = {}, options = {}, &block)
     part = attrs.delete :participation
@@ -206,7 +206,8 @@ end
 #
 # DEPRECATED:
 #
-# please use PageHistory::GrantGroupAccess and hand in the
+# please use PageHistory::GrantGroupAccess and hand in the participation
+# to determine the level of access.
 class PageHistory::GrantGroupFullAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupWriteAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupReadAccess < PageHistory::GrantGroupAccess; end
