@@ -21,23 +21,6 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count, @page.page_histories.count
   end
 
-  def test_add_star
-    @upart = @page.add(@pepe, star: true ).save!
-    @page.reload
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::AddStar, PageHistory.last.class
-  end
-
-  def test_remove_star
-    @upart = @page.add(@pepe, star: true).save!
-    @upart = @page.add(@pepe, star: nil).save!
-    @page.reload
-    assert_equal @last_count + 2, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::RemoveStar, PageHistory.last.class
-  end
-
   def test_add_tag
     true
   end
@@ -52,44 +35,6 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
 
   def test_remove_attachment
     true
-  end
-
-  def test_start_watching
-    @upart = @page.add(@pepe, watch: true).save!
-    @page.reload
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::StartWatching, PageHistory.last.class
-  end
-
-  def test_stop_watching
-    @upart = @page.add(@pepe, watch: true).save!
-    @page.reload
-    @upart = @page.add(@pepe, watch: nil).save!
-    @page.reload
-    assert_equal @last_count + 2, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::StopWatching, PageHistory.last.class
-  end
-
-  def test_share_page_with_user_removing_access
-    @page.add(@manu, access: 3).save!
-    @page.user_participations.last.destroy
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::RevokedUserAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.item.class
-  end
-
-  def test_share_page_with_group_removing_access
-    group = FactoryGirl.create(:group)
-    group.add_user! @pepe
-    @page.add(group, access: 3).save!
-    @page.group_participations.last.destroy
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::RevokedGroupAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.item.class
   end
 
   def test_update_content

@@ -14,6 +14,7 @@ module Tracking::Action
     destroy_page: [],
     delete_page: ['PageHistory::Deleted'],
     undelete_page: [],
+    update_participation: ['PageHistory::UpdateParticipation'],
     update_group_access: ['PageHistory::GrantGroupAccess'],
     update_user_access: ['PageHistory::GrantUserAccess'],
     update_title: ['PageHistory::ChangeTitle']
@@ -24,7 +25,9 @@ module Tracking::Action
     options[:key] ||= rand(Time.now.to_i)
     EVENT_CREATES_ACTIVITIES[event].each do |class_name|
       klass = class_name.constantize
-      klass.create! filter_options_for_class(klass, options)
+      klass = klass.pick_class(options) if klass.respond_to? :pick_class
+      next if klass.blank?
+      activity = klass.create! filter_options_for_class(klass, options)
     end
   end
 

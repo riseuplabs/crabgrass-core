@@ -99,19 +99,13 @@ class PageHistory < ActiveRecord::Base
   end
 end
 
-class PageHistory::AddStar        < PageHistory; end
-class PageHistory::RemoveStar     < PageHistory; end
-class PageHistory::MakePublic     < PageHistory; end
-class PageHistory::MakePrivate    < PageHistory; end
-class PageHistory::StartWatching  < PageHistory; end
-class PageHistory::StopWatching   < PageHistory; end
-
 # Factory class for the different page updates
 class PageHistory::Update < PageHistory
-  def initialize(attrs = {}, options = {}, &block)
-    page = attrs[:page]
-    klass_for_update(page).new(attrs, options, &block)
+  def self.pick_class(attrs = {})
+    class_for_update(attrs[:page])
   end
+
+  protected
 
   def class_for_update(page)
     return PageHistory::MakePrivate if page.marked_as_private?
@@ -119,7 +113,8 @@ class PageHistory::Update < PageHistory
     # return PageHistory::ChangeOwner if page.owner_id_changed?
   end
 end
-
+class PageHistory::MakePublic     < PageHistory; end
+class PageHistory::MakePrivate    < PageHistory; end
 
 class PageHistory::PageCreated < PageHistory
   after_save :page_updated_at
@@ -161,6 +156,61 @@ class PageHistory::UpdatedContent < PageHistory
   after_save :page_updated_at
 end
 
+# Factory class for the different page updates
+# To track updates to participations:
+#  * inherit directly from this class
+#  * define self.tracks on your class to return true for changes that should
+#    be tracked.
+# Changes will be a ActiveModel::Dirty changeset. You can use the activated
+# and deactivated helper methods if you only need to look at the boolean value.
+class PageHistory::UpdateParticipation < PageHistory
+  def self.pick_class(attrs = {})
+    class_for_update(attrs[:participation])
+  end
+
+  protected
+
+  def self.class_for_update(participation)
+    subclasses.detect{|klass|
+      klass.tracks participation.previous_changes, participation
+    }
+  end
+
+  def self.tracks(changes, part); false; end
+
+  def self.activated(old = nil, new = nil)
+    new && !old
+  end
+
+  def self.deactivated(old = nil, new = nil)
+    old && !new
+  end
+end
+
+class PageHistory::AddStar < PageHistory::UpdateParticipation
+  def self.tracks(changes, _part)
+    activated(*changes[:star])
+  end
+end
+
+class PageHistory::RemoveStar < PageHistory::UpdateParticipation
+  def self.tracks(changes, _part)
+    deactivated(*changes[:star])
+  end
+end
+
+class PageHistory::StartWatching  < PageHistory::UpdateParticipation
+  def self.tracks(changes, _part)
+    activated(*changes[:watch])
+  end
+end
+
+class PageHistory::StopWatching  < PageHistory::UpdateParticipation
+  def self.tracks(changes, _part)
+    deactivated(*changes[:watch])
+  end
+end
+
 # Module for the methods shared between
 # GrantGroupAccess and GrantUserAccess.
 module PageHistory::GrantAccess
@@ -196,8 +246,13 @@ module PageHistory::GrantAccess
   end
 end
 
-class PageHistory::GrantGroupAccess < PageHistory
+class PageHistory::GrantGroupAccess < PageHistory::UpdateParticipation
   include GrantAccess
+
+  def self.tracks(changes, part)
+    part.is_a?(GroupParticipation) && changes.keys.include?('access')
+  end
+
   after_save :page_updated_at
 
   validates_presence_of :item_id
@@ -222,15 +277,29 @@ class PageHistory::GrantGroupFullAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupWriteAccess < PageHistory::GrantGroupAccess; end
 class PageHistory::GrantGroupReadAccess < PageHistory::GrantGroupAccess; end
 
-class PageHistory::RevokedGroupAccess < PageHistory
+class PageHistory::RevokedGroupAccess < PageHistory::UpdateParticipation
   after_save :page_updated_at
+
+  def self.tracks(changes, part)
+    part.is_a?(GroupParticipation) &&
+      !GroupParticipation.exists?(id: part.id)
+  end
+
+  def participation=(part)
+    self.item = part.try.group
+  end
 
   validates_format_of :item_type, with: /Group/
   validates_presence_of :item_id
 end
 
-class PageHistory::GrantUserAccess < PageHistory
+class PageHistory::GrantUserAccess < PageHistory::UpdateParticipation
   include GrantAccess
+
+  def self.tracks(changes, part)
+    part.is_a?(UserParticipation) && changes.keys.include?('access')
+  end
+
   after_save :page_updated_at
 
   validates_presence_of :item_id
@@ -255,7 +324,16 @@ class PageHistory::GrantUserFullAccess < PageHistory::GrantUserAccess; end
 class PageHistory::GrantUserWriteAccess < PageHistory::GrantUserAccess; end
 class PageHistory::GrantUserReadAccess < PageHistory::GrantUserAccess; end
 
-class PageHistory::RevokedUserAccess < PageHistory
+class PageHistory::RevokedUserAccess < PageHistory::UpdateParticipation
+  def self.tracks(changes, part)
+    part.is_a?(UserParticipation) &&
+      !UserParticipation.exists?(id: part.id)
+  end
+
+  def participation=(part)
+    self.item = part.try.user
+  end
+
   after_save :page_updated_at
 
   validates_format_of :item_type, with: /User/

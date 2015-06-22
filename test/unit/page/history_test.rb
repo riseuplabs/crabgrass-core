@@ -141,16 +141,12 @@ class Page::HistoryTest < ActiveSupport::TestCase
     user_a = FactoryGirl.create(:user, receive_notifications: "Digest")
     user_b = FactoryGirl.create(:user, receive_notifications: "Digest")
     user_c = FactoryGirl.create(:user, receive_notifications: "Single")
-
-    @page.user_participations.create!(user: user_a, watch: true)
-    @page.user_participations.create!(user: user_b, watch: true)
-    @page.user_participations.create!(user: user_c, watch: true)
+    users = [user_a, user_b, user_c]
 
     PageHistory.delete_all
 
-    @page.participation_for_user(user_a).update_attribute(:star, true)
-    @page.participation_for_user(user_b).update_attribute(:star, true)
-    @page.participation_for_user(user_c).update_attribute(:star, true)
+    users.each{ |user| @page.add(user, star: true, watch: true).save }
+    users.each{ |user| PageHistory::AddStar.create user: user, page: @page }
 
     assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
     assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
