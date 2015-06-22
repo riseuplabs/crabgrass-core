@@ -82,6 +82,12 @@ class Pages::CreateController < ApplicationController
 
   def track_action
     super :create_page, group: @owner
+    @page.user_participations.each do |part|
+      super('update_user_access', participation: part)
+    end
+    @page.group_participations.each do |part|
+      super('update_group_access', participation: part)
+    end
   end
 
   #

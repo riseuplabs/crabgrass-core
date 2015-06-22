@@ -202,22 +202,23 @@ class Page::HistoryTest < ActiveSupport::TestCase
   def test_send_pending_notifications
     user_a = FactoryGirl.create(:user, receive_notifications: "Single")
     User.current = user_a
-    FactoryGirl.build(:user_participation, page: @page, user: user_a, watch: true).save!
+    FactoryGirl.create :user_participation,
+      page: @page, user: user_a, watch: true
 
     last_state = Conf.paranoid_emails
     Conf.paranoid_emails = false
     PageHistory.send_single_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
+    assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
 
     Conf.paranoid_emails = last_state
     PageHistory.send_single_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
+    assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
   end
 
   def test_pending_notifications
-    assert_equal 2, PageHistory.pending_notifications.size
+    assert_equal 1, PageHistory.pending_notifications.size
   end
 
   private

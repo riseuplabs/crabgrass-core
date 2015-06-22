@@ -72,34 +72,10 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     assert_equal PageHistory::StopWatching, PageHistory.last.class
   end
 
-  def test_share_page_with_user_assigning_full_access
-    @page.add(@manu, access: 1).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantUserFullAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.item.class
-  end
-
-  def test_share_page_with_user_assigning_write_access
-    @page.add(@manu, access: 2).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantUserWriteAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.item.class
-  end
-
-  def test_share_page_with_user_assigning_read_access
-    @page.add(@manu, access: 3).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantUserReadAccess, PageHistory.last.class
-    assert_equal User, PageHistory.last.item.class
-  end
-
   def test_share_page_with_user_removing_access
     @page.add(@manu, access: 3).save!
     @page.user_participations.last.destroy
-    assert_equal @last_count + 2, @page.page_histories.count
+    assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::RevokedUserAccess, PageHistory.last.class
     assert_equal User, PageHistory.last.item.class

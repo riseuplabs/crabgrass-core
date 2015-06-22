@@ -66,14 +66,15 @@ module PageExtension::Create
                 send_notice: inbox
               share.with recipients
             end
-            # Page#owner= creates a user participation for the owner. Creating it
-            # here is only needed, if the page is created for a different owner.
-            # Also the participation may have been created by PageShare#with.
-            # In either case we want "access" to be set to "admin" and "changed_at"
-            # set as well (so the page shows up under "Recent Pages" on the dash)
+            # Maybe we already build a user participation because the user
+            # is going to be the owner or shared with one of their groups
+            # with notification.
+            # Please note that at this point the participation only exists
+            # in memory. So do not try to use where(user_id: ...) here.
             participation = page.user_participations.select { |part|
               part.user == user
-            }.first || page.user_participations.build(user_id: user.id)
+            }.first
+            participation ||= page.user_participations.build(user_id: user.id)
             participation.access = ACCESS[:admin]
             participation.changed_at = Time.now
           end
