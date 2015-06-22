@@ -166,12 +166,8 @@ end
 module PageHistory::GrantAccess
   extend ActiveSupport::Concern
 
-  # there always should be a participation given that this tracks granting
-  # access. However in tests this is currently not the case.
-  def initialize(attrs = {}, options = {}, &block)
-    part = attrs.delete :participation
-    attrs.reverse_merge! access: access_from_participation(part)
-    super
+  def participation=(part)
+    self.access = access_from_participation(part)
   end
 
   # participations use a different naming scheme for access levels
@@ -207,9 +203,8 @@ class PageHistory::GrantGroupAccess < PageHistory
   validates_presence_of :item_id
   validates_format_of :item_type, with: /Group/
 
-  def initialize(attrs = {}, options = {}, &block)
-    part = attrs[:participation]
-    attrs.reverse_merge! item: part.try.group
+  def participation=(part)
+    self.item = part.try.group
     super
   end
 
@@ -241,9 +236,8 @@ class PageHistory::GrantUserAccess < PageHistory
   validates_presence_of :item_id
   validates_format_of :item_type, with: /User/
 
-  def initialize(attrs = {}, options = {}, &block)
-    part = attrs[:participation]
-    attrs.reverse_merge! item: part.try.user
+  def participation=(part)
+    self.item = part.try.user
     super
   end
 

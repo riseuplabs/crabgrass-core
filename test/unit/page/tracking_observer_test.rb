@@ -81,48 +81,12 @@ class Page::TrackingObserverTest < ActiveSupport::TestCase
     assert_equal User, PageHistory.last.item.class
   end
 
-  def test_share_page_with_group_assigning_full_access
-    group = FactoryGirl.create :group
-    group.add_user! @pepe
-    @page.add(group, access: 1).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.item.class
-    assert_equal 'page_history_granted_group_full_access',
-      PageHistory.last.description_key
-  end
-
-  def test_share_page_with_group_assigning_write_access
-    group = FactoryGirl.create(:group)
-    group.add_user! @pepe
-    @page.add(group, access: 2).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.item.class
-    assert_equal 'page_history_granted_group_write_access',
-      PageHistory.last.description_key
-  end
-
-  def test_share_page_with_group_assigning_read_access
-    group = FactoryGirl.create(:group)
-    group.add_user! @pepe
-    @page.add(group, access: 3).save!
-    assert_equal @last_count + 1, @page.page_histories.count
-    assert_equal @pepe, PageHistory.last.user
-    assert_equal PageHistory::GrantGroupAccess, PageHistory.last.class
-    assert_equal Group, PageHistory.last.item.class
-    assert_equal 'page_history_granted_group_read_access',
-      PageHistory.last.description_key
-  end
-
   def test_share_page_with_group_removing_access
     group = FactoryGirl.create(:group)
     group.add_user! @pepe
     @page.add(group, access: 3).save!
     @page.group_participations.last.destroy
-    assert_equal @last_count + 2, @page.page_histories.count
+    assert_equal @last_count + 1, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::RevokedGroupAccess, PageHistory.last.class
     assert_equal Group, PageHistory.last.item.class
