@@ -1,6 +1,8 @@
 # um, so, yeah, basically we don't use ActiveRecord for this.
 # lots of MySQL-specific stuff here.
-class Tracking < ActiveRecord::Base
+class Tracking::Page < ActiveRecord::Base
+  self.table_name = 'trackings'
+
   #belongs_to :page
   #belongs_to :group
   #belongs_to :user
@@ -28,7 +30,7 @@ class Tracking < ActiveRecord::Base
   ##
 
   def self.process
-    return if (Tracking.count == 0)
+    return if (count == 0)
 
     unprocessed_since = last_processed_at
 
@@ -173,7 +175,7 @@ class Tracking < ActiveRecord::Base
   end
 
   def self.last_processed_at
-    Tracking.order(:tracked_at).first.try.tracked_at || Time.now - 3.month
+    order(:tracked_at).first.try.tracked_at || Time.now - 3.month
   end
 
 end

@@ -2,8 +2,8 @@ module PageExtension::Tracking
   def self.included(base)
     base.send(:include, InstanceMethods)
     base.instance_eval do
-      has_many :dailies
-      has_many :hourlies
+      has_many :dailies, class_name: 'Tracking::Daily'
+      has_many :hourlies, class_name: 'Tracking::Hourly'
     end
   end
 
