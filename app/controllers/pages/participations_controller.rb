@@ -50,9 +50,9 @@ class Pages::ParticipationsController < Pages::SidebarsController
     if params[:access] == 'remove'
       destroy
     else
-      @page.add(participation.entity, access: params[:access]).save!
+      @page.add(@part.entity, access: params[:access]).save!
       render :update do |page|
-        page.replace_html dom_id(participation), partial: 'pages/participations/permission_row', locals: {participation: participation.reload}
+        page.replace_html dom_id(@part), partial: 'pages/participations/permission_row', locals: {participation: @part.reload}
       end
     end
   end
@@ -61,17 +61,17 @@ class Pages::ParticipationsController < Pages::SidebarsController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access.
   def destroy
-    if may_remove_participation?(participation)
-      if participation.is_a? UserParticipation
-        @page.remove(participation.user)
+    if may_remove_participation?(@part)
+      if @part.is_a? UserParticipation
+        @page.remove(@part.user)
       else
-        @page.remove(participation.group)
+        @page.remove(@part.group)
       end
     else
       raise ErrorMessage.new(:remove_access_error.t)
     end
     render :update do |page|
-      page.hide dom_id(@gpart || @upart)
+      page.hide dom_id(@part || @upart)
     end
   end
 
@@ -80,16 +80,19 @@ class Pages::ParticipationsController < Pages::SidebarsController
   end
 
   # we always load the user participation for page sidebar controllers
-  # so use the group participation if it's present and fallback to user part.
+  # so use the participation loaded in fetch_data and fallback to user part.
   def participation
-    @gpart || @upart
+    @part || @upart
   end
 
   # we only act upon group participations access. There's no staring or
   # watching group participations.
   def fetch_data
-    if params[:group] && params[:access]
-      @gpart = GroupParticipation.find(params[:id]) if params[:id]
+    return unless params[:access] && params[:id]
+    if params[:group]
+      @part = GroupParticipation.find(params[:id])
+    else
+      @part = UserParticipation.find(params[:id])
     end
   end
 

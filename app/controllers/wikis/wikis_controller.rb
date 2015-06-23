@@ -6,9 +6,17 @@
 #
 
 class Wikis::WikisController < Wikis::BaseController
+  include Common::Tracking::Action
 
   skip_before_filter :login_required, only: :show
   before_filter :authorized?, only: :show
+
+  # cancel button pressed
+  before_filter :cancel, only: :update, if: :cancel?
+  # no save param present - do nothing
+  before_filter :noop, only: :update, if: :noop?
+
+  track_actions :update
 
   guard show: :may_show_wiki?
   helper 'wikis/sections'
@@ -50,16 +58,11 @@ class Wikis::WikisController < Wikis::BaseController
   #
   def update
     WikiLock.transaction do
-      if params[:cancel]
-        @wiki.release_my_lock!(@section, current_user)
-      elsif params[:force_save]
-        @wiki.break_lock!(@section)
-      end
-      if params[:save] || params[:force_save]
-        version = params[:save] ? params[:wiki][:version] : nil # disable version checked if force save
-        @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
-        success
-      end
+      @wiki.break_lock!(@section) if params[:force_save]
+      # disable version checked if force save
+      version = params[:force_save] ? nil : params[:wiki][:version]
+      @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
+      success
     end
     render template: 'wikis/wikis/show'
   rescue Wiki::VersionExistsError, Wiki::LockedError => exc
@@ -71,4 +74,27 @@ class Wikis::WikisController < Wikis::BaseController
     render template: '/wikis/wikis/edit'
   end
 
+  protected
+
+  # only track wiki updates on pages that have been saved
+  def track_action(event = nil, event_options = {})
+    super if @page && @wiki.previous_changes[:body]
+  end
+
+  def cancel
+    @wiki.release_my_lock!(@section, current_user)
+    render template: 'wikis/wikis/show'
+  end
+
+  def cancel?
+    !!params[:cancel]
+  end
+
+  def noop
+    render template: 'wikis/wikis/show'
+  end
+
+  def noop?
+    !params[:save] && !params[:force_save]
+  end
 end

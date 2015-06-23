@@ -49,7 +49,7 @@ module Common::Tracking::Action
       group: @group,
       user: @user || current_user,
       page: @page
-    Tracking::Action.track event.to_sym, event_options
+    ::Tracking::Action.track event.to_sym, event_options
   end
 
   module ClassMethods

@@ -1,5 +1,6 @@
 require_relative "../lib/crabgrass/info.rb"
 
+
 info "LOAD FRAMEWORK"
 require_relative 'boot'
 
@@ -22,7 +23,7 @@ module Crabgrass
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 
-    config.autoload_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers notice).
+    config.autoload_paths += %w(activity assets associations discussion chat profile poll task tracking requests mailers notice).
      collect { |dir| "#{Rails.root}/app/models/#{dir}" }
     config.autoload_paths << "#{Rails.root}/app/permissions"
     config.autoload_paths << "#{Rails.root}/app/sweepers"
@@ -47,8 +48,6 @@ module Crabgrass
     #
     # We use strong parameters instead like rails4 does.
     #config.active_record.whitelist_attributes = true
-
-    config.active_record.observers = "tracking/wiki_observer"
 
     config.session_store :cookie_store,
       :key => 'crabgrass_session'

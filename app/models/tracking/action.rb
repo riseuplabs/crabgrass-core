@@ -17,7 +17,8 @@ module Tracking::Action
     update_participation: ['PageHistory::UpdateParticipation'],
     update_group_access: ['PageHistory::GrantGroupAccess'],
     update_user_access: ['PageHistory::GrantUserAccess'],
-    update_title: ['PageHistory::ChangeTitle']
+    update_title: ['PageHistory::ChangeTitle'],
+    update_wiki: ['PageHistory::UpdatedContent']
   }
 
   def self.track(event, options = {})
