@@ -3,11 +3,10 @@ module RecordTracking
   protected
 
   # keep track of all records created
-  attr_accessor :records
+  attr_writer :records
 
-  def setup
-    super
-    @records = {}
+  def records
+    @records ||= {}
   end
 
 end

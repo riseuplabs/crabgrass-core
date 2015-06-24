@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150423085826) do
+ActiveRecord::Schema.define(:version => 20150623202727) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -256,7 +256,6 @@ ActiveRecord::Schema.define(:version => 20150423085826) do
 
   create_table "geo_places", :force => true do |t|
     t.integer "geo_country_id",                                                    :null => false
-    t.integer "geonameid",                                                         :null => false
     t.string  "name",                                                              :null => false
     t.string  "alternatenames",    :limit => 5000
     t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
@@ -533,6 +532,7 @@ ActiveRecord::Schema.define(:version => 20150423085826) do
     t.datetime "deleted_at"
     t.string   "type"
     t.integer  "page_terms_id"
+    t.integer  "stars_count",                         :default => 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -690,6 +690,14 @@ ActiveRecord::Schema.define(:version => 20150423085826) do
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
+
+  create_table "stars", :force => true do |t|
+    t.integer  "user_id",      :null => false
+    t.integer  "starred_id",   :null => false
+    t.string   "starred_type", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "survey_answers", :force => true do |t|
     t.integer  "question_id"

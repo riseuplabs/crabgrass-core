@@ -5,7 +5,7 @@
 %div.post_body{id: post.body_id}
   %div.float_right
     = edit_post_link(post)
-    = #star_post_action(post)
+    = star_post_action(post)
     = # call_hook :post_actions, {post: post}
   = post.body_html
 

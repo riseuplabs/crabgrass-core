@@ -196,6 +196,10 @@ Crabgrass::Application.routes.draw do
     resource :trash,      only: [:edit, :update], controller: 'trash'
   end
 
+  resources :posts, only: [] do |posts|
+    resource :star, only: [:create, :destroy]
+  end
+
   ##
   ## WIKI
   ##
