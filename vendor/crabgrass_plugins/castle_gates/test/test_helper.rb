@@ -1,4 +1,4 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'rubygems'
 begin
   require 'byebug'
@@ -6,9 +6,11 @@ rescue LoadError  # ruby < 2.0.0
   require 'debugger'
 end
 require 'logger'
-gem 'actionpack', '~> 3.2.19'
-gem 'activerecord', '~> 3.2.19'
+gem 'actionpack', '~> 3.2.22'
+gem 'activerecord', '~> 3.2.22'
+gem 'railties', '~> 3.2.22'
 require 'active_record'
+require 'rails/engine'
 
 ##
 ## OPTIONS

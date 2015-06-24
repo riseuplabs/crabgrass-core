@@ -1,9 +1,3 @@
-#require 'rubygems'
-# we need to require test/unit because ActiveSupport::TestCase
-# derives from it and mocha will not patch it if it is not loaded
-# so the Mocha::API would not be available in AS::TestCase
-require 'test/unit'
-gem 'minitest', '~> 2.12'
 require 'minitest/autorun'
 
 ENV["RAILS_ENV"] = "test"

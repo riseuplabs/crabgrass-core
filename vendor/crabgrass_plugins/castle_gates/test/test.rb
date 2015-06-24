@@ -3,7 +3,11 @@ require_relative 'test_helper'
 ## TEST
 ##
 
-class CastleGatesTest < Test::Unit::TestCase
+unless defined? Minitest::Test
+  class Minitest::Test < ActiveSupport::TestCase; end
+end
+
+class CastleGatesTest < Minitest::Test
 
   def setup
     @fort = Fort.find :first
@@ -22,6 +26,10 @@ class CastleGatesTest < Test::Unit::TestCase
     @bunker = Bunker.find :first
 
     #User.current = @me
+  end
+
+  def teardown
+    Fort.clear_key_cache
   end
 
   def test_argument_exception
@@ -68,7 +76,6 @@ class CastleGatesTest < Test::Unit::TestCase
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
       assert !@fort.access?(@me => :door), 'defaults do not apply with set'
 
-      @fort.clear_key_cache
       raise ActiveRecord::Rollback
     end
   end
