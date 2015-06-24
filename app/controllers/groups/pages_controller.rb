@@ -1,8 +1,9 @@
 class Groups::PagesController < Groups::BaseController
 
   skip_before_filter :login_required
-  guard :may_show_group?
-  
+  # fetch_group already checks may_show_group?
+  skip_before_filter :authorization_required
+
   include_controllers 'common/page_search'
 
   def index

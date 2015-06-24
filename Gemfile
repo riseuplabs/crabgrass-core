@@ -221,8 +221,8 @@ group :test, :ci do
 
   gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
-  gem 'minitest', '~> 2.12', :require => false
-  gem 'mocha', '~> 0.12.0', :require => false
+  gem 'minitest', '~> 4.7', :require => false
+  gem 'mocha', '~> 1.1', :require => false
   #
   # mocha note: mocha must be loaded after the things it needs to patch.
   #             so, we skip the 'require' here, and do it later.
