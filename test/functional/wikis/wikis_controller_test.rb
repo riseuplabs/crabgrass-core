@@ -7,7 +7,7 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
   end
-  
+
   def test_edit
     @wiki = create_profile_wiki
     login_as @user
@@ -37,7 +37,7 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     assert_equal other_user, @wiki.locker_of(:document)
     assert_equal @wiki, assigns['wiki']
   end
-  
+
   def test_update_group_wiki
     @wiki = create_profile_wiki
     login_as @user
@@ -169,7 +169,7 @@ biggie
     @page.data = Wiki.new(user: owner, body: "")
     @page.save
     @page.wiki.save
-    owner.share_page_with!(@page, @user, access: :edit)
+    @page.add(@user, access: :edit).save!
     @page.wiki
   end
 

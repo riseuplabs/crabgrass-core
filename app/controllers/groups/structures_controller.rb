@@ -1,9 +1,9 @@
 class Groups::StructuresController < Groups::SettingsController
-  include Common::Tracking::Activity
+  include Common::Tracking::Action
 
   guard :may_edit_group_structure?, actions: [:new, :create, :destroy]
 
-  after_filter :track_activity, only: [:create]
+  track_actions :create
 
   def show
   end
@@ -21,7 +21,6 @@ class Groups::StructuresController < Groups::SettingsController
     @committee = group_class.create group_params
     @group.add_committee!(@committee)
     @committee.add_user!(current_user) if @committee.council?
-    Activity.track :group_created, group: @committee, user: current_user
     success :group_successfully_created.t
     redirect_to group_url(@committee)
   end
@@ -49,7 +48,7 @@ class Groups::StructuresController < Groups::SettingsController
     params.fetch(:group, {}).permit :name, :full_name, :language
   end
 
-  def track_activity
+  def track_action
     super("#{action_string}_group", group: @committee)
   end
 end

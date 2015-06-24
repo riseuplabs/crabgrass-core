@@ -9,7 +9,10 @@
 -#
 
 - remote = local_assigns[:remote] || false
-= form_for @post, url: posts_path, remote: remote,
+- # display the current post if it has unsaved changes
+- record = @post if @post.new_record? or @post.changed?
+- record ||= Post.new
+= form_for record, url: posts_path, remote: remote,
   html: {onsubmit: show_spinner('post')} do |f|
   = hidden_field_tag('in_reply_to_id', last_id) if last_id
 

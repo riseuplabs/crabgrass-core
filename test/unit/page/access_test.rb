@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class PageAccessTest < ActiveSupport::TestCase
+class Page::AccessTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships
 

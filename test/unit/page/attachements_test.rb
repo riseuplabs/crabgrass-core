@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class Pages::AttachmentTest < ActiveSupport::TestCase
+class Page::AttachmentTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :polls
 

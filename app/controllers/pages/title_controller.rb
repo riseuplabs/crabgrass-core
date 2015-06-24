@@ -1,6 +1,8 @@
 class Pages::TitleController < Pages::SidebarsController
 
   guard :may_edit_page?
+  track_actions :update
+
 
   # Return the edit title form. This is called by modalbox to load the popup contents.
   def edit

@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require_relative 'test_helper'
+require 'test_helper'
 
-class PageTermsTest < ActiveSupport::TestCase
+class Page::TermsTest < ActiveSupport::TestCase
   fixtures :users
 
   def test_create

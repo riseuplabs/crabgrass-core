@@ -7,7 +7,7 @@ require 'test_helper'
 # the tests some counts for example seems to not have sense, but this is because of that already created data.
 #
 
-class PageHistoryTest < ActiveSupport::TestCase
+class Page::HistoryTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all
@@ -19,6 +19,7 @@ class PageHistoryTest < ActiveSupport::TestCase
     User.current = @user
 
     @page = FactoryGirl.create(:page, created_by: @user)
+    PageHistory::PageCreated.create page: @page, user: @user
 
     @site = FactoryGirl.create(:site, domain: "crabgrass.org",
                                title: "Crabgrass Social Network",
@@ -37,9 +38,9 @@ class PageHistoryTest < ActiveSupport::TestCase
   end
 
   def test_validations
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: nil, page: nil) end
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: @user, page: nil) end
-    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(user: nil, page: @page) end
+    assert_invalid_attrs user: nil, page: nil
+    assert_invalid_attrs user: @user, page: nil
+    assert_invalid_attrs user: nil, page: @page
   end
 
   def test_associations
@@ -57,63 +58,48 @@ class PageHistoryTest < ActiveSupport::TestCase
     PageHistory.create!(user: @user, page: page)
     assert_not_change_updated_at page
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::PageCreated.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdatedContent.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::ChangeTitle.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::Deleted.create!(user: @user, page: page)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::AddComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdateComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::DestroyComment.create!(user: @user, page: page, item: post)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupFullAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupWriteAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupReadAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedGroupAccess.create!(user: @user, page: page, item: group)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserFullAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserWriteAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserReadAccess.create!(user: @user, page: page, item: user)
 
-    page = FactoryGirl.create(:page)
     Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedUserAccess.create!(user: @user, page: page, item: user)
   end
@@ -121,6 +107,7 @@ class PageHistoryTest < ActiveSupport::TestCase
   def test_change_title_saves_old_and_new_value
     page = FactoryGirl.create(:page, title: "Bad title")
     page.update_attribute :title, "Nice title"
+    Tracking::Action.track :update_title, user: @user, page: page
     page_history = PageHistory::ChangeTitle.find :first, conditions: {page_id: page.id}
     assert_equal "Bad title", page_history.details[:from]
     assert_equal "Nice title", page_history.details[:to]
@@ -154,16 +141,12 @@ class PageHistoryTest < ActiveSupport::TestCase
     user_a = FactoryGirl.create(:user, receive_notifications: "Digest")
     user_b = FactoryGirl.create(:user, receive_notifications: "Digest")
     user_c = FactoryGirl.create(:user, receive_notifications: "Single")
-
-    @page.user_participations.create!(user: user_a, watch: true)
-    @page.user_participations.create!(user: user_b, watch: true)
-    @page.user_participations.create!(user: user_c, watch: true)
+    users = [user_a, user_b, user_c]
 
     PageHistory.delete_all
 
-    @page.participation_for_user(user_a).update_attribute(:star, true)
-    @page.participation_for_user(user_b).update_attribute(:star, true)
-    @page.participation_for_user(user_c).update_attribute(:star, true)
+    users.each{ |user| @page.add(user, star: true, watch: true).save }
+    users.each{ |user| PageHistory::AddStar.create user: user, page: @page }
 
     assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
     assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
@@ -212,40 +195,35 @@ class PageHistoryTest < ActiveSupport::TestCase
     assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_c)
   end
 
-  def test_destroy_page_leave_no_history
-    post = Post.create! @page, @user, body: "content"
-    @page.destroy
-    assert_equal 0, PageHistory.count
-  end
-
-  def test_delete_page_leaves_history
-    post = Post.create! @page, @user, body: "content"
-    @page.delete
-    assert_equal 1, PageHistory::Deleted.count
-  end
-
   def test_send_pending_notifications
     user_a = FactoryGirl.create(:user, receive_notifications: "Single")
     User.current = user_a
-    FactoryGirl.build(:user_participation, page: @page, user: user_a, watch: true).save!
+    FactoryGirl.create :user_participation,
+      page: @page, user: user_a, watch: true
 
     last_state = Conf.paranoid_emails
     Conf.paranoid_emails = false
     PageHistory.send_single_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
+    assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
 
     Conf.paranoid_emails = last_state
     PageHistory.send_single_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
+    assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
   end
 
   def test_pending_notifications
-    assert_equal 2, PageHistory.pending_notifications.size
+    assert_equal 1, PageHistory.pending_notifications.size
   end
 
   private
+
+  def assert_invalid_attrs(attrs)
+    history = PageHistory.new attrs
+    assert !history.valid?,
+      "These attributes should be invalid for a Page History: #{attrs.inspect}"
+  end
 
   def assert_change_updated_at(page, page_history)
     page.reload

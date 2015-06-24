@@ -5,10 +5,10 @@
 # Some tests require that sphinx be running. These are skipped if it is not.
 #
 
-require_relative 'test_helper'
+require 'test_helper'
 require 'set'
 
-class Pages::PageSearchTest < ActiveSupport::TestCase
+class Page::SearchTest < ActiveSupport::TestCase
 
   def self.helper_method(method); end
 

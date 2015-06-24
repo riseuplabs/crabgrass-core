@@ -3,6 +3,7 @@
 # this controller.
 #
 class Pages::SidebarsController < ApplicationController
+  include Common::Tracking::Action
 
   before_filter :fetch_page
   before_filter :login_required

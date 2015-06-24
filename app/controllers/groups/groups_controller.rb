@@ -1,5 +1,5 @@
 class Groups::GroupsController < Groups::BaseController
-  include Common::Tracking::Activity
+  include Common::Tracking::Action
 
   # restricting the before filter to { :only => :destroy } doesn't work, because
   # then it changes position in the filter chain and runs after the guards, but
@@ -10,7 +10,7 @@ class Groups::GroupsController < Groups::BaseController
   before_filter :initialize_group,  only: ['new', 'create']
   before_filter :fetch_associations, only: :destroy
 
-  after_filter :track_activity, only: [:create]
+  track_actions :create
   after_filter :notify_former_users, only: :destroy
 
   guard :may_ALIAS_group?

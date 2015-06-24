@@ -19,9 +19,9 @@ class CronController < ActionController::Base
     when 'notices_send_digests'
       PageHistory.send_digest_pending_notifications
     when 'tracking_update_hourlies'
-      Tracking.process
+      Tracking::Page.process
     when 'tracking_update_dailies'
-      Daily.update
+      Tracking::Daily.update
     when 'cache_session_clean'
       clean_session_cache
     when 'cache_fragment_clean'

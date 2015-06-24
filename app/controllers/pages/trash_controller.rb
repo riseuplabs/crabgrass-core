@@ -2,6 +2,7 @@ class Pages::TrashController < Pages::SidebarsController
 
   guard :may_admin_page?
   helper 'pages/trash'
+  track_actions :update
 
   # loads popup
   def edit
@@ -17,6 +18,10 @@ class Pages::TrashController < Pages::SidebarsController
   end
 
   protected
+
+  def track_action
+    super "#{params[:type]}_page"
+  end
 
   def redirect_url
     if params[:type] == 'undelete'

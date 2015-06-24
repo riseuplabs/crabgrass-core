@@ -13,7 +13,7 @@ class Groups::RequestsController < Groups::BaseController
   # permissions handled by model:
   guard create: :allow, update: :allow, destroy: :allow
 
-  after_filter :track_activity, only: :create
+  track_actions :create
 
   rescue_render create: :index
 
@@ -49,7 +49,7 @@ class Groups::RequestsController < Groups::BaseController
     REQUEST_TYPES[params[:type]].try.constantize
   end
 
-  def track_activity
+  def track_action
     if REQUEST_TYPES.has_key? params[:type]
       super "request_to_#{params[:type]}"
     end

@@ -1,5 +1,5 @@
-# lots of MySQL-specific stuff here.
-class Daily < ActiveRecord::Base
+# mainly MySQL-specific stuff here.
+class Tracking::Daily < ActiveRecord::Base
   belongs_to :page
 
   def self.update

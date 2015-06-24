@@ -113,7 +113,7 @@ module Pages::BeforeFilters
     group = current_site.tracking? && @group
     group ||= current_site.tracking? && @page.owner.is_a?(Group) && @page.owner
     user  = current_site.tracking? && @page.owner.is_a?(User) && @page.owner
-    Tracking.insert_delayed(
+    Tracking::Page.insert_delayed(
       page: @page, current_user: current_user, action: action,
       group: group, user: user
     )

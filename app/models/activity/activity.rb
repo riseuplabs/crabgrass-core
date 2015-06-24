@@ -1,7 +1,9 @@
 # = Activity
 #
 # Activities are used to populate the recent activity list on the dashboard.
-# They are usually created by Observers on the corresponding item.
+# They are usually created by using track_action in the controllers which
+# hands the current state to Tracking::Action.track
+# (see Common::Tracking::Action in controllers and Tracking::Action in models)
 # Activities will show up on the subjects landing page.
 #
 # == Database Schema:
@@ -36,22 +38,6 @@ class Activity < ActiveRecord::Base
 
   belongs_to :subject, polymorphic: true  # the "subject" is typically the actor who is doing something.
   belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
-
-  EVENT_CREATES_ACTIVITIES = {
-    create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity'],
-    create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
-    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
-    request_to_destroy_group: ['UserProposedToDestroyGroupActivity'],
-    create_friendship: ['FriendActivity']
-  }
-
-  def self.track(event, options = {})
-    options[:key] ||= rand(Time.now.to_i)
-    EVENT_CREATES_ACTIVITIES[event].each do |class_name|
-      klass = class_name.constantize
-      klass.create! options.select{|k,v| klass.method_defined? "#{k}="}
-    end
-  end
 
   before_create :set_defaults
   def set_defaults # :nodoc:
