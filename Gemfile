@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 # Rails is the framework we use.
 # use the 3.2 series including all security fixes
-gem 'rails', '~> 3.2.19'
+gem 'rails', '~> 3.2.22'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
