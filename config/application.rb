@@ -102,6 +102,14 @@ module Crabgrass
       end
     end
 
+    #
+    # Reload the permissions when reloading models in development and once
+    # in production.
+    # (They monkeypatch the User and Group classes.)
+    config.to_prepare do
+      CastleGates.initialize('config/permissions')
+    end
+
     initializer "crabgrass_page.freeze_pages" do |app|
       require 'crabgrass/page/class_registrar'
       ::PAGES = Crabgrass::Page::ClassRegistrar.proxies.dup.freeze

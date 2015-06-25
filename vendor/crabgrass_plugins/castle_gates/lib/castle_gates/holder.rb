@@ -260,20 +260,16 @@ class Holder
   def self.eval_block(block, options)
     if block
       if model = options[:model]
-        after_reload(model) do |model|
-          model.class_eval &block
-        end
+        model.class_eval &block
       end
     end
   end
 
   def self.holder_from_model(options)
-    model = options[:model]
-    raise ArgumentError.new unless model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
-    after_reload(model) do |model|
+    options[:model].tap do |model|
+      raise ArgumentError.new unless model?(model)
       model.send(:include, CastleGates::ActsAsHolder::InstanceMethods)
     end
-    model
   end
 
   def self.holder_from_association(options)
@@ -283,5 +279,8 @@ class Holder
     association
   end
 
+  def self.model?(model)
+    model.is_a?(Class) && model.ancestors.include?(ActiveRecord::Base)
+  end
 end
 end
