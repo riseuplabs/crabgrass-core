@@ -103,6 +103,10 @@ module Common::Ui::LayoutHelper
       lines << '<![endif]-->'
     end
 
+    lines << '<!--[if IE]>'
+    lines << javascript_include_tag(SPROCKETS_PREFIX + 'shims.js')
+    lines << '<![endif]-->'
+
     # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
     unless logged_in?
       lines.push('<script type="text/javascript">if(sessionStorage.length > 0) sessionStorage.clear();</script>')
