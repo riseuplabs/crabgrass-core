@@ -20,18 +20,18 @@ module Common::Ui::PostHelper
 
   def star_post_action(post)
     return unless may_twinkle_posts?(post)
-    content_tag :div, :class=>'shy' do
-      if !post.starred_by?(current_user)
-        link_to '', post_star_path(post), remote: true,
-          class: 'small_icon_button',
-          icon: 'star_plus',
-          method: :post
-      else
-        link_to '', post_star_path(post), remote: true,
-          class: 'small_icon_button',
-          icon: 'star_minus',
-          method: :delete
-      end
+    if !post.starred_by?(current_user)
+      link_to '', post_star_path(post), remote: true,
+        class: 'small_icon_button shy',
+        icon: 'star_plus',
+        data: {toggle: {star_plus_16: :star_minus_16}},
+        method: :post
+    else
+      link_to '', post_star_path(post), remote: true,
+        class: 'small_icon_button shy',
+        icon: 'star_minus',
+        data: {toggle: {star_minus_16: :star_plus_16}},
+        method: :delete
     end
   end
 
