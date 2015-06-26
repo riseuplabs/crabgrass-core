@@ -1,8 +1,3 @@
-# Tests have a dummy after_reload implementation
-unless Object.private_methods.include? :after_reload
-  require 'after_reload'
-end
-
 module CastleGates
   class Engine < ::Rails::Engine
   end
@@ -16,8 +11,10 @@ module CastleGates
   #
   #   CasteGates.initialize('config/permissions')
   #
+  # require_dependency makes sure the file get's reloaded when
+  # models get reloaded in development.
   def self.initialize(path)
-    require "#{Rails.root}/#{path}"
+    require_dependency "#{Rails.root}/#{path}"
   end
 
   def self.define(&block)
@@ -25,10 +22,8 @@ module CastleGates
   end
 
   def self.castle(model_class, &block)
-    after_reload(model_class) do |model_class|
-      model_class.send(:acts_as_castle)
-      model_class.class_eval(&block)
-    end
+    model_class.send(:acts_as_castle)
+    model_class.class_eval(&block)
   end
 
   def self.holder(prefix, name, options=nil, &block)

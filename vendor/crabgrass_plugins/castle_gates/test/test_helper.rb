@@ -45,13 +45,6 @@ SHOW_SQL = false
 ## TEST HELPERS
 ##
 
-class Object
-  private
-  def after_reload(model, &block)
-    yield model
-  end
-end
-
 ['../init', 'setup_db', 'models', 'fixtures'].each do |file|
   require_relative file
 end
