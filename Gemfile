@@ -191,7 +191,11 @@ group :development do
   gem 'rdoc', '~> 3.0'
 
   # fast and light weight server
-  gem 'thin', :platforms => :mri_19, :require => false
+  if RUBY_VERSION > '2'
+    gem 'thin', :require => false
+  else
+    gem 'thin', :platforms => :mri_19, :require => false
+  end
 
   # speed up rails dev mode
   gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
