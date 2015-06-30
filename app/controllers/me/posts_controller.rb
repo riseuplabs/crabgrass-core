@@ -24,11 +24,7 @@ class Me::PostsController < Me::BaseController
   def create
     in_reply_to = Post.find_by_id(params[:in_reply_to_id])
     current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
-    if request.xhr?
-      render_posts_refresh(@discussion.posts.paginate(post_pagination_params))
-    else
-      redirect_to me_discussion_posts_url(@recipient)
-    end
+    redirect_to action: :index
   end
 
   protected
@@ -39,6 +35,7 @@ class Me::PostsController < Me::BaseController
       @discussion = current_user.discussions.from_user(@recipient).first
     end
     if @recipient.blank?
+      error(:thing_not_found.t(thing: :recipient.t), :later)
       redirect_to me_discussions_url
     end
     if params[:id] && @discussion

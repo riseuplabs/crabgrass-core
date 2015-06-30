@@ -39,14 +39,5 @@ module Common::Posts
     end
   end
 
-  protected
-
-  def render_posts_refresh(posts)
-    render :update do |page|
-      standard_update(page)
-      page.replace('posts', partial: 'common/posts/list', locals: {posts: posts})
-    end
-  end
-
 end
 

@@ -12,6 +12,7 @@ class Pages::PostsController < ApplicationController
   before_filter :authorization_required
   guard :may_ALIAS_post?
   guard show: :may_show_page?
+  guard index: :may_show_page?
 
   track_actions :create, :update, :destroy
 
@@ -21,14 +22,21 @@ class Pages::PostsController < ApplicationController
   # do we still want this?...
   # cache_sweeper :social_activities_sweeper, :only => [:create, :save, :twinkle]
 
+  # js action to rerender the posts
+  def index
+    @posts = @page.posts(pagination_params)
+    @post = Post.new
+    # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
+  end
+
   def show
     redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
   end
 
   def create
-    @post = @page.add_post(current_user, post_params)
-    # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
-    render_posts_refresh @page.posts(pagination_params)
+    if @post = @page.add_post(current_user, post_params)
+      redirect_to action: :index
+    end
   end
 
   #
