@@ -1,0 +1,5 @@
+page.replace dom_id(@post),
+  partial: 'common/posts/default/row',
+  locals: {post: @post}
+
+page << 'renderStars()';

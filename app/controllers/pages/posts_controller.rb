@@ -22,7 +22,12 @@ class Pages::PostsController < ApplicationController
   # cache_sweeper :social_activities_sweeper, :only => :create
 
   def show
-    redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
+    respond_to do |format|
+      format.js { render 'common/posts/show' }
+      format.html {
+        redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
+      }
+    end
   end
 
   def create

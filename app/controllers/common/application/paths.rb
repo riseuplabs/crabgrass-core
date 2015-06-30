@@ -148,13 +148,20 @@ module Common::Application::Paths
     action = options.delete(:action)
     path << action if [:sort, :new, :edit].include? action.to_sym
 
-    return ('/' + path.select(&:present?).join('/') + build_query_string(options))
+    anchor = options.delete :anchor
+    path_string = '/' + path.select(&:present?).join('/')
+    path_string += build_query_string(options)
+    path_string += "##{anchor}" if anchor
+    path_string
   end
 
   def page_url(page, options={})
     urlize page_path(page, options)
   end
 
+  def post_url(post, options={})
+    page_post_url post.discussion.page, post
+  end
   ##
   ## ME
   ##

@@ -55,7 +55,7 @@ Crabgrass::Application.routes.draw do
     post 'pages(/*path)', to: 'pages#index', as: 'pages'
     resources :activities, only: [:index, :show, :create]
     resources :discussions, path: 'messages', only: :index do
-      resources :posts, except: [:show, :new]
+      resources :posts, except: [:new]
     end
     resource  :settings, only: [:show, :update]
     resource  :destroy, only: [:show, :update]

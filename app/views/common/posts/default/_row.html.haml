@@ -3,7 +3,7 @@
 - last = local_assigns[:last] || false
 - top_spacer_class = once?('post_spacer') ? "first round-top" : ""
 
-%tbody{id:post.dom_id, class: color}
+%tbody[post]
   %tr.post_spacer_top
     %td{colspan: 2, class: top_spacer_class}
       -# this is for linking to this post via the url, so
