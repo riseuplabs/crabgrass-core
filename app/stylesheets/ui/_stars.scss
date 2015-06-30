@@ -8,13 +8,11 @@
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
-    &.star_0 {
-      background-image: url(/images/png/48/post_twinkle_0.png);
-    }
-    &.star_1 {
+    background-image: url(/images/png/48/post_twinkle_0.png);
+    &:nth-of-type(3n+1) {
       background-image: url(/images/png/48/post_twinkle_1.png);
     }
-    &.star_2 {
+    &:nth-of-type(3n+2) {
       background-image: url(/images/png/48/post_twinkle_2.png);
     }
   }

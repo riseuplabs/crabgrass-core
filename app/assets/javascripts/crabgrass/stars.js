@@ -27,7 +27,6 @@ function renderStars() {
   function newStar(index) {
     var star = document.createElement("div");
     star.classList.add('star');
-    star.classList.add('star_' + index % 3);
     star.style.backgroundPosition = randomPosition();
     return star;
   }
