@@ -1,28 +1,5 @@
-#  UPGRADE TASKS
-#
-# Some data structures have changed over years. These tasks help upgrade them.
-#
-# They only need to be run once and only when migrating from older versions.
-# However, when adding tasks make sure running them again won't hurt.
-#
-#
-#
-
 namespace :cg do
   namespace :upgrade do
-    desc "Complete upgrade to crabgrass 0.6"
-    task :to_0_6 => [
-      'db:migrate',
-      'cg:cleanup:remove_committees_without_parent',
-      'cg:upgrade:init_group_permissions',
-      'cg:upgrade:migrate_group_permissions',
-      'cg:upgrade:user_permissions',
-      'cg:upgrade:secure_password',
-      'cg:upgrade:init_created_at',
-      'cg:upgrade:convert_message_pages',
-      'cg:upgrade:owner_id_in_page_terms',
-      'ts:index'
-    ]
 
     # This will grant a group's access to its members.
     # This is for the migration to core's castle_gates permission system to work
@@ -67,7 +44,7 @@ namespace :cg do
     desc "Convert the MessagePages to other classes"
     task :convert_message_pages => :environment do
 
-      require_relative 'upgrade/message_page'
+      require_relative 'message_page'
       # first we turn all the Message Pages with more or less than
       # two participants into Discussion Pages.
 
