@@ -94,7 +94,7 @@ define_navigation do
       label  { :tasks.t }
       url    { me_tasks_path }
       active { controller?('me/tasks') }
-      icon   :page_task
+      icon   :page_tasks
       local_section :pending do
         label  { :pending.t }
         url    { me_tasks_path }
