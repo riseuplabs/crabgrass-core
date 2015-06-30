@@ -17,12 +17,14 @@ $posts_padding: $ui-margin;
   table.posts {
     width: 100%;
     border: $posts_border;
-  }
-  .shade_even {
-    background: $posts_even_background;
-  }
-  .shade_odd {
-    background: $posts_odd_background;
+
+    tbody:nth-of-type(odd) {
+      background: $posts_odd_background;
+    }
+
+    tbody:nth-of-type(even) {
+      background: $posts_even_background;
+    }
   }
   .pagination {
     // border-bottom: $posts_border;
