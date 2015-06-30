@@ -21,8 +21,10 @@
 # a result of redirects.
 #
 class StarsController < ApplicationController
+  include Common::Tracking::Action
 
   before_filter :fetch_starred
+  track_actions :create
 
   def create
     @starred.stars.create(user: current_user)
@@ -30,7 +32,6 @@ class StarsController < ApplicationController
   end
 
   def destroy
-    @star = @starred.stars.where(user_id: current_user).first
     # do not trigger callbacks but decrement stars_count on @starred
     @starred.stars.delete(@star) if @star
     redirect_to @starred
@@ -40,14 +41,16 @@ class StarsController < ApplicationController
 
   def fetch_starred
     @starred = Post.find(params[:post_id])
+    @star = @starred.stars.where(user_id: current_user).first
+    # Prevent sending notifcation if the action will result in a noop.
+    # redirects in a before filter skip the action and after_filters.
+    redirect_to @starred if @star.blank? && action?(:destroy)
+    redirect_to @starred if @star.present? && action?(:create)
   end
 
   def track_action
-  #    TwinkledActivity.create!(
-  #      :user => @post.user, :twinkler => current_user,
-  #      :post => {:id => @post.id, :snippet => @post.body[0..30]}
-  #    )
-  #  end
+    super from: current_user, user: @starred.user,
+      noticable: @starred
   end
 
 end
