@@ -3,8 +3,9 @@ require 'test_helper'
 class StarsControllerTest < ActionController::TestCase
 
   def setup
-    @post = FactoryGirl.create :post
+    @page = FactoryGirl.create :page
     @user = FactoryGirl.create :user
+    @post = @page.add_post(@user, body: 'test post')
     login_as @user
   end
 
@@ -13,12 +14,10 @@ class StarsControllerTest < ActionController::TestCase
       xhr :post, :create, post_id: @post
     end
 
-    assert_response :success
-    assert assigns(:star).tap {|star|
-      assert star.persisted?
-      assert_equal @user, star.user
-      assert_equal @post, star.starred
-    }
+    assert_response :redirect
+    star = Star.last
+    assert_equal @user, star.user
+    assert_equal @post, star.starred
 
     assert_equal 1, @post.reload.stars_count
   end
@@ -30,6 +29,6 @@ class StarsControllerTest < ActionController::TestCase
     end
     assert_equal 0, @post.stars_count
 
-    assert_response :success
+    assert_response :redirect
   end
 end

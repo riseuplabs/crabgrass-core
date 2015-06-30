@@ -41,22 +41,23 @@ class CommentTest < IntegrationTest
 
   def star_comment(comment)
     within_comment(comment) do
-      find('.shy_parent a.shy', visible: false, text: "Add Star").click
+      find('.shy_parent a.shy.star_plus_16', visible: false).click
     end
   end
 
   def unstar_comment(comment)
     within_comment(comment) do
-      find('.shy_parent').hover
-      click_on "Remove Star"
+      find('.shy_parent a.shy.star_minus_16', visible: false).click
     end
   end
 
   def star_count(comment)
-    0
+    within_comment(comment) do
+      find('[data-stars]')["data-stars"].to_i
+    end
   end
 
   def within_comment(comment, &block)
-    within "#posts-#{comment.id}", &block
+    within "#post_#{comment.id}", &block
   end
 end
