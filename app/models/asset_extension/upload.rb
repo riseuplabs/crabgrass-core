@@ -147,7 +147,7 @@ module AssetExtension
           @old_files = self.all_filenames || []
 
           # create @temp_file
-          if @file_data and @file_data.size != 0
+          if @file_data
             # handle an uploaded file
             self.content_type  = Asset.mime_type_from_data(@file_data)
             self.filename      = @file_data.original_filename
