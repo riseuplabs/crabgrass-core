@@ -290,6 +290,12 @@ class AssetTest < ActiveSupport::TestCase
     assert asset.filename.present?
   end
 
+  def test_empty_files_get_filename
+    asset = Asset.build(uploaded_data: upload_data('empty.jpg'))
+    assert asset.valid?
+    assert asset.filename.present?
+  end
+
   def test_search
     user = users(:kangaroo)
     correct_ids = Asset.find(:all).collect do |asset|
