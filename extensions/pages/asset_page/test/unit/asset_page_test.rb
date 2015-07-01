@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class AssetPageTest < ActiveSupport::TestCase
   fixtures :users, :assets
@@ -33,15 +33,6 @@ class AssetPageTest < ActiveSupport::TestCase
     page.save!
     assert File.exist?(asset.private_filename)
     assert !File.exist?(asset.public_filename), 'public file "%s" should NOT exist' % asset.public_filename
-  end
-
-  # make sure assigning page.data later still updates permissions.
-  def test_asset_page_alt_method
-    page = AssetPage.create! title: 'perm test', user: users(:blue)
-    asset = Asset.create! data: 'hi', filename: 'x'
-    page.data = asset
-    page.save!
-    assert asset.visible?(users(:blue))
   end
 
   protected
