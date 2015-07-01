@@ -28,7 +28,8 @@ namespace :cg do
     desc "Upgrade from 0.6.0 to crabgrass 0.6.2"
     task :to_0_6_2 => [
       'db:migrate',
-      'cg:upgrade:migrate_ratings_to_stars'
+      'cg:upgrade:migrate_ratings_to_stars',
+      'cg:upgrade:reset_star_counters'
     ]
   end
 end
