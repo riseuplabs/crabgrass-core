@@ -8,16 +8,12 @@
 
 - local_assigns[:reply_body] ||= false
 - show_reply = local_assigns[:reply_body] || safe_call(:may_create_post?) || false
-
-- if posts.any?
-  - last_id = posts.last.id
-- else
-  - last_id = nil
+- last_id = posts.last.try.id
 
 = post_pagination_links(posts)
 %table.posts.round
   - for post in posts do
     = render partial: 'common/posts/default/row', locals: local_assigns.merge(post: post, last: (post.id == last_id))
   - if show_reply
-    = render partial: 'common/posts/default/reply', locals: local_assigns.merge(last_id: last_id)
+    = render partial: 'common/posts/default/reply', locals: local_assigns
 = post_pagination_links(posts)
