@@ -11,6 +11,17 @@ class MessageTest < JavascriptIntegrationTest
     assert_content msg
   end
 
+  def test_send_message_from_discussion
+    msg = "Here is my Message"
+    login users(:blue)
+    send_message msg, to: 'red'
+    assert_content msg
+    fill_in 'post_body', with: "other message"
+    click_on 'Post Message'
+    assert_selector '.private_post', text: "other message"
+    save_screenshot '/tmp/posted.png'
+  end
+
   def test_edit_message
     msg = "Here is my Message"
     new_msg = "Now here is something new!"
