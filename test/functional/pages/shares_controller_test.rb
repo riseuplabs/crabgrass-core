@@ -24,7 +24,7 @@ class Pages::SharesControllerTest < ActionController::TestCase
     admin = {access: 'admin'}
     assert_difference "PageHistory.count", 2 do
       xhr :post, :update, share_button: true,
-        recipients: {blue: admin, animals: admin},
+        recipients: {blue: admin, animals: admin, contributors: '0'},
         page_id: page.id,
         mode: 'share',
         format: :js

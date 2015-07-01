@@ -21,18 +21,13 @@
 
 class Recipients
 
-  attr_reader :options, :page, :param, :users, :groups, :emails, :specials
+  attr_reader :options, :page, :param, :users, :groups, :emails, :specials, :errors
 
   def initialize(param, page = nil)
-    @param, @options = param
-    @options ||= {}
+    @params, @options = param
     @page = page
-
-    # checked checkboxes will set options '1'
-    @options = {} if @options == '1'
-    # skip unchecked checkboxes
-    @param = '' if @options == '0'
-    @users, @groups, @emails, @specials = parse_recipients(@param)
+    prepare_options
+    parse_recipients
   end
 
   def users_from_groups
@@ -63,8 +58,17 @@ class Recipients
     return []
   end
 
-  # parses a list of recipients, turning them into email, user, or group
-  # objects as appropriate.
+  protected
+
+  def prepare_options
+    # checkboxes will set options to '1' or '0'
+    # skip unchecked checkboxes
+    @params = [] if @options == '0'
+    @options = {} unless @options.respond_to? :each_pair
+  end
+
+  # parses the list of recipients in @paramss
+  # turns them into email, user, or group objects as appropriate.
   #
   # entity recipients:
   #
@@ -81,45 +85,45 @@ class Recipients
   #
   #   special recipients can be symbols or strings that start with ':'
   #
-  # returns an array [users, groups, emails, special] where:
+  # sets:
   #
-  #   [users]  an array of all parsed users
-  #   [groups] an array of all parsed groups
-  #   [emails] an array of all parsed emails
-  #   [special] special recipients (:participants, etc)
+  #   @users   an array of all parsed users
+  #   @groups  an array of all parsed groups
+  #   @emails  an array of all parsed emails
+  #   @special special recipients (:participants, etc)
   #
-  def parse_recipients(recipients)
-    users = []; groups = []; emails = []; specials = []; errors = []
-    if recipients.is_a? Array
-      entities = recipients
-    elsif recipients.is_a? String
-      entities = recipients.split(/[\s,]+/)
-    else
-      entities = [recipients]
-    end
+  def parse_recipients
+    @users = []; @groups = []; @emails = []; @specials = []; @errors = []
 
-    entities.each do |entity|
+    params_as_array.each do |entity|
       entity_string = (entity.is_a?(Symbol) ? ':' : '') + entity.to_s
       if entity.is_a? Group
-        groups << entity
+        @groups << entity
       elsif entity.is_a? User
-        users << entity
+        @users << entity
       elsif entity_string.starts_with?(':')
-        specials << entity
+        @specials << entity
       elsif u = User.find_by_login(entity.to_s)
-        users << u
+        @users << u
       elsif g = Group.find_by_name(entity.to_s)
-        groups << g
+        @groups << g
       elsif ValidatesEmailFormatOf.validate_email_format(entity.to_s).nil?
-        emails << entity
+        @emails << entity
       elsif entity.present?
-        errors << I18n.t(:name_or_email_not_found, name: h(entity))
+        @errors << I18n.t(:name_or_email_not_found, name: h(entity))
       end
     end
 
-    unless errors.empty?
-      raise ErrorMessages.new('Could not understand some recipients.', errors)
+    unless @errors.empty?
+      raise ErrorMessages.new('Could not understand some recipients.', @errors)
     end
-    [users, groups, emails, specials]
-  end # parse_recipients!
+  end
+
+  def params_as_array
+    if @params.is_a? String
+      @params.split(/[\s,]+/)
+    else
+      Array(@params)
+    end
+  end
 end

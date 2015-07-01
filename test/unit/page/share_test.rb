@@ -52,7 +52,7 @@ class Page::ShareTest < ActiveSupport::TestCase
       "send_notice"=>true,
       "send_message"=>"",
       "send_email"=>false
-    share.with "rainbow" => {"send_notice"=>"1"}, "red"=> {"send_notice"=>"1"}
+    share.with "rainbow" => "1", "red"=> "1", ":contributors" => "0"
 
     page.save!
     page.reload
