@@ -1,2 +1,4 @@
 standard_update(page)
 page.replace 'posts', partial: 'common/posts/list'
+
+page << 'renderStars()';

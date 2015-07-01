@@ -9,11 +9,11 @@ namespace :cg do
         (`created_at`, `starred_type`, `starred_id`, `user_id`)
       SELECT created_at, rateable_type, rateable_id, user_id
       FROM ratings
-      WHERE ratings.rateable_type = 'Page'
+      WHERE ratings.rateable_type = 'Post'
       EOSQL
-      if Star.count == old_count + Rating.where(rateable_type: 'Page').count
+      if Star.count == old_count + Rating.where(rateable_type: 'Post').count
         puts "Converted #{Star.count - old_count} Ratings to Stars."
-        Rating.where(rateable_type: 'Page').delete_all
+        Rating.where(rateable_type: 'Post').delete_all
       end
     end
   end
