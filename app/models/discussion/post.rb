@@ -20,6 +20,8 @@ class Post < ActiveRecord::Base
   belongs_to :user
   belongs_to :page_terms    # if this is on a page we set page_terms so we can use path_finder
 
+  has_many :stars, as: :starred, dependent: :delete_all
+
   after_create :post_created
   after_destroy :post_destroyed
 
@@ -141,9 +143,7 @@ class Post < ActiveRecord::Base
   end
 
   def starred_by?(user)
-    self.ratings.detect do |rating|
-      rating.rating == 1 and rating.user_id == user.id
-    end
+    stars.exists? user_id: user
   end
 
   # These are currently only used from moderation mod.

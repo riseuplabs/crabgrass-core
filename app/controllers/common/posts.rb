@@ -25,11 +25,7 @@ module Common::Posts
     if params[:save]
       @post.update_attribute('body', params[:post][:body])
     end
-    render :update do |page|
-      page.replace @post.body_id,
-        partial: 'common/posts/default/body',
-        locals: {post: @post}
-    end
+    redirect_to action: :show
   end
 
   def destroy

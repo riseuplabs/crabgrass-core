@@ -2,10 +2,11 @@
 - # stars = post.ratings.with_rating(1).size
 - # @page ||= post.discussion.page # in case @page is not already set
 
-%div.post_body{id: post.body_id}
-  %div.float_right
+.post_body{id: post.body_id, style: "z-index: 100;"}
+  .float_right
     = edit_post_link(post)
-    = #star_post_action(post)
+    - # some pseudo posts such as requests do not support stars
+    = star_post_action(post) if post.respond_to? :stars_count
     = # call_hook :post_actions, {post: post}
   = post.body_html
 

@@ -4,14 +4,14 @@ class MessageTest < JavascriptIntegrationTest
   include Integration::Comments
 
 
-  def test_sending_message
+  def test_send_message
     msg = "Here is my Message"
     login users(:blue)
     send_message msg, to: 'red'
     assert_content msg
   end
 
-  def test_editing_message
+  def test_edit_message
     msg = "Here is my Message"
     new_msg = "Now here is something new!"
     login users(:blue)

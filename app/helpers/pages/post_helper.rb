@@ -11,11 +11,11 @@ module Pages::PostHelper
   #
 
   def edit_post_path(post, *args)
-    edit_page_post_path(@page, post, *args)
+    edit_page_post_path(@page || post.discussion.page, post, *args)
   end
 
   def post_path(post, *args)
-    page_post_path(@page, post, *args)
+    page_post_path(@page || post.discussion.page, post, *args)
   end
 
   def posts_path(*args)

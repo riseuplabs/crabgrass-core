@@ -19,10 +19,15 @@ class Pages::PostsController < ApplicationController
   rescue_render create: lambda { |controller| redirect_to(page_url(@page)) }
 
   # do we still want this?...
-  # cache_sweeper :social_activities_sweeper, :only => [:create, :save, :twinkle]
+  # cache_sweeper :social_activities_sweeper, :only => :create
 
   def show
-    redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
+    respond_to do |format|
+      format.js { render 'common/posts/show' }
+      format.html {
+        redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
+      }
+    end
   end
 
   def create
@@ -30,29 +35,6 @@ class Pages::PostsController < ApplicationController
     # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
     render_posts_refresh @page.posts(pagination_params)
   end
-
-  #
-  # I would like this to be in an add-on...
-  #
-  #  def twinkle
-  #    if rating = @post.ratings.find_by_user_id(current_user.id)
-  #      rating.update_attribute(:rating, 1)
-  #    else
-  #      rating = @post.ratings.create(:user_id => current_user.id, :rating => 1)
-  #    end
-
-  #    # this should be in an observer, but oddly it doesn't work there.
-  #    TwinkledActivity.create!(
-  #      :user => @post.user, :twinkler => current_user,
-  #      :post => {:id => @post.id, :snippet => @post.body[0..30]}
-  #    )
-  #  end
-
-  #  def untwinkle
-  #    if rating = @post.ratings.find_by_user_id(current_user.id)
-  #      rating.destroy
-  #    end
-  #  end
 
   protected
 

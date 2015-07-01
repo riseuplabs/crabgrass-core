@@ -252,6 +252,8 @@ class User < ActiveRecord::Base
 
   has_many :posts, dependent: :destroy
 
+  has_many :stars, dependent: :destroy, inverse_of: :user
+
   has_many :notices, dependent: :destroy
 
   after_destroy :destroy_requests

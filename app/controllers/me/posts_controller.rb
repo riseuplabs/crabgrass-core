@@ -11,7 +11,8 @@ class Me::PostsController < Me::BaseController
   before_filter :authorization_required
   permissions 'posts'
   guard :may_ALIAS_post?
-  guard index: :allow
+  guard index: :allow,
+    show: :allow
 
   # /me/discussions/green/posts
   def index
@@ -19,6 +20,13 @@ class Me::PostsController < Me::BaseController
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.includes(:user).paginate(post_pagination_params)
     @post = Post.new
+  end
+
+  # used in redirects after editing a post
+  def show
+    respond_to do |format|
+      format.js { render 'common/posts/show' }
+    end
   end
 
   def create

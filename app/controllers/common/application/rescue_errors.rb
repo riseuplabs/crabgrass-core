@@ -143,12 +143,12 @@ module Common::Application::RescueErrors
   # for html, we try to to figure out the best template to render.
   #
   def render_error(exception=nil, options={})
-    #if exception
+    if exception
     #  options[:template] ||= exception.template
     #  options[:redirect] ||= exception.redirect
     #  options[:record] ||= exception.record
-    #  options[:status] ||= exception.status
-    #end
+      options[:status] ||= status_for_exception(exception)
+    end
     respond_to do |format|
       format.html do
         render_error_html(exception, options)
@@ -157,6 +157,11 @@ module Common::Application::RescueErrors
         render_error_js(exception, options)
       end
     end
+  end
+
+  def status_for_exception(exception)
+    class_name = exception.class.name
+    ActionDispatch::ExceptionWrapper.status_code_for_exception(class_name)
   end
 
   #
@@ -263,7 +268,7 @@ module Common::Application::RescueErrors
     end
     log_exception(exception)
     return if performed?  # error in after_filter
-    render :update do |page|
+    render :update, options do |page|
       hide_spinners(page)
       update_alert_messages(page)
     end

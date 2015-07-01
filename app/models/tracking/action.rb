@@ -18,7 +18,8 @@ module Tracking::Action
     update_group_access: ['PageHistory::GrantGroupAccess'],
     update_user_access: ['PageHistory::GrantUserAccess'],
     update_title: ['PageHistory::ChangeTitle'],
-    update_wiki: ['PageHistory::UpdatedContent']
+    update_wiki: ['PageHistory::UpdatedContent'],
+    create_star: ['PostStarredNotice']
   }
 
   def self.track(event, options = {})
