@@ -262,24 +262,10 @@ class AssetTest < ActiveSupport::TestCase
     assert_equal 'application/octet-stream', Asset.new.content_type
   end
 
-  # data without a file upload, but just from memory
-  def test_direct_data
-    data1 = '<b>this is some very interesting data</b>'
-    data2 = '<i>but not this</i>'
-
-    asset = Asset.create!(data: '<b>this is some very interesting data</b>', content_type: 'text/html', filename: 'data')
-    assert_equal data1, File.read(asset.private_filename)
-
-    asset.data = data2
-    asset.save
-
-    assert_equal data2, File.read(asset.private_filename)
-    assert_equal data1, File.read(asset.versions.earliest.private_filename)
-  end
-
   def test_user_versions
-    asset = Asset.create! data: 'hi', filename: 'x'
-    asset.update_attributes data: 'bye', user: users(:blue)
+    asset = Asset.create! uploaded_data: upload_data('empty.jpg')
+    asset.update_attributes user: users(:blue),
+      uploaded_data: upload_data('photo.jpg')
     assert_nil asset.versions.first.user
     assert_equal users(:blue), asset.versions.last.user
   end
