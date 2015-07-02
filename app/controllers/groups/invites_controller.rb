@@ -41,13 +41,8 @@ class Groups::InvitesController < Groups::BaseController
     emails.each do |email|
       req = RequestToJoinUsViaEmail.create(created_by: current_user,
          email: email, requestable: @group, language: I18n.locale.to_s)
-      begin
-        Mailer.invite_to_join_us(req, mailer_options).deliver
-        reqs << req
-      rescue => exc
-        error(:now, exc)
-        req.destroy
-      end
+      Mailer.invite_to_join_us(req, mailer_options).deliver
+      reqs << req
     end
 
     if reqs.detect{|req|!req.valid?}
