@@ -40,6 +40,14 @@ module PageAssertions
     assert_selector '#star.star_empty_dark_16'
   end
 
+  def assert_page_public
+    assert_selector '.check_on_16', text: 'Public'
+  end
+
+  def assert_page_private
+    assert_selector '.check_off_16', text: 'Public'
+  end
+
   def assert_page_watched
     assert_selector '#watch_checkbox.check_on_16'
   end
