@@ -50,6 +50,14 @@ module PageActions
     click_on 'Watch For Updates'
   end
 
+  def make_page_public
+    find('.check_off_16', text: 'Public').click
+  end
+
+  def make_page_private
+    find('.check_on_16', text: 'Public').click
+  end
+
   def unwatch_page
     click_on 'Watch For Updates'
   end

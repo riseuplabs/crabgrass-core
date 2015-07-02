@@ -107,7 +107,7 @@ class PageHistory::Update < PageHistory
 
   protected
 
-  def class_for_update(page)
+  def self.class_for_update(page)
     return PageHistory::MakePrivate if page.marked_as_private?
     return PageHistory::MakePublic if page.marked_as_public?
     # return PageHistory::ChangeOwner if page.owner_id_changed?

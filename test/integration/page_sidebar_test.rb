@@ -27,6 +27,13 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_not_starred
   end
 
+  def test_public
+    make_page_public
+    assert_page_public
+    make_page_private
+    assert_page_private
+  end
+
   def test_share_with_user
     share_page_with users(:red)
     assert_page_users user, users(:red)
