@@ -23,6 +23,7 @@ class Wikis::WikisController < Wikis::BaseController
   layout false
 
   def show
+    @last_seen = @wiki.last_version_before(last_visit) if last_visit
     render template: 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
   end
 
@@ -79,6 +80,12 @@ class Wikis::WikisController < Wikis::BaseController
   # only track wiki updates on pages that have been saved
   def track_action(event = nil, event_options = {})
     super if @page && @wiki.previous_changes[:body]
+  end
+
+  def last_visit
+    if @page
+      @page.user_participations.where(user_id: current_user).pluck(:viewed_at)
+    end
   end
 
   def cancel

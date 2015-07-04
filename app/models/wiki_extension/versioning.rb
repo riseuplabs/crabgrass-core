@@ -44,7 +44,7 @@ module WikiExtension
     end
 
     # returns first version since +time+
-    def first_version_since(time)
+    def last_version_before(time)
       return nil unless time
       versions.first conditions: ["updated_at <= :time", {time: time}],
         order: "updated_at DESC"

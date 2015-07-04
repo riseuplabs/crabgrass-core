@@ -9,5 +9,6 @@
     .space-ui-top.icon.small.single{style: avatar_style(@version.user, 'small')}
       = :created_by_user_on.t(user: link_to_name(@version.user.try(:name)), when: friendly_time(@version.updated_at)).html_safe
 
-.wiki.clear
+
+.wiki.clear{data: {diff: @former && wiki_version_path(@wiki, @former.version)}}
   = @version.body_html

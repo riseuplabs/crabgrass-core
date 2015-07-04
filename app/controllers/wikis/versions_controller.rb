@@ -30,6 +30,9 @@ class Wikis::VersionsController < Wikis::BaseController
     super
     return if action? :index
     @version = @wiki.find_version(params[:id])
+    if params[:id].to_i > 1
+      @former = @wiki.find_version(params[:id].to_i - 1)
+    end
   rescue Wiki::VersionNotFoundError => ex
     error ex
     redirect_to action: :index
