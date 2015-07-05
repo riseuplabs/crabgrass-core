@@ -149,6 +149,13 @@ article {
       text-decoration: none;
       color: #3c763d;
     }
+    .shy {
+      ins, del{
+        background-color: initial;
+        color: initial;
+        text-decoration: initial;
+      }
+    }
 
   }
 
