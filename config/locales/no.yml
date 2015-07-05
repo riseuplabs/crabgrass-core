@@ -595,6 +595,9 @@
   request_to_friend: Be om å bli kontakter
   request_to_friend_short: Skal %{user} bli %{other_user} sin kontakt?
   request_to_friend_description: Bruker %{user} har bedt om å bli %{other_user} sin kontakt.
+  request_to_join_our_network:
+    one: Invitasjon til å bli medlem
+    other: Invitasjoner til å bli medlem
   request_to_destroy_our_group: Forespørsel om å destruere gruppe
   request_to_join_our_network_short: Skal %{group} bli medlem av %{network}?
   request_to_join_our_network_description: Gruppa %{group} ble invitert til å bli medlem i nettverket %{network}.

@@ -166,11 +166,14 @@ en:
 ########################################
 ### en/exceptions.yml
   exception:
-    not_found: Not Found
     title:
-      not_found: Not Found
+      not_found: "%{thing} Not Found"
+      group:
+        not_found: Group Not Found
     description:
       not_found: Sorry, we could not find what you were looking for.
+      group:
+        not_found: Sorry, we could not find the group you were looking for.
 
 
 ########################################
@@ -314,6 +317,7 @@ en:
   messages: Messages
   page: Page
   tags: Tags
+  tasks: Tasks
   title: Title
   body: Body
   text_message: Text Message
@@ -808,6 +812,9 @@ en:
   request_to_friend_short: Shall %{user} become a contact of %{other_user}?
   request_to_friend_description: User %{user} has requested to become a contact of user
     %{other_user}.
+  request_to_join_our_network:
+    one: Invitation to Join
+    other: Invitations to Join
   request_to_destroy_our_group: Request to Destroy Group
   request_to_join_our_network_short: Shall %{group} join %{network}?
   request_to_join_our_network_description: The group %{group} was invited to join then

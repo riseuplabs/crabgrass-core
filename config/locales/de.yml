@@ -591,6 +591,9 @@ de:
   request_to_friend: Kontaktanfrage stellen
   request_to_friend_short: Soll %{user} ein Kontakt von %{other_user} werden?
   request_to_friend_description: '%{user} würde %{other_user} gerne zu seinen_ihren Kontakten hinzufügen'
+  request_to_join_our_network:
+    one: Einladung beizutreten
+    other: Einladungen beizutreten
   request_to_destroy_our_group: Anfrage Gruppe zu vernichten
   request_to_join_our_network_short: Soll %{group} dem Netzwerk %{network} beitreten?
   request_to_join_our_network_description: Gruppe %{group} wurde eingeladen, sich dem Netzwerk %{network} anzuschließen

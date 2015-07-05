@@ -605,6 +605,9 @@ nl:
   request_to_friend: Aanvraag contacten te worden
   request_to_friend_short: Zal %{user} een contact van %{other_user} worden?
   request_to_friend_description: Gebruiker / Gebruikster %{user} heeft een aanvraag gesteld een contact van gebruiker / gebruikster user %{other_user} te worden.
+  request_to_join_our_network:
+    one: Invitatie om bijtetreden
+    other: Invitaties om bijtetreden
   request_to_destroy_our_group: Aanvrag om groep de verwoesten
   request_to_join_our_network_short: Zal %{group} %{network} bijtreden?
   request_to_join_our_network_description: De groep %{group} was geïnviteerd de netwerk %{network} bijtetreden.

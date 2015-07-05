@@ -604,6 +604,9 @@ fr:
   request_to_friend: Demander à être en contact
   request_to_friend_short: '%{user} peut-il ou peut-elle être mise en contact avec %{other_user} ?'
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
+  request_to_join_our_network:
+    one: Invitation à adhérer
+    other: Invitations à adhérer
   request_to_destroy_our_group: Demander à détruire le groupe
   request_to_join_our_network_short: '%{group} peut-il rejoindre %{network} ?'
   request_to_join_our_network_description: Le groupe %{group} a été invité à rejoindre le réseau %{network}.
