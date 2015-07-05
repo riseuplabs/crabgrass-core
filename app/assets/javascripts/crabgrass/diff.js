@@ -38,3 +38,5 @@ function renderDiff() {
   processDataDiffs(diffList);
 
 }
+
+document.observe("dom:loaded", renderDiff);
