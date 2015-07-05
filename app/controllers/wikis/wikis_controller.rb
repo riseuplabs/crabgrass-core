@@ -50,12 +50,12 @@ class Wikis::WikisController < Wikis::BaseController
 
   #
   # three ways this can be called:
-  # - cancel button     -> unlock section      - params[:cancel]
+  # - cancel button     -> unlock section      - params[:cancel] (before_filter)
   # - save button       -> save section        - params[:save]
   # - force save button -> unlock, then save   - params[:force_save]
   #
   # Either :cancel, :save, or :force_save must be present for this action
-  # to have any effect.
+  # to have any effect. Otherwise the noop before filter will render already.
   #
   def update
     WikiLock.transaction do
