@@ -68,6 +68,11 @@ module Common::Ui::AvatarHelper
       { class: 'inline' }
   end
 
+  def remove_image_link(entity)
+    link_to :remove_image_link.t, me_avatar_path(entity), method: :delete,
+      icon: 'trash', class: 'inline', confirm: :confirm_image_delete.t
+  end
+
   def edit_avatar_path(entity)
     if entity == current_user
       edit_me_avatar_path

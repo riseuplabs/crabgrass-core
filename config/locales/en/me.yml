@@ -37,7 +37,7 @@ en:
   select_image_file: "select image file"
   or_image_url: "or image URL"
   upload_image_link: "upload image"
-  ##!  remove_image_link: "remove image"
+  remove_image_link: "remove image"
   ##!  copy_paste_option_name: "Copy and paste the name of the option(s) to be customized into the box below (one option per line)."
   ##!  click_on: "Click on"
   ##!  view_custom_names: "to view the custom appearance option names."
