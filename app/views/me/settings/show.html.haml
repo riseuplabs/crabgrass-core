@@ -16,6 +16,7 @@
     - f.row do |r|
       - r.label :icon.t
       - r.input avatar_field(current_user)
+      - r.input remove_image_link(current_user) if current_user.avatar
     - f.label :notification.t
     - f.row do |r|
       - r.label :email.t
@@ -23,9 +24,9 @@
     - f.row do |r|
       - r.label :notice.t
       - r.info :do_you_want_to_receive_email_notifications.t
-      - r.input select 'user', 'receive_notifications', 
-        [ [I18n.t('notification_select.none'), ""], 
-          [I18n.t('notification_select.single'), "Single"], 
+      - r.input select 'user', 'receive_notifications',
+        [ [I18n.t('notification_select.none'), ""],
+          [I18n.t('notification_select.single'), "Single"],
           [I18n.t('notification_select.digest'), "Digest"] ],
         {}, class: 'form-control'
     - f.label :locale.t

@@ -5,6 +5,17 @@ class Me::AvatarsController < Me::BaseController
   before_filter :setup
   cache_sweeper :user_sweeper
 
+  def destroy
+    if avatar = @entity.avatar
+      expire_avatar(avatar)
+      avatar.destroy
+      @entity.avatar = nil
+      @entity.increment!(:version)
+    end
+  ensure
+    redirect_to @success_url
+  end
+
   protected
 
   def setup

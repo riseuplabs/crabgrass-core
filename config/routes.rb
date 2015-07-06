@@ -64,7 +64,7 @@ Crabgrass::Application.routes.draw do
     resource  :profile, controller: 'profile', only: [:edit, :update]
     resources :requests, only: [:index, :update, :destroy, :show]
     # resources :events, only: [:index]
-    resource :avatar, only: [:create, :edit, :update]
+    resource :avatar, only: [:create, :edit, :update, :destroy]
     resources :tasks, only: [:index]
   end
 
