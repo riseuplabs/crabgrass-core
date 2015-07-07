@@ -7,12 +7,7 @@
 # requests:
 
 :request_to_destroy_our_group.t
-:request_to_friend.t
-:request_to_join_our_network.t
-:request_to_join_us.t
 :request_to_join_us_via_email.t
-:request_to_join_you.t
-:request_to_join_your_network.t
 :request_to_remove_user.t
 :votable_request.t
 

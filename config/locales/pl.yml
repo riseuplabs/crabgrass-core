@@ -617,6 +617,10 @@ pl:
   request_to_friend: Wyślij zaproszenie do kontaktów
   request_to_friend_short: Czy dodać %{user} do kontaktów %{other_user}?
   request_to_friend_description: '%{user} chce zostać dodana/y do kontaktów %{other_user}'
+  request_to_join_our_network:
+    one: Zaproszenie do dołączenia
+    few: Zaproszenia do dołączenia
+    other: Zaproszenia do dołączenia
   request_to_destroy_our_group: Poproś o skasowanie grupy
   request_to_join_our_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}

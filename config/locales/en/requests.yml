@@ -38,6 +38,9 @@ en:
   request_to_friend: "Request to Become Contacts"
   request_to_friend_short: "Shall %{user} become a contact of %{other_user}?"
   request_to_friend_description: "User %{user} has requested to become a contact of user %{other_user}."
+  request_to_join_our_network:
+    one: "Invitation to Join"
+    other: "Invitations to Join"
 
   request_to_destroy_our_group: "Request to Destroy Group"
   request_to_join_our_network_short: "Shall %{group} join %{network}?"

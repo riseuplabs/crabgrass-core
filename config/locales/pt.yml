@@ -601,6 +601,9 @@ pt:
       request_to_create_council: Pedir para Criar um Conselho
       request_to_remove_user: Pedir para Remover um Membro
   request_to_friend: Pedir para se Tornarem Contatos
+  request_to_join_our_network:
+    one: Convite para Participar
+    other: Convites para Participar
   request_to_friend_short: Será que %{user} poderia se tornar contato de %{other_user}?
   request_to_friend_description: '%{user} gostaria de ser contato de %{other_user}'
   request_to_destroy_our_group: Pedir para Destruir o Grupo

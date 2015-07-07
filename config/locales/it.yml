@@ -599,6 +599,9 @@ it:
   request_to_friend: Richiesta di Diventare Contatti
   request_to_friend_short: '%{user} deve diventare contatto di %{other_user}?'
   request_to_friend_description: '%{user} vorrebbe essere il contatto di %{other_user}'
+  request_to_join_our_network:
+    one: Invito ad entrare a fare parte
+    other: Inviti ad entrare a fare parte
   request_to_destroy_our_group: Richiesta di Distruggere Gruppo
   request_to_join_our_network_short: '%{group} deve unirsi alla rete %{network}?'
   request_to_join_our_network_description: il gruppo %{group} è stato inviato a entrare nella rete %{network}
