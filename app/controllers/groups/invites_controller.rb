@@ -25,14 +25,16 @@ class Groups::InvitesController < Groups::BaseController
     groups = @group.network? ? recipients.groups : []
     emails = recipients.emails
 
-    reqs = []; mailers = []
+    reqs, mailers = [], []
     unless users.any? or emails.any? or groups.any?
       raise_error('Recipient required')
     end
+
     users.each do |user|
       reqs << RequestToJoinUs.create(created_by: current_user,
         recipient: user, requestable: @group)
     end
+
     groups.each do |group|
       reqs << RequestToJoinOurNetwork.create(created_by: current_user,
         recipient: group, requestable: @group)
@@ -45,14 +47,17 @@ class Groups::InvitesController < Groups::BaseController
       reqs << req
     end
 
-    if reqs.detect{|req|!req.valid?}
+    if reqs.detect { |req| !req.valid? }
       reqs.each do |req|
         alert_message req
+        RequestNotice.create! req if req.valid? && !req.is_a?(RequestToJoinUsViaEmail)
       end
     else
       success reqs.first, count: reqs.size
       params[:recipients] = ""
+      reqs.each { |req| RequestNotice.create! req if !req.is_a?(RequestToJoinUsViaEmail) }
     end
+
     redirect_to action: :new
   end
 

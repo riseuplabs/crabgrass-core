@@ -14,14 +14,17 @@ class RequestNotice < Notice
         super(*args)
       else
         request = args.first
-        if request.recipient.nil?
+        recipient = request.recipient
+
+        if recipient.nil?
           nil
-        elsif request.recipient.is_a? Group
-          request.recipient.users.each do |user|
+        elsif recipient.is_a? Group
+          recipient = recipient.council if recipient.council
+          recipient.users.each do |user|
             create!(request: request, user: user)
           end
         else
-          create!(request: request, user: request.recipient)
+          create!(request: request, user: recipient)
         end
       end
     end
