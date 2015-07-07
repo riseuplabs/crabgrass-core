@@ -13,9 +13,11 @@ class People::FriendRequestsController < People::BaseController
     if params[:cancel]
       redirect_to entity_url(@user)
     else
-      req = RequestToFriend.create! recipient: @user, created_by: current_user, message: params[:message]
+      req = RequestToFriend.create! recipient: @user, created_by: current_user,
+        message: params[:message]
       if req.valid?
         success req
+        create_notice req
         redirect_to entity_url(@user)
       else
         error
@@ -28,6 +30,12 @@ class People::FriendRequestsController < People::BaseController
     current_user.remove_contact!(@user)
     success
     redirect_to entity_url(@user)
+  end
+
+  private
+
+  def create_notice(request_obj)
+    RequestNotice.create! request_obj
   end
 
 end
