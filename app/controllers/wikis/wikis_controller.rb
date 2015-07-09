@@ -11,11 +11,6 @@ class Wikis::WikisController < Wikis::BaseController
   skip_before_filter :login_required, only: :show
   before_filter :authorized?, only: :show
 
-  # cancel button pressed
-  before_filter :cancel, only: :update, if: :cancel?
-  # no save param present - do nothing
-  before_filter :noop, only: :update, if: :noop?
-
   track_actions :update
 
   guard show: :may_show_wiki?
@@ -50,21 +45,16 @@ class Wikis::WikisController < Wikis::BaseController
 
   #
   # three ways this can be called:
-  # - cancel button     -> unlock section      - params[:cancel] (before_filter)
+  # - cancel button     -> unlock section      - params[:cancel]
   # - save button       -> save section        - params[:save]
   # - force save button -> unlock, then save   - params[:force_save]
   #
   # Either :cancel, :save, or :force_save must be present for this action
-  # to have any effect. Otherwise the noop before filter will render already.
+  # to have any effect.
   #
   def update
-    WikiLock.transaction do
-      @wiki.break_lock!(@section) if params[:force_save]
-      # disable version checked if force save
-      version = params[:force_save] ? nil : params[:wiki][:version]
-      @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
-      success
-    end
+    release_lock if cancel?
+    update_wiki if save?
     render template: 'wikis/wikis/show'
   rescue Wiki::VersionExistsError, Wiki::LockedError => exc
     # could not save, but give user a choice to force save anyway
@@ -88,20 +78,25 @@ class Wikis::WikisController < Wikis::BaseController
     end
   end
 
-  def cancel
+  def release_lock
     @wiki.release_my_lock!(@section, current_user)
-    render template: 'wikis/wikis/show'
+  end
+
+  def update_wiki
+    WikiLock.transaction do
+      @wiki.break_lock!(@section) if params[:force_save]
+      # disable version checked if force save
+      version = params[:force_save] ? nil : params[:wiki][:version]
+      @wiki.update_section!(@section, current_user, version, params[:wiki][:body])
+      success
+    end
   end
 
   def cancel?
     !!params[:cancel]
   end
 
-  def noop
-    render template: 'wikis/wikis/show'
-  end
-
-  def noop?
-    !params[:save] && !params[:force_save]
+  def save?
+    !cancel? && ( params[:save] || params[:force_save] )
   end
 end

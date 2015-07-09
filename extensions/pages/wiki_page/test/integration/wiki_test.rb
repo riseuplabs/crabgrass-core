@@ -19,6 +19,12 @@ class WikiTest < JavascriptIntegrationTest
     assert_success "Changes saved"
   end
 
+  def test_cancel_edit
+    assert_page_tab "Edit"
+    click_button 'Cancel'
+    assert_page_tab "Show"
+  end
+
   def test_format_help
     find('.edit_wiki').click_on 'Editing Help'
     help = windows.last
