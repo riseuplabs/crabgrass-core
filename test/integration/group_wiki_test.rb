@@ -2,6 +2,7 @@ require 'javascript_integration_test'
 
 class GroupWikiTest < JavascriptIntegrationTest
   include Capybara::DSL
+  include Integration::Wiki
 
   # let's not wait for wiki lock requests.
   # They are triggered automatically when leaving the settings window
@@ -27,6 +28,23 @@ class GroupWikiTest < JavascriptIntegrationTest
     assert_selector '.wiki h2', text: 'test content'
   end
 
+  def test_diff_display
+    @user = users(:blue)
+    @group = groups(:rainbow)
+    @wiki = @group.profiles.public.create_wiki version: 0, body: '', user: @user
+    @old = create_wiki_version @user
+    membership = @user.memberships.where(group_id: @group).first
+    membership.update_column :visited_at, Time.now
+    sleep 1
+    create_wiki_version users(:red)
+    @new = create_wiki_version users(:red)
+
+    login
+    visit '/rainbow'
+    assert_selector 'article .wiki ins'
+    assert_selector 'article .wiki del'
+  end
+
   protected
 
   def create_group_wiki(type)
@@ -39,4 +57,7 @@ class GroupWikiTest < JavascriptIntegrationTest
     click_on 'Edit'
   end
 
+  def assert_wiki_content(text)
+    assert_selector 'article div.wiki', text: text.gsub("\n", " ")
+  end
 end

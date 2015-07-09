@@ -23,7 +23,7 @@ class Wikis::WikisController < Wikis::BaseController
   layout false
 
   def show
-    @last_seen = @wiki.last_version_before(last_visit) if last_visit
+    @wiki.last_seen_at = last_visit if last_visit
     render template: 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
   end
 
