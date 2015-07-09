@@ -23,6 +23,7 @@ class Wikis::WikisController < Wikis::BaseController
   layout false
 
   def show
+    @wiki.last_seen_at = last_visit if last_visit
     render template: 'wikis/wikis/show' #, :locals => {:preview => params['preview']}
   end
 
@@ -49,12 +50,12 @@ class Wikis::WikisController < Wikis::BaseController
 
   #
   # three ways this can be called:
-  # - cancel button     -> unlock section      - params[:cancel]
+  # - cancel button     -> unlock section      - params[:cancel] (before_filter)
   # - save button       -> save section        - params[:save]
   # - force save button -> unlock, then save   - params[:force_save]
   #
   # Either :cancel, :save, or :force_save must be present for this action
-  # to have any effect.
+  # to have any effect. Otherwise the noop before filter will render already.
   #
   def update
     WikiLock.transaction do
@@ -79,6 +80,12 @@ class Wikis::WikisController < Wikis::BaseController
   # only track wiki updates on pages that have been saved
   def track_action(event = nil, event_options = {})
     super if @page && @wiki.previous_changes[:body]
+  end
+
+  def last_visit
+    if @page
+      @page.user_participations.where(user_id: current_user).pluck(:viewed_at)
+    end
   end
 
   def cancel

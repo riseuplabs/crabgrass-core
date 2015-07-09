@@ -19,6 +19,8 @@ class Groups::HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal @pub, assigns('public_wiki')
     assert_equal @priv, assigns('private_wiki')
+    last_visit = @group.memberships.where(user_id: @user).pluck(:visited_at).first
+    assert (last_visit > 1.minute.ago), 'visited_at should be set'
   end
 
   ##

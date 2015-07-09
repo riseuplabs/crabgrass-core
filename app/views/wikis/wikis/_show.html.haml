@@ -4,7 +4,7 @@
 - if (notice = wiki_notice()).present?
   -# give it an id so we can hide it with javascript
   #inline-page-notice= notice
-%div.wiki
+.wiki{data: {diff: wiki.former && wiki_version_path(wiki, wiki.former.version)}}
   -# the indentation for wikis must be preserved exactly, or
   -# <pre> blocks get indented by haml.
   = preserve do

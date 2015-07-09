@@ -40,7 +40,7 @@ class WikiPageController < Pages::BaseController
 
   def find_last_seen
     if @upart and !@upart.viewed? and @wiki.version > 1
-      @last_seen = @wiki.first_version_since( @upart.viewed_at )
+      @wiki.last_seen_at = @upart.viewed_at
     end
   end
 

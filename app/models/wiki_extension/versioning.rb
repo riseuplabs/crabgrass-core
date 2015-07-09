@@ -43,8 +43,16 @@ module WikiExtension
       body_changed? and !versions.last.body.blank?
     end
 
+    def current
+      versions.order(:version).last
+    end
+
+    def former
+      last_version_before(last_seen_at) if last_seen_at.present?
+    end
+
     # returns first version since +time+
-    def first_version_since(time)
+    def last_version_before(time)
       return nil unless time
       versions.first conditions: ["updated_at <= :time", {time: time}],
         order: "updated_at DESC"

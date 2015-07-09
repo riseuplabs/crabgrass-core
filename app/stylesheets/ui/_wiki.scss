@@ -135,6 +135,28 @@ article {
       }
     }
 
+    //
+    // DIFFS
+    //
+
+    del {
+      color: #A33;
+      background-color: #fff;
+    }
+
+    ins {
+      background-color: #d6e9c6;
+      text-decoration: none;
+      color: #3c763d;
+    }
+    .shy {
+      ins, del{
+        background-color: initial;
+        color: initial;
+        text-decoration: initial;
+      }
+    }
+
   }
 
   .post {
@@ -153,17 +175,6 @@ article {
   div.diff {
     p {
   margin: 0; } }
-
-  del {
-    &.diffmod, &.diffins {
-      color: #999999;
-  background-color: #dddddd; } }
-
-  ins {
-    &.diffmod, &.diffins {
-      background-color: #ccffcc;
-      text-decoration: none;
-  color: black; } }
 
   //
   // WIKI EDITING

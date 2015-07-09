@@ -22,7 +22,7 @@ class GroupCreationTest < IntegrationTest
 
   def test_create_committee
     visit_new_committee_form :animals
-    create_group :committee, parent: groups(:animals)
+    create_group :committee, parent: groups(:animals), name: 'cold'
     assert_group_created
   end
 

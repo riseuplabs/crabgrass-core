@@ -5,6 +5,7 @@ class Groups::HomeController < Groups::BaseController
   skip_before_filter :authorization_required
 
   before_filter :fetch_wikis
+  after_filter :track_visit
 
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'
@@ -25,10 +26,27 @@ class Groups::HomeController < Groups::BaseController
   protected
 
   def fetch_wikis
-    if may_edit_group? && @group.private_wiki.try.body.present?
-      @private_wiki = @group.private_wiki
+    @private_wiki = fetch_wiki(:private) if may_edit_group?
+    @public_wiki = fetch_wiki(:public)
+  end
+
+  def fetch_wiki(type)
+    @group.profiles.send(type).try.wiki.tap do |wiki|
+      return nil if wiki.blank? || wiki.body.blank?
+      wiki.last_seen_at = last_visit
     end
-    @public_wiki = @group.public_wiki if @group.public_wiki.try.body.present?
+  end
+
+  def last_visit
+    memberships.pluck(:visited_at).first
+  end
+
+  def track_visit
+    memberships.update_all visited_at: Time.now
+  end
+
+  def memberships
+    @group.memberships.where(user_id: current_user)
   end
 
   #helper_method :coming_from_wiki?

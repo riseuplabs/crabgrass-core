@@ -27,7 +27,7 @@ class WikiTest < JavascriptIntegrationTest
     end
   end
 
-  def test_versioning
+  def test_versioning_with_diff
     versions = []
     3.times do
       versions << update_wiki
@@ -38,7 +38,8 @@ class WikiTest < JavascriptIntegrationTest
     assert_no_content "Version 4"
     find("span.b", text: "3", exact: false).click
     clicking "previous" do
-      assert_content versions.pop
+      assert_selector 'ins', text: versions.pop
+      assert_selector 'del', text: versions.last if versions.last.present?
     end
   end
 
