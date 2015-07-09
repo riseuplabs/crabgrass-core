@@ -32,11 +32,7 @@ class AssetsController < ApplicationController
   ## Before Filters
 
   def fetch_asset
-    if params[:version]
-      @asset = Asset.find_by_id(params[:id]).versions.find_by_version(params[:version])
-    else
-      @asset = Asset.find_by_id(params[:id])
-    end
+    @asset = Asset.find(params[:id]).version_or_self(params[:version])
     raise_not_found(:file.t) unless @asset
     @page = @asset.page
     true
