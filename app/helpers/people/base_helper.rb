@@ -20,4 +20,9 @@ module People::BaseHelper
     end
   end
 
+  def profile_send_message_link
+    if may_pester?
+      link_to :send_message_link.t, me_discussion_posts_path(@user), icon: :page_message
+    end
+  end
 end

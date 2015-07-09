@@ -23,4 +23,8 @@ module PeoplePermission
     current_user.friend_of?(@user)
   end
 
+  def may_pester?
+    current_user.may?(:pester, @user) && current_user != @user
+  end
+
 end
