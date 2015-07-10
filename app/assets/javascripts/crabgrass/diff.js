@@ -6,7 +6,7 @@ function renderDiff() {
   // former markup into a div and then we compare the innerHTML.
   function processResponse(response) {
     var div = document.createElement("div");
-    div.innerHTML = response.responseText;
+    div.innerHTML = response.responseText.trim();
     return div;
   }
 
@@ -24,7 +24,9 @@ function renderDiff() {
   function diffDiv(current) {
     var url = current.readAttribute('data-diff');
     fetchVersion(url, function(former) {
-      current.innerHTML = htmldiff(former.innerHTML, current.innerHTML);
+      if (former.innerHTML != "") {
+        current.innerHTML = htmldiff(former.innerHTML, current.innerHTML);
+      }
     });
   }
 
