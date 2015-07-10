@@ -63,6 +63,21 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     assert_equal @user.login, @wiki.page.updated_by_login
   end
 
+  def test_cancel_update
+    @wiki = create_page_wiki
+    login_as @user
+    former = @wiki.body_html
+    assert_permission :may_edit_wiki? do
+      xhr :post, :update,
+        id: @wiki.id,
+        wiki: {body: '*updated*', version: 1},
+        cancel: true
+    end
+    assert_equal former, @wiki.reload.body_html
+    assert !(@user.login == @wiki.page.updated_by_login),
+      'cancel should not set updated_by'
+  end
+
   def test_show_private_group_wiki
     @wiki = create_profile_wiki(true)
     login_as @user
