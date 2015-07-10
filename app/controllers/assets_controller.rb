@@ -9,7 +9,7 @@ class AssetsController < ApplicationController
   prepend_before_filter :fetch_asset, only: [:show, :destroy]
 
   def show
-    file = file_to_send(params[:path])
+    file = file_to_send
     send_file private_filename(file),
       type: file.content_type,
       disposition: disposition(file)
@@ -57,8 +57,7 @@ class AssetsController < ApplicationController
 
   ## Helper Methods
 
-  def file_to_send(path)
-    thumb_name = thumb_name_from_path(path)
+  def file_to_send
     if thumb_name
       thumb = @asset.thumbnail(thumb_name)
       raise_not_found unless thumb
@@ -82,8 +81,17 @@ class AssetsController < ApplicationController
     filename =~ /#{THUMBNAIL_SEPARATOR}/
   end
 
-  def thumb_name_from_path(path)
+  def thumb_name
     $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
+  end
+
+  # read path from params and deal with invalid byte sequence in UTF-8
+  # for links created when we still used a different encoding
+  def path
+    params[:path].try.encode 'UTF-8', 'binary',
+      invalid: :replace,
+      undef: :replace,
+      replace: ''
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.
