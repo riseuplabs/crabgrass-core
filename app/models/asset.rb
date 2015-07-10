@@ -152,6 +152,11 @@ class Asset < ActiveRecord::Base
     where("is_#{type} = ?",true)
   end
 
+  def version_or_self(version_id)
+    return self if version_id.blank?
+    versions.find_by_version(version_id)
+  end
+
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
   ##

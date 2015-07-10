@@ -17,6 +17,18 @@ class AssetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_not_found
+    assert_raises ActiveRecord::RecordNotFound do
+      get :show, id: :non_existant
+    end
+  end
+
+  def test_not_found_with_version
+    assert_raises ActiveRecord::RecordNotFound do
+      get :show, id: :non_existant, version: 123
+    end
+  end
+
   def test_thumbnail_get
     ImageAsset.any_instance.stubs(:public?).returns(false)
     asset = FactoryGirl.create :image_asset
