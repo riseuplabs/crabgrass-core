@@ -1,7 +1,8 @@
 - if logged_in?
+  - entities = current_user.friends.most_active
   = render partial: '/layouts/global/nav/boxes',
       locals: { id: 'people',
-        entities: current_user.friends.most_active,
+        entities: entities.sort_by{|u| u.display_name.downcase},
         heading: I18n.t(:my_contacts),
         see_all_url: people_directory_path(path: 'contacts') }
 
