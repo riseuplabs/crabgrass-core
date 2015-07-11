@@ -47,6 +47,7 @@ Crabgrass::Application.routes.draw do
   ##
 
   namespace 'me' do
+    delete 'notices/destroy_all', to: 'notices#destroy_all', as: 'notices_destroy_all'
     resources :notices, only: [:index, :show, :destroy]
     get '', to: 'notices#index', as: 'home'
     # resource  :page, only: [:new, :create]

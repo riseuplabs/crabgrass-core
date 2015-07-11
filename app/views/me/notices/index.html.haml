@@ -1,12 +1,15 @@
-.h2.first=:notices.t
-- if @notices.empty?
-  %ul.shaded
-    %li= :none.t
-- else
-  = pagination_links @notices
+%span.h2.first=:notices.t
+- if @notices.any?
+  %span.dismiss-all-notices-btn
+    = dismiss_all_notices_button
   %table#notice_list.shaded
     = render partial: 'notice', collection: @notices
-  = pagination_links @notices
+  .notices-pagination-wrapper
+    = pagination_links @notices
+- else
+  %ul.shaded
+    %li= :none.t
 
 = render 'layouts/section/heading_with_info', section: :recent_pages
 = render partial: 'common/pages/list', locals: {style: 'table'}
+

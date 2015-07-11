@@ -24,6 +24,15 @@ class Me::NoticesController < Me::BaseController
     @notice.dismiss!
   end
 
+  def destroy_all
+    notices = Notice.for_user(current_user).dismissed(false).each &:dismiss!
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+    end
+  end
+
   protected
 
   def fetch_notice

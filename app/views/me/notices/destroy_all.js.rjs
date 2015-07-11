@@ -1,0 +1,18 @@
+standard_update(page)
+page << %Q(
+  var el = $$("#notice_list tbody").first();
+  if (el) {
+    el.replace("<tr><td>#{:none.t}</td></tr>");
+  }
+
+  var pagination = $$(".notices-pagination-wrapper").first();
+  if (pagination) {
+    pagination.hide();
+  }
+
+  var dismissBtn = $$(".dismiss-all-notices-btn").first();
+  if (dismissBtn) {
+    dismissBtn.hide();
+  }
+)
+
