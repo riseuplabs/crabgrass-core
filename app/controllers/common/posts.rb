@@ -31,7 +31,7 @@ module Common::Posts
   def destroy
     @post.destroy
     render :update do |page|
-      page.hide @post.dom_id
+      page.hide dom_id(@post)
     end
   end
 

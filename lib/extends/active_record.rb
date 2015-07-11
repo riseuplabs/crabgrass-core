@@ -63,10 +63,6 @@ ActiveRecord::Base.class_eval do
     end
   end
 
-  def dom_id
-    [self.class.name.downcase.pluralize.dasherize, id] * '-'
-  end
-
   # make sanitize_sql public so we can use it ourselves
   def self.quote_sql(condition)
     sanitize_sql_array(condition)
