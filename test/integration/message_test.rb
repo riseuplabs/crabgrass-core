@@ -32,13 +32,34 @@ class MessageTest < JavascriptIntegrationTest
     assert_no_content msg
   end
 
+  def test_delete_message
+    text = "Here is my Message"
+    blue = users(:blue)
+    red = users(:red)
+    login blue
+    new_msg = blue.send_message_to!(red, text, nil)
+    msg_id = "#private_post_#{new_msg.id}"
+
+    visit "/me/messages/#{red.login}/posts"
+
+    assert_selector msg_id
+
+    hover_and_edit(text) do
+      click_on 'Delete'
+      wait_for_ajax
+    end
+
+    assert_no_selector msg_id
+  end
+
+  private
+
   def send_message(msg, options = {})
     click_on 'Messages'
     fill_in 'Recipient', with: options[:to]
     fill_in 'Message', with: msg
     click_on 'Send'
   end
-
 
 end
 
