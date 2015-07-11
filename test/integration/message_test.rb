@@ -46,7 +46,6 @@ class MessageTest < JavascriptIntegrationTest
 
     hover_and_edit(text) do
       click_on 'Delete'
-      wait_for_ajax
     end
 
     assert_no_selector msg_id
