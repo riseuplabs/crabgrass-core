@@ -5,7 +5,7 @@ class Groups::HomeController < Groups::BaseController
   skip_before_filter :authorization_required
 
   before_filter :fetch_wikis
-  after_filter :track_visit
+  after_filter :track_visit, if: :logged_in?
 
   layout 'sidecolumn'
   helper 'wikis/base', 'wikis/sections'
@@ -38,7 +38,7 @@ class Groups::HomeController < Groups::BaseController
   end
 
   def last_visit
-    memberships.pluck(:visited_at).first
+    memberships.pluck(:visited_at).first if logged_in?
   end
 
   def track_visit

@@ -8,7 +8,6 @@ class Groups::HomeControllerTest < ActionController::TestCase
     @group.add_user!(@user)
     @pub = @group.profiles.public.create_wiki body: 'hello'
     @priv = @group.profiles.private.create_wiki body: 'pssst'
-    Group.stubs(:find_by_name).with(@group.to_param).returns(@group)
   end
 
   def test_show
@@ -21,6 +20,14 @@ class Groups::HomeControllerTest < ActionController::TestCase
     assert_equal @priv, assigns('private_wiki')
     last_visit = @group.memberships.where(user_id: @user).pluck(:visited_at).first
     assert (last_visit > 1.minute.ago), 'visited_at should be set'
+  end
+
+  def test_show_public
+    assert_permission :may_show_group? do
+      get :show, group_id: 'animals'
+    end
+    assert_response :success
+    assert assigns('group').present?
   end
 
   ##
