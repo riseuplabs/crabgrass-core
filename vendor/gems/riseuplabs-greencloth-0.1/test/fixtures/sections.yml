@@ -2,7 +2,7 @@
 name: one section no heading
 in: |-
   start unheaded section
-  
+
   line line line
 out: |-
   <div class="wiki_section" id="wiki_section-0">
@@ -23,14 +23,14 @@ out: |-
 ---
 name: some mixed style sections
 in: |-
-  
+
   h2. first section
-  
+
   some blahs
-  
+
   second section
   ==============
-  
+
   more lalas
 out: |-
   <div class="wiki_section" id="wiki_section-0">
@@ -46,11 +46,11 @@ name: section without heading
 in: |-
   some text
   one more line of text without a heading
-  
+
   some blahs
-  
+
   h1. first section heading here
-  
+
   more lalas
 out: |-
   <div class="wiki_section" id="wiki_section-0">
@@ -69,21 +69,21 @@ in: |-
   -----------
   section one line one is here
   section one line two is next
-  
+
   Here is section one still
-  
+
   Section Two
   ==========
   Section two first line
   Section two another line
-  
-  
+
+
   h2. Section 3 with h2
-  
+
   One more line for section 3
-  
+
   h3. final section 4
-  
+
   section 4 first non-blank line
 out: |-
   <div class="wiki_section" id="wiki_section-0">
@@ -106,3 +106,23 @@ out: |-
     <h3>final section 4</h3>
     <p>section 4 first non-blank line</p>
   </div>
+name: broken in production
+in: |-
+  [[toc]]
+
+  Me Section
+  ---------------------
+
+  h3. Me Section
+
+  text
+out: |-
+  <ul class="toc">
+  <li class="toc1"><a href="#me-section"><span>1</span> Me Section</a></li>
+  <ul>
+  <li class="toc2"><a href="#me-section_2"><span>1.1</span> Me Section</a></li>
+  </ul>
+  </ul>
+  <h2 class="first">Me Section</h2>
+  <h3>Me Section</h3>
+  <p>text</p>
