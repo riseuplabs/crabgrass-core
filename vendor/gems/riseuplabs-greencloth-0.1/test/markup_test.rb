@@ -28,7 +28,7 @@ class TestMarkup < MiniTest::Test
         raise
       end
     end
-    @special = ['sections.yml', 'outline.yml']
+    @special = ['outline.yml']
     @markup_fixtures = @fixtures.reject{|key,value| @special.include? key}
   end
 
