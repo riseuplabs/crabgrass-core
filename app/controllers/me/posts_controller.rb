@@ -46,6 +46,10 @@ class Me::PostsController < Me::BaseController
       error(:thing_not_found.t(thing: :recipient.t), :later)
       redirect_to me_discussions_url
     end
+    if @discussion.blank?
+      error(:thing_not_found.t(thing: :message.t), :later)
+      redirect_to me_discussions_url
+    end
     if params[:id] && @discussion
       @post = @discussion.posts.find(params[:id])
     end
