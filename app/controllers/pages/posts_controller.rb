@@ -31,16 +31,17 @@ class Pages::PostsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.js { render 'common/posts/show' }
-      format.html {
-        redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
-      }
+      format.js   { render 'common/posts/show' }
+      format.html { redirect_to page_url(@page) + "#posts-#{@post.id}" }
     end
   end
 
   def create
     if @post = @page.add_post(current_user, post_params)
-      redirect_to action: :index
+      respond_to do |format|
+        format.js   { redirect_to action: :index }
+        format.html { redirect_to page_url(@page) + "#posts-#{@post.id}" }
+      end
     end
   end
 
