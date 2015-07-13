@@ -14,7 +14,10 @@
     %td.post_author
       %div.author{style: author_style}
         %div.username= link_to_user post.user
-        %div.nowrap.date= created_modified_date(post.created_at, post.updated_at)
+        %div.nowrap.date.created-link
+          = created_date(post.created_at, post.updated_at, "#post-#{post.id}")
+        %div.nowrap.date.hide.detailed-link
+          = created_modified_date(post.created_at, post.updated_at, "#post-#{post.id}")
     %td.post_body.shy_parent{stars_for(post)}
       = render partial: 'common/posts/default/body', locals: local_assigns
   %tr.post_spacer_bottom

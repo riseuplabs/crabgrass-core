@@ -1,11 +1,25 @@
 module Common::Ui::PostHelper
 
-  def created_modified_date(created, modified=nil)
-    return friendly_date(created) unless modified and (modified > created + 30.minutes)
+  def created_date(created, modified=nil, href=nil)
+    created_date = friendly_date(created)
+    link_to_function created_date,
+      'var parent = this.up("div");
+       parent.toggleClassName("hide");
+       parent.siblings().last().toggleClassName("hide")',
+      href: href, class: 'dotted'
+  end
+
+  def created_modified_date(created, modified=nil, href=nil)
+    return created_date(created, modified, href) unless modified and (modified > created + 30.minutes)
     created_date = friendly_date(created)
     modified_date = friendly_date(modified)
-    detail_string = "created:&nbsp;#{created_date}<br/>modified:&nbsp;#{modified_date}"
-    link_to_function created_date, %Q[this.replace("#{detail_string}")], class: 'dotted'
+    detail_string = "created:&nbsp;#{created_date}<br>modified:&nbsp;#{modified_date}"
+
+    link_to_function detail_string.html_safe,
+      'var parent = this.up("div");
+       parent.toggleClassName("hide");
+       parent.siblings().last().toggleClassName("hide")',
+      href: href, class: 'dotted'
   end
 
   #
