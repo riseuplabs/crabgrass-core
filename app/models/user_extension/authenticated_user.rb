@@ -49,10 +49,6 @@ module AuthenticatedUser
       find_by_login(login).try.authenticate(password)
     end
 
-    def find_for_forget(email)
-      where(email: email).first
-    end
-
     # set to the currently logged in user.
     def current; Thread.current[:user]; end
     def current=(user); Thread.current[:user] = user; end

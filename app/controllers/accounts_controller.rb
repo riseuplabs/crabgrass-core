@@ -117,10 +117,9 @@ class AccountsController < ApplicationController
 
     sleep(rand*3) # an attempt to make timing attacks harder
 
-    user = User.find_for_forget(params[:email])
+    user = User.find_by_email params[:email]
     if user
-      token = Token.new(user: user, action: "recovery")
-      token.save
+      token = Token.to_recover.create(user: user)
       Mailer.forgot_password(token, mailer_options).deliver
     end
 
@@ -154,14 +153,13 @@ class AccountsController < ApplicationController
   # confirms that the token is valid, returns false otherwise.
   #
   def confirm_token
-    @token = Token.find_by_value_and_action(params[:token], 'recovery')
-    if @token.nil? or @token.expired?
+    @token = Token.to_recover.active.find_by_param(params[:token])
+    if @token.present?
+      @user = @token.user
+    else
       error :invalid_token.t, :invalid_token_text.t
       render_alert
       return false
-    else
-      @user = @token.user
-      return true
     end
   end
 
