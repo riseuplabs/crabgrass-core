@@ -169,7 +169,6 @@ Crabgrass::Application.routes.draw do
     as: 'page_creation',
     to: 'page/create#new'
   post '/pages/create(/:owner(/:type))',
-    as: 'page_creation',
     to: 'page/create#create'
 
   # base page

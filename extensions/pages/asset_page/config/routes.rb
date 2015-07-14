@@ -7,8 +7,7 @@ Rails.application.routes.draw do
       to: 'create_asset_page#new',
       as: :asset_page_creation
     post 'assets/create(/:owner)',
-      to: 'create_asset_page#create',
-      as: :asset_page_creation
+      to: 'create_asset_page#create'
   end
 
   scope path: 'pages/:page_id' do
