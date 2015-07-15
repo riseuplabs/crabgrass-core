@@ -1,16 +1,16 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 class Groups::RequestsControllerTest < ActionController::TestCase
 
   def setup
     @user  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
+    @group.add_user! @user
+    login_as @user
   end
 
 
   def test_index
-    @group.add_user! @user
-    login_as @user
     assert_permission :may_admin_group? do
       get :index, group_id: @group.to_param
     end
@@ -18,8 +18,6 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_create
-    login_as @user
-    @group.add_user! @user
       assert_difference 'RequestToDestroyOurGroup.count' do
         get :create, group_id: @group.to_param, type: 'destroy_group'
       end
@@ -27,5 +25,18 @@ class Groups::RequestsControllerTest < ActionController::TestCase
     assert activity = UserProposedToDestroyGroupActivity.last
     assert_equal @user, activity.user
     assert_equal @group, activity.group
+  end
+
+  def test_approve
+    @other = FactoryGirl.create(:user)
+    @group.add_user! @other
+    @req = RequestToCreateCouncil.create! group: @group,
+      requestable: @group,
+      created_by: @other
+
+    assert_difference 'Council.count' do
+      post :update, group_id: @group.to_param, id: @req.id, mark: :approve
+    end
+    assert_response :success
   end
 end
