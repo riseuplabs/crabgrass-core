@@ -14,7 +14,7 @@ class SurveyPageController < Pages::BaseController
 #    @page.data = @survey
 #    @page.save
 #  rescue exc
-#    flash_message_now :object => @survey, :exception => exc
+#    warning exc
 #  end
 
   def show
