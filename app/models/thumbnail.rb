@@ -145,11 +145,14 @@ class Thumbnail < ActiveRecord::Base
 
   def generate_now(options)
     trans = Media.transmogrifier(options)
-    if trans.run() == :success
+    # trans can be nil for old assets that still have a thumbnail
+    # were we currently do not have a transmogrifier.
+    # Observed this for .xcf - but probably better to be save anyway.
+    # So using try here.
+    if trans.try.run == :success
       update_metadata(options)
       self.failure = false
     else
-      # failure
       self.failure = true
     end
     save if changed?

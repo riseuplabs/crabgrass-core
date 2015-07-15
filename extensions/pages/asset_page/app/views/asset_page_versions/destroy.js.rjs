@@ -1,0 +1,1 @@
+page.hide "asset_#{@asset_version.asset_id}_version_#{@asset_version.version}"

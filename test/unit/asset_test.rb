@@ -150,6 +150,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_type_changes
     @asset = FactoryGirl.create :image_asset
+    @word_asset = FactoryGirl.create :word_asset
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -158,7 +159,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
     assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
-    assert_equal 6, @asset.thumbnails.count
+    # relative comparison to account for CI which does not have
+    # a transmogrifier for word right now.
+    assert_equal @word_asset.thumbnails.count, @asset.thumbnails.count
 
     # change back
     @asset = Asset.find(@asset.id)
@@ -256,6 +259,14 @@ class AssetTest < ActiveSupport::TestCase
     end
     GraphicsMagickTransmogrifier.send(:define_method, :gm_command, proc { GRAPHICSMAGICK_COMMAND })
     Media::Transmogrifier.suppress_errors = false
+  end
+
+  # we currently do not have a xcf transmogrifier
+  def test_no_thumbs_for_xcf
+    @asset = Asset.create_from_params uploaded_data: upload_data('image.xcf')
+    @asset.generate_thumbnails
+    assert_equal ImageAsset, @asset.class
+    assert_equal 0, @asset.thumbnails.count
   end
 
   def test_content_type

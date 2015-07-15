@@ -6,11 +6,12 @@ module AssetTestHelper
   ##
 
   def upload_data(file)
-    type = 'image/png' if file =~ /\.png$/
-    type = 'image/jpeg' if file =~ /\.jpg$/
-    type = 'application/msword' if file =~ /\.doc$/
-    type = 'application/octet-stream' if file =~ /\.bin$/
-    type = 'application/zip' if file =~ /\.zip$/
+    type = 'image/png' if file =~ /\.png\Z/
+    type = 'image/jpeg' if file =~ /\.jpg\Z/
+    type = 'image/x-xcf' if file =~ /\.xcf\Z/
+    type = 'application/msword' if file =~ /\.doc\Z/
+    type = 'application/octet-stream' if file =~ /\.bin\Z/
+    type = 'application/zip' if file =~ /\.zip\Z/
     fixture_file_upload('files/'+file, type)
   end
 
