@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PageTest < ActiveSupport::TestCase
+class Page::BaseTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :polls
 

@@ -1,21 +1,4 @@
-# redMine - project management software
-# Copyright (C) 2006-2007  Jean-Philippe Lang
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-require_relative 'test_helper'
+require 'test_helper'
 
 class TokenTest < ActiveSupport::TestCase
   fixtures :tokens, :users
@@ -30,5 +13,17 @@ class TokenTest < ActiveSupport::TestCase
   def test_expired
     assert tokens(:tokens_001).expired?
     assert !tokens(:tokens_003).expired?
+  end
+
+  def test_token_to_recover
+    token = Token.to_recover.new(user: users(:blue))
+    assert_equal 'recovery', token.action
+    assert_equal users(:blue).id, token.user_id
+  end
+
+  def test_find_token
+    token = Token.to_recover.create(user: users(:blue))
+    assert_equal token, Token.to_recover.active.find_by_param(token.to_param)
+    assert_nil Token.active.find_by_param(Token.new.to_param)
   end
 end

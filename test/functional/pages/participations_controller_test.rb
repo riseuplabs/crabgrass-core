@@ -12,14 +12,24 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
 
   def test_star
     assert_difference 'PageHistory::AddStar.count' do
-      post :update, page_id: @page, id: @upart, star: true
+      xhr :post, :update, page_id: @page, id: @upart, star: true
     end
     assert @upart.reload.star
   end
 
+  def test_star_as_create
+    @other = FactoryGirl.create :user
+    login_as @other
+    @page.update_attribute :public, true
+    assert_difference 'UserParticipation.count' do
+      xhr :post, :create, page_id: @page, star: true
+    end
+    assert UserParticipation.last.star
+  end
+
   def test_watch
     assert_difference 'PageHistory::StartWatching.count' do
-      post :update, page_id: @page, id: @upart, watch: true
+      xhr :post, :update, page_id: @page, id: @upart, watch: true
     end
     assert @upart.reload.watch
   end
@@ -28,7 +38,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
     @upart.access = :view
     @upart.save
     assert_no_difference 'PageHistory.count' do
-      post :update, page_id: @page, id: @upart, access: :admin
+      xhr :post, :update, page_id: @page, id: @upart, access: :admin
     end
     assert_equal :view, @upart.reload.access_sym
   end
@@ -38,7 +48,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
     other_upart = @page.add(other_user, access: :view)
     other_upart.save
     assert_difference 'PageHistory.count' do
-      post :update, page_id: @page, id: other_upart, access: :remove
+      xhr :post, :update, page_id: @page, id: other_upart, access: :remove
     end
   end
 
@@ -47,7 +57,7 @@ class Pages::ParticipationsControllerTest < ActionController::TestCase
     gpart = @page.add(group, access: :view)
     gpart.save
     assert_difference 'PageHistory.count' do
-      post :update, page_id: @page, id: gpart, group: true, access: :remove
+      xhr :post, :update, page_id: @page, id: gpart, group: true, access: :remove
     end
   end
 end

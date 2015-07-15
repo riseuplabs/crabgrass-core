@@ -3,7 +3,6 @@ class Me::AvatarsController < Me::BaseController
   include_controllers 'common/avatars'
   include_controllers 'common/always_perform_caching'
   before_filter :setup
-  cache_sweeper :user_sweeper
 
   def destroy
     if avatar = @entity.avatar

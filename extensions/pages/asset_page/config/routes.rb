@@ -3,9 +3,11 @@ Rails.application.routes.draw do
     resources :assets,
       only: [:show, :edit, :update],
       controller: :asset_page
-    get 'assets/create(/:owner)', to: 'create_asset_page#new',
+    get 'assets/create(/:owner)',
+      to: 'create_asset_page#new',
       as: :asset_page_creation
-    post 'assets/create(/:owner)', to: 'create_asset_page#create',
+    post 'assets/create(/:owner)',
+      to: 'create_asset_page#create',
       as: :asset_page_creation
   end
 

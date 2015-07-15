@@ -4,6 +4,7 @@
 # Handles all the group <> user relationships
 #
 module GroupExtension::Users
+  extend ActiveSupport::Concern
   # large groups will be ignored when calculating peers.
   LARGE_GROUP_SIZE=50
 
@@ -33,26 +34,35 @@ module GroupExtension::Users
           super(access).only_select("DISTINCT users.*")
         end
       end
+    end
+  end
 
-      # tmp hack until we have a better viewing system in place.
-      scope :most_visits, joins(:memberships).
+  module ClassMethods
+
+    # tmp hack until we have a better viewing system in place.
+    def most_visits
+      joins(:memberships).
         group('groups.id').
         order('count(memberships.total_visits) DESC')
+    end
 
-      scope :recent_visits, joins(:memberships).
+    def recent_visits
+      joins(:memberships).
         group('groups.id').
         order('memberships.visited_at DESC')
+    end
 
-      def self.with_admin(user)
-        where("groups.id IN (?)", user.admin_for_group_ids)
-      end
+    def with_admin(user)
+      where("groups.id IN (?)", user.admin_for_group_ids)
+    end
 
-      scope :large, joins(:memberships).
+    def large
+      joins(:memberships).
         group('groups.id').
         select('groups.*').
         having("count(memberships.id) > #{LARGE_GROUP_SIZE}")
-
     end
+
   end
 
   # commented out... removing a council member from a group is no big deal,

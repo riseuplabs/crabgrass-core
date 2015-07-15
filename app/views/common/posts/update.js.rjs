@@ -1,0 +1,7 @@
+if params[:destroy]
+  page.hide @post.dom_id
+else
+  page.replace @post.body_id,
+    partial: 'common/posts/default/body',
+    locals: {post: @post}
+end

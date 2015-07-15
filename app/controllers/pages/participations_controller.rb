@@ -30,6 +30,7 @@ class Pages::ParticipationsController < Pages::SidebarsController
 
   def create
     update
+    render action: :update
   end
 
   protected
@@ -37,23 +38,18 @@ class Pages::ParticipationsController < Pages::SidebarsController
   def watch
     @upart = @page.add(current_user, watch: params[:watch])
     @upart.save!
-    render(:update) {|page| page.replace 'watch_li', watch_line}
   end
 
   def star
     @upart = @page.add(current_user, star: params[:star])
     @upart.save!
-    render(:update) {|page| page.replace 'star_li', star_line}
   end
 
   def access
     if params[:access] == 'remove'
       destroy
     else
-      @page.add(@part.entity, access: params[:access]).save!
-      render :update do |page|
-        page.replace_html dom_id(@part), partial: 'pages/participations/permission_row', locals: {participation: @part.reload}
-      end
+      @part = @page.add(@part.entity, access: params[:access]).save!
     end
   end
 
@@ -69,9 +65,6 @@ class Pages::ParticipationsController < Pages::SidebarsController
       end
     else
       raise ErrorMessage.new(:remove_access_error.t)
-    end
-    render :update do |page|
-      page.hide dom_id(@part || @upart)
     end
   end
 
@@ -90,9 +83,9 @@ class Pages::ParticipationsController < Pages::SidebarsController
   def fetch_data
     return unless params[:access] && params[:id]
     if params[:group]
-      @part = GroupParticipation.find(params[:id])
+      @part = @page.group_participations.find(params[:id])
     else
-      @part = UserParticipation.find(params[:id])
+      @part = @page.user_participations.find(params[:id])
     end
   end
 

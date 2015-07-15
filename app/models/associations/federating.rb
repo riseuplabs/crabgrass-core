@@ -33,9 +33,6 @@ class Federating < ActiveRecord::Base
   belongs_to :council, class_name: 'Group'
   belongs_to :delegation, class_name: 'Group'
 
-  scope :alphabetized_by_group,
-    joins(:group).order('groups.full_name ASC, groups.name ASC')
-
   alias :entity :group
 
   protected

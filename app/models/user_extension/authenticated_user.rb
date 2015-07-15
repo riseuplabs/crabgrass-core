@@ -33,7 +33,7 @@ module AuthenticatedUser
       with_options unless: :ghost? do |alive|
         alive.validates :login, presence: true,
           length: { within: 3..40 },
-          format: { with: /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/ }
+          format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
 
         alive.validates :password, confirmation: true,
           length: {minimum: 8, allow_blank: true}
@@ -47,10 +47,6 @@ module AuthenticatedUser
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
       find_by_login(login).try.authenticate(password)
-    end
-
-    def find_for_forget(email)
-      where(email: email).first
     end
 
     # set to the currently logged in user.

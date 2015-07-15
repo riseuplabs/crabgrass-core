@@ -94,9 +94,17 @@ class Request < ActiveRecord::Base
   #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
   #}
 
-  scope :pending, where("state = 'pending'")
-  scope :by_created_at, order('created_at DESC')
-  scope :by_updated_at, order('updated_at DESC')
+  def self.pending
+    where("state = 'pending'")
+  end
+
+  def self.by_created_at
+    order('created_at DESC')
+  end
+
+  def self.by_updated_at
+    order('updated_at DESC')
+  end
 
   def self.created_by(user)
     where(created_by_id: user)
@@ -158,7 +166,9 @@ class Request < ActiveRecord::Base
   # find only requests related to membership.
   # maybe we should add a "membership?" column?
   #
-  scope :membership_related, where(type: MEMBERSHIP_TYPES)
+  def self.membership_related
+    where(type: MEMBERSHIP_TYPES)
+  end
 
   ##
   ## ATTRIBUTES
