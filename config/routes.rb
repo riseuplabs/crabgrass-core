@@ -19,7 +19,6 @@ Crabgrass::Application.routes.draw do
   ## CRON JOBS
   ##
 
-  # TODO: specify http verb
   post '/do/cron/run(/:id)', to: 'cron#run', format: false,
     constraints: {ip: /127.0.0.1/}
 
