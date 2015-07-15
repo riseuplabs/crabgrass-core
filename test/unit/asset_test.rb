@@ -258,6 +258,14 @@ class AssetTest < ActiveSupport::TestCase
     Media::Transmogrifier.suppress_errors = false
   end
 
+  # we currently do not have a xcf transmogrifier
+  def test_no_thumbs_for_xcf
+    @asset = Asset.create_from_params uploaded_data: upload_data('image.xcf')
+    @asset.generate_thumbnails
+    assert_equal ImageAsset, @asset.class
+    assert_equal 0, @asset.thumbnails.count
+  end
+
   def test_content_type
     assert_equal 'application/octet-stream', Asset.new.content_type
   end

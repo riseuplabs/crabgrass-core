@@ -33,13 +33,24 @@ class CreateAssetPageControllerTest < ActionController::TestCase
 
   def test_create
     login_as :gerrard
-    assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
+    assert_difference 'Thumbnail.count', 6,
+      "image file should generate 6 thumbnails" do
       post 'create', page_id: 'me',
         page: {title: "title", summary: ""},
         asset: {uploaded_data: upload_data('photo.jpg')}
       assert_response :redirect
     end
+  end
 
+  def test_create_with_xcf
+    login_as :gerrard
+    assert_difference 'Thumbnail.count', 0,
+      "xcf currently does not generate thumbnails" do
+      post 'create', page_id: 'me',
+        page: {title: "title", summary: ""},
+        asset: {uploaded_data: upload_data('image.xcf')}
+      assert_response :redirect
+    end
   end
 
   def test_create_in_group

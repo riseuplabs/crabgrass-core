@@ -104,11 +104,10 @@ module Media
       output_transmogs = self.output_map[output_type] || []
       # take first of the intersection, maybe add weighting in the future.
       transmog = (input_transmogs & output_transmogs).select {|tm| tm.available?}.first
-      if transmog
-        transmog.class
-      else
-        log_error 'could not find a transmogrifier for "%s" -> "%s"' % [input_type, output_type]
-      end
+      return transmog.class if transmog
+      log_error 'could not find a transmogrifier for "%s" -> "%s"' %
+        [input_type, output_type]
+      return nil
     end
 
     #
