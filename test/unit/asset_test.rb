@@ -150,6 +150,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_type_changes
     @asset = FactoryGirl.create :image_asset
+    @word_asset = FactoryGirl.create :word_asset
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -158,7 +159,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset.save
     assert_equal 'application/msword', @asset.content_type
     assert_equal 'TextAsset', @asset.type
-    assert_equal 6, @asset.thumbnails.count
+    # relative comparison to account for CI which does not have
+    # a transmogrifier for word right now.
+    assert_equal @word_asset.thumbnails.count, @asset.thumbnails.count
 
     # change back
     @asset = Asset.find(@asset.id)

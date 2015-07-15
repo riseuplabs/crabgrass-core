@@ -83,6 +83,10 @@ FactoryGirl.define do
       uploaded_data { fixture_file_upload('files/image.png',  "image/png") }
     end
 
+    factory :word_asset, class: TextAsset do
+      uploaded_data { fixture_file_upload('files/msword.doc', 'application/msword') }
+    end
+
   end
 
   factory :user_participation do
