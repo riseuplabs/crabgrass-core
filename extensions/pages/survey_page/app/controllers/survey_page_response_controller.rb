@@ -53,7 +53,7 @@ class SurveyPageResponseController < Pages::BaseController
     end
     redirect_to page_url(@page, action: 'response-show', id: @response.id)
   rescue => exc
-    flash_message_now exception: exc, object: @response
+    warning exc
     render template: 'survey_page_response/new'
   end
 
@@ -64,13 +64,13 @@ class SurveyPageResponseController < Pages::BaseController
     @response.update_attributes!(params[:response])
     flash_message success: I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message success: I18n.t(:survey_please_check_and_rate_message)
+      success I18n.t(:survey_please_check_and_rate_message), :later
     else
-      flash_message success: I18n.t(:survey_please_check_message)
+      success I18n.t(:survey_please_check_message), :later
     end
     redirect_to page_url(@page, action: 'response-show', id: @response.id)
   rescue => exc
-    flash_message_now object: @response, exc: exc
+    warning exc
   end
 
   def destroy

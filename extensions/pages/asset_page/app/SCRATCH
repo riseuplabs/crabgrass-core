@@ -44,7 +44,7 @@
     end
     redirect_to page_url(@page)
   rescue exc
-    flash_message_now :exception => exc
+    warning exc
   end
 
 ======================

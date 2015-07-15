@@ -24,8 +24,8 @@ class RateManyPossiblesController < Pages::BaseController
       @page.unresolve
     else
       @poll.possibles.delete(@possible)
-      flash_message_now object: @possible unless @possible.valid?
-      flash_message_now object: @poll unless @poll.valid?
+      warning @possible unless @possible.valid?
+      warning @poll unless @poll.valid?
       redirect_to page_url(@page, action: 'show')
     end
   end
