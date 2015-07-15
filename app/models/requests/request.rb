@@ -278,6 +278,7 @@ class Request < ActiveRecord::Base
   ##
 
   def event() end
+  def event_attrs(); {}; end
   def description() end
   def short_description() end
   def votable?() false end
