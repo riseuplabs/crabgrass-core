@@ -94,9 +94,13 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  scope :newest, order('created_at DESC')
+  def self.newest
+    order('created_at DESC')
+  end
 
-  scope :unique, group('`key`')
+  def self.unique
+    group('`key`')
+  end
 
   #
   # for 'me/activities'

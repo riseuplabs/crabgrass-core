@@ -85,16 +85,13 @@ class Page < ActiveRecord::Base
 
   acts_as_path_findable
 
-  ##
-  ## NAMES SCOPES
-  ##
+  def self.deleted
+    where(flow: FLOW[:deleted])
+  end
 
-  scope :deleted, where(flow: FLOW[:deleted])
-  scope :not_deleted, where("pages.flow != %s", FLOW[:deleted])
-  scope :only_public, where(public: true)
-  scope :only_images, where(is_image: true)
-  scope :only_videos, where(is_video: true)
-  scope :pending, where(resolved: false).order(:happens_at)
+  def self.not_deleted
+    where("pages.flow != %s", FLOW[:deleted])
+  end
 
   ##
   ## PAGE NAMING

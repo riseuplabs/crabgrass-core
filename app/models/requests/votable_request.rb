@@ -17,9 +17,9 @@ class VotableRequest < Request
   # returns Requests for which the voting time has passed
   #
   # use lamba here so that VOTE_DURATION.ago is evaluated freshly each time
-  scope :voting_completed, lambda {
+  def self.voting_completed
     where("state = 'pending' AND created_at <= ?", self.vote_duration.ago)
-  }
+  end
 
   #
   # the default duration for votable requests

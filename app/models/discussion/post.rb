@@ -31,9 +31,13 @@ class Post < ActiveRecord::Base
 
   acts_as_path_findable
 
-  scope :visible, where('deleted_at IS NULL')
+  def self.visible
+    where('deleted_at IS NULL')
+  end
 
-  scope :by_created_at, order('created_at DESC')
+  def self.by_created_at
+    order('created_at DESC')
+  end
 
   def self.private_messages(user)
     where discussion_id: user.discussions.pluck(:id)

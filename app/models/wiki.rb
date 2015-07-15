@@ -271,7 +271,9 @@ class Wiki < ActiveRecord::Base
 
     before_destroy :confirm_existance_of_other_version
 
-    scope :most_recent, order('version DESC')
+    def self.most_recent
+      order('version DESC')
+    end
 
     self.per_page = 10
 

@@ -144,7 +144,9 @@ class Asset < ActiveRecord::Base
     !showing.nil? && showing.is_cover
   end
 
-  scope :not_attachment, where('is_attachment = ?',false)
+  def self.not_attachment
+    where('is_attachment = ?',false)
+  end
 
   # one of :image, :audio, :video, :document
   def self.media_type(type)

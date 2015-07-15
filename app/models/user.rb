@@ -44,8 +44,9 @@ class User < ActiveRecord::Base
   ## NAMED SCOPES
   ##
 
-  scope :recent, order('users.created_at DESC').
-   where("users.created_at > ?", 2.weeks.ago)
+  def self.recent
+    order('users.created_at DESC').where("users.created_at > ?", 2.weeks.ago)
+  end
 
   # this is a little mysql magic to get what we want:
   # We want to sort by display_name.presence || login
@@ -81,10 +82,6 @@ class User < ActiveRecord::Base
     where "users.login LIKE ? OR users.display_name LIKE ?",
       filter, filter
   end
-
-  # select only logins
-  scope :logins_only, select('login')
-
 
   ##
   ## USER IDENTITY

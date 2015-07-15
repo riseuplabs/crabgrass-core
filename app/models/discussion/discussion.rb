@@ -41,22 +41,22 @@ class Discussion < ActiveRecord::Base
     end
   end
 
-  ##
-  ## NAMED SCOPES
-  ##
-
-  scope :with_some_posts, where('discussions.posts_count > ?', 0)
+  def self.with_some_posts
+    where('discussions.posts_count > ?', 0)
+  end
 
   # used when relationships are joined in
   # ex: current_user.discussions.from_user(User.first)
   # where user has many dicussions through relationships
-  scope :from_user, lambda { |user|
+  def self.from_user(user)
     user.blank? ? {} : where('relationships.contact_id = ?', user.id)
-  }
+  end
 
   # user with relationships like the above scope
   # ex: current_user.discussions.unread
-  scope :unread, where('relationships.unread_count > 0')
+  def unread
+    where('relationships.unread_count > 0')
+  end
 
   ##
   ## PRIVATE DISCUSSION (MESSAGES)
