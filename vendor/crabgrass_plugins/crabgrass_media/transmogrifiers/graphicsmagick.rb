@@ -42,6 +42,19 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
   # on the pipe, since the progress is updated on a single line.
   #
   def run(&block)
+    # try converting first page only
+    status = convert(input_file.to_s + '[0]', &block)
+    # retry with full file if result was empty
+    if File.size(output_file.to_s) == 0
+      # reset filenames to the state before run
+      set_temporary_outfile
+      status = convert(&block)
+    end
+    FileUtils.chmod 0644, output_file.to_s if File.exist? output_file.to_s
+    return status
+  end
+
+  def convert(input = input_file.to_s, &block)
     # +profile '*' will remove all the image profiles, which will save
     # space (sometimes) and are not useful for thumbnails
     arguments = [gm_command, 'convert', '+profile', "*"]
@@ -63,10 +76,8 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
       # we add '+0+0' because we don't want tiles, just a single image
       arguments << '-crop' << options[:crop]+'+0+0'
     end
-    arguments << input_file << output_file
-    status = run_command(*arguments, &block)
-    FileUtils.chmod 0644, output_file.to_s if File.exist? output_file.to_s
-    return status
+    arguments << input << output_file
+    run_command(*arguments, &block)
   end
 
   def dimensions(filename)
