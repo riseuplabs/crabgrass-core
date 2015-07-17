@@ -80,7 +80,14 @@ class GraphicsMagickTransmogrifier < Media::Transmogrifier
     run_command(*arguments, &block)
   end
 
+  # try to detect the dimensions of the first page.
+  # fallback to detecting dimensions of all pages.
   def dimensions(filename)
+    run_dimensions(filename.to_s + '[0]') ||
+      run_dimensions(filename.to_s)
+  end
+
+  def run_dimensions(filename)
     if available?
       args = [gm_command, 'identify', '-format', '%m %w %h', filename]
       dimensions = nil
