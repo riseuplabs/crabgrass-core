@@ -17,8 +17,12 @@ class Me::PostsController < Me::BaseController
   # /me/discussions/green/posts
   def index
     @other_user = @recipient
-    @discussion.mark!(:read, current_user)
-    @posts = @discussion.posts.includes(:user).paginate(post_pagination_params)
+    if @discussion
+      @discussion.mark!(:read, current_user)
+      @posts = @discussion.posts.includes(:user).paginate(post_pagination_params)
+    else
+      @posts = []
+    end
     @post = Post.new
   end
 
@@ -44,10 +48,6 @@ class Me::PostsController < Me::BaseController
     end
     if @recipient.blank?
       error(:thing_not_found.t(thing: :recipient.t), :later)
-      redirect_to me_discussions_url
-    end
-    if @discussion.blank?
-      error(:thing_not_found.t(thing: :message.t), :later)
       redirect_to me_discussions_url
     end
     if params[:id] && @discussion

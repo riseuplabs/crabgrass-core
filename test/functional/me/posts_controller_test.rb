@@ -16,13 +16,13 @@ class Me::PostsControllerTest < ActionController::TestCase
     assert_equal you, assigns(:recipient)
   end
 
-  def test_error_on_empty_discussion
+  def test_no_error_on_empty_discussion
     me = users(:gerrard)
     you = users(:green)
     login_as me
     get :index, discussion_id: you.login
-    assert_response :redirect
-    assert_redirected_to me_discussions_url
+    assert_response :success
+    assert_equal [], assigns(:posts)
   end
 
   def test_delete_post
