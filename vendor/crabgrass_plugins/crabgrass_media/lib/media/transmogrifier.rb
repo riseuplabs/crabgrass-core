@@ -176,6 +176,7 @@ module Media
       # run the command
       cmdstr = command_string(*args)
       self.command_output = ""
+      before = Time.now
       IO.popen(cmdstr + ' 2>&1', 'r') do |pipe|
         while line = pipe.gets
           if block_given?
@@ -184,6 +185,7 @@ module Media
           self.command_output << line << "\n"
         end
       end
+      took = Time.now - before
 
       # set the status
       status = case $?.exitstatus
@@ -194,6 +196,7 @@ module Media
       end
       if status == :success
         log_command cmdstr
+        log_command "took #{took} seconds."
       else
         log_error cmdstr
         msg = 'exited with "%s"' % $?.exitstatus
