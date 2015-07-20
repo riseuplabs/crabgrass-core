@@ -226,7 +226,6 @@ module Common::Ui::ImageHelper
     link_to img, url, class: klass, title: asset.filename, style: style, method: method
   end
 
-
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
     if thumbnail
       image_tag(thumbnail.url, html_options)
