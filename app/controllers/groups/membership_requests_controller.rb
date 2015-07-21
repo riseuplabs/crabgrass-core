@@ -35,7 +35,6 @@ class Groups::MembershipRequestsController < Groups::BaseController
     elsif type == :destroy
       create_destroy_request
     end
-    redirect_to requests_path(@req)
   end
 
   protected
@@ -83,6 +82,7 @@ class Groups::MembershipRequestsController < Groups::BaseController
       raise_error
     end
     success @req
+    redirect_to requests_path(@req)
   end
 
 end
