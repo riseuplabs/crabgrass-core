@@ -7,7 +7,7 @@ test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
 
 SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] !~ /\.rb/
-  ARGV[0]
+  [ARGV[0]]
 else
   nil
 end
@@ -41,7 +41,7 @@ class TestMarkup < MiniTest::Test
   end
 
   def test_outline
-    assert @fixtures['outline.yml']
+    skip 'no outline fixture given' unless @fixtures['outline.yml']
     @fixtures['outline.yml'].each do |doc|
       assert_markup('outline.yml', doc, GreenCloth.new(doc['in'], '', [:outline]).to_html)
     end

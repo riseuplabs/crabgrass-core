@@ -744,7 +744,7 @@ class GreenCloth < RedCloth::TextileDoc
   def dynamic_symbols(text)
     text.gsub!(DYNAMIC_SYMBOLS_RE) do |line|
       symbol = $1
-      macrotag_it(symbol, line)
+      macrotag_it(symbol, line) if outline
     end
   end
 

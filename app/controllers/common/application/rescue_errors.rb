@@ -41,6 +41,7 @@ module Common::Application::RescueErrors
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, with: :render_error
       rescue_from CrabgrassException,          with: :render_error
+      rescue_from GreenClothHeadingError,      with: :render_error
       rescue_from AuthenticationRequired,      with: :render_authentication_required
       rescue_from PermissionDenied,            with: :render_permission_denied
       rescue_from ActionController::InvalidAuthenticityToken, with: :render_csrf_error
@@ -263,16 +264,15 @@ module Common::Application::RescueErrors
   end
 
   def render_error_js(exception=nil, options={})
-    if exception
-      alert_message :error, exception
-    end
+    error exception if exception.present?
     log_exception(exception)
     return if performed?  # error in after_filter
-    render template: 'error/alert', locals: {exception: exception}    
+    render template: 'error/alert', locals: {exception: exception}
   end
 
   def log_exception(exception)
     Rails.logger.debug "Rescuing from #{exception.class}."
+    Rails.logger.debug exception.log_message if exception.respond_to? :log_message
     Rails.logger.debug Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
   end
 

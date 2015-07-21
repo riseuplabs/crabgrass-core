@@ -1,0 +1,10 @@
+---
+name: overdecorated multiline heading
+in: |-
+  [[toc]]
+
+  h3. heading
+  *bold* - but close ... too close actually
+out: |-
+  <h3>heading<br />
+  <strong>bold</strong> &#8211; but close &#8230; too close actually</h3>

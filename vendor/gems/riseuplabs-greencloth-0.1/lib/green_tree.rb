@@ -212,7 +212,7 @@ class GreenTree < Array
       # find the first occurance of this node in the markup
       self.start_index = markup.index(self.markup_regexp, offset)
       if self.start_index.nil?
-        raise GreenClothException, "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup '#{markup}' with regexp: '#{markup_regexp}'"
+        raise GreenClothHeadingError.new(text, markup, markup_regexp)
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
@@ -262,7 +262,9 @@ class GreenTree < Array
       # remove html entities, and let them match one to several characters
       gsub(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.{1,3}').
       # add back carriage returns as optional
-      gsub('\\n', '\\r?\\n')
+      gsub('\\n', '\\r?\\n').
+      # allow special chars at the beginning of the line
+      gsub('\\n', '\\n([\W_](.*[\W_])?)*')
   end
 
   def heading_underline_regexp

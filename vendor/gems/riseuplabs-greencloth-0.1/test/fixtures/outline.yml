@@ -390,3 +390,17 @@ out: |-
   aa... bb
   -----
   </code></pre>
+---
+name: overdecorated multiline heading
+in: |-
+  [[toc]]
+
+  h3. heading
+  *bold* - but close ... too close actually
+out: |-
+  <ul class="toc">
+  <li class="toc1"><a href="#heading-bold-but-close-too-close-actually"><span>1</span> heading
+  bold &#8211; but close &#8230; too close actually</a></li>
+  </ul>
+  <h3><a name="heading-bold-but-close-too-close-actually"></a>heading<br />
+  <strong>bold</strong> &#8211; but close &#8230; too close actually<a class="anchor" href="#heading-bold-but-close-too-close-actually">&para;</a></h3>
