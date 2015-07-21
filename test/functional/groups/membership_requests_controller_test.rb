@@ -5,11 +5,23 @@ class Groups::MembershipRequestsControllerTest < ActionController::TestCase
   def setup
     @user  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
-    @group.add_user! @user
     login_as @user
   end
 
+  def test_request_to_join
+    @group.grant_access! public: :view
+    assert_difference "RequestToJoinYou.count" do
+      post :create, group_id: @group.to_param,
+        type: :join
+    end
+    req = RequestToJoinYou.last
+    assert_response :redirect
+    assert_equal @user, req.user
+    assert_equal @group, req.group
+  end
+
   def test_request_to_remove
+    @group.add_user! @user
     @remove_me = FactoryGirl.create(:user)
     @group.add_user! @remove_me
     assert_difference "RequestToRemoveUser.count" do
@@ -24,6 +36,7 @@ class Groups::MembershipRequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve
+    @group.add_user! @user
     @other = FactoryGirl.create(:user)
     @remove_me = FactoryGirl.create(:user)
     @group.add_user! @other

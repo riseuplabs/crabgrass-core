@@ -17,8 +17,8 @@ module GroupRecords
   end
 
   def public_group
-    records[:public_group] ||= FactoryGirl.create(:group).tap do |hide|
-      hide.grant_access! public: :view
+    records[:public_group] ||= FactoryGirl.create(:group).tap do |pub|
+      pub.grant_access! public: :view
     end
   end
 
