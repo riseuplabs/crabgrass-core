@@ -19,8 +19,8 @@ module AjaxPending
     end
 
     def message
-      urls = @reqs.map(&:url).to_sentence
-      "The ajax request to #{urls} was not answered during the test."
+      req = @reqs.last
+      "The #{req.method} request to #{req.url} was not answered during the test."
     end
   end
 
