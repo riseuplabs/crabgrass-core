@@ -121,7 +121,7 @@ module Common::Application::RescueErrors
         render_auth_error_html(exception)
       end
       format.js do
-        render_error_js(exception)
+        render_error_js(exception, status: 401)
       end
       format.xml do
         headers["Status"]           = "Unauthorized"
@@ -267,7 +267,8 @@ module Common::Application::RescueErrors
     error exception if exception.present?
     log_exception(exception)
     return if performed?  # error in after_filter
-    render template: 'error/alert', locals: {exception: exception}
+    render template: 'error/alert', locals: {exception: exception},
+      status: options[:status]
   end
 
   def log_exception(exception)

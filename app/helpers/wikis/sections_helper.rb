@@ -15,9 +15,7 @@ module Wikis::SectionsHelper
   def find_heading_node(doc, section)
     return nil if section.nil?
     anchor = doc.at("a[@name=#{section}]")
-    if anchor.nil?
-      raise Wiki::SectionNotFoundError.new(section)
-    end
+    return anchor.parent if anchor.present?
     anchor.parent
   end
 
@@ -42,7 +40,7 @@ module Wikis::SectionsHelper
     heading = find_heading_node(doc, section)
     # everything between replace_node and next_node should be wrapped
 
-    end_before = find_heading_node(doc, wiki.successor_for_section(section).try.name) rescue nil
+    end_before = find_heading_node(doc, wiki.successor_for_section(section).try.name)
 
     # these nodes should be wrapped
     wrapped_nodes = []
