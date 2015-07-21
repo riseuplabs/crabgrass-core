@@ -147,20 +147,29 @@ module Pages::SidebarHelper
 
   def page_attachments
     if @page.assets.any?
-      safe_join @page.assets.collect { |asset|
-        thumbnail = asset.thumbnail(:medium)
-        if thumbnail
-          image = image_tag(thumbnail.url)
-        else
-          image = icon_for(asset) + asset.filename
-        end
-        link_to image, asset.url, class: "attachment", title: asset.filename
-      }
+      safe_join @page.assets.collect { |asset| page_attachment(asset) }
     elsif may_edit_page?
       ''
     end
   end
 
+  def page_attachment(asset)
+    link_to page_attachment_image(asset), asset.url,
+      class: "attachment", title: asset.filename
+  end
+
+  def page_attachment_image(asset)
+    content_tag(:div, image_or_icon(asset), class: 'asset')
+  end
+
+  def image_or_icon(asset, size = :medium)
+    thumbnail = asset.thumbnail(size)
+    if thumbnail
+      image_tag(thumbnail.url)
+    else
+      icon_for(asset) + asset.filename
+    end
+  end
 
   ##
   ## SIDEBAR POPUP LINES
