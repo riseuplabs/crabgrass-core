@@ -11,8 +11,7 @@ class People::DirectoryController < ApplicationController
 
   def index
     @query ||= finder.query_term
-    @users = finder.find
-    @users = @users.paginate(pagination_params)
+    @users = finder.find.alphabetic_order.paginate(pagination_params)
   end
 
   protected
