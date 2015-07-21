@@ -66,7 +66,8 @@ module Crabgrass
 
     # add our custom 404 error class
     config.action_dispatch.rescue_responses.merge!(
-      'ErrorNotFound' => :not_found
+      'ErrorNotFound' => :not_found,
+      'WikiExtension::Sections::SectionNotFoundError' => :not_found
     )
     # Make Active Record use UTC-base instead of local time
     config.time_zone = 'UTC'
