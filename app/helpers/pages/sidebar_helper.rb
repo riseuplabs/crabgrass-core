@@ -148,7 +148,13 @@ module Pages::SidebarHelper
   def page_attachments
     if @page.assets.any?
       safe_join @page.assets.collect { |asset|
-        link_to_asset(asset, :small, :crop! => '36x36')
+        thumbnail = asset.thumbnail(:medium)
+        if thumbnail
+          image = image_tag(thumbnail.url)
+        else
+          image = icon_for(asset) + asset.filename
+        end
+        link_to image, asset.url, class: "attachment", title: asset.filename
       }
     elsif may_edit_page?
       ''

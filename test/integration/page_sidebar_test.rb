@@ -89,10 +89,11 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_attach_file
-    assert_no_selector '#attachments a.thumbnail'
+    assert_no_selector '#attachments a.attachment'
     attach_file_to_page
     check_attachment_thumbnail
+    assert_selector '#attachments a.attachment'
     remove_file_from_page
-    assert_no_selector '#attachments a.thumbnail'
+    assert_no_selector '#attachments a.attachment'
   end
 end

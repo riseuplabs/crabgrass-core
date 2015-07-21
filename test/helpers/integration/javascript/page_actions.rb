@@ -103,8 +103,8 @@ module PageActions
 
   # verify that the little thumbnail image actually gets displayed
   def check_attachment_thumbnail
-    find("#attachments a.thumbnail img").synchronize do
-      unless evaluate_script("$$('#attachments a.thumbnail img').first().naturalWidth != 0")
+    find("#attachments a.attachment img").synchronize do
+      unless evaluate_script("$$('#attachments a.attachment img').first().naturalWidth != 0")
         raise Capybara::ExpectationNotMet.new("Thumbnail could not be loaded")
       end
     end

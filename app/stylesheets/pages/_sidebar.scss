@@ -50,6 +50,33 @@
   overflow: auto;
 }
 
+/*
+  Responsive Attachments in the Sidebar
+
+  On xs screens display 1 image per row. 2 on small to medium and 3 on large.
+  In order to prevent the next image being put under the last image in the
+  previous row if that image is a bit smaller we fix the height of a.attachment
+  This way the image will scale inside but the container will always have the
+  same height.
+  We do not apply this for xs screens as it's not needed with 1 image per row.
+*/
+#page_sidebar .attachments {
+  @include make-row;
+  a.attachment {
+    @include make-xs-column(6);
+    @include make-lg-column(4);
+    height: 64px;
+    @media (min-width: $screen-sm-min) {
+      height: 100px;
+    }
+    overflow: hidden;
+    padding: 10px;
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
 ul.side_list {
   @include list-unstyled;
   clear: both;
