@@ -156,8 +156,8 @@ class Wiki < ActiveRecord::Base
   # renders body_html and calculates structure if needed
   def update_body_html_and_structure
     return unless needs_rendering?
-    write_attribute(:body_html, render_body_html)
-    write_attribute(:raw_structure, render_raw_structure)
+    write_attribute :body_html, render_body_html
+    write_attribute :raw_structure, render_raw_structure
   end
 
   # whenever we set body, we reset body_html to nil, so this condition will

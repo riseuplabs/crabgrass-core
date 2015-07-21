@@ -212,7 +212,7 @@ class GreenTree < Array
       # find the first occurance of this node in the markup
       self.start_index = markup.index(self.markup_regexp, offset)
       if self.start_index.nil?
-        raise GreenClothException, "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup '#{markup}' with regexp: '#{markup_regexp}'"
+        raise GreenClothHeadingError.new(text, markup, markup_regexp)
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position

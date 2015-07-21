@@ -185,7 +185,8 @@ module Common::Application::AlertMessages
     elsif exception.is_a? CrabgrassException
       [{type: exception.options[:type] || :error, text: exception.message}]
     else
-      [{type: :error, text: exception.to_s}]
+      text = exception.respond_to?(:message) ? exception.message  : exception
+      [{type: :error, text: text.to_s}]
     end
   end
 
