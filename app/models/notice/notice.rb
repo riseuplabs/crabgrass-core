@@ -34,6 +34,11 @@ class Notice < ActiveRecord::Base
     where(dismissed: false).update_all dismissed: true, dismissed_at: Time.now
   end
 
+  def initialize(*args)
+    super
+    self.data ||= Hash.new
+  end
+
   ##
   ## INSTANCE METHODS
   ##
@@ -89,12 +94,10 @@ class Notice < ActiveRecord::Base
   end
 
   def display_attr(attr)
-    if data.is_a? Hash
-      if data[attr].is_a? Array
-        I18n.t(*data[attr])
-      else
-        I18n.t(data[attr], count: 1)
-      end
+    if data[attr].is_a? Array
+      I18n.t(*data[attr])
+    else
+      I18n.t(data[attr], count: 1)
     end
   rescue
     Rails.logger.error "Invalid attribute #{attr} in Notice ##{id}."

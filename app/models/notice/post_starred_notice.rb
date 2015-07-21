@@ -5,7 +5,7 @@ class PostStarredNotice < Notice
 
   def display_title
     I18n.t :activity_twinkled,
-      user: data[:from], post: noticable.body.truncate(39)
+      user: data[:from], post: display_body.truncate(39)
   end
 
   def display_body_as_quote?
@@ -13,7 +13,7 @@ class PostStarredNotice < Notice
   end
 
   def display_body
-    noticable.body
+    noticable.try.body || ""
   end
 
   def noticable_path
