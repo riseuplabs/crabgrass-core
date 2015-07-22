@@ -32,7 +32,7 @@ class Pages::PostsController < ApplicationController
   def show
     respond_to do |format|
       format.js   { render 'common/posts/show' }
-      format.html { redirect_to page_url(@page) + "#posts-#{@post.id}" }
+      format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
     end
   end
 
@@ -40,7 +40,7 @@ class Pages::PostsController < ApplicationController
     if @post = @page.add_post(current_user, post_params)
       respond_to do |format|
         format.js   { redirect_to action: :index }
-        format.html { redirect_to page_url(@page) + "#posts-#{@post.id}" }
+        format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }
       end
     end
   end
