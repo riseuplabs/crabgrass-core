@@ -5,8 +5,12 @@ class Me::NoticesController < Me::BaseController
   def index
     @notices = Notice.for_user(current_user).
       dismissed(params[:view] == 'old').
+      includes(:noticable).
       paginate(pagination_params.merge(order: "created_at desc"))
-    @pages = current_user.pages.not_deleted.order('pages.updated_at desc').limit(30)
+
+    @pages = current_user.pages.not_deleted.
+      includes(:owner, :updated_by).
+      order('pages.updated_at desc').limit(30)
   end
 
   def show
