@@ -8,6 +8,8 @@ module Wikis::SectionsHelper
       wrap_in_div(wiki, doc, subsection, section == :document)
     end
     doc.to_html.html_safe
+  rescue WikiExtension::Sections::SectionNotFoundError
+    wiki.body_html
   end
 
   private
@@ -16,7 +18,6 @@ module Wikis::SectionsHelper
     return nil if section.nil?
     anchor = doc.at("a[@name=#{section}]")
     return anchor.parent if anchor.present?
-    anchor.parent
   end
 
   #
@@ -38,6 +39,7 @@ module Wikis::SectionsHelper
   def wrap_in_div(wiki, doc, section, is_full_wiki)
     # this is the heading node we want to wrap with its content
     heading = find_heading_node(doc, section)
+    return if heading.blank?
     # everything between replace_node and next_node should be wrapped
 
     end_before = find_heading_node(doc, wiki.successor_for_section(section).try.name)
