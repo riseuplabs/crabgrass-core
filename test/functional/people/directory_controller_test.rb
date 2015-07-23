@@ -4,24 +4,32 @@ class People::DirectoryControllerTest < ActionController::TestCase
   fixtures :users, :relationships, :sites, :groups, :memberships
 
   def test_index
+    friends = users(:blue).friends
     login_as :blue
     get :index
     assert_response :success
-    assert_equal users(:blue).friends.count, assigns(:users).count
+    users = assigns(:users)
+
+    assert_equal friends.count, users.count
+    assert_right_order friends, users
   end
 
   def test_friends
     login_as :blue
     get :index, path: 'contacts'
     assert_response :success
-    assert_equal 2, assigns(:users).count
+    users = assigns(:users)
+    assert_equal 2, users.count
+    assert_right_order users(:blue).friends, users
   end
 
   def test_peers
     login_as :blue
     get :index, path: 'peers'
     assert_response :success
-    assert_equal 10, assigns(:users).count
+    users = assigns(:users)
+    assert_equal 10, users.count
+    assert_right_order users(:blue).peers, users
   end
 
   def test_pagination
@@ -46,6 +54,16 @@ class People::DirectoryControllerTest < ActionController::TestCase
     # leading spaces should be ignored in the query
     get :index, query: ' a', path: 'search', format: :json
     assert_equal [users(:aaron)], assigns(:users)
+  end
+
+  private
+
+  def assert_right_order(expected, real, msg = nil)
+    assert_equal sorted(expected), real.map(&:login), msg
+  end
+
+  def sorted(users)
+    users.alphabetic_order.map &:login
   end
 end
 
