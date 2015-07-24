@@ -91,6 +91,8 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    crabgrass_media (0.0.1)
+      activesupport (~> 3.2)
     daemons (1.1.9)
     debugger (1.6.8)
       columnize (>= 0.3.1)
@@ -242,6 +244,7 @@ DEPENDENCIES
   cache_digests (~> 0.3)
   capybara
   coffee-rails (~> 3.2.2)
+  crabgrass_media (~> 0.0.1)
   debugger
   delayed_job (~> 3.0.5)
   factory_girl_rails

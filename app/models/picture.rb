@@ -223,7 +223,7 @@ class Picture < ActiveRecord::Base
     geometry = Geometry[geometry]
     input_path = private_file_path
     output_path = storage.private_path(geometry)
-    status = GraphicsMagickTransmogrifier.new(
+    status = Media::GraphicsMagickTransmogrifier.new(
       input_file: input_path,
       output_file: output_path,
       size: geometry.gm_size_param_from(self.size),

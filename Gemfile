@@ -137,6 +137,10 @@ gem 'undress', :require => 'undress/greencloth',
 gem 'uglify_html', :require => 'uglify_html',
   :path => 'vendor/gems/riseuplabs-uglify_html-0.12'
 
+# media upload post processing has it's own repo
+# version is rather strict for now as api may still change.
+gem 'crabgrass_media', '~> 0.0.1', :require => 'media'
+
 ##
 ## GEMS not required, but a really good idea
 ##
