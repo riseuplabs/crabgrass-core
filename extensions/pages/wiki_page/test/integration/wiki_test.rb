@@ -63,6 +63,26 @@ and some content
     assert_selector 'li.toc1'
   end
 
+  def test_section_editing
+    content = update_wiki <<-EOWIKI
+h2. section to keep
+
+kept content
+
+h2. section to edit
+
+with content
+    EOWIKI
+    update_section "section to edit", <<-EOSEC
+h2. edited section
+
+with content
+    EOSEC
+    assert_selector "h2", text: 'edited section'
+    assert_no_selector "h2", text: 'section to edit'
+    assert_selector "h2", text: 'section to keep'
+  end
+
   def assert_wiki_unlocked
     request_urls = page.driver.network_traffic.map(&:url)
     assert request_urls.detect{|u| u.end_with? '/lock'}.present?

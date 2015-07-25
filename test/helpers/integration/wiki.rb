@@ -12,6 +12,15 @@ module Integration
       # work around not being on edit to begin with
       select_page_tab 'Edit'
       content ||= Faker::Lorem.paragraphs(4).join("\n")
+      submit_wiki_with content
+    end
+
+    def update_section(section, content)
+      hover_and_edit section
+      submit_wiki_with content
+    end
+
+    def submit_wiki_with(content)
       within('form.edit_wiki') do
         fill_in 'wiki[body]', with: content
         click_on 'Save'
