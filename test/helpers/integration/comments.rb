@@ -1,5 +1,9 @@
+require_relative 'navigation'
+
 module Integration
   module Comments
+    include Integration::Navigation
+
     def post_comment(text = nil)
       text ||= Faker::Lorem.paragraph
       fill_in :post_body, with: text
@@ -13,15 +17,6 @@ module Integration
         click_on 'Save'
       end
       new_text
-    end
-
-    def hover_and_edit(text)
-      target = page.find('.shy_parent', text: text)
-      target.hover
-      within ".shy_parent:hover" do
-        find("a.shy", text: 'Edit').click
-        yield if block_given?
-      end
     end
   end
 end

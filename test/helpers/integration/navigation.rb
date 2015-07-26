@@ -17,5 +17,14 @@ module Integration
         yield
       end
     end
+
+    def hover_and_edit(text)
+      target = page.find('.shy_parent', text: text)
+      target.hover
+      within ".shy_parent:hover" do
+        find("a.shy", text: 'Edit').click
+        yield if block_given?
+      end
+    end
   end
 end
