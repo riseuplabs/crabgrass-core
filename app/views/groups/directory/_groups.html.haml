@@ -1,11 +1,15 @@
 .directory
-  - @groups.count.times do |i|
-    - group = @groups[i]
-    - if group
-      .entry
-        = render partial: 'group', locals: {group: group}
-    - if @groups[i+1]
-      .divider
+  - @groups.group_by(&:type).each do |type, groups_list|
+    %h1= type.blank? ? :groups.t : type.downcase.pluralize.to_sym.t
+    .divider
+    .groups-wrapper
+      - groups_list.count.times do |i|
+        - group = groups_list[i]
+        - if group
+          .entry
+            = render partial: 'group', object: group
+        - if groups_list[i+1]
+          .divider
 
 = pagination_links(@groups, params: params.except(:utf8))
 
