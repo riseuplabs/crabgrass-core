@@ -73,6 +73,7 @@ FactoryGirl.define do
 
     factory :image_asset, class: ImageAsset do
       uploaded_data { fixture_file_upload('files/bee.jpg',  "image/jpeg") }
+      content_type { "image/jpeg" }
 
       factory :small_image_asset do
         uploaded_data { fixture_file_upload('files/gears.jpg',  "image/jpeg") }
@@ -81,10 +82,12 @@ FactoryGirl.define do
 
     factory :png_asset, class: PngAsset do
       uploaded_data { fixture_file_upload('files/image.png',  "image/png") }
+      content_type { "image/png" }
     end
 
     factory :word_asset, class: TextAsset do
       uploaded_data { fixture_file_upload('files/msword.doc', 'application/msword') }
+      content_type { "application/msword" }
     end
 
   end
