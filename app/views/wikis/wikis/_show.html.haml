@@ -4,11 +4,12 @@
 - if (notice = wiki_notice()).present?
   -# give it an id so we can hide it with javascript
   #inline-page-notice= notice
-.wiki{data: {diff: wiki.former && wiki_version_path(wiki, wiki.former.version)}}
-  -# the indentation for wikis must be preserved exactly, or
-  -# <pre> blocks get indented by haml.
-  = preserve do
-    - if may_edit_wiki?(wiki)
-      = decorate_wiki_sections(wiki)
-    - else
-      = wiki.body_html
+- cache [wiki, may_edit_wiki?(wiki) && current_language] do
+  .wiki{data: {diff: wiki.former && wiki_version_path(wiki, wiki.former.version)}}
+    -# the indentation for wikis must be preserved exactly, or
+    -# <pre> blocks get indented by haml.
+    = preserve do
+      - if may_edit_wiki?(wiki)
+        = decorate_wiki_sections(wiki)
+      - else
+        = wiki.body_html

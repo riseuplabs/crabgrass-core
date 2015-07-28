@@ -1,18 +1,19 @@
-- if @group.committee?
+- cache [@group, current_language] do
+  - if @group.committee?
+    .margin-bottom
+      = :this_is_committee.t(parent_group: link_to_group(@group.parent)).html_safe
+
+  - if @group.profiles.public.summary.present?
+    .profile-text
+      = @group.profiles.public.summary_html
+
+  - if @group.profiles.public.place.present?
+    .margin-bottom
+      %div
+        %b= h @group.profiles.public.place
+
   .margin-bottom
-    = :this_is_committee.t(parent_group: link_to_group(@group.parent)).html_safe
-
-- if @group.profiles.public.summary.present?
-  .profile-text
-    = @group.profiles.public.summary_html
-
-- if @group.profiles.public.place.present?
-  .margin-bottom
-    %div
-      %b= h @group.profiles.public.place
-
-.margin-bottom
-  = :group_membership_count.t(count: @group.users.count)
+    = :group_membership_count.t(count: @group.users.count)
 
 %div
   = join_group_link
