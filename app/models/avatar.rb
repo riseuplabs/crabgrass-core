@@ -17,7 +17,7 @@
 require 'open-uri'
 
 class Avatar < ActiveRecord::Base
-  
+
   # This is only used in singular resources and avatar_path.
   # So we use this workaround for form_for paths:
   # https://github.com/rails/rails/issues/1769#issuecomment-41025758
@@ -92,7 +92,7 @@ class Avatar < ActiveRecord::Base
       IO.read(default_file(size))
     else
       Media::TempFile.open(nil,content_type) do |dest_file|
-        status = GraphicsMagickTransmogrifier.new(input_file: filename, output_file: dest_file, size: dimensions, crop: crop, background: 'white').try.run
+        status = Media::GraphicsMagickTransmogrifier.new(input_file: filename, output_file: dest_file, size: dimensions, crop: crop, background: 'white').try.run
         if status == :success
           return IO.read(dest_file.path)
         else

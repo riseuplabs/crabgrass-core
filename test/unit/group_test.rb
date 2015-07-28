@@ -179,7 +179,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_avatar
     # must have GM installed
-    if !GraphicsMagickTransmogrifier.new.available?
+    if !Media::GraphicsMagickTransmogrifier.new.available?
       puts "GraphicsMagick converter is not available. Either GraphicsMagick is not installed or it can not be started. Skipping GroupTest#test_avatar."
       return
     end

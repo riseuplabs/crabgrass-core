@@ -1,6 +1,6 @@
 require 'integration_test'
 
-class AssetTest < IntegrationTest
+class ImageTest < IntegrationTest
 
   def test_get_asset
     asset = FactoryGirl.create :image_asset
