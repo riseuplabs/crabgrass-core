@@ -8,31 +8,49 @@ class AssetPageTest < ActiveSupport::TestCase
 
   def setup
     setup_assets
+    @page = AssetPage.build! title: 'hi', user: users(:blue)
+    @asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
+    @page.data = @asset
+    @page.save!
   end
 
   def teardown
     teardown_assets
   end
 
-  def test_asset_page
-    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
-    page = nil
-    assert_nothing_raised do
-      page = AssetPage.create! title: 'hi', data: asset, user: users(:blue)
-    end
-    assert_equal asset, page.data
-    asset.reload
-    assert asset.page_terms
-    assert "1", page.data.page_terms.media
+  def test_asset_page_data
+    assert_equal @asset, @page.data
+    @asset.reload
+    assert @asset.page_terms
+    assert "1", @page.data.page_terms.media
   end
 
   def test_asset_page_access
-    page = AssetPage.build! title: 'hi', user: users(:blue)
-    asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
-    page.data = asset
-    page.save!
-    assert File.exist?(asset.private_filename)
-    assert !File.exist?(asset.public_filename), 'public file "%s" should NOT exist' % asset.public_filename
+    assert File.exist?(@asset.private_filename)
+    assert !File.exist?(@asset.public_filename),
+      'public file "%s" should NOT exist' % @asset.public_filename
+  end
+
+  def test_asset_page_public_access
+    @page.public = true
+    @page.save
+    assert File.exist?(@asset.public_filename),
+      'public file "%s" not created when page became public' % @asset.public_filename
+  end
+
+  def test_asset_page_unpublished
+    @page.public = true
+    @page.save
+    @page.public = false
+    @page.save
+    assert !File.exist?(@asset.public_filename),
+      'public file "%s" still present after page was hidden' % @asset.public_filename
+  end
+
+  def test_symlinks_untouched_on_unrelated_updates
+    @asset.expects(:update_access).never
+    @page.title = "new title"
+    @page.save
   end
 
   protected
