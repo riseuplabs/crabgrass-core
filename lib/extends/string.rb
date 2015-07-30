@@ -11,7 +11,7 @@ class String
   def nameize
     str = self.dup
     str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
-    str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
+    str.gsub!(/[^[[:word:]]\+]+/, ' ') # all non-word chars to spaces
     str.strip!            # ohh la la
     str.downcase!         # upper case characters in urls are confusing
     str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
