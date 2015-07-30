@@ -43,6 +43,7 @@ module PageRecords
   end
 
   def create_page(type, options = {})
+    options, type = type, :discussion_page if type.is_a? Hash
     prepare_page(type, options)
     click_on :create.t
   end

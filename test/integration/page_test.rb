@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 require 'integration_test'
 
 class PageTest < IntegrationTest
@@ -24,6 +26,13 @@ class PageTest < IntegrationTest
         assert_not_found
       end
     end
+  end
+
+  def test_page_with_umlaut_title
+    login
+    create_page title: "Ümläute in the títlè"
+    page_title = current_url.to_s.split('/').last.split('+').first
+    assert_equal URI.encode('Ümläute-in-the-títlè'), page_title
   end
 
 end

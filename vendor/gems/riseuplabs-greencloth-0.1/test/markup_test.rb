@@ -6,10 +6,10 @@ require 'yaml'
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
 
-SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] !~ /\.rb/
-  ARGV[0]
+if ARGV[0] and ARGV[0] =~ /\.yml/
+  SINGLE_FILE_OVERRIDE = [ARGV[0]]
 else
-  nil
+  SINGLE_FILE_OVERRIDE = nil
 end
 
 class TestMarkup < MiniTest::Test
@@ -60,20 +60,13 @@ class TestMarkup < MiniTest::Test
 
   def assert_markup(filename, doc, html)
     in_markup = doc['in']
-    out_markup = doc['out'] || doc['html']
-    return unless in_markup and out_markup
+    expected = doc['out'] || doc['html']
+    return unless in_markup and expected
     html.gsub!( /\n+/, "\n" )
-    out_markup.gsub!( /\n+/, "\n" )
-    if html == out_markup
-      putc "."
-    else
-      puts "\n------- #{filename} failed -------"
-      puts "---- IN ----"; p in_markup
-      puts "---- OUT ----"; puts html
-      puts "---- EXPECTED ----"; puts out_markup
-      puts ""
-    end
+    expected.gsub!( /\n+/, "\n" )
+    assert_equal expected, html, <<-EOFAIL
+\n------- #{filename} failed: -------
+#{in_markup}
+    EOFAIL
   end
 end
-
-

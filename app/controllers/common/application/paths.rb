@@ -152,7 +152,7 @@ module Common::Application::Paths
     path_string = '/' + path.select(&:present?).join('/')
     path_string += build_query_string(options)
     path_string += "##{anchor}" if anchor
-    path_string
+    URI.encode(path_string)
   end
 
   def page_url(page, options={})
