@@ -14,7 +14,7 @@
         = embold_links(notice.display_body)
   %td.nowrap.align_right.reflow
     = spinner(notice, align: :middle)
-    - url = self.send(notice.noticable_path, notice.noticable)
-    = link_to notice.button_text, url, class: 'btn btn-sm btn-default'
+    = link_to notice.button_text, noticable_url(notice),
+      class: 'btn btn-sm btn-default'
     = link_to(:dismiss.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-sm btn-default'})
 

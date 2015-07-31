@@ -9,6 +9,21 @@ class Me::NoticesControllerTest < ActionController::TestCase
     login_as @blue
   end
 
+  def test_index
+    get :index
+    assert_response :success
+  end
+
+  # we should prevent this from happening in the first place.
+  # However the landing page is such an important entry point
+  # that we want to be sure to catch errors as well.
+  def test_index_with_invalid_notice
+    notice = PostStarredNotice.create user: @blue, noticable_type: 'Post',
+      noticable_id: 987654321
+    get :index
+    assert_response :success
+  end
+
   def test_destroy_all_html
     request.env["HTTP_REFERER"] = 'http://0.0.0.0:3000/me'
     delete :destroy_all

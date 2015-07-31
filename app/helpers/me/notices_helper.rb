@@ -6,4 +6,12 @@ module Me::NoticesHelper
         method: :delete,
       }, class: 'btn btn-sm btn-default')
   end
+
+  def noticable_url(notice)
+    self.send(notice.noticable_path, notice.noticable)
+  rescue NoMethodError => e
+    logger.error "Error: " + e.message
+    logger.error e.backtrace.join("\n")
+    return nil
+  end
 end
