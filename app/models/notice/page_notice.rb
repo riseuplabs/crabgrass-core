@@ -37,7 +37,7 @@ class PageNotice < Notice
       from: CGI::escapeHTML(data[:from]),
       message: CGI::escapeHTML(data[:message])
     )
-    if data[:message]
+    if !data[:message].empty?
       :page_notice_title_with_message.t(props).html_safe
     else
       :page_notice_title.t(props).html_safe
