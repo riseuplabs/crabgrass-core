@@ -15,7 +15,7 @@ On a debian-based system:
 
 Depending on what you are running, you might need to install `git-core`
 instead of `git`. You might also need libopenssl-ruby.
-If installing using bundler, you may need `libmysqlclient-dev`.
+If installing using bundler, you may need `libmysqlclient-dev` and `libsqlite3-dev`.
 
 On a redhat-based system:
 
