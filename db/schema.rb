@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150623202727) do
+ActiveRecord::Schema.define(:version => 20150810090844) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -437,6 +437,7 @@ ActiveRecord::Schema.define(:version => 20150623202727) do
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
+  add_index "page_terms", ["delta"], :name => "index_page_terms_on_delta"
   execute "ALTER TABLE page_terms ENGINE = MyISAM"
   execute "CREATE FULLTEXT INDEX idx_fulltext ON page_terms (access_ids,tags)"
 
