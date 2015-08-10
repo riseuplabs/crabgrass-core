@@ -7,6 +7,7 @@
 #   page has many users through user_participations
 #
 module UserExtension::Pages
+  include ActiveSupport::Benchmarkable
 
   ##
   ## ASSOCIATIONS
@@ -143,33 +144,35 @@ module UserExtension::Pages
   #  :all_resolved -- everyone's participation is resolved.
   #
   def updated(page, options={})
-    return if page.blank?
-    now = Time.now
+    benchmark 'User#updated' do
+      return if page.blank?
+      now = Time.now
 
-    unless page.contributor?(self)
-      page.contributors_count += 1
-    end
+      unless page.contributor?(self)
+        page.contributors_count += 1
+      end
 
-    # update everyone's participation
-    if options[:all_resolved]
-      page.user_participations.update_all('viewed = 0, resolved = 1')
-    else
-      page.user_participations.update_all('viewed = 0')
-    end
+      # update everyone's participation
+      if options[:all_resolved]
+        page.user_participations.update_all('viewed = 0, resolved = 1')
+      else
+        page.user_participations.update_all('viewed = 0')
+      end
 
-    # create self's participation if it does not exist
-    my_part = find_or_build_participation(page)
-    my_part.update_attributes(
-      changed_at: now, viewed_at: now, viewed: true,
-      resolved: (options[:resolved] || options[:all_resolved] || my_part.resolved?)
-    )
+      # create self's participation if it does not exist
+      my_part = find_or_build_participation(page)
+      my_part.update_attributes(
+        changed_at: now, viewed_at: now, viewed: true,
+        resolved: (options[:resolved] || options[:all_resolved] || my_part.resolved?)
+      )
 
-    # this is unfortunate, because perhaps we have already just modified the page?
-    page.resolved = options[:all_resolved] || page.resolved?
-    page.updated_at = now
-    page.updated_by = self
-    page.user_participations.where(watch: true).each do |part|
-      PageUpdateNotice.create!(user_id: part.user_id, page: page, from: self)
+      # this is unfortunate, because perhaps we have already just modified the page?
+      page.resolved = options[:all_resolved] || page.resolved?
+      page.updated_at = now
+      page.updated_by = self
+      page.user_participations.where(watch: true).each do |part|
+        PageUpdateNotice.create!(user_id: part.user_id, page: page, from: self)
+      end
     end
   end
 

@@ -7,6 +7,7 @@
 #
 #
 module PageExtension::Index
+  include ActiveSupport::Benchmarkable
 
   def self.included(base)
     base.extend(ClassMethods)
@@ -119,7 +120,9 @@ module PageExtension::Index
           update_page_terms
         end
       else
-        update_page_terms
+        benchmark 'Page#update_page_terms' do
+          update_page_terms
+        end
       end
     end
 
