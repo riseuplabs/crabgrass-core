@@ -150,8 +150,8 @@ gem 'crabgrass_media', '~> 0.0.2', :require => 'media'
 gem 'mime-types', :require => 'mime/types'
 
 # process heavy tasks asynchronously
-# TODO: why is this locked to 3.0 ?
-gem 'delayed_job', '~> 3.0.5'
+# 4.0 is most recent right now. fix major version.
+gem 'delayed_job_active_record', '~> 4.0'
 
 # ?
 gem 'rails3_before_render'
