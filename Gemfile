@@ -42,6 +42,11 @@ gem 'prototype_legacy_helper', '0.0.0',
 # so, we bind to the latest in the version 2 series for now
 gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
 
+#
+# Use delayed job to postpone the delta processing
+# latest version available. Stick to major release
+gem 'ts-delayed-delta', '~> 2.0'
+
 # Enhanced Tagging lib. Used to tag pages
 # Could not get the migration rake task for acts-as-taggable-on 3.x to work
 # before rails 3.2.
@@ -152,6 +157,9 @@ gem 'mime-types', :require => 'mime/types'
 # process heavy tasks asynchronously
 # 4.0 is most recent right now. fix major version.
 gem 'delayed_job_active_record', '~> 4.0'
+
+# delayed job runner as a deamon
+gem 'daemons'
 
 # ?
 gem 'rails3_before_render'
