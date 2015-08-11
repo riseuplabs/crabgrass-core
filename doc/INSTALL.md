@@ -6,11 +6,11 @@
 Install for development
 ====================================================
 
-Install basic ruby environment
+Install basic ruby environment (at least ruby 1.9.3, ideally ruby 2.1)
 
 On a debian-based system:
 
-    sudo apt-get install ruby1.9.1 ruby1.9.1-dev rake mysql-server
+    sudo apt-get install ruby ruby-dev rake mysql-server
     mysql-client libmysqld-dev git make libssl-dev g++ sphinxsearch
 
 Depending on what you are running, you might need to install `git-core`
@@ -101,7 +101,7 @@ Install for production
 install prerequisites
 ----------------------
 
-Download and install ruby 1.9 , rubygems, rails, and mysql the same way as
+Download and install ruby, rubygems, rails, and mysql the same way as
 in the 'install for development' instructions.
 
 Then:
