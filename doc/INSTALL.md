@@ -6,11 +6,11 @@
 Install for development
 ====================================================
 
-Install basic ruby environment
+Install basic ruby environment (at least ruby 1.9.3, ideally ruby 2.1)
 
 On a debian-based system:
 
-    sudo apt-get install ruby1.9.1 ruby1.9.1-dev rake mysql-server
+    sudo apt-get install ruby ruby-dev rake mysql-server
     mysql-client libmysqld-dev git make libssl-dev g++ sphinxsearch
 
 Depending on what you are running, you might need to install `git-core`
@@ -98,16 +98,28 @@ Run tests:
 Install for production
 ====================================================
 
+setup the environment
+---------------------
+
+Many of the following commands require RAILS_ENV to be set. You can do so
+for the current session with
+    export RAILS_ENV=production
+
+You may also want to add this to your shell environment by default.
+
+Alternatively you can prefix the commands involving rails or rake like this
+
+    RAILS_ENV=production bundle exec rails c
+
 install prerequisites
 ----------------------
 
-Download and install ruby 1.9 , rubygems, rails, and mysql the same way as
+Download and install ruby, rubygems, rails, and mysql the same way as
 in the 'install for development' instructions.
 
 Then:
 
     apt-get install sphinxsearch
-    export RAILS_ENV=production
     bundle install
 
 `sphinxsearch` is not technically required, but crabgrass runs 100 times faster
@@ -139,7 +151,6 @@ set the permissions:
 
 initialize the database:
 
-    export RAILS_ENV=production
     rake cg:convert_to_unicode
     rake db:schema:load
 
@@ -169,6 +180,18 @@ easiest way to do this is to set up a crontab. The gem `whatever` will install
 one for you from the schedule.rb config file.
 
     whenever --update-crontab -f config/misc/schedule.rb
+
+start delayed job daemon
+--------------------
+
+We index updated documents in sphinx using delayed job.
+(ts-delayed-delta to be exact).
+Run delayed job as a daemon so it can start the jobs:
+
+    script/delayed_job start
+
+You may want to symlink script/delayed_job from your start script directory
+such as /etc/init.d
 
 Configuration options
 ====================================================

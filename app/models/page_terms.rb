@@ -82,7 +82,7 @@ class PageTerms < ActiveRecord::Base
       has :flow
 
       # index options
-      set_property delta: true
+      set_property delta: ThinkingSphinx::Deltas::DelayedDelta
       set_property field_weights: {tags: 12, title: 8, body: 4, comments: 2}
     rescue
       ::Rails.logger.warn "failed to index page #{self.id} for sphinx search"
