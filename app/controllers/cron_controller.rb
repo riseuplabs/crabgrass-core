@@ -28,8 +28,6 @@ class CronController < ActionController::Base
       clean_fragment_cache
     when 'codes_expire'
       Code.cleanup_expired
-    when 'sphinx_reindex'
-      system('rake', '--rakefile', Rails.root+'/Rakefile', 'ts:index', 'RAILS_ENV=production')
     else
       raise 'no such cron action'
     end

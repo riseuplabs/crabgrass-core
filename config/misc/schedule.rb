@@ -39,7 +39,7 @@ end
 # Minimum total time is for delta growing up to
 #    sqr( 2*R / d) ~ 180 documents
 every 6.hour, :at => '0:40' do
-  curl 'sphinx_reindex'
+  rake 'ts:index'
 end
 
 every 1.day do
