@@ -29,7 +29,9 @@ class CronController < ActionController::Base
     when 'codes_expire'
       Code.cleanup_expired
     when 'sphinx_reindex'
-      system('rake', '--rakefile', Rails.root+'/Rakefile', 'ts:index', 'RAILS_ENV=production')
+      require 'rake'
+      require 'thinking_sphinx/tasks'
+      Rake::Task["ts:rebuild"].invoke
     else
       raise 'no such cron action'
     end
