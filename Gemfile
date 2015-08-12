@@ -37,10 +37,11 @@ gem 'prototype_legacy_helper', '0.0.0',
 ##
 
 # Full text search for the database
-# thinking-sphinx version 3 requires activerecord >= 3.1 which we have now
-# It also requires sphinx >= 2.06 and probably changes the API
-# so, we bind to the latest in the version 2 series for now
-gem 'thinking-sphinx', '~> 2.1.0', :require => 'thinking_sphinx'
+# thinking-sphinx version 3.1.4 has dropped support for some features
+# with rails 3.2 but they should not affect us
+# 3.1.3 prints warnings with latest sphinx:
+# https://github.com/pat/thinking-sphinx/issues/882
+gem 'thinking-sphinx', '3.1.4', :require => 'thinking_sphinx'
 
 #
 # Use delayed job to postpone the delta processing

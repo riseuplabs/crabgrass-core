@@ -4,22 +4,31 @@
 #
 module Integration
   module Search
+
+    SPHINX_ENABLED_SETTINGS = {
+      attribute_updates: true,
+      quiet_deltas: true
+    }
+
     def setup
       super
-      @_ts_updates_enabled = ThinkingSphinx.updates_enabled?
-      ThinkingSphinx.updates_enabled = true
-      @_ts_deltas_enabled = ThinkingSphinx.deltas_enabled?
-      ThinkingSphinx.deltas_enabled = true
-      @_ts_suppress_delta_output = ThinkingSphinx.suppress_delta_output?
-      ThinkingSphinx.suppress_delta_output = true
+      @_ts_old_settings = sphinx_settings.dup
+      sphinx_settings.merge! SPHINX_ENABLED_SETTINGS
     end
 
     def teardown
-      ThinkingSphinx.deltas_enabled = @_ts_deltas_enabled
-      ThinkingSphinx.updates_enabled = @_ts_updates_enabled
-      ThinkingSphinx.suppress_delta_output = @_ts_suppress_delta_output
+      sphinx_settings.merge! @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
       super
     end
+
+    def sphinx_config
+      ThinkingSphinx::Configuration.instance
+    end
+
+    def sphinx_settings
+      sphinx_config.settings
+    end
+
   end
 end
 

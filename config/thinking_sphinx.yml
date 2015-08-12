@@ -12,14 +12,14 @@ common: &common
 development:
   <<: *common
   config_file: config/sphinx/development.conf
-  port: 3312
+  mysql41: 3312
   address: localhost
   morphology: stem_en
 
 test:
   <<: *common
   config_file: config/sphinx/test.conf
-  port: 3313
+  mysql41: 3313
   address: localhost
   morphology: stem_en
   version: 2.0.4
@@ -27,7 +27,7 @@ test:
 production:
   <<: *common
   config_file: config/sphinx/production.conf
-  port: 3312
+  mysql41: 3312
   address: localhost
   morphology: stem_en
 
