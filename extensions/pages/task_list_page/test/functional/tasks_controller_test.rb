@@ -3,14 +3,15 @@ require 'test_helper'
 class TasksControllerTest < ActionController::TestCase
   fixtures :pages, :users, :task_lists, :tasks
 
-  def test_sort
-    login_as :blue
-
+  def setup
     @user = users(:blue)
     @page = pages(:tasklist1)
     @page.add(@user, access: :admin)
     @page.save!
+    login_as @user
+  end
 
+  def test_sort
     assert_equal 1, Task.find(1).position
     assert_equal 2, Task.find(2).position
     assert_equal 3, Task.find(3).position
@@ -24,11 +25,19 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   def test_create_task
-    login_as :blue
-    pages(:tasklist1).add(users(:blue), access: :admin)
-    pages(:tasklist1).save!
-    assert_difference 'pages(:tasklist1).data.tasks.count' do
-      xhr :post, :create, page_id: pages(:tasklist1).id, task: {name: "new task", user_ids: ["5"], description: "new task description"}
+    assert_difference '@page.data.tasks.count' do
+      xhr :post, :create, page_id: @page.id,
+        task: {name: "new task", user_ids: ["5"], description: "new task description"}
+    end
+  end
+
+  def test_update_task
+    list = @page.data
+    task = list.tasks.create name: 'blue... do something!',
+      user_ids: [@user.id]
+    assert_difference '@user.tasks.count', -1 do
+      xhr :put, :update, page_id: @page, id: task.id,
+        task: {name: "updated task", description: "new task description"}
     end
   end
 end
