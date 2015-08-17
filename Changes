@@ -1,3 +1,18 @@
+Changes in Crabgrass 0.6.2
+--------------------------
+
+Another bugfix release. This one has seen some serious speed improvements in
+particular for updates that update a page.
+The main user visible changes are the return of wiki diffs and stars for
+comments. Also we sort group and user lists alphabetically in a number of
+places now.
+We also prepared the upgrade to rails 4 as much as possible. So we removed all
+mods and turned the other rails 2.3 style plugins into engines that will be
+compatible with rails4. We also moved all the activity tracking that was using
+observers before into controllers. We now use helper classes to keep controllers
+thin but trigger the action tracking from the controllers themselves.
+
+
 Changes in Crabgrass 0.6.1
 --------------------------
 
