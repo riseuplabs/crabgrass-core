@@ -14,11 +14,6 @@ class ProfileTest < ActiveSupport::TestCase
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
 
-  def teardown
-    FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
-    FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
-  end
-
   def test_adding_profile
     u = users(:blue)
     p = u.profiles.create stranger: true, first_name: 'Blue'

@@ -74,12 +74,14 @@ module PageActions
   def delete_page(page = @page)
     click_on 'Delete Page'
     click_button 'Delete'
+    wait_for_ajax
     # ensure after_commit callbacks are triggered so sphinx indexes the page.
     page.page_terms.committed!
   end
 
   def undelete_page(page = @page)
     click_on 'Undelete'
+    wait_for_ajax
     # ensure after_commit callbacks are triggered so sphinx indexes the page.
     page.page_terms.committed!
   end
