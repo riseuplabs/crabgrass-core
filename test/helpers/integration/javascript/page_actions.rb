@@ -66,7 +66,11 @@ module PageActions
     click_on 'Page Details'
     find('a', text: 'Permissions').click
     select permission
-    assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
+    if PERMISSION_ICONS.keys.include? permission
+      assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
+    else
+      wait_for_ajax
+    end
     close_popup
     wait_for_ajax # reload sidebar
   end
@@ -74,12 +78,14 @@ module PageActions
   def delete_page(page = @page)
     click_on 'Delete Page'
     click_button 'Delete'
+    wait_for_ajax
     # ensure after_commit callbacks are triggered so sphinx indexes the page.
     page.page_terms.committed!
   end
 
   def undelete_page(page = @page)
     click_on 'Undelete'
+    wait_for_ajax
     # ensure after_commit callbacks are triggered so sphinx indexes the page.
     page.page_terms.committed!
   end

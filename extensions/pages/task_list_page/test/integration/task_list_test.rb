@@ -29,7 +29,14 @@ class TaskListTest < JavascriptIntegrationTest
     assign_task_to users(:red)
     assert_task_assigned_to users(:red)
     unassign_task_from user
-    assert_task_not_assigned_to users(:blue)
+    assert_no_task_assigned_to users(:blue)
+  end
+
+  def test_unassigning_task_from_last_user
+    add_task
+    unassign_task_from user
+    assert_tasks_pending
+    assert_no_task_assigned_to(user)
   end
 
   def add_task(options = {})
@@ -44,7 +51,9 @@ class TaskListTest < JavascriptIntegrationTest
 
   def unassign_task_from(user)
     edit_task
-    uncheck user.login
+    within '#sort_list_pending' do
+      uncheck user.login
+    end
     click_on 'Save'
   end
 
@@ -94,7 +103,7 @@ class TaskListTest < JavascriptIntegrationTest
     end
   end
 
-  def assert_task_not_assigned_to(*users)
+  def assert_no_task_assigned_to(*users)
     users.each do |user|
       assert_no_selector '.people',
         text: user.display_name

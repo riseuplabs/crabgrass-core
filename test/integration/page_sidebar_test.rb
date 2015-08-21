@@ -57,6 +57,15 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_starred
   end
 
+  def test_remove_user_from_page
+    @page.add(users(:red), access: :admin)
+    @page.save!
+    visit current_url # reload
+    assert_page_users users(:blue), users(:red)
+    change_access_to 'No Access'
+    assert_page_users users(:blue)
+  end
+
   def test_trash
     path = current_path
     delete_page

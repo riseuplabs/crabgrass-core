@@ -1,9 +1,7 @@
 require_relative 'test_helper'
 
 class TaskTest < ActiveSupport::TestCase
-
-  def setup
-  end
+  fixtures :users
 
   def test_creation
     assert list = TaskList.create
@@ -45,4 +43,13 @@ class TaskTest < ActiveSupport::TestCase
     assert_nil t.completed_at
   end
 
+  def test_unassigning_from_last_user
+    list = TaskList.create
+    task = list.tasks.create
+    task.user_ids = [users(:blue).id]
+    task.save
+    task.user_ids = []
+    task.save
+    assert_equal [], task.user_ids
+  end
 end
