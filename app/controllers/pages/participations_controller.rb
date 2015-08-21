@@ -82,7 +82,7 @@ class Pages::ParticipationsController < Pages::SidebarsController
   # watching group participations.
   def fetch_data
     return unless params[:access] && params[:id]
-    if params[:group]
+    if params[:group] && params[:group]!= 'false'
       @part = @page.group_participations.find(params[:id])
     else
       @part = @page.user_participations.find(params[:id])
