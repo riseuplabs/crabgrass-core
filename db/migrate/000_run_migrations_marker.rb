@@ -34,7 +34,7 @@ private
   end
 
   def migration_numbers
-    Dir["#{RAILS_ROOT}/db/migrate/[0-9]*_*.rb"].collect { |file| file[/(\d+)_[^\/]+\.rb$/][$1].to_i }.sort
+    Dir["#{Rails.root}/db/migrate/[0-9]*_*.rb"].collect { |file| file[/(\d+)_[^\/]+\.rb$/][$1].to_i }.sort
   end
 
   def mark_already_run_migration(migration_number)
