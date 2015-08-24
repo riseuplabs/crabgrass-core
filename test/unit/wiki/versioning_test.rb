@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class Wiki::VersioningTest < ActiveSupport::TestCase
-  fixtures :users, :wikis
+  fixtures :users, :wikis, :wiki_versions
   include WikiTestHelper
 
   def setup
@@ -21,6 +21,7 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     assert_difference '@wiki.versions.size' do
       @wiki.update_attributes!(body: 'hi', user: @user)
     end
+    assert_equal 1, @wiki.version
     assert_latest_body @wiki, 'hi'
     assert_latest_body_html @wiki, '<p>hi</p>'
     assert_latest_raw_structure @wiki, wiki_raw_structure_for_n_byte_body(2)
@@ -34,6 +35,7 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     assert_difference '@wiki.versions.size' do
       @wiki.update_attributes!(body: 'hi there', user: @user)
     end
+    assert_equal 2, @wiki.version
 
     #
     # save third version
@@ -43,6 +45,7 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     assert_no_difference '@wiki.versions.size' do
       assert_nothing_raised { @wiki.save! }
     end
+    assert_equal 2, @wiki.version
     assert_latest_body @wiki, 'hey you'
     assert_latest_body_html @wiki, '<p>hey you</p>'
     assert_latest_raw_structure @wiki, wiki_raw_structure_for_n_byte_body(7)
@@ -96,6 +99,7 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     assert_equal '2222', @wiki.body,  "should revert wiki body"
     assert_equal 2, @wiki.versions(true).size, "should delete all newer versions"
     assert_equal '2222', @wiki.versions.find_by_version(2).body, "should keep version 2"
+    assert_equal 2, @wiki.version
   end
 
   private

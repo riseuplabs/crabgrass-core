@@ -6,7 +6,7 @@ require_relative '../test_helper'
 #
 
 class Wiki::LockingTest < ActiveSupport::TestCase
-  fixtures :users, :wikis
+  fixtures :users, :wikis, :wiki_versions, :wiki_locks
 
   def setup
     @user = users(:blue)
