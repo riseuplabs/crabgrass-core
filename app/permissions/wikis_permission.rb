@@ -18,6 +18,8 @@ module WikisPermission
     current_user.may?(:admin, (wiki.page || wiki.group))
   end
 
+  # you can revert, if the version you want to revert to
+  # is not already the last version.
   def may_revert_wiki_version?(version = @version)
     version.next && may_edit_wiki?(version.wiki)
   end
