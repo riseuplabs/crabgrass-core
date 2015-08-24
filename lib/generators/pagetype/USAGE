@@ -1,0 +1,24 @@
+Description:
+    Create a new pagetype to use in crabgrass.
+    Running this generator will enable the creation of pages of a new type
+    inside crabgrass:
+    * Click on "Create New Page" in the 'me' menu.
+    * Pick the new pagetype - probably last in the selection
+    * fill in the fields for the page and create the page
+    This will create a page of the new pagetype. Of course the specific
+    functionality still needs to be added.
+
+Example:
+    rails generate pagetype bird
+
+    This will create:
+        extensions/pages/bird_page
+    and preseed it with an engine, model and controller for the pagetype.
+
+    Inside the engine definition it will register the pagetype with
+    crabgrass and activate it in
+      config/crabgrass/crabgrass.development.yml
+    so it can be played with.
+
+    A dummy pagetype description will be added to
+      config/locales/en/pages.yml
