@@ -22,10 +22,13 @@ namespace :cg do
       #
       # regenerate page terms in the database
       #
-      val = ThinkingSphinx.deltas_enabled?
-      ThinkingSphinx.deltas_enabled = false
-      Page.all.each { |page| print "#{page.id} "; page.update_page_terms; STDOUT.flush; }
-      ThinkingSphinx.deltas_enabled = val
+      ThinkingSphinx::Deltas.suspend(:page_terms) do
+        Page.find_each do |page|
+          print "#{page.id} "
+          page.update_page_terms
+          STDOUT.flush
+        end
+      end
 
       #
       # save page_terms to fixture yaml file
