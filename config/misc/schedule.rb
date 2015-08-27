@@ -45,11 +45,6 @@ every 6.hour, :at => '0:40' do
 end
 
 every 1.day do
-  curl 'cache_session_clean'
   curl 'codes_expire'
   curl 'tracking_update_dailies'
-end
-
-every 3.days do
-  curl 'cache_fragment_clean'
 end
