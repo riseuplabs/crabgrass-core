@@ -2,9 +2,12 @@
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
   ##%>
---- 
+---
 <% tags = %w(joy trust fear surprise sadness disgust anger happiness love anticipation) %>
 <% for tag in tags %>
 <%= tag %>:
   name: <%=tag%>
 <% end %>
+
+special_chars:
+  name: ;&étiquette

@@ -7,10 +7,10 @@ To freeze a gem named 'x':
   run:
     rake gems:unpack GEM=x
 
-NOTE: for all rails 2.3.X, unpacked gems may trigger a complaint by rails that 
+NOTE: for all rails 2.3.X, unpacked gems may trigger a complaint by rails that
 the gem doesn't have a specification file -- and then rails refuses to run.
 
-Unfortunately, the advice the error gives, to run "rake gems:refresh_specs", 
+Unfortunately, the advice the error gives, to run "rake gems:refresh_specs",
 does not work. Instead, try running "ruby vendor/refresh_specs.rb"
 
 If you freeze a gem, please document what the gem is used
@@ -26,9 +26,9 @@ work better with wikis.
 uglify_html
 ---------------------
 
-Some WYSIWYG text editors don't handle nice HTML very well. 
+Some WYSIWYG text editors don't handle nice HTML very well.
 This gem will take beautiful HTML and transform it into the
-ugly version needed by these editors. 
+ugly version needed by these editors.
 
 TODO: is this used anymore? isn't this only for nicEdit?
 I think this is currently unused.
@@ -73,37 +73,23 @@ the adaptor for the sphinx search indexer. required for
 fulltext searching. thinking_sphinx requires gems riddle and
 after_commit
 
-we don't modify the code, but we depend on an undocumented
-and unsupported "feature" of thinking sphinx, one that the
-author has said is an unintended byproduct of the
-implementation. I think it should be a feature, because it
-is cool.
-
 Here is the problem: you pass attribute filters to search() using
 :with => {}. But what do you do if you want to have multiple
 contraints on the same field? You are stuck, because you can't
-have two keys that are the same. 
+have two keys that are the same.
 
-So, instead, you can pass an array. Rather than:
+So, instead, you can pass an array to with_all. Rather than:
 
-   Page.search 'text', :with => {:access_ids => '1 2 3'}
+   Page.search 'text', with: {access_ids: '1 2 3'}
 
 You can do multiple constraints on the same field by doing this:
 
-   Page.search 'text', :with =>
-     [[:access_ids, '1 2 3'], [:access_ids, '4 5 6']]
+   Page.search 'text', with_all: {access_ids: [[1 2 3], [4 5 6]]}
 
 This will search "(1 OR 2 OR 3) AND (4 OR 5 OR 6)"
 
-This might break in future versions of thinking_sphinx.
-
-Here is the part of the code that makes it work with arrays
-and not just hashes:
-
-  lib/thinking_sphinx/search.rb:
-    (options[:with] || {}).collect { |attrib, value|
-       Riddle::Client::Filter.new attrib.to_s, filter_value(value)
-    }
+This feature replaced an earlier hack we used with sphinx 3. It's now
+officially supported.
 
 will_paginate
 ------------------

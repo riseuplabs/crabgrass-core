@@ -22,7 +22,6 @@
 # :created_by_id, :updated_by_id, :resolved, :stars_count, :access_ids,
 # :media
 #
-# NOTE: @conditions is a hash, @with is an array.
 #
 
 class PathFinder::Sphinx::Query < PathFinder::Query
@@ -38,25 +37,12 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     @original_options = options.dup
     @klass = klass # What are we searching Pages or Posts?
 
-    @with = []
-    if options[:group_ids] or options[:user_ids] or options[:public]
-      @with << access_limit(
-        public: options[:public],
-        group_ids: options[:group_ids],
-        user_ids: options[:user_ids]
-      )
-    end
-    if options[:secondary_group_ids] or options[:secondary_user_ids]
-      @with << access_limit(
-        group_ids: options[:secondary_group_ids],
-        user_ids: options[:secondary_user_ids]
-      )
-    end
-    if options[:site_ids]
-      @with << access_limit(
-        site_ids: options[:site_ids]
-      )
-    end
+    @with = {}
+
+    add_access_constraint options.slice(:public, :group_ids, :user_ids)
+    add_access_constraint group_ids: options[:secondary_group_ids],
+      user_ids: options[:secondary_user_ids]
+    add_access_constraint site_ids: options[:site_ids]
 
     @without      = {}
     @conditions   = {}
@@ -83,12 +69,12 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   ##
 
   def search
-    # the default sort is '@relevance DESC', but this can create rather odd
+    # the default sort is 'weight() DESC', but this can create rather odd
     # results because you might get relevent pages from years ago. So, if there
     # is no explicit order set, we want to additionally sort by page_updated_at.
     if @order.blank?
       @sort_mode = :extended
-      @order = "@relevance DESC, page_updated_at DESC"
+      @order = "weight() DESC, page_updated_at DESC"
     end
 
     #puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
@@ -96,10 +82,8 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
-    page_terms = PageTerms.search @search_text,
-      page: @page,   per_page: @per_page,  include: :page,
-      with: @with,   without: @without, conditions: @conditions,
-      order: @order, sort_mode: @sort_mode
+    options = search_options sort_mode: @sort_mode
+    page_terms = PageTerms.search @search_text, options
 
     # page_terms has all of the will_paginate magic included, it just needs to
     # actually have the pages, which we supply with page_terms.replace(pages).
@@ -127,11 +111,19 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, with: @with, without: @without,
-      page: @page, per_page: @per_page, conditions: @conditions,
-      order: @order, include: :page).size
+    PageTerms.search_for_ids(@search_text, search_options).size
   rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
     fallback.count
+  end
+
+  def search_options(options = {})
+    options.reverse_merge page: @page,
+      per_page: @per_page,
+      include: :page,
+      with_all: @with,
+      without_all: @without,
+      conditions: @conditions,
+      order: @order
   end
 
   def fallback
@@ -143,15 +135,17 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   ##
 
   def add_attribute_constraint(attribute, value)
-    @with << [attribute, value]
+    return if value.blank?
+    @with[attribute] ||= []
+    @with[attribute] << [value]
   end
 
   def add_access_constraint(access_hash)
-    @with << access_limit(access_hash)
+    add_attribute_constraint 'access_ids', access_limit(access_hash)
   end
 
   def add_public
-    @with << access_limit(public: true)
+    add_access_constraint public: true
   end
 
   def add_tag_constraint(tag)
@@ -188,7 +182,8 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     page_group, page_type, media_type = parse_page_type(arg)
 
     if media_type
-      @with << [:media, MEDIA_TYPE[media_type.to_sym]] # indexed as multi array of ints.
+      # indexed as multi array of ints.
+      add_attribute_constraint :media, MEDIA_TYPE[media_type.to_sym]
     elsif page_type
       @conditions[:page_type] = Page.param_id_to_class_name(page_type)
     elsif page_group
@@ -223,12 +218,14 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   # attribute filter, using the attribute 'access_ids' in order to
   # encode permissions.
   #
-  # we use an array for @with (rather than a hash), so that we
-  # can have multiple constraints on the same key. See README_GEMS
-  # for details on this hackery.
+  # we use an array of arrays for @with and feed it to with_all.
+  # This way we can have multiple constraints on the same key.
+  # For details see:
+  # https://github.com/riseuplabs/crabgrass-core/pull/306
   #
   def access_limit(access_hash)
-    ['access_ids', Page.access_ids_for(access_hash)]
+    real_access = access_hash.select{|_k,v| v.present?}
+    [Page.access_ids_for(real_access)]
   end
 
   #
@@ -242,4 +239,3 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   end
 
 end
-

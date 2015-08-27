@@ -237,7 +237,7 @@ class Page::SearchTest < ActiveSupport::TestCase
   end
 
   def sphinx_working?
-    ThinkingSphinx.sphinx_running?
+    ThinkingSphinx::Configuration.instance.controller.running?
   end
 
 end

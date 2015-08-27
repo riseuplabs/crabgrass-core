@@ -5,44 +5,55 @@ require 'javascript_integration_test'
 class PageSearchTest < JavascriptIntegrationTest
   include Integration::Search
 
+  def test_sphinx
+    user = users(:blue)
+    page = user.pages.first
+    pages = Page.find_by_path "text/#{page.title}", method: :mysql
+    assert pages.count >= 1
+    pages = Page.find_by_path "text/#{page.title}", method: :sphinx
+    assert pages.count >= 1
+  end
+
   def test_initial_search
-    # new page so it shows up on top
-    login users(:blue)
-    own_page
+    user = users(:blue)
+    page = user.pages.last
+    login user
     click_on 'Pages'
-    assert_content own_page.title
+    assert_content page.title
   end
 
   def test_owned_by_me
-    login users(:blue)
-    own_page
+    user = users(:blue)
+    page = user.pages_owned.first
+    login user
     click_on 'Pages'
     click_on 'Own'
     assert_content 'Owned By Me'
     assert_text_of_all 'td.owner', user.display_name
-    assert_content own_page.title
+    assert_content page.title
   end
 
   def test_deleted
-    login users(:blue)
-    own_page(flow: FLOW[:deleted])
+    user = users(:blue)
+    page = pages(:delete_test)
+    login user
     click_on 'Pages'
     assert_content 'Owner'
-    assert_no_content own_page.title
+    assert_no_content page.title
     click_on 'Deleted'
-    assert_content own_page.title
+    assert_content page.title
   end
 
   def test_tagged
-    login users(:blue)
-    own_page.tag_list.add 'some, test, tags, with, ;&étiquette', parse: true
-    own_page.save
-    own_page.page_terms.committed!
+    user = users(:blue)
+    tag = tags(:special_chars).name
+    page = user.pages.tagged_with(tag).first
+    login user
     click_on 'Pages'
     click_on 'Tag...'
-    click_on ';&étiquette'
-    assert_content own_page.title
-    assert_content 'Tag: ;&étiquette'
+    click_on tag
+    assert_content "Tag: #{tag}"
+    assert_content page.title
   end
 
   def assert_text_of_all(selector, text)

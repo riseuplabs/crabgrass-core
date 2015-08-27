@@ -2,7 +2,7 @@
   ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
   ## rake cg:test:update_fixtures
   ##%>
---- 
+---
 <%
   srand(314159265359)
   page_count = 50
@@ -13,7 +13,7 @@
 <% tag = tags.sample %>
 <%= "#{tag}_#{page_id}" %>:
   tag: <%= tag %>
-  taggable_id: <%= page_id %> 
+  taggable_id: <%= page_id %>
   taggable_type: Page
   context: "tags"
 <% end %>
@@ -29,8 +29,8 @@ extra_tag_for_blue_anticipation:
   taggable_type: Page
   context: "tags"
 
-extra_tag_for_blue_surprise:
-  tag: surprise
+extra_tag_for_blue_special_chars:
+  tag: special_chars
   taggable_id: 33
   taggable_type: Page
   context: "tags"

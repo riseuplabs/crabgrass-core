@@ -40,54 +40,20 @@ in a normal page query.
 =end
 
 class PageTerms < ActiveRecord::Base
+  include ThinkingSphinx::Scopes
+
+  FIELD_WEIGHTS = {
+    tags: 12,
+    title: 8,
+    body: 4,
+    comments: 2
+  }
+  sphinx_scope(:weighted) {
+    { field_weights: FIELD_WEIGHTS }
+  }
+  default_sphinx_scope :weighted
+
   belongs_to :page
-
-  define_index do
-    begin
-      ## text fields ##
-
-      # general fields
-      indexes :title,     sortable: true
-      indexes :page_type, sortable: true
-      indexes :tags
-      indexes :body
-      indexes :comments
-
-      # denormalized names
-      indexes :created_by_login, sortable: true
-      indexes :updated_by_login, sortable: true
-      indexes :owner_name,       sortable: true
-
-      ## attributes ##
-
-      # timedates
-      has :page_created_at
-      has :page_updated_at
-
-      # ids
-      has :created_by_id
-      has :updated_by_id
-      has :owner_id
-      # has :updated_by_ids, :type => :multi
-      # has :watched_by_ids, :type => :multi
-
-      # counts
-      has :views_count
-      has :stars_count
-
-      # flags and access
-      has :resolved
-      has :access_ids, type: :multi # multi: indexes as an array of ints
-      has :media, type: :multi
-      has :flow
-
-      # index options
-      set_property delta: ThinkingSphinx::Deltas::DelayedDelta
-      set_property field_weights: {tags: 12, title: 8, body: 4, comments: 2}
-    rescue
-      ::Rails.logger.warn "failed to index page #{self.id} for sphinx search"
-    end
-  end
 
   def updated_at=(value)
     write_attribute(:page_updated_at, value)

@@ -64,8 +64,6 @@ module PageRecords
   def save_and_index(page)
     if page.new_record?
       page.save
-      # ensure after_commit callbacks are triggered so sphinx indexes the page.
-      page.page_terms.committed!
     end
     page
   end
