@@ -1,0 +1,4 @@
+Thinking Sphinx generates config files to use with sphinx.
+They live in this directory so they do not clutter the config dir.
+
+Gitignore is setup to ignore them.

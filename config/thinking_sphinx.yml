@@ -11,23 +11,24 @@ common: &common
 
 development:
   <<: *common
-  config_file: config/sphinx/development.conf
+  configuration_file: config/sphinx/development.conf
   mysql41: 3312
   address: localhost
   morphology: stem_en
 
 test:
   <<: *common
-  config_file: config/sphinx/test.conf
+  configuration_file: config/sphinx/test.conf
   mysql41: 3313
   address: localhost
   morphology: stem_en
-  version: 2.0.4
 
 production:
   <<: *common
-  config_file: config/sphinx/production.conf
+  configuration_file: config/sphinx/production.conf
   mysql41: 3312
   address: localhost
   morphology: stem_en
+  quiet_deltas: true
+  bin_path: '/usr/bin'
 
