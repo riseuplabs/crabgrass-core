@@ -18,9 +18,11 @@
 # See https://github.com/javan/whenever for more details.
 #
 
-set :host, ENV['RAILS_ENV'] === 'development' ? 'localhost:3000' : 'localhost'
+set :host, ENV['RAILS_ENV'] === 'development' ?
+  'localhost:3000' :
+  ( ENV['RAILS_HOST'] || 'localhost' )
 
-job_type :curl, 'curl http://:host/do/cron/run/:task'
+job_type :curl, 'curl -L -XPOST http://:host/do/cron/run/:task'
 
 every 5.minutes do
   curl 'notices_send'
