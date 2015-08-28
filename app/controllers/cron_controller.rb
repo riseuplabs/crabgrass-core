@@ -22,10 +22,6 @@ class CronController < ActionController::Base
       Tracking::Page.process
     when 'tracking_update_dailies'
       Tracking::Daily.update
-    when 'cache_session_clean'
-      clean_session_cache
-    when 'cache_fragment_clean'
-      clean_fragment_cache
     when 'codes_expire'
       Code.cleanup_expired
     else
@@ -44,22 +40,6 @@ class CronController < ActionController::Base
     unless request.remote_addr == '127.0.0.1'
       render text: 'not allowed'
     end
-  end
-
-  #
-  # remove all files that have had their status changed more than three days ago.
-  # (on a system with user accounts, tmpreaper should be used instead.)
-  #
-  def clean_fragment_cache
-    system("find", Rails.root+'/tmp/cache', '-ctime', '+3', '-exec', 'rm', '{}', ';')
-  end
-
-  #
-  # remove all files that have had their status changed more than three days ago.
-  # (on a system with user accounts, tmpreaper should be used instead.)
-  #
-  def clean_session_cache
-    system("find", Rails.root+'/tmp/sessions', '-ctime', '+3', '-exec', 'rm', '{}', ';')
   end
 
 end
