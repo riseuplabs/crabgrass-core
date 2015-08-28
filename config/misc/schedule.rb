@@ -24,14 +24,6 @@ set :host, ENV['RAILS_ENV'] === 'development' ?
 
 job_type :curl, 'curl -L -XPOST http://:host/do/cron/run/:task'
 
-every 5.minutes do
-  curl 'notices_send'
-end
-
-every 1.hour, :at => '0:20' do
-  curl 'notices_send_digests'
-end
-
 every 1.hour, :at => '0:30' do
   curl 'tracking_update_hourlies'
 end
