@@ -7,64 +7,66 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  def self.send_single_pending_notifications
-    pending_notifications.each do |page_history|
-      if page_history.page.nil?
-        page_history.destroy
-        next
+  after_save :send_single_pending_notifications, only: :create
+
+  def send_single_pending_notifications
+    destroy && return if page.nil?
+    recipients_for_single_notification.each do |user|
+      if Conf.paranoid_emails?
+        Mailer.page_history_single_notification_paranoid(user, self).deliver
+      else
+        Mailer.page_history_single_notification(user, self).deliver
       end
-      recipients_for_single_notification(page_history).each do |user|
-        if Conf.paranoid_emails?
-          Mailer.page_history_single_notification_paranoid(user, page_history).deliver
-        else
-          Mailer.page_history_single_notification(user, page_history).deliver
-        end
-      end
-      page_history.update_attribute :notification_sent_at, Time.now
     end
+    update_attribute :notification_sent_at, Time.now
+  end
+  handle_asynchronously :send_single_pending_notifications
+
+  # BROKEN RIGHT NOW:
+  # This used to be far to complex for processing the backlog of
+  # unsend notifications we have in production.
+  #
+  # I rewrote this to only work on a single page. But that does not
+  # get us very far either.
+  #
+  # So for now we only send single notifications
+  def self.send_digest_pending_notifications(page = nil)
+    return
+    page_histories = pending_digest_notifications_for_page(page).all
+    return if page_histories.blank?
+    recipients_for_digest_notifications(page).each do |user|
+      if Conf.paranoid_emails?
+        Mailer.page_history_digest_notification_paranoid(user, page, page_histories).deliver
+      else
+        Mailer.page_history_digest_notification(user, page, page_histories).deliver
+      end
+    end
+    PageHistory.where(id: page_histories)
+      .update_all notification_digest_sent_at: Time.now
   end
 
-  def self.send_digest_pending_notifications
-    pending_digest_notifications_by_page.each do |page_id, page_histories|
-      page = Page.find(page_id)
-      recipients_for_digest_notifications(page).each do |user|
-        if Conf.paranoid_emails?
-          Mailer.page_history_digest_notification_paranoid(user, page, page_histories).deliver
-        else
-          Mailer.page_history_digest_notification(user, page, page_histories).deliver
-        end
-      end
-      PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
-    end
-  end
-
-  def self.pending_digest_notifications_by_page
-    histories = {}
-    PageHistory.order("created_at desc")
-      .where(notification_digest_sent_at: nil).each do |page_history|
-      histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
-      histories[page_history.page.id] << page_history
-    end
-    histories
+  def self.pending_digest_notifications_for_page(page)
+    page.page_histories.order("created_at desc")
+      .where notification_digest_sent_at: nil
   end
 
   def self.pending_notifications
-    PageHistory.where(notification_sent_at: nil).all
+    where notification_sent_at: nil
   end
 
   def self.recipients_for_page(page)
-    UserParticipation.where(page_id: page.id, watch: true).map(&:user_id)
+    UserParticipation.where(page_id: page.id, watch: true).pluck(:user_id)
   end
 
   def self.recipients_for_digest_notifications(page)
-    User.where("receive_notifications = 'Digest'")
-      .where(id: recipients_for_page(page)).all
+    User.where receive_notifications: 'Digest', id: recipients_for_page(page)
   end
 
-  def self.recipients_for_single_notification(page_history)
-    users_watching_ids = recipients_for_page(page_history.page)
-    users_watching_ids.delete(page_history.user.id)
-    User.where("receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids).all
+  def recipients_for_single_notification
+    users_watching_ids = recipients_for_page(page)
+    users_watching_ids.delete(user.id)
+    User.where receive_notifications: 'Single',
+      id: users_watching_ids
   end
 
   def description_key
