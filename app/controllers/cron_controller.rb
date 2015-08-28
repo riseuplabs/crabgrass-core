@@ -14,10 +14,6 @@ class CronController < ActionController::Base
 
   def run
     case params[:id]
-    when 'notices_send'
-      PageHistory.send_single_pending_notifications
-    when 'notices_send_digests'
-      PageHistory.send_digest_pending_notifications
     when 'tracking_update_hourlies'
       Tracking::Page.process
     when 'tracking_update_dailies'
