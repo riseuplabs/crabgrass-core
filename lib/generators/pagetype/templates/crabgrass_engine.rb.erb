@@ -1,0 +1,15 @@
+require 'crabgrass/page/engine'
+
+module Crabgrass<%= class_name %>Page
+  class Engine < ::Rails::Engine
+    include Crabgrass::Page::Engine
+
+    register_page_type :<%= class_name %>Page,
+      controller: ['<%= name %>_page'],
+      model: '<%= name %>',
+      icon: 'page_<%= name %>',
+      class_group: ['planning', '<%= name %>'],
+      order: 5
+  end
+end
+
