@@ -35,17 +35,15 @@ module WikiExtension
     end
 
     def create_new_version? #:nodoc:
-      body_updated = body_changed?
-      recently_edited_by_same_user = !user_id_changed? && (updated_at and (updated_at > 30.minutes.ago))
-
-      latest_version_has_blank_body = self.versions.last && self.versions.last.body.blank?
-
       # always create a new version if we have no versions at all
-      # don't create a new version if
-      #   * a new version would be on top of an old blank version (we don't want to store blank versions)
-      #   * the same user is making several edits in sequence
-      #   * the body hasn't changed
-      return (versions.empty? or (body_updated and !recently_edited_by_same_user and !latest_version_has_blank_body))
+      return true if versions.empty?
+      # overwrite blank versions (we don't want to store blank versions)
+      return false if current.body.blank?
+      body_changed? && ( user_id_changed? || long_time_no_updates? )
+    end
+
+    def long_time_no_updates?
+      updated_at && (updated_at < 30.minutes.ago)
     end
 
     def current

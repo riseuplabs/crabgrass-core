@@ -13,21 +13,24 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     wiki = pages(:wiki).data
 
     # create versions
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      login_as user
-      wiki.update_section!(:document, users(user), i, "text %d for the wiki" % i)
+    %w[yellow orange blue yellow red purple].each do |user|
+      wiki.update_section! :document, users(user), nil,
+        "text from %s for the wiki" % user
     end
-
-    wiki.update_section!(:document, users(:purple), 6, "text 6 for the wiki")
 
     login_as :orange
     wiki.versions.reload
 
+    assert_equal 6, wiki.versions.count
+    assert_equal 6, wiki.versions.last.version
+
     # find versions
-    get :show, wiki_id: wiki.id, id: 6
+    get :show, wiki_id: wiki.id, id: 5
     assert_response :success
-    assert_equal 6, assigns(:version).version
-    assert_equal 'text 6 for the wiki', assigns(:wiki).body
+    assert_equal 5, assigns(:version).version
+    assert_equal 'text from purple for the wiki', assigns(:wiki).body
+    assert_equal 'text from red for the wiki', assigns(:version).body
+    assert_equal 4, assigns(:former).version
   end
 
   def test_show_invalid_version

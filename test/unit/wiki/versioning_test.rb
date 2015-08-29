@@ -14,41 +14,31 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     assert @wiki.versions.empty?
   end
 
-  def test_save_versions
-    #
-    # save first version
-    #
+  def test_updates_combined
     assert_difference '@wiki.versions.size' do
       @wiki.update_attributes!(body: 'hi', user: @user)
+      @wiki.update_attributes!(body: 'hi again', user: @user)
     end
     assert_equal 1, @wiki.version
-    assert_latest_body @wiki, 'hi'
-    assert_latest_body_html @wiki, '<p>hi</p>'
-    assert_latest_raw_structure @wiki, wiki_raw_structure_for_n_byte_body(2)
-    assert_no_difference '@wiki.versions.size', 'saving the same body should never produce a new version' do
+  end
+
+  def test_different_users_separate_versions
+    assert_difference '@wiki.versions.size', 3 do
+      @wiki.update_attributes!(body: 'hi', user: @user)
+      @wiki.update_attributes!(body: 'hi again', user: @different_user)
+      @wiki.update_attributes!(body: 'hi once more', user: @user)
+    end
+    assert_equal 3, @wiki.version
+  end
+
+  def test_same_body_same_version
+    assert_difference '@wiki.versions.size' do
+      @wiki.update_attributes!(body: 'hi', user: @user)
       @wiki.update_attributes!(body: 'hi', user: @different_user)
     end
-
-    #
-    # save second version
-    #
-    assert_difference '@wiki.versions.size' do
-      @wiki.update_attributes!(body: 'hi there', user: @user)
-    end
-    assert_equal 2, @wiki.version
-
-    #
-    # save third version
-    #
-    @wiki.body = 'hey you'
-    @wiki.user = @user
-    assert_no_difference '@wiki.versions.size' do
-      assert_nothing_raised { @wiki.save! }
-    end
-    assert_equal 2, @wiki.version
-    assert_latest_body @wiki, 'hey you'
-    assert_latest_body_html @wiki, '<p>hey you</p>'
-    assert_latest_raw_structure @wiki, wiki_raw_structure_for_n_byte_body(7)
+    assert_equal 1, @wiki.version
+    # FIXME: prevent version take over
+    assert_equal @different_user, @wiki.versions.last.user
   end
 
   def test_initial_empty_body
