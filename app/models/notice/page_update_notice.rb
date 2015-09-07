@@ -1,7 +1,7 @@
 class PageUpdateNotice < PageNotice
 
   def display_title
-    I18n.t("page_updated", data).html_safe
+    I18n.t(:page_updated, data).html_safe
   end
 
   def display_body_as_quote?
@@ -13,7 +13,7 @@ class PageUpdateNotice < PageNotice
   end
 
   def display_label
-    I18n.t "page_update"
+    I18n.t :page_update
   end
 
 end
