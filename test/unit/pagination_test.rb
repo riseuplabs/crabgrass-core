@@ -18,7 +18,7 @@ class PaginationTest < ActiveSupport::TestCase
       # last page gets only 1 view
       # lets us test that pagination sorts them properly
       (all_pages.size - index).times do
-        Tracking::Page.insert_delayed(current_user: user,
+        Tracking::Page.insert(current_user: user,
           user: user,
           group: group,
           page: page,

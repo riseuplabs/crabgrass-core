@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150810092223) do
+ActiveRecord::Schema.define(:version => 20150908105227) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -827,8 +827,6 @@ ActiveRecord::Schema.define(:version => 20150810092223) do
     t.boolean  "stars"
     t.integer  "user_id"
   end
-
-  execute "ALTER TABLE trackings ENGINE = MyISAM"
 
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id"
