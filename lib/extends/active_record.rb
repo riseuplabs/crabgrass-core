@@ -149,7 +149,7 @@ end
 
 #
 # What is going on here!?
-# Crabgrass requires MyISAM for certain tables and the ability to add fulltext
+# Crabgrass requires MyISAM for the page_terms and the ability to add fulltext
 # indexes. Additionally, since we are tied to mysql, we might as well be able
 # to use it properly and specify the index length.
 #
@@ -168,10 +168,6 @@ module ActiveRecord
   class SchemaDumper #:nodoc:
     # modifies index support for MySQL full text indexes
     def indexes(table, stream)
-      if table == 'page_views' or table == 'trackings'
-        stream.puts %(  execute "ALTER TABLE #{table} ENGINE = MyISAM")
-        stream.puts
-      end
       indexes = @connection.indexes(table)
       indexes.each do |index|
         if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)

@@ -10,7 +10,7 @@ module Common::Application::Tracking
       group: @group,
       user: @user,
       action: :view
-    ::Tracking::Page.insert_delayed options
+    ::Tracking::Page.insert options
   end
 
 end
