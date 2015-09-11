@@ -11,7 +11,7 @@ SPHINX_DEV_CONF_PATH = 'config/sphinx/development.conf'
 ruby_version_file = File.join(File.dirname(__FILE__), '.ruby-version')
 RUBY_VER = File.exist?(ruby_version_file) ? File.read(ruby_version_file) : '2.1.5'
 MYSQL_PASS = ENV['CRABGRASS_MYSQL_PASS'] || 'password' # We don't care, because it is a development VM
-MEMORY = (ENV['CRABGRASS_MEMORY'] || 2096).to_i
+MEMORY = (ENV['CRABGRASS_MEMORY'] || 2048).to_i
 CPU_COUNT = (ENV['CRABGRASS_CPU_COUNT'] || 2).to_i
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
