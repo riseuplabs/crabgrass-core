@@ -1,14 +1,18 @@
 class Me::TasksController < Me::BaseController
 
   def index
-    if completed?
-      @tasks = current_user.tasks.completed.order('updated_at DESC')
-    else
-      @tasks = current_user.tasks.pending.order('updated_at DESC').limit(200)
-    end
+    @tasks = tasks_for_view.order('updated_at DESC').limit(200)
   end
 
   protected
+
+  def tasks_for_view
+    current_user.tasks.send(view)
+  end
+
+  def view
+    completed? ? :completed : :pending
+  end
 
   def completed?
     params[:view] == 'completed'
