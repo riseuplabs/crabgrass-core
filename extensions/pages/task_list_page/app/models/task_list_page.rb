@@ -2,11 +2,11 @@
 
 class TaskListPage < Page
 
+  # has_many :tasks
+
   # Return string of all tasks, for the full text search index
   def body_terms
-    return "" unless data and data.tasks
-    data.tasks.collect { |task| "#{task.name}\t#{task.description}" }.join "\n"
+    data.tasks.pluck('CONCAT(name,"\t",description)').join "\n"
   end
-
 end
 

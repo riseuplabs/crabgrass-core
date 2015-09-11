@@ -1,9 +1,16 @@
-require 'test/unit'
-require File.dirname(__FILE__) + '/../../../../../test/test_helper'
+require 'test_helper'
 
 class TaskListPageTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  #def test_this_plugin
-  #  flunk
-  #end
+  fixtures :tasks, :task_lists, :pages
+
+  def test_body_terms
+    @page = pages(:tasklist1)
+    assert_equal expected_body_terms, @page.body_terms
+  end
+
+  def expected_body_terms
+    expected_body_terms = [1,2,3]
+      .map {|n| "task#{n}\ttask#{n} description"}
+      .join "\n"
+  end
 end
