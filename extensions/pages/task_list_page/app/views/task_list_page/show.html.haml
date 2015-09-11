@@ -3,8 +3,8 @@
 
 %h2= I18n.t(:pending_tasks).capitalize
 %ul#sort_list_pending.list-group.stripe
-  = render @list.pending
-%ul#no_pending_tasks.list-group{:style => ('display:none' if @list.pending.any?)}
+  = render @pending
+%ul#no_pending_tasks.list-group{:style => ('display:none' if @pending.any?)}
   %li.list-group-item
     = :no_pending_tasks.tcap
 
@@ -13,8 +13,8 @@
 
 %h2= I18n.t(:completed_tasks).capitalize
 %ul#sort_list_completed.list-group.stripe
-  = render @list.completed
-%ul#no_completed_tasks.list-group{:style => ('display:none' if @list.completed.any?)}
+  = render @completed
+%ul#no_completed_tasks.list-group{:style => ('display:none' if @completed.any?)}
   %li.list-group-item
     = :no_completed_tasks.tcap
 

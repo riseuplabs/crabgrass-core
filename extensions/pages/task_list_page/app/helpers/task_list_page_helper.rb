@@ -32,7 +32,7 @@ module TaskListPageHelper
 
   # creates a checkbox tag for a task
   def task_checkbox(task)
-    disabled = !current_user.may?(:edit, task.task_list.page)
+    disabled = !current_user.may?(:edit, task.page)
     if true
       content_tag(:label, class: 'checkbox-inline') do
         content_tag(:input, '',type: 'checkbox', disabled: 'disabled') +
@@ -41,7 +41,7 @@ module TaskListPageHelper
     else
       next_state = task.completed? ? 'pending' : 'complete'
       name = "#{task.id}_task"
-      spinbox_tag name, task_url(task, page_id: task.task_list.page),
+      spinbox_tag name, task_url(task, page_id: task.page),
         checked: task.completed?,
         tag: :span,
         method: :put,
@@ -94,7 +94,7 @@ module TaskListPageHelper
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      url: task_url(task, page_id: task.task_list.page),
+      url: task_url(task, page_id: task.page),
       method: 'delete',
       loading: show_spinner(task),
       complete: hide(task)
@@ -111,7 +111,7 @@ module TaskListPageHelper
 
   def edit_task_details_function(task)
     remote_function(
-      url: edit_task_url(task, page_id: task.task_list.page),
+      url: edit_task_url(task, page_id: task.page),
       loading: show_spinner(task),
       method: :get
     )
@@ -149,7 +149,7 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      url: task_url(task, page_id: task.task_list.page),
+      url: task_url(task, page_id: task.page),
       loading: show_spinner(task),
       method: :put,
       html: {}
@@ -157,7 +157,7 @@ module TaskListPageHelper
   end
 
   def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
-    page ||= task.task_list.page
+    page ||= task.page
     render partial: 'tasks/assigned_checkbox',
       collection: possible_users(task, page),
       as: :user,

@@ -1,15 +1,23 @@
 class Task < ActiveRecord::Base
 
-  belongs_to :task_list
+  belongs_to :page
 #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
   has_many :task_participations, dependent: :destroy
   has_many :users, through: :task_participations
-  acts_as_list scope: :task_list
+  acts_as_list scope: :page
   format_attribute :description
   validates_presence_of :name
 
-  belongs_to :created_by, class_name: 'User', foreign_key: 'created_by_id'
-  belongs_to :updated_by, class_name: 'User', foreign_key: 'updated_by_id'
+  belongs_to :created_by, class_name: 'User'
+  belongs_to :updated_by, class_name: 'User'
+
+  def self.completed
+    where "completed_at IS NOT NULL"
+  end
+
+  def self.pending
+    where completed_at: nil
+  end
 
   before_create :set_user
   def set_user
@@ -21,7 +29,7 @@ class Task < ActiveRecord::Base
   end
 
   def owner_name
-    task_list.page.owner_name if task_list.page
+    page.try.owner_name
   end
 
   def state=(state)
