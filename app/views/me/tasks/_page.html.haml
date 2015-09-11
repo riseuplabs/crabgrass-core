@@ -1,0 +1,9 @@
+.panel.panel-default
+  .panel-heading
+    %h2
+      = link_to page.title, page_url(page)
+      %small=page.owner.try.display_name
+    %p= page.summary
+
+  %ul.list-group
+    = render page.tasks
