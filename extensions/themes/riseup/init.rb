@@ -16,6 +16,13 @@ define_theme(parent: 'default') {
     }
   }
 
+  link {
+    # this is the color of the menu background in the banner navigation.
+    # (banner background with a dark overlay)
+    # It works both for normal fonts and for headings
+    standard_color "#2a5183"
+  }
+
 }
 
 style %{
