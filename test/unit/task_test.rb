@@ -4,34 +4,15 @@ class TaskTest < ActiveSupport::TestCase
   fixtures :users
 
   def test_creation
-    assert list = TaskList.create
-    assert list.tasks.create
-  end
-
-  def test_deletion
-    list = TaskList.create
-    list.tasks.create
-    id = list.tasks.first.id
-    list.destroy
-    assert_nil Task.find_by_id(id), 'deleting the list should delete the tasks'
+    assert Task.create
   end
 
   def test_associations
-    assert check_associations(TaskList)
     assert check_associations(Task)
-#    assert check_associations(TaskParticipations)
-  end
-
-  def test_include_associations
-    assert_nothing_raised do
-      TaskList.includes(:tasks, :completed, :pending).first
-      Task.includes(:task_list).first
-    end
   end
 
   def test_setting_state
-    list = TaskList.create
-    t = list.tasks.create
+    t = Task.create
 
     assert_equal false, t.completed?
     assert_nil t.completed_at
@@ -44,8 +25,7 @@ class TaskTest < ActiveSupport::TestCase
   end
 
   def test_unassigning_from_last_user
-    list = TaskList.create
-    task = list.tasks.create
+    task = Task.create
     task.user_ids = [users(:blue).id]
     task.save
     task.user_ids = []

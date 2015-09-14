@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TasksControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :task_lists, :tasks
+  fixtures :pages, :users, :tasks
 
   def setup
     @user = users(:blue)
@@ -25,15 +25,14 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   def test_create_task
-    assert_difference '@page.data.tasks.count' do
+    assert_difference '@page.tasks.count' do
       xhr :post, :create, page_id: @page.id,
         task: {name: "new task", user_ids: ["5"], description: "new task description"}
     end
   end
 
   def test_update_task
-    list = @page.data
-    task = list.tasks.create name: 'blue... do something!',
+    task = @page.tasks.create name: 'blue... do something!',
       user_ids: [@user.id]
     assert_difference '@user.tasks.count', -1 do
       xhr :put, :update, page_id: @page, id: task.id,

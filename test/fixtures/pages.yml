@@ -121,8 +121,6 @@ tasklist1:
   id: 200
   title: a task list
   type: TaskListPage
-  data_type: TaskList
-  data_id: 1
   created_by_id: 1
   created_by_login: quentin
   updated_by_id: 3
@@ -135,8 +133,6 @@ tasklist2:
   id: 201
   title: another task list
   type: TaskListPage
-  data_type: TaskList
-  data_id: 2
   created_by_id: 4
   created_by_login: blue
   updated_by_id: 5

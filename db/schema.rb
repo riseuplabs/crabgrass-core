@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150908105227) do
+ActiveRecord::Schema.define(:version => 20150911091551) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -762,9 +762,6 @@ ActiveRecord::Schema.define(:version => 20150908105227) do
 
   add_index "tags", ["name"], :name => "tags_name"
 
-  create_table "task_lists", :force => true do |t|
-  end
-
   create_table "task_participations", :force => true do |t|
     t.boolean "watching"
     t.boolean "waiting"
@@ -774,7 +771,6 @@ ActiveRecord::Schema.define(:version => 20150908105227) do
   end
 
   create_table "tasks", :force => true do |t|
-    t.integer  "task_list_id"
     t.string   "name"
     t.text     "description",      :limit => 2147483647
     t.text     "description_html", :limit => 2147483647
@@ -786,10 +782,10 @@ ActiveRecord::Schema.define(:version => 20150908105227) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.integer  "points"
+    t.integer  "page_id"
   end
 
-  add_index "tasks", ["task_list_id"], :name => "index_tasks_task_list_id"
-  add_index "tasks", ["task_list_id", "position"], :name => "index_tasks_completed_positions"
+  add_index "tasks", ["page_id", "position"], :name => "index_tasks_on_page_id_and_position"
 
   create_table "tasks_users", :id => false, :force => true do |t|
     t.integer "user_id"

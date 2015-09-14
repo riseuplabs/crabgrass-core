@@ -3,12 +3,12 @@
 -#
 -# requires local: 'mode', which must be either :show or :toggle
 -#
-- if !current_user.may?(:edit, task.task_list.page)
+- if !current_user.may?(:edit, task.page)
   %label.checkbox-inline
     %input{:type => 'checkbox', :disabled => 'disabled'}
 - else
   - next_state = task.completed? ? 'pending' : 'complete'
-  - url = task_url(task, page_id: task.task_list.page)
+  - url = task_url(task, page_id: task.page)
   = spinbox_tag dom_id(task, :task), url,
     label: '',
     class: 'inline',
