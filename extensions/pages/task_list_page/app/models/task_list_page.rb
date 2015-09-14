@@ -14,9 +14,13 @@ class TaskListPage < Page
     tasks.pluck('CONCAT(name,"\t",description)').join "\n"
   end
 
-  # Fetch the pages that for the given task_ids and include the tasks
-  # Now page.tasks will return only the tasks that were in task_ids \o/.
-  def self.with_tasks(task_ids)
+  # Fetch the pages that for the given tasks and include the tasks
+  # Now page.tasks will return only the tasks that also were in tasks \o/.
+  def self.with_tasks(tasks)
+    # For relations we first build the task_ids.
+    # Using the relation in the where clause will result in a subselect
+    # with a join that makes for a very slow query.
+    task_ids = tasks.respond_to?(:pluck) ? tasks.pluck(:id) : tasks
     includes(:tasks).where(tasks: {id: task_ids})
   end
 end
