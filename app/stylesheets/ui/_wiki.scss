@@ -100,10 +100,15 @@ article {
     }
 
     ul, ol {
+      padding-left: 1em;
+      margin-left: 0.5em;
+    }
+
+    ul {
       list-style: disc outside none;
       padding-left: 1em;
       margin-left: 0.5em;
-      ul, ol {
+      ul {
         list-style: circle outside none;
       }
     }
