@@ -58,6 +58,10 @@ class Recipients
     return []
   end
 
+  def empty?
+    [@users, @groups, @emails, @specials].all?(&:empty?)
+  end
+
   protected
 
   def prepare_options

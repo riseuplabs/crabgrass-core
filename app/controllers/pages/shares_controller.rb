@@ -72,14 +72,16 @@ class Pages::SharesController < Pages::SidebarsController
   # Main Update Task
   #
   def notify_or_share
-    if (params[:share_button] || params[:notify_button]) and params[:recipients]
-
+    if (params[:share_button] || params[:notify_button])
       share = PageShare.new(@page, current_user, share_options)
       @uparts, @gparts = share.with params[:recipients]
       @page.save!
       success(@success_msg)
     end
     close_popup
+  rescue ActiveRecord::RecordNotFound
+    warning I18n.t('autocomplete.placeholder.enter_name_of_group_or_person')
+    refresh_sidebar
   end
 
   def share_options
