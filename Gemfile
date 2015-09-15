@@ -76,7 +76,7 @@ gem 'i18n', '~> 0.7'
 
 # improved gem to access mysql database
 # locking in to latest major to fix API
-gem 'mysql2', '~> 0.3'
+gem 'mysql2', '~> 0.3.10'
 
 # parsing and generating JSON
 # locking in to latest major to fix API
