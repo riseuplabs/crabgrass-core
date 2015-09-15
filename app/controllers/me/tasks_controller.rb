@@ -1,7 +1,10 @@
 class Me::TasksController < Me::BaseController
 
   def index
-    @pages = pages_with_tasks.order('pages.updated_at DESC').limit(20)
+    @pages = pages_with_tasks
+      .not_deleted
+      .order('pages.updated_at DESC')
+      .limit(20)
   end
 
   protected
