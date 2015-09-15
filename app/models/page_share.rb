@@ -55,6 +55,7 @@ class PageShare
 
   def with(recipient_params)
     recipients = build_recipients(recipient_params)
+    raise ActiveRecord::RecordNotFound if recipients.all?(&:empty?)
     share_and_email(recipients)
   end
 
