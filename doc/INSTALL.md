@@ -6,6 +6,8 @@
 Install for development
 ====================================================
 
+For installation using Vagrant, see [doc/development/vagrant.md](development/vagrant.md).
+
 Install basic ruby environment (at least ruby 1.9.3, ideally ruby 2.1)
 
 On a debian-based system:
@@ -203,3 +205,4 @@ All the options that you might want to change live in three places:
 3. config/crabgrass/crabgrass-<mode>.yml.
 
 See config/crabgrass/README for more information.
+
