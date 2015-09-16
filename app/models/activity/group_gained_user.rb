@@ -1,4 +1,4 @@
-class GroupGainedUserActivity < Activity
+class Activity::GroupGainedUser < Activity
 
   validates_format_of :subject_type, with: /Group/
   validates_format_of :item_type, with: /User/

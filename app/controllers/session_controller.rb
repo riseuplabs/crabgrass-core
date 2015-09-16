@@ -35,7 +35,7 @@ class SessionController < ApplicationController
 
       # replace this:
       #current_site.add_user!(current_user)
-      #UnreadActivity.create(:user => current_user)
+      #Activity::Unread.create(:user => current_user)
       # with
       # hook(:successful_login)
 

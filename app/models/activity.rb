@@ -28,7 +28,6 @@
 # related_id and extra are used for generic storage and association, whatever
 # the subclass wants to use it for.
 #
-
 class Activity < ActiveRecord::Base
 
   # activity access (relative to self.subject):
@@ -138,10 +137,10 @@ class Activity < ActiveRecord::Base
     [ "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?)) ",
-      user.id,
-      other_users_ids_list,
-      Activity::PRIVATE,
-      user.all_group_id_cache]
+       user.id,
+       other_users_ids_list,
+       Activity::PRIVATE,
+       user.all_group_id_cache]
   end
 
   # for user's landing page
@@ -157,8 +156,8 @@ class Activity < ActiveRecord::Base
   def self.for_user(user, current_user)
     if (current_user and current_user.friend_of?(user) or current_user == user)
       restricted = Activity::PRIVATE
-    # elsif current_user and current_user.peer_of?(user)
-    #   restricted = Activity::DEFAULT
+      # elsif current_user and current_user.peer_of?(user)
+      #   restricted = Activity::DEFAULT
     else
       restricted = Activity::DEFAULT
     end
@@ -225,4 +224,3 @@ class Activity < ActiveRecord::Base
   end
 
 end
-

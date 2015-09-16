@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ContextPagesControllerTest < ActionController::TestCase
-  fixtures :users, :pages, :groups
+  fixtures :all
 
   def test_group_page
     login_as users(:blue)

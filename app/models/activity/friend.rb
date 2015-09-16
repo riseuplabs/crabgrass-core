@@ -1,4 +1,4 @@
-class FriendActivity < Activity
+class Activity::Friend < Activity
 
   validates_format_of :subject_type, with: /User/
   validates_format_of :item_type, with: /User/
@@ -35,16 +35,16 @@ class FriendActivity < Activity
             other_user: user_span(:other_user))
   end
 
-  # Warning: Do not use self.class or even FriendActivity here...
+  # Warning: Do not use self.class or even Activity::Friend here...
   # Why? It seems the scope of self is kept in that case.
   # So activity.twin.twin would always return nil because it tries to
   # fullfill both conditions (those for the twin and for the twin of that twin)
   # at the same time.
   # UPGRADE: Check if this is fixed
   def twin
-    Activity.where(type: self.type).
-      where(subject_id: item_id, subject_type: 'User').
-      where(item_id: subject_id, item_type: 'User')
+    Activity.where type: 'Friend',
+      subject_id: item_id, subject_type: 'User',
+      item_id: subject_id, item_type: 'User'
   end
 
   def icon
