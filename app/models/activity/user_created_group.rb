@@ -1,4 +1,4 @@
-class UserCreatedGroupActivity < Activity
+class Activity::UserCreatedGroup < Activity
 
   validates_format_of :subject_type, with: /User/
   validates_format_of :item_type, with: /Group/

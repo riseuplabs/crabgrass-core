@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-class ActivityTest < ActiveSupport::TestCase
+class Activity::Test < ActiveSupport::TestCase
 
   def setup
     @joe = FactoryGirl.create(:user)
@@ -14,19 +14,19 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_contact
     assert_difference 'Activity.count', 2 do
-      FriendActivity.create! user: @joe, other_user: @ann
+      Activity::Friend.create! user: @joe, other_user: @ann
     end
-    act = FriendActivity.for_me(@joe).find(:first)
+    act = Activity::Friend.for_me(@joe).find(:first)
     assert act, 'there should be a friend activity created'
     assert_equal @joe, act.user
     assert_equal @ann, act.other_user
   end
 
   def test_group_created
-    act = GroupCreatedActivity.new group: @group, user: @ann
+    act = Activity::GroupCreated.new group: @group, user: @ann
     assert_activity_for_user_group(act, @ann, @group)
 
-    act = UserCreatedGroupActivity.new group: @group, user: @ann
+    act = Activity::UserCreatedGroup.new group: @group, user: @ann
     assert_activity_for_user_group(act, @ann, @group)
   end
 
@@ -35,19 +35,19 @@ class ActivityTest < ActiveSupport::TestCase
     @group.add_user!(ruth)
     Tracking::Action.track :create_membership, group: @group, user: ruth
 
-    assert_nil UserJoinedGroupActivity.for_all(@ann).find_by_subject_id(ruth.id),
+    assert_nil Activity::UserJoinedGroup.for_all(@ann).find_by_subject_id(ruth.id),
       "The new peers don't get UserJoinedGroupActivities."
 
-    act = GroupGainedUserActivity.for_all(@ann).last
+    act = Activity::GroupGainedUser.for_all(@ann).last
     assert_equal @group.id, act.group.id,
       "New peers should get GroupGainedUserActivities."
 
-    act = GroupGainedUserActivity.for_group(@group, ruth).last
-    assert_equal GroupGainedUserActivity, act.class
+    act = Activity::GroupGainedUser.for_group(@group, ruth).last
+    assert_equal Activity::GroupGainedUser, act.class
     assert_equal @group.id, act.group.id
 
     # users own activity should always show up:
-    act = UserJoinedGroupActivity.for_all(ruth).last
+    act = Activity::UserJoinedGroup.for_all(ruth).last
     assert_equal @group.id, act.group.id
   end
 
@@ -59,20 +59,20 @@ class ActivityTest < ActiveSupport::TestCase
     @group.remove_user!(@joe)
     Tracking::Action.track :destroy_membership, group: @group, user: @joe
 
-    act = GroupLostUserActivity.for_all(@ann).last
+    act = Activity::GroupLostUser.for_all(@ann).last
     assert_activity_for_user_group(act, @joe, @group)
 
-    act = GroupLostUserActivity.for_group(@group, @ann).last
+    act = Activity::GroupLostUser.for_group(@group, @ann).last
     assert_activity_for_user_group(act, @joe, @group)
 
-    act = UserLeftGroupActivity.for_all(@joe).last
+    act = Activity::UserLeftGroup.for_all(@joe).last
     assert_activity_for_user_group(act, @joe, @group)
   end
 
   def test_deleted_subject
     @joe.add_contact!(@ann, :friend)
     Tracking::Action.track :create_friendship, user: @joe, other_user: @ann
-    act = FriendActivity.for_me(@joe).find(:first)
+    act = Activity::Friend.for_me(@joe).find(:first)
     former_name = @ann.name
     @ann.destroy
 
@@ -92,11 +92,11 @@ class ActivityTest < ActiveSupport::TestCase
     new_group.add_user!(@joe)
     Tracking::Action.track :create_membership, group: new_group, user: @joe
 
-    friend_act = FriendActivity.find_by_subject_id(@joe.id)
-    user_joined_act = UserJoinedGroupActivity.find_by_subject_id(@joe.id)
-    group_gained_act = GroupGainedUserActivity.find_by_subject_id(new_group.id)
-    post_act = PrivatePostActivity.find_by_subject_id(@ann.id)
-    # we do not create PrivatePostActivities anymore
+    friend_act = Activity::Friend.find_by_subject_id(@joe.id)
+    user_joined_act = Activity::UserJoinedGroup.find_by_subject_id(@joe.id)
+    group_gained_act = Activity::GroupGainedUser.find_by_subject_id(new_group.id)
+    post_act = Activity::MessageSent.find_by_subject_id(@ann.id)
+    # we do not create PrivatePost Activities anymore
     assert_nil post_act
 
 

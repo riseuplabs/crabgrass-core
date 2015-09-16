@@ -1,4 +1,4 @@
-class UserJoinedSiteActivity < UserJoinedGroupActivity
+class Activity::UserJoinedSite < Activity::UserJoinedGroup
 
   def description(view=nil)
     I18n.t(:activity_user_joined_site,

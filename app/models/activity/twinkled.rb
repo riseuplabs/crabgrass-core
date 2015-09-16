@@ -1,4 +1,4 @@
-class TwinkledActivity < Activity
+class Activity::Twinkled < Activity
   include ActionView::Helpers::TagHelper
 
   validates_format_of :subject_type, with: /User/
