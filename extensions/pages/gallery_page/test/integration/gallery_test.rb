@@ -15,9 +15,9 @@ class GalleryTest < JavascriptIntegrationTest
     click_page_tab 'Show'
     first('.control_image_asset .thumbnail').click
     assert_content 'Image 1 of 2'
-    assert_image_file 'be%C3%A9_large.jpg'
     find('a.right_16').click
     assert_content 'Image 2 of 2'
+    assert_image_file 'be%C3%A9_large.jpg'
     find('a.sort_up_16').click
     assert_no_content 'Image'
     # assert_content 'Click thumbnail to see full image.'
