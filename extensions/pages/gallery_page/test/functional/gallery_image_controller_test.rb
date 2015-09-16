@@ -56,7 +56,7 @@ class GalleryImageControllerTest < ActionController::TestCase
     @asset2.save!
     login_as :blue
     xhr :post, :sort, page_id: @gallery.id,
-      sort_gallery: [@asset2.id, @asset.id]
+      assets_list: [@asset2.id, @asset.id]
     assert_response :success
     assert_equal [@asset2.id, @asset.id], @gallery.reload.images.map(&:id)
   end
