@@ -1,8 +1,9 @@
 class PrivatePost < Post
 
-  has_one :private_post_activity,
+  has_one :activity,
     foreign_key: :related_id,
-    dependent: :delete
+    dependent: :delete,
+    class_name: 'Activity::MessageSent'
 
   def private?
     true

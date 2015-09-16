@@ -1,11 +1,11 @@
 module Tracking::Action
 
   EVENT_CREATES_ACTIVITIES = {
-    create_group: ['GroupCreatedActivity', 'UserCreatedGroupActivity'],
-    create_membership: ['GroupGainedUserActivity', 'UserJoinedGroupActivity'],
-    destroy_membership: ['GroupLostUserActivity', 'UserLeftGroupActivity'],
-    request_to_destroy_group: ['UserProposedToDestroyGroupActivity'],
-    create_friendship: ['FriendActivity'],
+    create_group: ['Activity::GroupCreated', 'Activity::UserCreatedGroup'],
+    create_membership: ['Activity::GroupGainedUser', 'Activity::UserJoinedGroup'],
+    destroy_membership: ['Activity::GroupLostUser', 'Activity::UserLeftGroup'],
+    request_to_destroy_group: ['Activity::UserProposedToDestroyGroup'],
+    create_friendship: ['Activity::Friend'],
     create_post: ['PageHistory::AddComment'],
     update_post: ['PageHistory::UpdateComment'],
     destroy_post: ['PageHistory::DestroyComment'],

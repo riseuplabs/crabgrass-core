@@ -1,4 +1,4 @@
-class UnreadActivity < Activity
+class Activity::Unread < Activity
 
   validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id
@@ -22,12 +22,12 @@ class UnreadActivity < Activity
     self.unread_count = user.relationships.sum('unread_count') || 0
   end
 
-  # We want to delete the other UnreadActivities even if we don't pass
+  # We want to delete the other Activity::Unread even if we don't pass
   # validations, because if there are no unread messages, we want no
-  # UnreadActivities.
+  # Activity.
   before_validation :destroy_twins, on: :create
   def destroy_twins
-    UnreadActivity.destroy_all 'subject_id = %s' % user.id
+    self.class.destroy_all 'subject_id = %s' % user.id
   end
 
   public

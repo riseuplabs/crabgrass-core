@@ -1,4 +1,5 @@
-class GroupLostUserActivity < GroupGainedUserActivity
+class Activity::GroupLostUser < Activity::GroupGainedUser
+
   def description(view=nil)
     I18n.t(:activity_user_left_group,
         user: user_span(:user),

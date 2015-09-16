@@ -1,4 +1,4 @@
-class MessageWallActivity < Activity
+class Activity::MessageWall < Activity
   include ActionView::Helpers::TagHelper
 
   validates_format_of :subject_type, with: /User/

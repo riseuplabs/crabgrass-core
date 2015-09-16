@@ -1,4 +1,4 @@
-class GroupDestroyedActivity < Activity
+class Activity::GroupDestroyed < Activity
 
   validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id

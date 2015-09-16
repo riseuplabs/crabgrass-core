@@ -1,5 +1,4 @@
-class UserJoinedGroupActivity < Activity
-
+class Activity::UserProposedToDestroyGroup < Activity
   validates_format_of :subject_type, with: /User/
   validates_format_of :item_type, with: /Group/
   validates_presence_of :subject_id
@@ -17,14 +16,16 @@ class UserJoinedGroupActivity < Activity
 
 
   def description(view=nil)
-    I18n.t(:activity_user_joined_group,
+    I18n.t(:request_to_destroy_our_group_description,
               user: user_span(:user),
               group_type: group_class(:group),
               group: group_span(:group))
   end
 
   def icon
-    'membership_add'
+    'minus'
   end
 
+
 end
+

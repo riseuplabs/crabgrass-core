@@ -1,4 +1,4 @@
-class GroupCreatedActivity < Activity
+class Activity::GroupCreated < Activity
 
   validates_format_of :subject_type, with: /Group/
   validates_presence_of :subject_id
