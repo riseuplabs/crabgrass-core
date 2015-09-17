@@ -1,10 +1,10 @@
 
 #
-# GIF files have their own asset type because, unlike other images,
-# we want thumbnails in a format that will preserve transparency.
+# PNG files have their own asset type because, unlike other images
+# we probably want the thumbnails to be PNGs.
 #
 
-class GifAsset < Asset
+class Asset::Png < Asset
 
   def update_media_flags
     self.is_image = true

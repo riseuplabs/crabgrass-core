@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ImageAssetTest < ActiveSupport::TestCase
+class Asset::ImageTest < ActiveSupport::TestCase
 
   def test_thumbnail_definitions
     @asset = FactoryGirl.build :image_asset

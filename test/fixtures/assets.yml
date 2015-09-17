@@ -1,9 +1,9 @@
---- 
-assets_001: 
+---
+assets_001:
   content_type: image/jpeg
   size: "100266"
-  type: ImageAsset
-  page_id: 
+  type: Image
+  page_id:
   id: "1"
   version: "1"
   height: "500"
@@ -11,11 +11,11 @@ assets_001:
   created_at: 2008-09-19 06:15:53
   width: "333"
   is_image: "1"
-assets_002: 
+assets_002:
   content_type: image/jpeg
   size: "107459"
-  type: ImageAsset
-  page_id: 
+  type: Image
+  page_id:
   id: "2"
   version: "1"
   height: "321"
@@ -23,11 +23,11 @@ assets_002:
   created_at: 2008-09-19 06:16:19
   width: "500"
   is_image: "1"
-assets_003: 
+assets_003:
   content_type: image/jpeg
   size: "51636"
-  type: ImageAsset
-  page_id: 
+  type: Image
+  page_id:
   id: "3"
   version: "1"
   height: "475"

@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class TextAssetTest < ActiveSupport::TestCase
+class Asset::TextTest < ActiveSupport::TestCase
 
   def test_asset_type_from_file
     @asset = FactoryGirl.create :word_asset
-    assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
-    assert_equal 'TextAsset', @asset.versions.earliest.versioned_type,
-      'version should by of type TextAsset'
+    assert_equal Asset::Text, @asset.class, 'asset should be a Asset::Text'
+    assert_equal 'Text', @asset.versions.earliest.versioned_type,
+      'version should by of type Asset::Text'
   end
 
   def test_text_asset_thumb_defs

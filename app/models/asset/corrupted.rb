@@ -1,4 +1,4 @@
-class CorruptedAsset < Asset
+class Asset::Corrupted < Asset
 
   def is_image
     true

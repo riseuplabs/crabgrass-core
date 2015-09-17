@@ -1,10 +1,10 @@
---- 
-asset_versions_001: 
+---
+asset_versions_001:
   content_type: image/jpeg
   updated_at: 2008-09-19 06:15:53
   size: "100266"
-  versioned_type: ImageAsset
-  page_id: 
+  versioned_type: Asset::Image
+  page_id:
   id: "1"
   version: "1"
   height: "500"
@@ -12,12 +12,12 @@ asset_versions_001:
   created_at: 2008-09-19 06:15:53
   width: "333"
   asset_id: "1"
-asset_versions_002: 
+asset_versions_002:
   content_type: image/jpeg
   updated_at: 2008-09-19 06:16:19
   size: "107459"
-  versioned_type: ImageAsset
-  page_id: 
+  versioned_type: Asset::Image
+  page_id:
   id: "2"
   version: "1"
   height: "321"
@@ -25,12 +25,12 @@ asset_versions_002:
   created_at: 2008-09-19 06:16:19
   width: "500"
   asset_id: "2"
-asset_versions_003: 
+asset_versions_003:
   content_type: image/jpeg
   updated_at: 2008-09-19 07:26:44
   size: "51636"
-  versioned_type: ImageAsset
-  page_id: 
+  versioned_type: Asset::Image
+  page_id:
   id: "3"
   version: "1"
   height: "475"

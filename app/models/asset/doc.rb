@@ -2,14 +2,14 @@
 
 A generic document asset: anything that we can create a pdf out of.
 
-See TextdocAsset and SpreadsheetAsset for more specific asset types.
+See Asset::Textdoc and Asset::Spreadsheet for more specific asset types.
 
-What files become DocAssets? This is set by lib/media/mime_type.rb
+What files become doc assets? This is set by lib/media/mime_type.rb
 What doc files may generate thumbnails? This is set by lib/media/processors.rb
 
 =end
 
-class DocAsset < Asset
+class Asset::Doc < Asset
 
   def update_media_flags
     self.is_document = true

@@ -1,4 +1,4 @@
-class AudioAsset < Asset
+class Asset::Audio < Asset
 
   def update_media_flags
     self.is_audio = true
