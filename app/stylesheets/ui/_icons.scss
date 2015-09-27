@@ -105,12 +105,23 @@
     overflow: hidden;  // only applies when display:block
   }
 
+  &.tiny {
+    &.indent {
+      padding-left: $icon_tiny + $icon_tiny/2 + 4px !important;
+      background-position: $icon_tiny/2 50% !important;
+    }
+  }
+
   &.xsmall {
     padding-left: $icon_xsmall + 6px !important;
     min-height: $icon_xsmall;
     &.single {
       line-height: $icon_xsmall;
       height: $icon_xsmall;
+    }
+    &.indent {
+      padding-left: $icon_xsmall + $icon_xsmall/2 + 6px !important;
+      background-position: $icon_xsmall/2 50% !important;
     }
   }
 
