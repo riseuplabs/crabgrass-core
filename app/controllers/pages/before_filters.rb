@@ -110,9 +110,18 @@ module Pages::BeforeFilters
     end
     return true unless action
 
-    group = current_site.tracking? && @group
-    group ||= current_site.tracking? && @page.owner.is_a?(Group) && @page.owner
-    user  = current_site.tracking? && @page.owner.is_a?(User) && @page.owner
+    group = nil
+    user  = nil
+    if current_site.tracking?
+      if @group
+        group = @group
+      elsif @page.owner_is?(Group)
+        group = @page.owner
+      end
+      if @page.owner_is?(User)
+        user = @page.owner
+      end
+    end
     Tracking::Page.insert(
       page: @page, current_user: current_user, action: action,
       group: group, user: user

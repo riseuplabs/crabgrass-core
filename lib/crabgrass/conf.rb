@@ -114,7 +114,7 @@ class Conf
     self.default_language  = 'en'
     self.email_sender      = 'robot@$current_host'
     self.email_sender_name = '$site_title ($user_name)'
-    self.tracking          = false
+    self.tracking          = true
     self.evil              = {}
     self.available_page_types = []
     self.enforce_ssl       = false
