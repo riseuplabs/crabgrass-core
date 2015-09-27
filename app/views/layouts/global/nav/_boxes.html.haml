@@ -1,11 +1,12 @@
+-#
 -# this partial display a grid of little avatar boxes.
 -# arguments: entities
--# This markup and css may seem odd, but it works in all browsers.
 -# this is used for groups and people menu.
--# so we need to include the entities type in the cache key.
+-#
 - if entities.present?
   %ul.dropdown-menu(style="display:none")
     %li
       = link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
     - for entity in entities
-      %li= link_to_entity(entity, avatar: 'tiny')
+      - css_class = entity.is_a?(Group) && entity.parent_id ? 'indent' : ''
+      %li= link_to_entity(entity, avatar: 'tiny', class: css_class)

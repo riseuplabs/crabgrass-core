@@ -1,8 +1,8 @@
 - if logged_in?
-  - entities = current_user.primary_groups.most_active
+  - entities = current_user.groups.recently_active
   = render partial: '/layouts/global/nav/boxes',
       locals: { id: 'groups',
-        entities: entities.sort_by{|g| g.display_name.downcase},
+        entities: entities,
         heading: I18n.t(:my_groups),
         see_all_url: groups_directory_path(path: ['my']) }
 
