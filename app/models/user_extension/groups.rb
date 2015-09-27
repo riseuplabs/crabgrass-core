@@ -46,10 +46,18 @@ module UserExtension::Groups
         def councils
           self.select{|group|group.council?}
         end
+        def by_visited
+          self.order('memberships.visited_at DESC')
+        end
+        # groups we have visited most recently, including their parent groups.
         def recently_active(options={})
-          options[:limit] ||= 13
-          limit(options[:limit]).order('memberships.visited_at DESC')
-            .where('groups.type IS NULL').all
+          options[:limit] ||= 20
+          grps = []
+          self.by_visited.limit(options[:limit]).all.each do |group|
+            grps << group
+            grps << group.parent if group.parent
+          end
+          grps.sort_by{|g|g.name}.uniq{|g|g.name}
         end
       end
 

@@ -1,7 +1,19 @@
-%span.h2.first=:notices.t
+- groups = current_user.groups.recently_active
+- if groups.any?
+  - content_for(:left_column) do
+    %h2.space-ui-bottom.first=:groups.t
+    %ul.entities
+      - groups.each do |group|
+        - css_class = group.parent_id ? 'indent' : ''
+        %li= link_to_entity(group, avatar: current_theme.local_sidecolumn_icon_size, class: css_class)
+      %li= link_to((:see_all_link.t + '&nbsp;&raquo;').html_safe, groups_directory_path)
+
+%h2.space-ui-bottom.first
+  = :notices.t
+  - if @notices.any?
+    .dismiss-all-notices-btn.pull-right
+      = dismiss_all_notices_button
 - if @notices.any?
-  %span.dismiss-all-notices-btn
-    = dismiss_all_notices_button
   %table#notice_list.shaded
     = render partial: 'notice', collection: @notices
   .notices-pagination-wrapper

@@ -58,7 +58,11 @@
 
 .dropdown-menu li a.icon {
   padding: 6px 0px 6px 36px !important;
-  background-position: 16px 45% !important;
+  background-position: 16px 50% !important;
+  &.indent {
+    padding-left: 52px !important;
+    background-position: 32px 50% !important;
+  }
 }
 
 .dropdown-menu {
