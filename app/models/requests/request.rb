@@ -156,7 +156,7 @@ class Request < ActiveRecord::Base
   MEMBERSHIP_TYPES = [
     'RequestToJoinOurNetwork',
     'RequestToJoinUs',
-    'RequestToJoinViaEmail',
+    'RequestToJoinUsViaEmail',
     'RequestToJoinYou',
     'RequestToJoinYourNetwork',
     'RequestToRemoveUser'
