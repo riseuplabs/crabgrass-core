@@ -11,7 +11,7 @@ module GroupExtension::Groups
 
     base.instance_eval do
 
-      has_many :federatings, dependent: :destroy
+      has_many :federatings, dependent: :destroy, class_name: 'Group::Federating'
       has_many :networks, through: :federatings
       belongs_to :council, class_name: 'Group'
 

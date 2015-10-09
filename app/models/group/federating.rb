@@ -17,7 +17,7 @@
 #   t.integer "delegation_id", :limit => 11
 # end
 #
-class Federating < ActiveRecord::Base
+class Group::Federating < ActiveRecord::Base
   # required
   belongs_to :group
   belongs_to :network, class_name: 'Group'
