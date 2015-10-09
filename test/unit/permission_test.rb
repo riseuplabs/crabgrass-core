@@ -81,10 +81,10 @@ class PermissionTest < ActiveSupport::TestCase
   def test_find_committee
     user = users(:red)
 
-    correct_visible_groups = Committee.find(:all).select do |g|
+    correct_visible_groups = Group::Committee.find(:all).select do |g|
       user.may?(:view,g)
     end
-    visible_groups = Committee.with_access(user => :view).find(:all)
+    visible_groups = Group::Committee.with_access(user => :view).find(:all)
 
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
     names         = visible_groups.collect{|g|g.name}.sort

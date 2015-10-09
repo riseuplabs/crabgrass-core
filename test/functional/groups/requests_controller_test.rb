@@ -34,7 +34,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
       requestable: @group,
       created_by: @other
 
-    assert_difference 'Council.count' do
+    assert_difference 'Group::Council.count' do
       post :update, group_id: @group.to_param, id: @req.id, mark: :approve
     end
     assert_response :success

@@ -57,7 +57,7 @@ class RequestToJoinOurNetwork < Request
   end
 
   def no_membership_yet
-    if group.federatings.where(network_id: network.id).exist?
+    if group.federatings.where(network_id: network.id).exists?
       errors.add(:base, I18n.t(:membership_exists_error, member: group.name))
     end
   end

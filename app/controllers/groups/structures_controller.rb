@@ -38,8 +38,8 @@ class Groups::StructuresController < Groups::SettingsController
 
   def group_class
     case group_type
-      when :council then Council
-      when :committee then Committee
+      when :council then Group::Council
+      when :committee then Group::Committee
       else raise 'error'
     end
   end

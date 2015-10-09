@@ -1,4 +1,4 @@
-class Committee < Group
+class Group::Committee < Group
 
 
   ##

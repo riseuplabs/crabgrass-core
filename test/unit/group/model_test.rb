@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
-class GroupModelTest < ActiveSupport::TestCase
+class Group::ModelTest < ActiveSupport::TestCase
 
   def setup
     Conf.load_defaults
@@ -47,18 +47,18 @@ class GroupModelTest < ActiveSupport::TestCase
   end
 
   def test_network_can_have_council
-    assert Network.can_have_council?
-    assert Network.can_have_committees?
+    assert Group::Network.can_have_council?
+    assert Group::Network.can_have_committees?
   end
 
   def test_council_can_not_have_council
-    assert !Council.can_have_council?
-    assert !Council.can_have_committees?
+    assert !Group::Council.can_have_council?
+    assert !Group::Council.can_have_committees?
   end
 
   def test_committees_can_not_have_council
-    assert !Committee.can_have_council?
-    assert !Committee.can_have_committees?
+    assert !Group::Committee.can_have_council?
+    assert !Group::Committee.can_have_committees?
   end
 
 end

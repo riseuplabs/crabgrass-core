@@ -90,11 +90,11 @@ class Groups::GroupsControllerTest < ActionController::TestCase
     group = FactoryGirl.create(:group, name: 'pine')
     group.add_user! @user
     login_as @user
-    assert_difference 'Network.count' do
+    assert_difference 'Group::Network.count' do
       post :create, type: 'network',
         group: { name: 'trees', initial_member_group: group.name }
     end
-    network = Network.last
+    network = Group::Network.last
     assert !@user.direct_member_of?(network),
       "user should not become member of their groups new network"
     assert @user.may?(:admin, network),

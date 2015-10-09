@@ -35,9 +35,9 @@ FactoryGirl.define do
     full_name { generate(:display_name) }
     name      { full_name.gsub(/[^a-z]/,"") }
 
-    factory(:committee, class: Committee) {}
-    factory(:council, class: Council) {}
-    factory(:network,   class: Network)   {
+    factory(:committee, class: Group::Committee) {}
+    factory(:council, class: Group::Council) {}
+    factory(:network,   class: Group::Network)   {
       initial_member_group { FactoryGirl.create(:group) }
     }
   end

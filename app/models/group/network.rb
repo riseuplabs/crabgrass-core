@@ -13,7 +13,7 @@
 #
 # * Networks show up under the networks tab instead of the groups tab.
 #
-class Network < Group
+class Group::Network < Group
 
   has_many :federatings, dependent: :destroy
   has_many :groups, through: :federatings

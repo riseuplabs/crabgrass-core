@@ -47,6 +47,7 @@ class ActiveSupport::TestCase
   set_fixture_class castle_gates_keys: CastleGates::Key
   set_fixture_class taggings: ActsAsTaggableOn::Tagging
   set_fixture_class tags: ActsAsTaggableOn::Tag
+  set_fixture_class group_federatings: Group::Federating
 end
 
 require 'factory_girl'

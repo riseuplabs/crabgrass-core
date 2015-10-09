@@ -18,6 +18,8 @@
 # end
 #
 class Group::Federating < ActiveRecord::Base
+  self.table_name = 'federatings'
+
   # required
   belongs_to :group
   belongs_to :network, class_name: 'Group'

@@ -1,11 +1,11 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class CouncilTest < ActiveSupport::TestCase
+class Group::CouncilTest < ActiveSupport::TestCase
   fixtures :groups, :users
 
   def test_add_council
     network = groups(:cnt)
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     network.add_committee!(council)
     network.reload
     council.reload
@@ -21,7 +21,7 @@ class CouncilTest < ActiveSupport::TestCase
     # only one user added
     g.add_user!(users(:blue))
 
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.reload
@@ -34,7 +34,7 @@ class CouncilTest < ActiveSupport::TestCase
     g.add_user!(users(:blue))
     g.add_user!(users(:yellow))
 
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.reload
@@ -46,7 +46,7 @@ class CouncilTest < ActiveSupport::TestCase
     g.add_user!(users(:yellow))
     g.add_user!(users(:blue))
 
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
@@ -60,7 +60,7 @@ class CouncilTest < ActiveSupport::TestCase
     g.add_user!(users(:yellow))
     g.add_user!(users(:blue))
 
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))
@@ -73,7 +73,7 @@ class CouncilTest < ActiveSupport::TestCase
 
   def test_remove_council_from_network
     network = groups(:cnt)
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     council.add_user!(users(:blue))
     network.add_committee!(council)
     council.destroy
@@ -87,7 +87,7 @@ class CouncilTest < ActiveSupport::TestCase
     g = Group.create name: 'boosh'
     g.add_user!(users(:blue))
 
-    council = Council.create!(name: 'council')
+    council = Group::Council.create!(name: 'council')
     g.add_committee!(council)
 
     council.add_user!(users(:blue))

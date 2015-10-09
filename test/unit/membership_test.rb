@@ -89,7 +89,7 @@ class MembershipTest < ActiveSupport::TestCase
     # u.all_groups.reload
     assert_equal [g], u.all_groups, 'should be one group (all)'
 
-    c = Committee.new name: 'dumbledores-army'
+    c = Group::Committee.new name: 'dumbledores-army'
     g.add_committee!(c)
 
     assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
@@ -162,7 +162,7 @@ class MembershipTest < ActiveSupport::TestCase
       group = Group.create(name: ('group-%d' % i))
       groups << group
       (rand(max_committees_per_group+1)).times do |j|
-        group.add_committee! Committee.create( name: ('subgroup-%d-%d' % [i, j]) )
+        group.add_committee! Group::Committee.create( name: ('subgroup-%d-%d' % [i, j]) )
       end
     end
 

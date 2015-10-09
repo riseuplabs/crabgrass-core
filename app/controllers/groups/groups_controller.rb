@@ -72,7 +72,7 @@ class Groups::GroupsController < Groups::BaseController
   helper_method :group_type
 
   def group_class
-    group_type.to_s.capitalize.constantize
+    group_type == :network ? Group::Network : Group
   end
 
   def initialize_group

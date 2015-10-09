@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class CommitteeTest < ActiveSupport::TestCase
+class Group::CommitteeTest < ActiveSupport::TestCase
   fixtures :groups, :users
 
   def setup
@@ -11,8 +11,8 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_creation_and_deletion
     g = Group.create name: 'riseup'
-    c1 = Committee.create name: 'finance'
-    c2 = Committee.create name: 'food'
+    c1 = Group::Committee.create name: 'finance'
+    c2 = Group::Committee.create name: 'food'
 
     assert_difference 'Group.find(%d).version'%g.id do
       g.add_committee!(c1)
@@ -29,7 +29,7 @@ class CommitteeTest < ActiveSupport::TestCase
       end
     end
     g.destroy
-    assert_nil Committee.find_by_name('food'), 'committee should die with group'
+    assert_nil Group::Committee.find_by_name('food'), 'committee should die with group'
   end
 
   def test_destroy_group
@@ -44,8 +44,8 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_membership
     g = Group.create name: 'riseup'
-    c1 = Committee.create name: 'finance'
-    c2 = Committee.create name: 'food'
+    c1 = Group::Committee.create name: 'finance'
+    c2 = Group::Committee.create name: 'food'
     g.add_committee!(c1)
     g.add_committee!(c2)
     user = users(:kangaroo)
@@ -66,7 +66,7 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_naming
     g = Group.create name: 'riseup'
-    c = Committee.new name: 'outreach'
+    c = Group::Committee.new name: 'outreach'
     g.add_committee!(c)
     assert_equal 'riseup+outreach', c.full_name, 'committee full name should be in the form <groupname>+<committeename>'
     c.name = 'legal'
@@ -79,20 +79,20 @@ class CommitteeTest < ActiveSupport::TestCase
   end
 
   def test_create
-    g = Committee.create
+    g = Group::Committee.create
     assert !g.valid?, 'committee with no name should not be valid'
   end
 
   def test_associations
     # current_user_permissions needs a current user
     User.current = users(:blue)
-    assert check_associations(Committee)
+    assert check_associations(Group::Committee)
     User.current = nil
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
     g = Group.create name: 'riseup'
-    c = Committee.create name: 'outreach'
+    c = Group::Committee.create name: 'outreach'
     g.add_committee!(c)
     user = users(:gerrard)
     other_user = users(:blue)
@@ -117,7 +117,7 @@ class CommitteeTest < ActiveSupport::TestCase
 
   def test_cant_pester_private_committee
     g = Group.create name: 'riseup'
-    c = Committee.create name: 'outreach'
+    c = Group::Committee.create name: 'outreach'
     g.add_committee!(c)
 
     u = User.create login: 'user'
@@ -128,7 +128,7 @@ class CommitteeTest < ActiveSupport::TestCase
   def test_can_pester_public_committee
     g = Group.create name: 'riseup'
     g.grant_access! public: [:view, :pester, :see_committees]
-    c = Committee.create name: 'outreach'
+    c = Group::Committee.create name: 'outreach'
     c.grant_access! public: [:view, :pester]
     g.add_committee!(c)
 

@@ -168,13 +168,13 @@ module UserExtension
       end
       if direct.any?
         committee = Group.where(type: 'Committee', parent_id: direct).pluck(:id)
-        network = Network.
+        network = Group::Network.
           joins(:federatings).
           where(federatings: {group_id: direct}).
           pluck(:id)
         if network.any?
           # we still have networks inside networks on the live server
-          network += Network.
+          network += Group::Network.
             joins(:federatings).
             where(federatings: {group_id: network}).
             pluck(:id)

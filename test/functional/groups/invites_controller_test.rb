@@ -124,7 +124,7 @@ class Groups::InvitesControllerTest < ActionController::TestCase
     # @group has a council with one member and two other members
     @group.council = @council
     @group.save
-    assert_instance_of Council, @group.council
+    assert_instance_of Group::Council, @group.council
     assert_difference 'RequestNotice.count' do
       post :create, group_id: @network.to_param, recipients: @group.name
     end
