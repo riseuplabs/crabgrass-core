@@ -1,4 +1,4 @@
-class WikiPageController < Pages::BaseController
+class WikiPageController < Page::BaseController
 
   guard print: :may_show_page?
   helper 'wikis/base', 'wikis/sections'
@@ -9,9 +9,9 @@ class WikiPageController < Pages::BaseController
   def show
     if default_to_edit?
       params[:action] = 'edit'
-      render template: '/wikis/wikis/edit'
+      render template: '/wiki/wikis/edit'
     else
-      render template: '/wikis/wikis/show'
+      render template: '/wiki/wikis/show'
     end
   end
 
@@ -19,7 +19,7 @@ class WikiPageController < Pages::BaseController
     if @page.try.discussion
       @posts = @page.try.discussion.visible_posts.includes(:user)
     end
-    render template: 'wikis/wikis/print', layout: 'printer_friendly'
+    render template: 'wiki/wikis/print', layout: 'printer_friendly'
   end
 
   protected

@@ -1,0 +1,5 @@
+standard_update(page)
+page << "activateTabLink('%s')" % dom_id(@wiki, 'versions_tab')
+
+page.replace_html dom_id(@wiki), :partial => 'wiki/versions/show'
+page << "renderDiff();"

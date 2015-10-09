@@ -1,4 +1,4 @@
-class TaskListPageController < Pages::BaseController
+class TaskListPageController < Page::BaseController
   before_filter :fetch_user_participation
 
   def show

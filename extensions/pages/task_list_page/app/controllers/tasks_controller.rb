@@ -1,4 +1,4 @@
-class TasksController < Pages::BaseController
+class TasksController < Page::BaseController
   before_filter :fetch_task, only: [:edit, :update, :destroy]
   before_filter :fetch_user_participation
   after_filter :update_participations, only: [:create, :update, :destroy]

@@ -1,0 +1,34 @@
+-#
+-# requires: page_type()
+-# optional:
+-#   @form_sections -- array of sections to include in the form
+-#   @multipart     -- if true, make form multipart
+-#
+
+%div.icon.multi.medium{class: "#{page_type.icon}_48"}
+  .h2.first
+    .small= :create_a_new_thing.t(thing: :page.t.downcase)
+    = page_type.class_display_name
+- if @owner.present?
+  %p= :page_added_to_group.t(group_type: @owner.group_type.downcase, group_name: content_tag(:b,@owner.name)).html_safe
+%hr
+
+.create_page
+  = form_tag(create_page_path(page_type: page_type), multipart: @multipart) do
+    = hidden_field_tag 'page_type', page_type
+    = formy(:horizontal_form) do |form|
+      - @form_sections.each do |section|
+        - if section =~ /\//
+          = render partial: section, locals: {form: form}
+        - else
+          = render partial: "#{section}", locals: {form: form}
+      = render partial: 'sharing', locals: {form: form}
+    .buttons-right.reverse
+      = submit_tag (:create_button.t + ' &raquo;').html_safe, name: 'create', class: 'btn btn-primary'
+      = link_to(('&laquo; ' + I18n.t(:back_button)).html_safe, new_page_path(owner: @group, type: page_type), class: 'btn btn-default')
+
+
+:javascript
+  if ($("page_title"))
+    $("page_title").focus();
+

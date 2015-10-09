@@ -63,7 +63,7 @@ module Common::Application::UrlIdentifiers
 
   # return true if the current controller is page related.
   def page_controller?
-    controller?('me/pages', 'groups/pages', 'people/pages', 'pages/') or controller.is_a?(Pages::BaseController) or controller.is_a?(Pages::CreateController)
+    controller?('me/pages', 'groups/pages', 'people/pages', 'pages/') or controller.is_a?(Page::BaseController) or controller.is_a?(Page::CreateController)
   end
 
   # returns true if params[:id] matches the id passed in

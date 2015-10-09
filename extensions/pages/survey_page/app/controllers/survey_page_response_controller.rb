@@ -2,7 +2,7 @@
 ## Handles the CRUD for survey responses
 ##
 
-class SurveyPageResponseController < Pages::BaseController
+class SurveyPageResponseController < Page::BaseController
   helper 'survey_page'
 
   guard show: :may_view_survey_response?,

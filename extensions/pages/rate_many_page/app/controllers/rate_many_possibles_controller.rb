@@ -1,4 +1,4 @@
-class RateManyPossiblesController < Pages::BaseController
+class RateManyPossiblesController < Page::BaseController
   before_filter :fetch_poll
 
   guard :may_edit_page?

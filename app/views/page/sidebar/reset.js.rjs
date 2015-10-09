@@ -1,0 +1,5 @@
+# this a generic rjs script to replace the sidebar with a fresh copy.
+# it also shows any messages
+
+rebuild_sidebar(page)
+update_alert_messages(page)

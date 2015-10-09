@@ -1,4 +1,4 @@
-class CreateAssetPageController < Pages::CreateController
+class CreateAssetPageController < Page::CreateController
 
   before_filter :ensure_asset, only: :create
 
