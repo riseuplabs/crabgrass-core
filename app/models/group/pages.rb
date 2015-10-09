@@ -3,19 +3,18 @@
 #
 # Handles all the group <> page relationships
 #
-module GroupExtension::Pages
+module Group::Pages
+  extend ActiveSupport::Concern
 
-  def self.included(base)
-    base.instance_eval do
-      has_many :participations,
-        class_name: 'GroupParticipation',
-        dependent: :delete_all,
-        order: :featured_position,
-        inverse_of: :group
-      has_many :pages, through: :participations
+  included do
+    has_many :participations,
+      class_name: 'GroupParticipation',
+      dependent: :delete_all,
+      order: :featured_position,
+      inverse_of: :group
+    has_many :pages, through: :participations
 
-      has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
-    end
+    has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
   end
 
   # Almost every page is retrieved from the database using this method.
@@ -73,9 +72,9 @@ module GroupExtension::Pages
   # DEPRECATED
   def may?(perm, page)
     begin
-       may!(perm,page)
+      may!(perm,page)
     rescue PermissionDenied
-       false
+      false
     end
   end
 

@@ -3,36 +3,34 @@
 #
 # Handles all the group <> user relationships
 #
-module GroupExtension::Users
+module Group::Users
   extend ActiveSupport::Concern
   # large groups will be ignored when calculating peers.
   LARGE_GROUP_SIZE=50
 
-  def self.included(base)
-    base.instance_eval do
+  included do
 
-      before_destroy :destroy_memberships
-#      before_create :set_created_by
+    before_destroy :destroy_memberships
+    #      before_create :set_created_by
 
-      has_many :memberships, before_add: :check_duplicate_memberships
+    has_many :memberships, before_add: :check_duplicate_memberships
 
-      has_many :users, through: :memberships do
-        def <<(*dummy)
-          raise "don't call << on group.users"
-        end
-        def delete(*records)
-          raise "don't call delete on group.users"
-        end
-        def most_recently_active(options={})
-          order('memberships.visited_at DESC')
-        end
-        # UPGRADE: This is a workaround for the lack of declaring a
-        # query DISTINCT and having that applied to the final query.
-        # it won't be needed anymore as soon as .distinct can be used
-        # with rails 4.0
-        def with_access(access)
-          super(access).only_select("DISTINCT users.*")
-        end
+    has_many :users, through: :memberships do
+      def <<(*dummy)
+        raise "don't call << on group.users"
+      end
+      def delete(*records)
+        raise "don't call delete on group.users"
+      end
+      def most_recently_active(options={})
+        order('memberships.visited_at DESC')
+      end
+      # UPGRADE: This is a workaround for the lack of declaring a
+      # query DISTINCT and having that applied to the final query.
+      # it won't be needed anymore as soon as .distinct can be used
+      # with rails 4.0
+      def with_access(access)
+        super(access).only_select("DISTINCT users.*")
       end
     end
   end
