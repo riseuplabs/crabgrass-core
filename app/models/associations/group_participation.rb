@@ -16,9 +16,6 @@ add_index "group_participations", ["group_id", "page_id"], :name => "index_group
 =end
 
 class GroupParticipation < ActiveRecord::Base
-  # this includes the ability to find featured-pages in GroupParticipation
-  # include GroupParticipationExtension::Featured
-  include GroupParticipationExtension::PageHistory
   include ParticipationAccess
 
   belongs_to :page, inverse_of: :group_participations
