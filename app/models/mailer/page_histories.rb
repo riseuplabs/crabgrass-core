@@ -11,7 +11,7 @@ class Mailer::PageHistories < ActionMailer::Base
   DIGEST_TIMESPAN = 1.day
   UPDATE_TIMESPAN = 1.hour
 
-  add_template_helper(Pages::HistoryHelper)
+  add_template_helper(Page::HistoryHelper)
   add_template_helper(Common::Utility::TimeHelper)
 
   def self.deliver_digests
