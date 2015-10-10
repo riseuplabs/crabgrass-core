@@ -64,7 +64,7 @@ end
 # It looks like this is not included right now. But then again we don't allow
 # featuring pages right now anyway.
 #
-module GroupParticipation::Featured
+module Group::Participation::Featured
   extend ActiveSupport::Concern
 
   module ClassMethods

@@ -4,7 +4,7 @@ module Page::ParticipationHelper
   # since this could produce really bad load times.
   def edit_page_access(participation)
     url = page_participation_path @page, participation,
-      group: participation.is_a?(GroupParticipation)
+      group: participation.group?
     select_id = "access_select_#{participation.id}"
     select_page_access(select_id, participation, {
       remove: true,

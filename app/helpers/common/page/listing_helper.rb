@@ -157,7 +157,7 @@ module Common::Page::ListingHelper
 
 #  #
 #  # Often when you run a page search, you will get an array of UserParticipation
-#  # or GroupParticipation objects.
+#  # or Group::Participation objects.
 #  #
 #  # This method will convert the array to Pages if they are not.
 #  #

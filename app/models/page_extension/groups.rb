@@ -8,6 +8,7 @@ module PageExtension::Groups
     base.instance_eval do
 
       has_many :group_participations,
+        class_name: 'Group::Participation',
         dependent: :destroy,
         inverse_of: :page
       has_many :groups, through: :group_participations

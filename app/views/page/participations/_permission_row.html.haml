@@ -1,9 +1,6 @@
 %td
   &nbsp;&nbsp;
-  - if participation.is_a?(GroupParticipation)
-    = link_to_group(participation.group)
-  - else
-    = link_to_user(participation.user)
+  = link_to_entity(participation.entity)
 
 %td= spinner(dom_id(participation))
 %td.form-inline

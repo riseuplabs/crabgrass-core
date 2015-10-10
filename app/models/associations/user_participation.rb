@@ -32,9 +32,9 @@ class UserParticipation < ActiveRecord::Base
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe
 
-  def entity
-    user
-  end
+  def entity; user; end
+  def group?; false;  end
+  def user? ; true; end
 
   protected
 

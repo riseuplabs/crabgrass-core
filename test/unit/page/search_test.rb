@@ -212,7 +212,7 @@ class Page::SearchTest < ActiveSupport::TestCase
   #
   def page_ids(array)
     return Set.new() unless array.any?
-    if array.first.instance_of?(UserParticipation) or array.first.instance_of?(GroupParticipation)
+    if array.first.instance_of?(UserParticipation) or array.first.instance_of?(Group::Participation)
       Set.new(
         array.collect{|part|
           if block_given?

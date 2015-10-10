@@ -1,5 +1,5 @@
 =begin
-a GroupParticipation holds the data representing a group's
+a Group::Participation holds the data representing a group's
 relationship with a particular page.
 
 create_table "group_participations", :force => true do |t|
@@ -15,8 +15,9 @@ end
 add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 =end
 
-class GroupParticipation < ActiveRecord::Base
+class Group::Participation < ActiveRecord::Base
   include ParticipationAccess
+  self.table_name = :group_participations
 
   belongs_to :page, inverse_of: :group_participations
   belongs_to :group, inverse_of: :participations
@@ -24,9 +25,7 @@ class GroupParticipation < ActiveRecord::Base
   validates :page, presence: true
   validates :group, presence: true
 
-
-  def entity
-    group
-  end
-
+  def entity; group; end
+  def group?; true;  end
+  def user? ; false; end
 end

@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class GroupParticipationTest < ActiveSupport::TestCase
+class Group::ParticipationTest < ActiveSupport::TestCase
   fixtures :groups, :users, :memberships, :group_participations
 
   def test_name_change
@@ -19,7 +19,7 @@ class GroupParticipationTest < ActiveSupport::TestCase
   end
 
   def test_associations
-    assert check_associations(GroupParticipation)
+    assert check_associations(Group::Participation)
   end
 
 end

@@ -222,7 +222,7 @@ class PageHistory::GrantGroupAccess < PageHistory::UpdateParticipation
   include GrantAccess
 
   def self.tracks(changes, part)
-    part.is_a?(GroupParticipation) && changes.keys.include?('access')
+    part.group? && changes.keys.include?('access')
   end
 
   after_save :page_updated_at
@@ -253,8 +253,8 @@ class PageHistory::RevokedGroupAccess < PageHistory::UpdateParticipation
   after_save :page_updated_at
 
   def self.tracks(changes, part)
-    part.is_a?(GroupParticipation) &&
-      !GroupParticipation.exists?(id: part.id)
+    part.group? &&
+      !Group::Participation.exists?(id: part.id)
   end
 
   def participation=(part)

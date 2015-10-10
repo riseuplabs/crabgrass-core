@@ -188,7 +188,8 @@ module UserExtension::Pages
   #
   # this method is VERY expensive to call, and should only be called with caution.
   def may_admin_page_without?(page, participation)
-    method = participation.class.name.underscore.pluralize # user_participations or group_participations
+    # user_participations or group_participations
+    method = participation.class.name.underscore.pluralize.sub('/', '_')
     # work with a new, untained page object
     # no changes to it should be saved!
     page = Page.find(page.id)
