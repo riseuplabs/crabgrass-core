@@ -166,7 +166,7 @@ class GroupTest < ActiveSupport::TestCase
     page = DiscussionPage.create! title: 'hello', user: users(:blue), owner: g
     assert_equal page.owner, g
 
-    assert_difference 'Membership.count', -2 do
+    assert_difference 'Group::Membership.count', -2 do
       g.destroy
     end
 

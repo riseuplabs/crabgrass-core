@@ -13,7 +13,9 @@ module Group::Users
     before_destroy :destroy_memberships
     #      before_create :set_created_by
 
-    has_many :memberships, before_add: :check_duplicate_memberships
+    has_many :memberships,
+      class_name: 'Group::Membership',
+      before_add: :check_duplicate_memberships
 
     has_many :users, through: :memberships do
       def <<(*dummy)

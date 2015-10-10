@@ -15,7 +15,9 @@
 #  add_index "memberships", ["user_id", "group_id"], :name => "ug"
 #
 
-class Membership < ActiveRecord::Base
+class Group::Membership < ActiveRecord::Base
+  self.table_name = 'memberships'
+
   attr_accessor :skip_destroy_notification
 
   belongs_to :user
@@ -37,5 +39,7 @@ class Membership < ActiveRecord::Base
   end
 
   alias :entity :user
+  # this deals with users in contrast to federatings
+  def user?; true; end
 end
 

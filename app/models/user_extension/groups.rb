@@ -19,6 +19,7 @@ module UserExtension::Groups
     base.instance_eval do
 
       has_many :memberships, foreign_key: 'user_id',
+        class_name: 'Group::Membership',
         dependent: :destroy,
         before_add: :check_duplicate_memberships
 

@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class MembershipTest < ActiveSupport::TestCase
+class Group::MembershipTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :memberships
 

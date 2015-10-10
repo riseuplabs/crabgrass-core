@@ -5,7 +5,7 @@
       - if @group.has_a_council?
         - r.input link_to_group(@group.council, avatar: :small)
       - else
-        - r.input link_line :bullet, :none.t, create_council_link
+        - r.input link_line(:bullet, :none.t, create_council_link)
       - r.info :council_description.t
       - if !@group.has_a_council?
         - r.info content_tag(:div, :council_description_details.t(group: @group.group_type), class: 'p')

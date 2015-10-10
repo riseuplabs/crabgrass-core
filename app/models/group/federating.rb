@@ -37,6 +37,9 @@ class Group::Federating < ActiveRecord::Base
 
   alias :entity :group
 
+  # this does not deal with users - in contrast to Memberships
+  def user?; false; end
+
   protected
 
   def group_is_not_network
