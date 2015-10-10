@@ -13,7 +13,8 @@
 = post_pagination_links(posts)
 %table.posts.round
   - for post in posts do
-    = render partial: 'common/posts/default/row', locals: local_assigns.merge(post: post, last: (post.id == last_id))
+    = render 'common/posts/default/row',
+      local_assigns.merge(post: post, last: (post.id == last_id))
   - if show_reply
-    = render partial: 'common/posts/default/reply', locals: local_assigns
+    = render 'common/posts/default/reply', local_assigns
 = post_pagination_links(posts)

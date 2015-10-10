@@ -5,7 +5,7 @@
 
 #search_results{data: {search: 'path', href: page_search_path}}
   - if @path.present?
-    = render partial: 'common/pages/list', locals: local_assigns
+    = render 'common/pages/list', local_assigns
   - else
     = big_spinner
 

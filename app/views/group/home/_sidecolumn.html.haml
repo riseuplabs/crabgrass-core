@@ -1,9 +1,9 @@
 .sidebox
   .padded
-    = render partial: 'sidebox'
+    = render 'sidebox'
     - if may_show_affiliations?
-      = render partial: 'group/structures/show_in_sidebar'
+      = render 'group/structures/show_in_sidebar'
     - if may_list_memberships?
-      = render partial: 'memberships'
+      = render 'memberships'
 
 

@@ -4,4 +4,4 @@
 %ul.clickable
   - @versions.each do |version|
     %li{onmousedown: show_version_remote_function(version)}
-      = render partial: 'wiki/versions/line_item', locals: {version: version}
+      = render 'line_item', version: version

@@ -1,5 +1,5 @@
 - content_for :left_column do
-  = render partial: 'sidecolumn'
+  = render 'sidecolumn'
 
 -#
 -# super temporary... should be replaced by a simple widget system.
@@ -9,6 +9,6 @@
 
 %h2.p.first= :recent_pages.t
 .without_owner
-  = render partial: 'common/pages/list'
+  = render 'common/pages/list'
 
 

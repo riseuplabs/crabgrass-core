@@ -33,7 +33,7 @@
     r.input %Q{
       <div class='share_page'>
         <div id='share_error_message'></div>
-        #{render(:partial => 'page/shares/add_recipient_widget')}
+        #{render 'page/shares/add_recipient_widget'}
       </div>
     }
     if may_select_access_participation?

@@ -1,6 +1,6 @@
 #group_membership_list
   - if may_create_membership?(@group)
-    = render partial: 'group/memberships/add_member_form'
+    = render 'add_member_form'
     .h3= :members.t
   - else
     .h3.first= :members.t
@@ -16,8 +16,8 @@
       - myself = @memberships.detect {|m| m.entity.name == current_user.name}
       - memberships = @memberships.reject {|m| m.entity.name == current_user.name}
       - if myself
-        = render partial: '/group/memberships/membership', locals: {membership: myself}
+        = render 'membership', membership: myself
       - memberships.each do |membership|
-        = render partial: '/group/memberships/membership', locals: {membership: membership}
+        = render 'membership', membership: membership
     .p= pagination_links(@memberships)
 

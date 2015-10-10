@@ -1,8 +1,8 @@
 = back_to_wiki_link
 = pagination_links(@versions)
-= render partial: 'common/split_panel',
-  locals: { items: '@versions',
-    left_panel: 'wiki/diffs/diff_short_entry',
-    right_panel: 'wiki/diffs/show',
-    current: @new,
-    load_url: proc {|version| wiki_diff_path(@wiki, version.diff_id)}}
+= render 'common/split_panel',
+  items: '@versions',
+  left_panel: 'wiki/diffs/diff_short_entry',
+  right_panel: 'wiki/diffs/show',
+  current: @new,
+  load_url: proc {|version| wiki_diff_path(@wiki, version.diff_id)}

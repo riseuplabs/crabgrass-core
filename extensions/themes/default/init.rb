@@ -219,7 +219,7 @@ define_theme {
 
   home {
     content {
-      html partial: 'session/welcome'
+      html partial: 'common/session/welcome'
     }
   }
 

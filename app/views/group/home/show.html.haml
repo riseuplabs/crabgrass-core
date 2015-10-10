@@ -1,13 +1,13 @@
 - content_for :left_column do
-  = render partial: 'sidecolumn'
+  = render 'sidecolumn'
 
 - if should_render_group_wiki?
-  = render partial: 'wikis'
+  = render 'wikis'
 
 %h2.pages{class: first(:heading)}
   = :recent_pages.t
   %span.plain
     = link_to (:create_page.t + " &raquo;").html_safe, new_page_path(owner: @group)
 .without_owner
-  = render partial: 'common/pages/list'
+  = render 'common/pages/list'
 

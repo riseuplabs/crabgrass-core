@@ -22,12 +22,12 @@
         .panel_arrow[item, :panel_arrow]
       .row[item, :panel_left]{onmousedown:activate_panel_row(item, load_url)}
         .content
-          = render partial: left_panel, locals: {item_name => item}
+          = render left_panel, item_name => item
   .panel_right
     - for item in @items
       .row[item, :panel_right]{ style: 'display:none'}
         - if right_panel
-          = render partial: right_panel, locals: {item_name => item}
+          = render right_panel, item_name => item
         - else
           = big_spinner
 

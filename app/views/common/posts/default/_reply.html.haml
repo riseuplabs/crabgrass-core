@@ -16,6 +16,6 @@
       - if local_assigns[:reply_body]
         = local_assigns[:reply_body]
       - else
-        = render partial: 'common/posts/default/reply_body', locals: local_assigns
+        = render 'common/posts/default/reply_body', local_assigns
   %tr{class: "post_spacer_bottom #{color}"}
     %td{colspan: 2, class: 'round-bottom'}= '&nbsp;'.html_safe

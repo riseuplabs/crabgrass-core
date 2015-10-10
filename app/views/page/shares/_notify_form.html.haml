@@ -1,6 +1,6 @@
 = page_popup_form('notify') do
   .legend= :recipients.t
-  = render(partial: 'add_recipient_widget', locals: {empty_box: true, mode: 'notify'})
+  = render 'add_recipient_widget', empty_box: true, mode: 'notify'
   - if (@page.contributors_count || 0) > 0
     .checkbox.p
       %label
@@ -12,7 +12,7 @@
       = :notify_current_access.t.html_safe
 
   .legend= :notification_message.t
-  = render(partial: 'notification_message_form', locals: {forced_send: true})
+  = render 'notification_message_form', forced_send: true
 
   .buttons-right
     = spinner 'popup'

@@ -4,7 +4,7 @@
     %h1= h(:welcome_title.t(site_title: 'we.riseup.net'))
     %p=t 'crabgrass.powered_by_html', description: t('crabgrass.description_html'), default: 'Powered by crabgrass'
     .space-ui(style = "max-width: 20em")
-      = render partial: 'session/login_form'
+      = render 'common/session/login_form'
     %p
       = t('riseup.accounts_note',
         {riseup_black: content_tag(:b, link_to(t('riseup.riseup_black'), 'https://black.riseup.net')),

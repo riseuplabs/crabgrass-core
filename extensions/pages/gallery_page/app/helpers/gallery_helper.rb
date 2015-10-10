@@ -184,7 +184,7 @@ module GalleryHelper
     caption = image.caption ? h(image.caption) : '[click here to edit caption]'
     output = content_tag :p, caption, class: 'description small_icon pencil_16',
        id: 'detail_image_title', onclick: change_title
-    output << render(partial: 'change_image_title', locals: { image: image })
+    output << render('change_image_title', image: image)
     return output
   end
 

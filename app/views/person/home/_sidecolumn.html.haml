@@ -1,7 +1,7 @@
 .sidebox
-  = render partial: 'sidebox'
+  = render 'sidebox'
   - if may_list_friends?
-    = render partial: 'friends'
+    = render 'friends'
   - if may_list_groups?
-    = render partial: 'groups'
+    = render 'groups'
 

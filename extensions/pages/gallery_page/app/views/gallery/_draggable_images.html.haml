@@ -1,4 +1,5 @@
 %ul#assets_list.sortable.list-inline
-  = render partial: '/common/assets/asset_as_li', collection: @images, locals: {draggable: true}
+  = render partial: '/common/assets/asset_as_li', collection: @images,
+    locals: {draggable: true}
 
 = gallery_make_images_sortable_js

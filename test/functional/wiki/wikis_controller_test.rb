@@ -32,7 +32,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
       xhr :get, :edit, id: @wiki.id
     end
     assert_response :success
-    assert_template 'wiki/wikis/_locked'
+    assert_template 'common/wikis/_locked'
     assert_equal 'text/javascript', @response.content_type
     assert_equal other_user, @wiki.locker_of(:document)
     assert_equal @wiki, assigns['wiki']

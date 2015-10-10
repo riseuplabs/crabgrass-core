@@ -22,4 +22,4 @@
 
 - if posts.any? || may_create_post?
   %section{class: "post_list #{style}", id: 'posts'}
-    = render partial: "/common/posts/list_as_#{style}", locals: local_assigns
+    = render "/common/posts/list_as_#{style}", local_assigns
