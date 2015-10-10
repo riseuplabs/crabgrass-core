@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class UserParticipationTest < ActiveSupport::TestCase
+class User::ParticipationTest < ActiveSupport::TestCase
 
   fixtures :groups, :users, :pages, :user_participations
 
@@ -9,7 +9,7 @@ class UserParticipationTest < ActiveSupport::TestCase
   end
 
   def test_associations
-    assert check_associations(UserParticipation)
+    assert check_associations(User::Participation)
   end
 
   def test_name_changed
@@ -90,7 +90,7 @@ class UserParticipationTest < ActiveSupport::TestCase
 
     upart = nil
     gpart = nil
-    assert_no_difference 'UserParticipation.count' do
+    assert_no_difference 'User::Participation.count' do
       upart = page.participation_for_user(user)
       assert !user.may_admin_page_without?(page, upart), 'cannot remove upart and still have access'
 

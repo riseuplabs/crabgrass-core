@@ -16,7 +16,7 @@ module UserExtension::Pages
   def self.included(base)
     base.instance_eval do
       has_many :participations,
-        class_name: 'UserParticipation',
+        class_name: 'User::Participation',
         dependent: :destroy,
         inverse_of: :user
 

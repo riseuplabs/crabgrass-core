@@ -59,11 +59,9 @@ class Page::ParticipationsController < Page::SidebarsController
   ## view access, then we need to destory them to remove access.
   def destroy
     if may_remove_participation?(@part)
-      if @part.is_a? UserParticipation
-        @page.remove(@part.user)
-      else
-        @page.remove(@part.group)
-      end
+      @part.destroy
+      entity = @part.entity
+      entity.clear_access_cache if entity.respond_to? :clear_access_cache
     else
       raise ErrorMessage.new(:remove_access_error.t)
     end

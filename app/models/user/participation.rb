@@ -13,7 +13,8 @@
 # attend, :boolean      -- the user will attend event
 #
 
-class UserParticipation < ActiveRecord::Base
+class User::Participation < ActiveRecord::Base
+
   include Common::ParticipationAccess
 
   belongs_to :page, inverse_of: :user_participations
@@ -26,8 +27,8 @@ class UserParticipation < ActiveRecord::Base
   after_destroy :clear_tag_cache
 
   # use this for counting stars :)
-  include UserParticipationExtension::Starring
-  include UserParticipationExtension::PageHistory
+  include Starring
+  include History
 
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe

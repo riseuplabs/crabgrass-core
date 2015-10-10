@@ -48,6 +48,7 @@ class ActiveSupport::TestCase
   set_fixture_class taggings: ActsAsTaggableOn::Tagging
   set_fixture_class tags: ActsAsTaggableOn::Tag
   set_fixture_class federatings: Group::Federating
+  set_fixture_class relationships: User::Relationship
   set_fixture_class memberships: Group::Membership
 end
 

@@ -127,7 +127,7 @@ module Common::Page::ListingHelper
 #    title = link_to(h(page.title), page_url(page))
 
 #    # this is not used for now
-#    #if participation and participation.instance_of? UserParticipation
+#    #if participation and participation.user?
 #    #  title += " " + icon_tag("tiny_star") if participation.star?
 #    #else
 #    #  #title += " " + icon_tag("tiny_pending") unless page.resolved?
@@ -156,7 +156,7 @@ module Common::Page::ListingHelper
 #  end
 
 #  #
-#  # Often when you run a page search, you will get an array of UserParticipation
+#  # Often when you run a page search, you will get an array of User::Participation
 #  # or Group::Participation objects.
 #  #
 #  # This method will convert the array to Pages if they are not.

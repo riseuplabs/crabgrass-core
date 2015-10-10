@@ -21,10 +21,10 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     @other = FactoryGirl.create :user
     login_as @other
     @page.update_attribute :public, true
-    assert_difference 'UserParticipation.count' do
+    assert_difference 'User::Participation.count' do
       xhr :post, :create, page_id: @page, star: true
     end
-    assert UserParticipation.last.star
+    assert @other.participations.last.star
   end
 
   def test_watch
@@ -51,6 +51,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     other_upart.save
     assert_difference 'PageHistory.count' do
       xhr :post, :update, page_id: @page, id: other_upart, access: :remove
+      assert_response :success
     end
   end
 

@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class RelationshipTest < ActiveSupport::TestCase
+class User::RelationshipTest < ActiveSupport::TestCase
   fixtures :users
 
   def test_add_contact
@@ -8,7 +8,7 @@ class RelationshipTest < ActiveSupport::TestCase
     b = users(:green)
 
     assert !a.contacts.include?(b), 'no contact yet'
-    assert_difference 'Relationship.count', 2 do
+    assert_difference 'User::Relationship.count', 2 do
       a.add_contact!(b)
     end
     assert a.contacts.include?(b), 'should be contact'
@@ -19,7 +19,7 @@ class RelationshipTest < ActiveSupport::TestCase
     a = users(:red)
     b = users(:green)
 
-    assert_difference 'Friendship.count', 2 do
+    assert_difference 'User::Friendship.count', 2 do
       a.add_contact!(b, :friend)
     end
 
@@ -39,7 +39,7 @@ class RelationshipTest < ActiveSupport::TestCase
 
     a.add_contact!(b)
     a.reload; b.reload
-    assert_difference 'Relationship.count', -2 do
+    assert_difference 'User::Relationship.count', -2 do
       a.remove_contact!(b)
     end
     assert !a.contacts.include?(b), 'no contact now'
@@ -58,12 +58,13 @@ class RelationshipTest < ActiveSupport::TestCase
     a = users(:red)
     b = users(:green)
 
-    assert_difference 'Relationship.count', 2 do
+    assert_difference 'User::Relationship.count', 2 do
       a.add_contact!(b)
       a.add_contact!(b)
     end
 
-    assert_equal 1, Relationship.count(conditions: ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
+    assert_equal 1, a.relationships.with(b).count,
+      'should be only be one contact, but there are really two'
   end
 
   def test_different_types
@@ -91,7 +92,7 @@ class RelationshipTest < ActiveSupport::TestCase
 
     discussion = rel.discussion
     assert_no_difference 'Discussion.count' do
-      assert_equal discussion, b.relationships.with(a).discussion
+      assert_equal discussion, b.relationships.with(a).first.discussion
     end
 
     relationships = discussion.relationships.sort_by {|r|r.id}
@@ -107,7 +108,7 @@ class RelationshipTest < ActiveSupport::TestCase
   end
 
   def test_associations
-    assert check_associations(Relationship)
+    assert check_associations(User::Relationship)
   end
 
 end

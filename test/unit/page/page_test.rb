@@ -46,7 +46,7 @@ class Page::BaseTest < ActiveSupport::TestCase
 
     assert_difference 'Page.count' do
       assert_difference 'PageTerms.count' do
-        assert_difference 'UserParticipation.count' do
+        assert_difference 'User::Participation.count' do
           WikiPage.create!(params)
         end
       end
@@ -54,7 +54,7 @@ class Page::BaseTest < ActiveSupport::TestCase
 
     assert_no_difference 'Page.count', 'no new page' do
       assert_no_difference 'PageTerms.count', 'no new page terms' do
-        assert_no_difference 'UserParticipation.count', 'no new user part' do
+        assert_no_difference 'User::Participation.count', 'no new user part' do
           assert_raises ActiveRecord::RecordInvalid do
             WikiPage.create!(params)
           end
@@ -69,14 +69,14 @@ class Page::BaseTest < ActiveSupport::TestCase
     page = nil
     assert_no_difference 'Page.count', 'no new page' do
       assert_no_difference 'PageTerms.count', 'no new page terms' do
-        assert_no_difference 'UserParticipation.count', 'no new user part' do
+        assert_no_difference 'User::Participation.count', 'no new user part' do
           page = WikiPage.build!(title: 'hi', user: user)
         end
       end
     end
     assert_difference 'Page.count' do
       assert_difference 'PageTerms.count' do
-        assert_difference 'UserParticipation.count' do
+        assert_difference 'User::Participation.count' do
           page.save
         end
       end

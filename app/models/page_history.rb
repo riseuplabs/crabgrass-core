@@ -29,6 +29,10 @@ class PageHistory < ActiveRecord::Base
     'page_histories/page_history'
   end
 
+  def self.recipients_for_page(page)
+    page.user_participations.where(watch: true).map(&:user_id)
+  end
+
   def notification_sent?
     notification_sent_at.present?
   end
@@ -253,8 +257,9 @@ class PageHistory::RevokedGroupAccess < PageHistory::UpdateParticipation
   after_save :page_updated_at
 
   def self.tracks(changes, part)
-    part.group? &&
-      !Group::Participation.exists?(id: part.id)
+    # destroyed? does not work here because we destroy the participation via
+    # page.groups
+    part.group? && !part.class.exists?(id: part.id)
   end
 
   def participation=(part)
@@ -269,7 +274,7 @@ class PageHistory::GrantUserAccess < PageHistory::UpdateParticipation
   include GrantAccess
 
   def self.tracks(changes, part)
-    part.is_a?(UserParticipation) && changes.keys.include?('access')
+    part.user? && changes.keys.include?('access')
   end
 
   after_save :page_updated_at
@@ -298,8 +303,9 @@ class PageHistory::GrantUserReadAccess < PageHistory::GrantUserAccess; end
 
 class PageHistory::RevokedUserAccess < PageHistory::UpdateParticipation
   def self.tracks(changes, part)
-    part.is_a?(UserParticipation) &&
-      !UserParticipation.exists?(id: part.id)
+    # destroyed? does not work here because we destroy the participation via
+    # page.users
+    part.user? && !part.class.exists?(id: part.id)
   end
 
   def participation=(part)

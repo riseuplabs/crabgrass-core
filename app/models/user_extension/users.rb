@@ -38,14 +38,18 @@ module UserExtension::Users
       ## RELATIONSHIPS
       ##
 
-      has_many :relationships, dependent: :destroy do
-        def with(user) find_by_contact_id(user.id) end
-      end
+      has_many :relationships,
+        class_name: 'User::Relationship',
+        dependent: :destroy
+
+      has_many :friendships,
+        class_name: 'User::Relationship',
+        conditions: {type: 'Friendship'}
 
       has_many :discussions, through: :relationships, order: 'discussions.replied_at DESC'
       has_many :contacts,    through: :relationships
 
-      has_many :friends, through: :relationships, conditions: "relationships.type = 'Friendship'", source: :contact do
+      has_many :friends, through: :friendships, source: :contact do
         def most_active(options = {})
           options[:limit] ||= 13
           max_visit_count = select('MAX(relationships.total_visits) as id').first.id || 1
@@ -114,15 +118,11 @@ module UserExtension::Users
     def add_contact!(other_user, type=nil)
       type = 'Friendship' if type == :friend
 
-      unless relationship = other_user.relationships.with(self)
-        relationship = Relationship.new(user: other_user, contact: self)
-      end
+      relationship = other_user.relationships.with(self).first_or_initialize
       relationship.type = type
       relationship.save!
 
-      unless relationship = self.relationships.with(other_user)
-        relationship = Relationship.new(user: self, contact: other_user)
-      end
+      relationship = self.relationships.with(other_user).first_or_initialize
       relationship.type = type
       relationship.save!
 
@@ -141,11 +141,11 @@ module UserExtension::Users
 
     # this should be the ONLY way contacts are deleted
     def remove_contact!(other_user)
-      if self.relationships.with(other_user)
+      if self.relationships.with(other_user).exists?
         self.contacts.delete(other_user)
         self.update_contacts_cache
       end
-      if other_user.relationships.with(self)
+      if other_user.relationships.with(self).exists?
          other_user.contacts.delete(self)
          other_user.update_contacts_cache
       end
@@ -161,7 +161,7 @@ module UserExtension::Users
     # notification on the user's wall.
     #
     def send_message_to!(other_user, body, in_reply_to = nil)
-      relationship = relationships.with(other_user) || add_contact!(other_user)
+      relationship = relationships.with(other_user).first || add_contact!(other_user)
       relationship.send_message(body, in_reply_to)
     end
 

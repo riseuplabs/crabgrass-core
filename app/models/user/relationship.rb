@@ -1,9 +1,15 @@
 # user to user relationship
 
-class Relationship < ActiveRecord::Base
+class User::Relationship < ActiveRecord::Base
+  self.table_name = :relationships
+
   belongs_to :user
   belongs_to :contact, class_name: 'User', foreign_key: :contact_id
   belongs_to :discussion, dependent: :destroy, inverse_of: :relationships
+
+  def self.with(user)
+    where(contact_id: user)
+  end
 
   # mark as read or unread the discussion on this relationship
   def mark!(as)
@@ -44,6 +50,6 @@ class Relationship < ActiveRecord::Base
   end
 
   def inverse
-    @inverse ||= Relationship.where(user_id: contact, contact_id: user).first
+    @inverse ||= self.class.where(user_id: contact, contact_id: user).first
   end
 end

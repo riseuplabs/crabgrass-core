@@ -15,7 +15,10 @@ module PageExtension::Users
 
       belongs_to :created_by, class_name: 'User', foreign_key: 'created_by_id'
       belongs_to :updated_by, class_name: 'User', foreign_key: 'updated_by_id'
-      has_many :user_participations, dependent: :destroy, inverse_of: :page
+      has_many :user_participations,
+        class_name: 'User::Participation',
+        dependent: :destroy,
+        inverse_of: :page
       has_many :users, through: :user_participations do
         def with_access
           where('access IS NOT NULL')
@@ -28,19 +31,6 @@ module PageExtension::Users
       after_save :reset_users
     end
 
-    base.class_eval do
-      def self.flag_all(page_ids, options)
-        return unless options[:as] and options[:by]
-        update = case options[:as]
-                 when :read then "viewed = TRUE"
-                 when :unread then "viewed = FALSE"
-                 when :watched then "watch = TRUE"
-                 when :unwatched then "watch = FALSE"
-                 end
-        UserParticipation.update_all update,
-          ["page_id IN (?) AND user_id = ?", page_ids, options[:by]]
-      end
-    end
   end
 
   ##

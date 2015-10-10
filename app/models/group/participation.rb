@@ -17,7 +17,6 @@ add_index "group_participations", ["group_id", "page_id"], :name => "index_group
 
 class Group::Participation < ActiveRecord::Base
   include Common::ParticipationAccess
-  self.table_name = :group_participations
 
   belongs_to :page, inverse_of: :group_participations
   belongs_to :group, inverse_of: :participations

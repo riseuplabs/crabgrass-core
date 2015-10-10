@@ -345,6 +345,8 @@ class Page < ActiveRecord::Base
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
+  # FIXME: removing the connection should be part of the participation.
+  # This way we can test participation.destroyed? in page history and views.
   def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|

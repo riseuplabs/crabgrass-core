@@ -92,12 +92,12 @@ FactoryGirl.define do
 
   end
 
-  factory :user_participation do
+  factory 'user_participation', class: User::Participation do
     access 1
     watch false
   end
 
-  factory :group_participation do
+  factory 'group_participation', class: Group::Participation do
     access 1
   end
 
