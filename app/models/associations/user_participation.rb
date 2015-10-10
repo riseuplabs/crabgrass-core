@@ -14,7 +14,7 @@
 #
 
 class UserParticipation < ActiveRecord::Base
-  include ParticipationAccess
+  include Common::ParticipationAccess
 
   belongs_to :page, inverse_of: :user_participations
   belongs_to :user, inverse_of: :participations

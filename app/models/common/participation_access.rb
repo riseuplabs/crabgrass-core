@@ -1,4 +1,4 @@
-module ParticipationAccess
+module Common::ParticipationAccess
 
   def access_sym
     ACCESS_TO_SYM[self.access]
