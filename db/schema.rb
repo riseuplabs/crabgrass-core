@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151009094137) do
+ActiveRecord::Schema.define(:version => 20151011091211) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -94,9 +94,6 @@ ActiveRecord::Schema.define(:version => 20151009094137) do
   end
 
   add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
-
-  create_table "categories", :force => true do |t|
-  end
 
   create_table "channels", :force => true do |t|
     t.string  "name"
