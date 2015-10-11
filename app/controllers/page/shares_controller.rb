@@ -73,7 +73,7 @@ class Page::SharesController < Page::SidebarsController
   #
   def notify_or_share
     if (params[:share_button] || params[:notify_button])
-      share = PageShare.new(@page, current_user, share_options)
+      share = Page::Share.new(@page, current_user, share_options)
       @uparts, @gparts = share.with params[:recipients]
       @page.save!
       success(@success_msg)

@@ -1,17 +1,17 @@
 #
 # Page Share
 #
-# PageShare is a utility class to help sharing a page with multiple recipients.
+# Page::Share is a utility class to help sharing a page with multiple recipients.
 #
 # This is the only method that should ever be used when a user is sharing a page
 # with a user or group and/or sending a notification. It will make sure mails
 # get send and so on.
 #
-# A PageShare instance captures the process of sharing a specific page as a
+# A Page::Share instance captures the process of sharing a specific page as a
 # specific user with some options.
 #
 # Usage:
-# share = PageShare.new page, sender, defaults
+# share = Page::Share.new page, sender, defaults
 # share.with recipients
 #
 # The user and group participations affected are returned as two arrays.
@@ -21,7 +21,7 @@
 # See models/recipient.rb for details.
 #
 # Please keep the instance immutable. This way we do not have to worry about
-# changes to the PageShare state and can focus on the effects it has on other classes.
+# changes to the Page::Share state and can focus on the effects it has on other classes.
 #
 # valid options:
 #         :access -- sets access level directly. one of nil, :admin, :edit, or
@@ -43,7 +43,7 @@
 # auto saves the @page if has been changed.)
 #
 
-class PageShare
+class Page::Share
 
   attr_reader :page, :sender, :defaults
 

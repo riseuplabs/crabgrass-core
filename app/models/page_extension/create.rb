@@ -61,7 +61,7 @@ module PageExtension::Create
           yield(page) if block_given?
           if user
             if recipients
-              share = PageShare.new page, user,
+              share = Page::Share.new page, user,
                 access: access,
                 send_notice: inbox
               share.with recipients

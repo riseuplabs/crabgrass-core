@@ -80,7 +80,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert user_in_other_group.may?(:view, page)
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
 
-    share = PageShare.new(page, user, send_notice: true)
+    share = Page::Share.new(page, user, send_notice: true)
     share.with other_group
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
@@ -136,7 +136,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     group = groups(:animals)
     page = Page.create!(title: 'title', user: creator, share_with: 'animals', access: 'admin')
-    share = PageShare.new page, creator,
+    share = Page::Share.new page, creator,
       send_notice: true,
       send_message: "here's a page for you"
     share.with group
@@ -152,7 +152,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     additional_user = users(:kangaroo)
 
     page = Page.create!(title: 'title', user: creator, share_with: users, access: 'admin')
-    share = PageShare.new(page, creator, send_notice: true, send_message: 'hi')
+    share = Page::Share.new(page, creator, send_notice: true, send_message: 'hi')
 
     assert_difference 'PageNotice.count' do
       share.with additional_user
@@ -164,7 +164,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     creator = users(:blue)
     additional_user = users(:kangaroo)
     page = Page.create!(title: 'title', user: creator, access: 'admin')
-    share = PageShare.new(page, creator, send_notice: true, send_message: 'hi')
+    share = Page::Share.new(page, creator, send_notice: true, send_message: 'hi')
     share.with additional_user
     page.save!
 
@@ -177,7 +177,7 @@ class Page::SharingTest < ActiveSupport::TestCase
   def test_share_with_committee
     owner = users(:penguin)
     page = Page.create!(title: 'title', user: owner)
-    share = PageShare.new(page, owner)
+    share = Page::Share.new(page, owner)
     committee = groups(:cold)
     assert owner.member_of?(committee)
     share.with committee
