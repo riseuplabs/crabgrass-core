@@ -44,12 +44,16 @@ class ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   # fixtures :all
-  set_fixture_class castle_gates_keys: CastleGates::Key
-  set_fixture_class taggings: ActsAsTaggableOn::Tagging
-  set_fixture_class tags: ActsAsTaggableOn::Tag
-  set_fixture_class federatings: Group::Federating
-  set_fixture_class relationships: User::Relationship
-  set_fixture_class memberships: Group::Membership
+  set_fixture_class castle_gates_keys: CastleGates::Key,
+    federatings: Group::Federating,
+    geo_admin_codes: Geo::AdminCode,
+    geo_countries: Geo::Country,
+    geo_locations: Geo::Location,
+    geo_places: Geo::Place,
+    memberships: Group::Membership,
+    relationships: User::Relationship,
+    taggings: ActsAsTaggableOn::Tagging,
+    tags: ActsAsTaggableOn::Tag
 end
 
 require 'factory_girl'

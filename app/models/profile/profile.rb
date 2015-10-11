@@ -211,9 +211,10 @@ class Profile < ActiveRecord::Base
       geo_admin_code_id: params.delete('state_id'),
       geo_place_id: params.delete('city_id'),
     }
-    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
+    # prevent making blank geo_location objects
+    if Geo::Country.exists?(geo_location_options[:geo_country_id])
       if self.geo_location.nil?
-        params['geo_location'] = GeoLocation.new(geo_location_options)
+        params['geo_location'] = Geo::Location.new(geo_location_options)
       else
         ### do not create new records.
         self.geo_location.update_attributes(geo_location_options)
@@ -245,9 +246,7 @@ class Profile < ActiveRecord::Base
     self.geo_location.geo_admin_code_id.to_s
   end
   def geo_city_name
-    return nil if self.geo_location.nil? || self.geo_location.geo_place_id.nil?
-    geoplace = GeoPlace.find_by_id(self.geo_location.geo_place_id)
-    geoplace.name
+    geo_location.try.geo_place.name
   end
   def city_id
     return nil if self.geo_location.nil?

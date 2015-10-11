@@ -1,10 +1,11 @@
-class GeoPlace < ActiveRecord::Base
+class Geo::Place < ActiveRecord::Base
+  self.table_name = 'geo_places'
   validates_presence_of :geo_country_id, :name
-  belongs_to :geo_country
-  belongs_to :geo_admin_code
+  belongs_to :geo_country, class_name: 'Geo::Country'
+  belongs_to :geo_admin_code, class_name: 'Geo::AdminCode'
 
   def self.with_names_matching(name, country_id, params={})
-    geo_country = GeoCountry.find(country_id)
+    geo_country = Geo::Country.find(country_id)
     if params[:admin_code_id] =~ /\d+/
       geo_admin_code = geo_country.geo_admin_codes.find(params[:admin_code_id])
       admin_codes = [geo_admin_code]
