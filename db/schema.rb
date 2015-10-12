@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151012092859) do
+ActiveRecord::Schema.define(:version => 20151012135013) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -335,16 +335,6 @@ ActiveRecord::Schema.define(:version => 20151012092859) do
 
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
-
-  create_table "menu_items", :force => true do |t|
-    t.string   "title"
-    t.string   "link"
-    t.integer  "position"
-    t.integer  "group_id"
-    t.boolean  "default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
