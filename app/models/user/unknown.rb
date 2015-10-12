@@ -1,4 +1,4 @@
-class UnauthenticatedUser
+class User::Unknown
 
   def login
     :anonymous.t
@@ -64,6 +64,10 @@ class UnauthenticatedUser
   # authenticated users are real, we are not.
   def real?
     false
+  end
+
+  def unknown?
+    true
   end
 
   def time_zone

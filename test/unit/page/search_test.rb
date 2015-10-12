@@ -201,7 +201,7 @@ class Page::SearchTest < ActiveSupport::TestCase
 
   def dont_login
     @logged_in = false
-    @current_user = UnauthenticatedUser.new
+    @current_user = User::Unknown.new
   end
 
   #

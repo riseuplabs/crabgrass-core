@@ -33,7 +33,7 @@ module UserRecords
   end
 
   def visitor
-    UnauthenticatedUser.new
+    User::Unknown.new
   end
 
   def friend_of(other)

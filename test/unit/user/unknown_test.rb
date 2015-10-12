@@ -1,9 +1,9 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class UnauthenticatedUserTest < ActiveSupport::TestCase
+class User::UnknownTest < ActiveSupport::TestCase
 
   def setup
-    @user = UnauthenticatedUser.new
+    @user = User::Unknown.new
   end
 
   # User.may? checks for access through participations.

@@ -106,7 +106,7 @@ module Group::Users
   end
   def relationships_to(user)
     return [:stranger] unless user
-    return [:stranger] if user.is_a? UnauthenticatedUser
+    return [:stranger] if user.unknown?
 
     @relationships_to_user_cache ||= {}
     @relationships_to_user_cache[user.login] ||= get_relationships_to(user)

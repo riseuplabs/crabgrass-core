@@ -68,10 +68,9 @@ module User::Authenticated
     save(validate: false)
   end
 
-  # authenticated users are real, unathenticated are not
-  def real?
-    true
-  end
+  # authenticated users are real, unathenticated are unknown
+  def real?;    true; end
+  def unknown?; false; end
 
   # Update last_seen_at if have passed 5 minutes from the last time
   def seen!

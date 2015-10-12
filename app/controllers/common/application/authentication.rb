@@ -12,7 +12,7 @@ module Common::Application::Authentication
   def current_user
     @current_user ||= begin
       user = load_user(session[:user]) if session[:user]
-      user ||= UnauthenticatedUser.new
+      user ||= User::Unknown.new
       User.current = user
       user
     end
@@ -53,7 +53,7 @@ module Common::Application::Authentication
       # auth using http headers
       username, passwd = get_auth_data
       if username and passwd
-        self.current_user = User.authenticate(username, passwd) || UnauthenticatedUser.new
+        self.current_user = User.authenticate(username, passwd) || User::Unknown.new
       end
     end
     User.current = current_user

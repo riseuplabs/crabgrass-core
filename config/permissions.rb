@@ -28,7 +28,7 @@ CastleGates.define do
     :label => :public,
     :info => :public_description
 
-  holder_alias :public, :model => UnauthenticatedUser
+  holder_alias :public, :model => User::Unknown
 
   ##
   ## USER
