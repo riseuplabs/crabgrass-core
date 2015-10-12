@@ -18,7 +18,9 @@
 
 require 'password'
 
-class Code < ActiveRecord::Base
+class Page::AccessCode < ActiveRecord::Base
+  self.table_name = 'page_access_codes'
+
   belongs_to :user
   belongs_to :page
 
@@ -28,7 +30,7 @@ class Code < ActiveRecord::Base
   def set_unique_code
     begin
        self.code = Password.random(10)
-    end until Code.find_by_code(self.code).nil?
+    end until self.class.find_by_code(self.code).nil?
   end
 
   def set_expiry
@@ -36,7 +38,7 @@ class Code < ActiveRecord::Base
   end
 
   def self.cleanup_expired
-    Code.delete_all ['expires_at < ?', Time.now.utc]
+    delete_all ['expires_at < ?', Time.now.utc]
   end
 
   def days_left
