@@ -14,7 +14,7 @@
 #  updated whenever membership is created or destroyed. In cases of indirect
 #  membership (all_groups) the database is correctly updated but the in-memory
 #  object will need to be reloaded if you want the new data.
-module UserExtension::Groups
+module User::Groups
   def self.included(base)
     base.instance_eval do
 

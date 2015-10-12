@@ -5,7 +5,7 @@
 # "relationships" is the join table:
 #    user has many users through relationships
 #
-module UserExtension::Users
+module User::Users
 
   def self.included(base)
 

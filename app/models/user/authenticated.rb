@@ -18,28 +18,24 @@
 #  avatar_id                 :integer(11)
 #
 
-module UserExtension
-module AuthenticatedUser
-  #set_table_name 'users'
+module User::Authenticated
+  extend ActiveSupport::Concern
 
-  def self.included(base)
-    base.extend   ClassMethods
-    base.instance_eval do
-      has_secure_password
+  included do
+    has_secure_password
 
-      # the current site (set tmp on a per-request basis)
-      attr_accessor :current_site
+    # the current site (set tmp on a per-request basis)
+    attr_accessor :current_site
 
-      with_options unless: :ghost? do |alive|
-        alive.validates :login, presence: true,
-          length: { within: 3..40 },
-          format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
+    with_options unless: :ghost? do |alive|
+      alive.validates :login, presence: true,
+        length: { within: 3..40 },
+        format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
 
-        alive.validates :password, confirmation: true,
-          length: {minimum: 8, allow_blank: true}
+      alive.validates :password, confirmation: true,
+        length: {minimum: 8, allow_blank: true}
 
-        # uniqueness is validated elsewhere
-      end
+      # uniqueness is validated elsewhere
     end
   end
 
@@ -84,5 +80,4 @@ module AuthenticatedUser
     update_column :last_seen_at, now
   end
 
-end
 end

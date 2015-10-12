@@ -20,8 +20,7 @@
 # remove it as well.
 
 require 'digest/sha1'
-module UserExtension
-module LegacyPasswords
+module User::LegacyPasswords
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -93,5 +92,4 @@ module LegacyPasswords
     self.password_digest = nil
   end
 
-end
 end

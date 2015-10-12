@@ -5,7 +5,7 @@
 #   user has many chat_channels through chat_channels_users
 #   chat_channel has many users through chat_channels_users
 #
-module UserExtension::ChatChannels
+module User::ChatChannels
 
   ##
   ## ASSOCIATIONS

@@ -6,7 +6,7 @@
 #   user has many pages through user_participations
 #   page has many users through user_participations
 #
-module UserExtension::Pages
+module User::Pages
   include ActiveSupport::Benchmarkable
 
   ##

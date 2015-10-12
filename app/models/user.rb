@@ -4,14 +4,14 @@ class User < ActiveRecord::Base
   ## CORE EXTENSIONS
   ##
 
-  include UserExtension::Cache      # cached user data (should come first)
-  include UserExtension::Users      # user <--> user
-  include UserExtension::Groups     # user <--> groups
-  include UserExtension::Pages      # user <--> pages
-  include UserExtension::Tags       # user <--> tags
-  include UserExtension::ChatChannels # user <--> chat channels
-  include UserExtension::AuthenticatedUser
-  include UserExtension::LegacyPasswords
+  include User::Cache      # cached user data (should come first)
+  include User::Users      # user <--> user
+  include User::Groups     # user <--> groups
+  include User::Pages      # user <--> pages
+  include User::Tags       # user <--> tags
+  include User::ChatChannels # user <--> chat channels
+  include User::Authenticated
+  include User::LegacyPasswords
 
   ##
   ## VALIDATIONS

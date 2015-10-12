@@ -32,7 +32,7 @@ module Common::Application::Authentication
   # Returns true if the user is logged in.
   #
   def logged_in?
-    current_user.is_a?(UserExtension::AuthenticatedUser)
+    current_user.is_a?(User::Authenticated)
   end
 
   #
