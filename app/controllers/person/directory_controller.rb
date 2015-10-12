@@ -33,7 +33,7 @@ class Person::DirectoryController < ApplicationController
   end
 
   def finder
-    @user_finder ||= UserFinder.new(current_user, path)
+    @user_finder ||= User::Finder.new(current_user, path)
   end
 
   def default_path

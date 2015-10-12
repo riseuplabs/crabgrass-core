@@ -1,29 +1,29 @@
 require 'test_helper'
 
-class UserFinderTest < ActiveSupport::TestCase
+class User::FinderTest < ActiveSupport::TestCase
   fixtures :all
 
   def test_find_all_by_default
-    finder = UserFinder.new(users(:blue), 'search/a')
+    finder = User::Finder.new(users(:blue), 'search/a')
     assert_equal "a", finder.query_term
     assert_same_entities [users(:aaron)], finder.find
   end
 
   def test_no_list_of_all_users
-    finder = UserFinder.new(users(:blue), 'search')
+    finder = User::Finder.new(users(:blue), 'search')
     assert_nil finder.query_term
     assert_same_entities [], finder.find
   end
 
   def test_find_contacts
-    finder = UserFinder.new(users(:blue), 'contacts/')
+    finder = User::Finder.new(users(:blue), 'contacts/')
     assert_nil finder.query_term
     visible_friends = users(:blue).friends.with_access(users(:blue) => :view)
     assert_same_entities visible_friends, finder.find
   end
 
   def test_find_peers
-    finder = UserFinder.new(users(:blue), 'peers/')
+    finder = User::Finder.new(users(:blue), 'peers/')
     assert_nil finder.query_term
     visible_peers = users(:blue).peers.with_access(users(:blue) => :view)
     assert_same_entities visible_peers, finder.find

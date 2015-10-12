@@ -1,4 +1,4 @@
-class UserFinder
+class User::Finder
 
   # There can only be one scope per path.
   # The keys are the path parts that identify the scope
@@ -6,7 +6,7 @@ class UserFinder
   PATH_SCOPES = {contacts: :friends, peers: :peers}
 
   # queries take a parameter and there could be multiple in a single path
-  # These will be called as methods in the UserFinder.
+  # These will be called as methods in the User::Finder.
   QUERIES = ['search']
 
   def initialize(user, path)
@@ -63,7 +63,7 @@ class UserFinder
   def find_without_search_term
     if scope_method.present?
       scope.with_access(access)
-    else 
+    else
       # do not list all users
       User.none
     end
