@@ -1,13 +1,10 @@
-module PageExtension::Tracking
-  def self.included(base)
-    base.send(:include, InstanceMethods)
-    base.instance_eval do
-      has_many :dailies, class_name: 'Tracking::Daily'
-      has_many :hourlies, class_name: 'Tracking::Hourly'
-    end
-  end
+module Page::Stats
+  extend ActiveSupport::Concern
 
-  module InstanceMethods
+  included do
+    has_many :dailies, class_name: 'Tracking::Daily'
+    has_many :hourlies, class_name: 'Tracking::Hourly'
+  end
 
     # returns an array of view counts, [daily, weekly, monthly, all time]
     def views_stats
@@ -38,5 +35,4 @@ module PageExtension::Tracking
     #def stats_per_hour
     #  self.hourlies
     #end
-  end
 end

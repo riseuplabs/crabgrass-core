@@ -20,7 +20,7 @@
 #   asset has many pages through showings (gallery tool)
 #
 #
-module PageExtension::Assets
+module Page::Assets
 
   def self.included(base)
     base.instance_eval do

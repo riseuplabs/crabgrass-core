@@ -1,14 +1,14 @@
 =begin
 
-Some notes on PageTerms
+Some notes on Page::Terms
 -----------------------
 
-See PageExtension::Index for most the code dealing with PageTerms.
+See Page::Index for most the code dealing with Page::Terms.
 
-PageTerms holds searching information for a page. Every Page has exactly one
-PageTerms object and vice-versa.
+Page::Terms holds searching information for a page. Every Page has exactly one
+Page::Terms object and vice-versa.
 
-PageTerms has three uses:
+Page::Terms has three uses:
 
 (1) Sphinx full-text searching
 
@@ -19,7 +19,7 @@ this stuff in one table than trying to do complex queries on a sphinx reindex.
 
 (2) Page permissions
 
-PageTerms is also used to filter by access restrictions in non-sphinx page
+Page::Terms is also used to filter by access restrictions in non-sphinx page
 queries. We could just use sphinx for all queries, but the problem with this is
 that there are many situations in which the sphinx index could be out of date.
 
@@ -39,7 +39,7 @@ in a normal page query.
 
 =end
 
-class PageTerms < ActiveRecord::Base
+class Page::Terms < ActiveRecord::Base
   include ThinkingSphinx::Scopes
 
   FIELD_WEIGHTS = {

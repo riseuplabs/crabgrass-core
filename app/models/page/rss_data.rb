@@ -1,6 +1,6 @@
 # this is included by selected page types which wish to have custom RSS metadata
 # appear in feeds.
-module PageExtension::RssData
+module Page::RssData
   def self.included(base)
     # this uses a closure and this is slightly magical, but it shows us that
     # ruby is, as they say, tres dynamique.

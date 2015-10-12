@@ -7,7 +7,7 @@
 
 common: &common
   indexed_models:
-    - PageTerms
+    - Page::Terms
 
 development:
   <<: *common

@@ -4,7 +4,7 @@
 
 =end
 
-module PageExtension::Users
+module Page::Users
 
   def self.included(base)
     base.instance_eval do

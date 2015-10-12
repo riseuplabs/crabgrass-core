@@ -36,7 +36,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     page = FactoryGirl.create :page, created_by: @owner
     login_as @owner
     admin = {access: 'admin'}
-    assert_difference "PageHistory.count", 2 do
+    assert_difference "Page::History.count", 2 do
       xhr :post, :update, share_button: true,
         recipients: {blue: admin, animals: admin, contributors: '0'},
         page_id: page.id,
@@ -49,7 +49,7 @@ class Page::SharesControllerTest < ActionController::TestCase
     page = FactoryGirl.create :page, created_by: @owner
     login_as @owner
     admin = {access: 'admin'}
-    assert_difference "PageHistory.count" do
+    assert_difference "Page::History.count" do
       xhr :post, :update, share_button: true,
         recipients: {animals: admin},
         page_id: page.id,
@@ -57,14 +57,14 @@ class Page::SharesControllerTest < ActionController::TestCase
         format: :js
     end
     assert_equal "page_history_granted_group_full_access",
-      PageHistory.last.description_key
+      Page::History.last.description_key
   end
 
   def test_share_page_with_user
     page = FactoryGirl.create :page, created_by: @owner
     login_as @owner
     admin = {access: 'admin'}
-    assert_difference "PageHistory.count" do
+    assert_difference "Page::History.count" do
       xhr :post, :update, share_button: true,
         recipients: {blue: admin},
         page_id: page.id,
@@ -72,6 +72,6 @@ class Page::SharesControllerTest < ActionController::TestCase
         format: :js
     end
     assert_equal "page_history_granted_user_full_access",
-      PageHistory.last.description_key
+      Page::History.last.description_key
   end
 end

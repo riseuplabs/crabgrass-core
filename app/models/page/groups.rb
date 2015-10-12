@@ -1,7 +1,7 @@
 #
 # Page relationship to Groups
 #
-module PageExtension::Groups
+module Page::Groups
 
   def self.included(base)
     base.extend(ClassMethods)
@@ -145,13 +145,13 @@ module PageExtension::Groups
       current_user = options[:current_user]
       if current_user and current_user.may?(:edit, group)
         # current_user can see all the group's pages
-        PageTerms.access_filter_for(group)
+        Page::Terms.access_filter_for(group)
       elsif current_user
         # current_user can see public pages OR pages it has access to.
-        "(%s) (%s)" % [PageTerms.access_filter_for(group, :public), PageTerms.access_filter_for(group, current_user)]
+        "(%s) (%s)" % [Page::Terms.access_filter_for(group, :public), Page::Terms.access_filter_for(group, current_user)]
       else
         # only show public pages
-        PageTerms.access_filter_for(group, :public)
+        Page::Terms.access_filter_for(group, :public)
       end
     end
 

@@ -1,9 +1,5 @@
-module PageExtension::Starring
-  def self.included(base)
-    base.extend ClassMethods
-    base.send(:include, InstanceMethods)
-  end
-
+module Page::Starring
+  extend ActiveSupport::Concern
 
   # Helps with getting and setting static content
   module ClassMethods
@@ -32,17 +28,15 @@ module PageExtension::Starring
 
   end
 
-  module InstanceMethods
 
-    # updates the star count for this page.
-    # called in after_save of user_participation when :star is changed.
-    def update_star_count
-      new_count = self.user_participations.count(:all, conditions: {star: true})
-      if new_count != self.stars_count
-        self.update_attribute(:stars_count, new_count)
-      end
+  # updates the star count for this page.
+  # called in after_save of user_participation when :star is changed.
+  def update_star_count
+    new_count = self.user_participations.count(:all, conditions: {star: true})
+    if new_count != self.stars_count
+      self.update_attribute(:stars_count, new_count)
     end
-
   end
 
 end
+

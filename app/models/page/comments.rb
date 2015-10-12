@@ -6,7 +6,7 @@
 #
 # TODO: give page a discussion_id instead of putting the page_id in discussions table.
 #
-module PageExtension::Comments
+module Page::Comments
 
   def self.included(base)
     base.instance_eval do

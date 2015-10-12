@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class PaginationTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :memberships, :relationships, :pages, :sites, :page_terms
+  fixtures :users, :groups, :memberships, :relationships, :pages, :sites, 'page/terms'
 
   def test_tracking_most_views_in_days_pagination
     user = users(:blue)

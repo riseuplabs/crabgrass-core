@@ -48,7 +48,7 @@ class Page::PostsControllerTest < ActionController::TestCase
   def assert_history_tracked(subclass_string, item = nil)
     assert history = @page.page_histories.last, "Missing history record"
     assert_equal @user, history.user
-    assert_equal "PageHistory::#{subclass_string}", history.class.name
+    assert_equal "Page::History::#{subclass_string}", history.class.name
     assert_equal item, history.item if item.present?
   end
 

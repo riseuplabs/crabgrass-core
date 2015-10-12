@@ -1,4 +1,4 @@
-module PageExtension::Create
+module Page::Create
   def self.included(base)
     base.extend(ClassMethods)
     #base.instance_eval do
@@ -85,6 +85,6 @@ module PageExtension::Create
 
 
   end # ClassMethods
-end # PageExtension::Create
+end # Page::Create
 
 

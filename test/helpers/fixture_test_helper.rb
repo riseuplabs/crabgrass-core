@@ -5,6 +5,6 @@ module FixtureTestHelper
   def reset_page_terms_from_fixtures
     fixture_path = ActiveSupport::TestCase.fixture_path
     Fixtures.reset_cache
-    Fixtures.create_fixtures(fixture_path, ["page_terms"])
+    Fixtures.create_fixtures(fixture_path, ["page/terms"])
   end
 end

@@ -1,5 +1,5 @@
 class AssetPage < Page
-  include PageExtension::RssData
+  include Page::RssData
 
   before_save :set_cover
 

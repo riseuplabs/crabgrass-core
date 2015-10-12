@@ -20,7 +20,7 @@ TODO: clean this up using:
 
 =end
 
-module PageExtension::Subclass
+module Page::Subclass
 
   def self.included(base)
     base.extend(ClassMethods)

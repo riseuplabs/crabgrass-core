@@ -1,5 +1,5 @@
 class Gallery < Page
-  include PageExtension::RssData
+  include Page::RssData
 
   # A gallery is a collection of images, being presented to the user by a cover
   # page, an overview or a slideshow.

@@ -11,7 +11,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_star
-    assert_difference 'PageHistory::AddStar.count' do
+    assert_difference 'Page::History::AddStar.count' do
       xhr :post, :update, page_id: @page, id: @upart, star: true
     end
     assert @upart.reload.star
@@ -28,7 +28,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_watch
-    assert_difference 'PageHistory::StartWatching.count' do
+    assert_difference 'Page::History::StartWatching.count' do
       xhr :post, :update, page_id: @page, id: @upart, watch: true
     end
     assert @upart.reload.watch
@@ -37,7 +37,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   def test_prevent_increasing_access
     @upart.access = :view
     @upart.save
-    assert_no_difference 'PageHistory.count' do
+    assert_no_difference 'Page::History.count' do
       assert_permission_denied do
         xhr :post, :update, page_id: @page, id: @upart, access: :admin
       end
@@ -49,7 +49,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     other_user = FactoryGirl.create :user
     other_upart = @page.add(other_user, access: :view)
     other_upart.save
-    assert_difference 'PageHistory.count' do
+    assert_difference 'Page::History.count' do
       xhr :post, :update, page_id: @page, id: other_upart, access: :remove
       assert_response :success
     end
@@ -59,7 +59,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     group = FactoryGirl.create :group
     gpart = @page.add(group, access: :view)
     gpart.save
-    assert_difference 'PageHistory.count' do
+    assert_difference 'Page::History.count' do
       xhr :post, :update, page_id: @page, id: gpart, group: true, access: :remove
     end
   end

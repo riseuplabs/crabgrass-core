@@ -53,7 +53,7 @@ end
 
 
 #
-# PageExtension::Linking -- All things related to pages linking to other pages.
+# Page::Linking -- All things related to pages linking to other pages.
 #
 #
 # ASSOCIATIONS
@@ -115,7 +115,7 @@ end
 # parent.child_ids
 #
 
-module PageExtension::Linking
+module Page::Linking
 
   def self.included(base)
     base.instance_eval do

@@ -1,4 +1,6 @@
 class Page::History < ActiveRecord::Base
+  self.table_name = 'page_histories'
+
   belongs_to :user
   belongs_to :page
   belongs_to :item, polymorphic: true
@@ -76,7 +78,7 @@ class Page::History < ActiveRecord::Base
 end
 
 # Factory class for the different page updates
-class PageHistory::Update < PageHistory
+class Page::History::Update < Page::History
   def self.pick_class(attrs = {})
     class_for_update(attrs[:page])
   end
@@ -84,15 +86,15 @@ class PageHistory::Update < PageHistory
   protected
 
   def self.class_for_update(page)
-    return PageHistory::MakePrivate if page.marked_as_private?
-    return PageHistory::MakePublic if page.marked_as_public?
-    # return PageHistory::ChangeOwner if page.owner_id_changed?
+    return Page::History::MakePrivate if page.marked_as_private?
+    return Page::History::MakePublic if page.marked_as_public?
+    # return Page::History::ChangeOwner if page.owner_id_changed?
   end
 end
-class PageHistory::MakePublic     < PageHistory; end
-class PageHistory::MakePrivate    < PageHistory; end
+class Page::History::MakePublic     < Page::History; end
+class Page::History::MakePrivate    < Page::History; end
 
-class PageHistory::PageCreated < PageHistory
+class Page::History::PageCreated < Page::History
   after_save :page_updated_at
 
   def description_key
@@ -100,7 +102,7 @@ class PageHistory::PageCreated < PageHistory
   end
 end
 
-class PageHistory::ChangeTitle < PageHistory
+class Page::History::ChangeTitle < Page::History
   before_save :add_details
   after_save :page_updated_at
 
@@ -120,7 +122,7 @@ class PageHistory::ChangeTitle < PageHistory
   end
 end
 
-class PageHistory::Deleted < PageHistory
+class Page::History::Deleted < Page::History
   after_save :page_updated_at
 
   def description_key
@@ -128,7 +130,7 @@ class PageHistory::Deleted < PageHistory
   end
 end
 
-class PageHistory::UpdatedContent < PageHistory
+class Page::History::UpdatedContent < Page::History
   after_save :page_updated_at
 end
 
@@ -139,7 +141,7 @@ end
 #    be tracked.
 # Changes will be a ActiveModel::Dirty changeset. You can use the activated
 # and deactivated helper methods if you only need to look at the boolean value.
-class PageHistory::UpdateParticipation < PageHistory
+class Page::History::UpdateParticipation < Page::History
   def self.pick_class(attrs = {})
     class_for_update(attrs[:participation])
   end
@@ -163,25 +165,25 @@ class PageHistory::UpdateParticipation < PageHistory
   end
 end
 
-class PageHistory::AddStar < PageHistory::UpdateParticipation
+class Page::History::AddStar < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     activated(*changes[:star])
   end
 end
 
-class PageHistory::RemoveStar < PageHistory::UpdateParticipation
+class Page::History::RemoveStar < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     deactivated(*changes[:star])
   end
 end
 
-class PageHistory::StartWatching  < PageHistory::UpdateParticipation
+class Page::History::StartWatching  < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     activated(*changes[:watch])
   end
 end
 
-class PageHistory::StopWatching  < PageHistory::UpdateParticipation
+class Page::History::StopWatching  < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     deactivated(*changes[:watch])
   end
@@ -189,7 +191,7 @@ end
 
 # Module for the methods shared between
 # GrantGroupAccess and GrantUserAccess.
-module PageHistory::GrantAccess
+module Page::History::GrantAccess
   extend ActiveSupport::Concern
 
   def participation=(part)
@@ -222,7 +224,7 @@ module PageHistory::GrantAccess
   end
 end
 
-class PageHistory::GrantGroupAccess < PageHistory::UpdateParticipation
+class Page::History::GrantGroupAccess < Page::History::UpdateParticipation
   include GrantAccess
 
   def self.tracks(changes, part)
@@ -247,13 +249,13 @@ end
 #
 # DEPRECATED:
 #
-# please use PageHistory::GrantGroupAccess and hand in the participation
+# please use Page::History::GrantGroupAccess and hand in the participation
 # to determine the level of access.
-class PageHistory::GrantGroupFullAccess < PageHistory::GrantGroupAccess; end
-class PageHistory::GrantGroupWriteAccess < PageHistory::GrantGroupAccess; end
-class PageHistory::GrantGroupReadAccess < PageHistory::GrantGroupAccess; end
+class Page::History::GrantGroupFullAccess < Page::History::GrantGroupAccess; end
+class Page::History::GrantGroupWriteAccess < Page::History::GrantGroupAccess; end
+class Page::History::GrantGroupReadAccess < Page::History::GrantGroupAccess; end
 
-class PageHistory::RevokedGroupAccess < PageHistory::UpdateParticipation
+class Page::History::RevokedGroupAccess < Page::History::UpdateParticipation
   after_save :page_updated_at
 
   def self.tracks(changes, part)
@@ -270,7 +272,7 @@ class PageHistory::RevokedGroupAccess < PageHistory::UpdateParticipation
   validates_presence_of :item_id
 end
 
-class PageHistory::GrantUserAccess < PageHistory::UpdateParticipation
+class Page::History::GrantUserAccess < Page::History::UpdateParticipation
   include GrantAccess
 
   def self.tracks(changes, part)
@@ -295,13 +297,13 @@ end
 #
 # DEPRECATED:
 #
-# please use PageHistory::GrantUserAccess and hand in the participation
+# please use Page::History::GrantUserAccess and hand in the participation
 # to determine the level of access.
-class PageHistory::GrantUserFullAccess < PageHistory::GrantUserAccess; end
-class PageHistory::GrantUserWriteAccess < PageHistory::GrantUserAccess; end
-class PageHistory::GrantUserReadAccess < PageHistory::GrantUserAccess; end
+class Page::History::GrantUserFullAccess < Page::History::GrantUserAccess; end
+class Page::History::GrantUserWriteAccess < Page::History::GrantUserAccess; end
+class Page::History::GrantUserReadAccess < Page::History::GrantUserAccess; end
 
-class PageHistory::RevokedUserAccess < PageHistory::UpdateParticipation
+class Page::History::RevokedUserAccess < Page::History::UpdateParticipation
   def self.tracks(changes, part)
     # destroyed? does not work here because we destroy the participation via
     # page.users
@@ -318,7 +320,7 @@ class PageHistory::RevokedUserAccess < PageHistory::UpdateParticipation
   validates_presence_of :item_id
 end
 
-class PageHistory::ForComment < PageHistory
+class Page::History::ForComment < Page::History
   after_save :page_updated_at
 
   validates_format_of :item_type, with: /Post/
@@ -331,6 +333,6 @@ class PageHistory::ForComment < PageHistory
   end
 end
 
-class PageHistory::AddComment < PageHistory::ForComment ; end
-class PageHistory::UpdateComment < PageHistory::ForComment ; end
-class PageHistory::DestroyComment < PageHistory::ForComment ; end
+class Page::History::AddComment < Page::History::ForComment ; end
+class Page::History::UpdateComment < Page::History::ForComment ; end
+class Page::History::DestroyComment < Page::History::ForComment ; end
