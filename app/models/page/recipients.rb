@@ -19,7 +19,7 @@
 # In the hash form options can be specified for each recipient.
 # If the options are "0" the recipient is skipped. This is useful for checkboxes.
 
-class Recipients
+class Page::Recipients
 
   attr_reader :options, :page, :param, :users, :groups, :emails, :specials, :errors
 

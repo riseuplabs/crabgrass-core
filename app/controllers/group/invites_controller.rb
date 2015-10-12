@@ -20,7 +20,7 @@ class Group::InvitesController < Group::BaseController
   # RequestToJoinUsViaEmail
   #
   def create
-    recipients = Recipients.new(params[:recipients])
+    recipients = Page::Recipients.new(params[:recipients])
     users  = recipients.users
     groups = @group.network? ? recipients.groups : []
     emails = recipients.emails

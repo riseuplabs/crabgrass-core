@@ -63,7 +63,7 @@ class Page::Share
 
   def build_recipients(recipient_params)
     Array(recipient_params).map! do |param|
-      Recipients.new(param, page)
+      Page::Recipients.new(param, page)
     end
   end
 
