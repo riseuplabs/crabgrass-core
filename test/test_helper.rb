@@ -53,7 +53,8 @@ class ActiveSupport::TestCase
     memberships: Group::Membership,
     relationships: User::Relationship,
     taggings: ActsAsTaggableOn::Tagging,
-    tags: ActsAsTaggableOn::Tag
+    tags: ActsAsTaggableOn::Tag,
+    tokens: User::Token
 end
 
 require 'factory_girl'

@@ -1,4 +1,6 @@
-class Token < ActiveRecord::Base
+class User::Token < ActiveRecord::Base
+  self.table_name = 'tokens'
+
   belongs_to :user
 
   @@validity_time = 1.day
@@ -23,7 +25,7 @@ class Token < ActiveRecord::Base
 
   # Delete all expired tokens
   def self.destroy_expired
-    Token.expired.delete_all
+    expired.delete_all
   end
 
   # Return true if token has expired
@@ -36,7 +38,7 @@ class Token < ActiveRecord::Base
 
   protected
   def generate_value
-    self.value = Token.generate_token_value
+    self.value = self.class.generate_token_value
   end
 
   private

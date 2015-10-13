@@ -76,24 +76,24 @@ class AccountsControllerTest < ActionController::TestCase
     get :reset_password
     assert_response :success
 
-    #old_count = Token.count
-    assert_difference 'Token.count' do
+    #old_count = User::Token.count
+    assert_difference 'User::Token.count' do
       post :reset_password, email: users(:quentin).email
       assert_response :success
       #assert_message /email has been sent.*reset.*password/i
       # doesn't work becuse flash disappears with render_alert
       # could make sure we get the right message with new helper function
     end
-    #assert_equal old_count + 1, Token.count
+    #assert_equal old_count + 1, User::Token.count
 
-    token = Token.find(:last)
+    token = User::Token.find(:last)
     assert_equal "recovery", token.action
     assert_equal users(:quentin).id, token.user_id
 
     get :reset_password, token: token.value
     assert_response :success
 
-    assert_difference 'Token.count', -1 do
+    assert_difference 'User::Token.count', -1 do
       post :reset_password, token: token.value, new_password: "abcdefgh", password_confirmation: "abcdefgh"
       assert_response :redirect # test for success message
 

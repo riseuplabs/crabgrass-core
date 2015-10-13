@@ -119,7 +119,7 @@ class AccountsController < ApplicationController
 
     user = User.find_by_email params[:email]
     if user
-      token = Token.to_recover.create(user: user)
+      token = User::Token.to_recover.create(user: user)
       Mailer.forgot_password(token, mailer_options).deliver
     end
 
@@ -153,7 +153,7 @@ class AccountsController < ApplicationController
   # confirms that the token is valid, returns false otherwise.
   #
   def confirm_token
-    @token = Token.to_recover.active.find_by_param(params[:token])
+    @token = User::Token.to_recover.active.find_by_param(params[:token])
     if @token.present?
       @user = @token.user
     else
