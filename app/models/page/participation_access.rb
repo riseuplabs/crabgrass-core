@@ -1,4 +1,4 @@
-module Common::ParticipationAccess
+module Page::ParticipationAccess
 
   def access_sym
     ACCESS_TO_SYM[self.access]
