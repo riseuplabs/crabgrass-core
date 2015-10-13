@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
 
 class Wiki::DiffsControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :user_participations, :wikis, :groups
+  fixtures :pages, :users, 'user/participations', :wikis, :groups
 
   def test_diff
     login_as :orange

@@ -46,10 +46,6 @@ class ActiveSupport::TestCase
   # fixtures :all
   set_fixture_class castle_gates_keys: CastleGates::Key,
     federatings: Group::Federating,
-    geo_admin_codes: Geo::AdminCode,
-    geo_countries: Geo::Country,
-    geo_locations: Geo::Location,
-    geo_places: Geo::Place,
     memberships: Group::Membership,
     relationships: User::Relationship,
     taggings: ActsAsTaggableOn::Tagging,

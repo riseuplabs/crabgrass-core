@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Wiki::VersionsControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :user_participations, :wikis, :groups
+  fixtures :pages, :users, 'user/participations', :wikis, :groups
 
   def setup
     Crabgrass::Wiki::HTMLDiff.log_to_stdout = false # set to true for debugging

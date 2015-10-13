@@ -3,7 +3,7 @@ require 'test_helper'
 class Wiki::SectionsControllerTest < ActionController::TestCase
   tests Wiki::WikisController
 
-  fixtures :pages, :users, :user_participations, :wikis
+  fixtures :pages, :users, 'user/participations', :wikis
 
   def test_edit
     login_as :blue

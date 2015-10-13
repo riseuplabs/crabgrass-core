@@ -2,7 +2,7 @@ require 'test_helper'
 
 class User::ParticipationTest < ActiveSupport::TestCase
 
-  fixtures :groups, :users, :pages, :user_participations
+  fixtures :groups, :users, :pages, 'user/participations'
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]

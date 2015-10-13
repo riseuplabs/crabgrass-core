@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class Me::PagesControllerTest < ActionController::TestCase
-  fixtures :users, :pages, :user_participations, :page_terms
+  fixtures :users, :pages, 'user/participations', 'page/terms'
 
   def test_get_index_view
     login_as users(:blue)
