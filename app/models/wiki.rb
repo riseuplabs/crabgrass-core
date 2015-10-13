@@ -23,9 +23,9 @@
 # 3. wiki should never get saved with body/body products mismatch
 # 4. loaded wiki should see only the latest body products, if body was updated from outside
 class Wiki < ActiveRecord::Base
-  include WikiExtension::Locking
-  include WikiExtension::Sections
-  include WikiExtension::Versioning
+  include Wiki::Locking
+  include Wiki::Sections
+  include Wiki::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
   has_one :page, as: :data
@@ -141,7 +141,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def structure
-    @structure ||= WikiExtension::WikiStructure.new(raw_structure, body.to_s)
+    @structure ||= Wiki::Structure.new(raw_structure, body.to_s)
   end
 
   def edit_sections?

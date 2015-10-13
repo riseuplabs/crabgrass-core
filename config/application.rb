@@ -66,7 +66,7 @@ module Crabgrass
     # add our custom error classes
     config.action_dispatch.rescue_responses.merge!(
       'ErrorNotFound' => :not_found,
-      'WikiExtension::Sections::SectionNotFoundError' => :not_found,
+      'Wiki::Sections::SectionNotFoundError' => :not_found,
       'PermissionDenied' => :forbidden,
       'AuthenticationRequired' => :unauthorized
     )

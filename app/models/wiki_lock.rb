@@ -6,7 +6,7 @@
 # Note: WikiLock has no concept of section hierarchy!
 # this means that if :document is locked for user 'blue'
 # a subsection of :document will appear open to a different user
-# Always use WikiExtension::Locking methods for manipulating wiki locks
+# Always use Wiki::Locking methods for manipulating wiki locks
 # since those methods take section hierarchy into account
 class WikiLock < ActiveRecord::Base
   belongs_to :wiki

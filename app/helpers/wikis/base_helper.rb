@@ -106,7 +106,7 @@ module Wikis::BaseHelper
     if @wiki && !@wiki.section_open_for?(:document, current_user)
       other_user = @wiki.locker_of(:document)
       section_they_have_locked = @wiki.section_edited_by(other_user)
-      msg = WikiExtension::Locking::SectionLockedError.new(section_they_have_locked, other_user).to_s
+      msg = Wiki::Locking::SectionLockedError.new(section_they_have_locked, other_user).to_s
       content_tag(:div, msg, class: "alert alert-info")
     end
   end

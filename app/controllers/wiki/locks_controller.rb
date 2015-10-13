@@ -22,7 +22,7 @@ class Wiki::LocksController < Wiki::BaseController
   def destroy
     @wiki.release_my_lock!(@section, current_user)
     head :accepted
-  rescue WikiExtension::Sections::SectionNotFoundError
+  rescue Wiki::Sections::SectionNotFoundError
     head :not_found
   end
 
