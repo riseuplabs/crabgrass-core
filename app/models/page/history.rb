@@ -1,6 +1,4 @@
 class Page::History < ActiveRecord::Base
-  self.table_name = 'page_histories'
-
   belongs_to :user
   belongs_to :page
   belongs_to :item, polymorphic: true
