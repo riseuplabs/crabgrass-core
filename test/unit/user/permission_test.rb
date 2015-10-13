@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class UserPermissionTest < ActiveSupport::TestCase
+class User::PermissionTest < ActiveSupport::TestCase
 
   def setup
     @me = FactoryGirl.create(:user)

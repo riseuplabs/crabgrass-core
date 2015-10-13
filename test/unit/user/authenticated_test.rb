@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class AuthenticatedUserTest < ActiveSupport::TestCase
+class User::AuthenticatedTest < ActiveSupport::TestCase
 
   fixtures :users
 

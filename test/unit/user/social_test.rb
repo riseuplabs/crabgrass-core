@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class SocialUserTest < ActiveSupport::TestCase
+class User::SocialTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :pages, :castle_gates_keys
 

@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 
-class MembersTest < ActiveSupport::TestCase
+class Group::MembersTest < ActiveSupport::TestCase
   fixtures :groups, :users, :memberships, :castle_gates_keys
 
   # this is used when sharing with a group to only notify

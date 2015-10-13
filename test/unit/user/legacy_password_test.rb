@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 require 'digest/sha1'
 
 # has_secure_password is fairly simple but we also need to support
@@ -6,7 +6,7 @@ require 'digest/sha1'
 # We wrap them in a bcrypt hash to make them more robust.
 # This test is for all of that.
 
-class LegacyPasswordTest < ActiveSupport::TestCase
+class User::LegacyPasswordTest < ActiveSupport::TestCase
 
   def test_old_password_encryption
     old_password = 'my dear old password'
