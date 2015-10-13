@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   # This way you can modify the ghost without touching the original user.
   #
   def ghostify!
-    update_attribute :type, 'UserGhost'
+    update_attribute :type, 'Ghost'
     User.find(self.id)
   end
 

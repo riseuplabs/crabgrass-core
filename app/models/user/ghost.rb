@@ -1,4 +1,4 @@
-class UserGhost < User
+class User::Ghost < User
 
   def login
     read_attribute(:login).presence || 'none'

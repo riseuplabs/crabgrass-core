@@ -25,7 +25,6 @@ class Person::HomeControllerTest < ActionController::TestCase
     assert_not_found do
       get :show, person_id: user.login
     end
-    user.destroy
   end
 
   def test_missing_user
@@ -42,7 +41,6 @@ class Person::HomeControllerTest < ActionController::TestCase
     get :show, person_id: user.login
     assert_response :success
     assert_equal user, assigns[:user]
-    user.destroy
   end
 
 end

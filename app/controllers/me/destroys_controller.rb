@@ -17,7 +17,7 @@ class Me::DestroysController < Me::BaseController
 
   protected
 
-  # fetch user as a UserGhost
+  # fetch user as a User::Ghost
   def fetch_user
     if action?(:update)
       @user = current_user.ghostify!
