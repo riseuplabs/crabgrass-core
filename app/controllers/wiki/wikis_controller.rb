@@ -35,7 +35,7 @@ class Wiki::WikisController < Wiki::BaseController
   # in order to lock the section.
   #
   def edit
-    WikiLock.transaction do
+    Wiki::Lock.transaction do
       @wiki.lock!(@section, current_user)
     end
     render template: "wiki/wikis/edit"
@@ -83,7 +83,7 @@ class Wiki::WikisController < Wiki::BaseController
   end
 
   def update_wiki
-    WikiLock.transaction do
+    Wiki::Lock.transaction do
       @wiki.break_lock!(@section) if params[:force_save]
       # disable version checked if force save
       version = params[:force_save] ? nil : params[:wiki][:version]

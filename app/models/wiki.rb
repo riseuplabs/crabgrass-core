@@ -34,7 +34,7 @@ class Wiki < ActiveRecord::Base
   attr_accessor :private # marks private group wikis during creation
   attr_accessor :last_seen_at
 
-  has_one :section_locks, class_name: "WikiLock", dependent: :destroy
+  has_one :section_locks, class_name: "Wiki::Lock", dependent: :destroy
 
   serialize :raw_structure, Hash
 

@@ -1,14 +1,16 @@
 
-# WikiLock objects are protected by optimistic locking
-# this means that if two users load the same WikiLock
+# Wiki::Lock objects are protected by optimistic locking
+# this means that if two users load the same Wiki::Lock
 # the first one will be able to save it, the second one will get a StaleObject exception on save
 
-# Note: WikiLock has no concept of section hierarchy!
+# Note: Wiki::Lock has no concept of section hierarchy!
 # this means that if :document is locked for user 'blue'
 # a subsection of :document will appear open to a different user
 # Always use Wiki::Locking methods for manipulating wiki locks
 # since those methods take section hierarchy into account
-class WikiLock < ActiveRecord::Base
+class Wiki::Lock < ActiveRecord::Base
+  self.table_name = 'wiki_locks'
+
   belongs_to :wiki
 
   validates_presence_of :wiki
@@ -76,7 +78,7 @@ class WikiLock < ActiveRecord::Base
   end
 
   protected
-  # this should be called every time WikiLocks is loaded from db
+  # this should be called every time Wiki::Lock is loaded from db
   # so that we may never see any expired locks
   def update_expired_locks!
     current_time = Time.now.utc
