@@ -81,15 +81,9 @@ class WikiLock < ActiveRecord::Base
   def update_expired_locks!
     current_time = Time.now.utc
 
-    updated_locks = locks.reject do |section, lock|
+    self.locks = locks.reject do |section, lock|
       # reject if past due and time is used OR if the section doesn't exist
       (lock[:expires_at] and lock[:expires_at] < current_time) or !all_sections.include?(section)
-    end
-
-    # save locks if something changed
-    if updated_locks != locks
-      update_attributes!({locks: updated_locks})
-      self.reload
     end
   end
 
