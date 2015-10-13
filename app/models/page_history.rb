@@ -1,4 +1,4 @@
-class PageHistory < ActiveRecord::Base
+class Page::History < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
   belongs_to :item, polymorphic: true

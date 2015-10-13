@@ -9,8 +9,6 @@
 # Always use Wiki::Locking methods for manipulating wiki locks
 # since those methods take section hierarchy into account
 class Wiki::Lock < ActiveRecord::Base
-  self.table_name = 'wiki_locks'
-
   belongs_to :wiki
 
   validates_presence_of :wiki
