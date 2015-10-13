@@ -27,7 +27,8 @@
 #  end
 #
 
-class UserSetting < ActiveRecord::Base
+class User::Setting < ActiveRecord::Base
+  self.table_name = 'user_settings'
 
   belongs_to :user
 
