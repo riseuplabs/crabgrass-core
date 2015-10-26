@@ -45,9 +45,10 @@ class Pages::AssetsControllerTest < ActionController::TestCase
     @page.save!
     login_as :red
     assert_no_difference '@page.assets.count' do
-      post :create, page_id: @page.id,
-        asset: {uploaded_data: upload_data('photo.jpg')}
-      assert_permission_denied
+      assert_permission_denied do
+        post :create, page_id: @page.id,
+          asset: {uploaded_data: upload_data('photo.jpg')}
+      end
     end
   end
 

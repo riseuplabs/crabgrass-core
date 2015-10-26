@@ -12,9 +12,8 @@ module FunctionalTestHelper
     assert message_text(errors).grep("Permission Denied")
   end
 
-  def assert_login_required
-    assert_response :redirect
-    assert_redirected_to root_path(redirect: @request.path)
+  def assert_login_required(&block)
+    assert_raises AuthenticationRequired, &block
   end
 
   NOT_FOUND_ERRORS = [

@@ -7,9 +7,9 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
   end
 
   def test_index_requires_login
-    get :index
-    assert_response :redirect
-    assert_redirected_to '/?redirect=%2Fnetworks%2Fdirectory'
+    assert_login_required do
+      get :index
+    end
   end
 
   def test_index

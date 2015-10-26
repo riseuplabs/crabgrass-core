@@ -12,7 +12,7 @@ module Crabgrass
 
     def render_with_exceptions_controller(env)
       status = env["PATH_INFO"][1..-1]
-      return unless status == '404'
+      return unless ['401', '403', '404'].include? status
       ExceptionsController.action(:show).call(env)
     rescue Exception => controller_error
       $stderr.puts error_log(controller_error)

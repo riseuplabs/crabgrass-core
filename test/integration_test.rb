@@ -16,6 +16,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   include UserRecords
   include OptionalFields
   include PageRecords
+  include UseExceptionsApp
 
   # included last so crashes in other extensions will get logged.
   include EnhancedLogging

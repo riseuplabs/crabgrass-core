@@ -103,9 +103,10 @@ class Wikis::WikisControllerTest < ActionController::TestCase
     @wiki = create_profile_wiki(true)
     @group.grant_access! public: :view
     assert_permission(:may_show_wiki?, false) do
-      xhr :get, :show, id: @wiki.id
+      assert_permission_denied do
+        xhr :get, :show, id: @wiki.id
+      end
     end
-    assert_permission_denied
   end
 
   ##

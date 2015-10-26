@@ -3,20 +3,27 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SessionControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
 
-  def test_should_login_and_redirect
+  def test_login_screen
     get :login
     assert_response :success
+  end
 
+  def test_should_login_and_redirect
+    referer = 'http://test.host/bla'
+    @request.env["HTTP_REFERER"] = referer
     post :login, login: 'quentin', password: 'quentin'
     assert session[:user]
     assert_response :redirect
-    assert_redirected_to '/me'
+    assert_redirected_to referer
   end
 
   def test_should_fail_login_and_not_redirect
+    referer = 'http://test.host/bla'
+    @request.env["HTTP_REFERER"] = referer
     post :login, login: 'quentin', password: 'bad password'
     assert_nil session[:user]
-    assert_response :success
+    assert_response :redirect
+    assert_redirected_to referer
   end
 
   def test_should_logout
@@ -26,22 +33,17 @@ class SessionControllerTest < ActionController::TestCase
     assert_response :redirect
   end
 
-  def test_illegal_hash_redirect
-    post :login, redirect: {controller: :pages, action: :destroy, id: 123},  login: "quentin", password: "quentin"
-    assert_response :redirect
-    assert_redirected_to '/me'
-  end
-
-  def test_legal_redirect
+  def test_ignores_redirect_param
     post :login, redirect: "blabla",  login: "quentin", password: "quentin"
     assert_response :redirect
-    assert_redirected_to "blabla"
+    assert_redirected_to "/"
   end
 
   def test_illegal_offsite_redirect
-    post :login, redirect: "http://blabla.com/track_me",  login: "quentin", password: "quentin"
+    @request.env["HTTP_REFERER"] = "http://blabla.com/track_me"
+    post :login,   login: "quentin", password: "quentin"
     assert_response :redirect
-    assert_redirected_to "/me"
+    assert_redirected_to "/"
   end
 
 #  def test_should_remember_me
