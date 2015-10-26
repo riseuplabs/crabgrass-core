@@ -9,41 +9,13 @@ class SessionController < ApplicationController
 
   def login
     return unless request.post?
-    previous_language = session[:language_code]
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
-      reset_session # important!!
-                    # always force a new session on every login success
-                    # in order to prevent session fixation attacks.
-      # have to reauth, since we just cleared the session
-      self.current_user = User.authenticate(params[:login], params[:password])
-
-      # i feel like this is a security flaw, and i don't like it....
-      #if params[:remember_me] == "1"
-      #  self.current_user.remember_me
-      #  cookies[:auth_token] = {
-      #    :value => self.current_user.remember_token,
-      #    :expires => self.current_user.remember_token_expires_at
-      #  }
-      #end
-
-      if self.current_user.language.present?
-        session[:language_code] = self.current_user.language.to_sym
-      else
-        session[:language_code] = previous_language
-      end
-
-      # replace this:
-      #current_site.add_user!(current_user)
-      #UnreadActivity.create(:user => current_user)
-      # with
-      # hook(:successful_login)
-
-      redirect_to referrer
+      rebuild_session # prevent session fixation attacks!
     else
-      error [I18n.t(:login_failed), I18n.t(:login_failure_reason)], :now
+      error [I18n.t(:login_failed), I18n.t(:login_failure_reason)], :later
     end
-
+    redirect_to referrer
   end
 
   def logout
@@ -69,4 +41,17 @@ class SessionController < ApplicationController
     render partial: 'session/login_form', layout: false, content_type: "text/html"
   end
 
+  protected
+
+  def rebuild_session
+    previous_language = session[:language_code]
+    reset_session
+    self.current_user = User.authenticate(params[:login], params[:password])
+
+    if current_user.language.present?
+      session[:language_code] = self.current_user.language.to_sym
+    else
+      session[:language_code] = previous_language
+    end
+  end
 end
