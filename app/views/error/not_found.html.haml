@@ -3,3 +3,5 @@
   .h1= :not_found.tcap
   - if exception
     .p= exception.to_s
+  - unless logged_in?
+    = render 'session/login_form'
