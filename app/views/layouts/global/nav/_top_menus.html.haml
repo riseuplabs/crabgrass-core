@@ -21,7 +21,7 @@
   %ul.nav.navbar-nav.navbar-right
     - if logged_in?
       %li.tab.account.last
-        = link_to(:menu_link_logout.t(user: current_user.display_name), logout_path, class: 'tab', method: 'post')
+        = logout_link
     - else
       %li.tab.account.last
         = link_to_modal(:sign_in.t, {url: login_form_path, width: '400'}, {class: 'tab'})
