@@ -16,5 +16,5 @@
     = spinner(notice, align: :middle)
     = link_to notice.button_text, noticable_url(notice),
       class: 'btn btn-sm btn-default'
-    = link_to(:dismiss.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-sm btn-default'})
+    = link_to(:hide.t, me_notice_path(notice),{remote: true, method: 'delete', onclick: show_spinner(notice), class: 'btn btn-sm btn-default'})
 
