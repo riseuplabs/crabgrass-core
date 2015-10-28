@@ -64,11 +64,14 @@ module Crabgrass
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 
-    # add our custom 404 error class
+    # add our custom error classes
     config.action_dispatch.rescue_responses.merge!(
       'ErrorNotFound' => :not_found,
-      'WikiExtension::Sections::SectionNotFoundError' => :not_found
+      'WikiExtension::Sections::SectionNotFoundError' => :not_found,
+      'PermissionDenied' => :forbidden,
+      'AuthenticationRequired' => :unauthorized
     )
+
     # Make Active Record use UTC-base instead of local time
     config.time_zone = 'UTC'
     config.active_record.default_timezone = :utc

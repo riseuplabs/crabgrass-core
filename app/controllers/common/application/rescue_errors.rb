@@ -42,14 +42,14 @@ module Common::Application::RescueErrors
       rescue_from ActiveRecord::RecordInvalid, with: :render_error
       rescue_from CrabgrassException,          with: :render_error
       rescue_from GreenClothHeadingError,      with: :render_error
-      rescue_from AuthenticationRequired,      with: :render_authentication_required
-      rescue_from PermissionDenied,            with: :render_permission_denied
       rescue_from ActionController::InvalidAuthenticityToken, with: :render_csrf_error
 
       # Use the ExceptionApp with ExceptionsController for these:
       # ( this is the default for errors that do not inherit from
       #   one of the above)
       rescue_from ErrorNotFound,               with: :raise
+      rescue_from AuthenticationRequired,      with: :raise
+      rescue_from PermissionDenied,            with: :raise
 
       #helper_method :rescues_path
       #alias_method_chain :rescue_action_locally, :js
@@ -109,33 +109,6 @@ module Common::Application::RescueErrors
   #
   def render_csrf_error(exception=nil)
     render template: 'account/csrf_error', layout: 'notice'
-  end
-
-  #
-  # show a permission denied page, or prompt for login
-  #
-  def render_permission_denied(exception)
-    log_exception(exception)
-    respond_to do |format|
-      format.html do
-        render_auth_error_html(exception)
-      end
-      format.js do
-        render_error_js(exception, status: 401)
-      end
-      format.xml do
-        headers["Status"]           = "Unauthorized"
-        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-        render text: "Could not authenticate you", status: '401 Unauthorized'
-      end
-    end
-  end
-
-  #
-  # show the login screen
-  #
-  def render_authentication_required(exception)
-    render_permission_denied(exception)
   end
 
   #
@@ -248,18 +221,6 @@ module Common::Application::RescueErrors
     # if we ended up redirecting, then ensure that any :now flash is changed to :later
     if @preformed_redirect
       force_later_alert
-    end
-  end
-
-  def render_auth_error_html(exception)
-    alert_message exception, :later
-    if logged_in?
-      # fyi, this template will eat the alert_message
-      render template: 'error/permission_denied', layout: 'notice'
-    else
-      # request.path does not keep query params. But we need them in some cases.
-      after_login = url_for params.merge(only_path: true)
-      redirect_to root_path(redirect: after_login)
     end
   end
 

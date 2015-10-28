@@ -5,6 +5,7 @@
 -# tab focus.
 -#
 
+- redirect_url = params.present? && url_for(params.merge(only_path: true))
 
 .login_form
   = form_tag(login_path, id: "entry") do
@@ -13,7 +14,9 @@
         = :cookie_disabled_warning.t
       %div
         %label(for = 'login')= :login_name.t
-        %span= link_to(:signup_link.t, new_account_path(redirect: params[:redirect]), class: 'nofocus')
+        %span= link_to :signup_link.t,
+          new_account_path(redirect: redirect_url),
+          class: 'nofocus'
         = text_field_tag 'login', params['login'], id: 'login', tabindex: 1, class: 'form-control'
       %div.password
         %label(for = 'password')= :login_password.t
@@ -22,6 +25,4 @@
       %div.buttons
         %input{ type: 'submit', value: :login_button.t, tabindex: 3, class: 'btn btn-primary' }
     %div
-      - if params[:redirect]
-        = hidden_field_tag 'redirect', params[:redirect]
       = javascript_tag "Form.focusFirstElement('entry');"

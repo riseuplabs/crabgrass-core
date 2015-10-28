@@ -19,17 +19,19 @@ class Groups::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_logged_in
-    get :show, group_id: @group.to_param
-    assert_response 302
+    assert_login_required do
+      get :show, group_id: @group.to_param
+    end
   end
 
   def test_not_a_member
     stranger = FactoryGirl.create(:user)
     login_as stranger
     assert_permission :may_admin_group?, false do
-      get :show, group_id: @group.to_param
+      assert_permission_denied do
+        get :show, group_id: @group.to_param
+      end
     end
-    assert_select '.inline_message_list'
   end
 
   def test_member_can_see_private

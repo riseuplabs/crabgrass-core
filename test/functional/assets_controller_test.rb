@@ -5,8 +5,9 @@ class AssetsControllerTest < ActionController::TestCase
   def test_get_permissions
     ImageAsset.any_instance.stubs(:public?).returns(false)
     asset = FactoryGirl.create :image_asset
-    get :show, id: asset.id, path: asset.basename
-    assert_login_required
+    assert_permission_denied do
+      get :show, id: asset.id, path: asset.basename
+    end
   end
 
   def test_get_with_escaped_chars

@@ -1,4 +1,7 @@
-.col-lg-center
-  .h1= details[:title]
+-content_for :title do
+  %h1= details[:title]
   - if details[:description]
-    .p= details[:description]
+    = details[:description]
+- if !logged_in?
+  .col-sm-center.margin-top
+    = render partial: 'session/login_form'

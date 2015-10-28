@@ -8,11 +8,15 @@ en:
     title:
       # %{thing} is optional here. Please make sure the string works without it.
       not_found: "%{thing} Not Found"
+      unauthorized: "Login Required"
+      forbidden: "Permission Denied"
       # optional - falls back to translation of not_found
       group:
         not_found: Group Not Found
     description:
       not_found: Sorry, we could not find what you were looking for.
+      unauthorized: "Please login to perform that action."
+      forbidden: "Sorry. You do not have the ability to perform that action."
       # optional - falls back to exception.description.not_found
       group:
         not_found: Sorry, we could not find the group you were looking for.

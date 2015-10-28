@@ -42,7 +42,8 @@ module AjaxPending
   # This may be too early if you have a response triggering further requests.
   #
   def wait_for_ajax
-    page.document.synchronize(Capybara.default_wait_time, errors: [AjaxPending::Error]) do
+    page.document.synchronize Capybara.default_max_wait_time,
+      errors: [AjaxPending::Error] do
       pending = pending_ajax
       raise AjaxPending::Error.new(pending) if pending.present?
     end

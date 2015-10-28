@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 class Groups::GroupsControllerTest < ActionController::TestCase
 
@@ -7,8 +7,9 @@ class Groups::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_new_group_requires_login
-    get :new
-    assert_login_required
+    assert_login_required do
+      get :new
+    end
   end
 
   def test_choose_group_type

@@ -32,9 +32,9 @@ class Wikis::LocksControllerTest < ActionController::TestCase
   end
 
   def test_cannot_destroy_locks_when_logged_out
-    xhr :delete, :destroy, wiki_id: @wiki
-    assert_response 401
-    assert_equal :document, @wiki.reload.section_edited_by(@user)
+    assert_raises AuthenticationRequired do
+      xhr :delete, :destroy, wiki_id: @wiki
+    end
   end
 
   def test_breaking_lock

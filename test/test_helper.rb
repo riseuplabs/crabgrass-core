@@ -28,6 +28,7 @@ class ActiveSupport::TestCase
   setup {
     # make sure we don't have any login from the last test
     User.current = nil
+
   }
 
   include AuthenticatedTestHelper
