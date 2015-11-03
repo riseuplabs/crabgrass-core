@@ -23,7 +23,9 @@ class ThemeController < ApplicationController
   caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
 
   def show
-    render :show, content_type: 'text/css', formats: [:css]
+    if stale?(@theme, file: @file)
+      render :show, content_type: 'text/css', formats: [:css]
+    end
   rescue Sass::SyntaxError => exc
     self.cache_css = false
     render text: @theme.error_response(exc)
