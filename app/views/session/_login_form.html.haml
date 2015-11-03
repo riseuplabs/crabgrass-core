@@ -5,8 +5,6 @@
 -# tab focus.
 -#
 
-- redirect_url = params.present? && url_for(params.merge(only_path: true))
-
 .login_form
   = form_tag(login_path, id: "entry") do
     - cache current_language do
@@ -15,7 +13,7 @@
       %div
         %label(for = 'login')= :login_name.t
         %span= link_to :signup_link.t,
-          new_account_path(redirect: redirect_url),
+          new_account_path(redirect: request.original_fullpath),
           class: 'nofocus'
         = text_field_tag 'login', params['login'], id: 'login', tabindex: 1, class: 'form-control'
       %div.password
