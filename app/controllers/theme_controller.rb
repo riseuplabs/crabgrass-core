@@ -19,15 +19,10 @@
 class ThemeController < ApplicationController
   include_controllers 'common/always_perform_caching'
 
-  attr_accessor :cache_css
-  caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
-
   def show
-    render text: @theme.render_css(@file), content_type: 'text/css'
+    render :show, content_type: 'text/css', formats: [:css]
   rescue Sass::SyntaxError => exc
-    self.cache_css = false
     render text: @theme.error_response(exc)
-    expire_page name: params[:name], file: params[:file]
   end
 
   protected
@@ -36,16 +31,8 @@ class ThemeController < ApplicationController
   # useful for debugging.
   prepend_before_filter :get_theme
   def get_theme
-    self.cache_css = true
-    [params[:name], *params[:file]].each do |param|
-      if param =~ /_refresh/
-        param.sub!('_refresh','')
-        self.cache_css = false
-      end
-    end
     @theme = Crabgrass::Theme[params[:name]]
     @file = File.join(params[:file])
-    @theme.clear_cache(@file) unless self.cache_css
   end
 
 end
