@@ -1,0 +1,3 @@
+<% cache(request.original_fullpath) do %>
+  <%= raw @theme.render_css(@file) %>
+<% end %>
