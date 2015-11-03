@@ -11,8 +11,12 @@ module Crabgrass::Theme::Cache
     FileUtils.rm_r(cached, secure: true) if File.exist? cached
   end
 
+  def updated_at
+    config_updated_at.utc
+  end
+
   def cache_key
-    "theme/#{name}-#{config_updated_at.utc.to_s(:number)}"
+    "theme/#{name}-#{updated_at.to_s(:number)}"
   end
 
   private
