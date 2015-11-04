@@ -55,7 +55,7 @@ class EntitiesController < ApplicationController
     if preload?
       User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
     elsif filter.present?
-      recipients = User.with_access(current_user => :pester)
+      recipients = User.with_access(current_user => [:view, :pester])
       recipients.named_like(filter).limit(LIMIT)
     end
   end
