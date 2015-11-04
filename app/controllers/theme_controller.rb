@@ -23,7 +23,7 @@ class ThemeController < ApplicationController
   caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
 
   def show
-    if stale?(@theme, file: @file)
+    if stale?(@theme, file: @file,  last_modified: css_last_modified)
       render :show, content_type: 'text/css', formats: [:css]
     end
   rescue Sass::SyntaxError => exc
@@ -50,6 +50,13 @@ class ThemeController < ApplicationController
     @theme.clear_cache(@file) unless self.cache_css
   end
 
+  def css_last_modified
+    @css_last_modified ||= [@theme.updated_at, css_updated_at].max
+  end
+  helper_method :css_last_modified
+
+  def css_updated_at
+    Dir.glob("app/stylesheets/**/*").map{|f| File.mtime(f)}.max
+  end
+
 end
-
-
