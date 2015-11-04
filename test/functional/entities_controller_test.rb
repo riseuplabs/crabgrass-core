@@ -58,30 +58,28 @@ class EntitiesControllerTest < ActionController::TestCase
     assert !users(:red).member_of?(groups(:private_group)),
       "red should not be in the private group."
     xhr :get, :index, format: :json, view: :all, query: 'pri'
-    assert_response :success
-    response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal [], response["suggestions"],
-      "red can't see any group starting with 'pri'"
+    assert_no_suggestions "red can't see any group starting with 'pri'"
   end
 
   def test_entities_respect_user_privacy
     login_as :gerrard
     users(:red).revoke_access! public: :view
     xhr :get, :index, format: :json, view: :all, query: 're'
-    assert_response :success
-    response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal [], response["suggestions"],
-      "gerrard can't see red after it removed public access"
+    assert_no_suggestions "gerrard can't see red after it removed public access"
   end
 
   def test_people_respect_user_privacy
     login_as :gerrard
     users(:red).revoke_access! public: :view
     xhr :get, :index, format: :json, view: :users, query: 're'
-    assert_response :success
-    response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal [], response["suggestions"],
-      "gerrard can't see red after it removed public access"
+    assert_no_suggestions "gerrard can't see red after it removed public access"
+  end
+
+  def test_recipients_respect_user_privacy
+    login_as :gerrard
+    users(:red).revoke_access! public: :view
+    xhr :get, :index, format: :json, view: :recipients, query: 're'
+    assert_no_suggestions "gerrard can't see red after it removed public access"
   end
 
   #  def test_querying_locations
@@ -101,4 +99,13 @@ class EntitiesControllerTest < ActionController::TestCase
     assert_equal response["query"], query,
       "response.query should contain the query string."
   end
+
+  protected
+
+  def assert_no_suggestions(message = "did not expect autocomplete suggestions")
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal [], response["suggestions"], message
+  end
+
 end
