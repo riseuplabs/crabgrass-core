@@ -4,8 +4,9 @@
 -# requires local: 'mode', which must be either :show or :toggle
 -#
 - if !current_user.may?(:edit, task.page)
-  %label.checkbox-inline
-    %input{:type => 'checkbox', :disabled => 'disabled'}
+  %label
+    %input{type: 'checkbox', disabled: 'disabled', checked: task.completed? }
+    = task.name
 - else
   - next_state = task.completed? ? 'pending' : 'complete'
   - url = task_url(task, page_id: task.page)
@@ -14,9 +15,10 @@
     class: 'inline',
     checked: task.completed?, method: :put,
     with: "'task[state]=#{next_state}'"
-= task_link_to_details(task, mode)
+  = task_link_to_details(task, mode)
 %span.modified
   = task_modification_flag(task)
-%span.people
-  = task_link_to_people(task)
-
+- if task.users.present?
+  %span.people
+    &bull;
+    = task_link_to_people(task)

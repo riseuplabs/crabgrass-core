@@ -74,8 +74,6 @@ module TaskListPageHelper
       content_tag(:span, :new.t, class: 'label label-success')
     elsif task.updated_at and last_visit < task.updated_at
       content_tag(:span, :modified.t, class: 'label label-primary')
-    else
-      "&bull;".html_safe
     end
   end
 
