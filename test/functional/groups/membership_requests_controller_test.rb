@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Groups::MembershipRequestsControllerTest < ActionController::TestCase
+class Groups::MembershipRequestsControllerTest < ActionController::TestCase#
+  fixtures :all
 
   def setup
     @user  = FactoryGirl.create(:user)
@@ -49,6 +50,18 @@ class Groups::MembershipRequestsControllerTest < ActionController::TestCase
     assert_difference '@group.users.count', -1 do
       put :update, group_id: @group.to_param, id: @req.id, mark: :approve
     end
+    assert_response :success
+  end
+
+  def test_display_request_to_join_you
+    login_as users(:penguin)
+    get :show, id: requests(:join_animals).id, group_id: :animals
+    assert_response :success
+  end
+
+  def test_display_request_to_join_us
+    login_as users(:penguin)
+    get :show, id: requests(:invite_from_animals).id, group_id: :animals
     assert_response :success
   end
 end

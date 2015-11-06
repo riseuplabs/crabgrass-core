@@ -148,8 +148,13 @@ class Request < ActiveRecord::Base
   end
 
   def self.visible_to(user)
-    where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
-      user.id, user.all_group_ids, user.id
+    visibility_condition = <<-EOSQL
+    (recipient_id = :id AND recipient_type = 'User') OR
+    (recipient_id IN (:group_ids) AND recipient_type = 'Group') OR
+    (requestable_id IN (:group_ids) AND requestable_type = 'Group') OR
+    (created_by_id = :id)
+    EOSQL
+    where visibility_condition, id: user.id, group_ids: user.all_group_ids
   end
 
 
