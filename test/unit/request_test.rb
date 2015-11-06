@@ -197,5 +197,12 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal "0 Invitations to Join were sent.",
       request.flash_message(count: 0)[:text]
   end
+
+  # both invites to and from a group are visible to its members
+  def test_request_visibility
+    requests = Request.visible_to(users(:penguin))
+    assert requests.include?(requests(:join_animals))
+    assert requests.include?(requests(:invite_from_animals))
+  end
 end
 
