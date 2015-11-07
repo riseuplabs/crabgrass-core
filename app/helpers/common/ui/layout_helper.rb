@@ -90,12 +90,6 @@ module Common::Ui::LayoutHelper
   def crabgrass_javascripts
     lines = javascript_include_tags
 
-    # inline script code
-    lines << '<script type="text/javascript">'
-    #lines << localize_modalbox_strings
-      lines << content_for(:script) if content_for?(:script)
-    lines << '</script>'
-
     # run firebug lite in dev mode for ie
     if Rails.env == 'development'
       lines << '<!--[if IE]>'
@@ -106,6 +100,13 @@ module Common::Ui::LayoutHelper
     lines << '<!--[if IE]>'
     lines << javascript_include_tag(SPROCKETS_PREFIX + 'shims.js')
     lines << '<![endif]-->'
+
+    # inline script code
+    if content_for?(:script)
+      lines << '<script type="text/javascript">'
+      lines << content_for(:script)
+      lines << '</script>'
+    end
 
     # Autocomplete caches results in sessionStorage. After logging out, the session storage should be cleared.
     unless logged_in?
