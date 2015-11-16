@@ -53,11 +53,11 @@ class Wiki::Decorator
 
     to_wrap = [heading]
     last = heading
-    current = heading.try.next_sibling
+    current = heading.try.next
     while current != end_before and current
       to_wrap << current
       old = current
-      current = current.next_sibling
+      current = current.next
       old.parent.children.delete(old)
     end
     wrap = heading.make(view.div_for(wiki, section.underscore)).first
