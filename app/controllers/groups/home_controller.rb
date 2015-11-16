@@ -42,7 +42,8 @@ class Groups::HomeController < Groups::BaseController
   end
 
   def track_visit
-    memberships.update_all visited_at: Time.now
+    memberships.update_all [ "total_visits = total_visits + 1, visited_at = ?",
+                            Time.now ]
   end
 
   def memberships
