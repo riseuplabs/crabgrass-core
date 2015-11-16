@@ -51,6 +51,8 @@ en:
   ## MEMBERSHIP
   ##
 
+  shared_groups: "Shared Groups"
+  public_groups: "Public Groups"
   membership_requests: "Membership Requests"
   group_membership_count: "%{count} Members"
   membership_exists_error: "Membership already exists for %{member}"

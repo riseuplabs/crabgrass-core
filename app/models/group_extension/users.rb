@@ -53,7 +53,11 @@ module GroupExtension::Users
     end
 
     def with_admin(user)
-      where("groups.id IN (?)", user.admin_for_group_ids)
+      where(id: user.admin_for_group_ids)
+    end
+
+    def with_member(user)
+      where(id: user.all_group_ids)
     end
 
     def large

@@ -1,0 +1,7 @@
+%ul.entities
+  - groups.each do |group|
+    %li= link_to_entity group,
+      avatar: current_theme.local_sidecolumn_icon_size,
+      class: group.parent_id ? 'indent' : ''
+  - if local_assigns[:more]
+    %li= link_to (:see_all_link.t + '&nbsp;&raquo;').html_safe, more
