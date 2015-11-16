@@ -2,11 +2,9 @@
 - if groups.any?
   - content_for(:left_column) do
     %h2.space-ui-bottom.first=:groups.t
-    %ul.entities
-      - groups.each do |group|
-        - css_class = group.parent_id ? 'indent' : ''
-        %li= link_to_entity(group, avatar: current_theme.local_sidecolumn_icon_size, class: css_class)
-      %li= link_to((:see_all_link.t + '&nbsp;&raquo;').html_safe, groups_directory_path)
+    = render 'groups/list_with_committees',
+      groups: groups,
+        more: groups_directory_path
 
 %h2.space-ui-bottom.first
   = :notices.t

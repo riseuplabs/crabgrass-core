@@ -1,6 +1,9 @@
+- cache [current_language, @user.version_cache_key, @current_user.version_cache_key] do
+  %h3= :shared_groups.t
+  = render 'groups/list_with_committees',
+    groups: @user.groups.with_member(current_user).recently_active
 - cache [current_language, @user.version_cache_key] do
-  = entity_list(@user.groups.recently_active(limit: 10),
-    {link_options: {avatar: 'small'},
-    header: content_tag(:b, :groups.t),
-    after: ''})
+  %h3= :public_groups.t
+  = render 'groups/list_with_committees',
+    groups: @user.groups.with_access(public: :view).recently_active
 
