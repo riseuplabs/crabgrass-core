@@ -398,26 +398,6 @@ class Page < ActiveRecord::Base
     end
   end
 
-  # updates the denormalized copies of owner name
-  def self.update_owner_name(owner)
-    Page.connection.execute(quote_sql([
-      "UPDATE pages SET `owner_name` = ? WHERE pages.owner_id = ? AND pages.owner_type = ?",
-      owner.name,
-      owner.id,
-      owner.class.name
-    ]))
-    if owner.is_a? User
-      Page.connection.execute(quote_sql([
-        "UPDATE pages SET updated_by_login = ? WHERE pages.updated_by_id = ?",
-        owner.login, owner.id
-      ]))
-      Page.connection.execute(quote_sql([
-        "UPDATE pages SET created_by_login = ? WHERE pages.created_by_id = ?",
-        owner.login, owner.id
-      ]))
-    end
-  end
-
   # returns the appropriate user_participation or group_participation record.
   # it would be better to use OOP, but this allows page to cache the results.
   def participation_for(entity)

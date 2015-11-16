@@ -118,7 +118,9 @@ class User < ActiveRecord::Base
   after_save :update_name
   def update_name
     if login_changed? and !login_was.nil?
-      Page.update_owner_name(self)
+      pages_owned.update_all(owner_name: login)
+      pages_created.update_all(created_by_login: login)
+      pages_updated.update_all(updated_by_login: login)
       Wiki.clear_all_html(self)
     end
   end
