@@ -14,6 +14,12 @@ class PageAccessTest < JavascriptIntegrationTest
     page.save
     visit_page(page)
     assert_not_found
+    click_on 'Me'
+    assert_content 'Recent Pages'
+    assert_no_content page.title
+    click_on 'Pages'
+    assert_content 'Pages'
+    assert_no_content page.title
   end
 
   def test_public_page_of_hidden_group

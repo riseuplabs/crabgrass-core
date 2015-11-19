@@ -87,7 +87,7 @@ module Common::Ui::MenuHelper
 
   def home_option
     top_menu(
-      I18n.t(:menu_home),
+      I18n.t(:home),
       '/',
       {
         :active => menu_tab == :home,
