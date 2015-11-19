@@ -8,9 +8,7 @@ class Me::NoticesController < Me::BaseController
       includes(:noticable).
       paginate(pagination_params.merge(order: "created_at desc"))
 
-    @pages = current_user.pages.not_deleted.
-      includes(:owner, :updated_by).
-      order('pages.updated_at desc').limit(30)
+    @pages = Page.paginate_by_path '', options_for_me, pagination_params
   end
 
   def show
