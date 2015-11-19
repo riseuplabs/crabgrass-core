@@ -22,12 +22,12 @@ module EnhancedLogging
       test_log.puts __name__
       test_log.puts Time.now
       if page.current_path
-        File.open(logpath('html'), 'w') do |page_dump|
-          page_dump.puts page.html
-        end
         test_log.puts page.current_path
         test_log.puts page.status_code
         test_log.puts page.response_headers
+        File.open(logpath('html'), 'w') do |page_dump|
+          page_dump.puts page.html
+        end
         test_log.puts "page.html"
         test_log.puts "------------------------"
         test_log.puts page.html
@@ -39,7 +39,7 @@ module EnhancedLogging
       end
       test_log.puts "server log"
       test_log.puts "------------------------"
-      test_log.puts `tail log/test.log -n 1000`
+      test_log.puts `tail log/test.log -n 500`
     end
   end
 

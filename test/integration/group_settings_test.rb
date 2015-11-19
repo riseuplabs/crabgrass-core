@@ -19,4 +19,15 @@ class GroupSettingsTest < JavascriptIntegrationTest
     assert_selector 'img.avatar[src*="/avatars/"][src*="large.jpg"]'
   end
 
+  def test_changing_committee_name
+    visit '/rainbow+the-warm-colors'
+    click_on 'Settings'
+    fill_in 'group_name', with: 'rainbow+some-warm-colors'
+    click_on 'Save'
+    assert_content 'Changes saved'
+    click_on 'Home'
+    click_on 'page owned by the warm colors'
+    assert_equal '/rainbow+some-warm-colors/committee_page', current_path
+    assert_content 'some-warm-colors'
+  end
 end

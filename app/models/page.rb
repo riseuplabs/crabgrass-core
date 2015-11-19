@@ -153,14 +153,6 @@ class Page < ActiveRecord::Base
     owner_name.present? ? [owner_name, name_url].path : ['page', friendly_url].path
   end
 
-  #
-  # returns a string that is guaranteed to change if the page is updated.
-  # used for caching.
-  #
-  def update_hash
-    self.updated_at.utc.hash.to_s(36)
-  end
-
   # returns true if self's unique page name is already in use by the same owner.
   def name_taken?
     return false unless self.name.present?

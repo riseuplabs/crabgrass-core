@@ -45,7 +45,7 @@ class Page::SearchTest < ActiveSupport::TestCase
   def test_search_group_pages
     login(:blue)
     assert_path_filters '/group/rainbow' do |p|
-      !p.deleted? && groups(:rainbow).may?(:view, p)
+      !p.deleted? && groups(:rainbow).pages.include?(p)
     end
   end
 
