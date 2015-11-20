@@ -1,241 +1,834 @@
---- 
-el: 
-  about_me: "Σχετικά με εμένα"
-  accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
-  access: Πρόσβαση
-  action: δράση
-  activate_js_to_rearrange_photos: "Ενεργοποιήστε την JavaScript ώστε να ανατακτοποιείτε τις φωτογραφίες με Drag&Drop"
-  activity_contact_created: "ο/η %{user} πρόσθεσε τον/την %{other_user} ως επαφή"
-  activity_group_created: "%{user} δημιούργησε %{group_type} %{group}"
-  activity_group_destroyed: "%{group} διαγράφηκε από %{user}"
-  activity_message: "Ο/η %{author} έγραψε: %{message}"
-  activity_unread: "Έχετε %{count} αδιάβαστα [μηνύματα]"
-  activity_unread_singular: "Έχετε ένα αδιάβαστο [μύνημα]"
-  activity_user_destroyed: "Ο/η %{user} αποσύρθηκε"
-  activity_user_joined_group: "Ο/η %{user} προσχώρησε στην ομάδα %{group_type} %{group}"
-  activity_user_left_group: "%{user} αποχώρησε από %{group_type} %{group}"
-  activity_user_status: "%{user} είναι τώρα %{status}"
-  activity_wall_message: "Ο/η %{author} είπε στον/ην %{user}: %{message}"
-  add_another_file: "Προσθήκη και άλλου αρχείου"
-  add_button: Πρόσθεσε
-  add_comment: "Προσθήκη Σχολίου"
-  add_contact_info: "Όταν ένας άλλος χρήστης είναι επαφή σου, μπορεί να δει πότε είσαι συνδεδεμένος και έχει πρόσβαση στο πλήρες προφίλ σου. Όταν γίνεις επαφή ενός άλλου προσώπου, αυτόματα το πρόσωπο αυτό γίνεται και δική σου επαφή."
-  add_description: "Προσθήκη Περιγραφής"
-  add_email_address: "Προσθέστε διεύθυνση ηλεκτρονικού ταχυδρομείου"
-  add_encryption_key: "Προσθέστε κλειδί κρυπτογράφησης"
-  add_existing_image: "Πρόσθεσε φωτογραφία"
-  add_im_address: "Προσθέστε IM διεύθυνση (MSN,yahoo messenger etc)"
-  add_location: "Προσθήκη Τοποθεσίας"
-  add_new_attachment: "Πρόσθεσε μια νέα επισύναψη"
-  add_one_or_more_tags: "Προσθέστε μία ή περισσότερες ετικέτες, διαχωρίζοντάς τες με ένα κόμμα"
-  add_phone_number: "Προσθήκη Αριθμού Τηλεφώνου"
-  add_photo_to_gallery: "Κάντε click σε μια φωτογραφία για να την προσθέσετε"
-  add_star_link: "Πρόσθεσε Αστέρι (%{star_count})"
-  add_tags: "Προσθέστε ετικέτες"
-  add_websites: "Προσθήκη Ιστοσελίδας"
-  additional_page_access: "Επιπλέον Πρόσβαση"
-  administer_site: "Διαχειρήσου Σελίδα"
-  administration: Διαχείρηση
-  alert: Ειδοποίηση
-  alert_error: Σφάλμα!
-  alert_field_errors: "Υπάρχουν προβλήματα με τα παρακάτω πεδία"
-  alert_not_saved: "Οι αλλαγές δεν αποθηκεύτηκαν"
-  alert_permission_denied: "Απαγορεύτηκε η πρόσβαση"
-  alert_permission_denied_details: "Συγγνώμη. Δεν έχεις τη δυνατότητα να το κάνεις αυτό."
-  alert_saved: "Οι αλλαγές αποθηκεύτηκαν"
-  all: Όλα
-  all_content: "Όλα τα περιεχόμενα"
-  all_groups: "όλες οι ομάδες"
-  all_networks: "Όλα τα Δίκτυα"
-  all_page_types: "όλοι οι τύποι σελίδων"
-  all_people: "όλοι οι άνθρωποι"
-  all_people_link: όλοι
-  all_states: "Όλες οι Καταστάσεις"
-  allow_membership_requests: "Επιτρέψτε τις αιτήσεις εγγραφής μελών"
-  already_contacts_info: "Είστε ήδη επαφή αυτού του προσώπου"
-  announcement_page_description: "Μια αναγγελία."
-  announcement_page_display: Αναγγελία
-  announcements: Ανακοινώσεις
-  approve: εγκρίνω
-  approve_button: έγκριση
-  approve_contact_info: "Μια αίτηση για να γίνει φίλος/η υπάρχει ήδη από αυτόν/η τον/η χρήστη. Θέλεις να την εγκρίνεις;"
-  approve_or_reject_link: "ενέκρινε ή απόρριψε αυτή την αίτηση"
-  approved: εγγεκριμένο
-  archive: Αρχείο
-  archive_filter_created_link: "Ημερομηνία Δημιουργίας"
-  archive_filter_updated_link: "Τελευταία Ημερομηνία Ενημέρωσης"
-  archive_headline: Αρχείο
-  article_page_description: "Δημιούργησε ένα άρθρο blog ή άρθρο ειδήσεων."
-  article_page_display: άρθρο
-  asset_page_description: "Ανέβασε μια εικόνα, κείμενο, λογιστικό φύλλο, παρουσίαση ή οποιοδήποτε αρχείο."
-  asset_page_display: Αρχείο
-  at_least_one_recipient_is_required: "απαιτείται τουλάχιστον ένας παραλήπτης"
-  attachments: Επισυνάψεις
-  away: απουσιάζω
+el:
+  cookie_disabled_warning: Έχετε απενεργοποιήσει τα cookies. Δεν θα είστε σε θέση να συνδεθείτε μέχρι να ενεργοποιήσετε τα cookies.
+  signup_link: Δημιουργία νέου χρήστη
+  signup_email_info: 'Προαιρετικό: χρησιμοποιείται σε περίπτωση που ξεχάσετε τον κωδικό σας'
+  forgot_password_link: Ξεχάσατε τον κωδικό σας;
+  login_failure_reason: Το όνομα χρήστη ή ο κωδικός πρόσβασης είναι λάθος.
+  signup_success_message: Ευχαριστούμε για την εγγραφή!
+  login_name: Όνομα χρήστη
+  signup_success: Επιτυχής εγγραφή
+  logout_success: Αντίο
+  logout_success_message: Έχετε αποσυνδεθεί.
+  signup_button: Εγγραφή
+  login_failed: Αδύνατη σύνδεση
+  signup_login_name: Το όνομα χρήστη σας
+  login_button: Είσοδος
+  login: Σύνδεση
+  sign_in: Είσοδος
+  signup_title: Δημιουργία λογαριασμού
+  signup_email: Η διεύθυνση email σας
+  forgot_password_text: Εάν έχετε ξεχάσει τον κωδικό πρόσβασης που χρησιμοποιείτε για να συνδεθείτε, μπορούμε να σας στείλουμε μέσω email έναν σύνδεσμο που θα σας επιτρέψει να δημιουργήσετε έναν νέο.
+  reset_password_text: Γεια, %{user}. Αν έχετε ξεχάσει τον κωδικό που χρησιμοποιείτε για τον λογαριασμό σας, μπορείτε να ορίσετε έναν νέο εδώ.
+  forgot_password_mail_greeting: "%{user}, για να επαναφέρετε τον κωδικό πρόσβασής σας, επισκεφτείτε τον σύνδεσμο"
+  forgot_password_mail_expiry: Αυτός ο σύνδεσμος θα παραμείνει σε ισχύ για 24 ώρες. Αν χρειαστεί να επαναφέρετε τον κωδικό πρόσβασής σας αργότερα, θα πρέπει να ξαναεπισκεφθείτε την σελίδα για απώλεια του κωδικού πρόσβασης και να ζητήσετε έναν νέο σύνδεσμο.
+  reset_password_mail_greeting: "%{user}, έχει γίνει επαναφορά του κωδικού σας όπως ζητήσατε."
+  reset_password_mail_warning: Αν δεν έχετε ζητήσει αλλαγή κωδικού πρόσβασης, επικοινωνήστε μαζί μας.
+  your_login: Ο λογαριασμός σας
+  invalid_email_text: Η διεύθυνση email που δώσατε δεν είναι έγκυρη.
+  reset_password: Επαναφορά κωδικού πρόσβασης
+  reset_password_email_sent: Εάν αυτή η ηλεκτρονική διεύθυνση σχετίζεται με ένα έγκυρο όνομα χρήστη, θα σταλεί ένα email με οδηγίες για την επαναφορά του κωδικού πρόσβασής σας.
+  invalid_token: Μη έγκυρο ενδεικτικό
+  invalid_token_text: Ο σύνδεσμος επαναφοράς κωδικού πρόσβασης που έχετε ορίσει δεν είναι έγκυρος. Πιθανόν να έχει ήδη χρησιμοποιηθεί ή να έχει λήξει.
+  password_reset: Επαναφορά κωδικού πρόσβασης
+  password_reset_ok_text: Ο κωδικός σας άλλαξε επιτυχώς. Μπορείτε τώρα να συνδεθείτε με τον νέο σας κωδικό πρόσβασης.
+  requested_forgot_password: Έχετε ζητήσει να αλλάξετε κωδικό πρόσβασης
+  password_was_reset: Έχει γίνει επαναφορά του κωδικού πρόσβασης
+  forgotten_email_address: Ποια διεύθυνση email είχατε δώσει κατά τη δημιουργία του λογαριασμού σας;
+  new_password: Νέος κωδικός
+  confirm_new_password: Επιβεβαίωση νέου κωδικού
+  congratulations_you_have_signed_up: Συγχαρητήρια! Έχετε κάνει εγγραφή στο %{site_title}.
+  you_should_receive_instructions_email: Θα λάβετε ένα ηλεκτρονικό μήνυμα με οδηγίες για την ολοκλήρωση της δημιουργίας του λογαριασμού σας.
+  email_verification_body: |-
+    Έχετε κάνει εγγραφή στο %{site_title} (%{host}).
+
+    Πριν μπορέσετε να μπείτε στον λογαριασμό σας, πρέπει να επιβεβαιώσουμε ότι πρόκειται για το δικό σας email.
+
+    Κάντε κλικ στον παρακάτω σύνδεσμο ή κάντε αντιγραφή-επικόλληση στον φυλλομετρητή σας:
+
+    %{verify_email_link}
+
+    Αν δεν επιθυμείτε να εγγραφείτε, απλώς αγνοήστε αυτό το μήνυμα.
+  change_password: Αλλαγή κωδικού
+  password: Κωδικός πρόσβασης
+  password_confirmation: Επιβεβαίωση κωδικού πρόσβασης
+  signup_confirm_password: Επιβεβαιώστε τον κωδικό
+  login_password: Κωδικός πρόσβασης
+  signup_password: Ο κωδικός σας
+  remove_your_account: Κατάργηση του λογαριασμού σας
+  anonymize_display_name: Ανωνυμοποίηση του εμφανιζόμενου ονόματος χρήστη
+  anonymize_display_name_info: Αυτό θα αντικαταστήσει παντού το εμφανιζόμενο όνομά σας με τη λέξη 'Anonymous'
+  destroy_comments: Ασφαλής διαγραφή σχολίων
+  destroy_comments_info: 'Αυτό θα διαγράψει όλα τα σχόλια που έχετε κάνει στις διάφορες σελίδες. Ενδέχεται να δυσκολέψει την κατανόηση των υπόλοιπων σχολίων. '
+  confirm_account_removal: Είστε σίγουροι ότι θέλετε να καταργήσετε τον λογαριασμό σας; Αυτό το βήμα δεν μπορεί να αναιρεθεί και τα δεδομένα σας θα χαθούν.
+  account_successfully_removed: Ο λογαριασμός σας καταργήθηκε επιτυχώς. Θα σβήσουμε όλα τα σχετικά δεδομένα από την βάση δεδομένων.
+  crabgrass:
+    powered_by_html: |
+      Ο ιστότοπος υποστηρίζεται από το <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> άδεια ελεύθερου λογισμικού AGPL</a> για την οργάνωση της δικτύωσης.
+    report_a_bug: Αναφορά σφάλματος
+    request_a_feature: Αίτημα για νέο χαρακτηριστικό
+    help_pages: Σελίδες βοήθειας
+    get_involved: Συμμετέχετε
+    help_translate: Βοηθήστε στη μετάφραση
+  destroy_confirmation: Είστε σίγουροι ότι θέλετε να διαγράψετε τον/την/το %{thing}; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
+  confirmation: Είστε σίγουροι;
+  cancel: Ακύρωση
+  optional: Προαιρετικό
+  required: Υποχρεωτικό
+  thing_required: "Το %{thing} είναι υποχρεωτικό"
+  edit: Επεξεργασία
+  upload: Φόρτωση
+  select_files: Επιλέξτε τα αρχεία
+  drop_files_here: Σύρετε τα αρχεία εδώ
+  files_pending: "#{pending} αρχείο(α) σε αναμονή"
+  return_link: Επιστροφή
   back_button: Πίσω
-  back_to_group: "επιστροφή στην %{group_name}"
-  basic_settings: "Βασικές Ρυθμίσεις"
-  break_lock: "Παύση Κλειδώματος"
-  break_lock_button: "Παύση Κλειδώματος"
-  cancel_button: Ακύρωση
-  cancel_link: ακύρωση
-  caption: Λεζάντα
-  category: Κατηγορία
-  chat_flagged_inappropriate: "Χώρος συζήτησης επιτυχώς επισημάνθηκε ως ακατάλληλος."
-  check_all: "Επιλογή Όλων"
+  send_button: Αποστολή
   close_button: Κλείσιμο
-  committee: Επιτροπή
-  committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
-  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση %{domain}/yourgroupname"
-  committees: επιτροπές
-  comparing_changes_header: "Σύγκριση αλλαγών από %{user} στις %{when} από %{old_version} σε %{new_version}"
-  confirm: Έγκριση
-  confirm_discarding_text_area: "Όση δουλειά δεν έχεις σώσει θα χαθεί. Πάτησε %{cancel} για να συνεχίσεις την επεξεργασία."
-  confirm_inappropriate_chat: "Είστε βέβαιοι ότι αυτή η συζήτηση είναι ακατάλληλη; Κάντε κλικ στο κουμπί \"ΟΚ\" μόνο αν νομίζετε ότι είναι προσβλητική, αγενής ή κακεντρεχής. Ένας μεσολαβητής θα το εξετάσει σύντομα."
-  confirm_inappropriate_page: "Είστε βέβαιοι ότι αυτή η σελίδα είναι ακατάλληλη; Κάντε κλικ στο κουμπί \"ΟΚ\" μόνο αν νομίζετε ότι είναι προσβλητική, αγενής ή κακεντρεχής. Ένας μεσολαβητής θα το εξετάσει σύντομα."
-  confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
-  confirmation: "Είσαι σίγουρος/η;"
-  contact: Επαφή
-  contact_request_message_label: "Πες στον/η %{user} γιατί θες να γίνεις φίλος/η του/ης."
+  share_button: Κοινή χρήση
+  save_button: Αποθήκευση
+  add_button: Προσθήκη
+  cancel_button: Ακύρωση
+  create_button: Δημιουργία
+  ok_button: Εντάξει
+  done: Ολοκλήρωση
+  show_button: Εμφάνιση
+  show_thing: Εμφάνιση %{thing}
+  confirm: Επιβεβαίωση
+  alert: Ειδοποίηση
+  loading_progress: Γίνεται φόρτωση...
+  loadingdotdotdot: Γίνεται φόρτωση...
+  create_a_new_thing: Δημιουργία νέου %{thing}
+  create_thing: Δημιουργία %{thing}
+  created_by: Δημιουργήθηκε από
+  updated_by: Ενημερώθηκε από
+  created_by_user_on: Δημιουργηθηκε από %{user} στις %{when}.
+  approve: Έγκριση
+  reject: Απόρριψη
+  pending: Σε αναμονή
+  rejected: Απορρίφθηκε
+  approved: Εγκρίθηκε
+  saved: Αποθηκεύτηκε
+  destroy: Ασφαλής διαγραγή
+  thing_destroyed: "%{thing} διαγράφτηκε με ασφάλεια"
+  destroy_thing: Ασφαλής διαγραφή %{thing}
+  delete_thing: Διαγραφή %{thing}
+  delete: Διαγραφή
+  delete_button: Διαγραφή
+  deleted: Διαγράφτηκε
+  remove: Αφαίρεση
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Εισάγετε το όνομα μιας ομάδας ή ενός χρήστη
+      enter_name_of_group: Εισάγεται το όνομα μιας ομάδας
+      enter_name_of_person: Εισάγεται το όνομα ενός χρήστη
+  actions:
+    task:
+      add: Προσθήκη νέας Εργασίας
+    possible:
+      add: Προσθήκη νέας Δυνατότητας
+  exception:
+    title:
+      not_found: "Ο/Η/Το %{thing} δεν βρέθηκε"
+      unauthorized: Απαιτείται σύνδεση
+      forbidden: Απαγορεύτηκε η πρόσβαση
+      group:
+        not_found: Η ομάδα δεν βρέθηκε
+    description:
+      not_found: Συγνώμη, δεν βρήκαμε αυτό που αναζητήσατε.
+      unauthorized: Συνδεθείτε για να εκτελέσετε αυτή την ενέργεια.
+      group:
+        not_found: Συγνώμη, δε βρήκαμε την ομάδα που αναζητήσατε.
+  image_count: Εικόνα %{number} από %{count}
+  image_count_total: "%{count} εικόνες"
+  show_gallery: Εμφάνιση Γκαλερί εικόνων
+  edit_gallery_explanation: Προσθέστε νέες εικόνες ή σύρετε τις εικόνες για να τις αναδιατάξετε.
+  edit_image: Επεξεργασία εικόνας
+  show_gallery_explaination: Κάντε κλικ στο εικονίδιο για να δείτε την πλήρη εικόνα.
+  add_images_or_zips: Προσθέστε εικόνες ή αρχείο Zip
+  add_images_or_zips_explaination: Το αρχείο Zip θα εξαχθεί αυτόματα και θα προστεθεί στη γκαλερί
+  confirm_image_delete: Θέλετε να διαγράψετε αυτή την εικόνα; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
+  no_title_given: "(χωρίς τίτλο)"
+  add_images: Προσθήκη εικόνων
+  edit_images: Επεξεργασία εικόνων
+  upload_new_image: Φόρτωση νέας εικόνας
+  type_your_messages_here: Πληκτρολογήστε τα μηνύματά σας εδώ και πατήστε Enter...
+  group_not_allowed_to_view_image_error: Η ομάδα που διατηρεί αυτή τη σελίδα δεν έχει την άδεια να δει την εικόνα.
+  add_comment: Προσθήκη σχολίου
+  image_title: 'Τίτλος εικόνας: %{title}'
+  upload_zip_file_link: Φόρτωση αρχείου Zip
+  add_images_to_gallery_link: Προσθήκη εικόνων στη γκαλερί
+  too_tall_image_error: Η εικόνα που φορτώθηκε είναι πολύ μεγάλη σε ύψος ({{count}} pixels το μέγιστο ύψος)
+  too_wide_image_error: Η εικόνα που φορτώθηκε πρέπει να έχει πλάτος ακριβώς  {{count}} pixels
+  cant_detect_image_height_error: Δεν μπορούμε να εντοπίσουμε το ύψος της εικόνας. Είτε η εικόνα είναι κατεστραμμένη ή ο διακομιστής παρουσίασε σφάλμα
+  edit_image_header: Επεξεργασίας εικόνας και ήχου
+  upload_images_and_zip_files_help: 'Προαιρετικό: Επιλέξτε την εικόνα ή τα αρχεία Zip που θέλετε να φορτώσετε.'
+  close_and_reload_gallery: Κλείσιμο και ανανέωση της γκαλερί
+  search: Αναζήτηση
+  go: Μετάβαση
+  thing_not_found: "Δεν βρέθηκε %{thing}"
+  no_things_found: Δεν βρέθηκαν %{things}
+  no_search_results: Δεν υπάρχουν αποτελέσματα
+  not_found: Δεν βρέθηκε
+  see_all_link: Εμφάνιση όλων
+  total: "%{count} σύνολο"
+  all: Όλα
+  none: Κανένα
+  or: ή
+  new: νέο
+  modified: τροποποιημένο
+  unknown: Άγνωστο
+  next: Επόμενο
+  previous: Προηγούμενο
+  pagination_next: Επόμενη σελίδα
+  pagination_previous: Προηγούμενη σελίδα
+  return: Επιστροφή
+  see_more_link: Δείτε περισσότερα
+  see_less_link: Δείτε λιγότερα
+  list_things: Λίστα από %{things}
+  thing_was_sent:
+    one: "%{thing} έχει σταλεί σε %{recipient}."
+    other: "%{count} %{thing} έχουν σταλεί."
+  thing_was_not_sent:
+    one: "Το %{thing} δεν μπόρεσε να σταλεί σε %{recipient}."
+    other: "%{count} %{thing} δεν μπόρεσαν να σταλούν."
+  user: Χρήστης
+  users: Χρήστες
+  people: Χρήστες
+  person: Χρήστης
+  name: Όνομα
+  recipients: Παραλήπτες
+  recipient: Παραλήπτης
+  owner: Κάτοχος
+  created_by_entity: Δημιουργήθηκε από %{entity}
+  approved_by_entity: Εγκρίθηκε από %{entity}
+  rejected_by_entity: Απορρίφθηκε από %{entity}
   contacts: Επαφές
-  contribute_content_link: "Δημιουργία Σελίδας"
-  contribute_group_content_link: "Πρόσθεσε τη Σελίδα στην Ομάδα %{group}"
-  contribute_to_site: "Συμβολή στη Σελίδα"
+  friends: Φίλοι
+  member_groups_of_network: Ομάδες μελών
+  peers: Ομότιμοι
+  me: Εγώ
+  back: Πίσω
+  share: Κοινή χρήση
   contributed: Συνεισφέρθηκε
-  coordinating_council: "Συντονιστικό Συμβούλιο"
-  coordinator: Συντονιστής
-  coordinator_help: "Η <b>Πλήρης Πρόσβαση</b> ) θα παραχωρήσει απεριόριστη δυνατότητα για τροποποίηση αυτής της σελίδας (ακόμη και να σβήστει και να μοιραστεί)."
-  coordinators: Συντονιστές
+  profile: Προφίλ
+  content: Περιεχόμενο
+  comments: Σχόλια
+  statistics: Στατιστικές
+  summary: Περίληψη
+  private: Προσωπικό
+  public: Δημόσιο
+  options: Επιλογές
+  permissions: Άδειες
+  notification: Ειδοποίηση
+  notice: Επισήμανση
+  notices: Επισημάνσεις
+  dismiss: Απόρριψη
+  locale: Τοπική ρύθμιση
+  description: Περιγραφή
+  details: Λεπτομέρειες
+  invite: Πρόσκληση
+  membership: Ιδιότητα μέλους
+  visibility: Ορατότητα
+  administration: Διαχείριση
+  settings: Ρυθμίσεις
+  messages: Μηνύματα
+  page: Σελίδα
+  tasks: Εργασίες
+  title: Τίτλος
+  text_message: Κείμενο μηνύματος
+  print: Εκτύπωση
+  show: Εμφάνιση
+  hide: Απόκρυψη
+  display: Εμφάνιση
+  message: Μήνυμα
+  private_message_notice: Ειδοποίηση προσωπικού μηνύματος
+  visits: Επισκέψεις
+  group: Ομάδα
+  groups: Ομάδες
+  organization: Οργάνωση
+  organizations: Οργανώσεις
+  network: Δίκτυο
+  networks: Δίκτυα
+  committee: Επιτροπή
+  committees: Επιτροπές
   council: Συμβούλιο
   councils: Συμβούλια
-  create_a_group: "Δημιούργησε μια Ομάδα"
-  create_a_new_thing: "Δημιούργησε ένα νέο %{thing}"
-  create_button: Δημιουργία
-  create_committee: "δημιούργησε επιτροπή"
-  create_group_link: "δημιούργησε μια νέα ομάδα"
-  create_page: "Δημιουργία Σελίδας"
-  create_page_button: "Δημιουργία %{page_class}"
-  create_page_data: "%{page_class} Δεδομένα"
-  create_page_information: "%{page_class} Πληροφορίες"
-  create_task_list: "δημιούργησε μια νέα λίστα καθηκόντων"
-  created: δημιουργήθηκε
-  created_by: "Δημιουργήθηκε από"
-  created_on: "Δημιουργήθηκε την"
-  created_when_by: "δημιουργήθηκε %{when} από %{user}"
-  csrf_error_message: "Η αίτηση σύνδεσής σας μοιάζει με προσπάθεια επίθεσης σε αυτή την σελίδα. Μην ανησυχείτε, το λάθος αυτό συμβαίνει συχνά, ακόμη και για αθώα αιτήματα. Είμαστε απλά επιπλέον καχύποπτοι. Το μόνο που έχετε να κάνετε είναι να ξαναφορτώσετε τη σελίδα πριν επιχειρήσετε να συνδεθείτε. Μπορείτε να ακολουθήσετε αυτό το σύνδεσμο για να προσπαθήσετε ξανά."
-  current_attachments: "Τρέχοντα Συνημμένα"
-  current_featured_content: "Τρέχον Προτεινόμενο Περιεχόμενο"
-  current_tags: "Τρέχουσες Ετικέτες"
-  current_video_sources: "Προς το παρόν υποστηρίζονται: youtube, blip.tv, google video, vimeo."
-  data_for_page_missing: "Τα δεδομένα για αυτή τη σελίδα λείπουν."
-  date_date: ημερομηνία
-  date_all_time: "Όλος ο Χρόνος"
-  date_centuries: αιώνες
-  date_days: μέρες
-  date_hours: ώρες
-  date_minutes: λεπτά
-  date_months: μήνες
-  date_older: Παλιότερη
-  date_seconds: δευτερόλεπτα
-  date_this_month: "Αυτό το Μήνα"
-  date_this_week: "Αυτή την Εβδομάδα"
-  date_today: Σήμερα
-  date_weeks: εβδομάδες
-  date_years: χρόνια
-  date_yesterday: Εχτές
-  delete: Διαγραφή
-  delete_page_link: "Διαγραφή %{page_class}"
-  delete_post: "Διαγραφή Άρθρου"
-  delete_this_version: "διαγραφή αυτής της έκδοσης"
-  delete_version_confirm: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την εκδοχή;"
-  deleted: Διαγράφτηκε
-  description: περιγραφή
-  descriptions: Περιγραφές
-  descriptive_name_for_display: "Ένα περιγραφικό όνομα που χρησιμοποιείται για απεικόνιση"
-  destroy: καταστροφή
-  destroy_confirmation: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό/ή το/η %{thing}; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
-  destroy_group_link: "Καταστροφή %{group_type}"
-  details_link: Λεπτομέρειες
-  diff_link: "επισκόπηση αλλαγών"
-  directory_of_groups: "Κατάλογος Ομάδων"
-  directory_of_networks: "Κατάλογος Δικτύων"
-  directory_of_people: "Κατάλογος Ανθρώπων"
-  discuss_request_link: "συζητήστε αυτό το αίτημα με τον/την %{person_or_group}"
-  discussion_page_description: "Συζητήστε ένα συγκεκριμένο θέμα με ομάδες ή άλλους χρήστες."
-  discussion_page_display: "Ομαδική Συζήτηση"
-  discussions: Συζητήσεις
-  display_name: "Επισκόπηση ονόματος"
-  dont_have_permission_to_create_committees: "Δεν έχετε την άδεια να δημιουργήσετε επιτροπές υπό τον/την %{group}"
-  dont_understand_group_type: "Ο τύπος %{type} της ομάδας δεν είναι κατανοητός"
-  download: Κατέβασε
-  download_gallery: "Κατέβασε Έκθεση"
-  drag_and_drop_to_rearrange_photos: "Μετακινήστε εικόνες για να τις ανακατατάξετε"
-  edit: Επεξεργασία
-  edit_appearance: "Επεξεργασία Εμφάνισης"
-  edit_attachments: "Επεξεργασία Συνημμένων"
-  edit_attachments_link: Επεξεργασία
-  edit_featured_content_for_group: "Επεξεργασία Προτεινόμενου Περιεχομένου για τον/την %{group_name}"
-  edit_gallery: "Επεξεργασία Έκθεσης"
-  edit_profile_link: "Επεξεργασία Προφίλ"
-  edit_settings: "Επεξεργασία Ρυθμίσεων"
-  edit_tags: "Επεξεργασία Ετικετών"
-  edit_tags_link: Επεξεργασία
-  edit_title: "επεξεργασία τίτλου"
-  edit_underlined_e: <u>ε</u>πεξεργασία
-  edited: Επεξεργάστηκε
-  email: Email
-  email_addresses: "Διευθύνσεις Email"
-  email_link_expires: "Αυτός ο σύνδεσμος θα λείξει σε %{days} μέρες."
-  email_notice_access: "Μπορείτε να αποκτήσετε πρόσβαση σε αυτήν τη σελίδα εδώ:"
-  email_notice_hello: "Γειά, ο/η %{from} σας έστειλε μια σελίδα."
-  email_notice_hello_with_message: "Γειά, ο/η %{from} σας έστειλε μια σελίδα με το ακόλουθο μύνημα: %{message}"
-  email_notice_subject: "Δες τη σελίδα \"%{title}\""
-  empty_results: Κανένα
-  entity_autocomplete_tip: "Πληκτρολογήστε το όνομα μιας ομάδας ή προσώπου."
-  error_saving_new_order: "Λάθος κατά την αποθήκευση νέας τάξης!"
-  exception_back_link: Πίσω
-  exception_bug_report_description: "Παρακαλείσθε να προσθέσετε μια περιγραφή του πώς βρεθήκατε σε αυτή τη σελίδα, καθώς και τυχόν πρόσθετες παρατηρήσεις"
-  exception_bug_report_link: "Υποβολή Αναφοράς Σφάλματος"
-  exception_description: "Παρακαλούμε να μας βοηθήσετε να κάνουμε αυτό το λογισμικό καλύτερο στέλνοντάς μας μια αναφορά σφάλματος. Θα προσπαθήσουμε να διορθώσουμε το πρόβλημα σύντομα."
-  exception_headline: "Ουπς! Μόλις συνέβη ένα λάθος."
-  exception_title: "Σφάλμα Συστήματος"
-  expired_featured_content: "Ληγμένο Προτεινόμενο Περιεχόμενο"
-  external_video_page_description: "Δείτε ένα βίντεο που φιλοξενείται σε μια εξωτερική σελίδα."
-  external_video_page_display: "Εξωτερικό Βίντεο"
-  fax: Fax
-  feature_button: Χαρακτηριστικό!
-  featured_content: "Προτεινόμενο Περιεχόμενο"
-  featured_content_header: Προτεινόμενο
-  file: αρχείο
-  file_must_be_image_error: "Το αρχείο πρέπει να είναι εικόνα για να είναι μέρος μιας έκθεσης."
-  file_size: "Μέγεθος αρχείου"
-  file_version_deleted: "έκδοση αρχείου διαγράφηκε"
-  files: Αρχεία
-  friday: Παρασκευή
-  friends: Φίλοι
-  from: από
-  height: Ύψος
-  history: Ιστορικό
-  image_title: "Τίτλος εικόνας: %{title}"
-  incoming: Εισερχόμενα
-  language: Γλώσσα
-  last_change: "Τελευταία Αλλαγή"
-  last_name: επίθετο
-  locations: Τοποθεσίες
-  login: Σύνδεση
   members: Μέλη
-  menu_admin: Διαχειριστής
-  menu_link_logout: Αποσύνδεση
-  message: μήνυμα
-  message_page_display: μήνυμα
+  structure: Δομή
+  group_creation_info: 'Υπάρχουν τέσσερις τύποι ομάδων:'
+  group_description: Οι Οργανώσεις είναι αυτόνομες ομάδες που έχουν άτομα ως μέλη
+  network_description: 'Τα Δίκτυα είναι ομάδες που μπορούν να έχουν οργανώσεις ως μέλη. Ένα δίκτυο μπορεί να χρησιμοποιηθεί ως ένωση πολλών οργανώσεων ή ως χώρος συνεργασίας δυο οργανώσεων. '
+  committee_description: Οι Επιτροπές είναι ομάδες εντός μιας οργάνωσης ή ενός δικτύου. Μια επιτροπή υπάγεται στην οργάνωση ή το δίκτυο της. Ένας χρήστης που προστίθεται στην επιτροπή εκτός της οργάνωσης ή του δικτύου θα έχει πρόσβαση μόνο στην επιτροπή.
+  council_description: Συμβούλια είναι οι ομάδες με ειδικές διαχειριστικές εξουσίες. Κάθε οργάνωση ή δίκτυο μπορεί να έχει ένα συμβούλιο. Σε αυτή την περίπτωση, τα μέλη του  συμβουλίου έχουν διαχειριστικές αρμοδιότητες στην οργάνωση ή το δίκτυο.
+  council_description_details: Από προεπιλογή, όλα τα μέλη μπορούν να τροποποιήσουν την ομάδα %{group}. Αν θέλετε να περιορίσετε τις διαχειριστικές αρμοδιότητες σε ορισμένους χρήστες, δημιουργήστε ένα συμβούλιο και προσθέστε χρήστες σε αυτό.
+  committee_choose_group: 'Επιλέξτε μια ομάδα για αυτή την επιτροπή:'
+  network_committees_may_not_join_networks: Οι επιτροπές άλλων δικτύων δεν μπορούν να ενταχθούν.
+  networks_may_not_join_networks: Τα δίκτυα δεν μπορούν να ενταχθούν σε άλλα δίκτυα.
+  may_request_membership_description: Ένας σύνδεσμος για "συμμετοχή στην ομάδα %{group}" θα εμφανιστεί στη σελίδα %{group} σας. Αυτό θα στείλει μια πρόσκληση για συμμετοχή η οποία μπορεί να γίνει δεκτή ή να απορριφθεί.
+  open_group: Άνοιγμα %{group}
+  open_group_description: Οι χρήστες προστίθενται απευθείας στην ομάδα %{group} - Τα αιτήματα δεν χρειάζεται να εγκριθούν
+  membership_requests: Αιτήματα εγγραφής μελών
+  group_membership_count: "%{count} μέλη"
+  membership_exists_error: Ο/Η %{member} έχει ήδη ιδιότητα μέλους
+  membership_destroy_confirm_message: Είστε σίγουροι ότι θέλετε να αφαιρέσετε τον/την/το  %{entity} από την ομάδα %{group};
+  group_invite_subject: Πρόσκληση για συμμετοχή στην ομάδα "%{group}"
+  group_invite_email: |-
+    Ο/Η %{from_user} σας προσκαλεί να γραφτείτε στην ομάδα %{group}. Αν θέλετε να γραφτείτε, κάντε κλικ εδώ:
+
+     %{accept_invite_link}
+
+    Η αρχική σελίδα της ομάδας βρίσκεται εδώ:
+    %{group_home_link}
+
+    Αν δεν επιθυμείτε να γραφτείτε, απλώς αγνοήστε αυτό το μήνυμα.
+  group_destroyed_subject: "Η/Το %{group_type} %{group} διαγράφτηκε από τον/την %{user}!"
+  group_destroyed_email: "Η/Το %{group_type} %{group} διαγραφτηκε με ασφάλεια!"
+  group_wiki: Wiki ομάδας
+  create_public_group_wiki: Δημόσιο
+  create_private_group_wiki: Προσωπικό
+  public_group_wiki: Δημόσιο
+  private_group_wiki: Προσωπικό
+  group_publicly_visible: Κάντε την ομάδα %{group} δημόσια ορατή
+  committee_publicly_visible: Κάνε τις επιτροπές δημόσια ορατές
+  networks_publicly_visible: Κάντε τα δίκτυα δημόσια ορατά
+  allow_membership_requests: Επιτρέψτε τις αιτήσεις εγγραφής μελών
+  group_successfully_created: Η ομάδα δημιουργήθηκε επιτυχώς.
+  group_publicly_visible_description: "Η ομάδα %{group} εμφανίζεται στον δημόσιο κατάλογο. Το <i>προφίλ</i> είναι ορατό σε μη μέλη στη διεύθυνση %{domain}/yourgroupname."
+  committee_publicly_visible_description: Οι επιτροπές είναι ορατές σε μη μέλη στη διεύθυνση %{domain}/yourgroupname
+  networks_publicly_visible_description: Τα δίκτυα είναι ορατά σε μη μέλη στη διεύθυνση %{domain}/yourgroupname
+  group_members_publicly_visible: Κάντε τα μέλη δημόσια ορατά
+  group_members_publicly_visible_description: Τα μέλη είναι ορατά σε μη μέλη στο %{domain}/yourgroupname. Η ομάδα %{group} μπορεί να αναφέρεται στη σελίδα του προφίλ των μελών (%{domain}/username)
+  members_may_edit_wiki: Όλα τα μέλη μπορούν να επεξεργαστούν το wikii
+  members_may_edit_wiki_description: Αν δεν είναι επιλεγμένο, μόνο τα μέλη του συμβουλίου μπορούν να επεξεργαστούν το wiki της ομάδας %{group}.
+  rss_feed: Τροφοδοσία RSS
+  group_language: Η κύρια γλώσσα της ομάδας %{group}.
+  my_networks: Τα δίκτυά μου
+  my_groups: Οι ομάδες μου
+  basic_settings: Βασικές ρυθμίσεις
+  send_invites: Αποστολή προσκλήσεων
+  view_requests: Εμφάνιση αιτημάτων
+  add_members_to_committee: 'Προσθέστε ένα μέλος ομάδας σ'' αυτή την επιτροπή. Για να προσθέσετε κάποιο μη μέλος, στείλτε αντ'' αυτού μια πρόσκληση. '
+  join_group_link: Εγγραφή στην/στο %{group_type}
+  leave_group_link: Αποχώρηση από την/το %{group_type}
+  leave_group_confirmation: Είστε σίγουροι ότι θέλετε να αποχωρήστε από την/το %{group_type};
+  request_join_group_link: Αίτηση εγγραφής στην/στο %{group_type}
+  request_exists: Η αίτηση εγγραφής σας βρίσκεται σε αναμονή για έγκριση.
+  join_group_confirmation: Είστε σίγουροι ότι θέλετε να γραφτείτε στην/στο %{group_type};
+  link_name_description: Αυτό το όνομα θα χρησιμοποιηθεί για αναφορά σε αυτή την ομάδα σε συνδέσμους και διευθύνσεις URL. Πρέπει να περιέχει μόνο αλφαριθμητικούς χαρακτήρες, χωρίς κενά.
+  descriptive_name_for_display: Ένα περιγραφικό όνομα που χρησιμοποιείται για εμφάνιση
+  this_is_committee: Αυτή η επιτροπή είναι μέρος του/της %{parent_group}.
+  network_initial_member: Επιλέξτε μια οργάνωση που θα είναι αρχικό μέλος αυτού του δικτύου.
+  headings:
+    page_search: Αναζήτηση σελίδων
+    recent_pages: Πρόσφατες σελίδες
+    info:
+      page_search: Βρείτε όλες τις σελίδες στις οποίες έχετε πρόσβαση απευθείας ή μέσω των ομάδων σας
+  my_dashboard: Πίνακας ελέγχου
+  uploaded_image_cropped: Η εικόνα που φορτώθηκε θα περικοπεί και θα εκταθεί σε τετράγωνη διάσταση 202 pixels
+  select_image_file: επιλογή αρχείου εικόνας
+  or_image_url: ή διεύθυνσης URL της εικόνας
+  upload_image_link: φόρτωση εικόνας
+  save_changes: Αποθήκευση αλλαγών
+  username: Όνομα χρήστη
+  display_name: Όνομα εμφάνισης
+  email: Email
+  language: Γλώσσα
+  time_zone: Ζώνη ώρας
+  do_you_want_to_receive_email_notifications: Θέλετε να λαμβάνετε ειδοποιήσεις μέσω email για τις αλλαγές στις σελίδες που «παρακολουθείτε»;
+  notification_select:
+    none: 'Όχι: καμία ειδοποίηση μέσω email για αλλαγές'
+    single: 'Ναι: ένα email ειδοποίησης για κάθε αλλαγή'
+    digest: 'Ναι: μια ημερήσια σύνοψη των αλλαγών '
+  send_message_link: Αποστολή μηνύματος
+  messages_with: Συνομιλία με %{other_user}
+  message_to_self_error: Δεν μπορείτε να ανοίξετε συνομιλία με τον εαυτό σας
+  message_you_wrote_caption: 'Γράψατε:'
+  message_user_wrote_caption: "Ο/Η %{user} έγραψε:"
+  unread_private_message: Έχετε ένα μη αναγνωσμένο προσωπικό μήνυμα από %{user}
+  home: Αρχικό μενού
+  menu_me: Εγώ
+  menu_groups: Ομάδες
+  menu_chat: Chat
+  menu_people: Άνθρωποι
+  menu_networks: Δίκτυα
+  menu_link_logout: Αποσύνδεση %{user}
+  menu_admin: Διαχείριση
+  account_settings: Ρυθμίσεις λογαριασμού
+  back_to_page: Επιστροφή στην σελίδα
+  back_to_group: Επιστροφή στην ομάδα
+  pages: Σελίδες
+  recent_pages: Πρόσφατες σελίδες
+  my_pages: Οι σελίδες μου
+  properties: Ιδιότητες
+  popular_pages: Δημοφιλείς σελίδες
+  advanced: Προχωρημένο
+  access: Πρόσβαση
+  active_filters: Ενεργά φίλτρα
+  all_pages: Όλες οι σελίδες
+  created_by_me: Δημιουργήθηκε
+  created_by_user: Δημιουργήθηκε από %{user}
+  created_by_user_description: Αναζήτηση σελίδων που έχουν δημιουργηθεί από συγκεκριμένο χρήστη
+  created_by_dotdotdot: Δημιουργήθηκε από...
+  starred_by_me: Με αστέρι
+  starred_by_user: Με αστέρι από %{user}
+  watched_by_me: Παρακολούθηση
+  watched_by_user: Παρακολουθείτε από %{user}
+  edited_by_me: Επεξεργασμένο
+  edited_by_user: Επεξεργασμένο από %{user}
+  owned_by_me: Ανήκει σε μένα
+  owned_by_user: Ανήκει στον/στην %{user}
+  most_active: Περισσότερο ενεργή
+  most_stars: Με περισσότερα αστέρια
+  most_viewed: Περισσότερο αναγνωσμένη
+  filter_user_description: Αναζήτηση σελίδων με πρόσβαση από συγκεκριμένο χρήστη.
+  filter_group_description: Αναζήτηση σελίδων με πρόσβαση από συγκεκριμένη ομάδα.
+  starred: Με αστέρι
+  viewed: Προβλήθηκε
+  edited: Επεξεργάστηκε
+  type: Τύπος
+  all_page_types: όλοι οι τύποι σελίδων
+  edit_title: επεξεργασία τίτλου
+  data_for_page_missing: Τα στοιχεία αυτής της σελίδας λείπουν.
+  no_change: καμία αλλαγή
+  updated: ενημερώθηκε
+  created: δημιουργήθηκε
+  unread: μη αναγνωσμένα
+  read: αναγνωσμένα
+  page_name_description: Προαιρετικό μοναδικό όνομα (που χρησιμοποιείται για τη δημιουργία της διεύθυνσης URL αυτής της σελίδας)
+  filter_tag_description: Αναζητήστε σελίδες με συγκεκριμένη ετικέτα.
+  page_notice: Ειδοποίηση σελίδας
+  email_notice_subject: Δείτε τη σελίδα "%{title}"
+  email_notice_hello_with_message: 'Γεια, ο/η %{from} σας έστειλε μια σελίδα με το ακόλουθο μήνυμα: %{message}'
+  email_notice_hello: Γεια, ο/η %{from} σας έστειλε μια σελίδα.
+  email_notice_access: 'Μπορείτε να επισκεφτείτε αυτή την σελίδα εδώ:'
+  email_link_expires: Αυτός ο σύνδεσμος θα λήξει σε %{days} μέρες.
+  page_notice_title: Ο/Η <user>%{from}</user> σας έστειλε τη σελίδα "%{page_title}"
+  page_notice_title_with_message: 'Ο/Η <user>%{from}</user> σας έστειλε τη σελίδα "%{page_title}" με το μήνυμα:'
+  page_updated: Ο/Η <user>%{from}</user> ενημέρωσε τη σελίδα "%{page_title}"
+  page_update: Ενημέρωση σελίδας
+  watch_checkbox: Παρακολούθηση ενημερώσεων
+  add_star_link: Προσθήκη αστεριού (%{star_count})
+  remove_star_link: Αφαίρεση αστεριού (%{star_count})
+  public_checkbox: Δημόσια
+  public_checkbox_help: Αν επιλεγεί, η σελίδα είναι προσβάσιμη στον καθένα.
+  page_details_link: "Λεπτομέρειες %{page_class}"
+  delete_page_link: Διαγραφή %{page_class}
+  destroy_page_via_shred: Άμεση ασφαλής διαγραφή
+  destroy_page_via_shred_info: Αυτό θα διαγράψει οριστικά την σελίδα. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
+  destroy_page_via_trash: Μετακίνηση στον Κάδο απορριμάτων
+  destroy_page_via_trash_info: 'Αυτή η ενέργεια θα μετακινήσει τη σελίδα στον Κάδο απορριμάτων, από όπου μπορεί αργότερα να ανακτηθεί.  '
+  undelete_from_trash: Αναίρεση διαγραφής
+  participation: Συμμετοχή
+  information: Πληροφορία
+  remove_access_error: Η πρόσβαση σε αυτή τη σελίδα δεν μπόρεσε να αφαιρεθεί. Δεν μπορείτε να καταργήσετε την πρόσβαση των κατόχων ή την πρόσβαση που είναι σας απαραίτητη για τη διαχείριση της σελίδας.
+  edit_tags_link: Επεξεργασία
+  edit_attachments_link: Επεξεργασία
+  attachments: Συνημμένα
+  edit_attachments: Επεξεργασία συνημμένων αρχείων
+  current_attachments: Τρέχοντα συνημμένα αρχεία
+  add_new_attachment: Προσθήκη νέου συνημμένου αρχείου
+  use_radio_buttons_to_select_page_cover: Χρησιμοποιήστε τα κουμπιά επιλογής για να επιλέξετε το εξώφυλλο
+  page_access_admin: Πλήρης πρόσβαση
+  page_access_edit: Δυνατότητα εγγραφής
+  page_access_none: Καμία πρόσβαση
+  page_access_view: Μόνο για ανάγνωση
+  share_page_link: Κοινή χρήση %{page_class}
+  share_page_recipients: Κοινή χρήση με
+  notify_page_link: Αποστολή ειδοποίησης
+  notify_contribution: "<b>Προηγούμενες συνεισφορές:</b> ειδοποίηση των χρηστών που έχουν <b>συνεισφέρει</b> σε αυτή τη σελίδα."
+  notify_current_access: "<b>Τρέχουσα πρόσβαση:</b> ειδοποίηση των χρηστών ή των ομάδων που έχουν πρόσβαση σε αυτή τη σελίδα."
+  notification_message: Μήνυμα ειδοποίησης
+  send_only_with_encryption: Αποστολή μόνο αν είναι δυνατή η κρυπτογραφημένη διανομή
+  share_send_notification: Αποστολή ειδοποίησης
+  send_email: Αποστολή email
+  share_include_message: Προσθήκη προσαρμοσμένου μυνήματος
+  shared_page_success: Μοιραστήκατε τη σελίδα επιτυχώς.
+  notify_success: Στείλατε ειδοποιήσεις επιτυχώς.
+  share_grant_required_error: "Ο/Η %{name} δεν επιτρέπεται να δει αυτή τη σελίδα. Θα πρέπει πρώτα να του παραχωρηθεί μεγαλύτερη πρόσβαση."
+  share_permission_denied_error: Δεν επιτρέπεται να αλλάξετε τα δικαιώματα πρόσβασης αυτής της σελίδας
+  notify_no_access_error: Συγνώμη, ο/η "%{name}" δεν έχει πρόσβαση σε αυτή τη σελίδα.
+  share_already_exists_error: 'Ο/Η "%{name}" έχει ήδη πρόσβαση σε αυτή τη σελίδα.'
+  share_pester_error: Συγνώμη, δεν επιτρέπεται να κάνετε κοινή χρήση σε  "%{name}".
+  name_or_email_not_found: 'Το όνομα "%{name}" δεν αντιστοιχεί σε κάποιον χρήστη ή ομάδα και δεν είναι έγκυρη διεύθυνση email.'
+  contribute_content_link: Δημιουργία σελίδας
+  page_create_owner: Κάτοχος σελίδας
+  create_page: Δημιουργία σελίδας
+  only_me: Μόνο εγώ
+  page_added_to_group: Αυτή η σελίδα θα προστεθεί στην/στο %{group_type} %{group_name}.
+  additional_page_access: Πρόσθετη πρόσβαση
+  page_owner_error: Το πεδίο του κατόχου της σελίδας δεν μπορεί να είναι κενό.
+  action: Ενέργεια
+  page_history_add_star: "Ο/Η %{user_name} πρόσθεσε ένα αστέρι"
+  page_history_added_comment: "Ο/Η %{user_name} πρόσθεσε ένα σχόλιο"
+  page_history_change_title: "Ο/Η %{user_name} τροποποίησε τον τίτλο της σελίδας"
+  page_history_deleted_page: "Ο/Η %{user_name} διέγραψε τη σελίδα"
+  page_history_destroyed_comment: "Ο/Η %{user_name} διέγραψε οριστικά ένα σχόλιο"
+  page_history_details_change_title: 'Από: "%{from}" σε: "%{to}"'
+  page_history_granted_group_full_access: "Ο/Η %{user_name} παραχώρησε πλήρη πρόσβαση στην ομάδα %{item_name}"
+  page_history_granted_group_read_access: "Ο/Η %{user_name} παραχώρησε δικαίωμα ανάγνωσης στην ομάδα %{item_name}"
+  page_history_granted_group_write_access: "Ο/Η %{user_name} παραχώρησε δικαίωμα εγγραφής στην ομάδα %{item_name}"
+  page_history_granted_user_full_access: "Ο/Η %{user_name} παραχώρησε πλήρη πρόσβαση στον χρήστη %{item_name}"
+  page_history_granted_user_read_access: "Ο/Η %{user_name} παραχώρησε δικαίωμα ανάγνωσης στον χρήστη %{item_name}"
+  page_history_granted_user_write_access: "Ο/Η %{user_name} παραχώρησε δικαίωμα εγγραφής στον χρήστη %{item_name}"
+  page_history_make_private: "Ο/Η %{user_name} αναίρεσε την επιλογή να κάνει δημόσια τη σελίδα"
+  page_history_make_public: "Ο/Η %{user_name} έκανε δημόσια τη σελίδα"
+  page_history_remove_star: "Ο/Η %{user_name} αφαίρεσε ένα αστέρι"
+  page_history_revoked_group_access: "Ο/Η %{user_name} ανακάλεσε την πρόσβαση στην ομάδα %{item_name}"
+  page_history_revoked_user_access: "Ο/Η %{user_name} ανακάλεσε την πρόσβαση του χρήστη %{item_name}"
+  page_history_start_watching: "Ο/Η %{user_name} άρχισε να παρακολουθεί τη σελίδα"
+  page_history_stop_watching: "Ο/Η %{user_name} σταμάτησε να παρακολουθεί τη σελίδα"
+  page_history_updated_comment: "Ο/Η %{user_name} ενημέρωσε ένα σχόλιο"
+  page_history_updated_content: "Ο/Η %{user_name} ενημέρωσε το περιεχόμενο της σελίδας"
+  page_history_user_created_page: "Ο/Η %{user_name} δημιούργησε τη σελίδα"
+  page_history_mailer_hello_user_name: Γεια %{user_name}
+  page_history_mailer: 'Αλλάξτε τις ρυθμίσεις ειδοποίησης μέσω email εδώ: %{page_link}'
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : μια σελίδα έχει τροποποιηθεί"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
+    Μια σελίδα που παρακολουθείτε έχει τροποποιηθεί %{histories_count} φορά/ές από την τελευταία ειδοποίηση,
+    μπορείτε να αποκτήσετε πρόσβαση στη σελίδα εδώ:
+  page_history_mailer_a_page_you_are_watching: Μια σελίδα που παρακολουθείτε έχει τροποποιηθεί, μπορείτε να μεταβείτε στη σελίδα εδώ
+  page_history_the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακολουθείτε έχει τροποποιηθεί
+  page_history_mailer_expire_link: 'Ο σύνδεσμος λήγει σε '
+  page_history_mailer_choose_turn_off_notifications: Μπορείτε να επιλέξετε να απενεργοποιήσετε τις ειδοποιήσεις ηλεκτρονικού ταχυδρομείου, να λαμβάνετε μια περίληψη των αλλαγών, ή να λαμβάνετε ένα email κάθε φορά που η σελίδα τροποποιείται
+  wiki_page_description: Δημιουργήστε ένα επεξεργάσιμο κείμενο ελεύθερης μορφής.
+  wiki_page_display: Σελίδα Wiki
+  gallery_description: Φορτώστε πολλαπλές εικόνες ή οργανώσετε τις υπάρχουσες εικόνες σε ένα σύνολο.
+  gallery_display: Γκαλερί
+  asset_page_description: Φορτώστε μια εικόνα, ένα κείμενο, ένα λογιστικό φύλλο, μια παρουσίαση ή οποιοδήποτε αρχείο.
+  asset_page_display: Αρχείο
+  select_file_to_upload: Επιλέξτε ένα αρχείο για φόρτωση.
+  discussion_page_description: Συζητήστε ένα συγκεκριμένο θέμα με ομάδες ή άλλους χρήστες.
+  discussion_page_display: Ομαδική συζήτηση
+  ranked_vote_page_description: Δημιουργήστε μια λίστα επιλογών που οι χρήστες θα μπορούν να κατατάξουν ανά σειρά προτίμησης.
+  ranked_vote_page_display: Ψηφοφορία κατάταξης
+  survey_page_display: Ερωτηματολόγιο
+  rate_many_page_description: Δημιουργήστε μια λίστα επιλογών που οι χρήστες θα μπορούν να εγκρίνουν ή να απορρίψουν.
+  rate_many_page_display: Ψηφοφορία έγκρισης
+  task_list_page_description: Δημιουργήστε μια λίστα εργασιών προς υλοποίηση και αναθέστε καθήκοντα στον εαυτό σας ή σε άλλους.
+  task_list_page_display: Λίστα εργασιών
+  page_group_vote: Δημοσκοπήσεις και ψηφοφορίες
+  page_group_text: Κείμενα και συζητήσεις
+  page_group_media: Πολυμέσα
+  page_group_planning: Εργαλεία σχεδιασμού
+  pending_tasks: Εργασίες σε εκκρεμότητα
+  completed_tasks: Ολοκληρωμένες εργασίες
+  no_pending_tasks: Δεν υπάρχουν εργασίες σε εκκρεμότητα
+  no_completed_tasks: Δεν υπάρχουν ολοκληρωμένες εργασίες
+  assign_to: Ανάθεση σε
+  completed: Ολοκληρώθηκε
+  vote:
+    really_remove_this: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την επιλογή;
+    you_have_not_ranked: 'Δεν έχετε ακόμα επιλέξει κατάταξη για:'
+    voted_on: Ψήφος για
+    not_voted_on: Δεν έχετε ψηφίσει για
+  vote_good: καλό
+  vote_ok: εντάξει
+  vote_bad: κακό
+  vote_none: τίποτα
+  vote_no: 'όχι'
+  ranked_vote_instructions: Κάντε drag and drop στα στοιχεία της παρακάτω λίστας, μέχρι να είναι ταξινομημένα κατά σειρά προτίμησης από πάνω προς τα κάτω.
+  confirm_vote_button: Επιβεβαίωση ψήφου
+  edit_my_vote_tab: Επεξεργασία ψήφου
+  show_results_tab: Εμφάνιση αποτελεσμάτων
+  top_pick: κορυφαία επιλογή
+  first_choice_of: πρώτη επιλογή για
+  save_survey_button: Αποθήκευση ερωτηματολογίου
+  survey_may_create_response: Μπορεί να δημιουργήσει μια απάντηση;
+  survey_may_see_responses: Μπορεί να δει τις απαντήσεις;
+  survey_may_rate: Μπορεί να κατατάξει τις απαντήσεις;
+  survey_may_see_ratings: Μπορεί να δει τις βαθμολογίες μου;
+  survey_question_label: 'Ερώτηση:'
+  survey_description_heading: Περιγραφή
+  survey_description_explaination: Αυτό το κείμενο θα εμφανιστεί στην καρτέλα εισαγωγής, και θα είναι το πρώτο πράγμα που θα δουν όσοι συμμετέχουν στο ερωτηματολόγιο.
+  select_many_choices_label: 'Επιλέξτε πολλαπλές απαντήσεις:'
+  select_one_choices_label: 'Επιλέξτε μία απάντηση:'
+  video_embed_code_description: Αυτή δεν είναι η διεύθυνση της ιστοσελίδας. Είναι ένας κώδικας που περιβάλλεται από < και > τον οποίον η ιστοσελίδα βίντεο - youtube, κλπ. - θέτει στη διάθεσή σας για να ενσωματώσετε το βίντεο σε άλλους δικτυακούς τόπους.
+  private_question_label: Προσωπική ερώτηση
+  their_answer_goes_here_label: Η απάντηση μπαίνει εδώ...
+  survey_response_by: Απάντηση από %{login}
+  see_whole_response_link: δείτε την πλήρη απάντηση
+  survey_average_rating_heading: 'Μέση βαθμολογία:'
+  survey_previous_result: Προηγούμενο αποτέλεσμα
+  survey_rated_by_1_person_caption: Βαθμολογήθηκε από έναν χρήστη.
+  survey_rated_by_x_people_caption: Βαθμολογήθηκε από %{count} χρήστες.
+  survey_respond_button: Απάντηση
+  survey_rate_this_response_heading: Βαθμολογήστε την απάντηση
+  survey_select_a_rating_message: Επιλέξτε βαθμολογία για να δείτε το επόμενο στοιχείο
+  survey_skip_next_link: Μετάβαση στο επόμενο
+  survey_you_already_rated_response_with_rating_heading: Έχετε ήδη βαθμολογήσει αυτή την απάντηση - έχετε δώσει τη βαθμολογία %{rating}.
+  survey_you_previousely_rated_message: Έχετε ήδη βαθμολογήσει αυτό το στοιχείο ως %{rating}.
+  survey_your_rating_heading: 'Η βαθμολογία σας:'
+  survey_questions: Ερωτήσεις
+  add_long_text_question_link: Εκτενής απάντηση
+  add_select_many_question_link: Επιλογή πολλαπλών απαντήσεων
+  add_select_one_question_link: Επιλογή μοναδικής απάντησης
+  add_short_text_question_link: Σύντομη απάντηση
+  upload_image_question_link: Φόρτωση εικόνας
+  video_link_question_link: Σύνδεσμος video
+  survey_introduction_tab: Εισαγωγή
+  survey_list_all_tab: Λίστα απαντήσεων
+  survey_my_response_tab: Η απάντησή μου
+  survey_please_check_and_rate_message: Ελέγξτε τις απαντήσεις σας και αξιολογήστε τις απαντήσεις των άλλων χρηστών.
+  survey_please_check_message: Ελέξτε τις απαντήσεις σας.
+  survey_thanks_submit_message: Ευχαριστούμε για την απάντησή σας.
+  drag_to_move_tip: σύρετε για να μετακινήσετε
+  each_line_is_a_choice_caption: "(κάθε γραμμή είναι μια πιθανή επιλογή)"
+  no_data_uploaded_label: Δεν έχουν φορτωθεί δεδομένα
+  current_video_sources: 'Προς το παρόν υποστηρίζονται: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_prompt: Ενσωμάτωση κώδικα από εξωτερική πηγή βίντεο.
+  permissions_key: Κλειδί
+  public_description: Όλοι στο διαδίκτυο
+  peers_description: Μέλη των ομάδων σας
+  friends_description: Οι φίλοι σας
+  may_view_label: Να εμφανίζεται το προφίλ μου;
+  may_view_description: Αν δεν είναι επιλεγμένο, το προφίλ σας θα είναι εντελώς κρυφό.
+  may_see_contacts_label: Να εμφανίζονται οι επαφές μου;
+  may_see_contacts_description: Επιτρέψτε στους υπόλοιπους χρήστες να δουν τις επαφές σας.
+  may_see_groups_label: Να εμφανίζονται οι ομάδες μου;
+  may_see_groups_description: Επιτρέψτε σε άλλους χρήστες να δουν σε ποιες ομάδες είστε μέλος.
+  may_pester_label: Να γίνεται κοινή χρήση με μένα;
+  may_pester_description: Επιτρέψτε σε άλλους χρήστες να σας στείλουν μηνύματα, σελίδες και προσκλήσεις.
+  may_request_contact_label: Να επιτρέπονται οι επαφές;
+  may_request_contact_description: Επιτρέψτε σε άλλους χρήστες να σας ζητήσουν να μπουν στις επαφές σας;
+  sharing_and_requests: Κοινή χρήση και αιτήσεις
+  view_profile: Εμφάνιση προφίλ
+  profile_member_since: Μέλος από
+  banner: Banner
+  banner_info: Οι ιδανικές διαστάσεις είναι %{optimal_dimensions} pixels
+  organizational_role: Οργανωτικός ρόλος
+  phone_number: Αριθμός τηλεφώνου
+  email_addresses: Διευθύνσεις email
+  post_message: Δημοσίευση μηνύματος
+  request_friend_link: Προσθήκη στις επαφές μου
+  remove_friend_link: Αφαίρεση από τις επαφές μου
+  edit_profile_link: Επεξεργασία προφίλ
+  profile_saved: Το προφίλ σας έχει αποθηκευτεί.
+  requests: Αιτήματα
+  request: Αίτημα
+  incoming: Εισερχόμενα
+  outgoing: Απεσταλμένα
+  request_pending: "Το αίτημα %{request} βρίσκεται σε αναμονή"
+  not_allowed_to_respond_to_request: "Ο/Η %{user} δεν επιτρέπεται να %{command} το αίτημα."
+  try_again: Προσπαθήστε ξανά
+  send_request_button: Αποστολή αιτήματος
+  send_invites_button: Αποστολή προσκλήσεων
+  all_requests: Όλα τα αιτήματα
+  activerecord:
+    models:
+      request_to_friend: Αίτημα φιλίας
+      request_to_join_our_network:
+        one: Πρόσκληση εγγραφής
+        other: Προσκλήσεις εγγραφής
+      request_to_destroy_our_group: Αίτημα για ασφαλή διαγραφή ομάδας
+      request_to_join_us:
+        one: Πρόσκληση εγγραφής
+        other: Προσκλήσεις εγγραφής
+      request_to_join_us_via_email:
+        one: Πρόσκληση εγγραφής
+        other: Προσκλήσεις εγγραφής
+      request_to_join_you: Αίτημα εγγραφής
+      request_to_join_your_network: Αίτημα εγγραφής
+      request_to_create_council: Αίτημα δημιουργίας επιτροπής
+      request_to_remove_user: Αίτημα αφαίρεσης μέλους
+  request_to_friend: Αίτημα φιλίας
+  request_to_friend_short: Να προστεθεί ο/η %{user} στις επαφές του/της %{other_user};
+  request_to_friend_description: Ο/Η χρήστης %{user} ζήτησε να προστεθεί στις επαφές του/της χρήστη %{other_user}.
+  request_to_join_our_network:
+    one: Πρόσκληση εγγραφής
+    other: Προσκλήσεις εγγραφής
+  request_to_destroy_our_group: Αίτημα για ασφαλή διαγραφή ομάδας
+  request_to_join_our_network_short: Να ενταχθεί η ομάδα %{group} στο  δίκτυο %{network};
+  request_to_join_our_network_description: Η ομάδα %{group} καλέστηκε στο δίκτυο %{network}.
+  request_to_join_us:
+    one: Πρόσκληση επαφής
+    other: Προσκλήσεις εγγραφής
+  request_to_join_us_short: Να ενταχθεί ο/η/το %{group} στην ομάδα %{group};
+  request_to_join_us_description: Ο/Η χρήστης %{user} καλέστηκε στην ομάδα %{group}.
+  request_to_join_us_via_email:
+    one: Πρόσκληση εγγραφής
+    other: Προσκλήσεις εγγραφής
+  request_to_join_us_via_email_short: Να ενταχθεί ο/η χρήστης  %{email} στην ομάδα %{group};
+  request_to_join_us_via_email_description: Ο/Η χρήστης με διεύθυνση email %{email} έχει καλεστεί στην ομάδα %{group}.
+  request_to_join_you: Αίτημα εγγραφής
+  request_to_join_you_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
+  request_to_join_you_description: Ο/Η χρήστης %{user} ζήτησε να γραφτεί στην ομάδα %{group}.
+  request_to_join_your_network: Αίτημα εγγραφής
+  request_to_join_your_network_short: Να ενταχθεί η ομάδα %{group} στο δίκτυο %{network};
+  request_to_join_your_network_description: Η ομάδα %{group} ζήτησε να εγγραφεί στο δίκτυο %{network}.
+  request_to_destroy_our_group_short: Να διαγραφεί οριστικά η ομάδα %{group};
+  request_to_destroy_our_group_description: Ο/Η χρήστης %{user} πρότεινε την οριστική διαγραφή της/του %{group_type} %{group}.
+  request_to_create_council: Αίτημα δημιουργίας συμβουλίου
+  request_to_create_council_short: Να έχει συμβούλιο η ομάδα %{group};
+  request_to_create_council_description: Ο/Η χρήστης %{user} πρότεινε τη δημιουργία συμβουλίου για την/το %{group_type} %{group}.
+  request_to_remove_user: Αίτημα αφαίρεσης μέλους
+  request_to_remove_user_short: Να αφαιρεθεί ο/η %{member} από την ομάδα %{group};
+  request_to_remove_user_description: Ο/Η χρήστης %{user} πρότεινε την αφαίρεση του/της %{member} από την %{group_type} %{group}.
+  invite_info: Εισάγετε μια λίστα χρηστών ή διευθύνσεων email όσων θα θέλατε να καλέσετε να συμμετάσχουν σε αυτήν/το την/το %{group_type}.
+  invite_error_redeemed: Η πρόσκληση έχει ήδη χρησιμοποιηθεί.
+  invite_error_already_member: Είστε ήδη μέλος αυτής της ομάδας.
+  request_exists_error: Υπάρχει ήδη αίτημα για τον/την %{recipient}
+  network_invite_info: Εισάγετε τα ονόματα των ομάδων που θα θέλατε να καλέσετε να συμμετάσχουν σε αυτό το δίκτυο.
+  recipient_tip: Διαχωρίστε τους παραλήπτες με κόμματα, διαστήματα ή νέες γραμμές.
+  you_are_invited: Έχετε προσκληθεί να εγγραφείτε.
+  friend_request_message_label: Πείτε στον/στην %{user} γιατί θέλετε να προστεθείτε στις επαφές του/της.
+  friend_remove_confirmation: Είστε σίγουροι ότι δεν θέλετε να έχετε στις επαφές σας τον/την %{user};
+  place: τόπος
+  icon: Εικονίδιο
+  file: Αρχείο
+  files: Αρχεία
+  photo: Φωτογραφία
+  caption: Λεζάντα
+  photo_credit: Αναφορά προέλευσης
+  video_embed: Ενσωμάτωση
+  size: Μέγεθος
+  illegal_redirect: Παράνομη ανακατεύθυνση
+  redirect_to_foreign_domain: Προσπαθείτε να ανακατευθύνετε σε ένα εξωτερικό domain (%{url}) μετά την είσοδο σας. Για λόγους ασφάλειας έχουμε αφαιρέσει αυτήν την παράμετρο από τη διεύθυνση URL.
+  save_wiki_before_adding_image: Αποθηκεύστε το wiki προτού προσθέσετε μια εικόνα σε αυτό.
+  preview_selected_image: Προεπισκόπηση της επιλεγμένης εικόνας
+  image_size_info: Επιλέξτε το μέγεθος που θα χρησιμοποιηθεί για την εικόνα
+  small: μικρό
+  medium: μεσαίο
+  large: μεγάλο
+  full: πλήρες
+  image_options_info: Να προστεθεί σε πλήρες μέγεθος η εικόνα στον σύνδεσμο του wiki;
+  include_full_checkbox: προσθήκη συνδέσμου προς την πλήρη εικόνα
+  image_select_info: Διαλέξτε την εικόνα που θα εισάγετε από τις εικόνες που έχουν φορτωθεί στο παρελθόν σε αυτή την ομάδα
+  image_upload_info: Φορτώστε μια νέα εικόνα στην ομάδα για να μπορεί να χρησιμοποιηθεί στο wiki
+  a_message_link: ένα μήνυμα
+  a_reply_link: μια απάντηση
+  confirm_discarding_text_area: Όλες οι μη αποθηκευμένες εργασίες σας θα χαθούν. Πατήστε %{cancel} για να συνεχίσετε την επεξεργασία.
+  activity_contact_created: "Ο/Η %{user} πρόσθεσε τον/την %{other_user} ως επαφή"
+  activity_user_left_group: "Ο/Η %{user} αποχώρησε από την/το %{group_type} %{group}"
+  activity_user_joined_group: "Ο/Η %{user} γράφτηκε στην/στο %{group_type} %{group}"
+  activity_user_joined_site: "Ο/Η %{user} γράφτηκε στην ομάδα %{group}"
+  activity_user_destroyed: "Ο/Η %{user} αποσύρθηκε"
+  activity_group_created: "Ο/Η %{user} δημιούργησε την/το %{group_type} %{group}"
+  activity_group_destroyed: "Η %{group} διαγράφηκε από τον χρήστη %{user}"
+  activity_wall_message: "Ο/Η %{author} έγραψε στον/στην %{user}: %{message}"
+  activity_message: "Ο/Η %{author} έγραψε: %{message}"
+  activity_unread: Έχετε %{count} αδιάβαστα [προσωπικά μηνύματα]
+  activity_unread_singular: Έχετε ένα αδιάβαστο [προσωπικό μήνυμα]
+  activity_user_left_site: "Ο/Η %{user} αποχώρησε από %{group} "
+  activity_message_received: 'Έχετε λάβει %{message_tag} από %{other_user}: %{title}'
+  activity_twinkled: 'Ο %{user} σημείωσε την ανάρτησή σας "%{post}" με αστέρι'
+  media_image: Εικόνα
+  media_images: Εικόνες
+  zip_file: Αρχείο Zip
+  history: Ιστορικό
+  other_formats: Άλλοι τύποι αρχείων
+  file_version_deleted: η έκδοση του αρχείου έχει διαγραφεί
+  delete_version_confirm: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την έκδοση;
+  galleries: Γκαλερί
+  created_on: Δημιουργήθηκε την
+  file_size: Μέγεθος αρχείου
+  format: Τύπος αρχείου
+  regenerate: ανανέωση εικονιδίων
+  version_number: έκδοση %{version}
+  upload_image: Φόρτωση εικόνας
+  asset_version_list_version_heading: έκδοση
+  order_changed: Άλλαξε η σειρά.
+  error_saving_new_order_message: 'Σφάλμα κατά την αποθήκευση της νέας σειράς:  %{error_message}'
+  successfully_removed_image: Η εικόνα αφαιρέθηκε με επιτυχία! (%{undo_link})
+  view_slideshow: Προβολή διαφανειών
+  edit_gallery: Επεξεργασία γκαλερί
+  back_to_gallery_link: Επιστροφή στην γκαλερί
+  gallery_changing_cover_message: Αλλαγή εξωφύλλου...
+  download: Λήψη
+  download_gallery: Λήψη γκαλερί
+  gallery_slideshow_apply_settings_button: εφαρμογή
+  gallery_undo_link: αναίρεση
+  remove_from_gallery: Αφαίρεση από τη γκαλερί
+  removing_image: Αφαίρεση εικόνας...
+  move_image_left: Μετακίνηση εικόνας στα αριστερά
+  move_image_right: Μετακίνηση εικόνας στα δεξιά
+  successful_undelete_image: Επιτυχής αναίρεση διαγραφής της εικόνας.
+  saved_new_order: Η νέα σειρά έχει αποθηκευτεί!
+  error_saving_new_order: Σφάλμα κατά την αποθήκευση της νέας σειράς!
+  saving_your_changes: Αποθήκευση των αλλαγών...
+  activate_js_to_rearrange_photos: Ενεργοποιήστε την JavaScript για να αναδιατάξετε  τις φωτογραφίες σας με Drag&amp;Drop
+  drag_and_drop_to_rearrange_photos: Κάντε drag &amp; drop για να αναδιατάξετε τις εικόνες
+  no_images_in_gallery: Δεν υπάρχουν εικόνες στην γκαλερί
+  add_existing_image: Προσθήκη φωτογραφίας
+  add_photo_to_gallery: Κάντε κλικ σε μια φωτογραφία για να την προσθέσετε
+  cancel_link: ακύρωση
+  file_must_be_image_error: Το αρχείο πρέπει να είναι εικόνα για προστεθεί στη γκαλερί σας.
+  add_another_file: Προσθήκη άλλου αρχείου
+  slideshow_delay_input: Ενημέρωση κάθε %{input_field} δευτερόλεπτα
+  make_album_cover: επιλογή της εικόνας ως εξώφυλλο
+  album_cover_changed: Το εξώφυλλο έχει αλλαχτεί
+  upload_images_link: Φόρτωση
+  upload_a_zip_file_link: Φόρτωση αρχείου Zip
+  you_are_not_allowed_to_do_that: Δεν επιτρέπεται να κάνετε κάτι τέτοιο!
+  view_label: Προβολή
+  sunday: Κυριακή
   monday: Δευτέρα
-  more_information: "Περισσότερες Πληροφορίες"
-  rate_many_page_display: "ψήφος έγκρισης"
-  settings: Ρυθμίσεις
-  usage_agreement_required: "Χρειάζεται αποδοχή της συμφωνίας χρήσης"
-  user: Χρήστης
-  username: "Όνομα χρήστη"
-  versions: Εκδόσεις
-  websites: Ιστοσελίδες
+  tuesday: Τρίτη
   wednesday: Τετάρτη
-  wiki_page_display: Wiki
+  thursday: Πέμπτη
+  friday: Παρασκευή
+  saturday: Σάββατο
+  date_today: Σήμερα
+  date_this_week: Αυτή την εβδομάδα
+  date_this_month: Αυτό το μήνα
+  date_this_year: Αυτό το έτος
+  date_all_time: Όλες οι χρονικές περίοδοι
+  alert_not_saved: Οι αλλαγές δεν έχουν αποθηκευτεί
+  alert_field_errors: Υπάρχουν προβλήματα με τα παρακάτω πεδία
+  alert_saved: Οι αλλαγές έχουν αποθηκευτεί
+  alert_permission_denied: Απαγορεύτηκε η πρόσβαση
+  csrf_error_message: 'Η αίτηση σύνδεσής σας μοιάζει με προσπάθεια επίθεσης σε αυτή την σελίδα. Μην ανησυχείτε, το λάθος αυτό συμβαίνει συχνά, ακόμη και για αθώα αιτήματα. Είμαστε απλά επιπλέον καχύποπτοι. Το μόνο που έχετε να κάνετε είναι να ξαναφορτώσετε τη σελίδα πριν επιχειρήσετε να συνδεθείτε. Μπορείτε να ακολουθήσετε αυτό τον σύνδεσμο για να προσπαθήσετε ξανά.'
+  set_status_button: Ενημέρωση του status
+  my_contacts: Επαφές
+  anonymous: anonymous
+  login_required: Απαιτείται σύνδεση
+  login_required_description: Συνδεθείτε για να εκτελέσετε αυτή την ενέργεια.
+  permission_denied_description: Δεν έχετε επαρκή δικαιώματα για να εκτελέσετε αυτή την ενέργεια.
+  permission_denied: Απαγορεύτηκε η πρόσβαση
+  chat: Chat
+  left_the_chatroom: έφυγε από τη συνομιλία
+  tag: Ετικέτα
+  tags: Ετικέτες
+  no_tags: Δεν υπάρχουν ετικέτες
+  add_one_or_more_tags: Προσθέστε μία ή περισσότερες ετικέτες, διαχωρίζοντάς τες με ένα κόμμα
+  separate_tags: Διαχωρίστε τις ετικέτες με ένα κόμμα.
+  add_tags: Προσθήκη ετικετών
+  current_tags: Τρέχουσες ετικέτες
+  welcome_title: Καλωσλθατε στο %{site_title}
+  welcome_message: Το Crabgrass βοηθάει τις οργανώσεις κοινωνικής αλλαγής να υλοποιήσουν δράσεις, κάνουν ενημέρωση, να συνεργαστούν και να δικτυωθούν.
+  wiki: Wiki
+  public_wiki: Δημόσιο Wiki
+  private_wiki: Κλειστό Wiki
+  edit_wiki: Επεξεργασία Wiki
+  wiki_existed_new_version_created: Αυτό το wiki έχει ήδη δημιουργηθεί από άλλο χρήστη. Οι αλλαγές σας αποθηκεύτηκαν ως νέα έκδοση.
+  wiki_is_locked: Το wiki έχει κλειδωθεί από τον/την %{user}.
+  wiki_section_is_locked: Η ενότητα %{section} έχει κλειδωθεί από τον/την %{user}.
+  leave_editing_wiki_page_warning: Οι αλλαγές σας θα χαθούν αν φύγετε από τη σελίδα.
+  cant_edit_section: Δεν μπορείτε να επεξεργαστείτε την ενότητα %{section}.
+  user_locked_section: "Ο/Η %{user} έχει κλειδώσει την ενότητα %{section}."
+  can_still_save: Μπορείτε ακόμα να αποθηκεύσετε.
+  changes_might_be_overwritten: Οι αλλαγές σας μπορεί να αντικατασταθούν.
+  other_section_locked_error: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα %{section}.
+  break_lock_button: Παύση κλειδώματος
+  force_save_button: Παύση κλειδώματος και αποθήκευση
+  versions: Εκδόσεις
+  version: Έκδοση
+  comparing_changes_header: Σύγκριση αλλαγών από ανάμεσα σε %{old_version} και %{new_version}.
+  changes_made: 'Οι αλλαγές έγιναν %{when}. '
+  prev_change: Προηγούμενη αλλαγή
+  next_change: Επόμενη αλλαγή
+  formatting_reference_link: Βοήθεια στην επεξεργασία
+  version_doesnt_exist: Δεν υπάρχει έκδοση %{version}
+  version_exists_error: Το wiki είναι κλειδωμένο επειδή ο χρήστης %{user} έχει αποθηκεύσει νέες αλλαγές πρόσφατα. Μπορείτε να αποθηκεύσετε τις αλλαγές σας, αλλά αυτό θα αντικαταστήσει τη νέα έκδοση.
+  you_are_viewing_version: Βλέπετε την έκδοση %{version} από τον/την {user}
+  diff_link: προβολή αλλαγών
+  version_link: προβολή έκδοσης
+  wiki_section_edit: Επεξεργασία αυτής της ενότητας
+  wiki_revert_version: Επαναφορά στην έκδοση %{version}
+  wiki_version_creator_heading: χρήστης
+  wiki_version_revert_link: επαναφορά
+  insert_image: Εισαγωγή εικόνας
+  preview: Προεπισκόπηση
+  save_or_cancel_edit_lock_wiki_error: Έχετε κλειδώσει αυτό το wiki. Οι υπόλοιποι χρήστες δεν θα είναι σε θέση να το επεξεργαστούν μέχρι να κάνετε κλικ στο κουμπί %{save_button} ή %{cancel_button} για να σταματήσετε την επεξεργασία.
+  cant_find_wiki_section: Η ενότητα %{section} του wiki δεν μπορεί να βρεθεί

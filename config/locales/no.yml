@@ -15,9 +15,9 @@
   signup_email: Din e-post
   forgot_password_text: Hvis du har glemt passordet du bruker for å logge inn, kan vi sende deg en e-postlenke hvor du kan generere et nytt passord.
   reset_password_text: Hei %{user}. Hvis du har glemt passordet du bruker for å logge inn, så kan du sette et nytt passord her.
-  forgot_password_mail_greeting: '%{user}, for å tilbakestille passordet ditt, gå til'
+  forgot_password_mail_greeting: "%{user}, for å tilbakestille passordet ditt, gå til"
   forgot_password_mail_expiry: Denne lenken vil være gyldig i 24 timer. Hvis du trenger å tilbakestille passordet ditt etter det, må du besøke glemt passord-siden på nytt for å be om en ny lenke.
-  reset_password_mail_greeting: '%{user}, passordet ditt er tilbakestilt som du ba om.'
+  reset_password_mail_greeting: "%{user}, passordet ditt er tilbakestilt som du ba om."
   reset_password_mail_warning: Hvis du ikke har bedt om å få passordet ditt endret, vær vennlig å kontakt oss.
   your_login: Din innlogging
   invalid_email_text: E-postadressen du oppga er ugyldig.
@@ -33,19 +33,16 @@
   confirm_new_password: Bekreft nytt passord
   congratulations_you_have_signed_up: Gratulerer! Du har registrert deg på %{site_title}.
   you_should_receive_instructions_email: Du vil motta en e-post med instruksjoner for hvordan du fullfører opprettelsen av brukerkontoen din.
-  email_verification_body: 'Du har registrert deg på %{site_title} (%{host}).
-
+  email_verification_body: |-
+    Du har registrert deg på %{site_title} (%{host}).
 
     Før du kan logge inn, må du verifisere e-postadressen din.
 
-
     Klikk på lenken under eller kopier og lim inn adressen i nettleseren:
-
 
     %{verify_email_link}
 
-
-    Hvis du ikke vil registrere deg, kan du se bort fra denne e-posten.'
+    Hvis du ikke vil registrere deg, kan du se bort fra denne e-posten.
   change_password: Bytt passord
   password: Passord
   password_confirmation: Passordbekreftelse
@@ -60,23 +57,21 @@
   confirm_account_removal: Er du sikker på at du vil fjerne din brukerkonto? Dette kan ikke gjøres om og dine data vil gå tapt.
   account_successfully_removed: Din konto er nå fjernet. Vi vil slette kontoen og alle assosierte data fra vår database.
   crabgrass:
-    powered_by_html: 'Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-
-      '
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
-
-      '
+    powered_by_html: |
+      Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
   destroy_confirmation: Er du sikker på at du vil slette %{thing}? Denne handlingen kan ikke gjøres om.
   confirmation: Er du sikker?
   cancel: Avbryt
   optional: Valgfritt
   required: Påkrevd
-  thing_required: '%{thing} Påkrevd'
+  thing_required: "%{thing} Påkrevd"
   edit: Rediger
   upload: Last opp
   select_files: Velg filer
   drop_files_here: Slipp filer her
-  files_pending: '#{pending} fil(er) venter'
+  files_pending: "#{pending} fil(er) venter"
   return_link: Gå tilbake
   back_button: Tilbake
   send_button: Send
@@ -105,7 +100,7 @@
   approved: Godkjent
   saved: Lagret
   destroy: Destruer
-  thing_destroyed: '%{thing} er destruert'
+  thing_destroyed: "%{thing} er destruert"
   destroy_thing: Destruer %{thing}
   delete_thing: Slett %{thing}
   delete: Slett
@@ -122,8 +117,14 @@
       add: Legg til ny oppgave
     possible:
       add: Legg til ny valgmulighet
+  exception:
+    title:
+      unauthorized: Innlogging påkrevd
+      forbidden: Tillatelse avslått
+    description:
+      unauthorized: Du må logge inn for å utføre denne handlingen.
   image_count: Bilde %{number} av %{count}
-  image_count_total: '%{count} Fotoer'
+  image_count_total: "%{count} Fotoer"
   show_gallery: Vis galleri
   edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
   edit_image: Rediger bilde
@@ -131,7 +132,7 @@
   add_images_or_zips: Legg bilder til zipfil
   add_images_or_zips_explaination: Zipfil blir automatisk pakket ut og lagt til galleriet
   confirm_image_delete: Vil du virkelig slette dette bildet? Denne handlingen kan ikke gjøres om.
-  no_title_given: (ingen tittel gitt)
+  no_title_given: "(ingen tittel gitt)"
   add_images: Legg til bilder
   edit_images: Rediger bilder
   upload_new_image: Last opp nytt bilde
@@ -148,12 +149,12 @@
   upload_images_and_zip_files_help: 'Valgfritt: Velg bilde eller zipfiler til å laste opp.'
   close_and_reload_gallery: Lukk og last inn galleriet på nytt
   search: Søk
-  thing_not_found: '%{thing} ikke funnet'
+  thing_not_found: "%{thing} ikke funnet"
   no_things_found: Ingen %{things} funnet.
   no_search_results: Ingen resultater
   not_found: Ikke funnet
   see_all_link: Se alle
-  total: '%{count} totalt'
+  total: "%{count} totalt"
   all: Alt
   none: Ingen
   or: eller
@@ -169,11 +170,11 @@
   see_less_link: Mindre
   list_things: List %{things}
   thing_was_sent:
-    one: '%{thing} ble sendt til %{recipient}.'
-    other: '%{count} %{thing} ble sendt.'
+    one: "%{thing} ble sendt til %{recipient}."
+    other: "%{count} %{thing} ble sendt."
   thing_was_not_sent:
-    one: '%{thing} kunne ikke sendes til %{recipient}.'
-    other: '%{count} %{thing} kunne ikke sendes.'
+    one: "%{thing} kunne ikke sendes til %{recipient}."
+    other: "%{count} %{thing} kunne ikke sendes."
   user: Bruker
   users: Brukere
   people: Folk
@@ -214,7 +215,6 @@
   messages: Meldinger
   page: Side
   title: Tittel
-  body: Brødtekst
   text_message: Tekstmelding
   print: Utskrift
   show: Vis
@@ -248,13 +248,21 @@
   open_group: Åpen %{group}
   open_group_description: Brukere blir lagt til %{group} med en gang - ingen forespørsler må godkjennes.
   membership_requests: Forespørsler om medlemskap
-  group_membership_count: '%{count} Medlemmer'
+  group_membership_count: "%{count} Medlemmer"
   membership_exists_error: '%{member} er allerede medlem'
   membership_destroy_confirm_message: Er du sikker på at du vil fjerne %{entity} fra %{group}?
   group_invite_subject: Invitasjon til å bli medlem i gruppen "%{group}"
-  group_invite_email: "%{from_user} har invitert deg til å bli medlem i gruppen %{group}. Hvis du vil bli med i gruppen, klikk her:\n\n%{accept_invite_link}\n\nGruppens hjemmeside finner du her:\n%{group_home_link}\n\nHvis du ikke vil bli medlem i denne gruppen er det bare å se bort fra denne e-posten."
-  group_destroyed_subject: '%{group_type} %{group} har blitt slettet av %{user}!'
-  group_destroyed_email: '%{group_type} %{group} har blitt destruert!'
+  group_invite_email: |-
+    %{from_user} har invitert deg til å bli medlem i gruppen %{group}. Hvis du vil bli med i gruppen, klikk her:
+
+    %{accept_invite_link}
+
+    Gruppens hjemmeside finner du her:
+    %{group_home_link}
+
+    Hvis du ikke vil bli medlem i denne gruppen er det bare å se bort fra denne e-posten.
+  group_destroyed_subject: "%{group_type} %{group} har blitt slettet av %{user}!"
+  group_destroyed_email: "%{group_type} %{group} har blitt destruert!"
   group_wiki: Gruppewiki
   create_public_group_wiki: Offentlig
   create_private_group_wiki: Privat
@@ -265,7 +273,7 @@
   networks_publicly_visible: Gjør nettverk synlig for alle
   allow_membership_requests: Tillat forespørsler om medlemskap
   group_successfully_created: Gruppen er opprettet
-  group_publicly_visible_description: '%{group} er synlig i den offentlig tilgjengelige indeksen. <i>profile</i> er synlig for ikke-medlemmer på %{domain}/yourgroupname.'
+  group_publicly_visible_description: "%{group} er synlig i den offentlig tilgjengelige indeksen. <i>profile</i> er synlig for ikke-medlemmer på %{domain}/yourgroupname."
   committee_publicly_visible_description: Komitéer er synlige for ikke-medlemmer på %{domain}/yourgroupname
   networks_publicly_visible_description: Nettverk er synlige for ikke-medlemmer på %{domain}/yourgroupname
   group_members_publicly_visible: Gjør medlemmer synlig for alle
@@ -295,7 +303,6 @@
     recent_pages: Nylige sider
     info:
       page_search: Finn alle sider du har tilgang til direkte eller via dine grupper
-      recent_pages: Du bidro til disse sidene eller de har blitt delt med deg
   my_dashboard: Kontrollpanel
   uploaded_image_cropped: Bildet vil bli beskjært og strukket til 202 piksler i høyde og bredde.
   select_image_file: velg bildefil
@@ -312,11 +319,11 @@
   messages_with: Samtale med %{other_user}
   message_to_self_error: Du kan ikke snakke med deg selv
   message_you_wrote_caption: 'Du skrev:'
-  message_user_wrote_caption: '%{user} skrev:'
+  message_user_wrote_caption: "%{user} skrev:"
   unread_private_message: Du har en ulest privat melding fra %{user}
+  home: Hjem
   menu_me: Meg
   menu_groups: Grupper
-  menu_home: Hjem
   menu_chat: Chat
   menu_people: Folk
   menu_networks: Nettverk
@@ -380,7 +387,7 @@
   remove_star_link: Fjern stjerne (%{star_count})
   public_checkbox: Offentlig
   public_checkbox_help: Dersom denne er krysset av, så er siden synlig for alle.
-  page_details_link: '%{page_class} Detaljer'
+  page_details_link: "%{page_class} Detaljer"
   delete_page_link: Slett %{page_class}
   destroy_page_via_shred: Destruer umiddelbart
   destroy_page_via_shred_info: Dette vil destruere siden permanent. Denne handlingen kan ikke gjøres om.
@@ -404,8 +411,8 @@
   share_page_link: Del %{page_class}
   share_page_recipients: Del side med
   notify_page_link: Send varsel
-  notify_contribution: <b>Tidligere bidrag:</b> varsle folk som har gitt et <b>bidrag</b> til denne siden.
-  notify_current_access: <b>Nåværende tilgang:</b> varsle folk eller grupper som har tilgang til denne siden per i dag.
+  notify_contribution: "<b>Tidligere bidrag:</b> varsle folk som har gitt et <b>bidrag</b> til denne siden."
+  notify_current_access: "<b>Nåværende tilgang:</b> varsle folk eller grupper som har tilgang til denne siden per i dag."
   notification_message: Varselmelding
   send_only_with_encryption: Bare send dersom kryptert distribusjon er mulig
   share_send_notification: Send varsel
@@ -413,7 +420,7 @@
   share_include_message: Inkluder en standardmelding
   shared_page_success: Du har delt denne siden
   notify_success: Du har sendt varsler
-  share_grant_required_error: '%{name} har ikke tillatelse til å se denne siden. De må få godkjent tilgang først.'
+  share_grant_required_error: "%{name} har ikke tillatelse til å se denne siden. De må få godkjent tilgang først."
   share_permission_denied_error: Du har ikke tilgang til å endre tilgangstillatelser for denne siden
   notify_no_access_error: Beklager, "%{name}" har ikke tilgang til denne siden.
   share_already_exists_error: '"%{name}" har allerede tilgang til denne siden.'
@@ -427,34 +434,34 @@
   additional_page_access: Tilleggstilgang
   page_owner_error: Sideeier må fylles ut.
   action: Handling
-  page_history_add_star: '%{user_name} har lagt til en stjerne'
-  page_history_added_comment: '%{user_name} la til en kommentar'
-  page_history_change_title: '%{user_name} har endret tittelen på siden'
-  page_history_deleted_page: '%{user_name} har slettet siden'
-  page_history_destroyed_comment: '%{user_name} destruerte en kommentar'
+  page_history_add_star: "%{user_name} har lagt til en stjerne"
+  page_history_added_comment: "%{user_name} la til en kommentar"
+  page_history_change_title: "%{user_name} har endret tittelen på siden"
+  page_history_deleted_page: "%{user_name} har slettet siden"
+  page_history_destroyed_comment: "%{user_name} destruerte en kommentar"
   page_history_details_change_title: 'Fra: "%{from}" Til: "%{to}"'
-  page_history_granted_group_full_access: '%{user_name} er gitt full tilgang til gruppa %{item_name}'
-  page_history_granted_group_read_access: '%{user_name} er gitt lesetilgang til gruppa %{item_name}'
-  page_history_granted_group_write_access: '%{user_name} er gitt skrivetilgang til gruppa %{item_name}'
-  page_history_granted_user_full_access: '%{user_name} har gitt full tilgang til bruker %{item_name}'
-  page_history_granted_user_read_access: '%{user_name} har gitt lesetilgang til bruker %{item_name}'
-  page_history_granted_user_write_access: '%{user_name} har gitt skrivetilgang til bruker %{item_name}'
-  page_history_make_private: '%{user_name} har valgt å ikke gjøre siden offentlig'
-  page_history_make_public: '%{user_name} har gjort siden offentlig'
-  page_history_remove_star: '%{user_name} har fjernet en stjerne'
-  page_history_revoked_group_access: '%{user_name} har trukket tilbake tilgang til gruppa %{item_name}'
-  page_history_revoked_user_access: '%{user_name} har trukket tilbake tilgang til bruker %{item_name}'
-  page_history_start_watching: '%{user_name} har begynt å følge denne siden'
-  page_history_stop_watching: '%{user_name} har sluttet å følge denne siden'
-  page_history_updated_comment: '%{user_name} oppdaterte en kommentar'
-  page_history_updated_content: '%{user_name} har oppdatert sideinnhold'
-  page_history_user_created_page: '%{user_name} har opprettet siden'
+  page_history_granted_group_full_access: "%{user_name} er gitt full tilgang til gruppa %{item_name}"
+  page_history_granted_group_read_access: "%{user_name} er gitt lesetilgang til gruppa %{item_name}"
+  page_history_granted_group_write_access: "%{user_name} er gitt skrivetilgang til gruppa %{item_name}"
+  page_history_granted_user_full_access: "%{user_name} har gitt full tilgang til bruker %{item_name}"
+  page_history_granted_user_read_access: "%{user_name} har gitt lesetilgang til bruker %{item_name}"
+  page_history_granted_user_write_access: "%{user_name} har gitt skrivetilgang til bruker %{item_name}"
+  page_history_make_private: "%{user_name} har valgt å ikke gjøre siden offentlig"
+  page_history_make_public: "%{user_name} har gjort siden offentlig"
+  page_history_remove_star: "%{user_name} har fjernet en stjerne"
+  page_history_revoked_group_access: "%{user_name} har trukket tilbake tilgang til gruppa %{item_name}"
+  page_history_revoked_user_access: "%{user_name} har trukket tilbake tilgang til bruker %{item_name}"
+  page_history_start_watching: "%{user_name} har begynt å følge denne siden"
+  page_history_stop_watching: "%{user_name} har sluttet å følge denne siden"
+  page_history_updated_comment: "%{user_name} oppdaterte en kommentar"
+  page_history_updated_content: "%{user_name} har oppdatert sideinnhold"
+  page_history_user_created_page: "%{user_name} har opprettet siden"
   page_history_mailer_hello_user_name: Hei %{user_name}
   page_history_mailer: 'Endre dine innstillinger for e-postvarsler her: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: '%{site_title} : En side har blitt endret'
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: 'En side du følger har blitt endret %{histories_count} siden siste varsel,
-
-    du kan se siden her:'
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : En side har blitt endret"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
+    En side du følger har blitt endret %{histories_count} siden siste varsel,
+    du kan se siden her:
   page_history_mailer_a_page_you_are_watching: En side du følger har blitt endret, du kan se siden her
   page_history_the_page_you_are_watching_description: Siden du følger "%{page_title}" har blitt endret
   page_history_mailer_expire_link: Lenken utløper om %{expire_time}
@@ -534,7 +541,7 @@
   survey_please_check_message: Vennligst sjekk dine svar.
   survey_thanks_submit_message: Takk for svaret.
   drag_to_move_tip: dra for å flytte
-  each_line_is_a_choice_caption: (hver linje er et mulig valg)
+  each_line_is_a_choice_caption: "(hver linje er et mulig valg)"
   no_data_uploaded_label: Ingen data lastet opp
   current_video_sources: 'Støttet per i dag: youtube, blip.tv, google video, vimeo.'
   video_embed_code_prompt: Legg inn kode fra ekstern videokilde.
@@ -554,7 +561,6 @@
   sharing_and_requests: Deling og forespørsler
   view_profile: Se profil
   profile_member_since: Medlem siden
-  home: Hjem
   banner: Banner
   banner_info: Optimal størrelse er %{optimal_dimensions} pixler
   organizational_role: Organisasjonsrolle
@@ -569,8 +575,8 @@
   request: Forespørsel
   incoming: Innkommende
   outgoing: Utgående
-  request_pending: '%{request} venter'
-  not_allowed_to_respond_to_request: '%{user} har ikke tillatelse til å %{command} forespørselen.'
+  request_pending: "%{request} venter"
+  not_allowed_to_respond_to_request: "%{user} har ikke tillatelse til å %{command} forespørselen."
   try_again: Prøv igjen
   send_request_button: Send forespørsel
   send_invites_button: Send invitasjoner
@@ -595,9 +601,6 @@
   request_to_friend: Be om å bli kontakter
   request_to_friend_short: Skal %{user} bli %{other_user} sin kontakt?
   request_to_friend_description: Bruker %{user} har bedt om å bli %{other_user} sin kontakt.
-  request_to_join_our_network:
-    one: Invitasjon til å bli medlem
-    other: Invitasjoner til å bli medlem
   request_to_destroy_our_group: Forespørsel om å destruere gruppe
   request_to_join_our_network_short: Skal %{group} bli medlem av %{network}?
   request_to_join_our_network_description: Gruppa %{group} ble invitert til å bli medlem i nettverket %{network}.
@@ -659,17 +662,17 @@
   a_message_link: en melding
   a_reply_link: et svar
   confirm_discarding_text_area: Alle endringer som ikke er lagret vil gå tapt. Klikk %{cancel} for å fortsette å redigere.
-  activity_contact_created: '%{user} la til %{other_user} som venn'
-  activity_user_left_group: '%{user} har forlatt %{group_type} %{group}'
-  activity_user_joined_group: '%{user} har blitt medlem i %{group_type} %{group}'
-  activity_user_joined_site: '%{user} har blitt medlem i %{group}'
-  activity_group_created: '%{user} opprettet %{group_type} %{group}'
-  activity_group_destroyed: '%{group} ble destruert av %{user}'
-  activity_wall_message: '%{author} skrev til %{user}: %{message}'
-  activity_message: '%{author} skrev: %{message}'
+  activity_contact_created: "%{user} la til %{other_user} som venn"
+  activity_user_left_group: "%{user} har forlatt %{group_type} %{group}"
+  activity_user_joined_group: "%{user} har blitt medlem i %{group_type} %{group}"
+  activity_user_joined_site: "%{user} har blitt medlem i %{group}"
+  activity_group_created: "%{user} opprettet %{group_type} %{group}"
+  activity_group_destroyed: "%{group} ble destruert av %{user}"
+  activity_wall_message: "%{author} skrev til %{user}: %{message}"
+  activity_message: "%{author} skrev: %{message}"
   activity_unread: Du har %{count} uleste [private messages]
   activity_unread_singular: Du har en ulest [private message]
-  activity_user_left_site: '%{user} har forlatt %{group}'
+  activity_user_left_site: "%{user} har forlatt %{group}"
   activity_message_received: 'Du har mottatt %{message_tag} fra %{other_user}: %{title}'
   activity_twinkled: '%{user} har stjernet ditt innlegg "%{post}"'
   media_image: Bilde
@@ -765,7 +768,7 @@
   wiki_section_is_locked: Seksjonen %{section} er for øyeblikket låst av %{user}.
   leave_editing_wiki_page_warning: Du vil miste dine endringer hvis du forlater denne siden.
   cant_edit_section: Kan ikke redigere %{section}.
-  user_locked_section: '%{user} har låst %{section}.'
+  user_locked_section: "%{user} har låst %{section}."
   can_still_save: Du kan fremdeles lagre.
   changes_might_be_overwritten: Dine endringer kan bli skrevet over.
   other_section_locked_error: Du kan bare låse en seksjon av gangen. Du har allerede låst %{section}.
