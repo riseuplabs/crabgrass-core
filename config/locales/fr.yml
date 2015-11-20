@@ -1,28 +1,32 @@
 fr:
-  cookie_disabled_warning: Les cookies sont désactivés sur votre navigateur. Vous ne pourrez vous connecter tant que ce sera le cas.
+  cookie_disabled_warning: Les cookies sont désactivés sur votre navigateur. Vous ne pourrez pas vous connecter tant que ce sera le cas.
   signup_link: Créer un nouveau compte ?
   signup_email_info: 'Optionnel: utilisé si vous oubliez votre mot de passe'
   forgot_password_link: J'ai oublié mon mot de passe
-  login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
-  signup_success_message: Merci de votre inscription !
-  login_name: Nom d'utilisateur
+  login_failure_reason: L'identifiant ou le mot de passe est incorrect.
+  signup_success_message: Merci pour votre inscription !
+  login_name: Identifiant
   signup_success: Enregistrement réussi
   logout_success: Au revoir
-  logout_success_message: Vous avez été déconnecté-e.
+  logout_success_message: Vous avez été déconnecté·e.
+  signup_button: S'enregistrer
   login_failed: Connexion impossible
+  signup_login_name: Votre identifiant
+  login_button: Connexion
   login: Connexion
+  sign_in: Connexion
   signup_title: Créez votre compte
   signup_email: Votre Mail
   forgot_password_text: Si vous avez oublié votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer un nouveau.
   reset_password_text: Bonjour, %{user}. Si vous avez oublié votre mot de passe pour vous connecter, vous pouvez en définir un ici.
-  forgot_password_mail_greeting: '%{user}, pour régénérer votre mot de passe'
-  forgot_password_mail_expiry: Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre mot de passe après ce délai, vous aurez à retourner à nouveau sur la page pour demander un nouveau lien.
-  reset_password_mail_greeting: '%{user}, votre mot de passe a été réinitialisé à votre demande.'
+  forgot_password_mail_greeting: "%{user}, pour régénérer votre mot de passe, allez à "
+  forgot_password_mail_expiry: Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre mot de passe après ce délai, vous aurez à retourner à nouveau sur la page 'mot de passe perdu' pour demander un nouveau lien.
+  reset_password_mail_greeting: "%{user}, votre mot de passe a été réinitialisé à votre demande."
   reset_password_mail_warning: Si vous n'avez pas demandé à réinitialiser votre mot de passe, merci de nous contacter.
   your_login: Votre identifiant
   invalid_email_text: L'adresse mail fournie est invalide.
   reset_password: Réinitialiser le mot de passe
-  reset_password_email_sent: Un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé.
+  reset_password_email_sent: Si cette adresse mail est associée avec un identifiant, alors un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé.
   invalid_token: Lien invalide
   invalid_token_text: Le lien de régénération de mot de passe spécifié est invalide. Il doit être déjà utilisé, ou a dû expirer.
   password_reset: Réinitialisation du mot de passe
@@ -32,21 +36,18 @@ fr:
   forgotten_email_address: Quelle adresse mail avez-vous donné lors de la création du compte ?
   new_password: Nouveau mot de passe
   confirm_new_password: Confirmer le nouveau mot de passe
-  congratulations_you_have_signed_up: Félicitations ! Vous êtes inscrit-e sur %{site_title}.
+  congratulations_you_have_signed_up: Félicitations ! Vous êtes inscrit·e sur %{site_title}.
   you_should_receive_instructions_email: Vous devriez recevoir un mail avec les instructions pour finaliser la création de votre compte.
-  email_verification_body: 'Vous ou une autre personne avez demandé à vous inscrire sur %{site_title} (%{host}).
+  email_verification_body: |-
+    Vous ou une autre personne avez demandé à vous inscrire sur %{site_title} (%{host}).
 
-
-    Avant de pouvoir vous connecter, vous devez confirmer que c''est bien votre mail.
-
+    Avant de pouvoir vous connecter, vous devez confirmer que c'est bien votre mail.
 
     Cliquez le lien ci-dessous ou copiez-le dans votre navigateur :
 
-
     %{verify_email_link}
 
-
-    Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.'
+    Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.
   change_password: Modification du mot de passe
   password: Mot de passe
   password_confirmation: Confirmation du mot de Passe
@@ -54,30 +55,33 @@ fr:
   login_password: Mot de passe
   signup_password: Votre mot de passe
   remove_your_account: Suppression de votre compte
-  anonymize_display_name: 'Anonymiser le nom d''affichage '
-  anonymize_display_name_info: Remplace votre nom d'affichage par 'Anonyme' partout
+  anonymize_display_name: 'Anonymiser le nom affiché '
+  anonymize_display_name_info: Remplace votre nom affiché par 'Anonyme' partout
   destroy_comments: Détruire les commentaires
   destroy_comments_info: Cela va détruire tous les commentaires que vous avez fait sur les pages, Cela peut rendre difficile la compréhension des commentaires restant des autres personnes.
-  confirm_account_removal: Êtes-vous certain-e de vouloir supprimer votre compte ? Cette action est définitive et vos données seront perdues.
+  confirm_account_removal: Êtes-vous certain·e de vouloir supprimer votre compte ? Cette action est définitive et vos données seront perdues.
   account_successfully_removed: Votre compte a bien été supprimé. Nous allons le supprimer ainsi que toutes les informations associées dans la base de donnée.
   crabgrass:
-    powered_by_html: 'Ce site est propulsé par <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-
-      '
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux.
-
-      '
+    powered_by_html: |
+      Ce site est propulsé par <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> logiciel libre AGPL</a> pour organiser les réseaux.
+    report_a_bug: Signaler un bogue
+    request_a_feature: Demander une nouvelle fonctionnalité
+    help_pages: Page d'aide Crabgrass
+    get_involved: S'investir
+    help_translate: Aider aux traductions
   destroy_confirmation: Êtes vous certain de vouloir effacer ce %{thing}? Cette opération est définitive.
-  confirmation: Êtes-vous sûr-e ?
+  confirmation: Êtes-vous sûr·e ?
   cancel: Annuler
-  optional: Optionel-le
-  required: (requis)
-  thing_required: '%{thing} nécessaire'
+  optional: Optionel·le
+  required: obligatoire
+  thing_required: "%{thing} nécessaire"
   edit: Éditer
   upload: Télécharger
   select_files: Sélectionner des fichiers
   drop_files_here: Glisser les fichiers ici
-  files_pending: '#{pending} fichier(s) en cours'
+  files_pending: "#{pending} fichier(s) en cours"
   return_link: Retour
   back_button: Retour
   send_button: Envoyer
@@ -95,7 +99,7 @@ fr:
   alert: Alerte
   loading_progress: Chargement...
   loadingdotdotdot: Chargement...
-  create_a_new_thing: Créer un-e %{thing}
+  create_a_new_thing: Créer %{thing}
   create_thing: Créer %{thing}
   created_by: Créée par
   updated_by: Mise à jour par
@@ -105,14 +109,14 @@ fr:
   pending: En attente
   rejected: rejetées
   approved: approuvées
-  saved: Sauvegardé-e
+  saved: Sauvegardé·e
   destroy: Détruire
-  thing_destroyed: '%{thing} détruit•e'
+  thing_destroyed: "%{thing} détruit•e"
   destroy_thing: Détruire %{thing}
   delete_thing: Supprimer %{thing}
   delete: Supprimer
   delete_button: Supprimer
-  deleted: Supprimé-e
+  deleted: Supprimé·e
   remove: Retirer
   autocomplete:
     placeholder:
@@ -124,8 +128,21 @@ fr:
       add: Ajouter une nouvelle tâche
     possible:
       add: Ajouter une nouvelle possibilité
+  exception:
+    title:
+      not_found: "%{thing} Non Trouvé·e"
+      unauthorized: Connexion Obligatoire
+      forbidden: Autorisation refusée
+      group:
+        not_found: Groupe Non Trouvé
+    description:
+      not_found: désolé, nous ne pouvons trouver ce que vous cherchez.
+      unauthorized: Merci de vous connecter pour effectuer cette action.
+      forbidden: Désolé. Vous n'avez pas les droits pour faire cette action.
+      group:
+        not_found: Désolé, nous ne pouvons trouver le groupe que vous cherchez.
   image_count: Image %{number} de %{count}
-  image_count_total: '%{count} Images'
+  image_count_total: "%{count} Images"
   show_gallery: Afficher la galerie
   edit_gallery_explanation: Ajouter de nouvelles images ou glisser les images pour les réordonner
   edit_image: Modifier l'image
@@ -133,7 +150,7 @@ fr:
   add_images_or_zips: Ajouter des images ou une archive Zip
   add_images_or_zips_explaination: Les archives Zip seront automatiquement décompressées et ajoutées à la galerie
   confirm_image_delete: Voulez-vous vraiment supprimer cette image ? Cette action sera définitive.
-  no_title_given: (pas de titre donné)
+  no_title_given: "(pas de titre donné)"
   add_images: Ajouter des images
   edit_images: Modifier les images
   upload_new_image: Téléverser une nouvelle image
@@ -150,17 +167,18 @@ fr:
   upload_images_and_zip_files_help: 'Optionnel: Sélectionner une image ou une archive Zip à téléverser'
   close_and_reload_gallery: Fermer et recharger la galerie
   search: Rechercher
-  thing_not_found: '%{thing} non trouvé-e'
-  no_things_found: '%{things} non trouvé-es.'
+  go: Aller
+  thing_not_found: "%{thing} non trouvé·e"
+  no_things_found: '%{things} non trouvé·es.'
   no_search_results: Aucun résultat
-  not_found: Non trouvé-e
+  not_found: Non trouvé·e
   see_all_link: Tout afficher
-  total: '%{count} au total'
+  total: "%{count} au total"
   all: Tout
   none: Aucun
   or: ou
-  new: nouvel-le
-  modified: modifié-e
+  new: nouveau
+  modified: modifié·e
   unknown: Inconnu
   next: Suivant
   previous: Précédent
@@ -171,11 +189,11 @@ fr:
   see_less_link: Moins
   list_things: Lister les %{things}
   thing_was_sent:
-    one: '1 %{thing} a été envoyé-e pour %{recipient}.'
-    other: '%{count} %{thing} ont été envoyé-es'
+    one: "%{thing} a été envoyé·e à %{recipient}."
+    other: "%{count} %{thing} ont été envoyé·es"
   thing_was_not_sent:
-    one: '%{thing} n''a pas pu être envoyé-e à %{recipient}.'
-    other: '%{count} %{thing} n''ont pu être envoyé-es.'
+    one: "%{thing} n'a pas pu être envoyé·e à %{recipient}."
+    other: "%{count} %{thing} n'ont pu être envoyé·es."
   user: Utilisateur
   users: Utilisateurs
   people: Utilisateurs
@@ -184,8 +202,8 @@ fr:
   recipients: Destinataires
   recipient: Destinataire
   owner: Propriétaire
-  created_by_entity: Créé-e par %{entity}
-  approved_by_entity: Approuvé-e par %{entity}
+  created_by_entity: Créé·e par %{entity}
+  approved_by_entity: Approuvé·e par %{entity}
   rejected_by_entity: Rejetée par %{entity}
   contacts: Contacts
   friends: Contacts
@@ -208,6 +226,9 @@ fr:
   notice: En attente
   notices: En attente
   dismiss: Évacuer
+  dismiss_all_notices: Tout Évacuer
+  dismiss_all_notices_confirmation: Êtes-vous certain·e de vouloir évacuer toutes les notifications ?
+  action_cannot_be_undone: Cette action ne peut être annulé·e.
   locale: Localisation
   description: Description
   details: Détails
@@ -218,8 +239,8 @@ fr:
   settings: Paramètres
   messages: Messages
   page: Page
+  tasks: Tâches
   title: Titre
-  body: Corps
   text_message: Message textuel
   print: Imprimer
   show: Montrer
@@ -230,8 +251,8 @@ fr:
   visits: Visites
   group: Groupe
   groups: Groupes
-  organization: organisation
-  organizations: Organisations
+  organization: Groupe
+  organizations: Groupes
   network: Réseau
   networks: Réseaux
   committee: Commission
@@ -240,11 +261,11 @@ fr:
   councils: Conseils
   members: Membres
   structure: Structure
-  group_creation_info: 'Il y a quatre types d''organisation:'
-  group_description: Les groupes sont des organisations autonomes qui ont des personnes comme membres.
-  network_description: Les réseaux sont des organisations qui peuvent avoir des groupes comme membres. Un réseau peut être utilisé comme une fédération de multiples groupes, ou bien comme lieu de collaboration entre deux groupes.
-  committee_description: Les commissions sont des organisations dans un groupe ou un réseau. Une commission est entièrement subordonnée au groupe ou au réseau dont elle fait partie.
-  council_description: Les conseils sont des organisations avec des pouvoir administratifs particuliers. Tous les groupes ou réseaux peuvent avoir un conseil. Si c'est le cas, les membres de ce conseil auront le pouvoir sur le réseau ou le groupe.
+  group_creation_info: 'Il y a quatre types de structure:'
+  group_description: Les groupes sont des structures autonomes qui ont des personnes comme membres.
+  network_description: Les réseaux sont des structures qui peuvent avoir des groupes comme membres. Un réseau peut être utilisé comme une fédération de multiples groupes, ou bien comme lieu de collaboration entre deux groupes.
+  committee_description: Les commissions sont des structures dans un groupe ou un réseau. Une commission est entièrement subordonnée au groupe ou au réseau dont elle fait partie.
+  council_description: Les conseils sont des structures avec des pouvoir administratifs particuliers. Tous les groupes ou réseaux peuvent avoir un conseil. Si c'est le cas, les membres de ce conseil auront le pouvoir sur le réseau ou le groupe.
   council_description_details: Par défaut, tous ses membres peuvent modifier le %{group}. Pour restreindre les pouvoirs administratifs à certains membres, créer un conseil et y ajouter ces membres.
   committee_choose_group: 'Choisir un groupe pour cette commission:'
   network_committees_may_not_join_networks: Les commissions des autres réseaux ne peuvent se joindre.
@@ -252,14 +273,25 @@ fr:
   may_request_membership_description: Un lien "Rejoindre %{group}" apparaîtra sur la page de votre groupe. Cela enverra une demande d'inscription au groupe qui pourra être acceptée ou rejetée.
   open_group: Ouvrir %{group}
   open_group_description: Les personnes sont immédiatement inscrites dans le %{group} - les requêtes n'ont pas besoin d'être approuvées
+  shared_groups: Groupes Partagés
+  public_groups: Structures Publiques
   membership_requests: Demandes d'adhésion
-  group_membership_count: '%{count} Membres'
+  group_membership_count: "%{count} Membres"
   membership_exists_error: Une inscription existe déjà pour %{member}
-  membership_destroy_confirm_message: Êtes-vous certain•e de vouloir retirer '%{entity}' de %{group} ?
+  membership_destroy_confirm_message: Êtes-vous certain·e de vouloir retirer '%{entity}' de %{group} ?
   group_invite_subject: Invitation à rejoindre le groupe "%{group}"
-  group_invite_email: "%{from_user} vous a invité•e à rejoindre le groupe \"%{group}\". Si vous souhaitez rejoindre ce groupe, cliquez ici:\n\n %{accept_invite_link}\n\nLa page d'accueil du groupe peut être trouvée ici:\n\n %{group_home_link}\n\nSi vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail."
-  group_destroyed_subject: 'L''organisation %{group} a été supprimée par %{user}!'
-  group_destroyed_email: 'L''organisation %{group} a été détruite !'
+  group_invite_email: |-
+    %{from_user} vous a invité•e à rejoindre le groupe "%{group}". Si vous souhaitez rejoindre ce groupe, cliquez ici:
+
+     %{accept_invite_link}
+
+    La page d'accueil du groupe peut être trouvée ici:
+
+     %{group_home_link}
+
+    Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail.
+  group_destroyed_subject: "%{group_type} %{group} supprimé·e par %{user}!"
+  group_destroyed_email: "%{group_type} %{group} détruit·e !"
   group_wiki: Wiki principal
   create_public_group_wiki: Public
   create_private_group_wiki: Privé
@@ -270,7 +302,7 @@ fr:
   networks_publicly_visible: Rendre les réseaux visibles publiquement
   allow_membership_requests: Autoriser les demandes de membre
   group_successfully_created: Le groupe est créé avec succès.
-  group_publicly_visible_description: 'Le groupe apparaît dans le répertoire public. Son <i>profil</i> est visible de toutes et tous à l''adresse %{domain}/yourgroupname.'
+  group_publicly_visible_description: "Le groupe apparaît dans le répertoire public. Son <i>profil</i> est visible de toutes et tous à l'adresse %{domain}/yourgroupname."
   committee_publicly_visible_description: Les commissions sont visibles aux non-membres à l'adresse %{domain}/yourgroupname
   networks_publicly_visible_description: Les réseaux sont visibles aux non-membres à l'adresse %{domain}/yourgroupname
   group_members_publicly_visible: Afficher publiquement les membres du groupe
@@ -286,11 +318,11 @@ fr:
   view_requests: Voir les Demandes
   add_members_to_committee: Ajouter des membres du groupe à cette commission
   join_group_link: Rejoindre %{group_type}
-  leave_group_link: Quitter le %{group_type}
-  leave_group_confirmation: Êtes-vous certain•e de vouloir quitter cette organisation ?
-  request_join_group_link: Demande d'inscription à %{group_type}
+  leave_group_link: Quitter %{group_type}
+  leave_group_confirmation: Êtes-vous certain·e de vouloir quitter cette structure ?
+  request_join_group_link: Demander à rejoindre %{group_type}
   request_exists: Votre demande d'adhésion est en attente d'approbation.
-  join_group_confirmation: Êtes-vous certain•e de vouloir rejoindre cette organisation ?
+  join_group_confirmation: Êtes-vous certain·e de vouloir rejoindre cette structure ?
   link_name_description: C'est ce nom qui sera utilisé pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
   descriptive_name_for_display: Un nom explicite utilisé pour l'affichage
   this_is_committee: Cette commission fait partie de %{parent_group}.
@@ -300,14 +332,15 @@ fr:
     recent_pages: Pages récentes
     info:
       page_search: Trouver toutes les pages accessibles directement ou via vos groupes
-      recent_pages: Vous avez contribué à ces pages ou elles ont été partagées avec vous
+      recent_pages: Ces pages ont été créées ou mises à jour récemment.
   my_dashboard: Mon tableau de bord
   uploaded_image_cropped: Les images téléversées seront réduites à un carré de 96 pixels de côté.
   select_image_file: Sélectionner le fichier image
   or_image_url: ou URL de l'image
   upload_image_link: Téléverser une image
+  remove_image_link: retirer image
   save_changes: Sauvegarder les modifications
-  username: Nom d'utilisateur
+  username: Identifiant
   display_name: Nom affiché
   email: Mail
   language: Langue
@@ -319,17 +352,17 @@ fr:
     digest: 'Oui: un résumé quotidien des modifications'
   send_message_link: Envoyer un message
   messages_with: 'Conversation avec '
-  message_to_self_error: Ne peut parler à soi-même
+  message_to_self_error: Impossible de parler à soi-même
   message_you_wrote_caption: 'Vous avez écrit:'
-  message_user_wrote_caption: '%{user} a écrit:'
+  message_user_wrote_caption: "%{user} a écrit:"
   unread_private_message: Vous avez un message privé non lu de %{user}
+  home: Accueil
   menu_me: Moi
   menu_groups: Groupes
-  menu_home: Accueil
   menu_chat: Salon de Discussion
   menu_people: Autrui
   menu_networks: Réseaux
-  menu_link_logout: Déconnexion
+  menu_link_logout: Déconnecter %{user}
   menu_admin: Administrer
   account_settings: Paramètres du compte
   back_to_page: Retour à la page
@@ -389,7 +422,7 @@ fr:
   remove_star_link: Retirer l'étoile (%{star_count})
   public_checkbox: Public
   public_checkbox_help: Si coché, tout le monde peut voir cette page.
-  page_details_link: 'Détails de la %{page_class}'
+  page_details_link: "Détails de la %{page_class}"
   delete_page_link: Supprimer la %{page_class}
   destroy_page_via_shred: Détruire définitivement
   destroy_page_via_shred_info: Ceci supprimera définitivement la page. Cette action ne peut être annulée.
@@ -413,8 +446,8 @@ fr:
   share_page_link: Partager la %{page_class}
   share_page_recipients: 'Partager cette %{page_class} avec '
   notify_page_link: Envoyer une notification
-  notify_contribution: <b>Contributeurs précédents:</b> notifier les personnes qui ont déjà fait une <b>contribution</b> sur cette page.
-  notify_current_access: <b>Accès actuels:</b> notifier les personnes ou les groupes qui ont actuellement accès à cette page.
+  notify_contribution: "<b>Contributeurs précédents:</b> notifier les personnes qui ont déjà fait une <b>contribution</b> sur cette page."
+  notify_current_access: "<b>Accès actuels:</b> notifier les personnes ou les groupes qui ont actuellement accès à cette page."
   notification_message: Message de Notification
   send_only_with_encryption: N'envoyer que si le chiffrement est possible
   share_send_notification: Envoyer une notification
@@ -422,46 +455,46 @@ fr:
   share_include_message: Ajouter un message personnalisé
   shared_page_success: Vous avez partagé cette page avec succès.
   notify_success: Vous avez envoyé des notifications avec succès.
-  share_grant_required_error: '%{name} n''est pas autorisé•e à voir cette page. Un accès lui est nécessaire auparavant pour ce faire.'
+  share_grant_required_error: "%{name} n'est pas autorisé•e à voir cette page. Un accès lui est nécessaire auparavant pour ce faire."
   share_permission_denied_error: Vous n'êtes pas autorisé•e à modifier les permissions d'accès de cette page.
   notify_no_access_error: Désolé, "%{name}" n'a pas accès à cette page.
   share_already_exists_error: '"%{name}" a déjà accès à cette page.'
-  share_pester_error: Désolé, vous n'êtes pas autorisé-e à partager avec "%{name}".
+  share_pester_error: Désolé, vous n'êtes pas autorisé·e à partager avec "%{name}".
   name_or_email_not_found: '"%{name}" ne correspond à aucun nom de personne ou de groupe et n''est pas une adresse mail valide.'
   contribute_content_link: Créer une Page
   page_create_owner: Propriétaire de la Page
   create_page: Créer une Page
   only_me: Moi
-  page_added_to_group: Cette page sera ajoutée à l'organisation %{group_name}.
+  page_added_to_group: Cette page sera ajoutée à la structure %{groupe_type} %{group_name}.
   additional_page_access: Accès additionnel
   page_owner_error: Propriétaire de la page ne peut pas être laissé en blanc
   action: action
-  page_history_add_star: '%{user_name} a ajouté une étoile'
-  page_history_added_comment: '%{user_name} a ajouté un commentaire'
-  page_history_change_title: '%{user_name} a modifié le titre de la page'
-  page_history_deleted_page: '%{user_name} a supprimé la page'
-  page_history_destroyed_comment: '%{user_name} a détruit un commentaire'
+  page_history_add_star: "%{user_name} a ajouté une étoile"
+  page_history_added_comment: "%{user_name} a ajouté un commentaire"
+  page_history_change_title: "%{user_name} a modifié le titre de la page"
+  page_history_deleted_page: "%{user_name} a supprimé la page"
+  page_history_destroyed_comment: "%{user_name} a détruit un commentaire"
   page_history_details_change_title: 'De: "%{from}" à : "%{to}"'
-  page_history_granted_group_full_access: '%{user_name} a donné les accès complets au groupe %{item_name}'
-  page_history_granted_group_read_access: '%{user_name} a donné l''accès en lecture au groupe %{item_name}'
-  page_history_granted_group_write_access: '%{user_name} a donné l''accès en écriture au groupe %{item_name}'
-  page_history_granted_user_full_access: '%{user_name} a donné l''accès complet à l''utilisateur  %{item_name}'
-  page_history_granted_user_read_access: '%{user_name} a donné l''accès en lecture à l''utilisateur %{item_name}'
-  page_history_granted_user_write_access: '%{user_name} a donné l''accès en écriture à l''utilisateur %{item_name}'
-  page_history_make_private: '%{user_name} a décoché l''option qui rend la page publique'
-  page_history_make_public: '%{user_name} a rendu la page publique'
-  page_history_remove_star: '%{user_name} a retiré une étoile'
-  page_history_revoked_group_access: '%{user_name} a révoqué l''accès au groupe %{item_name}'
-  page_history_revoked_user_access: '%{user_name} a révoqué l''accès à l''utilisateur %{item_name}'
-  page_history_start_watching: '%{user_name} a mis en place un suivi de cette page'
-  page_history_stop_watching: '%{user_name} a arrêté de suivre cette page'
-  page_history_updated_comment: '%{user_name} a modifié un commentaire'
-  page_history_updated_content: '%{user_name} a modifié le contenu de la page'
-  page_history_user_created_page: '%{user_name} a créé la page'
+  page_history_granted_group_full_access: "%{user_name} a donné les accès complets au groupe %{item_name}"
+  page_history_granted_group_read_access: "%{user_name} a donné l'accès en lecture au groupe %{item_name}"
+  page_history_granted_group_write_access: "%{user_name} a donné l'accès en écriture au groupe %{item_name}"
+  page_history_granted_user_full_access: "%{user_name} a donné l'accès complet à l'utilisateur  %{item_name}"
+  page_history_granted_user_read_access: "%{user_name} a donné l'accès en lecture à l'utilisateur %{item_name}"
+  page_history_granted_user_write_access: "%{user_name} a donné l'accès en écriture à l'utilisateur %{item_name}"
+  page_history_make_private: "%{user_name} a décoché l'option qui rend la page publique"
+  page_history_make_public: "%{user_name} a rendu la page publique"
+  page_history_remove_star: "%{user_name} a retiré une étoile"
+  page_history_revoked_group_access: "%{user_name} a révoqué l'accès au groupe %{item_name}"
+  page_history_revoked_user_access: "%{user_name} a révoqué l'accès à l'utilisateur %{item_name}"
+  page_history_start_watching: "%{user_name} a mis en place un suivi de cette page"
+  page_history_stop_watching: "%{user_name} a arrêté de suivre cette page"
+  page_history_updated_comment: "%{user_name} a modifié un commentaire"
+  page_history_updated_content: "%{user_name} a modifié le contenu de la page"
+  page_history_user_created_page: "%{user_name} a créé la page"
   page_history_mailer_hello_user_name: Bonjour %{user_name}
   page_history_mailer: 'Modifiez vos paramètres de notification par mail ici: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: '%{site_title} : Une page a été modifiée'
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: 'Une page dont vous suivez les mises à jour a été modifiée %{histories_count} depuis la dernière notification, vous pouvez y accéder ici: '
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : Une page a été modifiée"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Une page dont vous suivez les mises à jour a été modifiée %{histories_count} depuis la dernière notification, vous pouvez y accéder ici: "
   page_history_mailer_a_page_you_are_watching: Une page dont vous suivez les mises à jour a été modifiée, vous pouvez y accéder ici
   page_history_the_page_you_are_watching_description: La page que vous suivez "%{page_title}" a été modifiée
   page_history_mailer_expire_link: Le lien expirera dans %{expire_time}
@@ -486,6 +519,11 @@ fr:
   page_group_text: Texte et Discussions
   page_group_media: Multimédia
   page_group_planning: Outils de Planification
+  pending_tasks: Tâches en attente
+  completed_tasks: Tâches terminées
+  no_pending_tasks: Aucune tâche en attente
+  no_completed_tasks: Aucune tâche terminée
+  assign_to: Assigner à
   completed: Complétées
   vote:
     really_remove_this: Voulez-vous vraiment retirer cette option ?
@@ -494,9 +532,10 @@ fr:
     not_voted_on: N'a pas voté sur
   vote_good: bien
   vote_ok: ok
-  vote_bad: mauvais-e
+  vote_bad: mauvais·e
   vote_none: aucun•e
   vote_no: 'Non'
+  ranked_vote_instructions: Glissez/déplacez les éléments de la liste suivante afin qu'ils soient dans ordonnées du préféré en haut au moins apprécié en bas.
   confirm_vote_button: Confirmer le Vote
   edit_my_vote_tab: Modifier mon vote
   show_results_tab: Voir les résultats
@@ -542,7 +581,7 @@ fr:
   survey_please_check_message: Merci de passer vos réponses en revue.
   survey_thanks_submit_message: Merci de votre réponse.
   drag_to_move_tip: Déplacer
-  each_line_is_a_choice_caption: (chaque ligne est un choix possible)
+  each_line_is_a_choice_caption: "(chaque ligne est un choix possible)"
   no_data_uploaded_label: Aucune donnée téléchargée
   current_video_sources: 'Actuellement supportés: youtube, blip.tv, google video et vimeo.'
   video_embed_code_prompt: Code importé depuis une source vidéo extérieure.
@@ -563,7 +602,6 @@ fr:
   sharing_and_requests: Partages et requêtes
   view_profile: Voir le profil
   profile_member_since: Membre Depuis
-  home: Accueil
   banner: Bannière
   banner_info: La taille optimale est %{optimal_dimensions} pixels
   organizational_role: rôle organisationnel
@@ -578,8 +616,8 @@ fr:
   request: Requêtes
   incoming: Entrant
   outgoing: Sortant
-  request_pending: '%{request} est en attente'
-  not_allowed_to_respond_to_request: '%{user} n''est pas autorisé-e à %{command} la requête.'
+  request_pending: "%{request} est en attente"
+  not_allowed_to_respond_to_request: "%{user} n'est pas autorisé·e à %{command} la requête."
   try_again: Essayer encore
   send_request_button: Envoyer une requête
   send_invites_button: Envoyer des invitations
@@ -588,53 +626,53 @@ fr:
     models:
       request_to_friend: Demande de mise en contact
       request_to_join_our_network:
-        one: Invitation à adhérer
-        other: Invitations à adhérer
+        one: Invitation à Rejoindre
+        other: Invitations à Rejoindre
       request_to_destroy_our_group: Demande de destruction de groupe
       request_to_join_us:
-        one: Invitation à adhérer
-        other: Invitations à adhérer
+        one: Invitation à Rejoindre
+        other: Invitations à Rejoindre
       request_to_join_us_via_email:
-        one: Invitation à adhérer
-        other: Invitations à adhérer
+        one: Invitation à Rejoindre
+        other: Invitations à Rejoindre
       request_to_join_you: Demande d'inscription
       request_to_join_your_network: Demande d'inscription
       request_to_create_council: Demande de création de conseil
       request_to_remove_user: Demande de désinscription
   request_to_friend: Demander à être en contact
-  request_to_friend_short: '%{user} peut-il ou peut-elle être mise en contact avec %{other_user} ?'
+  request_to_friend_short: Autoriser %{user} à être mis·e en contact avec %{other_user} ?
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_join_our_network:
-    one: Invitation à adhérer
-    other: Invitations à adhérer
+    one: Invitation à Rejoindre
+    other: Invitations à Rejoindre
   request_to_destroy_our_group: Demander à détruire le groupe
-  request_to_join_our_network_short: '%{group} peut-il rejoindre %{network} ?'
+  request_to_join_our_network_short: Autoriser %{group} à rejoindre %{network} ?
   request_to_join_our_network_description: Le groupe %{group} a été invité à rejoindre le réseau %{network}.
   request_to_join_us:
-    one: Invitation à adhérer
-    other: Invitations à adhérer
-  request_to_join_us_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
+    one: Invitation à Rejoindre
+    other: Invitations à Rejoindre
+  request_to_join_us_short: Autoriser %{user} à rejoindre %{group} ?
   request_to_join_us_description: '%{user} a été invité•e à rejoindre %{group}'
   request_to_join_us_via_email:
-    one: Invitation à adhérer
-    other: Invitations à adhérer
-  request_to_join_us_via_email_short: '%{email} peut-il ou peut-elle rejoindre %{group} ?'
+    one: Invitation à Rejoindre
+    other: Invitations à Rejoindre
+  request_to_join_us_via_email_short: Autoriser %{email} à rejoindre %{group} ?
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
   request_to_join_you: Demander inscription
-  request_to_join_you_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
+  request_to_join_you_short: Autoriser %{user} à rejoindre %{group} ?
   request_to_join_you_description: '%{user} a demandé à rejoindre le groupe %{group}.'
   request_to_join_your_network: Demander à adhérer
-  request_to_join_your_network_short: '%{group} peut-il rejoindre %{network} ? '
+  request_to_join_your_network_short: 'Autoriser %{group} à rejoindre %{network} ? '
   request_to_join_your_network_description: Le groupe %{group} a demandé à rejoindre le réseau %{network}.
-  request_to_destroy_our_group_short: '%{group} doit-il être détruit ?'
-  request_to_destroy_our_group_description: '%{user} a proposé de détruire l''organisation %{group}.'
+  request_to_destroy_our_group_short: Détruire %{group} ?
+  request_to_destroy_our_group_description: '%{user} a proposé de détruire la structure %{group_type} %{group}.'
   request_to_create_council: Demander à créer un conseil
   request_to_create_council_short: '%{group} doit-il avoir un conseil ?'
-  request_to_create_council_description: '%{user} a proposé de créer un conseil pour l''organisation %{group}.'
+  request_to_create_council_description: '%{user} a proposé de créer un conseil pour la structure %{groupe_type} %{group}.'
   request_to_remove_user: Demander à retirer un membre
-  request_to_remove_user_short: '%{member} doit-il ou doit-elle être retirée de %{group} ?'
-  request_to_remove_user_description: '%{user} a proposé de retirer %{member} de l''organisation %{group}.'
-  invite_info: Entrez la liste des identifiants ou des adresses mail des personnes que vous voulez inviter à rejoindre cette organisation.
+  request_to_remove_user_short: Retirer %{member} de %{group} ?
+  request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{groupe_type} %{group}.'
+  invite_info: Entrez la liste des identifiants ou des adresses mail des personnes que vous voulez inviter à rejoindre cette structure.
   invite_error_redeemed: L'invitation a déjà été utilisée.
   invite_error_already_member: Vous êtes déjà membre de ce groupe.
   request_exists_error: La demande existe déjà pour %{recipient}
@@ -642,7 +680,7 @@ fr:
   recipient_tip: Séparez les destinataires par des virgules, des espaces ou de nouvelles lignes.
   you_are_invited: Vous êtes invité•e à rejoindre.
   friend_request_message_label: Précisez à %{user} pourquoi vous voulez être en contact.
-  friend_remove_confirmation: Êtes-vous certain•e de ne plus vouloir être en contact avec %{user} ?
+  friend_remove_confirmation: Êtes-vous certain·e de ne plus vouloir être en contact avec %{user} ?
   place: place
   icon: Icone
   file: Fichier
@@ -668,18 +706,18 @@ fr:
   a_message_link: un message
   a_reply_link: une réponse
   confirm_discarding_text_area: Tous vos travaux non sauvegardés seront perdus. Cliquez %{cancel} pour continuer l'édition.
-  activity_contact_created: '%{user} a ajouté %{other_user} comme ami-e'
-  activity_user_left_group: '%{user} a quitté l''organisation %{group}'
-  activity_user_joined_group: '%{user} a rejoint l''organisation %{group}'
-  activity_user_joined_site: '%{user} a rejoint %{group}'
-  activity_user_destroyed: '%{user} s''est retiré'
-  activity_group_created: '%{user} a créé l''organisation %{group}'
-  activity_group_destroyed: '%{group} a été détruit par %{user}'
-  activity_wall_message: '%{author} a écrit à %{user}: %{message}'
-  activity_message: '%{author} a écrit: %{message}'
+  activity_contact_created: "%{user} a ajouté %{other_user} comme ami·e"
+  activity_user_left_group: "%{user} a quitté la structure %{groupe_type} %{group}"
+  activity_user_joined_group: "%{user} a rejoint la structure %{groupe_type} %{group}"
+  activity_user_joined_site: "%{user} a rejoint %{group}"
+  activity_user_destroyed: "%{user} s'est retiré"
+  activity_group_created: "%{user} a créé la structure %{groupe_type} %{group}"
+  activity_group_destroyed: "%{group} a été détruit par %{user}"
+  activity_wall_message: "%{author} a écrit à %{user}: %{message}"
+  activity_message: "%{author} a écrit: %{message}"
   activity_unread: Vous avez %{count} [private messages] non lus
   activity_unread_singular: Vous avez un [private message] non lu
-  activity_user_left_site: '%{user} a quitté %{group}'
+  activity_user_left_site: "%{user} a quitté %{group}"
   activity_message_received: 'Vous avez recu %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} a étoilé votre message "%{post}"'
   media_image: Image
@@ -688,7 +726,7 @@ fr:
   history: Historique
   other_formats: autres formats
   file_version_deleted: version du fichier supprimée
-  delete_version_confirm: Êtes-vous certain de vouloir supprimer cette version ?
+  delete_version_confirm: Êtes-vous certain·e de vouloir supprimer cette version ?
   galleries: Galeries
   created_on: Créé sur
   file_size: Taille du fichier
@@ -751,7 +789,7 @@ fr:
   set_status_button: Rafraîchir le statut
   my_contacts: Contacts
   anonymous: anonyme
-  login_required: Connexion Requise
+  login_required: Connexion Obligatoire
   login_required_description: Merci de vous connecter pour effectuer cette action.
   permission_denied_description: Vous n'avez pas les droits suffisants pour effectuer cette action.
   permission_denied: Autorisation refusée
@@ -773,9 +811,9 @@ fr:
   wiki_existed_new_version_created: Ce wiki a déjà été créé par une autre personne. Vos changements ont été sauvegardés comme une nouvelle version.
   wiki_is_locked: Ce wiki est actuellement verrouillé par %{user}
   wiki_section_is_locked: La section %{section} est verrouillée par %{user}.
-  leave_editing_wiki_page_warning: Si vous quittez cette page sans sauvegarder le wiki ou sans annuler l'édition; alors les autres utilisateur-trice-s verront ce wiki comme verrouillé par vous et il-le-s ne pourront l'éditer. De même, si vous ne sauvegardez pas le wiki, vous perdrez vos modifications.
+  leave_editing_wiki_page_warning: Si vous quittez cette page sans sauvegarder le wiki ou sans annuler l'édition; alors les autres verront ce wiki verrouillé et ne pourront l'éditer. De même, si vous ne sauvegardez pas le wiki, vous perdrez vos modifications.
   cant_edit_section: Édition de %{section} impossible.
-  user_locked_section: '%{section} verrouillée par %{user}.'
+  user_locked_section: "%{section} verrouillée par %{user}."
   can_still_save: Vous pouvez toujours faire une sauvegarde.
   changes_might_be_overwritten: Vos modifications peuvent être écrasées.
   other_section_locked_error: Vous ne pouvez verrouiller qu'une section simultanément. Vous avez déjà verrouillé '%{section}'.

@@ -17,11 +17,11 @@ es:
   sign_in: Acceder
   signup_title: Crea tu cuenta
   signup_email: Tu e-mail
-  forgot_password_text: Si has olvidado tu contraseña, podemos enviarte un link por e-mailcon el que puedes generar una nueva.
+  forgot_password_text: Si has olvidado tu contraseña, podemos enviarte un link por e-mail con el que puedes generar una nueva.
   reset_password_text: Hola, %{user}. Si has olvidado tu contraseña, puedes crear una nueva aquí.
   forgot_password_mail_greeting: "%{user}, para restablecer tu contraseña, por favor visita"
   forgot_password_mail_expiry: Este link es válido por 24 horas. Si necesitas reiniciar tu contraseña transcurrido ese tiempo, deberás visitar nuevamente la pagina para recuperar tu contraseña y pedir un nuevo link.
-  reset_password_mail_greeting: "%{user}, su contraseña fue restablecida como lo solicitó."
+  reset_password_mail_greeting: "%{user}, tu contraseña fue restablecida como lo solicitaste."
   reset_password_mail_warning: Si no has solicitado cambiar tu contraseña, por favor contáctanos.
   your_login: Tu login
   invalid_email_text: La dirección de email no es válida.
@@ -129,11 +129,17 @@ es:
     possible:
       add: Añadir nuevo Posibilidad
   exception:
-    not_found: No Encontrado
     title:
-      not_found: No Encontrado
+      not_found: "%{thing} No Encontrad@"
+      unauthorized: Se requiere ingresar
+      forbidden: Permiso denegado
+      group:
+        not_found: Grupo No Encontrado
     description:
       not_found: los sentimos, no pudimos encontrar lo que estabas buscando
+      unauthorized: Inicie sesión para realizar esa acción.
+      group:
+        not_found: Lo sentimos, no pudimos encontrar el grupo que buscabas.
   image_count: Imagen %{number} de %{count}
   image_count_total: "%{count} imágenes"
   show_gallery: Mostrar Álbum de fotos
@@ -229,8 +235,8 @@ es:
   settings: configuración
   messages: Mensajes
   page: Página
+  tasks: Tareas
   title: Titulo
-  body: Cuerpo
   text_message: Mensaje de texto
   print: Imprimir
   show: Mostrar
@@ -322,7 +328,6 @@ es:
     recent_pages: Paginas Recientes
     info:
       page_search: Encuentra todas las páginas que tiene acceso directamente oa través de sus grupos
-      recent_pages: Usted contribuyó a estas páginas o que fueron compartidas con usted
   my_dashboard: Salpicadero
   uploaded_image_cropped: La foto cargada será recortada y estirada a 96 píxeles cuadrados.
   select_image_file: seleccionar archivo de foto
@@ -345,9 +350,9 @@ es:
   message_you_wrote_caption: 'Tu escribiste:'
   message_user_wrote_caption: "%{user} escribió:"
   unread_private_message: Tienes un mensaje privado sin leer de %{user}
+  home: Inicio
   menu_me: Solo Yo
   menu_groups: Grupos
-  menu_home: Inicio
   menu_chat: Charla
   menu_people: Gente
   menu_networks: Redes
@@ -401,6 +406,7 @@ es:
   email_notice_hello: Hola, %{from} te ha enviado una página web.
   email_notice_access: 'Puedes acceder a esta página en:'
   email_link_expires: Este enlace expirará en %{days} días.
+  page_notice_title: <user>%{from}</user> the envió la página "%{page_title}"
   page_notice_title_with_message: '<user>%{from}</user> te envió la página "%{page_title}" con e mensaje:'
   page_updated: <user>%{from}</user> actualizada la página "%{page_title}"
   page_update: Página Actualización
@@ -465,9 +471,14 @@ es:
   page_history_granted_group_full_access: "%{user_name} concedió acceso pleno al grupo %{item_name}"
   page_history_granted_group_read_access: "%{user_name} concedió permisos de lectura al grupo %{item_name}"
   page_history_granted_group_write_access: "%{user_name} concedió accesos de escritura al grupo %{item_name}"
+  page_history_granted_user_full_access: "%{user_name} otorgó accesso completo a el/la usuari@ %{item_name}"
+  page_history_granted_user_read_access: "%{user_name} otorgó acceso de lectura a el/la usuari@ %{item_name}"
+  page_history_granted_user_write_access: "%{user_name} otorgó acceso de escritura a la/el usuari@ %{item_name}"
   page_history_make_private: "%{user_name} ha desactivado la opción que haría pública la página"
   page_history_make_public: "%{user_name} ha hecho pública la página"
   page_history_remove_star: "%{user_name} ha retirado una estrella"
+  page_history_revoked_group_access: "%{user_name} revocó el acceso al grupo %{item_name}"
+  page_history_revoked_user_access: "%{user_name} revocó el acceso a la/el usuari@ %{item_name}"
   page_history_start_watching: "%{user_name} ha comenzado a seguir los cambios en esta página"
   page_history_stop_watching: "%{user_name} ha dejado de seguir los cambios en esta página"
   page_history_updated_comment: "%{user_name} actualizó un comentario"
@@ -504,6 +515,12 @@ es:
   page_group_text: Texto
   page_group_media: Multimedia
   page_group_planning: Herramientas de planificación
+  pending_tasks: Tareas pendientes
+  completed_tasks: Tareas completadas
+  no_pending_tasks: No hay tareas pendientes
+  no_completed_tasks: No hay tareas completadas
+  assign_to: Asignar a
+  completed: Completado
   vote:
     really_remove_this: ¿De verdad quiere eliminar esta opción?
     you_have_not_ranked: 'Aún no ha clasificado:'
@@ -514,6 +531,7 @@ es:
   vote_bad: malo
   vote_none: nada
   vote_no: 'no'
+  ranked_vote_instructions: Arrastrar y soltar los ítems de la lista siguiente hasta que se encuentren en orden del más al menos preferido.
   confirm_vote_button: Confirma tu voto
   edit_my_vote_tab: Editar mi voto
   show_results_tab: Mostrar resultados
@@ -586,8 +604,8 @@ es:
   sharing_and_requests: Compartir y Solicitudes
   view_profile: Ver Perfil
   profile_member_since: En el sitio desde
-  home: Inicio
   banner: Bandera
+  banner_info: Las dimensiones óptimas son %{optimal_dimensions} pixeles
   organizational_role: rol en la organización
   phone_number: Número de teléfono
   email_addresses: Direcciones de Correo Electrónico
@@ -600,6 +618,7 @@ es:
   request: Solicitud
   incoming: Entrante
   outgoing: Saliente
+  request_pending: "%{request} está pendiente"
   not_allowed_to_respond_to_request: "%{user} no tiene autorizado %{command} la solicitud"
   try_again: Inténtelo de nuevo
   send_request_button: Enviar Solicitud
@@ -608,14 +627,33 @@ es:
   activerecord:
     models:
       request_to_friend: Solicitud para convertirse en Contactos
+      request_to_join_our_network:
+        one: Invitación para Unirse
+        other: Invitaciones para Unirse
+      request_to_destroy_our_group: Petición para Eliminar Grupo
+      request_to_join_us:
+        one: Invitación para Unirse
+        other: Invitaciones para Unirse
+      request_to_join_us_via_email:
+        one: Invitación para Unirse
+        other: Invitaciones para Unirse
+      request_to_remove_user: Petición para Remover Miembro
   request_to_friend: Solicitud para convertirse en Contactos
+  request_to_friend_short: ¿Debe %{user} ser contacto de %{other_user}?
   request_to_friend_description: '%{user} quiere ser el contacto de %{other_user}'
+  request_to_destroy_our_group: Petición para Eliminar Grupo
+  request_to_join_our_network_short: ¿Debe %{group} ser parte de %{network}?
   request_to_join_our_network_description: grupo %{group} fue invitado a unirse a la red %{network}
+  request_to_join_us_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_us_description: '%{user} fue invitado a unirse %{group}'
+  request_to_join_us_via_email_short: ¿Debe %{email} unirse a %{group}?
   request_to_join_us_via_email_description: '%{email} fue invitado a unirse a %{group}'
+  request_to_join_you_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_you_description: '%{user} solicito unirse a %{group}'
+  request_to_join_your_network_short: ¿Debe %{group} ser parte de %{network}?
   request_to_join_your_network_description: '%{group} solicito unirse a la red %{network}'
   request_to_destroy_our_group_description: '%{user} ha propuesto borrar %{group_type} %{group}'
+  request_to_remove_user: Petición para Remover Miembro
   invite_info: Proporciona una lista de cuentas de este sitio (o direcciones de correo) de personas que quieres que participen en este(a) %{group_type}
   invite_error_redeemed: La invitación ya fue retirada.
   invite_error_already_member: Ya eres parte de ese grupo.
@@ -710,10 +748,10 @@ es:
   sunday: Domingo
   monday: Lunes
   tuesday: Martes
-  wednesday: Miercoles
+  wednesday: Miércoles
   thursday: Jueves
   friday: Viernes
-  saturday: sabado
+  saturday: Sábado
   date_today: Hoy
   date_this_week: Esta semana
   date_this_month: Este Mes
@@ -732,7 +770,7 @@ es:
   permission_denied_description: Usted no tiene permisos suficientes para realizar esa acción.
   permission_denied: Permiso denegado
   chat: Charla
-  left_the_chatroom: 'salido de la sala de chat '
+  left_the_chatroom: 'dejó la sala de chat '
   tag: Etiqueta
   tags: Etiquetas
   no_tags: No existen etiquetas
@@ -741,7 +779,7 @@ es:
   add_tags: Añadir Etiquetas
   current_tags: Etiquetas actuales
   welcome_title: Bienvenido a %{site_title}
-  welcome_message: Crabgrass permite que organizaciones que trabajan en asuntos de cambio social ejecutan acciones, promovan, colaboren y crean redes.
+  welcome_message: Crabgrass permite que organizaciones que trabajan por el cambio social ejecuten acciones, difundan mensajes, colaboren y creen redes.
   public_wiki: Wiki Público
   private_wiki: Wiki Privado
   edit_wiki: Editar Wiki
@@ -757,7 +795,7 @@ es:
   diff_link: Ver cambios
   version_link: ver versión
   wiki_section_edit: Corrija esta sección
-  wiki_revert_version: Invierta a la versión %{version}
+  wiki_revert_version: Volver a la versión %{version}
   wiki_version_creator_heading: persona
   wiki_version_revert_link: revertir
   insert_image: Insertar imagen

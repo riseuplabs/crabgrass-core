@@ -1,16 +1,16 @@
 pt:
-  cookie_disabled_warning: Seus coockies estão desabilitados. Você não será capaz de logar até habilitar os coockies.
+  cookie_disabled_warning: Seus cookies estão desabilitados. Você não será capaz de logar se não habilitar os cookies.
   signup_link: Criar uma nova conta
-  signup_email_info: 'Opcional: será usado para recuperar sua senha se você perder'
-  forgot_password_link: Esqueceu sua senha?
+  signup_email_info: 'Opcional: é necessário para recuperar sua senha se você perder'
+  forgot_password_link: Esqueceu sua Senha?
   login_failure_reason: O nome de usuária ou senha está incorreto.
   signup_success_message: Obrigada por se inscrever!
   login_name: Usuária
-  signup_success: Registro bem-sucedido!
+  signup_success: Você criou sua conta!
   logout_success: Até mais
-  logout_success_message: Você foi desconectada.
+  logout_success_message: Você se desconectou.
   signup_button: Criar Conta
-  login_failed: Não foi possível fazer login
+  login_failed: Não foi possível entrar
   signup_login_name: Seu nome de usuária
   login_button: Entrar
   login: Login
@@ -23,7 +23,7 @@ pt:
   forgot_password_mail_expiry: Este link tem validade de 24 horas. Se você precisa redefinir sua senha depois desse tempo, você terá que visitar novamente a página 'esqueci minha senha' e requisitar um novo link.
   reset_password_mail_greeting: "%{user}, sua senha foi redefinida conforme você pediu."
   reset_password_mail_warning: Se você não pediu para mudar sua senha, entre em contato conosco.
-  your_login: Seu login
+  your_login: Seu nome de usuária
   invalid_email_text: O endereço de email que você forneceu não é válido.
   reset_password: Redefinir senha
   reset_password_email_sent: Se aquele endereço de email está associado com um nome de usuária, então um email contendo instruções para redefinir sua senha foi enviado.
@@ -65,7 +65,7 @@ pt:
     powered_by_html: |
       Este site usa <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
     description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL software libre</a> para organização de redes.
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> software livre AGPL</a> para organização de redes.
     report_a_bug: Encontrei um problema
     request_a_feature: Sugerir melhorias
     help_pages: Páginas de Ajuda de Crabgrass
@@ -94,7 +94,7 @@ pt:
   ok_button: OK
   done: Feito
   show_button: Mostrar
-  show_thing: Mostrar %{thing}
+  show_thing: Ver %{thing}
   confirm: Confirmar
   alert: Alertar
   loading_progress: Carregando...
@@ -113,10 +113,10 @@ pt:
   destroy: Destruir
   thing_destroyed: "%{thing} destruído"
   destroy_thing: Destruir %{thing}
-  delete_thing: Eliminar %{thing}
-  delete: Eliminar
-  delete_button: Eliminar
-  deleted: Excluido
+  delete_thing: Apagar %{thing}
+  delete: Apagar
+  delete_button: Apagar
+  deleted: Apagada
   remove: Remover
   autocomplete:
     placeholder:
@@ -129,8 +129,17 @@ pt:
     possible:
       add: Adicione uma Nova Possibilidade
   exception:
+    title:
+      not_found: "%{thing} Não Encontrado(a)"
+      unauthorized: Entre com sua Conta.
+      forbidden: Permissão Negada
+      group:
+        not_found: Grupo Não Encontrado
     description:
-      not_found: Desculpe, não encontramos o que você procurava.
+      not_found: Opa, não encontramos o que você procurava.
+      unauthorized: É preciso entrar com sua conta para fazer isso.
+      group:
+        not_found: Opa, não encontramos o grupo que você procurava.
   image_count: Imagem %{number} de %{count}
   image_count_total: "%{count} Fotos"
   show_gallery: Mostrar Galeria
@@ -145,7 +154,7 @@ pt:
   edit_images: Editar Imagens
   upload_new_image: Carregar nova imagem
   type_your_messages_here: Digite suas mensagens aqui e clique entrar...
-  group_not_allowed_to_view_image_error: O grupo dono desta página não tem autorização para ver esta foto.
+  group_not_allowed_to_view_image_error: O grupo que possui esta página não tem autorização para ver esta foto.
   add_comment: Adicionar Comentário
   image_title: 'Título da imagem: %{title}'
   upload_zip_file_link: Carregar um arquivo zipado
@@ -161,7 +170,7 @@ pt:
   thing_not_found: "%{thing} não encontrado(a)"
   no_things_found: Nenhum %{things} encontrado.
   no_search_results: Não há resultados
-  not_found: Não Encontrado
+  not_found: Nada Por Aqui
   see_all_link: Ver Tudo
   total: "%{count} do total"
   all: Todos
@@ -169,7 +178,7 @@ pt:
   or: ou
   new: nova(o)
   modified: modificada(o)
-  unknown: desconhecida(o)
+  unknown: Desconhecida(o)
   next: Seguinte
   previous: Anterior
   pagination_next: Seguinte
@@ -191,7 +200,7 @@ pt:
   name: Nome
   recipients: Enviar para
   recipient: Enviar para
-  owner: Dona
+  owner: Possuidora
   created_by_entity: Criado por %{entity}
   approved_by_entity: Aprovado por %{entity}
   rejected_by_entity: Recusado por %{entity}
@@ -226,8 +235,8 @@ pt:
   settings: Configurações
   messages: Mensagens
   page: Página
+  tasks: Tarefas
   title: Título
-  body: Corpo
   text_message: Mensagem de Texto
   print: Imprimir
   show: Exibir
@@ -277,7 +286,7 @@ pt:
       %{group_home_link}
 
     Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
-  group_destroyed_subject: "%{group_type} %{group} foi deletado por %{user}!"
+  group_destroyed_subject: "%{group_type} %{group} foi apagado por %{user}!"
   group_destroyed_email: "%{group_type} %{group} foi eliminado!"
   group_wiki: Wiki do Grupo
   create_public_group_wiki: Público
@@ -319,7 +328,6 @@ pt:
     recent_pages: Páginas Recentes
     info:
       page_search: Encontre todas as páginas que você tem acesso diretamente ou através dos seus grupos
-      recent_pages: Você contribuiu nessas páginas ou elas foram compartilhadas com você
   my_dashboard: Painel
   uploaded_image_cropped: A imagem carregada será cortada e expandida a um quadrado de 202 pixels.
   select_image_file: selecionar arquivo de imagem
@@ -327,11 +335,11 @@ pt:
   upload_image_link: carregar imagem
   save_changes: Salvar Mudanças
   username: Usuária
-  display_name: Nome de Exibição
+  display_name: Nome Mostrado
   email: E-mail
   language: Idioma
   time_zone: Fuso Horário
-  do_you_want_to_receive_email_notifications: Você gostaria de receber notificações por email sobre mudanças nas páginas que vocês está 'acompanhando'?
+  do_you_want_to_receive_email_notifications: Você gostaria de receber notificações por email sobre mudanças nas páginas que você está 'acompanhando'?
   notification_select:
     none: 'Não: não quero receber emails sobre alterações em páginas.'
     single: 'Sim: um email por alteração'
@@ -342,9 +350,9 @@ pt:
   message_you_wrote_caption: 'Você escreveu:'
   message_user_wrote_caption: "%{user} escreveu:"
   unread_private_message: Você tem uma mensagem privada não lida de %{user}
+  home: Início
   menu_me: Eu
   menu_groups: Grupos
-  menu_home: Início
   menu_chat: Bate-Papo
   menu_people: Pessoas
   menu_networks: Redes
@@ -358,11 +366,11 @@ pt:
   my_pages: Minhas Páginas
   properties: Propriedades
   popular_pages: Páginas Populares
-  advanced: Avnaçado
+  advanced: Avançado
   access: Acesso
   active_filters: Filtros Ativos
   all_pages: Todas as Páginas
-  created_by_me: Criado
+  created_by_me: Criadas
   created_by_user: Criado por %{user}
   created_by_user_description: Procurar por páginas criadas por uma pessoa em particular.
   created_by_dotdotdot: Criado por...
@@ -370,10 +378,10 @@ pt:
   starred_by_user: Marcado com estrela por %{user}
   watched_by_me: Acompanhando
   watched_by_user: Acompanhado por %{user}
-  edited_by_me: Editado
+  edited_by_me: Editadas
   edited_by_user: Editado por %{user}
-  owned_by_me: Seu
-  owned_by_user: Pertence a %{user}
+  owned_by_me: Possuo
+  owned_by_user: Possuída por %{user}
   most_active: Mais Ativo(s)
   most_stars: Mais Estrelas
   most_viewed: Mais Visitados
@@ -405,11 +413,11 @@ pt:
   page_update: Atualização da Página
   watch_checkbox: Acompanhar Atualizações
   add_star_link: Marcar com Estrela (%{star_count})
-  remove_star_link: 'Eliminar Estrela (%{star_count}) '
+  remove_star_link: 'Apagar Estrela (%{star_count}) '
   public_checkbox: Público
   public_checkbox_help: Se estiver selecionado, todo mundo poderá ver esta página.
   page_details_link: "Detalhes de %{page_class} "
-  delete_page_link: Eliminar %{page_class}
+  delete_page_link: Apagar %{page_class}
   destroy_page_via_shred: Destruir Imediatamente
   destroy_page_via_shred_info: Esta página será destruída permanentemente. Esta ação não pode ser desfeita.
   destroy_page_via_trash: Mover para a Lixeira
@@ -417,7 +425,7 @@ pt:
   undelete_from_trash: Restaurar
   participation: Participação
   information: Informação
-  remove_access_error: O acesso a esta página não pode ser removido. Você pode remover o acesso aos donos ou um acesso que seja necessário para você administrar a página.
+  remove_access_error: O acesso a esta página não pode ser removido. Você não pode remover o acesso de quem possui ou um acesso seja necessário para você administrar a página.
   edit_tags_link: Editar
   edit_attachments_link: Editar
   attachments: Arquivos Anexados
@@ -431,7 +439,7 @@ pt:
   page_access_view: Apenas Leitura
   share_page_link: Compartilhar %{page_class}
   share_page_recipients: Compartilhar esta página com
-  notify_page_link: Enviar Aviso
+  notify_page_link: Enviar Notificação
   notify_contribution: "<b>Contribuição Prévia:</b> avisar pessoas que fizeram uma <b>contribuição</b> a esta página."
   notify_current_access: "<b>Acesso Atual:</b> avisar pessoas ou grupos que podem acessar esta página atualmente."
   notification_message: Mensagem de Notificação
@@ -443,17 +451,17 @@ pt:
   notify_success: Você enviou as notificações com sucesso.
   share_grant_required_error: "%{name} não tem permissão para ver esta página. Deve-se conceder-lhe maior acesso primeiro."
   share_permission_denied_error: Você não tem permissão para modificar as permissões de acesso desta página
-  notify_no_access_error: Desculpe, "%{name}" não tem acesso a esta página.
+  notify_no_access_error: Opa, "%{name}" não tem acesso a esta página.
   share_already_exists_error: '"%{name}" já tem acesso a esta página.'
-  share_pester_error: Desculpe, você não tem permissão para compartilhar com "%{name}".
+  share_pester_error: Opa, você não tem permissão para compartilhar com "%{name}".
   name_or_email_not_found: '"%{name}" não corresponde ao nome de nenhuma usuária ou grupo e não é um endereço de email válido.'
   contribute_content_link: Criar Página
-  page_create_owner: Dona da Página
+  page_create_owner: Posse da Página
   create_page: Criar Página
   only_me: Eu
   page_added_to_group: Esta página será adicionada ao %{group_type} %{group_name}.
   additional_page_access: Acesso Adicional
-  page_owner_error: A dona da página não pode ficar em branco.
+  page_owner_error: Possuidora da página não pode ficar em branco.
   action: Ação
   page_history_add_star: "%{user_name} marcou com uma estrela"
   page_history_added_comment: "%{user_name} adicionou um comentário"
@@ -469,7 +477,7 @@ pt:
   page_history_granted_user_write_access: "%{user_name} concedeu acesso para escrita à usuária %{item_name}"
   page_history_make_private: "%{user_name} desmarcou a opção de tornar a página pública"
   page_history_make_public: "%{user_name} tornou a página pública"
-  page_history_remove_star: "%{user_name} removeu uma estrela"
+  page_history_remove_star: "%{user_name} apagou uma estrela"
   page_history_revoked_group_access: "%{user_name} revogou o acesso ao grupo %{item_name}"
   page_history_revoked_user_access: "%{user_name} revogou acesso à usuária %{item_name}"
   page_history_start_watching: "%{user_name} começou acompanhar esta página"
@@ -478,14 +486,14 @@ pt:
   page_history_updated_content: "%{user_name} atualizou o conteúdo da página"
   page_history_user_created_page: "%{user_name} criou a página"
   page_history_mailer_hello_user_name: Olá, %{user_name}
-  page_history_mailer: 'Mude sua configurações de aviso por email aqui: %{page_link}'
+  page_history_mailer: 'Mude suas configurações de notificações por email aqui: %{page_link}'
   page_history_mailer_a_page_has_been_modified: "%{site_title} : Uma página foi modificada"
   page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Uma página que você está acompanhando foi modificada %{histories_count} desde o último aviso, você pode acessar a página aqui:
+    Uma página que você está acompanhando foi modificada %{histories_count} desde a última notificação, você pode acessar a página aqui:
   page_history_mailer_a_page_you_are_watching: Uma página que você está acompanhando foi modificada, você pode acessá-la aqui
   page_history_the_page_you_are_watching_description: A página que você está acompanhando "%{page_title}" foi modificada
   page_history_mailer_expire_link: O link vai expirar em %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Você pode escolher desligar avisos por email, receber um sumário de mudanças, ou receber um email toda vez que a página é modificada
+  page_history_mailer_choose_turn_off_notifications: Você pode escolher desligar notificações por email, receber um sumário de mudanças, ou receber um email toda vez que a página é modificada
   wiki_page_description: Criar um documento editável com formato de texto livre.
   wiki_page_display: Página Wiki
   gallery_description: Carregar múltiplas imagens ou organizar imagens existentes em um conjunto.
@@ -577,19 +585,18 @@ pt:
   peers_description: Membros dos seus grupos
   friends_description: Suas pessoas amigas
   may_view_label: Ver meu perfil?
-  may_view_description: Se não estiver selecionado, seu perfil estará totalmente escondido.
+  may_view_description: Se você não selecionar nada, seu perfil será totalmente escondido.
   may_see_contacts_label: Ver meus contatos?
-  may_see_contacts_description: Permitir que as pessoas vejam quem são seus contatos.
+  may_see_contacts_description: Escolher quem pode ver quem são seus contatos.
   may_see_groups_label: Ver meus grupos?
-  may_see_groups_description: Permitir que as pessoas vejam quais grupos você é membro.
+  may_see_groups_description: Escolher quem pode ver de quais grupos que você é membro.
   may_pester_label: Compartilhar comigo?
-  may_pester_description: Permitir que as pessoas mandem-me mensagens, páginas e convites.
+  may_pester_description: Pessoas podem me enviar mensagens, páginas e convites.
   may_request_contact_label: Pedir para ser contato?
   may_request_contact_description: Permite que as pessoas peçam para se tornarem seu contato.
   sharing_and_requests: Compartilhamentos e Pedidos
   view_profile: Ver Perfil
   profile_member_since: Membro desde
-  home: Início
   banner: Cabeçalho
   banner_info: As dimensões ótimas são %{optimal_dimensions} pixels.
   organizational_role: Função Organizacional
@@ -630,6 +637,9 @@ pt:
   request_to_friend: Pedir para se Tornarem Contatos
   request_to_friend_short: Será que %{user} poderia se tornar contato de %{other_user}?
   request_to_friend_description: '%{user} gostaria de ser contato de %{other_user}'
+  request_to_join_our_network:
+    one: Convite para Participar
+    other: Convites para Participar
   request_to_destroy_our_group: Pedir para Destruir o Grupo
   request_to_join_our_network_short: Será que o %{group} poderia participar da %{network}?
   request_to_join_our_network_description: O grupo %{group} foi convidado para fazer parte da rede %{network}
@@ -657,7 +667,7 @@ pt:
   request_to_remove_user: Pedir para Retirar Membro
   request_to_remove_user_short: Será que %{member} deve ser removida do grupo %{group}?
   request_to_remove_user_description: A usuária %{user} propôs que se removess %{member} de %{group_type} %{group}.
-  invite_info: Digite uma lista de identificações de usuária ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste %{group_type}.
+  invite_info: Digite uma lista de usuárias ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste %{group_type}.
   invite_error_redeemed: O convite foi recebido.
   invite_error_already_member: Você já é membro daquele grupo.
   request_exists_error: O pedido já foi feito para %{recipient}
@@ -704,7 +714,7 @@ pt:
   activity_unread_singular: Você tem uma [private message] não lida.
   activity_user_left_site: "%{user} saiu do grupo %{group}"
   activity_message_received: 'Você redebeu %{message_tag} de %{other_user}: %{title}'
-  activity_twinkled: '%{user} marcou com estrela o seu post "%{post}"'
+  activity_twinkled: '%{user} marcou com estrela sua mensagem "%{post}"'
   media_image: Imagem
   media_images: Imagens
   zip_file: Arquivo Zipado
@@ -722,7 +732,7 @@ pt:
   asset_version_list_version_heading: versão
   order_changed: Ordem modificada.
   error_saving_new_order_message: 'Erro ao salvar a nova ordem: %{error_message}'
-  successfully_removed_image: A imagem foi eliminada! (%{undo_link})
+  successfully_removed_image: A imagem foi apagada! (%{undo_link})
   view_slideshow: Ver Slideshow
   edit_gallery: Editar Galeria
   back_to_gallery_link: Voltar à Galeria
@@ -738,7 +748,7 @@ pt:
   successful_undelete_image: A imagem foi recuperada.
   saved_new_order: A nova ordem foi salva!
   error_saving_new_order: Erro ao salvar nova ordem!
-  saving_your_changes: Salvando suas mudanças...
+  saving_your_changes: Salvando suas alterações...
   activate_js_to_rearrange_photos: Ativar Javascript para usar Arrastar & Soltar para reorganizar as fotos!
   drag_and_drop_to_rearrange_photos: Arraste & Solte as imagens para reorganizá-las
   no_images_in_gallery: Não há imagens na Galeria
@@ -774,8 +784,8 @@ pt:
   set_status_button: Configurar Status
   my_contacts: Contatos
   anonymous: anônimo
-  login_required: Login Obrigatório
-  login_required_description: É preciso estar logada para fazer isso.
+  login_required: Entre com sua Conta.
+  login_required_description: É preciso entrar com sua conta para fazer isso.
   permission_denied_description: Você não tem permissão suficiente para executar essa ação.
   permission_denied: Permissão Negada
   chat: Bate-Papo
@@ -787,7 +797,7 @@ pt:
   separate_tags: Separe etiquetas usando vírgulas.
   add_tags: Adicionar Etiquetas
   current_tags: Etiquetas Atuais
-  welcome_title: Bem-vinda ao %{site_title}
+  welcome_title: Bem-vinda a %{site_title}
   welcome_message: Crabgrass possibilita que organizações de mudança social façam suas coisas, dialoguem, colaborem e trabalhem em rede.
   wiki: Wiki
   public_wiki: Wiki Pública

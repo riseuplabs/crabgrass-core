@@ -15,9 +15,9 @@ nl:
   signup_email: Je email
   forgot_password_text: Wanneer je jouw wachtwoord heeft vergeten kunnen we jou een link mailen met die je een nieuwe paswoord kan genereren.
   reset_password_text: Hoi, %{user}. Wanneer je jou wachtwoord heeft vergeten kan je hier een nieuwe paswoord opstellen.
-  forgot_password_mail_greeting: '%{user}, teneinde jou wachtwoord te resetten, ga naar'
+  forgot_password_mail_greeting: "%{user}, teneinde jou wachtwoord te resetten, ga naar"
   forgot_password_mail_expiry: Dit link blijft geldig voor 24 uurtjes. Wanneer je je wachtwoord later wil resetten, mout je weer na de pagina van het vergeten wachtwoord gaan en een nieuwe link opvragen.
-  reset_password_mail_greeting: '%{user}, als je opgevraagd hebt, was je wachtwoord gereset.'
+  reset_password_mail_greeting: "%{user}, als je opgevraagd hebt, was je wachtwoord gereset."
   reset_password_mail_warning: Wanneer je niet opgevraagd hebt of je wachtwoord mag veranderd worden, dan kontakteer ons, alsjeblieft.
   your_login: Je login
   invalid_email_text: Het emailadres je heeft ingeschreven is niet geldig.
@@ -34,23 +34,20 @@ nl:
   confirm_new_password: Nieuw wachtwoord bevestigen
   congratulations_you_have_signed_up: Gefeliciteerd! Je bent toegetreden tot %{site_title}.
   you_should_receive_instructions_email: Je zal een email krijgen met instructies voor hoe je kan besluiten je account optestellen.
-  email_verification_body: 'Je heeft jezelf ingeschreven voor %{site_title} (%{host}).
-
+  email_verification_body: |-
+    Je heeft jezelf ingeschreven voor %{site_title} (%{host}).
 
 
     Voor je kan inloggen moet jij je email verifieren.
 
 
-
     Klik op de link beneden of kopieer en invoeg de link in je browser:
-
 
 
     %{verify_email_link}
 
 
-
-    Wanneer je niet bijtreden wil kan je deze email gewoon ignoreren.'
+    Wanneer je niet bijtreden wil kan je deze email gewoon ignoreren.
   change_password: Wachtwoord veranderen
   password: Wachtwoord
   password_confirmation: Wachtwoord confirmatie
@@ -65,23 +62,21 @@ nl:
   confirm_account_removal: Bent je zeker dat jij je toegang wil deleten? Deze stap kan niet ongedaan gemaakt worden en je bestand zal gewist worden.
   account_successfully_removed: Je account was met succes gewisst. Wij zullen het en alle gegevens, die daarmee geassociëret zijn van onze databank verwijderen.
   crabgrass:
-    powered_by_html: 'Deze pagina werkt met <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-
-      '
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL vrije software</a> voor de organisatie van netwerken.
-
-      '
+    powered_by_html: |
+      Deze pagina werkt met <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL vrije software</a> voor de organisatie van netwerken.
   destroy_confirmation: Bent je zeker, dat je deze %{thing} wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
   confirmation: Bent je zeker?
   cancel: Afbreken
   optional: Optionaal
   required: Benodigd
-  thing_required: '%{thing} benodigd'
+  thing_required: "%{thing} benodigd"
   edit: Editeren
   upload: Uploaden
   select_files: Bestanden selecteren
   drop_files_here: Bestanden hier plaatsen
-  files_pending: '#{pending} bestand(en) hangend'
+  files_pending: "#{pending} bestand(en) hangend"
   return_link: Teruggaan
   back_button: Terug
   send_button: Sturen
@@ -111,7 +106,7 @@ nl:
   approved: Goedgekeurd
   saved: Opgeslaan
   destroy: Vernietigd
-  thing_destroyed: '%{thing} vernietigd'
+  thing_destroyed: "%{thing} vernietigd"
   destroy_thing: Vernietig %{thing}
   delete_thing: Wis %{thing}
   delete: Deleten
@@ -128,8 +123,14 @@ nl:
       add: Een nieuwe opdracht toevoegen
     possible:
       add: Een nieuwe mogelijkheid toevoegen
+  exception:
+    title:
+      unauthorized: Je moet ingeloggd zijn
+      forbidden: Permissie afgewezen
+    description:
+      unauthorized: Log in voor je deze actie uitvoert, alsjeblieft.
   image_count: Afbeelding %{number} van %{count}
-  image_count_total: '%{count} foto''s'
+  image_count_total: "%{count} foto's"
   show_gallery: Laat me galerij zien
   edit_gallery_explanation: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
   edit_image: Afbeelding editeren
@@ -137,7 +138,7 @@ nl:
   add_images_or_zips: Voeg afbeeldingen of Zipfiles toe
   add_images_or_zips_explaination: Zipfile zal automatisch uitgepakt en in de galerij geplaatst worden
   confirm_image_delete: Bent je zeker, dat jij deze afbeeling wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
-  no_title_given: (geen opschrift)
+  no_title_given: "(geen opschrift)"
   add_images: Voeg afbeeldingen toe
   edit_images: Afbeeldingen editeren
   upload_new_image: Nieuw afbeelding omhoogladen
@@ -154,12 +155,12 @@ nl:
   upload_images_and_zip_files_help: 'Optioneel: Afbeelding of ZIP-bestand selecteren voor upload.'
   close_and_reload_gallery: Sluit en reload galerij
   search: Zoek
-  thing_not_found: '%{thing} niet gevonden'
+  thing_not_found: "%{thing} niet gevonden"
   no_things_found: Geen %{things} gevonden.
   no_search_results: Geen resultaat
   not_found: Niet gevonden
   see_all_link: Alle zien
-  total: '%{count} totaal'
+  total: "%{count} totaal"
   all: allemaal
   none: Geen
   or: of
@@ -175,11 +176,11 @@ nl:
   see_less_link: Minder
   list_things: Een List van alle %{things} opmaken
   thing_was_sent:
-    one: '%{thing} was gestuurd naar %{recipient}.'
-    other: '%{count} %{thing} waren gestuurd.'
+    one: "%{thing} was gestuurd naar %{recipient}."
+    other: "%{count} %{thing} waren gestuurd."
   thing_was_not_sent:
-    one: '%{thing} kon niet gestuurd worden naar %{recipient}.'
-    other: '%{count} %{thing} kon niet gestuurd worden.'
+    one: "%{thing} kon niet gestuurd worden naar %{recipient}."
+    other: "%{count} %{thing} kon niet gestuurd worden."
   user: Gebruiker / Gebruikster
   users: Gebruiker / Gebruikster
   people: Mensen
@@ -223,7 +224,6 @@ nl:
   messages: Boodschappen
   page: Pagina
   title: Opschrift
-  body: Lichaam
   text_message: Boodschap tekst
   print: Printen
   show: Laat me zien
@@ -257,13 +257,24 @@ nl:
   open_group: Open %{group}
   open_group_description: Gebruikers / Gebruiksters zijn meteen toegefoegd aan de %{group} - geen aanvraag moet toegestemd worden.
   membership_requests: Lid-aanvragen
-  group_membership_count: '%{count} leden'
+  group_membership_count: "%{count} leden"
   membership_exists_error: '%{member} is reeds een lid'
   membership_destroy_confirm_message: Bent je zeker, dat je %{entity} van %{group} wil verwijderen?
   group_invite_subject: Uitnodiging de groep "%{group}" bijtetreden
-  group_invite_email: "%{from_user} heeft je geïnviteerd de groep %{group} bijtetreden. Wanneer je deze groep bijtreden wil, klik hier:\n\n%{accept_invite_link}\n\nDe website van deze groep kan je hier vinden:\n\n\n%{group_home_link}\n\n\nWanneer je deze groep nit bijtreden wil kan je deze email gewoon ignoreren."
-  group_destroyed_subject: '%{group_type} %{group} was gewisst van %{user}!'
-  group_destroyed_email: '%{group_type} %{group} was vernietigd!'
+  group_invite_email: |-
+    %{from_user} heeft je geïnviteerd de groep %{group} bijtetreden. Wanneer je deze groep bijtreden wil, klik hier:
+
+    %{accept_invite_link}
+
+    De website van deze groep kan je hier vinden:
+
+
+    %{group_home_link}
+
+
+    Wanneer je deze groep nit bijtreden wil kan je deze email gewoon ignoreren.
+  group_destroyed_subject: "%{group_type} %{group} was gewisst van %{user}!"
+  group_destroyed_email: "%{group_type} %{group} was vernietigd!"
   group_wiki: Groep Wiki
   create_public_group_wiki: Publiek
   create_private_group_wiki: Privé
@@ -274,7 +285,7 @@ nl:
   networks_publicly_visible: Maak netwerken publiek zichtbaar
   allow_membership_requests: Laat lid-aanvragen toe
   group_successfully_created: Groep was met succes opgesteld
-  group_publicly_visible_description: '%{group} daagd op in de publiek groep-lijst. Het <i>profile</i> is zichtbaar voor niet-leden op %{domain}/yourgroupname.'
+  group_publicly_visible_description: "%{group} daagd op in de publiek groep-lijst. Het <i>profile</i> is zichtbaar voor niet-leden op %{domain}/yourgroupname."
   committee_publicly_visible_description: Werkgroepen zijn zichtbaar voor niet-leden op {domain}/yourgroupname
   networks_publicly_visible_description: Netwerken zijn zichtbaar voor niet-leden op %{domain}/yourgroupname
   group_members_publicly_visible: Maakt leden publiek zichtbaar
@@ -304,7 +315,6 @@ nl:
     recent_pages: Recente paginas
     info:
       page_search: Vind alle paginas voor die je vlak of door je groepen toegang hebt
-      recent_pages: Je hebt tot deze paginas bijgedragen of iemand heeft ze met jij gedeeld.
   my_dashboard: Panel
   uploaded_image_cropped: Hooggeladen afbeelding zal geknipt en gestrekt worden tot 202 pixels in het vierkant.
   select_image_file: kiez afbeelding file
@@ -321,11 +331,11 @@ nl:
   messages_with: Gesprek met %{other_user}
   message_to_self_error: Je kan niet met jezelf praten
   message_you_wrote_caption: 'Je hebt geschreven:'
-  message_user_wrote_caption: '%{user} heeft geschreven:'
+  message_user_wrote_caption: "%{user} heeft geschreven:"
   unread_private_message: Je hebt een ongelezen privé boodschap van %{user}
+  home: Thuis
   menu_me: Ik
   menu_groups: Groepen
-  menu_home: Thuis
   menu_chat: Chat
   menu_people: Mensen
   menu_networks: Netwerken
@@ -389,7 +399,7 @@ nl:
   remove_star_link: Ster verwijderen (%{star_count})
   public_checkbox: Publiek
   public_checkbox_help: Wanneer geklikt kan ideren deze pagina zien.
-  page_details_link: '%{page_class} Details'
+  page_details_link: "%{page_class} Details"
   delete_page_link: Wis %{page_class}
   destroy_page_via_shred: Verstoor zo snel mogelijk
   destroy_page_via_shred_info: Dit wil de pagina blijvend verwoesten. Deze actie kan nie ongedaan gemakt worden.
@@ -413,8 +423,8 @@ nl:
   share_page_link: Deel %{page_class}
   share_page_recipients: Deel pagina met
   notify_page_link: Stuur bericht
-  notify_contribution: <b>Eerste bijdrage:</b> adviseer mensen, die een <b>contribution</b> voor deze pagina gemaakt hebben.
-  notify_current_access: <b>Actuele toegang:</b> adviseer mensen of groepen, die actueel toegang tot deze pagina hebben.
+  notify_contribution: "<b>Eerste bijdrage:</b> adviseer mensen, die een <b>contribution</b> voor deze pagina gemaakt hebben."
+  notify_current_access: "<b>Actuele toegang:</b> adviseer mensen of groepen, die actueel toegang tot deze pagina hebben."
   notification_message: Bekendmaking boodschap
   send_only_with_encryption: Stuur alleen maar wanneer versleuteld distributie is mogelijk
   share_send_notification: Stuur bekandmaking
@@ -422,7 +432,7 @@ nl:
   share_include_message: Voeg een gebruikelijk boodschap aan
   shared_page_success: Je hebt deze pagina met succes degeeld.
   notify_success: Je hebt bekandmakingen met succes gestuurd.
-  share_grant_required_error: '%{name} mag deze pagina niet zien. Zij moeten eerst een grooter toegang krijgen.'
+  share_grant_required_error: "%{name} mag deze pagina niet zien. Zij moeten eerst een grooter toegang krijgen."
   share_permission_denied_error: Je mag de toegangspermissies voor deze pagina niet veranderen
   notify_no_access_error: Sorry, "%{name}" heeft geen toegang tot deze pagina.
   share_already_exists_error: '"%{name}" heeft reeds toegang tot deze pagina.'
@@ -436,34 +446,34 @@ nl:
   additional_page_access: Extra toegang
   page_owner_error: Eigenaar van pagina kan niet leeg zijn.
   action: actie
-  page_history_add_star: '%{user_name} heeft een starretje toegevoegd'
-  page_history_added_comment: '%{user_name} heeft een commentaar toegevoegd'
-  page_history_change_title: '%{user_name} heeft de titel van de pagina gemodificeerd'
-  page_history_deleted_page: '%{user_name} heeft de pagina gewisst'
-  page_history_destroyed_comment: '%{user_name} heeft een commentaar vernietigd'
+  page_history_add_star: "%{user_name} heeft een starretje toegevoegd"
+  page_history_added_comment: "%{user_name} heeft een commentaar toegevoegd"
+  page_history_change_title: "%{user_name} heeft de titel van de pagina gemodificeerd"
+  page_history_deleted_page: "%{user_name} heeft de pagina gewisst"
+  page_history_destroyed_comment: "%{user_name} heeft een commentaar vernietigd"
   page_history_details_change_title: 'Van: "%{from}" Tot: "%{to}"'
-  page_history_granted_group_full_access: '%{user_name} heeft volledig toegang tot de groep %{item_name} toegestaan'
-  page_history_granted_group_read_access: '%{user_name} heeft toegang ten lezen voor de groep %{item_name} toegestaan'
-  page_history_granted_group_write_access: '%{user_name} heeft toegang ten schrijven voor de groep %{item_name} toegestaan'
-  page_history_granted_user_full_access: '%{user_name} heeft volledig toegang tot de gebruiker / gebruikster %{item_name} toegestaan'
-  page_history_granted_user_read_access: '%{user_name} heeft toegang ten lezen toegestaan aan %{item_name} toegestaan'
-  page_history_granted_user_write_access: '%{user_name} heeft toegang ten schrijven voor de gebruiker / gebruikster %{item_name} toegestaan'
-  page_history_make_private: '%{user_name} heeft de optie de pagina publiek te maken verwijderd'
-  page_history_make_public: '%{user_name} heeft de pagina publiek gemaakt'
-  page_history_remove_star: '%{user_name} heeft een starretje verwijderd'
-  page_history_revoked_group_access: '%{user_name} heeft de toegang naar de groep %{item_name} ingetrokken'
-  page_history_revoked_user_access: '%{user_name} heeft de toegang tot de gebruiker / gebruikster %{item_name} ingetrokken'
-  page_history_start_watching: '%{user_name} heeft begonnen deze pagina de bekijken'
-  page_history_stop_watching: '%{user_name} heeft het bekijken van deze pagina geeindigd'
-  page_history_updated_comment: '%{user_name} heeft een commentaar geupdated'
-  page_history_updated_content: '%{user_name} heeft de inhoud van de pagina geupdated'
-  page_history_user_created_page: '%{user_name} heeft de pagina opgesteld'
+  page_history_granted_group_full_access: "%{user_name} heeft volledig toegang tot de groep %{item_name} toegestaan"
+  page_history_granted_group_read_access: "%{user_name} heeft toegang ten lezen voor de groep %{item_name} toegestaan"
+  page_history_granted_group_write_access: "%{user_name} heeft toegang ten schrijven voor de groep %{item_name} toegestaan"
+  page_history_granted_user_full_access: "%{user_name} heeft volledig toegang tot de gebruiker / gebruikster %{item_name} toegestaan"
+  page_history_granted_user_read_access: "%{user_name} heeft toegang ten lezen toegestaan aan %{item_name} toegestaan"
+  page_history_granted_user_write_access: "%{user_name} heeft toegang ten schrijven voor de gebruiker / gebruikster %{item_name} toegestaan"
+  page_history_make_private: "%{user_name} heeft de optie de pagina publiek te maken verwijderd"
+  page_history_make_public: "%{user_name} heeft de pagina publiek gemaakt"
+  page_history_remove_star: "%{user_name} heeft een starretje verwijderd"
+  page_history_revoked_group_access: "%{user_name} heeft de toegang naar de groep %{item_name} ingetrokken"
+  page_history_revoked_user_access: "%{user_name} heeft de toegang tot de gebruiker / gebruikster %{item_name} ingetrokken"
+  page_history_start_watching: "%{user_name} heeft begonnen deze pagina de bekijken"
+  page_history_stop_watching: "%{user_name} heeft het bekijken van deze pagina geeindigd"
+  page_history_updated_comment: "%{user_name} heeft een commentaar geupdated"
+  page_history_updated_content: "%{user_name} heeft de inhoud van de pagina geupdated"
+  page_history_user_created_page: "%{user_name} heeft de pagina opgesteld"
   page_history_mailer_hello_user_name: Hoi %{user_name}
   page_history_mailer: 'Verander je instellingen voor email aankondigingen hier: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: '%{site_title} : Een pagina was gemodificeerd'
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: 'Een pagina die je bekijkt was gemodificeerd %{histories_count} sinds de laatste aankondiging,
-
-    je kan de pagina hier vinden:'
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : Een pagina was gemodificeerd"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
+    Een pagina die je bekijkt was gemodificeerd %{histories_count} sinds de laatste aankondiging,
+    je kan de pagina hier vinden:
   page_history_mailer_a_page_you_are_watching: Een pagina die je bekijkt was gemodificeerd, je kan ze hier bereiken
   page_history_the_page_you_are_watching_description: De pagina die je bekijkt "%{page_title}" was gemodificeerd
   page_history_mailer_expire_link: De link gaat in %{expire_time} aflopen
@@ -543,7 +553,7 @@ nl:
   survey_please_check_message: Kijk je antwoorden na, alsjeblieft.
   survey_thanks_submit_message: Dank je wel voor je antwoord.
   drag_to_move_tip: trek om te bewegen
-  each_line_is_a_choice_caption: (iedere regel is een mogelijk keuze)
+  each_line_is_a_choice_caption: "(iedere regel is een mogelijk keuze)"
   no_data_uploaded_label: Geen bestand hoog geladen
   current_video_sources: 'Actueel ondersteunt: youtube, blip.tv, google video, vimeo.'
   video_embed_code_prompt: Bed code van externe video bron in.
@@ -564,7 +574,6 @@ nl:
   sharing_and_requests: Delen en aanvraen
   view_profile: Profiel bekijken
   profile_member_since: Lid sinds
-  home: Thuis
   banner: Banner
   banner_info: Optimaal afmetingen zijn %{optimal_dimensions pixels
   organizational_role: Rol in organisatie
@@ -579,8 +588,8 @@ nl:
   request: Aanvraag
   incoming: Inkomend
   outgoing: Uitgaand
-  request_pending: '%{request} wacht'
-  not_allowed_to_respond_to_request: '%{user} mag de aanvraag niet %{command}.'
+  request_pending: "%{request} wacht"
+  not_allowed_to_respond_to_request: "%{user} mag de aanvraag niet %{command}."
   try_again: Verzoek nog eens
   send_request_button: Stuur aanvraag
   send_invites_button: Uitnodigingen sturen
@@ -605,9 +614,6 @@ nl:
   request_to_friend: Aanvraag contacten te worden
   request_to_friend_short: Zal %{user} een contact van %{other_user} worden?
   request_to_friend_description: Gebruiker / Gebruikster %{user} heeft een aanvraag gesteld een contact van gebruiker / gebruikster user %{other_user} te worden.
-  request_to_join_our_network:
-    one: Invitatie om bijtetreden
-    other: Invitaties om bijtetreden
   request_to_destroy_our_group: Aanvrag om groep de verwoesten
   request_to_join_our_network_short: Zal %{group} %{network} bijtreden?
   request_to_join_our_network_description: De groep %{group} was geïnviteerd de netwerk %{network} bijtetreden.
@@ -669,18 +675,18 @@ nl:
   a_message_link: een boodschap
   a_reply_link: een antwoord
   confirm_discarding_text_area: Je heel niet opgeslaan werk werd verloren gaan. Klik %{cancel} om verder te editeren.
-  activity_contact_created: '%{user} heeft %{other_user} als vriend toegevoegd'
-  activity_user_left_group: '%{user} heeft %{group_type} %{group} verlaten'
-  activity_user_joined_group: '%{user} is %{group_type} %{group} bijgetreden'
-  activity_user_joined_site: '%{user} is %{group} bijgetreden'
-  activity_user_destroyed: '%{user} is afgetreden'
-  activity_group_created: '%{user} heeft %{group_type} %{group} opgesteld'
-  activity_group_destroyed: '%{group} was verwoest van %{user}'
-  activity_wall_message: '%{author} heeft %{user} geschreven: %{message}'
-  activity_message: '%{author} heeft geschreven: %{message}'
+  activity_contact_created: "%{user} heeft %{other_user} als vriend toegevoegd"
+  activity_user_left_group: "%{user} heeft %{group_type} %{group} verlaten"
+  activity_user_joined_group: "%{user} is %{group_type} %{group} bijgetreden"
+  activity_user_joined_site: "%{user} is %{group} bijgetreden"
+  activity_user_destroyed: "%{user} is afgetreden"
+  activity_group_created: "%{user} heeft %{group_type} %{group} opgesteld"
+  activity_group_destroyed: "%{group} was verwoest van %{user}"
+  activity_wall_message: "%{author} heeft %{user} geschreven: %{message}"
+  activity_message: "%{author} heeft geschreven: %{message}"
   activity_unread: Je hebt %{count} ongelezen [private messages]
   activity_unread_singular: Je hebt een ongelezen [private message]
-  activity_user_left_site: '%{user} heeft %{group} verlaten'
+  activity_user_left_site: "%{user} heeft %{group} verlaten"
   activity_message_received: 'Je hebt %{message_tag} van %{other_user} gekregen: %{title}'
   activity_twinkled: '%{user} heeft je boodschap "%{post}" een starretje gegeven'
   media_image: Afbeelding
@@ -776,7 +782,7 @@ nl:
   wiki_section_is_locked: Het gedeelte %{section} is op dit moment afgesluiten door %{user}.
   leave_editing_wiki_page_warning: Wanneer je deze pagina verlat ga jij je veranderingen verliezen.
   cant_edit_section: Kan niet %{section} editeren.
-  user_locked_section: '%{user} heeft %{section} afgesluiten.'
+  user_locked_section: "%{user} heeft %{section} afgesluiten."
   can_still_save: Je kan nog steeds opslaan.
   changes_might_be_overwritten: Je veranderingen kunnen overgeschreven worden.
   other_section_locked_error: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds %{section} afgesluiten.

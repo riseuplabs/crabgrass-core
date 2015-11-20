@@ -19,11 +19,11 @@ pl:
   signup_email: Twój mejl
   forgot_password_text: Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło.
   reset_password_text: Cześć, %{user}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj.
-  forgot_password_mail_greeting: '%{user}, żeby zresetować swoje hasło wejdź na'
+  forgot_password_mail_greeting: "%{user}, żeby zresetować swoje hasło wejdź na"
   forgot_password_mail_expiry: 'Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
 
     ponownie ustawić swoje hasło po tym czasie, musisz ponownie odwiedzić stronę z zapomnianym hasłem i poprosić o nowy link.'
-  reset_password_mail_greeting: '%{user}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś'
+  reset_password_mail_greeting: "%{user}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
   reset_password_mail_warning: Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami.
   your_login: Twój login
   invalid_email_text: Adres e-mail który zsotał wprowadzony jest błędny.
@@ -55,12 +55,10 @@ pl:
   confirm_account_removal: Czy na pewno chcesz usunąć konto? Tego kroku nie da się cofnąć a dane zostaną bezpowrotnie usunięte.
   account_successfully_removed: Twoje konto zostało usunięte. Usuniemy je i wszystkie powiązane z nim dane z bazy danych.
   crabgrass:
-    powered_by_html: 'Stronę napędza <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-
-      '
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">wolne oprogramowanie AGPL</a> do organizacji sieciowej.
-
-      '
+    powered_by_html: |
+      Stronę napędza <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html">wolne oprogramowanie AGPL</a> do organizacji sieciowej.
     report_a_bug: Zgłoś błąd
     request_a_feature: Zaproponuj funkcję
     help_pages: Strony pomocy Crabgrassa
@@ -71,12 +69,12 @@ pl:
   cancel: Anuluj
   optional: Opcjonalne
   required: (wymagane)
-  thing_required: '%{thing} wymagane'
+  thing_required: "%{thing} wymagane"
   edit: Edytuj
   upload: Załaduj
   select_files: Wybierz pliki
   drop_files_here: Upuść pliki tutaj
-  files_pending: 'jeszcze #{pending} plik/ów'
+  files_pending: "jeszcze #{pending} plik/ów"
   return_link: Powrót
   back_button: Wróć
   send_button: Wyślij
@@ -106,7 +104,7 @@ pl:
   approved: Zatwierdzone
   saved: Zapisane
   destroy: Skasuj
-  thing_destroyed: 'skasowano %{thing} '
+  thing_destroyed: "skasowano %{thing} "
   destroy_thing: Skasuj %{thing}
   delete_thing: Usuń %{thing}
   delete: Usuń
@@ -123,8 +121,14 @@ pl:
       add: Dodaj nowe zadanie
     possible:
       add: Dodaj nową opcję
+  exception:
+    title:
+      unauthorized: Wymagany login
+      forbidden: Odmowa dostępu
+    description:
+      unauthorized: Proszę zaloguj się aby wykonać tą czynność.
   image_count: Zdjęcie %{number} z %{count}
-  image_count_total: '%{count} Zdjęć'
+  image_count_total: "%{count} Zdjęć"
   show_gallery: Pokaż Galerię
   edit_gallery_explanation: Dodaj nowe grafiki lub przeciągnij je do pożądanej kolejności.
   edit_image: Edytuj grafikę
@@ -132,7 +136,7 @@ pl:
   add_images_or_zips: Dodaj grafiki lub plik .zip
   add_images_or_zips_explaination: Plik zip zostanie automatyczni rozpakowany i wstawiony do galerii.
   confirm_image_delete: 'Czy na pewno chcesz skasować ten obraz? Tego działania nie da się cofnąć. '
-  no_title_given: (bez tytułu)
+  no_title_given: "(bez tytułu)"
   add_images: Dodaj grafiki
   edit_images: Edytuj grafiki
   upload_new_image: Załaduj nową grafikę
@@ -150,12 +154,12 @@ pl:
   close_and_reload_gallery: Zamknij i przeładuj galerię
   search: Szukaj
   go: Dajesz!
-  thing_not_found: '%{thing} nie ma'
+  thing_not_found: "%{thing} nie ma"
   no_things_found: Nie znaleziono %{things}.
   no_search_results: Brak wyników
   not_found: Brak wyników
   see_all_link: Zobacz Wszystkie
-  total: 'w sumie %{things}'
+  total: "w sumie %{things}"
   all: Wszystko
   none: Brak
   or: lub
@@ -171,13 +175,13 @@ pl:
   see_less_link: Mniej
   list_things: 'Lista '
   thing_was_sent:
-    one: 'Do %{recipient} wysłano %{thing}.'
-    few: 'Wysłano %{count} %{thing}.'
-    other: 'Wysłano %{count} %{thing}.'
+    one: "Do %{recipient} wysłano %{thing}."
+    few: "Wysłano %{count} %{thing}."
+    other: "Wysłano %{count} %{thing}."
   thing_was_not_sent:
-    one: '%{thing} do %{recipient} nie został/a wysłana.'
-    few: 'Nie udało się wysłać %{count} %{thing}.'
-    other: 'Nie udało się wysłać %{count} %{thing}.'
+    one: "%{thing} do %{recipient} nie został/a wysłana."
+    few: "Nie udało się wysłać %{count} %{thing}."
+    other: "Nie udało się wysłać %{count} %{thing}."
   user: Użytkownik/Użytkowniczka
   users: Użytkownicy/Użytkowniczki
   people: Ludzie
@@ -221,7 +225,6 @@ pl:
   messages: Wiadomości
   page: Strona
   title: Tytuł
-  body: Zawartość
   text_message: Wiadomość tekstowa
   print: Drukuj
   show: Pokaż
@@ -255,13 +258,24 @@ pl:
   open_group: Otwórz %{group}
   open_group_description: Wszyscy mogą od razu dołączyć do %{group} - nie trzeba potwierdzić żadnych próśb.
   membership_requests: Zgłoszenia do grup
-  group_membership_count: '%{count} osób'
+  group_membership_count: "%{count} osób"
   membership_exists_error: '%{member} już uczestniczy.'
   membership_destroy_confirm_message: Czy na pewno chcesz usunąć %{entity} z %{group}?
   group_invite_subject: Zaproszenie do grupy "%{group}"
-  group_invite_email: "%{from_user} zaprasza cię do grupy \"%{group}\".\n\nJeśli chcesz do niej dołączyć, kliknij tutaj:\n\n  %{accept_invite_link}\n\nStrona domowa tej grupy znajduje się tutaj:\n\n  %{group_home_link}\n\nJeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.\n"
-  group_destroyed_subject: '%{user} zdecydował/a o osunięciu %{group_type} %{group}!'
-  group_destroyed_email: 'Skasowano %{group_type} %{group}!'
+  group_invite_email: |
+    %{from_user} zaprasza cię do grupy "%{group}".
+
+    Jeśli chcesz do niej dołączyć, kliknij tutaj:
+
+      %{accept_invite_link}
+
+    Strona domowa tej grupy znajduje się tutaj:
+
+      %{group_home_link}
+
+    Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
+  group_destroyed_subject: "%{user} zdecydował/a o osunięciu %{group_type} %{group}!"
+  group_destroyed_email: "Skasowano %{group_type} %{group}!"
   group_wiki: Grupowe Wiki
   create_public_group_wiki: Publiczne
   create_private_group_wiki: Prywatne
@@ -272,7 +286,7 @@ pl:
   networks_publicly_visible: Uczyń sieci widocznymi publicznie
   allow_membership_requests: Pozwól na prośby o dołączenie
   group_successfully_created: Grupa została utworzona.
-  group_publicly_visible_description: 'Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem %{domain}/nazwatwojejgrupy.'
+  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem %{domain}/nazwatwojejgrupy."
   committee_publicly_visible_description: Komitety będą widoczne dla zalogowanych osób pod adresem %{domain}/nazwatwojejgrupy
   networks_publicly_visible_description: Sieci są widoczne dla osób niebędących członkami pod adresem %{domain}/nazwagrupy
   group_members_publicly_visible: Udostępnij publicznie listę uczestniczących osób
@@ -302,7 +316,6 @@ pl:
     recent_pages: Ostatnie strony
     info:
       page_search: Znajdź wszystkie strony do których masz dostęp bezpośrednio, lub poprzez grupy w których uczestniczysz.
-      recent_pages: Masz udział w edycji tych stron lub zostały ci one udostępnione
   my_dashboard: Panel
   uploaded_image_cropped: Załadowany obraz będzie obcięty i rozciągnięty do kwadratu 96 pixeli.
   select_image_file: wybierz plik z obrazem
@@ -323,11 +336,11 @@ pl:
   messages_with: Konwersacja z %{other_user}
   message_to_self_error: Nie gadaj do siebie
   message_you_wrote_caption: 'Piszesz:'
-  message_user_wrote_caption: '%{user} pisze:'
+  message_user_wrote_caption: "%{user} pisze:"
   unread_private_message: Masz nieprzeczytaną wiadomość od %{user}
+  home: Strona startowa
   menu_me: Ja
   menu_groups: Grupy
-  menu_home: Strona domowa
   menu_chat: Czat
   menu_people: Ludzie
   menu_networks: Sieci
@@ -391,7 +404,7 @@ pl:
   remove_star_link: Usuń Gwiazdkę (%{star_count})
   public_checkbox: Publiczny
   public_checkbox_help: Jeśli zaznaczone, każdy może oglądać tą stronę.
-  page_details_link: '%{page_class} Szczegóły'
+  page_details_link: "%{page_class} Szczegóły"
   delete_page_link: Usuń %{page_class}
   destroy_page_via_shred: Skasuj
   destroy_page_via_shred_info: To ostatecznie skasuje stronę. Tego działania nie da się cofnąć.
@@ -415,8 +428,8 @@ pl:
   share_page_link: Współuzytkowuj %{page_class}
   share_page_recipients: Współużytkowuj %{page_class} z
   notify_page_link: Wyślij Powiadomienie
-  notify_contribution: <b>Uprzedni Udział:</b> poinformuj o ludziach którzy dokonali <b>zmian</b> na tej stronie.
-  notify_current_access: <b>Obecny Dostęp:</b> poinformuj ludzi bądź grupy które obecnie mają dostęp do tej strony.
+  notify_contribution: "<b>Uprzedni Udział:</b> poinformuj o ludziach którzy dokonali <b>zmian</b> na tej stronie."
+  notify_current_access: "<b>Obecny Dostęp:</b> poinformuj ludzi bądź grupy które obecnie mają dostęp do tej strony."
   notification_message: Wiadomość powiadomienia
   send_only_with_encryption: Wyślij tylko jeżeli możliwa jest szyfrowana dystrybucja
   share_send_notification: Wyślij powiadomienie
@@ -424,7 +437,7 @@ pl:
   share_include_message: Dodaj własną wiadomość
   shared_page_success: Udało się udostępnić tę stronę.
   notify_success: Udało się wysłać powiadomienia.
-  share_grant_required_error: '%{name} nie ma uprawnień żeby zobaczyć tą stronę. Musi najpierw otrzymać większy dostęp.'
+  share_grant_required_error: "%{name} nie ma uprawnień żeby zobaczyć tą stronę. Musi najpierw otrzymać większy dostęp."
   share_permission_denied_error: Nie masz uprawnień żeby zmieniać kontrole dostępu do tej strony
   notify_no_access_error: Przykro mi, "%{name}" nie ma dostępu do tej strony.
   share_already_exists_error: '"%{name}" już ma dostęp do tej strony.'
@@ -438,34 +451,34 @@ pl:
   additional_page_access: 'Rozszerzony Dostęp '
   page_owner_error: Pole właściciela/właścicielki strony nie może być puste.
   action: Akcja
-  page_history_add_star: '%{user_name} dodał/dodała gwiazdeczkę'
-  page_history_added_comment: '%{user_name} zamieścił/zamieściła komentarz'
-  page_history_change_title: '%{user_name} zmienił/zmieniła nazwę strony'
-  page_history_deleted_page: '%{user_name} usunął/usunęła stronę'
-  page_history_destroyed_comment: '%{user_name} zniszczył/zniszczyła komentarz'
+  page_history_add_star: "%{user_name} dodał/dodała gwiazdeczkę"
+  page_history_added_comment: "%{user_name} zamieścił/zamieściła komentarz"
+  page_history_change_title: "%{user_name} zmienił/zmieniła nazwę strony"
+  page_history_deleted_page: "%{user_name} usunął/usunęła stronę"
+  page_history_destroyed_comment: "%{user_name} zniszczył/zniszczyła komentarz"
   page_history_details_change_title: 'Od: "%{from}" Do: "%{to}"'
-  page_history_granted_group_full_access: '%{user_name} uzyskał/uzyskała pełen dostęp do grupy %{item_name}'
-  page_history_granted_group_read_access: '%{user_name} uzyskał/uzyskała dostęp do czytania grupy %{item_name}'
-  page_history_granted_group_write_access: '%{user_name} uzyskał/uzyskała dostęp do pisania w grupie %{item_name}'
-  page_history_granted_user_full_access: '%{user_name} uzyskał/uzyskała pełen dostęp do użytkownika/użytkowniczki %{item_name}'
-  page_history_granted_user_read_access: '%{user_name} uzyskał/uzyskała dostęp do czytania u użytkownika/użytkowniczki %{item_name}'
-  page_history_granted_user_write_access: '%{user_name} uzyskał/uzyskała dostęp do pisania do użytkownika/użytkowniczki %{item_name}'
-  page_history_make_private: '%{user_name} zostawił/zostawiła opcję upubliczniania strony niezaznaczoną '
-  page_history_make_public: '%{user_name} zaznaczył/zaznaczyła stronę jako publiczną'
-  page_history_remove_star: '%{user_name} usunął/usunęła gwiazdeczkę'
-  page_history_revoked_group_access: '%{user_name} odwołał/odwołała dostęp do grupy %{item_name}'
-  page_history_revoked_user_access: '%{user_name} odwołał/odwołała dostęp użytkownika/użytkowniczki %{item_name}'
-  page_history_start_watching: '%{user_name} zaczął/zaczęła przeglądać tą stronę'
-  page_history_stop_watching: '%{user_name} zaprzestał/zaprzestała przeglądania tej strony'
-  page_history_updated_comment: '%{user_name} zaktualizował/zaktualizowała komentarz'
-  page_history_updated_content: '%{user_name} zaktualizował/zaktualizowała zawartość strony'
-  page_history_user_created_page: '%{user_name} utworzył/utworzyła stronę'
+  page_history_granted_group_full_access: "%{user_name} uzyskał/uzyskała pełen dostęp do grupy %{item_name}"
+  page_history_granted_group_read_access: "%{user_name} uzyskał/uzyskała dostęp do czytania grupy %{item_name}"
+  page_history_granted_group_write_access: "%{user_name} uzyskał/uzyskała dostęp do pisania w grupie %{item_name}"
+  page_history_granted_user_full_access: "%{user_name} uzyskał/uzyskała pełen dostęp do użytkownika/użytkowniczki %{item_name}"
+  page_history_granted_user_read_access: "%{user_name} uzyskał/uzyskała dostęp do czytania u użytkownika/użytkowniczki %{item_name}"
+  page_history_granted_user_write_access: "%{user_name} uzyskał/uzyskała dostęp do pisania do użytkownika/użytkowniczki %{item_name}"
+  page_history_make_private: "%{user_name} zostawił/zostawiła opcję upubliczniania strony niezaznaczoną "
+  page_history_make_public: "%{user_name} zaznaczył/zaznaczyła stronę jako publiczną"
+  page_history_remove_star: "%{user_name} usunął/usunęła gwiazdeczkę"
+  page_history_revoked_group_access: "%{user_name} odwołał/odwołała dostęp do grupy %{item_name}"
+  page_history_revoked_user_access: "%{user_name} odwołał/odwołała dostęp użytkownika/użytkowniczki %{item_name}"
+  page_history_start_watching: "%{user_name} zaczął/zaczęła przeglądać tą stronę"
+  page_history_stop_watching: "%{user_name} zaprzestał/zaprzestała przeglądania tej strony"
+  page_history_updated_comment: "%{user_name} zaktualizował/zaktualizowała komentarz"
+  page_history_updated_content: "%{user_name} zaktualizował/zaktualizowała zawartość strony"
+  page_history_user_created_page: "%{user_name} utworzył/utworzyła stronę"
   page_history_mailer_hello_user_name: Cześć %{user_name}
   page_history_mailer: 'Tutaj możesz zmienić opcje powiadomień e-mail''owych: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: '%{site_title} : Strona została zmodyfikowana'
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: 'Strona którą oglądasz została zmodyfikowana %{histories_count} od czasu ostatniego powiadomienia,
-
-    tutaj możesz wejść na stronę:'
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : Strona została zmodyfikowana"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
+    Strona którą oglądasz została zmodyfikowana %{histories_count} od czasu ostatniego powiadomienia,
+    tutaj możesz wejść na stronę:
   page_history_mailer_a_page_you_are_watching: Strona którą oglądasz została zmodyfikowana, tutaj możesz na nią wejść
   page_history_the_page_you_are_watching_description: Strona którą pzreglądasz "%{page_title}" została zmieniona
   page_history_mailer_expire_link: Link wygaśnie w ciągu %{expire_time}
@@ -552,7 +565,7 @@ pl:
   survey_please_check_message: Proszę sprawdź swoje odpowiedzi.
   survey_thanks_submit_message: Dziękuję za wysłanie odpowiedzi.
   drag_to_move_tip: przeciągnij żeby przemieścić
-  each_line_is_a_choice_caption: (każda linia to możliwy wybór)
+  each_line_is_a_choice_caption: "(każda linia to możliwy wybór)"
   no_data_uploaded_label: Nie załadowano żadnych danych
   current_video_sources: 'Obecnie obsługiwane: youtube, blip.tv, google video, vimeo'
   video_embed_code_prompt: Osadzone kody z zewnętrznego źródła wideo
@@ -573,7 +586,6 @@ pl:
   sharing_and_requests: Udostępnianie i Prośby
   view_profile: Zobacz profil
   profile_member_since: W grupie od
-  home: Strona startowa
   banner: Baner
   banner_info: Optymalne rozmiary to %{optimal_dimensions} pikseli
   organizational_role: Funkcja w organizacji
@@ -588,8 +600,8 @@ pl:
   request: Zgłoszenie
   incoming: Przychodzące
   outgoing: Wysłane
-  request_pending: '%{request} oczekuje'
-  not_allowed_to_respond_to_request: '%{user} nie ma uprawnień do zastosowania działania %{command} '
+  request_pending: "%{request} oczekuje"
+  not_allowed_to_respond_to_request: "%{user} nie ma uprawnień do zastosowania działania %{command} "
   try_again: Spróbuj Ponownie
   send_request_button: Wyślij zgłoszenie
   send_invites_button: Wyślij zaproszenia
@@ -617,10 +629,6 @@ pl:
   request_to_friend: Wyślij zaproszenie do kontaktów
   request_to_friend_short: Czy dodać %{user} do kontaktów %{other_user}?
   request_to_friend_description: '%{user} chce zostać dodana/y do kontaktów %{other_user}'
-  request_to_join_our_network:
-    one: Zaproszenie do dołączenia
-    few: Zaproszenia do dołączenia
-    other: Zaproszenia do dołączenia
   request_to_destroy_our_group: Poproś o skasowanie grupy
   request_to_join_our_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}
@@ -680,18 +688,18 @@ pl:
   a_message_link: wiadomość
   a_reply_link: odpowiedź
   confirm_discarding_text_area: Cała Twoja niezapisana praca zostanie utracona. Naciśnij %{cancel} aby kontynuować edytowanie.
-  activity_contact_created: '%{user} dodał/a %{other_user} do swoich kontaktów'
-  activity_user_left_group: '%{user} opuścił/a %{group_type} %{group}'
-  activity_user_joined_group: '%{user} dołączył/a do %{group_type} %{group}'
-  activity_user_joined_site: '%{user} dołącza do %{group}'
-  activity_user_destroyed: '%{user} idzie na emeryturę'
-  activity_group_created: '%{user} stworzył/a %{group_type} %{group}'
-  activity_group_destroyed: 'grupa %{group} została usunięta przez %{user}'
-  activity_wall_message: '%{author} napisał/a do %{user}: %{message}'
-  activity_message: '%{author} napisał/napisała: %{message}'
+  activity_contact_created: "%{user} dodał/a %{other_user} do swoich kontaktów"
+  activity_user_left_group: "%{user} opuścił/a %{group_type} %{group}"
+  activity_user_joined_group: "%{user} dołączył/a do %{group_type} %{group}"
+  activity_user_joined_site: "%{user} dołącza do %{group}"
+  activity_user_destroyed: "%{user} idzie na emeryturę"
+  activity_group_created: "%{user} stworzył/a %{group_type} %{group}"
+  activity_group_destroyed: "grupa %{group} została usunięta przez %{user}"
+  activity_wall_message: "%{author} napisał/a do %{user}: %{message}"
+  activity_message: "%{author} napisał/napisała: %{message}"
   activity_unread: Masz %{count} nieprzeczytanych [private messages]
   activity_unread_singular: Masz nieprzeczytaną [private message]
-  activity_user_left_site: '%{user} opuszcza %{group}'
+  activity_user_left_site: "%{user} opuszcza %{group}"
   activity_message_received: 'Masz %{message_tag} od %{other_user}: %{title}'
   activity_twinkled: 'twój post "%{post}" został wyróżniony przez %{user}'
   media_image: Obraz
@@ -789,7 +797,7 @@ pl:
   wiki_section_is_locked: Sekcja %{section} jest obecnie zablokowana przez %{user}.
   leave_editing_wiki_page_warning: Jeśli opuścisz tą stronę bez zapisania wiki lub anulowania edytowania, wtedy inni użytkownicy/inne użytkowniczki dostaną komunikat, że ta strona jest zablokowana przez Ciebie i nie będzie można jej edytować. Również, jeśli nie zapiszesz wiki, stracisz zmiany, które zostały przez Ciebie wprowadzone.
   cant_edit_section: Nie można edytować %{section}.
-  user_locked_section: '%{user} zablokował/a %{section}.'
+  user_locked_section: "%{user} zablokował/a %{section}."
   can_still_save: Możesz jeszcze zapisać
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
   other_section_locked_error: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już %{section}.
