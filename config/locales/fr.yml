@@ -1,9 +1,9 @@
 fr:
   cookie_disabled_warning: Les cookies sont désactivés sur votre navigateur. Vous ne pourrez pas vous connecter tant que ce sera le cas.
   signup_link: Créer un nouveau compte ?
-  signup_email_info: 'Optionnel: utilisé si vous oubliez votre mot de passe'
-  forgot_password_link: J'ai oublié mon mot de passe
-  login_failure_reason: L'identifiant ou le mot de passe est incorrect.
+  signup_email_info: 'Optionnel: utilisé si vous oubliez votre phrase de passe'
+  forgot_password_link: J'ai oublié ma phrase de passe
+  login_failure_reason: L'identifiant ou la phrase de passe est incorrect.
   signup_success_message: Merci pour votre inscription !
   login_name: Identifiant
   signup_success: Enregistrement réussi
@@ -17,25 +17,25 @@ fr:
   sign_in: Connexion
   signup_title: Créez votre compte
   signup_email: Votre Mail
-  forgot_password_text: Si vous avez oublié votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer un nouveau.
-  reset_password_text: Bonjour, %{user}. Si vous avez oublié votre mot de passe pour vous connecter, vous pouvez en définir un ici.
-  forgot_password_mail_greeting: "%{user}, pour régénérer votre mot de passe, allez à "
-  forgot_password_mail_expiry: Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre mot de passe après ce délai, vous aurez à retourner à nouveau sur la page 'mot de passe perdu' pour demander un nouveau lien.
-  reset_password_mail_greeting: "%{user}, votre mot de passe a été réinitialisé à votre demande."
-  reset_password_mail_warning: Si vous n'avez pas demandé à réinitialiser votre mot de passe, merci de nous contacter.
+  forgot_password_text: Si vous avez oublié votre phrase de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer une nouvelle
+  reset_password_text: Bonjour, %{user}. Si vous avez oublié votre phrase de passe pour vous connecter, vous pouvez en définir une ici.
+  forgot_password_mail_greeting: "%{user}, pour régénérer votre phrase de passe, allez à "
+  forgot_password_mail_expiry: Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre phrase de passe après ce délai, vous aurez à retourner à nouveau sur la page 'phrase de passe perdue' pour demander un nouveau lien.
+  reset_password_mail_greeting: "%{user}, votre phrase de passe a été réinitialisée à votre demande."
+  reset_password_mail_warning: Si vous n'avez pas demandé à réinitialiser votre phrase de passe, merci de nous contacter.
   your_login: Votre identifiant
   invalid_email_text: L'adresse mail fournie est invalide.
-  reset_password: Réinitialiser le mot de passe
-  reset_password_email_sent: Si cette adresse mail est associée avec un identifiant, alors un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé.
+  reset_password: Réinitialiser la phrase de passe
+  reset_password_email_sent: Si cette adresse mail est associée avec un identifiant, alors un mail contenant les instructions de réinitialisation de la phrase de passe vous a été envoyé.
   invalid_token: Lien invalide
-  invalid_token_text: Le lien de régénération de mot de passe spécifié est invalide. Il doit être déjà utilisé, ou a dû expirer.
-  password_reset: Réinitialisation du mot de passe
-  password_reset_ok_text: Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
-  requested_forgot_password: Vous avez demandé une modification du mot de passe
-  password_was_reset: Votre mot de passe a été réinitialisé
+  invalid_token_text: Le lien de régénération de phrase de passe spécifié est invalide. Il doit être déjà utilisé, ou a dû expirer.
+  password_reset: Réinitialisation de la phrase de passe
+  password_reset_ok_text: Votre phrase de passe a été réinitialisée. Vous pouvez maintenant vous connecter avec votre nouvelle phrase de passe.
+  requested_forgot_password: Vous avez demandé une modification de la phrase de passe
+  password_was_reset: Votre phrase de passe a été réinitialisée
   forgotten_email_address: Quelle adresse mail avez-vous donné lors de la création du compte ?
-  new_password: Nouveau mot de passe
-  confirm_new_password: Confirmer le nouveau mot de passe
+  new_password: Nouvelle phrase de passe
+  confirm_new_password: Confirmer la nouvelle phrase de passe
   congratulations_you_have_signed_up: Félicitations ! Vous êtes inscrit·e sur %{site_title}.
   you_should_receive_instructions_email: Vous devriez recevoir un mail avec les instructions pour finaliser la création de votre compte.
   email_verification_body: |-
@@ -48,12 +48,12 @@ fr:
     %{verify_email_link}
 
     Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.
-  change_password: Modification du mot de passe
-  password: Mot de passe
-  password_confirmation: Confirmation du mot de Passe
-  signup_confirm_password: Confirmation du mot de passe
-  login_password: Mot de passe
-  signup_password: Votre mot de passe
+  change_password: Modification de la phrase de passe
+  password: Phrase de passe
+  password_confirmation: Confirmation de la Phrase de Passe
+  signup_confirm_password: Confirmation de la phrase de passe
+  login_password: Phrase de passe
+  signup_password: Votre phrase de passe
   remove_your_account: Suppression de votre compte
   anonymize_display_name: 'Anonymiser le nom affiché '
   anonymize_display_name_info: Remplace votre nom affiché par 'Anonyme' partout
@@ -120,8 +120,8 @@ fr:
   remove: Retirer
   autocomplete:
     placeholder:
-      enter_name_of_group_or_person: Indiquer le nom d'un groupe ou d'une personne
-      enter_name_of_group: Indiquer le nom d'un groupe
+      enter_name_of_group_or_person: Indiquer le nom d'une structure ou d'une personne
+      enter_name_of_group: Indiquer le nom d'une structure
       enter_name_of_person: Indiquer le nom d'une personne
   actions:
     task:
@@ -134,13 +134,13 @@ fr:
       unauthorized: Connexion Obligatoire
       forbidden: Autorisation refusée
       group:
-        not_found: Groupe Non Trouvé
+        not_found: Structure Non Trouvée
     description:
       not_found: désolé, nous ne pouvons trouver ce que vous cherchez.
       unauthorized: Merci de vous connecter pour effectuer cette action.
       forbidden: Désolé. Vous n'avez pas les droits pour faire cette action.
       group:
-        not_found: Désolé, nous ne pouvons trouver le groupe que vous cherchez.
+        not_found: Désolé, nous ne pouvons trouver la structure que vous cherchez.
   image_count: Image %{number} de %{count}
   image_count_total: "%{count} Images"
   show_gallery: Afficher la galerie
@@ -155,7 +155,7 @@ fr:
   edit_images: Modifier les images
   upload_new_image: Téléverser une nouvelle image
   type_your_messages_here: Écrivez votre message ici et validez avec la touche Entrée...
-  group_not_allowed_to_view_image_error: Le groupe qui possède cette page n'est pas autorisé à voir cette image.
+  group_not_allowed_to_view_image_error: La structure qui possède cette page n'est pas autorisé à voir cette image.
   add_comment: Ajouter un commentaire
   image_title: 'Titre de l''image: %{title}'
   upload_zip_file_link: Téléverser un fichier ZIP
@@ -233,7 +233,7 @@ fr:
   description: Description
   details: Détails
   invite: Inviter
-  membership: Adhésion
+  membership: Inscription
   visibility: Qui peut voir...
   administration: Administration
   settings: Paramètres
@@ -249,8 +249,8 @@ fr:
   message: message
   private_message_notice: Notification de message privé
   visits: Visites
-  group: Groupe
-  groups: Groupes
+  group: Structure
+  groups: Structures
   organization: Groupe
   organizations: Groupes
   network: Réseau
@@ -267,29 +267,29 @@ fr:
   committee_description: Les commissions sont des structures dans un groupe ou un réseau. Une commission est entièrement subordonnée au groupe ou au réseau dont elle fait partie.
   council_description: Les conseils sont des structures avec des pouvoir administratifs particuliers. Tous les groupes ou réseaux peuvent avoir un conseil. Si c'est le cas, les membres de ce conseil auront le pouvoir sur le réseau ou le groupe.
   council_description_details: Par défaut, tous ses membres peuvent modifier le %{group}. Pour restreindre les pouvoirs administratifs à certains membres, créer un conseil et y ajouter ces membres.
-  committee_choose_group: 'Choisir un groupe pour cette commission:'
+  committee_choose_group: 'Choisir une structure pour cette commission:'
   network_committees_may_not_join_networks: Les commissions des autres réseaux ne peuvent se joindre.
   networks_may_not_join_networks: Les réseaux ne peuvent se joindre à d'autres réseaux.
-  may_request_membership_description: Un lien "Rejoindre %{group}" apparaîtra sur la page de votre groupe. Cela enverra une demande d'inscription au groupe qui pourra être acceptée ou rejetée.
+  may_request_membership_description: Un lien "Rejoindre %{group}" apparaîtra sur la page de votre structure. Cela enverra une demande d'inscription aux membres de la structure qui pourra être acceptée ou rejetée.
   open_group: Ouvrir %{group}
-  open_group_description: Les personnes sont immédiatement inscrites dans le %{group} - les requêtes n'ont pas besoin d'être approuvées
-  shared_groups: Groupes Partagés
+  open_group_description: Les personnes sont immédiatement inscrites dans la structure %{group} - les demandes n'ont pas besoin d'être approuvées
+  shared_groups: Structures Partagés
   public_groups: Structures Publiques
-  membership_requests: Demandes d'adhésion
+  membership_requests: Demande d'Inscription
   group_membership_count: "%{count} Membres"
   membership_exists_error: Une inscription existe déjà pour %{member}
   membership_destroy_confirm_message: Êtes-vous certain·e de vouloir retirer '%{entity}' de %{group} ?
-  group_invite_subject: Invitation à rejoindre le groupe "%{group}"
+  group_invite_subject: Invitation à rejoindre la structure "%{group}"
   group_invite_email: |-
-    %{from_user} vous a invité•e à rejoindre le groupe "%{group}". Si vous souhaitez rejoindre ce groupe, cliquez ici:
+    %{from_user} vous a invité•e à rejoindre la structure "%{group}". Si vous souhaitez la rejoindre, cliquez ici:
 
      %{accept_invite_link}
 
-    La page d'accueil du groupe peut être trouvée ici:
+    La page d'accueil de la structure peut être trouvée ici:
 
      %{group_home_link}
 
-    Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail.
+    Si vous ne souhaitez pas la rejoindre, ignorez simplement ce mail.
   group_destroyed_subject: "%{group_type} %{group} supprimé·e par %{user}!"
   group_destroyed_email: "%{group_type} %{group} détruit·e !"
   group_wiki: Wiki principal
@@ -300,30 +300,30 @@ fr:
   group_publicly_visible: 'Publier %{group} '
   committee_publicly_visible: Publier les commissions
   networks_publicly_visible: Rendre les réseaux visibles publiquement
-  allow_membership_requests: Autoriser les demandes de membre
+  allow_membership_requests: Autoriser les Demandes d'Inscription
   group_successfully_created: Le groupe est créé avec succès.
-  group_publicly_visible_description: "Le groupe apparaît dans le répertoire public. Son <i>profil</i> est visible de toutes et tous à l'adresse %{domain}/yourgroupname."
-  committee_publicly_visible_description: Les commissions sont visibles aux non-membres à l'adresse %{domain}/yourgroupname
-  networks_publicly_visible_description: Les réseaux sont visibles aux non-membres à l'adresse %{domain}/yourgroupname
+  group_publicly_visible_description: "La structure apparaît dans le répertoire public. Son <i>profil</i> est visible de toutes et tous à l'adresse %{domain}/nomdestructure."
+  committee_publicly_visible_description: Les commissions sont visibles aux non-membres à l'adresse %{domain}/nomdestructure
+  networks_publicly_visible_description: Les réseaux sont visibles aux non-membres à l'adresse %{domain}/nomdestructure
   group_members_publicly_visible: Afficher publiquement les membres du groupe
-  group_members_publicly_visible_description: Les membres sont visibles aux non-membres à l'adresse %{domain}/yourgroupname. De même, le nom du groupe sera affiché sur le profil de chaque membre (%{domain}/username)
+  group_members_publicly_visible_description: Les membres sont visibles aux non-membres à l'adresse %{domain}/nomdestructure. De même, le nom du groupe sera affiché sur le profil de chaque membre (%{domain}/identifiant)
   members_may_edit_wiki: Tous les membres peuvent éditer le wiki
   members_may_edit_wiki_description: Si décochée, seuls les membres du conseil peuvent éditer le wiki principal.
   rss_feed: Flux RSS
   group_language: La langue principale de ce %{group}.
   my_networks: Mes Réseaux
-  my_groups: Mes groupes
+  my_groups: Mes structures
   basic_settings: Parametres
   send_invites: Envoyer des invitations
   view_requests: Voir les Demandes
-  add_members_to_committee: Ajouter des membres du groupe à cette commission
+  add_members_to_committee: Ajouter des membres de la structure à cette commission
   join_group_link: Rejoindre %{group_type}
   leave_group_link: Quitter %{group_type}
   leave_group_confirmation: Êtes-vous certain·e de vouloir quitter cette structure ?
   request_join_group_link: Demander à rejoindre %{group_type}
-  request_exists: Votre demande d'adhésion est en attente d'approbation.
+  request_exists: Votre demande d'inscription est en attente d'approbation.
   join_group_confirmation: Êtes-vous certain·e de vouloir rejoindre cette structure ?
-  link_name_description: C'est ce nom qui sera utilisé pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
+  link_name_description: C'est ce nom qui sera utilisé pour identifier cette structure dans les liens et les URLs. Il ne doit contenir que des caractères alphanumériques non accentués, sans espace.
   descriptive_name_for_display: Un nom explicite utilisé pour l'affichage
   this_is_committee: Cette commission fait partie de %{parent_group}.
   network_initial_member: Choisissez un groupe comme membre initial de ce réseau.
@@ -331,7 +331,7 @@ fr:
     page_search: Chercher dans les pages
     recent_pages: Pages récentes
     info:
-      page_search: Trouver toutes les pages accessibles directement ou via vos groupes
+      page_search: Trouver toutes les pages accessibles directement ou via vos structures
       recent_pages: Ces pages ont été créées ou mises à jour récemment.
   my_dashboard: Mon tableau de bord
   uploaded_image_cropped: Les images téléversées seront réduites à un carré de 96 pixels de côté.
@@ -358,7 +358,7 @@ fr:
   unread_private_message: Vous avez un message privé non lu de %{user}
   home: Accueil
   menu_me: Moi
-  menu_groups: Groupes
+  menu_groups: Structures
   menu_chat: Salon de Discussion
   menu_people: Autrui
   menu_networks: Réseaux
@@ -366,7 +366,7 @@ fr:
   menu_admin: Administrer
   account_settings: Paramètres du compte
   back_to_page: Retour à la page
-  back_to_group: Revenir au groupe
+  back_to_group: Revenir à la structure
   pages: Pages
   recent_pages: Pages récentes
   my_pages: Mes pages
@@ -392,7 +392,7 @@ fr:
   most_stars: Le Plus d'Étoiles
   most_viewed: Les plus vus
   filter_user_description: Rechercher les pages accessibles à une personne en particulier.
-  filter_group_description: Rechercher les pages accessibles à un groupe en particulier.
+  filter_group_description: Rechercher les pages accessibles à une structure en particulier.
   starred: Étoilé
   viewed: Vu
   edited: Édité
@@ -447,7 +447,7 @@ fr:
   share_page_recipients: 'Partager cette %{page_class} avec '
   notify_page_link: Envoyer une notification
   notify_contribution: "<b>Contributeurs précédents:</b> notifier les personnes qui ont déjà fait une <b>contribution</b> sur cette page."
-  notify_current_access: "<b>Accès actuels:</b> notifier les personnes ou les groupes qui ont actuellement accès à cette page."
+  notify_current_access: "<b>Accès actuels:</b> notifier les personnes ou les structures qui ont actuellement accès à cette page."
   notification_message: Message de Notification
   send_only_with_encryption: N'envoyer que si le chiffrement est possible
   share_send_notification: Envoyer une notification
@@ -460,7 +460,7 @@ fr:
   notify_no_access_error: Désolé, "%{name}" n'a pas accès à cette page.
   share_already_exists_error: '"%{name}" a déjà accès à cette page.'
   share_pester_error: Désolé, vous n'êtes pas autorisé·e à partager avec "%{name}".
-  name_or_email_not_found: '"%{name}" ne correspond à aucun nom de personne ou de groupe et n''est pas une adresse mail valide.'
+  name_or_email_not_found: '"%{name}" ne correspond à aucun nom de personne ou de structure et n''est pas une adresse mail valide.'
   contribute_content_link: Créer une Page
   page_create_owner: Propriétaire de la Page
   create_page: Créer une Page
@@ -475,16 +475,16 @@ fr:
   page_history_deleted_page: "%{user_name} a supprimé la page"
   page_history_destroyed_comment: "%{user_name} a détruit un commentaire"
   page_history_details_change_title: 'De: "%{from}" à : "%{to}"'
-  page_history_granted_group_full_access: "%{user_name} a donné les accès complets au groupe %{item_name}"
-  page_history_granted_group_read_access: "%{user_name} a donné l'accès en lecture au groupe %{item_name}"
-  page_history_granted_group_write_access: "%{user_name} a donné l'accès en écriture au groupe %{item_name}"
+  page_history_granted_group_full_access: "%{user_name} a donné les accès complets à la structure %{item_name}"
+  page_history_granted_group_read_access: "%{user_name} a donné l'accès en lecture à la structure %{item_name}"
+  page_history_granted_group_write_access: "%{user_name} a donné l'accès en écriture à la structure %{item_name}"
   page_history_granted_user_full_access: "%{user_name} a donné l'accès complet à l'utilisateur  %{item_name}"
   page_history_granted_user_read_access: "%{user_name} a donné l'accès en lecture à l'utilisateur %{item_name}"
   page_history_granted_user_write_access: "%{user_name} a donné l'accès en écriture à l'utilisateur %{item_name}"
   page_history_make_private: "%{user_name} a décoché l'option qui rend la page publique"
   page_history_make_public: "%{user_name} a rendu la page publique"
   page_history_remove_star: "%{user_name} a retiré une étoile"
-  page_history_revoked_group_access: "%{user_name} a révoqué l'accès au groupe %{item_name}"
+  page_history_revoked_group_access: "%{user_name} a révoqué l'accès à la structure %{item_name}"
   page_history_revoked_user_access: "%{user_name} a révoqué l'accès à l'utilisateur %{item_name}"
   page_history_start_watching: "%{user_name} a mis en place un suivi de cette page"
   page_history_stop_watching: "%{user_name} a arrêté de suivre cette page"
@@ -506,7 +506,7 @@ fr:
   asset_page_description: Envoyer une image, un document, une présentation, ou tout autre fichier.
   asset_page_display: Fichier
   select_file_to_upload: Choisir un fichier à téléverser
-  discussion_page_description: Discuter d'un sujet particulier avec des groupes ou d'autres personnes.
+  discussion_page_description: Discuter d'un sujet particulier avec des structures ou d'autres personnes.
   discussion_page_display: Discussion de groupe
   ranked_vote_page_description: Créer une liste de propositions à classer par ordre de préférence.
   ranked_vote_page_display: Vote par Classement
@@ -587,19 +587,19 @@ fr:
   video_embed_code_prompt: Code importé depuis une source vidéo extérieure.
   permissions_key: Clé
   public_description: Tout le monde sur l'Internet
-  peers_description: Les membres de vos groupes
+  peers_description: Les membres de vos structures
   friends_description: Vos ami•es
   may_view_label: mon profil ?
   may_view_description: Si non cochées, votre profil sera complètement caché.
   may_see_contacts_label: mes contacts ?
   may_see_contacts_description: Déterminer qui peut voir qui sont vos contacts.
-  may_see_groups_label: mes groupes ?
-  may_see_groups_description: Déterminer qui peut voir les groupes dont vous faites partie.
+  may_see_groups_label: mes structures ?
+  may_see_groups_description: Déterminer qui peut voir les structures dont vous faites partie.
   may_pester_label: Partager avec moi ?
   may_pester_description: Choisir qui peut vous envoyer des messages, des pages et des invitations.
   may_request_contact_label: Contacter ?
   may_request_contact_description: Choisir qui peut demander à être en contact avec vous.
-  sharing_and_requests: Partages et requêtes
+  sharing_and_requests: Partages et Demandes
   view_profile: Voir le profil
   profile_member_since: Membre Depuis
   banner: Bannière
@@ -612,42 +612,42 @@ fr:
   remove_friend_link: Retirer de mes contacts
   edit_profile_link: Modifier le Profil
   profile_saved: Votre profil est sauvegardé.
-  requests: Requêtes
-  request: Requêtes
+  requests: Demandes
+  request: Demande
   incoming: Entrant
   outgoing: Sortant
   request_pending: "%{request} est en attente"
-  not_allowed_to_respond_to_request: "%{user} n'est pas autorisé·e à %{command} la requête."
+  not_allowed_to_respond_to_request: "%{user} n'est pas autorisé·e à %{command} la demande."
   try_again: Essayer encore
-  send_request_button: Envoyer une requête
+  send_request_button: Envoyer une Demande
   send_invites_button: Envoyer des invitations
   all_requests: Toutes Les Demandes
   activerecord:
     models:
-      request_to_friend: Demande de mise en contact
+      request_to_friend: Demande de Mise en Contact
       request_to_join_our_network:
         one: Invitation à Rejoindre
         other: Invitations à Rejoindre
-      request_to_destroy_our_group: Demande de destruction de groupe
+      request_to_destroy_our_group: Demande de Destruction de Structure
       request_to_join_us:
         one: Invitation à Rejoindre
         other: Invitations à Rejoindre
       request_to_join_us_via_email:
         one: Invitation à Rejoindre
         other: Invitations à Rejoindre
-      request_to_join_you: Demande d'inscription
-      request_to_join_your_network: Demande d'inscription
-      request_to_create_council: Demande de création de conseil
+      request_to_join_you: Demande d'Inscription
+      request_to_join_your_network: Demande d'Inscription
+      request_to_create_council: Demande de Création de Conseil
       request_to_remove_user: Demande de désinscription
-  request_to_friend: Demander à être en contact
+  request_to_friend: Demande de Mise en Contact
   request_to_friend_short: Autoriser %{user} à être mis·e en contact avec %{other_user} ?
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_join_our_network:
     one: Invitation à Rejoindre
     other: Invitations à Rejoindre
-  request_to_destroy_our_group: Demander à détruire le groupe
+  request_to_destroy_our_group: Demander à Détruire la Structure
   request_to_join_our_network_short: Autoriser %{group} à rejoindre %{network} ?
-  request_to_join_our_network_description: Le groupe %{group} a été invité à rejoindre le réseau %{network}.
+  request_to_join_our_network_description: La structure %{group} a été invitée à rejoindre le réseau %{network}.
   request_to_join_us:
     one: Invitation à Rejoindre
     other: Invitations à Rejoindre
@@ -658,25 +658,25 @@ fr:
     other: Invitations à Rejoindre
   request_to_join_us_via_email_short: Autoriser %{email} à rejoindre %{group} ?
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
-  request_to_join_you: Demander inscription
+  request_to_join_you: Requête d'Inscription
   request_to_join_you_short: Autoriser %{user} à rejoindre %{group} ?
-  request_to_join_you_description: '%{user} a demandé à rejoindre le groupe %{group}.'
-  request_to_join_your_network: Demander à adhérer
+  request_to_join_you_description: '%{user} a demandé à rejoindre la structure %{group}.'
+  request_to_join_your_network: Demande d'Inscription
   request_to_join_your_network_short: 'Autoriser %{group} à rejoindre %{network} ? '
   request_to_join_your_network_description: Le groupe %{group} a demandé à rejoindre le réseau %{network}.
   request_to_destroy_our_group_short: Détruire %{group} ?
   request_to_destroy_our_group_description: '%{user} a proposé de détruire la structure %{group_type} %{group}.'
-  request_to_create_council: Demander à créer un conseil
+  request_to_create_council: Demande de Création de Conseil
   request_to_create_council_short: '%{group} doit-il avoir un conseil ?'
   request_to_create_council_description: '%{user} a proposé de créer un conseil pour la structure %{groupe_type} %{group}.'
-  request_to_remove_user: Demander à retirer un membre
+  request_to_remove_user: Demande de Désinscription de Membre
   request_to_remove_user_short: Retirer %{member} de %{group} ?
   request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{groupe_type} %{group}.'
   invite_info: Entrez la liste des identifiants ou des adresses mail des personnes que vous voulez inviter à rejoindre cette structure.
   invite_error_redeemed: L'invitation a déjà été utilisée.
-  invite_error_already_member: Vous êtes déjà membre de ce groupe.
+  invite_error_already_member: Vous êtes déjà membre de cette structure.
   request_exists_error: La demande existe déjà pour %{recipient}
-  network_invite_info: Écrivez les noms des groupes que vous désirez inviter à rejoindre ce réseau.
+  network_invite_info: Écrivez les noms des structures que vous désirez inviter à rejoindre ce réseau.
   recipient_tip: Séparez les destinataires par des virgules, des espaces ou de nouvelles lignes.
   you_are_invited: Vous êtes invité•e à rejoindre.
   friend_request_message_label: Précisez à %{user} pourquoi vous voulez être en contact.
@@ -701,8 +701,8 @@ fr:
   full: plein
   image_options_info: L'image ajoutée dans le wiki doit-elle avoir un hyperlien sur l'image pleine taille ?
   include_full_checkbox: Inclus le lien vers l'image de taille originale
-  image_select_info: Choisissez une image à insérer parmi les images précédemment téléversées dans le groupe
-  image_upload_info: Téléverser une nouvelle image au groupe afin qu'elle soit utilisée dans le wiki
+  image_select_info: Choisissez une image à insérer parmi les images précédemment téléversées dans la structure
+  image_upload_info: Téléverser une nouvelle image dans la structure afin qu'elle soit utilisée dans le wiki
   a_message_link: un message
   a_reply_link: une réponse
   confirm_discarding_text_area: Tous vos travaux non sauvegardés seront perdus. Cliquez %{cancel} pour continuer l'édition.
