@@ -15,14 +15,12 @@ en:
   logout_success_message: "You have been logged out."
   signup_button: "Sign Up"
   login_failed: "Could not log in"
-  signup_login_name: "Your Username"
   login_button: "Sign In"
   # "Log in" is the action of using your "Login" to authenticate.
   # For clarity, use "Sign In"
   login: "Login"
   sign_in: "Sign In"
   signup_title: "Create Your Account"
-  signup_email: "Your Email"
   forgot_password_text: "If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one."
   reset_password_text: "Hello, %{user}. If you've forgotten the password you use to log in, you can set a new one here."
   forgot_password_mail_greeting: "%{user}, to reset your password, please visit"
@@ -30,7 +28,6 @@ en:
 
   reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
-  your_login: "Your login"
   ##!  invalid_email: "Invalid Email"
   invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
@@ -94,9 +91,7 @@ en:
   change_password: "Change Password"
   password: "Password"
   password_confirmation: "Password Confirmation"
-  signup_confirm_password: "Confirm Password"
   login_password: "Password"
-  signup_password: "Your Password"
 
   ##
   ## ACCOUNT REMOVAL
