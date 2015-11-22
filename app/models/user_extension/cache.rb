@@ -154,7 +154,15 @@ module UserExtension
     # include direct memberships, committees, and networks
     def get_group_ids
       if self.id
-        direct = self.groups.pluck(:id)
+        # this can be called from inside the
+        #   user.groups.recently_active.with_member(current_user)
+        # association.
+        # This causes self.groups to include the memberships join twice
+        # I think this is a rails bug
+        # So we use the memberships instead. TODO: UPGRADE: check if
+        # this is fixed for self.groups.
+        # (otherwise People::HomeControllerTest will fail)
+        direct = self.memberships.pluck(:group_id)
       else
         direct = []
       end

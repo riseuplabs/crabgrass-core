@@ -72,7 +72,7 @@ committee_page:
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
   owner_id: 31
   owner_type: Group
-  owner_name: warm
+  owner_name: rainbow+the-warm-colors
   updated_by_id: 4
   type: DiscussionPage
 
