@@ -33,12 +33,11 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
 
   def test_same_body_same_version
     assert_difference '@wiki.versions.size' do
-      @wiki.update_attributes!(body: 'hi', user: @user)
-      @wiki.update_attributes!(body: 'hi', user: @different_user)
+      @wiki.update_section!(:document, @user, nil, 'hi')
+      @wiki.update_section!(:document, @different_user, nil, 'hi')
     end
     assert_equal 1, @wiki.version
-    # FIXME: prevent version take over
-    assert_equal @different_user, @wiki.versions.last.user
+    assert_equal @user, @wiki.versions.last.user
   end
 
   def test_initial_empty_body
