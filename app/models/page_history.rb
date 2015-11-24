@@ -7,7 +7,7 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  after_save :send_single_pending_notifications, only: :create
+  after_create :send_single_pending_notifications
 
   def send_single_pending_notifications
     destroy && return if page.nil?
@@ -29,41 +29,49 @@ class PageHistory < ActiveRecord::Base
   # I rewrote this to only work on a single page. But that does not
   # get us very far either.
   #
+  # One of the issues involved is how to send a batch of notifications
+  # for different pages each having some page_histories.
+  #
+  # Here's the plan...
+  # * get all the page_histories grouped by page
+  #   (which effectively will get us one per page)
+  # * call this method on all of them. It sends digests for all the
+  #   page_histories for the given page within the last 24 hours.
+  #
   # So for now we only send single notifications
-  def self.send_digest_pending_notifications(page = nil)
-    return
-    page_histories = pending_digest_notifications_for_page(page).all
-    return if page_histories.blank?
-    recipients_for_digest_notifications(page).each do |user|
+  def send_digest_pending_notifications
+    return #FIXME
+    page_histories = PageHistory.digested_with(self).pending_notifications
+    recipients_for_digest_notifications.each do |user|
       if Conf.paranoid_emails?
         Mailer.page_history_digest_notification_paranoid(user, page, page_histories).deliver
       else
         Mailer.page_history_digest_notification(user, page, page_histories).deliver
       end
     end
-    PageHistory.where(id: page_histories)
-      .update_all notification_digest_sent_at: Time.now
+    page_histories.update_all notification_digest_sent_at: Time.now
   end
 
-  def self.pending_digest_notifications_for_page(page)
-    page.page_histories.order("created_at desc")
-      .where notification_digest_sent_at: nil
+  def self.digested_with(page_history)
+    where(page_id: page_history.page_id).
+      where("created_at > #{page_history.created_at - 1.day}").
+      where("created_at < #{page_history.created_at + 1.day}")
   end
 
   def self.pending_notifications
     where notification_sent_at: nil
   end
 
-  def self.recipients_for_page(page)
+  def recipients_for_page
     UserParticipation.where(page_id: page.id, watch: true).pluck(:user_id)
   end
 
-  def self.recipients_for_digest_notifications(page)
-    User.where receive_notifications: 'Digest', id: recipients_for_page(page)
+  def recipients_for_digest_notifications
+    User.where receive_notifications: 'Digest', id: recipients_for_page
   end
 
   def recipients_for_single_notification
-    users_watching_ids = recipients_for_page(page)
+    users_watching_ids = recipients_for_page
     users_watching_ids.delete(user.id)
     User.where receive_notifications: 'Single',
       id: users_watching_ids
