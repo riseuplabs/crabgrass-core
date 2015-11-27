@@ -21,6 +21,18 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     assert_includes mail.body, "Red! has modified the page title"
   end
 
+  def test_send_paranoid
+    watch_page
+    updated_page_as users(:red)
+    Conf.paranoid_emails = true
+    mail = mailer_class.deliver_all.first
+    assert ActionMailer::Base.deliveries.present?
+    assert_includes mail.body, "A page that you are watching has been modified"
+    assert_not_includes mail.body, "Red! has modified the page title"
+  ensure
+    Conf.paranoid_emails = false
+  end
+
   protected
 
   def mailer_class
