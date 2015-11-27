@@ -25,6 +25,11 @@ class PageHistory < ActiveRecord::Base
     recipients_for_single_notification.present?
   end
 
+  # all subclasses use the same partial
+  def to_partial_path
+    'page_histories/page_history'
+  end
+
   # BROKEN RIGHT NOW:
   # This used to be far to complex for processing the backlog of
   # unsend notifications we have in production.
