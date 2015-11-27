@@ -30,9 +30,7 @@ class Mailer::PageHistories < ActionMailer::Base
     @histories = page_histories_for_recipient.includes(:page).
       order("page_histories.created_at")
     return if @histories.blank?
-    mail to: recipient,
-      subject: I18n.t("mail.subject.daily_digest", site: @site.title),
-      from: @site.email_sender.gsub('$current_host', @site.domain)
+    mail to: recipient, subject: digest_subject, from: sender
   end
 
   protected
@@ -62,4 +60,11 @@ class Mailer::PageHistories < ActionMailer::Base
       where("DATE(pages.updated_at) >= DATE(?)", TIMESPAN.ago)
   end
 
+  def digest_subject
+    I18n.t("mail.subject.daily_digest", site: @site.title)
+  end
+
+  def sender
+    @site.email_sender.gsub('$current_host', @site.domain)
+  end
 end
