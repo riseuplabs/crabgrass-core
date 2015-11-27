@@ -15,21 +15,20 @@ module Mailers::PageHistory
     end
   end
 
-  def page_history_single_notification(user, page_history)
+  def page_history_single_notification(user, page_history, mailer_options = {})
+    setup mailer_options
     @page_history   = page_history
     @user           = user
-    @site           = Site.default
-    @subject        = "#{@site.title} : #{@page_history.page.title}"
-    mail from: from_address, to: @user.email, subject: @subject
-  end
-
-  def page_history_single_notification_paranoid(user, page_history)
-    @page_history   = page_history
-    @user           = user
-    @site           = Site.default
-    @subject        = I18n.t(:page_history_mailer_a_page_has_been_modified, site_title: @site.title)
-    @code           = Code.create!(user: user, page: page_history.page)
-    mail from: from_address, to: @user.email, subject: @subject
+    @site           ||= Site.default
+    if Conf.paranoid_emails?
+      @subject      = I18n.t(:page_history_mailer_a_page_has_been_modified, site_title: @site.title)
+      @code         = Code.create!(user: user, page: page_history.page)
+      mail from: from_address, to: @user.email, subject: @subject,
+        template_name: 'single_notification_paranoid'
+    else
+      @subject      = "#{@site.title} : #{@page_history.page.title}"
+      mail from: from_address, to: @user.email, subject: @subject
+    end
   end
 
   def page_history_digest_notification(user, page, page_histories)

@@ -7,20 +7,23 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  after_create :send_single_pending_notifications
+  after_create :send_single_notification, if: :single_notification_wanted?
 
-  def send_single_pending_notifications
-    destroy && return if page.nil?
-    recipients_for_single_notification.each do |user|
-      if Conf.paranoid_emails?
-        Mailer.page_history_single_notification_paranoid(user, self).deliver
-      else
-        Mailer.page_history_single_notification(user, self).deliver
-      end
-    end
-    update_attribute :notification_sent_at, Time.now
+  def send_single_notification
+    return if self.reload.notification_sent?
+    notification = Notification.new :page_history_single, self
+    notification.deliver_mails_to recipients_for_single_notification
   end
-  handle_asynchronously :send_single_pending_notifications
+
+  handle_asynchronously :send_single_notification
+
+  # TODO: Let's wait 30 minutes so notifications for all changes to the same page
+  # within that timeframe can be combined.
+  #   run_at: Proc.new { 30.minutes.from_now }
+
+  def single_notification_wanted?
+    recipients_for_single_notification.present?
+  end
 
   # BROKEN RIGHT NOW:
   # This used to be far to complex for processing the backlog of
@@ -60,6 +63,10 @@ class PageHistory < ActiveRecord::Base
 
   def self.pending_notifications
     where notification_sent_at: nil
+  end
+
+  def notification_sent?
+    notification_sent_at.present?
   end
 
   def recipients_for_page
