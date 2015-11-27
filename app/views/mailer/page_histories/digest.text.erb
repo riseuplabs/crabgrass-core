@@ -1,6 +1,6 @@
 <%= I18n.t(:page_history_mailer_hello_user_name, :user_name => @recipient.display_name) %>,
 
-<%= render partial: 'mailer/daily_digest/page', collection: @histories.group_by(&:page).to_a %>
+<%= render partial: 'page', collection: @histories.group_by(&:page).to_a %>
 
 ------------
 <%= I18n.t(:page_history_mailer, :page_link => me_settings_url(:host => @site.domain)) %>

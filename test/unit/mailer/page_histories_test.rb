@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Mailer::DailyDigestTest <  ActionMailer::TestCase
+class Mailer::PageHistoriesTest <  ActionMailer::TestCase
   fixtures :all
 
   def setup
@@ -9,19 +9,23 @@ class Mailer::DailyDigestTest <  ActionMailer::TestCase
   end
 
   def test_wont_send_empty_mails
-    Mailer::DailyDigest.deliver_all
+    mailer_class.deliver_all
     assert ActionMailer::Base.deliveries.empty?
   end
 
   def test_send_simple_digest
     watch_page
     updated_page_as users(:red)
-    mail = Mailer::DailyDigest.deliver_all.first
+    mail = mailer_class.deliver_all.first
     assert ActionMailer::Base.deliveries.present?
     assert_includes mail.body, "Red! has modified the page title"
   end
 
   protected
+
+  def mailer_class
+    Mailer::PageHistories
+  end
 
   def watch_page
     page.user_participations.where(user_id: @user).create watch: true
