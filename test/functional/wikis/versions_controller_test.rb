@@ -7,7 +7,9 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
     @group  = FactoryGirl.create(:group)
     @group.add_user!(@user)
     @wiki = @group.profiles.public.create_wiki body: 'test'
-    @wiki.body = 'more testing'
+    @wiki.body =  @original_body = 'original wiki body'
+    @wiki.updated_at = 1.day.ago # force an older timestamp, so that
+                                 # changing the wiki will create a new version.
     @wiki.save
     @version = @wiki.versions.last
     login_as @user
@@ -46,14 +48,14 @@ class Wikis::VersionsControllerTest < ActionController::TestCase
 
   def test_revert
     login_as @user
-    @wiki.body = "revert me"
+    @wiki.body = "new version"
     @wiki.save
     assert_difference "@wiki.versions.count" do
       assert_permission :may_revert_wiki_version? do
         post :revert, wiki_id: @wiki.to_param, id: @version.to_param
       end
     end
-    assert_equal @version.body, @wiki.reload.body
+    assert_equal @original_body, @wiki.reload.body
     assert_response :redirect
     assert_redirected_to wiki_versions_url(@wiki)
   end
