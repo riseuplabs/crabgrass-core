@@ -11,8 +11,8 @@ class PageHistory < ActiveRecord::Base
 
   def send_single_notification
     return if self.reload.notification_sent?
-    notification = Notification.new :page_history_single, self
-    notification.deliver_mails_to recipients_for_single_notification
+    Mailer::PageHistory.deliver_updates_for page,
+      to: recipients_for_single_notification
   end
 
   handle_asynchronously :send_single_notification
@@ -44,15 +44,9 @@ class PageHistory < ActiveRecord::Base
     notification_sent_at.present?
   end
 
-  def recipients_for_page
-    UserParticipation.where(page_id: page.id, watch: true).pluck(:user_id)
-  end
-
   def recipients_for_single_notification
-    users_watching_ids = recipients_for_page
-    users_watching_ids.delete(user.id)
-    User.where receive_notifications: 'Single',
-      id: users_watching_ids
+    page.users.where(receive_notifications: 'Single').
+      where(user_participations: {watch: true})
   end
 
   def description_key
