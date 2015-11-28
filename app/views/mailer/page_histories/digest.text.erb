@@ -1,9 +1,9 @@
 <%= I18n.t("mailer.hello", :user_name => @recipient.display_name) %>,
 
 <%- if Conf.paranoid_emails? %>
-<%=   render 'paranoid', count: @histories.group_by(&:page).count -%>
+<%=   render 'paranoid', count: @histories.count -%>
 <%- else %>
-<%=   render partial: 'page', collection: @histories.group_by(&:page).to_a -%>
+<%=   render partial: 'page', collection: @histories -%>
 <%- end %>
 
 ------------

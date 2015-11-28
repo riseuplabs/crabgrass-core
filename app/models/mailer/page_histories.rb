@@ -58,6 +58,7 @@ class Mailer::PageHistories < ActionMailer::Base
   # add some defaults
   def mail(options = {})
     return if @histories.blank?
+    @histories = @histories.group_by(&:page).to_a
     super options.reverse_merge from: sender, to: @recipient
   end
 
