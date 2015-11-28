@@ -13,7 +13,7 @@ class Mailer::PageHistories < ActionMailer::Base
   add_template_helper(Pages::HistoryHelper)
   add_template_helper(Common::Utility::TimeHelper)
 
-  def self.deliver_all
+  def self.deliver_digests
     digest_recipients.map do |recipient|
       # let's throttle this a bit. We have ~2000 recipients
       # So this will take 2000 sec. < 40 Minutes total.
