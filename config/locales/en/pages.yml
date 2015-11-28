@@ -299,14 +299,6 @@ en:
   page_history_updated_content: "%{user_name} has updated the page content"
   page_history_user_created_page: "%{user_name} has created the page"
 
-  page_history_mailer_hello_user_name: "Hello %{user_name}"
-  page_history_mailer: "Change your email notification settings here: %{page_link}"
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : A page has been modified"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "A page that you are watching has been modified %{histories_count} since the last notification,\nyou may access the page here:"
-  page_history_mailer_a_page_you_are_watching: "A page that you are watching has been modified, you may access the page here"
-  page_history_the_page_you_are_watching_description: "The page you are watching \"%{page_title}\" has been modified"
-  page_history_mailer_expire_link: "The link will expire in %{expire_time}"
-  page_history_mailer_choose_turn_off_notifications: "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"
 
   ##
   ## PAGE TYPES

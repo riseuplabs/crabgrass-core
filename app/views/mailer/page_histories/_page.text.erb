@@ -1,7 +1,6 @@
 <%- page, histories = page if page.is_a? Array%>
 <%- histories.sort_by!(&:created_at) %>
-<%= I18n.t :page_history_the_page_you_are_watching_description, :page_title => page.title %>:
-<%= URI::encode context_page_url(page.owner.name, page.name_url) %>
+<%= I18n.t "mailer.page_history.the_page_you_are_watching_description", :page_title => page.title %>:
+  <%= URI::encode context_page_url(page.owner.name, page.name_url) %>
 
 <%= render histories %>
-

@@ -1,5 +1,5 @@
 #
-# Mailer that sends out the daily digests of page updates
+# Mailer that sends out the daily digests and notifications about page updates
 #
 # This is triggered from a chron job. At night in the early morning.
 # It includes all updates from the day before. In order to ensure
@@ -45,7 +45,7 @@ class Mailer::PageHistories < ActionMailer::Base
     @histories = page.page_histories.includes(:page).
       where("page_histories.created_at >= ?", UPDATE_TIMESPAN.ago).
       where(page_histories: {notification_sent_at: nil})
-    mail subject: update_subject
+    mail subject: update_subject, template_name: :digest
   end
 
   protected

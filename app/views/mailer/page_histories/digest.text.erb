@@ -1,13 +1,14 @@
-<%= I18n.t(:page_history_mailer_hello_user_name, :user_name => @recipient.display_name) %>,
+<%= I18n.t("mailer.hello", :user_name => @recipient.display_name) %>,
 
 <%- if Conf.paranoid_emails? %>
-  <%= render 'paranoid', count: @histories.group_by(&:page).count %>
+<%=   render 'paranoid', count: @histories.group_by(&:page).count -%>
 <%- else %>
-  <%= render partial: 'page', collection: @histories.group_by(&:page).to_a %>
+<%=   render partial: 'page', collection: @histories.group_by(&:page).to_a -%>
 <%- end %>
 
 ------------
-<%= I18n.t(:page_history_mailer, :page_link => me_settings_url(:host => @site.domain)) %>
-<%= I18n.t(:page_history_mailer_choose_turn_off_notifications) %>.
+
+<%= I18n.t("mailer.page_history.change_your_settings_here", :page_link => me_settings_url(:host => @site.domain)) %>
+<%= I18n.t("mailer.page_history.you_can_turn_of_or_configure_notifications") %>.
 
 ------------

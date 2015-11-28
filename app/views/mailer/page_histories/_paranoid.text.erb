@@ -1,5 +1,8 @@
-<%= I18n.t(:page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times, :histories_count => pluralize(count, "time")) %>
+<%= I18n.t("mailer.page_history.pages_you_are_watching_have_been_modified", count: count) %>
 
-<%= "\t" %>
-<%= URI::encode "http://#{@site.domain}/me}" %>
+<%= I18n.t("mailer.page_history.we_do_not_include_details") %>
+
+<%= I18n.t("mailer.page_history.you_can_find_updates_here") %>
+  <%= URI::encode "http://#{@site.domain}/me" %>
+
 
