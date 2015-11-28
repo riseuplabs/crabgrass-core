@@ -42,7 +42,6 @@ class Mailer < ActionMailer::Base
   include Mailers::Request
   include Mailers::Bugreport
   include Mailers::Verification
-  include Mailers::PageHistory
 
   protected
 

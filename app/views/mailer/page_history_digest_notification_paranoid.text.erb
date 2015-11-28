@@ -1,7 +1,0 @@
-<%= I18n.t(:page_history_mailer_hello_user_name, :user_name => @user.display_name) %>,
-
-<%= I18n.t(:page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times, :histories_count => pluralize(paranoid.count, "time")) %>
-
-<%= "\t" %>
-<%= URI::encode "http://#{@site.domain}/me" %>
-
