@@ -19,12 +19,10 @@ en:
   logout_success_message: You have been logged out.
   signup_button: Sign Up
   login_failed: Could not log in
-  signup_login_name: Your Username
   login_button: Sign In
   login: Login
   sign_in: Sign In
   signup_title: Create Your Account
-  signup_email: Your Email
   forgot_password_text: If you've forgotten the password you use to log in, we can send
     you an email link which will allow you to generate a new one.
   reset_password_text: Hello, %{user}. If you've forgotten the password you use to log
@@ -36,7 +34,6 @@ en:
   reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
   reset_password_mail_warning: If you did not request that your password be changed,
     please contact us.
-  your_login: Your login
   invalid_email_text: The email address you provided is invalid.
   reset_password: Reset Password
   reset_password_email_sent: If that email address is associated with a username, then
@@ -69,9 +66,7 @@ en:
   change_password: Change Password
   password: Password
   password_confirmation: Password Confirmation
-  signup_confirm_password: Confirm Password
   login_password: Password
-  signup_password: Your Password
   remove_your_account: Remove Your Account
   anonymize_display_name: Anonymize display name
   anonymize_display_name_info: Replaces your display name with 'Anonymous' everywhere
@@ -161,6 +156,27 @@ en:
       add: Add new Task
     possible:
       add: Add new Possibility
+
+
+########################################
+### en/emails.yml
+  mailer:
+    hello: Hello %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : A page has been modified"
+      pages_you_are_watching_have_been_modified:
+        one: A page that you are watching has been modified since the last notification.
+        other: "%{count} pages that you are watching have been modified since the last
+          notification."
+      we_leave_out_details: We leave out the details in this email to protect information
+        you might want to keep private.
+      you_can_find_updates_here: 'You will find more details and a list of recently
+        changed pages here:'
+      the_page_you_are_watching_description: The page you are watching "%{page_title}"
+        has been modified
+      change_your_settings_here: 'Change your email notification settings here: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Turn off email notifications, receive
+        a summary of changes, or get an email each time the page is changed
 
 
 ########################################
@@ -640,20 +656,6 @@ en:
   page_history_updated_comment: "%{user_name} updated a comment"
   page_history_updated_content: "%{user_name} has updated the page content"
   page_history_user_created_page: "%{user_name} has created the page"
-  page_history_mailer_hello_user_name: Hello %{user_name}
-  page_history_mailer: 'Change your email notification settings here: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : A page has been modified"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    A page that you are watching has been modified %{histories_count} since the last notification,
-    you may access the page here:
-  page_history_mailer_a_page_you_are_watching: A page that you are watching has been
-    modified, you may access the page here
-  page_history_the_page_you_are_watching_description: The page you are watching "%{page_title}"
-    has been modified
-  page_history_mailer_expire_link: The link will expire in %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: You can choose to turn off email
-    notifications, receive a summary of changes, or get an email each time the page
-    is changed
   wiki_page_description: Create an editable free-form text document.
   wiki_page_display: Wiki Page
   gallery_description: Upload multiple images or organize existing images into a set.
