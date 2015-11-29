@@ -79,7 +79,7 @@ committee_page:
 blue_page:
   id: 1002
   name: "blue_page"
-  title: "page owned by blue, rainbow has access"
+  title: "page owned by blue, rainbow has access @test.me"
   <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -88,6 +88,7 @@ blue_page:
   owner_name: blue
   updated_by_id: 4
   type: DiscussionPage
+  summary: Find this page in the test for escaping chars
 
 rainbow_page:
   id: 1003

@@ -174,7 +174,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   #end
 
   def add_text_filter(text)
-    @search_text += " #{text}"
+    @search_text += Riddle::Query.escape " #{text}"
   end
 
   # filter on page type or types, and maybe even media flag too!

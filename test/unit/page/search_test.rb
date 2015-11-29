@@ -21,6 +21,15 @@ class Page::SearchTest < ActiveSupport::TestCase
   ## Tests for various search parameters
   ##
 
+  # we can only test the title here as that is the only thing
+  # mysql currently searches.
+  def test_search_is_escaped
+    login(:blue)
+    assert_path_filters '/text/@test.me' do |page|
+      page.title.try.include? "@test.me"
+    end
+  end
+
   def test_search_by_type
     login(:blue)
     assert_path_filters '/type/discussion' do |page|
