@@ -66,6 +66,17 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_users users(:blue)
   end
 
+  def test_change_user_access
+    @page.add(users(:red), access: :admin)
+    @page.save!
+    visit current_url # reload
+    assert_selector '.tiny_wrench_16', text: 'Red!'
+    assert_page_users users(:blue), users(:red)
+    change_access_to 'Read Only'
+    assert_no_selector '.tiny_wrench_16', text: 'Red!'
+    assert_page_users users(:blue), users(:red)
+  end
+
   def test_trash
     path = current_path
     delete_page
