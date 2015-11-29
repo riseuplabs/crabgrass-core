@@ -49,7 +49,8 @@ class Pages::ParticipationsController < Pages::SidebarsController
     if params[:access] == 'remove'
       destroy
     else
-      @part = @page.add(@part.entity, access: params[:access]).save!
+      @part = @page.add(@part.entity, access: params[:access])
+      @part.save!
     end
   end
 
