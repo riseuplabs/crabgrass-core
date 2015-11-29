@@ -113,7 +113,7 @@ class Picture::Storage
   #
   #
   def file_name(geometry)
-    Picture::Geometry[geometry].to_s + ext
+    Picture::Geometry[geometry].to_s + '.' + ext
   end
 
 
