@@ -75,7 +75,7 @@ fr:
   confirmation: Êtes-vous sûr·e ?
   cancel: Annuler
   optional: Optionel·le
-  required: obligatoire
+  required: Obligatoire
   thing_required: "%{thing} nécessaire"
   edit: Éditer
   upload: Télécharger
@@ -111,7 +111,7 @@ fr:
   approved: approuvées
   saved: Sauvegardé·e
   destroy: Détruire
-  thing_destroyed: "%{thing} détruit•e"
+  thing_destroyed: "%{thing} détruit·e"
   destroy_thing: Détruire %{thing}
   delete_thing: Supprimer %{thing}
   delete: Supprimer
@@ -273,7 +273,7 @@ fr:
   may_request_membership_description: Un lien "Rejoindre %{group}" apparaîtra sur la page de votre structure. Cela enverra une demande d'inscription aux membres de la structure qui pourra être acceptée ou rejetée.
   open_group: Ouvrir %{group}
   open_group_description: Les personnes sont immédiatement inscrites dans la structure %{group} - les demandes n'ont pas besoin d'être approuvées
-  shared_groups: Structures Partagés
+  shared_groups: Structures Partagées
   public_groups: Structures Publiques
   membership_requests: Demande d'Inscription
   group_membership_count: "%{count} Membres"
@@ -281,7 +281,7 @@ fr:
   membership_destroy_confirm_message: Êtes-vous certain·e de vouloir retirer '%{entity}' de %{group} ?
   group_invite_subject: Invitation à rejoindre la structure "%{group}"
   group_invite_email: |-
-    %{from_user} vous a invité•e à rejoindre la structure "%{group}". Si vous souhaitez la rejoindre, cliquez ici:
+    %{from_user} vous a invité·e à rejoindre la structure "%{group}". Si vous souhaitez la rejoindre, cliquez ici:
 
      %{accept_invite_link}
 
@@ -313,7 +313,7 @@ fr:
   group_language: La langue principale de ce %{group}.
   my_networks: Mes Réseaux
   my_groups: Mes structures
-  basic_settings: Parametres
+  basic_settings: Paramètres
   send_invites: Envoyer des invitations
   view_requests: Voir les Demandes
   add_members_to_committee: Ajouter des membres de la structure à cette commission
@@ -345,7 +345,7 @@ fr:
   email: Mail
   language: Langue
   time_zone: Fuseau Horaire
-  do_you_want_to_receive_email_notifications: Voulez-vous recevoir des notifications par mail sur les modifications des pages que vous 'surveillez' ?
+  do_you_want_to_receive_email_notifications: Voulez-vous recevoir des notifications par mail sur les modifications des pages que vous 'suivez' ?
   notification_select:
     none: 'Non: pas de mails pour les modifications'
     single: 'Oui: un mail par modification'
@@ -377,17 +377,17 @@ fr:
   active_filters: Filtres actifs
   all_pages: Toutes les pages
   created_by_me: Créé
-  created_by_user: Créé•e par %{user}
+  created_by_user: Créé·e par %{user}
   created_by_user_description: Rechercher les pages créées par une personne en particulier.
-  created_by_dotdotdot: Créé•e par...
+  created_by_dotdotdot: Créé·e par...
   starred_by_me: Étoilé
-  starred_by_user: Étoilé•e par %{user}
+  starred_by_user: Étoilé·e par %{user}
   watched_by_me: Suivie
   watched_by_user: Suivie par %{user}
   edited_by_me: Édité
-  edited_by_user: Édité•e par %{user}
+  edited_by_user: Édité·e par %{user}
   owned_by_me: possède
-  owned_by_user: Possédé•e par %{user}
+  owned_by_user: Possédé·e par %{user}
   most_active: Les plus actifs
   most_stars: Le Plus d'Étoiles
   most_viewed: Les plus vus
@@ -455,8 +455,8 @@ fr:
   share_include_message: Ajouter un message personnalisé
   shared_page_success: Vous avez partagé cette page avec succès.
   notify_success: Vous avez envoyé des notifications avec succès.
-  share_grant_required_error: "%{name} n'est pas autorisé•e à voir cette page. Un accès lui est nécessaire auparavant pour ce faire."
-  share_permission_denied_error: Vous n'êtes pas autorisé•e à modifier les permissions d'accès de cette page.
+  share_grant_required_error: "%{name} n'est pas autorisé·e à voir cette page. Un accès lui est nécessaire auparavant pour ce faire."
+  share_permission_denied_error: Vous n'êtes pas autorisé·e à modifier les permissions d'accès de cette page.
   notify_no_access_error: Désolé, "%{name}" n'a pas accès à cette page.
   share_already_exists_error: '"%{name}" a déjà accès à cette page.'
   share_pester_error: Désolé, vous n'êtes pas autorisé·e à partager avec "%{name}".
@@ -465,7 +465,7 @@ fr:
   page_create_owner: Propriétaire de la Page
   create_page: Créer une Page
   only_me: Moi
-  page_added_to_group: Cette page sera ajoutée à la structure %{groupe_type} %{group_name}.
+  page_added_to_group: Cette page sera ajoutée à la structure %{group_type} %{group_name}.
   additional_page_access: Accès additionnel
   page_owner_error: Propriétaire de la page ne peut pas être laissé en blanc
   action: action
@@ -533,7 +533,7 @@ fr:
   vote_good: bien
   vote_ok: ok
   vote_bad: mauvais·e
-  vote_none: aucun•e
+  vote_none: aucun·e
   vote_no: 'Non'
   ranked_vote_instructions: Glissez/déplacez les éléments de la liste suivante afin qu'ils soient dans ordonnées du préféré en haut au moins apprécié en bas.
   confirm_vote_button: Confirmer le Vote
@@ -548,7 +548,7 @@ fr:
   survey_may_see_ratings: Voir les réponses ?
   survey_question_label: 'Question :'
   survey_description_heading: Description
-  survey_description_explaination: Ce texte va être affiché en introduction, et sera la première chose que le ou la sondé•e va voir.
+  survey_description_explaination: Ce texte va être affiché en introduction, et sera la première chose que le ou la sondé·e va voir.
   select_many_choices_label: 'Sélectionner plusieurs réponses:'
   select_one_choices_label: 'Sélectionner une seule réponse:'
   video_embed_code_description: Ce n'est pas l'adresse du site web. C'est un code délimité par < et > que le site vidéo – youtube, etc. – met à disposition pour afficher la vidéo sur d'autres sites.
@@ -588,7 +588,7 @@ fr:
   permissions_key: Clé
   public_description: Tout le monde sur l'Internet
   peers_description: Les membres de vos structures
-  friends_description: Vos ami•es
+  friends_description: Vos ami·es
   may_view_label: mon profil ?
   may_view_description: Si non cochées, votre profil sera complètement caché.
   may_see_contacts_label: mes contacts ?
@@ -607,7 +607,7 @@ fr:
   organizational_role: rôle organisationnel
   phone_number: Numéro de téléphone
   email_addresses: Adresses Mail
-  post_message: Ecrire un message
+  post_message: Écrire un message
   request_friend_link: Ajouter à mes contacts
   remove_friend_link: Retirer de mes contacts
   edit_profile_link: Modifier le Profil
@@ -626,15 +626,15 @@ fr:
     models:
       request_to_friend: Demande de Mise en Contact
       request_to_join_our_network:
-        one: Invitation à Rejoindre
-        other: Invitations à Rejoindre
+        one: Invitation
+        other: Invitations
       request_to_destroy_our_group: Demande de Destruction de Structure
       request_to_join_us:
-        one: Invitation à Rejoindre
-        other: Invitations à Rejoindre
+        one: Invitation
+        other: Invitations
       request_to_join_us_via_email:
-        one: Invitation à Rejoindre
-        other: Invitations à Rejoindre
+        one: Invitation
+        other: Invitations
       request_to_join_you: Demande d'Inscription
       request_to_join_your_network: Demande d'Inscription
       request_to_create_council: Demande de Création de Conseil
@@ -643,22 +643,22 @@ fr:
   request_to_friend_short: Autoriser %{user} à être mis·e en contact avec %{other_user} ?
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_join_our_network:
-    one: Invitation à Rejoindre
-    other: Invitations à Rejoindre
+    one: Invitation
+    other: Invitations
   request_to_destroy_our_group: Demander à Détruire la Structure
   request_to_join_our_network_short: Autoriser %{group} à rejoindre %{network} ?
   request_to_join_our_network_description: La structure %{group} a été invitée à rejoindre le réseau %{network}.
   request_to_join_us:
-    one: Invitation à Rejoindre
-    other: Invitations à Rejoindre
+    one: Invitation
+    other: Invitations
   request_to_join_us_short: Autoriser %{user} à rejoindre %{group} ?
-  request_to_join_us_description: '%{user} a été invité•e à rejoindre %{group}'
+  request_to_join_us_description: '%{user} a été invité·e à rejoindre %{group}'
   request_to_join_us_via_email:
-    one: Invitation à Rejoindre
-    other: Invitations à Rejoindre
+    one: Invitation
+    other: Invitations
   request_to_join_us_via_email_short: Autoriser %{email} à rejoindre %{group} ?
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
-  request_to_join_you: Requête d'Inscription
+  request_to_join_you: Demande d'Inscription
   request_to_join_you_short: Autoriser %{user} à rejoindre %{group} ?
   request_to_join_you_description: '%{user} a demandé à rejoindre la structure %{group}.'
   request_to_join_your_network: Demande d'Inscription
@@ -668,21 +668,21 @@ fr:
   request_to_destroy_our_group_description: '%{user} a proposé de détruire la structure %{group_type} %{group}.'
   request_to_create_council: Demande de Création de Conseil
   request_to_create_council_short: '%{group} doit-il avoir un conseil ?'
-  request_to_create_council_description: '%{user} a proposé de créer un conseil pour la structure %{groupe_type} %{group}.'
+  request_to_create_council_description: '%{user} a proposé de créer un conseil pour la structure %{group_type} %{group}.'
   request_to_remove_user: Demande de Désinscription de Membre
   request_to_remove_user_short: Retirer %{member} de %{group} ?
-  request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{groupe_type} %{group}.'
+  request_to_remove_user_description: '%{user} a proposé de retirer %{member} de la structure %{group_type} %{group}.'
   invite_info: Entrez la liste des identifiants ou des adresses mail des personnes que vous voulez inviter à rejoindre cette structure.
   invite_error_redeemed: L'invitation a déjà été utilisée.
   invite_error_already_member: Vous êtes déjà membre de cette structure.
   request_exists_error: La demande existe déjà pour %{recipient}
   network_invite_info: Écrivez les noms des structures que vous désirez inviter à rejoindre ce réseau.
   recipient_tip: Séparez les destinataires par des virgules, des espaces ou de nouvelles lignes.
-  you_are_invited: Vous êtes invité•e à rejoindre.
+  you_are_invited: Vous êtes invité·e à rejoindre.
   friend_request_message_label: Précisez à %{user} pourquoi vous voulez être en contact.
   friend_remove_confirmation: Êtes-vous certain·e de ne plus vouloir être en contact avec %{user} ?
   place: place
-  icon: Icone
+  icon: Icône
   file: Fichier
   files: Fichiers
   photo: Photo
@@ -707,11 +707,11 @@ fr:
   a_reply_link: une réponse
   confirm_discarding_text_area: Tous vos travaux non sauvegardés seront perdus. Cliquez %{cancel} pour continuer l'édition.
   activity_contact_created: "%{user} a ajouté %{other_user} comme ami·e"
-  activity_user_left_group: "%{user} a quitté la structure %{groupe_type} %{group}"
-  activity_user_joined_group: "%{user} a rejoint la structure %{groupe_type} %{group}"
+  activity_user_left_group: "%{user} a quitté la structure %{group_type} %{group}"
+  activity_user_joined_group: "%{user} a rejoint la structure %{group_type} %{group}"
   activity_user_joined_site: "%{user} a rejoint %{group}"
   activity_user_destroyed: "%{user} s'est retiré"
-  activity_group_created: "%{user} a créé la structure %{groupe_type} %{group}"
+  activity_group_created: "%{user} a créé la structure %{group_type} %{group}"
   activity_group_destroyed: "%{group} a été détruit par %{user}"
   activity_wall_message: "%{author} a écrit à %{user}: %{message}"
   activity_message: "%{author} a écrit: %{message}"
@@ -767,7 +767,7 @@ fr:
   album_cover_changed: La couverture de l'album a été modifiée
   upload_images_link: Téléverser
   upload_a_zip_file_link: Téléverser un fichier ZIP
-  you_are_not_allowed_to_do_that: Vous n'êtes pas autorisé•e à faire ça !
+  you_are_not_allowed_to_do_that: Vous n'êtes pas autorisé·e à faire ça !
   view_label: Voir
   sunday: Dimanche
   monday: Lundi
