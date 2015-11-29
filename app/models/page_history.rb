@@ -30,23 +30,14 @@ class PageHistory < ActiveRecord::Base
     'page_histories/page_history'
   end
 
-  def self.digested_with(page_history)
-    where(page_id: page_history.page_id).
-      where("created_at > #{page_history.created_at - 1.day}").
-      where("created_at < #{page_history.created_at + 1.day}")
-  end
-
-  def self.pending_notifications
-    where notification_sent_at: nil
-  end
-
   def notification_sent?
     notification_sent_at.present?
   end
 
   def recipients_for_single_notification
     page.users.where(receive_notifications: 'Single').
-      where(user_participations: {watch: true})
+      where(user_participations: {watch: true}).
+      where("users.id <> ?", user_id)
   end
 
   def description_key
