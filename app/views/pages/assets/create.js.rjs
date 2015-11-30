@@ -1,11 +1,17 @@
 page.replace 'page_sidebar', :partial => 'pages/sidebar/sidebar'
-page.replace_html 'assets_list', :partial => '/common/assets/asset_as_li', :collection => @page.assets
+page.replace_html 'assets_list',
+  partial: '/common/assets/asset_as_li',
+  collection: @page.respond_to?(:images) ? @page.images : @page.assets
 page << 'initAjaxUpload();'
 
 page << <<-EOJS
 if (document.getElementById('MB_window')) { Modalbox.updatePosition(); }
 var list = document.getElementById('assets_list');
 if (list.classList.contains('sortable')) {
-  #{sortable_element_js( "assets_list", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update) )}
+  #{sortable_element_js "assets_list",
+      constraint: false,
+      overlap: :horizontal,
+      url: sort_images_url(page_id: @page)
+   }
 }
 EOJS
