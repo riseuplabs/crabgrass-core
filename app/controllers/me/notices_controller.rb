@@ -41,4 +41,9 @@ class Me::NoticesController < Me::BaseController
     @notice = Notice.for_user(current_user).find(params[:id])
   end
 
+  # we don't really have a post path yet. Partially due to the
+  # way they are attached to pages via discussions.
+  def post_path(post, *args)
+    page_post_path(post.discussion.page, post, *args)
+  end
 end
