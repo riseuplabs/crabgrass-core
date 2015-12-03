@@ -7,11 +7,10 @@ class WikiTest < JavascriptIntegrationTest
   def setup
     super
     own_page :wiki_page
-    login
-    click_on own_page.title
   end
 
   def test_writing_initial_version
+    visit_page
     assert_page_tab "Edit"
     content = update_wiki
     assert_content content
@@ -20,12 +19,14 @@ class WikiTest < JavascriptIntegrationTest
   end
 
   def test_cancel_edit
+    visit_page
     assert_page_tab "Edit"
     click_button 'Cancel'
     assert_page_tab "Show"
   end
 
   def test_format_help
+    visit_page
     find('.edit_wiki').click_on 'Editing Help'
     help = windows.last
     within_window help do
@@ -34,6 +35,8 @@ class WikiTest < JavascriptIntegrationTest
   end
 
   def test_versioning_with_diff
+    seed_version
+    visit_page
     versions = []
     3.times do
       versions << update_wiki
@@ -41,8 +44,8 @@ class WikiTest < JavascriptIntegrationTest
     end
     click_page_tab "Versions"
     assert_wiki_unlocked
-    assert_no_content "Version 4"
-    find("span.b", text: "3", exact: false).click
+    assert_no_content "Version 3"
+    find("span.b", text: "2", exact: false).click
     clicking "previous" do
       assert_selector 'ins', text: versions.pop
       assert_selector 'del', text: versions.last if versions.last.present?
@@ -50,6 +53,7 @@ class WikiTest < JavascriptIntegrationTest
   end
 
   def test_wiki_toc
+    visit_page
     content = update_wiki <<-EOWIKI
 [[toc]]
 
@@ -64,6 +68,7 @@ and some content
   end
 
   def test_section_editing
+    visit_page
     content = update_wiki <<-EOWIKI
 h2. section to keep
 
@@ -81,6 +86,17 @@ with content
     assert_selector "h2", text: 'edited section'
     assert_no_selector "h2", text: 'section to edit'
     assert_selector "h2", text: 'section to keep'
+  end
+
+  def visit_page
+    login
+    click_on own_page.title
+  end
+
+  # let's have some other users content so we can create a new version
+  def seed_version
+    own_page.data.update_section!(:document, users(:blue), nil, 'bla')
+    own_page.save
   end
 
   def assert_wiki_unlocked

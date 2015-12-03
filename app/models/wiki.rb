@@ -220,17 +220,20 @@ class Wiki < ActiveRecord::Base
   # that the version has not changed. If the user still has a valid lock
   # we allow saving even if the version has changed.
   #
-  def check_and_unlock_section!(section, user, current_version)
-    if sections_locked_for(user).include? section
+  def check_and_unlock_section!(section, user, edited_version)
+    # if the section is locked, then bail
+    if section_locked_for?(section, user)
       raise SectionLockedOnSaveError.new(section, locker_of(section))
     end
-    if current_version and self.version > current_version.to_i
-      # our version might be outdated but if the last edit
-      # was in a different section we still have the lock
-      # and we can still save.
-      unless user == locker_of(section)
-        raise VersionExistsError.new(self.versions.last)
-      end
+
+    # if the edited_version was outdated AND
+    # the user does not have a lock,
+    # only then throw an exception.
+    if edited_version &&
+      self.version > edited_version.to_i &&
+      user != locker_of(section)
+
+      raise VersionExistsError.new(self.versions.last)
     end
     release_my_lock!(section, user)
   end

@@ -15,6 +15,7 @@ module WikiExtension
     def save_section!(section, text)
       section = structure.find_section(section) unless section.is_a? GreenTree
       updated_body = section.sub_markup(text)
+      return if self.body == updated_body
       self.body = updated_body
       self.save!
     end

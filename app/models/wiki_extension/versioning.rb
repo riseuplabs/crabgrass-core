@@ -34,13 +34,16 @@ module WikiExtension
       end
     end
 
-    def create_new_version?
+    def create_new_version? #:nodoc:
       # always create a new version if we have no versions at all
       return true if versions.empty?
-      # don't create a new version if
-      #   * a new version would be on top of an old blank version (we don't want to store blank versions)
-      #   * the body hasn't changed
-      body_changed? and !versions.last.body.blank?
+      # overwrite blank versions (we don't want to store blank versions)
+      return false if current.body.blank?
+      body_changed? && ( user_id_changed? || long_time_no_updates? )
+    end
+
+    def long_time_no_updates?
+      updated_at && (updated_at < 30.minutes.ago)
     end
 
     def current
