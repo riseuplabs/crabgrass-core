@@ -10,9 +10,6 @@ class PageCreationTest < JavascriptIntegrationTest
     # hidden users do not show up in autocomplete
     add_recipients hidden_user, blocking_user
     click_on :create.t
-
-    assert_content public_user.display_name
-    assert_no_content blocking_user.display_name
     assert_page_users user, public_user, hidden_user
   end
 
@@ -43,7 +40,7 @@ class PageCreationTest < JavascriptIntegrationTest
     assert_no_content public_group.display_name
     assert_page_users user
   end
-  
+
   def test_add_tags
     login users(:red)
     prepare_page :discussion_page
