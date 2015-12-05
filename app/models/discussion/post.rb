@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
   belongs_to :page_terms    # if this is on a page we set page_terms so we can use path_finder
 
   has_many :stars, as: :starred, dependent: :delete_all
+  has_many :post_starred_notices, as: :noticable, dependent: :delete_all
 
   after_create :post_created
   after_destroy :post_destroyed
