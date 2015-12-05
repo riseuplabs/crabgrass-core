@@ -47,6 +47,19 @@ class Groups::StructuresControllerTest < ActionController::TestCase
     assert_response :redirect
   end
 
+  # the same group can have only one committee with the same name.
+  def test_create_no_duplicates
+    login_as users(:blue)
+    assert_permission :may_edit_group_structure? do
+      assert_no_difference 'Committee.count' do
+        get :create,
+          group_id: groups(:rainbow),
+          type: 'committee',
+          group: committee_attributes(name: 'the-warm-colors')
+      end
+    end
+  end
+
   def test_new_council
     login_as @user
     assert_permission :may_edit_group_structure? do
