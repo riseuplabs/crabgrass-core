@@ -1,0 +1,6 @@
+# robots.txt for crabgrass
+# disallow the things specific to a human
+User-agent: *
+Disallow: /me
+Disallow: /account
+Disallow: /session
