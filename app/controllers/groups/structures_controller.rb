@@ -18,7 +18,7 @@ class Groups::StructuresController < Groups::SettingsController
     else
       raise_denied unless may_create_council?
     end
-    @committee = group_class.create group_params
+    @committee = group_class.new group_params
     @group.add_committee!(@committee)
     @committee.add_user!(current_user) if @committee.council?
     success :group_successfully_created.t
