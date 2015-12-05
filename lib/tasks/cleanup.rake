@@ -72,7 +72,8 @@ namespace :cg do
     desc "Remove duplicate users that have no groups or pages"
     task(:remove_user_dups => :environment) do
       puts "Removing duplicate users. This may take some time."
-      dups = User.joins("JOIN users AS dups ON dups.login = users.login")
+      dups = User.joins("JOIN users AS dups ON dups.login = users.login").
+        where('users.type IS NULL')   # no ghosts
       count = dups.where("users.id > dups.id").
         where("users.created_at = users.updated_at").
         select{|u| u.groups.empty?}.
