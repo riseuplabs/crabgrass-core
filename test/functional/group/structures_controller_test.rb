@@ -51,7 +51,7 @@ class Group::StructuresControllerTest < ActionController::TestCase
   def test_create_no_duplicates
     login_as users(:blue)
     assert_permission :may_edit_group_structure? do
-      assert_no_difference 'Committee.count' do
+      assert_no_difference 'Group::Committee.count' do
         get :create,
           group_id: groups(:rainbow),
           type: 'committee',
