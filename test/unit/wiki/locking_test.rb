@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 #
 # there are some unusually written tests in the form "msg".tap{|msg| assert true, msg}
@@ -6,7 +6,7 @@ require_relative '../test_helper'
 #
 
 class Wiki::LockingTest < ActiveSupport::TestCase
-  fixtures :users, :wikis, :wiki_versions, :wiki_locks
+  fixtures :users, :wikis, 'wiki/versions', 'wiki/locks'
 
   def setup
     @user = users(:blue)
