@@ -6,6 +6,8 @@ class Notice < ActiveRecord::Base
 
   serialize :data
 
+  validates :noticable, presence: true
+
   ##
   ## CLASS METHODS
   ##
