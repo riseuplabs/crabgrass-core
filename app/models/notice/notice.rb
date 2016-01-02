@@ -6,7 +6,7 @@ class Notice < ActiveRecord::Base
 
   serialize :data
 
-  validates :noticable, presence: true
+  validates :redirect_object, presence: true
 
   ##
   ## CLASS METHODS
@@ -72,10 +72,15 @@ class Notice < ActiveRecord::Base
   end
 
   #
-  # should return the symbol for the path method for the noticable.
+  # should return the symbol for the path method to redirect to.
   # slightly dubious use of putting view code in the model, but makes things much easier.
   #
-  def noticable_path
+  def redirect_path
+  end
+
+  # object to hand to redirect path, defaults to noticable
+  def redirect_object
+    noticable
   end
 
   private
