@@ -60,7 +60,7 @@ class PageNotice < Notice
     :page_notice.t
   end
 
-  def noticable_path
+  def redirect_path
     :page_path
   end
 

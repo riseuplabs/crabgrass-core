@@ -16,7 +16,7 @@ class PostStarredNotice < Notice
     noticable.try.body || ""
   end
 
-  def noticable_path
+  def redirect_path
     :post_path
   end
 

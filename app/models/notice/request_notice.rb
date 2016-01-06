@@ -43,7 +43,7 @@ class RequestNotice < Notice
     display_attr(:body).html_safe
   end
 
-  def noticable_path
+  def redirect_path
     :me_request_path
   end
 

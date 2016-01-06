@@ -12,7 +12,7 @@ class Me::NoticesController < Me::BaseController
   end
 
   def show
-    url = self.send(@notice.noticable_path, @notice.noticable)
+    url = self.send(@notice.redirect_path, @notice.redirect_object)
     respond_to do |format|
       format.html { redirect_to url }
       format.js  { render(:update){|page| page.redirect_to url} }

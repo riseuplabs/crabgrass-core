@@ -37,12 +37,12 @@ class PrivateMessageNotice < Notice
     :show_thing.t(thing: :message.t)
   end
 
-  def noticable_path
+  def redirect_path
     :me_discussion_posts_path
   end
 
-  def noticable
-    data[:from]
+  def redirect_object
+    from.try.name || data[:from]
   end
 
   protected

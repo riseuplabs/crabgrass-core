@@ -8,7 +8,7 @@ module Me::NoticesHelper
   end
 
   def noticable_url(notice)
-    self.send(notice.noticable_path, notice.noticable)
+    self.send(notice.redirect_path, notice.redirect_object)
   rescue NoMethodError => e
     logger.error "Error: " + e.message
     logger.error e.backtrace.join("\n")

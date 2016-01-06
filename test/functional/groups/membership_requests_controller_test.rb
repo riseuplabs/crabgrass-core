@@ -21,6 +21,19 @@ class Groups::MembershipRequestsControllerTest < ActionController::TestCase#
     assert_equal @group, req.group
   end
 
+  def test_no_dup_request_to_join
+    # group which already has members
+    @group = groups(:animals)
+    @req = RequestToJoinYou.create recipient: @group, created_by: @user
+    assert_no_difference "RequestToJoinYou.count" do
+      assert_no_difference "Notice.count" do
+        xhr :post, :create, group_id: @group.to_param,
+          type: :join
+      end
+    end
+    assert_response :redirect
+  end
+
   def test_request_to_remove
     @group.add_user! @user
     @remove_me = FactoryGirl.create(:user)

@@ -119,7 +119,7 @@ module Common::Requests
   end
 
   def create_notices
-    RequestNotice.create! @req
+    RequestNotice.create! @req if @req.persisted?
   end
 
   def dismiss_notices
