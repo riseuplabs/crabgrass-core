@@ -1,3 +1,18 @@
+Changes in Crabgrass 0.6.3
+--------------------------
+
+I18n improvemtents, dependency upgraded, doc fixes, performance tweaks,
+cleanups and refactorings - everything you would expect from a bugfix release.
+And of course bugfixes, bugfixes, bugfixes...
+Elijah brought back merging subsequent wiki edits by the same author into
+a single version to make notifications less noisy and the history cleaner.
+
+Thanks to perfectritone we now have install instructions for OSX and
+aliaksandrb provided the basics for vagrant based development.
+
+This will probably be the last bugfix release for the 0.6 series.
+0.7 and thus rails 4.2 lay ahead of us. :)
+
 Changes in Crabgrass 0.6.2
 --------------------------
 
