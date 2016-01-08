@@ -11,30 +11,18 @@ class Page::HistoryTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all
-    ActionMailer::Base.delivery_method = :test
-    ActionMailer::Base.perform_deliveries = true
-    ActionMailer::Base.deliveries = []
 
     @user = FactoryGirl.create(:user, login: "pepe")
     User.current = @user
 
     @page = FactoryGirl.create(:page, created_by: @user)
     PageHistory::PageCreated.create page: @page, user: @user
-
-    @site = FactoryGirl.create(:site, domain: "crabgrass.org",
-                               title: "Crabgrass Social Network",
-                               email_sender: "robot@$current_host",
-                               default: true,
-                               name: 'cg'
-                              )
-    enable_site_testing 'cg'
   end
 
   def teardown
     Page.delete_all
     User.delete_all
     User.current = nil
-    disable_site_testing
   end
 
   def test_validations
@@ -113,60 +101,6 @@ class Page::HistoryTest < ActiveSupport::TestCase
     assert_equal "Nice title", page_history.details[:to]
   end
 
-  def test_recipients_for_digest_notifications
-    user   = FactoryGirl.create(:user, login: "user", receive_notifications: nil)
-    user_a = FactoryGirl.create(:user, login: "user_a", receive_notifications: "Single")
-    user_b = FactoryGirl.create(:user, login: "user_b", receive_notifications: "Digest")
-    user_c = FactoryGirl.create(:user, login: "user_c", receive_notifications: "Digest")
-
-    FactoryGirl.build(:user_participation, page: @page, user: user_a, watch: true).save!
-    FactoryGirl.build(:user_participation, page: @page, user: user_b, watch: true).save!
-    FactoryGirl.build(:user_participation, page: @page, user: user_c, watch: true).save!
-
-    assert_equal 2, PageHistory.recipients_for_digest_notifications(@page).count
-
-    # this should not receive notifications because he has it disabled
-    assert !PageHistory.recipients_for_digest_notifications(@page).include?(user)
-
-    # this should not receive notifications because he has Single enabled
-    assert !PageHistory.recipients_for_digest_notifications(@page).include?(user_a)
-
-    # this should receibe notifications because he has it enabled
-    assert PageHistory.recipients_for_digest_notifications(@page).include?(user_b)
-    assert PageHistory.recipients_for_digest_notifications(@page).include?(user_c)
-  end
-
-  def test_send_digest_pending_notifications
-    PageHistory.delete_all
-    user_a = FactoryGirl.create(:user, receive_notifications: "Digest")
-    user_b = FactoryGirl.create(:user, receive_notifications: "Digest")
-    user_c = FactoryGirl.create(:user, receive_notifications: "Single")
-    users = [user_a, user_b, user_c]
-
-    PageHistory.delete_all
-
-    users.each{ |user| @page.add(user, star: true, watch: true).save }
-    users.each{ |user| PageHistory::AddStar.create user: user, page: @page }
-
-    assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
-    assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
-
-    last_state = Conf.paranoid_emails
-    Conf.paranoid_emails = true
-    PageHistory.send_digest_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
-    assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
-
-    Conf.paranoid_emails = last_state
-    PageHistory.send_digest_pending_notifications
-    assert_equal 2, ActionMailer::Base.deliveries.count
-    assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
-  end
-
-  def test_pending_digest_notifications_by_page
-    assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
-  end
-
   def test_recipients_for_single_notifications
     user   = FactoryGirl.create(:user, login: "user", receive_notifications: nil)
     user_a = FactoryGirl.create(:user, login: "user_a", receive_notifications: "Digest")
@@ -177,44 +111,17 @@ class Page::HistoryTest < ActiveSupport::TestCase
     FactoryGirl.build(:user_participation, page: @page, user: user_b, watch: true).save!
     FactoryGirl.build(:user_participation, page: @page, user: user_c, watch: true).save!
 
-    assert_equal 2, PageHistory.recipients_for_single_notification(PageHistory.last).count
+    history = PageHistory.last
+    assert_equal 2, history.recipients_for_single_notification.count
 
-    PageHistory.last.update_attribute(:user, user_c)
-    assert_equal 1, PageHistory.recipients_for_single_notification(PageHistory.last).count
+    history.update_attribute(:user, user_c)
+    # user should not receive notifications because he has it disabled
+    # user_a should not receive notifications because he has Digest enabled
+    # user_b should receive notifications because he has it enabled
+    # user_c should not receive_notifications because he was the performer
 
-    # this should not receive notifications because he has it disabled
-    assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user)
-
-    # this should not receive notifications because he has Digest enabled
-    assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_a)
-
-    # this should receibe notifications because he has it enabled
-    assert PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_b)
-
-    # this should not receive_notifications because he was the performer
-    assert !PageHistory.recipients_for_single_notification(PageHistory.last).include?(user_c)
-  end
-
-  def test_send_pending_notifications
-    user_a = FactoryGirl.create(:user, receive_notifications: "Single")
-    User.current = user_a
-    FactoryGirl.create :user_participation,
-      page: @page, user: user_a, watch: true
-
-    last_state = Conf.paranoid_emails
-    Conf.paranoid_emails = false
-    PageHistory.send_single_pending_notifications
-    assert_equal 1, ActionMailer::Base.deliveries.count
-    assert_equal 0, PageHistory.pending_notifications.size
-
-    Conf.paranoid_emails = last_state
-    PageHistory.send_single_pending_notifications
-    assert_equal 1, ActionMailer::Base.deliveries.count
-    assert_equal 0, PageHistory.pending_notifications.size
-  end
-
-  def test_pending_notifications
-    assert_equal 1, PageHistory.pending_notifications.size
+    assert_equal 1, history.recipients_for_single_notification.count
+    assert_equal [user_b], history.recipients_for_single_notification
   end
 
   private

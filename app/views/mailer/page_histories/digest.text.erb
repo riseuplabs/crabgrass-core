@@ -1,0 +1,14 @@
+<%= I18n.t("mailer.hello", :user_name => @recipient.display_name) %>,
+
+<%- if Conf.paranoid_emails? %>
+<%=   render 'paranoid', count: @histories.count -%>
+<%- else %>
+<%=   render partial: 'page', collection: @histories -%>
+<%- end %>
+
+------------
+
+<%= I18n.t("mailer.page_history.change_your_settings_here", :page_link => me_settings_url(:host => @site.domain)) %>
+<%= I18n.t("mailer.page_history.you_can_turn_of_or_configure_notifications") %>.
+
+------------

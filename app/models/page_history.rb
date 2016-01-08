@@ -7,64 +7,37 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  def self.send_single_pending_notifications
-    pending_notifications.each do |page_history|
-      if page_history.page.nil?
-        page_history.destroy
-        next
-      end
-      recipients_for_single_notification(page_history).each do |user|
-        if Conf.paranoid_emails?
-          Mailer.page_history_single_notification_paranoid(user, page_history).deliver
-        else
-          Mailer.page_history_single_notification(user, page_history).deliver
-        end
-      end
-      page_history.update_attribute :notification_sent_at, Time.now
-    end
+  after_create :send_single_notification, if: :single_notification_wanted?
+
+  def send_single_notification
+    return if self.reload.notification_sent?
+    Mailer::PageHistory.deliver_updates_for page,
+      to: recipients_for_single_notification
   end
 
-  def self.send_digest_pending_notifications
-    pending_digest_notifications_by_page.each do |page_id, page_histories|
-      page = Page.find(page_id)
-      recipients_for_digest_notifications(page).each do |user|
-        if Conf.paranoid_emails?
-          Mailer.page_history_digest_notification_paranoid(user, page, page_histories).deliver
-        else
-          Mailer.page_history_digest_notification(user, page, page_histories).deliver
-        end
-      end
-      PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
-    end
+  handle_asynchronously :send_single_notification
+
+  # TODO: Let's wait 30 minutes so notifications for all changes to the same page
+  # within that timeframe can be combined.
+  #   run_at: Proc.new { 30.minutes.from_now }
+
+  def single_notification_wanted?
+    recipients_for_single_notification.present?
   end
 
-  def self.pending_digest_notifications_by_page
-    histories = {}
-    PageHistory.order("created_at desc")
-      .where(notification_digest_sent_at: nil).each do |page_history|
-      histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
-      histories[page_history.page.id] << page_history
-    end
-    histories
+  # all subclasses use the same partial
+  def to_partial_path
+    'page_histories/page_history'
   end
 
-  def self.pending_notifications
-    PageHistory.where(notification_sent_at: nil).all
+  def notification_sent?
+    notification_sent_at.present?
   end
 
-  def self.recipients_for_page(page)
-    UserParticipation.where(page_id: page.id, watch: true).map(&:user_id)
-  end
-
-  def self.recipients_for_digest_notifications(page)
-    User.where("receive_notifications = 'Digest'")
-      .where(id: recipients_for_page(page)).all
-  end
-
-  def self.recipients_for_single_notification(page_history)
-    users_watching_ids = recipients_for_page(page_history.page)
-    users_watching_ids.delete(page_history.user.id)
-    User.where("receive_notifications = 'Single' and `users`.id in (?)", users_watching_ids).all
+  def recipients_for_single_notification
+    page.users.where(receive_notifications: 'Single').
+      where(user_participations: {watch: true}).
+      where("users.id <> ?", user_id)
   end
 
   def description_key
