@@ -192,10 +192,14 @@ non-destructive, so it can be run anytime.
 compile assets
 -----------------------
 
-There are some static assets that need to be compiled in production mode.
-This should be run after deploying a new version of the codebase:
+We use the rails assets pipeline for compiling javascript. In order to do so
+this should be run after deploying a new version of the codebase:
 
-    rake cg:compile_assets
+    rake assets:precompile
+
+See the asset pipeline docs for more information and alternative strategies:    
+http://guides.rubyonrails.org/asset_pipeline.html#precompiling-assets
+    
 
 configure apache
 -----------------------
