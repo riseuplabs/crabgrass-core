@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency("RedCloth", ">= 4.2.2")
 
   s.files = %w[LICENSE README.textile Rakefile SYNTAX_REFERENCE greencloth.gemspec]
-  s.files << Dir['lib/*.rb'] + Dir['test/*.rb']
+  s.files += Dir['lib/*.rb'] + Dir['test/*.rb']
 end
