@@ -11,15 +11,14 @@ class PageHistory < ActiveRecord::Base
 
   def send_single_notification
     return if self.reload.notification_sent?
-    Mailer::PageHistory.deliver_updates_for page,
+    Mailer::PageHistories.deliver_updates_for page,
       to: recipients_for_single_notification
   end
 
-  handle_asynchronously :send_single_notification
-
-  # TODO: Let's wait 30 minutes so notifications for all changes to the same page
+  # Let's wait 30 minutes so notifications for all changes to the same page
   # within that timeframe can be combined.
-  #   run_at: Proc.new { 30.minutes.from_now }
+  handle_asynchronously :send_single_notification,
+    run_at: Proc.new { 30.minutes.from_now }
 
   def single_notification_wanted?
     recipients_for_single_notification.present?

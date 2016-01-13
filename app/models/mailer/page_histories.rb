@@ -57,9 +57,9 @@ class Mailer::PageHistories < ActionMailer::Base
 
   # add some defaults
   def mail(options = {})
-    return if @histories.blank?
+    return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
-    super options.reverse_merge from: sender, to: @recipient
+    super options.reverse_merge from: sender, to: @recipient.email
   end
 
   def self.digest_recipients
@@ -92,11 +92,11 @@ class Mailer::PageHistories < ActionMailer::Base
   end
 
   def digest_subject
-    I18n.t("mail.subject.daily_digest", site: @site.title)
+    I18n.t("mailer.page_histories.daily_digest", site: @site.title)
   end
 
   def update_subject
-    I18n.t("mail.subject.daily_digest", site: @site.title)
+    I18n.t("mailer.page_histories.page_update", site: @site.title)
   end
 
   def sender
