@@ -38,7 +38,7 @@ Once you have git:
 	git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 	source ~/.zshrc
 	rbenv versions
-	
+
 Once you have the code, run this from inside of the source directory. Ruby 2.1.5 should work here, but you can customize it if need be.
 
 	rbenv install 2.1.5
@@ -46,9 +46,9 @@ Once you have the code, run this from inside of the source directory. Ruby 2.1.5
 Now for the app dependencies
 
 	brew install mysql graphicsmagick sphinx --with-mysql
-	
+
 To run MySQL
-	
+
 	mysqld
 
 If you run into any problems bundling with bundle install (a few steps down), make sure that you are up to date with XCode and that you have installed the command line developer tools.  XCode can be updated from the App Store. You may need to open XCode after updating to accept the licenses. If you need the command line tools, run the following.
@@ -197,9 +197,13 @@ this should be run after deploying a new version of the codebase:
 
     rake assets:precompile
 
-See the asset pipeline docs for more information and alternative strategies:    
+See the asset pipeline docs for more information and alternative strategies:
 http://guides.rubyonrails.org/asset_pipeline.html#precompiling-assets
-    
+
+For css we rely on our custom theming mechanism. In order to install the css
+files for images please run
+
+    rake cg:images:update_css
 
 configure apache
 -----------------------
