@@ -1,20 +1,34 @@
 require 'pathname'
 
 def write_file(type, images)
-  File.open(images_dir + "/../stylesheets/icon_#{type}.css", 'w') do |file|
+  pathname = stylesheets_dir + "icon_#{type}.css"
+  pathname.open('w') do |file|
     images.each do |image|
       str = ".#{image[1]}_#{image[0]} {background-image: url(/images/#{type}/#{image[0]}/#{image[1]}.#{type})}\n"
       file.write(str)
     end
   end
+rescue Errno::ENOENT # directory missing
+  Dir.mkdir stylesheets_dir
+  retry
+end
+
+def stylesheets_dir
+  rails_root + 'public/stylesheets'
 end
 
 def images_dir
-  Pathname.new(File.dirname(__FILE__) + '/../../public/images').realpath.to_s
+  rails_root + 'public/images'
 end
 
 def svg_dir
-  Pathname.new(File.dirname(__FILE__) + '/../../doc/image-sources').realpath.to_s
+  rails_root + 'doc/image-sources'
+end
+
+# replacement for Rails.root - which is not available here.
+def rails_root
+  path = Pathname.new File.dirname(__FILE__)
+  path.realpath + '../..'
 end
 
 namespace :cg do
@@ -23,14 +37,12 @@ namespace :cg do
     desc "updates the css for all the icons"
     task :update_css do
       images = []
-      Dir.chdir(images_dir) do
-        Dir.chdir('png') do
-          ['16','48'].each do |dir|
-            Dir.chdir(dir) do
-              Dir.glob('*.png') do |png_file|
-                images << [dir,png_file.sub(/\.png$/,'')]
-                putc '.'; STDOUT.flush;
-              end
+      Dir.chdir(images_dir + 'png') do
+        ['16','48'].each do |dir|
+          Dir.chdir(dir) do
+            Dir.glob('*.png') do |png_file|
+              images << [dir,png_file.sub(/\.png$/,'')]
+              putc '.'; STDOUT.flush;
             end
           end
         end
