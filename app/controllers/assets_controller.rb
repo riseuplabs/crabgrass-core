@@ -40,15 +40,12 @@ class AssetsController < ApplicationController
 
   # Update access and redirect to the same path - which will now have a
   # symlink in public
-  # This only applies iff asset is public AND the public file is not in place.
   def symlink_public_asset
-    return unless @asset.public? and !File.exist?(@asset.public_filename)
-    @asset.update_access
-    @asset.generate_thumbnails
-    raise_not_found(:file.t) unless @asset.thumbnails.any?
-
-    # redirect to the same url again, but next time they will get the symlinks
-    redirect_to
+    if @asset.symlink_missing?
+      @asset.update_access
+      # redirect to the same url again, but next time they will get the symlinks
+      redirect_to
+    end
   end
 
   ## Helper Methods

@@ -217,9 +217,18 @@ module AssetExtension # :nodoc:
       File.file?(private_filename) ? File.read(private_filename) : nil
     end
 
+    def symlink_missing?
+      self.public? and !has_symlink?
+    end
+    public :symlink_missing?
+
+    def has_symlink?
+      File.exist?(File.dirname(public_filename))
+    end
+
     # creates a symlink from the private asset storage to a publicly accessible directory
     def add_symlink
-      unless File.exist?(File.dirname(public_filename))
+      unless has_symlink?
         real_private_path = Pathname.new(private_filename).realpath.dirname
         real_public_path  = Pathname.new(public_storage).realpath
         public_to_private = real_private_path.relative_path_from(real_public_path)
@@ -231,7 +240,7 @@ module AssetExtension # :nodoc:
 
     # removes symlink from public directory
     def remove_symlink
-      if File.exist?(File.dirname(public_filename))
+      if has_symlink?
         FileUtils.rm(File.dirname(public_filename))
       end
     end
