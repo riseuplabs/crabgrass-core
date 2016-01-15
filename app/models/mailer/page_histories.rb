@@ -76,7 +76,7 @@ class Mailer::PageHistories < ActionMailer::Base
 
   # all relevant PageHistory records
   def self.page_histories
-    PageHistory.where(notification_digest_sent_at: nil).
+    Page::History.where(notification_digest_sent_at: nil).
       where("DATE(page_histories.created_at) >= DATE(?)", DIGEST_TIMESPAN.ago).
       where("DATE(page_histories.created_at) < DATE(?)", Time.now)
   end
