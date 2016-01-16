@@ -4,8 +4,14 @@ class Gallery < Page
   # A gallery is a collection of images, being presented to the user by a cover
   # page, an overview or a slideshow.
 
-  has_many :showings, order: 'position', dependent: :destroy
-  has_many :images, through: :showings, source: :asset, order: 'showings.position'
+  has_many :showings,
+    -> { order 'position' },
+    dependent: :destroy
+
+  has_many :images,
+    -> { order 'showings.position' },
+    through: :showings,
+    source: :asset
 
   def update_media_flags
     self.is_image = true

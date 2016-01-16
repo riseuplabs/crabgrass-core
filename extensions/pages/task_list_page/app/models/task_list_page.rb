@@ -3,7 +3,7 @@
 class TaskListPage < Page
 
   has_many :tasks,
-    order: "position",
+    -> { order "position" },
     dependent: :destroy,
     foreign_key: :page_id,
     inverse_of: :page

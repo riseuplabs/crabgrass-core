@@ -196,10 +196,17 @@ class User < ActiveRecord::Base
   ##
 
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
-  has_one :public_profile, as: 'entity', class_name: 'Profile',
-    conditions: {stranger: true}
-  has_one :private_profile, as: 'entity', class_name: 'Profile',
-    conditions: {friend: true}
+
+  has_one :public_profile,
+    -> { where stranger: true },
+    as: 'entity',
+    class_name: 'Profile'
+
+
+  has_one :private_profile,
+    -> { where friend: true },
+    as: 'entity',
+    class_name: 'Profile'
 
   def profile(reload=false)
     @profile = nil if reload
@@ -240,15 +247,14 @@ class User < ActiveRecord::Base
 
   has_many :task_participations, dependent: :destroy
   has_many :tasks, through: :task_participations do
+
     def pending
       where('completed_at IS NULL')
     end
+
     def completed
       where('completed_at IS NOT NULL')
     end
-    #def priority
-    #  self.find(:all, conditions: ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
-    #end
   end
 
   has_many :posts, dependent: :destroy
