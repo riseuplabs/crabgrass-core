@@ -9,9 +9,9 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151013074955) do
+ActiveRecord::Schema.define(version: 20151013074955) do
 
   create_table "activities", force: true do |t|
     t.integer  "subject_id"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(:version => 20151013074955) do
 
   add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
 
-  create_table "crypt_keys", :force => true do |t|
+  create_table "crypt_keys", force: true do |t|
     t.integer "profile_id"
     t.boolean "preferred",                      default: false
     t.text    "key",         limit: 2147483647
@@ -380,8 +380,8 @@ ActiveRecord::Schema.define(:version => 20151013074955) do
     t.datetime "updated_at"
   end
 
-  add_index "page_access_codes", ["code"], name: "index_codes_on_code", unique: true
-  add_index "page_access_codes", ["expires_at"], name: "index_codes_on_expires_at"
+  add_index "page_access_codes", ["code"], :name => "index_codes_on_code", :unique => true
+  add_index "page_access_codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
   create_table "page_histories", force: true do |t|
     t.integer  "user_id"
@@ -521,7 +521,7 @@ ActiveRecord::Schema.define(:version => 20151013074955) do
     t.datetime "deleted_at"
     t.string   "type"
     t.integer  "page_terms_id"
-    t.integer  "stars_count",                         :default => 0
+    t.integer  "stars_count",                      default: 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -687,7 +687,6 @@ ActiveRecord::Schema.define(:version => 20151013074955) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
-
 
   create_table "survey_answers", force: true do |t|
     t.integer  "question_id"
