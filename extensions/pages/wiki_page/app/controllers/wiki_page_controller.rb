@@ -17,7 +17,7 @@ class WikiPageController < Page::BaseController
 
   def print
     if @page.try.discussion
-      @posts = @page.try.discussion.visible_posts.includes(:user)
+      @posts = @page.try.discussion.posts.visible.includes(:user)
     end
     render template: 'wiki/wikis/print', layout: 'printer_friendly'
   end

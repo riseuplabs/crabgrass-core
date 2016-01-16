@@ -33,7 +33,7 @@ class Post < ActiveRecord::Base
   acts_as_path_findable
 
   def self.visible
-    where('deleted_at IS NULL')
+    where deleted_at: nil
   end
 
   def self.by_created_at

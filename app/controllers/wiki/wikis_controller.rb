@@ -25,7 +25,7 @@ class Wiki::WikisController < Wiki::BaseController
   def print
     # no pagination for the posts - one large print view.
     if @page.try.discussion
-      @posts = @page.discussion.visible_posts.includes(:user)
+      @posts = @page.discussion.posts.visible.includes(:user)
     end
     render layout: "printer_friendly"
   end

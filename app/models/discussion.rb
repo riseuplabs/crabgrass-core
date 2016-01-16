@@ -26,11 +26,9 @@ class Discussion < ActiveRecord::Base
 
   # remove all posts without creating PageHistory::DestroyComment
   # if we clean up the whole discussion.
-  has_many :posts, order: 'posts.created_at',
+  has_many :posts,
+    -> { order 'posts.created_at' },
     dependent: :delete_all
-
-  has_many :visible_posts, order: 'posts.created_at',
-    class_name: 'Post', conditions: {deleted_at: nil}
 
   belongs_to :commentable, polymorphic: true
 
@@ -167,9 +165,9 @@ class Discussion < ActiveRecord::Base
 
     update_attributes!(
       posts_count: posts_count,
-      last_post: visible_posts.last,
-      replied_by_id: visible_posts.last.try.user_id,
-      replied_at: visible_posts.last.try.updated_at )
+      last_post: posts.visible.last,
+      replied_by_id: posts.visible.last.try.user_id,
+      replied_at: posts.visible.last.try.updated_at )
 
     if post.private?
       private_notices = PrivateMessageNotice.where(noticable_type: post.type,
