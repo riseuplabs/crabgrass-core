@@ -16,7 +16,7 @@ class Activity::Test < ActiveSupport::TestCase
     assert_difference 'Activity.count', 2 do
       Activity::Friend.create! user: @joe, other_user: @ann
     end
-    act = Activity::Friend.for_me(@joe).find(:first)
+    act = Activity::Friend.for_me(@joe).first
     assert act, 'there should be a friend activity created'
     assert_equal @joe, act.user
     assert_equal @ann, act.other_user
@@ -72,7 +72,7 @@ class Activity::Test < ActiveSupport::TestCase
   def test_deleted_subject
     @joe.add_contact!(@ann, :friend)
     Tracking::Action.track :create_friendship, user: @joe, other_user: @ann
-    act = Activity::Friend.for_me(@joe).find(:first)
+    act = Activity::Friend.for_me(@joe).first
     former_name = @ann.name
     @ann.destroy
 

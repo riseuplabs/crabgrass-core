@@ -131,7 +131,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   def find
     options = options_for_find
     #puts "Page.find(:all, #{options.inspect})"
-    @klass.find :all, options
+    @klass.all options
   end
 
   def paginate

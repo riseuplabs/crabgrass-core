@@ -3,7 +3,7 @@ require_relative 'test_helper'
 class TaggingTest < ActiveSupport::TestCase
   fixtures :pages, :users
   def setup
-    @objs = Page.find(:all, limit: 2)
+    @objs = Page.limit(2).to_a
 
     @obj1 = @objs[0]
     @obj1.tag_list = "pale"

@@ -303,7 +303,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_search
     user = users(:kangaroo)
-    correct_ids = Asset.find(:all).collect do |asset|
+    correct_ids = Asset.all.map do |asset|
       asset.page_terms = asset.page.page_terms
       asset.save
       asset.id if user.may?(:view, asset.page)

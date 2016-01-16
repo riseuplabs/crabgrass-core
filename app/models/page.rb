@@ -98,11 +98,11 @@ class Page < ActiveRecord::Base
   ##
 
   # flexible finder. Finds pages by id or param
-  def self.find(*args)
-    if args.count != 1 || args.first.to_s =~ /^\d+$/
+  def self.find(id)
+    if id.to_s =~ /^\d+$/
       super
     else
-      find_by_param(args.first)
+      find_by_param(id)
     end
   end
 

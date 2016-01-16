@@ -41,9 +41,9 @@ class Thumbnail < ActiveRecord::Base
 
   # finds or initializes a Thumbnail
   def self.find_or_init(thumbnail_name, parent_id, asset_class)
-    self.find_or_initialize_by_name_and_parent_id_and_parent_type(
-      thumbnail_name.to_s, parent_id, asset_class
-    )
+    self.find_or_initialize_by name: thumbnail_name.to_s,
+      parent_id: parent_id,
+      parent_type: asset_class
   end
 
   #
