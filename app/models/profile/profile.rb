@@ -125,27 +125,27 @@ class Profile < ActiveRecord::Base
 
   has_many :locations,
     class_name: '::ProfileLocation',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   has_many :email_addresses,
     class_name: '::ProfileEmailAddress',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   has_many :im_addresses,
     class_name: '::ProfileImAddress',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   has_many :phone_numbers,
     class_name: '::ProfilePhoneNumber',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   has_many :websites,
     class_name: '::ProfileWebsite',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   has_many :notes,
     class_name: '::ProfileNote',
-    dependent: :destroy, order: "preferred desc"
+    dependent: :destroy
 
   #has_many :crypt_keys,
   #  :class_name => '::ProfileCryptKey',
