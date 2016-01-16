@@ -2,26 +2,35 @@ module Crabgrass::Page
   module Data
     extend ActiveSupport::Concern
 
-    included do
+    module ClassMethods
       # Use page_terms to find what objects the user has access to. Note that it is
       # necessary to match against both access_ids and tags, since the index only
       # works if both fields are included.
-      scope :visible_to, lambda { |*args|
+      def visible_to(*args)
         access_filter = Page::Terms.access_filter_for(*args)
-        { select: "#{table_name}.*", joins: :page_terms,
-          conditions: ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
-        }
-      }
+        access_filter_sql = <<-EOSQL
+          MATCH(page_terms.access_ids, page_terms.tags)
+          AGAINST (? IN BOOLEAN MODE)
+        EOSQL
+        select("#{table_name}.*").
+          joins(:page_terms).
+          where access_filter_sql, access_filter
+      end
 
-      scope :most_recent, order: 'updated_at DESC'
+      def most_recent
+        order 'updated_at DESC'
+      end
 
-      scope :exclude_ids, lambda {|ids|
+      def exclude_ids(ids)
         if ids.any? and ids.is_a? Array
           {conditions: ["#{table_name}.id NOT IN (?)", ids]}
         else
           {}
         end
-      }
+      end
+    end
+
+    included do
 
       # ruby has unexpected syntax for checking if Page is a superclass
       unless self <= ::Page
@@ -29,11 +38,6 @@ module Crabgrass::Page
         belongs_to :page_terms,
           class_name: 'Page::Terms'
         def page; pages.first; end
-      else
-        # I do not think this is used, or would be very useful:
-        #base.class_eval do
-        #  def page; self; end
-        #end
       end
 
       before_save :ensure_page_terms

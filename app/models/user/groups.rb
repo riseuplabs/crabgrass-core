@@ -15,95 +15,91 @@
 #  membership (all_groups) the database is correctly updated but the in-memory
 #  object will need to be reloaded if you want the new data.
 module User::Groups
-  def self.included(base)
-    base.instance_eval do
+  extend ActiveSupport::Concern
 
-      has_many :memberships, foreign_key: 'user_id',
-        class_name: 'Group::Membership',
-        dependent: :destroy,
-        before_add: :check_duplicate_memberships
+  included do
 
-      has_many :groups, foreign_key: 'user_id', through: :memberships do
-        def <<(*dummy)
-          raise "don't call << on user.groups"
-        end
-        def delete(*records)
-          super(*records)
-          records.each do |group|
-            group.increment!(:version)
-          end
-          proxy_association.owner.clear_peer_cache_of_my_peers
-          proxy_association.owner.update_membership_cache
-        end
-        def normals
-          self.select{|group|group.normal?}
-        end
-        def networks
-          self.select{|group|group.network?}
-        end
-        def committees
-          self.select{|group|group.committee?}
-        end
-        def councils
-          self.select{|group|group.council?}
-        end
-        def by_visited
-          self.order('memberships.visited_at DESC')
-        end
-        # groups we have visited most recently, including their parent groups.
-        def recently_active(options={})
-          options[:limit] ||= 20
-          grps = []
-          self.by_visited.limit(options[:limit]).all.each do |group|
-            grps << group
-            grps << group.parent if group.parent
-          end
-          grps.sort_by{|g|g.name}.uniq{|g|g.name}
-        end
+    has_many :memberships, foreign_key: 'user_id',
+      class_name: 'Group::Membership',
+      dependent: :destroy,
+      before_add: :check_duplicate_memberships
+
+    has_many :groups, foreign_key: 'user_id', through: :memberships do
+      def <<(*dummy)
+        raise "don't call << on user.groups"
       end
-
-      # primary groups are:
-      # (1) groups user has a direct membership in.
-      # (2) committees only if the user is not also the member of the parent group
-      # (3) not networks
-      # 'primary groups' is useful when you want to list of the user's groups,
-      # including committees only when necessary. primary_groups_and_networks is the same
-      # but it includes networks in addition to just groups.
-      has_many(:primary_groups, class_name: 'Group', through: :memberships,
-       source: :group, conditions: PRIMARY_GROUPS_CONDITION) do
-
-         # most active should return a list of groups that we are most interested in.
-         # this includes groups we have recently visited, and groups that we visit the most.
-         def most_active
-           max_visit_count = select('MAX(memberships.total_visits) as id').first.id || 1
-           select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-           limit(13).select(select).order('last_visit_weight + total_visits_weight DESC').all
-         end
+      def delete(*records)
+        super(*records)
+        records.each do |group|
+          group.increment!(:version)
+        end
+        proxy_association.owner.clear_peer_cache_of_my_peers
+        proxy_association.owner.update_membership_cache
       end
-
-      has_many(:primary_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_NETWORKS_CONDITION) do
-         # most active should return a list of groups that we are most interested in.
-         # in the case of networks this should not include the site network
-         # this includes groups we have recently visited, and groups that we visit the most.
-         def most_active(site=nil)
-           site_sql = (!site.nil? and !site.network_id.nil?) ? "groups.id != #{site.network_id}" : ''
-           max_visit_count = select('MAX(memberships.total_visits) as id').first.id || 1
-           select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-           limit(13).select(select).order('last_visit_weight + total_visits_weight DESC').all
-         end
+      def normals
+        self.select{|group|group.normal?}
       end
-
-      has_many :primary_groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: PRIMARY_G_AND_N_CONDITION
-
-      # just groups and networks the user is a member of, no committees.
-      has_many :groups_and_networks, class_name: 'Group', through: :memberships, source: :group, conditions: GROUPS_AND_NETWORKS_CONDITION
-
-      serialize_as IntArray,
-        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
-
-      initialized_by :update_membership_cache,
-        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
+      def networks
+        self.select{|group|group.network?}
+      end
+      def committees
+        self.select{|group|group.committee?}
+      end
+      def councils
+        self.select{|group|group.council?}
+      end
+      def by_visited
+        self.order('memberships.visited_at DESC')
+      end
+      # groups we have visited most recently, including their parent groups.
+      def recently_active(options={})
+        options[:limit] ||= 20
+        grps = []
+        self.by_visited.limit(options[:limit]).all.each do |group|
+          grps << group
+          grps << group.parent if group.parent
+        end
+        grps.sort_by{|g|g.name}.uniq{|g|g.name}
+      end
     end
+
+    # primary groups are:
+    # (1) groups user has a direct membership in.
+    # (2) committees only if the user is not also the member of the parent group
+    # (3) not networks
+    # 'primary groups' is useful when you want to list of the user's groups,
+    # including committees only when necessary. primary_groups_and_networks is the same
+    # but it includes networks in addition to just groups.
+    has_many :primary_groups,
+      -> { where PRIMARY_GROUPS_CONDITION },
+      class_name: 'Group',
+      through: :memberships,
+      source: :group
+
+    has_many :primary_networks,
+      -> { where PRIMARY_NETWORKS_CONDITION },
+      class_name: 'Group',
+      through: :memberships,
+      source: :group
+
+    has_many :primary_groups_and_networks,
+      -> { where PRIMARY_G_AND_N_CONDITION },
+      class_name: 'Group',
+      through: :memberships,
+      source: :group
+
+    # just groups and networks the user is a member of, no committees.
+    has_many :groups_and_networks,
+      -> { where GROUPS_AND_NETWORKS_CONDITION },
+      class_name: 'Group',
+      through: :memberships,
+      source: :group
+
+    serialize_as IntArray,
+      :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
+
+    initialized_by :update_membership_cache,
+      :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
   end
 
   # all groups, including groups we have indirect access to even when there
