@@ -2,8 +2,9 @@ class Task < ActiveRecord::Base
 
   belongs_to :page
 #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
-  has_many :task_participations, dependent: :destroy
-  has_many :users, through: :task_participations
+  has_many :participations,
+    dependent: :destroy
+  has_many :users, through: :participations
   acts_as_list scope: :page
   format_attribute :description
   validates_presence_of :name

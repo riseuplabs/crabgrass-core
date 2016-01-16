@@ -245,7 +245,9 @@ class User < ActiveRecord::Base
   ## ASSOCIATED DATA
   ##
 
-  has_many :task_participations, dependent: :destroy
+  has_many :task_participations,
+    class_name: 'Task::Participation',
+    dependent: :destroy
   has_many :tasks, through: :task_participations do
 
     def pending
