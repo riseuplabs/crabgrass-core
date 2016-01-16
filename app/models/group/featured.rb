@@ -4,10 +4,9 @@ module Group::Featured
   included do
 
     has_many :featured_pages,
+      -> { where ["`group_participations`.static = ?", true] },
       through: :participations,
-      conditions: ["`group_participations`.static = ?", true],
       source: :page
-
   end
 
   ##

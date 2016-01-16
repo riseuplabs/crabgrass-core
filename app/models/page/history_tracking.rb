@@ -3,9 +3,9 @@ module Page::HistoryTracking
 
   included do
     has_many :page_histories,
+      -> { order "page_histories.id desc" },
       class_name: 'Page::History',
-      dependent: :delete_all,
-      order: "page_histories.id desc"
+      dependent: :delete_all
   end
 
   def marked_as_public?

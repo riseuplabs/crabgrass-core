@@ -13,8 +13,6 @@ module Page::Groups
         inverse_of: :page
       has_many :groups, through: :group_participations
 
-      has_many :namespace_groups, class_name: 'Group', finder_sql: lambda { |a| "SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})" }
-
       attr_accessor :groups_changed       # set to true of group_participations has changed.
     end
   end

@@ -204,10 +204,17 @@ class Group < ActiveRecord::Base
   ##
 
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
-  has_one :public_profile, as: 'entity', class_name: "Profile",
-    conditions: {stranger: true}
-  has_one :private_profile, as: 'entity', class_name: "Profile",
-    conditions: {friend: true}
+
+  has_one :public_profile,
+    -> { where stranger: true },
+    as: 'entity',
+    class_name: "Profile"
+
+  has_one :private_profile,
+    -> { where friend: true },
+    as: 'entity',
+    class_name: "Profile"
+
   has_many :wikis, through: :profiles
 
   def public_wiki

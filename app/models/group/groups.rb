@@ -15,28 +15,18 @@ module Group::Groups
     # Committees are children! They must respect their parent group.
     belongs_to :parent, class_name: 'Group',
       inverse_of: :children
-    has_many :children, class_name: 'Group',
+    has_many :children, -> { order 'name' },
+      class_name: 'Group',
       foreign_key: :parent_id,
-      order: 'name',
       after_add: :org_structure_changed,
       after_remove: :org_structure_changed,
       dependent: :destroy,
       inverse_of: :parent
     alias_method :committees, :children
 
-    has_many :real_committees,
+    has_many :real_committees, -> { where type: 'Committee' },
       foreign_key: 'parent_id',
-      class_name: 'Committee',
-      conditions: {type: 'Committee'} do
-        # UPGRADE: This is a workaround for the lack of declaring a
-        # query DISTINCT and having that applied to the final query.
-        # it won't be needed anymore as soon as .distinct can be used
-        # with rails 4.0
-        def with_access(access)
-          super(access).only_select("DISTINCT groups.*")
-        end
-      end
-
+      class_name: 'Committee'
   end
 
   ##
@@ -158,7 +148,7 @@ module Group::Groups
 
   # returns an array of committees visible to the given user
   def committees_for(user)
-    self.real_committees.with_access(user => :view)
+    self.real_committees.with_access(user => :view).distinct
   end
 
   # whenever the structure of this group has changed

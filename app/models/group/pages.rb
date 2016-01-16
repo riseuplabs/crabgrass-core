@@ -8,9 +8,9 @@ module Group::Pages
 
   included do
     has_many :participations,
+      -> { order  :featured_position },
       class_name: 'Group::Participation',
       dependent: :delete_all,
-      order: :featured_position,
       inverse_of: :group
     has_many :pages, through: :participations
 

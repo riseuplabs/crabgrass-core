@@ -43,10 +43,13 @@ module User::Users
         dependent: :destroy
 
       has_many :friendships,
-        class_name: 'User::Relationship',
-        conditions: {type: 'Friendship'}
+        -> { where type: 'Friendship' },
+        class_name: 'User::Relationship'
 
-      has_many :discussions, through: :relationships, order: 'discussions.replied_at DESC'
+      has_many :discussions,
+        -> { order 'discussions.replied_at DESC' },
+        through: :relationships
+
       has_many :contacts,    through: :relationships
 
       has_many :friends, through: :friendships, source: :contact do
