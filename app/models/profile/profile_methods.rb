@@ -31,21 +31,15 @@ module ProfileMethods
     args.map!{|i| if i==:member; :friend; else; i; end}
 
     conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
-    find(
-      :first,
-      conditions: [conditions] + ([true] * args.size),
-      order: 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
-    )
+    where([conditions] + ([true] * args.size)).
+      order('foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC').
+      first
   end
 
   def find_by_no_access
     fields = [:foe, :friend, :peer, :fof, :stranger]
     conditions = fields.collect{|access| "profiles.`#{access}` = ?"}.join(' AND ')
-    find(
-      :first,
-      conditions: [conditions] + ([false] * fields.size),
-      order: 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
-    )
+    where([conditions] + ([false] * fields.size)).first
   end
 
   # a shortcut to grab the 'public' profile
