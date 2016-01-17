@@ -1,4 +1,5 @@
-class Possible < ActiveRecord::Base
+class Poll::Possible < ActiveRecord::Base
+  self.table_name = 'possibles'
 
   acts_as_list
   belongs_to :poll

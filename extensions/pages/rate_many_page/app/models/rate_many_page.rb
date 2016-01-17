@@ -16,7 +16,7 @@ class RateManyPage < Page
   #
   def create_poll
     unless self.data_id
-      self.data = RatingPoll.new
+      self.data = Poll::RatingPoll.new
     end
     return true # ensure we don't halt on this callback
   end

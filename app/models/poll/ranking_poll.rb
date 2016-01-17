@@ -1,5 +1,8 @@
-class RankingPoll < Poll
-  has_many :votes, foreign_key: :votable_id, class_name: "RankingVote", dependent: :delete_all
+class Poll::RankingPoll < Poll
+  has_many :votes,
+    foreign_key: :votable_id,
+    class_name: "RankingVote",
+    dependent: :delete_all
 
   def vote(user, picks)
     votes.by_user(user).delete_all

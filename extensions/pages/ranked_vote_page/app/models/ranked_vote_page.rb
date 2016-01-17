@@ -15,7 +15,7 @@ class RankedVotePage < Page
   #
   def create_poll
     unless self.data_id
-      self.data = RankingPoll.new
+      self.data = Poll::RankingPoll.new
     end
     return true # ensure we don't halt on this callback
   end

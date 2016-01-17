@@ -58,7 +58,9 @@ module User::Pages
       # some page data objects belong to users.
       # These need has many relationships so they get cleaned up if a user
       # is destroyed.
-      has_many :votes, dependent: :destroy
+      has_many :votes,
+        dependent: :destroy,
+        class_name: 'Poll::Vote'
 
     end
   end

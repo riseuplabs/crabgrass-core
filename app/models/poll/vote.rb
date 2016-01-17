@@ -1,7 +1,9 @@
-class Vote < ActiveRecord::Base
+class Poll::Vote < ActiveRecord::Base
+  self.table_name = 'votes'
+
   validates_presence_of :votable_id
 
-  belongs_to :possible
+  belongs_to :possible, class_name: 'Poll::Possible'
   belongs_to :user
   belongs_to :votable, polymorphic: :true
 

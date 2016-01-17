@@ -57,7 +57,10 @@ class Request < ActiveRecord::Base
   # when a period of time has passed
   # 'ignore' is another vote that could be use by otherwise non-votable requests
   # so that each person has a distinct 'ignore'/'non-ignore' state
-  has_many :votes, as: :votable, class_name: "RequestVote", dependent: :delete_all
+  has_many :votes,
+    as: :votable,
+    class_name: "Poll::RequestVote",
+    dependent: :delete_all
 
   validates_presence_of :created_by
   validates_presence_of :recipient,   if: :recipient_required?
