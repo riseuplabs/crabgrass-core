@@ -66,37 +66,13 @@ class PathFinder::Mysql::Query < PathFinder::Query
   def initialize(path, options, klass)
     super
 
-    ## page_terms access clauses
-    ## (within each clause, the values are OR'ed, but the clauses are AND'ed
-    ##  together in the query).
-    if options[:group_ids] or options[:user_ids] or options[:public]
-      @access_me_clause = "+(%s)" % Page.access_ids_for(
-        public: options[:public],
-        group_ids: options[:group_ids],
-        user_ids: options[:user_ids]
-      ).join(' ')
-    end
-    if options[:secondary_group_ids] or options[:secondary_user_ids]
-      @access_target_clause = "+(%s)" % Page.access_ids_for(
-        group_ids: options[:secondary_group_ids],
-        user_ids: options[:secondary_user_ids]
-      ).join(' ')
-    end
-    if options[:site_ids]
-      @access_site_clause = "+(%s)" % Page.access_ids_for(
-        site_ids: options[:site_ids]
-      ).join(' ')
-    end
+    @relation = klass # something to start with
 
     @access_filter_clause = [] # to be used by path filters
 
     ## page stuff
-    @conditions  = []
-    @values      = []
     @order       = []
     @tags        = []
-    @or_clauses  = []
-    @and_clauses = []
     @selects     = []
     @flow        = options[:flow]
     @date_field  = 'created_at'
@@ -115,6 +91,8 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @selects <<  @klass.table_name + ".*"
 
     apply_filters_from_path(path)
+    apply_fulltext_filter
+    apply_flow_filter
   end
 
   def apply_filter(filter, args)
@@ -129,36 +107,35 @@ class PathFinder::Mysql::Query < PathFinder::Query
   ##
 
   def find
-    options = options_for_find
-    #puts "Page.find(:all, #{options.inspect})"
-    @klass.all options
+    final_relation
   end
 
   def paginate
-    @klass.paginate options_for_find.merge(page: @page, per_page: @per_page)
+    final_relation.paginate page: @page, per_page: @per_page
   end
 
   def count
-    @order = nil
-    @klass.count options_for_find
+    final_relation.count
   end
 
   def ids
-    @klass.find_ids options_for_find.merge(select: 'pages.id')
+    final_relation.pluck('pages.id')
   end
 
   ##
   ## utility methods called by SearchFilter classes
   ##
 
-  def add_sql_condition(condition, value = nil)
-    @conditions << condition
-    @values << value if value
+  def add_sql_condition(*args)
+    [:user_participations, :group_participations].each do |j|
+      joins(j) if /#{j.to_s}\./ =~ args.first
+    end
+    where(*args)
   end
 
   # and a condition based on an attribute of the page
   def add_attribute_constraint(attribute, value)
-    add_sql_condition("pages.#{attribute} = ?", value)
+    where("pages.#{attribute} = ?", value)
   end
 
   # add a condition based on the fulltext access field
@@ -216,11 +193,13 @@ class PathFinder::Mysql::Query < PathFinder::Query
       num = num.to_i * 365
     end
     if unit=="days"
-      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      joins :dailies
+      where "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
       @order << "SUM(dailies.#{what}) DESC"
       @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
     elsif unit=="hours"
-      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      joins :hourlies
+      where "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
       @order << "SUM(hourlies.#{what}) DESC"
       @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
@@ -233,14 +212,14 @@ class PathFinder::Mysql::Query < PathFinder::Query
     page_group, page_type, media_type = parse_page_type(arg)
 
     if media_type
-      @conditions << "pages.is_#{media_type} = ?" # safe because media_type is limited by parge_page_type
-      @values << true
+      # safe because media_type is limited by parge_page_type
+      where "pages.is_#{media_type} = ?", true
     elsif page_type
-      @conditions << 'pages.type = ?'
-      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+     where 'pages.type = ?',
+       Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
     elsif page_group
-      @conditions << 'pages.type IN (?)'
-      @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+      where 'pages.type IN (?)',
+        Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
     else
       # we didn't find either a type or a group for arg
     end
@@ -248,73 +227,64 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   private
 
-  ##
-  ## private guts for building the actual query
-  ##
+  def where(*args)
+    @relation = @relation.where(*args)
+  end
 
-  def options_for_find
-    fulltext_filter = [@access_me_clause, @access_target_clause,
-      @access_site_clause, @access_filter_clause, @tags].flatten.compact
+  def joins(*args)
+    @relation = @relation.joins(*args)
+  end
+
+  def apply_fulltext_filter
+    fulltext_filter = access_filters(@options)
+    fulltext_filter += [@access_filter_clause, @tags]
+    fulltext_filter.flatten!.compact!
 
     if fulltext_filter.any?
       # it is absolutely vital that we MATCH against both access_ids and tags,
       # because this is how the index is specified.
-      @conditions << " MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)"
-      @values << fulltext_filter.join(' ')
+      joins :page_terms
+      where "MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)",
+        fulltext_filter.join(' ')
     end
+  end
 
-    conditions = sql_for_conditions
-    order      = sql_for_order
-
-    # make the hash
-    find_opts = {
-      conditions: conditions,
-      joins: sql_for_joins(conditions),
-      order: order,
-      include: @include,
-      select: @select || @selects.join(", "),
+  def access_filters(options)
+    ## page_terms access clauses
+    ## (within each clause, the values are OR'ed, but the clauses are AND'ed
+    ##  together in the query).
+    secondary_options = {
+      group_ids: options[:secondary_group_ids],
+      user_ids: options[:secondary_user_ids]
     }
-    # setting limit to nil will keep will_paginate from setting its own limit
-    find_opts[:limit]  = @limit  if @limit   # manual limit
-    find_opts[:offset] = @offset if @offset  # manual offset
-
-    find_opts[:group]  = sql_for_group(order)
-    find_opts[:having] = sql_for_group(order)
-
-    return find_opts
+    [
+      access_filter(options.slice(:group_ids, :user_ids, :public)),
+      access_filter(secondary_options),
+      access_filter(options.slice(:site_ids))
+    ]
   end
 
-  # the argument is an array, each element assumed to be a
-  # separate AND clause, that may be composed of multiple OR clauses.
-  # this method unravels the condition tree and converts it to sql.
-  def sql_for_boolean_tree(and_clauses)
-    # holy crap, i can't believe how ugly this is
-    "(" + and_clauses.collect{|or_clause|
-      if or_clause.is_a? String
-        or_clause
-      elsif or_clause.any?
-        "(" + or_clause.collect{|condition|
-          if condition.is_a? String
-            condition
-          elsif condition.any?
-            condition.join(' AND ')
-          end
-        }.join(') OR (') + ")"
-      else
-        "1"
-      end
-    }.join(') AND (') + ")"
-  end
-
-  def sql_for_joins(conditions_string)
-    joins = []
-    [:user_participations, :group_participations, :page_terms,
-      :dailies, :hourlies, :moderated_flags].each do |j|
-      if /#{j.to_s}\./ =~ conditions_string
-        joins << j
-      end
+  def access_filter(options)
+    active_options = options.select{|k,v| v.present?}
+    if active_options.present?
+      "+(%s)" % Page.access_ids_for(active_options).join(' ')
     end
-    return joins
+  end
+
+  ##
+  ## private guts for building the actual query
+  ##
+
+  def final_relation
+    order = sql_for_order
+    @relation
+      .order(order)
+      .includes(@include)
+      .select(@select || @selects.join(", "))
+      .limit(@limit)
+      .offset(@offset)
+      .group(sql_for_group(order))
+      .having(sql_for_having(order))
   end
 
   # TODO: make this more generall so it works with all aggregation functions.
@@ -346,34 +316,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
     end
   end
 
-  def add_flow(flow)
+  def apply_flow_filter
+    return if @flow.blank?
     return unless @klass == Page
-    if flow.instance_of? Array
-      cond = []
-      flow.each do |f|
-        cond << cond_for_flow(f)
-      end
-      @conditions << "(" + cond.join(' OR ') + ")"
-    elsif flow
-      @conditions << cond_for_flow(flow)
-    end
+    where flow: Array(@flow).map{|f| FLOW[f]}
   end
 
-  def cond_for_flow(flow)
-    raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
-    @values << FLOW[flow]
-    return 'pages.flow = ?'
-  end
-
-  def sql_for_conditions()
-    add_flow( @flow )
-
-    # grab the remaining open clauses
-    @or_clauses << @conditions if @conditions.any?
-    @and_clauses << @or_clauses
-    @and_clauses.reject!(&:blank?)
-    return nil if @and_clauses.blank?
-    Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
-  end
 end
-

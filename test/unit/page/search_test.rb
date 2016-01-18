@@ -104,7 +104,7 @@ class Page::SearchTest < ActiveSupport::TestCase
   def assert_path_filter(path, options, &filter)
     context = options.delete :context
     searched_pages = Page.find_by_path(path, options)
-    actual_pages = Page.all(order: "updated_at DESC").select(&filter)
+    actual_pages = Page.order("updated_at DESC").to_a.select(&filter)
     assert actual_pages.any?,
       'a filter with no results is a bad test (user `%s`, context `%s`, filter `%s`)' %
       [current_user.name, context.name, path]
