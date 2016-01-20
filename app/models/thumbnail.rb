@@ -46,6 +46,10 @@ class Thumbnail < ActiveRecord::Base
       parent_type: asset_class
   end
 
+  def self.clone(orig, options = {})
+    self.create orig.attributes.except('id').merge(options)
+  end
+
   #
   # generates the thumbnail file for this thumbnail object.
   #
