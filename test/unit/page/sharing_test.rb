@@ -154,7 +154,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     page = Page.create!(title: 'title', user: creator, share_with: users, access: 'admin')
     share = Page::Share.new(page, creator, send_notice: true, send_message: 'hi')
 
-    assert_difference 'PageNotice.count' do
+    assert_difference 'Notice::PageNotice.count' do
       share.with additional_user
       page.save!
     end
@@ -168,7 +168,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     share.with additional_user
     page.save!
 
-    assert_difference 'PageNotice.count', -1 do
+    assert_difference 'Notice::PageNotice.count', -1 do
       page.destroy
     end
   end

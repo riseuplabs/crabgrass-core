@@ -140,18 +140,12 @@ class Discussion < ActiveRecord::Base
   def post_created(post)
     self.posts_count += 1
 
-    update_attributes!(
-      posts_count: posts_count,
-      last_post: post,
-      replied_by_id: post.user_id,
-      replied_at: post.updated_at )
+    update_attributes_from_posts
 
     if post.private?
-      PrivateMessageNotice.create! from: post.user,
+      post.private_message_notices.create! from: post.user,
         user: post.discussion.user_talking_to(post.user),
-        message: post.body_html,
-        noticable_type: post.type,
-        noticable_id: post.id
+        message: post.body_html
     end
   end
 
@@ -162,19 +156,14 @@ class Discussion < ActiveRecord::Base
     if decrement
       self.posts_count -= 1
     end
+    update_attributes_from_posts
+  end
 
-    update_attributes!(
-      posts_count: posts_count,
+  def update_attributes_from_posts
+    update_attributes! posts_count: posts_count,
       last_post: posts.visible.last,
       replied_by_id: posts.visible.last.try.user_id,
-      replied_at: posts.visible.last.try.updated_at )
-
-    if post.private?
-      private_notices = PrivateMessageNotice.where(noticable_type: post.type,
-                                                   noticable_id: post.id,
-                                                   dismissed: false)
-      private_notices.each &:dismiss!
-    end
+      replied_at: posts.visible.last.try.updated_at
   end
 
 end

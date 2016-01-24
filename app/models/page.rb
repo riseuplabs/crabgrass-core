@@ -76,7 +76,10 @@ class Page < ActiveRecord::Base
   include Page::HistoryTracking # page <> page_history
 
 
-  has_many :page_notices, as: :noticable, dependent: :delete_all
+  has_many :page_notices,
+    class_name: 'Notice::PageNotice',
+    as: :noticable,
+    dependent: :delete_all
 
 
   # disable timestamps, we set the updated_at field through certain Page::History subclasses

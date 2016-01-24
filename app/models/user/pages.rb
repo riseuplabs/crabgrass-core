@@ -173,12 +173,12 @@ module User::Pages
       page.updated_at = now
       page.updated_by = self
       page.user_participations.where(watch: true).each do |part|
-        notices = PageUpdateNotice.for_page(page).where(dismissed: false, user_id: part.user_id)
+        notices = Notice::PageUpdateNotice.for_page(page).where(dismissed: false, user_id: part.user_id)
           .select { |notice| notice.data[:from] == self.name }
         if notices.any?
           notices.each &:touch
         else
-          PageUpdateNotice.create!(user_id: part.user_id, page: page, from: self)
+          Notice::PageUpdateNotice.create!(user_id: part.user_id, page: page, from: self)
         end
       end
     end

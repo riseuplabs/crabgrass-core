@@ -193,7 +193,7 @@ class Page::Share
   end
 
   def send_notices users
-    PageNotice.create! recipients: users,
+    Notice::PageNotice.create! recipients: users,
       page: page,
       from: sender,
       message: defaults[:send_message]

@@ -19,7 +19,7 @@ module Tracking::Action
     update_user_access: ['Page::History::GrantUserAccess'],
     update_title: ['Page::History::ChangeTitle'],
     update_wiki: ['Page::History::UpdatedContent'],
-    create_star: ['PostStarredNotice']
+    create_star: ['Notice::PostStarredNotice']
   }
 
   def self.track(event, options = {})

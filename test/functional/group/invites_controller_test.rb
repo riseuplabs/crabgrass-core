@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 class Group::InvitesControllerTest < ActionController::TestCase
 
@@ -76,13 +76,9 @@ class Group::InvitesControllerTest < ActionController::TestCase
     login_as @user
     recipient = FactoryGirl.create(:user)
 
-    assert_difference 'RequestNotice.count' do
+    assert_notice_for(recipient) do
       post :create, group_id: @group.to_param, recipients: recipient.name
     end
-
-    notice = RequestNotice.last
-    assert_equal recipient.id, notice.user_id
-    assert_equal 'request_to_join_us', notice.data[:title]
   end
 
   def test_invite_to_join_us_notifies_all_valid_recipients
@@ -90,16 +86,10 @@ class Group::InvitesControllerTest < ActionController::TestCase
     recipient = FactoryGirl.create(:user)
 
     # As @user already member of a group it should not be notified
-    assert_difference('RequestNotice.count', 2) do
+    assert_notice_for recipient, @user_not_in_group do
       post :create, group_id: @group.to_param,
         recipients: "#{recipient.name}, #{@user.name}, #{@user_not_in_group.name}"
     end
-
-    notice = RequestNotice.last(2)
-    assert_equal recipient.id, notice.first.user_id
-    assert_equal @user_not_in_group.id, notice.last.user_id
-    assert_equal 'request_to_join_us', notice.first.data[:title]
-    assert_equal 'request_to_join_us', notice.last.data[:title]
   end
 
   def test_invite_group_to_network_notifies_all_group_members_if_no_council
@@ -107,13 +97,11 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
     # @group has only two members, no council
     assert_nil @group.council
-    assert_difference('RequestNotice.count', 2) do
+    assert_notice_for @user, @user_not_in_network do
       post :create, group_id: @network.to_param, recipients: @group.name
     end
 
-    notice = RequestNotice.last(2)
-    assert_equal @user.id, notice.first.user_id
-    assert_equal @user_not_in_network.id, notice.last.user_id
+    notice = Notice::RequestNotice.last(2)
     assert_equal 'request_to_join_our_network', notice.first.data[:title]
     assert_equal 'request_to_join_our_network', notice.last.data[:title]
   end
@@ -125,20 +113,31 @@ class Group::InvitesControllerTest < ActionController::TestCase
     @group.council = @council
     @group.save
     assert_instance_of Group::Council, @group.council
-    assert_difference 'RequestNotice.count' do
+    assert_notice_for @user_council do
       post :create, group_id: @network.to_param, recipients: @group.name
     end
-
-    notice = RequestNotice.last
-    assert_equal @user_council.id, notice.user_id
-    assert_equal 'request_to_join_our_network', notice.data[:title]
   end
 
   def test_invite_by_email_does_not_notify_internally
     email =  "test@mail.me"
     login_as @user
-    assert_no_difference 'RequestNotice.count' do
+    assert_no_notice do
       post :create, group_id: @group.to_param, recipients: email
+    end
+  end
+
+  protected
+
+  def assert_no_notice(&block)
+    assert_notice_for &block
+  end
+
+  def assert_notice_for(*recipients, &block)
+    assert_difference 'Notice::RequestNotice.count', recipients.count, &block
+
+    notices = Notice::RequestNotice.last(recipients.count)
+    notices.each_with_index do |notice, i|
+      assert_equal recipients[i].id, notice.user_id
     end
   end
 

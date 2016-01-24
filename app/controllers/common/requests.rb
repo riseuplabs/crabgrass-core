@@ -119,11 +119,11 @@ module Common::Requests
   end
 
   def create_notices
-    RequestNotice.create! @req if @req.persisted?
+    Notice::RequestNotice.create! @req if @req.persisted?
   end
 
   def dismiss_notices
-    RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
+    Notice::RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
   end
 
   def approved?

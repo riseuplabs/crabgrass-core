@@ -5,6 +5,10 @@ class PrivatePost < Post
     dependent: :delete,
     class_name: 'Activity::MessageSent'
 
+  has_many :private_message_notices,
+    class_name: 'Notice::PrivateMessageNotice',
+    as: :noticable
+
   def private?
     true
   end

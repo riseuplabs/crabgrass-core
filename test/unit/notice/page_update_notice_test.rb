@@ -13,13 +13,13 @@ class PageUpdateNoticeTest < ActiveSupport::TestCase
   end
 
   def test_simple_page_update_displays_notice_for_each_watcher
-    assert_difference 'PageUpdateNotice.count' do
+    assert_created do
       @page.add_post @blue, { body: 'comment' }
     end
     Notice.last.dismiss!
 
     watch_page @orange, @page
-    assert_difference 'PageUpdateNotice.count', 2 do
+    assert_created 2 do
       @page.add_post @orange, { body: 'comment' }
     end
   end
@@ -27,7 +27,7 @@ class PageUpdateNoticeTest < ActiveSupport::TestCase
   def test_multiply_updates_by_one_user_updates_timestamp_of_notice
     old_notice = nil
 
-    assert_difference 'PageUpdateNotice.count' do
+    assert_created do
       @page.add_post @blue, { body: 'comment1' }
       old_notice = Notice.last
       # miliseconds are ignored during database retrive?!
@@ -41,13 +41,13 @@ class PageUpdateNoticeTest < ActiveSupport::TestCase
   def test_multiply_updates_by_many_users_create_just_one_notice
     watch_page @orange, @page
     # each user recieves notification for the first page update
-    assert_difference 'PageUpdateNotice.count', 4 do
+    assert_created 4 do
       @page.add_post @blue, { body: 'comment1' }
       @page.add_post @orange, { body: 'comment2' }
     end
 
     # but not for the second from same user
-    assert_no_difference 'PageUpdateNotice.count' do
+    assert_created 0 do
       @page.add_post @blue, { body: 'comment1' }
       @page.add_post @orange, { body: 'comment2' }
     end
@@ -69,6 +69,10 @@ class PageUpdateNoticeTest < ActiveSupport::TestCase
   end
 
   private
+
+  def assert_created(count = 1, &block)
+    assert_difference 'Notice::PageUpdateNotice.count', count, &block
+  end
 
   def create_page_for_user(owner)
     @page = DiscussionPage.create!({

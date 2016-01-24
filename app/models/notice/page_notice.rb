@@ -1,6 +1,6 @@
 require 'cgi'
 
-class PageNotice < Notice
+class Notice::PageNotice < Notice
 
   alias_attr :page, :noticable
   attr_accessor :message

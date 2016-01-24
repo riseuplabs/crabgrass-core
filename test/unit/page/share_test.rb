@@ -72,7 +72,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     share = Page::Share.new(page, owner, send_notice: true)
 
     # send notice to participants
-    assert_difference('PageNotice.count', 4) do
+    assert_difference('Notice::PageNotice.count', 4) do
       share.with ':participants'
     end
 
@@ -81,7 +81,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     page.add(users(:kangaroo),changed_at: Time.now)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
-    assert_difference('PageNotice.count', 2) do
+    assert_difference('Notice::PageNotice.count', 2) do
       share.with ':contributors'
     end
   end

@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 class Person::FriendRequestsControllerTest < ActionController::TestCase
 
@@ -14,11 +14,11 @@ class Person::FriendRequestsControllerTest < ActionController::TestCase
       true
     end
 
-    assert_difference 'RequestNotice.count', 1 do
+    assert_difference 'Notice::RequestNotice.count', 1 do
       xhr :post, :create, person_id: recipient.login
     end
 
-    notice = RequestNotice.last
+    notice = Notice::RequestNotice.last
     assert_equal recipient.id, notice.user_id
     assert_equal 'request_to_friend', notice.data[:title]
   end

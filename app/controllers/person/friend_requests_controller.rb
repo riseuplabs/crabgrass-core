@@ -35,7 +35,7 @@ class Person::FriendRequestsController < Person::BaseController
   private
 
   def create_notice(request_obj)
-    RequestNotice.create! request_obj
+    Notice::RequestNotice.create! request_obj
   end
 
 end

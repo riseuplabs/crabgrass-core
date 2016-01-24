@@ -48,7 +48,7 @@ class Request < ActiveRecord::Base
 
   has_many :notices, as: :noticable,
     dependent: :delete_all,
-    class_name: 'RequestNotice'
+    class_name: 'Notice::RequestNotice'
 
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved

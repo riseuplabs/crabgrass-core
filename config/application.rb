@@ -23,7 +23,7 @@ module Crabgrass
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 
-    config.autoload_paths += %w(chat profile requests mailers notice).
+    config.autoload_paths += %w(chat profile requests mailers).
      collect { |dir| "#{Rails.root}/app/models/#{dir}" }
     config.autoload_paths << "#{Rails.root}/app/permissions"
     config.autoload_paths << "#{Rails.root}/app/helpers/classes"
