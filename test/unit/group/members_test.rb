@@ -14,6 +14,13 @@ class Group::MembersTest < ActiveSupport::TestCase
   def test_pestering_all_members
     group = groups(:rainbow)
     users = group.users.with_access(public: :pester)
-    assert users.all
+    users.each do |user|
+      assert group.users.include? user
+      assert user.access?(public: :pester)
+    end
+    group.users.each do |user|
+      assert users.include?(user) || !user.access?(public: :pester)
+    end
+    assert_equal users.uniq, users
   end
 end
