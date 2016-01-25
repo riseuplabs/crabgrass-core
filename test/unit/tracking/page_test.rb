@@ -71,18 +71,6 @@ class Tracking::PageTest < ActiveSupport::TestCase
     end
   end
 
-  def test_most_active_groups
-    user = users(:blue)
-    group1 = groups(:rainbow)
-    group2 = groups(:animals)
-    group3 = groups(:recent_group)
-    1.times { Tracking::Page.insert(current_user: user, group: group3) }
-    2.times { Tracking::Page.insert(current_user: user, group: group2) }
-    3.times { Tracking::Page.insert(current_user: user, group: group1) }
-    Tracking::Page.process
-    assert_equal [group1, group2, group3], user.primary_groups.most_active[0..2]
-  end
-
   private
 
   # Insert delayed is not delaysed for testing so this should not cause problems.
