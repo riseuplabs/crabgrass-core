@@ -3,12 +3,10 @@ require 'test_helper'
 class User::GhostTest < ActiveSupport::TestCase
   fixtures :users
 
-  #
-  # Ghosts do not require a login or a password
-  #
+  # you are not supposed to create ghosts from scratch.
+  # existing users are turned into ghosts with ghostify.
   def test_valid_without_attributes
-    ghost = User::Ghost.new
-    assert ghost.valid?, ghost.errors.full_messages.join(', ')
+    assert !User::Ghost.new.valid?
   end
 
   def test_retire_user

@@ -25,9 +25,11 @@ module User::Groups
       before_add: :check_duplicate_memberships
 
     has_many :groups, foreign_key: 'user_id', through: :memberships do
+
       def <<(*dummy)
         raise "don't call << on user.groups"
       end
+
       def delete(*records)
         super(*records)
         records.each do |group|
@@ -36,21 +38,11 @@ module User::Groups
         proxy_association.owner.clear_peer_cache_of_my_peers
         proxy_association.owner.update_membership_cache
       end
-      def normals
-        self.select{|group|group.normal?}
-      end
-      def networks
-        self.select{|group|group.network?}
-      end
-      def committees
-        self.select{|group|group.committee?}
-      end
-      def councils
-        self.select{|group|group.council?}
-      end
+
       def by_visited
         self.order('memberships.visited_at DESC')
       end
+
       # groups we have visited most recently, including their parent groups.
       def recently_active(options={})
         options[:limit] ||= 20

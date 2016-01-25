@@ -27,13 +27,12 @@ module User::Authenticated
     # the current site (set tmp on a per-request basis)
     attr_accessor :current_site
 
+    validates :password, length: {minimum: 8, allow_blank: true}
+
     with_options unless: :ghost? do |alive|
       alive.validates :login, presence: true,
         length: { within: 3..40 },
         format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
-
-      alive.validates :password, confirmation: true,
-        length: {minimum: 8, allow_blank: true}
 
       # uniqueness is validated elsewhere
     end

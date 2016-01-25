@@ -1,16 +1,17 @@
 class User::Ghost < User
 
+  validate :no_ghost, on: :create
+
+  def no_ghost
+    errors.add :type, "Can't create a ghost. Please turn an existing user into one."
+  end
+
   def login
     read_attribute(:login).presence || 'none'
   end
 
   def display_name
     read_attribute(:display_name).presence || :deleted.t
-  end
-
-  # work around has_secure_password validation
-  def password_digest
-    'ghosts cannot log in.'
   end
 
   def authenticate(_password)
@@ -68,10 +69,6 @@ class User::Ghost < User
 
   def ghost?
     true
-  end
-
-  def password_required?
-    false
   end
 
   private
