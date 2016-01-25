@@ -173,7 +173,7 @@ class GroupTest < ActiveSupport::TestCase
     assert_nil page.reload.owner_id
 
     red = users(:red)
-    assert_nil Activity::GroupLostUser.for_all(red).find(:first),
+    assert_nil Activity::GroupLostUser.for_all(red).first,
       "there should be no user left group message"
   end
 

@@ -71,7 +71,7 @@ class Page::History < ActiveRecord::Base
   protected
 
   def page_updated_at
-    Page.update_all(["updated_at = ?", created_at], ["id = ?", page.id])
+    Page.where(id: self.page).update_all updated_at: self.created_at
   end
 end
 
