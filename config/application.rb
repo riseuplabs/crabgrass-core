@@ -37,6 +37,7 @@ module Crabgrass
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
     config.active_record.schema_format = :sql
+    config.active_record.disable_implicit_join_references = true
 
     config.active_support.deprecation = :notify
 
