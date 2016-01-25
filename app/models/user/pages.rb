@@ -195,7 +195,9 @@ module User::Pages
     # work with a new, untained page object
     # no changes to it should be saved!
     page = Page.find(page.id)
-    page.send(method).delete_if {|part| part.id == participation.id}
+    proxy = page.send(method)
+    proxy.load_target
+    proxy.target.delete_if {|part| part.id == participation.id}
     begin
       result = page.has_access!(:admin, self)
     rescue PermissionDenied
