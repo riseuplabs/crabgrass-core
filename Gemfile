@@ -11,7 +11,7 @@ gem 'rails', '~> 3.2.22'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
-gem 'rake', '~> 10.0', :require => false
+gem 'rake', '~> 10.0', require: false
 
 # Bcrypt for has_secure_password
 # version 3.0.x required for rails 3.2
@@ -30,7 +30,7 @@ gem 'prototype-rails', '~> 3.2.1'
 # legacy helper for form_remote_for and link_to_remote
 # there's only a 0.0.0 version out there it seems
 gem 'prototype_legacy_helper', '0.0.0',
-  :github => 'rails/prototype_legacy_helper'
+  github: 'rails/prototype_legacy_helper'
 
 ##
 # Upgrade pending
@@ -41,7 +41,7 @@ gem 'prototype_legacy_helper', '0.0.0',
 # with rails 3.2 but they should not affect us
 # 3.1.3 prints warnings with latest sphinx:
 # https://github.com/pat/thinking-sphinx/issues/882
-gem 'thinking-sphinx', '3.1.4', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
 
 #
 # Use delayed job to postpone the delta processing
@@ -132,20 +132,20 @@ gem 'hpricot', '~> 0.8'
 ##
 
 # extension of the redcloth markup lang
-gem 'greencloth', :require => 'greencloth',
-  :path => 'vendor/gems/riseuplabs-greencloth-0.1'
+gem 'greencloth', require: 'greencloth',
+  path: 'vendor/gems/riseuplabs-greencloth-0.1'
 
 # ?
-gem 'undress', :require => 'undress/greencloth',
-  :path => 'vendor/gems/riseuplabs-undress-0.2.4'
+gem 'undress', require: 'undress/greencloth',
+  path: 'vendor/gems/riseuplabs-undress-0.2.4'
 
 # ?
-gem 'uglify_html', :require => 'uglify_html',
-  :path => 'vendor/gems/riseuplabs-uglify_html-0.12'
+gem 'uglify_html', require: 'uglify_html',
+  path: 'vendor/gems/riseuplabs-uglify_html-0.12'
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
-gem 'crabgrass_media', '~> 0.0.5', :require => 'media'
+gem 'crabgrass_media', '~> 0.0.5', require: 'media'
 
 ##
 ## GEMS not required, but a really good idea
@@ -153,7 +153,7 @@ gem 'crabgrass_media', '~> 0.0.5', :require => 'media'
 
 # detect mime-types of uploaded files
 #
-gem 'mime-types', :require => 'mime/types'
+gem 'mime-types', require: 'mime/types'
 
 # process heavy tasks asynchronously
 # 4.0 is most recent right now. fix major version.
@@ -167,11 +167,11 @@ gem 'rails3_before_render'
 
 # unpack file uploads
 # TODO: why is this locked to 1.1. ?
-gem 'rubyzip', '~> 1.1.0', :require => false
+gem 'rubyzip', '~> 1.1.0', require: false
 
 # load new rubyzip, but with the old API.
 # TODO: use the new zip api and remove gem zip-zip
-gem 'zip-zip', :require => 'zip'
+gem 'zip-zip', require: 'zip'
 
 # Assets group according to migration guide:
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-3-1-to-rails-3-2
@@ -190,11 +190,11 @@ end
 
 group :production, :development do
   # used to install crontab
-  gem 'whenever', :require => false
+  gem 'whenever', require: false
   # used to minify javascript
   # I don't think this is used in production with the Asset Pipeline
   # TODO check if it's needed at all
-  gem 'jsmin', :require => false
+  gem 'jsmin', require: false
 end
 
 group :development do
@@ -205,26 +205,26 @@ group :development do
 
   # fast and light weight server
   if RUBY_VERSION > '2'
-    gem 'thin', :require => false
+    gem 'thin', require: false
   else
-    gem 'thin', :platforms => :mri_19, :require => false
+    gem 'thin', platforms: :mri_19, require: false
   end
 
   # speed up rails dev mode
-  gem 'rails-dev-boost', :github => 'thedarkone/rails-dev-boost'
+  gem 'rails-dev-boost', github: 'thedarkone/rails-dev-boost'
 
   # used by rails-dev-boost
-  gem 'rb-inotify', '~> 0.9', :require => false
+  gem 'rb-inotify', '~> 0.9', require: false
 end
 
 group :test, :development do
   # as the name says... debug things
-  gem 'debugger', :platforms => :mri_19
+  gem 'debugger', platforms: :mri_19
   # use byebug on new versions of ruby
   # and make sure bundler does not die if it does not know them yet.
   if Bundler.respond_to?(:current_ruby) &&
     Bundler.current_ruby.respond_to?(:mri_21?)
-    gem 'byebug', :platforms => [:mri_20, :mri_21]
+    gem 'byebug', platforms: [:mri_20, :mri_21]
   end
 end
 
@@ -238,8 +238,8 @@ group :test, :ci do
 
   gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
-  gem 'minitest', '~> 4.7', :require => false
-  gem 'mocha', '~> 1.1', :require => false
+  gem 'minitest', '~> 4.7', require: false
+  gem 'mocha', '~> 1.1', require: false
   #
   # mocha note: mocha must be loaded after the things it needs to patch.
   #             so, we skip the 'require' here, and do it later.
@@ -255,11 +255,11 @@ group :test, :ci do
 
   # Capybara driver with javascript capabilities using phantomjs
   # locked to major version for stable API
-  gem 'poltergeist', '~> 1.5', :require => false
+  gem 'poltergeist', '~> 1.5', require: false
 
   # Headless webkit browser for testing, fast and with javascript
   # Version newer than 1.8 is required by current poltergeist.
-  gem 'phantomjs-binaries', '~> 1.8', :require => false
+  gem 'phantomjs-binaries', '~> 1.8', require: false
 
   # The castle_gates tests are based on sqlite
   gem 'sqlite3'

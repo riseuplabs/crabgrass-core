@@ -8,7 +8,6 @@
     %p= :drop_files_here.t
     %p= :or.t
     #file-select.upload.btn.btn-primary.hook
-      %input#upload-input.file.handler{type:"file",
-        multiple: local_assigns[:single] ? false : "multiple"}
-        = :select_files.t
-
+      %input#upload-input.file.handler{ type:"file",
+        multiple: (local_assigns[:single] ? false : "multiple") }
+      = :select_files.t
