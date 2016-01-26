@@ -46,11 +46,11 @@ module User::Groups
       # groups we have visited most recently, including their parent groups.
       def recently_active(options={})
         options[:limit] ||= 20
-        grps = []
-        self.by_visited.limit(options[:limit]).all.each do |group|
-          grps << group
-          grps << group.parent if group.parent
-        end
+        grps = self.by_visited.
+          limit(options[:limit]).
+          includes(:parent).
+          to_a
+        grps += grps.map(&:parent).compact
         grps.sort_by{|g|g.name}.uniq{|g|g.name}
       end
     end

@@ -7,9 +7,8 @@ class Me::DestroysController < Me::BaseController
 
   def update
     # these will be cleared after retire!
-    users_to_notify = @user.friends.all
     @user.retire! params.slice(:scrub_name, :scrub_comments)
-    notify users_to_notify
+    notify @user.friends
     success :account_successfully_removed.t
     logout!
     redirect_to '/'

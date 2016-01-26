@@ -31,7 +31,7 @@ class Me::DestroysControllerTest < ActionController::TestCase
   def test_notification
     notification_mock(:user_destroyed, username: @user.name).
       expects(:create_notices_for).
-      with(@user.friends.all)
+      with(@user.friends)
 
     login_as @user
     post :update, scrub_name: 1
