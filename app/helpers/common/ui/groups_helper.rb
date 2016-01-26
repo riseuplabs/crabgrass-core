@@ -32,7 +32,9 @@ module Common::Ui::GroupsHelper
     items.order(:name)
 
     # make sure to act on a copy so we do not alter the relation
-    items = items.map {|group| {value: group.name, label: group.name, group: group} }
+    items = items.map do |group|
+      { value: group.name, label: group.name, group: group}
+    end
 
     selected_item = nil
 

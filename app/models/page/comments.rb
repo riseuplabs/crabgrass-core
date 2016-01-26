@@ -4,8 +4,6 @@
 # Comments are of type Post, owned by a Discussion.
 # Page owns a single Discussion.
 #
-# TODO: give page a discussion_id instead of putting the page_id in discussions table.
-#
 module Page::Comments
 
   def self.included(base)
@@ -21,7 +19,7 @@ module Page::Comments
     return [] unless self.discussion
     pagination_options[:per_page] ||= Conf.pagination_size
     pagination_options[:page] ||= discussion.last_page
-    self.discussion.visible_posts.includes(:user).paginate(pagination_options)
+    self.discussion.posts.includes(:user).paginate(pagination_options)
   end
 
   def add_post(user, post_attributes)

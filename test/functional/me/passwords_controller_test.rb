@@ -28,7 +28,7 @@ class Me::PasswordsControllerTest < ActionController::TestCase
   def test_password_fail
     login_as @user
     post :update, user: {password: 'sdofi33si', password_confirmation: 'xxxxxxx'}
-    assert_error_message /password doesn.t match confirmation/i
+    assert_error_message /doesn.t match/i
   end
 
 end

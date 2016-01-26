@@ -187,14 +187,14 @@ module User::Cache
     else
       committee, network, admin_for = [],[],[]
     end
-    direct = direct.collect{|id| id.to_i}.uniq
-    all = (direct + committee + network).collect{|id|id.to_i}.uniq
-    admin_for = admin_for.collect{|id| id.to_i}.uniq
+    direct = direct.map{|id| id.to_i}.uniq
+    all = (direct + committee + network).map{|id|id.to_i}.uniq
+    admin_for = admin_for.map{|id| id.to_i}.uniq
     [direct, all, admin_for]
   end
 
   def get_peer_ids(group_ids)
-    return [] unless self.id
+    return [] unless self.id && group_ids.present?
     # Exclude large groups from calculating peer relationships
     group_ids -= Group.large.pluck(:id)
     ids = User.joins(:memberships).

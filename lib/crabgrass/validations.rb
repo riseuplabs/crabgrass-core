@@ -44,22 +44,9 @@ module Crabgrass
           if FORBIDDEN_NAMES.include?(value)
             record.errors.add(attr_name, 'is already taken')
           end
-          # TODO: make this dynamic so this function can be
-          # used over any set of classes (instead of just User, Group)
-          if record.instance_of? User
-            if User.exists?(['login = ? and `users`.id <> ?', value, record.id||-1])
-              record.errors.add(attr_name, 'is already taken')
-            end
-            if Group.exists?({name: value})
-              record.errors.add(attr_name, 'is already taken')
-            end
-          elsif record.kind_of? Group
-            if Group.exists?(['name = ? and `groups`.id <> ?', value, record.id||-1])
-              record.errors.add(attr_name, 'is already taken')
-            end
-            if User.exists?({login: value})
-              record.errors.add(attr_name, 'is already taken')
-            end
+          previous = User.find_by_login(value) || Group.find_by_name(value)
+          if previous.present? && previous != record
+            record.errors.add(attr_name, 'is already taken')
           end
         end
       end

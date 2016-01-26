@@ -63,19 +63,19 @@ module User::Groups
     # including committees only when necessary. primary_groups_and_networks is the same
     # but it includes networks in addition to just groups.
     has_many :primary_groups,
-      -> { where PRIMARY_GROUPS_CONDITION },
+      ->(owner) { where owner.primary_groups_condition },
       class_name: 'Group',
       through: :memberships,
       source: :group
 
     has_many :primary_networks,
-      -> { where PRIMARY_NETWORKS_CONDITION },
+      -> { where type: 'Network' },
       class_name: 'Group',
       through: :memberships,
       source: :group
 
     has_many :primary_groups_and_networks,
-      -> { where PRIMARY_G_AND_N_CONDITION },
+      ->(owner) { where owner.primary_groups_and_networks_condition },
       class_name: 'Group',
       through: :memberships,
       source: :group
@@ -92,6 +92,26 @@ module User::Groups
 
     initialized_by :update_membership_cache,
       :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
+  end
+
+  #
+  # CONDITIONS for associations
+  #
+  def primary_groups_condition
+    <<-EOSQL
+      ( type IS NULL
+        OR parent_id NOT IN (#{direct_group_id_cache.to_sql})
+      )
+    EOSQL
+  end
+
+  def primary_groups_and_networks_condition
+    <<-EOSQL
+      ( type IS NULL
+        OR type = \'Network\'
+        OR parent_id NOT IN (#{direct_group_id_cache.to_sql})
+      )
+    EOSQL
   end
 
   # all groups, including groups we have indirect access to even when there
@@ -149,9 +169,6 @@ module User::Groups
 
   private
 
-  PRIMARY_GROUPS_CONDITION      = lambda { |a| "(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
-  PRIMARY_NETWORKS_CONDITION    = '(type = \'Network\')'
-  PRIMARY_G_AND_N_CONDITION     = lambda { |a| "(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))" }
   GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 

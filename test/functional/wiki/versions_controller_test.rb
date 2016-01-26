@@ -15,12 +15,6 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     login_as @user
   end
 
-  def test_fetching_version
-    run_before_filters :show, wiki_id: @wiki.to_param, id: @version.to_param
-    assert_equal @wiki, assigned(:wiki)
-    assert_equal @version, assigned(:version)
-  end
-
   def test_version_not_found
     get :show, wiki_id: @wiki.to_param, id: '123'
     assert_response :redirect
@@ -32,6 +26,7 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
       get :show, wiki_id: @wiki.to_param, id: @version.to_param
     end
     assert_equal @version, assigns['version']
+    assert_equal @wiki.versions.first, assigns['former']
   end
 
   def test_index
@@ -41,13 +36,12 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_not_possible
-    assert_raise ActionController::RoutingError do
+    assert_raise ActionController::UrlGenerationError do
       delete :destroy, wiki_id: @wiki.to_param, id: @version.to_param
     end
   end
 
   def test_revert
-    login_as @user
     @wiki.body = "new version"
     @wiki.save
     assert_difference "@wiki.versions.count" do

@@ -18,7 +18,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
       get :new
     end
     assert_response :success
-    assert_template :choose_group_type
+    assert_template :_choose_group_type
   end
 
   def test_new_committee
@@ -27,7 +27,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
       get :new, type: 'committee'
     end
     assert_response :success
-    assert_template :choose_parent_group
+    assert_template :_choose_parent_group
   end
 
   def test_new_council
@@ -36,7 +36,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
       get :new, type: 'council'
     end
     assert_response :success
-    assert_template :choose_parent_group
+    assert_template :_choose_parent_group
   end
 
   def test_new_group
