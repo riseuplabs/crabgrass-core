@@ -50,7 +50,7 @@ module Common::Requests
   def destroy
     @req.destroy_by!(current_user)
     notice request_destroyed_message, :later
-    render(:update) {|page| page.redirect_to requests_path}
+    render template: 'common/requests/destroy'
   end
 
   protected

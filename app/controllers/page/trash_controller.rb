@@ -14,7 +14,6 @@ class Page::TrashController < Page::SidebarsController
     else
       raise_error 'unknown type'
     end
-    render(:update) {|page| page.redirect_to redirect_url}
   end
 
   protected
