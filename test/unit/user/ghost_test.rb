@@ -15,7 +15,7 @@ class User::GhostTest < ActiveSupport::TestCase
     user.retire!
     user.reload
     user.attributes.except("id", "type", "login", "display_name").each do |k, v|
-      assert_blank v, "expected #{k} to be cleared"
+      assert v.blank?, "expected #{k} to be cleared"
     end
     assert_equal "Blue!", user.display_name
     assert_equal "blue", user.name

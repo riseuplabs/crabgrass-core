@@ -44,7 +44,7 @@ class Tracking::PageTest < ActiveSupport::TestCase
     # let's clean things up first so they do not get in the way...
     Tracking::Page.process
     Tracking::Daily.update
-    Tracking::Hourly.find(:all).each{|h| h.destroy}
+    Tracking::Hourly.destroy_all
     assert_no_difference 'Tracking::Daily.count' do
       # daily should not be created for the new hourlies
       # we only create them with one day delay to avoid double counting.

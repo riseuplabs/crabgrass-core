@@ -7,7 +7,7 @@ class PollTest < ActiveSupport::TestCase
     poll = Poll.create
     p1 = poll.possibles.create(name: 'p1')
     p2 = poll.possibles.create(name: 'robot_destroyer')
-    possibles = poll.possibles.find(:all, include: {votes: :user})
+    possibles = poll.possibles.includes(votes: :user)
     assert_equal 2, possibles.size, 'there should be two possibles'
   end
 

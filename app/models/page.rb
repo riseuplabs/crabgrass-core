@@ -160,9 +160,9 @@ class Page < ActiveRecord::Base
   def name_taken?
     return false unless self.name.present?
     if self.owner
-      pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
+      pages = Page.where name: self.name, owner_id: self.owner
     else
-      pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
+      pages = Page.where name: self.name, created_by_id: self.created_by_id
     end
     pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
   end

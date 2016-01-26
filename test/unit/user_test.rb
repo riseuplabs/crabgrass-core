@@ -79,7 +79,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_alphabetized
-    assert_equal User.all.size, User.alphabetized('').size
+    assert_equal User.count, User.alphabetized('').size
 
     # find numeric group names
     assert_equal 0, User.alphabetized('#').size
@@ -113,7 +113,7 @@ class UserTest < ActiveSupport::TestCase
     ChatChannelsUser.create({channel: channel2, user: user})
 
     user.destroy
-    assert ChatChannelsUser.find(:all, conditions: {user_id: user_id}).empty?
+    assert ChatChannelsUser.where(user_id: user_id).empty?
   end
 
   def test_friends_or_peers_with_access
@@ -126,7 +126,7 @@ class UserTest < ActiveSupport::TestCase
     red.add_contact!(blue)
 
     with_access = User.with_access(blue => :spy).friends_or_peers_of(blue)
-    assert_equal ['red'], with_access.all.map(&:login)
+    assert_equal ['red'], with_access.to_a.map(&:login)
   end
 
   def test_changing_display_name_pushes_group

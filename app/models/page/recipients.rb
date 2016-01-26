@@ -34,7 +34,7 @@ class Page::Recipients
     group_ids = groups.map(&:id) + groups_from_specials.map(&:id)
     User.joins(:memberships).
       where(memberships: {group_id: group_ids}).
-      readonly(false).all
+      readonly(false).to_a
   end
 
   #
@@ -46,15 +46,15 @@ class Page::Recipients
     specials.map do |special|
       case special
       when ':participants'
-        page.users.all
+        page.users.to_a
       when ':contributors'
-        page.users.contributed.all
+        page.users.contributed.to_a
       end
     end.flatten.uniq
   end
 
   def groups_from_specials
-    return page.groups.all          if specials.include?(':participants')
+    return page.groups.to_a if specials.include?(':participants')
     return []
   end
 

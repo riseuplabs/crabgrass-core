@@ -43,7 +43,7 @@ class Poll::RankingPoll < Poll
     ## the key is the user's id and the element is an array of all their votes
     ## where each vote is [possible_name, vote_value].
     ## eg. { 5 => [["A",0],["B",1]], 22 => [["A",1],["B",0]]
-    possibles = self.possibles.find(:all, include: {votes: :user})
+    possibles = self.possibles.includes(votes: :user)
 
     possibles.each do |possible|
       possible.votes.each do |vote|
