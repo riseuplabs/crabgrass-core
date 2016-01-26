@@ -166,8 +166,8 @@ module Page::Users
   # This uses a limited query, otherwise it takes forever on pages with many participants.
   def sorted_user_participations(options={})
     self.user_participations.
-      order('access ASC, changed_at DESC, users.login ASC').
       includes(:user).
+      order('access ASC, changed_at DESC').
       where('access IS NOT NULL OR changed_at IS NOT NULL')
   end
 
