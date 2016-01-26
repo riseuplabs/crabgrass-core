@@ -94,9 +94,17 @@ module PageActions
     within '#attachments' do
       click_on 'Edit'
     end
-    attach_file 'upload-input', file
+    attach_file_to_hidden 'upload-input', file
     assert_selector '#assets_list li.asset'
     close_popup
+  end
+
+  # workaround for the upload being hidden (opacity: 0)
+  def attach_file_to_hidden(id, file)
+    assert_selector "##{id}", visible: false
+    execute_script("$('#{id}').setOpacity(0.99);")
+    attach_file id, file
+    execute_script("$('#{id}').setOpacity(0);")
   end
 
   def remove_file_from_page
