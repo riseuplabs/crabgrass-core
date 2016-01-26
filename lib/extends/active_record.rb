@@ -1,13 +1,7 @@
 require 'rubygems'
 require 'active_record'
-# backported from rails 4
-require_relative 'active_record/null_relation'
 
 ActiveRecord::Base.class_eval do
-
-  class << self
-    delegate :none, to: :scoped
-  end
 
   #
   # Crabgrass uses exceptions in most places to display error messages.
