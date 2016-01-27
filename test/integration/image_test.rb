@@ -22,8 +22,6 @@ class ImageTest < IntegrationTest
     asset = FactoryGirl.create :image_asset
     visit asset.url.sub('.jpg', '%F3.jpg')
     assert_equal 200, status_code
-    visit asset.url.sub('.jpg', '%F3.jpg')
-    assert_equal 200, status_code
   end
 end
 

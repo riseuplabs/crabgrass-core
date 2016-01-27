@@ -207,6 +207,8 @@ GEM
       delayed_job
       thinking-sphinx (>= 1.5.0)
     tzinfo (0.3.51)
+    utf8-cleaner (0.2.1)
+      activesupport
     validates_email_format_of (1.6.3)
       i18n
     websocket-driver (0.6.3)
@@ -268,6 +270,7 @@ DEPENDENCIES
   ts-delayed-delta (~> 2.0)
   uglify_html!
   undress!
+  utf8-cleaner
   validates_email_format_of (~> 1.6)
   whenever
   will_paginate (= 3.0.6)
