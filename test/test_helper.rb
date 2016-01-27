@@ -50,7 +50,8 @@ class ActiveSupport::TestCase
     relationships: User::Relationship,
     taggings: ActsAsTaggableOn::Tagging,
     tags: ActsAsTaggableOn::Tag,
-    tokens: User::Token
+    tokens: User::Token,
+    "page/terms" => Page::Terms
 end
 
 require 'factory_girl'

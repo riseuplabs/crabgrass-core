@@ -45,6 +45,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   #
   # Page::Terms live in an MyIsam table
+  # so they do not get cleaned up by transactional fixtures.
   def truncate_page_terms
     first_dangling_term = Page::Terms.joins('LEFT JOIN pages ON pages.id = page_terms.page_id').
       where('pages.id IS NULL').order(:id).first

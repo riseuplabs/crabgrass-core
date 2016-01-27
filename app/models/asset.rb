@@ -216,51 +216,11 @@ class Asset < ActiveRecord::Base
   end
   self.non_versioned_columns.concat NON_VERSIONED
 
-  ##
-  ## DEFINE THE CLASS Asset::Version
-  ##
-
   # to be overridden in Asset::Version
   def path
     @path ||= Storage::Path.new id: id, filename: filename
   end
   def is_version?; false; end
-
-  versioned_class.class_eval do
-    delegate :page, :public?, :has_access!, to: :asset
-
-    # all our paths will have version info inserted into them
-    def path
-      @path ||= Storage::Path.new id: asset.id,
-        filename: filename,
-        version: version.to_s
-    end
-
-    # this object is a version, not the main asset
-    def is_version?; true; end
-
-    # delegate call to thumbdefs to our original Asset subclass.
-    # eg: Asset::Version#thumbdefs --> Asset::Image.thumbdefs
-    def thumbdefs
-      "Asset::#{versioned_type}".constantize.class_thumbdefs if versioned_type
-    end
-
-    def type_as_parent
-      'Asset::Version'
-    end
-
-    # for this version, hard link the files from the main asset
-    after_create :clone_files_from_asset, :clone_thumbnails_from_asset
-    def clone_files_from_asset
-      clone_files_from(asset); true
-    end
-    def clone_thumbnails_from_asset
-      clone_thumbnails_from(asset); true
-    end
-
-    # fixes warning: toplevel constant Asset referenced by Asset::Asset
-    Asset = ::Asset
-  end
 
   ##
   ## RELATIONSHIP TO PAGES

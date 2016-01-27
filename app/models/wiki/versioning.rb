@@ -1,18 +1,3 @@
-# (Wiki::Version is declared in app/models/wiki.rb)
-#
-#     create_table "wiki_versions", :force => true do |t|
-#       t.integer  "wiki_id",    :limit => 11
-#       t.integer  "version",    :limit => 11
-#       t.text     "body"
-#       t.text     "body_html"
-#       t.text     "raw_structure"
-#       t.datetime "updated_at"
-#       t.integer  "user_id",    :limit => 11
-#     end
-#
-#     add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
-#     add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
-
 module Wiki::Versioning
 
   class VersionNotFoundError < CrabgrassException
