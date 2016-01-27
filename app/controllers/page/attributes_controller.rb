@@ -16,7 +16,6 @@ class Page::AttributesController < Page::SidebarsController
       @page.public = params[:public]
       @page.updated_by = current_user
       @page.save!
-      render(:update) {|page| page.replace 'public_li', public_line}
     elsif owner
       @page.owner = owner
       @page.save!

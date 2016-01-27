@@ -8,8 +8,10 @@ class TaskOverviewTest < JavascriptIntegrationTest
     login users(:blue)
     visit '/me/tasks'
     assert_selector 'h2', text: 'another task list'
-    assert_content 'task4'
-    assert_no_content 'task6'
+    # the only pending task assigned to me
+    assert_content 'task5'
+    assert_no_content 'task4' # not pending
+    assert_no_content 'task6' # not assigned to me
     assert_no_selector 'h2', text: 'a task list'
     assert_no_content 'task1'
   end
