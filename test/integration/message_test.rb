@@ -3,6 +3,7 @@ require 'javascript_integration_test'
 class MessageTest < JavascriptIntegrationTest
   include Integration::Comments
 
+  fixtures :users, 'castle_gates/keys'
 
   def test_send_message
     msg = "Here is my Message"

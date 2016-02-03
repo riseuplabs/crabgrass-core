@@ -5,6 +5,8 @@ require 'javascript_integration_test'
 class PageSearchTest < JavascriptIntegrationTest
   include Integration::Search
 
+  fixtures :all
+
   def test_sphinx
     user = users(:blue)
     page = user.pages.first
@@ -46,7 +48,7 @@ class PageSearchTest < JavascriptIntegrationTest
 
   def test_tagged
     user = users(:blue)
-    tag = tags(:special_chars).name
+    tag = acts_as_taggable_on_tags(:special_chars).name
     page = user.pages.tagged_with(tag).first
     login user
     click_on 'Pages'

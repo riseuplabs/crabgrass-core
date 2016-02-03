@@ -4,6 +4,8 @@ class GroupWikiTest < JavascriptIntegrationTest
   include Capybara::DSL
   include Integration::Wiki
 
+  fixtures :users, :groups, 'group/memberships', :profiles
+
   # let's not wait for wiki lock requests.
   # They are triggered automatically when leaving the settings window
   # Since they run after the page was left their response will not
