@@ -5,7 +5,7 @@
 
 <% srand(314159265359) # consistent rand results %>
 
-<% for i in 1..40 %>
+<% for i in 1..10 %>
 grouppage_<%=i%>:
   id: <%= i %>
   page_id: <%= rand(99)+1 %>
@@ -59,7 +59,7 @@ warm_committee_page:
   group_id: 31
   access: 1
 
-<% for i in 1..20 %>
+<% for i in 1..5 %>
 networkpage_<%=i%>:
   id: 5<%= i %>
   page_id: <%= rand(99)+1 %>

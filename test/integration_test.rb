@@ -33,7 +33,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
     Capybara.use_default_driver
 
-    truncate_page_terms
+    reload_page_terms
   end
 
   # this is overwritten by JavascriptIntegrationTest.
@@ -46,12 +46,13 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   #
   # Page::Terms live in an MyIsam table
   # so they do not get cleaned up by transactional fixtures.
-  def truncate_page_terms
-    first_dangling_term = Page::Terms.joins('LEFT JOIN pages ON pages.id = page_terms.page_id').
-      where('pages.id IS NULL').order(:id).first
-    if first_dangling_term
-      Page::Terms.where("id >= #{first_dangling_term.id}").delete_all
-    end
+  def reload_page_terms
+    return unless self.class.use_transactional_fixtures
+    Page::Terms.delete_all
+    ActiveRecord::FixtureSet.cache_fixtures ActiveRecord::Base.connection,
+      'page/terms' => nil
+    ActiveRecord::FixtureSet.create_fixtures Rails.root + 'test/fixtures',
+      'page/terms'
   end
 
   def group

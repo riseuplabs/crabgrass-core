@@ -11,6 +11,8 @@ class JavascriptIntegrationTest < IntegrationTest
   include AjaxPending
   include Autocomplete
 
+  self.use_transactional_fixtures = false
+
   Capybara.javascript_driver = :poltergeist
 
   def setup

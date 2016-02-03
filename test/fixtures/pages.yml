@@ -31,7 +31,7 @@ owner_users = [['blue','4'],['orange','5'], ['red', '8'], ['kangaroo','10']]
 
 %>
 
-<% for i in 1..100 %>
+<% for i in 1..10 %>
 page<%=i%>:
   id: <%=i%>
   title: "<%= garble(5..50) %>"
