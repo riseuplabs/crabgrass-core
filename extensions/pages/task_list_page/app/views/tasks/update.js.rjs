@@ -1,6 +1,11 @@
-# the list the task was just moved into
-list = @task.completed? ? 'sort_list_completed' : 'sort_list_pending'
-page.remove dom_id(@task)
-page.insert_html :bottom, list, partial: 'task', locals: {task: @task}
-page.sortable list, handle: 'handle', url: sort_tasks_url(page_id: @page)
-page.hide @task.completed? ? 'no_completed_tasks' : 'no_pending_tasks'
+if @task.previous_changes.keys.include? 'completed_at'
+  # the list the task was just moved into
+  list = @task.completed? ? 'sort_list_completed' : 'sort_list_pending'
+  page.remove dom_id(@task)
+  page.insert_html :bottom, list, partial: 'task', locals: {task: @task}
+  page.sortable list, handle: 'handle', url: sort_tasks_url(page_id: @page)
+  page.hide @task.completed? ? 'no_completed_tasks' : 'no_pending_tasks'
+else
+  page.replace_html dom_id(@task), partial: 'inner_task_show',
+    locals: {task: @task}
+end

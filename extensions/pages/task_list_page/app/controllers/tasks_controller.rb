@@ -29,9 +29,6 @@ class TasksController < Page::BaseController
   end
 
   def edit
-    render :update do |page|
-      page.replace_html dom_id(@task), partial: 'inner_task_edit', locals: {task: @task}
-    end
   end
 
   def update
@@ -41,10 +38,6 @@ class TasksController < Page::BaseController
       @task.move_to_bottom
     else
       @task.update_attributes task_params
-      render :update do |page|
-        page.replace_html dom_id(@task), partial: 'inner_task_show',
-          locals: {task: @task}
-      end
     end
     current_user.updated(@page)
   end

@@ -2,7 +2,6 @@ require 'test_helper'
 
 class User::TokenTest < ActiveSupport::TestCase
 
-
   def test_create
     token = User::Token.new(user: users(:blue))
     token.save
@@ -11,8 +10,8 @@ class User::TokenTest < ActiveSupport::TestCase
   end
 
   def test_expired
-    assert tokens(:tokens_001).expired?
-    assert !tokens(:tokens_003).expired?
+    assert user_tokens(:tokens_001).expired?
+    assert !user_tokens(:tokens_003).expired?
   end
 
   def test_token_to_recover

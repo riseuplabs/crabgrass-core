@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class MessageTest < ActiveSupport::TestCase
+class PrivatePostTest < ActiveSupport::TestCase
 
   def setup
-    @sender = FactoryGirl.create :user
-    @recipient = FactoryGirl.create :user
+    @sender = users(:blue)
+    @recipient = users(:penguin)
   end
 
   def test_initial_message

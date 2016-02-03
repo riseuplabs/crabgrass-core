@@ -3,12 +3,12 @@ require 'integration_test'
 class ImageTest < IntegrationTest
 
   def setup
+    super
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
 
   def test_get_asset
-    debugger
     asset = FactoryGirl.create :image_asset
     visit asset.url
     assert_equal 200, status_code

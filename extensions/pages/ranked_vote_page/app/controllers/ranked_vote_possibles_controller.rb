@@ -45,7 +45,7 @@ class RankedVotePossiblesController < Page::BaseController
   protected
 
   def possible_params
-    params.require(:possible).permit(:name, :description)
+    params.require(:poll_possible).permit(:name, :description)
   end
 
   def sort_params

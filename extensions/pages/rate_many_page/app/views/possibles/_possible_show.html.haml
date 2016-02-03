@@ -1,12 +1,12 @@
 - ## DOM STUFF
-- possible_id        = "possible_#{possible.id}"
+- possible_id        = dom_id(possible)
 - details_id         = "#{possible_id}_details"
 - possible_show_id   = "#{possible_id}_show"
 - possible_edit_id   = "#{possible_id}_edit"
 -
 - ## LOGIC STUFF
 - vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
-- vote ||= RatingVote.new
+- vote ||= Poll::RatingVote.new
 - @allvotes = {}
 - possible.votes.each do |v|
   - (@allvotes[map(v.value)] ||= []) << v.user.login

@@ -108,16 +108,16 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   def test_redirect_on_old_or_invalid_token
-    get :reset_password, token: tokens(:old_token).value
+    get :reset_password, token: user_tokens(:old_token).value
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: tokens(:strange).value
+    get :reset_password, token: user_tokens(:strange).value
     assert_error_message(:invalid_token)
 
     get :reset_password, token: "invalid"
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: tokens(:tokens_003).value
+    get :reset_password, token: user_tokens(:tokens_003).value
     assert_response :success
   end
 

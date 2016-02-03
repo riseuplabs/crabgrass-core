@@ -4,6 +4,8 @@ class WikiTest < JavascriptIntegrationTest
   include Integration::Wiki
   include Integration::Navigation
 
+  fixtures :users
+
   def setup
     super
     own_page :wiki_page

@@ -1,4 +1,4 @@
-possible_id      = "possible_#{@possible.id}"
+possible_id      = dom_id(@possible)
 possible_edit_id = "#{possible_id}_edit"
 possible_show_id   = "#{possible_id}_show"
 

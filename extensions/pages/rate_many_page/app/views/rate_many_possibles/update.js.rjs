@@ -1,4 +1,4 @@
-possible_id  = "possible_#{@possible.id}"
+possible_id  = dom_id(@possible)
 
 # update the possible li with the updated possible data
 page.replace_html possible_id, partial: 'possibles/possible_show',

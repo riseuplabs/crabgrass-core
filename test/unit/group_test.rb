@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
 
@@ -158,21 +158,14 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_destroy
-    g = Group.create name: 'fruits'
-    g.add_user! users(:blue)
-    g.add_user! users(:red)
-    g.reload
+    g = groups(:warm)
+    red = users(:red)
 
-    page = DiscussionPage.create! title: 'hello', user: users(:blue), owner: g
-    assert_equal page.owner, g
-
-    assert_difference 'Group::Membership.count', -2 do
+    assert_difference 'Group::Membership.count', (-1) * g.users.count do
       g.destroy
     end
 
-    assert_nil page.reload.owner_id
-
-    red = users(:red)
+    assert_nil pages(:committee_page).reload.owner_id
     assert_nil Activity::GroupLostUser.for_all(red).first,
       "there should be no user left group message"
   end

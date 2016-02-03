@@ -13,8 +13,8 @@ module Integration
       open_new_possibility_form
       description ||= Faker::Lorem.sentence
       detail ||= Faker::Lorem.paragraph
-      fill_in 'possible_name', with: description
-      fill_in 'possible_description', with: detail
+      fill_in 'poll_possible_name', with: description
+      fill_in 'poll_possible_description', with: detail
       click_button "Add new Possibility"
       assert_text description
       close_new_possibility_form

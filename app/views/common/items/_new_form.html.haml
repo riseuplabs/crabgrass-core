@@ -5,7 +5,7 @@
 - # for an example see
 - #   /extensions/pages/task_list_page/app/views/tasks/_new.html.haml
 :ruby
-  type = dom_class(item) if type.blank?
+  type = model_name_from_record_or_class(item).i18n_key if type.blank?
   label = I18n.t("actions.#{type}.add")
 
 %div[item]

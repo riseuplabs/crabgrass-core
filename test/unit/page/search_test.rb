@@ -213,9 +213,11 @@ class Page::SearchTest < ActiveSupport::TestCase
       array.collect{|record|
 
         if record.is_a?(Page)
-          id, page = record, record.id
+          page, id = record, record.id
+        elsif record.respond_to? :page_id
+          page, id = record.page_id, nil
         else
-          id, page = record.page_id, nil
+          raise "invalid record: #{record.inspect}"
         end
 
         if block_given?

@@ -64,8 +64,7 @@ end
 #end
 
 
-# UPGRADE: this moved into ActionView with rails4
-module ActionController::RecordIdentifier
+module ActionView::RecordIdentifier
   #
   # let's make sure the dom_id matches what haml creates when using
   # [record, prefix] for a new record

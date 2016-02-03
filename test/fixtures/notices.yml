@@ -10,9 +10,9 @@ friend_blue:
   user_id: 4
   # user: blue
   data: |-
-    --- 
+    ---
     :title: request_to_friend
-    :body: 
+    :body:
     - :request_to_friend_description
     - :user: <user>kangaroo</user>
       :other_user: <user>blue</user>
@@ -24,9 +24,9 @@ join_animals:
   type: RequestNotice
   user_id: 4
   data: |-
-    --- 
+    ---
     :title: request_to_join_you
-    :body: 
+    :body:
     - :request_to_join_you_description
     - :user: <user>red</user>
       :group: <group>animals</group>
@@ -38,9 +38,9 @@ create_council:
   type: RequestNotice
   user_id: 4
   data: |-
-    --- 
+    ---
     :title: request_to_create_council
-    :body: 
+    :body:
     - :request_to_create_council_description
     - :user: <user>red</user>
       :group: <group>rainbow</group>
@@ -52,10 +52,10 @@ create_council:
 page_notice_1:
   type: PageNotice
   user_id: 4
-  noticable_id: 62
-  noticable_type: Page 
+  noticable_id: 2
+  noticable_type: Page
   data: |-
-    --- 
+    ---
     :from: red
     :page_title: rem et tincidunt fac
     :message: hey, check out this page. <script>alert('hi')</script>
