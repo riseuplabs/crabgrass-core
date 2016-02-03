@@ -5,7 +5,7 @@
 ---
 <%
   srand(314159265359)
-  page_count = 50
+  page_count = 10
   tags = %w(joy trust fear surprise sadness disgust anger happiness love anticipation)
 %>
 <% page_count.times do |page_id| %>
@@ -25,12 +25,12 @@
 
 extra_tag_for_blue_anticipation:
   tag: anticipation
-  taggable_id: 33
+  taggable_id: 1
   taggable_type: Page
   context: "tags"
 
 extra_tag_for_blue_special_chars:
   tag: special_chars
-  taggable_id: 33
+  taggable_id: 1
   taggable_type: Page
   context: "tags"

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class SessionControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :sites, :tokens
+
 
   def test_login_screen
     get :login

@@ -2,7 +2,7 @@ require_relative 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :profiles, :external_videos
+
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::CouncilTest < ActiveSupport::TestCase
-  fixtures :groups, :users
+
 
   def test_add_council
     network = groups(:cnt)

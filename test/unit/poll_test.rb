@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
-  fixtures :polls, :users
+
 
   def test_find_possibles
     poll = Poll.create

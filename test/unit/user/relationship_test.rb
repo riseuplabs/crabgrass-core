@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class User::RelationshipTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   def test_add_contact
     a = users(:red)

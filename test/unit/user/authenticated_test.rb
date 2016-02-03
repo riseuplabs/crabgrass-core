@@ -2,7 +2,7 @@ require 'test_helper'
 
 class User::AuthenticatedTest < ActiveSupport::TestCase
 
-  fixtures :users
+
 
   def test_last_seen
     quentin = create_user(login: "Tarantino")

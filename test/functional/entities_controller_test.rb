@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class EntitiesControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def test_preloading_entities
     login_as :blue

@@ -8,6 +8,7 @@ class ImageTest < IntegrationTest
   end
 
   def test_get_asset
+    debugger
     asset = FactoryGirl.create :image_asset
     visit asset.url
     assert_equal 200, status_code

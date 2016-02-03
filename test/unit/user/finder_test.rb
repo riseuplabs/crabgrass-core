@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class User::FinderTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   def test_find_all_by_default
     finder = User::Finder.new(users(:blue), 'search/a')

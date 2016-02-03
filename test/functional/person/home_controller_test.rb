@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Person::HomeControllerTest < ActionController::TestCase
-  fixtures :users, :relationships, :sites, :groups, :memberships
+
 
   def test_show
     login_as :blue

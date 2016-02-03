@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class User::TokenTest < ActiveSupport::TestCase
-  fixtures :tokens, :users
+
 
   def test_create
     token = User::Token.new(user: users(:blue))

@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class Page::TermsTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   def test_create
     user = users(:blue)

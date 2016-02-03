@@ -2,7 +2,7 @@ require 'test_helper'
 require 'javascript_integration_test'
 
 class TaskOverviewTest < JavascriptIntegrationTest
-  fixtures :all
+
 
   def test_list_only_pages_with_assigned_tasks
     login users(:blue)

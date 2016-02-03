@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Page::DetailsControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def test_show_details
     user = users(:blue)

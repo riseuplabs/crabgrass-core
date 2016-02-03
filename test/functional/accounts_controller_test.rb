@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :sites, :tokens
+
 
   def teardown
     ActionMailer::Base.deliveries.clear

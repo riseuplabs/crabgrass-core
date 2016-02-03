@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Me::DestroysControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def setup
     @user  = users(:blue)

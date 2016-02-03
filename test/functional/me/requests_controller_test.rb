@@ -2,7 +2,7 @@ require_relative '../../test_helper'
 
 class Me::RequestsControllerTest < ActionController::TestCase
 
-  fixtures :users, :requests
+
 
   def test_destroy
     login_as users(:blue)

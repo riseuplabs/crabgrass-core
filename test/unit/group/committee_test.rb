@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::CommitteeTest < ActiveSupport::TestCase
-  fixtures :groups, :users
+
 
   def setup
     #@group = groups[:rainbow]

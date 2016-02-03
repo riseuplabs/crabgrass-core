@@ -2,7 +2,7 @@ require 'test_helper'
 
 class User::SocialTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :pages, :castle_gates_keys
+
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]

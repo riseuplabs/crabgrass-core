@@ -4,7 +4,7 @@ class CollaborationTest < JavascriptIntegrationTest
   include Integration::Wiki
   include Integration::Navigation
 
-  fixtures :all
+
 
   def setup
     super

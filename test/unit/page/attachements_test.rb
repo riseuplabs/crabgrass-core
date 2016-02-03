@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::AttachmentTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :polls
+
 
   def setup
     Page::History.delete_all

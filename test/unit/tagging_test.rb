@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class TaggingTest < ActiveSupport::TestCase
-  fixtures :pages, :users
+
   def setup
     @objs = Page.limit(2).to_a
 

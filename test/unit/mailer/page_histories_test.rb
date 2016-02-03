@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Mailer::PageHistoriesTest <  ActionMailer::TestCase
-  fixtures :all
+
 
   def setup
     @user = users(:blue)

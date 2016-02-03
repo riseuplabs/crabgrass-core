@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Person::FriendRequestsControllerTest < ActionController::TestCase
 
-  fixtures :users
+
 
   def test_new_contact_request_notifies_recipient
     requesting = users(:blue)

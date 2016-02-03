@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AssetPageControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :sites
+
 
   def setup
     setup_assets

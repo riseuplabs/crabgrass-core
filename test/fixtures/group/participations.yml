@@ -13,6 +13,12 @@ grouppage_<%=i%>:
   access: 1
 <% end %>
 
+rainbow_page1:
+  id: 40
+  page_id: 1
+  group_id: 3
+  access: 1
+
 rainbow_tasklist:
   id: 41
   page_id: 201

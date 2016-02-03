@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::MembersTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :memberships, :castle_gates_keys
+
 
   # this is used when sharing with a group to only notify
   # the members which allow the current user to pester them

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class Person::DirectoryControllerTest < ActionController::TestCase
-  fixtures :users, :relationships, :sites, :groups, :memberships
+
 
   def test_index
     friends = users(:blue).friends

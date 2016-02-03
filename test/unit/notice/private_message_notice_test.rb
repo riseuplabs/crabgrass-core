@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Notice::PrivateMessageNoticeTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   def test_post_deletion_dismiss_its_notice
     blue, orange = users(:blue), users(:orange)

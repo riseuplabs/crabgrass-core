@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::BaseTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :polls
+
 
   def setup
     Page::History.delete_all

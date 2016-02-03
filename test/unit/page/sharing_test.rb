@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::SharingTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :memberships, 'user/participations'
+
 
   def test_better_permission_takes_precedence
     creator = users(:kangaroo)

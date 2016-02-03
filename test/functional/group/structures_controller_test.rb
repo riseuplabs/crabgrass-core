@@ -1,7 +1,7 @@
 require_relative '../../test_helper'
 
 class Group::StructuresControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def setup
     @user  = FactoryGirl.create(:user)

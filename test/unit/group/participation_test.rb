@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::ParticipationTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :memberships, 'group/participations'
+
 
   def test_name_change
     group = groups(:rainbow)

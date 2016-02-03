@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::NetworkTest < ActiveSupport::TestCase
-  fixtures :federatings, :groups, :users, :memberships
+
 
   def test_creation
     network = Group::Network.create! name: 'robot-federation', initial_member_group: groups(:rainbow)

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class User::GhostTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   # you are not supposed to create ghosts from scratch.
   # existing users are turned into ghosts with ghostify.

@@ -1,7 +1,7 @@
 require_relative '../../test_helper'
 
 class Me::NoticesControllerTest < ActionController::TestCase
-  fixtures :users, :notices
+
 
   def setup
     @blue = users(:blue)

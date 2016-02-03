@@ -1,7 +1,7 @@
 require 'javascript_integration_test'
 
 class DismissAllNoticesTest < JavascriptIntegrationTest
-  fixtures :users, :notices
+
 
   def test_dismiss_all_notices_updates_page
     login users(:blue)

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PageUpdateNoticeTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   def setup
     @blue, @orange = users(:blue), users(:orange)

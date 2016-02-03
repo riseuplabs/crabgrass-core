@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Wiki::VersioningTest < ActiveSupport::TestCase
-  fixtures :users, :wikis, 'wiki/versions'
+
   include WikiTestHelper
 
   def setup

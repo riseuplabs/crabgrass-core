@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TasksControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :tasks
+
 
   def setup
     @user = users(:blue)

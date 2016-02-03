@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RootControllerTest < ActionController::TestCase
-  fixtures :users
+
 
   def test_show
     get :index

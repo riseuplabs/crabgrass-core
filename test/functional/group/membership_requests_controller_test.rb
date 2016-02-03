@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::MembershipRequestsControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def setup
     @user  = FactoryGirl.create(:user)

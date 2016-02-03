@@ -7,7 +7,7 @@ class Site < ActiveRecord::Base
 end
 
 class SiteTest < ActiveSupport::TestCase
-  fixtures :sites, :users, :groups, :memberships
+
 
   def test_defaults_to_conf
     assert_equal Conf.title, Site.new.title

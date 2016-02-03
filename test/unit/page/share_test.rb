@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::ShareTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :memberships, 'user/participations'
+
 
   def test_share_hash
     user = users(:kangaroo)

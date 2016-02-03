@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Group::PagesControllerTest < ActionController::TestCase
-  fixtures :all
+
 
   def test_index
     user = users(:penguin)

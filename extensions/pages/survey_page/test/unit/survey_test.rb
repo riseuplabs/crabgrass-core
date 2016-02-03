@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class SurveyTest < ActiveSupport::TestCase
-  fixtures :surveys, :survey_questions
+
 
   def setup
     setup_assets

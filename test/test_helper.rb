@@ -43,7 +43,7 @@ class ActiveSupport::TestCase
   # for fixture_file_upload
   include ActionDispatch::TestProcess
 
-  # fixtures :all
+  fixtures :all
   set_fixture_class castle_gates_keys: CastleGates::Key,
     federatings: Group::Federating,
     memberships: Group::Membership,

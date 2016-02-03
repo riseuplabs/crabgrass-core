@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class DiscussionTest < ActiveSupport::TestCase
-  fixtures :users, :pages
+
 
   def test_creation
     discussion = Discussion.create

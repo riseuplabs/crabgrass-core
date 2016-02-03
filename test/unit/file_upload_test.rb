@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class FileUploadTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   def setup
     setup_assets

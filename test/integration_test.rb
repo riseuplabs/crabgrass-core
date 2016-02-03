@@ -21,8 +21,6 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   # included last so crashes in other extensions will get logged.
   include EnhancedLogging
 
-  fixtures :all
-
   protected
 
   def setup

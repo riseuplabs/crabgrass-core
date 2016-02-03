@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class PermissionTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   #
   # This test uses user.clear_access_cache. This is needed after a structure change because the user object has

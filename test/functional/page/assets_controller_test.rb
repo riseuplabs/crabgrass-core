@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Page::AssetsControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships
+
 
   def setup
     @page = FactoryGirl.create :page, created_by: users(:blue)

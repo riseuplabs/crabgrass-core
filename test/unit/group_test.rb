@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites,
+
     :castle_gates_keys
 
   def teardown
