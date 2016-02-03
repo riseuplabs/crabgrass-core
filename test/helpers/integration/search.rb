@@ -17,7 +17,9 @@ module Integration
     end
 
     def teardown
-      sphinx_settings.merge! @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+      if @_ts_old_settings.present?
+        sphinx_settings.merge! @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+      end
       super
     end
 
