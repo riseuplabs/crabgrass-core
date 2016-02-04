@@ -168,9 +168,7 @@ group :production, :development do
   # used to install crontab
   gem 'whenever', require: false
   # used to minify javascript
-  # I don't think this is used in production with the Asset Pipeline
-  # TODO check if it's needed at all
-  gem 'jsmin', require: false
+  gem 'uglifier', require: false
 end
 
 group :development do

@@ -67,14 +67,6 @@ module Common::Requests
     :thing_destroyed.tcap thing: I18n.t(@req.name, count: 1)
   end
 
-  #def left_id(request)
-  #  dom_id(request, :panel_left)
-  #end
-
-  #def right_id(request)
-  #  dom_id(request, :panel_right)
-  #end
-
   def request_path(*args)
     raise 'you forgot to override this method'
   end

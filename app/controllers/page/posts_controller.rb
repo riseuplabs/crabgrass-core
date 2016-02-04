@@ -26,7 +26,6 @@ class Page::PostsController < ApplicationController
   def index
     @posts = @page.posts(pagination_params)
     @post = Post.new
-    # maybe? :anchor => @page.discussion.posts.last.dom_id), :paging => params[:paging] || '1')
   end
 
   def show

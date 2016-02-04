@@ -10,7 +10,7 @@ class Page::SidebarsController < ApplicationController
   before_filter :authorization_required
   permissions :pages
   guard :may_edit_page?
-  layout nil
+  layout false
 
   helper 'page/base', 'page/sidebar'
 
