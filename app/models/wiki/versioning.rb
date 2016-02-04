@@ -41,8 +41,8 @@ module Wiki::Versioning
   # returns first version since +time+
   def last_version_before(time)
     return nil unless time
-    versions.first conditions: ["updated_at <= :time", {time: time}],
-      order: "updated_at DESC"
+    versions.where("updated_at <= :time", {time: time}).
+      order("updated_at DESC").first
   end
 
   def find_version(number)

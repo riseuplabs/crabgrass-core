@@ -50,7 +50,7 @@ class Page::PostsController < ApplicationController
   def fetch_data
     @page = Page.find(params[:page_id])
     if params[:id]
-      @post = @page.discussion.posts.find(params[:id], include: :discussion)
+      @post = @page.discussion.posts.includes(:discussion).find(params[:id])
       raise PermissionDenied.new unless @post
     end
   end

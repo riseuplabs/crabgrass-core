@@ -5,7 +5,7 @@
 - possible_edit_id   = "#{possible_id}_edit"
 -
 - ## LOGIC STUFF
-- vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
+- vote = possible.votes.where(user_id: current_user).first
 - vote ||= Poll::RatingVote.new
 - @allvotes = {}
 - possible.votes.each do |v|

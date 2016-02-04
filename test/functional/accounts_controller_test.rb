@@ -86,7 +86,7 @@ class AccountsControllerTest < ActionController::TestCase
     end
     #assert_equal old_count + 1, User::Token.count
 
-    token = User::Token.find(:last)
+    token = User::Token.last
     assert_equal "recovery", token.action
     assert_equal users(:quentin).id, token.user_id
 

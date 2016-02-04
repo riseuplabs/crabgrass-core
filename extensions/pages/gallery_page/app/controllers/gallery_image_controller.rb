@@ -10,7 +10,7 @@ class GalleryImageController < Page::BaseController
   prepend_before_filter :fetch_page_for_new, only: :new
 
   def show
-    @showing = @page.showings.find_by_asset_id(params[:id], include: 'asset')
+    @showing = @page.showings.includes(:asset).find_by_asset_id(params[:id])
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next

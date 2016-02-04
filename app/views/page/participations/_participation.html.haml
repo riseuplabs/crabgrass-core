@@ -1,6 +1,7 @@
-- pagination_size = 15
-- uparts = @page.user_participations.paginate(page: params[:page], per_page: pagination_size, include: :user, order: 'users.login ASC')
--
+:ruby
+  pagination_size = 15
+  uparts = @page.user_participations.includes(:user).order('users.login ASC').
+    paginate(page: params[:page], per_page: pagination_size)
 
 %table.styled{width:'100%'}
   %tr

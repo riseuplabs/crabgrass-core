@@ -14,7 +14,7 @@ class Page::TrashControllerTest < ActionController::TestCase
     login_as @user
     xhr :post, :update, page_id: @page.id, type: :destroy
     assert_response :success
-    assert_equal [], Page.where(id: @page.id).all
+    assert_equal 0, Page.where(id: @page.id).count
   end
 
   def test_delete
