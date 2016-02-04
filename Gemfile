@@ -168,14 +168,13 @@ group :production, :development do
   # used to install crontab
   gem 'whenever', require: false
   # used to minify javascript
-  gem 'uglifier', require: false
+  gem 'uglifier', '>= 1.3.0', require: false
 end
 
-group :development do
-  ##
-  ## needed for some rake tasks, but not generally.
-  ##
-  gem 'rdoc', '~> 3.0'
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  # needed for some rake tasks, but not generally.
+  gem 'sdoc', require: false
 end
 
 group :test, :development do
