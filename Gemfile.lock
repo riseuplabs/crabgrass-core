@@ -10,18 +10,6 @@ PATH
     greencloth (0.1)
       RedCloth (>= 4.2.2)
 
-PATH
-  remote: vendor/gems/riseuplabs-uglify_html-0.12
-  specs:
-    uglify_html (0.12)
-      hpricot
-
-PATH
-  remote: vendor/gems/riseuplabs-undress-0.2.4
-  specs:
-    undress (0.2.4)
-      hpricot
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -243,8 +231,6 @@ DEPENDENCIES
   therubyracer
   thinking-sphinx (= 3.1.4)
   ts-delayed-delta (~> 2.0)
-  uglify_html!
-  undress!
   utf8-cleaner
   validates_email_format_of (~> 1.6)
   whenever

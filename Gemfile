@@ -130,14 +130,6 @@ gem 'hpricot', '~> 0.8'
 gem 'greencloth', require: 'greencloth',
   path: 'vendor/gems/riseuplabs-greencloth-0.1'
 
-# ?
-gem 'undress', require: 'undress/greencloth',
-  path: 'vendor/gems/riseuplabs-undress-0.2.4'
-
-# ?
-gem 'uglify_html', require: 'uglify_html',
-  path: 'vendor/gems/riseuplabs-uglify_html-0.12'
-
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
 gem 'crabgrass_media', '~> 0.1.1', require: 'media'
