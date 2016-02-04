@@ -121,21 +121,13 @@ module User::Cache
   # invalidated the cache. For example, adding or removing a commmittee.
   #
   def clear_cache
-    # UPGRADE: use update_columns from rails4 on:
-    User.where(id: self).update_all tag_id_cache: nil,
+    update_columns tag_id_cache: nil,
       direct_group_id_cache: nil,
       foe_id_cache: nil,
       peer_id_cache: nil,
       friend_id_cache: nil,
       all_group_id_cache: nil,
       admin_for_group_id_cache: nil
-    write_attribute(:tag_id_cache, nil)
-    write_attribute(:foe_id_cache, nil)
-    write_attribute(:peer_id_cache, nil)
-    write_attribute(:friend_id_cache, nil)
-    write_attribute(:direct_group_id_cache, nil)
-    write_attribute(:all_group_id_cache, nil)
-    write_attribute(:admin_for_group_id_cache, nil)
     self.clear_access_cache
   end
 
@@ -151,15 +143,7 @@ module User::Cache
   # include direct memberships, committees, and networks
   def get_group_ids
     if self.id
-      # this can be called from inside the
-      #   user.groups.recently_active.with_member(current_user)
-      # association.
-      # This causes self.groups to include the memberships join twice
-      # I think this is a rails bug
-      # So we use the memberships instead.
-      # TODO: UPGRADE: check if this is fixed for self.groups.
-      # (otherwise People::HomeControllerTest will fail)
-      direct = self.memberships.pluck(:group_id)
+      direct = memberships.pluck(:group_id)
     else
       direct = []
     end

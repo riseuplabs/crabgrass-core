@@ -8,8 +8,7 @@
   possible_url     = ranked_vote_possible_url(possible, page_id: @page)
   delete_click     = remote_function url: possible_url,
     method: :delete,
-    success: remove(possible),
-    data: {confirm: I18n.t('vote.really_remove_this')}
+    confirm: I18n.t('vote.really_remove_this')
 
 = form_tag possible_url, remote: true, method: :put, html: {id: form_id} do
   -# text_field 'possible', 'name', size: 70

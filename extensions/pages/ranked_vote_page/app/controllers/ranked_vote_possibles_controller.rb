@@ -39,7 +39,6 @@ class RankedVotePossiblesController < Page::BaseController
   def destroy
     @possible.destroy
     current_user.updated(@page)
-    render nothing: true
   end
 
   protected

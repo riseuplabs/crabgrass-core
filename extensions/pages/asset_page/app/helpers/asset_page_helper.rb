@@ -41,12 +41,11 @@ module AssetPageHelper
       action = {
         url: version_url(version.version, page_id: @page),
         method: :delete,
+        confirm: I18n.t(:delete_version_confirm)
         #:before => "$($(this).up('td')).addClassName('busy')",
         #:failure => "$($(this).up('td')).removeClassName('busy')"
       }
-      link_to_remote :remove.t, action,
-        icon: 'tiny_trash',
-        data: {confirm: I18n.t(:delete_version_confirm)}
+      link_to_remote(:remove.t, action, icon: 'tiny_trash')
     end
   end
 

@@ -40,7 +40,6 @@ class Activity::Friend < Activity
   # So activity.twin.twin would always return nil because it tries to
   # fullfill both conditions (those for the twin and for the twin of that twin)
   # at the same time.
-  # UPGRADE: Check if this is fixed
   def twin
     Activity.where type: 'Friend',
       subject_id: item_id, subject_type: 'User',
