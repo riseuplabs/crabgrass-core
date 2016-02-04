@@ -1,8 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '/test_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../../../../../app/controllers/common/application/guard.rb')
+require 'test_helper'
+require_relative '../../../../../app/controllers/common/application/guard.rb'
 class Common::Application::PermissionsTest < ActiveSupport::TestCase
 
-  class GuardStubController < Common::Application::StubController
+  class GuardStubController
     include Common::Application::Guard
   end
 

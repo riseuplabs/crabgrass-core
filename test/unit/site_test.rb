@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class Site < ActiveRecord::Base
   def self.uncache_default

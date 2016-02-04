@@ -1,7 +1,4 @@
-require 'rubygems'
-require 'minitest/autorun'
-require 'mocha'
-require_relative '../test_helper'
+require 'test_helper'
 
 module Groups
   require Rails.root + '/app/permissions/groups/structures_permission'

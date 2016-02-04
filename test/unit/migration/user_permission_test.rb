@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 ##
 # Tests for migrate_permissions!, in order:

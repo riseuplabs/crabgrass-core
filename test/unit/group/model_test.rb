@@ -3,7 +3,6 @@ require 'test_helper'
 class Group::ModelTest < ActiveSupport::TestCase
 
   def setup
-    Conf.load_defaults
     @group = FactoryGirl.build(:group)
   end
 
@@ -35,15 +34,17 @@ class Group::ModelTest < ActiveSupport::TestCase
   end
 
   def test_councils_can_be_disabled
-    Conf.councils = false
-    assert !Group.can_have_council?
-    assert Group.can_have_committees?
+    Conf.stub :councils, false do
+      assert !Group.can_have_council?
+      assert Group.can_have_committees?
+    end
   end
 
   def test_committees_can_be_disabled
-    Conf.committees = false
-    assert !Group.can_have_committees?
-    assert !Group.can_have_council?
+    Conf.stub :committees, false do
+      assert !Group.can_have_committees?
+      assert !Group.can_have_council?
+    end
   end
 
   def test_network_can_have_council
