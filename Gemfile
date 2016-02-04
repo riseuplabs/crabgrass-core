@@ -186,34 +186,12 @@ group :development do
   ## needed for some rake tasks, but not generally.
   ##
   gem 'rdoc', '~> 3.0'
-
-  # fast and light weight server
-  if RUBY_VERSION > '2'
-    gem 'thin', require: false
-  else
-    gem 'thin', platforms: :mri_19, require: false
-  end
-
-  # speed up rails dev mode
-  gem 'rails-dev-boost', github: 'thedarkone/rails-dev-boost'
-
-  # used by rails-dev-boost
-  gem 'rb-inotify', '~> 0.9', require: false
 end
 
 group :test, :development do
-  # as the name says... debug things
-  gem 'debugger', platforms: :mri_19
-  # use byebug on new versions of ruby
-  # and make sure bundler does not die if it does not know them yet.
-  if Bundler.respond_to?(:current_ruby) &&
-    Bundler.current_ruby.respond_to?(:mri_21?)
-    gem 'byebug', platforms: [:mri_20, :mri_21]
-  end
+  gem 'byebug'
 end
 
-
-## from config/environments/test.rb
 group :test, :ci do
 
   ##
