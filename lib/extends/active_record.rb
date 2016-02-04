@@ -197,23 +197,3 @@ module ActiveRecord::AttributeMethods::ClassMethods
   end
 end
 
-module ActiveRecord::QueryMethods
-
-  # clear all other selects that might have been applied before
-  # and only select the given string.
-  #
-  # This helps to make sure distinct selects also work on associations
-  # like group.users.only_select("DISTINCT ..")
-  # UPGRADE: replace me with using .distinct in rails 4.0
-  def only_select(value)
-    relation = clone
-    relation.select_values = Array.wrap(value)
-    relation
-  end
-
-  # backported from rails 4.
-  # Returns an emtpy set without a query and still allows chaining.
-  def none
-    extending(ActiveRecord::NullRelation)
-  end
-end
