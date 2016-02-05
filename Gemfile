@@ -6,8 +6,8 @@ source 'https://rubygems.org'
 ##
 
 # Rails is the framework we use.
-# use the 3.2 series including all security fixes
-gem 'rails', '~> 4.0.13'
+# use the 4.1 series including all security fixes
+gem 'rails', '~> 4.1.14'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -190,8 +190,7 @@ group :test, :ci do
   gem 'factory_girl_rails'
   gem 'faker', '~> 1.0.0'
 
-  # 4.2 is required by rails 4.0.13
-  gem 'minitest', '~> 4.7', require: false
+  gem 'minitest', require: false
   gem 'mocha', '~> 1.1', require: false
   #
   # mocha note: mocha must be loaded after the things it needs to patch.
