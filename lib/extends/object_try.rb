@@ -66,8 +66,12 @@ class NilClass
 end
 
 class Object
-  def try(method=nil, *args, &block)
-    method.nil? ? self : __send__(method, *args, &block)
+  def try(*args, &block)
+    if args.empty?
+      block_given? ? yield(self) : self
+    else
+      public_send(*args, &block) if respond_to? args.first
+    end
   end
 end
 
