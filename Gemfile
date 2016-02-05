@@ -16,6 +16,9 @@ gem 'rake', '~> 10.0', require: false
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+# Application preloader for faster start time
+gem 'spring', group: :development
+
 ##
 # Prototype - yes. we still use it.
 # these will be replaced by jquery equivalents at some point:
