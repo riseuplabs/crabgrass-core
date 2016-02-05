@@ -47,10 +47,7 @@ gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
 gem 'ts-delayed-delta', '~> 2.0'
 
 # Enhanced Tagging lib. Used to tag pages
-# Could not get the migration rake task for acts-as-taggable-on 3.x to work
-# before rails 3.2.
-# So we should run the migration and upgrade now that we are on rails 3.2
-gem 'acts-as-taggable-on', '~> 2.4.1'
+gem 'acts-as-taggable-on', '~> 3.5'
 
 # Page Caching has been removed from rails 4.
 # migrate it and drop this.
