@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 ##
 ## All these tests are disabled, because Group::WikiController is now

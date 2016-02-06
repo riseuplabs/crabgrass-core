@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../../../test/test_helper'
+require 'test_helper'
 
 class Wiki::DiffsControllerTest < ActionController::TestCase
   fixtures :pages, :users, 'user/participations', :wikis, :groups
