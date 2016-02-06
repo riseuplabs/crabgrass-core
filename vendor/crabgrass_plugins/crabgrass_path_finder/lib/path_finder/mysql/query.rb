@@ -73,7 +73,6 @@ class PathFinder::Mysql::Query < PathFinder::Query
     ## page stuff
     @order       = []
     @tags        = []
-    @selects     = []
     @flow        = options[:flow]
     @date_field  = 'created_at'
 
@@ -84,11 +83,11 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @limit       = nil
     @offset      = nil
     @include     = options[:include]
-    @select      = options[:select]
+
+    select options[:select] if options[:select]
 
     # klass the find/paginate/... was send to and thus of the objects we return.
     @klass = klass
-    @selects <<  @klass.table_name + ".*"
 
     apply_filters_from_path(path)
     apply_fulltext_filter
@@ -196,12 +195,12 @@ class PathFinder::Mysql::Query < PathFinder::Query
       joins :dailies
       where "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
       @order << "SUM(dailies.#{what}) DESC"
-      @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
+      select "pages.*, SUM(dailies.#{what}) AS #{name}_count"
     elsif unit=="hours"
       joins :hourlies
       where "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
       @order << "SUM(hourlies.#{what}) DESC"
-      @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
+      select "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
       return
     end
@@ -233,6 +232,10 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def joins(*args)
     @relation = @relation.joins(*args)
+  end
+
+  def select(*args)
+    @relation = @relation.select(*args)
   end
 
   def apply_fulltext_filter
@@ -280,7 +283,6 @@ class PathFinder::Mysql::Query < PathFinder::Query
     @relation
       .order(order)
       .includes(@include)
-      .select(@select || @selects.join(", "))
       .limit(@limit)
       .offset(@offset)
       .group(sql_for_group(order))
