@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   include User::Authenticated
   include User::LegacyPasswords
 
+  acts_as_castle
+
   ##
   ## VALIDATIONS
   ##

@@ -34,6 +34,8 @@ class Group < ActiveRecord::Base
   include Group::Pages      # group <--> page behavior
   include Group::Cache      # only versioning so far
 
+  acts_as_castle
+
   # not saved to database, just used by activity feed:
   attr_accessor :created_by
 
