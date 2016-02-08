@@ -7,12 +7,15 @@ Crabgrass::Application.configure do
   # set to true if you use a tool that preloads your test environment
   config.eager_load = false
   config.cache_classes = !defined?(UNIT_TESTING)
-  config.consider_all_requests_local = true
   config.action_controller.perform_caching             = false
   config.action_controller.allow_forgery_protection    = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => "localhost" }
+
+  # use the exceptions app
+  config.action_dispatch.show_exceptions = true
+  config.consider_all_requests_local = false
 
   ## Rails 3.1
   # Configure static asset server for tests with Cache-Control for performance
