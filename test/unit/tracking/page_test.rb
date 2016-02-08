@@ -10,15 +10,12 @@ class Tracking::PageTest < ActiveSupport::TestCase
   end
 
   def test_group_view_tracked
+    Tracking::Page.process
     user = users(:blue)
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
     assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
       Tracking::Page.insert(current_user: user, group: group)
-      Tracking::Page.process
-    end
-    assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
-      Tracking::Page.insert(current_user: user.id, group: group.id)
       Tracking::Page.process
     end
   end

@@ -3,13 +3,11 @@ require 'test_helper'
 class TaggingTest < ActiveSupport::TestCase
 
   def setup
-    @objs = Page.limit(2).to_a
-
-    @obj1 = @objs[0]
+    @obj1 = Page.new title: 'test_tags1'
     @obj1.tag_list = "pale"
     @obj1.save
 
-    @obj2 = @objs[1]
+    @obj2 = Page.new title: 'test_tags2'
     @obj2.tag_list = "pale, imperial"
     @obj2.save
   end
