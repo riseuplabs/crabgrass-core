@@ -36,10 +36,9 @@ label}</a></span>).html_safe
   # looks like a link but is a form so people with no-script can still
   # logout.
   def logout_link
-    content_tag :form, action: logout_path, method: :post do
-      submit_tag :menu_link_logout.t(user: current_user.display_name),
-        class: 'btn btn-link tab'
-    end
+    button_to :menu_link_logout.t(user: current_user.display_name),
+      logout_path,
+      { method: :post , class: 'btn btn-link tab'}
   end
   ##
   ## UTILITY
