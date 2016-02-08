@@ -26,9 +26,14 @@ module Common::Utility::TimeHelper
 
   WeekdaySymbols = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 
-  def friendly_date(time)
+  def friendly_date(time, options = {})
     return '' if time.nil?
-    content_tag(:span, short_date(time, true), class: :date, title: l(time))
+    classes = [:date]
+    classes += [:icon, "#{options[:icon]}_16"] if options[:icon]
+    content_tag :span,
+      short_date(time, true),
+      class: classes,
+      title: l(time)
   end
 
   def friendly_time(time, format = :long)

@@ -1,0 +1,7 @@
+%td.post_author
+  = render 'ui/author', author: request.created_by,
+    created_at: request.created_at
+
+%td.post_body
+  = display_request request
+

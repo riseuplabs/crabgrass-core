@@ -1,5 +1,6 @@
 page.replace dom_id(@post),
-  partial: 'common/posts/default/row',
+  partial: 'common/posts/post',
+  layout: 'ui/table/devided_row',
   locals: {post: @post}
 
 page << 'renderStars()';

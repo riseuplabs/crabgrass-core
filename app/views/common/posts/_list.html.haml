@@ -1,25 +1,32 @@
 -#
--# Every time we show a list of posts, it should go through this partial.
+-#  Every time we show a list of posts, it should go through this partial.
 -#
--# options:
--#   style -- currently, only 'default'
--#   posts -- the array of Post objects.
+-#  options:
+-#    posts -- the array of Post objects.
 -#
--# these paths must be defined:
+-#  these paths must be defined:
+-#    edit_post_path(post, *args)  -- path for editing post.
+-#         post_path(post, *args)  -- path for updating the post.
+-#              posts_path(*args)  -- path to create a post.
 -#
--#   edit_post_path(post, *args)  -- path for editing post.
--#        post_path(post, *args)  -- path for updating the post.
--#             posts_path(*args)  -- path to create a post.
--#
--# these permissions must be defined:
--#     may_create_post?()
--#   may_edit_post?(post)
--#
+-#  these permissions must be defined:
+-#    may_create_post?()
+-#    may_edit_post?(post)
 
-- style = local_assigns[:style] ||= :default
-- posts = local_assigns[:posts] ||= @posts
-- local_assigns[:remote] = true if local_assigns[:remote].nil?
+:ruby
+  posts = local_assigns[:posts] ||= @posts
+  show_reply = safe_call(:may_create_post?) || false
 
-- if posts.any? || may_create_post?
-  %section{class: "post_list #{style}", id: 'posts'}
-    = render "/common/posts/list_as_#{style}", local_assigns
+- if posts.any? || show_reply
+  %section#posts.post_list
+    = post_pagination_links(posts)
+    %table.posts.round
+      = render partial: 'common/posts/post',
+        layout: 'ui/table/devided_row',
+        collection: posts,
+        locals: { last: posts.last }
+      - if show_reply
+        = render partial: 'common/posts/reply',
+          layout: 'ui/table/devided_row',
+          locals: { link_name: :reply, post: Post.new }
+    = post_pagination_links(posts)

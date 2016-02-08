@@ -1,0 +1,15 @@
+-#
+  Name and icon of the author with creation and update timestamps.
+  So far used for the left side of the list of comments under a page.
+
+- created_at = local_assigns[:created_at]
+- updated_at = local_assigns[:updated_at]
+- updated_at = nil if updated_at == created_at
+- author_style = "background-image: url(#{avatar_url_for(author, 'small')})"
+
+.author{style: author_style}
+  .username= link_to_user author
+  - if created_at
+    = friendly_date created_at, icon: (updated_at && :tiny_pencil)
+  - if updated_at
+    = friendly_date updated_at, icon: (created_at && :tiny_wrench)
