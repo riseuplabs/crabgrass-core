@@ -28,6 +28,10 @@ test:
   username: root
   password:
   host: localhost
+  # our integration tests make some requests in parallel
+  # so webrick spins up more threads - up to 7 as far as
+  # i've seen. So let's give it a bit of room.
+  pool: 10
 
 production:
   encoding: utf8
