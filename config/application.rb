@@ -51,6 +51,8 @@ module Crabgrass
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 
+    # use the new json based cookies.
+    config.action_dispatch.cookies_serializer = :hybrid
     # add our custom error classes
     config.action_dispatch.rescue_responses.merge!(
       'ErrorNotFound' => :not_found,
