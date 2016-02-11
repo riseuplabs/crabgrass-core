@@ -19,7 +19,7 @@ class Group::PermissionsController < Group::BaseController
       # the group itself.
       # otherwise you could do all kinds of nasty things.
       if holder != @group
-        render status: 400, text: '' and return
+        head :bad_request and return
       end
     end
 

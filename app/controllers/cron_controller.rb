@@ -23,7 +23,7 @@ class CronController < ActionController::Base
     else
       raise 'no such cron action'
     end
-    render text: '', layout: false
+    render nothing: true
   end
 
   protected
@@ -34,7 +34,7 @@ class CronController < ActionController::Base
   #
   def allow_only_requests_from_localhost
     unless request.remote_addr == '127.0.0.1'
-      render text: 'not allowed'
+      render plain: 'not allowed'
     end
   end
 

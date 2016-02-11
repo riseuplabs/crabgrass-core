@@ -28,7 +28,7 @@ class ThemeController < ApplicationController
     end
   rescue Sass::SyntaxError => exc
     self.cache_css = false
-    render text: @theme.error_response(exc)
+    render html: @theme.error_response(exc)
     expire_page name: params[:name], file: params[:file]
   end
 
