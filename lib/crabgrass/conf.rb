@@ -63,7 +63,6 @@ class Conf
   cattr_accessor :enabled_languages_hash # (private)
   cattr_accessor :email
   cattr_accessor :sites
-  cattr_accessor :secret
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
   cattr_accessor :default_page_access
@@ -132,7 +131,6 @@ class Conf
     self.enabled_languages = []
     self.email         = nil
     self.sites         = []
-    self.secret        = nil
     self.ensure_page_owner = true
     self.default_page_access = :admin
     self.default_group_permissions = {

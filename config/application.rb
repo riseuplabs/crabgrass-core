@@ -41,8 +41,6 @@ module Crabgrass
     config.session_store :cookie_store,
       :key => 'crabgrass_session'
 
-    config.secret_token = Conf.secret
-
     # Enable the asset pipeline
     config.assets.enabled = true
     # Version of your assets, change this if you want to expire all your assets
