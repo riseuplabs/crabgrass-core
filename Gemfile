@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 # Rails is the framework we use.
 # use the 4.1 series including all security fixes
-gem 'rails', '~> 4.1.14'
+gem 'rails', '~> 4.2.5'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -43,8 +43,8 @@ gem 'sass'
 ##
 
 # main part of prototype
-# locking so it matches rails version
-gem 'prototype-rails', '~> 4.0.1'
+# needs special branch for rails 4.2
+gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 
 # legacy helper for form_remote_for and link_to_remote
 # there's only a 0.0.0 version out there it seems
