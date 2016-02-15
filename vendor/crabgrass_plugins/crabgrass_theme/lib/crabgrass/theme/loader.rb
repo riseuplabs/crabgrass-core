@@ -111,7 +111,8 @@ module Crabgrass::Theme::Loader
     end
     symlink(@directory + "images", @public_directory + "images")
 
-    info 'Loaded theme %s (%sms)' % [@directory, (Time.now - start_time)*1000]
+    Rails.logger.debug 'Loaded theme %s (%sms)' %
+      [@directory, (Time.now - start_time)*1000]
   end
 
   def reload!
@@ -119,7 +120,7 @@ module Crabgrass::Theme::Loader
       @parent.reload!
     end
     @navigation = nil
-    info 'Reloading theme %s' % @name
+    Rails.logger.debug 'Reloading theme %s' % @name
     load()
   end
 
