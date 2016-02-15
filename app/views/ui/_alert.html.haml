@@ -1,0 +1,43 @@
+-# A single alert line.
+
+  alert is a hash with these keys:
+
+    :type -- one of :error, :warning, :notice, :success
+    :text -- a string or array of strings to display. (optional)
+    :list -- an array of strings to be used in a bulleted list
+    :fade -- if true, force fading of this alert
+    :quick -- faster fading
+    :nofade -- if true, force no fade
+
+  locals:
+    allow_fade: set to false, to enforce :nofade behaviour
+    timeout: default fade timeout
+
+
+:ruby
+  alert = alert.with_indifferent_access
+  alert_class = case alert[:type].to_s
+    when 'error'   then 'alert-danger'
+    when 'warning' then 'alert-warning'
+    when 'notice'  then 'alert-info'
+    when 'success' then 'alert-success'
+  end
+  alert_id = "message_alert_#{rand(100_000_000)}"
+  fade_alert = alert[:fade] || alert[:quick] ||
+    ((alert[:type] == 'success' || alert[:type] == 'notice') && !alert[:nofade])
+  timeout = 0.5 if alert[:quick]
+  text = Array(alert[:text])
+
+
+.alert{class: alert_class, id: alert_id }
+  = link_to_function('×', "hideAlertMessage('#{alert_id}')", class: 'close')
+  .text
+    - text.each do |line|
+      %p{class: first(alert_id)}= line
+  - if alert[:list]
+    %ul
+      - alert[:list].each do |item|
+        %li=item
+  - if allow_fade && fade_alert
+    :javascript
+      hideAlertMessage('#{alert_id}', #{timeout});
