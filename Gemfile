@@ -13,52 +13,8 @@ gem 'rails', '~> 4.1.14'
 # locking in to latest major to fix API
 gem 'rake', '~> 10.0', require: false
 
-# Bcrypt for has_secure_password
-gem 'bcrypt', '~> 3.1.7'
-
 # Application preloader for faster start time
 gem 'spring', group: :development
-
-##
-# Prototype - yes. we still use it.
-# these will be replaced by jquery equivalents at some point:
-##
-
-# main part of prototype
-# locking so it matches rails version
-gem 'prototype-rails', '~> 4.0.1'
-
-# legacy helper for form_remote_for and link_to_remote
-# there's only a 0.0.0 version out there it seems
-gem 'prototype_legacy_helper', '0.0.0',
-  github: 'rails/prototype_legacy_helper'
-
-##
-# Upgrade pending
-##
-
-# Full text search for the database
-# thinking-sphinx version 3.1.4 has dropped support for some features
-# with rails 3.2 but they should not affect us
-# 3.1.3 prints warnings with latest sphinx:
-# https://github.com/pat/thinking-sphinx/issues/882
-gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
-
-#
-# Use delayed job to postpone the delta processing
-# latest version available. Stick to major release
-gem 'ts-delayed-delta', '~> 2.0'
-
-# Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 3.5'
-
-# Page Caching has been removed from rails 4.
-# migrate it and drop this.
-gem 'actionpack-page_caching'
-
-##
-#  Required, but not included with crabgrass:
-##
 
 # translating strings for the user interface
 # locking in to latest major to fix API
@@ -80,6 +36,55 @@ gem 'haml-rails', '~> 0.9.0'
 # Extendet scriptable CSS language
 # locking in to latest major to fix API
 gem 'sass'
+
+##
+# Prototype - yes. we still use it.
+# these will be replaced by jquery equivalents at some point:
+##
+
+# main part of prototype
+# locking so it matches rails version
+gem 'prototype-rails', '~> 4.0.1'
+
+# legacy helper for form_remote_for and link_to_remote
+# there's only a 0.0.0 version out there it seems
+gem 'prototype_legacy_helper', '0.0.0',
+  github: 'rails/prototype_legacy_helper'
+
+##
+# Upgrade pending
+##
+
+# HTML parser used inside our Wiki Decorators
+# Deprecated by the original maintainers
+# TODO: replace with nokogiri
+gem 'hpricot', '~> 0.8'
+
+# Full text search for the database
+# thinking-sphinx version 3.1.4 has dropped support for some features
+# with rails 3.2 but they should not affect us
+# 3.1.3 prints warnings with latest sphinx:
+# https://github.com/pat/thinking-sphinx/issues/882
+gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
+
+#
+# Use delayed job to postpone the delta processing
+# latest version available. Stick to major release
+gem 'ts-delayed-delta', '~> 2.0'
+
+# Enhanced Tagging lib. Used to tag pages
+gem 'acts-as-taggable-on', '~> 3.5'
+
+# Page Caching has been removed from rails 4.
+# migrate it and drop this.
+gem 'actionpack-page_caching'
+
+##
+# Single use tools
+##
+
+# Bcrypt for has_secure_password
+gem 'bcrypt', '~> 3.1.7'
 
 # ?
 # locking in to latest major to fix API
@@ -117,13 +122,8 @@ gem 'validates_email_format_of', '~> 1.6'
 # locking in to latest major to fix API
 gem 'RedCloth', '~> 4.2'
 
-# HTML parser used inside our own uglify gem
-# Deprecated by the original maintainers
-# TODO: replace with nokogiri
-gem 'hpricot', '~> 0.8'
-
 ##
-## GEMS required, included with crabgrass
+## required, included with crabgrass
 ##
 
 # extension of the redcloth markup lang
@@ -135,7 +135,7 @@ gem 'greencloth', require: 'greencloth',
 gem 'crabgrass_media', '~> 0.1.1', require: 'media'
 
 ##
-## GEMS not required, but a really good idea
+## not required, but a really good idea
 ##
 
 # detect mime-types of uploaded files
@@ -156,6 +156,10 @@ gem 'rubyzip', '~> 1.1.0', require: false
 # load new rubyzip, but with the old API.
 # TODO: use the new zip api and remove gem zip-zip
 gem 'zip-zip', require: 'zip'
+
+##
+# Environment specific
+##
 
 group :production do
   # js runtime needed to precompile assets
@@ -184,7 +188,7 @@ end
 group :test, :ci do
 
   ##
-  ## GEMS REQUIRED FOR TESTS
+  ## TESTS
   ##
 
   gem 'factory_girl_rails'
@@ -200,7 +204,7 @@ group :test, :ci do
   #
 
   ##
-  ## GEMS REQUIRED FOR INTEGRATION TESTS
+  ## INTEGRATION TESTS
   ##
 
   gem 'capybara', require: false
