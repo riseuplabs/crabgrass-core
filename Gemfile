@@ -55,11 +55,6 @@ gem 'prototype_legacy_helper', '0.0.0',
 # Upgrade pending
 ##
 
-# HTML parser used inside our Wiki Decorators
-# Deprecated by the original maintainers
-# TODO: replace with nokogiri
-gem 'hpricot', '~> 0.8'
-
 # Full text search for the database
 # thinking-sphinx version 3.1.4 has dropped support for some features
 # with rails 3.2 but they should not affect us

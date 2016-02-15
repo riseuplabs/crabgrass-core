@@ -2,17 +2,28 @@ require 'test_helper'
 
 class Wiki::DecoratorTest < ActiveSupport::TestCase
 
-  def test_keep_plain_text_nodes
-    wiki = Wiki.new body: <<-EOWIKI
-h2. heading
+  def test_simple_wiki
+    wiki = Wiki.new body: simple_wiki
+    assert_decorated_content_of wiki, <<-EOML
+<div><h2 class=\"first shy_parent\"><a name=\"heading\"></a>heading<a class=\"anchor\" href=\"#heading\">&para;</a><a>edit</a></h2>
+<p>Some content</p></div>
+    EOML
+  end
 
- content outside the default paras
-Some content
-    EOWIKI
+  # everything should be wrapped in one big div.
+  def test_keep_plain_text_nodes
+    wiki = Wiki.new body: wiki_with_outside_content
+    assert_decorated_content_of wiki, <<-EOML
+<div><h2 class=\"first shy_parent\"><a name=\"heading\"></a>heading<a class=\"anchor\" href=\"#heading\">&para;</a><a>edit</a></h2>
+content outside the default paras
+<p>Some content</p></div>
+    EOML
+  end
+
+  def assert_decorated_content_of(wiki, expected)
     decorator = Wiki::Decorator.new wiki, dummy_view
     decorator.decorate :document
-    # everything should be wrapped in one big div.
-    assert_equal 1, decorator.doc.children.count
+    assert_equal Nokogiri::HTML.fragment(expected.chomp).to_html, decorator.to_html
   end
 
   def dummy_view
@@ -20,4 +31,15 @@ Some content
       div_for: '<div></div>'
   end
 
+  def wiki_with_outside_content
+    simple_wiki " content outside the default paras\n"
+  end
+
+  def simple_wiki(additional_content = nil)
+    <<-EOWIKI
+h2. heading
+
+#{additional_content}Some content
+    EOWIKI
+  end
 end
