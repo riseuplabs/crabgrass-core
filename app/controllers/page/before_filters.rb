@@ -112,7 +112,7 @@ module Page::BeforeFilters
 
     group = nil
     user  = nil
-    if current_site.tracking?
+    if Conf.tracking?
       if @group
         group = @group
       elsif @page.owner_is?(Group)

@@ -8,56 +8,20 @@ require 'active_support'
 class Conf
 
   ##
-  ## CONSTANTS
-  ##
-
-  TEXT_EDITOR = Hash.new(0).merge({
-    greencloth_only: 0,        html_only: 1,
-    greencloth_preferred: 2,   html_preferred: 3
-  }).freeze
-
-  ##
   ## CLASS ATTRIBUTES
-  ## (these are ok, because they are shared among all sites)
   ##
 
-  # Site attributes that can only be specified in crabgrass.*.yml.
+  # global options
+  # Attributes that define behaviour of the whole install.
+  # They cannot be differentiated based on domain
   cattr_accessor :name
-
-  # Default values for site objects. If a site does not have
-  # a value defined for one of these, we use the default in
-  # the config file, or defined here.
-  cattr_accessor :title
-  cattr_accessor :pagination_size
-  cattr_accessor :default_language
-  cattr_accessor :email_sender
-  cattr_accessor :email_sender_name
   cattr_accessor :available_page_types
   cattr_accessor :tracking
   cattr_accessor :evil
   cattr_accessor :enforce_ssl
-  cattr_accessor :show_exceptions
-  cattr_accessor :require_user_email
-  cattr_accessor :require_user_full_info
-  cattr_accessor :domain
-  cattr_accessor :translation_group
-  cattr_accessor :chat
-  cattr_accessor :dev_email
-  cattr_accessor :login_redirect_url
-  cattr_accessor :theme
-
-  # are in site, but I think they should be global
-  cattr_accessor :translators
-  cattr_accessor :translation_group
-
-  # are global, but might end up in site one day.
   cattr_accessor :profiles
   cattr_accessor :profile_fields
-  cattr_accessor :limited
-
-  # global options
-  cattr_accessor :enabled_mods
-  cattr_accessor :enabled_tools # deprecated
+  cattr_accessor :require_user_email
   cattr_accessor :enabled_pages
   cattr_accessor :enabled_languages
   cattr_accessor :enabled_languages_hash # (private)
@@ -68,7 +32,6 @@ class Conf
   cattr_accessor :default_page_access
   cattr_accessor :default_group_permissions
   cattr_accessor :default_user_permissions
-  cattr_accessor :text_editor
   cattr_accessor :use_full_geonames_data
   cattr_accessor :remote_processing
   cattr_accessor :committees
@@ -78,9 +41,19 @@ class Conf
   cattr_accessor :transifex_password
   cattr_accessor :log_level
 
-
-  # set automatically from site.admin_group
-  cattr_accessor :super_admin_group_id
+  # Default values for site objects. If a site does not have
+  # a value defined for one of these, we use the default in
+  # the config file, or defined here.
+  cattr_accessor :domain
+  cattr_accessor :title
+  cattr_accessor :theme
+  cattr_accessor :pagination_size
+  cattr_accessor :default_language
+  cattr_accessor :email_sender
+  cattr_accessor :email_sender_name
+  cattr_accessor :dev_email
+  cattr_accessor :show_exceptions
+  cattr_accessor :login_redirect_url
 
   # Global options that are set automatically by the code
   # Typically, you will never have to configured these.
@@ -93,7 +66,6 @@ class Conf
   cattr_accessor :raise_i18n_exceptions
 
   # cattr_accessor doesn't work with ?
-  def self.chat?; self.chat; end
   def self.limited?; self.limited; end
   def self.paranoid_emails?; self.paranoid_emails; end
   def self.tracking?; self.tracking; end
@@ -105,7 +77,6 @@ class Conf
 
   def self.load_defaults
     self.name                 = 'default'
-    self.super_admin_group_id = nil
 
     # site defaults
     self.title             = 'crabgrass'
@@ -116,21 +87,18 @@ class Conf
     self.tracking          = true
     self.evil              = {}
     self.available_page_types = []
-    self.enforce_ssl       = false
-    self.show_exceptions   = true
+    self.enforce_ssl       = true
+    self.show_exceptions   = false
     self.domain            = 'localhost'
-    self.chat              = true
     self.dev_email         = ''
     self.login_redirect_url = '/me'
     self.theme             = 'default'
 
     # global configuration
-    self.enabled_mods  = []
-    self.enabled_tools = [] # deprecated
     self.enabled_pages = []
     self.enabled_languages = []
     self.email         = nil
-    self.sites         = []
+    self.sites         = {}
     self.ensure_page_owner = true
     self.default_page_access = :admin
     self.default_group_permissions = {
@@ -142,8 +110,6 @@ class Conf
       'peers' => [:pester, :request_contact],
       'public' => []
     }
-    self.text_editor   = TEXT_EDITOR[:greencloth_only]
-    self.use_full_geonames_data = false
     self.remote_processing = false
     self.committees = true
     self.councils = true
@@ -162,16 +128,6 @@ class Conf
       else
         puts "ERROR (%s): unknown option '%s'" % [configuration_filename,key]
       end
-    end
-
-    ## convert strings in config to numeric constants.
-    const = ("Conf::TEXT_EDITOR").constantize
-    attr = ("TEXT_EDITOR").downcase
-    if self.send(attr).is_a? String
-      unless const.has_key? self.send(attr).to_sym
-        raise '%s of "%s" is not recognized' % [attr, self.send(attr)]
-      end
-      self.send(attr+'=', const[self.send(attr).to_sym])
     end
 
     ## convert some strings in config to symbols
@@ -208,25 +164,4 @@ class Conf
     self.enabled_languages_hash[lang_code]
   end
 
-  ##
-  ## CONVENIENCE METHODS
-  ##
-
-  public
-
-  def self.allow_greencloth_editor?
-    self.text_editor != TEXT_EDITOR[:html_only]
-  end
-
-  def self.allow_html_editor?
-    self.text_editor != TEXT_EDITOR[:greencloth_only]
-  end
-
-  def self.text_editor_sym
-    @@text_editor_symbols ||= TEXT_EDITOR.invert
-    @@text_editor_symbols[self.text_editor]
-  end
-
 end
-
-

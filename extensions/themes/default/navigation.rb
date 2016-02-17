@@ -90,7 +90,7 @@ define_navigation do
     end
 
     context_section :tasks do
-      visible { current_site.available_page_types.include? 'TaskListPage' }
+      visible { Conf.available_page_types.include? 'TaskListPage' }
       label  { :tasks.t }
       url    { me_tasks_path }
       active { controller?('me/tasks') }

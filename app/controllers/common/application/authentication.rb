@@ -116,7 +116,6 @@ module Common::Application::Authentication
     user = User.find_by_id(id)
     if user
       user.seen!
-      #user.current_site = current_site
     end
     return user
   end

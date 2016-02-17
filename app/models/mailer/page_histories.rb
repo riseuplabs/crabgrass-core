@@ -51,7 +51,7 @@ class Mailer::PageHistories < ActionMailer::Base
   protected
 
   def init_mail_to(recipient)
-    @site = Site.default || Site.new
+    @site = Site.default
     @recipient = recipient
   end
 

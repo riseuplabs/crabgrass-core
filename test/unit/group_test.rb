@@ -66,19 +66,6 @@ class GroupTest < ActiveSupport::TestCase
     assert u.may?(:pester, g) == true, 'should be able to pester private group'
   end
 
-  def test_site_disabling_public_profiles_doesnt_affect_groups
-    with_site(:local, profiles: ["private"]) do
-      u = users(:red)
-      g = groups(:animals)
-
-      g.grant_access! public: :request_membership
-      g.reload
-
-      assert g.profiles.visible_by(u).public?
-      assert g.has_access? :request_membership, u
-    end
-  end
-
   # disabled mocha test
   #def test_association_callbacks
   #  g = Group.create :name => 'callbacks'

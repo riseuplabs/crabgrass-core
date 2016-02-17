@@ -13,9 +13,6 @@ module ProfileMethods
       owner = proxy_association.owner
       relationships = owner.relationships_to(user)
 
-      # site relationship settings are for user <=> user relationships only
-      filter_relationships_for_site(relationships) unless owner.is_a? Group
-
       profile = find_by_access(*relationships)
     else
       profile = find_by_access :stranger
@@ -66,14 +63,5 @@ module ProfileMethods
     end
   end
 
-  protected
-
-  def filter_relationships_for_site(relationships)
-    # filter possible profiles on current_site
-    if site = Site.current
-      relationships.delete(:stranger) unless site.profile_enabled? 'public'
-      relationships.delete(:friend) unless site.profile_enabled? 'private'
-    end
-  end
 end
 

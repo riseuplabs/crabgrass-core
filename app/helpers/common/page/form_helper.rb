@@ -19,11 +19,7 @@ module Common::Page::FormHelper
   #
   #
   def tree_of_page_types(options={})
-    if @group
-      available_page_classes = current_site.tools_for(@group)
-    else
-      available_page_classes = current_site.available_page_types
-    end
+    available_page_classes = Conf.available_page_types
     page_groupings = []
     available_page_classes.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
@@ -69,7 +65,7 @@ module Common::Page::FormHelper
   # (this one does not list the types in a tree)
   #
   def options_for_select_page_type(default_selected='')
-    available_types = current_site.available_page_types
+    available_types = Conf.available_page_types
     menu_items = []
     available_types.each do |klass_name|
       klass = Page.class_name_to_class(klass_name)

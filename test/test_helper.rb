@@ -33,7 +33,6 @@ class ActiveSupport::TestCase
 
   include AuthenticatedTestHelper
   include AssetTestHelper
-  include SiteTestHelper
   include LoginTestHelper
   include FixtureTestHelper
   include FunctionalTestHelper

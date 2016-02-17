@@ -7,7 +7,6 @@ module Common::Application::BeforeFilters
     before_filter :set_session_timezone
     before_filter :header_hack_for_ie6
     before_filter :redirect_unverified_user
-    before_filter :enforce_ssl_if_needed
 
     alias_method_chain :render, :view_setup
   end
@@ -18,10 +17,6 @@ module Common::Application::BeforeFilters
     setup_theme
     setup_context
     render_without_view_setup(*args)
-  end
-
-  def enforce_ssl_if_needed
-    request.session_options[:secure] = nil #current_site.enforce_ssl #needs to be fixed
   end
 
   def header_hack_for_ie6

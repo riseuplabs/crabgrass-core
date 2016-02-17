@@ -35,11 +35,7 @@ class User < ActiveRecord::Base
 
   def should_validate_email
     return false if ghost?
-    if Site.current
-      Site.current.require_user_email
-    else
-      Conf.require_user_email
-    end
+    Conf.require_user_email
   end
 
   ##

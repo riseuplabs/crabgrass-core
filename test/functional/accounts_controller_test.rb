@@ -50,8 +50,8 @@ class AccountsControllerTest < ActionController::TestCase
     }
   end
 
-  repeat_with_sites(local: {require_user_email: true}) do
-    def test_should_require_email_on_signup
+  def test_should_require_email_on_signup
+    Conf.stub :require_user_email, true do
       assert_no_difference 'User.count' do
         post_signup_form(user: {email: nil})
         assert assigns(:user).errors[:email]
@@ -59,7 +59,6 @@ class AccountsControllerTest < ActionController::TestCase
       end
     end
   end
-
 
 =begin
   #not enabled

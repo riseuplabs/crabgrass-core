@@ -17,7 +17,6 @@ class Group::Network < Group
 
   has_many :federatings, dependent: :destroy
   has_many :groups, through: :federatings
-  has_many :sites
 
   attr_accessor :initial_member_group
 
