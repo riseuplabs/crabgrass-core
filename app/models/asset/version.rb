@@ -1,4 +1,4 @@
-class Asset::Version
+class Asset::Version < ActiveRecord::Base
   delegate :page, :public?, :has_access!, to: :asset
 
   # all our paths will have version info inserted into them

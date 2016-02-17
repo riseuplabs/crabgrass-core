@@ -269,3 +269,8 @@ class Wiki < ActiveRecord::Base
     GreenCloth.new('').to_structure
   end
 end
+
+# TODO
+# stupid hack to ensure this gets loaded despite acts_as_versioned
+# defining the constant
+require 'wiki/version'

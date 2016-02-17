@@ -373,3 +373,5 @@ class Asset < ActiveRecord::Base
   end
 
 end
+
+require 'asset/version'
