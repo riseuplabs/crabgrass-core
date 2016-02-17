@@ -115,10 +115,10 @@ module Page::BeforeFilters
     if Conf.tracking?
       if @group
         group = @group
-      elsif @page.owner_is?(Group)
+      elsif @page.owner.is_a?(Group)
         group = @page.owner
       end
-      if @page.owner_is?(User)
+      if @page.owner.is_a?(User)
         user = @page.owner
       end
     end
