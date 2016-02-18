@@ -9,10 +9,6 @@ class Group::Committee < Group
   # so the committee names are unique. however, for display purposes
   # we want to just display the committee name without the parent name.
 
-  # parent name + committee name
-  def full_name
-    read_attribute(:name)
-  end
   # committee name without parent
   def short_name
     (read_attribute(:name)||'').sub(/^.*\+/,'')

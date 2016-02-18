@@ -68,14 +68,17 @@ class Group::CommitteeTest < ActiveSupport::TestCase
     g = Group.create name: 'riseup'
     c = Group::Committee.new name: 'outreach'
     g.add_committee!(c)
-    assert_equal 'riseup+outreach', c.full_name, 'committee full name should be in the form <groupname>+<committeename>'
+    assert_equal 'riseup+outreach', c.name,
+      'committee name should be in the form <groupname>+<committeename>'
     c.name = 'legal'
     c.save
-    assert_equal 'riseup+legal', c.full_name, 'committee name update when changed.'
+    assert_equal 'riseup+legal', c.name,
+      'committee name update when changed.'
     g.reload
     g.name = 'riseup-collective'
     g.save
-    assert_equal 'riseup-collective+legal', g.committees.first.full_name, 'committee name update when group name changed.'
+    assert_equal 'riseup-collective+legal', g.committees.first.name,
+      'committee name update when group name changed.'
   end
 
   def test_create
