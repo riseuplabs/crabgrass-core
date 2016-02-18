@@ -41,3 +41,4 @@ vendor/crabgrass_plugins/castle_gates/test/tests.sqlite
 vendor/bundle
 .bundle
 bin/
+.byebug*
