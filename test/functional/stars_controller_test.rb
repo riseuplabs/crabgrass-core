@@ -27,7 +27,7 @@ class StarsControllerTest < ActionController::TestCase
     assert_difference('Star.count', -1) do
       xhr :delete, :destroy, post_id: @post
     end
-    assert_equal 0, @post.stars_count
+    assert_equal 0, @post.reload.stars_count
 
     assert_response :redirect
   end
