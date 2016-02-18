@@ -91,9 +91,9 @@ remote_processing: "http://localhost:3002"
 #
 
 sites:
-- name: site1
-  theme: blueberry
-  domain: localhost
+  localhost:
+    name: site1
+    theme: blueberry
 
 # bound to test.host
 #  - name: site2
