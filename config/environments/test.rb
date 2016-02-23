@@ -17,9 +17,8 @@ Crabgrass::Application.configure do
   config.action_dispatch.show_exceptions = true
   config.consider_all_requests_local = false
 
-  ## Rails 3.1
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = 'public, max-age=3600'
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
