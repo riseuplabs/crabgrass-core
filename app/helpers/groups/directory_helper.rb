@@ -18,7 +18,7 @@ module Groups::DirectoryHelper
       haml '.name', group.name if group.display_name != group.name
       haml '.info', comma_join(place, count)
       if summary && summary.chars.any?
-        haml '.summary.plain', strip_tags(summary)
+        haml '.summary.plain', raw(strip_tags(summary))
       end
       if committees.present?
         haml '.committees' do
