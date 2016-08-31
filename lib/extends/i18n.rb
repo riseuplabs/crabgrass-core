@@ -61,6 +61,7 @@ module I18n
         hsh[:ca] = Lang.new('Català',    'ca', 19, false)
         hsh[:da] = Lang.new('Dansk',     'da', 20, false)
         hsh[:no] = Lang.new('Norsk',     'no', 21, false)
+        hsh[:eu] = Lang.new('Euskara',   'eu',101, false)
         hsh
       end
     end
