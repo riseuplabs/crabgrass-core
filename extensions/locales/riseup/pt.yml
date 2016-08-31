@@ -1,10 +1,17 @@
 pt:
   riseup:
-    run_by_html: "Este site é tocado por %{provider}%{description}"
-    description: ", o seu coletivo tech autônomo e amigável desde 1999."
-    privacy_policy: "políticas de privacidade"
-    about_us: "sobre a gente"
-    email_accounts: "contas de email"
-    mailing_lists: "listas de email"
-    system_status: "status do sistema"
-    donate: "faça uma doação para riseup"
+    run_by_html: "Este site é mantido por %{provider}%{description}"
+    description: ", seu coletivo técnico autônomo e amigável desde 1999."
+    privacy_policy: "Política de Privacidade"
+    terms_of_service: "Termos de Serviço"
+    about_us: "Sobre Nós"
+    email_accounts: "Contas de E-mail"
+    mailing_lists: "Listas de discussão"
+    system_status: "Status do sistema"
+    donate: "Doar a Riseup"
+    riseup_black: "Riseup Preto"
+    riseup_red: "Riseup Vermelho"
+    accounts_note: >
+        NOTA: As contas de usuário para este site são independentes de outros serviços
+        riseup.net. Em outras palavras, você não pode usar sua conta na %{riseup_black}
+        ou %{riseup_red} para entrar neste site

@@ -5,25 +5,22 @@ pt:
   forgot_password_link: Esqueceu sua Senha?
   login_failure_reason: O nome de usuária ou senha está incorreto.
   signup_success_message: Obrigada por se inscrever!
-  login_name: Usuária
+  login_name: Usuário
   signup_success: Você criou sua conta!
   logout_success: Até mais
   logout_success_message: Você se desconectou.
   signup_button: Criar Conta
   login_failed: Não foi possível entrar
-  signup_login_name: Seu nome de usuária
   login_button: Entrar
   login: Login
   sign_in: Entrar
   signup_title: Crie Sua Conta
-  signup_email: Seu Email
   forgot_password_text: Se você esqueceu a senha que usa para se logar, podemos lhe enviar um link por email para você gerar uma nova.
   reset_password_text: Olá, %{user}. Se você esqueceu sua senha, você pode definir uma nova aqui.
   forgot_password_mail_greeting: "%{user}, para redefinir sua senha, visite"
   forgot_password_mail_expiry: Este link tem validade de 24 horas. Se você precisa redefinir sua senha depois desse tempo, você terá que visitar novamente a página 'esqueci minha senha' e requisitar um novo link.
   reset_password_mail_greeting: "%{user}, sua senha foi redefinida conforme você pediu."
   reset_password_mail_warning: Se você não pediu para mudar sua senha, entre em contato conosco.
-  your_login: Seu nome de usuária
   invalid_email_text: O endereço de email que você forneceu não é válido.
   reset_password: Redefinir senha
   reset_password_email_sent: Se aquele endereço de email está associado com um nome de usuária, então um email contendo instruções para redefinir sua senha foi enviado.
@@ -51,9 +48,7 @@ pt:
   change_password: Mude sua Senha
   password: Senha
   password_confirmation: Confirmação de Senha
-  signup_confirm_password: Confirme sua Senha
   login_password: Senha
-  signup_password: Sua Senha
   remove_your_account: Remova sua Conta
   anonymize_display_name: Tornar o nome de exibição anônimo
   anonymize_display_name_info: Substitui seu nome de exibição por 'anônima' em todos os lugares
@@ -128,6 +123,18 @@ pt:
       add: Adicione uma Nova Tarefa
     possible:
       add: Adicione uma Nova Possibilidade
+  mailer:
+    hello: Olá, %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Uma das páginas foi modificada"
+      pages_you_are_watching_have_been_modified:
+        one: A página que você está acompanhando foi modificada desde a sua última notificação.
+        other: '%{count} páginas que você acompanhou foram alteradas desde a sua última notificação.'
+      we_leave_out_details: Ocultamos alguns detalhes deste e-mail para proteger a informação que talvez você poderá querer manter privada.
+      you_can_find_updates_here: 'Você encontrará mais detalhes e uma lista de páginas recentemente alteradas aqui:'
+      the_page_you_are_watching_description: A página que você está visualizando "%{page_title}" foi modificada
+      change_your_settings_here: 'Altere as configurações das notificações de e-mail aqui: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Desativar as notificações por email, receber um resumo das mudanças, ou receber um e-mail a cada alteração de página
   exception:
     title:
       not_found: "%{thing} Não Encontrado(a)"
@@ -138,6 +145,7 @@ pt:
     description:
       not_found: Opa, não encontramos o que você procurava.
       unauthorized: É preciso entrar com sua conta para fazer isso.
+      forbidden: Desculpe! Você não possui permissão para realizar esta ação.
       group:
         not_found: Opa, não encontramos o grupo que você procurava.
   image_count: Imagem %{number} de %{count}
@@ -193,7 +201,7 @@ pt:
   thing_was_not_sent:
     one: "%{thing} não pode ser enviado para %{recipient}."
     other: "%{count} %{thing} não pode ser enviado."
-  user: Usuária
+  user: Usuário
   users: Usuárias
   people: Pessoas
   person: Pessoa
@@ -225,6 +233,9 @@ pt:
   notice: Aviso
   notices: Avisos
   dismiss: Dispensar
+  dismiss_all_notices: Recusar todas
+  dismiss_all_notices_confirmation: Você tem certeza que deseja rejeitar todas as notificações?
+  action_cannot_be_undone: Esta ação não pode ser desfeita.
   locale: Local
   description: Descrição
   details: Detalhes
@@ -269,6 +280,8 @@ pt:
   may_request_membership_description: O link para "participar de %{group}" irá aparecer na página de %{group}. Isto irá enviar um pedido de participação que pode ser aceito ou negado.
   open_group: Abrir %{group}
   open_group_description: Usuárias são imediatamente adicionadas ao grupo %{group} - nenhum pedido precisa ser aprovado
+  shared_groups: Grupos compartilhados
+  public_groups: Grupos Públicos
   membership_requests: Pedidos para Participar
   group_membership_count: "%{count} Membros"
   membership_exists_error: '%{member} já é membro'
@@ -279,11 +292,11 @@ pt:
 
     Se você quiser fazer parte deste grupo, clique aqui:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     Visite a homepage deste grupo:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
   group_destroyed_subject: "%{group_type} %{group} foi apagado por %{user}!"
@@ -328,11 +341,13 @@ pt:
     recent_pages: Páginas Recentes
     info:
       page_search: Encontre todas as páginas que você tem acesso diretamente ou através dos seus grupos
+      recent_pages: Estas páginas foram criadas ou atualizadas recentemente.
   my_dashboard: Painel
   uploaded_image_cropped: A imagem carregada será cortada e expandida a um quadrado de 202 pixels.
   select_image_file: selecionar arquivo de imagem
   or_image_url: ou URL de imagem
   upload_image_link: carregar imagem
+  remove_image_link: apagar imagem
   save_changes: Salvar Mudanças
   username: Usuária
   display_name: Nome Mostrado
@@ -381,7 +396,7 @@ pt:
   edited_by_me: Editadas
   edited_by_user: Editado por %{user}
   owned_by_me: Possuo
-  owned_by_user: Possuída por %{user}
+  owned_by_user: Criado por %{user}
   most_active: Mais Ativo(s)
   most_stars: Mais Estrelas
   most_viewed: Mais Visitados
@@ -485,15 +500,6 @@ pt:
   page_history_updated_comment: "%{user_name} atualizou um comentário"
   page_history_updated_content: "%{user_name} atualizou o conteúdo da página"
   page_history_user_created_page: "%{user_name} criou a página"
-  page_history_mailer_hello_user_name: Olá, %{user_name}
-  page_history_mailer: 'Mude suas configurações de notificações por email aqui: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Uma página foi modificada"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Uma página que você está acompanhando foi modificada %{histories_count} desde a última notificação, você pode acessar a página aqui:
-  page_history_mailer_a_page_you_are_watching: Uma página que você está acompanhando foi modificada, você pode acessá-la aqui
-  page_history_the_page_you_are_watching_description: A página que você está acompanhando "%{page_title}" foi modificada
-  page_history_mailer_expire_link: O link vai expirar em %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Você pode escolher desligar notificações por email, receber um sumário de mudanças, ou receber um email toda vez que a página é modificada
   wiki_page_description: Criar um documento editável com formato de texto livre.
   wiki_page_display: Página Wiki
   gallery_description: Carregar múltiplas imagens ou organizar imagens existentes em um conjunto.
@@ -713,7 +719,7 @@ pt:
   activity_unread: Você tem %{count} [private messages] não lidas.
   activity_unread_singular: Você tem uma [private message] não lida.
   activity_user_left_site: "%{user} saiu do grupo %{group}"
-  activity_message_received: 'Você redebeu %{message_tag} de %{other_user}: %{title}'
+  activity_message_received: 'Você recebeu %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} marcou com estrela sua mensagem "%{post}"'
   media_image: Imagem
   media_images: Imagens

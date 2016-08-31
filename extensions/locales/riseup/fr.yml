@@ -7,9 +7,11 @@ fr:
     about_us: "À propos"
     email_accounts: "Comptes Mail"
     mailing_lists: "Listes Mail"
+    system_status: "État des Services"
     donate: "Faire un don à Riseup"
     riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
     accounts_note: >
-      NOTE: Les comptes de ce site web sont indépendants de ceux des autres services
-      riseup.net. En d'autres termes, tu ne peux utiliser tes comptes %{riseup_black}
-      ou %{riseup_red} pour te connecter sur ce site web.
+        NOTE: Les comptes de ce site web sont indépendants de ceux des autres services
+        riseup.net. En d'autres termes, tu ne peux utiliser tes comptes %{riseup_black}
+        ou %{riseup_red} pour te connecter sur ce site web.

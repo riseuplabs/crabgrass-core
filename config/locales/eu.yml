@@ -1,0 +1,579 @@
+eu:
+  cookie_disabled_warning: Cookie-ak desgaituta dituzu. Ezin izango duzu saioa hasi cookie-ak gaitu arte.
+  signup_link: Sortu erabiltzaile berria
+  signup_email_info: 'Hautazkoa: zure pasahitza ahazten baduzu erabiltzen da'
+  forgot_password_link: Pasahitza ahaztu al duzu?
+  login_failure_reason: Erabiltzaile-izena edo pasahitza okerra da.
+  signup_success_message: Eskerrik asko izena emateagatik!
+  login_name: Erabiltzaile-izena
+  signup_success: Izena ematea ondo burutu da
+  logout_success: Agur
+  logout_success_message: Zure saioa itxi da.
+  signup_button: Eman izena
+  login_failed: Ezin izan da saioa hasi
+  login_button: Hasi saioa
+  login: Sartu
+  sign_in: Hasi saioa
+  signup_title: Sortu zure kontua
+  reset_password_mail_warning: Zuk zure pasahitza aldatzerik eskatu ez baduzu, mesedez jarri gurekin harremanetan.
+  invalid_email_text: Adierazi duzun e-posta helbidea okerra da.
+  reset_password: Berrezi pasahitza
+  reset_password_email_sent: E-posta helbide hori erabiltzaile-izen bati badagokio, pasahitza berrezartzeko jarraibideak dituen e-posta bat bidali zaio.
+  invalid_token: Token baliogabea
+  invalid_token_text: Pasahitza berrezartzeko erabili duzun esteka okerra da. Litekeena, dagoeneko erabili izana edo iraungi izana da.
+  password_reset: Pasahitzaren berrezarpena
+  password_reset_ok_text: Zure pasahitza ondo berrezarri da. Orain, aldatu berri duzun pasahitzarekin saioa has dezakezu.
+  requested_forgot_password: Pasahitz aldaketa bat eskatu duzu
+  password_was_reset: Zure pasahitza berrezarria izan da
+  forgotten_email_address: Zure kontua sortu zenuenean zein e-posta helbide eman zenigun?
+  new_password: Pasahitz berria
+  confirm_new_password: Baieztatu pasahitz berria
+  congratulations_you_have_signed_up: Zorionak! %{site_title}-(e)n izena eman duzu.
+  you_should_receive_instructions_email: Zure kontua sortzea nola burutu azaltzen duen e-posta bat jaso behar zenuke.
+  change_password: Aldatu pasahitza
+  password: Pasahitza
+  password_confirmation: Pasahitzaren baieztapena
+  login_password: Pasahitza
+  remove_your_account: Ezabatu zure kontua
+  anonymize_display_name: Izena anonimoa bihurtu
+  anonymize_display_name_info: Leku guztietan zure izenaren ordez 'anonimoa' erakusten du
+  destroy_comments: Suntsitu iruzkinak
+  confirm_account_removal: Ziur al zaude zure kontua ezabatu nahi duzula? Urrats hau ezin da desegin eta zure datuak galdu egin dira.
+  account_successfully_removed: Zure kontua ondo ezabatu da. Bera eta berarekin lotutako datu guztiak ezabatuko ditugu datu-basetik.
+  crabgrass:
+    description_html: |+
+      , sare-antolaketarako <a href="https://www.gnu.org/licenses/agpl.html">AGPL lizentziadun</a> software librea.
+
+    report_a_bug: Akats baten berri eman
+    request_a_feature: Eskatu funtzionaltasun bat
+    help_pages: Crabgrass-eko laguntza orrialdeak
+    get_involved: Parte hartu
+    help_translate: Lagundu itzulpenak mantentzen
+  destroy_confirmation: Ziur al zaude %{thing} hau ezabatu nahi duzula? Ekintza hau ezin da desegin.
+  confirmation: Ziur al zaude?
+  cancel: Utzi
+  optional: Hautazkoa
+  required: Beharrezkoa
+  thing_required: "%{thing} ezinbestekoa da"
+  edit: Editatu
+  upload: Igo
+  select_files: Hautatu fitxategiak
+  drop_files_here: Jaregin fitxategiak hemen
+  files_pending: "#{pending} fitxategi falta dira"
+  return_link: Itzuli
+  back_button: Atzera
+  send_button: Bidali
+  close_button: Itxi
+  share_button: Partekatu
+  save_button: Gorde
+  add_button: Gehitu
+  cancel_button: Utzi
+  create_button: Sortu
+  ok_button: Ados
+  done: Eginda
+  show_button: Erakutsi
+  confirm: Baieztatu
+  loading_progress: Kargatzen...
+  loadingdotdotdot: Kargatzen...
+  saved: Gordeta
+  delete: Ezabatu
+  delete_button: Ezabatu
+  deleted: Ezabatuta
+  remove: Kendu
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Sartu talde edo pertsona baten izena
+      enter_name_of_group: Sartu talde baten izena
+      enter_name_of_person: Sartu pertsona baten izena
+  mailer:
+    hello: Kaixo %{user_name}
+  exception:
+    title:
+      unauthorized: Saioa hastea ezinbestekoa da
+      group:
+        not_found: Taldea ez da aurkitu
+    description:
+      not_found: Barkatu, ezin izan dugu bila zenbiltzana aurkitu.
+      unauthorized: Mesedez, saioa has ezazu ekintza hori egiteko.
+  show_gallery: Erakutsi galeria
+  edit_image: Editatu irudia
+  confirm_image_delete: Ziur al zaude irudi hau ezabatu nahi duzula? Ekintza hau ezin da desegin.
+  add_images: Gehitu irudiak
+  edit_images: Editatu irudiak
+  upload_new_image: Igo irudi berria
+  add_comment: Gehitu iruzkina
+  upload_zip_file_link: Igo Zip fitxategi bat
+  edit_image_header: Editatu irudia eta audioa
+  upload_images_and_zip_files_help: 'Hautazkoa: hautatu igotzeko irudia edo zip fitxategiak.'
+  close_and_reload_gallery: Itxi eta birkargatu galeria
+  search: Bilatu
+  go: Aurrera
+  thing_not_found: "%{thing} ez da aurkitu"
+  no_things_found: Ez da %{things}(r)ik aurkitu.
+  no_search_results: Emaitzarik ez
+  not_found: Ez da aurkitu
+  see_all_link: Ikusi denak
+  all: Guztiak
+  none: Bat ere ez
+  or: edo
+  new: berria
+  modified: aldatuta
+  unknown: Ezezaguna
+  next: Hurrengoa
+  previous: Aurrekoa
+  pagination_next: Hurrengoa
+  pagination_previous: Aurrekoa
+  return: Itzuli
+  see_more_link: Gehiago
+  see_less_link: Gutxiago
+  user: Erabiltzailea
+  users: Erabiltzaileak
+  people: Jendea
+  person: Pertsona
+  name: Izena
+  recipients: Hartzaileak
+  recipient: Hartzailea
+  owner: Jabea
+  contacts: Kontaktuak
+  friends: Kontaktuak
+  me: Ni
+  back: Atzera
+  share: Partekatu
+  profile: Profila
+  content: Edukia
+  comments: Iruzkinak
+  statistics: Estatistikak
+  summary: Laburpena
+  private: Pribatua
+  public: Publikoa
+  options: Aukerak
+  permissions: Baimenak
+  notification: Jakinarazpena
+  notice: Abisua
+  notices: Abisuak
+  action_cannot_be_undone: Ekintza hau ezin da desegin.
+  description: Deskripzioa
+  details: Xehetasunak
+  visibility: Ikusgaitasuna
+  administration: Administrazioa
+  settings: Ezarpenak
+  messages: Mezuak
+  page: Orrialdea
+  tasks: Atazak
+  title: Izenburua
+  text_message: Idatzizko mezua
+  print: Inprimatu
+  show: Erakutsi
+  hide: Ezkutatu
+  message: Mezua
+  private_message_notice: Mezu pribatuen jakinarazpena
+  visits: Bisitak
+  group: Taldea
+  groups: Taldeak
+  organization: Erakundea
+  organizations: Erakundeak
+  network: Sarea
+  networks: Sareak
+  members: Kideak
+  structure: Egitura
+  shared_groups: Partekatutako taldeak
+  public_groups: Talde publikoak
+  membership_requests: Kidetasun eskaerak
+  group_membership_count: "%{count} kide"
+  group_destroyed_subject: "%{user}(e)k %{group} %{group_type} ezabatu du!"
+  group_destroyed_email: "%{group} %{group_type} suntsitua izan da!"
+  group_wiki: Taldeko wikia
+  create_public_group_wiki: Publikoa
+  create_private_group_wiki: Pribatua
+  public_group_wiki: Publikoa
+  private_group_wiki: Pribatua
+  group_publicly_visible: Egin %{group} publikoki ikusgarria
+  networks_publicly_visible: Egin sareak publikoki ikusgarriak
+  allow_membership_requests: Baimendu kide izateko eskaerak
+  group_successfully_created: Taldea ondo sortu da.
+  group_members_publicly_visible: Egin kideak publikoki ikusgarriak
+  members_may_edit_wiki: Kide guztiek editatu dezakete wikia
+  rss_feed: RSS jarioa
+  group_language: '%{group} honetako hizkuntza nagusia.'
+  my_networks: Nire sareak
+  my_groups: Nire taldeak
+  basic_settings: Oinarrizko ezarpenak
+  send_invites: Bidali gonbidapenak
+  view_requests: Ikusi eskaerak
+  join_group_link: Sartu %{group_type}(e)n
+  leave_group_link: Utzi %{group_type}
+  leave_group_confirmation: Ziur al zaude %{group_type} utzi nahi duzula?
+  request_join_group_link: Eskatu %{group_type}(e)n sartzea
+  request_exists: Zure sartze eskaera onarpenaren zain dago.
+  join_group_confirmation: Ziur al zaude %{group_type}(e)n sartu nahi duzula?
+  network_initial_member: Hautatu erakunde bat sare honetako lehen kidea izateko.
+  headings:
+    page_search: Orrialdeak bilatu
+    recent_pages: Azken orrialdeak
+    info:
+      page_search: Aurkitu sarrera zuzena edo zure taldeen bidez sar zaitezkeen orrialde guztiak
+      recent_pages: Orrialde hauek duela gutxi sortu edo eguneratu dira.
+  my_dashboard: Arbela
+  uploaded_image_cropped: Igotako irudia 202 pixeleko karratu batean sartzeko moztua eta txikitua izango da.
+  select_image_file: hautatu irudiaren fitxategia
+  or_image_url: edo irudiaren URL-a
+  upload_image_link: igo irudia
+  remove_image_link: kendu irudia
+  save_changes: Gorde aldaketak
+  username: Erabiltzaile-izena
+  display_name: Bistaratutako izena
+  email: E-posta
+  language: Hizkuntza
+  time_zone: Ordu eremua
+  notification_select:
+    none: 'Ez: e-postarik ez aldaketekin'
+    single: 'Bai: e-posta bat aldaketa bakoitzeko'
+    digest: 'Bai: aldaketen laburpen bat egunean'
+  send_message_link: Bidali mezua
+  messages_with: Elkarrizketa %{other_user}(r)ekin
+  message_to_self_error: Ezin zara zure buruarekin mintzatu
+  message_you_wrote_caption: 'Idatzi zenuen:'
+  message_user_wrote_caption: "%{user}(e)k idatzi zuen:"
+  unread_private_message: '%{user}(r)en irakurri gabeko mezu pribatu bat daukazu'
+  home: Etxea
+  menu_me: Ni
+  menu_groups: Taldeak
+  menu_chat: Txata
+  menu_people: Jendea
+  menu_networks: Sareak
+  menu_link_logout: Itxi %[user] saioa
+  menu_admin: Admin
+  account_settings: Kontuaren ezarpenak
+  back_to_page: Itzuli orrialdera
+  back_to_group: Itzuli taldera
+  pages: Orrialdeak
+  recent_pages: Azken orrialdeak
+  my_pages: Nire orrialdeak
+  properties: Propietateak
+  popular_pages: Orrialde erabilienak
+  advanced: Aurreratua
+  access: Sarrera-maila
+  active_filters: Iragazki aktiboak
+  all_pages: Orrialde guztiak
+  created_by_me: Sortuta
+  created_by_user: '%{user}(e)k sortuta'
+  created_by_user_description: Bilatu pertsona zehatz batek sortutako orrialdeak.
+  created_by_dotdotdot: Sortzailea
+  starred_by_me: Izarduna
+  starred_by_user: Izarra %{user}(e)k gehituta
+  edited_by_me: Editatuta
+  edited_by_user: '%{user}(e)k editatuta'
+  owned_by_me: Zureak
+  owned_by_user: '%{user}(r)enak'
+  most_active: Aktiboenak
+  most_stars: Izardunenak
+  most_viewed: Ikusienak
+  filter_user_description: Bilatu erabiltzaile zehatz bat sar daitekeen orrialdeak.
+  filter_group_description: Bilatu talde zehatz bat sar daitekeen orrialdeak.
+  starred: Izarduna
+  viewed: Ikusita
+  edited: Editatuta
+  type: Mota
+  all_page_types: orrialde mota guztiak
+  edit_title: editatu izenburua
+  data_for_page_missing: Orrialde honetako datuak galdu dira.
+  no_change: aldaketarik ez
+  updated: eguneratuta
+  created: sortuta
+  unread: irakurri gabe
+  read: irakurrita
+  page_name_description: Hautazko izen bakarra (orrialde honen URL-a sortzeko erabiltzen da)
+  filter_tag_description: Bilatu etiketa zehatz bat duten orrialdeak.
+  email_notice_hello_with_message: 'Kaixo, %{from}(e)k web orrialde bat bidali dizu ondoko mezuarekin: %{message}'
+  email_notice_hello: Kaixo, %{from}(e)k web orrialde bat bidali dizu.
+  email_notice_access: 'Orrialde honetara honela sartu behar zinateke:'
+  email_link_expires: '%{days} egunen buruan esteka hau iraungiko da.'
+  page_notice_title: <user>%{from}(e)k</user> "%{page_title}" orrialdea bidali dizu
+  page_notice_title_with_message: '<user>%{from}(e)k</user> "%{page_title}" orrialdea bidali dizu ondoko mezuarekin:'
+  page_updated: <user>%{from}(e)k</user> "%{page_title}" orrialdea eguneratu du
+  page_update: Orrialde eguneraketa
+  add_star_link: Gehitu izarra (%{star_count})
+  remove_star_link: Kendu izarra (%{star_count})
+  public_checkbox: Publikoa
+  public_checkbox_help: Piztuta badago, orrialde hau edonork ikus dezake.
+  page_details_link: "%{page_class}ren xehetasunak"
+  delete_page_link: Ezabatu %{page_class}
+  destroy_page_via_shred: Suntsitu berehala
+  destroy_page_via_shred_info: Honek orrialdea behin-betiko suntsituko du. Ekintza hau ezin da desegin.
+  destroy_page_via_trash: Bota zakarrontzira
+  destroy_page_via_trash_info: Honek orrialdea zakarrontzira botako du, gero berreskuratu daitekeelarik.
+  undelete_from_trash: Berreskuratu
+  participation: Parte-hartzea
+  information: Informazioa
+  remove_access_error: Ezin da orrialde honetara sarrerarik kendu. Ezin diezu egileei sarrerarik kendu, ezta zuri ere orrialdea kudeatu ahal izateko.
+  edit_tags_link: Editatu
+  edit_attachments_link: Editatu
+  attachments: Eranskinak
+  edit_attachments: Editatu eranskinak
+  current_attachments: Egungo eranskinak
+  add_new_attachment: Gehitu eranskin berria
+  use_radio_buttons_to_select_page_cover: Erabili aukera botoiak azaleko orrialdea hautatzeko
+  page_access_admin: Sarrera-maila osoa
+  page_access_edit: Idazteko gaitasuna
+  page_access_none: Sarrerarik ez
+  page_access_view: Irakurri bakarrik
+  share_page_link: Partekatu %{page_class}
+  share_page_recipients: 'Partekatu orrialde honekin:'
+  notify_page_link: Bidali jakinarazpena
+  notify_contribution: "<b>Aurreko ekarpenak:</b> jakinarazi orrialde honetan <b>ekarpenak</b> egin dituzten pertsonei."
+  notify_current_access: "<b>Sarrera orain:</b> jakinarazi orrialde honetan orain sartzeko baimena duten pertsonei eta taldeei."
+  notification_message: Jakinarazpen mezua
+  send_only_with_encryption: Bidali banaketa zifratuta egin badaiteke bakarrik
+  share_send_notification: Bidali jakinarazpena
+  send_email: Bidali e-posta
+  share_include_message: Sartu mezu pertsonalizatu bat
+  shared_page_success: Orrialde hau ondo partekatu duzu.
+  notify_success: Jakinarazpenak ondo bidali dituzu.
+  share_grant_required_error: "%{name}(e)k ez du orrialde hau ikusteko baimenik. Lehenik, sarrera-maila handiagoa eman behar saio."
+  share_permission_denied_error: Ezin dituzu orrialde honetako sarrera-mailak aldatu
+  notify_no_access_error: Barkatu, "%{name}"(e)k ez du orrialde honetan sartzeko baimenik.
+  share_already_exists_error: 'Dagoeneko "%{name}"(e)k orrialde honetan sartzeko baimena du.'
+  share_pester_error: Barkatu, ezin duzu "%{name}"(e)kin partekatu.
+  name_or_email_not_found: '"%{name}" ez dator bat ezein erabiltzaile edo talde izenekin eta ez da baliozko e-posta helbide bat.'
+  contribute_content_link: Sortu orrialdea
+  page_create_owner: Orrialdearen jabea
+  create_page: Sortu orrialdea
+  only_me: Ni
+  page_added_to_group: Orrialde hau %{group_name} %{group_type}(e)ra gehituko da.
+  additional_page_access: Sarrera-maila gehigarria
+  page_owner_error: Orrialdeko jabea ezin da hutsik egon.
+  action: Ekintza
+  page_history_add_star: "%{user_name}(e)k izar bat gehitu du"
+  page_history_added_comment: "%{user_name}(e)k iruzkin bat gehitu du"
+  page_history_change_title: "%{user_name}(e)k orrialdeko izenburua aldatu du"
+  page_history_deleted_page: "%{user_name}(e)k orrialdea ezabatu du"
+  page_history_destroyed_comment: "%{user_name}(e)k iruzkin bat suntsitu du"
+  page_history_details_change_title: 'Nork: "%{from}" Nori: "%{to}"'
+  page_history_granted_group_full_access: "%{user_name}(e)k sarrera-maila osoa jaso du %{item_name} talderako"
+  page_history_granted_group_read_access: "%{user_name}(e)k irakurtzeko sarrera-maila jaso du %{item_name} talderako"
+  page_history_granted_group_write_access: "%{user_name}(e)k idazteko sarrera-maila jaso du %{item_name} talderako"
+  page_history_granted_user_full_access: "%{user_name}(e)k sarrera-maila osoa eman dio %{item_name} erabiltzaileari"
+  page_history_granted_user_read_access: "%{user_name}(e)k irakurtzeko sarrera-maila eman dio %{item_name} erabiltzaileari"
+  page_history_granted_user_write_access: "%{user_name}(e)k idazteko sarrera-maila eman dio %{item_name} erabiltzaileari"
+  page_history_make_private: "%{user_name}(e)k orrialdea publikoa egiteko kontrol-laukia itzali du"
+  page_history_make_public: "%{user_name}(e)k orrialdea publikoa bihurtu du"
+  page_history_remove_star: "%{user_name}(e)k izar bat kendu du"
+  page_history_revoked_group_access: "%{user_name}(e)k %{item_name} taldera sarrera galdu du"
+  page_history_revoked_user_access: "%{user_name}(e)k %{item_name} erabiltzaileari sarrera kendu dio"
+  page_history_updated_comment: "%{user_name}(e)k iruzkin bat eguneratu du"
+  page_history_updated_content: "%{user_name}(e)k orrialdeko edukia eguneratu du"
+  page_history_user_created_page: "%{user_name}(e)k orrialdea sortu du"
+  wiki_page_description: Sortu ezazu formatu libreko testua duen dokumentu editagarri bat.
+  wiki_page_display: Wiki orrialdea
+  gallery_description: Igo itzazu hainbat irudi edo antola itzazu jada igotakoak bilduma batean.
+  gallery_display: Galeria
+  asset_page_description: Igo ezazu irudi, dokumentu, kalkulu-orri, aurkezpen edo beste edozein fitxategi.
+  asset_page_display: Fitxategia
+  select_file_to_upload: Hautatu fitxategi bat igotzeko.
+  discussion_page_description: Eztabaidatu gai zehatz bat taldeetan edo beste erabiltzaileekin.
+  discussion_page_display: Talde eztabaida
+  task_list_page_description: Sortu ezazu egin beharrekoen zerrenda bat eta esleitu atazak zure buruari edo besteei.
+  task_list_page_display: Ataza zerrenda
+  page_group_text: Testuak eta eztabaidak
+  page_group_media: Multimedia
+  page_group_planning: Plangintza tresnak
+  pending_tasks: Egiteko dauden atazak
+  completed_tasks: Eginda dauden atazak
+  no_pending_tasks: Ez dago atazarik egiteko.
+  no_completed_tasks: Ez dago atazarik eginda.
+  assign_to: 'Esleitu honi:'
+  completed: Eginda
+  vote:
+    really_remove_this: Benetan nahi duzu aukera hau kendu?
+  vote_good: ona
+  vote_ok: ados
+  vote_bad: txarra
+  vote_none: bat ere ez
+  vote_no: 'ez'
+  confirm_vote_button: Baieztatu bozka
+  edit_my_vote_tab: Editatu nire bozka
+  show_results_tab: Erakutsi emaitzak
+  survey_question_label: 'Galdera:'
+  survey_description_heading: Deskripzioa
+  private_question_label: 'Galdera pribatua:'
+  their_answer_goes_here_label: Beraien erantzuna hemen doa...
+  survey_response_by: '%{login}(r)en erantzuna'
+  see_whole_response_link: ikusi erantzun osoa
+  survey_respond_button: Erantzun
+  survey_skip_next_link: Egin salto hurrengora
+  survey_questions: Galderak
+  add_long_text_question_link: Erantzun luzea
+  add_select_many_question_link: Hautatu hainbat erantzun
+  add_select_one_question_link: Hautatu erantzun bakarra
+  add_short_text_question_link: Erantzun laburra
+  upload_image_question_link: Igo irudia
+  video_link_question_link: Bideo esteka
+  survey_introduction_tab: Sarrera
+  survey_list_all_tab: Zerrendatu erantzunak
+  survey_my_response_tab: Nire erantzuna
+  survey_please_check_message: Mesedez, egiaztatu zure erantzunak.
+  survey_thanks_submit_message: Eskerrik asko zure erantzuna bidaltzeagatik.
+  drag_to_move_tip: arrastatu mugitzeko
+  each_line_is_a_choice_caption: "(lerro bakoitza aukera posible bat da)"
+  no_data_uploaded_label: Ez da daturik igo
+  current_video_sources: 'Orain erabil daitezkeenak: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_prompt: Kapsulatu kanpoko bideoa.
+  permissions_key: Gakoa
+  public_description: Interneteko edonor
+  peers_description: Zure taldeetako kideek
+  friends_description: Zure lagunek
+  may_view_label: Nire profila ikusi?
+  may_view_description: Itzalita badago, zure profil osoa ezkutua izango da.
+  may_see_contacts_label: Nire kontaktuak ikusi?
+  may_see_contacts_description: Utzi jendeari zure kontaktuak nortzuk diren ikusten.
+  may_see_groups_label: Nire taldeak ikusi?
+  may_see_groups_description: Utzi jendeari zeintzuk talderen kide zaren ikusten.
+  may_pester_label: Nirekin partekatu?
+  may_pester_description: Utzi jendeari zuri mezuak, orrialdeak eta gonbidapenak bidaltzen.
+  may_request_contact_label: Kontaktu eskaerak?
+  may_request_contact_description: Utzi jendeari zure kontaktua izaten eskatzea.
+  sharing_and_requests: Partekatzeak eta eskaerak
+  view_profile: Ikusi profila
+  profile_member_since: 'Kidea noiztik:'
+  banner_info: Neurri hoberenak %{optimal_dimensions} pixel dira
+  phone_number: Telefono zenbakia
+  email_addresses: E-posta helbidea
+  post_message: Bidali mezua
+  request_friend_link: Gehitu nire kontaktuetara
+  remove_friend_link: Kendu nire kontaktuetatik
+  edit_profile_link: Editatu profila
+  profile_saved: Zure profila gorde da.
+  requests: Eskaerak
+  request: Eskaera
+  incoming: Sarrerakoak
+  outgoing: Irteerakoak
+  try_again: Saiatu berriro
+  send_request_button: Bidali eskaera
+  send_invites_button: Bidali gonbidapenak
+  all_requests: Eskaera guztiak
+  request_to_destroy_our_group_description: '%{user} erabiltzaileak %{group} %{group_type} suntsitzea proposatu du.'
+  request_to_remove_user_short: '%{member} %{group} taldetik atera nahi duzu?'
+  request_to_remove_user_description: '%{user} erabiltzaileak %{member} %{group} %{group_type}(e)tik ateratzea proposatu du.'
+  invite_info: Sartu %{group_type} honetara sartzera gonbidatu nahi dituzun pertsonen erabiltzaile-izenak edo e-posta helbideak.
+  invite_error_already_member: Dagoeneko talde horretako kidea zara.
+  recipient_tip: Banatu hartzaileak komekin, hutsuneekin edo lerro berriekin.
+  friend_request_message_label: Esaiozu %{user}-(r)i zergatik nahi duzun bere kontaktua izan.
+  friend_remove_confirmation: Ziur al zaude ez duzula %{user}-(r)en kontaktua izaten jarraitu nahi?
+  place: lekua
+  icon: Ikonoa
+  file: Fitxategia
+  files: Fitxategiak
+  photo: Argazkia
+  caption: Izenburua
+  video_embed: Kapsulatu
+  size: Tamaina
+  illegal_redirect: Legez kontrako birbideraketa
+  save_wiki_before_adding_image: Mesedez, gorde wiki orrialdea irudi bat gehitu baino lehen.
+  preview_selected_image: Hautatutako irudiaren aurreikuspena
+  image_size_info: Aukeratu txertatu beharreko irudiaren neurria
+  small: txikia
+  medium: ertaina
+  large: handia
+  full: osoa
+  image_select_info: Hautatu txertatu beharreko irudia dagoeneko taldera igotakoen artetik
+  image_upload_info: Igo irudi berri bat taldera wiki orrialdean erabili ahal izateko
+  activity_user_left_group: "%{user}(e)k %{group} %{group_type}(e)tik atera da"
+  activity_user_joined_group: "%{user} %{group} %{group_type}(e)ko kide egin da"
+  activity_group_created: "%{user}(e)k %{group} %{group_type} sortu du"
+  media_image: Irudia
+  media_images: Irudiak
+  zip_file: Zip fitxategia
+  history: Historia
+  other_formats: Bestelako formatuak
+  file_version_deleted: fitxategiaren bertsioa ezabatuta
+  delete_version_confirm: Ziur al zaude bertsio hau ezabatu nahi duzula?
+  galleries: Galeriak
+  created_on: 'Noiz sortua:'
+  file_size: Fitxategiaren tamaina
+  format: Formatua
+  regenerate: birsortu iruditxoak
+  version_number: '%{version} bertsioa'
+  upload_image: Igo irudia
+  asset_version_list_version_heading: Bertsioa
+  order_changed: Ordena aldatuta.
+  error_saving_new_order_message: 'Errorea ordena berria gordetzean: %{error_message}'
+  successfully_removed_image: Irudia ondo kendu da! (%{undo_link})
+  edit_gallery: Editatu galeria
+  back_to_gallery_link: Itzuli galeriara
+  gallery_changing_cover_message: Azala aldatzen...
+  download: Deskargatu
+  download_gallery: Deskargatu galeria
+  gallery_undo_link: desegin
+  remove_from_gallery: Kendu galeriatik
+  removing_image: Irudia kentzen...
+  move_image_left: Mugitu irudia ezkerrera
+  move_image_right: Mugitu irudia eskuinera
+  successful_undelete_image: Irudia ondo berreskuratu da.
+  saved_new_order: Ordena berria gorde da!
+  error_saving_new_order: Errorea ordena berria gordetzean!
+  saving_your_changes: Zure aldaketak gordetzen...
+  no_images_in_gallery: Ez dago irudirik galerian
+  add_existing_image: Gehitu argazkia
+  add_photo_to_gallery: Egin klik argazki batean gehitzeko
+  cancel_link: utzi
+  file_must_be_image_error: Fitxategia irudi bat izan behar da galeriaren parte izateko.
+  add_another_file: Gehitu beste fitxategi bat
+  make_album_cover: Bihurtu irudi hau bildumaren azala
+  album_cover_changed: Bildumaren azala aldatuta
+  upload_images_link: Igo
+  upload_a_zip_file_link: Igo Zip fitxategi bat
+  you_are_not_allowed_to_do_that: Zuk ezin duzu horrelakorik egin!
+  sunday: Igandea
+  monday: Astelehena
+  tuesday: Asteartea
+  wednesday: Asteazkena
+  thursday: Osteguna
+  friday: Ostirala
+  saturday: Larunbata
+  date_today: Gaur
+  date_this_week: Aste honetan
+  date_this_month: Hilabete honetan
+  date_this_year: Urte honetan
+  date_all_time: Inoiz
+  alert_not_saved: Ezin izan dira aldaketak gorde
+  alert_field_errors: Arazoak daude ondoko eremuekin
+  alert_saved: Aldaketak gorde dira
+  set_status_button: Eguneratu egoera
+  my_contacts: Kontaktuak
+  anonymous: anonimoa
+  login_required: Saioa hastea ezinbestekoa da
+  login_required_description: Mesedez, saioa has ezazu ekintza hori egiteko.
+  permission_denied_description: Ez duzu behar haina baimenik ekitza hori egiteko.
+  chat: Txata
+  left_the_chatroom: -(e)k txat-gela utzi du
+  tag: Etiketa
+  tags: Etiketak
+  no_tags: ez dago etiketarik
+  add_one_or_more_tags: Gehitu etiketa bat edo gehiago, komekin banatuz
+  separate_tags: Banatu etiketak komak erabiliz.
+  add_tags: Gehitu etiketak
+  current_tags: Egungo etiketak
+  welcome_title: Ongi etorria %{site_title}-(e)ra
+  welcome_message: Crabgrass-ek gizarte kolektiboei lanak burutzen, hitzetatik ekintzara pasatzen, elkarlana koordinatzen eta saretzen laguntzen die.
+  wiki: Wiki orrialdea
+  public_wiki: Wiki publikoa
+  private_wiki: Wiki pribatua
+  edit_wiki: Editatu wiki orrialdea
+  versions: Bertsioak
+  version: Bertsioa
+  changes_made: 'Aldaketak noiz egin dira: %{when}'
+  prev_change: Aurreko aldaketa
+  next_change: Hurrengo aldaketa
+  formatting_reference_link: Editatzeko laguntza
+  version_doesnt_exist: Ez dago %{version} bertsiorik
+  you_are_viewing_version: Ikusten zaudena %{user}-(r)ren %{version} bertsioa da
+  diff_link: ikusi aldaketak
+  version_link: ikusi bertsioa
+  wiki_section_edit: Editatu atal hau
+  wiki_revert_version: '%{version} bertsiora alderantzizkatu'
+  wiki_version_creator_heading: pertsona
+  wiki_version_revert_link: alderantzizkatu
+  insert_image: Txertatu irudia
+  preview: Aurreikusi
+  save_or_cancel_edit_lock_wiki_error: Wiki hau blokeatu duzu. Beste erabiltzaileek ezingo dute berau editatu zuk %{save_button} edo edizioa bertan behera uzteko %{cancel_button} sakatu arte.
+  cant_find_wiki_section: Wiki orrialdeak ez da %{section} atalik aurkitzen

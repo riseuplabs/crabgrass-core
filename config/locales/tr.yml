@@ -1,4 +1,5 @@
 tr:
+  cookie_disabled_warning: Tarayıcınız çerezlere izin vermiyor. İzin verene kadar giriş yapmanız mümkün değildir.
   signup_link: Yeni bir kullanıcı hesabına ihtiyacınız var mı?
   signup_email_info: 'İsteğe bağlı: şifrenizi unuttuğunuz zaman kullanılır'
   forgot_password_link: Şifremi unuttum
@@ -8,17 +9,18 @@ tr:
   signup_success: Kayıt Başarılı
   logout_success: Güle güle
   logout_success_message: Oturumunuz kapatıldı.
+  signup_button: Kayıt Ol
   login_failed: Giriş Başarısız
+  login_button: Giriş Yap
   login: Oturum aç
+  sign_in: Giriş Yap
   signup_title: Kullanıcı Hesabınızı Yaratın
-  signup_email: Email Adresiniz
   forgot_password_text: Kullanıcı girişinde kullandığınız şifreyi unuttuysanız yeni bir şifre oluşturmanızı sağlayacak bir bağlantıyı email olarak size gönderiyoruz.
   reset_password_text: Merhaba, %{user}. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz.
   forgot_password_mail_greeting: "%{user}, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
   forgot_password_mail_expiry: Bu bağlantı 24 saat boyunca geçerli olacaktır. Eğer şifrenizi daha sonra sıfırlamanız gerekiyorsa unutulmuş şifre sayfasını tekrar ziyaret edip yeni bir link istemelisiniz.
   reset_password_mail_greeting: "%{user}, isteğinize uygun olarak şifreniz sıfırlandı."
   reset_password_mail_warning: Eğer şifrenizin değişmesini istemiyorsanız, lütfen bizimle bağlantı kurun
-  your_login: Girişiniz
   invalid_email_text: Verdiğiniz email adresi geçersiz.
   reset_password: Şifreyi Sıfırla
   reset_password_email_sent: Şifrenizi sıfırlamak için gereken yönergeleri içeren email gönderildi.
@@ -31,17 +33,50 @@ tr:
   forgotten_email_address: Hesabınızı açarken bize hangi e-posta adresinizi vermiştiniz?
   new_password: Yenı şifre
   confirm_new_password: Yeni Şifrenizi Doğrulayın
-  password: Şifre
-  password_confirmation: Şifre Doğrulama
-  signup_confirm_password: Şifreyi Onayla
-  login_password: Şifre
-  signup_password: Şifreniz
+  congratulations_you_have_signed_up: Tebrikler! %{site_title} sitesine kayıt oldunuz.
+  you_should_receive_instructions_email: Kayıt işlemini tamamlamak için gereken bilgileri içeren bir e-posta alacaksınız.
+  email_verification_body: |-
+    %{site_title} (%{host}) için kayıt oldunuz.
+
+    Giriş yapabilmek için e-posta adresinizi doğrulamalısınız.
+
+    Aşağıdaki bağlantıya tıklayın veya kopyalayıp tarayıcınıza yapıştırın.
+
+    %{verify_email_link}
+
+    Eğer katılmak istemiyorsanız, bu e-postayı dikkate almayın.
+  change_password: Parolanızı Değiştirin
+  password: Parola
+  password_confirmation: Parola Doğrulama
+  login_password: Parola
+  remove_your_account: Hesabınızı Silin
+  anonymize_display_name: Anonim isim kullanın
+  anonymize_display_name_info: Her yerde görünen isminizi 'Anonim' olarak değiştirir
+  destroy_comments: Yorumları sil
+  destroy_comments_info: Tüm sayfalara yaptığınız yorumlar silinir. Sayfalara bakanların diğer yorumları okuyarak anlaması zorlaşacaktır.
+  confirm_account_removal: Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz. Tüm veriniz silinecektir.
+  account_successfully_removed: Hesabınız başarıyla silindi. Hesabınızla ilişkili tüm bilgileri veritabanından sileceğiz.
+  crabgrass:
+    powered_by_html: |
+      Bu sitenin arkasında <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      (<a href="https://www.gnu.org/licenses/agpl-3.0.html">özgür</a> ağ örgütlenmesi yazılımı) var.
+    report_a_bug: Hata Bildir
+    request_a_feature: Yeni Özellik Talep Et
+    help_pages: Crabgrass Yardım
+    get_involved: Destek Ol
+    help_translate: Çeviriye Destek Ol
   destroy_confirmation: Bunu silmek istediğinizden emin misiniz? Bu eylem geri alınamaz.
   confirmation: Emin misiniz?
-  cancel: Vazgeç düğmesi
-  required: (gerekli)
-  edit: Düzenleme
+  cancel: Vazgeç
+  optional: İsteğe bağlı
+  required: Gerekli
+  thing_required: "%{thing} Gerekli"
+  edit: Düzenle
   upload: Yükle
+  select_files: Dosya seçin
+  drop_files_here: Dosyaları buraya sürükleyin
+  files_pending: "#{pending} dosya(lar) bekleniyor"
   return_link: Geri dön
   back_button: Geri
   send_button: Gönder
@@ -49,71 +84,169 @@ tr:
   share_button: Paylaş
   save_button: Kaydet
   add_button: Ekle
-  cancel_button: Vazgeç düğmesi
+  cancel_button: Vazgeç
   create_button: Oluştur
+  ok_button: Tamam
+  done: Tamamlandı
+  show_button: Göster
+  show_thing: '%{thing}''i göster'
+  confirm: Onayla
+  alert: Uyarı
+  loading_progress: Yükleniyor...
+  loadingdotdotdot: Yükleniyor...
   create_a_new_thing: Yeni bir %{thing} oluştur
-  created_by: Tarafından oluşturuldu
-  approve: onay
-  reject: reddet
-  pending: bekleyen
-  rejected: reddedildi
-  approved: onaylandı
-  destroy: yok et
+  create_thing: '%{thing} oluştur'
+  created_by: Oluşturan
+  updated_by: Güncelleyen
+  created_by_user_on: '%{user} tarafından %{when} tarihinde oluşturuldu.'
+  approve: Onayla
+  reject: Reddet
+  pending: Bekleyen
+  rejected: Reddedildi
+  approved: Onaylandı
+  saved: Kaydedildi
+  destroy: Sil
+  thing_destroyed: "%{thing} silindi"
+  destroy_thing: '%{thing}''i sil'
+  delete_thing: '%{thing}''i sil'
   delete: Sil
   delete_button: Sil
-  remove: kaldır
+  deleted: Silindi
+  remove: Kaldır
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Bir grubun ya da kişinin ismini girin
+      enter_name_of_group: Bir grup ismi girin
+      enter_name_of_person: Bir kişi ismi girin
+  actions:
+    task:
+      add: Yeni iş ekle
+    possible:
+      add: Yeni ihtimal girin
+  mailer:
+    hello: Merhaba %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title}: Bir sayfa düzenlendi."
+      we_leave_out_details: Bu e-postada bazı bilgileriniz, gizliliğinizi korumak için gösterilmiyor.
+      you_can_find_updates_here: 'Burada daha çok detay ve yakın zamanda değiştirilmiş sayfaları bulabilirsiniz:'
+      the_page_you_are_watching_description: İzlediğiniz "%{page_title}" sayfası düzenlendi
+      change_your_settings_here: 'Buradan e-posta bildirimlerinizi düzenleyebilirsiniz: %{page_link}'
+      you_can_turn_of_or_configure_notifications: E-posta bildirimlerini kapatın, değişikliklere dair genel bir e-posta alın veya her değiştirilen sayfa için bir e-posta alın
   exception:
     title:
-      unauthorized: Kullancı girişi gerekli
-      forbidden: İzin verilmedi
+      not_found: "%{thing} Bulunamadı"
+      unauthorized: Kullancı Girişi Gerekli
+      forbidden: İzin Verilmedi
+      group:
+        not_found: Grup Bulunamadı
     description:
+      not_found: Kusura bakmayın, aradığınızı bulamadık.
       unauthorized: Bunu yapmak için lütfen kullanıcı girişi yapın.
-  image_count: Fotoğraf %{number} of %{count}
-  image_count_total: "%{count} Fotoğraflar"
+      forbidden: Kusura bakmayın, bu işlemi yapamazsınız.
+      group:
+        not_found: Kusura bakmayın, aradığınız grubu bulamadık.
+  image_count: '%{count} fotoğraf arasında %{number}'
+  image_count_total: "%{count} tane fotoğraf"
   show_gallery: Galeriyi Göster
+  edit_gallery_explanation: Yeni resim ekleyin veya resimleri sürükleyerek sıralayın.
+  edit_image: Resmi Düzenle
+  show_gallery_explaination: Resmi büyütmek için küçük resme tıklayın
+  add_images_or_zips: Resim veya Zip dosyası Yükleyin
+  add_images_or_zips_explaination: Zip dosyasındaki resimler otomatik olarak galeriye eklenecek
+  confirm_image_delete: Resmi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.
   no_title_given: "(başlık yok)"
-  upload_new_image: Yeni görüntü yükle
+  add_images: Resim Ekleyin
+  edit_images: Resimleri Düzenleyin
+  upload_new_image: Yeni Resim Yükle
   type_your_messages_here: İletilerinizi buraya yazın ve enter tuşuna basın...
-  group_not_allowed_to_view_image_error: Bu sayfanın ait olduğu gruba bu görüntüyü gösterme izni verilmiyor.
-  add_comment: Yorum ekle
-  image_title: 'Görüntü başlığı: %{title}'
+  group_not_allowed_to_view_image_error: Bu sayfanın ait olduğu grubun bu resmi görmeye yetkisi yok.
+  add_comment: Yorum Ekle
+  image_title: 'Resim başlığı: %{title}'
+  upload_zip_file_link: Bir Zip Dosyası Yükleyin
+  add_images_to_gallery_link: Galeriye resim ekleyin
+  too_tall_image_error: Resim çok uzun (Yükseklik en fazla {{count}} piksel olabilir)
+  too_wide_image_error: Yüklenen resmin genişliği tam {{count}} piksel olmalı
+  cant_detect_image_height_error: Resmin yüksekliği ölçülemedi. Resim bozuk veya sunucuda bir hata oldu.
+  edit_image_header: Resmi ve Sesi Düzenle
+  upload_images_and_zip_files_help: 'Seçimli: Resim veya zip dosyası yükleyin.'
+  close_and_reload_gallery: Kapat ve galeriyi yenile
   search: Ara
+  go: Git
   thing_not_found: "%{thing} bulunamadı"
+  no_things_found: Hiç %{things} bulunamadı.
   no_search_results: Arama sonucu yok
+  not_found: Bulunamadı
   see_all_link: Hepsini Gör
+  total: "Toplam %{count}"
+  all: Hepsi
   none: Hiçbiri
+  or: veya
+  new: yeni
+  modified: değiştirildi
   unknown: Bilinmeyen
   next: Sonraki
   previous: Önceki
   pagination_next: Sonraki
   pagination_previous: Önceki
   return: Geri dön
-  see_more_link: Daha Fazlası
+  see_more_link: Daha fazla
+  see_less_link: Daha az
+  list_things: '%{things} listele'
   user: Kullanıcı
+  users: Kullanıcılar
   people: Kişiler
+  person: Kişi
   name: Ad
   recipients: Alıcılar
-  contacts: Aarkadaşlar
+  recipient: Alıcı
+  owner: Sahibi
+  created_by_entity: '%{entity} tarafından oluşturuldu'
+  approved_by_entity: '%{entity} tarafından onaylandı'
+  rejected_by_entity: '%{entity} tarafından reddedildi'
+  contacts: Kişiler
   friends: Arkadaşlar
   member_groups_of_network: Üye Gruplar
   peers: Eşler
-  me: Sadece ben
+  me: Ben
   back: Geri
   share: Paylaş
-  contributed: Katkıda bulundu
+  contributed: Katkıda bulundun
+  profile: Profil
+  content: İçerik
+  comments: Yorumlar
+  statistics: İstatistikler
   summary: Özet
-  private: Özel
-  public: Genel
+  private: Gizli
+  public: Herkese açık
   options: Seçenekler
   permissions: İzinler
-  description: Tanım
+  notification: Bildirim
+  notice: Bildirim
+  notices: Bildirimler
+  dismiss: Yoksay
+  dismiss_all_notices: Hepsini Yoksay
+  dismiss_all_notices_confirmation: Tüm bildirimleri yoksaymak istediğinizden emin misiniz?
+  action_cannot_be_undone: Bu işlem geri alınamaz.
+  locale: Yerel
+  description: Açıklama
+  details: Detaylar
+  invite: Davet et
   membership: Üyelik
   visibility: Görünürlük
   administration: Yönetim
   settings: Ayarlar
+  messages: Mesajlar
   page: Sayfa
+  tasks: Görevler
   title: Başlık
+  text_message: Mesaj
+  print: Yazdır
+  show: Göster
+  hide: Gizle
+  display: Göster
   message: Mesaj
+  private_message_notice: Özel Mesaj Bildirimi
+  visits: Ziyaretler
   group: Grup
   groups: Gruplar
   organization: organizasyon
@@ -130,7 +263,7 @@ tr:
 
     Bu gruba katılmak istiyorsanız, buraya tıklayın:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
   group_wiki: Vikipedi Grubu
   create_public_group_wiki: Genel
   create_private_group_wiki: Özel
@@ -345,6 +478,7 @@ tr:
   slideshow_delay_input: Her %{input_field} saniyede güncelle
   make_album_cover: bu görüntüyü albüm kapağı yap
   upload_images_link: Yükle
+  upload_a_zip_file_link: Bir Zip Dosyası Yükleyin
   sunday: Pazar
   monday: pazartesi
   tuesday: Salı

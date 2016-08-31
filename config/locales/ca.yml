@@ -1,4 +1,5 @@
 ca:
+  cookie_disabled_warning: Tens les cookies deshabilitades. No podràs iniciar sessió fins que actives les cookies.
   signup_link: Nou compte
   signup_email_info: 'Opcional: utilitzat si te n''oblides de la teva contrasenya'
   forgot_password_link: Contrasenya Oblidada
@@ -8,19 +9,21 @@ ca:
   signup_success: T'has registrat amb èxit
   logout_success: Adéu
   logout_success_message: T'has desconnectat correctament.
+  signup_button: registra-te
   login_failed: No s'ha pogut autenticar
+  login_button: Iniciar sessió
   login: Entrar
+  sign_in: Iniciar sessió
   signup_title: Crea el teu compte
-  signup_email: El teu Correu Electrònic
   forgot_password_text: Si te n'has oblidat de la teva contrasenya, podem enviar-te un enllaç per correu electrònic que et permetrà crear-la de nou.
   reset_password_text: Hola, %{user}. Si te n'has oblidat de la teva contrasenya pots regenerar-la aquí.
   forgot_password_mail_greeting: "%{user}, per recrear la teva contrasenya, visita a "
   forgot_password_mail_expiry: Aquest enllaç expirarà en 24 hores. Si han passat els 24 hores, hauràs de tornar a visitar la pàgina de "Contrasenya Oblidada" i demanar-ne de nou.
   reset_password_mail_greeting: "%{user}, s'ha regenerat la teva contrasenya, tal com havies demanat."
   reset_password_mail_warning: Si no volies canviar la teva contrasenya, posa't en contacte amb nosaltres.
-  your_login: El teu nom d'accés
   invalid_email_text: La adreça de correu electrònic que has indicat no és vàlida.
   reset_password: Regenerar Contrasenya
+  reset_password_email_sent: Si eixe correu està associat amb un nom d'usuari, un correu s'haurà enviat amb instruccions per a reiniciar la teua contrasenya.
   invalid_token: Codi No Vàlid
   invalid_token_text: L'enllaç per regenerar la contrasenya no sembla vàlida.  És possible que s'hagi expirat o que ja s'ha utilitzat.
   password_reset: Recrear Contrasenya
@@ -30,11 +33,10 @@ ca:
   forgotten_email_address: Quina adreça de correu electrònic ens vas donar al crear el teu compte?
   new_password: Nova Contrasenya
   confirm_new_password: Confirmar la Nova Contrasenya
+  congratulations_you_have_signed_up: ¡Enhorabona! t'has registrat a %{site_title}.
   password: Contrasenya
   password_confirmation: Confirmació de Contrasenya
-  signup_confirm_password: Confirmació de Contrasenya
   login_password: Contrasenya
-  signup_password: La teva contrasenya
   destroy_confirmation: Segur que vols eliminar aquest/a %{thing}?  No es pot desfer aquesta acció.
   confirmation: Estàs segur/a?
   cancel: Cancel·lar
@@ -142,11 +144,11 @@ ca:
 
     Si t'hi vols apuntar, fes clic aquí:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     La pàgina d'aquest grup és aquí:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Si no vols formar part d'aquest grup, simplement ignora aquest correu.
   group_wiki: Wiki del Grup
@@ -273,14 +275,6 @@ ca:
   page_history_updated_comment: "%{user_name} ha actualitzat un comentari"
   page_history_updated_content: "%{user_name} ha actualitzat el contingut de la pàgina"
   page_history_user_created_page: "%{user_name} ha creat la pàgina"
-  page_history_mailer_hello_user_name: Hola %{user_name}
-  page_history_mailer: 'Canvia les teves preferències de correu electrònic aquí: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Una pàgina ha sigut modificada"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Una pàgina que estàs seguint ha sigut modificada %{histories_count} des de la última notificació.  La pots accedir aquí: "
-  page_history_mailer_a_page_you_are_watching: Un pàgina que estàs seguint ha sigut modificada.  La pots accedir aquí
-  page_history_the_page_you_are_watching_description: La pàgina "%{page_title}" que segueixes ha sigut modificada
-  page_history_mailer_expire_link: Aquest enllaç expirarà en %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Pots decidir a suprimir les notificacions per correu electrònic, rebre un resum dels canvis o bé rebre un correu electrònic cada vegada que es modifica la pàgina.
   wiki_page_description: 'Crea una pàgina lliurement editable sense format. '
   wiki_page_display: Pàgina Wiki
   gallery_description: Puja múltiples imatges o organitza algunes imatges existents a un conjunt.
@@ -441,5 +435,6 @@ ca:
   diff_link: veure diferències
   wiki_section_edit: Edita Aquesta Secció
   wiki_revert_version: Revertir a la Versió %{version}
+  wiki_version_creator_heading: persona
   preview: Preveure
   save_or_cancel_edit_lock_wiki_error: Has bloquejat aquest wiki. Altres usuaris no podran editar-lo fins que facis clic a %{save_button} o %{cancel_button} per deixar la edició.

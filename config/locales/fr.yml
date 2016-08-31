@@ -11,19 +11,16 @@ fr:
   logout_success_message: Vous avez été déconnecté·e.
   signup_button: S'enregistrer
   login_failed: Connexion impossible
-  signup_login_name: Votre identifiant
   login_button: Connexion
   login: Connexion
   sign_in: Connexion
   signup_title: Créez votre compte
-  signup_email: Votre Mail
   forgot_password_text: Si vous avez oublié votre phrase de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer une nouvelle
   reset_password_text: Bonjour, %{user}. Si vous avez oublié votre phrase de passe pour vous connecter, vous pouvez en définir une ici.
   forgot_password_mail_greeting: "%{user}, pour régénérer votre phrase de passe, allez à "
   forgot_password_mail_expiry: Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre phrase de passe après ce délai, vous aurez à retourner à nouveau sur la page 'phrase de passe perdue' pour demander un nouveau lien.
   reset_password_mail_greeting: "%{user}, votre phrase de passe a été réinitialisée à votre demande."
   reset_password_mail_warning: Si vous n'avez pas demandé à réinitialiser votre phrase de passe, merci de nous contacter.
-  your_login: Votre identifiant
   invalid_email_text: L'adresse mail fournie est invalide.
   reset_password: Réinitialiser la phrase de passe
   reset_password_email_sent: Si cette adresse mail est associée avec un identifiant, alors un mail contenant les instructions de réinitialisation de la phrase de passe vous a été envoyé.
@@ -51,9 +48,7 @@ fr:
   change_password: Modification de la phrase de passe
   password: Phrase de passe
   password_confirmation: Confirmation de la Phrase de Passe
-  signup_confirm_password: Confirmation de la phrase de passe
   login_password: Phrase de passe
-  signup_password: Votre phrase de passe
   remove_your_account: Suppression de votre compte
   anonymize_display_name: 'Anonymiser le nom affiché '
   anonymize_display_name_info: Remplace votre nom affiché par 'Anonyme' partout
@@ -128,6 +123,18 @@ fr:
       add: Ajouter une nouvelle tâche
     possible:
       add: Ajouter une nouvelle possibilité
+  mailer:
+    hello: Bonjour %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : une page a été modifiée"
+      pages_you_are_watching_have_been_modified:
+        one: '%{count} pages que vous surveillez ont été modifiées depuis la dernière alerte.'
+        other: '%{count} pages que vous surveillez ont été modifiées depuis la dernière alerte.'
+      we_leave_out_details: Nous n'incluons pas vos données dans ce courriel dans le cas où vous souhaiteriez les garder privées.
+      you_can_find_updates_here: 'Vous trouverez plus d''informations et une liste des pages récemment modifiées ici:'
+      the_page_you_are_watching_description: La page que vous regardez,  "%{page_title}" , a été modifiée
+      change_your_settings_here: 'Modifiez les paramètres de vos alertes courriels ici : %{page_link}'
+      you_can_turn_of_or_configure_notifications: Ne plus recevoir d'alertes courriels, obtenir une liste des modifications ou recevoir un courriel chaque fois que la page est transformée
   exception:
     title:
       not_found: "%{thing} Non Trouvé·e"
@@ -283,11 +290,11 @@ fr:
   group_invite_email: |-
     %{from_user} vous a invité·e à rejoindre la structure "%{group}". Si vous souhaitez la rejoindre, cliquez ici:
 
-     %{accept_invite_link}
+    %{accept_invite_link}
 
     La page d'accueil de la structure peut être trouvée ici:
 
-     %{group_home_link}
+    %{group_home_link}
 
     Si vous ne souhaitez pas la rejoindre, ignorez simplement ce mail.
   group_destroyed_subject: "%{group_type} %{group} supprimé·e par %{user}!"
@@ -491,14 +498,6 @@ fr:
   page_history_updated_comment: "%{user_name} a modifié un commentaire"
   page_history_updated_content: "%{user_name} a modifié le contenu de la page"
   page_history_user_created_page: "%{user_name} a créé la page"
-  page_history_mailer_hello_user_name: Bonjour %{user_name}
-  page_history_mailer: 'Modifiez vos paramètres de notification par mail ici: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Une page a été modifiée"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Une page dont vous suivez les mises à jour a été modifiée %{histories_count} depuis la dernière notification, vous pouvez y accéder ici: "
-  page_history_mailer_a_page_you_are_watching: Une page dont vous suivez les mises à jour a été modifiée, vous pouvez y accéder ici
-  page_history_the_page_you_are_watching_description: La page que vous suivez "%{page_title}" a été modifiée
-  page_history_mailer_expire_link: Le lien expirera dans %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Vous pouvez choisir de supprimer les notifications par mail, recevoir un résumé des modifications, ou recevoir un mail à chaque fois qu'une page est modifiée
   wiki_page_description: Créer un document texte modifiable.
   wiki_page_display: Page Wiki
   gallery_description: Envoyer des images ou organiser les images existantes.

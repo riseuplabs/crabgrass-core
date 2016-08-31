@@ -1,0 +1,17 @@
+eu:
+  riseup:
+    run_by_html: "Webgune hau %{provider}%{description}-(e)k eskaintzen du"
+    description: ", 1999tik zure teknologia kolektibo autonomo erabilerraza."
+    privacy_policy: "Pribatutasun politika"
+    terms_of_service: "Zerbitzuaren baldintzak"
+    about_us: "Guri buruz"
+    email_accounts: "E-posta kontuak"
+    mailing_lists: "Posta zerrendak"
+    system_status: "Sistemaren egoera"
+    donate: "Egin dohaintza Riseup-i"
+    riseup_black: "Riseup Beltza"
+    riseup_red: "Riseup Gorria"
+    accounts_note: >
+        OHARRA: webgune honetako erabiltzaile kontuak ez daude riseup.net zerbitzuetakoekin
+        loturik. Hortaz, ezin dituzu zure %{riseup_black} eta %{riseup_red} kontuak
+        erabili webgune honetan saioa hasteko.

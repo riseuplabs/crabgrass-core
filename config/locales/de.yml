@@ -15,14 +15,12 @@ de:
   login: Anmelden
   sign_in: Anmelden
   signup_title: Erstelle dein Konto
-  signup_email: Deine E-Mailadresse
   forgot_password_text: Falls du dein Passwort vergessen hast können wir dir einen Link schicken, mit dem du ein neues generieren kannst.
   reset_password_text: Hallo %{user}. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen.
   forgot_password_mail_greeting: "%{user}, um Dein Passwort zurückzusetzen besuche bitte"
   forgot_password_mail_expiry: Dieser Link behält seine Gültigkeit für 24 Stunden. Willst Du Dein Passwort später rücksetzen musst Du Dir auf der "Passwort vergessen"-Seite einen neuen Link zuschicken lassen.
   reset_password_mail_greeting: "%{user}, dein Passwort wurde auf deinen Wunsch zurückgesetzt."
   reset_password_mail_warning: Wenn du keine Passwortänderung angefragt hast, kontaktiere uns bitte.
-  your_login: Dein Login
   invalid_email_text: Die von dir angegebene E-Mailadresse ist ungültig.
   reset_password: Passwort zurücksetzen
   reset_password_email_sent: Wenn diese E-Mailadresse mit einem Nutzer_innennamen assoziiert ist, dann wurde eine E-Mail verschickt, welche eine Anleitung zum Zurücksetzen deines Passworts enthält.
@@ -44,15 +42,13 @@ de:
 
     Klick auf den Link hier oder füge ihn in die Adresszeile deines Browsers ein.
 
-      %{verify_email_link}
+    %{verify_email_link}
 
     Wenn du dich nicht eintragen willst, ignorier diese Mail einfach.
   change_password: Passwort ändern
   password: Passwort
   password_confirmation: Passwortbestätigung
-  signup_confirm_password: Passwort bestätigen
   login_password: Passwort
-  signup_password: Dein Passwort
   remove_your_account: Lösche dein Konto
   anonymize_display_name: Anonymisiere deinen Anzeige-Namen
   anonymize_display_name_info: Ersetzt überall deinen Anzeige-Namen mit 'Anonym'
@@ -127,6 +123,18 @@ de:
       add: Neue Aufgabe hinzufügen
     possible:
       add: Neue Möglichkeit hinzufügen
+  mailer:
+    hello: Hallo %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Eine Seite wurde bearbeitet"
+      pages_you_are_watching_have_been_modified:
+        one: Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung geändert.
+        other: '%{count} Seiten, die du beobachtest, wurden seit der letzten Benachrichtigung geändert.'
+      we_leave_out_details: Wir lassen die Details in dieser E-Mail weg, um die Informationen zu schützen, die du wahrscheinlich für dich behalten möchtest.
+      you_can_find_updates_here: 'Weitere Details und eine Liste der zuletzt bearbeiteten Seiten findest du hier:'
+      the_page_you_are_watching_description: Die Seite "%{page_title}", die du beobachtest, wurde bearbeitet
+      change_your_settings_here: 'Hier kannst du deine E-Mail-Benachrichtigungseinstellungen ändern: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Deaktiviere E-Mail-Benachrichtigungen, empfange eine Zusammenfassung der Änderungen oder erhalte jedes Mal eine E-Mail, wenn eine Seite geändert wurde
   exception:
     title:
       not_found: "%{thing} nicht gefunden"
@@ -284,11 +292,11 @@ de:
 
     Hier kannst Du dieser Einladung folgen:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     Die Homepage der Gruppe findest Du hier:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Wenn du der Gruppe nicht beitreten möchtest, kannst du diese Mail einfach ignorieren.
   group_destroyed_subject: "%{group_type} %{group} wurde von %{user} gelöscht!"
@@ -492,14 +500,6 @@ de:
   page_history_updated_comment: "%{user_name} hat einen Kommentar editiert"
   page_history_updated_content: "%{user_name} hat den Inhalt der Seite editiert"
   page_history_user_created_page: "%{user_name} hat diese Seite erstellt"
-  page_history_mailer_hello_user_name: Hallo %{user_name}
-  page_history_mailer: 'Hier kannst du deine E-Mail-Benachrichtigungseinstellungen ändern: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Eine Seite wurde bearbeitet"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung %{histories_count}x bearbeitet. \nHier gelangst du zur Seite:"
-  page_history_mailer_a_page_you_are_watching: 'Eine Seite, die du beobachtest, wurde bearbeitet. Hier gelangst du zur Seite:'
-  page_history_the_page_you_are_watching_description: Die Seite "%{page_title}", die du beobachtest, wurde bearbeitet
-  page_history_mailer_expire_link: Der Link wird in %{expire_time} ablaufen
-  page_history_mailer_choose_turn_off_notifications: Du kannst dich entscheiden zwischen gar keinen E-Mail-Benachrichtigungen, regelmäßigen Zusammenfassungen der Änderungen oder einer E-Mail bei jeder Änderung der Seite
   wiki_page_description: Erstelle ein allgemeines Textdokument
   wiki_page_display: Wiki-Seite
   gallery_description: Mehrere Bilder hochladen oder vorhandene Bilder zu einer Kollektion zusammenstellen.

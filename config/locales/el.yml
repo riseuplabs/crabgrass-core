@@ -11,19 +11,16 @@ el:
   logout_success_message: Έχετε αποσυνδεθεί.
   signup_button: Εγγραφή
   login_failed: Αδύνατη σύνδεση
-  signup_login_name: Το όνομα χρήστη σας
   login_button: Είσοδος
   login: Σύνδεση
   sign_in: Είσοδος
   signup_title: Δημιουργία λογαριασμού
-  signup_email: Η διεύθυνση email σας
   forgot_password_text: Εάν έχετε ξεχάσει τον κωδικό πρόσβασης που χρησιμοποιείτε για να συνδεθείτε, μπορούμε να σας στείλουμε μέσω email έναν σύνδεσμο που θα σας επιτρέψει να δημιουργήσετε έναν νέο.
   reset_password_text: Γεια, %{user}. Αν έχετε ξεχάσει τον κωδικό που χρησιμοποιείτε για τον λογαριασμό σας, μπορείτε να ορίσετε έναν νέο εδώ.
   forgot_password_mail_greeting: "%{user}, για να επαναφέρετε τον κωδικό πρόσβασής σας, επισκεφτείτε τον σύνδεσμο"
   forgot_password_mail_expiry: Αυτός ο σύνδεσμος θα παραμείνει σε ισχύ για 24 ώρες. Αν χρειαστεί να επαναφέρετε τον κωδικό πρόσβασής σας αργότερα, θα πρέπει να ξαναεπισκεφθείτε την σελίδα για απώλεια του κωδικού πρόσβασης και να ζητήσετε έναν νέο σύνδεσμο.
   reset_password_mail_greeting: "%{user}, έχει γίνει επαναφορά του κωδικού σας όπως ζητήσατε."
   reset_password_mail_warning: Αν δεν έχετε ζητήσει αλλαγή κωδικού πρόσβασης, επικοινωνήστε μαζί μας.
-  your_login: Ο λογαριασμός σας
   invalid_email_text: Η διεύθυνση email που δώσατε δεν είναι έγκυρη.
   reset_password: Επαναφορά κωδικού πρόσβασης
   reset_password_email_sent: Εάν αυτή η ηλεκτρονική διεύθυνση σχετίζεται με ένα έγκυρο όνομα χρήστη, θα σταλεί ένα email με οδηγίες για την επαναφορά του κωδικού πρόσβασής σας.
@@ -51,9 +48,7 @@ el:
   change_password: Αλλαγή κωδικού
   password: Κωδικός πρόσβασης
   password_confirmation: Επιβεβαίωση κωδικού πρόσβασης
-  signup_confirm_password: Επιβεβαιώστε τον κωδικό
   login_password: Κωδικός πρόσβασης
-  signup_password: Ο κωδικός σας
   remove_your_account: Κατάργηση του λογαριασμού σας
   anonymize_display_name: Ανωνυμοποίηση του εμφανιζόμενου ονόματος χρήστη
   anonymize_display_name_info: Αυτό θα αντικαταστήσει παντού το εμφανιζόμενο όνομά σας με τη λέξη 'Anonymous'
@@ -128,6 +123,18 @@ el:
       add: Προσθήκη νέας Εργασίας
     possible:
       add: Προσθήκη νέας Δυνατότητας
+  mailer:
+    hello: Γεια %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Μια σελίδα έχει τροποποιηθεί"
+      pages_you_are_watching_have_been_modified:
+        one: Μια σελίδα σελίδα που παρακολουθείτε έχει τροποποιηθεί από την τελευταία ειδοποίηση.
+        other: '%{count} σελίδες που παρακολουθείτε έχουν τροποποιηθεί από την τελευταία ειδοποίηση.'
+      we_leave_out_details: Σ' αυτό το μήνυμα, έχουμε παραλείψει τις λεπτομέρειες που μπορεί να θέλετε να κρατήσετε εμπιστευτικές.
+      you_can_find_updates_here: 'Μπορείτε να βρείτε περισσότερες λεπτομέρειες καθώς και μια λίστα των πρόσφατα τροποποιημένων σελίδεων εδώ:'
+      the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακαολουθείτε έχει τροποποιηθεί
+      change_your_settings_here: 'Μπορείτε να αλλάξετε τις ρυθμίσεις των ειδοποιήσεων ηλεκτρονικού ταχυδρομείου εδώ: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Απενεργοποιείστε τις ειδοποιήσεις ηλεκτρονικού ταχυδρομείου, επιλέξτε να λαμβάνετε μια περίληψη των αλλαγών, ή ένα email κάθε φορά που η σελίδα έχει αλλάξει.
   exception:
     title:
       not_found: "Ο/Η/Το %{thing} δεν βρέθηκε"
@@ -138,6 +145,7 @@ el:
     description:
       not_found: Συγνώμη, δεν βρήκαμε αυτό που αναζητήσατε.
       unauthorized: Συνδεθείτε για να εκτελέσετε αυτή την ενέργεια.
+      forbidden: Συγνώμη. Δεν έχετε τη δυνατότηα να εκτελέσετε αυτή την ενέργεια.
       group:
         not_found: Συγνώμη, δε βρήκαμε την ομάδα που αναζητήσατε.
   image_count: Εικόνα %{number} από %{count}
@@ -225,6 +233,9 @@ el:
   notice: Επισήμανση
   notices: Επισημάνσεις
   dismiss: Απόρριψη
+  dismiss_all_notices: Απόρριψη όλων
+  dismiss_all_notices_confirmation: Είστε σίγουροι ότι θέλετε να απορρίψετε όλες τις ειδοποιήσεις;
+  action_cannot_be_undone: Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.
   locale: Τοπική ρύθμιση
   description: Περιγραφή
   details: Λεπτομέρειες
@@ -269,6 +280,8 @@ el:
   may_request_membership_description: Ένας σύνδεσμος για "συμμετοχή στην ομάδα %{group}" θα εμφανιστεί στη σελίδα %{group} σας. Αυτό θα στείλει μια πρόσκληση για συμμετοχή η οποία μπορεί να γίνει δεκτή ή να απορριφθεί.
   open_group: Άνοιγμα %{group}
   open_group_description: Οι χρήστες προστίθενται απευθείας στην ομάδα %{group} - Τα αιτήματα δεν χρειάζεται να εγκριθούν
+  shared_groups: Κοινές ομάδες
+  public_groups: Δημόσιες ομάδες
   membership_requests: Αιτήματα εγγραφής μελών
   group_membership_count: "%{count} μέλη"
   membership_exists_error: Ο/Η %{member} έχει ήδη ιδιότητα μέλους
@@ -277,7 +290,7 @@ el:
   group_invite_email: |-
     Ο/Η %{from_user} σας προσκαλεί να γραφτείτε στην ομάδα %{group}. Αν θέλετε να γραφτείτε, κάντε κλικ εδώ:
 
-     %{accept_invite_link}
+    %{accept_invite_link}
 
     Η αρχική σελίδα της ομάδας βρίσκεται εδώ:
     %{group_home_link}
@@ -325,11 +338,13 @@ el:
     recent_pages: Πρόσφατες σελίδες
     info:
       page_search: Βρείτε όλες τις σελίδες στις οποίες έχετε πρόσβαση απευθείας ή μέσω των ομάδων σας
+      recent_pages: Αυτές οι σελίδες δημιουργήθηκαν ή ενημερώθηκαν πρόσφατα.
   my_dashboard: Πίνακας ελέγχου
   uploaded_image_cropped: Η εικόνα που φορτώθηκε θα περικοπεί και θα εκταθεί σε τετράγωνη διάσταση 202 pixels
   select_image_file: επιλογή αρχείου εικόνας
   or_image_url: ή διεύθυνσης URL της εικόνας
   upload_image_link: φόρτωση εικόνας
+  remove_image_link: αφαίρεση εικόνας
   save_changes: Αποθήκευση αλλαγών
   username: Όνομα χρήστη
   display_name: Όνομα εμφάνισης
@@ -482,16 +497,6 @@ el:
   page_history_updated_comment: "Ο/Η %{user_name} ενημέρωσε ένα σχόλιο"
   page_history_updated_content: "Ο/Η %{user_name} ενημέρωσε το περιεχόμενο της σελίδας"
   page_history_user_created_page: "Ο/Η %{user_name} δημιούργησε τη σελίδα"
-  page_history_mailer_hello_user_name: Γεια %{user_name}
-  page_history_mailer: 'Αλλάξτε τις ρυθμίσεις ειδοποίησης μέσω email εδώ: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : μια σελίδα έχει τροποποιηθεί"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Μια σελίδα που παρακολουθείτε έχει τροποποιηθεί %{histories_count} φορά/ές από την τελευταία ειδοποίηση,
-    μπορείτε να αποκτήσετε πρόσβαση στη σελίδα εδώ:
-  page_history_mailer_a_page_you_are_watching: Μια σελίδα που παρακολουθείτε έχει τροποποιηθεί, μπορείτε να μεταβείτε στη σελίδα εδώ
-  page_history_the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακολουθείτε έχει τροποποιηθεί
-  page_history_mailer_expire_link: 'Ο σύνδεσμος λήγει σε '
-  page_history_mailer_choose_turn_off_notifications: Μπορείτε να επιλέξετε να απενεργοποιήσετε τις ειδοποιήσεις ηλεκτρονικού ταχυδρομείου, να λαμβάνετε μια περίληψη των αλλαγών, ή να λαμβάνετε ένα email κάθε φορά που η σελίδα τροποποιείται
   wiki_page_description: Δημιουργήστε ένα επεξεργάσιμο κείμενο ελεύθερης μορφής.
   wiki_page_display: Σελίδα Wiki
   gallery_description: Φορτώστε πολλαπλές εικόνες ή οργανώσετε τις υπάρχουσες εικόνες σε ένα σύνολο.

@@ -2,9 +2,16 @@ de:
   riseup:
     run_by_html: "Diese Seite wird betrieben von %{provider}%{description}"
     description: "- deinem freundlichen autonomen Technik-Kollektiv (seit 1999)."
-    privacy_policy: "Datenschutz-Richtlinie"
+    privacy_policy: "Datenschutzerklärung"
+    terms_of_service: "Nutzungsbedingungen"
     about_us: "Über uns"
-    email_accounts: "E-Mail Konten"
+    email_accounts: "E-Mail-Konten"
     mailing_lists: "Mailinglisten"
     system_status: "Systemstatus"
-    donate: "Spende an riseup"
+    donate: "Spende an Riseup"
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+        HINWEIS: Die Benutzerkonten für diese Webseite sind unabhängig von anderen
+        riseup.net-Diensten. In anderen Worten: Du kannst dein %{riseup_black}- oder
+        %{riseup_red}-Konto nicht verwenden, um dich auf dieser Webseite anzumelden.
