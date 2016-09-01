@@ -11,7 +11,7 @@ class Mailer::PageHistories < ActionMailer::Base
   DIGEST_TIMESPAN = 1.day
   UPDATE_TIMESPAN = 1.hour
 
-  add_template_helper(Pages::HistoryHelper)
+  add_template_helper(Page::HistoryHelper)
   add_template_helper(Common::Utility::TimeHelper)
 
   def self.deliver_digests
@@ -76,7 +76,7 @@ class Mailer::PageHistories < ActionMailer::Base
 
   # all relevant PageHistory records
   def self.page_histories
-    PageHistory.where(notification_digest_sent_at: nil).
+    Page::History.where(notification_digest_sent_at: nil).
       where("DATE(page_histories.created_at) >= DATE(?)", DIGEST_TIMESPAN.ago).
       where("DATE(page_histories.created_at) < DATE(?)", Time.now)
   end

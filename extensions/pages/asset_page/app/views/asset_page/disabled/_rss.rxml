@@ -1,1 +1,1 @@
-xml << render(:partial => 'asset_page/rss_asset_tags', :locals => {:object => item.data})
+xml << render('asset_page/rss_asset_tags', object: item.data)

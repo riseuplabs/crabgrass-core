@@ -1,5 +1,5 @@
 class WikiPage < Page
-  include PageExtension::RssData
+  include Page::RssData
 
   def title=(value)
     write_attribute(:title, value)

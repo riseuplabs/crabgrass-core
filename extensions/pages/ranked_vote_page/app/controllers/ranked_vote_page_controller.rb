@@ -1,4 +1,4 @@
-class RankedVotePageController < Pages::BaseController
+class RankedVotePageController < Page::BaseController
   before_filter :fetch_poll
   before_filter :find_possibles, only: [:show, :edit]
 

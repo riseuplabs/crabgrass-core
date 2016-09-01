@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150911091551) do
+ActiveRecord::Schema.define(:version => 20151013074955) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id"
@@ -95,9 +95,6 @@ ActiveRecord::Schema.define(:version => 20150911091551) do
 
   add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
 
-  create_table "categories", :force => true do |t|
-  end
-
   create_table "channels", :force => true do |t|
     t.string  "name"
     t.integer "group_id"
@@ -114,20 +111,6 @@ ActiveRecord::Schema.define(:version => 20150911091551) do
   end
 
   add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
-
-  create_table "codes", :force => true do |t|
-    t.string   "code",       :limit => 10
-    t.integer  "page_id"
-    t.integer  "user_id"
-    t.integer  "access"
-    t.datetime "expires_at"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
-  add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id"
@@ -353,16 +336,6 @@ ActiveRecord::Schema.define(:version => 20150911091551) do
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
 
-  create_table "menu_items", :force => true do |t|
-    t.string   "title"
-    t.string   "link"
-    t.integer  "position"
-    t.integer  "group_id"
-    t.boolean  "default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
     t.string   "type"
@@ -395,6 +368,20 @@ ActiveRecord::Schema.define(:version => 20150911091551) do
   end
 
   add_index "notices", ["user_id"], :name => "index_notices_on_user_id"
+
+  create_table "page_access_codes", :force => true do |t|
+    t.string   "code",       :limit => 10
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.integer  "access"
+    t.datetime "expires_at"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "page_access_codes", ["code"], :name => "index_codes_on_code", :unique => true
+  add_index "page_access_codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
   create_table "page_histories", :force => true do |t|
     t.integer  "user_id"

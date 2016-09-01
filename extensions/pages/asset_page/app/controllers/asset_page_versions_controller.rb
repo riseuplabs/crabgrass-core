@@ -1,4 +1,4 @@
-class AssetPageVersionsController < Pages::BaseController
+class AssetPageVersionsController < Page::BaseController
 
   guard index: :may_show_page?,
     create: :may_show_page?,

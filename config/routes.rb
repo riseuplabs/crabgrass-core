@@ -110,10 +110,10 @@ Crabgrass::Application.routes.draw do
 
   match 'people/directory(/*path)',
     as: 'people_directory',
-    to: 'people/directory#index',
+    to: 'person/directory#index',
     via: [:get, :post]
 
-  resources :people, module: 'people', controller: 'home', only: :show do
+  resources :people, module: 'person', controller: 'home', only: :show do
     resource  :home, only: :show, controller: 'home'
     match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
     # resources :messages
@@ -125,10 +125,10 @@ Crabgrass::Application.routes.draw do
   ## GROUP
   ##
 
-  get 'networks/directory(/*path)', as: 'networks_directory', to: 'groups/directory#index'
-  get 'groups/directory(/*path)', as: 'groups_directory', to: 'groups/directory#index'
+  get 'networks/directory(/*path)', as: 'networks_directory', to: 'group/directory#index'
+  get 'groups/directory(/*path)', as: 'groups_directory', to: 'group/directory#index'
 
-  resources :groups, module: 'groups', only: [:new, :create, :destroy] do
+  resources :groups, module: 'group', only: [:new, :create, :destroy] do
     # content related
     resource  :home, only: [:show], controller: 'home'
     match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
@@ -167,13 +167,13 @@ Crabgrass::Application.routes.draw do
   # default page creator
   get '/pages/create(/:owner(/:type))',
     as: 'page_creation',
-    to: 'pages/create#new'
+    to: 'page/create#new'
   post '/pages/create(/:owner(/:type))',
     as: 'page_creation',
-    to: 'pages/create#create'
+    to: 'page/create#create'
 
   # base page
-  resources :pages, module: 'pages', controller: 'base', only: [] do |pages|
+  resources :pages, module: 'page', controller: 'base', only: [] do |pages|
     resources :participations, only: [:index, :update, :create]
     #resources :changes
     resources :assets, only: [:index, :update, :create]
@@ -199,7 +199,7 @@ Crabgrass::Application.routes.draw do
   ## WIKI
   ##
 
-  resources :wikis, module: 'wikis', only: [:show, :edit, :update] do
+  resources :wikis, module: 'wiki', only: [:show, :edit, :update] do
     member do
       get 'print'
     end

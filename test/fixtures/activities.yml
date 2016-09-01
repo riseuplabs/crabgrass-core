@@ -2,7 +2,7 @@
 activities_001:
   item_name: gerrard
   subject_name: animals
-  type: GroupCreatedActivity
+  type: GroupCreated
   id: "1"
   subject_type: Group
   subject_id: "2"
@@ -15,7 +15,7 @@ activities_001:
 activities_002:
   item_name: animals
   subject_name: gerrard
-  type: UserCreatedGroupActivity
+  type: UserCreatedGroup
   id: "2"
   subject_type: User
   subject_id: "3"
@@ -28,7 +28,7 @@ activities_002:
 activities_003:
   item_name: animals
   subject_name: gerrard
-  type: UserJoinedGroupActivity
+  type: UserJoinedGroup
   id: "3"
   subject_type: User
   subject_id: "3"
@@ -41,7 +41,7 @@ activities_003:
 activities_004:
   item_name: gerrard
   subject_name: animals
-  type: GroupGainedUserActivity
+  type: GroupGainedUser
   id: "4"
   subject_type: Group
   subject_id: "2"
@@ -54,7 +54,7 @@ activities_004:
 activities_005:
   item_name: animals
   subject_name: blue
-  type: UserJoinedGroupActivity
+  type: UserJoinedGroup
   id: "5"
   subject_type: User
   subject_id: "4"
@@ -67,7 +67,7 @@ activities_005:
 activities_006:
   item_name: blue
   subject_name: animals
-  type: GroupGainedUserActivity
+  type: GroupGainedUser
   id: "6"
   subject_type: Group
   subject_id: "2"
@@ -80,7 +80,7 @@ activities_006:
 activities_007:
   item_name: gerrard
   subject_name: blue
-  type: TwinkledActivity
+  type: Twinkled
   id: "7"
   subject_type: User
   subject_id: "4"
@@ -95,7 +95,7 @@ activities_007:
 activities_008:
   item_name: blue
   subject_name: gerrard
-  type: FriendActivity
+  type: Friend
   id: "8"
   subject_type: User
   subject_id: "3"
@@ -108,7 +108,7 @@ activities_008:
 activities_009:
   item_name: gerrard
   subject_name: blue
-  type: FriendActivity
+  type: Friend
   id: "9"
   subject_type: User
   subject_id: "4"
@@ -121,7 +121,7 @@ activities_009:
 activities_010:
   item_name:
   subject_name: blue
-  type: UserDestroyedActivity
+  type: UserDestroyed
   id: "10"
   subject_type: User
   subject_id: "4"
@@ -134,7 +134,7 @@ activities_010:
 activities_012:
   item_name: gerrard
   subject_name: blue
-  type: MessageWallActivity
+  type: MessageWall
   id: "12"
   subject_type: User
   subject_id: "4"

@@ -1,4 +1,4 @@
-class GalleryImageController < Pages::BaseController
+class GalleryImageController < Page::BaseController
 
   helper 'gallery'
 

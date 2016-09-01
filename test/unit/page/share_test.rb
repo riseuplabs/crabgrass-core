@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::ShareTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :memberships, :user_participations
+  fixtures :pages, :users, :groups, :memberships, 'user/participations'
 
   def test_share_hash
     user = users(:kangaroo)
@@ -10,7 +10,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     user2 = users(:red)
     page = Page.create(title: 'x', user: user, access: :admin)
 
-    share = PageShare.new page, user
+    share = Page::Share.new page, user
     share.with "animals" => {access: "edit"}, "red" => {access: "edit"}
 
     assert group.may?(:edit, page)
@@ -25,7 +25,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     rainbow = groups(:rainbow)
     page = Page.create!(title: 'title', user: creator, share_with: ['red', 'rainbow', 'animals'], access: :admin)
 
-    share = PageShare.new page, creator,
+    share = Page::Share.new page, creator,
       send_notice: true,
       send_message: 'hi'
     share.with ['red', 'rainbow', 'animals']
@@ -48,7 +48,7 @@ class Page::ShareTest < ActiveSupport::TestCase
      access: :view)
     assert rainbow.may?(:admin, page)
 
-    share = PageShare.new page, creator,
+    share = Page::Share.new page, creator,
       "send_notice"=>true,
       "send_message"=>"",
       "send_email"=>false
@@ -69,7 +69,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     owner = users(:kangaroo)
     userlist = [users(:dolphin), users(:penguin), users(:iguana)]
     page = Page.create!(title: 'title', user: owner, share_with: userlist, access: :edit)
-    share = PageShare.new(page, owner, send_notice: true)
+    share = Page::Share.new(page, owner, send_notice: true)
 
     # send notice to participants
     assert_difference('PageNotice.count', 4) do

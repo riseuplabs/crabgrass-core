@@ -159,8 +159,8 @@ define_navigation do
 
   global_section :people do
     label  { :people.t }
-    url    controller: 'people/directory'
-    active { controller?('people/') or (context?(:user) && visible_context?) }
+    url    controller: 'person/directory'
+    active { controller?('person/') or (context?(:user) && visible_context?) }
     html    partial: '/layouts/global/nav/people_menu'
 
     context_section :no_context do
@@ -193,7 +193,7 @@ define_navigation do
       icon   :house
       url    { entity_path(@user) }
       visible { current_user.may?(:view, @user) }
-      active { controller?('people/home') }
+      active { controller?('person/home') }
     end
 
     context_section :pages do
@@ -213,12 +213,12 @@ define_navigation do
   global_section :group do
     label  { :groups.t }
     url    { groups_directory_path }
-    active { controller?('groups/') or (context?(:group) && visible_context?) }
+    active { controller?('group/') or (context?(:group) && visible_context?) }
     html    partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do
-      #visible { context?(:none) and controller?('groups/directory') }
-      #active  { context?(:none) and controller?('groups/directory') }
+      #visible { context?(:none) and controller?('group/directory') }
+      #active  { context?(:none) and controller?('group/directory') }
 
       visible { context?(:none) }
       active  { context?(:none) }
@@ -227,19 +227,19 @@ define_navigation do
         visible { logged_in? }
         label { :my_groups.t }
         url { groups_directory_path(path: ['my']) }
-        active { controller?('groups/directory') and params[:path].try(:include?, 'my') }
+        active { controller?('group/directory') and params[:path].try(:include?, 'my') }
       end
 
       local_section :search do
         label { :search.t }
         url { groups_directory_path(path: ['search']) }
-        active { controller?('groups/directory') and params[:path].try(:include?, 'search') }
+        active { controller?('group/directory') and params[:path].try(:include?, 'search') }
       end
 
       local_section :create do
         label   { :create_thing.t(thing: :group.t) }
         url     { new_group_path }
-        active  { controller?('groups/groups') }
+        active  { controller?('group/groups') }
         icon    :plus
       end
 
@@ -250,7 +250,7 @@ define_navigation do
       label  { :home.t }
       icon   :house
       url    { entity_path(@group) }
-      active { controller?('groups/home') }
+      active { controller?('group/home') }
     end
 
     context_section :pages do
@@ -264,7 +264,7 @@ define_navigation do
 #    context_section :calendar do
 #      label  { :calendar.t }
 #      url    { group_events_path(@group) }
-#      active { controller?('groups/events') }
+#      active { controller?('group/events') }
 #      icon   :date
 #    end
 
@@ -273,34 +273,34 @@ define_navigation do
       label   { :members.t }
       icon    :user
       url     { group_memberships_path(@group) }
-      active  { controller?('groups/memberships', 'groups/invites', 'groups/membership_requests') }
+      active  { controller?('group/memberships', 'group/invites', 'group/membership_requests') }
 
       local_section :people do
         visible { may_list_memberships? }
         label   { :people.t }
         url     { group_memberships_path(@group) }
-        active  { controller?('groups/memberships') and params[:view] != 'groups' }
+        active  { controller?('group/memberships') and params[:view] != 'groups' }
       end
 
       local_section :groups do
         visible { may_list_memberships? and @group.network? }
         label   { :groups.t }
         url     { group_memberships_path(@group, view: 'groups') }
-        active  { controller?('groups/memberships') and params[:view] == 'groups' }
+        active  { controller?('group/memberships') and params[:view] == 'groups' }
       end
 
       local_section :invites do
         visible { may_admin_group? }
         label   { :send_invites.t }
         url     { new_group_invite_path(@group) }
-        active  { controller?('groups/invites') }
+        active  { controller?('group/invites') }
       end
 
       local_section :requests do
         visible { may_admin_group? }
         label   { :membership_requests.t }
         url     { group_membership_requests_path(@group) }
-        active  { controller?('groups/membership_requests') }
+        active  { controller?('group/membership_requests') }
       end
 
       #local_section :leave_group_link do
@@ -322,48 +322,48 @@ define_navigation do
       label  { :settings.t }
       icon   :control
       url    { group_settings_path(@group) }
-      active { controller?('groups/settings', 'groups/permissions', 'groups/profiles', 'groups/structures', 'groups/requests', 'groups/wikis', 'wikis/versions', 'wikis/diffs') }
+      active { controller?('group/settings', 'group/permissions', 'group/profiles', 'group/structures', 'group/requests', 'group/wikis', 'wiki/versions', 'wiki/diffs') }
 
       local_section :settings do
         visible { may_admin_group? }
         label  { :basic_settings.t }
         url    { group_settings_path(@group) }
-        active { controller?('groups/settings') }
+        active { controller?('group/settings') }
       end
 
       local_section :permissions do
         visible { may_admin_group? }
         label  { :permissions.t }
         url    { group_permissions_path(@group) }
-        active { controller?('groups/permissions') }
+        active { controller?('group/permissions') }
       end
 
       local_section :profile do
         visible { may_admin_group? }
         label  { :profile.t }
         url    { edit_group_profile_path(@group) }
-        active { controller?('groups/profiles') }
+        active { controller?('group/profiles') }
       end
 
       local_section :wiki do
         visible { may_admin_group? }
         label  { :wiki.t }
         url    { group_wikis_path(@group) }
-        active { controller?('groups/wikis', 'wikis/versions', 'wikis/diffs') }
+        active { controller?('group/wikis', 'wiki/versions', 'wiki/diffs') }
       end
 
       local_section :structure do
         visible { may_admin_group? }
         label  { :structure.t }
         url    { group_structure_path(@group) }
-        active { controller?('groups/structures') }
+        active { controller?('group/structures') }
       end
 
       local_section :requests do
         visible { may_admin_group? }
         label  { :requests.t }
         url    { group_requests_path(@group) }
-        active { controller?('groups/requests') }
+        active { controller?('group/requests') }
       end
     end
   end
@@ -376,7 +376,7 @@ define_navigation do
 #    visible { @group.nil? }
 #    label  "Groups"
 #    url    { groups_directory_path }
-#    active { controller?('groups/') }
+#    active { controller?('groups') }
 #    html   :partial => '/layouts/global/nav/groups_menu'
 ##    section :place do
 ##    end

@@ -28,11 +28,11 @@ class Group < ActiveRecord::Base
   extend RouteInheritance          # subclasses use /groups routes
 
   # core group extentions
-  include GroupExtension::Groups     # group <--> group behavior
-  include GroupExtension::Users      # group <--> user behavior
-  include GroupExtension::Featured   # this makes this group's pages featureable
-  include GroupExtension::Pages      # group <--> page behavior
-  include GroupExtension::Cache      # only versioning so far
+  include Group::Groups     # group <--> group behavior
+  include Group::Users      # group <--> user behavior
+  include Group::Featured   # this makes this group's pages featureable
+  include Group::Pages      # group <--> page behavior
+  include Group::Cache      # only versioning so far
 
   # not saved to database, just used by activity feed:
   attr_accessor :created_by
@@ -231,33 +231,6 @@ class Group < ActiveRecord::Base
   end
 
   ##
-  ## MENU_ITEMS
-  ##
-
-  has_many :menu_items, dependent: :destroy, order: :position do
-
-    def update_order(menu_item_ids)
-      menu_item_ids.each_with_index do |id, position|
-        # find the menu_item with this id
-        menu_item = self.find(id)
-        menu_item.update_attribute(:position, position)
-      end
-      self
-    end
-  end
-
-  # creates a menu item for the group and returns it.
-  def add_menu_item(params)
-    item = MenuItem.create!(params.merge(group_id: self.id, position: self.menu_items.count))
-  end
-
-
-  # TODO: add visibility to menu_items so they can be visible to members only.
-  # def menu_items
-  #   self.menu_items.visible_by(User.current)
-  # end
-
-  ##
   ## AVATAR
   ##
 
@@ -309,31 +282,7 @@ class Group < ActiveRecord::Base
     destroy_permissions
   end
 
-  ##
-  ## GROUP SETTINGS
-  ##
-
   public
-
-  has_one :group_setting
-  # can't remember the way to do this automatically
-  after_create :create_group_setting
-  def create_group_setting
-    self.group_setting = GroupSetting.new
-    self.group_setting.save
-  end
-
-  #Defaults!
-  def tool_allowed(tool)
-    group_setting.allowed_tools.nil? or group_setting.allowed_tools.index(tool)
-  end
-
-  #Defaults!
-  def layout(section)
-    template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
-    template_data[section]
-  end
-
 
   # migrate permissions from pre-CastleGates databases to CastleGates.
   # Called from cg:upgrade:migrate_group_permissions task.

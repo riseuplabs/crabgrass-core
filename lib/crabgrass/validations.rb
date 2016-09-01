@@ -35,7 +35,7 @@ module Crabgrass
           unless /^[a-z0-9]+([-\+_]*[a-z0-9]+){1,49}$/ =~ value
             record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
           end
-          unless record.instance_of?(Committee) || record.instance_of?(Council)
+          unless record.instance_of?(Group::Committee) || record.instance_of?(Group::Council)
             # only allow '+' for Committees
             if /\+/ =~ value
               record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')

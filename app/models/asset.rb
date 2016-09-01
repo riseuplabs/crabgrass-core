@@ -3,7 +3,7 @@
 Assets use a lot of classes to manage a particular uploaded file:
 
   Asset          -- main asset class.
-  ImageAsset     -- a subclass of Asset using STI, for example.
+  Asset::Image   -- a subclass of Asset using STI, for example.
   Asset::Version -- all the past and present versions of the main asset.
   Thumbnail      -- a processed representation of an Asset (usually a small image)
 
@@ -11,9 +11,9 @@ Assets use a lot of classes to manage a particular uploaded file:
   have many thumbnails.
 
   Additionally, three modules are included by Asset:
-    AssetExtension::Upload      -- handles uploading data
-    AssetExtension::Storage     -- handles where/how data is stored
-    AssetExtension::Thumbnails  -- handles the creation of the thumbnails
+    Asset::Upload      -- handles uploading data
+    Asset::Storage     -- handles where/how data is stored
+    Asset::Thumbnails  -- handles the creation of the thumbnails
 
   Asset::Versions have the latter two included as well.
 
@@ -76,16 +76,12 @@ TODO:
 class Asset < ActiveRecord::Base
   include Crabgrass::Page::Data
 
-  # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
-  # it always picks "Asset". So, we hardcode what the query should be:
-  POLYMORPH_AS_PARENT = lambda { |a| "SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = \"#{self.type_as_parent}\"" }
-
   # fields in assets table not in asset_versions
   NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
 
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
-  include AssetExtension::Upload
+  include Asset::Upload
   validates_presence_of :filename, unless: 'new_record?'
 
 
@@ -165,11 +161,11 @@ class Asset < ActiveRecord::Base
 
   acts_as_versioned do
     def self.included(base)
-      base.send :include, AssetExtension::Storage
-      base.send :include, AssetExtension::Thumbnails
+      base.send :include, Asset::Storage
+      base.send :include, Asset::Thumbnails
       base.belongs_to :user
-      base.has_many :thumbnails, class_name: '::Thumbnail',
-        dependent: :destroy, finder_sql: POLYMORPH_AS_PARENT do
+      base.has_many :thumbnails, class_name: '::Thumbnail', as: :parent,
+        dependent: :destroy do
         def preview_images
           small, medium, large = nil
           self.each do |tn|
@@ -198,6 +194,10 @@ class Asset < ActiveRecord::Base
     # file name without extension
     def basename; File.basename(filename, ext); end
 
+    def url(name = filename)
+      path.url(name)
+    end
+
     def big_icon
       "mime_#{Media::MimeType.icon_for(content_type)}"
     end
@@ -221,30 +221,28 @@ class Asset < ActiveRecord::Base
   ##
 
   # to be overridden in Asset::Version
-  def version_path; []; end
+  def path
+    @path ||= Storage::Path.new id: id, filename: filename
+  end
   def is_version?; false; end
-  def type_as_parent; self.type; end
 
   versioned_class.class_eval do
     delegate :page, :public?, :has_access!, to: :asset
 
     # all our paths will have version info inserted into them
-    def version_path
-      ['versions',version.to_s]
-    end
-
-    # our path id will be the id of the main asset
-    def path_id
-      asset.path_id if asset
+    def path
+      @path ||= Storage::Path.new id: asset.id,
+        filename: filename,
+        version: version.to_s
     end
 
     # this object is a version, not the main asset
     def is_version?; true; end
 
     # delegate call to thumbdefs to our original Asset subclass.
-    # eg: Asset::Version#thumbdefs --> ImageAsset.thumbdefs
+    # eg: Asset::Version#thumbdefs --> Asset::Image.thumbdefs
     def thumbdefs
-      versioned_type.constantize.class_thumbdefs if versioned_type
+      "Asset::#{versioned_type}".constantize.class_thumbdefs if versioned_type
     end
 
     def type_as_parent
@@ -293,7 +291,7 @@ class Asset < ActiveRecord::Base
     self.parent_page = AssetPage.create!(page_params)
   end
 
-  # some asset subclasses (like AudioAsset) will display using flash
+  # some asset subclasses (like Asset::Audio) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
     nil
@@ -324,7 +322,7 @@ class Asset < ActiveRecord::Base
   ##
 
   #
-  # creates an Asset of the appropriate subclass (ie ImageAsset).
+  # creates an Asset of the appropriate subclass (ie Asset::Image).
   #
   def self.create_from_params(attributes = nil, &block)
     asset_class(attributes).create!(attributes, &block)
@@ -349,7 +347,7 @@ class Asset < ActiveRecord::Base
   private
 
   #
-  # returns the appropriate asset class, ie ImageAsset, for the attributes passed in.
+  # returns the appropriate asset class, ie Asset::Image, for the attributes passed in.
   #
   def self.asset_class(attributes)
     if attributes
@@ -368,7 +366,7 @@ class Asset < ActiveRecord::Base
   # MIME TYPES
   #
 
-  # eg: 'image/jpg' --> ImageAsset
+  # eg: 'image/jpg' --> Asset::Image
   def self.class_for_mime_type(mime)
     if mime
       Media::MimeType.asset_class_from_mime_type(mime).constantize

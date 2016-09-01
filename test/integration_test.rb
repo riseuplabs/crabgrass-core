@@ -44,12 +44,12 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   end
 
   #
-  # PageTerms live in an MyIsam table
+  # Page::Terms live in an MyIsam table
   def truncate_page_terms
-    first_dangling_term = PageTerms.joins('LEFT JOIN pages ON pages.id = page_terms.page_id').
+    first_dangling_term = Page::Terms.joins('LEFT JOIN pages ON pages.id = page_terms.page_id').
       where('pages.id IS NULL').order(:id).first
     if first_dangling_term
-      PageTerms.where("id >= #{first_dangling_term.id}").delete_all
+      Page::Terms.where("id >= #{first_dangling_term.id}").delete_all
     end
   end
 

@@ -64,22 +64,22 @@ schema
 class Page < ActiveRecord::Base
   extend RouteInheritance          # subclasses use /pages routes
 
-  include PageExtension::Users     # page <> users relationship
-  include PageExtension::Groups    # page <> group relationship
-  include PageExtension::Assets    # page <> asset relationship
-  include PageExtension::Comments  # page <> post relationship
-  include PageExtension::Create    # page creation
-  include PageExtension::Subclass  # page subclassing
-  include PageExtension::Index     # page full text searching
-  include PageExtension::Starring  # ???
-  include PageExtension::Tracking  # page tracking views, edits and stars
-  include PageExtension::PageHistory
+  include Page::Users           # page <> users relationship
+  include Page::Groups          # page <> group relationship
+  include Page::Assets          # page <> asset relationship
+  include Page::Comments        # page <> post relationship
+  include Page::Create          # page creation
+  include Page::Subclass        # page subclassing
+  include Page::Index           # page full text searching
+  include Page::Starring        # star specific functionality
+  include Page::Stats           # page tracking views, edits and stars
+  include Page::HistoryTracking # page <> page_history
 
 
   has_many :page_notices, as: :noticable, dependent: :delete_all
 
 
-  # disable timestamps, we set the updated_at field through certain PageHistory subclasses
+  # disable timestamps, we set the updated_at field through certain Page::History subclasses
   self.record_timestamps = false
   before_save :save_timestamps
 
@@ -345,6 +345,8 @@ class Page < ActiveRecord::Base
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
+  # FIXME: removing the connection should be part of the participation.
+  # This way we can test participation.destroyed? in page history and views.
   def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|

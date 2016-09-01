@@ -1,0 +1,6 @@
+- if !params[:type]
+  = render 'choose_group_type'
+- elsif params[:type] == 'committee' or params[:type] == 'council'
+  = render 'choose_parent_group'
+- else
+  = render 'group/structures/new_form'

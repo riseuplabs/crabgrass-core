@@ -28,7 +28,7 @@ CastleGates.define do
     :label => :public,
     :info => :public_description
 
-  holder_alias :public, :model => UnauthenticatedUser
+  holder_alias :public, :model => User::Unknown
 
   ##
   ## USER
@@ -191,8 +191,8 @@ CastleGates.define do
   end
 
   holder 8, :group, :model => Group
-  holder_alias :group, :model => Committee
-  holder_alias :group, :model => Council
-  holder_alias :group, :model => Network
+  holder_alias :group, :model => Group::Committee
+  holder_alias :group, :model => Group::Council
+  holder_alias :group, :model => Group::Network
 
 end

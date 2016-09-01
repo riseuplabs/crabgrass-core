@@ -1,4 +1,4 @@
-ThinkingSphinx::Index.define :page_terms, with: :active_record,
+ThinkingSphinx::Index.define 'page/terms', with: :active_record,
   delta: ThinkingSphinx::Deltas::DelayedDelta do
   ## text fields ##
 

@@ -4,6 +4,6 @@
 
 %li.list-group-item.handle[possible]
   %div{:id => possible_show_id}
-    = render :partial => 'ranked_vote_possibles/possible_show', :locals => {:possible => possible}
+    = render 'ranked_vote_possibles/possible_show', possible: possible
   %div{:id => possible_edit_id, :style => 'display: none'}
 

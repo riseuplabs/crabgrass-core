@@ -1,0 +1,7 @@
+.sidebox
+  = render 'sidebox'
+  - if may_list_friends?
+    = render 'friends'
+  - if may_list_groups?
+    = render 'groups'
+

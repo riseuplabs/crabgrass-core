@@ -35,9 +35,9 @@ FactoryGirl.define do
     full_name { generate(:display_name) }
     name      { full_name.gsub(/[^a-z]/,"") }
 
-    factory(:committee, class: Committee) {}
-    factory(:council, class: Council) {}
-    factory(:network,   class: Network)   {
+    factory(:committee, class: Group::Committee) {}
+    factory(:council, class: Group::Council) {}
+    factory(:network,   class: Group::Network)   {
       initial_member_group { FactoryGirl.create(:group) }
     }
   end
@@ -71,7 +71,7 @@ FactoryGirl.define do
     version       1
     # association :parent_page, factory: :asset_page
 
-    factory :image_asset, class: ImageAsset do
+    factory :image_asset, class: Asset::Image do
       uploaded_data { fixture_file_upload('files/bee.jpg',  "image/jpeg") }
       content_type { "image/jpeg" }
 
@@ -80,24 +80,24 @@ FactoryGirl.define do
       end
     end
 
-    factory :png_asset, class: PngAsset do
+    factory :png_asset, class: Asset::Png do
       uploaded_data { fixture_file_upload('files/image.png',  "image/png") }
       content_type { "image/png" }
     end
 
-    factory :word_asset, class: TextAsset do
+    factory :word_asset, class: Asset::Text do
       uploaded_data { fixture_file_upload('files/msword.doc', 'application/msword') }
       content_type { "application/msword" }
     end
 
   end
 
-  factory :user_participation do
+  factory 'user_participation', class: User::Participation do
     access 1
     watch false
   end
 
-  factory :group_participation do
+  factory 'group_participation', class: Group::Participation do
     access 1
   end
 

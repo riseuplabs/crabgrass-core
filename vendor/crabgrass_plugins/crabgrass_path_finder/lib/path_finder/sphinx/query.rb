@@ -77,20 +77,20 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       @order = "weight() DESC, page_updated_at DESC"
     end
 
-    #puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
+    #puts "Page::Terms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
     options = search_options sort_mode: @sort_mode
-    page_terms = PageTerms.search @search_text, options
+    page_terms = Page::Terms.search @search_text, options
 
     # page_terms has all of the will_paginate magic included, it just needs to
     # actually have the pages, which we supply with page_terms.replace(pages).
     pages = []
     page_terms.each do |pt|
       pages << pt.page unless pt.nil?
-      # Why might pt be nil? If the PageTerms was destroyed but sphinx has
+      # Why might pt be nil? If the Page::Terms was destroyed but sphinx has
       # not been reindex. This should not ever happen when things are working,
       # but sometimes it does, and if it does we don't want to bomb out.
     end
@@ -111,7 +111,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, search_options).size
+    Page::Terms.search_for_ids(@search_text, search_options).size
   rescue ThinkingSphinx::ConnectionError, Riddle::ConnectionError
     fallback.count
   end

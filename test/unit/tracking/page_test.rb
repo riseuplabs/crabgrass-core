@@ -13,11 +13,11 @@ class Tracking::PageTest < ActiveSupport::TestCase
     user = users(:blue)
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
-    assert_difference('Membership.find(%d).total_visits'%membership.id) do
+    assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
       Tracking::Page.insert(current_user: user, group: group)
       Tracking::Page.process
     end
-    assert_difference('Membership.find(%d).total_visits'%membership.id) do
+    assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
       Tracking::Page.insert(current_user: user.id, group: group.id)
       Tracking::Page.process
     end
@@ -33,7 +33,7 @@ class Tracking::PageTest < ActiveSupport::TestCase
     assert_difference 'Tracking::Page.count', -3 do
       Tracking::Page.process
     end
-    assert_equal 3, current_user.relationships.with(user).total_visits
+    assert_equal 3, current_user.relationships.with(user).first.total_visits
   end
 
   def test_page_view_tracked_fully

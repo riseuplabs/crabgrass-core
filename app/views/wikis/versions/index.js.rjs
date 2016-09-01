@@ -1,8 +1,0 @@
-standard_update(page)
-page.replace_html dom_id(@wiki), :partial => 'wikis/versions/index'
-
-# update tab
-page << "activateTabLink('%s')" % dom_id(@wiki, 'versions_tab')
-
-# hide the comment box, if it exists (groups don't have comments)
-page << "if ($('posts')) {$('posts').hide()}"

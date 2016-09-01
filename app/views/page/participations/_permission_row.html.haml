@@ -1,0 +1,12 @@
+%td
+  &nbsp;&nbsp;
+  = link_to_entity(participation.entity)
+
+%td= spinner(dom_id(participation))
+%td.form-inline
+  = display_access_icon(participation)
+  &nbsp;
+  - if may_remove_participation?(participation)
+    = edit_page_access(participation)
+  - else
+    = display_access(participation)

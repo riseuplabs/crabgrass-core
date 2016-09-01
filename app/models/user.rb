@@ -4,14 +4,14 @@ class User < ActiveRecord::Base
   ## CORE EXTENSIONS
   ##
 
-  include UserExtension::Cache      # cached user data (should come first)
-  include UserExtension::Users      # user <--> user
-  include UserExtension::Groups     # user <--> groups
-  include UserExtension::Pages      # user <--> pages
-  include UserExtension::Tags       # user <--> tags
-  include UserExtension::ChatChannels # user <--> chat channels
-  include UserExtension::AuthenticatedUser
-  include UserExtension::LegacyPasswords
+  include User::Cache      # cached user data (should come first)
+  include User::Users      # user <--> user
+  include User::Groups     # user <--> groups
+  include User::Pages      # user <--> pages
+  include User::Tags       # user <--> tags
+  include User::ChatChannels # user <--> chat channels
+  include User::Authenticated
+  include User::LegacyPasswords
 
   ##
   ## VALIDATIONS
@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   # This way you can modify the ghost without touching the original user.
   #
   def ghostify!
-    update_attribute :type, 'UserGhost'
+    update_attribute :type, 'Ghost'
     User.find(self.id)
   end
 
@@ -210,10 +210,12 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
-  has_one :setting, class_name: 'UserSetting', dependent: :destroy
+  has_one :setting, dependent: :destroy
 
   # allow us to call user.setting.x even if user.setting is nil
-  def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
+  def setting_with_safety(*args)
+    setting_without_safety(*args) or User::Setting.new;
+  end
   alias_method_chain :setting, :safety
 
   def update_setting(attrs)

@@ -1,7 +1,0 @@
-- content_for :title do
-  %h1
-    = h :welcome_title.t(site_title: current_site.title)
-  = to_html first_present(:welcome_login_message.t, :welcome_message.t)
-- if !logged_in?
-  .col-sm-center.margin-top
-    = render partial: 'session/login_form'

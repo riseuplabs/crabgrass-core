@@ -166,14 +166,14 @@ class GroupTest < ActiveSupport::TestCase
     page = DiscussionPage.create! title: 'hello', user: users(:blue), owner: g
     assert_equal page.owner, g
 
-    assert_difference 'Membership.count', -2 do
+    assert_difference 'Group::Membership.count', -2 do
       g.destroy
     end
 
     assert_nil page.reload.owner_id
 
     red = users(:red)
-    assert_nil GroupLostUserActivity.for_all(red).find(:first),
+    assert_nil Activity::GroupLostUser.for_all(red).find(:first),
       "there should be no user left group message"
   end
 

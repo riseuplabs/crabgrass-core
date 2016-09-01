@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 class RequestNoticeTest < ActiveSupport::TestCase
 
@@ -34,7 +34,7 @@ class RequestNoticeTest < ActiveSupport::TestCase
 
     @group.council = @council
     @group.save
-    assert_instance_of Council, @group.council
+    assert_instance_of Group::Council, @group.council
     assert_difference 'RequestNotice.count' do
       RequestNotice.create! req
     end

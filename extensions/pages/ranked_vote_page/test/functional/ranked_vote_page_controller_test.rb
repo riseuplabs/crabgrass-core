@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RankedVotePageControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :user_participations, :polls, :possibles
+  fixtures :pages, :users, 'user/participations', :polls, :possibles
 
   def setup
     user = users(:orange)

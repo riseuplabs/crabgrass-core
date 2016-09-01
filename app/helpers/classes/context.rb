@@ -49,7 +49,7 @@ class Context
   # returns the correct context for the given entity.
   def self.find(entity)
     return nil if entity.blank?
-    "Context::#{entity.class}".constantize.new(entity)
+    "Context::#{entity.class.name.demodulize}".constantize.new(entity)
   end
 
   def initialize(entity)

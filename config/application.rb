@@ -23,10 +23,9 @@ module Crabgrass
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 
-    config.autoload_paths += %w(activity assets associations discussion chat profile poll task requests mailers notice).
+    config.autoload_paths += %w(discussion chat profile poll task requests mailers notice).
      collect { |dir| "#{Rails.root}/app/models/#{dir}" }
     config.autoload_paths << "#{Rails.root}/app/permissions"
-    config.autoload_paths << "#{Rails.root}/app/sweepers"
     config.autoload_paths << "#{Rails.root}/app/helpers/classes"
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -67,7 +66,7 @@ module Crabgrass
     # add our custom error classes
     config.action_dispatch.rescue_responses.merge!(
       'ErrorNotFound' => :not_found,
-      'WikiExtension::Sections::SectionNotFoundError' => :not_found,
+      'Wiki::Sections::SectionNotFoundError' => :not_found,
       'PermissionDenied' => :forbidden,
       'AuthenticationRequired' => :unauthorized
     )

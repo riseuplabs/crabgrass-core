@@ -1,11 +1,11 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 #
 # a test for the interaction of versioning and locking and sections
 #
 
 class Wiki::LockingVersionTest < ActiveSupport::TestCase
-  fixtures :users, :wikis, :wiki_versions, :wiki_locks
+  fixtures :users, :wikis, 'wiki/versions', 'wiki/locks'
 
   def setup
     @user1 = users(:blue)

@@ -1,4 +1,4 @@
-class CreateEventPageController < Pages::CreateController
+class CreateEventPageController < Page::CreateController
 
   protected
 

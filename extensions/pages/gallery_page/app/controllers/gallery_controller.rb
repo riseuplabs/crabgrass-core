@@ -1,4 +1,4 @@
-class GalleryController < Pages::BaseController
+class GalleryController < Page::BaseController
 
   def show
     @images = @page.images.paginate(page: params[:page])

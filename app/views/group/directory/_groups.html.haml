@@ -1,0 +1,10 @@
+.directory
+  - @groups.group_by(&:type).each do |type, group_list|
+    %h1= type.blank? ? :groups.t : type.downcase.pluralize.to_sym.t
+    .divider
+    .groups-wrapper
+      = render partial: 'group', collection: group_list,
+        spacer_template: 'common/divider'
+
+= pagination_links(@groups, params: params.except(:utf8))
+

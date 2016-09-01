@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../../../../test/test_helper'
 
 class SurveyPageResponseControllerTest < ActionController::TestCase
 
-  fixtures :users, :pages, :groups, :user_participations, :survey_questions,
+  fixtures :users, :pages, :groups, 'user/participations', :survey_questions,
     :surveys, :survey_responses, :survey_answers
 
   def setup

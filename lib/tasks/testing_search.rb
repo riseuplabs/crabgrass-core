@@ -17,12 +17,12 @@ namespace :cg do
       # load existing fixtures
       #
       Rake::Task["db:fixtures:load"].invoke
-      PageTerms.delete_all
+      Page::Terms.delete_all
 
       #
       # regenerate page terms in the database
       #
-      ThinkingSphinx::Deltas.suspend(:page_terms) do
+      ThinkingSphinx::Deltas.suspend('page/terms') do
         Page.find_each do |page|
           print "#{page.id} "
           page.update_page_terms
@@ -34,17 +34,16 @@ namespace :cg do
       # save page_terms to fixture yaml file
       #
       sql  = "SELECT * FROM %s"
-      tables = ["page_terms"]
       ActiveRecord::Base.establish_connection
-      tables.each do |table_name|
-        i = "000"
-        File.open(Rails.root + "test/fixtures/#{table_name}.yml", 'w') do |file|
-          data = ActiveRecord::Base.connection.select_all(sql % table_name)
-          file.write data.inject({}) { |hash, record|
-            hash["#{table_name}_#{i.succ!}"] = record
-            hash
-          }.to_yaml
-        end
+      table_name = 'page_terms'
+      fixture_name = 'page/terms'
+      i = "000"
+      File.open(Rails.root + "test/fixtures/#{fixture_name}.yml", 'w') do |file|
+        data = ActiveRecord::Base.connection.select_all(sql % table_name)
+        file.write data.inject({}) { |hash, record|
+          hash["#{table_name}_#{i.succ!}"] = record
+          hash
+        }.to_yaml
       end
 
       #

@@ -17,27 +17,14 @@ class AssetTest < ActiveSupport::TestCase
     assert check_associations(Thumbnail)
   end
 
-  def test_paths
-    @asset = FactoryGirl.create :png_asset
-
-    assert_equal "%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
-    assert_equal "%s/0000/%04d/image_small.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_thumbnail_filename(:small)
-
-    assert_equal "%s/%s/image.png" % [ASSET_PUBLIC_STORAGE,@asset.id], @asset.public_filename
-    assert_equal "%s/%s/image_small.png" % [ASSET_PUBLIC_STORAGE,@asset.id], @asset.public_thumbnail_filename(:small)
-
-    assert_equal "/assets/%s/image.png" % @asset.id, @asset.url
-    assert_equal "/assets/%s/image_small.png" % @asset.id, @asset.thumbnail_url(:small)
-  end
-
   def test_single_table_inheritance
     @asset = FactoryGirl.create :png_asset
-    assert_equal 'PngAsset', @asset.type, 'initial asset should be a png'
+    assert_equal 'Png', @asset.type, 'initial asset should be a png'
     assert_equal 'image/png', @asset.content_type, 'initial asset should be a png'
 
     @asset.uploaded_data = upload_data('photo.jpg')
     @asset.save
-    assert_equal 'ImageAsset', @asset.type, 'then the asset should be a jpg'
+    assert_equal 'Image', @asset.type, 'then the asset should be a jpg'
     assert_equal 'image/jpeg', @asset.content_type, 'then the asset should be a jpg'
   end
 
@@ -58,7 +45,7 @@ class AssetTest < ActiveSupport::TestCase
 
     @version = @asset.versions.earliest
     assert_equal @version.class, Asset::Version
-    assert_equal 'PngAsset', @version.versioned_type
+    assert_equal 'Png', @version.versioned_type
     assert_equal 'image.png', @version.filename
 
     #puts @version.inspect
@@ -69,7 +56,7 @@ class AssetTest < ActiveSupport::TestCase
     assert read_file('image.png') == File.read(@version.private_filename), 'version 1 data should match image.png'
 
     @version = @asset.versions.latest
-    assert_equal 'ImageAsset', @version.versioned_type
+    assert_equal 'Image', @version.versioned_type
     assert_equal 'photo.jpg', @version.filename
     assert_equal 'photo_small.jpg', @version.thumbnail_filename(:small)
     assert_equal "/assets/#{@id}/versions/2/photo.jpg", @version.url
@@ -124,8 +111,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset = FactoryGirl.create :image_asset
     @asset.generate_thumbnails
 
-    @thumb1 = @asset.private_thumbnail_filename(:small)
-    @thumb_v1 = @asset.versions.latest.private_thumbnail_filename(:small)
+    thumb_file = @asset.thumbnail_filename(:small)
+    @thumb1 = @asset.private_filename thumb_file
+    @thumb_v1 = @asset.versions.latest.private_filename thumb_file
     assert File.exist?(@thumb1), '%s should exist' % @thumb1
     assert File.exist?(@thumb_v1), '%s should exist' % @thumb_v1
 
@@ -140,8 +128,9 @@ class AssetTest < ActiveSupport::TestCase
     end
 
     @asset.generate_thumbnails
-    @thumb2 = @asset.private_thumbnail_filename(:small)
-    @thumb_v2 = @asset.versions.latest.private_thumbnail_filename(:small)
+    thumb_file = @asset.thumbnail_filename(:small)
+    @thumb2 = @asset.private_filename thumb_file
+    @thumb_v2 = @asset.versions.latest.private_filename thumb_file
 
     assert File.exist?(@thumb2), '%s should exist (new thumb)' % @thumb2
     assert File.exist?(@thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
@@ -154,14 +143,14 @@ class AssetTest < ActiveSupport::TestCase
   def test_type_changes
     @asset = FactoryGirl.create :image_asset
     @word_asset = FactoryGirl.create :word_asset
-    assert_equal 'ImageAsset', @asset.type
+    assert_equal 'Image', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
-    # change to TextAsset
+    # change to Text
     @asset.uploaded_data = upload_data('msword.doc')
     @asset.save
     assert_equal 'application/msword', @asset.content_type
-    assert_equal 'TextAsset', @asset.type
+    assert_equal 'Text', @asset.type
     # relative comparison to account for CI which does not have
     # a transmogrifier for word right now.
     assert_equal @word_asset.thumbnails.count, @asset.thumbnails.count
@@ -170,7 +159,7 @@ class AssetTest < ActiveSupport::TestCase
     @asset = Asset.find(@asset.id)
     @asset.uploaded_data = upload_data('gears.jpg')
     @asset.save
-    assert_equal 'ImageAsset', @asset.type
+    assert_equal 'Image', @asset.type
     assert_equal 3, @asset.thumbnails.count
   end
 
@@ -218,12 +207,11 @@ class AssetTest < ActiveSupport::TestCase
     skip_if_graphics_magick_missing
 
     @asset = Asset.create_from_params uploaded_data: upload_data('test.odt')
-    assert_equal 'DocAsset', @asset.class.name
+    assert_equal 'Asset::Doc', @asset.class.name
     @asset.generate_thumbnails
 
     # pdf's are the basis for the other thumbnails. So let's check that first.
-    assert @asset.thumbnail_exists?('pdf'),
-      "Could not find #{@asset.private_thumbnail_filename('pdf')}"
+    assert_thumb_exists @asset, 'pdf'
   end
 
   def test_doc_integration
@@ -231,12 +219,11 @@ class AssetTest < ActiveSupport::TestCase
     skip_if_graphics_magick_missing
 
     @asset = Asset.create_from_params uploaded_data: upload_data('msword.doc')
-    assert_equal 'TextAsset', @asset.class.name
+    assert_equal 'Asset::Text', @asset.class.name
     @asset.generate_thumbnails
 
     # pdf's are the basis for the other thumbnails. So let's check that first.
-    assert @asset.thumbnail_exists?('pdf'),
-      "Could not find #{@asset.private_thumbnail_filename('pdf')}"
+    assert_thumb_exists @asset, 'pdf'
 
     @asset.thumbnails.each do |thumb|
       assert thumb.ok?, 'generating thumbnail "%s" should have succeeded' % thumb.name
@@ -286,7 +273,7 @@ class AssetTest < ActiveSupport::TestCase
   def test_no_thumbs_for_xcf
     @asset = Asset.create_from_params uploaded_data: upload_data('image.xcf')
     @asset.generate_thumbnails
-    assert_equal ImageAsset, @asset.class
+    assert_equal Asset::Image, @asset.class
     assert_equal 0, @asset.thumbnails.count
   end
 
@@ -321,7 +308,7 @@ class AssetTest < ActiveSupport::TestCase
       asset.save
       asset.id if user.may?(:view, asset.page)
     end.compact.sort
-    ids = Asset.visible_to(user).media_type(:image).find(:all).collect{|asset| asset.id}
+    ids = Asset.visible_to(user).media_type(:image).pluck(:id)
     assert_equal correct_ids, ids.sort
   end
 
@@ -351,4 +338,9 @@ class AssetTest < ActiveSupport::TestCase
     ))
   end
 
+  def assert_thumb_exists(asset, thumb)
+    name = asset.thumbnail_filename(thumb)
+    assert asset.thumbnail_exists?(thumb),
+      "Could not find #{asset.private_filename(name)}"
+  end
 end

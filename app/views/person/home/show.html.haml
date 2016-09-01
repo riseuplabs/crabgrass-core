@@ -1,0 +1,14 @@
+- content_for :left_column do
+  = render 'sidecolumn'
+
+-#
+-# super temporary... should be replaced by a simple widget system.
+-#
+
+- @pages = Page.paginate_by_path('/descending/updated_at/limit/30/', options_for_user(@user), pagination_params)
+
+%h2.p.first= :recent_pages.t
+.without_owner
+  = render 'common/pages/list'
+
+

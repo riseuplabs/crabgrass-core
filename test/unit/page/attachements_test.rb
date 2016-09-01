@@ -5,12 +5,12 @@ class Page::AttachmentTest < ActiveSupport::TestCase
   fixtures :pages, :users, :groups, :polls
 
   def setup
-    PageHistory.delete_all
+    Page::History.delete_all
     setup_assets
   end
 
   def teardown
-    PageHistory.delete_all
+    Page::History.delete_all
     # ensure there are no tempfiles left and getting removed
     # some random time.
     GC.start

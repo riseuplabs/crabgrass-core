@@ -1,7 +1,7 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 class Wiki::VersioningTest < ActiveSupport::TestCase
-  fixtures :users, :wikis, :wiki_versions
+  fixtures :users, :wikis, 'wiki/versions'
   include WikiTestHelper
 
   def setup

@@ -1,5 +1,0 @@
-# this a generic rjs script to replace the sidebar with a fresh copy.
-# it also shows any messages
-
-page.replace 'page_sidebar', :partial => 'pages/sidebar/sidebar'
-update_alert_messages(page)

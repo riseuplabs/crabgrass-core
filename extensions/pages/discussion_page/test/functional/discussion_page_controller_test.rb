@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class DiscussionPageControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :user_participations
+  fixtures :pages, :users, 'user/participations'
 
   def setup
     @request.host = "localhost"

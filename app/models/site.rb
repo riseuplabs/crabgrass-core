@@ -48,7 +48,7 @@ Example data for serialized fields:
 =end
 
 class Site < ActiveRecord::Base
-  belongs_to :network
+  belongs_to :network, class_name: 'Group::Network'
   belongs_to :custom_appearance, dependent: :destroy
   belongs_to :council, class_name: 'Group'
 

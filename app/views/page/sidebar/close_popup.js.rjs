@@ -1,0 +1,9 @@
+# this a generic rjs script to replace the sidebar with a fresh copy.
+# it also hides any open popups and shows any messages
+
+page.call 'Modalbox.hide'
+rebuild_sidebar(page)
+page.select('submit').each do |submit|
+  submit.disable = false
+end
+update_alert_messages(page)

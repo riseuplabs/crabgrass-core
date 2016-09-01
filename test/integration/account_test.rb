@@ -33,7 +33,7 @@ class AccountTest < IntegrationTest
     fill_in :email, with: @user.email
     click_on 'Reset Password'
     assert_content 'If that email address is associated with a username, then an email has been sent containing instructions for resetting your password.'
-    @token = Token.last
+    @token = User::Token.last
   end
 
   def confirm_password_reset

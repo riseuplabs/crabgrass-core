@@ -3,7 +3,7 @@ require_relative 'test_helper'
 class AssetsControllerTest < ActionController::TestCase
 
   def test_get_permissions
-    ImageAsset.any_instance.stubs(:public?).returns(false)
+    image_assets_are_private
     asset = FactoryGirl.create :image_asset
     assert_permission_denied do
       get :show, id: asset.id, path: asset.basename
@@ -11,7 +11,7 @@ class AssetsControllerTest < ActionController::TestCase
   end
 
   def test_get_with_escaped_chars
-    ImageAsset.any_instance.stubs(:public?).returns(false)
+    image_assets_are_private
     @controller.stubs(:authorized?).returns(true)
     asset = FactoryGirl.create :image_asset
     get :show, id: asset.id, path: asset.basename + '\xF3'
@@ -31,7 +31,7 @@ class AssetsControllerTest < ActionController::TestCase
   end
 
   def test_thumbnail_get
-    ImageAsset.any_instance.stubs(:public?).returns(false)
+    image_assets_are_private
     asset = FactoryGirl.create :image_asset
     @controller.stubs(:authorized?).returns(true)
     @controller.expects(:private_filename).returns(asset.private_filename)
@@ -59,4 +59,7 @@ class AssetsControllerTest < ActionController::TestCase
     path.sub(/#{ext}$/, "_small#{ext}")
   end
 
+  def image_assets_are_private
+    Asset::Image.any_instance.stubs(:public?).returns(false)
+  end
 end

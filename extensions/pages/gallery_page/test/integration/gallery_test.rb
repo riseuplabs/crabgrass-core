@@ -13,7 +13,7 @@ class GalleryTest < JavascriptIntegrationTest
     attach_file_to_hidden 'upload-input', fixture_file('beé.jpg')
     assert_content 'beé'
     click_page_tab 'Show'
-    first('.control_image_asset .thumbnail').click
+    first('.control_asset_image .thumbnail').click
     assert_content 'Image 1 of 2'
     find('a.right_16').click
     assert_content 'Image 2 of 2'

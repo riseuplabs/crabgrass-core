@@ -1,5 +1,5 @@
 -# locals:
--# 
+-#
 -#  style -- one of table, rows, grid, blog. if not set, we use @path to
 -#           which one to use.
 
@@ -10,6 +10,6 @@
 - paginate_options ||= {}
 
 %section{class: "page_list #{style}"}
-  = render partial: "/common/pages/list_as_#{style}", locals: local_assigns
+  = render "/common/pages/list_as_#{style}", local_assigns
   - if paginate
     = pagination_links( pages, paginate_options )

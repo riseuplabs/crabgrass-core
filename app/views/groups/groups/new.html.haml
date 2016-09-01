@@ -1,6 +1,0 @@
-- if !params[:type]
-  = render partial: 'choose_group_type'
-- elsif params[:type] == 'committee' or params[:type] == 'council'
-  = render partial: 'choose_parent_group'
-- else
-  = render partial: 'groups/structures/new_form'

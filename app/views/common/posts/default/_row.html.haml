@@ -19,7 +19,7 @@
         %div.nowrap.date.hide.detailed-link
           = created_modified_date(post.created_at, post.updated_at, "#post-#{post.id}")
     %td.post_body.shy_parent{stars_for(post)}
-      = render partial: 'common/posts/default/body', locals: local_assigns
+      = render 'common/posts/default/body', local_assigns
   %tr.post_spacer_bottom
     %td{colspan: 2, class: ''}= '&nbsp;'.html_safe
 

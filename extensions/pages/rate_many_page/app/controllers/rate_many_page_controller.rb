@@ -1,4 +1,4 @@
-class RateManyPageController < Pages::BaseController
+class RateManyPageController < Page::BaseController
   before_filter :fetch_poll
 
   def show

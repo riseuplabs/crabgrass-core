@@ -19,7 +19,7 @@ class CronController < ActionController::Base
     when 'tracking_update_dailies'
       Tracking::Daily.update
     when 'codes_expire'
-      Code.cleanup_expired
+      Page::AccessCode.cleanup_expired
     else
       raise 'no such cron action'
     end

@@ -86,7 +86,7 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     page.title = 'new title from ' + user.display_name
     page.updated_by user
     page.save
-    PageHistory::ChangeTitle.create user: user, page: page, created_at: time
+    Page::History::ChangeTitle.create user: user, page: page, created_at: time
   end
 
   def page
