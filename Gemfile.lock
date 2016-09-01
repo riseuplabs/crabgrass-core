@@ -260,7 +260,7 @@ DEPENDENCIES
   poltergeist (~> 1.5)
   prototype-rails!
   prototype_legacy_helper (= 0.0.0)!
-  rails (~> 4.2.5)
+  rails (~> 4.2.7)
   rake (~> 10.0)
   rubyzip (~> 1.1.0)
   sass
