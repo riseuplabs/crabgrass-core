@@ -264,3 +264,6 @@ group :test, :ci do
   # The castle_gates tests are based on sqlite
   gem 'sqlite3'
 end
+
+gem 'bundler-audit'
+
