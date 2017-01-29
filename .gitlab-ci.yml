@@ -5,11 +5,12 @@ before_script:
   - bundle install --jobs $(nproc)  "${FLAGS[@]}"
 image: leapcode/ruby
 stages:
-  - checks
   - build
   - test
+  - checks
 bundle_audit:
   stage: checks
+  allow_failure: true
   script: |
     sudo gem install bundler-audit
     bundle-audit update
