@@ -1,14 +1,32 @@
 before_script:
-  - sudo apt update -qq && sudo apt dist-upgrade -y && sudo apt install -y build-essential libsqlite3-dev ruby ruby-dev bundler rubygems libmysqlclient-dev
+  - sudo apt update -qq && sudo apt dist-upgrade -y && sudo apt install -y build-essential libsqlite3-dev ruby ruby-dev bundler rubygems libmysqlclient-dev graphicsmagick inkscape
   - ruby -v
   - which ruby
   - bundle install --jobs $(nproc)  "${FLAGS[@]}"
 image: leapcode/ruby
 stages:
   - checks
+  - build
+  - test
 bundle_audit:
   stage: checks
   script: |
     sudo gem install bundler-audit
     bundle-audit update
     bundle-audit check
+build:
+  stage: build
+  script: |
+    bundle exec rake create_a_secret
+    cp config/database.yml.example config/database.yml
+    bundle exec rake db:create
+    bundle exec rake db:schema:load
+    bundle exec rake db:test:prepare
+    RAILS_ENV=test bundle exec rake db:fixtures:load
+test:
+  stage: test
+  script: |
+    RAILS_ENV=test bundle exec rake ts:index ts:star
+    bundle exec rake
+    bundle exec rake test:pages:all
+
