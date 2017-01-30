@@ -22,8 +22,8 @@ bundle_audit:
     sudo gem install bundler-audit
     bundle-audit update
     bundle-audit check
-build:
-  stage: build
+test:
+  stage: test
   script: |
     bundle exec rake create_a_secret
     cp config/database.yml.gitlab config/database.yml
@@ -31,9 +31,6 @@ build:
     bundle exec rake db:schema:load
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
-test:
-  stage: test
-  script: |
     RAILS_ENV=test bundle exec rake ts:index ts:star
     bundle exec rake
     bundle exec rake test:pages:all
