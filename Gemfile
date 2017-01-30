@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+# ensure github urls use https rather than insecure git protocol.
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 
 ##
 #  Core components
@@ -215,3 +221,6 @@ group :test, :ci do
   # The castle_gates tests are based on sqlite
   gem 'sqlite3'
 end
+
+gem 'bundler-audit'
+

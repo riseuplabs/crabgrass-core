@@ -19,7 +19,7 @@ development:
   database: <%=db_name%>_development
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
 
 test:
   encoding: utf8
@@ -27,7 +27,7 @@ test:
   database: <%=db_name%>_test
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
   # our integration tests make some requests in parallel
   # so webrick spins up more threads - up to 7 as far as
   # i've seen. So let's give it a bit of room.
@@ -39,4 +39,4 @@ production:
   database: <%=db_name%>
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
