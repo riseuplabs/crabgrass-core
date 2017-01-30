@@ -3,6 +3,7 @@ services:
 
 variables:
   MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  MYSQL_HOST: 'mysql'
 
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
@@ -26,7 +27,7 @@ test:
   stage: test
   script: |
     bundle exec rake create_a_secret
-    cp config/database.yml.gitlab config/database.yml
+    cp config/database.yml.example config/database.yml
     bundle exec rake db:create
     bundle exec rake db:schema:load
     bundle exec rake db:test:prepare

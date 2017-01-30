@@ -19,7 +19,7 @@ development:
   database: <%=db_name%>_development
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
 
 test:
   encoding: utf8
@@ -27,7 +27,7 @@ test:
   database: <%=db_name%>_test
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
 
 production:
   encoding: utf8
@@ -35,4 +35,4 @@ production:
   database: <%=db_name%>
   username: root
   password:
-  host: localhost
+  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
