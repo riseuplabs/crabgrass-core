@@ -42,7 +42,7 @@ module AccountManagement
 
   def run_for_user(current_user, &block)
     @user = current_user
-    login unless @user.is_a? UnauthenticatedUser
+    login if @user.real?
     block.arity == 1 ? yield(@user) : yield
   ensure
     clear_session

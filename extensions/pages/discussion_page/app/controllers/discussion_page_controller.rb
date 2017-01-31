@@ -1,4 +1,4 @@
-class DiscussionPageController < Pages::BaseController
+class DiscussionPageController < Page::BaseController
 
   def show
   end

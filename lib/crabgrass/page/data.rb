@@ -1,41 +1,46 @@
 module Crabgrass::Page
   module Data
-    def self.included(base)
+    extend ActiveSupport::Concern
+
+    module ClassMethods
       # Use page_terms to find what objects the user has access to. Note that it is
       # necessary to match against both access_ids and tags, since the index only
       # works if both fields are included.
-      base.scope :visible_to, lambda { |*args|
-        access_filter = PageTerms.access_filter_for(*args)
-        { select: "#{base.table_name}.*", joins: :page_terms,
-          conditions: ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
-        }
-      }
+      def visible_to(*args)
+        access_filter = Page::Terms.access_filter_for(*args)
+        access_filter_sql = <<-EOSQL
+          MATCH(page_terms.access_ids, page_terms.tags)
+          AGAINST (? IN BOOLEAN MODE)
+        EOSQL
+        select("#{table_name}.*").
+          joins(:page_terms).
+          where access_filter_sql, access_filter
+      end
 
-      base.scope :most_recent, order: 'updated_at DESC'
+      def most_recent
+        order 'updated_at DESC'
+      end
 
-      base.scope :exclude_ids, lambda {|ids|
+      def exclude_ids(ids)
         if ids.any? and ids.is_a? Array
-          {conditions: ["#{base.table_name}.id NOT IN (?)", ids]}
+          {conditions: ["#{table_name}.id NOT IN (?)", ids]}
         else
           {}
         end
-      }
+      end
+    end
 
-      # ruby has unexpected syntax for checking if Page is a superclass of base
-      unless base <= ::Page
-        base.has_many :pages, as: :data
-        base.belongs_to :page_terms
-        base.class_eval do
-          def page; pages.first; end
-        end
-      else
-        # I do not think this is used, or would be very useful:
-        #base.class_eval do
-        #  def page; self; end
-        #end
+    included do
+
+      # ruby has unexpected syntax for checking if Page is a superclass
+      unless self <= ::Page
+        has_many :pages, as: :data
+        belongs_to :page_terms,
+          class_name: 'Page::Terms'
+        def page; pages.first; end
       end
 
-      base.before_save :ensure_page_terms
+      before_save :ensure_page_terms
     end
 
     public

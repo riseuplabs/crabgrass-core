@@ -3,6 +3,7 @@ require 'integration_test'
 class ImageTest < IntegrationTest
 
   def setup
+    super
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
@@ -20,8 +21,6 @@ class ImageTest < IntegrationTest
   # invalid. Let's make sure the old link still works...
   def test_get_asset_with_strange_char
     asset = FactoryGirl.create :image_asset
-    visit asset.url.sub('.jpg', '%F3.jpg')
-    assert_equal 200, status_code
     visit asset.url.sub('.jpg', '%F3.jpg')
     assert_equal 200, status_code
   end

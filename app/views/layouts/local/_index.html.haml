@@ -25,19 +25,19 @@
 - classes = [@local_layout]
 - if @navigation[:local].present?
   - content_for(:left_column) do
-    = render partial: 'layouts/local/side_navigation'
+    = render 'layouts/local/side_navigation'
 
 - if content_for?(:left_column)
   #local.on_left{class: classes}
     #column_left{class: side_span}
       = yield :left_column
     #column_center{class: center_span}
-      = render partial: 'layouts/local/content'
+      = render 'layouts/local/content'
 
 - elsif content_for?(:right_column)
   #local.on_right{class: classes}
     #column_center{class: center_span}
-      = render partial: 'layouts/local/content'
+      = render 'layouts/local/content'
     #column_right{class: side_span}
       = yield :right_column
 
@@ -45,4 +45,4 @@
   - center_class = "col-xs-#{current_theme['local_single_width']}"
   #local.full_width{class: classes}
     #column_center{class: center_class}
-      = render partial: 'layouts/local/content'
+      = render 'layouts/local/content'

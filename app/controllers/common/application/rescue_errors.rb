@@ -160,7 +160,7 @@ module Common::Application::RescueErrors
 #        if Rails.env.production? or Rails.env.development?
 #          rescue_action_locally_without_js(exception)
 #        else
-#          render :text => exception
+#          render plain: exception
 #         end
 #      end
 #      format.js do

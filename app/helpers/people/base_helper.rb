@@ -6,7 +6,7 @@ module People::BaseHelper
   # for viewing our own profile, this becomes an edit link.
   #
   def profile_contact_link
-    return if current_user.is_a?(UnauthenticatedUser) || current_user == @user
+    return if current_user.unknown? || current_user == @user
 
     if current_user.friend_of?(@user)
       link_to :remove_friend_link.t,

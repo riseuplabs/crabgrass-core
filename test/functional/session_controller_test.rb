@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class SessionControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :sites, :tokens
+
 
   def test_login_screen
     get :login
@@ -57,7 +57,6 @@ class SessionControllerTest < ActionController::TestCase
 #    assert_nil @response.cookies["auth_token"]
 #  end
 
- # repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:verify_email]}) do
 #  def test_login_without_verification_should_remind_to_verify
 #    gerrard = users(:gerrard)
 #    gerrard.update_attribute(:unverified, true)

@@ -1,5 +1,5 @@
 
-class SurveyPageController < Pages::BaseController
+class SurveyPageController < Page::BaseController
   helper 'survey_page'
 
   guard :may_ACTION_survey?

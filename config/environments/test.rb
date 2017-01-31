@@ -4,23 +4,22 @@ Crabgrass::Application.configure do
   ## STANDARD RAILS OPTIONS
   ##
 
+  # set to true if you use a tool that preloads your test environment
+  config.eager_load = false
   config.cache_classes = !defined?(UNIT_TESTING)
-  config.whiny_nils = true
-  config.consider_all_requests_local = true
   config.action_controller.perform_caching             = false
   config.action_controller.allow_forgery_protection    = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { :host => "localhost" }
 
-  ## Rails 3.1
-  # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
-  config.static_cache_control = 'public, max-age=3600'
+  # use the exceptions app
+  config.action_dispatch.show_exceptions = true
+  config.consider_all_requests_local = false
 
-  ## Rails 3.2
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  # Configure static asset server for tests with Cache-Control for performance
+  config.serve_static_files = true
+  config.static_cache_control = 'public, max-age=3600'
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,

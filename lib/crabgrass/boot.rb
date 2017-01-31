@@ -21,12 +21,3 @@ end
 
 # load configuration file
 Conf.load("crabgrass.#{Rails.env}.yml")
-
-begin
-  Conf.secret = File.read(CRABGRASS_SECRET_FILE).chomp
-rescue
-  unless ARGV.first == "create_a_secret"
-    raise "Can't load the secret key from file #{CRABGRASS_SECRET_FILE}. Have you run 'rake create_a_secret'?"
-  end
-end
-

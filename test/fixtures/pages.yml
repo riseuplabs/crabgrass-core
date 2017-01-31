@@ -31,7 +31,7 @@ owner_users = [['blue','4'],['orange','5'], ['red', '8'], ['kangaroo','10']]
 
 %>
 
-<% for i in 1..100 %>
+<% for i in 1..10 %>
 page<%=i%>:
   id: <%=i%>
   title: "<%= garble(5..50) %>"
@@ -80,7 +80,7 @@ blue_page:
   id: 1002
   name: "blue_page"
   title: "page owned by blue, rainbow has access @test.me"
-  <% updated = rand(46080); created = updated + rand(46080) %>
+  <% updated = 1; created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
   owner_id: 4

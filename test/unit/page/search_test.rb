@@ -14,9 +14,6 @@ class Page::SearchTest < ActiveSupport::TestCase
 
   include PathFinder::ControllerExtension
 
-  fixtures :groups, :users, :memberships, :pages, :page_terms,
-   :user_participations, :group_participations, :tags, :taggings
-
   ##
   ## Tests for various search parameters
   ##
@@ -104,7 +101,7 @@ class Page::SearchTest < ActiveSupport::TestCase
   def assert_path_filter(path, options, &filter)
     context = options.delete :context
     searched_pages = Page.find_by_path(path, options)
-    actual_pages = Page.all(order: "updated_at DESC").select(&filter)
+    actual_pages = Page.order("updated_at DESC").to_a.select(&filter)
     assert actual_pages.any?,
       'a filter with no results is a bad test (user `%s`, context `%s`, filter `%s`)' %
       [current_user.name, context.name, path]
@@ -201,42 +198,35 @@ class Page::SearchTest < ActiveSupport::TestCase
 
   def dont_login
     @logged_in = false
-    @current_user = UnauthenticatedUser.new
+    @current_user = User::Unknown.new
   end
 
   #
-  # takes an array of Pages, UserParticipations, or GroupParticipations
+  # takes an array of Pages, User::Participations, or GroupParticipations
   # and returns a Set of page ids. If a block is given, then the page
   # is passed to the block and if the block evaluates to false then
   # the page is not added to the set.
   #
   def page_ids(array)
     return Set.new() unless array.any?
-    if array.first.instance_of?(UserParticipation) or array.first.instance_of?(GroupParticipation)
-      Set.new(
-        array.collect{|part|
-          if block_given?
-            part.page_id if yield(part.page)
-          else
-            part.page_id
-          end
-        }.compact
-      )
-    elsif array.first.is_a?(Page)
-      Set.new(
-        array.collect{|page|
-          if block_given?
-            page.id if yield(page)
-          else
-            page.id
-          end
-        }.compact
-      )
-    else
-      puts 'error in page_ids(%s)' % array.class
-      puts array.first.class.to_s
-      puts caller().inspect
-    end
+    Set.new(
+      array.collect{|record|
+
+        if record.is_a?(Page)
+          page, id = record, record.id
+        elsif record.respond_to? :page_id
+          page, id = record.page_id, nil
+        else
+          raise "invalid record: #{record.inspect}"
+        end
+
+        if block_given?
+          id if yield(page || Page.find(id))
+        else
+          id
+        end
+      }.compact
+    )
   end
 
   def skip_with_sphinx_hints

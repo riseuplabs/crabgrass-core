@@ -1,4 +1,4 @@
-class AssetPageController < Pages::BaseController
+class AssetPageController < Page::BaseController
   #before_filter :fetch_asset
 
   def show

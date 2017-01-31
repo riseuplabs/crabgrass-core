@@ -48,7 +48,7 @@ class Request < ActiveRecord::Base
 
   has_many :notices, as: :noticable,
     dependent: :delete_all,
-    class_name: 'RequestNotice'
+    class_name: 'Notice::RequestNotice'
 
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
@@ -57,7 +57,10 @@ class Request < ActiveRecord::Base
   # when a period of time has passed
   # 'ignore' is another vote that could be use by otherwise non-votable requests
   # so that each person has a distinct 'ignore'/'non-ignore' state
-  has_many :votes, as: :votable, class_name: "RequestVote", dependent: :delete_all
+  has_many :votes,
+    as: :votable,
+    class_name: "Poll::RequestVote",
+    dependent: :delete_all
 
   validates_presence_of :created_by
   validates_presence_of :recipient,   if: :recipient_required?

@@ -16,11 +16,9 @@ module Arel
       alias :visit_Arel_Nodes_BitOr :function
     end
 
-    class ToSql < Arel::Visitors::Visitor
-      def visit_Arel_Nodes_BitOr o
-        expressions = o.expressions.map { |x| visit x }.join(', ')
-        aliaz = o.alias ? " AS #{visit o.alias}" : ''
-        "BIT_OR(#{expressions})#{aliaz}"
+    class ToSql < Arel::Visitors::Reduce
+      def visit_Arel_Nodes_BitOr o, collector
+        aggregate "BIT_OR", o, collector
       end
     end
   end

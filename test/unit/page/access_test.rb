@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::AccessTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :memberships
+
 
   def setup
   end

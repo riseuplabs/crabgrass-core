@@ -1,4 +1,4 @@
-class RatingVote < Vote
+class Poll::RatingVote < Poll::Vote
   validates_numericality_of :value, only_integer: true, message: "can only be whole number."
   validates_inclusion_of :value, in: -2..2, message: "can only be between -2 and 2."
 

@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class PermissionTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   #
   # This test uses user.clear_access_cache. This is needed after a structure change because the user object has
@@ -54,12 +54,12 @@ class PermissionTest < ActiveSupport::TestCase
     user = users(:red)
 
     # test search
-    correct_visible_groups = Group.find(:all, conditions: 'type IS NULL').select do |g|
+    correct_visible_groups = Group.where('type IS NULL').select do |g|
       user.may?(:view,g)
     end
-    visible_groups = Group.with_access(user => :view).only_groups.find(:all)
+    visible_groups = Group.with_access(user => :view).only_groups
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
-    names         = visible_groups.collect{|g|g.name}.sort
+    names         = visible_groups.pluck(:name).sort
 
     assert names.length > 0
     assert_equal correct_names, names
@@ -81,13 +81,13 @@ class PermissionTest < ActiveSupport::TestCase
   def test_find_committee
     user = users(:red)
 
-    correct_visible_groups = Committee.find(:all).select do |g|
+    correct_visible_groups = Group::Committee.all.select do |g|
       user.may?(:view,g)
     end
-    visible_groups = Committee.with_access(user => :view).find(:all)
+    visible_groups = Group::Committee.with_access(user => :view)
 
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
-    names         = visible_groups.collect{|g|g.name}.sort
+    names         = visible_groups.pluck(:name).sort
 
     assert_equal  correct_names, names
   end

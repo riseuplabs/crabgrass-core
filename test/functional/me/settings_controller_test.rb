@@ -3,7 +3,7 @@ require 'test_helper'
 class Me::SettingsControllerTest < ActionController::TestCase
 
   def setup
-    @user  = FactoryGirl.create(:user)
+    @user  = FactoryGirl.create :user
   end
 
   def test_not_logged_in
@@ -25,7 +25,7 @@ class Me::SettingsControllerTest < ActionController::TestCase
       password: 'xxxxxxxx',
       password_confirmation: 'xxxxxxx'
     }
-    assert_equal @user.crypted_password, @user.reload.crypted_password,
+    assert_equal @user.password_digest, @user.reload.password_digest,
       "password can't be changed in settings"
     assert_equal 'new_login', @user.login, "login should have changed"
   end

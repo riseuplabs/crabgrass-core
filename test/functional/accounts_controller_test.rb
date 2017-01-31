@@ -1,7 +1,7 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :sites, :tokens
+
 
   def teardown
     ActionMailer::Base.deliveries.clear
@@ -50,8 +50,8 @@ class AccountsControllerTest < ActionController::TestCase
     }
   end
 
-  repeat_with_sites(local: {require_user_email: true}) do
-    def test_should_require_email_on_signup
+  def test_should_require_email_on_signup
+    Conf.stub :require_user_email, true do
       assert_no_difference 'User.count' do
         post_signup_form(user: {email: nil})
         assert assigns(:user).errors[:email]
@@ -59,7 +59,6 @@ class AccountsControllerTest < ActionController::TestCase
       end
     end
   end
-
 
 =begin
   #not enabled
@@ -76,24 +75,24 @@ class AccountsControllerTest < ActionController::TestCase
     get :reset_password
     assert_response :success
 
-    #old_count = Token.count
-    assert_difference 'Token.count' do
+    #old_count = User::Token.count
+    assert_difference 'User::Token.count' do
       post :reset_password, email: users(:quentin).email
       assert_response :success
       #assert_message /email has been sent.*reset.*password/i
       # doesn't work becuse flash disappears with render_alert
       # could make sure we get the right message with new helper function
     end
-    #assert_equal old_count + 1, Token.count
+    #assert_equal old_count + 1, User::Token.count
 
-    token = Token.find(:last)
+    token = User::Token.last
     assert_equal "recovery", token.action
     assert_equal users(:quentin).id, token.user_id
 
     get :reset_password, token: token.value
     assert_response :success
 
-    assert_difference 'Token.count', -1 do
+    assert_difference 'User::Token.count', -1 do
       post :reset_password, token: token.value, new_password: "abcdefgh", password_confirmation: "abcdefgh"
       assert_response :redirect # test for success message
 
@@ -108,16 +107,16 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   def test_redirect_on_old_or_invalid_token
-    get :reset_password, token: tokens(:old_token).value
+    get :reset_password, token: user_tokens(:old_token).value
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: tokens(:strange).value
+    get :reset_password, token: user_tokens(:strange).value
     assert_error_message(:invalid_token)
 
     get :reset_password, token: "invalid"
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: tokens(:tokens_003).value
+    get :reset_password, token: user_tokens(:tokens_003).value
     assert_response :success
   end
 

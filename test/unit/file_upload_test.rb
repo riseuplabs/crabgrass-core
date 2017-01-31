@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class FileUploadTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   def setup
     setup_assets
@@ -29,7 +29,7 @@ class FileUploadTest < ActiveSupport::TestCase
 
   def test_using_factory_girl_instead
     @asset = FactoryGirl.create :image_asset
-    assert_equal 'ImageAsset', @asset.class.name
+    assert_equal 'Asset::Image', @asset.class.name
     assert File.exist?( @asset.private_filename ), 'the private file should exist'
     assert_equal 500, @asset.height
     assert_equal 333, @asset.width

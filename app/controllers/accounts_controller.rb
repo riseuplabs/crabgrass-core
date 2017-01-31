@@ -18,9 +18,6 @@ class AccountsController < ApplicationController
   # allow the user to request a new user account.
   #
   def new
-    if current_site.signup_redirect_url.present?
-      redirect_to current_site.signup_redirect_url
-    end
     @user = User.new(user_params)
   end
 
@@ -30,26 +27,14 @@ class AccountsController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    # i think the usage agreement should be a plugin
-    #if params[:usage_agreement_accepted] != "1"
-    #  error :usage_agreement_required.t
-    #  render :template => 'accounts/new'
-    #else
-      @user.language   = session[:language_code].to_s
-      @user.avatar     = Avatar.new
-#      @user.unverified = current_site.needs_email_verification?
-      @user.save!
-      session[:signup_email_address] = nil
-      self.current_user = @user
+    @user.language   = session[:language_code].to_s
+    @user.avatar     = Avatar.new
+    @user.save!
+    session[:signup_email_address] = nil
+    self.current_user = @user
 
-      # replace with hook(:new_user_registered)
-      #current_site.add_user!(current_user)
-
-#      send_email_verification if current_site.needs_email_verification?
-
-      redirect_to(params[:redirect] || current_site.login_redirect(current_user))
-      success :signup_success.t, :signup_success_message.t
-    #end
+    redirect_to(params[:redirect] || current_site.login_redirect_url)
+    success :signup_success.t, :signup_success_message.t
   end
 
   ##
@@ -119,7 +104,7 @@ class AccountsController < ApplicationController
 
     user = User.find_by_email params[:email]
     if user
-      token = Token.to_recover.create(user: user)
+      token = User::Token.to_recover.create(user: user)
       Mailer.forgot_password(token, mailer_options).deliver
     end
 
@@ -153,7 +138,7 @@ class AccountsController < ApplicationController
   # confirms that the token is valid, returns false otherwise.
   #
   def confirm_token
-    @token = Token.to_recover.active.find_by_param(params[:token])
+    @token = User::Token.to_recover.active.find_by_param(params[:token])
     if @token.present?
       @user = @token.user
     else

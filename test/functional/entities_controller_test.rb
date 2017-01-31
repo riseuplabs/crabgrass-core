@@ -1,9 +1,7 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 class EntitiesControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :castle_gates_keys,
-          :memberships, :user_participations, :group_participations,
-          :pages, :relationships, :geo_countries, :geo_admin_codes, :geo_places
+
 
   def test_preloading_entities
     login_as :blue

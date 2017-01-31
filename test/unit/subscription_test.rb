@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require 'test_helper'
 class SubscriptionTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :profiles
+
 
   def setup
   end

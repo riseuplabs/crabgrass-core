@@ -1,5 +1,5 @@
 class AssetPage < Page
-  include PageExtension::RssData
+  include Page::RssData
 
   before_save :set_cover
 
@@ -33,7 +33,7 @@ class AssetPage < Page
 
   # Return string of Asset text, for the full text search index
   def body_terms
-    return "" unless self.asset and self.asset.is_a? DocAsset and self.asset.thumbnail(:txt)
+    return "" unless self.asset and self.asset.thumbnail(:txt)
 
     thumbnail = self.asset.thumbnail(:txt)
     thumbnail.generate unless File.exist?(thumbnail.private_filename)
@@ -54,7 +54,7 @@ class AssetPage < Page
   end
 
   def set_cover
-    self.cover = self.data if self.data.is_a?(ImageAsset)
+    self.cover = self.data if self.data.is_a?(Asset::Image)
   end
 end
 

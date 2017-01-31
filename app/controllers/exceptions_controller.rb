@@ -14,6 +14,8 @@ class ExceptionsController < ApplicationController
       format.xml  { render xml: details, root: "error", status: @status_code }
       format.json { render json: {error: details}, status: @status_code }
       format.js   { render_error_js(@exception, status: @status_code) }
+      # let's send the error message out somehow.
+      format.all { render json: {error: details}, status: @status_code }
     end
   end
 

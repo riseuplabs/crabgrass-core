@@ -6,6 +6,9 @@ class ChatMessage < ActiveRecord::Base
 
   validates_presence_of  :channel, :sender
 
+  default_scope { where(deleted_at: nil) }
+  default_scope { order("created_at ASC") }
+
   before_create :set_sender_name
   def set_sender_name
     if sender

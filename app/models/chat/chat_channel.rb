@@ -4,11 +4,16 @@ class ChatChannel < ActiveRecord::Base
   belongs_to :group
   validates_presence_of :group
 
-  has_many :channels_users, dependent: :delete_all, class_name: 'ChatChannelsUser', foreign_key: 'channel_id'
+  has_many :channels_users,
+    dependent: :delete_all,
+    class_name: 'ChatChannelsUser',
+    foreign_key: 'channel_id'
 
-  has_many :users, order: 'login asc', through: :channels_users
+  has_many :users, through: :channels_users
 
-  has_many :messages, class_name: 'ChatMessage', foreign_key: 'channel_id', order: 'created_at asc', dependent: :delete_all, conditions: 'deleted_at IS NULL' do
+  has_many :messages, class_name: 'ChatMessage',
+    foreign_key: 'channel_id',
+    dependent: :delete_all do
     def since(last_seen_id)
       where('id > ?', last_seen_id).all
     end

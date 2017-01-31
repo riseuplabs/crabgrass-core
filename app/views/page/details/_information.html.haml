@@ -1,0 +1,21 @@
+= formy(:horizontal_form) do |f|
+  - f.row do |r|
+    - r.label :page_create_owner.tcap
+    - r.input link_to_entity(@page.owner, avatar: 'small', class: 'single nofocus') + content_tag(:div, change_page_owner, class: 'space')
+    - r.info help(:page_owner)
+  - f.row do |r|
+    - r.label :created.tcap
+    - r.input link_to_user(@page.created_by, avatar: 'tiny')
+    - r.input friendly_time(@page.created_at)
+  - f.row do |r|
+    - if @page.deleted?
+      - r.label :deleted.tcap
+    - else
+      - r.label :updated.tcap
+    - r.input link_to_user(@page.updated_by, avatar: 'tiny')
+    - r.input friendly_time(@page.updated_at)
+  - if Conf.tracking?
+    - f.row do |r|
+      - r.label :statistics.t
+      - r.input render('stats')
+

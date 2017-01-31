@@ -50,7 +50,7 @@ module Common::Requests
   def destroy
     @req.destroy_by!(current_user)
     notice request_destroyed_message, :later
-    render(:update) {|page| page.redirect_to requests_path}
+    render template: 'common/requests/destroy'
   end
 
   protected
@@ -66,14 +66,6 @@ module Common::Requests
   def request_destroyed_message
     :thing_destroyed.tcap thing: I18n.t(@req.name, count: 1)
   end
-
-  #def left_id(request)
-  #  dom_id(request, :panel_left)
-  #end
-
-  #def right_id(request)
-  #  dom_id(request, :panel_right)
-  #end
 
   def request_path(*args)
     raise 'you forgot to override this method'
@@ -119,11 +111,11 @@ module Common::Requests
   end
 
   def create_notices
-    RequestNotice.create! @req if @req.persisted?
+    Notice::RequestNotice.create! @req if @req.persisted?
   end
 
   def dismiss_notices
-    RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
+    Notice::RequestNotice.for_noticable(@req).dismiss_all unless @req.pending?
   end
 
   def approved?

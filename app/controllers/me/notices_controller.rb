@@ -6,7 +6,8 @@ class Me::NoticesController < Me::BaseController
     @notices = Notice.for_user(current_user).
       dismissed(params[:view] == 'old').
       includes(:noticable).
-      paginate(pagination_params.merge(order: "created_at desc"))
+      order('created_at DESC').
+      paginate(pagination_params)
 
     @pages = Page.paginate_by_path '', options_for_me, pagination_params
   end

@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 #
 # there are some unusually written tests in the form "msg".tap{|msg| assert true, msg}
@@ -6,7 +6,7 @@ require_relative '../test_helper'
 #
 
 class Wiki::LockingTest < ActiveSupport::TestCase
-  fixtures :users, :wikis, :wiki_versions, :wiki_locks
+
 
   def setup
     @user = users(:blue)
@@ -16,14 +16,14 @@ class Wiki::LockingTest < ActiveSupport::TestCase
   def test_wiki_after_locking
     @wiki = Wiki.new
     assert_difference "Wiki.count" do
-      assert_difference "WikiLock.count" do
+      assert_difference "Wiki::Lock.count" do
         assert_nothing_raised do
           @wiki.lock!(:document, @user)
         end
       end
     end
     assert !@wiki.new_record?, "wiki should be saved"
-    lock = WikiLock.find_by_wiki_id(@wiki.id)
+    lock = Wiki::Lock.find_by_wiki_id(@wiki.id)
     refute_nil lock, 'lock should exist'
     lock_user = lock.locks[:document][:by]
     assert_equal @user.id, lock_user, 'lock user should be set'

@@ -1,0 +1,22 @@
+- content_for :dom_loaded do
+  showTabByHash();
+
+= group_wiki_toggles
+
+#private_panel.tab_content
+  - if @private_wiki
+    = formy(:tabs, class: 'space-ui') do |f|
+      - wiki_tabs(f, @private_wiki, active: 'show')
+    .space-ui
+      = render file: "wiki/wikis/show", locals: {wiki: @private_wiki}
+  - else
+    .space-ui= create_group_wiki_link('private')
+#public_panel.tab_content{style: "display: none"}
+  - if @public_wiki
+    = formy(:tabs, class: 'space-ui') do |f|
+      - wiki_tabs(f, @public_wiki, active: 'show')
+    .space-ui
+      = render file: "wiki/wikis/show", locals: {wiki: @public_wiki}
+  - else
+    .space-ui= create_group_wiki_link('public')
+

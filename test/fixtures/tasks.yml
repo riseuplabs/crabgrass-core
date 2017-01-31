@@ -6,7 +6,6 @@
   name: <%= task_name %>
   description: <%= task_name %> description
   description_html: <p><%= task_name %> description</p>
-  completed_at: ~
   position: <%= n %>
 <% end %>
 <% 4.upto(6) do |n| %>
@@ -17,7 +16,9 @@
   name: <%= task_name %>
   description: <%= task_name %> description
   description_html: <p><%= task_name %> description</p>
-  completed_at: <%= n.even? ? nil : 10.minutes.ago.to_s(:db) %>
+<% if n.even? %>
+  completed_at: <%= 10.minutes.ago.to_s(:db) %>
+<% end %>
   position: <%= n-3 %>
 <% end %>
 

@@ -1,0 +1,2 @@
+page.replace_html dom_id(@task), partial: 'inner_task_edit',
+  locals: {task: @task}

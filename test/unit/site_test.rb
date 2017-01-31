@@ -1,35 +1,19 @@
-require_relative 'test_helper'
-
-class Site < ActiveRecord::Base
-  def self.uncache_default
-    @default_size = nil
-  end
-end
+require 'test_helper'
 
 class SiteTest < ActiveSupport::TestCase
-  fixtures :sites, :users, :groups, :memberships
 
   def test_defaults_to_conf
     assert_equal Conf.title, Site.new.title
   end
 
-  def test_defaults_to_confs_page_types
-    assert_equal Conf.available_page_types, Site.new.available_page_types
-  end
-
-  def test_site_admin
-    blue = users(:blue)
-    kangaroo = users(:kangaroo)
-    site = Site.find_by_name("site1")
-    assert blue.may?(:admin, site), 'blue should have access to the first site.'
-    assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
-    # if no council is set no one may :admin
-    site.council=nil
-    site.save
-    blue.clear_access_cache
-    assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
-      blue.may!(:admin, site)
+  def test_overwrite_default
+    with_site 'domain', title: "other title" do
+      assert_equal "other title", Site.for_domain('domain').title
+      assert_equal Conf.title, Site.default.title
     end
   end
 
+  def with_site(domain, attributes = {}, &block)
+    Conf.stub :sites, {domain => attributes.stringify_keys}, &block
+  end
 end

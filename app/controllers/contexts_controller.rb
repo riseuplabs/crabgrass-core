@@ -25,12 +25,12 @@ class ContextsController < DispatchController
 
     @group = Group.where(name: name).first!
     params[:group_id] = params[:id]
-    new_controller 'groups/home'
+    new_controller 'group/home'
   end
 
   def controller_for_person(login)
     @user = User.where(login: login).first!
     params[:person_id] = params[:id]
-    new_controller 'people/home'
+    new_controller 'person/home'
   end
 end

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TaskListPageTest < ActiveSupport::TestCase
-  fixtures :tasks, :pages
+
 
   def test_body_terms
     page = pages(:tasklist1)

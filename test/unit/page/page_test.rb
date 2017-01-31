@@ -2,14 +2,14 @@ require 'test_helper'
 
 class Page::BaseTest < ActiveSupport::TestCase
 
-  fixtures :pages, :users, :groups, :polls
+
 
   def setup
-    PageHistory.delete_all
+    Page::History.delete_all
   end
 
   def teardown
-    PageHistory.delete_all
+    Page::History.delete_all
     # ensure there are no tempfiles left and getting removed
     # some random time.
     GC.start
@@ -18,9 +18,9 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_page_history_order
     user = users(:blue)
     page = WikiPage.create! owner: user, title: 'history'
-    action_1 = PageHistory::AddStar.create!(page: page, user: user, created_at: "2007-10-10 10:10:10")
-    action_2 = PageHistory::RemoveStar.create!(page: page, user: user, created_at: "2008-10-10 10:10:10")
-    action_3 = PageHistory::StartWatching.create!(page: page, user: user, created_at: "2009-10-10 10:10:10")
+    action_1 = Page::History::AddStar.create!(page: page, user: user, created_at: "2007-10-10 10:10:10")
+    action_2 = Page::History::RemoveStar.create!(page: page, user: user, created_at: "2008-10-10 10:10:10")
+    action_3 = Page::History::StartWatching.create!(page: page, user: user, created_at: "2009-10-10 10:10:10")
     assert_equal action_1, page.page_histories[2]
     assert_equal action_2, page.page_histories[1]
     assert_equal action_3, page.page_histories[0]
@@ -45,16 +45,16 @@ class Page::BaseTest < ActiveSupport::TestCase
     params = ParamHash.new("title"=>"beet", "owner"=>user, "user"=>user, "share_with"=>{user.login=>{"access"=>"admin"}})
 
     assert_difference 'Page.count' do
-      assert_difference 'PageTerms.count' do
-        assert_difference 'UserParticipation.count' do
+      assert_difference 'Page::Terms.count' do
+        assert_difference 'User::Participation.count' do
           WikiPage.create!(params)
         end
       end
     end
 
     assert_no_difference 'Page.count', 'no new page' do
-      assert_no_difference 'PageTerms.count', 'no new page terms' do
-        assert_no_difference 'UserParticipation.count', 'no new user part' do
+      assert_no_difference 'Page::Terms.count', 'no new page terms' do
+        assert_no_difference 'User::Participation.count', 'no new user part' do
           assert_raises ActiveRecord::RecordInvalid do
             WikiPage.create!(params)
           end
@@ -68,15 +68,15 @@ class Page::BaseTest < ActiveSupport::TestCase
     user = users(:kangaroo)
     page = nil
     assert_no_difference 'Page.count', 'no new page' do
-      assert_no_difference 'PageTerms.count', 'no new page terms' do
-        assert_no_difference 'UserParticipation.count', 'no new user part' do
+      assert_no_difference 'Page::Terms.count', 'no new page terms' do
+        assert_no_difference 'User::Participation.count', 'no new user part' do
           page = WikiPage.build!(title: 'hi', user: user)
         end
       end
     end
     assert_difference 'Page.count' do
-      assert_difference 'PageTerms.count' do
-        assert_difference 'UserParticipation.count' do
+      assert_difference 'Page::Terms.count' do
+        assert_difference 'User::Participation.count' do
           page.save
         end
       end
@@ -148,7 +148,7 @@ class Page::BaseTest < ActiveSupport::TestCase
     page = RateManyPage.create! title: 'short lived', data: Poll.new
     poll_id = page.data.id
     page.destroy
-    assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
+    assert_nil Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
   def test_delete_and_undelete

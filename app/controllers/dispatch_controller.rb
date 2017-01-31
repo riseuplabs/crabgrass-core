@@ -28,13 +28,10 @@ class DispatchController < ApplicationController
   # (for example the ContextPageController does so).
   def process(name, *args)
     flash.keep
-    load_current_site
     find_controller.dispatch(name, request)
   end
 
   protected
-
-  def load_current_site; current_site; end
 
   # create a new instance of a controller, and pass it whatever info regarding
   # current group or user context or page object that we have gathered.

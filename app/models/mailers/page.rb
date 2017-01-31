@@ -4,7 +4,7 @@ module Mailers::Page
   def share_notice(user, notice_message, options)
     setup(options)
     if Conf.paranoid_emails?
-      code = Code.create! user: user, page: @page
+      code = Page::AccessCode.create! user: user, page: @page
       page_link = link()
       notice_message = nil
     else

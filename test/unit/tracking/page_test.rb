@@ -4,21 +4,18 @@ class Tracking::PageTest < ActiveSupport::TestCase
   # otherwise transactions fail because UNLOCK TABLES implicitly commits the transaction
   self.use_transactional_fixtures = false
 
-  fixtures :users, :groups, :memberships, :relationships, :pages
+
 
   def setup
   end
 
   def test_group_view_tracked
+    Tracking::Page.process
     user = users(:blue)
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
-    assert_difference('Membership.find(%d).total_visits'%membership.id) do
+    assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
       Tracking::Page.insert(current_user: user, group: group)
-      Tracking::Page.process
-    end
-    assert_difference('Membership.find(%d).total_visits'%membership.id) do
-      Tracking::Page.insert(current_user: user.id, group: group.id)
       Tracking::Page.process
     end
   end
@@ -33,7 +30,7 @@ class Tracking::PageTest < ActiveSupport::TestCase
     assert_difference 'Tracking::Page.count', -3 do
       Tracking::Page.process
     end
-    assert_equal 3, current_user.relationships.with(user).total_visits
+    assert_equal 3, current_user.relationships.with(user).first.total_visits
   end
 
   def test_page_view_tracked_fully
@@ -44,7 +41,7 @@ class Tracking::PageTest < ActiveSupport::TestCase
     # let's clean things up first so they do not get in the way...
     Tracking::Page.process
     Tracking::Daily.update
-    Tracking::Hourly.find(:all).each{|h| h.destroy}
+    Tracking::Hourly.destroy_all
     assert_no_difference 'Tracking::Daily.count' do
       # daily should not be created for the new hourlies
       # we only create them with one day delay to avoid double counting.
@@ -69,18 +66,6 @@ class Tracking::PageTest < ActiveSupport::TestCase
         Tracking::Daily.update
       end
     end
-  end
-
-  def test_most_active_groups
-    user = users(:blue)
-    group1 = groups(:rainbow)
-    group2 = groups(:animals)
-    group3 = groups(:recent_group)
-    1.times { Tracking::Page.insert(current_user: user, group: group3) }
-    2.times { Tracking::Page.insert(current_user: user, group: group2) }
-    3.times { Tracking::Page.insert(current_user: user, group: group1) }
-    Tracking::Page.process
-    assert_equal [group1, group2, group3], user.primary_groups.most_active[0..2]
   end
 
   private

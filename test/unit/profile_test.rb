@@ -1,11 +1,8 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
 
-  fixtures :users, :groups, :profiles, :external_videos
 
-  @@private = AssetExtension::Storage.private_storage = Rails.root + "tmp/private_assets"
-  @@public = AssetExtension::Storage.public_storage = Rails.root + "tmp/public_assets"
 
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]

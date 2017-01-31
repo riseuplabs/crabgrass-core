@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 class CreateCouncilRequestTest < ActiveSupport::TestCase
 
@@ -41,7 +41,7 @@ class CreateCouncilRequestTest < ActiveSupport::TestCase
   end
 
   def test_approve_creates_council
-    assert_difference 'Council.count' do
+    assert_difference 'Group::Council.count' do
       @request.mark! :approve, @accepting_user
     end
   end

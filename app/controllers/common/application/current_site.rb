@@ -14,17 +14,10 @@ module Common::Application::CurrentSite
 
   # returns the (cache) of the current site.
   def current_site
-    if !@current_site_disabled
-      @current_site ||= begin
-        host = request.host.sub(/^staging\./, '')
-        site = Site.for_domain(host).first
-        site ||= Site.default
-        site ||= Site.new(domain: host, name: 'custom')
-        Site.current = site
-        # ^^ not so nice, but required for now. used by i18n
-      end
-    else
-      Site.new()
+    return Site.default if @current_site_disabled
+    @current_site ||= begin
+      host = request.host.sub(/^staging\./, '')
+      Site.for_domain(host) || Site.default
     end
   end
 

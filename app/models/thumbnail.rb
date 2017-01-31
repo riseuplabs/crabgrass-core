@@ -29,7 +29,7 @@ class Thumbnail < ActiveRecord::Base
   after_destroy :rm_file
   def rm_file
     unless proxy?
-      fname = parent.private_thumbnail_filename(filename)
+      fname = path.private_filename(filename)
       FileUtils.rm(fname) if File.exist?(fname) and File.file?(fname)
     end
   end
@@ -41,9 +41,13 @@ class Thumbnail < ActiveRecord::Base
 
   # finds or initializes a Thumbnail
   def self.find_or_init(thumbnail_name, parent_id, asset_class)
-    self.find_or_initialize_by_name_and_parent_id_and_parent_type(
-      thumbnail_name.to_s, parent_id, asset_class
-    )
+    self.find_or_initialize_by name: thumbnail_name.to_s,
+      parent_id: parent_id,
+      parent_type: asset_class
+  end
+
+  def self.clone(orig, options = {})
+    self.create orig.attributes.except('id').merge(options)
   end
 
   #
@@ -96,16 +100,18 @@ class Thumbnail < ActiveRecord::Base
   end
 
   # delegate path stuff to the parent
+  delegate :path, to: :parent
+
   def private_filename
-    parent.private_thumbnail_filename(self.name)
+    path.private_filename filename
   end
 
   def public_filename
-    parent.public_thumbnail_filename(self.name)
+    path.public_filename filename
   end
 
   def url
-    parent.thumbnail_url(self.name)
+    path.url filename
   end
 
   def exists?
@@ -130,7 +136,7 @@ class Thumbnail < ActiveRecord::Base
   # when true, we skip all processing of this thumbnail
   # and just proxy to the main asset.
   #
-  # For example, in the DocAsset, if the uploaded file is a microsoft word
+  # For example, in the Asset::Doc, if the uploaded file is a microsoft word
   # file, then we first convert it to a libreoffice document before converting
   # to a pdf. However, If the uploaded file is already libreoffice, then
   # the libreoffice thumbnail is just proxied to the original uploaded file.

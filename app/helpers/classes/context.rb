@@ -25,6 +25,7 @@ Available options:
 =end
 
 class Context
+  extend ActiveModel::Naming
 
   attr_accessor :tab
   attr_accessor :entity
@@ -43,13 +44,15 @@ class Context
   delegate :to_param, to: :entity
   delegate :id, to: :entity
 
+  def to_model; self; end
+
   #attr_accessor :links
   #attr_accessor :form
 
   # returns the correct context for the given entity.
   def self.find(entity)
     return nil if entity.blank?
-    "Context::#{entity.class}".constantize.new(entity)
+    "Context::#{entity.class.name.demodulize}".constantize.new(entity)
   end
 
   def initialize(entity)

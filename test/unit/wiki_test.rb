@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class WikiTest < ActiveSupport::TestCase
-  fixtures :users, :wikis
+
 
   def setup
     @user = users(:blue)

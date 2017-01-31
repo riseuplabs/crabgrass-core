@@ -1,0 +1,9 @@
+.sidebox
+  .padded
+    = render 'sidebox'
+    - if may_show_affiliations?
+      = render 'group/structures/show_in_sidebar'
+    - if may_list_memberships?
+      = render 'memberships'
+
+

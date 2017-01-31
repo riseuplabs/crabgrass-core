@@ -1,4 +1,4 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 ##
 # Tests for migrate_permissions!, in order:
@@ -15,7 +15,7 @@ require_relative '../test_helper'
 module Migration
   class UserPermissionTest < ActiveSupport::TestCase
 
-    fixtures :users, :groups, :memberships
+
 
     def setup
       @user = FactoryGirl.create :user

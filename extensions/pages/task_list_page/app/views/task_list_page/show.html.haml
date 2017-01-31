@@ -1,6 +1,3 @@
-- content_for :right_sidebar do
-  = render partial: 'pages/sidebar/sidebar'
-
 %h2= I18n.t(:pending_tasks).capitalize
 %ul#sort_list_pending.list-group.stripe
   = render @pending
@@ -9,7 +6,7 @@
     = :no_pending_tasks.tcap
 
 - if current_user.may?(:edit, @page)
-  = render partial: 'tasks/new', locals: {page: @page}
+  = render 'tasks/new', page: @page
 
 %h2= I18n.t(:completed_tasks).capitalize
 %ul#sort_list_completed.list-group.stripe

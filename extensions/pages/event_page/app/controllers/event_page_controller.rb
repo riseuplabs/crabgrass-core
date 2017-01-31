@@ -1,4 +1,4 @@
-class EventPageController < Pages::BaseController
+class EventPageController < Page::BaseController
   before_filter :fetch_event
 
   def show

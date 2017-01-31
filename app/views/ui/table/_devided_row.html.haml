@@ -1,0 +1,25 @@
+-#
+  The table uses funky spacer rows, but this makes it possible to have a full
+  height divider border between the user avatar and the body of the post,
+  regardless of which side is taller.
+
+:ruby
+  # this is for linking to this post via the url, so
+  # we really do want a hypen and post.id, rather than dom_id.
+  link_name = local_assigns[:link_name] || "post-#{post.id}"
+  top_spacer_class = once?('post_spacer') ? "first round-top" : ""
+  # UPGRADE RAILS4.2 use post_iteration.last?
+  last = local_assigns[:last] == post
+
+%tbody[post, local_assigns[:prefix]]
+  %tr.post_spacer_top
+    %td{colspan: 2, class: top_spacer_class}
+      %a{name: link_name}! &nbsp;
+      - if last
+        %a{name: "last"}! &nbsp;
+  %tr.post
+    = yield
+  %tr.post_spacer_bottom
+    %td{colspan: 2, class: ''}
+      ! &nbsp;
+

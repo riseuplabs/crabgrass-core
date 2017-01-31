@@ -1,0 +1,23 @@
+#group_membership_list
+  - if may_create_membership?(@group)
+    = render 'add_member_form'
+    .h3= :members.t
+  - else
+    .h3.first= :members.t
+
+  %section{class: 'table'}
+    %table.fancy{width: '100%'}
+      %tr
+        %th{style: 'width:30%'}= federation_view? ? :member_groups_of_network.t : :user.t
+        %th= :profile_member_since.t
+        - if !federation_view?
+          %th= :visits.t
+        %th{style: 'width:30%'}
+      - myself = @memberships.detect {|m| m.entity.name == current_user.name}
+      - memberships = @memberships.reject {|m| m.entity.name == current_user.name}
+      - if myself
+        = render 'membership', membership: myself
+      - memberships.each do |membership|
+        = render 'membership', membership: membership
+    .p= pagination_links(@memberships)
+

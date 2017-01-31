@@ -23,9 +23,9 @@
 # 3. wiki should never get saved with body/body products mismatch
 # 4. loaded wiki should see only the latest body products, if body was updated from outside
 class Wiki < ActiveRecord::Base
-  include WikiExtension::Locking
-  include WikiExtension::Sections
-  include WikiExtension::Versioning
+  include Wiki::Locking
+  include Wiki::Sections
+  include Wiki::Versioning
 
   # a wiki can be used in multiple places: pages or profiles
   has_one :page, as: :data
@@ -34,7 +34,7 @@ class Wiki < ActiveRecord::Base
   attr_accessor :private # marks private group wikis during creation
   attr_accessor :last_seen_at
 
-  has_one :section_locks, class_name: "WikiLock", dependent: :destroy
+  has_one :section_locks, class_name: "Wiki::Lock", dependent: :destroy
 
   serialize :raw_structure, Hash
 
@@ -141,7 +141,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def structure
-    @structure ||= WikiExtension::WikiStructure.new(raw_structure, body.to_s)
+    @structure ||= Wiki::Structure.new(raw_structure, body.to_s)
   end
 
   def edit_sections?
@@ -268,39 +268,9 @@ class Wiki < ActiveRecord::Base
     # let's return a dummy structure at least.
     GreenCloth.new('').to_structure
   end
-
-  class Version < ActiveRecord::Base
-
-
-    before_destroy :confirm_existance_of_other_version
-
-    def self.most_recent
-      order('version DESC')
-    end
-
-    self.per_page = 10
-
-    def confirm_existance_of_other_version
-      self.previous || self.next || false
-    end
-
-    def to_s
-      to_param
-    end
-
-    def to_param
-      self.version.to_s
-    end
-
-    def diff_id
-      "#{previous.to_param}-#{self.to_param}"
-    end
-
-    def body_html
-      read_attribute(:body_html).try.html_safe
-    end
-
-  end
-
 end
 
+# TODO
+# stupid hack to ensure this gets loaded despite acts_as_versioned
+# defining the constant
+require 'wiki/version'

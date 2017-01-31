@@ -19,7 +19,7 @@ module EnhancedLogging
     File.open(logpath, 'w') do |test_log|
       test_log.puts self.class.name
       test_log.puts "========================="
-      test_log.puts __name__
+      test_log.puts name
       test_log.puts Time.now
       if page.current_path
         test_log.puts page.current_path
@@ -47,7 +47,7 @@ module EnhancedLogging
 
 
   def logpath(ext = 'log')
-    Rails.root + 'tmp' + "#{self.class.name.underscore}.#{__name__}.#{ext}"
+    Rails.root + 'tmp' + "#{self.class.name.underscore}.#{name}.#{ext}"
   end
 
 end

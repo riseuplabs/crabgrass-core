@@ -1,0 +1,17 @@
+= render 'tabs'
+
+#information_tab.tab_content.tab_area
+  = render 'information'
+
+#permissions_tab.tab_content.tab_area{style:'display:none'}
+  = render 'page/participations/permissions'
+
+#participation_tab.tab_content.tab_area{style:'display:none'}
+  = render 'page/participations/participation'
+
+#history_tab.tab_content.tab_area{style:'display:none'}
+
+.buttons-right
+  = close_modal_button
+
+= refresh_sidebar_on_close

@@ -3,11 +3,12 @@ Crabgrass::Application.configure do
   ## STANDARD RAILS OPTIONS
   ##
 
+  config.eager_load = true
   config.cache_classes = true
   config.action_controller.perform_caching             = true
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false

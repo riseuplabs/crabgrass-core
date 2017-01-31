@@ -64,22 +64,25 @@ schema
 class Page < ActiveRecord::Base
   extend RouteInheritance          # subclasses use /pages routes
 
-  include PageExtension::Users     # page <> users relationship
-  include PageExtension::Groups    # page <> group relationship
-  include PageExtension::Assets    # page <> asset relationship
-  include PageExtension::Comments  # page <> post relationship
-  include PageExtension::Create    # page creation
-  include PageExtension::Subclass  # page subclassing
-  include PageExtension::Index     # page full text searching
-  include PageExtension::Starring  # ???
-  include PageExtension::Tracking  # page tracking views, edits and stars
-  include PageExtension::PageHistory
+  include Page::Users           # page <> users relationship
+  include Page::Groups          # page <> group relationship
+  include Page::Assets          # page <> asset relationship
+  include Page::Comments        # page <> post relationship
+  include Page::Create          # page creation
+  include Page::Subclass        # page subclassing
+  include Page::Index           # page full text searching
+  include Page::Starring        # star specific functionality
+  include Page::Stats           # page tracking views, edits and stars
+  include Page::HistoryTracking # page <> page_history
 
 
-  has_many :page_notices, as: :noticable, dependent: :delete_all
+  has_many :page_notices,
+    class_name: 'Notice::PageNotice',
+    as: :noticable,
+    dependent: :delete_all
 
 
-  # disable timestamps, we set the updated_at field through certain PageHistory subclasses
+  # disable timestamps, we set the updated_at field through certain Page::History subclasses
   self.record_timestamps = false
   before_save :save_timestamps
 
@@ -98,11 +101,11 @@ class Page < ActiveRecord::Base
   ##
 
   # flexible finder. Finds pages by id or param
-  def self.find(*args)
-    if args.count != 1 || args.first.to_s =~ /^\d+$/
+  def self.find(id)
+    if id.to_s =~ /^\d+$/
       super
     else
-      find_by_param(args.first)
+      find_by_param(id)
     end
   end
 
@@ -157,9 +160,9 @@ class Page < ActiveRecord::Base
   def name_taken?
     return false unless self.name.present?
     if self.owner
-      pages = Page.find_all_by_name_and_owner_id(self.name, self.owner.id)
+      pages = Page.where name: self.name, owner_id: self.owner
     else
-      pages = Page.find_all_by_name_and_created_by_id(self.name, self.created_by_id)
+      pages = Page.where name: self.name, created_by_id: self.created_by_id
     end
     pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
   end
@@ -345,6 +348,8 @@ class Page < ActiveRecord::Base
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
+  # FIXME: removing the connection should be part of the participation.
+  # This way we can test participation.destroyed? in page history and views.
   def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|

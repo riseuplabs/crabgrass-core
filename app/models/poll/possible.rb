@@ -1,4 +1,6 @@
-class Possible < ActiveRecord::Base
+class Poll::Possible < ActiveRecord::Base
+  self.table_name = 'possibles'
+  model_name.instance_variable_set(:@i18n_key, 'possible')
 
   acts_as_list
   belongs_to :poll
@@ -6,7 +8,7 @@ class Possible < ActiveRecord::Base
     # disable votes collection builder, since we want the vote to take it's type from the poll
     %w(build create create!).each do |method_name|
       define_method(method_name) {
-        raise "Don't call 'possible.votes.#{method_name}' -- user 'votable.votes.#{method_name}' instead"
+        raise "Don't call 'possible.votes.#{method_name}' -- use 'votable.votes.#{method_name}' instead"
       }
     end
   end

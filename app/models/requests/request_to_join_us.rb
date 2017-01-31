@@ -46,7 +46,7 @@ class RequestToJoinUs < MembershipRequest
   protected
 
   def no_membership_yet
-    if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
+    if user.memberships.where(group_id: group).exists?
       errors.add(:base, I18n.t(:membership_exists_error, member: recipient.name))
     end
   end

@@ -3,6 +3,8 @@ require 'javascript_integration_test'
 class PageCreationTest < JavascriptIntegrationTest
   include GroupRecords
 
+  fixtures :users, :groups, 'group/memberships'
+
   def test_share_with_users
     login
     prepare_page :discussion_page

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class GalleryImageControllerTest < ActionController::TestCase
-  fixtures :pages, :users, :groups, :memberships
+
 
   def setup
     # let's make some gallery

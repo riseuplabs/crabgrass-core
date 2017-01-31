@@ -4,6 +4,8 @@ class WikiTest < JavascriptIntegrationTest
   include Integration::Wiki
   include Integration::Navigation
 
+  fixtures :users
+
   def setup
     super
     own_page :wiki_page
@@ -45,7 +47,7 @@ class WikiTest < JavascriptIntegrationTest
     click_page_tab "Versions"
     assert_wiki_unlocked
     assert_no_content "Version 3"
-    find("span.b", text: "2", exact: false).click
+    find("span.b", text: "2").click
     clicking "previous" do
       assert_selector 'ins', text: versions.pop
       assert_selector 'del', text: versions.last if versions.last.present?

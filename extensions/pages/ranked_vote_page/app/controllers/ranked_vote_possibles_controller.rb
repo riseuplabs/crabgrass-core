@@ -1,4 +1,4 @@
-class RankedVotePossiblesController < Pages::BaseController
+class RankedVotePossiblesController < Page::BaseController
   before_filter :fetch_poll
   before_filter :fetch_possible, only: [:edit, :update, :destroy]
 
@@ -39,13 +39,12 @@ class RankedVotePossiblesController < Pages::BaseController
   def destroy
     @possible.destroy
     current_user.updated(@page)
-    render nothing: true
   end
 
   protected
 
   def possible_params
-    params.require(:possible).permit(:name, :description)
+    params.require(:poll_possible).permit(:name, :description)
   end
 
   def sort_params

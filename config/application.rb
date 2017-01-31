@@ -6,12 +6,9 @@ require_relative 'boot'
 
 require 'rails/all'
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
 require_relative "../lib/crabgrass/boot.rb"
 require_relative "../lib/crabgrass/public_exceptions.rb"
@@ -23,10 +20,9 @@ module Crabgrass
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 
-    config.autoload_paths += %w(activity assets associations discussion chat profile poll task requests mailers notice).
+    config.autoload_paths += %w(chat profile requests mailers).
      collect { |dir| "#{Rails.root}/app/models/#{dir}" }
     config.autoload_paths << "#{Rails.root}/app/permissions"
-    config.autoload_paths << "#{Rails.root}/app/sweepers"
     config.autoload_paths << "#{Rails.root}/app/helpers/classes"
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -37,22 +33,13 @@ module Crabgrass
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
-    config.active_record.schema_format = :sql
+    config.active_record.disable_implicit_join_references = true
 
     config.active_support.deprecation = :notify
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    #
-    # We use strong parameters instead like rails4 does.
-    #config.active_record.whitelist_attributes = true
 
     config.session_store :cookie_store,
       :key => 'crabgrass_session'
-
-    config.secret_token = Conf.secret
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -64,10 +51,12 @@ module Crabgrass
     # store fragments on disk, we might have a lot of them.
     config.action_controller.cache_store = :file_store, CACHE_DIRECTORY
 
+    # use the new json based cookies.
+    config.action_dispatch.cookies_serializer = :hybrid
     # add our custom error classes
     config.action_dispatch.rescue_responses.merge!(
       'ErrorNotFound' => :not_found,
-      'WikiExtension::Sections::SectionNotFoundError' => :not_found,
+      'Wiki::Sections::SectionNotFoundError' => :not_found,
       'PermissionDenied' => :forbidden,
       'AuthenticationRequired' => :unauthorized
     )

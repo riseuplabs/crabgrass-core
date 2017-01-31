@@ -9,7 +9,7 @@ Install for development
 For installation using Vagrant, see [doc/development/vagrant.md](development/vagrant.md).
 
 ###Install basic ruby environment
-(at least ruby 1.9.3, ideally ruby 2.1)
+(Tested with ruby 2.1, at least ruby 2.0)
 
 ####Debian-based system
 

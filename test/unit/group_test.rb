@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  fixtures :groups, :users, :profiles, :memberships, :sites,
+
     :castle_gates_keys
 
   def teardown
@@ -64,19 +64,6 @@ class GroupTest < ActiveSupport::TestCase
     u = User.create login: 'user'
 
     assert u.may?(:pester, g) == true, 'should be able to pester private group'
-  end
-
-  def test_site_disabling_public_profiles_doesnt_affect_groups
-    with_site(:local, profiles: ["private"]) do
-      u = users(:red)
-      g = groups(:animals)
-
-      g.grant_access! public: :request_membership
-      g.reload
-
-      assert g.profiles.visible_by(u).public?
-      assert g.has_access? :request_membership, u
-    end
   end
 
   # disabled mocha test
@@ -158,22 +145,15 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_destroy
-    g = Group.create name: 'fruits'
-    g.add_user! users(:blue)
-    g.add_user! users(:red)
-    g.reload
+    g = groups(:warm)
+    red = users(:red)
 
-    page = DiscussionPage.create! title: 'hello', user: users(:blue), owner: g
-    assert_equal page.owner, g
-
-    assert_difference 'Membership.count', -2 do
+    assert_difference 'Group::Membership.count', (-1) * g.users.count do
       g.destroy
     end
 
-    assert_nil page.reload.owner_id
-
-    red = users(:red)
-    assert_nil GroupLostUserActivity.for_all(red).find(:first),
+    assert_nil pages(:committee_page).reload.owner_id
+    assert_nil Activity::GroupLostUser.for_all(red).first,
       "there should be no user left group message"
   end
 

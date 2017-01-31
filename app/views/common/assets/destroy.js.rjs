@@ -1,5 +1,3 @@
-if @page
-  page.replace 'page_sidebar', :partial => 'pages/sidebar/sidebar'
-end
+rebuild_sidebar(page) if @page
 page << 'if (initAjaxUpload) initAjaxUpload();'
 standard_update(page)

@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class RequestTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :requests, :memberships, :federatings,
+
     :castle_gates_keys
 
   def test_request_to_friend
@@ -34,19 +34,6 @@ class RequestTest < ActiveSupport::TestCase
     end
   end
 
-  def test_request_notice
-    u1 = users(:kangaroo)
-    u2 = users(:iguana)
-    req = RequestToFriend.create! created_by: u1,
-      recipient: u2,
-      message: 'hi, lets be friends'
-    RequestNotice.create request: req
-    assert_equal req, req.notices.first.request
-    assert_difference 'Notice.count', -1 do
-      req.destroy
-    end
-  end
-
   def test_request_to_join_us
     insider  = users(:dolphin)
     outsider = users(:gerrard)
@@ -66,9 +53,9 @@ class RequestTest < ActiveSupport::TestCase
         created_by: insider, recipient: outsider, requestable: group)
     end
 
-    assert_equal req, Request.to_user(outsider).having_state('pending').find(:last)
-    assert_equal req, Request.created_by(insider).having_state('pending').find(:last)
-    assert_equal req, Request.from_group(group).having_state('pending').find(:last)
+    assert_equal req, Request.to_user(outsider).having_state('pending').last
+    assert_equal req, Request.created_by(insider).having_state('pending').last
+    assert_equal req, Request.from_group(group).having_state('pending').last
 
     assert_raises PermissionDenied do
       req.approve_by!(insider)
@@ -119,7 +106,10 @@ class RequestTest < ActiveSupport::TestCase
       RequestToJoinYou.create!(created_by: outsider, recipient: group)
     end
 
-    assert_equal req, Request.approvable_by(insider).having_state('pending').find(:first, conditions: {created_by_id: outsider})
+    assert_equal req, Request.approvable_by(insider).
+      having_state('pending').
+      where(created_by_id: outsider).
+      first
 
     assert_raises PermissionDenied, 'PERMISSIONS DISABLED: non member is able to accept request for a group' do
       req.approve_by!(outsider)

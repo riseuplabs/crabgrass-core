@@ -1,2 +1,0 @@
-standard_update(page)
-page.replace 'group_membership_list', partial: 'groups/memberships/list'

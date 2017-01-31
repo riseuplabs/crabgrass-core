@@ -45,7 +45,7 @@ class RequestToJoinYou < MembershipRequest
   protected
 
   def no_membership_yet
-    if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
+    if user.memberships.where(group_id: group).exists?
       errors.add(:base, "You are already a member")
     end
   end

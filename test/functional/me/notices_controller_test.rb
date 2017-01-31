@@ -1,7 +1,7 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 class Me::NoticesControllerTest < ActionController::TestCase
-  fixtures :users, :notices
+
 
   def setup
     @blue = users(:blue)
@@ -18,7 +18,7 @@ class Me::NoticesControllerTest < ActionController::TestCase
   # However the landing page is such an important entry point
   # that we want to be sure to catch errors as well.
   def test_index_with_invalid_notice
-    notice = PostStarredNotice.create user: @blue, noticable_type: 'Post',
+    notice = Notice::PostStarredNotice.create user: @blue, noticable_type: 'Post',
       noticable_id: 987654321
     get :index
     assert_response :success

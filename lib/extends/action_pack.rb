@@ -64,14 +64,3 @@ end
 #end
 
 
-# UPGRADE: this moved into ActionView with rails4
-module ActionController::RecordIdentifier
-  #
-  # let's make sure the dom_id matches what haml creates when using
-  # [record, prefix] for a new record
-  #
-  def dom_id(record, prefix = nil)
-    record_id = record_key_for_dom_id(record) || NEW
-    "#{dom_class(record, prefix)}#{JOIN}#{record_id}"
-  end
-end

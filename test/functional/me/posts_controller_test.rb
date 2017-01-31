@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Me::PostsControllerTest < ActionController::TestCase
 
-  fixtures :all
+
 
   def test_list_all_posts_in_discussion
     me = users(:blue)

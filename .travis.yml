@@ -7,7 +7,6 @@ env:
   - RAKE_TASK=test
   - RAKE_TASK=test:pages:all
 rvm:
-  - 1.9.3
   - 2.1.5
 matrix:
   fast_finish: true

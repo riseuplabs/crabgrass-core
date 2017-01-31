@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AssetPageTest < ActiveSupport::TestCase
-  fixtures :users, :assets
+
 
   # fixes fixture_file_upload for Rails 2.3
   include ActionDispatch::TestProcess

@@ -1,0 +1,34 @@
+##
+## This partial will add a line item to the share/notify recipients list.
+##
+
+update_alert_messages(page)  # will clear it if there are none.
+
+alter_access = true if alter_access.nil?
+
+if flash[:messages].blank?
+  # the response is wrapped in this 'if' in case the popup has been hidden before we return.
+  page << "if ($('recipient_name')) {"
+
+  # give focus to text field
+  page << "$('recipient_name').focus();"
+
+  # update the ui by adding the recipients
+  @recipients.each do |recipient|
+    page << "if ($('share_recipient_#{recipient.name}') == null){"
+
+    page.insert_html :top, 'share_page_recipient_table',
+      partial: 'recipient',
+      locals: {
+        recipient: recipient,
+        access: params[:recipient][:access],
+        unsaved: true,
+        alter_access: alter_access }
+
+    page << "}"
+  end
+  page << "$('recipient_name').value = '';"
+  page.show('share_page_recipient_area') if @recipients.any?
+
+  page << "}" # end if
+end

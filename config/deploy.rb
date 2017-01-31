@@ -194,8 +194,8 @@ namespace :crabgrass do
   #
   #  UPGRADE
   #
-  desc "Upgrade to Version 0.9"
-  task :upgrade_to_0_9 do
+  desc "Upgrade to Version 0.6"
+  task :upgrade_to_0_6 do
     run "cd #{current_release}; RAILS_ENV=production bundle exec rake cg:upgrade:init_group_permissions cg:upgrade:migrate_group_permissions cg:upgrade:user_permissions"
   end
 
@@ -213,4 +213,4 @@ before  "deploy:finalize_update", "crabgrass:link_to_shared"
 after  "deploy:create_symlink", "crabgrass:create_version_files"
 after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
-before 'crabgrass:upgrade_to_0_9', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'
+before 'crabgrass:upgrade_to_0_6', 'deploy', 'crabgrass:cleanup_outdated_data', 'deploy:migrate'

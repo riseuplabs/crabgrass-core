@@ -1,4 +1,4 @@
-class TasksController < Pages::BaseController
+class TasksController < Page::BaseController
   before_filter :fetch_task, only: [:edit, :update, :destroy]
   before_filter :fetch_user_participation
   after_filter :update_participations, only: [:create, :update, :destroy]
@@ -29,9 +29,6 @@ class TasksController < Pages::BaseController
   end
 
   def edit
-    render :update do |page|
-      page.replace_html dom_id(@task), partial: 'inner_task_edit', locals: {task: @task}
-    end
   end
 
   def update
@@ -41,10 +38,6 @@ class TasksController < Pages::BaseController
       @task.move_to_bottom
     else
       @task.update_attributes task_params
-      render :update do |page|
-        page.replace_html dom_id(@task), partial: 'inner_task_show',
-          locals: {task: @task}
-      end
     end
     current_user.updated(@page)
   end

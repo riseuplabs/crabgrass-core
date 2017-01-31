@@ -75,16 +75,9 @@ class AssetsController < ApplicationController
   end
 
   def thumb_name
-    $~['thumb'].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
-  end
-
-  # read path from params and deal with invalid byte sequence in UTF-8
-  # for links created when we still used a different encoding
-  def path
-    params[:path].try.encode 'UTF-8', 'binary',
-      invalid: :replace,
-      undef: :replace,
-      replace: ''
+    if params[:path] =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
+      $~['thumb'].to_sym
+    end
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.

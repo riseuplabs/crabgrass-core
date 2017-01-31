@@ -1,4 +1,4 @@
-class GalleryImageController < Pages::BaseController
+class GalleryImageController < Page::BaseController
 
   helper 'gallery'
 
@@ -10,7 +10,7 @@ class GalleryImageController < Pages::BaseController
   prepend_before_filter :fetch_page_for_new, only: :new
 
   def show
-    @showing = @page.showings.find_by_asset_id(params[:id], include: 'asset')
+    @showing = @page.showings.includes(:asset).find_by_asset_id(params[:id])
     @image = @showing.asset
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
@@ -33,9 +33,9 @@ class GalleryImageController < Pages::BaseController
   def sort
     @page.sort_images params[:assets_list]
     current_user.updated(@page)
-    render text: I18n.t(:order_changed), layout: false
+    render plain: I18n.t(:order_changed)
   rescue => exc
-    render text: I18n.t(:error_saving_new_order_message, error_message: exc.message)
+    render plain: I18n.t(:error_saving_new_order_message, error_message: exc.message)
   end
 
   protected

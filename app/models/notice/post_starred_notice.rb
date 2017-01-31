@@ -1,4 +1,4 @@
-class PostStarredNotice < Notice
+class Notice::PostStarredNotice < Notice
 
   alias_attr :post, :noticable
   attr_accessor :from

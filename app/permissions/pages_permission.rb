@@ -64,7 +64,7 @@ module PagesPermission
   # although it is clumsy.
   def may_remove_participation?(part)
     return false unless may_admin_page?
-    if part.is_a?(UserParticipation)
+    if part.user?
       if part.user_id != current_user.id
         true
       elsif part.user_id == @page.owner_id and @page.owner_type == 'User'
@@ -72,7 +72,7 @@ module PagesPermission
       else
         current_user.may_admin_page_without?(@page, part)
       end
-    elsif part.is_a?(GroupParticipation)
+    elsif part.group?
       if !current_user.member_of?(part.group)
         true
       elsif part.group_id == @page.owner_id and @page.owner_type == 'Group'

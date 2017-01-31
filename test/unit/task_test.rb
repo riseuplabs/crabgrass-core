@@ -1,7 +1,7 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class TaskTest < ActiveSupport::TestCase
-  fixtures :users
+
 
   def test_creation
     assert Task.create

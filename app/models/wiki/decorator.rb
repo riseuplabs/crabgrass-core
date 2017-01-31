@@ -1,11 +1,12 @@
+require 'nokogiri'
+
 class Wiki::Decorator
 
   delegate :to_html, to: :doc
-  attr_reader :wiki, :doc, :view
 
   def initialize(wiki, view)
     @wiki = wiki
-    @doc = Hpricot(wiki.body_html)
+    @doc = Nokogiri::HTML.fragment(wiki.body_html)
     @view = view
   end
 
@@ -19,6 +20,7 @@ class Wiki::Decorator
   end
 
   protected
+  attr_reader :wiki, :doc, :view
 
   def find_heading_node(doc, section)
     return nil if section.nil?
@@ -37,32 +39,23 @@ class Wiki::Decorator
   def add_edit_link_to_heading(wiki, anchor, section)
     heading = anchor.parent
     link = view.edit_wiki_section_link(wiki, section)
-    heading.insert_after(Hpricot(link), anchor)
-    heading.attributes['class'] += " shy_parent"
+    anchor.add_next_sibling link
+    heading['class'] = "#{heading['class']} shy_parent"
   end
 
   def wrap_in_div(wiki, doc, section, is_full_wiki)
     # this is the heading node we want to wrap with its content
     heading = find_heading_node(doc, section)
-    # everything between replace_node and next_node should be wrapped
-
+    # everything between heading and end_node should be wrapped
     end_before = find_heading_node(doc, wiki.successor_for_section(section).try.name) rescue nil
 
-    # these nodes should be wrapped
-    wrapped_nodes = []
-
-    to_wrap = [heading]
-    last = heading
-    current = heading.try.next
+    wrap = Nokogiri.make view.div_for(wiki, section.underscore)
+    heading.previous = wrap
+    current = wrap.try.next
     while current != end_before and current
-      to_wrap << current
-      old = current
-      current = current.next
-      old.parent.children.delete(old)
+      wrap << current
+      current = wrap.next
     end
-    wrap = heading.make(view.div_for(wiki, section.underscore)).first
-    heading.parent.replace_child(heading, wrap)
-    wrap.html(to_wrap)
   end
 
 end

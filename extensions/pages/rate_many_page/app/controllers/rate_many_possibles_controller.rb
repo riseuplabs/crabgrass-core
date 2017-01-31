@@ -1,4 +1,4 @@
-class RateManyPossiblesController < Pages::BaseController
+class RateManyPossiblesController < Page::BaseController
   before_filter :fetch_poll
 
   guard :may_edit_page?
@@ -49,7 +49,7 @@ class RateManyPossiblesController < Pages::BaseController
   protected
 
   def possible_params
-    params.require(:possible).permit(:name, :description)
+    params.require(:poll_possible).permit(:name, :description)
   end
 
   def fetch_poll

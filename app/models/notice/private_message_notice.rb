@@ -1,4 +1,4 @@
-class PrivateMessageNotice < Notice
+class Notice::PrivateMessageNotice < Notice
   alias_attr :private_message, :noticable
   attr_accessor :message
   attr_accessor :from

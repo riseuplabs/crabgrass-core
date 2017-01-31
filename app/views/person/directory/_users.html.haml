@@ -1,0 +1,5 @@
+.directory
+  = render partial: 'user', collection: @users,
+    spacer_template: 'common/divider'
+
+= pagination_links(@users, params: params.except(:utf8))

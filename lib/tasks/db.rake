@@ -12,8 +12,6 @@ namespace :db do
         puts "\rValidating #{total} records for #{type}"
         index = 0
         begin
-          # UPGRADE:
-          # rails 4 has find_each.with_index
           type.find_each do |record|
             index += 1
             invalid << track_invalid(record)

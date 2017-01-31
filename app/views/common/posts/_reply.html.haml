@@ -1,0 +1,14 @@
+-#
+-#  requires:
+-#    posts_path(*arg) -- must be defined, for creating.
+
+%td.post_author
+  = render 'ui/author', author: current_user
+%td.post_body
+  = form_for @post, url: posts_path, remote: true,
+    html: {onsubmit: show_spinner('post')} do |f|
+    = f.text_area :body, rows: 8, class: 'form-control'
+    .buttons-right
+      .float_left= formatting_reference_link
+      = spinner('post')
+      = submit_tag :post_message.t, name: 'post_message', class: 'btn btn-success'

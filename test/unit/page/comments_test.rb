@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Page::CommentsTest < ActiveSupport::TestCase
-  fixtures :all
+
 
   def setup
     @user = users(:blue)

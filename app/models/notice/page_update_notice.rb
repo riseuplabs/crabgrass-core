@@ -1,4 +1,4 @@
-class PageUpdateNotice < PageNotice
+class Notice::PageUpdateNotice < Notice::PageNotice
 
   def display_title
     I18n.t(:page_updated, data).html_safe

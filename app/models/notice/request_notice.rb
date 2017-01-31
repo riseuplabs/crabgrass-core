@@ -1,4 +1,4 @@
-class RequestNotice < Notice
+class Notice::RequestNotice < Notice
 
   alias_attr :request, :noticable
 

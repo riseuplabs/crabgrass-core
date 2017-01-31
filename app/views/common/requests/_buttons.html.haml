@@ -1,0 +1,7 @@
+- updated_at = request.updated_at unless request.pending?
+
+%td.post_author
+  = render 'ui/author', author: active_user_for_request(request),
+    updated_at: updated_at
+%td.post_body
+  = buttons

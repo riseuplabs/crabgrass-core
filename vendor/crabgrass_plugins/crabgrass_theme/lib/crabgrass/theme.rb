@@ -8,12 +8,6 @@ module Crabgrass
   end
 end
 
-unless defined?(info)
-  def info(str,lvl=1)
-    puts str
-  end
-end
-
 %w[renderer cache loader options navigation_item navigation_definition].each do |file|
   require_relative "theme/#{file}"
 end

@@ -1,0 +1,74 @@
+<%##
+  ## NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
+  ## rake cg:test:update_fixtures
+  ##%>
+
+<% srand(314159265359) # consistent rand results %>
+
+<% for i in 1..10 %>
+grouppage_<%=i%>:
+  id: <%= i %>
+  page_id: <%= rand(99)+1 %>
+  group_id: <%= rand(3)+1 %>
+  access: 1
+<% end %>
+
+rainbow_page1:
+  id: 40
+  page_id: 1
+  group_id: 3
+  access: 1
+
+rainbow_tasklist:
+  id: 41
+  page_id: 201
+  group_id: 3
+  access: 1
+
+animals_asset1:
+  id: 42
+  page_id: 211
+  group_id: 2
+  access: 1
+
+animals_asset2:
+  id: 43
+  page_id: 212
+  group_id: 2
+  access: 1
+
+animals_asset3:
+  id: 44
+  page_id: 213
+  group_id: 2
+  access: 1
+
+rainbow_deleted:
+  id: 45
+  page_id: 207
+  group_id: 3
+  access: 1
+
+rainbow_blue:
+  id: 46
+  page_id: 1002
+  group_id: 3
+  access: 1
+
+rainbow_own_page:
+  page_id: 1003
+  group_id: 3
+  access: 1
+
+warm_committee_page:
+  page_id: 1001
+  group_id: 31
+  access: 1
+
+<% for i in 1..5 %>
+networkpage_<%=i%>:
+  id: 5<%= i %>
+  page_id: <%= rand(99)+1 %>
+  group_id: 300<%= rand(3)+1 %>
+  access: 1
+<% end %>

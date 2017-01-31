@@ -33,7 +33,6 @@ class ActiveSupport::TestCase
 
   include AuthenticatedTestHelper
   include AssetTestHelper
-  include SiteTestHelper
   include LoginTestHelper
   include FixtureTestHelper
   include FunctionalTestHelper
@@ -43,10 +42,15 @@ class ActiveSupport::TestCase
   # for fixture_file_upload
   include ActionDispatch::TestProcess
 
-  # fixtures :all
-  set_fixture_class castle_gates_keys: CastleGates::Key
-  set_fixture_class taggings: ActsAsTaggableOn::Tagging
-  set_fixture_class tags: ActsAsTaggableOn::Tag
+  fixtures :all
+  set_fixture_class castle_gates_keys: CastleGates::Key,
+    federatings: Group::Federating,
+    memberships: Group::Membership,
+    relationships: User::Relationship,
+    taggings: ActsAsTaggableOn::Tagging,
+    tags: ActsAsTaggableOn::Tag,
+    tokens: User::Token,
+    "page/terms" => Page::Terms
 end
 
 require 'factory_girl'
@@ -65,18 +69,11 @@ end
 ## some special rules for integration tests
 ##
 
-# ActiveSupport will define this, if it doesn't find it.
-# It uses StandardError as the superclass though, instead of Exception,
-# so that will generate a "superclass mismatch" error.
-if Mocha.const_defined? :ExpectationError
-  Mocha.__send__ :remove_const, :ExpectationError
-end
-
 #
 # mocha must be required last.
 # the libraries that it patches must be loaded before it is.
 #
-require 'mocha'
+require 'mocha/mini_test'
 
 # ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
 # on all values. This happens when assembling 'assigns' in tests.

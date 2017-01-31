@@ -2,7 +2,14 @@
 -# we don't allow commenting on requests yet. but when we do, it will get added here.
 -#
 
--# comments here?
+- buttons = buttons_for_request @req
 
--# render the 'posts'
-= render 'common/posts/list', posts: posts_for_request
+%section#posts.post_list
+  %table.posts.round
+    = render partial: 'common/requests/display',
+      layout: 'ui/table/devided_row',
+      locals: { post: @req, request: @req }
+    - if buttons.present?
+      = render partial: 'common/requests/buttons',
+        layout: 'ui/table/devided_row',
+        locals: { post: @req, request: @req, buttons: buttons, prefix: :buttons}

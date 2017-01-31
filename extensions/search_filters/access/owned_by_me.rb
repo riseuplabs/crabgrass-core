@@ -7,10 +7,9 @@ SearchFilter.new('/owned-by-me/') do
     )
   end
 
-  # TODO: add owner_id attribute
   sphinx do |query|
     id = Page.encode_user_id(query.current_user.id)
-    query.add_attribute_constraint(:owner_id, id)
+    query.add_attribute_constraint(:owner_id, id.to_i)
   end
 
   self.section = :my_pages

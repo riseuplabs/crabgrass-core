@@ -1,15 +1,13 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class TaggingTest < ActiveSupport::TestCase
-  fixtures :pages, :users
-  def setup
-    @objs = Page.find(:all, limit: 2)
 
-    @obj1 = @objs[0]
+  def setup
+    @obj1 = Page.new title: 'test_tags1'
     @obj1.tag_list = "pale"
     @obj1.save
 
-    @obj2 = @objs[1]
+    @obj2 = Page.new title: 'test_tags2'
     @obj2.tag_list = "pale, imperial"
     @obj2.save
   end

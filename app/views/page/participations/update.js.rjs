@@ -1,0 +1,11 @@
+page.replace 'watch_li', watch_line
+page.replace 'star_li', star_line
+if @part.present?
+  if @part.destroyed?
+    page.hide dom_id(@part)
+  else
+    page.replace_html dom_id(@part),
+      partial: 'page/participations/permission_row',
+      locals: {participation: @part}
+  end
+end

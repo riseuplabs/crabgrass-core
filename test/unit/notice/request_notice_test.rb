@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require 'test_helper'
 
 class RequestNoticeTest < ActiveSupport::TestCase
 
@@ -23,8 +23,8 @@ class RequestNoticeTest < ActiveSupport::TestCase
       recipient: @group, requestable: @network)
 
     assert_nil @group.council
-    assert_difference('RequestNotice.count', 2) do
-      RequestNotice.create! req
+    assert_difference('Notice::RequestNotice.count', 2) do
+      Notice::RequestNotice.create! req
     end
   end
 
@@ -34,9 +34,22 @@ class RequestNoticeTest < ActiveSupport::TestCase
 
     @group.council = @council
     @group.save
-    assert_instance_of Council, @group.council
-    assert_difference 'RequestNotice.count' do
-      RequestNotice.create! req
+    assert_instance_of Group::Council, @group.council
+    assert_difference 'Notice::RequestNotice.count' do
+      Notice::RequestNotice.create! req
+    end
+  end
+
+  def test_friend_request_notice
+    u1 = @user_in_group_1
+    u2 = @user_in_group_2
+    req = RequestToFriend.create! created_by: u1,
+      recipient: u2,
+      message: 'hi, lets be friends'
+    Notice::RequestNotice.create request: req
+    assert_equal req, req.notices.first.request
+    assert_difference 'Notice.count', -1 do
+      req.destroy
     end
   end
 

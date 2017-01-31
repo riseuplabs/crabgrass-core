@@ -22,7 +22,6 @@ module CastleGates
   end
 
   def self.castle(model_class, &block)
-    model_class.send(:acts_as_castle)
     model_class.class_eval(&block)
   end
 
