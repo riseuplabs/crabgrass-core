@@ -15,14 +15,4 @@ module WikiTestHelper
     assert_equal raw_structure, wiki.versions.last.raw_structure, "should have the latest raw_structure for its most recent version"
   end
 
-  def wiki_raw_structure_for_n_byte_body(n)
-    {
-      name: nil,
-      children: [],
-      start_index: 0,
-      end_index: n - 1,
-      heading_level: 0
-    }
-  end
-
 end
