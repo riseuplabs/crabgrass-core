@@ -2,8 +2,6 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-
-
   def setup
     Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
@@ -13,6 +11,11 @@ class UserTest < ActiveSupport::TestCase
     orange.valid?
     assert_equal Hash.new, orange.errors.messages
     assert orange.valid?
+  end
+
+  def test_user_factories_create_passwords
+    user = FactoryGirl.create :user
+    refute_nil user.password_digest
   end
 
   def test_email_required_settings

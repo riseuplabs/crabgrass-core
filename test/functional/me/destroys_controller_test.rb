@@ -17,7 +17,7 @@ class Me::DestroysControllerTest < ActionController::TestCase
     login_as @user
     post :update
     assert_equal @user.display_name, @user.reload.display_name
-    assert_nil @user.reload.crypted_password
+    assert_nil @user.reload.password_digest
     assert_equal [], @user.keys
   end
 
