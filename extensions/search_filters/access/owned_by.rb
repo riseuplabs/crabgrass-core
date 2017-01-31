@@ -21,7 +21,7 @@ SearchFilter.new('/owned-by/:type/:id/') do
     elsif type == 'group'
       id = Page.encode_group_id(group_id(id))
     end
-    query.add_attribute_constraint(:owner_id, id)
+    query.add_attribute_constraint(:owner_id, id.to_i)
   end
 
 end
