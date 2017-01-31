@@ -14,22 +14,8 @@ Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 ## misc.
 ##
 
-#include ActionController::Assertions::ResponseAssertions
-#ActionController::TestCase.send(:include, FunctionalTestHelper) unless #ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
-
 class ActiveSupport::TestCase
 
-  #  setup {
-  #    # Make sure Faker generates random but predictable content
-  #    # https://github.com/technoweenie/machinist
-  #    # Sham.reset
-  #   }
-
-  setup {
-    # make sure we don't have any login from the last test
-    User.current = nil
-
-  }
 
   include AuthenticatedTestHelper
   include AssetTestHelper
