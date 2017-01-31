@@ -107,13 +107,11 @@ class TaskListTest < JavascriptIntegrationTest
 
   def assert_no_task_assigned_to(*users)
     users.each do |user|
-      assert_no_selector '.people',
-        text: user.display_name
+      assert_no_selector '.people', text: user.display_name
     end
   end
 
   def assert_task_assigned_to(*users)
-    assert_selector '.people', exact: true,
-      text: users.map(&:display_name).join(', ')
+    assert_selector '.people', text: users.map(&:display_name).join(', ')
   end
 end
