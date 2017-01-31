@@ -139,7 +139,7 @@ GEM
     mysql2 (0.3.21)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
-    phantomjs-binaries (1.9.8.0)
+    phantomjs-binaries (2.1.1.1)
       sys-uname (= 0.9.0)
     poltergeist (1.13.0)
       capybara (~> 2.1)
@@ -260,7 +260,7 @@ DEPENDENCIES
   minitest
   mocha (~> 1.1)
   mysql2 (~> 0.3.18)
-  phantomjs-binaries (~> 1.8)
+  phantomjs-binaries (~> 2.1.1)
   poltergeist (~> 1.5)
   prototype-rails!
   prototype_legacy_helper (= 0.0.0)!

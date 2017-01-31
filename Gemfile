@@ -216,7 +216,7 @@ group :test, :ci do
 
   # Headless webkit browser for testing, fast and with javascript
   # Version newer than 1.8 is required by current poltergeist.
-  gem 'phantomjs-binaries', '~> 1.8', require: false
+  gem 'phantomjs-binaries', '~> 2.1.1', require: false
 
   # The castle_gates tests are based on sqlite
   gem 'sqlite3'
