@@ -3,7 +3,8 @@ require 'test_helper'
 class Me::SettingsControllerTest < ActionController::TestCase
 
   def setup
-    @user  = FactoryGirl.create(:user)
+    @user  = FactoryGirl.create :user, password: 'some password',
+      password_confirmation: 'some password'
   end
 
   def test_not_logged_in

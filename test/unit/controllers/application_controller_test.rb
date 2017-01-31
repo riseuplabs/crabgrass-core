@@ -6,14 +6,14 @@ class ApplicationControllerTest < ActiveSupport::TestCase
     class SimpleController < ApplicationController; end
     SimpleController.stylesheet :test
     assert_equal hash_for_all(:test), SimpleController.stylesheets
-    assert_equal nil, ApplicationController.stylesheets
+    assert_nil ApplicationController.stylesheets
   end
 
   test "can set javascript" do
     class SimpleController < ApplicationController; end
     SimpleController.javascript :test
     assert_equal hash_for_all(:test), SimpleController.javascripts
-    assert_equal nil, ApplicationController.javascripts
+    assert_nil ApplicationController.javascripts
   end
 
   test "stylesheets do not mess with super class" do

@@ -29,19 +29,19 @@ class UserTest < ActiveSupport::TestCase
 
     user.receive_notifications = nil
     user.save!
-    assert_equal nil, user.receive_notifications
+    assert_nil user.receive_notifications
 
     user.receive_notifications = true
     user.save!
-    assert_equal nil, user.receive_notifications
+    assert_nil user.receive_notifications
 
     user.receive_notifications = false
     user.save!
-    assert_equal nil, user.receive_notifications
+    assert_nil user.receive_notifications
 
     user.receive_notifications = "Any"
     user.save!
-    assert_equal nil, user.receive_notifications
+    assert_nil user.receive_notifications
 
     user.receive_notifications = "Digest"
     user.save!
@@ -53,7 +53,7 @@ class UserTest < ActiveSupport::TestCase
 
     user.receive_notifications = ""
     user.save!
-    assert_equal nil, user.receive_notifications
+    assert_nil user.receive_notifications
   end
 
   ## ensure that a user and a group cannot have the same handle

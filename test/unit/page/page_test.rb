@@ -148,7 +148,7 @@ class Page::BaseTest < ActiveSupport::TestCase
     page = RateManyPage.create! title: 'short lived', data: Poll.new
     poll_id = page.data.id
     page.destroy
-    assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
+    assert_nil Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
   def test_delete_and_undelete
