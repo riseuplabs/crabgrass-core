@@ -1,6 +1,7 @@
 class Poll::Possible < ActiveRecord::Base
   self.table_name = 'possibles'
   model_name.instance_variable_set(:@i18n_key, 'possible')
+  def to_partial_path; 'possibles/possible'; end
 
   acts_as_list
   belongs_to :poll
