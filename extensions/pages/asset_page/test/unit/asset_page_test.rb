@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class AssetPageTest < ActiveSupport::TestCase
+
   # fixes fixture_file_upload for Rails 2.3
   include ActionDispatch::TestProcess
 
@@ -20,20 +21,20 @@ class AssetPageTest < ActiveSupport::TestCase
     assert_equal @asset, @page.data
     @asset.reload
     assert @asset.page_terms
-    assert '1', @page.data.page_terms.media
+    assert "1", @page.data.page_terms.media
   end
 
   def test_asset_page_access
     assert File.exist?(@asset.private_filename)
     assert !File.exist?(@asset.public_filename),
-           format('public file "%s" should NOT exist', @asset.public_filename)
+      'public file "%s" should NOT exist' % @asset.public_filename
   end
 
   def test_asset_page_public_access
     @page.public = true
     @page.save
     assert File.exist?(@asset.public_filename),
-           format('public file "%s" not created when page became public', @asset.public_filename)
+      'public file "%s" not created when page became public' % @asset.public_filename
   end
 
   def test_asset_page_unpublished
@@ -42,13 +43,16 @@ class AssetPageTest < ActiveSupport::TestCase
     @page.public = false
     @page.save
     assert !File.exist?(@asset.public_filename),
-           format('public file "%s" still present after page was hidden', @asset.public_filename)
+      'public file "%s" still present after page was hidden' % @asset.public_filename
   end
 
   def test_symlinks_untouched_on_unrelated_updates
-    @asset.expects(:update_access).never
+    def @asset.update_access
+      raise Minitest::Assertion, 'update_access should not get called...'
+    end
     @page.title = 'new title'
     @page.save
+    assert_equal 'new title', @page.reload.title
   end
 
   protected

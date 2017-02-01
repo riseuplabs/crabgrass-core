@@ -33,8 +33,15 @@ class Wiki::DecoratorTest < ActiveSupport::TestCase
   end
 
   def dummy_view
-    stub edit_wiki_section_link: '<a>edit</a>',
-         div_for: '<div></div>'
+    Object.new.tap do |view|
+      def view.edit_wiki_section_link(*args)
+        '<a>edit</a>'
+      end
+
+      def view.div_for(*args)
+        '<div></div>'
+      end
+    end
   end
 
   def wiki_with_outside_content

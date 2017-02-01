@@ -193,14 +193,20 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   def test_success_flash_messages
+    rec_stub = Object.new.tap do |rec|
+      def rec.display_name
+        'New Member'
+      end
+    end
     request = RequestToJoinUs.new
-    request.stubs(:recipient).returns(stub(display_name: 'New Member'))
-    assert_equal 'Invitation to Join was sent to New Member.',
-                 request.flash_message(count: 1)[:text]
-    assert_equal '3 Invitations to Join were sent.',
-                 request.flash_message(count: 3)[:text]
-    assert_equal '0 Invitations to Join were sent.',
-                 request.flash_message(count: 0)[:text]
+    request.stub(:recipient, rec_stub) do
+      assert_equal 'Invitation to Join was sent to New Member.',
+        request.flash_message(count: 1)[:text]
+      assert_equal '3 Invitations to Join were sent.',
+        request.flash_message(count: 3)[:text]
+      assert_equal '0 Invitations to Join were sent.',
+        request.flash_message(count: 0)[:text]
+    end
   end
 
   # both invites to and from a group are visible to its members

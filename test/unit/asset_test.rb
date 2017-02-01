@@ -66,12 +66,6 @@ class AssetTest < ActiveSupport::TestCase
       'public file should not exist'
   end
 
-  def test_thumbnail_generation_handled_by_thumbnails
-    @asset = FactoryBot.create :image_asset
-    @asset.thumbnails.each { |thumb| thumb.expects(:generate) }
-    @asset.generate_thumbnails
-  end
-
   def test_build_asset
     asset = Asset.build(uploaded_data: upload_data('photo.jpg'))
     asset.valid? # running validations will load metadata

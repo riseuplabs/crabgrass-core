@@ -12,7 +12,9 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   end
 
   def test_remove_request_fails
-    @requester.expects(:longterm_member_of?).with(@group).returns(false)
+    def @requester.longterm_member_of?(group)
+      false
+    end
     assert_raises ActiveRecord::RecordInvalid, 'Permission Denied' do
       @request = RequestToRemoveUser.create! created_by: @requester, group: @group, user: @user
     end
@@ -20,20 +22,29 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   end
 
   def test_remove_succeeds
-    @requester.expects(:longterm_member_of?).with(@group).returns(true)
-    @request = RequestToRemoveUser.create! created_by: @requester, group: @group, user: @user
+    def @requester.longterm_member_of?(group)
+      true
+    end
     @approver = users(:green)
-    @approver.expects(:longterm_member_of?).with(@group).returns(true)
+    def @approver.longterm_member_of?(group)
+      true
+    end
+    @request = RequestToRemoveUser.create! created_by: @requester, group: @group, user: @user
     @request.approve_by!(@approver)
     assert_equal 'approved', @request.state, 'state should change'
     assert_removed
   end
 
   def test_remove_fails
-    @requester.expects(:longterm_member_of?).with(@group).returns(true)
+    def @requester.longterm_member_of?(group)
+      true
+    end
+    @approver = users(:green)
+    def @approver.longterm_member_of?(group)
+      false
+    end
     @request  = RequestToRemoveUser.create! created_by: @requester, group: @group, user: @user
     @approver = users(:green)
-    @approver.expects(:longterm_member_of?).with(@group).returns(false)
     assert_raises PermissionDenied do
       @request.approve_by!(@approver)
     end
