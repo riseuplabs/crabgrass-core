@@ -39,6 +39,7 @@ test:
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
     bundle exec rake
+    bundle exec rake cg:cleanup:all     # test cleanup tasks
   artifacts:
     when: on_failure
     paths:

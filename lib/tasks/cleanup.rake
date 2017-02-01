@@ -92,23 +92,23 @@ namespace :cg do
 
     desc "Turn committees without a parent into normal groups"
     task(:convert_committees_without_parent => :environment) do
-      count = Committee.where(parent_id: nil).update_all(type: nil)
+      count = Group::Committee.where(parent_id: nil).update_all(type: nil)
       puts "Turned #{count} committees without parent into groups"
     end
 
     desc "Remove committees without a parent into normal groups"
     task(:remove_committees_without_parent => :environment) do
-      count = Committee.where(parent_id: nil).delete_all
+      count = Group::Committee.where(parent_id: nil).delete_all
       puts "Deleted #{count} committees without parent"
     end
 
     desc "Remove all participations where the entity does not exist anymore"
     task(:remove_dead_participations => :environment) do
-      count = UserParticipation.where(dead_entity_sql('user')).delete_all
-      count += UserParticipation.where(dead_entity_sql('page')).delete_all
+      count = User::Participation.where(dead_entity_sql('user')).delete_all
+      count += User::Participation.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} User Participations."
-      count = GroupParticipation.where(dead_entity_sql('group')).delete_all
-      count += GroupParticipation.where(dead_entity_sql('page')).delete_all
+      count = Group::Participation.where(dead_entity_sql('group')).delete_all
+      count += Group::Participation.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} Group Participations."
     end
 
@@ -122,7 +122,7 @@ namespace :cg do
 
     desc "Remove all federatings where the group does not exist anymore"
     task(:remove_dead_memberships => :environment) do
-      count = Membership.where(dead_entity_sql('group')).delete_all
+      count = Group::Membership.where(dead_entity_sql('group')).delete_all
       puts "Removed #{count} Memberships with outdated groups."
     end
 
@@ -182,10 +182,10 @@ namespace :cg do
     task(:merge_duplicate_tags => :environment) do
       map = ActsAsTaggableOn::Tag.
         joins("JOIN tags AS dup ON tags.name = dup.name").
-        where("dup.id > tags.id").
-        select("dup.*, tags.id AS target")
+        where("dup.id > tags.id")
       puts "Merging #{map.count} duplicate tags"
       count = 0
+      map = map.select("dup.*, tags.id AS target")
       map.each do |dup|
         count += dup.taggings.update_all tag_id: dup.target
       end
@@ -219,9 +219,9 @@ namespace :cg do
 
     desc "Remove page histories where the page is gone"
     task(:remove_dangling_page_histories => :environment) do
-      count = PageHistory.where(dead_entity_sql('page')).delete_all
+      count = Page::History.where(dead_entity_sql('page')).delete_all
       puts "Removed #{count} page history records without a page"
-      count = PageHistory.where(dead_entity_sql('user')).delete_all
+      count = Page::History.where(dead_entity_sql('user')).delete_all
       puts "Removed #{count} page history records without a user"
     end
 
