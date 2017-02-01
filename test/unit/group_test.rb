@@ -124,9 +124,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_associations
-    User.current = users(:blue)
     assert check_associations(Group)
-    User.current = nil
   end
 
   def test_alphabetized

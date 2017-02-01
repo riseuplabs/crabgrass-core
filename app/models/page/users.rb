@@ -77,8 +77,7 @@ module Page::Users
   end
 
   def set_user
-    if User.current or self.created_by
-      self.created_by ||= User.current
+    if self.created_by
       self.created_by_login = self.created_by.login
       self.updated_by       = self.created_by
       self.updated_by_login = self.created_by.login

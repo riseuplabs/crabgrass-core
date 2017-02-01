@@ -73,30 +73,6 @@ module Associations
 
       end
 
-      ##
-      ## CURRENT USER KEYS
-      ##
-
-      #
-      # This uses ActiveRecord magic to allow you to pre-load the keys for current_user:
-      #
-      #   @pages = Page.find... :include => {:owner => :current_user_keys}
-      #
-      # has_many :current_user_keys,
-      #          :class_name => "CastleGates::Key",
-      #          :conditions => 'holder_code IN (#{User.current.access_codes.join(", ")})',
-      #          :as => :castle do
-      #   def open?(locks)
-      #     proxy_association.owner.class.keys_open_locks?(self, locks)
-      #   end
-      #   def gate_bitfield
-      #     if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-      #       self.inject(0) {|prior, key| prior | key.gate_bitfield}
-      #     else
-      #       self.calculate(:bit_or, :gate_bitfield)
-      #     end
-      #   end
-      # end
   end
 end
 

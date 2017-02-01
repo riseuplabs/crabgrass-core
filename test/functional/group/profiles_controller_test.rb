@@ -23,7 +23,7 @@ class Group::ProfilesControllerTest < ActionController::TestCase
         profile: {summary: 'test profile', entity_id: 1}
     end
     assert_response :redirect
-    profile = @group.profile.reload
+    profile = @group.profiles.public.reload
     assert_equal 'test profile', profile.summary
     assert_equal @group, profile.entity
   end

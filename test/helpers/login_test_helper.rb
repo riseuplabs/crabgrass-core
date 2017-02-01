@@ -9,7 +9,6 @@ module LoginTestHelper
     # of the user from the session removes mocks and stubs.
     @request.session[:user] = user
     @controller.instance_variable_set :@current_user, user
-    User.current = user
   end
 
   # the normal acts_as_authenticated 'login_as' does not work for integration tests

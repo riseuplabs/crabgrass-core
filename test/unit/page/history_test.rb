@@ -13,7 +13,6 @@ class Page::HistoryTest < ActiveSupport::TestCase
     Page.delete_all
 
     @user = FactoryGirl.create(:user, login: "pepe")
-    User.current = @user
 
     @page = FactoryGirl.create(:page, created_by: @user)
     Page::History::PageCreated.create page: @page, user: @user
@@ -22,7 +21,6 @@ class Page::HistoryTest < ActiveSupport::TestCase
   def teardown
     Page.delete_all
     User.delete_all
-    User.current = nil
   end
 
   def test_validations

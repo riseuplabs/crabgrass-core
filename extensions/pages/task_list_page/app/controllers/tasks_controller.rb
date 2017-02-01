@@ -6,7 +6,7 @@ class TasksController < Page::BaseController
   guard :may_edit_page?
 
   def create
-    @task = @page.tasks.new task_params
+    @task = @page.tasks.new task_params.merge created_by: current_user
     @task.name = 'untitled' if @task.name.blank?
     if @task.save
       current_user.updated(@page)

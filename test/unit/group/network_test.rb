@@ -110,10 +110,8 @@ class Group::NetworkTest < ActiveSupport::TestCase
   end
 
   def test_associations
-    User.current = users(:blue)
     assert check_associations(Group::Network)
     assert check_associations(Group::Federating)
-    User.current = nil
   end
 
 end
