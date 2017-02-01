@@ -24,7 +24,7 @@ class Wiki::Decorator
 
   def find_heading_node(doc, section)
     return nil if section.nil?
-    anchor = doc.at("a[@name=#{section}]")
+    anchor = doc.at %Q/a[@name="#{section}"]/
     if anchor.nil?
       raise Wiki::SectionNotFoundError.new(section)
     end
