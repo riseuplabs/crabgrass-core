@@ -20,6 +20,14 @@ content outside the default paras
     EOML
   end
 
+  def test_headings_that_caused_errors
+    wiki = Wiki.new body: wiki_with_troublesome_headings
+    decorator = Wiki::Decorator.new wiki, dummy_view
+    decorator.decorate :document
+    assert_includes decorator.to_html, 'a name='
+  end
+
+
   def assert_decorated_content_of(wiki, expected)
     decorator = Wiki::Decorator.new wiki, dummy_view
     decorator.decorate :document
@@ -40,6 +48,18 @@ content outside the default paras
 h2. heading
 
 #{additional_content}Some content
+    EOWIKI
+  end
+
+  def wiki_with_troublesome_headings
+    <<-EOWIKI
+    h2. 1. heading
+
+    content
+
+    h2. +++ heading +++
+
+    content
     EOWIKI
   end
 end
