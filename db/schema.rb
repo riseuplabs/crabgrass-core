@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217112907) do
+ActiveRecord::Schema.define(version: 20170204192405) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.string   "extra",        limit: 255
     t.integer  "key",          limit: 4
     t.datetime "created_at"
-    t.integer  "access",       limit: 1,   default: 2
+    t.integer  "access",       limit: 2,   default: 2
     t.integer  "related_id",   limit: 4
     t.integer  "site_id",      limit: 4
     t.boolean  "flag"
@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   create_table "asset_versions", force: :cascade do |t|
     t.integer  "asset_id",       limit: 4
     t.integer  "version",        limit: 4
+    t.integer  "parent_id",      limit: 4
     t.string   "content_type",   limit: 255
     t.string   "filename",       limit: 255
+    t.string   "thumbnail",      limit: 255
     t.integer  "size",           limit: 4
     t.integer  "width",          limit: 4
     t.integer  "height",         limit: 4
@@ -50,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   end
 
   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["parent_id"], :name => "index_asset_versions_parent_id"
   add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
   add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
 
@@ -59,10 +62,10 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.integer  "size",          limit: 4
     t.integer  "width",         limit: 4
     t.integer  "height",        limit: 4
+    t.string   "type",          limit: 255
     t.integer  "page_id",       limit: 4
     t.datetime "created_at"
     t.integer  "version",       limit: 4
-    t.string   "type",          limit: 255
     t.integer  "page_terms_id", limit: 4
     t.boolean  "is_attachment",               default: false
     t.boolean  "is_image"
@@ -113,9 +116,9 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
 
   create_table "crypt_keys", force: :cascade do |t|
-    t.integer "profile_id",  limit: 4
-    t.boolean "preferred",                      default: false
-    t.text    "key",         limit: 4294967295
+    t.integer "profile_id",  limit: 8
+    t.boolean "preferred",                 default: false
+    t.text    "key",         limit: 65535
     t.string  "keyring",     limit: 255
     t.string  "fingerprint", limit: 255
     t.string  "name",        limit: 255
@@ -123,7 +126,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   end
 
   create_table "custom_appearances", force: :cascade do |t|
-    t.text     "parameters",        limit: 4294967295
+    t.text     "parameters",        limit: 65535
     t.integer  "parent_id",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -142,16 +145,16 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   add_index "dailies", ["page_id"], :name => "index_dailies_on_page_id"
 
   create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   limit: 4,     default: 0
-    t.integer  "attempts",   limit: 4,     default: 0
-    t.text     "handler",    limit: 65535
-    t.text     "last_error", limit: 65535
+    t.integer  "priority",   limit: 4,        default: 0
+    t.integer  "attempts",   limit: 4,        default: 0
+    t.text     "handler",    limit: 16777215
+    t.text     "last_error", limit: 16777215
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by",  limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "queue",      limit: 255
   end
 
@@ -178,12 +181,23 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
+  create_table "event_recurrencies", force: :cascade do |t|
+    t.integer  "event_id",          limit: 4
+    t.datetime "start"
+    t.datetime "end"
+    t.string   "type",              limit: 255
+    t.string   "day_of_the_week",   limit: 255
+    t.string   "day_of_the_month",  limit: 255
+    t.string   "month_of_the_year", limit: 255
+    t.datetime "created_at",                    null: false
+  end
+
   create_table "events", force: :cascade do |t|
-    t.text     "description",      limit: 4294967295
-    t.text     "description_html", limit: 4294967295
-    t.boolean  "is_all_day",                          default: false
-    t.boolean  "is_cancelled",                        default: false
-    t.boolean  "is_tentative",                        default: true
+    t.text     "description",      limit: 16777215
+    t.text     "description_html", limit: 16777215
+    t.boolean  "is_all_day",                        default: false
+    t.boolean  "is_cancelled",                      default: false
+    t.boolean  "is_tentative",                      default: true
     t.string   "location",         limit: 255
     t.datetime "starts_at"
     t.datetime "ends_at"
@@ -197,13 +211,13 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.string   "media_key",           limit: 255
     t.string   "media_url",           limit: 255
     t.string   "media_thumbnail_url", limit: 255
-    t.text     "media_embed",         limit: 4294967295
+    t.text     "media_embed",         limit: 65535
     t.integer  "page_terms_id",       limit: 4
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.integer  "height",              limit: 3
-    t.integer  "width",               limit: 3
-    t.integer  "player",              limit: 1
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "height",              limit: 2
+    t.integer  "width",               limit: 2
+    t.integer  "player",              limit: 2
   end
 
   create_table "federatings", force: :cascade do |t|
@@ -339,7 +353,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at"
     t.string   "type",        limit: 255
-    t.text     "content",     limit: 4294967295
+    t.text     "content",     limit: 16777215
     t.integer  "channel_id",  limit: 4
     t.integer  "sender_id",   limit: 4
     t.string   "sender_name", limit: 255
@@ -358,13 +372,13 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.string   "type",           limit: 255
     t.integer  "user_id",        limit: 4
     t.integer  "avatar_id",      limit: 4
-    t.text     "data",           limit: 65535
+    t.text     "data",           limit: 16777215
     t.integer  "noticable_id",   limit: 4
     t.string   "noticable_type", limit: 255
-    t.boolean  "dismissed",                    default: false
+    t.boolean  "dismissed",                       default: false
     t.datetime "dismissed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   add_index "notices", ["user_id"], :name => "index_notices_on_user_id"
@@ -380,8 +394,8 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.datetime "updated_at"
   end
 
-  add_index "page_access_codes", ["code"], :name => "index_codes_on_code", :unique => true
-  add_index "page_access_codes", ["expires_at"], :name => "index_codes_on_expires_at"
+  add_index "page_access_codes", ["code"], :name => "index_page_access_codes_on_code", :unique => true
+  add_index "page_access_codes", ["expires_at"], :name => "index_page_access_codes_on_expires_at"
 
   create_table "page_histories", force: :cascade do |t|
     t.integer  "user_id",                     limit: 4
@@ -399,27 +413,27 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", force: :cascade do |t|
-    t.integer  "page_id",            limit: 4
+    t.integer  "page_id",            limit: 8
     t.string   "page_type",          limit: 255
-    t.text     "access_ids",         limit: 4294967295
-    t.text     "body",               limit: 4294967295
-    t.text     "comments",           limit: 4294967295
+    t.text     "access_ids",         limit: 16777215
+    t.text     "body",               limit: 16777215
+    t.text     "comments",           limit: 16777215
     t.string   "tags",               limit: 255
     t.string   "title",              limit: 255
     t.boolean  "resolved"
     t.integer  "rating",             limit: 4
     t.integer  "contributors_count", limit: 4
-    t.integer  "flow",               limit: 4,          default: 0
+    t.integer  "flow",               limit: 4,        default: 0
     t.string   "created_by_login",   limit: 255
     t.string   "updated_by_login",   limit: 255
-    t.integer  "created_by_id",      limit: 4
-    t.integer  "updated_by_id",      limit: 4
+    t.integer  "created_by_id",      limit: 8
+    t.integer  "updated_by_id",      limit: 8
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media",              limit: 255
-    t.integer  "stars_count",        limit: 4,          default: 0
-    t.integer  "views_count",        limit: 4,          default: 0, null: false
+    t.integer  "stars_count",        limit: 4,        default: 0
+    t.integer  "views_count",        limit: 4,        default: 0, null: false
     t.string   "owner_name",         limit: 255
     t.integer  "owner_id",           limit: 4
   end
@@ -441,22 +455,22 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.string   "title",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "resolved",                              default: true
+    t.boolean  "resolved",                            default: true
     t.boolean  "public"
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.text     "summary",            limit: 4294967295
+    t.text     "summary",            limit: 16777215
     t.string   "type",               limit: 255
-    t.integer  "message_count",      limit: 4,          default: 0
+    t.integer  "message_count",      limit: 4,        default: 0
     t.integer  "data_id",            limit: 4
     t.string   "data_type",          limit: 255
-    t.integer  "contributors_count", limit: 4,          default: 0
+    t.integer  "contributors_count", limit: 4,        default: 0
     t.string   "name",               limit: 255
     t.string   "updated_by_login",   limit: 255
     t.string   "created_by_login",   limit: 255
-    t.integer  "flow",               limit: 4,          default: 0
-    t.integer  "stars_count",        limit: 4,          default: 0
-    t.integer  "views_count",        limit: 4,          default: 0,    null: false
+    t.integer  "flow",               limit: 4,        default: 0
+    t.integer  "stars_count",        limit: 4,        default: 0
+    t.integer  "views_count",        limit: 4,        default: 0,    null: false
     t.integer  "owner_id",           limit: 4
     t.string   "owner_type",         limit: 255
     t.string   "owner_name",         limit: 255
@@ -496,16 +510,21 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.string  "average_color", limit: 255
   end
 
+  create_table "plugin_schema_info", id: false, force: :cascade do |t|
+    t.string  "plugin_name", limit: 255
+    t.integer "version",     limit: 4
+  end
+
   create_table "polls", force: :cascade do |t|
     t.string "type", limit: 255
   end
 
   create_table "possibles", force: :cascade do |t|
     t.string  "name",             limit: 255
-    t.text    "action",           limit: 4294967295
+    t.text    "action",           limit: 16777215
     t.integer "poll_id",          limit: 4
-    t.text    "description",      limit: 4294967295
-    t.text    "description_html", limit: 4294967295
+    t.text    "description",      limit: 16777215
+    t.text    "description_html", limit: 16777215
     t.integer "position",         limit: 4
   end
 
@@ -514,14 +533,14 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id",       limit: 4
     t.integer  "discussion_id", limit: 4
-    t.text     "body",          limit: 4294967295
-    t.text     "body_html",     limit: 4294967295
+    t.text     "body",          limit: 16777215
+    t.text     "body_html",     limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type",          limit: 255
     t.integer  "page_terms_id", limit: 4
-    t.integer  "stars_count",   limit: 4,          default: 0
+    t.integer  "stars_count",   limit: 4,        default: 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -529,9 +548,9 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   create_table "profile_notes", force: :cascade do |t|
     t.integer "profile_id", limit: 4
-    t.boolean "preferred",                     default: false
+    t.boolean "preferred",                   default: false
     t.string  "note_type",  limit: 255
-    t.text    "body",       limit: 4294967295
+    t.text    "body",       limit: 16777215
   end
 
   add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
@@ -539,10 +558,10 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   create_table "profiles", force: :cascade do |t|
     t.integer  "entity_id",              limit: 4
     t.string   "entity_type",            limit: 255
-    t.boolean  "stranger",                                  default: false, null: false
-    t.boolean  "peer",                                      default: false, null: false
-    t.boolean  "friend",                                    default: false, null: false
-    t.boolean  "foe",                                       default: false, null: false
+    t.boolean  "stranger",                             default: false, null: false
+    t.boolean  "peer",                                 default: false, null: false
+    t.boolean  "friend",                               default: false, null: false
+    t.boolean  "foe",                                  default: false, null: false
     t.string   "name_prefix",            limit: 255
     t.string   "first_name",             limit: 255
     t.string   "middle_name",            limit: 255
@@ -554,8 +573,8 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
-    t.boolean  "fof",                                       default: false, null: false
-    t.text     "summary",                limit: 4294967295
+    t.boolean  "fof",                                  default: false, null: false
+    t.text     "summary",                limit: 65535
     t.integer  "wiki_id",                limit: 4
     t.integer  "layout_id",              limit: 4
     t.boolean  "may_see"
@@ -563,18 +582,18 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
     t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      limit: 4,          default: 0
+    t.integer  "membership_policy",      limit: 4,     default: 0
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact",                       default: true
-    t.boolean  "may_pester",                                default: true
+    t.boolean  "may_request_contact",                  default: true
+    t.boolean  "may_pester",                           default: true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               limit: 5
     t.integer  "discussion_id",          limit: 4
     t.string   "place",                  limit: 255
     t.integer  "video_id",               limit: 4
-    t.text     "summary_html",           limit: 4294967295
+    t.text     "summary_html",           limit: 65535
     t.integer  "geo_location_id",        limit: 4
     t.integer  "picture_id",             limit: 4
   end
@@ -658,7 +677,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.integer  "question_id",       limit: 4
     t.integer  "response_id",       limit: 4
     t.integer  "asset_id",          limit: 4
-    t.text     "value",             limit: 4294967295
+    t.text     "value",             limit: 65535
     t.string   "type",              limit: 255
     t.datetime "created_at"
     t.integer  "external_video_id", limit: 4
@@ -666,18 +685,18 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   create_table "survey_questions", force: :cascade do |t|
     t.string   "type",       limit: 255
-    t.text     "choices",    limit: 4294967295
+    t.text     "choices",    limit: 65535
     t.integer  "survey_id",  limit: 4
     t.integer  "position",   limit: 4
     t.string   "label",      limit: 255
-    t.text     "details",    limit: 4294967295
+    t.text     "details",    limit: 65535
     t.boolean  "required"
     t.datetime "created_at"
     t.datetime "expires_at"
     t.string   "regex",      limit: 255
     t.integer  "maximum",    limit: 4
     t.integer  "minimum",    limit: 4
-    t.boolean  "private",                       default: false
+    t.boolean  "private",                  default: false
   end
 
   create_table "survey_responses", force: :cascade do |t|
@@ -690,9 +709,9 @@ ActiveRecord::Schema.define(version: 20160217112907) do
   end
 
   create_table "surveys", force: :cascade do |t|
-    t.text     "description",     limit: 4294967295
+    t.text     "description",     limit: 65535
     t.datetime "created_at"
-    t.integer  "responses_count", limit: 4,          default: 0
+    t.integer  "responses_count", limit: 4,     default: 0
     t.string   "settings",        limit: 255
   end
 
@@ -727,8 +746,8 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name",             limit: 255
-    t.text     "description",      limit: 4294967295
-    t.text     "description_html", limit: 4294967295
+    t.text     "description",      limit: 16777215
+    t.text     "description_html", limit: 16777215
     t.integer  "position",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -742,30 +761,25 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   add_index "tasks", ["page_id", "position"], :name => "index_tasks_on_page_id_and_position"
 
-  create_table "tasks_users", id: false, force: :cascade do |t|
-    t.integer "user_id", limit: 4
-    t.integer "task_id", limit: 4
-  end
-
-  add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
-
   create_table "thumbnails", force: :cascade do |t|
-    t.integer "parent_id",    limit: 4
+    t.integer "parent_id",    limit: 8
     t.string  "parent_type",  limit: 255
     t.string  "content_type", limit: 255
     t.string  "filename",     limit: 255
     t.string  "name",         limit: 255
-    t.integer "size",         limit: 4
-    t.integer "width",        limit: 4
-    t.integer "height",       limit: 4
+    t.integer "size",         limit: 8
+    t.integer "width",        limit: 8
+    t.integer "height",       limit: 8
     t.boolean "failure"
   end
 
+  add_index "thumbnails", ["parent_id", "parent_type"], :name => "parent_id_and_type"
+
   create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4,   null: false
-    t.string   "action",     limit: 255
-    t.string   "value",      limit: 255
-    t.datetime "created_at",             null: false
+    t.integer  "user_id",    limit: 4,   default: 0,  null: false
+    t.string   "action",     limit: 255, default: "", null: false
+    t.string   "value",      limit: 40,  default: "", null: false
+    t.datetime "created_at",                          null: false
   end
 
   create_table "trackings", force: :cascade do |t|
@@ -778,6 +792,17 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.boolean  "stars"
     t.integer  "user_id",         limit: 4
   end
+
+  create_table "translations", force: :cascade do |t|
+    t.text     "text",        limit: 65535
+    t.integer  "key_id",      limit: 4
+    t.integer  "language_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "custom",                    default: false
+  end
+
+  add_index "translations", ["key_id"], :name => "index_translations_on_key_id"
 
   create_table "user_participations", force: :cascade do |t|
     t.integer  "page_id",       limit: 4
@@ -822,7 +847,7 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.integer  "login_landing",              limit: 4,   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "preferred_editor",           limit: 4
+    t.integer  "preferred_editor",           limit: 1
   end
 
   add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"
@@ -852,8 +877,6 @@ ActiveRecord::Schema.define(version: 20160217112907) do
     t.binary   "admin_for_group_id_cache",  limit: 65535
     t.boolean  "unverified",                              default: false
     t.string   "receive_notifications",     limit: 255
-    t.binary   "student_id_cache",          limit: 65535
-    t.boolean  "encrypt_emails",                          default: false
     t.string   "type",                      limit: 255
     t.string   "password_digest",           limit: 255
   end
@@ -886,30 +909,32 @@ ActiveRecord::Schema.define(version: 20160217112907) do
 
   create_table "wiki_locks", force: :cascade do |t|
     t.integer "wiki_id",      limit: 4
-    t.text    "locks",        limit: 4294967295
-    t.integer "lock_version", limit: 4,          default: 0
+    t.text    "locks",        limit: 65535
+    t.integer "lock_version", limit: 4,     default: 0
   end
+
+  add_index "wiki_locks", ["wiki_id"], :name => "wiki_id"
 
   create_table "wiki_versions", force: :cascade do |t|
     t.integer  "wiki_id",       limit: 4
     t.integer  "version",       limit: 4
-    t.text     "body",          limit: 4294967295
-    t.text     "body_html",     limit: 4294967295
+    t.text     "body",          limit: 16777215
+    t.text     "body_html",     limit: 16777215
     t.datetime "updated_at"
     t.integer  "user_id",       limit: 4
-    t.text     "raw_structure", limit: 4294967295
+    t.text     "raw_structure", limit: 65535
   end
 
   add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
   add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
 
   create_table "wikis", force: :cascade do |t|
-    t.text     "body",          limit: 4294967295
-    t.text     "body_html",     limit: 4294967295
+    t.text     "body",          limit: 16777215
+    t.text     "body_html",     limit: 16777215
     t.datetime "updated_at"
     t.integer  "user_id",       limit: 4
     t.integer  "version",       limit: 4
-    t.text     "raw_structure", limit: 4294967295
+    t.text     "raw_structure", limit: 65535
   end
 
   add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
