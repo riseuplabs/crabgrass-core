@@ -17,7 +17,7 @@ Crabgrass::Application.configure do
   config.assets.digest = true
 
   # Defaults to Rails.root.join("public/assets")
-  config.assets.manifest = Rails.root.join "public/static"
+  # config.assets.manifest = YOUR_PATH
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
