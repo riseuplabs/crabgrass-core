@@ -82,7 +82,7 @@ module Common::Ui::LayoutHelper
 
     includes = []
     files.each do |file|
-      includes << javascript_include_tag(SPROCKETS_PREFIX + file.to_s)
+      includes << javascript_include_tag(file.to_s)
     end
     return includes
   end
