@@ -34,10 +34,8 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   end
 
   # this is overwritten by JavascriptIntegrationTest.
-  # RackTests run in the same process so we need to reset User.current
   def clear_session
     Capybara.reset_sessions!
-    User.current = nil
   end
 
   #

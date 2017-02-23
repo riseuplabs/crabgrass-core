@@ -88,9 +88,7 @@ class Group::CommitteeTest < ActiveSupport::TestCase
 
   def test_associations
     # current_user_permissions needs a current user
-    User.current = users(:blue)
     assert check_associations(Group::Committee)
-    User.current = nil
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages

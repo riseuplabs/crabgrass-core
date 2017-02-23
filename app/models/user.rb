@@ -206,11 +206,6 @@ class User < ActiveRecord::Base
     as: 'entity',
     class_name: 'Profile'
 
-  def profile(reload=false)
-    @profile = nil if reload
-    @profile ||= self.profiles.visible_by(User.current)
-  end
-
   ##
   ## USER SETTINGS
   ##

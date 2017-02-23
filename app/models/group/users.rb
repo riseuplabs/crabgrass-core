@@ -11,7 +11,6 @@ module Group::Users
   included do
 
     before_destroy :destroy_memberships
-    #      before_create :set_created_by
 
     has_many :memberships,
       class_name: 'Group::Membership',
@@ -172,10 +171,6 @@ module Group::Users
       user.update_membership_cache
     end
     self.increment!(:version)
-  end
-
-  def set_created_by
-    self.created_by ||= User.current
   end
 
 # maps a user <-> group relationship to user <-> language

@@ -17,7 +17,7 @@ class WikiPage < Page
   def wiki_with_auto_create(*args)
     wiki_without_auto_create(*args) or begin
       newwiki = Wiki.new do |w|
-         w.user = User.current
+         w.user = created_by
          w.body = ""
       end
       self.data = newwiki

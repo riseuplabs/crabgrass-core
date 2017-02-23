@@ -235,10 +235,6 @@ class Group < ActiveRecord::Base
     profiles.private.wiki = wiki
   end
 
-  def profile
-    self.profiles.visible_by(User.current)
-  end
-
   ##
   ## AVATAR
   ##

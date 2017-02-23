@@ -96,8 +96,7 @@ gem 'http_accept_language', '~> 2.0'
 gem 'utf8-cleaner'
 
 # Pagination for lists with a lot of items
-# 3.0.7 introduced a bug: https://github.com/mislav/will_paginate/issues/400
-# we should remove this strict version once that is fixed.
+# locking in to latest major to fix API
 gem 'will_paginate', '~> 3.1'
 
 # state-machine for requests
@@ -200,8 +199,6 @@ group :test, :ci do
   #
   # mocha note: mocha must be loaded after the things it needs to patch.
   #             so, we skip the 'require' here, and do it later.
-  #             also, requiring either mocha or minitest here causes zeus to
-  #             run tests twice, if using zeus (which you should).
   #
 
   ##

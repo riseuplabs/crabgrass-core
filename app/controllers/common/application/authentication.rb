@@ -13,7 +13,6 @@ module Common::Application::Authentication
     @current_user ||= begin
       user = load_user(session[:user]) if session[:user]
       user ||= User::Unknown.new
-      User.current = user
       user
     end
   end
@@ -56,7 +55,7 @@ module Common::Application::Authentication
         self.current_user = User.authenticate(username, passwd) || User::Unknown.new
       end
     end
-    User.current = current_user
+    current_user
   end
 
   # Store the URI of the current request in the session.

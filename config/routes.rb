@@ -53,7 +53,6 @@ Crabgrass::Application.routes.draw do
     # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
     match 'pages(/*path)', to: 'pages#index', as: 'pages', via: [:get, :post]
-    resources :activities, only: [:index, :show, :create]
     resources :discussions, path: 'messages', only: :index do
       resources :posts, except: [:new]
     end
@@ -117,7 +116,6 @@ Crabgrass::Application.routes.draw do
     resource  :home, only: :show, controller: 'home'
     match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
     # resources :messages
-    # resources :activities
     resource :friend_request, only: [:new, :create, :destroy]
   end
 

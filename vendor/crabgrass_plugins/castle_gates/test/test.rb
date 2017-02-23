@@ -25,7 +25,6 @@ class CastleGatesTest < Minitest::Test
     @faction = Faction.find :first
     @bunker = Bunker.find :first
 
-    #User.current = @me
   end
 
   def teardown
