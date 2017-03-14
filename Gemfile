@@ -150,8 +150,8 @@ gem 'delayed_job_active_record', '~> 4.0'
 gem 'daemons'
 
 # unpack file uploads
-# TODO: why is this locked to 1.1. ?
-gem 'rubyzip', '~> 1.1.0', require: false
+# needs to be at least 1.2.1 to avoid directory traversal issues
+gem 'rubyzip', '~> 1.2.1', require: false
 
 # load new rubyzip, but with the old API.
 # TODO: use the new zip api and remove gem zip-zip
