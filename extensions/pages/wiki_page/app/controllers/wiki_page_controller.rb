@@ -1,6 +1,5 @@
 class WikiPageController < Page::BaseController
 
-  guard print: :may_show_page?
   helper 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
 
@@ -32,10 +31,6 @@ class WikiPageController < Page::BaseController
   def fetch_data
     return true unless @page
     @wiki = @page.wiki
-  end
-
-  def fetch_context
-    'test' ## TODO
   end
 
   def find_last_seen
