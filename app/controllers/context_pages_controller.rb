@@ -30,13 +30,6 @@
 
 class ContextPagesController < DispatchController
 
-  def process(*)
-    super
-  rescue ActiveRecord::RecordNotFound
-    warning :thing_not_found.t(thing: :page.t)
-    redirect_to_new_page || raise_not_found
-  end
-
   protected
 
   def redirect_to_new_page
@@ -76,7 +69,7 @@ class ContextPagesController < DispatchController
     @page = finder.page
     @group = finder.group
     @user = finder.user
-    controller_for_page(@page) || raise_not_found
+    controller_for_page(@page)
   end
 
   def finder_options
@@ -96,8 +89,8 @@ class ContextPagesController < DispatchController
   #end
 
   def controller_for_page(page)
-    return unless page
-    new_controller page.controller
+    name = page ? page.controller : 'discussion_page'
+    new_controller name
   end
 
   private

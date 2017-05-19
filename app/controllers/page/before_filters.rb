@@ -18,7 +18,7 @@ module Page::BeforeFilters
   #
   def default_fetch_data
     @page ||= Page.find(params[:page_id] || params[:id])
-    raise_not_found unless may_show_page?
+    raise_not_found unless @page && may_show_page?
 
     if logged_in?
       # grab the current user's participation from memory
