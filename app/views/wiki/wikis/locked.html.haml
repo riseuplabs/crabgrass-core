@@ -1,0 +1,4 @@
+- wiki = local_assigns[:wiki] || @wiki
+
+%div{id: dom_id(wiki)}
+  = render "common/wikis/locked", local_assigns

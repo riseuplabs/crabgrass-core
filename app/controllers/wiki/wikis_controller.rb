@@ -40,7 +40,7 @@ class Wiki::WikisController < Wiki::BaseController
     end
     render template: "wiki/wikis/edit"
   rescue Wiki::LockedError => @error_message
-    render template: 'wiki/wikis/edit', locals: {mode: 'locked'}
+    render template: 'wiki/wikis/locked'
   end
 
   #
