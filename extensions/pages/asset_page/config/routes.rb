@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   scope path: 'pages' do
     resources :assets,
+      as: :asset_pages,
       only: [:show, :edit, :update],
       controller: :asset_page
     get 'assets/create(/:owner)',
