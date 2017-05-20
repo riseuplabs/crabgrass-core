@@ -6,12 +6,13 @@ class DispatchController < ApplicationController
   # this is *not* an action, but the 'dispatch' method from ActionController::Metal
   # The only change here is that we don't return to_a(), but instead whatever
   # process() returns.
-  def dispatch(name, request, response = ActionDispatch::Response.new)
+  def dispatch(action, request, response = ActionDispatch::Response.new)
+    @action = action
     @_request = request
     @_env = request.env
     @_env['action_controller.instance'] = self
     flash.keep
-    find_controller.dispatch(name, request)
+    find_controller.dispatch(@action, request)
   end
 
   protected
@@ -21,7 +22,8 @@ class DispatchController < ApplicationController
   def new_controller(controller_name)
     modify_params controller: controller_name
     class_name = "#{params[:controller].camelcase}Controller"
-    class_name.constantize.new({group: @group, user: @user, page: @page, pages: @pages})
+    klass = class_name.constantize
+    klass.new group: @group, user: @user, page: @page, pages: @pages
   end
 
   # We want the modification to also apply to the newly instantiated controller.
@@ -29,6 +31,11 @@ class DispatchController < ApplicationController
   def modify_params(options={})
     request.parameters.merge! options
     @_params = nil
+  end
+
+  def modify_action(action)
+    modify_params action: action
+    @action = action
   end
 
 end

@@ -32,44 +32,17 @@ class ContextPagesController < DispatchController
 
   protected
 
-  def redirect_to_new_page
-    return unless logged_in?
-
-    new_page_owner = @group if current_user.may?(:edit, @group)
-    new_page_owner ||= (@user if (@user == current_user ))
-    return unless new_page_owner
-
-    title = params[:id].split('+')[0...-1].join(' ').humanize
-    url = page_creation_url owner: new_page_owner,
-      type: :wiki,
-      page: { title: params[:id].humanize }
-    logger.info("Redirect to #{url}")
-
-    # FIXME: this controller isn't fully set-up yet (because usually the request
-    #   will be completed in a new controller instance), so redirect_to etc.
-    #   won't work.
-    return [302, { 'Location' => url }, []]
-  end
-
-  #
-  # attempt to find a page by its name, and return a new instance of the
-  # page's controller.
-  #
-  # there are possibilities:
-  #
-  # - if we can find a unique page, then show that page with the correct controller.
-  # - if we get a list of pages (TODO)
-  #   - show either a list of public pages (if not logged in)
-  #   - a list of pages current_user has access to
-  # - if we fail entirely, show the page not found error.
-  #
-
   def find_controller
-    finder = Page::Finder.new params[:context_id], params[:id], finder_options
     @page = finder.page
     @group = finder.group
     @user = finder.user
-    controller_for_page(@page)
+    new_controller controller_name
+  end
+
+  def finder
+    @finder ||= Page::Finder.new params[:context_id],
+      params[:id],
+      finder_options
   end
 
   def finder_options
@@ -81,6 +54,43 @@ class ContextPagesController < DispatchController
     options.merge(pagination_params)
   end
 
+  def controller_name
+    if @page
+      @page.controller
+    else
+      controller_for_missing_page
+    end
+  end
+
+  def controller_for_missing_page
+    if create_page?
+      prepare_params
+      'page/create'
+    else
+      'discussion_page'  # just used here to render the 404
+    end
+  end
+
+  def create_page?
+    logged_in? &&
+      (create_group_page? || (@user == current_user))
+  end
+
+  def create_group_page?
+    @group && current_user.may?(:edit, @group)
+  end
+
+  def prepare_params
+    modify_action :new
+    modify_params owner: @group.name if create_group_page?
+    modify_params type: 'wiki',
+      page: {title: new_title}
+  end
+
+  def new_title
+    params[:id].sub(/\+\d*/, '').split('+').join(' ').humanize
+  end
+
   #def controller_for_list_of_pages(name)
   #  params[:action] = 'index'
   #  params[:search] = {:text => name}
@@ -88,18 +98,4 @@ class ContextPagesController < DispatchController
   #  SearchController.new()
   #end
 
-  def controller_for_page(page)
-    name = page ? page.controller : 'discussion_page'
-    new_controller name
-  end
-
-  private
-
-  ## Link to the action for the form to create a page of a particular type.
-  def create_page_url(options={})
-    group = options.delete(:group)
-    url_for(options.merge(controller: 'pages/create', action: 'new'))
-  end
 end
-
-
