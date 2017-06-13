@@ -20,8 +20,8 @@ module Common::Ui::ImageHelper
   #
   # currently, any 'size' argument other than the default will not display well.
   #
-  def icon_tag(icon, size = 16)
-    content_tag :i, ' ', class: "small_icon #{icon}_#{size}"
+  def icon_tag(icon, size: 16, title: '')
+    content_tag :i, ' ', class: "small_icon #{icon}_#{size}", title: title
   end
 
 #  def pushable_icon_tag(icon, size = 16, id = nil)
