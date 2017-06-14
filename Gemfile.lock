@@ -280,6 +280,3 @@ DEPENDENCIES
   whenever
   will_paginate (~> 3.1)
   zip-zip
-
-BUNDLED WITH
-   1.14.3
