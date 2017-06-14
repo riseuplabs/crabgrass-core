@@ -162,14 +162,17 @@ en:
 ### en/emails.yml
   mailer:
     hello: Hello %{user_name}
-    page_history:
-      a_page_has_been_modified: "%{site_title} : A page has been modified"
+    page_histories:
+      page_update: "%{site} : A page has been modified"
+      daily_digest: "%{site} : Daily summary of page modifications"
       pages_you_are_watching_have_been_modified:
         one: A page that you are watching has been modified since the last notification.
         other: "%{count} pages that you are watching have been modified since the last
           notification."
       we_leave_out_details: We leave out the details in this email to protect information
         you might want to keep private.
+      upload_your_public_pgp_key: To receive more detailed updates in encrypted emailsplease
+        upload your public pgp key.
       you_can_find_updates_here: 'You will find more details and a list of recently
         changed pages here:'
       the_page_you_are_watching_description: The page you are watching "%{page_title}"
@@ -626,6 +629,7 @@ en:
   page_added_to_group: This page will be added to %{group_type} %{group_name}.
   additional_page_access: Additional Access
   page_owner_error: Page owner cannot be empty.
+  page_is_public: This page is public.
   action: Action
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"

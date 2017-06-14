@@ -271,6 +271,8 @@ en:
   ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
   ##!  upload_file_help: "Required. Select a file to upload to this page."
 
+  page_is_public: "This page is public."
+
   ##
   ## PAGE HISTORY
   ##

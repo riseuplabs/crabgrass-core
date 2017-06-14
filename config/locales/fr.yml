@@ -475,6 +475,7 @@ fr:
   page_added_to_group: Cette page sera ajoutée à la structure %{group_type} %{group_name}.
   additional_page_access: Accès additionnel
   page_owner_error: Propriétaire de la page ne peut pas être laissé en blanc
+  page_is_public: C'est une page public.
   action: action
   page_history_add_star: "%{user_name} a ajouté une étoile"
   page_history_added_comment: "%{user_name} a ajouté un commentaire"
