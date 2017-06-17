@@ -57,10 +57,6 @@ module Common::Application::AlertMessages
       helper_method :warning
       helper_method :notice
       helper_method :success
-      helper_method :raise_error
-      helper_method :raise_not_found
-      helper_method :raise_denied
-
     end
   end
 
