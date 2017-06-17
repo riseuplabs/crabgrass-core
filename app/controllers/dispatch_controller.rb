@@ -23,7 +23,11 @@ class DispatchController < ApplicationController
     modify_params controller: controller_name
     class_name = "#{params[:controller].camelcase}Controller"
     klass = class_name.constantize
-    klass.new group: @group, user: @user, page: @page, pages: @pages
+    klass.new.tap do |instance|
+      if instance.respond_to?(:seed)
+        instance.seed group: @group, user: @user, page: @page
+      end
+    end
   end
 
   # We want the modification to also apply to the newly instantiated controller.

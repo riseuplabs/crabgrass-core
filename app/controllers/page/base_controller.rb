@@ -43,20 +43,14 @@ class Page::BaseController < ApplicationController
 
   include Page::BeforeFilters
 
-  ##
-  ## CONSTRUCTOR
-  ##
-
-  hide_action :initialize
-  # if the page controller is call by our custom DispatchController,
-  # objects which have already been loaded will be passed to the tool
-  # via this initialize method.
-  def initialize(seed={})
-    super()
-    @user  = seed[:user]   # the user context, if any
-    @group = seed[:group]  # the group context, if any
-    @page  = seed[:page]   # the page object, if already fetched
+  # if the page controller is initialized by our custom DispatchController,
+  # objects which have already been loaded will be passed in via this
+  def seed(user: nil, group: nil, page: nil)
+    @user  = user   # the user context, if any
+    @group = group  # the group context, if any
+    @page  = page   # the page object, if already fetched
   end
+  hide_action :seed
 
   protected
 
