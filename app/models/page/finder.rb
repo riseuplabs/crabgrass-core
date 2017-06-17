@@ -4,14 +4,18 @@
 # Used from the ContextPagesController.
 #
 # When page is called we try to find one page and return it.
-# If we cannot identify a single page we just return nil for now.
+# First of all we identify the context of the page as a group or a user.
+# If we cannot identify the context we return nil.
+#
+# We used to try to find pages even if we could not identify the context.
+# This is currently broken in production. I'm not sure if it was ever used at
+# scale. So I removed this to reduce complexity.
 
 class Page::Finder
 
-  def initialize(context_handle, page_handle, options = {})
+  def initialize(context_handle, page_handle)
     @handle = page_handle
     @context, @group, @user = find_context(context_handle)
-    @options = options
   end
 
   attr_reader :group, :user
@@ -25,18 +29,11 @@ class Page::Finder
       Page.find( $~[1] )
     elsif context
       context.find_page(handle)
-    else
-      pages = find_pages_with_unknown_context(handle)
-      if pages.size == 1
-        pages.first
-      elsif pages.size > 1
-        # for now, we don't support this.
-      end
     end
   end
 
   protected
-  attr_reader :handle, :context, :options
+  attr_reader :handle, :context
 
 
   def find_context(name)
@@ -52,7 +49,4 @@ class Page::Finder
     end
   end
 
-  def find_pages_with_unknown_context(name)
-    Page.paginate_by_path ["name",name], options
-  end
 end

@@ -19,13 +19,11 @@
 #
 # the dispatcher handles urls in the form:
 #
-# /:context/:page/:page_action/:id
+# /:context_handle/:page_handle/:page_action
 #
-# :context can be a group name or user login
-# :page can be the name of the page or "#{title}+#{page_id}"
+# :context_handle can be a group name or user login
+# :page_handle can be the name of the page or "#{title}+#{page_id}"
 # :page_action is the action that should be passed on to the page's controller
-# :id is just there as a catch all id for extra fun in case the
-#     page's controller wants it.
 #
 
 class ContextPagesController < DispatchController
@@ -41,17 +39,7 @@ class ContextPagesController < DispatchController
 
   def finder
     @finder ||= Page::Finder.new params[:context_id],
-      params[:id],
-      finder_options
-  end
-
-  def finder_options
-    if logged_in?
-      options = options_for_me
-    else
-      options = options_for_public
-    end
-    options.merge(pagination_params)
+      params[:id]
   end
 
   def controller_name
@@ -64,10 +52,11 @@ class ContextPagesController < DispatchController
 
   def controller_for_missing_page
     if create_page?
-      prepare_params
+      prepare_params_to_create_page
       'page/create'
     else
-      'discussion_page'  # just used here to render the 404
+      prepare_params_for_not_found
+      'exceptions'
     end
   end
 
@@ -80,11 +69,15 @@ class ContextPagesController < DispatchController
     @group && current_user.may?(:edit, @group)
   end
 
-  def prepare_params
+  def prepare_params_to_create_page
     modify_action :new
     modify_params owner: @group.name if create_group_page?
     modify_params type: 'wiki',
       page: {title: new_title}
+  end
+
+  def prepare_params_for_not_found
+    env['action_dispatch.exception'] = ErrorNotFound.new(:page)
   end
 
   def new_title
