@@ -11,6 +11,7 @@ class Asset::PdfTest < ActiveSupport::TestCase
   end
 
   def test_pdf_upload
+    skip if ENV['GITLAB_CI']
     @asset = Asset.create_from_params uploaded_data: upload_data('test.pdf')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
