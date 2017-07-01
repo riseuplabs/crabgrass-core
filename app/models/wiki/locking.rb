@@ -24,12 +24,12 @@ module Wiki::Locking
     def initialize(section, user, options = {})
       if section == :document
         super([
-          :wiki_is_locked.t(user: bold(user.name))
+          :wiki_is_locked_html.t(user: user.name)
         ], options)
       else
         super([
-          :cant_edit_section.t(section: bold(section)),
-          :user_locked_section.t(section: bold(section), user: bold(user.name))
+          :cant_edit_section_html.t(section: section),
+          :user_locked_section_html.t(section: section, user: user.name)
         ], options)
       end
     end
@@ -38,7 +38,7 @@ module Wiki::Locking
   class OtherSectionLockedError < LockedError
     def initialize(section, options = {})
       super(
-        :other_section_locked_error.t(section: bold(section)).html_safe,
+        :other_section_locked_error_html.t(section: section),
         options
       )
     end
@@ -48,13 +48,13 @@ module Wiki::Locking
     def initialize(section, user, options = {})
       if section == :document
         super([
-          :wiki_is_locked.t(user: bold(user.name)),
+          :wiki_is_locked_html.t(user: user.name),
           :can_still_save.t,
           :changes_might_be_overwritten.t
         ], options)
       else
         super([
-          :user_locked_section.t(section: bold(section), user: bold(user.name)),
+          :user_locked_section_html.t(section: section, user: user.name),
           :can_still_save.t,
           :changes_might_be_overwritten.t
         ], options)

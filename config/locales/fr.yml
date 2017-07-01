@@ -809,14 +809,14 @@ fr:
   private_wiki: Wiki privé
   edit_wiki: Éditer le wiki
   wiki_existed_new_version_created: Ce wiki a déjà été créé par une autre personne. Vos changements ont été sauvegardés comme une nouvelle version.
-  wiki_is_locked: Ce wiki est actuellement verrouillé par %{user}
+  wiki_is_locked_html: Ce wiki est actuellement verrouillé par <b>%{user}</b>
   wiki_section_is_locked: La section %{section} est verrouillée par %{user}.
   leave_editing_wiki_page_warning: Si vous quittez cette page sans sauvegarder le wiki ou sans annuler l'édition; alors les autres verront ce wiki verrouillé et ne pourront l'éditer. De même, si vous ne sauvegardez pas le wiki, vous perdrez vos modifications.
-  cant_edit_section: Édition de %{section} impossible.
-  user_locked_section: "%{section} verrouillée par %{user}."
+  cant_edit_section_html: Édition de <b>%{section}</b> impossible.
+  user_locked_section_html: "<b>%{section}</b> verrouillée par <b>%{user}</b>."
   can_still_save: Vous pouvez toujours faire une sauvegarde.
   changes_might_be_overwritten: Vos modifications peuvent être écrasées.
-  other_section_locked_error: Vous ne pouvez verrouiller qu'une section simultanément. Vous avez déjà verrouillé '%{section}'.
+  other_section_locked_error_html: Vous ne pouvez verrouiller qu'une section simultanément. Vous avez déjà verrouillé '<b>%{section}</b>'.
   break_lock_button: Forcer le verrou
   force_save_button: Forcer le verrou et sauvegarder
   versions: Versions

@@ -811,14 +811,14 @@ de:
   private_wiki: Privates Wiki
   edit_wiki: Bearbeite Wiki
   wiki_existed_new_version_created: Dieses Wiki wurde bereits von einer anderen Nutzer_in erstellt. Deine Veränderungen wurden als neue Version gespeichert.
-  wiki_is_locked: Dieses Wiki ist momentan gesperrt durch %{user}
+  wiki_is_locked_html: Dieses Wiki ist momentan gesperrt durch <b>%{user}</b>
   wiki_section_is_locked: Der Abschnitt %{section} ist gerade durch %{user} gesperrt.
   leave_editing_wiki_page_warning: Wenn du diese Seite verlässt, gehen deine Änderungen verloren.
-  cant_edit_section: Kann %{section} nicht bearbeiten.
-  user_locked_section: "%{user} hat %{section} gesperrt."
+  cant_edit_section_html: Kann <b>%{section}</b> nicht bearbeiten.
+  user_locked_section_html: "<b>%{user}</b> hat <b>%{section}</b> gesperrt."
   can_still_save: Du kannst immer noch speichern.
   changes_might_be_overwritten: Deine Veränderungen könnten überschrieben werden.
-  other_section_locked_error: Es kann immer nur eine Sektion zur Zeit gesperrt werden. Du hast bereits %{section} gesperrt.
+  other_section_locked_error_html: Es kann immer nur eine Sektion zur Zeit gesperrt werden. Du hast bereits <b>%{section}</b> gesperrt.
   break_lock_button: Sperre aufheben
   force_save_button: Sperre aufheben und speichern
   versions: Versionen

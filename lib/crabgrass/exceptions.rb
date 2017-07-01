@@ -6,14 +6,6 @@ class CrabgrassException < StandardError
     self.message = message
     super(message)
   end
-
-  def bold(str)
-    "<b>#{h(str)}</b>".html_safe
-  end
-
-  def to_s
-    [self.message].flatten.join("<br/>").html_safe
-  end
 end
 
 # the user does not have permission to do that.

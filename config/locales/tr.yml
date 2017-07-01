@@ -509,7 +509,7 @@ tr:
   current_tags: En Son Etiketler
   welcome_title: '%{site_title}''a hoşgediniz '
   welcome_message: Crabgrass, sosyal değişim örgütlerinin, işlemlerini yapmalarını, kararlar vermelerini, işbirliği yapmalarını ve ağ vasıtasıyla temasta olmalarını sağlar.
-  wiki_is_locked: Bu viki hâlen %{user} tarafından kilitlenmiş durumda
+  wiki_is_locked_html: Bu viki hâlen <b>%{user}</b> tarafından kilitlenmiş durumda
   break_lock_button: Kilitlemeyi Kaldır
   versions: Sürümler
   comparing_changes_header: '%{user} tarafından %{when} tarihinde %{old_version} sürümünden %{new_version} sürümüne yapılan değişiklikleri kıyaslıyor'
