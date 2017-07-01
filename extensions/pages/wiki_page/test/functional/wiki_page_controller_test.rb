@@ -2,8 +2,6 @@ require 'test_helper'
 
 class WikiPageControllerTest < ActionController::TestCase
 
-
-
   def test_show
     login_as :orange
     # existing page
@@ -12,10 +10,8 @@ class WikiPageControllerTest < ActionController::TestCase
   end
 
   def test_not_found_without_login
-    assert_not_found do
-      # existing page
-      get :show, id: pages(:wiki)
-    end
+    get :show, id: pages(:wiki)
+    assert_response 404
   end
 
   def test_show_without_login
