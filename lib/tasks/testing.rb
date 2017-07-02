@@ -1,11 +1,3 @@
-# try loading rcov
-begin
-  require 'rcov/rcovtask'
-rescue LoadError
-  # STDERR.puts "rcov not installed"
-  # ^^ I don't want to get this error every time.
-end
-
 #
 # Faster tests
 #
@@ -172,78 +164,30 @@ end
 
 namespace :test do
 
-  desc "Test everything: crabgrass, pages and mods."
-  task everything: "everything:default"
+  def all_file_list
+    # don't include mods by default
+    list = FileList["test/**/*_test.rb"]
+    list += FileList["extensions/pages/**/test/**/*_test.rb"]
+    # FileList["mods/**/test/**/*_test.rb"]
+    # find and add just the enabled  mods
+    pwd = File.dirname(__FILE__)
+    if conf = YAML.load_file(pwd + "/../../config/crabgrass/crabgrass.test.yml")
+      mods = conf['enabled_mods'] || []
+      mods.each { |m|
+        list += FileList["mods/#{m}/test/**/*_test.rb"]
+      }
+    end
 
-  task :coverage do
-    Rake::Task["test:everything:with_rcov"].invoke
+    return list
   end
 
-  namespace :everything do
-    desc "Test everything: crabgrass, pages and mods."
-    task default: :try_with_rcov
+  desc "Test everything: crabgrass, pages and mods."
+  Rake::TestTask.new(:everything) do |t|
 
-    def all_file_list
-      # don't include mods by default
-      list = FileList["test/**/*_test.rb"]
-      list += FileList["extensions/pages/**/test/**/*_test.rb"]
-      # FileList["mods/**/test/**/*_test.rb"]
-      # find and add just the enabled  mods
-      pwd = File.dirname(__FILE__)
-      if conf = YAML.load_file(pwd + "/../../config/crabgrass/crabgrass.test.yml")
-        mods = conf['enabled_mods'] || []
-        mods.each { |m|
-          list += FileList["mods/#{m}/test/**/*_test.rb"]
-        }
-      end
+    t.libs << "test"
 
-      return list
-    end
-
-    task load_plugin_fixtures: [:environment, "db:test:prepare"] do
-      # Engines::Testing.setup_plugin_fixtures(plugins_with_allowed_fixtures)
-    end
-
-    if defined? Rcov::RcovTask
-      desc "Test everything and generate rcov statistics"
-      Rcov::RcovTask.new(with_rcov: :load_plugin_fixtures) do |t|
-        t.libs << "test"
-
-        t.test_files = all_file_list
-
-        t.rcov_opts -= ["--text-report"]
-        t.rcov_opts << "--rails"
-        t.rcov_opts << "--text-summary"
-        t.output_dir = "doc/coverage"
-
-        if ENV["RCOV_NO_HTML"] == "true" or ENV["RCOV_NO_HTML"] == "1"
-          t.rcov_opts << "--no-html"
-        end
-
-        t.rcov_opts << "-x ^/" # exclude all files with absolute path
-        if ENV["RCOV_OPTS"]
-          t.rcov_opts << ENV["RCOV_OPTS"]
-        end
-        t.verbose = true
-      end
-    end
-
-    desc "Test everything without rcov"
-    Rake::TestTask.new(without_rcov: :load_plugin_fixtures) do |t|
-      t.libs << "test"
-
-      t.test_files = all_file_list
-      t.verbose = true
-    end
-
-    desc "Try test everything with rcov if possible, fallback to everything without rcov"
-    task :try_with_rcov do
-      if defined? Rcov::RcovTask and ENV["NO_RCOV"] != "true"
-        Rake::Task["test:everything:with_rcov"].invoke
-      else
-        Rake::Task["test:everything:without_rcov"].invoke
-      end
-    end
+    t.test_files = all_file_list
+    t.verbose = true
 
   end
 end

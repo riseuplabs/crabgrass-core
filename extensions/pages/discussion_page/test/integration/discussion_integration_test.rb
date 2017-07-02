@@ -1,6 +1,6 @@
 require 'javascript_integration_test'
 
-class DiscussionTest < JavascriptIntegrationTest
+class DiscussionIntegrationTest < JavascriptIntegrationTest
   include Integration::Comments
 
   def setup

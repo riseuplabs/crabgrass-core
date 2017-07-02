@@ -1,6 +1,6 @@
 require 'javascript_integration_test'
 
-class WikiTest < JavascriptIntegrationTest
+class WikiIntegrationTest < JavascriptIntegrationTest
   include Integration::Wiki
   include Integration::Navigation
 

@@ -1,6 +1,6 @@
 require 'javascript_integration_test'
 
-class AssetPageTest < JavascriptIntegrationTest
+class AssetTypeChangeTest < JavascriptIntegrationTest
   include Integration::Navigation
 
   def setup
@@ -19,6 +19,8 @@ class AssetPageTest < JavascriptIntegrationTest
     remove_version
     assert_no_content 'version 1'
   end
+
+  protected
 
   def update_asset(filename)
     click_page_tab 'Edit'
