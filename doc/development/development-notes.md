@@ -9,6 +9,11 @@ integrate documentcloud.org for displaying pdfs and docs.
 things to work on
 ============================
 
+technical debt
+* increase test coverage:
+  run tests with env COVERAGE set
+  remove unused code or add tests
+
 account
 * reset lost password
 * cracklib
@@ -20,13 +25,8 @@ pages
 * asset page
 * folder page
 
-
 themes
 * add more themes
-
-tests
-* minitest
-* write more tests
 
 i18n
 * identify used and unused keys
@@ -39,18 +39,6 @@ misc
 new features
 * issues
 * notices
-
-rails 3
-============================
-
-to support dirty, include this:
-http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
-
-internet explorer
-============================
-
-http://code.google.com/p/ie7-js/
-make ie behave like a modern browser.
 
 page changes
 ============================
@@ -81,7 +69,7 @@ created_by_login as a sortable index, but not contributors_count?
 Why is there no index for pages updated_by? we need to expire those when the user image changes or the user is deleted.
 
 Do we really use the owner_name indexes?
--> Yes - they are used for page lookup from the dispatch controller. Pages now live in 
+-> Yes - they are used for page lookup from the dispatch controller. Pages now live in
 /owner_name/Page_name. So it's really fast to find them this way.
 
 mailing list integration

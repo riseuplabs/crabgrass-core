@@ -181,6 +181,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :test do
+  gem 'simplecov', require: false
+end
+
 group :test, :development do
   gem 'byebug'
 end

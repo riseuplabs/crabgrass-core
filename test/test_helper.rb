@@ -1,3 +1,8 @@
+if ENV["COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
 require 'minitest/autorun'
 
 ENV["RAILS_ENV"] = "test"

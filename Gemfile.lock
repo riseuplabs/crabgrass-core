@@ -90,6 +90,7 @@ GEM
     delayed_job_active_record (4.1.1)
       activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
+    docile (1.1.5)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -184,6 +185,11 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     sexp_processor (4.7.0)
+    simplecov (0.14.1)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.1)
     spring (2.0.1)
       activesupport (>= 4.2)
     sprockets (3.7.1)
@@ -268,6 +274,7 @@ DEPENDENCIES
   rubyzip (~> 1.2.1)
   sass
   sdoc
+  simplecov
   spring
   sqlite3
   therubyracer
