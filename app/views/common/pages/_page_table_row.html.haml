@@ -6,6 +6,8 @@
       = page_icon(page)
     %td.title
       = cell_title(page)
+    %td.public_private
+      = icon_tag('globe', title: I18n.t(:page_is_public) ) if page.public
     %td.updated_by
       = link_to_entity(page.updated_by, avatar: :xsmall)
     %td.nowrap.updated_at

@@ -477,6 +477,7 @@ de:
   page_added_to_group: Diese Seite wird %{group_type} %{group_name} hinzugefügt.
   additional_page_access: Weitere Zugriffe
   page_owner_error: Seitenbesitzer_in kann nicht leer sein
+  page_is_public: Diese Seite ist öffentlich.
   action: Aktion
   page_history_add_star: "%{user_name} hat ein Sternchen hinzugefügt"
   page_history_added_comment: "%{user_name} hat einen Kommentar hinzugefügt"
