@@ -13,7 +13,6 @@ config/sphinx/*.sphinx.conf
 config/transifex.netrc
 doc/api
 doc/app
-doc/coverage
 doc/guides
 *~
 db/*.sqlite3
@@ -42,3 +41,4 @@ vendor/bundle
 .bundle
 bin/
 .byebug*
+coverage
