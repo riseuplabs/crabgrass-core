@@ -6,29 +6,13 @@ class DispatchController < ApplicationController
   # this is *not* an action, but the 'dispatch' method from ActionController::Metal
   # The only change here is that we don't return to_a(), but instead whatever
   # process() returns.
-  def dispatch(name, request, response = ActionDispatch::Response.new)
+  def dispatch(action, request, response = ActionDispatch::Response.new)
+    @action = action
     @_request = request
     @_env = request.env
     @_env['action_controller.instance'] = self
-    process(name)
-  rescue => exception
-    @_response ||= response
-    @_response.request ||= request
-    # keep regular rescue_from behaviour, even though we're never calling an action
-    # in this controller (taken from ActionController::Rescue#process_action)
-    rescue_with_handler(exception) || raise(exception)
-    # return "regular" response
-    to_a
-  end
-
-  # instead of processing the action we find the right controller and
-  # call 'dispatch' with the same action there.
-  # Using the same action means we can use restful routes.
-  # You might want to overwrite this in subclasses to catch errors
-  # (for example the ContextPageController does so).
-  def process(name, *args)
     flash.keep
-    find_controller.dispatch(name, request)
+    find_controller.dispatch(@action, request)
   end
 
   protected
@@ -38,7 +22,12 @@ class DispatchController < ApplicationController
   def new_controller(controller_name)
     modify_params controller: controller_name
     class_name = "#{params[:controller].camelcase}Controller"
-    class_name.constantize.new({group: @group, user: @user, page: @page, pages: @pages})
+    klass = class_name.constantize
+    klass.new.tap do |instance|
+      if instance.respond_to?(:seed)
+        instance.seed group: @group, user: @user, page: @page
+      end
+    end
   end
 
   # We want the modification to also apply to the newly instantiated controller.
@@ -46,6 +35,11 @@ class DispatchController < ApplicationController
   def modify_params(options={})
     request.parameters.merge! options
     @_params = nil
+  end
+
+  def modify_action(action)
+    modify_params action: action
+    @action = action
   end
 
 end

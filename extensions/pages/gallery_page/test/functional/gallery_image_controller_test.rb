@@ -32,9 +32,8 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_may_not_show
     login_as :red
-    assert_not_found do
-      xhr :get, :show, id: @asset.id, page_id: @gallery.id
-    end
+    xhr :get, :show, id: @asset.id, page_id: @gallery.id
+    assert_response 404
   end
 
   def test_may_show

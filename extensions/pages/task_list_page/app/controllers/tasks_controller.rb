@@ -1,6 +1,7 @@
 class TasksController < Page::BaseController
   before_filter :fetch_task, only: [:edit, :update, :destroy]
   before_filter :fetch_user_participation
+  before_filter :setup_second_nav
   after_filter :update_participations, only: [:create, :update, :destroy]
 
   guard :may_edit_page?
@@ -51,8 +52,7 @@ class TasksController < Page::BaseController
 
   protected
 
-  def initialize(options={})
-    super(options)
+  def setup_second_nav
     @second_nav = 'tasks'
   end
 

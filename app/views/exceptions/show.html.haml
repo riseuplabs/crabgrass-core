@@ -1,7 +1,6 @@
 -content_for :title do
-  %h1= details[:title]
-  - if details[:description]
-    = details[:description]
+  %h1= translate_exception :title
+  = translate_exception :description
 - if !logged_in?
   .col-sm-center.margin-top
     = render 'common/session/login_form'

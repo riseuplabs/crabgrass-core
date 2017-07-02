@@ -57,10 +57,7 @@ module Common::Application::AlertMessages
       helper_method :warning
       helper_method :notice
       helper_method :success
-      helper_method :raise_error
-      helper_method :raise_not_found
-      helper_method :raise_denied
-
+      helper_method :translate_exception
     end
   end
 
@@ -229,6 +226,16 @@ module Common::Application::AlertMessages
     elsif options[:notice];  :notice
     elsif options[:success]; :success
     end
+  end
+
+  # assumes @exception to be set to the exception to translate
+  def translate_exception(scope)
+    keys = ActionDispatch::ExceptionWrapper.rescue_responses
+    key = keys[@exception.class.name]
+    options = @exception.respond_to?(:options) ? @exception.options : {}
+    scope = [:exception, scope, options[:thing]].compact
+    thing = I18n.t(options[:thing], default: '')
+    I18n.t key, scope: scope, thing: thing, cascade: true
   end
 
 #  def exception_detailed_message(exception=nil)

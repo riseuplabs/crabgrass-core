@@ -17,8 +17,6 @@ module Common::Application::Paths
 
       helper_method :page_path
       helper_method :page_url
-      helper_method :page_xpath
-      helper_method :page_xurl
       helper_method :new_page_path
       helper_method :create_page_path
 

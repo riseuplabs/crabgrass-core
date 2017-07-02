@@ -1,5 +1,6 @@
 class TaskListPageController < Page::BaseController
   before_filter :fetch_user_participation
+  before_filter :setup_second_nav
 
   def show
     @pending = @page.tasks.pending
@@ -8,8 +9,7 @@ class TaskListPageController < Page::BaseController
 
   protected
 
-  def initialize(options={})
-    super(options)
+  def setup_second_nav
     @second_nav = 'tasks'
   end
 

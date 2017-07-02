@@ -764,14 +764,14 @@
   private_wiki: Privat Wiki
   edit_wiki: Rediger Wiki
   wiki_existed_new_version_created: Denne wikien har allerede blitt opprettet av en annen bruker. Dine endringer er lagret som en ny versjon.
-  wiki_is_locked: Denne wikien er for øyeblikket låst av %{user}.
+  wiki_is_locked_html: Denne wikien er for øyeblikket låst av <b>%{user}</b>.
   wiki_section_is_locked: Seksjonen %{section} er for øyeblikket låst av %{user}.
   leave_editing_wiki_page_warning: Du vil miste dine endringer hvis du forlater denne siden.
-  cant_edit_section: Kan ikke redigere %{section}.
-  user_locked_section: "%{user} har låst %{section}."
+  cant_edit_section_html: Kan ikke redigere <b>%{section}</b>.
+  user_locked_section_html: "<b>%{user}</b> har låst <b>%{section}</b>."
   can_still_save: Du kan fremdeles lagre.
   changes_might_be_overwritten: Dine endringer kan bli skrevet over.
-  other_section_locked_error: Du kan bare låse en seksjon av gangen. Du har allerede låst %{section}.
+  other_section_locked_error_html: Du kan bare låse en seksjon av gangen. Du har allerede låst <b>%{section}</b>.
   break_lock_button: Åpne lås
   force_save_button: Åpne lås og lagre
   versions: Versjoner

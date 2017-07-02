@@ -1,4 +1,4 @@
-- url ||= page_url(@page)
+- url ||= asset_page_path(@page)
 = form_tag url, method: :put, multipart: true do
   = file_field_tag 'asset[uploaded_data]'
   .space-ui

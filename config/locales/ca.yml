@@ -422,7 +422,7 @@ ca:
   current_tags: Etiquetes Actuals
   welcome_title: 'Benvingut/da a %{site_title} '
   welcome_message: Crabgrass (pastura de quaresma) ajuda a grups que treballen pel canvi social a treballar, organitzar-se, col·laborar i fer xarxa.
-  wiki_is_locked: Aquest wiki està bloquejat per %{user}
+  wiki_is_locked_html: Aquest wiki està bloquejat per <b>%{user}</b>
   leave_editing_wiki_page_warning: Si deixes aquesta pàgina de wiki sense guardar-hi els canvis i sense cancel·lar la seva edició, altres usuaris veuran que la tens bloquejada i no la podran editar.  Tanmateix, si no guardes el wiki, perdràs els canvis.
   break_lock_button: Desbloquejar
   versions: Versions

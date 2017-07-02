@@ -224,7 +224,7 @@ Crabgrass::Application.routes.draw do
   resources :contexts, path: "", only: :show do
     resources :pages, path: "",
       controller: :context_pages,
-      except: [:index, :new, :create] do
+      only: [:show, :edit] do
         member do
           get 'print'
         end

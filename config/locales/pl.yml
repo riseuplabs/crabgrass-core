@@ -793,14 +793,14 @@ pl:
   private_wiki: Prywatne wiki
   edit_wiki: Edytuj wiki
   wiki_existed_new_version_created: To wiki zostało już przez kogoś stworzone. Twoje zmiany zostaną zapisane jako nowa wersja.
-  wiki_is_locked: To wiki jest obecnie zablokowane przez %{user}
+  wiki_is_locked_html: To wiki jest obecnie zablokowane przez <b>%{user}</b>
   wiki_section_is_locked: Sekcja %{section} jest obecnie zablokowana przez %{user}.
   leave_editing_wiki_page_warning: Jeśli opuścisz tą stronę bez zapisania wiki lub anulowania edytowania, wtedy inni użytkownicy/inne użytkowniczki dostaną komunikat, że ta strona jest zablokowana przez Ciebie i nie będzie można jej edytować. Również, jeśli nie zapiszesz wiki, stracisz zmiany, które zostały przez Ciebie wprowadzone.
-  cant_edit_section: Nie można edytować %{section}.
-  user_locked_section: "%{user} zablokował/a %{section}."
+  cant_edit_section_html: Nie można edytować <b>%{section}</b>.
+  user_locked_section_html: "<b>%{user}</b> zablokował/a <b>%{section}</b>."
   can_still_save: Możesz jeszcze zapisać
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
-  other_section_locked_error: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już %{section}.
+  other_section_locked_error_html: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już <b>%{section}</b>.
   break_lock_button: Usuń blokadę
   force_save_button: Złam blokadę i zapisz.
   versions: Wersje

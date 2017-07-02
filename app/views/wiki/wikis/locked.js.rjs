@@ -1,10 +1,5 @@
-section = section.presence || :document
 
-render_wiki(page, template: 'edit')
-
-page << create_wiki_toolbar(@wiki)
-page << confirm_discarding_wiki_edit_text_area(@wiki)
-page << release_lock_on_unload(@wiki, section)
+render_wiki(page, template: :locked)
 
 # hide errors, stop spinners
 standard_update(page)

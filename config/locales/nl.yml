@@ -778,14 +778,14 @@ nl:
   private_wiki: Privé wiki
   edit_wiki: Wiki editeren
   wiki_existed_new_version_created: Deze wiki was al opgesteld van een andere gebruiker / gebruikster. Je veranderingen zijn opgeslaan als nieuwe versie.
-  wiki_is_locked: Deze wiki is op dit moment afgesluiten door %{user}.
+  wiki_is_locked_html: Deze wiki is op dit moment afgesluiten door <b>%{user}</b>.
   wiki_section_is_locked: Het gedeelte %{section} is op dit moment afgesluiten door %{user}.
   leave_editing_wiki_page_warning: Wanneer je deze pagina verlat ga jij je veranderingen verliezen.
-  cant_edit_section: Kan niet %{section} editeren.
-  user_locked_section: "%{user} heeft %{section} afgesluiten."
+  cant_edit_section_html: Kan niet <b>%{section}</b> editeren.
+  user_locked_section_html: "<b>%{user}</b> heeft <b>%{section}</b> afgesluiten."
   can_still_save: Je kan nog steeds opslaan.
   changes_might_be_overwritten: Je veranderingen kunnen overgeschreven worden.
-  other_section_locked_error: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds %{section} afgesluiten.
+  other_section_locked_error_html: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds <b>%{section}</b> afgesluiten.
   break_lock_button: Slot breken
   force_save_button: Brek slot en sla op
   versions: Versies

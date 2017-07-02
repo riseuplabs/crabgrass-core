@@ -807,14 +807,14 @@ el:
   private_wiki: Κλειστό Wiki
   edit_wiki: Επεξεργασία Wiki
   wiki_existed_new_version_created: Αυτό το wiki έχει ήδη δημιουργηθεί από άλλο χρήστη. Οι αλλαγές σας αποθηκεύτηκαν ως νέα έκδοση.
-  wiki_is_locked: Το wiki έχει κλειδωθεί από τον/την %{user}.
+  wiki_is_locked_html: Το wiki έχει κλειδωθεί από τον/την <b>%{user}</b>.
   wiki_section_is_locked: Η ενότητα %{section} έχει κλειδωθεί από τον/την %{user}.
   leave_editing_wiki_page_warning: Οι αλλαγές σας θα χαθούν αν φύγετε από τη σελίδα.
-  cant_edit_section: Δεν μπορείτε να επεξεργαστείτε την ενότητα %{section}.
-  user_locked_section: "Ο/Η %{user} έχει κλειδώσει την ενότητα %{section}."
+  cant_edit_section_html: Δεν μπορείτε να επεξεργαστείτε την ενότητα <b>%{section}</b>.
+  user_locked_section_html: "Ο/Η <b>%{user}</b> έχει κλειδώσει την ενότητα <b>%{section}</b>."
   can_still_save: Μπορείτε ακόμα να αποθηκεύσετε.
   changes_might_be_overwritten: Οι αλλαγές σας μπορεί να αντικατασταθούν.
-  other_section_locked_error: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα %{section}.
+  other_section_locked_error_html: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα <b>%{section}</b>.
   break_lock_button: Παύση κλειδώματος
   force_save_button: Παύση κλειδώματος και αποθήκευση
   versions: Εκδόσεις
