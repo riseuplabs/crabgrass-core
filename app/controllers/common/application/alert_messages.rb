@@ -52,11 +52,6 @@ module Common::Application::AlertMessages
 
   def self.included(base)
     base.class_eval do
-      # settings alerts
-      helper_method :error
-      helper_method :warning
-      helper_method :notice
-      helper_method :success
       helper_method :translate_exception
     end
   end
