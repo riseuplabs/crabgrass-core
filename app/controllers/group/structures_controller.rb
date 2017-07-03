@@ -14,9 +14,9 @@ class Group::StructuresController < Group::SettingsController
 
   def create
     if group_type == :committee
-      raise_denied unless may_create_committee?
+      raise PermissionDenied unless may_create_committee?
     else
-      raise_denied unless may_create_council?
+      raise PermissionDenied unless may_create_council?
     end
     @committee = group_class.new group_params
     @group.add_committee!(@committee)

@@ -19,7 +19,7 @@ class Page::ParticipationsController < Page::SidebarsController
 
   def update
     if params[:access]
-      raise_denied unless may_admin_page?
+      raise PermissionDenied unless may_admin_page?
       access
     elsif params[:watch]
       watch

@@ -9,7 +9,7 @@ class Group::WikisController < Group::BaseController
     elsif params[:profile] == 'public'
       @profile = @group.profiles.public
     else
-      raise_error 'missing profile parameter'
+      raise ErrorMessage, 'missing profile parameter'
     end
     wiki = @profile.create_wiki version: 0, body: '', user: current_user
     params[:edit_mode] = 'on'

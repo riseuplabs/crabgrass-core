@@ -51,7 +51,7 @@ module Common::Application::BeforeFilters
   #
   def login_required
     process_login
-    raise_authentication_required unless logged_in?
+    raise AuthenticationRequired unless logged_in?
   end
 
   # Filter method to enforce authorization.
@@ -68,7 +68,7 @@ module Common::Application::BeforeFilters
   #   guard :show => :allow
   #
   def authorization_required
-    raise_denied unless authorized?
+    raise PermissionDenied unless authorized?
   end
 
   #

@@ -97,14 +97,6 @@ module Common::Application::AlertMessages
     flash[:messages] = flash.now[:messages]
   end
 
-  def raise_error(message)
-    if message.is_a? ActiveRecord::Base
-      raise ActiveRecord::RecordInvalid.new(message)
-    else
-      raise ErrorMessage.new(message)
-    end
-  end
-
   #
   # We use the default rails error to trigger the ErrorApp middleware.
   # This will then in turn call ExceptionsController#show as defined in
@@ -120,14 +112,6 @@ module Common::Application::AlertMessages
   #
   def raise_not_found(thing=nil)
     raise ErrorNotFound.new(thing)
-  end
-
-  def raise_denied(message=nil)
-    raise PermissionDenied.new(message)
-  end
-
-  def raise_authentication_required
-    raise AuthenticationRequired
   end
 
   private

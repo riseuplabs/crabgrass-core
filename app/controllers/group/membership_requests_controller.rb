@@ -79,7 +79,7 @@ class Group::MembershipRequestsController < Group::BaseController
       @req = RequestToRemoveGroup.create! group: @entity, network: @group, created_by: current_user
       membership = @group.federatings.find_by_group_id(@entity.id)
     else
-      raise_error
+      raise ErrorMessage
     end
     success @req
     redirect_to requests_path(@req)
