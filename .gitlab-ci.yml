@@ -1,3 +1,5 @@
+image: 0xacab.org:4567/riseuplabs/docker/crabgrass:latest
+
 services:
   - mysql:5.5
 
@@ -12,15 +14,16 @@ cache:
 
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
-  - sudo apt update -qq && sudo apt dist-upgrade -y && sudo -E apt install -y build-essential libsqlite3-dev ruby ruby-dev bundler rubygems libmysqlclient-dev graphicsmagick inkscape mysql-client sphinxsearch
+  - sudo apt update -qq && sudo apt upgrade -y
   - ruby -v
   - which ruby
   - bundle install -j $(nproc) --path vendor "${FLAGS[@]}"
-image: 0xacab.org:4567/riseuplabs/crabgrass:latest
+
 stages:
   - build
   - test
   - checks
+
 bundle_audit:
   stage: checks
   allow_failure: true
@@ -28,6 +31,7 @@ bundle_audit:
     sudo gem install bundler-audit
     bundle-audit update
     bundle-audit check
+
 test:
   stage: test
   script: |
