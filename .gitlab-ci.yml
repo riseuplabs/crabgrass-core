@@ -19,13 +19,8 @@ before_script:
   - which ruby
   - bundle install -j $(nproc) --path vendor "${FLAGS[@]}"
 
-stages:
-  - build
-  - test
-  - checks
-
 bundle_audit:
-  stage: checks
+  stage: test
   allow_failure: true
   script: |
     sudo gem install bundler-audit
