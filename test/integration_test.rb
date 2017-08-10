@@ -30,6 +30,9 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
     Capybara.use_default_driver
 
+    # sometimes slow sql queries in CI result in long wait times
+    Capybara.default_max_wait_time = 5 if ENV['CI']
+
     reload_page_terms
   end
 
