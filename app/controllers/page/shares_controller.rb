@@ -188,7 +188,7 @@ class Page::SharesController < Page::SidebarsController
 
   def mode_param
     mode = params[:mode]
-    raise_error 'bad mode' unless ['notify', 'share'].include? mode
+    raise ErrorMessage, 'bad mode' unless ['notify', 'share'].include? mode
     mode.to_sym
   end
 

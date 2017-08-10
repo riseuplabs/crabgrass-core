@@ -12,7 +12,7 @@ class Page::TrashController < Page::SidebarsController
     if %w/delete destroy undelete/.include? params[:type]
       @page.public_send params[:type]
     else
-      raise_error 'unknown type'
+      raise ErrorMessage, 'unknown type'
     end
   end
 

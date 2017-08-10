@@ -27,7 +27,7 @@ class Group::InvitesController < Group::BaseController
 
     reqs = []
     unless users.any? or emails.any? or groups.any?
-      raise_error('Recipient required')
+      raise ErrorMessage, 'Recipient required'
     end
 
     users.each do |user|

@@ -12,7 +12,7 @@ class AssetPageController < Page::BaseController
 
   def update
     unless params[:asset]
-      raise_error :no_data_uploaded_label.t
+      raise ErrorMessage, :no_data_uploaded_label.t
     else
       @asset.update_attributes! asset_params
       current_user.updated(@page)

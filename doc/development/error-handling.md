@@ -1,4 +1,17 @@
-three methods of reporting errors:
+Error Handling
+==============
+
+There's two kinds of exceptions - the ones that are part of a normal workflow
+and those that you would not expect in the first place. Someone trying to
+access a private page without being logged in is part of the former whereas
+a full disk is part of the latter.
+
+Try to catch the first kind of exceptions in the controller where they might
+occur and handle them there. We used to rely on the ErrorApp middleware but
+that does not work properly with cookies and thus sessions and should only
+be used as a fallback for the second kind of exceptions.
+
+There are four methods of reporting errors:
 
 method 1 -- the normal way
 
@@ -31,7 +44,7 @@ method 3 -- automatically
   end
 
 method 4 -- semi-automatically
-  
+
   for when an error in 'update' should render the action 'show' instead of 'edit'
 
   rescue_render :update => :show
