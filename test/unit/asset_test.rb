@@ -189,7 +189,7 @@ class AssetTest < ActiveSupport::TestCase
 
 
   def test_dimension_integration
-    skip_if_graphics_magick_missing
+    skip_if_missing :GraphicsMagick
     @asset = FactoryGirl.create :image_asset
     @asset.generate_thumbnails
     assert_equal 43, @asset.thumbnail(:small).width, 'actual width should be 43'
@@ -203,8 +203,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_odt_integration
-    skip_if_libre_office_missing
-    skip_if_graphics_magick_missing
+    skip_if_missing :LibreOffice
 
     @asset = Asset.create_from_params uploaded_data: upload_data('test.odt')
     assert_equal 'Asset::Doc', @asset.class.name
@@ -215,8 +214,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_doc_integration
-    skip_if_libre_office_missing
-    skip_if_graphics_magick_missing
+    skip_if_missing :LibreMagick
 
     @asset = Asset.create_from_params uploaded_data: upload_data('msword.doc')
     assert_equal 'Asset::Text', @asset.class.name
@@ -314,20 +312,13 @@ class AssetTest < ActiveSupport::TestCase
 
   protected
 
-  def skip_if_libre_office_missing
-    # must have LO installed
-    if !Media::LibreOfficeTransmogrifier.new.available?
-      skip "LibreOffice converter is not available. Either LibreOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
-      return
-    end
-  end
-
-  def skip_if_graphics_magick_missing
-    # must have GM installed
-    if !Media::GraphicsMagickTransmogrifier.new.available?
-      skip "GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
-      return
-    end
+  def skip_if_missing(transmogrifier)
+    klass = "Media::#{transmogrifier}Transmogrifier".constantize
+    return if klass.new.available?
+    skip <<-EOM
+    #{transmogrifier} converter is not available.
+    This is most likely due to missing dependencies.
+    EOM
   end
 
   def transmogrifier_for(options = {})
