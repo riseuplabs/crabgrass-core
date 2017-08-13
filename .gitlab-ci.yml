@@ -46,3 +46,25 @@ test:
       - tmp/*.log
       - tmp/*.html
       - tmp/*.png
+
+test_stretch:
+  allow_failure: true
+  image: 0xacab.org:4567/riseuplabs/docker/crabgrass:stretch_amd64
+  stage: test
+  script: |
+    bundle exec rake create_a_secret
+    cp config/database.yml.example config/database.yml
+    bundle exec rake db:create
+    bundle exec rake db:schema:load
+    bundle exec rake db:test:prepare
+    RAILS_ENV=test bundle exec rake db:fixtures:load
+    RAILS_ENV=test bundle exec rake ts:index ts:start
+    bundle exec rake
+    bundle exec rake cg:cleanup:all     # test cleanup tasks
+  artifacts:
+    when: on_failure
+    paths:
+      - log/test.log
+      - tmp/*.log
+      - tmp/*.html
+      - tmp/*.png
