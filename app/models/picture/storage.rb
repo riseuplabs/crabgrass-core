@@ -20,12 +20,12 @@ class Picture::Storage
 
   def dimensions(geometry)
     path = private_path(geometry)
-    width, height = Media::GraphicsMagickTransmogrifier.new.dimensions(path)
+    width, height = Media::GraphicsMagickTransmogrifier.dimensions(path)
     [(width||0).to_i, (height||0).to_i]
   end
 
   def average_color
-    Media::GraphicsMagickTransmogrifier.new.average_color(private_path)
+    Media::GraphicsMagickTransmogrifier.average_color(private_path)
   end
 
   def destroy_files

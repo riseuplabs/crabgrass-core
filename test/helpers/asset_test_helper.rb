@@ -28,7 +28,8 @@ module AssetTestHelper
   end
 
   def setup_assets
-    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    # set to true to see all the commands being run.
+    Media::Transmogrifier.verbose = false
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
     #Conf.disable_site_testing
