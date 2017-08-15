@@ -132,7 +132,7 @@ gem 'greencloth', require: 'greencloth',
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
-gem 'crabgrass_media', '~> 0.1.1', require: 'media'
+gem 'crabgrass_media', '~> 0.2.0', require: 'media'
 
 ##
 ## not required, but a really good idea
