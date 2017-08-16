@@ -1,4 +1,4 @@
-require_relative '../integration_test'
+require 'integration_test'
 
 class AccountTest < IntegrationTest
 

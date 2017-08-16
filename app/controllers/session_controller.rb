@@ -38,7 +38,9 @@ class SessionController < ApplicationController
   # returns login form without layout.
   # used for ajax login form.
   def login_form
-    render partial: 'session/login_form', layout: false, content_type: "text/html"
+    render partial: 'common/session/login_form',
+      layout: false,
+      content_type: "text/html"
   end
 
   protected
