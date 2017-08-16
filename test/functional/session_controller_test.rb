@@ -8,6 +8,11 @@ class SessionControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_login_popup
+    get :login_form
+    assert_response :success
+  end
+
   def test_should_login_and_redirect
     referer = 'http://test.host/bla'
     @request.env["HTTP_REFERER"] = referer

@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 require 'capybara/rails'
 require "active_support/test_case"
 
