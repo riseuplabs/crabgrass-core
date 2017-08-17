@@ -34,6 +34,7 @@ test:
     cp config/database.yml.example config/database.yml
     bundle exec rake db:create
     bundle exec rake db:schema:load
+    bundle exec rake cg:test:update_fixtures
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
@@ -56,6 +57,7 @@ test_stretch:
     cp config/database.yml.example config/database.yml
     bundle exec rake db:create
     bundle exec rake db:schema:load
+    bundle exec rake cg:test:update_fixtures
     bundle exec rake db:test:prepare
     RAILS_ENV=test bundle exec rake db:fixtures:load
     RAILS_ENV=test bundle exec rake ts:index ts:start
