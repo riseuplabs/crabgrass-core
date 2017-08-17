@@ -49,7 +49,6 @@ test:
       - tmp/*.png
 
 test_stretch:
-  allow_failure: true
   image: 0xacab.org:4567/riseuplabs/docker/crabgrass:stretch_amd64
   stage: test
   script: |
