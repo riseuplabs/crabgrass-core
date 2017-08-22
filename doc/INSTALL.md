@@ -109,7 +109,7 @@ Install for testing
 
 ###Install additional gems needed for testing
 
-    sudo RAILS_ENV=test rake gems:install
+    sudo RAILS_ENV=test bundle install
 
 ###Create testing database
 If you haven't run rake db:create already.
@@ -121,9 +121,6 @@ If you haven't run rake db:create already.
 ###Run tests:
 
     bundle exec rake
-or
-
-	bundle exec rspec
 
 Install for production
 ====================================================
