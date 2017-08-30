@@ -5,7 +5,7 @@ require 'javascript_integration_test'
 class PageSidebarTest < JavascriptIntegrationTest
   include GroupRecords
 
-  fixtures :users, :groups, 'group/memberships'
+  fixtures :users, :groups, 'group/memberships', :pages
 
   def setup
     super
@@ -100,6 +100,20 @@ class PageSidebarTest < JavascriptIntegrationTest
     # finish deleting...
     assert_content 'Notices'
     assert_no_content own_page.title
+  end
+
+  def test_tag_from_suggestion
+    @rainbow_page = pages(:rainbow_page)
+    @rainbow_page.tag_list = "summer"
+    @rainbow_page.save
+    assert_no_page_tags 'summer'
+    tag_page_from_suggestion 'summer'
+    assert_page_tags 'summer'
+    assert_no_page_tags 'winter'
+    assert_raise do
+      tag_page_from_suggestion 'winter'
+    end
+    assert_no_page_tags 'winter'
   end
 
   def test_tag
