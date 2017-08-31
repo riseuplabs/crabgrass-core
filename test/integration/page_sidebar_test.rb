@@ -5,7 +5,7 @@ require 'javascript_integration_test'
 class PageSidebarTest < JavascriptIntegrationTest
   include GroupRecords
 
-  fixtures :users, :groups, 'group/memberships'
+  fixtures :users, :groups, 'group/memberships', 'pages'
 
   def setup
     super
@@ -100,6 +100,13 @@ class PageSidebarTest < JavascriptIntegrationTest
     # finish deleting...
     assert_content 'Notices'
     assert_no_content own_page.title
+  end
+
+  def test_history
+    create_page title: "Test page"
+    click_on 'Page Details'
+    find('a', text: 'History').click
+    assert_content 'Blue! has created the page'
   end
 
   def test_tag
