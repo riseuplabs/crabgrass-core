@@ -102,6 +102,13 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_content own_page.title
   end
 
+  def test_history
+    create_page title: "Test page"
+    click_on 'Page Details'
+    find('a', text: 'History').click
+    assert_content 'Blue! has created the page'
+  end
+
   def test_tag
     tags = %w/some tags for this páge/
     tag_page tags
