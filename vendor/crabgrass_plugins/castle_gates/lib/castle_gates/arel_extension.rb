@@ -13,12 +13,12 @@ module Arel
 
   module Visitors
     class DepthFirst < Arel::Visitors::Visitor
-      alias :visit_Arel_Nodes_BitOr :function
+      alias visit_Arel_Nodes_BitOr function
     end
 
     class ToSql < Arel::Visitors::Reduce
-      def visit_Arel_Nodes_BitOr o, collector
-        aggregate "BIT_OR", o, collector
+      def visit_Arel_Nodes_BitOr(o, collector)
+        aggregate 'BIT_OR', o, collector
       end
     end
   end

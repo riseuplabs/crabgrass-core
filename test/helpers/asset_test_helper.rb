@@ -12,7 +12,7 @@ module AssetTestHelper
     type = 'application/msword' if file =~ /\.doc\Z/
     type = 'application/octet-stream' if file =~ /\.bin\Z/
     type = 'application/zip' if file =~ /\.zip\Z/
-    fixture_file_upload('files/'+file, type)
+    fixture_file_upload('files/' + file, type)
   end
 
   def upload_avatar(file)
@@ -32,12 +32,11 @@ module AssetTestHelper
     Media::Transmogrifier.verbose = false
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
-    #Conf.disable_site_testing
+    # Conf.disable_site_testing
   end
 
   def teardown_assets
     FileUtils.rm_rf(ASSET_PRIVATE_STORAGE)
     FileUtils.rm_rf(ASSET_PUBLIC_STORAGE)
   end
-
 end

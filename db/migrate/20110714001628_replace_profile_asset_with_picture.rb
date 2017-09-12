@@ -1,6 +1,6 @@
 class ReplaceProfileAssetWithPicture < ActiveRecord::Migration
   def self.up
-    asset_ids = Profile.connection.select_values('select photo_id from profiles');
+    asset_ids = Profile.connection.select_values('select photo_id from profiles')
     asset_ids.each do |id|
       Asset.destroy(id) if Asset.exists?(id)
     end

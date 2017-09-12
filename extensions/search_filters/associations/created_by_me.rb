@@ -1,5 +1,4 @@
 SearchFilter.new('/created-by-me/') do
-
   query do |query|
     query.add_attribute_constraint(:created_by_id, query.current_user.id)
   end
@@ -19,6 +18,4 @@ SearchFilter.new('/created-by-me/') do
       :created_by_me.t
     end
   end
-
 end
-

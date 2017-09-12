@@ -7,7 +7,6 @@
 #
 
 class RequestToCreateCouncil < Request
-
   validates_format_of :recipient_type,   with: /Group/
   validates_format_of :requestable_type, with: /Group/
 
@@ -19,21 +18,21 @@ class RequestToCreateCouncil < Request
 
   def may_create?(user)
     user.may?(:admin, group) and
-    user.longterm_member_of?(group)
+      user.longterm_member_of?(group)
   end
 
   def self.may_create?(options)
-    self.new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
+    new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
   end
 
   def may_approve?(user)
     user.may?(:admin, group) and
-    user.id != created_by_id and
-    user.longterm_member_of?(group)
+      user.id != created_by_id and
+      user.longterm_member_of?(group)
   end
 
-  alias_method :may_view?, :may_create?
-  alias_method :may_destroy?, :may_create?
+  alias may_view? may_create?
+  alias may_destroy? may_create?
 
   def after_approval
     council = Group::Council.new
@@ -60,5 +59,4 @@ class RequestToCreateCouncil < Request
       user: user_span(created_by)
     }]
   end
-
 end

@@ -5,13 +5,13 @@ class Gallery < Page
   # page, an overview or a slideshow.
 
   has_many :showings,
-    -> { order 'position' },
-    dependent: :destroy
+           -> { order 'position' },
+           dependent: :destroy
 
   has_many :images,
-    -> { order 'showings.position' },
-    through: :showings,
-    source: :asset
+           -> { order 'showings.position' },
+           through: :showings,
+           source: :asset
 
   def update_media_flags
     self.is_image = true
@@ -31,17 +31,17 @@ class Gallery < Page
   # ErrorMessage is raised.
   #
   # This method always returns true. On failure an error is raised.
-  def add_attachment!(asset_params, options={})
+  def add_attachment!(asset_params, options = {})
     check_type!(asset_params)
     asset = super
     Showing.create! gallery: self, asset: asset
-    return asset
+    asset
   end
-  alias_method :add_image!, :add_attachment!
+  alias add_image! add_attachment!
 
   def sort_images(sorted_ids)
     sorted_ids.each_with_index do |id, index|
-      showing = self.showings.find_by_asset_id(id)
+      showing = showings.find_by_asset_id(id)
       showing.insert_at(index + 1)
     end
   end
@@ -58,7 +58,7 @@ class Gallery < Page
     if asset.page
       raise PermissionDenied if asset.page != self
     else
-      self.add_attachment! asset
+      add_attachment! asset
     end
   end
 end

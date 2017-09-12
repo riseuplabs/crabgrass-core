@@ -46,9 +46,8 @@ class PageCreationTest < JavascriptIntegrationTest
   def test_add_tags
     login users(:red)
     prepare_page :discussion_page
-    fill_in 'Tags', with: "a, few, tags"
+    fill_in 'Tags', with: 'a, few, tags'
     click_on :create.t
-    assert_page_tags "a, few, tags"
+    assert_page_tags 'a, few, tags'
   end
-
 end

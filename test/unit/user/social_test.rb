@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class User::SocialTest < ActiveSupport::TestCase
-
-
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
   end
 
   def test_peers
@@ -57,7 +54,7 @@ class User::SocialTest < ActiveSupport::TestCase
     assert red.peer_of?(green), 'must be peers'
     assert red.may?(:pester, green), 'peers should always be able to pester'
 
-    #users(:green).profiles.public.may_pester = true
+    # users(:green).profiles.public.may_pester = true
     green.grant_access! public: :pester
     assert !kangaroo.may?(:pester, green), 'we cache access permissions'
     kangaroo.clear_access_cache
@@ -65,10 +62,11 @@ class User::SocialTest < ActiveSupport::TestCase
   end
 
   protected
-    def create_user(options = {})
-      user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
-      user.profiles.build first_name: "Test", last_name: "Test", friend: true
-      user.save!
-      user
-    end
+
+  def create_user(options = {})
+    user = User.new({ login: 'mrtester', email: 'mrtester@riseup.net', password: 'test', password_confirmation: 'test' }.merge(options))
+    user.profiles.build first_name: 'Test', last_name: 'Test', friend: true
+    user.save!
+    user
+  end
 end

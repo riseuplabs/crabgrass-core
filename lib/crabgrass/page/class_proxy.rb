@@ -7,25 +7,24 @@
 
 module Crabgrass::Page
   class ClassProxy
-
     attr_accessor :creation_controller, :model, :icon, :class_group, :form_sections,
-      :class_name, :full_class_name, :internal, :order, :short_class_name, :forbid_new
+                  :class_name, :full_class_name, :internal, :order, :short_class_name, :forbid_new
 
     attr_writer :controller
 
-    ORDER = ['text', 'media', 'vote', 'calendar']
+    ORDER = %w[text media vote calendar].freeze
 
-    def initialize(arg=nil)
+    def initialize(arg = nil)
       raise 'error' unless arg.is_a? Hash
 
       if arg[:class_name]
-        arg.each do |key,value|
+        arg.each do |key, value|
           method = key.to_s + '='
-          self.send(method,value) if self.respond_to?(method)
+          send(method, value) if respond_to?(method)
         end
-        self.class_group = [self.class_group] unless self.class_group.is_a? Array
-        self.full_class_name = self.class_name
-        self.short_class_name = self.class_name.sub("Page","")
+        self.class_group = [class_group] unless class_group.is_a? Array
+        self.full_class_name = class_name
+        self.short_class_name = class_name.sub('Page', '')
         self.order ||= 100
       end
     end
@@ -45,12 +44,12 @@ module Crabgrass::Page
     end
 
     def actual_class
-      get_const(self.full_class_name)
+      get_const(full_class_name)
     end
 
     # allows us to get constants that might be namespaced
     def get_const(str)
-      str.split('::').inject(Object) {|x,y| x.const_get(y) }
+      str.split('::').inject(Object) { |x, y| x.const_get(y) }
     end
 
     def create(hash, &block)
@@ -72,7 +71,7 @@ module Crabgrass::Page
     # returns a unique identifier suited to put in a url
     # eg RateManyPage => "rate-many"
     def url
-      @url ||= short_class_name.underscore.gsub('_','-').nameize
+      @url ||= short_class_name.underscore.tr('_', '-').nameize
     end
 
     #
@@ -86,9 +85,7 @@ module Crabgrass::Page
         elsif @controller.is_a? String
           ary << @controller
         end
-        if @creation_controller
-          ary << @creation_controller
-        end
+        ary << @creation_controller if @creation_controller
         ary
       end
     end
@@ -105,7 +102,5 @@ module Crabgrass::Page
         end
       end
     end
-
   end
 end
-

@@ -17,7 +17,6 @@
 #
 module CastleGates
   class Key < ActiveRecord::Base
-
     self.table_name = :castle_gates_keys
 
     belongs_to :castle, polymorphic: true
@@ -47,11 +46,11 @@ module CastleGates
     #
     scope(:limit_by_holders, lambda { |holders|
       holders = [holders] unless holders.is_a?(Array)
-      holder_codes = holders.collect{|holder| Holder[holder].code_prefix.to_s}
-        # ^^ MySQL and SQLite both support substr of integers. For SQLite, however,
-        # the value it is compared to must be a string. MySQL allows you to compare with
-        # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
-        # As noted above, this is not very optimized.
+      holder_codes = holders.collect { |holder| Holder[holder].code_prefix.to_s }
+      # ^^ MySQL and SQLite both support substr of integers. For SQLite, however,
+      # the value it is compared to must be a string. MySQL allows you to compare with
+      # an integer. Here, we convert all the holder_codes to strings so it works in both cases.
+      # As noted above, this is not very optimized.
       { conditions: ['substr(castle_gates_keys.holder_code,1,1) IN (?)', holder_codes] }
     })
 
@@ -64,7 +63,7 @@ module CastleGates
     def self.gate_bitfield(keys_named_scope)
       return 0 unless keys_named_scope.any?
       if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-        keys_named_scope.all.inject(0) {|prior, key| prior | key.gate_bitfield}
+        keys_named_scope.all.inject(0) { |prior, key| prior | key.gate_bitfield }
       else
         keys_named_scope.calculate(:bit_or, :gate_bitfield)
       end
@@ -114,6 +113,5 @@ module CastleGates
     def bits_for_gates(gate_names)
       castle_type.constantize.gate_set.bits(gate_names)
     end
-
   end
 end

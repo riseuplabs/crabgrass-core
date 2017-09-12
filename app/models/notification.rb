@@ -10,7 +10,6 @@
 #
 #
 class Notification
-
   attr_reader :event
   attr_reader :event_options
 

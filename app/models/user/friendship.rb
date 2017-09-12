@@ -6,4 +6,3 @@
 
 class User::Friendship < User::Relationship
 end
-

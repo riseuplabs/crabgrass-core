@@ -1,5 +1,4 @@
 class Page::TagsController < Page::SidebarsController
-
   helper 'page/tags'
 
   def index
@@ -22,5 +21,4 @@ class Page::TagsController < Page::SidebarsController
     @page.save!
     refresh_sidebar
   end
-
 end

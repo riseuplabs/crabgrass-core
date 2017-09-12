@@ -19,7 +19,7 @@ class Wiki::WikisController < Wiki::BaseController
 
   def show
     @wiki.last_seen_at = last_visit if last_visit
-    render template: 'wiki/wikis/show' #, :locals => {:preview => params['preview']}
+    render template: 'wiki/wikis/show' # , :locals => {:preview => params['preview']}
   end
 
   def print
@@ -27,7 +27,7 @@ class Wiki::WikisController < Wiki::BaseController
     if @page.try.discussion
       @posts = @page.discussion.posts.visible.includes(:user)
     end
-    render layout: "printer_friendly"
+    render layout: 'printer_friendly'
   end
 
   #
@@ -38,7 +38,7 @@ class Wiki::WikisController < Wiki::BaseController
     Wiki::Lock.transaction do
       @wiki.lock!(@section, current_user)
     end
-    render template: "wiki/wikis/edit"
+    render template: 'wiki/wikis/edit'
   rescue Wiki::LockedError => @error_message
     render template: 'wiki/wikis/locked'
   end
@@ -97,6 +97,6 @@ class Wiki::WikisController < Wiki::BaseController
   end
 
   def save?
-    !cancel? && ( params[:save] || params[:force_save] )
+    !cancel? && (params[:save] || params[:force_save])
   end
 end

@@ -4,24 +4,21 @@
 
 module Formy
   class BaseForm < Root
-
-    def label(value=nil)
+    def label(value = nil)
       if value
-        @elements << indent('<div class="legend %s">%s</div>' % [first(:legend), value])
+        @elements << indent(format('<div class="legend %s">%s</div>', first(:legend), value))
       end
     end
 
-    def button(value=nil)
+    def button(value = nil)
       @buttons ||= []
-      if value
-        @buttons << value
-      end
+      @buttons << value if value
     end
 
-    def open(css_class=nil)
+    def open(css_class = nil)
       super()
       if css_class
-        puts_push '<fieldset class="%s">' % css_class
+        puts_push format('<fieldset class="%s">', css_class)
       else
         puts_push '<fieldset>'
       end
@@ -36,10 +33,10 @@ module Formy
       def open
         super
       end
+
       def close
         super
       end
     end
-
   end
 end

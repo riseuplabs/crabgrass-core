@@ -1,12 +1,11 @@
 class Person::HomeController < Person::BaseController
-
   guard :may_show_home?
   layout 'sidecolumn'
 
   #
   # called by DispatchController
   #
-  def initialize(options={})
+  def initialize(options = {})
     super()
     @user = options[:user]
   end
@@ -15,6 +14,4 @@ class Person::HomeController < Person::BaseController
     @profile = @user.profiles.public
     track
   end
-
 end
-

@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Person::DirectoryControllerTest < ActionController::TestCase
-
-
   def test_index
     friends = users(:blue).friends
     login_as :blue
@@ -35,7 +33,7 @@ class Person::DirectoryControllerTest < ActionController::TestCase
   def test_pagination
     login_as :blue
     def @controller.pagination_params
-      {page: 4, per_page: 3}
+      { page: 4, per_page: 3 }
     end
     get :index, path: 'peers'
     assert_response :success
@@ -66,4 +64,3 @@ class Person::DirectoryControllerTest < ActionController::TestCase
     users.alphabetic_order.map &:login
   end
 end
-

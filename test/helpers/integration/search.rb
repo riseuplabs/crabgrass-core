@@ -4,11 +4,10 @@
 #
 module Integration
   module Search
-
     SPHINX_ENABLED_SETTINGS = {
       attribute_updates: true,
       quiet_deltas: true
-    }
+    }.freeze
 
     def setup
       super
@@ -30,7 +29,5 @@ module Integration
     def sphinx_settings
       sphinx_config.settings
     end
-
   end
 end
-

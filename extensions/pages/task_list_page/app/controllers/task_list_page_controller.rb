@@ -16,5 +16,4 @@ class TaskListPageController < Page::BaseController
   def fetch_user_participation
     @upart = @page.participation_for_user(current_user) if @page and current_user
   end
-
 end

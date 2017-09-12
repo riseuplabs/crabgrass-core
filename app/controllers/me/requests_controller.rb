@@ -1,13 +1,12 @@
 class Me::RequestsController < Me::BaseController
-
   include_controllers 'common/requests'
 
   def index
-    @requests = Request.
-      having_state(current_state).
-      send(current_view, current_user).
-      by_updated_at.
-      paginate(pagination_params)
+    @requests = Request
+                .having_state(current_state)
+                .send(current_view, current_user)
+                .by_updated_at
+                .paginate(pagination_params)
     render template: 'common/requests/index'
   end
 
@@ -15,9 +14,9 @@ class Me::RequestsController < Me::BaseController
 
   def current_view
     case params[:view]
-      when "incoming" then :to_user;
-      when "outgoing" then :created_by;
-      else :to_or_created_by_user;
+    when 'incoming' then :to_user
+    when 'outgoing' then :created_by
+    else :to_or_created_by_user
     end
   end
 
@@ -28,5 +27,4 @@ class Me::RequestsController < Me::BaseController
   def requests_path(*args)
     me_requests_path(*args)
   end
-
 end

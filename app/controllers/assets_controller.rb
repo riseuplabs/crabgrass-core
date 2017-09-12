@@ -1,25 +1,24 @@
 class AssetsController < ApplicationController
-
   before_filter :authorization_required
   before_filter :symlink_public_asset, only: :show
   permissions 'assets'
   permission_helper 'pages'
   guard :may_ACTION_asset?
 
-  prepend_before_filter :fetch_asset, only: [:show, :destroy]
+  prepend_before_filter :fetch_asset, only: %i[show destroy]
 
   def show
     file = file_to_send
     send_file private_filename(file),
-      type: file.content_type,
-      disposition: disposition(file)
+              type: file.content_type,
+              disposition: disposition(file)
   end
 
   def destroy
     @asset.destroy
     current_user.updated(@page)
     respond_to do |format|
-      format.js {render 'common/assets/destroy' }
+      format.js { render 'common/assets/destroy' }
       format.html do
         success ['attachment deleted']
         redirect_to(page_url(@page))
@@ -76,13 +75,13 @@ class AssetsController < ApplicationController
 
   def thumb_name
     if params[:path] =~ /#{THUMBNAIL_SEPARATOR}(?<thumb>[a-z]+)$/
-      $~['thumb'].to_sym
+      $LAST_MATCH_INFO['thumb'].to_sym
     end
   end
 
   # returns 'inline' for formats that web browsers can display, 'attachment' otherwise.
   def disposition(asset)
-    if ['image/png','image/jpeg','image/gif'].include? asset.content_type
+    if ['image/png', 'image/jpeg', 'image/gif'].include? asset.content_type
       'inline'
     else
       'attachment'
@@ -94,6 +93,4 @@ class AssetsController < ApplicationController
   def private_filename(asset_or_thumbnail)
     asset_or_thumbnail.private_filename
   end
-
 end
-

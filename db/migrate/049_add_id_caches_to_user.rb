@@ -39,15 +39,14 @@
 #
 
 class AddIdCachesToUser < ActiveRecord::Migration
-
   def self.up
-    add_column :users, 'version',               :integer, :default => 0
+    add_column :users, 'version',               :integer, default: 0
     add_column :users, 'direct_group_id_cache', :string
-    add_column :users, 'all_group_id_cache',    :string, :limit => 512
-    add_column :users, 'friend_id_cache',       :string, :limit => 512
+    add_column :users, 'all_group_id_cache',    :string, limit: 512
+    add_column :users, 'friend_id_cache',       :string, limit: 512
     add_column :users, 'foe_id_cache',          :string
-    add_column :users, 'peer_id_cache',         :string, :limit => 1024
-    add_column :users, 'tag_id_cache',          :string, :limit => 1024
+    add_column :users, 'peer_id_cache',         :string, limit: 1024
+    add_column :users, 'tag_id_cache',          :string, limit: 1024
   end
 
   def self.down
@@ -59,6 +58,4 @@ class AddIdCachesToUser < ActiveRecord::Migration
     remove_column :users, 'peer_id_cache'
     remove_column :users, 'tag_id_cache'
   end
-
 end
-

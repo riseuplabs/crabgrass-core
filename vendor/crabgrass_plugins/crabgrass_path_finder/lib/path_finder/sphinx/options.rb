@@ -8,44 +8,36 @@
 #
 #
 module PathFinder::Sphinx::Options
-
-  def self.options_for_me(path, options)
+  def self.options_for_me(_path, options)
     options
   end
 
-  def self.options_for_public(path, options)
-    options.merge({
-      public: true
-    })
+  def self.options_for_public(_path, options)
+    options.merge(public: true)
   end
 
-  def self.options_for_user(path, options)
+  def self.options_for_user(_path, options)
     user = options[:callback_arg_user]
     user_id = user.is_a?(User) ? user.id : user.to_i
 
-    options.merge({
-      public: true,
-      secondary_user_ids: [user_id]
-    })
+    options.merge(public: true,
+                  secondary_user_ids: [user_id])
   end
 
   # pass :committees => false to exclude sub-committees from the results.
-  def self.options_for_group(path, options)
+  def self.options_for_group(_path, options)
     group = options[:callback_arg_group]
-    if group.is_a?(Group)
-      if options[:committees] == false
-        group_ids = [group.id]
-      else
-        group_ids = group.group_and_committee_ids
-      end
-    else
-      group_ids = [group.to_i]
-    end
+    group_ids = if group.is_a?(Group)
+                  if options[:committees] == false
+                    [group.id]
+                  else
+                    group.group_and_committee_ids
+                              end
+                else
+                  [group.to_i]
+                end
 
-    options.merge({
-     public: true,
-     secondary_group_ids: group_ids
-    })
+    options.merge(public: true,
+                  secondary_group_ids: group_ids)
   end
-
 end

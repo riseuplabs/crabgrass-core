@@ -1,5 +1,5 @@
 ThinkingSphinx::Index.define 'page/terms', with: :active_record,
-  delta: ThinkingSphinx::Deltas::DelayedDelta do
+                                           delta: ThinkingSphinx::Deltas::DelayedDelta do
   ## text fields ##
 
   # general fields
@@ -36,6 +36,4 @@ ThinkingSphinx::Index.define 'page/terms', with: :active_record,
   has :access_ids, multi: true, type: :integer
   has :media, multi: true, type: :integer
   has :flow
-
 end
-

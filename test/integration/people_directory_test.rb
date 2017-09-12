@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class PeopleDirectoryTest < JavascriptIntegrationTest
-
   fixtures :users, 'castle_gates/keys'
 
   def setup
@@ -56,5 +55,4 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
     click_on 'People'
     assert_content 'Login Required'
   end
-
 end

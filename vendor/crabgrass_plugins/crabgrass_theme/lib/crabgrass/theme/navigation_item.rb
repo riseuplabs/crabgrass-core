@@ -6,9 +6,8 @@
 ##
 
 class Crabgrass::Theme::NavigationItem < Array
-
   attr_reader :name
-  ATTRIBUTES = [:label, :url, :active, :active?, :visible, :visible?, :html, :icon]
+  ATTRIBUTES = %i[label url active active? visible visible? html icon].freeze
 
   def initialize(name, theme)
     @name = name
@@ -28,7 +27,7 @@ class Crabgrass::Theme::NavigationItem < Array
   end
 
   def [](key)
-    self.send(key) if ATTRIBUTES.include?(key)
+    send(key) if ATTRIBUTES.include?(key)
   end
 
   def current
@@ -46,15 +45,15 @@ class Crabgrass::Theme::NavigationItem < Array
   #
   def deep_clone
     # clone thy self!
-    self_clone = self.clone
+    self_clone = clone
 
     # remove all the array entries. they point to the wrong nav items.
     self_clone.clear
 
     # clone each nav item in turn
-    each {|item| self_clone << item.deep_clone }
+    each { |item| self_clone << item.deep_clone }
 
-    return self_clone
+    self_clone
   end
 
   #
@@ -90,16 +89,16 @@ class Crabgrass::Theme::NavigationItem < Array
   #
   def remove_current
     if @pointer >= 0
-      item = self.delete_at(@pointer)
+      item = delete_at(@pointer)
       seek_last
-      return item
+      item
     end
   end
 
   # used for debugging
   #
   def inspect
-    "[#{@name}: #{collect {|i| i.inspect}.join(',')}]"
+    "[#{@name}: #{collect(&:inspect).join(',')}]"
   end
 
   #
@@ -108,7 +107,7 @@ class Crabgrass::Theme::NavigationItem < Array
   #
   def set_attribute(name, value)
     if !ATTRIBUTES.include?(name)
-      raise 'ERROR in theme definition "%s": "%s" is not a known navigation attribute.' % [@theme.name, name]
+      raise format('ERROR in theme definition "%s": "%s" is not a known navigation attribute.', @theme.name, name)
     else
       name = name.to_s.chop if name.to_s =~ /\?$/
       instance_variable_set("@#{name}", value)
@@ -145,15 +144,12 @@ class Crabgrass::Theme::NavigationItem < Array
   #
   # the special attribute 'html' is passed through unprocessed
   #
-  def html
-    @html
-  end
+  attr_reader :html
 
   #
   # currently_active_item returns the first sub-tree that is currently active, if any.
   #
   def currently_active_item
-    detect{|i| i.active? && i.visible?}
+    detect { |i| i.active? && i.visible? }
   end
 end
-

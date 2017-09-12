@@ -1,5 +1,4 @@
 module PeoplePermission
-
   protected
 
   def may_show_home?
@@ -26,5 +25,4 @@ module PeoplePermission
   def may_pester?
     current_user.may?(:pester, @user) && current_user != @user
   end
-
 end

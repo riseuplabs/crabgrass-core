@@ -7,4 +7,3 @@ class AddDeletedAtToPosts < ActiveRecord::Migration
     remove_column :posts, :deleted_at
   end
 end
-

@@ -7,11 +7,12 @@ class ConvertDatabaseToUtf8 < ActiveRecord::Migration
       execute "ALTER TABLE #{table} CONVERT TO CHARACTER SET #{charset} COLLATE #{collation}"
     end
   end
+
   def self.down
-    raise ActiveRecord::IrreversibleMigration.new()
+    raise ActiveRecord::IrreversibleMigration.new
   end
+
   def self.connection
     ActiveRecord::Base.connection
   end
 end
-

@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class GroupCreationTest < IntegrationTest
-
   def setup
     super
     @user = users(:blue)
@@ -63,7 +62,4 @@ class GroupCreationTest < IntegrationTest
     assert_content @group.display_name
     assert_equal "/#{@group.name}", current_path
   end
-
 end
-
-

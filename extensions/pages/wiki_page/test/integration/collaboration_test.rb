@@ -10,7 +10,7 @@ class CollaborationTest < JavascriptIntegrationTest
     super
     @user = users(:blue)
     @page = new_page :wiki_page, owner: groups(:rainbow), created_by: @user
-    @page.data = @wiki = Wiki.create(user: @user, body: "")
+    @page.data = @wiki = Wiki.create(user: @user, body: '')
     @old = create_wiki_version @user
     @page.add @user, viewed_at: Time.now
     sleep 1
@@ -29,8 +29,6 @@ class CollaborationTest < JavascriptIntegrationTest
   protected
 
   def assert_wiki_content(text)
-    assert_selector 'article div.wiki', text: text.gsub("\n", " ")
+    assert_selector 'article div.wiki', text: text.tr("\n", ' ')
   end
 end
-
-

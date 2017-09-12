@@ -1,6 +1,5 @@
 module Integration
   module Navigation
-
     def select_page_tab(tab)
       return if find('#title_box .nav-tabs li.active').has_content?(tab)
       click_page_tab(tab)
@@ -21,8 +20,8 @@ module Integration
     def hover_and_edit(text)
       target = page.find('.shy_parent', text: text)
       target.hover
-      within ".shy_parent:hover" do
-        find("a.shy", text: 'Edit').click
+      within '.shy_parent:hover' do
+        find('a.shy', text: 'Edit').click
         yield if block_given?
       end
     end

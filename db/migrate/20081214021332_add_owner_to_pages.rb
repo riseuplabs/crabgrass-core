@@ -11,7 +11,7 @@ class AddOwnerToPages < ActiveRecord::Migration
     add_column :pages, :owner_type, :string
     add_column :pages, :owner_name, :string
     add_column :page_terms, :owner_name, :string
-    add_index :pages, 'owner_name', :name => 'owner_name_4'
+    add_index :pages, 'owner_name', name: 'owner_name_4'
 
     conn = Page.connection
 
@@ -33,7 +33,6 @@ class AddOwnerToPages < ActiveRecord::Migration
       Page.connection.execute("UPDATE pages SET owner_id = #{owner_id}, owner_type = '#{owner_type}' WHERE id = #{page['id']}")
       putc '.'; STDOUT.flush
     end
-
   end
 
   def self.down
@@ -43,5 +42,3 @@ class AddOwnerToPages < ActiveRecord::Migration
     remove_column :page_terms, :owner_name
   end
 end
-
-

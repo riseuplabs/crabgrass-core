@@ -41,9 +41,10 @@ class Wiki::Structure
   end
 
   protected
+
   def find(section)
     node = green_tree if section == :document
     node ||= green_tree.find(section)
-    return node || (raise Wiki::Sections::SectionNotFoundError.new(section))
+    node || (raise Wiki::Sections::SectionNotFoundError.new(section))
   end
 end

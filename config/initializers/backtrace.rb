@@ -7,7 +7,7 @@
 Rails.backtrace_cleaner.remove_silencers!
 
 # now we introduce our own
-Rails.backtrace_cleaner.add_silencer { |line|
-  (line !~ Rails::BacktraceCleaner::APP_DIRS_PATTERN) &&   # rails defaults
-  (line !~ /^\/?(extensions|vendor\/crabgrass_plugins)/ )  # cg stuff in other places
-}
+Rails.backtrace_cleaner.add_silencer do |line|
+  (line !~ Rails::BacktraceCleaner::APP_DIRS_PATTERN) && # rails defaults
+    (line !~ /^\/?(extensions|vendor\/crabgrass_plugins)/) # cg stuff in other places
+end

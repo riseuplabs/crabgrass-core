@@ -6,4 +6,3 @@
 WillPaginate.per_page = Conf.pagination_size
 
 PathFinder.default_pagination_size = Conf.pagination_size
-

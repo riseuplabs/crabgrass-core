@@ -1,20 +1,18 @@
 require 'test_helper'
 
 class DiscussionTest < ActiveSupport::TestCase
-
-
   def test_creation
     discussion = Discussion.create
     post       = discussion.posts.create(body: 'hi', user: users(:blue))
-    assert post.valid?, 'post should be valid (%s)' % post.errors.full_messages.to_s
-    assert discussion.valid?, 'discussion should be valid (%s)' % discussion.errors.full_messages.to_s
+    assert post.valid?, format('post should be valid (%s)', post.errors.full_messages.to_s)
+    assert discussion.valid?, format('discussion should be valid (%s)', discussion.errors.full_messages.to_s)
 
-    post       = discussion.posts.create(body: 'hi', user: users(:blue))
-    assert 2 == discussion.reload.posts_count
+    post = discussion.posts.create(body: 'hi', user: users(:blue))
+    assert discussion.reload.posts_count == 2
   end
 
   def test_creation_in_memory
-    disc = Discussion.new(post: {body: 'x', user: users(:blue)})
+    disc = Discussion.new(post: { body: 'x', user: users(:blue) })
     assert_equal 'x', disc.posts.first.body
     disc.save!
     disc.reload
@@ -47,8 +45,8 @@ class DiscussionTest < ActiveSupport::TestCase
   def test_discussion_update
     discussion = Discussion.create!
 
-    post1      = Post.create! discussion, users(:blue), {body: 'i like giants'}
-    post2      = Post.create! discussion, users(:blue), {body: 'even when they cry'}
+    post1      = Post.create! discussion, users(:blue), body: 'i like giants'
+    post2      = Post.create! discussion, users(:blue), body: 'even when they cry'
 
     assert_equal 2, discussion.reload.posts_count
     assert_last_post_properties post2, discussion
@@ -86,6 +84,4 @@ class DiscussionTest < ActiveSupport::TestCase
     assert post.updated_at > discussion.replied_at
     assert_equal post.user, discussion.replied_by
   end
-
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PrivatePostTest < ActiveSupport::TestCase
-
   def setup
     @sender = users(:blue)
     @recipient = users(:penguin)

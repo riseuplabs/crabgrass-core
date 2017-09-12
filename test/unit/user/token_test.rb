@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class User::TokenTest < ActiveSupport::TestCase
-
   def test_create
     token = User::Token.new(user: users(:blue))
     token.save

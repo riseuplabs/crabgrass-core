@@ -8,11 +8,10 @@ require 'test_helper'
 #
 
 class Page::HistoryTest < ActiveSupport::TestCase
-
   def setup
     Page.delete_all
 
-    @user = FactoryGirl.create(:user, login: "pepe")
+    @user = FactoryGirl.create(:user, login: 'pepe')
 
     @page = FactoryGirl.create(:page, created_by: @user)
     Page::History::PageCreated.create page: @page, user: @user
@@ -62,20 +61,19 @@ class Page::HistoryTest < ActiveSupport::TestCase
   end
 
   def test_change_title_saves_old_and_new_value
-    page = FactoryGirl.create(:page, title: "Bad title")
-    page.update_attribute :title, "Nice title"
+    page = FactoryGirl.create(:page, title: 'Bad title')
+    page.update_attribute :title, 'Nice title'
     Tracking::Action.track :update_title, user: @user, page: page
     page_history = Page::History::ChangeTitle.where(page_id: page).first
-    assert_equal "Bad title", page_history.details[:from]
-    assert_equal "Nice title", page_history.details[:to]
+    assert_equal 'Bad title', page_history.details[:from]
+    assert_equal 'Nice title', page_history.details[:to]
   end
 
-
   def test_recipients_for_single_notifications
-    user   = FactoryGirl.create(:user, login: "user", receive_notifications: nil)
-    user_a = FactoryGirl.create(:user, login: "user_a", receive_notifications: "Digest")
-    user_b = FactoryGirl.create(:user, login: "user_b", receive_notifications: "Single")
-    user_c = FactoryGirl.create(:user, login: "user_c", receive_notifications: "Single")
+    user   = FactoryGirl.create(:user, login: 'user', receive_notifications: nil)
+    user_a = FactoryGirl.create(:user, login: 'user_a', receive_notifications: 'Digest')
+    user_b = FactoryGirl.create(:user, login: 'user_b', receive_notifications: 'Single')
+    user_c = FactoryGirl.create(:user, login: 'user_c', receive_notifications: 'Single')
 
     FactoryGirl.build(:user_participation, page: @page, user: user_a, watch: true).save!
     FactoryGirl.build(:user_participation, page: @page, user: user_b, watch: true).save!
@@ -99,12 +97,12 @@ class Page::HistoryTest < ActiveSupport::TestCase
   def assert_invalid_attrs(attrs)
     history = Page::History.new attrs
     assert !history.valid?,
-      "These attributes should be invalid for a Page History: #{attrs.inspect}"
+           "These attributes should be invalid for a Page History: #{attrs.inspect}"
   end
 
   def assert_change_updated_at(page, klass, options = {})
     Page.where(id: page).update_all created_at: 3.months.ago,
-      updated_at: 2.months.ago
+                                    updated_at: 2.months.ago
     page_history = klass.create! options.merge(user: @user, page: page)
     page.reload
     page_history.reload

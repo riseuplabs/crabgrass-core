@@ -15,4 +15,3 @@ class AddNoticeToUserParticipations < ActiveRecord::Migration
     remove_column :user_participations, :notice
   end
 end
-

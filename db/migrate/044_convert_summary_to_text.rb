@@ -7,4 +7,3 @@ class ConvertSummaryToText < ActiveRecord::Migration
     change_column :pages, :summary, :text
   end
 end
-

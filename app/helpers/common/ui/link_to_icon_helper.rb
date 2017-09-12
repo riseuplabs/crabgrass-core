@@ -7,15 +7,13 @@
 #
 #
 module Common::Ui::LinkToIconHelper
-
-  def self.included(base)
+  def self.included(_base)
     unless ActionView::Base.method_defined? :link_to_with_icon
       ActionView::Base.send(:include, ActionViewExtension)
     end
   end
 
   module ActionViewExtension
-
     include PrototypeHelper
 
     def self.included(base)
@@ -31,13 +29,13 @@ module Common::Ui::LinkToIconHelper
     # thing happens, and the icon is set to a spinner. The icon is
     # restored when the ajax request completes.
     #
-    def link_to_remote_with_icon(name, options, html_options={})
+    def link_to_remote_with_icon(name, options, html_options = {})
       icon = html_options[:icon] || html_options[:button_icon]
       if icon.nil?
         link_to_remote_without_icon(name, options, html_options)
       else
         add_icon_class(html_options)
-        id = html_options[:id] || 'link%s'%rand(1000000)
+        id = html_options[:id] || format('link%s', rand(1_000_000))
         html_options[:id] ||= id
 
         # don't bother with spinner for confirm links:
@@ -76,14 +74,12 @@ module Common::Ui::LinkToIconHelper
     # end
     #
     def link_to_with_icon(*args, &block)
-      if block
-        html_options = args[1]
-      else
-        html_options = args[2]
-      end
-      if html_options
-        add_icon_class(html_options)
-      end
+      html_options = if block
+                       args[1]
+                     else
+                       args[2]
+                     end
+      add_icon_class(html_options) if html_options
       link_to_without_icon(*args, &block)
     end
 
@@ -92,17 +88,17 @@ module Common::Ui::LinkToIconHelper
     ## (no text, just icon)
     ##
 
-    def link_to_remote_icon(icon, options={}, html_options={})
+    def link_to_remote_icon(icon, options = {}, html_options = {})
       html_options[:button_icon] = icon
       link_to_remote_with_icon('', options, html_options)
     end
 
-    def link_to_function_icon(icon, function, html_options={})
+    def link_to_function_icon(icon, function, html_options = {})
       html_options[:button_icon] = icon
       link_to_function_with_icon('', function, html_options)
     end
 
-    def link_to_icon(icon, options, html_options={})
+    def link_to_icon(icon, options, html_options = {})
       html_options[:button_icon] = icon
       link_to_with_icon '', options, html_options
     end
@@ -116,12 +112,10 @@ module Common::Ui::LinkToIconHelper
     #
     def add_icon_class(html_options)
       if icon = html_options.delete(:icon)
-        html_options[:class] = ["icon", "#{icon}_16", html_options[:class]].combine
+        html_options[:class] = ['icon', "#{icon}_16", html_options[:class]].combine
       elsif icon = html_options.delete(:button_icon)
-        html_options[:class] = ["small_icon_button", "#{icon}_16", html_options[:class]].combine
+        html_options[:class] = ['small_icon_button', "#{icon}_16", html_options[:class]].combine
       end
     end
-
   end
 end
-

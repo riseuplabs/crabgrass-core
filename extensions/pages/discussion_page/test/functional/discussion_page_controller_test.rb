@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class DiscussionPageControllerTest < ActionController::TestCase
-
-
   def setup
-    @request.host = "localhost"
+    @request.host = 'localhost'
   end
 
   def test_show
@@ -12,5 +10,4 @@ class DiscussionPageControllerTest < ActionController::TestCase
     get :show, id: page.id
     assert_response :success
   end
-
 end

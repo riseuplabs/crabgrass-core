@@ -3,7 +3,6 @@
 #
 
 class SessionController < ApplicationController
-
   layout 'notice'
   skip_before_filter :redirect_unverified_user
 
@@ -21,8 +20,8 @@ class SessionController < ApplicationController
   def logout
     if logged_in?
       # i think the remember me stuff is a security flaw, so it is commented out for now:
-      #self.current_user.forget_me if logged_in?
-      #cookies.delete :auth_token
+      # self.current_user.forget_me if logged_in?
+      # cookies.delete :auth_token
       logout!
       success [:logout_success.t, :logout_success_message.t]
     end
@@ -39,8 +38,8 @@ class SessionController < ApplicationController
   # used for ajax login form.
   def login_form
     render partial: 'common/session/login_form',
-      layout: false,
-      content_type: "text/html"
+           layout: false,
+           content_type: 'text/html'
   end
 
   protected
@@ -51,7 +50,7 @@ class SessionController < ApplicationController
     self.current_user = User.authenticate(params[:login], params[:password])
 
     if current_user.language.present?
-      session[:language_code] = self.current_user.language.to_sym
+      session[:language_code] = current_user.language.to_sym
     else
       session[:language_code] = previous_language
     end

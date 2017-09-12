@@ -9,29 +9,23 @@
 
 module PathFinder
   class Query
-
     ##
     ## must be overridden by sub classes
     ##
 
-    def initialize(path, options, klass)
+    def initialize(_path, options, _klass)
       @options = options
     end
 
-    def apply_filter(filter, args)
-    end
+    def apply_filter(filter, args); end
 
-    def add_attribute_constraint(attribute, value)
-    end
+    def add_attribute_constraint(attribute, value); end
 
-    def add_access_constraint(access_hash)
-    end
+    def add_access_constraint(access_hash); end
 
-    def add_order(order_sql)
-    end
+    def add_order(order_sql); end
 
-    def cleanup_sort_column(column)
-    end
+    def cleanup_sort_column(column); end
 
     ##
     ## these adders work the same for mysql and sphinx
@@ -87,13 +81,11 @@ module PathFinder
           page_type = arg
         end
         if page_group and page_group =~ /^media-(image|audio|video|document)$/
-          media_type = page_group.sub(/^media-/,'')
+          media_type = page_group.sub(/^media-/, '')
           page_group = nil
         end
       end
       [page_group, page_type, media_type]
     end
-
   end
 end
-

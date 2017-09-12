@@ -1,7 +1,6 @@
-require_relative "../lib/crabgrass/info.rb"
+require_relative '../lib/crabgrass/info.rb'
 
-
-info "LOAD FRAMEWORK"
+info 'LOAD FRAMEWORK'
 require_relative 'boot'
 
 require 'rails/all'
@@ -10,23 +9,23 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative "../lib/crabgrass/boot.rb"
-require_relative "../lib/crabgrass/public_exceptions.rb"
+require_relative '../lib/crabgrass/boot.rb'
+require_relative '../lib/crabgrass/public_exceptions.rb'
 
 module Crabgrass
   class Application < Rails::Application
-    info "LOAD CONFIG BLOCK"
+    info 'LOAD CONFIG BLOCK'
 
     config.autoload_paths << "#{Rails.root}/lib"
     config.autoload_paths << "#{Rails.root}/app/models"
 
-    config.autoload_paths += %w(chat profile requests mailers).
-     collect { |dir| "#{Rails.root}/app/models/#{dir}" }
+    config.autoload_paths += %w[chat profile requests mailers]
+                             .collect { |dir| "#{Rails.root}/app/models/#{dir}" }
     config.autoload_paths << "#{Rails.root}/app/permissions"
     config.autoload_paths << "#{Rails.root}/app/helpers/classes"
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -37,9 +36,8 @@ module Crabgrass
 
     config.active_support.deprecation = :notify
 
-
     config.session_store :cookie_store,
-      :key => 'crabgrass_session'
+                         key: 'crabgrass_session'
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -79,7 +77,7 @@ module Crabgrass
     config.before_configuration do
       Pathname.glob(CRABGRASS_PLUGINS_DIRECTORY + '*').each do |plugin|
         info "LOAD #{plugin.basename.to_s.humanize}"
-        $:.unshift plugin + 'lib'
+        $LOAD_PATH.unshift plugin + 'lib'
         require plugin + 'init.rb'
       end
 
@@ -98,12 +96,11 @@ module Crabgrass
       CastleGates.initialize('config/permissions')
     end
 
-    initializer "crabgrass_page.freeze_pages" do |app|
+    initializer 'crabgrass_page.freeze_pages' do |_app|
       require 'crabgrass/page/class_registrar'
       ::PAGES = Crabgrass::Page::ClassRegistrar.proxies.dup.freeze
       Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
     end
-
   end
 
   ## FIXME: require these, where they are actually needed (or fix autoloading).
@@ -112,5 +109,4 @@ module Crabgrass
   require 'crabgrass/page/class_proxy'
   require 'crabgrass/page/class_registrar'
   require 'crabgrass/page/data'
-
 end

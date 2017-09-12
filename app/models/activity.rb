@@ -29,14 +29,13 @@
 # the subclass wants to use it for.
 #
 class Activity < ActiveRecord::Base
-
   # activity access (relative to self.subject):
   PRIVATE = 1  # only you can see it
   DEFAULT = 2  # your friends can see this activity for you
   PUBLIC  = 3  # anyone can see it.
 
-  belongs_to :subject, polymorphic: true  # the "subject" is typically the actor who is doing something.
-  belongs_to :item, polymorphic: true   # the "item" is the thing that is acted upon.
+  belongs_to :subject, polymorphic: true # the "subject" is typically the actor who is doing something.
+  belongs_to :item, polymorphic: true # the "item" is the thing that is acted upon.
 
   before_create :set_defaults
   def set_defaults # :nodoc:
@@ -47,8 +46,8 @@ class Activity < ActiveRecord::Base
 
     # sometimes the subject or item may be deleted.
     # therefore, we cache the name in case the subject or item doesn't exist.
-    self.subject_name ||= self.subject.name if self.subject and self.subject.respond_to?(:name)
-    self.item_name  ||= self.item.name if self.item and self.item.respond_to?(:name)
+    self.subject_name ||= subject.name if subject and subject.respond_to?(:name)
+    self.item_name ||= item.name if item and item.respond_to?(:name)
   end
 
   ##
@@ -57,17 +56,16 @@ class Activity < ActiveRecord::Base
 
   # user to be used as avatar in the activities list for the current user
   def avatar
-    self.respond_to?(:user) ? self.user : self.subject
+    respond_to?(:user) ? user : subject
   end
 
   # to be defined by subclasses
-  def icon()
+  def icon
     'exclamation'
   end
 
   # to be defined by subclasses
-  def style()
-  end
+  def style; end
 
   # to be defined by subclasses
   def description(view) end
@@ -82,10 +80,10 @@ class Activity < ActiveRecord::Base
   #
   # (normally, groups and users will not cause a problem, because most the time
   # we cache their name's at the time of the activity's creation)
-  def safe_description(view=nil)
+  def safe_description(view = nil)
     description(view)
   rescue
-    self.destroy
+    destroy
     nil
   end
 
@@ -107,18 +105,18 @@ class Activity < ActiveRecord::Base
 
   def self.for_my_groups(me)
     where "(subject_type = 'Group' AND subject_id IN (?))",
-      me.all_group_id_cache
+          me.all_group_id_cache
   end
 
   def self.for_me(me)
     where "(subject_type = 'User' AND subject_id = ?)",
-      me.id
+          me.id
   end
 
   def self.for_my_friends(me)
     where "(subject_type = 'User' AND subject_id IN (?) AND access != ?)",
-      me.friend_id_cache,
-      Activity::PRIVATE
+          me.friend_id_cache,
+          Activity::PRIVATE
   end
 
   def self.for_all(me)
@@ -134,13 +132,13 @@ class Activity < ActiveRecord::Base
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
   def self.social_activities_scope_conditions(user, other_users_ids_list)
-    [ "(subject_type = 'User'  AND subject_id = ?) OR
+    ["(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?)) ",
-       user.id,
-       other_users_ids_list,
-       Activity::PRIVATE,
-       user.all_group_id_cache]
+     user.id,
+     other_users_ids_list,
+     Activity::PRIVATE,
+     user.all_group_id_cache]
   end
 
   # for user's landing page
@@ -154,7 +152,7 @@ class Activity < ActiveRecord::Base
   #     (AND activity.public == true)
   #
   def self.for_user(user, current_user)
-    if (current_user and current_user.friend_of?(user) or current_user == user)
+    if current_user and current_user.friend_of?(user) or current_user == user
       restricted = Activity::PRIVATE
       # elsif current_user and current_user.peer_of?(user)
       #   restricted = Activity::DEFAULT
@@ -162,7 +160,7 @@ class Activity < ActiveRecord::Base
       restricted = Activity::DEFAULT
     end
     where "subject_type = 'User' AND subject_id = ? AND access > ?",
-      user.id, restricted
+          user.id, restricted
   end
 
   # for group's landing page
@@ -178,10 +176,10 @@ class Activity < ActiveRecord::Base
   def self.for_group(group, current_user)
     if current_user and current_user.member_of?(group)
       where "subject_type = 'Group' AND subject_id IN (?)",
-        group.group_and_committee_ids
+            group.group_and_committee_ids
     else
       where "subject_type = 'Group' AND subject_id IN (?) AND access = ?",
-        group.group_and_committee_ids, Activity::PUBLIC
+            group.group_and_committee_ids, Activity::PUBLIC
     end
   end
 
@@ -202,9 +200,9 @@ class Activity < ActiveRecord::Base
   end
 
   def group_class(attribute)
-    if group = self.send(attribute)
+    if group = send(attribute)
       group.group_type.downcase
-    elsif group_type = self.send(attribute.to_s + '_type')
+    elsif group_type = send(attribute.to_s + '_type')
       I18n.t(group_type.downcase.to_sym).downcase
     end
   end
@@ -217,10 +215,9 @@ class Activity < ActiveRecord::Base
     # if it's a group, try to get the group name directly from the reference item
     # need to figure out if i'm the subject or item!
     if item.to_s == 'group'
-      name = (self.item_type == 'Group') ? self.item.try.name : self.subject.try.name
+      name = item_type == 'Group' ? self.item.try.name : subject.try.name
     end
-    name ||= self.send("#{item}_name") || self.send(item).try.name || I18n.t(:unknown)
-    '<%s>%s</%s>' % [type, name, type]
+    name ||= send("#{item}_name") || send(item).try.name || I18n.t(:unknown)
+    format('<%s>%s</%s>', type, name, type)
   end
-
 end

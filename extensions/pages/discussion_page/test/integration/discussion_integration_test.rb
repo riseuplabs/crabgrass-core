@@ -11,13 +11,13 @@ class DiscussionIntegrationTest < JavascriptIntegrationTest
   end
 
   def test_posting
-    comment = post_comment "It is a discussion. So let us comment some."
+    comment = post_comment 'It is a discussion. So let us comment some.'
     assert_content comment
   end
 
   def test_editing_own_comment
-    comment = post_comment "It is a discussion. So let us comment some."
-    new = edit_comment comment, "It is a discussion. So what?"
+    comment = post_comment 'It is a discussion. So let us comment some.'
+    new = edit_comment comment, 'It is a discussion. So what?'
     assert_content new
     assert_no_content comment
   end
@@ -29,5 +29,4 @@ class DiscussionIntegrationTest < JavascriptIntegrationTest
       assert_content 'GreenCloth'
     end
   end
-
 end

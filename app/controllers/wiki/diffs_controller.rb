@@ -1,5 +1,4 @@
 class Wiki::DiffsController < Wiki::BaseController
-
   guard show: :may_show_wiki_diff?
 
   helper 'wikis/versions'

@@ -11,7 +11,7 @@ class Page::CreateControllerTest < ActionController::TestCase
     login_as :blue
 
     assert_difference 'Gallery.count' do
-      post :create, type: Gallery.param_id, page: {title: 'pictures'}, assets: [upload_data('photo.jpg')]
+      post :create, type: Gallery.param_id, page: { title: 'pictures' }, assets: [upload_data('photo.jpg')]
     end
 
     assert_not_nil assigns(:page)
@@ -24,8 +24,8 @@ class Page::CreateControllerTest < ActionController::TestCase
     login_as :blue
 
     assert_difference 'Gallery.count' do
-      post :create, type: Gallery.param_id, page: {title: 'pictures 2'},
-           assets: [upload_data('photo.jpg'), upload_data('subdir.zip')]
+      post :create, type: Gallery.param_id, page: { title: 'pictures 2' },
+                    assets: [upload_data('photo.jpg'), upload_data('subdir.zip')]
     end
 
     assert_not_nil assigns(:page)

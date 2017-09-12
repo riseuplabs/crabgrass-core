@@ -1,12 +1,9 @@
-=begin
-
-  a mix-in for Group and User associations with Profiles.
-  TODO: filter on language too
-
-=end
+#
+#   a mix-in for Group and User associations with Profiles.
+#   TODO: filter on language too
+#
 
 module ProfileMethods
-
   # returns the best profile for user to see
   def visible_by(user)
     if user
@@ -25,23 +22,23 @@ module ProfileMethods
   def find_by_access(*args)
     return find_by_no_access if args.empty?
 
-    args.map!{|i| if i==:member; :friend; else; i; end}
+    args.map! { |i| i == :member ? :friend : i }
 
-    conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
-    where([conditions] + ([true] * args.size)).
-      order('foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC').
-      first
+    conditions = args.collect { |access| "profiles.`#{access}` = ?" }.join(' OR ')
+    where([conditions] + ([true] * args.size))
+      .order('foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC')
+      .first
   end
 
   def find_by_no_access
-    fields = [:foe, :friend, :peer, :fof, :stranger]
-    conditions = fields.collect{|access| "profiles.`#{access}` = ?"}.join(' AND ')
+    fields = %i[foe friend peer fof stranger]
+    conditions = fields.collect { |access| "profiles.`#{access}` = ?" }.join(' AND ')
     where([conditions] + ([false] * fields.size)).first
   end
 
   # a shortcut to grab the 'public' profile
   def public
-    profile_options = {stranger: true}
+    profile_options = { stranger: true }
 
     @public_profile ||= (find_by_access(:stranger) || create_or_build(profile_options))
   end
@@ -55,13 +52,11 @@ module ProfileMethods
     @hidden_profile ||= (find_by_access || create_or_build)
   end
 
-  def create_or_build(args={})
+  def create_or_build(args = {})
     if proxy_association.owner.new_record?
       build(args)
     else
       create(args)
     end
   end
-
 end
-

@@ -1,5 +1,4 @@
 class Group::MyMembershipsController < Group::BaseController
-
   guard create: :may_join_group?,
         destroy: :may_leave_group?
 
@@ -16,5 +15,4 @@ class Group::MyMembershipsController < Group::BaseController
       redirect_to me_home_url
     end
   end
-
 end

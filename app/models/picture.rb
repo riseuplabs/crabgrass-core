@@ -52,7 +52,6 @@ MAX_HEIGHT = 1024
 MAX_WIDTH = 1024
 
 class Picture < ActiveRecord::Base
-
   serialize :dimensions      # Hash
   serialize :average_color   # Array
   after_destroy :destroy_files
@@ -62,21 +61,21 @@ class Picture < ActiveRecord::Base
   # the private filesystem path of this picture
   # e.g. rails_root/assets/pictures/0000/0004/full.jpg
   #
-  def private_file_path(geometry=nil)
+  def private_file_path(geometry = nil)
     storage.private_path(geometry)
   end
 
   #
   # the public filesystem path of this picture
   #
-  def public_file_path(geometry=nil)
+  def public_file_path(geometry = nil)
     storage.public_path(geometry)
   end
 
   #
   # the relative url path for this picture
   #
-  def url(geometry=nil)
+  def url(geometry = nil)
     storage.url(geometry)
   end
 
@@ -85,7 +84,7 @@ class Picture < ActiveRecord::Base
   # as a side effect, the self.dimensions hash is updated with that geometry.
   # it is only saved to the db if later self.save is called.
   #
-  def size(geometry=nil)
+  def size(geometry = nil)
     geometry = Geometry[geometry]
     dimensions[geometry.to_s] ||= storage.dimensions(geometry)
   end
@@ -150,9 +149,7 @@ class Picture < ActiveRecord::Base
   #
   def render(geometry)
     # ensure the file has been rendered
-    unless File.exist?(storage.private_path(geometry))
-      resize(geometry)
-    end
+    resize(geometry) unless File.exist?(storage.private_path(geometry))
     # ensure symlink to public dir exists
     storage.add_symlink # for now, all Pictures are public.
   end
@@ -172,7 +169,7 @@ class Picture < ActiveRecord::Base
 
     @uploaded_file = uploaded_file
     self.content_type = uploaded_file.content_type ||
-      Media::MimeType.mime_type_from_extension(uploaded_file.original_filename)
+                        Media::MimeType.mime_type_from_extension(uploaded_file.original_filename)
   end
 
   ##
@@ -194,12 +191,12 @@ class Picture < ActiveRecord::Base
   #
   def save_uploaded_file
     storage.allocate_directory
-    File.open(private_file_path, "wb") do |f|
+    File.open(private_file_path, 'wb') do |f|
       f.write(@uploaded_file.read)
     end
     self.average_color = storage.average_color # will get saved by add_geometry!
-    self.add_geometry! nil                     # save the height & width for the 'full' image
-                                               # (indexed as 'full' in geometry hash)
+    add_geometry! nil # save the height & width for the 'full' image
+    # (indexed as 'full' in geometry hash)
   end
 
   #
@@ -226,14 +223,9 @@ class Picture < ActiveRecord::Base
     status = Media::GraphicsMagickTransmogrifier.new(
       input_file: input_path,
       output_file: output_path,
-      size: geometry.gm_size_param_from(self.size),
+      size: geometry.gm_size_param_from(size),
       crop: geometry.gm_crop_param
     ).try.run
-    if status != :success
-      raise ErrorMessage.new('invalid image')
-    end
+    raise ErrorMessage.new('invalid image') if status != :success
   end
-
 end
-
-

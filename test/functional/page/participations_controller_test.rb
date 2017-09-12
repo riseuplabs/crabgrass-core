@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Page::ParticipationsControllerTest < ActionController::TestCase
-
   def setup
     @user = FactoryGirl.create :user
     @page = FactoryGirl.create :page
@@ -64,4 +63,3 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
     end
   end
 end
-

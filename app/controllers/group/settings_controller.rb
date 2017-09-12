@@ -1,7 +1,5 @@
 class Group::SettingsController < Group::BaseController
-
-  def show
-  end
+  def show; end
 
   def update
     @group.update_attributes! group_params

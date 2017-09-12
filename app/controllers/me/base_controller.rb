@@ -2,7 +2,6 @@
 # Abstract super class of all the Me controllers.
 #
 class Me::BaseController < ApplicationController
-
   before_filter :login_required, :fetch_user
 
   protected
@@ -15,5 +14,4 @@ class Me::BaseController < ApplicationController
     @context = Context::Me.new(current_user)
     super
   end
-
 end

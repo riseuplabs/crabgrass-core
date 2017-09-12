@@ -1,24 +1,23 @@
 class Event < ActiveRecord::Base
-
   has_many :pages, as: :data
   format_attribute :description
 
-  #validates_presence_of :location
+  # validates_presence_of :location
   #  validates_presence_of :starts_at # only commented out to test
- ##  validates_presence_of :ends_at # only commented out to test
+  ##  validates_presence_of :ends_at # only commented out to test
 
-  #delegate :owner_name, :to => :page # only commented out to test
+  # delegate :owner_name, :to => :page # only commented out to test
 
-  #def page
+  # def page
   #  pages.first || parent_page
-  #end
+  # end
 
-  #def page=(p)
+  # def page=(p)
   #  @page = p
-  #end
+  # end
 
   def index
-    self.description
+    description
   end
 
   def self.on_day(date)
@@ -37,8 +36,7 @@ class Event < ActiveRecord::Base
   private
 
   def self.between_dates(start_unix, end_unix)
-    where "UNIX_TIMESTAMP(starts_at) >= ? and UNIX_TIMESTAMP(starts_at) <= ?",
-      start_unix, end_unix
+    where 'UNIX_TIMESTAMP(starts_at) >= ? and UNIX_TIMESTAMP(starts_at) <= ?',
+          start_unix, end_unix
   end
-
 end

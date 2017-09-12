@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class User::ParticipationTest < ActiveSupport::TestCase
-
-
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
   end
 
   def test_associations
@@ -30,7 +27,7 @@ class User::ParticipationTest < ActiveSupport::TestCase
     g = groups(:animals)
     u = users(:blue)
     page = Page.create title: 'hello', owner: g
-    assert_difference 'Page.find(%d).contributors_count' % page.id do
+    assert_difference format('Page.find(%d).contributors_count', page.id) do
       u.updated(page)
       page.save
     end
@@ -46,7 +43,7 @@ class User::ParticipationTest < ActiveSupport::TestCase
     page.add(group, access: :admin)
     page.save! # save required after .add()
 
-    assert user.may?(:admin,page), 'user must be able to admin page'
+    assert user.may?(:admin, page), 'user must be able to admin page'
     assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'
     assert user.pages.include?(page), 'user must have an association with page'
     assert group.pages.include?(page), 'group must have an association with page'
@@ -69,7 +66,7 @@ class User::ParticipationTest < ActiveSupport::TestCase
     page.add(user)
     page.save!
     user.destroy
-    assert !page.user_participations(true).any?
+    assert page.user_participations(true).none?
   end
 
   def test_ids_update
@@ -121,6 +118,4 @@ class User::ParticipationTest < ActiveSupport::TestCase
     assert_equal 0, page.stars_count
     assert_equal 0, page.reload.stars_count
   end
-
 end
-

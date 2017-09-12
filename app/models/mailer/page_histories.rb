@@ -7,7 +7,6 @@
 # started.
 
 class Mailer::PageHistories < ActionMailer::Base
-
   DIGEST_TIMESPAN = 1.day
   UPDATE_TIMESPAN = 1.hour
 
@@ -42,9 +41,9 @@ class Mailer::PageHistories < ActionMailer::Base
 
   def updates(page, recipient)
     init_mail_to(recipient)
-    @histories = page.page_histories.includes(:page).
-      where("page_histories.created_at >= ?", UPDATE_TIMESPAN.ago).
-      where(page_histories: {notification_sent_at: nil})
+    @histories = page.page_histories.includes(:page)
+                     .where('page_histories.created_at >= ?', UPDATE_TIMESPAN.ago)
+                     .where(page_histories: { notification_sent_at: nil })
     mail subject: update_subject, template_name: :digest
   end
 
@@ -76,9 +75,9 @@ class Mailer::PageHistories < ActionMailer::Base
 
   # all relevant PageHistory records
   def self.page_histories
-    Page::History.where(notification_digest_sent_at: nil).
-      where("DATE(page_histories.created_at) >= DATE(?)", DIGEST_TIMESPAN.ago).
-      where("DATE(page_histories.created_at) < DATE(?)", Time.now)
+    Page::History.where(notification_digest_sent_at: nil)
+                 .where('DATE(page_histories.created_at) >= DATE(?)', DIGEST_TIMESPAN.ago)
+                 .where('DATE(page_histories.created_at) < DATE(?)', Time.now)
   end
 
   def page_histories_for(user)
@@ -86,17 +85,17 @@ class Mailer::PageHistories < ActionMailer::Base
   end
 
   def watched_pages(user)
-    user.pages.
-      where(user_participations: {watch: true}).
-      where("DATE(pages.updated_at) >= DATE(?)", DIGEST_TIMESPAN.ago)
+    user.pages
+        .where(user_participations: { watch: true })
+        .where('DATE(pages.updated_at) >= DATE(?)', DIGEST_TIMESPAN.ago)
   end
 
   def digest_subject
-    I18n.t("mailer.page_histories.daily_digest", site: @site.title)
+    I18n.t('mailer.page_histories.daily_digest', site: @site.title)
   end
 
   def update_subject
-    I18n.t("mailer.page_histories.page_update", site: @site.title)
+    I18n.t('mailer.page_histories.page_update', site: @site.title)
   end
 
   def sender

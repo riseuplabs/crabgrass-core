@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class ImageTest < IntegrationTest
-
   def setup
     super
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
@@ -14,7 +13,6 @@ class ImageTest < IntegrationTest
     assert_equal 200, status_code
   end
 
-
   # we used to have some iso encoding so links would escape to
   # strings include %F3.
   # Now this old link will lead to utf-8 errors as the chars > \xF0 are
@@ -25,5 +23,3 @@ class ImageTest < IntegrationTest
     assert_equal 200, status_code
   end
 end
-
-

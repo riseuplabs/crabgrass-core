@@ -1,12 +1,10 @@
 class AssetPageVersionsController < Page::BaseController
-
   guard index: :may_show_page?,
-    create: :may_show_page?,
-    destroy: :may_edit_page?
+        create: :may_show_page?,
+        destroy: :may_edit_page?
   helper 'asset_page'
 
-  def index
-  end
+  def index; end
 
   def create
     @asset.generate_thumbnails
@@ -29,5 +27,4 @@ class AssetPageVersionsController < Page::BaseController
     @options.show_assets = false
     @options.show_tabs   = true
   end
-
 end

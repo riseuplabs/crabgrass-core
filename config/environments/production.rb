@@ -5,7 +5,7 @@ Crabgrass::Application.configure do
 
   config.eager_load = true
   config.cache_classes = true
-  config.action_controller.perform_caching             = true
+  config.action_controller.perform_caching = true
 
   # Compress JavaScripts and CSS
   config.assets.js_compressor = :uglifier
@@ -47,7 +47,7 @@ Crabgrass::Application.configure do
   begin
     require 'logging'
     config.logger = Logging::Logger['main'].tap do |l|
-      l.add_appenders( Logging::Appenders::Syslog.new('crabgrass') )
+      l.add_appenders(Logging::Appenders::Syslog.new('crabgrass'))
       l.level = config.log_level
     end
   rescue LoadError => exc
@@ -64,12 +64,11 @@ Crabgrass::Application.configure do
   # we filter almost everything. Logs are only detailed for performance
   # analysis.
   # For debugging having the ids of the records should suffice.
-  config.filter_parameters += [:body, :description, :name, :summary, :comment]
-  config.filter_parameters += [:caption, :code, :email, :location, :im_address]
-  config.filter_parameters += [:street, :city, :state, :title, :content, :data]
-  config.filter_parameters += [:details, :phone_number, :organization, :role]
-  config.filter_parameters += [:value, :sms, :login]
+  config.filter_parameters += %i[body description name summary comment]
+  config.filter_parameters += %i[caption code email location im_address]
+  config.filter_parameters += %i[street city state title content data]
+  config.filter_parameters += %i[details phone_number organization role]
+  config.filter_parameters += %i[value sms login]
 
-
-  ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
+  ANALYZABLE_PRODUCTION_LOG = '/var/log/rails.log'.freeze
 end

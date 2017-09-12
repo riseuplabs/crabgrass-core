@@ -20,11 +20,11 @@
 
 set :host, ENV['RAILS_ENV'] === 'development' ?
   'localhost:3000' :
-  ( ENV['RAILS_HOST'] || 'localhost' )
+  (ENV['RAILS_HOST'] || 'localhost')
 
 job_type :curl, 'curl -L -XPOST http://:host/do/cron/run/:task'
 
-every 1.hour, :at => '0:30' do
+every 1.hour, at: '0:30' do
   curl 'tracking_update_hourlies'
 end
 
@@ -32,7 +32,7 @@ end
 # delta index takes d = 5ms longer for each document in the delta.
 # Minimum total time is for delta growing up to
 #    sqr( 2*R / d) ~ 180 documents
-every 6.hour, :at => '0:40' do
+every 6.hour, at: '0:40' do
   rake 'ts:index'
 end
 

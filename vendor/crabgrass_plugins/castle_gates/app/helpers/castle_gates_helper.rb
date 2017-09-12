@@ -12,7 +12,6 @@
 #
 
 module CastleGatesHelper
-
   #
   # display checkboxes for a castle gate, one checkbox for each possible holder.
   #
@@ -28,13 +27,10 @@ module CastleGatesHelper
     name = "#{gate}_#{holder}"
     options = options.dup
     options[:label] ||= holder.definition.label.t
-    if holder.definition.info
-      options[:title] ||= holder.definition.info.t
-    end
+    options[:title] ||= holder.definition.info.t if holder.definition.info
     options[:method] = 'put'
     options[:checked] = castle.access?(holder => gate)
-    url  = key_holder_path(holder.code, 'gate' => gate, 'new_state' => options[:checked] ? 'closed' : 'open')
+    url = key_holder_path(holder.code, 'gate' => gate, 'new_state' => options[:checked] ? 'closed' : 'open')
     spinbox_tag(name, url, options)
   end
-
 end

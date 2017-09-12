@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class DismissAllNoticesTest < JavascriptIntegrationTest
-
   fixtures :users, :notices
 
   def test_dismiss_all_notices_updates_page
@@ -18,6 +17,4 @@ class DismissAllNoticesTest < JavascriptIntegrationTest
     assert_no_selector('.dismiss-all-notices-btn', visible: true)
     assert_no_content msg
   end
-
 end
-

@@ -7,10 +7,9 @@ require 'test_helper'
 ##
 
 class Group::WikisControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user!(@user)
   end
 
@@ -64,11 +63,11 @@ class Group::WikisControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_edit_group? do
       xhr :post, :create,
-        group_id: @group.to_param,
-        wiki: { body: "_created_", private: true }
+          group_id: @group.to_param,
+          wiki: { body: '_created_', private: true }
     end
     wiki = Wiki.last
-    assert "<em>created</em>", wiki.body_html
+    assert '<em>created</em>', wiki.body_html
     assert wiki.profile.private?
     assert_equal @user, wiki.versions.last.user
     assert_response :redirect
@@ -79,11 +78,11 @@ class Group::WikisControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_edit_group? do
       xhr :post, :create,
-        group_id: @group.to_param,
-        wiki: { body: "_created_", private: false }
+          group_id: @group.to_param,
+          wiki: { body: '_created_', private: false }
     end
     wiki = Wiki.last
-    assert "<em>created</em>", wiki.body_html
+    assert '<em>created</em>', wiki.body_html
     assert wiki.profile.public?
     assert_response :redirect
     assert_redirected_to group_home_url(@group, wiki_id: wiki.id)
@@ -94,14 +93,13 @@ class Group::WikisControllerTest < ActionController::TestCase
     login_as @user
     assert_difference '@wiki.versions.count' do
       xhr :post, :create,
-        group_id: @group.to_param,
-        wiki: { body: "_created_", private: false }
+          group_id: @group.to_param,
+          wiki: { body: '_created_', private: false }
     end
     wiki = Wiki.last
-    assert "<em>created</em>", wiki.body_html
+    assert '<em>created</em>', wiki.body_html
     assert wiki.profile.public?
     assert_response :redirect
     assert_redirected_to group_home_url(@group, wiki_id: wiki.id)
   end
-
 end

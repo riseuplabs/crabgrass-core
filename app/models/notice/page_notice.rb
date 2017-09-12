@@ -1,13 +1,12 @@
 require 'cgi'
 
 class Notice::PageNotice < Notice
-
   alias_attr :page, :noticable
   attr_accessor :message
   attr_accessor :from
 
   class << self
-    alias_method :for_page, :for_noticable
+    alias for_page for_noticable
 
     #
     # like normal create!, but optionally takes these additional args:
@@ -16,7 +15,7 @@ class Notice::PageNotice < Notice
     # * :message -- text message to send to users
     # * :from -- the user sending this notice
     #
-    def create!(args={})
+    def create!(args = {})
       if recipients = args.delete(:recipients)
         recipients.each do |user|
           create!(args.merge(user: user))
@@ -33,9 +32,9 @@ class Notice::PageNotice < Notice
 
   def display_title
     props = data.merge(
-      page_title: CGI::escapeHTML(data[:page_title]),
-      from: CGI::escapeHTML(data[:from]),
-      message: CGI::escapeHTML(data[:message])
+      page_title: CGI.escapeHTML(data[:page_title]),
+      from: CGI.escapeHTML(data[:from]),
+      message: CGI.escapeHTML(data[:message])
     )
     if !data[:message].empty?
       :page_notice_title_with_message.t(props).html_safe
@@ -68,12 +67,11 @@ class Notice::PageNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {message: message, from: from.name, page_title: page.title}
+    self.data = { message: message, from: from.name, page_title: page.title }
   end
 
   before_create :set_avatar
   def set_avatar
     self.avatar_id = from.avatar_id if from
   end
-
 end

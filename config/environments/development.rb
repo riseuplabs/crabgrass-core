@@ -1,5 +1,4 @@
 Crabgrass::Application.configure do
-
   ##
   ## STANDARD RAILS OPTIONS
   ##
@@ -9,8 +8,8 @@ Crabgrass::Application.configure do
   config.assets.compress = false
   config.assets.debug = true
   config.consider_all_requests_local = false
-  #config.action_view.debug_rjs                         = true
-  config.action_controller.perform_caching              = false
+  # config.action_view.debug_rjs                         = true
+  config.action_controller.perform_caching = false
   config.action_mailer.raise_delivery_errors = false
   config.log_level = Conf.log_level || :debug
 
@@ -28,7 +27,7 @@ Crabgrass::Application.configure do
   # This sets the default level to 0, which shows the high level
   # messages.
   #
-  ENV['INFO'] ||= "0"
+  ENV['INFO'] ||= '0'
 
   ##
   ## DEBUGGING

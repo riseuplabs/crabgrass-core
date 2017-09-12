@@ -12,7 +12,6 @@
 #
 
 module AjaxPending
-
   class Error < StandardError
     def initialize(requests)
       @reqs = requests
@@ -43,7 +42,7 @@ module AjaxPending
   #
   def wait_for_ajax
     page.document.synchronize Capybara.default_max_wait_time,
-      errors: [AjaxPending::Error] do
+                              errors: [AjaxPending::Error] do
       pending = pending_ajax
       raise AjaxPending::Error.new(pending) if pending.present?
     end
@@ -53,13 +52,13 @@ module AjaxPending
     # let's not worry about missing images
     pending_requests.reject do |req|
       req.url.include?('.png') or
-      req.url.include?('.jpg')
+        req.url.include?('.jpg')
     end
   end
 
   def pending_requests
     # If the setup of the test failed the driver might not be a js driver
     return [] unless page.driver.respond_to? :network_traffic
-    page.driver.network_traffic.select{|req| req.response_parts.blank?}
+    page.driver.network_traffic.select { |req| req.response_parts.blank? }
   end
 end

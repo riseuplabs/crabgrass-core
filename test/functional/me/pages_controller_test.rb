@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Me::PagesControllerTest < ActionController::TestCase
-
-
   def test_get_index_view
     login_as users(:blue)
     get :index
@@ -12,7 +10,7 @@ class Me::PagesControllerTest < ActionController::TestCase
   def test_list_pages
     login_as users(:blue)
     xhr :post, :index
-    assert !assigns(:pages).empty?, "blue should have some pages to render"
+    assert !assigns(:pages).empty?, 'blue should have some pages to render'
     assert_response :success
   end
 
@@ -26,20 +24,20 @@ class Me::PagesControllerTest < ActionController::TestCase
 
   def test_filter_by_own_pages
     login_as users(:blue)
-    xhr :post, :index, add: "owned-by-me"
+    xhr :post, :index, add: 'owned-by-me'
     assert_response :success
     assert pages = assigns(:pages)
     assert pages.any?
-    assert_nil pages.detect{|page| page.owner != users(:blue)}
+    assert_nil pages.detect { |page| page.owner != users(:blue) }
   end
 
   def test_filter_by_created_by_me
     login_as users(:blue)
-    xhr :post, :index, add: "created-by-me"
+    xhr :post, :index, add: 'created-by-me'
     assert_response :success
     assert pages = assigns(:pages)
-    assert !pages.empty?, "blue should have some own pages to render"
-    assert_nil pages.detect{|page| page.created_by != users(:blue)}
+    assert !pages.empty?, 'blue should have some own pages to render'
+    assert_nil pages.detect { |page| page.created_by != users(:blue) }
   end
 
   def test_list_page_with_long_title
@@ -53,5 +51,4 @@ class Me::PagesControllerTest < ActionController::TestCase
     assert assigns(:pages).include?(page)
     assert response.body.include?(expected), "Expected #{response.body} to include #{expected}."
   end
-
 end

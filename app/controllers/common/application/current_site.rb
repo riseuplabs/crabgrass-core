@@ -1,12 +1,9 @@
 module Common::Application::CurrentSite
-
   def self.included(base)
     base.class_eval do
       # make current_site available to the views
       helper_method :current_site
-      if Rails.env.test?
-        hide_action :disable_current_site, :enable_current_site
-      end
+      hide_action :disable_current_site, :enable_current_site if Rails.env.test?
     end
   end
 
@@ -36,5 +33,4 @@ module Common::Application::CurrentSite
       @current_site_disabled = false
     end
   end
-
 end

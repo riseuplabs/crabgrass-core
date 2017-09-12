@@ -11,8 +11,8 @@
 
 namespace :cg do
   namespace :upgrade do
-    desc "Complete upgrade to crabgrass 0.6"
-    task :to_0_6 => [
+    desc 'Complete upgrade to crabgrass 0.6'
+    task to_0_6: [
       'db:migrate',
       'cg:cleanup:remove_committees_without_parent',
       'cg:upgrade:init_group_permissions',
@@ -25,8 +25,8 @@ namespace :cg do
       'ts:index'
     ]
 
-    desc "Upgrade from 0.6.0 to crabgrass 0.6.2"
-    task :to_0_6_2 => [
+    desc 'Upgrade from 0.6.0 to crabgrass 0.6.2'
+    task to_0_6_2: [
       'db:migrate',
       'cg:upgrade:migrate_ratings_to_stars',
       'cg:upgrade:reset_star_counters'

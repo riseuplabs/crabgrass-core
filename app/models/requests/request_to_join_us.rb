@@ -6,17 +6,21 @@
 # created_by: person who sent the invite
 #
 class RequestToJoinUs < MembershipRequest
-
   validates_format_of :requestable_type, with: /Group/
   validates_format_of :recipient_type, with: /User/
 
   validate :no_membership_yet, on: :create
 
-  def group() requestable end
-  def user()  recipient end
+  def group
+    requestable
+  end
+
+  def user
+    recipient
+  end
 
   def may_create?(user)
-    user.may?(:admin,group)
+    user.may?(:admin, group)
   end
 
   def may_approve?(user)
@@ -32,15 +36,15 @@ class RequestToJoinUs < MembershipRequest
   end
 
   def description
-    [:request_to_join_us_description, {user: user_span(recipient), group: group_span(group)}]
+    [:request_to_join_us_description, { user: user_span(recipient), group: group_span(group) }]
   end
 
   def short_description
-    [:request_to_join_us_short, {user: user_span(recipient), group: group_span(group)}]
+    [:request_to_join_us_short, { user: user_span(recipient), group: group_span(group) }]
   end
 
   def icon_entity
-    self.recipient
+    recipient
   end
 
   protected
@@ -50,6 +54,4 @@ class RequestToJoinUs < MembershipRequest
       errors.add(:base, I18n.t(:membership_exists_error, member: recipient.name))
     end
   end
-
 end
-

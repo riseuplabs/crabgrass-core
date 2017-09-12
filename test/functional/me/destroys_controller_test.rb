@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class Me::DestroysControllerTest < ActionController::TestCase
-
-
   def setup
-    @user  = users(:blue)
+    @user = users(:blue)
   end
 
   def test_not_logged_in
@@ -29,9 +27,9 @@ class Me::DestroysControllerTest < ActionController::TestCase
   end
 
   def test_notification
-    notification_mock(:user_destroyed, username: @user.name).
-      expects(:create_notices_for).
-      with(@user.friends)
+    notification_mock(:user_destroyed, username: @user.name)
+      .expects(:create_notices_for)
+      .with(@user.friends)
 
     login_as @user
     post :update, scrub_name: 1
@@ -42,5 +40,4 @@ class Me::DestroysControllerTest < ActionController::TestCase
       Notification.expects(:new).with(*args).returns mock
     end
   end
-
 end

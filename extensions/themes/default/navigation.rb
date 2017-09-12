@@ -1,7 +1,6 @@
 
 
 define_navigation do
-
   ##
   ## HOME
 
@@ -48,39 +47,39 @@ define_navigation do
       icon   :page_white_copy
     end
 
-#    context_section :activities do
-#      label  { :activities.t }
-#      url    { me_activities_path }
-#      active { controller?('me/activities') }
-#      icon   :transmit
-#      local_section :all do
-#        label  "All Activities"
-#        url    { me_activities_path }
-#        active { controller?('me/activities') and params[:view].empty? }
-#      end
-#      local_section :my do
-#        label  "Mine"
-#        url    { me_activities_path(:view => 'my') }
-#        active { controller?('me/activities') and params[:view] == 'my' }
-#      end
-#      local_section :friends do
-#        label  "People"
-#        url    { me_activities_path(:view => 'friends') }
-#        active { controller?('me/activities') and params[:view] == 'friends' }
-#      end
-#      local_section :groups do
-#        label  "Groups"
-#        url    { me_activities_path(:view => 'groups') }
-#        active { controller?('me/activities') and params[:view] == 'groups' }
-#      end
-#    end
+    #    context_section :activities do
+    #      label  { :activities.t }
+    #      url    { me_activities_path }
+    #      active { controller?('me/activities') }
+    #      icon   :transmit
+    #      local_section :all do
+    #        label  "All Activities"
+    #        url    { me_activities_path }
+    #        active { controller?('me/activities') and params[:view].empty? }
+    #      end
+    #      local_section :my do
+    #        label  "Mine"
+    #        url    { me_activities_path(:view => 'my') }
+    #        active { controller?('me/activities') and params[:view] == 'my' }
+    #      end
+    #      local_section :friends do
+    #        label  "People"
+    #        url    { me_activities_path(:view => 'friends') }
+    #        active { controller?('me/activities') and params[:view] == 'friends' }
+    #      end
+    #      local_section :groups do
+    #        label  "Groups"
+    #        url    { me_activities_path(:view => 'groups') }
+    #        active { controller?('me/activities') and params[:view] == 'groups' }
+    #      end
+    #    end
 
-#    context_section :calendar do
-#      label  "Calendar"
-#      url    { me_events_path }
-#      active { controller?('me/events') }
-#      icon   :date
-#    end
+    #    context_section :calendar do
+    #      label  "Calendar"
+    #      url    { me_events_path }
+    #      active { controller?('me/events') }
+    #      icon   :date
+    #    end
 
     context_section :messages do
       label  { :messages.t }
@@ -148,9 +147,7 @@ define_navigation do
         url    { me_destroy_path }
         active { controller?('me/destroys') }
       end
-
     end
-
   end
 
   ##
@@ -161,7 +158,7 @@ define_navigation do
     label  { :people.t }
     url    controller: 'person/directory'
     active { controller?('person/') or (context?(:user) && visible_context?) }
-    html    partial: '/layouts/global/nav/people_menu'
+    html partial: '/layouts/global/nav/people_menu'
 
     context_section :no_context do
       visible { context?(:none) }
@@ -203,7 +200,6 @@ define_navigation do
       visible { current_user.may?(:view, @user) }
       active { page_controller? }
     end
-
   end
 
   ##
@@ -214,11 +210,11 @@ define_navigation do
     label  { :groups.t }
     url    { groups_directory_path }
     active { controller?('group/') or (context?(:group) && visible_context?) }
-    html    partial: '/layouts/global/nav/groups_menu'
+    html partial: '/layouts/global/nav/groups_menu'
 
     context_section :directory do
-      #visible { context?(:none) and controller?('group/directory') }
-      #active  { context?(:none) and controller?('group/directory') }
+      # visible { context?(:none) and controller?('group/directory') }
+      # active  { context?(:none) and controller?('group/directory') }
 
       visible { context?(:none) }
       active  { context?(:none) }
@@ -242,7 +238,6 @@ define_navigation do
         active  { controller?('group/groups') }
         icon    :plus
       end
-
     end
 
     context_section :home do
@@ -261,12 +256,12 @@ define_navigation do
       active { page_controller? }
     end
 
-#    context_section :calendar do
-#      label  { :calendar.t }
-#      url    { group_events_path(@group) }
-#      active { controller?('group/events') }
-#      icon   :date
-#    end
+    #    context_section :calendar do
+    #      label  { :calendar.t }
+    #      url    { group_events_path(@group) }
+    #      active { controller?('group/events') }
+    #      icon   :date
+    #    end
 
     context_section :members do
       visible { may_list_memberships? }
@@ -303,18 +298,17 @@ define_navigation do
         active  { controller?('group/membership_requests') }
       end
 
-      #local_section :leave_group_link do
+      # local_section :leave_group_link do
       #  visible { may_leave_group? }
       #  html    { leave_group_link }
-      #end
+      # end
 
-      #local_section :membership_settings do
+      # local_section :membership_settings do
       #  visible { may_edit_group? }
       #  label   { 'Membership Settings' }
       #  url     { group_permissions_path(@group, :view => 'membership') }
       #  active  false
-      #end
-
+      # end
     end
 
     context_section :settings do
@@ -372,17 +366,15 @@ define_navigation do
   ## GROUPS DIRECTORY
   ##
 
-#  global_section :group_directory do
-#    visible { @group.nil? }
-#    label  "Groups"
-#    url    { groups_directory_path }
-#    active { controller?('groups') }
-#    html   :partial => '/layouts/global/nav/groups_menu'
-##    section :place do
-##    end
-##    section :location do
-##    end
-#  end
-
+  #  global_section :group_directory do
+  #    visible { @group.nil? }
+  #    label  "Groups"
+  #    url    { groups_directory_path }
+  #    active { controller?('groups') }
+  #    html   :partial => '/layouts/global/nav/groups_menu'
+  ##    section :place do
+  ##    end
+  ##    section :location do
+  ##    end
+  #  end
 end
-

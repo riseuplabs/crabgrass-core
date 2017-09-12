@@ -2,7 +2,6 @@
 module Juixe
   module Acts #:nodoc:
     module Rateable #:nodoc:
-
       def self.included(base)
         base.extend ClassMethods
       end
@@ -23,9 +22,8 @@ module Juixe
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
 
           Rating.find(:all,
-            conditions: ["rateable_id = ? and rateable_type = ?", obj.id, rateable],
-            order: "created_at DESC"
-          )
+                      conditions: ['rateable_id = ? and rateable_type = ?', obj.id, rateable],
+                      order: 'created_at DESC')
         end
 
         # Helper class method to lookup ratings for
@@ -35,9 +33,8 @@ module Juixe
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
 
           Rating.find(:all,
-            conditions: ["user_id = ? and rateable_type = ?", user.id, rateable],
-            order: "created_at DESC"
-          )
+                      conditions: ['user_id = ? and rateable_type = ?', user.id, rateable],
+                      order: 'created_at DESC')
         end
 
         # Helper class method to lookup rateable instances
@@ -45,13 +42,12 @@ module Juixe
         def find_by_rating(rating)
           rateable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
           ratings = Rating.find(:all,
-            conditions: ["rating = ? and rateable_type = ?", rating, rateable],
-            order: "created_at DESC"
-          )
+                                conditions: ['rating = ? and rateable_type = ?', rating, rateable],
+                                order: 'created_at DESC')
           rateables = []
-          ratings.each { |r|
+          ratings.each do |r|
             rateables << r.rateable
-          }
+          end
           rateables.uniq!
         end
       end
@@ -67,12 +63,10 @@ module Juixe
         #
         def rating
           average = 0.0
-          ratings.each { |r|
-            average = average + r.rating if r.rating
-          }
-          if ratings.size != 0
-            average = average / ratings.size
+          ratings.each do |r|
+            average += r.rating if r.rating
           end
+          average /= ratings.size unless ratings.empty?
           average
         end
 
@@ -80,9 +74,9 @@ module Juixe
         def rated_by_user?(user)
           rtn = false
           if user
-            self.ratings.each { |b|
+            ratings.each do |b|
               rtn = true if user.id == b.user_id
-            }
+            end
           end
           rtn
         end

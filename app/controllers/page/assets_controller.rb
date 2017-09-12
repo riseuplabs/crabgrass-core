@@ -1,5 +1,4 @@
 class Page::AssetsController < Page::SidebarsController
-
   helper 'page/assets'
 
   def index
@@ -21,13 +20,10 @@ class Page::AssetsController < Page::SidebarsController
 
   def fetch_page
     super
-    if @page and params[:id]
-      @asset = @page.assets.find_by_id params[:id]
-    end
+    @asset = @page.assets.find_by_id params[:id] if @page and params[:id]
   end
 
   def asset_params
     params.require(:asset).permit(:uploaded_data)
   end
-
 end

@@ -14,7 +14,6 @@
 # * Networks show up under the networks tab instead of the groups tab.
 #
 class Group::Network < Group
-
   has_many :federatings, dependent: :destroy
   has_many :groups, through: :federatings
 
@@ -40,42 +39,41 @@ class Group::Network < Group
   end
 
   def add_initial_member_group
-    if @initial_member_group and not @initial_member_group.member_of? self
+    if @initial_member_group and !@initial_member_group.member_of? self
       add_group!(@initial_member_group)
     end
   end
 
   # only this method should be used for adding groups to a network
-  def add_group!(group, delegation=nil)
-    self.federatings.create!(group: group, delegation: delegation, council: council)
+  def add_group!(group, delegation = nil)
+    federatings.create!(group: group, delegation: delegation, council: council)
     group.org_structure_changed
     group.save!
-    Group.increment_counter(:version, self.id) # in case self is not saved
+    Group.increment_counter(:version, id) # in case self is not saved
     self.version += 1 # in case self is later saved
   end
 
   # only this method should be used for removing groups from a network
   def remove_group!(group)
-    self.federatings.detect{|f|f.group_id == group.id}.destroy
+    federatings.detect { |f| f.group_id == group.id }.destroy
     group.org_structure_changed
     group.save!
-    Group.increment_counter(:version, self.id) # in case self is not saved
+    Group.increment_counter(:version, id) # in case self is not saved
     self.version += 1 # in case self is later saved
   end
 
   # Whenever the organizational structure of this network has changed
   # this function should be called. Afterward, a save is required.
-  def org_structure_changed(child=nil)
+  def org_structure_changed(child = nil)
     User.clear_membership_cache(user_ids)
     self.version += 1
-    self.groups.each do |group|
+    groups.each do |group|
       group.org_structure_changed(child)
       group.save!
     end
   end
 
   def all_users
-    groups.collect{|group| group.all_users}.flatten.uniq
+    groups.collect(&:all_users).flatten.uniq
   end
 end
-

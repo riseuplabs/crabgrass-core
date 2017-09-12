@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'rubygems'
 begin
   require 'byebug'
-rescue LoadError  # ruby < 2.0.0
+rescue LoadError # ruby < 2.0.0
   require 'debugger'
 end
 require 'logger'
@@ -22,15 +22,15 @@ require 'rails/engine'
 #   ruby test/tests.rb --rebuild
 #
 
-TEST_OPTIONS = {}
+TEST_OPTIONS = {}.freeze
 OptionParser.new do |opts|
-  opts.banner = "Usage: ruby test/tests.rb [options]"
+  opts.banner = 'Usage: ruby test/tests.rb [options]'
   # set to true if schema changes.
-  opts.on("-b", "--rebuild", "Rebuild schema") do |b|
+  opts.on('-b', '--rebuild', 'Rebuild schema') do |b|
     TEST_OPTIONS[:rebuild] = b
   end
   # set to true if fixtures changes.
-  opts.on("-r", "--reload", "Reload fixtures") do |r|
+  opts.on('-r', '--reload', 'Reload fixtures') do |r|
     TEST_OPTIONS[:reload] = r
   end
 end.parse!
@@ -57,4 +57,3 @@ elsif TEST_OPTIONS[:reload]
   reset_db
   create_fixtures
 end
-

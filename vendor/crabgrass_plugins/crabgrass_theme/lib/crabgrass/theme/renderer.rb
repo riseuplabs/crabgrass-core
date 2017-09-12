@@ -3,7 +3,6 @@
 ##
 
 module Crabgrass::Theme::Renderer
-
   public
 
   # returns rendered css from a sass source file
@@ -24,7 +23,7 @@ module Crabgrass::Theme::Renderer
   # print out a nice error message if anything goes wrong
   def error_response(exception)
     txt = []
-    txt << "<html><body>"
+    txt << '<html><body>'
     txt << "<h2>#{exception}</h2>"
     txt << "<blockquote>Line number: #{exception.sass_line}<br/>"
     txt << "File: #{exception.sass_filename}</blockquote>"
@@ -34,7 +33,7 @@ module Crabgrass::Theme::Renderer
     if exception.sass_template
       print_sass_source(txt, exception.sass_template.split("\n"))
     end
-    txt << "</body></html>"
+    txt << '</body></html>'
     txt.join("\n")
   end
 
@@ -42,12 +41,12 @@ module Crabgrass::Theme::Renderer
 
   def print_sass_source(txt, data)
     line_number = 1
-    txt << "<pre>"
+    txt << '<pre>'
     data.each do |line|
-      txt << "%4.i  %s" % [line_number, line]
+      txt << format('%4.i  %s', line_number, line)
       line_number += 1
     end
-    txt << "</pre>"
+    txt << '</pre>'
   end
 
   # takes a sass file, and prepends the variable declarations for this theme.
@@ -56,20 +55,20 @@ module Crabgrass::Theme::Renderer
   def generate_sass_text(file)
     # reload_theme_if_needed
     sass = []
-    sass << '// VARIABLES FROM %s' % @directory
-    data.collect do |key,value|
+    sass << format('// VARIABLES FROM %s', @directory)
+    data.collect do |key, value|
       if skip_variable?(key)
         next
       elsif special_variable?(key) and value
         sass += handle_special_variable(key, value)
       else
-        sass << handle_normal_variable(key,value)
+        sass << handle_normal_variable(key, value)
       end
     end
-    sass << ""
-    sass << '// FILE FROM %s' % sass_source_path(file)
+    sass << ''
+    sass << format('// FILE FROM %s', sass_source_path(file))
     begin
-      sass << File.read( sass_source_path(file) )
+      sass << File.read(sass_source_path(file))
     rescue Errno::ENOENT => e
       sass << "// ERROR: #{e}"
     end
@@ -77,7 +76,7 @@ module Crabgrass::Theme::Renderer
       sass << '// CUSTOM CSS FROM THEME'
       sass << @style
     end
-    return sass.join("\n")
+    sass.join("\n")
   end
 
   #
@@ -134,11 +133,11 @@ module Crabgrass::Theme::Renderer
     key.to_s =~ /_html$/
   end
 
-  def handle_normal_variable(key,value)
+  def handle_normal_variable(key, value)
     if quote_sass_variable?(value)
-      '$%s: "%s";' % [key,value]
+      format('$%s: "%s";', key, value)
     else
-      '$%s: %s;' % [key,value]
+      format('$%s: %s;', key, value)
     end
   end
 
@@ -147,25 +146,22 @@ module Crabgrass::Theme::Renderer
     if mixin_variable?(key)
       sass << "@mixin #{key} {"
       sass << value
-      sass << "}"
-      sass << '$%s: true;' % key
+      sass << '}'
+      sass << format('$%s: true;', key)
     elsif shadow_variable?(key)
-      unless value.is_a? Array
-        value = [value]
-      end
+      value = [value] unless value.is_a? Array
       sass << "@mixin #{key} {"
       value.each do |args|
-        border = "%s %s %s %s %s" % [(args[:inset] ? 'inset' : ''), (args[:x]||'1px'), (args[:y]||'1px'), (args[:blur]||'4px'), (args[:color]||'#333')]
+        border = format('%s %s %s %s %s', (args[:inset] ? 'inset' : ''), (args[:x] || '1px'), (args[:y] || '1px'), (args[:blur] || '4px'), (args[:color] || '#333'))
         sass << "-webkit-box-shadow: #{border};"
         sass << "-moz-box-shadow: #{border};"
         sass << "box-shadow: #{border};"
       end
-      sass << "}"
-      sass << '$%s: true;' % key
+      sass << '}'
+      sass << format('$%s: true;', key)
     end
-    return sass
+    sass
   end
-
 
   # given a css sheet name, return the corresponding sass file
   # e.g.
@@ -180,7 +176,7 @@ module Crabgrass::Theme::Renderer
   #   'screen' => '/usr/apps/crabgrass/public/theme/default/screen.css'
 
   def css_destination_path(sheet_name)
-    File.join(@public_directory, sheet_name.empty? ? "" : sheet_name + '.css')
+    File.join(@public_directory, sheet_name.empty? ? '' : sheet_name + '.css')
   end
 
   # http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#options
@@ -194,5 +190,4 @@ module Crabgrass::Theme::Renderer
       cache: false
     }
   end
-
 end

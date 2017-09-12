@@ -1,5 +1,4 @@
 class AssignPollsToVotes < ActiveRecord::Migration
-
   def self.up
     Possible.connection.execute <<-EOSQL
       UPDATE votes, possibles

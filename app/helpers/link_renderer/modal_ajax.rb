@@ -1,5 +1,4 @@
 class LinkRenderer::ModalAjax < LinkRenderer::Ajax
-
   protected
 
   def link_options(page)
@@ -8,10 +7,8 @@ class LinkRenderer::ModalAjax < LinkRenderer::Ajax
     # with two xhr request types - one for the initial loading of the modal and
     # one for pagination.
     options = { url: url_for(page),
-      method: :get,
-      loading: @template.show_spinner(spinner_id),
-      update: 'MB_content' }
+                method: :get,
+                loading: @template.show_spinner(spinner_id),
+                update: 'MB_content' }
   end
-
 end
-

@@ -5,7 +5,6 @@
 # Page owns a single Discussion.
 #
 module Page::Comments
-
   def self.included(base)
     base.instance_eval do
       has_one :discussion, dependent: :destroy
@@ -15,11 +14,11 @@ module Page::Comments
 
   public
 
-  def posts(pagination_options={})
-    return [] unless self.discussion
+  def posts(pagination_options = {})
+    return [] unless discussion
     pagination_options[:per_page] ||= Conf.pagination_size
     pagination_options[:page] ||= discussion.last_page
-    self.discussion.posts.includes(:user).paginate(pagination_options)
+    discussion.posts.includes(:user).paginate(pagination_options)
   end
 
   def add_post(user, post_attributes)
@@ -32,7 +31,7 @@ module Page::Comments
   #
   # use Post.create! instead.
   #
-  #def build_post(post,user)
+  # def build_post(post,user)
   #  # this looks like overkill, but it seems to be needed
   #  # in order to build the post in memory and have it saved when
   #  # (possibly new) pages is saved
@@ -47,8 +46,7 @@ module Page::Comments
   #  post.page_terms = self.page_terms
   #  association_will_change(:posts)
   #  return post
-  #end
+  # end
 
   protected
-
 end

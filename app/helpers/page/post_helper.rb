@@ -1,5 +1,4 @@
 module Page::PostHelper
-
   protected
 
   ##
@@ -21,5 +20,4 @@ module Page::PostHelper
   def posts_path(*args)
     page_posts_path(@page, *args)
   end
-
 end

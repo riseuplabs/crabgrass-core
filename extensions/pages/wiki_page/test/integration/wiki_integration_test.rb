@@ -13,18 +13,18 @@ class WikiIntegrationTest < JavascriptIntegrationTest
 
   def test_writing_initial_version
     visit_page
-    assert_page_tab "Edit"
+    assert_page_tab 'Edit'
     content = update_wiki
     assert_content content
-    assert_page_tab "Show"
-    assert_success "Changes saved"
+    assert_page_tab 'Show'
+    assert_success 'Changes saved'
   end
 
   def test_cancel_edit
     visit_page
-    assert_page_tab "Edit"
+    assert_page_tab 'Edit'
     click_button 'Cancel'
-    assert_page_tab "Show"
+    assert_page_tab 'Show'
   end
 
   def test_format_help
@@ -44,11 +44,11 @@ class WikiIntegrationTest < JavascriptIntegrationTest
       versions << update_wiki
       assert_content versions.last
     end
-    click_page_tab "Versions"
+    click_page_tab 'Versions'
     assert_wiki_unlocked
-    assert_no_content "Version 3"
-    find("span.b", text: "2").click
-    clicking "previous" do
+    assert_no_content 'Version 3'
+    find('span.b', text: '2').click
+    clicking 'previous' do
       assert_selector 'ins', text: versions.pop
       assert_selector 'del', text: versions.last if versions.last.present?
     end
@@ -56,14 +56,14 @@ class WikiIntegrationTest < JavascriptIntegrationTest
 
   def test_wiki_toc
     visit_page
-    content = update_wiki <<-EOWIKI
-[[toc]]
+    content = update_wiki <<-EOWIKI.strip_heredoc
+      [[toc]]
 
-h1. test table of content
+      h1. test table of content
 
-h2. with nested section
+      h2. with nested section
 
-and some content
+      and some content
     EOWIKI
     assert_content 'table of content'
     assert_selector 'li.toc1'
@@ -71,23 +71,23 @@ and some content
 
   def test_section_editing
     visit_page
-    content = update_wiki <<-EOWIKI
-h2. section to keep
+    content = update_wiki <<-EOWIKI.strip_heredoc
+      h2. section to keep
 
-kept content
+      kept content
 
-h2. section to edit
+      h2. section to edit
 
-with content
+      with content
     EOWIKI
-    update_section "section to edit", <<-EOSEC
-h2. edited section
+    update_section 'section to edit', <<-EOSEC.strip_heredoc
+      h2. edited section
 
-with content
+      with content
     EOSEC
-    assert_selector "h2", text: 'edited section'
-    assert_no_selector "h2", text: 'section to edit'
-    assert_selector "h2", text: 'section to keep'
+    assert_selector 'h2', text: 'edited section'
+    assert_no_selector 'h2', text: 'section to edit'
+    assert_selector 'h2', text: 'section to keep'
   end
 
   def visit_page
@@ -103,11 +103,10 @@ with content
 
   def assert_wiki_unlocked
     request_urls = page.driver.network_traffic.map(&:url)
-    assert request_urls.detect{|u| u.end_with? '/lock'}.present?
+    assert request_urls.detect { |u| u.end_with? '/lock' }.present?
     # the unlock request is triggered from onbeforeunload.
     # So the response will never be registered by the page.
     # In order to prevent the check for pending ajax from failing...
     page.driver.clear_network_traffic
   end
-
 end

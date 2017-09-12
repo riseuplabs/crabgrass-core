@@ -2,7 +2,6 @@
 # they should override these methods for special behavior
 
 module Common::Application::PaginationOptions
-
   def self.included(base)
     base.class_eval do
       helper_method :pagination_params
@@ -24,7 +23,7 @@ module Common::Application::PaginationOptions
     page = opts[:page] || params[:page] || pagination_default_page
     per_page = opts[:per_page]
 
-    {page: page, per_page: per_page }
+    { page: page, per_page: per_page }
   end
 
   #
@@ -40,12 +39,11 @@ module Common::Application::PaginationOptions
         LinkRenderer::Pages
       end
     elsif request.xhr?
-      (request.format == :html) ?
+      request.format == :html ?
         LinkRenderer::ModalAjax :
         LinkRenderer::Ajax
     else
       LinkRenderer::Dispatch
     end
   end
-
 end

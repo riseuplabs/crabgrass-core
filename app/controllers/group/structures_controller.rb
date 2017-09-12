@@ -1,12 +1,11 @@
 class Group::StructuresController < Group::SettingsController
   include Common::Tracking::Action
 
-  guard :may_edit_group_structure?, actions: [:new, :create, :destroy]
+  guard :may_edit_group_structure?, actions: %i[new create destroy]
 
   track_actions :create
 
-  def show
-  end
+  def show; end
 
   def new
     @committee = group_class.new
@@ -29,18 +28,18 @@ class Group::StructuresController < Group::SettingsController
 
   def group_type
     case params[:type]
-      when 'committee' then :committee
-      when 'council' then :council
-      else raise 'error'
+    when 'committee' then :committee
+    when 'council' then :council
+    else raise 'error'
     end
   end
   helper_method :group_type
 
   def group_class
     case group_type
-      when :council then Group::Council
-      when :committee then Group::Committee
-      else raise 'error'
+    when :council then Group::Council
+    when :committee then Group::Committee
+    else raise 'error'
     end
   end
 

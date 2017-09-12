@@ -1,10 +1,9 @@
 require 'test_helper'
 
 class Wiki::WikisControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user!(@user)
   end
 
@@ -25,7 +24,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
 
   def test_edit_locked
     @wiki = create_profile_wiki
-    other_user  = FactoryGirl.create(:user)
+    other_user = FactoryGirl.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
@@ -43,11 +42,11 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        id: @wiki.id,
-        wiki: {body: '*updated*', version: 1},
-        save: true
+          id: @wiki.id,
+          wiki: { body: '*updated*', version: 1 },
+          save: true
     end
-    assert_equal "<p><strong>updated</strong></p>", @wiki.reload.body_html
+    assert_equal '<p><strong>updated</strong></p>', @wiki.reload.body_html
   end
 
   def test_update_page_wiki
@@ -55,11 +54,11 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        id: @wiki.id,
-        wiki: {body: '*updated*', version: 1},
-        save: true
+          id: @wiki.id,
+          wiki: { body: '*updated*', version: 1 },
+          save: true
     end
-    assert_equal "<p><strong>updated</strong></p>", @wiki.reload.body_html
+    assert_equal '<p><strong>updated</strong></p>', @wiki.reload.body_html
     assert_equal @user.login, @wiki.page.updated_by_login
   end
 
@@ -69,13 +68,13 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     former = @wiki.body_html
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        id: @wiki.id,
-        wiki: {body: '*updated*', version: 1},
-        cancel: true
+          id: @wiki.id,
+          wiki: { body: '*updated*', version: 1 },
+          cancel: true
     end
     assert_equal former, @wiki.reload.body_html
-    assert !(@user.login == @wiki.page.updated_by_login),
-      'cancel should not set updated_by'
+    assert @user.login != @wiki.page.updated_by_login,
+           'cancel should not set updated_by'
   end
 
   def test_show_private_group_wiki
@@ -122,14 +121,14 @@ class Wiki::WikisControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'wikis/_edit'
     assert_equal 'text/javascript', @response.content_type
-    markup = <<-EOM
-h2. section one
+    markup = <<-EOM.strip_heredoc
+      h2. section one
 
-one
+      one
 
-h3. section one A
+      h3. section one A
 
-one A
+      one A
 
     EOM
     assert_equal markup, assigns['body']
@@ -141,7 +140,7 @@ one A
 
   def test_edit_locked_section
     @wiki = create_profile_wiki
-    other_user  = FactoryGirl.create(:user)
+    other_user = FactoryGirl.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
@@ -159,22 +158,22 @@ one A
     login_as @user
     assert_permission :may_edit_wiki? do
       xhr :post, :update,
-        id: @wiki.id, section: 'section-one',
-        wiki: {body: '*updated*', version: 1},
-        save: true
+          id: @wiki.id, section: 'section-one',
+          wiki: { body: '*updated*', version: 1 },
+          save: true
     end
     # this is an xhr so we just render the wiki in place
     assert_response :success
-    changed_body = <<-EOB
-*updated*
+    changed_body = <<-EOB.strip_heredoc
+      *updated*
 
-h2. section two
+      h2. section two
 
-two
+      two
 
-h1. big section
+      h1. big section
 
-biggie
+      biggie
     EOB
     assert_equal changed_body, @wiki.reload.body
   end
@@ -182,7 +181,7 @@ biggie
   def create_page_wiki
     owner = FactoryGirl.create :user
     @page = FactoryGirl.build :wiki_page, owner: owner
-    @page.data = Wiki.new(user: owner, body: "")
+    @page.data = Wiki.new(user: owner, body: '')
     @page.save
     @page.wiki.save
     @page.add(@user, access: :edit).save!
@@ -193,25 +192,23 @@ biggie
     if private
       @group.profiles.private.create_wiki body: 'private'
     else
-      @group.profiles.public.create_wiki body: <<-EOB
-h2. section one
+      @group.profiles.public.create_wiki body: <<-EOB.strip_heredoc
+        h2. section one
 
-one
+        one
 
-h3. section one A
+        h3. section one A
 
-one A
+        one A
 
-h2. section two
+        h2. section two
 
-two
+        two
 
-h1. big section
+        h1. big section
 
-biggie
+        biggie
       EOB
     end
   end
-
-
 end

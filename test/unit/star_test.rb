@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class StarTest < ActiveSupport::TestCase
-
   def setup
     @post = FactoryGirl.create :post
     @user = FactoryGirl.create :user

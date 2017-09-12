@@ -9,7 +9,6 @@
 #
 
 class CronController < ActionController::Base
-
   before_filter :allow_only_requests_from_localhost
 
   def run
@@ -33,9 +32,6 @@ class CronController < ActionController::Base
   # this seems reasonable.
   #
   def allow_only_requests_from_localhost
-    unless request.remote_addr == '127.0.0.1'
-      render plain: 'not allowed'
-    end
+    render plain: 'not allowed' unless request.remote_addr == '127.0.0.1'
   end
-
 end

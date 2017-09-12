@@ -1,6 +1,6 @@
 class ChangePreferredEditorDefault < ActiveRecord::Migration
   def self.up
-    execute "ALTER TABLE `user_settings` MODIFY COLUMN `preferred_editor` TINYINT DEFAULT NULL;"
+    execute 'ALTER TABLE `user_settings` MODIFY COLUMN `preferred_editor` TINYINT DEFAULT NULL;'
   end
 
   def self.down

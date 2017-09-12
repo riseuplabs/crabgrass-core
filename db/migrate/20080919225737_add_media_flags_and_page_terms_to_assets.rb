@@ -3,14 +3,14 @@ class AddMediaFlagsAndPageTermsToAssets < ActiveRecord::Migration
     add_column :page_terms, :media, :string
 
     add_column :assets, :page_terms_id, :integer
-    add_column :assets, :is_attachment, :boolean, :default => false
+    add_column :assets, :is_attachment, :boolean, default: false
     add_column :assets, :is_image, :boolean
     add_column :assets, :is_audio, :boolean
     add_column :assets, :is_video, :boolean
     add_column :assets, :is_document, :boolean
     add_column :assets, :updated_at, :datetime
 
-    add_index :assets, ["page_terms_id"], :name => "pterms"
+    add_index :assets, ['page_terms_id'], name: 'pterms'
 
     ThinkingSphinx.updates_enabled = false
     ActiveRecord::Base.record_timestamps = false
@@ -39,4 +39,3 @@ class AddMediaFlagsAndPageTermsToAssets < ActiveRecord::Migration
     remove_column :assets, :is_document
   end
 end
-

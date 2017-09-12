@@ -5,7 +5,7 @@ class RemoveLocksFromWikis < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :wikis, :lock_version, :integer, :default => 0
+    add_column :wikis, :lock_version, :integer, default: 0
     add_column :wikis, :edit_locks, :text
   end
 end

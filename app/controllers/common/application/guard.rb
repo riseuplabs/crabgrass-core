@@ -6,9 +6,7 @@
 #
 # See the +guard+ method for details.
 
-
 module Common::Application::Guard
-
   ACTION_ALIASES = HashWithIndifferentAccess.new(update: :edit,
                                                  new: :create)
 
@@ -47,7 +45,7 @@ module Common::Application::Guard
 
     def permission_for_action(action)
       method = action_map[action]
-      if !method
+      unless method
         if Rails.env.development?
           raise ArgumentError.new("No Permission defined for #{action}")
         end
@@ -68,20 +66,20 @@ module Common::Application::Guard
       if actions = options[:actions]
         action_map.merge!(build_action_map(method, actions))
       else
-        action_map.default=method
+        action_map.default = method
       end
     end
 
     def build_action_map(method, actions)
       actions = [actions] unless actions.is_a? Array
-      Hash[actions.map{|action| [action, method]}]
+      Hash[actions.map { |action| [action, method] }]
     end
 
     def replace_wildcards(method, action)
       return method if method.is_a? Proc
       string = method.to_s
-      string.sub!("ACTION", action.to_s)
-      string.sub!("ALIAS", (ACTION_ALIASES[action] || action).to_s)
+      string.sub!('ACTION', action.to_s)
+      string.sub!('ALIAS', (ACTION_ALIASES[action] || action).to_s)
       string.to_sym
     end
 

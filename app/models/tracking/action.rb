@@ -1,5 +1,4 @@
 module Tracking::Action
-
   EVENT_CREATES_ACTIVITIES = {
     create_group: ['Activity::GroupCreated', 'Activity::UserCreatedGroup'],
     create_membership: ['Activity::GroupGainedUser', 'Activity::UserJoinedGroup'],
@@ -20,7 +19,7 @@ module Tracking::Action
     update_title: ['Page::History::ChangeTitle'],
     update_wiki: ['Page::History::UpdatedContent'],
     create_star: ['Notice::PostStarredNotice']
-  }
+  }.freeze
 
   def self.track(event, options = {})
     # Activities have keys to link the different activities for the same event
@@ -36,7 +35,7 @@ module Tracking::Action
   protected
 
   def self.filter_options_for_class(klass, options)
-    options.select do |k,v|
+    options.select do |k, _v|
       klass.attribute_method?("#{k}=") ||
         klass.method_defined?("#{k}=")
     end

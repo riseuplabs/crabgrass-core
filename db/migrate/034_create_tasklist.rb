@@ -7,10 +7,10 @@ class CreateTasklist < ActiveRecord::Migration
       t.column :name, :string
       t.column :description, :text
       t.column :description_html, :text
-      t.column :completed, :boolean, :default => false
+      t.column :completed, :boolean, default: false
       t.column :position, :integer
     end
-    create_table :tasks_users, :id => false do |t|
+    create_table :tasks_users, id: false do |t|
       t.column :user_id, :integer
       t.column :task_id, :integer
     end

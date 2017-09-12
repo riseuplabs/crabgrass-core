@@ -3,9 +3,9 @@
 class Tracking::Page < ActiveRecord::Base
   self.table_name = 'trackings'
 
-  #belongs_to :page
-  #belongs_to :group
-  #belongs_to :user
+  # belongs_to :page
+  # belongs_to :group
+  # belongs_to :user
 
   # Tracks the actions quickly. Following things can be tracked:
   # :current_user - user that was doing anything
@@ -20,7 +20,7 @@ class Tracking::Page < ActiveRecord::Base
   #   is not otherwise in use.
   # So it very much looks like premature optimization.
   #
-  def self.insert(things={})
+  def self.insert(things = {})
     return false if things.empty?
     execute(%(
       INSERT INTO trackings(current_user_id, page_id, group_id, user_id, views, edits, stars, tracked_at)
@@ -36,12 +36,11 @@ class Tracking::Page < ActiveRecord::Base
   ##
 
   def self.process
-    return if (count == 0)
+    return if count == 0
 
     unprocessed_since = last_processed_at
 
     lock_tables do
-
       ##
       ## update hourlies
       ##
@@ -106,7 +105,7 @@ class Tracking::Page < ActiveRecord::Base
       ))
       execute(%(DROP TEMPORARY TABLE user_view_counts))
 
-      self.delete_all
+      delete_all
     end
 
     # do this after unlocking tables just to try to minimize the amount of time tables are locked
@@ -147,7 +146,7 @@ class Tracking::Page < ActiveRecord::Base
     # for testing we need to be able to create old trackings...
     time = things[:time] || Time.now.utc
     time = connection.quote time.to_s(:db)
-    thing_ids = things.values_at(:current_user, :page, :group, :user).collect{|t| quoted_id(t)}
+    thing_ids = things.values_at(:current_user, :page, :group, :user).collect { |t| quoted_id(t) }
     thing_ids.concat [views, edits, stars, time]
   end
 
@@ -158,7 +157,7 @@ class Tracking::Page < ActiveRecord::Base
   def self.id_from(thing)
     if thing.nil?
       nil
-    elsif thing.is_a?(Fixnum)
+    elsif thing.is_a?(Integer)
       thing
     elsif thing.is_a?(ActiveRecord::Base)
       thing.id
@@ -171,17 +170,14 @@ class Tracking::Page < ActiveRecord::Base
     connection.execute(sql)
   end
 
-  def self.lock_tables(&block)
-    begin
-      execute("LOCK TABLES trackings WRITE, hourlies WRITE, memberships WRITE, relationships WRITE, user_participations WRITE")
-      yield
-    ensure
-      execute("UNLOCK TABLES")
-    end
+  def self.lock_tables
+    execute('LOCK TABLES trackings WRITE, hourlies WRITE, memberships WRITE, relationships WRITE, user_participations WRITE')
+    yield
+  ensure
+    execute('UNLOCK TABLES')
   end
 
   def self.last_processed_at
     order(:tracked_at).first.try.tracked_at || Time.now - 3.month
   end
-
 end

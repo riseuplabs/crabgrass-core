@@ -8,4 +8,3 @@ unless defined?(UNIT_TESTING)
   require 'haml'
   Haml.init_rails(binding)
 end
-

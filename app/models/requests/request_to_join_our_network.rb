@@ -4,7 +4,6 @@
 # created_by: person who sent the invite
 #
 class RequestToJoinOurNetwork < Request
-
   validates_format_of :requestable_type, with: /Group/
   validates_format_of :recipient_type, with: /Group/
 
@@ -13,15 +12,20 @@ class RequestToJoinOurNetwork < Request
   validate :group_is_not_network, unless: :approved?
   validate :group_is_not_network_committee, unless: :approved?
 
-  def network() requestable end
-  def group() recipient end
+  def network
+    requestable
+  end
+
+  def group
+    recipient
+  end
 
   def may_create?(user)
-    user.may?(:admin,network)
+    user.may?(:admin, network)
   end
 
   def may_approve?(user)
-    user.may?(:admin,group)
+    user.may?(:admin, group)
   end
 
   def may_destroy?(user)
@@ -37,15 +41,15 @@ class RequestToJoinOurNetwork < Request
   end
 
   def description
-    [:request_to_join_our_network_description, {group: group_span(group), network: group_span(network)}]
+    [:request_to_join_our_network_description, { group: group_span(group), network: group_span(network) }]
   end
 
   def short_description
-    [:request_to_join_our_network_short, {group: group_span(group), network: group_span(network)}]
+    [:request_to_join_our_network_short, { group: group_span(group), network: group_span(network) }]
   end
 
   def icon_entity
-    self.recipient
+    recipient
   end
 
   protected
@@ -63,9 +67,7 @@ class RequestToJoinOurNetwork < Request
   end
 
   def group_is_not_network
-    if group.network?
-      errors.add(:base, I18n.t(:networks_may_not_join_networks))
-    end
+    errors.add(:base, I18n.t(:networks_may_not_join_networks)) if group.network?
   end
 
   def group_is_not_network_committee
@@ -74,4 +76,3 @@ class RequestToJoinOurNetwork < Request
     end
   end
 end
-

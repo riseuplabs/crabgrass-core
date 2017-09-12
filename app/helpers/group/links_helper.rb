@@ -3,7 +3,6 @@
 #
 
 module Group::LinksHelper
-
   protected
 
   ##
@@ -11,7 +10,7 @@ module Group::LinksHelper
   ##
 
   def more_info_link
-    link_to("More Info", '#')
+    link_to('More Info', '#')
   end
 
   def edit_group_profile_link
@@ -37,18 +36,18 @@ module Group::LinksHelper
   def leave_group_link
     if may_leave_group?
       link_to :leave_group_link.t(group_type: @group.group_type),
-        group_my_membership_path(@group, current_user),
-        confirm: :leave_group_confirmation.t(group_type: @group.group_type),
-        method: :delete,
-        class: 'navi'
+              group_my_membership_path(@group, current_user),
+              confirm: :leave_group_confirmation.t(group_type: @group.group_type),
+              method: :delete,
+              class: 'navi'
     end
   end
 
   def directly_join_group_link
     link_to :join_group_link.t(group_type: @group.group_type),
-      group_my_memberships_path(@group),
-      confirm: :join_group_confirmation.t(group_type: @group.group_type),
-      method: :post
+            group_my_memberships_path(@group),
+            confirm: :join_group_confirmation.t(group_type: @group.group_type),
+            method: :post
   end
 
   def join_request_link
@@ -60,8 +59,8 @@ module Group::LinksHelper
       link_line :bullet, :request_exists.t, link_to(:show_thing.t(thing: :request.t), me_request_path(requested))
     else
       link_to :request_join_group_link.t(group_type: @group.group_type),
-        group_membership_requests_path(@group, type: 'join'),
-        method: 'post'
+              group_membership_requests_path(@group, type: 'join'),
+              method: 'post'
     end
   end
 
@@ -76,29 +75,25 @@ module Group::LinksHelper
   end
 
   def invite_link
-    if may_admin_group?
-      link_to(:send_invites.t, new_group_invite_path(@group))
-    end
+    link_to(:send_invites.t, new_group_invite_path(@group)) if may_admin_group?
   end
 
   def requests_link
-    if may_admin_group?
-      link_to(:view_requests.t, group_requests_path(@group))
-    end
+    link_to(:view_requests.t, group_requests_path(@group)) if may_admin_group?
   end
 
   def destroy_group_link
     if logged_in?
       if RequestToDestroyOurGroup.already_exists?(group: @group)
-        "" # i guess do nothing?
+        '' # i guess do nothing?
       elsif may_destroy_group?
         link_to_with_confirm(:destroy_thing.t(thing: @group.display_name),
-          {confirm: :destroy_confirmation.t(thing: @group.name),
-           url: direct_group_path(@group), method: :delete }, class: 'btn btn-danger')
+                             { confirm: :destroy_confirmation.t(thing: @group.name),
+                               url: direct_group_path(@group), method: :delete }, class: 'btn btn-danger')
       elsif may_create_destroy_request?
         link_to(:destroy_thing.t(thing: @group.display_name),
-          group_requests_path(@group, type: 'destroy_group'),
-          method: 'post', class: 'btn btn-danger')
+                group_requests_path(@group, type: 'destroy_group'),
+                method: 'post', class: 'btn btn-danger')
       end
     end
   end
@@ -117,8 +112,8 @@ module Group::LinksHelper
         link_to(:create_a_new_thing.t(thing: :council.t), new_group_council_path(@group))
       elsif may_create_council_request?
         link_to(:create_a_new_thing.t(thing: :council.t),
-          group_requests_path(@group, type: 'create_council'),
-          method: 'post')
+                group_requests_path(@group, type: 'create_council'),
+                method: 'post')
       end
     end
   end
@@ -131,13 +126,14 @@ module Group::LinksHelper
       leave_group_link
     elsif may_destroy_membership?(membership)
       confirm = :membership_destroy_confirm_message.t(
-        entity: content_tag(:b,membership.entity.name),
-        group: content_tag(:b,@group.name))
+        entity: content_tag(:b, membership.entity.name),
+        group: content_tag(:b, @group.name)
+      )
       link_to_remote(:remove.t,
-        {url: group_membership_path(@group, membership),
-        method: 'delete',
-        confirm: confirm},
-        icon: 'minus')
+                     { url: group_membership_path(@group, membership),
+                       method: 'delete',
+                       confirm: confirm },
+                     icon: 'minus')
     else
       if membership.entity.is_a? Group
         return 'not yet supported'
@@ -148,12 +144,12 @@ module Group::LinksHelper
 
       if req
         link_to :request_pending.t(request: req.class.model_name.human),
-          group_membership_request_path(@group, req)
+                group_membership_request_path(@group, req)
       elsif may_create_expell_request?(membership)
         link_to_remote(:remove.t,
-          {url: group_membership_requests_path(@group, type: 'destroy', entity: membership.entity.name),
-          method: 'post'},
-          icon: 'minus')
+                       { url: group_membership_requests_path(@group, type: 'destroy', entity: membership.entity.name),
+                         method: 'post' },
+                       icon: 'minus')
       end
     end
   end
@@ -171,10 +167,10 @@ module Group::LinksHelper
   ## TAGGING
   ##
 
-  def link_to_group_tag(tag,options)
-    options[:class] ||= ""
-    path = (params[:path]||[]).dup
-    name = tag.name.gsub(' ','+')
+  def link_to_group_tag(tag, options)
+    options[:class] ||= ''
+    path = (params[:path] || []).dup
+    name = tag.name.tr(' ', '+')
     if path.delete(name)
       options[:class] += ' invert'
     else
@@ -183,6 +179,4 @@ module Group::LinksHelper
     options[:title] = tag.name
     link_to tag.name, groups_url(action: 'tags') + '/' + path.join('/'), options
   end
-
 end
-

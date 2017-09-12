@@ -1,4 +1,4 @@
-$: << File.dirname(__FILE__) + '/../lib'
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 
 require 'rubygems'
 require 'active_support'
@@ -31,7 +31,6 @@ class Testr
       f.button '<input type="submit">Save</input>'
     end
   end
-
 
   def tabs
     formy(:tabs) do |f|
@@ -84,17 +83,14 @@ class Testr
   end
 
   def run
-    ['simple', 'tabs', 'horizontal', 'toggle_bugs'].each do |method|
+    %w[simple tabs horizontal toggle_bugs].each do |method|
       puts
-      puts '='*60
+      puts '=' * 60
       puts '== ' + method
       puts
-      puts self.send(method)
+      puts send(method)
     end
   end
-
 end
 
-
 Testr.new.run
-

@@ -1,12 +1,12 @@
 # MessagePage class has been deleted a while ago,
 class MessagePage < Page
-
   def convert
     turn_into_messages
     destroy
   end
 
   protected
+
   def turn_into_messages
     return unless discussion
     discussion.posts.each do |post|
@@ -14,11 +14,10 @@ class MessagePage < Page
     end
   end
 
-
   def create_message_from_post(post)
     text = post.body
     sender = post.user
-    receiver = users.detect {|u| u != sender}
+    receiver = users.detect { |u| u != sender }
 
     return if sender.blank? || receiver.blank? || text.blank?
 
@@ -26,7 +25,7 @@ class MessagePage < Page
     new_post = sender.send_message_to!(receiver, text)
 
     disable_timestamps
-    new_post.update_attributes({updated_at: post.updated_at, created_at: post.created_at})
+    new_post.update_attributes(updated_at: post.updated_at, created_at: post.created_at)
   ensure
     enable_timestamps
   end
@@ -40,5 +39,4 @@ class MessagePage < Page
     PrivatePost.record_timestamps = true
     Post.record_timestamps = true
   end
-
 end

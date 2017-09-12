@@ -1,6 +1,6 @@
 class AddHasNetworksToSite < ActiveRecord::Migration
   def self.up
-    add_column :sites, :has_networks, :boolean, :default => true
+    add_column :sites, :has_networks, :boolean, default: true
   end
 
   def self.down

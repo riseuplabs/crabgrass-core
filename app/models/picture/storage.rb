@@ -1,16 +1,15 @@
 class Picture::Storage
-
-  URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root,'public'),'')
+  URL_ROOT = PICTURE_PUBLIC_STORAGE.sub(File.join(Rails.root, 'public'), '')
 
   def initialize(picture)
     @picture = picture
   end
 
-  def private_path(geometry=nil)
+  def private_path(geometry = nil)
     File.join(private_directory, file_name(geometry))
   end
 
-  def public_path(geometry=nil)
+  def public_path(geometry = nil)
     File.join(public_directory, file_name(geometry))
   end
 
@@ -21,7 +20,7 @@ class Picture::Storage
   def dimensions(geometry)
     path = private_path(geometry)
     width, height = Media::GraphicsMagickTransmogrifier.dimensions(path)
-    [(width||0).to_i, (height||0).to_i]
+    [(width || 0).to_i, (height || 0).to_i]
   end
 
   def average_color
@@ -72,9 +71,7 @@ class Picture::Storage
   # this makes the picture private.
   #
   def remove_symlink
-    if File.exist?(public_directory)
-      FileUtils.rm(public_directory)
-    end
+    FileUtils.rm(public_directory) if File.exist?(public_directory)
   end
 
   protected
@@ -86,7 +83,7 @@ class Picture::Storage
   # e.g. id of 12345 produces ['0001','2345']
   #
   def directory
-    ("%08d" % @picture.id).scan(/..../)
+    format('%08d', @picture.id).scan(/..../)
   end
 
   #
@@ -116,12 +113,10 @@ class Picture::Storage
     Picture::Geometry[geometry].to_s + '.' + ext
   end
 
-
   #
   # returns the file extension suitable for this content_type
   #
   def ext
     Media::MimeType.extension_from_mime_type(@picture.content_type).to_s
   end
-
 end

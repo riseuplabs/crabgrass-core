@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Activity::Test < ActiveSupport::TestCase
-
   def setup
     @blue = users(:blue)
     @red = users(:red)
@@ -32,11 +31,11 @@ class Activity::Test < ActiveSupport::TestCase
     Tracking::Action.track :create_membership, group: @group, user: ruth
 
     assert_nil Activity::UserJoinedGroup.for_all(@red).find_by_subject_id(ruth.id),
-      "The new peers don't get UserJoinedGroupActivities."
+               "The new peers don't get UserJoinedGroupActivities."
 
     act = Activity::GroupGainedUser.for_all(@red).last
     assert_equal @group.id, act.group.id,
-      "New peers should get GroupGainedUserActivities."
+                 'New peers should get GroupGainedUserActivities.'
 
     act = Activity::GroupGainedUser.for_group(@group, ruth).last
     assert_equal Activity::GroupGainedUser, act.class
@@ -46,7 +45,6 @@ class Activity::Test < ActiveSupport::TestCase
     act = Activity::UserJoinedGroup.for_all(ruth).last
     assert_equal @group.id, act.group.id
   end
-
 
   ##
   ## Remove the user
@@ -76,7 +74,7 @@ class Activity::Test < ActiveSupport::TestCase
     assert_nil act.other_user
     assert_equal former_name, act.other_user_name
     assert_equal "<user>#{former_name}</user>",
-      act.user_span(:other_user)
+                 act.user_span(:other_user)
   end
 
   def test_avatar
@@ -84,7 +82,7 @@ class Activity::Test < ActiveSupport::TestCase
 
     @blue.add_contact!(@red, :friend)
     Tracking::Action.track :create_friendship, user: @blue, other_user: @red
-    @blue.send_message_to!(@red, "hi @red")
+    @blue.send_message_to!(@red, 'hi @red')
     new_group.add_user!(@blue)
     Tracking::Action.track :create_membership, group: new_group, user: @blue
 
@@ -95,13 +93,12 @@ class Activity::Test < ActiveSupport::TestCase
     # we do not create PrivatePost Activities anymore
     assert_nil post_act
 
-
     # the person doing the thing should be the avatar for it
     # disregarding whatever is the subject (in the gramatical/language sense) of the activity
     assert_equal @blue, friend_act.avatar
     assert_equal @blue, user_joined_act.avatar
     assert_equal @blue, group_gained_act.avatar
-    #assert_equal @blue, post_act.avatar
+    # assert_equal @blue, post_act.avatar
   end
 
   def test_associations
@@ -119,6 +116,4 @@ class Activity::Test < ActiveSupport::TestCase
   def assert_in_description(act, thing)
     assert_match thing.name, act.description
   end
-
 end
-

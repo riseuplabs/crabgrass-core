@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class GalleryToolTest < ActiveSupport::TestCase
-
   def setup
     setup_assets
     @user = FactoryGirl.create :user
@@ -35,12 +34,12 @@ class GalleryToolTest < ActiveSupport::TestCase
       another_asset = @gal.add_image!(uploaded_data: upload_data('image.png'))
     end
 
-    positions = @gal.images.collect{|image| image.id}
+    positions = @gal.images.collect(&:id)
     correct_new_positions = [positions.pop] + positions # move the last to the front
 
     @gal.sort_images(correct_new_positions)
 
-    new_positions = @gal.images(true).collect{|image| image.id}
+    new_positions = @gal.images(true).collect(&:id)
     assert_equal correct_new_positions, new_positions
   end
 
@@ -68,5 +67,4 @@ class GalleryToolTest < ActiveSupport::TestCase
     assert check_associations(Gallery)
     assert check_associations(Showing)
   end
-
 end

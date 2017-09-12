@@ -1,5 +1,4 @@
 module PageAssertions
-
   def assert_page_tags(tags)
     # split a string but not an array
     tags = tags.split(',') unless tags.respond_to? :each
@@ -28,9 +27,8 @@ module PageAssertions
 
   def assert_page_groups(*groups)
     assert_equal groups.map(&:display_name).join(' '),
-      find('#groups.names').text
+                 find('#groups.names').text
   end
-
 
   def assert_page_starred
     assert_selector '#star.star_16'

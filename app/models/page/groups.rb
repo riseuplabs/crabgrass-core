@@ -2,34 +2,28 @@
 # Page relationship to Groups
 #
 module Page::Groups
-
   def self.included(base)
     base.extend(ClassMethods)
     base.instance_eval do
-
       has_many :group_participations,
-        class_name: 'Group::Participation',
-        dependent: :destroy,
-        inverse_of: :page
+               class_name: 'Group::Participation',
+               dependent: :destroy,
+               inverse_of: :page
       has_many :groups, through: :group_participations
 
-      attr_accessor :groups_changed       # set to true of group_participations has changed.
+      attr_accessor :groups_changed # set to true of group_participations has changed.
     end
   end
-
 
   def self.for_group(group)
     ids = Group.namespace_ids(group.id)
-    joins(:group_participations).
-      where(group_participations: {group_id: ids})
+    joins(:group_participations)
+      .where(group_participations: { group_id: ids })
   end
-
 
   # returns the owner if the owner happens to be a group
   def group
-    if owner and owner.is_a? Group
-      owner
-    end
+    owner if owner and owner.is_a? Group
   end
 
   # When getting a list of ids of groups for this page,
@@ -37,7 +31,7 @@ module Page::Groups
   # current data even if a group is added and the page
   # has not yet been saved.
   def group_ids
-    group_participations.collect{|gpart|gpart.group_id}
+    group_participations.collect(&:group_id)
   end
 
   # returns an array of group ids that compose this page's namespace
@@ -45,6 +39,7 @@ module Page::Groups
   def namespace_group_ids
     Group.namespace_ids(group_ids)
   end
+
   def namespace_group_ids_sql
     namespace_group_ids.any? ? namespace_group_ids.join(',') : 'NULL'
   end
@@ -56,21 +51,22 @@ module Page::Groups
       gpart if group_ids.include? gpart.group_id
     end.compact
   end
+
   def participation_for_group(group)
-    group_participations.detect{|gpart| gpart.group_id == group.id}
+    group_participations.detect { |gpart| gpart.group_id == group.id }
   end
 
   # a list of the group participation objects, but sorted
   # by access (higher number is less access permissions)
   def sorted_group_participations
-    group_participations.sort do |a,b|
-      (a.access||100) <=> (b.access||100)
+    group_participations.sort do |a, b|
+      (a.access || 100) <=> (b.access || 100)
     end
   end
 
   def shared_with_all?
-    self.site.try.network and
-    !participation_for_group(self.site.try.network).nil?
+    site.try.network and
+      !participation_for_group(site.try.network).nil?
   end
 
   # returns all the groups with a particular access level
@@ -104,15 +100,15 @@ module Page::Groups
     #
     def month_counts(options)
       field = case options[:field]
-        when 'created' then 'created_at'
-        when 'updated' then 'updated_at'
-        else 'error'
+              when 'created' then 'created_at'
+              when 'updated' then 'updated_at'
+              else 'error'
       end
 
       sql = "SELECT MONTH(pages.#{field}) AS month, YEAR(pages.#{field}) AS year, count(pages.id) as page_count "
-      sql += "FROM pages JOIN page_terms ON pages.id = page_terms.page_id "
-      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND page_terms.flow IS NULL " % access_filter(options)
-      sql += "GROUP BY year, month ORDER BY year, month"
+      sql += 'FROM pages JOIN page_terms ON pages.id = page_terms.page_id '
+      sql += format("WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND page_terms.flow IS NULL ", access_filter(options))
+      sql += 'GROUP BY year, month ORDER BY year, month'
       Page.connection.select_all(sql)
     end
 
@@ -127,7 +123,7 @@ module Page::Groups
     #
     def tags_for_group(group, current_user)
       filter = access_filter(group: group, current_user: current_user)
-      ActsAsTaggableOn::Tag.find_by_sql(%Q[
+      ActsAsTaggableOn::Tag.find_by_sql(%[
         SELECT tags.*, count(name) as count
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
@@ -146,13 +142,11 @@ module Page::Groups
         Page::Terms.access_filter_for(group)
       elsif current_user
         # current_user can see public pages OR pages it has access to.
-        "(%s) (%s)" % [Page::Terms.access_filter_for(group, :public), Page::Terms.access_filter_for(group, current_user)]
+        format('(%s) (%s)', Page::Terms.access_filter_for(group, :public), Page::Terms.access_filter_for(group, current_user))
       else
         # only show public pages
         Page::Terms.access_filter_for(group, :public)
       end
     end
-
   end
-
 end

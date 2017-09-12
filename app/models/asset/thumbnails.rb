@@ -5,22 +5,21 @@ module Asset::Thumbnails
     class_attribute :class_thumbdefs
   end
 
-
   module ClassMethods
-    def define_thumbnails(thumbnail_definitions={})
+    def define_thumbnails(thumbnail_definitions = {})
       # inherit thumbdefs from super class but modify a dup
       # so changes to not get pushed up.
       # See http://martinciu.com/2011/07/difference-between-class_inheritable_attribute-and-class_attribute.html
       self.class_thumbdefs = (class_thumbdefs || {}).dup
       thumbnail_definitions.each do |name, data|
-        self.class_thumbdefs[name] = Asset::ThumbnailDefinition.new(name, data).freeze
+        class_thumbdefs[name] = Asset::ThumbnailDefinition.new(name, data).freeze
       end
-      self.class_thumbdefs.freeze
+      class_thumbdefs.freeze
     end
 
     # true if any thumbnails are defined for the class
     def thumbable?
-      self.class_thumbdefs.any?
+      class_thumbdefs.any?
     end
   end
 
@@ -31,6 +30,7 @@ module Asset::Thumbnails
   def thumbdefs
     @thumbdefs || class_thumbdefs
   end
+
   def thumbdefs=(newdefs)
     @thumbdefs = newdefs
   end
@@ -42,31 +42,31 @@ module Asset::Thumbnails
   end
 
   # returns the thumbnail with 'name'
-  def thumbnail(name, include_failures=false)
+  def thumbnail(name, include_failures = false)
     return unless name
     name = name.to_s
-    thumbnails.detect{|thumb|thumb.name == name and (thumb.ok? or include_failures)}
+    thumbnails.detect { |thumb| thumb.name == name and (thumb.ok? or include_failures) }
   end
 
   # returns the relative filename of a thumbnail given its name
   # thumbnail filenames always have a "_" (THUMBNAIL_SEPARATOR)
   # eg. thumbnail_filename(:small) --> "myfile_small.jpg"
   def thumbnail_filename(name)
-    return name if name =~ /#{THUMBNAIL_SEPARATOR}/  # we might have been passed an already resolved thumbnail_filename
+    return name if name =~ /#{THUMBNAIL_SEPARATOR}/ # we might have been passed an already resolved thumbnail_filename
     thumbdef = name if name.is_a? Asset::ThumbnailDefinition
     thumbdef ||= thumbdefs[name.to_sym]
     if thumbdef.nil?
-      return "#{self.basename}#{THUMBNAIL_SEPARATOR}#{name}.#{name}"
-    elsif thumbdef.proxy and thumbdef.mime_type == self.content_type
-      self.filename
+      return "#{basename}#{THUMBNAIL_SEPARATOR}#{name}.#{name}"
+    elsif thumbdef.proxy and thumbdef.mime_type == content_type
+      filename
     else
-      "#{self.basename}#{THUMBNAIL_SEPARATOR}#{thumbdef.name}.#{thumbdef.ext}" if thumbdef
+      "#{basename}#{THUMBNAIL_SEPARATOR}#{thumbdef.name}.#{thumbdef.ext}" if thumbdef
     end
   end
 
   # populate self.thumbnails
   def create_thumbnail_records
-    thumbdefs.each do |name,thumbdef|
+    thumbdefs.each do |_name, thumbdef|
       create_or_update_thumbnail(thumbdef)
     end
   end
@@ -90,7 +90,7 @@ module Asset::Thumbnails
   end
 
   # returns true if this asset may have a thumbnail of dest_type
-  def may_thumbnail?(dest_type='image/jpg')
+  def may_thumbnail?(dest_type = 'image/jpg')
     Media.may_produce?(content_type, dest_type)
   end
 
@@ -98,7 +98,7 @@ module Asset::Thumbnails
   def create_or_update_thumbnail(thumbdef)
     return unless may_thumbnail?(thumbdef.mime_type)
 
-    thumb = Thumbnail.find_or_init thumbdef.name, self.id, 'Asset'
+    thumb = Thumbnail.find_or_init thumbdef.name, id, 'Asset'
     # ^^^ self.type is on purpose (rather than self.class) because we
     # may have modified self.type
     thumb.content_type        = thumbdef.mime_type
@@ -109,13 +109,13 @@ module Asset::Thumbnails
 
   # predict the dimensions of a thumbnail before the thumbnail is actually rendered
   def guess_dimensions(size)
-    return unless self.height and self.width and size
+    return unless height and width and size
     target_width, target_height = size.split /[x>]/
     if size =~ />$/
-      ratio_width  = target_width.to_f/self.width
-      ratio_height = target_height.to_f/self.height
+      ratio_width  = target_width.to_f / width
+      ratio_height = target_height.to_f / height
       ratio = [ratio_width, ratio_height, 1].min
-      return [ (self.width * ratio).round, (self.height * ratio).round ]
+      return [(width * ratio).round, (height * ratio).round]
     else
       return [target_width, target_height]
     end
@@ -127,9 +127,8 @@ module Asset::Thumbnails
   def clone_thumbnails_from(orig_model)
     orig_model.thumbnails.each do |thumbnail|
       Thumbnail.clone thumbnail,
-        parent_id: self.id,
-        parent_type: 'Asset::Version'
+                      parent_id: id,
+                      parent_type: 'Asset::Version'
     end
   end
 end
-

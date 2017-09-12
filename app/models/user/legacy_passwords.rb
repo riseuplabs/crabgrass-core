@@ -24,7 +24,6 @@ module User::LegacyPasswords
   extend ActiveSupport::Concern
 
   module ClassMethods
-
     def authenticate(login, passwd)
       super.tap do |user|
         user.upgrade_password(passwd) if user && user.legacy_password?
@@ -34,7 +33,6 @@ module User::LegacyPasswords
     def legacy_hash(passwd, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{passwd}--")
     end
-
   end
 
   def authenticate(passwd)
@@ -68,7 +66,9 @@ module User::LegacyPasswords
     return if password_digest.present?
     return if salt.blank? || crypted_password.blank?
     # create a bcrypt digest of the old crypted_password keeping the salt
+    # rubocop:disable Style/ParallelAssignment
     self.password, self.salt = crypted_password, salt
+    # rubocop:enable Style/ParallelAssignment
     raise 'Could not create bcrypt digest' unless password_digest
     self.crypted_password = nil
     save if persisted?
@@ -91,5 +91,4 @@ module User::LegacyPasswords
     self.crypted_password = legacy_hash(password)
     self.password_digest = nil
   end
-
 end

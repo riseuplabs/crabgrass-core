@@ -7,7 +7,6 @@
 #
 
 class RequestToRemoveUser < Request
-
   validates_format_of :recipient_type,   with: /Group/
   validates_format_of :requestable_type, with: /User/
 
@@ -24,26 +23,26 @@ class RequestToRemoveUser < Request
 
   def may_create?(current_user)
     current_user.may?(:admin, group) and
-    current_user.longterm_member_of?(group)
+      current_user.longterm_member_of?(group)
   end
 
   def self.may_create?(options)
-    self.new(user: options[:user], group: options[:group]).may_create?(options[:current_user])
+    new(user: options[:user], group: options[:group]).may_create?(options[:current_user])
   end
 
   def may_approve?(current_user)
     current_user.may?(:admin, group) and
-    current_user.id != created_by_id and
-    current_user.id != user.id and
-    current_user.longterm_member_of?(group)
+      current_user.id != created_by_id and
+      current_user.id != user.id and
+      current_user.longterm_member_of?(group)
   end
 
   def may_destroy?(current_user)
     current_user.may?(:admin, group) and
-    current_user.id != user.id
+      current_user.id != user.id
   end
 
-  alias_method :may_view?, :may_create?
+  alias may_view? may_create?
 
   def after_approval
     group.remove_user!(user)
@@ -68,7 +67,7 @@ class RequestToRemoveUser < Request
   end
 
   def icon_entity
-    self.user
+    user
   end
 
   protected
@@ -85,5 +84,4 @@ class RequestToRemoveUser < Request
   # end
 
   private
-
 end

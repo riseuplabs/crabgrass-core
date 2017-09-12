@@ -18,7 +18,6 @@ class NilClass
   end
 
   def to_sym
-    return self
+    self
   end
 end
-

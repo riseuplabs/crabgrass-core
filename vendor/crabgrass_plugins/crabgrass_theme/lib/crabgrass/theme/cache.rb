@@ -3,10 +3,9 @@
 ##
 
 module Crabgrass::Theme::Cache
-
   public
 
-  def clear_cache(file='')
+  def clear_cache(file = '')
     cached = css_destination_path(file)
     FileUtils.rm_r(cached, secure: true) if File.exist? cached
   end
@@ -25,9 +24,9 @@ module Crabgrass::Theme::Cache
   # returns true if any of the ruby files in the directory have been modified since
   # the timestamp given.
   #
-  #def self.directory_changed_since?(dir, updated_at)
+  # def self.directory_changed_since?(dir, updated_at)
   #  Dir[dir + '/*.rb'].inject(100.years.ago) {|previous,current| [previous,File.mtime(current)].max} > updated_at
-  #end
+  # end
 
   #
   # returns true if any of the theme's config files have been modified since
@@ -68,11 +67,11 @@ module Crabgrass::Theme::Cache
     if sheet_name == 'screen'
       newest = File.mtime(sass_source_path('screen'))
       sass_files_for_screen.each do |sass_file|
-         newest = [File.mtime(sass_file), newest].max
+        newest = [File.mtime(sass_file), newest].max
       end
-      return newest
+      newest
     else
-      return File.mtime(sass_source_path(sheet_name))
+      File.mtime(sass_source_path(sheet_name))
     end
   end
 
@@ -84,10 +83,9 @@ module Crabgrass::Theme::Cache
   def sass_files_for_screen
     # grab everything. not sure what might be in screen.
     Dir.glob(
-      ['*.sass', '*.scss', '*/*.sass', '*/*.scss'].collect { |dir|
+      ['*.sass', '*.scss', '*/*.sass', '*/*.scss'].collect do |dir|
         Crabgrass::Theme::SASS_ROOT + dir
-      }
+      end
     )
   end
-
 end

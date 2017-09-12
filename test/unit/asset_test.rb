@@ -7,7 +7,6 @@ require 'test_helper'
 #
 
 class AssetTest < ActiveSupport::TestCase
-
   def setup
     super
     setup_assets
@@ -23,9 +22,9 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_simple_upload
-   @asset = FactoryGirl.create :png_asset
-   assert File.exist?( @asset.private_filename ), 'the private file should exist'
-   assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
+    @asset = FactoryGirl.create :png_asset
+    assert File.exist?(@asset.private_filename), 'the private file should exist'
+    assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
   def test_single_table_inheritance
@@ -44,9 +43,9 @@ class AssetTest < ActiveSupport::TestCase
     @asset.base_filename = 'newimage'
     @asset.save
 
-    assert_equal "%s/0000/%04d/newimage.png" % [ASSET_PRIVATE_STORAGE,@asset.id], @asset.private_filename
+    assert_equal format('%s/0000/%04d/newimage.png', ASSET_PRIVATE_STORAGE, @asset.id), @asset.private_filename
     assert File.exist?(@asset.private_filename)
-    assert !File.exist?("%s/0000/%04d/image.png" % [ASSET_PRIVATE_STORAGE,@asset.id])
+    assert !File.exist?(format('%s/0000/%04d/image.png', ASSET_PRIVATE_STORAGE, @asset.id))
   end
 
   def test_file_cleanup_on_destroy
@@ -61,7 +60,7 @@ class AssetTest < ActiveSupport::TestCase
 
   def test_thumbnail_generation_handled_by_thumbnails
     @asset = FactoryGirl.create :image_asset
-    @asset.thumbnails.each{|thumb| thumb.expects(:generate)}
+    @asset.thumbnails.each { |thumb| thumb.expects(:generate) }
     @asset.generate_thumbnails
   end
 
@@ -76,5 +75,4 @@ class AssetTest < ActiveSupport::TestCase
     assert asset.valid?
     assert asset.filename.present?
   end
-
 end

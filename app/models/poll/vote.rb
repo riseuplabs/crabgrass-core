@@ -14,5 +14,4 @@ class Poll::Vote < ActiveRecord::Base
   def self.for_possible(possible)
     where(possible_id: possible)
   end
-
 end

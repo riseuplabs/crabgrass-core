@@ -44,7 +44,7 @@ class CastleGates::Association
       owner == other.owner &&
         relationship = other.relationship
     elsif other.is_a? Symbol
-      false  # don't query the relation just to compare to Symbol
+      false # don't query the relation just to compare to Symbol
     else
       owner.send(relationship) == other
     end
@@ -64,9 +64,7 @@ end
 # Association.
 #
 ActiveRecord::Associations::CollectionProxy.class_eval do
-  def reflection
-    @reflection
-  end
+  attr_reader :reflection
 end
 
 ##

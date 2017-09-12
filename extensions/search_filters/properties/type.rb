@@ -1,5 +1,4 @@
 SearchFilter.new('/type/:type_name/') do
-
   query do |query, type_name|
     query.add_type_constraint(type_name)
   end
@@ -23,9 +22,7 @@ SearchFilter.new('/type/:type_name/') do
     if type_name
       "#{:type.t}: #{I18n.t(type_name, default: type_name)}"
     else
-     :type.t + '...'
+      :type.t + '...'
     end
   end
-
 end
-

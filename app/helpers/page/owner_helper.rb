@@ -1,14 +1,13 @@
 module Page::OwnerHelper
-
   protected
 
   def change_page_owner
     if may_admin_page?
       html = render 'page/details/change_owner'
       link_to_modal :edit.t,
-        html: html,
-        title: :page_create_owner.tcap,
-        icon: 'pencil'
+                    html: html,
+                    title: :page_create_owner.tcap,
+                    icon: 'pencil'
     end
   end
 
@@ -26,14 +25,13 @@ module Page::OwnerHelper
   #
   #  :selected     -- the item to make selected (either string or group object)
   #
-  def options_for_page_owner(options={})
+  def options_for_page_owner(options = {})
     options_for_select_group(
       options.merge(
-       include_me: true,
-       include_committees: true,
-       include_none: !Conf.ensure_page_owner?
+        include_me: true,
+        include_committees: true,
+        include_none: !Conf.ensure_page_owner?
       )
     )
   end
-
 end

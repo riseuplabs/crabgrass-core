@@ -21,4 +21,3 @@ class Rating < ActiveRecord::Base
     where(user_id: user)
   end
 end
-

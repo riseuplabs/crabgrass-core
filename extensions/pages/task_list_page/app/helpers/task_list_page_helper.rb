@@ -1,5 +1,4 @@
 module TaskListPageHelper
-
   ##
   ## show tasks
   ##
@@ -13,7 +12,7 @@ module TaskListPageHelper
     else
       list.tasks
     end
-    tasks.any? ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
+    tasks.any? ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position] } : []
   end
 
   def options_for_task_list
@@ -35,17 +34,17 @@ module TaskListPageHelper
     disabled = !current_user.may?(:edit, task.page)
     if true
       content_tag(:label, class: 'checkbox-inline') do
-        content_tag(:input, '',type: 'checkbox', disabled: 'disabled') +
-        h(task.name)
+        content_tag(:input, '', type: 'checkbox', disabled: 'disabled') +
+          h(task.name)
       end
     else
       next_state = task.completed? ? 'pending' : 'complete'
       name = "#{task.id}_task"
       spinbox_tag name, task_url(task, page_id: task.page),
-        checked: task.completed?,
-        tag: :span,
-        method: :put,
-        with: "'task[state]=#{next_state}'"
+                  checked: task.completed?,
+                  tag: :span,
+                  method: :put,
+                  with: "'task[state]=#{next_state}'"
     end
   end
 
@@ -79,9 +78,9 @@ module TaskListPageHelper
 
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
   def task_link_to_people(task)
-    links = task.users.collect{|user|
+    links = task.users.collect do |user|
       link_to_user(user, action: 'tasks', class: 'hov')
-    }.join(', ').html_safe
+    end.join(', ').html_safe
   end
 
   # a button to hide the task detail
@@ -101,11 +100,11 @@ module TaskListPageHelper
   end
 
   # a button to replace the task detail with a tast edit form.
-  #def edit_task_details_button(task)
+  # def edit_task_details_button(task)
   #  button_to_function :edit.t,
   #    edit_task_details_function(task),
   #    class: 'btn btn-primary'
-  #end
+  # end
 
   def edit_task_details_function(task)
     remote_function(
@@ -115,34 +114,32 @@ module TaskListPageHelper
     )
   end
 
-  #def no_pending_tasks(visible)
+  # def no_pending_tasks(visible)
   #  empty_list_item :no_pending_tasks, hidden: !visible
-  #end
+  # end
 
-  #def no_completed_tasks(visible)
+  # def no_completed_tasks(visible)
   #  empty_list_item :no_completed_tasks, hidden: !visible
-  #end
+  # end
 
-  #def empty_list_item(message, options = {})
+  # def empty_list_item(message, options = {})
   #  content_tag :li, message.t, id: message,
   #    style: (options[:hidden] && 'display:none')
-  #end
+  # end
 
   ##
   ## edit task form
   ##
 
-  def possible_users(task, page)
+  def possible_users(_task, page)
     return @possible_users if @possible_users
     @possible_users = []
-    if page.users.with_access.any?
-      @possible_users += page.users.with_access
-    end
+    @possible_users += page.users.with_access if page.users.with_access.any?
     page.groups.each do |group|
       @possible_users += group.users
     end
     @possible_users.uniq!
-    return @possible_users
+    @possible_users
   end
 
   def options_for_task_edit_form(task)
@@ -154,12 +151,12 @@ module TaskListPageHelper
     }]
   end
 
-  def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
+  def checkboxes_for_assign_people_to_task(task, selected = nil, page = nil)
     page ||= task.page
     render partial: 'tasks/assigned_checkbox',
-      collection: possible_users(task, page),
-      as: :user,
-      locals: {selected: selected}
+           collection: possible_users(task, page),
+           as: :user,
+           locals: { selected: selected }
   end
 
   def close_task_edit_button(task)
@@ -170,7 +167,7 @@ module TaskListPageHelper
     delete_task_details_button(task)
   end
 
-  def save_task_edit_button(task)
+  def save_task_edit_button(_task)
     submit_tag :save_button.t, class: 'btn btn-primary'
   end
 
@@ -181,12 +178,10 @@ module TaskListPageHelper
   def options_for_new_task_form(page)
     [{
       url: tasks_url(page_id: page),
-      html: {id: 'new-task-form'},
+      html: { id: 'new-task-form' },
       loading: show_spinner('new-task'),
       complete: hide_spinner('new-task'),
       success: reset_form('new-task-form')
     }]
   end
-
 end
-

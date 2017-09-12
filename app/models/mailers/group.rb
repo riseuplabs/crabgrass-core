@@ -10,11 +10,11 @@ module Mailers::Group
     # @user may be nil
     @group = event[:group]
     @user = event[:user]
-    @recipients = "#{recipient.email}"
+    @recipients = recipient.email.to_s
     @subject = I18n.t(:group_destroyed_subject,
-                        group_type: @group.group_type,
-                        group: @group.full_name,
-                        user: @user.try.display_name)
+                      group_type: @group.group_type,
+                      group: @group.full_name,
+                      user: @user.try.display_name)
 
     mail from: @from, to: @recipients, subject: @subject
   end

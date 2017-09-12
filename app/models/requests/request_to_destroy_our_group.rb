@@ -7,7 +7,6 @@
 #
 
 class RequestToDestroyOurGroup < Request
-
   validates_format_of :recipient_type,   with: /Group/
   validates_format_of :requestable_type, with: /Group/
 
@@ -17,7 +16,7 @@ class RequestToDestroyOurGroup < Request
   def recipient_required?
     !approved?
   end
-  alias_method :requestable_required?, :recipient_required?
+  alias requestable_required? recipient_required?
 
   def self.already_exists?(options)
     pending.from_group(options[:group]).exists?
@@ -28,15 +27,15 @@ class RequestToDestroyOurGroup < Request
   end
 
   def self.may_create?(options)
-    self.new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
+    new(recipient: options[:group], requestable: options[:group]).may_create?(options[:current_user])
   end
 
   def may_approve?(user)
     user.may?(:admin, group) and user.id != created_by_id
   end
 
-  alias_method :may_view?, :may_create?
-  alias_method :may_destroy?, :may_create?
+  alias may_view? may_create?
+  alias may_destroy? may_create?
 
   def after_approval
     group.destroy
@@ -77,5 +76,4 @@ class RequestToDestroyOurGroup < Request
   #   xxxx
   # end
   #
-
 end

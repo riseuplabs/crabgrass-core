@@ -6,7 +6,6 @@
 # This can be used to highlight changes that happened later.
 #
 module Common::Utility::LastVisitHelper
-
   def last_visit
     # either the last timestamp or now so we do not mark anything as new
     context = @page || @group
@@ -16,5 +15,4 @@ module Common::Utility::LastVisitHelper
       Time.now
     end
   end
-
 end

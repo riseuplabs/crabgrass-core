@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class StarsControllerTest < ActionController::TestCase
-
   def setup
     @page = FactoryGirl.create :page
     @user = FactoryGirl.create :user

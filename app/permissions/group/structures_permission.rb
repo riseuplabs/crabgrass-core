@@ -1,5 +1,4 @@
 module Group::StructuresPermission
-
   protected
 
   def may_edit_group_structure?
@@ -12,36 +11,33 @@ module Group::StructuresPermission
   #
   def may_create_council?(group = @group)
     group.class.can_have_council? and
-    !group.has_a_council? and
-    current_user.may?(:admin, group) and
-    (group.recent? || group.single_user?)
+      !group.has_a_council? and
+      current_user.may?(:admin, group) and
+      (group.recent? || group.single_user?)
   end
 
   def may_create_committee?(group = @group)
     group.class.can_have_committees? and
-    current_user.may?(:admin, group)
+      current_user.may?(:admin, group)
   end
 
-  def may_federate?(group = @group)
-
-  end
+  def may_federate?(group = @group); end
 
   def may_list_group_committees?(group = @group)
-    return false if !Conf.committees
+    return false unless Conf.committees
     return false if group.parent_id
     current_user.may? :see_committees, group
   end
 
   def may_list_group_networks?(group = @group)
     Conf.networks and
-    group.normal? and
-    current_user.may? :see_networks, group
+      group.normal? and
+      current_user.may? :see_networks, group
   end
 
   def may_show_affiliations?(group = @group)
     may_list_group_networks?(group) or
-    may_list_group_committees?(group) or
-    group.has_a_council?
+      may_list_group_committees?(group) or
+      group.has_a_council?
   end
-
 end

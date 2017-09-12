@@ -1,5 +1,4 @@
 module Group::MembershipsPermission
-
   protected
 
   ##
@@ -11,11 +10,11 @@ module Group::MembershipsPermission
   #
   # for requests, see may_create_join_request?
   #
-  def may_join_group?(group=@group)
+  def may_join_group?(group = @group)
     logged_in? and
-    group and
-    (current_user.may?(:admin, group) or current_user.may?(:join, group)) and
-    !current_user.direct_member_of?(group)
+      group and
+      (current_user.may?(:admin, group) or current_user.may?(:join, group)) and
+      !current_user.direct_member_of?(group)
   end
 
   #
@@ -23,12 +22,12 @@ module Group::MembershipsPermission
   #
   # currently, this is possible only if the group is a committee and the user is in the parent group.
   #
-  def may_create_membership?(group=@group, user=@user)
+  def may_create_membership?(group = @group, user = @user)
     logged_in? and
-    group and
-    group.parent and
-    current_user.may?(:admin, group) and
-    ((user && user.member_of?(group.parent)) || user.nil?)
+      group and
+      group.parent and
+      current_user.may?(:admin, group) and
+      ((user && user.member_of?(group.parent)) || user.nil?)
   end
 
   ##
@@ -43,8 +42,8 @@ module Group::MembershipsPermission
   #
   def may_leave_group?(group = @group)
     logged_in? and
-    current_user.direct_member_of?(group) and
-    (group.network? or group.committee? or group.users.uniq.size > 1)
+      current_user.direct_member_of?(group) and
+      (group.network? or group.committee? or group.users.uniq.size > 1)
   end
 
   #
@@ -84,11 +83,11 @@ module Group::MembershipsPermission
   #
   # may request to join the group?
   #
-  def may_create_join_request?(group=@group)
+  def may_create_join_request?(group = @group)
     logged_in? and
-    group and
-    current_user.may?(:request_membership, group) and
-    !current_user.member_of?(group)
+      group and
+      current_user.may?(:request_membership, group) and
+      !current_user.member_of?(group)
   end
 
   #
@@ -97,7 +96,7 @@ module Group::MembershipsPermission
   # currently, this ability is limited to 'longterm' members.
   # see RequestToRemoveUser.may_create?
   #
-  def may_create_expell_request?(membership=@membership)
+  def may_create_expell_request?(membership = @membership)
     group = membership.group
     user = membership.user
     current_user.may?(:admin, group) && (
@@ -107,5 +106,4 @@ module Group::MembershipsPermission
       )
     )
   end
-
 end

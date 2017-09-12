@@ -35,19 +35,17 @@
 #
 
 module Formy
-
   class HorizontalForm < BaseForm
-
-    LEFT_COL = 'col-sm-3'
-    LEFT_SPACE = 'col-sm-offset-3'
-    RIGHT_COL = 'col-sm-9'
+    LEFT_COL = 'col-sm-3'.freeze
+    LEFT_SPACE = 'col-sm-offset-3'.freeze
+    RIGHT_COL = 'col-sm-9'.freeze
 
     def spacer
-    #  @elements << indent("<div class='spacer'></div>")
+      #  @elements << indent("<div class='spacer'></div>")
     end
 
     def heading(text)
-    #  @elements << indent("<h2>#{text}</h2>")
+      #  @elements << indent("<h2>#{text}</h2>")
     end
 
     def hidden(text)
@@ -63,17 +61,17 @@ module Formy
     end
 
     def close
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       if @buttons
         puts_push '<div class="form-group">'
-          puts_push '<div class="%s %s">' % [LEFT_SPACE, RIGHT_COL]
-            @buttons.each do |button|
-              puts button
-            end
-          puts_pop '</div>'
+        puts_push format('<div class="%s %s">', LEFT_SPACE, RIGHT_COL)
+        @buttons.each do |button|
+          puts button
+        end
+        puts_pop '</div>'
         puts_pop '</div>'
       end
-      puts_pop "</fieldset>"
+      puts_pop '</fieldset>'
       super
     end
 
@@ -99,14 +97,12 @@ module Formy
           @label ||= '&nbsp;'.html_safe
          end
 
-        puts_push '<div class="form-group %s" id="%s" style="%s">' % [@classes, @id, @style]
-        puts content_tag(:label, @label, for: @label_for, class: "control-label %s" % LEFT_COL)
-        puts_push '<div class="%s">' % RIGHT_COL
+        puts_push format('<div class="form-group %s" id="%s" style="%s">', @classes, @id, @style)
+        puts content_tag(:label, @label, for: @label_for, class: format('control-label %s', LEFT_COL))
+        puts_push format('<div class="%s">', RIGHT_COL)
         if @input
-            puts @input
-            if @info
-              puts content_tag(:div, @info.html_safe, class: 'help-block')
-            end
+          puts @input
+          puts content_tag(:div, @info.html_safe, class: 'help-block') if @info
           end
         puts_pop '</div>'
         puts_pop '</div>'
@@ -149,10 +145,7 @@ module Formy
 
       # end
       # sub_element HorizontalForm::Row::Checkboxes
-
     end
     sub_element HorizontalForm::Row
-
   end
 end
-

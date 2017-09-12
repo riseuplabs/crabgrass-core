@@ -1,27 +1,26 @@
 class Password < String
-
   # password must include a digit.
   #
-  ONE_DIGIT  =	1
+  ONE_DIGIT =	1
 
   # This flag is used in conjunction with Password.phonemic and states that a
   # password must include a capital letter.
   #
-  ONE_CASE    = 1 << 1
+  ONE_CASE = 1 << 1
 
   # Characters that may appear in generated passwords. Password.urandom may
   # also use the characters + and /.
   #
-  PASSWD_CHARS = '0123456789' +
-   'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-   'abcdefghijklmnopqrstuvwxyz'
+  PASSWD_CHARS = '0123456789' \
+                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' \
+                 'abcdefghijklmnopqrstuvwxyz'.freeze
 
   # Valid salt characters for use by Password#crypt.
   #
-  SALT_CHARS   = '0123456789' +
-   'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-   'abcdefghijklmnopqrstuvwxyz' +
-   './'
+  SALT_CHARS   = '0123456789' \
+                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' \
+                 'abcdefghijklmnopqrstuvwxyz' \
+                 './'.freeze
 
   # :stopdoc:
 
@@ -30,7 +29,7 @@ class Password < String
   CONSONANT = 1
   VOWEL	    = 1 << 1
   DIPHTHONG = 1 << 2
-  NOT_FIRST = 1 << 3  # indicates that a given phoneme may not occur first
+  NOT_FIRST = 1 << 3 # indicates that a given phoneme may not occur first
 
   PHONEMES = {
     a: VOWEL,
@@ -39,23 +38,23 @@ class Password < String
     ai: VOWEL      | DIPHTHONG,
     b: CONSONANT,
     c: CONSONANT,
-    ch: CONSONANT  | DIPHTHONG,
+    ch: CONSONANT | DIPHTHONG,
     d: CONSONANT,
     e: VOWEL,
     ee: VOWEL      | DIPHTHONG,
     ei: VOWEL      | DIPHTHONG,
     f: CONSONANT,
     g: CONSONANT,
-    gh: CONSONANT  | DIPHTHONG | NOT_FIRST,
+    gh: CONSONANT | DIPHTHONG | NOT_FIRST,
     h: CONSONANT,
     i: VOWEL,
-    ie: VOWEL      | DIPHTHONG,
+    ie: VOWEL | DIPHTHONG,
     j: CONSONANT,
     k: CONSONANT,
     l: CONSONANT,
     m: CONSONANT,
     n: CONSONANT,
-    ng: CONSONANT  | DIPHTHONG | NOT_FIRST,
+    ng: CONSONANT | DIPHTHONG | NOT_FIRST,
     o: VOWEL,
     oh: VOWEL      | DIPHTHONG,
     oo: VOWEL      | DIPHTHONG,
@@ -64,21 +63,21 @@ class Password < String
     qu: CONSONANT  | DIPHTHONG,
     r: CONSONANT,
     s: CONSONANT,
-    sh: CONSONANT  | DIPHTHONG,
+    sh: CONSONANT | DIPHTHONG,
     t: CONSONANT,
-    th: CONSONANT  | DIPHTHONG,
+    th: CONSONANT | DIPHTHONG,
     u: VOWEL,
     v: CONSONANT,
     w: CONSONANT,
     x: CONSONANT,
     y: CONSONANT,
     z: CONSONANT
-  }
+  }.freeze
 
   # Determine whether next character should be a vowel or consonant.
   #
-  def Password.get_vowel_or_consonant
-    rand( 2 ) == 1 ? VOWEL : CONSONANT
+  def self.get_vowel_or_consonant
+    rand(2) == 1 ? VOWEL : CONSONANT
   end
 
   # :startdoc:
@@ -100,104 +99,99 @@ class Password < String
   # Generated passwords may contain any of the characters in
   # <em>Password::PASSWD_CHARS</em>.
   #
-  def Password.phonemic(length=8, flags=nil)
-
+  def self.phonemic(length = 8, flags = nil)
     pw = nil
     ph_flags = flags
 
     loop do
-
-      pw = ""
+      pw = ''
 
       # Separate the flags integer into an array of individual flags
-      feature_flags = [ flags & ONE_DIGIT, flags & ONE_CASE ]
+      feature_flags = [flags & ONE_DIGIT, flags & ONE_CASE]
 
       prev = []
       first = true
       desired = Password.get_vowel_or_consonant
 
       # Get an Array of all of the phonemes
-      phonemes = PHONEMES.keys.map { |ph| ph.to_s }
+      phonemes = PHONEMES.keys.map(&:to_s)
       nr_phonemes = phonemes.size
 
-      while pw.length < length do
+      while pw.length < length
 
-  # Get a random phoneme and its length
-  phoneme = phonemes[ rand( nr_phonemes ) ]
-  ph_len = phoneme.length
+        # Get a random phoneme and its length
+        phoneme = phonemes[rand(nr_phonemes)]
+        ph_len = phoneme.length
 
-  # Get its flags as an Array
-  ph_flags = PHONEMES[ phoneme.to_sym ]
-  ph_flags = [ ph_flags & CONSONANT, ph_flags & VOWEL,
-       ph_flags & DIPHTHONG, ph_flags & NOT_FIRST ]
+        # Get its flags as an Array
+        ph_flags = PHONEMES[phoneme.to_sym]
+        ph_flags = [ph_flags & CONSONANT, ph_flags & VOWEL,
+                    ph_flags & DIPHTHONG, ph_flags & NOT_FIRST]
 
-  # Filter on the basic type of the next phoneme
-  next if ph_flags.include? desired
+        # Filter on the basic type of the next phoneme
+        next if ph_flags.include? desired
 
-  # Handle the NOT_FIRST flag
-  next if first and ph_flags.include? NOT_FIRST
+        # Handle the NOT_FIRST flag
+        next if first and ph_flags.include? NOT_FIRST
 
-  # Don't allow a VOWEL followed a vowel/diphthong pair
-  next if prev.include? VOWEL and ph_flags.include? VOWEL and
-  ph_flags.include? DIPHTHONG
+        # Don't allow a VOWEL followed a vowel/diphthong pair
+        next if prev.include? VOWEL and ph_flags.include? VOWEL and
+                ph_flags.include? DIPHTHONG
 
-  # Don't allow us to go longer than the desired length
-  next if ph_len > length - pw.length
+        # Don't allow us to go longer than the desired length
+        next if ph_len > length - pw.length
 
-  # We've found a phoneme that meets our criteria
-  pw << phoneme
+        # We've found a phoneme that meets our criteria
+        pw << phoneme
 
-  # Handle ONE_CASE
-  if feature_flags.include? ONE_CASE
+        # Handle ONE_CASE
+        if feature_flags.include? ONE_CASE
 
-    if (first or ph_flags.include? CONSONANT) and rand( 10 ) < 3
-      pw[-ph_len, 1] = pw[-ph_len, 1].upcase
-      feature_flags.delete ONE_CASE
-    end
+          if (first or ph_flags.include? CONSONANT) and rand(10) < 3
+            pw[-ph_len, 1] = pw[-ph_len, 1].upcase
+            feature_flags.delete ONE_CASE
+          end
 
-  end
+        end
 
-  # Is password already long enough?
-  break if pw.length >= length
+        # Is password already long enough?
+        break if pw.length >= length
 
-  # Handle ONE_DIGIT
-  if feature_flags.include? ONE_DIGIT
+        # Handle ONE_DIGIT
+        if feature_flags.include? ONE_DIGIT
 
-    if ! first and rand( 10 ) < 3
-      pw << ( rand( 10 ) + ?0 ).chr
-      feature_flags.delete ONE_DIGIT
+          if !first and rand(10) < 3
+            pw << (rand(10) + '0').chr
+            feature_flags.delete ONE_DIGIT
 
-      first = true
-      prev = []
-      desired = Password.get_vowel_or_consonant
-      next
-    end
+            first = true
+            prev = []
+            desired = Password.get_vowel_or_consonant
+            next
+          end
 
-  end
+        end
 
-  if desired == CONSONANT
-    desired = VOWEL
-  elsif prev.include? VOWEL or ph_flags.include? DIPHTHONG or
-        rand(10) > 3
-    desired = CONSONANT
-  else
-    desired = VOWEL
-  end
+        desired = if desired == CONSONANT
+                    VOWEL
+                  elsif prev.include? VOWEL or ph_flags.include? DIPHTHONG or
+                        rand(10) > 3
+                    CONSONANT
+                  else
+                    VOWEL
+                  end
 
-  prev = ph_flags
-  first = false
+        prev = ph_flags
+        first = false
       end
 
       # Try again
       break unless feature_flags.include? ONE_CASE or
-     feature_flags.include? ONE_DIGIT
-
+                   feature_flags.include? ONE_DIGIT
     end
 
-    Password.new( pw )
-
+    Password.new(pw)
   end
-
 
   # Generate a random password of _length_ characters. Unlike the
   # Password.phonemic method, no attempt will be made to generate a memorable
@@ -205,15 +199,14 @@ class Password < String
   # <em>Password::PASSWD_CHARS</em>.
   #
   #
-  def Password.random(length=8)
-    pw = ""
+  def self.random(length = 8)
+    pw = ''
     nr_chars = PASSWD_CHARS.size
 
-    length.times { pw << PASSWD_CHARS[ rand( nr_chars ) ] }
+    length.times { pw << PASSWD_CHARS[rand(nr_chars)] }
 
-    Password.new( pw )
+    Password.new(pw)
   end
-
 
   # An alternative to Password.random. It uses the <tt>/dev/urandom</tt>
   # device to generate passwords, returning +nil+ on systems that do not
@@ -221,15 +214,13 @@ class Password < String
   # characters in <em>Password::PASSWD_CHARS</em>, plus the additional
   # characters + and /.
   #
-  def Password.urandom(length=8)
+  def self.urandom(length = 8)
     return nil unless File.chardev? '/dev/urandom'
 
     rand_data = nil
-    File.open( "/dev/urandom" ) { |f| rand_data = f.read( length ) }
+    File.open('/dev/urandom') { |f| rand_data = f.read(length) }
 
     # Base64 encode it
-    Password.new( [ rand_data ].pack( 'm' )[ 0 .. length - 1 ] )
+    Password.new([rand_data].pack('m')[0..length - 1])
   end
-
 end
-

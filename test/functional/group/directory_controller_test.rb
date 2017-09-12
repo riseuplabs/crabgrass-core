@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Group::DirectoryControllerTest < ActionController::TestCase
-
   def setup
     @user = FactoryGirl.create(:user)
   end
@@ -17,5 +16,4 @@ class Group::DirectoryControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
-
 end

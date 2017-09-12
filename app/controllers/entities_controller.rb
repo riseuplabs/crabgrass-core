@@ -13,19 +13,18 @@
 #
 
 class EntitiesController < ApplicationController
-
   before_filter :login_required
 
   LIMIT = 20
 
   def index
     @entities = case params[:view]
-      when 'recipients' then recipients
-      when 'groups' then groups
-      when 'users' then users
-      when 'members' then members
-      when 'all' then all
-      else all
+                when 'recipients' then recipients
+                when 'groups' then groups
+                when 'users' then users
+                when 'members' then members
+                when 'all' then all
+                else all
     end
   end
 
@@ -55,7 +54,7 @@ class EntitiesController < ApplicationController
     if preload?
       User.friends_or_peers_of(current_user).all_with_access(current_user => :pester)
     elsif filter.present?
-      recipients = User.with_access(current_user => [:view, :pester])
+      recipients = User.with_access(current_user => %i[view pester])
       recipients.named_like(filter).limit(LIMIT)
     end
   end
@@ -89,7 +88,7 @@ class EntitiesController < ApplicationController
     if preload?
       groups + users
     else
-      (groups + users).sort_by{|r|r.name}[0..(LIMIT-1)]
+      (groups + users).sort_by(&:name)[0..(LIMIT - 1)]
     end
   end
 
@@ -97,7 +96,7 @@ class EntitiesController < ApplicationController
 
   def filter
     @query = params[:query]
-    @query.present? ? "#{params[:query].strip}%" : ""
+    @query.present? ? "#{params[:query].strip}%" : ''
   end
 
   # the autocomplete will issues an empty query when first loaded.
@@ -106,6 +105,3 @@ class EntitiesController < ApplicationController
     filter.empty? and logged_in?
   end
 end
-
-
-

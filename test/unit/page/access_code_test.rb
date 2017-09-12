@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Page::AccessCodeTest < ActiveSupport::TestCase
-
   def test_create
     assert_difference 'Page::AccessCode.count' do
       Page::AccessCode.create! expires_at: 1.hour.ago
@@ -16,7 +15,4 @@ class Page::AccessCodeTest < ActiveSupport::TestCase
 
     assert_equal 1, Page::AccessCode.count
   end
-
 end
-
-

@@ -1,89 +1,86 @@
-=begin
-
-Assets use a lot of classes to manage a particular uploaded file:
-
-  Asset          -- main asset class.
-  Asset::Image   -- a subclass of Asset using STI, for example.
-  Asset::Version -- all the past and present versions of the main asset.
-  Thumbnail      -- a processed representation of an Asset (usually a small image)
-
-  Every asset has many versions. Each asset, and each version, also
-  have many thumbnails.
-
-  Additionally, three modules are included by Asset:
-    Asset::Upload      -- handles uploading data
-    Asset::Storage     -- handles where/how data is stored
-    Asset::Thumbnails  -- handles the creation of the thumbnails
-
-  Asset::Versions have the latter two included as well.
-
-TODO:
-
-  * Image assets that are smaller than the thumbnails should not get thumbnails,
-    or should only get one thumbnail if the format differs. It is a waste of space
-    to keep four copies of the same image! (albeit, a very tiny image)
-
-  create_table "asset_versions", :force => true do |t|
-    t.integer  "asset_id",       :limit => 11
-    t.integer  "version",        :limit => 11
-    t.string   "content_type"
-    t.string   "filename"
-    t.integer  "size",           :limit => 11
-    t.integer  "width",          :limit => 11
-    t.integer  "height",         :limit => 11
-    t.integer  "page_id",        :limit => 11
-    t.integer  "user_id",        :limit => 11
-    t.text     "comment"
-    t.datetime "created_at"
-    t.string   "versioned_type"
-    t.datetime "updated_at"
-  end
-
-  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
-  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
-  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
-
-  create_table "assets", :force => true do |t|
-    t.string   "content_type"
-    t.string   "filename"
-    t.integer  "size",          :limit => 11
-    t.integer  "width",         :limit => 11
-    t.integer  "height",        :limit => 11
-    t.integer  "page_id",       :limit => 11
-    t.datetime "created_at"
-    t.integer  "version",       :limit => 11
-    t.string   "type"
-    t.integer  "page_terms_id", :limit => 11
-    t.boolean  "is_attachment",               :default => false
-    t.boolean  "is_image"
-    t.boolean  "is_audio"
-    t.boolean  "is_video"
-    t.boolean  "is_document"
-    t.datetime "updated_at"
-    t.string   "caption"
-    t.datetime "taken_at"
-    t.string   "credit"
-    t.integer  "user_id",        :limit => 11
-    t.text     "comment"
-  end
-
-  add_index "assets", ["version"], :name => "index_assets_version"
-  add_index "assets", ["page_id"], :name => "index_assets_page_id"
-  add_index "assets", ["page_terms_id"], :name => "pterms"
-
-=end
+#
+# Assets use a lot of classes to manage a particular uploaded file:
+#
+#   Asset          -- main asset class.
+#   Asset::Image   -- a subclass of Asset using STI, for example.
+#   Asset::Version -- all the past and present versions of the main asset.
+#   Thumbnail      -- a processed representation of an Asset (usually a small image)
+#
+#   Every asset has many versions. Each asset, and each version, also
+#   have many thumbnails.
+#
+#   Additionally, three modules are included by Asset:
+#     Asset::Upload      -- handles uploading data
+#     Asset::Storage     -- handles where/how data is stored
+#     Asset::Thumbnails  -- handles the creation of the thumbnails
+#
+#   Asset::Versions have the latter two included as well.
+#
+# TODO:
+#
+#   * Image assets that are smaller than the thumbnails should not get thumbnails,
+#     or should only get one thumbnail if the format differs. It is a waste of space
+#     to keep four copies of the same image! (albeit, a very tiny image)
+#
+#   create_table "asset_versions", :force => true do |t|
+#     t.integer  "asset_id",       :limit => 11
+#     t.integer  "version",        :limit => 11
+#     t.string   "content_type"
+#     t.string   "filename"
+#     t.integer  "size",           :limit => 11
+#     t.integer  "width",          :limit => 11
+#     t.integer  "height",         :limit => 11
+#     t.integer  "page_id",        :limit => 11
+#     t.integer  "user_id",        :limit => 11
+#     t.text     "comment"
+#     t.datetime "created_at"
+#     t.string   "versioned_type"
+#     t.datetime "updated_at"
+#   end
+#
+#   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+#   add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+#   add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+#
+#   create_table "assets", :force => true do |t|
+#     t.string   "content_type"
+#     t.string   "filename"
+#     t.integer  "size",          :limit => 11
+#     t.integer  "width",         :limit => 11
+#     t.integer  "height",        :limit => 11
+#     t.integer  "page_id",       :limit => 11
+#     t.datetime "created_at"
+#     t.integer  "version",       :limit => 11
+#     t.string   "type"
+#     t.integer  "page_terms_id", :limit => 11
+#     t.boolean  "is_attachment",               :default => false
+#     t.boolean  "is_image"
+#     t.boolean  "is_audio"
+#     t.boolean  "is_video"
+#     t.boolean  "is_document"
+#     t.datetime "updated_at"
+#     t.string   "caption"
+#     t.datetime "taken_at"
+#     t.string   "credit"
+#     t.integer  "user_id",        :limit => 11
+#     t.text     "comment"
+#   end
+#
+#   add_index "assets", ["version"], :name => "index_assets_version"
+#   add_index "assets", ["page_id"], :name => "index_assets_page_id"
+#   add_index "assets", ["page_terms_id"], :name => "pterms"
+#
 
 class Asset < ActiveRecord::Base
   include Crabgrass::Page::Data
 
   # fields in assets table not in asset_versions
-  NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
+  NON_VERSIONED = %w[page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit].freeze
 
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include Asset::Upload
   validates_presence_of :filename, unless: 'new_record?'
-
 
   ##
   ## ACCESS
@@ -113,20 +110,17 @@ class Asset < ActiveRecord::Base
   def has_access!(perm, user)
     # If the perm is :view, use the quick visibility check
     if perm == :view
-      return true if self.visible?(user)
+      return true if visible?(user)
     end
-    raise PermissionDenied unless self.page
-    self.page.has_access!(perm, user)
+    raise PermissionDenied unless page
+    page.has_access!(perm, user)
   end
 
-  def participation_for_groups ids
-    gparts = self.page.participation_for_groups(ids)
-    if(self.galleries.any?)
-      gparts += self.galleries.map(&:participation_for_groups)
-    end
-    return gparts.flatten
+  def participation_for_groups(ids)
+    gparts = page.participation_for_groups(ids)
+    gparts += galleries.map(&:participation_for_groups) if galleries.any?
+    gparts.flatten
   end
-
 
   ##
   ## FINDERS
@@ -134,20 +128,20 @@ class Asset < ActiveRecord::Base
 
   # Returns true if this Asset is currently the cover of the given `gallery'.
   # A Gallery can only have one cover at a time.
-  def is_cover_of? gallery
-    raise ArgumentError.new() unless gallery.kind_of? Gallery
-    showing = gallery.showings.find_by_asset_id(self.id)
+  def is_cover_of?(gallery)
+    raise ArgumentError.new unless gallery.is_a? Gallery
+    showing = gallery.showings.find_by_asset_id(id)
     !showing.nil? && showing.is_cover
   end
 
   def self.not_attachment
-    where('is_attachment = ?',false)
+    where('is_attachment = ?', false)
   end
 
   # one of :image, :audio, :video, :document
   def self.media_type(type)
-    raise TypeError.new unless [:image,:audio,:video,:document].include?(type)
-    where("is_#{type} = ?",true)
+    raise TypeError.new unless %i[image audio video document].include?(type)
+    where("is_#{type} = ?", true)
   end
 
   def version_or_self(version_id)
@@ -165,10 +159,10 @@ class Asset < ActiveRecord::Base
       base.send :include, Asset::Thumbnails
       base.belongs_to :user
       base.has_many :thumbnails, class_name: '::Thumbnail', as: :parent,
-        dependent: :destroy do
+                                 dependent: :destroy do
         def preview_images
           small, medium, large = nil
-          self.each do |tn|
+          each do |tn|
             if tn.name == 'small'
               small = tn
             elsif tn.name == 'medium'
@@ -181,18 +175,23 @@ class Asset < ActiveRecord::Base
           medium = nil if small && medium && medium.size == small.size
           [small, medium, large].compact
         end
+
         def other_formats
-          self.select{|t| !['small', 'medium', 'large'].include?(t.name)}
+          reject { |t| %w[small medium large].include?(t.name) }
         end
       end
-      base.define_thumbnails( {} ) # root Asset class has no thumbnails
+      base.define_thumbnails({}) # root Asset class has no thumbnails
     end
 
     # file extension, with '.'
-    def ext; File.extname(filename); end
+    def ext
+      File.extname(filename)
+    end
 
     # file name without extension
-    def basename; File.basename(filename, ext); end
+    def basename
+      File.basename(filename, ext)
+    end
 
     def url(name = filename)
       path.url(name)
@@ -214,13 +213,16 @@ class Asset < ActiveRecord::Base
       read_attribute('content_type') || 'application/octet-stream'
     end
   end
-  self.non_versioned_columns.concat NON_VERSIONED
+  non_versioned_columns.concat NON_VERSIONED
 
   # to be overridden in Asset::Version
   def path
     @path ||= Storage::Path.new id: id, filename: filename
   end
-  def is_version?; false; end
+
+  def is_version?
+    false
+  end
 
   ##
   ## RELATIONSHIP TO PAGES
@@ -229,25 +231,23 @@ class Asset < ActiveRecord::Base
   # an asset might have two different types of associations to a page. it could
   # be the data of page (1), or it could be an attachment of the page (2).
   belongs_to :parent_page, foreign_key: 'page_id', class_name: 'Page' # (2)
-  def page()
+  def page
     page = page_id ? parent_page : pages.first
-    return page
+    page
   end
 
   def create_page(user, group)
     # run validations so filname gets set
-    self.valid?
+    valid?
     page_params = {
-      title: self.basename,
-      summary: "Asset Page for #{self.basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
-      tag_list: "",
+      title: basename,
+      summary: "Asset Page for #{basename}. This asset was used without a page - for example in a group wiki. This page was created automatically for the asset.",
+      tag_list: '',
       user: user,
-      access: "admin",
+      access: 'admin',
       data: self
     }
-    if group
-      page_params.merge! share_with: {group.name => {access: "1"}}
-    end
+    page_params[:share_with] = { group.name => { access: '1' } } if group
     self.parent_page = AssetPage.create!(page_params)
   end
 
@@ -301,7 +301,7 @@ class Asset < ActiveRecord::Base
 
   before_create :set_default_type
   def set_default_type
-    self.type ||= 'Asset'  # make Asset the default type so Asset::Version.versioned_type will be accurate.
+    self.type ||= 'Asset' # make Asset the default type so Asset::Version.versioned_type will be accurate.
   end
 
   private
@@ -312,11 +312,11 @@ class Asset < ActiveRecord::Base
   def self.asset_class(attributes)
     if attributes
       content_type = if attributes[:uploaded_data]
-        mime_type_from_data(attributes[:uploaded_data])
-      elsif attributes[:data]
-        attributes[:content_type]
+                       mime_type_from_data(attributes[:uploaded_data])
+                     elsif attributes[:data]
+                       attributes[:content_type]
       end
-      return class_for_mime_type( content_type )
+      class_for_mime_type(content_type)
     else
       self
     end
@@ -357,7 +357,7 @@ class Asset < ActiveRecord::Base
       is_video = false
       is_image = false
       is_document = false
-      update_media_flags()
+      update_media_flags
     end
   end
 
@@ -367,11 +367,10 @@ class Asset < ActiveRecord::Base
   # returns either :landscape or :portrait, depending on the format of the
   # image.
   def image_format
-    raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
+    raise TypeError unless respond_to?(:width) && respond_to?(:height)
     return :landscape if width.nil? or height.nil?
-    self.width > self.height ? :landscape : :portrait
+    width > height ? :landscape : :portrait
   end
-
 end
 
 require 'asset/version'

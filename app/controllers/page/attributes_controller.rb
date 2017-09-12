@@ -5,7 +5,6 @@
 #
 
 class Page::AttributesController < Page::SidebarsController
-
   before_filter :login_required
   track_actions :update
 
@@ -38,6 +37,4 @@ class Page::AttributesController < Page::SidebarsController
       Group.where(name: params[:owner]).first!
     end
   end
-
 end
-

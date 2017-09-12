@@ -29,8 +29,8 @@ class Page::AccessCode < ActiveRecord::Base
 
   def set_unique_code
     begin
-       self.code = Password.random(10)
-    end until self.class.find_by_code(self.code).nil?
+      self.code = Password.random(10)
+    end until self.class.find_by_code(code).nil?
   end
 
   def set_expiry
@@ -46,8 +46,6 @@ class Page::AccessCode < ActiveRecord::Base
   end
 
   def to_param
-    self.code
+    code
   end
-
 end
-

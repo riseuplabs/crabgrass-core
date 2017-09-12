@@ -8,5 +8,5 @@ class Showing < ActiveRecord::Base
 
   acts_as_list scope: :gallery
 
-  alias :image :asset
+  alias image asset
 end

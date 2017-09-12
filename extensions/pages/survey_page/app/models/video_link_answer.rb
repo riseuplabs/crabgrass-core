@@ -9,7 +9,7 @@ class VideoLinkAnswer < SurveyAnswer
     return true if value.empty?
 
     valid = external_video.valid?
-    external_video.errors.each {|attr, msg| self.errors.add(:value, msg)}
+    external_video.errors.each { |_attr, msg| errors.add(:value, msg) }
     valid
   end
 
@@ -30,5 +30,4 @@ class VideoLinkAnswer < SurveyAnswer
     write_attribute(:value, val)
     update_external_video
   end
-
 end

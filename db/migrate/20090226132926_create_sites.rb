@@ -12,7 +12,7 @@ class CreateSites < ActiveRecord::Migration
       t.text    :available_page_types
       t.text    :evil
       t.boolean :tracking
-      t.boolean :default, :default => false
+      t.boolean :default, default: false
     end
   end
 

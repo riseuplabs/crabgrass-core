@@ -1,27 +1,25 @@
-if ENV["COVERAGE"]
+if ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start 'rails'
 end
 
 require 'minitest/autorun'
 
-ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+ENV['RAILS_ENV'] = 'test'
+require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
 require 'rails/test_help'
 
 ##
 ## load all the test helpers
 ##
 
-Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each { |file| require file }
 
 ##
 ## misc.
 ##
 
 class ActiveSupport::TestCase
-
-
   include AuthenticatedTestHelper
   include AssetTestHelper
   include LoginTestHelper
@@ -35,13 +33,13 @@ class ActiveSupport::TestCase
 
   fixtures :all
   set_fixture_class castle_gates_keys: CastleGates::Key,
-    federatings: Group::Federating,
-    memberships: Group::Membership,
-    relationships: User::Relationship,
-    taggings: ActsAsTaggableOn::Tagging,
-    tags: ActsAsTaggableOn::Tag,
-    tokens: User::Token,
-    "page/terms" => Page::Terms
+                    federatings: Group::Federating,
+                    memberships: Group::Membership,
+                    relationships: User::Relationship,
+                    taggings: ActsAsTaggableOn::Tagging,
+                    tags: ActsAsTaggableOn::Tag,
+                    tokens: User::Token,
+                    'page/terms' => Page::Terms
 end
 
 require 'factory_girl'
@@ -74,7 +72,7 @@ MiniTest::Mock.class_eval do
     MiniTest::Mock
   end
 
-  def is_a?(klass)
+  def is_a?(_klass)
     false
   end
 end

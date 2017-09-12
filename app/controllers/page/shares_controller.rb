@@ -23,7 +23,6 @@
 # the page is private and they already have access.
 #
 class Page::SharesController < Page::SidebarsController
-
   guard update: :may_share_page?
 
   helper 'page/share', 'page/participation'
@@ -72,7 +71,7 @@ class Page::SharesController < Page::SidebarsController
   # Main Update Task
   #
   def notify_or_share
-    if (params[:share_button] || params[:notify_button])
+    if params[:share_button] || params[:notify_button]
       share = Page::Share.new(@page, current_user, share_options)
       @uparts, @gparts = share.with params[:recipients]
       @page.save!
@@ -97,7 +96,7 @@ class Page::SharesController < Page::SidebarsController
 
   # we allow for an id of 0 for pages just getting created
   def fetch_page
-    @page = Page.new if params['page_id'] == "0"
+    @page = Page.new if params['page_id'] == '0'
     @page || super
   end
 
@@ -107,7 +106,7 @@ class Page::SharesController < Page::SidebarsController
 
   def add_recipients
     @recipients = build_recipient_array
-    render partial: 'page/shares/add_recipient', locals: {alter_access: share?}
+    render partial: 'page/shares/add_recipient', locals: { alter_access: share? }
   end
 
   def add_recipients?
@@ -118,14 +117,14 @@ class Page::SharesController < Page::SidebarsController
   # After Filters
   #
 
-  def track_action(event = nil, options = {})
+  def track_action(_event = nil, _options = {})
     @uparts.each do |part|
-      if part.previous_changes.keys.include? "access"
+      if part.previous_changes.keys.include? 'access'
         super('update_user_access', participation: part)
       end
     end
     @gparts.each do |part|
-      if part.previous_changes.keys.include? "access"
+      if part.previous_changes.keys.include? 'access'
         super('update_group_access', participation: part)
       end
     end
@@ -150,7 +149,7 @@ class Page::SharesController < Page::SidebarsController
   # a lot can go wrong: the name might not exist, you may not have permission,
   # the user might already have access, etc.
   #
-  def find_recipient(recipient_name, action=:share)
+  def find_recipient(recipient_name, action = :share)
     recipient_name.strip!
     return nil unless recipient_name.present?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
@@ -172,7 +171,7 @@ class Page::SharesController < Page::SidebarsController
         end
       end
     end
-    return recipient
+    recipient
   end
 
   private
@@ -180,7 +179,7 @@ class Page::SharesController < Page::SidebarsController
   #
   # Utility Methods
   #
-  SUCCESS_MESSAGES = { share: :shared_page_success, notify: :notify_success }
+  SUCCESS_MESSAGES = { share: :shared_page_success, notify: :notify_success }.freeze
 
   def notify_or_share_message
     SUCCESS_MESSAGES[mode_param]
@@ -188,7 +187,7 @@ class Page::SharesController < Page::SidebarsController
 
   def mode_param
     mode = params[:mode]
-    raise ErrorMessage, 'bad mode' unless ['notify', 'share'].include? mode
+    raise ErrorMessage, 'bad mode' unless %w[notify share].include? mode
     mode.to_sym
   end
 
@@ -198,7 +197,7 @@ class Page::SharesController < Page::SidebarsController
 
   # convert {:checkbox => '1'} to {:checkbox => true}
   def convert_checkbox_boolean(hsh)
-    hsh.each_pair do |key,val|
+    hsh.each_pair do |key, val|
       if val == '0'
         hsh[key] = false
       elsif val == '1'
@@ -206,6 +205,4 @@ class Page::SharesController < Page::SidebarsController
       end
     end
   end
-
 end
-

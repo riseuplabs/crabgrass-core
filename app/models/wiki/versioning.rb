@@ -1,5 +1,4 @@
 module Wiki::Versioning
-
   class VersionNotFoundError < CrabgrassException
     def initialize(version_or_message = '', options = {})
       message = version_or_message.is_a?(Integer) ?
@@ -23,7 +22,7 @@ module Wiki::Versioning
     return true if versions.empty?
     # overwrite blank versions (we don't want to store blank versions)
     return false if current.body.blank?
-    body_changed? && ( user_id_changed? || long_time_no_updates? )
+    body_changed? && (user_id_changed? || long_time_no_updates?)
   end
 
   def long_time_no_updates?
@@ -41,12 +40,12 @@ module Wiki::Versioning
   # returns first version since +time+
   def last_version_before(time)
     return nil unless time
-    versions.where("updated_at <= :time", {time: time}).
-      order("updated_at DESC").first
+    versions.where('updated_at <= :time', time: time)
+            .order('updated_at DESC').first
   end
 
   def find_version(number)
-    self.versions.find_by_version(number) or
+    versions.find_by_version(number) or
       raise VersionNotFoundError.new(number.to_i)
   end
 
@@ -58,7 +57,7 @@ module Wiki::Versioning
   end
 
   # reverts and deletes all versions after the reverted version.
-  def revert_to_version!(version_number, user=nil)
+  def revert_to_version!(version_number, _user = nil)
     revert_to(version_number)
     destroy_versions_after(version_number)
   end
@@ -76,25 +75,23 @@ module Wiki::Versioning
       body_html: read_attribute(:body_html),
       raw_structure: read_attribute(:raw_structure),
       user: user,
-      updated_at: Time.now)
+      updated_at: Time.now
+    )
   end
 
   def page_for_version(version)
     return 1 unless version
-    page_index = versions_since(version) / Wiki.per_page #Version.per_page
+    page_index = versions_since(version) / Wiki.per_page # Version.per_page
     page_index + 1
   end
 
   protected
 
   def versions_since(version)
-    self.versions.where("version > #{version.version}").count
+    versions.where("version > #{version.version}").count
   end
 
   def destroy_versions_after(version_number)
-    versions.where("version > ?", version_number).each do |version|
-      version.destroy
-    end
+    versions.where('version > ?', version_number).each(&:destroy)
   end
-
 end

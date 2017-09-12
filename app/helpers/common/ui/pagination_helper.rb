@@ -6,28 +6,27 @@
 # will_paginate() directly.
 #
 module Common::Ui::PaginationHelper
-
   protected
 
-#  def letter_pagination_labels
-#    $letter_pagination_labels_list ||= ("A".."Z").to_a + ["#"]
-#  end
+  #  def letter_pagination_labels
+  #    $letter_pagination_labels_list ||= ("A".."Z").to_a + ["#"]
+  #  end
 
-#  def letter_pagination_links(url_opts = {}, pagination_opts = {}, &url_proc)
-#    url_proc = method :url_for if url_proc.nil?
-#    available_letters = pagination_opts[:available_letters]
-#    if available_letters and !available_letters.grep(/^[^a-z]/i).empty?
-#      # we have things that are not letters in the mix
-#      available_letters << "#"
-#    end
+  #  def letter_pagination_links(url_opts = {}, pagination_opts = {}, &url_proc)
+  #    url_proc = method :url_for if url_proc.nil?
+  #    available_letters = pagination_opts[:available_letters]
+  #    if available_letters and !available_letters.grep(/^[^a-z]/i).empty?
+  #      # we have things that are not letters in the mix
+  #      available_letters << "#"
+  #    end
 
-#    render  :partial => 'pages/letter_pagination',
-#                        :locals => {:letter_labels => letter_pagination_labels,
-#                                    :available_letters => pagination_opts[:available_letters],
-#                                    :url_proc => url_proc,
-#                                    :url_opts => url_opts,
-#                                    }
-#  end
+  #    render  :partial => 'pages/letter_pagination',
+  #                        :locals => {:letter_labels => letter_pagination_labels,
+  #                                    :available_letters => pagination_opts[:available_letters],
+  #                                    :url_proc => url_proc,
+  #                                    :url_opts => url_opts,
+  #                                    }
+  #  end
 
   #
   # Default pagination link options:
@@ -44,15 +43,15 @@ module Common::Ui::PaginationHelper
   #   :page_links   => true,    # when false, only previous/next links are rendered
   #   :container    => true
   #
-  def pagination_links(things, options={})
+  def pagination_links(things, options = {})
     return unless paginated?(things)
 
     defaults = {
-     previous_label: ("&laquo; %s" % :pagination_previous.t).html_safe,
-     next_label: ("%s &raquo;" % :pagination_next.t).html_safe,
-     inner_window: 2,
-     outer_window: 0,
-     renderer: pagination_link_renderer
+      previous_label: format('&laquo; %s', :pagination_previous.t).html_safe,
+      next_label: format('%s &raquo;', :pagination_next.t).html_safe,
+      inner_window: 2,
+      outer_window: 0,
+      renderer: pagination_link_renderer
     }
     will_paginate(things, defaults.merge(options))
   end
@@ -63,6 +62,4 @@ module Common::Ui::PaginationHelper
   def paginated?(things)
     things.respond_to?(:total_entries) && things.total_entries > things.per_page
   end
-
 end
-

@@ -1,5 +1,4 @@
 module ProfileHelper
-
   def banner_field(formy)
     formy.heading :banner.t
 
@@ -18,6 +17,4 @@ module ProfileHelper
       )
     end
   end
-
 end
-

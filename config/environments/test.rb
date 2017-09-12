@@ -1,5 +1,4 @@
 Crabgrass::Application.configure do
-
   ##
   ## STANDARD RAILS OPTIONS
   ##
@@ -11,7 +10,7 @@ Crabgrass::Application.configure do
   config.action_controller.allow_forgery_protection    = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :test
-  config.action_mailer.default_url_options = { :host => "localhost" }
+  config.action_mailer.default_url_options = { host: 'localhost' }
 
   # use the exceptions app
   config.action_dispatch.show_exceptions = true
@@ -30,11 +29,9 @@ Crabgrass::Application.configure do
   ## CRABGRASS OPTIONS
   ##
 
-  ENV['INFO'] ||= "0"
+  ENV['INFO'] ||= '0'
 
-  if ENV["REMOTE"]
-    Conf.remote_processing = 'http://localhost:3002'
-  end
+  Conf.remote_processing = 'http://localhost:3002' if ENV['REMOTE']
 
   ##
   ## DEBUGGING

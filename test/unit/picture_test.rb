@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class PictureTest < ActiveSupport::TestCase
-
   def setup
-    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    Media::Transmogrifier.verbose = false # set to true to see all the commands being run.
     FileUtils.mkdir_p(PICTURE_PRIVATE_STORAGE)
     FileUtils.mkdir_p(PICTURE_PUBLIC_STORAGE)
   end
@@ -19,11 +18,10 @@ class PictureTest < ActiveSupport::TestCase
   end
 
   def test_geometry
-    geometry = {max_width: 100, min_width: 100}
+    geometry = { max_width: 100, min_width: 100 }
     picture = Picture.create(upload: upload_data('photo.jpg'))
     picture.add_geometry!(geometry)
     assert_not_nil File.read(picture.private_file_path(geometry))
-    assert_equal [100,64], picture.dimensions["100-100-0-0"]
+    assert_equal [100, 64], picture.dimensions['100-100-0-0']
   end
-
 end

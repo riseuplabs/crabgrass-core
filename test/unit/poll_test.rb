@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class PollTest < ActiveSupport::TestCase
-
-
   def test_find_possibles
     poll = Poll.create
     p1 = poll.possibles.create(name: 'p1')
@@ -16,8 +14,8 @@ class PollTest < ActiveSupport::TestCase
     poll = Poll::RatingPoll.create
     p1 = poll.possibles.create(name: 'smashed')
     v1 = poll.votes.create user: dolphin,
-      possible: p1,
-      value: 2
+                           possible: p1,
+                           value: 2
     dolphin.destroy
     assert_equal 0, p1.votes.count
   end
@@ -28,13 +26,12 @@ class PollTest < ActiveSupport::TestCase
     poll = Poll::RankingPoll.create
     p1 = poll.possibles.create(name: 'smashed')
     v1 = poll.votes.create user_id: 100,
-      possible: p1,
-      value: 0
+                           possible: p1,
+                           value: 0
     assert poll.tally.empty?, 'no top votes should be present'
   end
 
   def test_associations
     assert check_associations(Poll)
   end
-
 end

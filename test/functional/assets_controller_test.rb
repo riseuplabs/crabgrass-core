@@ -1,7 +1,6 @@
 require_relative 'test_helper'
 
 class AssetsControllerTest < ActionController::TestCase
-
   def test_get_permissions
     image_assets_are_private
     asset = FactoryGirl.create :image_asset
@@ -50,7 +49,6 @@ class AssetsControllerTest < ActionController::TestCase
       delete :destroy, id: asset.id, page_id: page.id
     end
   end
-
 
   private
 

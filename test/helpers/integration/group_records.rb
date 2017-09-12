@@ -1,12 +1,11 @@
 module GroupRecords
-
   def group
     records[:group] ||= FactoryGirl.create(:group)
   end
 
   def public_group_to_pester
     records[:public_group_to_pester] ||= FactoryGirl.create(:group).tap do |pester|
-      pester.grant_access! public: [:view, :pester]
+      pester.grant_access! public: %i[view pester]
     end
   end
 
@@ -21,5 +20,4 @@ module GroupRecords
       pub.grant_access! public: :view
     end
   end
-
 end

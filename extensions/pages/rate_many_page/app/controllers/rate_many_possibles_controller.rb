@@ -11,8 +11,8 @@ class RateManyPossiblesController < Page::BaseController
     return unless params[:sort_list].present?
     ids = params[:sort_list]
     @poll.possibles.each do |possible|
-      position = ids.index( possible.id.to_s )
-      possible.update_attribute('position',position+1) if position
+      position = ids.index(possible.id.to_s)
+      possible.update_attribute('position', position + 1) if position
     end
     render nothing: true
   end
@@ -56,5 +56,4 @@ class RateManyPossiblesController < Page::BaseController
     return true unless @page
     @poll = @page.data
   end
-
 end

@@ -1,10 +1,8 @@
 class Me::ProfileController < Me::BaseController
-
   before_filter :fetch_profile
   helper :profile
 
-  def edit
-  end
+  def edit; end
 
   def update
     if params[:clear_photo]
@@ -24,7 +22,6 @@ class Me::ProfileController < Me::BaseController
 
   def profile_params
     params[:profile].permit :place, :organization, :role, :summary,
-      {:picture => [:upload]}
+                            picture: [:upload]
   end
 end
-

@@ -9,7 +9,7 @@ class RemoveIsCouncil < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :groups, :is_council, :boolean, :default => false
+    add_column :groups, :is_council, :boolean, default: false
     Group.connection.execute("
       UPDATE `groups`
       SET `is_council` = 1

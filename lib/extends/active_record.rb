@@ -2,16 +2,13 @@ require 'rubygems'
 require 'active_record'
 
 ActiveRecord::Base.class_eval do
-
   #
   # Crabgrass uses exceptions in most places to display error messages.
   # This method adds an easy way to generate RecordInvalid exceptions
   # without attempting to save the record (e.g. save!)
   #
   def validate!
-    unless valid?
-      raise ActiveRecord::RecordInvalid.new(self)
-    end
+    raise ActiveRecord::RecordInvalid.new(self) unless valid?
   end
 
   # used to automatically apply greencloth to a field and store it in another field.
@@ -26,24 +23,24 @@ ActiveRecord::Base.class_eval do
   #
   # Will pass :lite_mode as an option to GreenCloth.
   #
-  def self.format_attribute(attr_name, flags={})
+  def self.format_attribute(attr_name, flags = {})
     flags[:options] ||= []
-    #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
-    define_method("#{attr_name}_html") {
+    # class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
+    define_method("#{attr_name}_html") do
       super().try.html_safe
-    }
+    end
     before_save :"format_#{attr_name}"
-    define_method("format_#{attr_name}") {
+    define_method("format_#{attr_name}") do
       return unless formatted_attribute_needs_update?(attr_name)
-      plain = send("#{attr_name}").strip
+      plain = send(attr_name.to_s).strip
       context = respond_to?('owner_name') ? owner_name : 'page'
       value = GreenCloth.new(plain, context, flags[:options]).to_html
       send("#{attr_name}_html=", value)
-    }
+    end
   end
 
   def formatted_attribute_needs_update?(attr_name)
-    return false if send("#{attr_name}").blank?
+    return false if send(attr_name.to_s).blank?
     return true if send("#{attr_name}_html").blank?
     send("#{attr_name}_changed?") && !send("#{attr_name}_html_changed?")
   end
@@ -52,7 +49,7 @@ ActiveRecord::Base.class_eval do
   def self.serialize_default(attr_name, default_object)
     attr_name = attr_name.to_sym
 
-    self.send :define_method, attr_name do
+    send :define_method, attr_name do
       read_attribute(attr_name) || write_attribute(attr_name, default_object.clone)
     end
   end
@@ -66,11 +63,10 @@ ActiveRecord::Base.class_eval do
     self.class.quote_sql(condition)
   end
 
-
   # used by STI models to name fields appropriately
   # alias_attr :user, :object
   def self.alias_attr(new, old)
-    if self.method_defined? old
+    if method_defined? old
       alias_method new, old
       alias_method "#{new}=", "#{old}="
       define_method("#{new}_id")   { read_attribute("#{old}_id") }
@@ -90,8 +86,6 @@ ActiveRecord::Base.class_eval do
     yield
     self.class.record_timestamps = true
   end
-
-
 
   #
   # This is an intervention into how activerecord deals with STI (single table
@@ -114,12 +108,14 @@ ActiveRecord::Base.class_eval do
   # Returns the class type of the record using the current module as a prefix. So descendants of
   # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
   #
+
   protected
+
   def self.compute_type_with_page_fallback(type_name)
     compute_type_without_page_fallback(type_name)
   rescue NameError => e
     if type_name =~ /Page$/
-      ActiveSupport::Dependencies.constantize("DiscussionPage")
+      ActiveSupport::Dependencies.constantize('DiscussionPage')
     else
       raise e
     end
@@ -138,7 +134,6 @@ ActiveRecord::Base.class_eval do
   class << self
     alias_method_chain :compute_type, :page_fallback
   end
-
 end
 
 #
@@ -180,7 +175,7 @@ module ActiveRecord
           stream.puts %(  execute "CREATE INDEX #{index.name} ON #{index.table} (#{index_parts.join(',')})")
         else
           stream.print "  add_index #{index.table.inspect}, #{index.columns.inspect}, :name => #{index.name.inspect}"
-          stream.print ", :unique => true" if index.unique
+          stream.print ', :unique => true' if index.unique
           stream.puts
         end
       end
@@ -193,7 +188,6 @@ module ActiveRecord::AttributeMethods::ClassMethods
   def create_time_zone_conversion_attribute?(name, column)
     # FIXME: this is a hack!
     skip_time_zone_conversion_for_attributes ||= []
-    time_zone_aware_attributes && !skip_time_zone_conversion_for_attributes.include?(name.to_sym) && [:datetime, :timestamp].include?(column.type)
+    time_zone_aware_attributes && !skip_time_zone_conversion_for_attributes.include?(name.to_sym) && %i[datetime timestamp].include?(column.type)
   end
 end
-

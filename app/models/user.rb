@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   ##
   ## CORE EXTENSIONS
   ##
@@ -22,16 +21,15 @@ class User < ActiveRecord::Base
   include Crabgrass::Validations
   validates_handle :login, unless: :ghost?
 
-
   before_validation :validates_receive_notifications
 
   def validates_receive_notifications
-    self.receive_notifications = nil if ! ['Single', 'Digest'].include?(self.receive_notifications)
+    self.receive_notifications = nil unless %w[Single Digest].include?(receive_notifications)
   end
 
   validates :email,
-    email_format: {allow_blank: true},
-    presence: {if: :should_validate_email}
+            email_format: { allow_blank: true },
+            presence: { if: :should_validate_email }
 
   def should_validate_email
     return false if ghost?
@@ -43,7 +41,7 @@ class User < ActiveRecord::Base
   ##
 
   def self.recent
-    order('users.created_at DESC').where("users.created_at > ?", 2.weeks.ago)
+    order('users.created_at DESC').where('users.created_at > ?', 2.weeks.ago)
   end
 
   # this is a little mysql magic to get what we want:
@@ -69,22 +67,21 @@ class User < ActiveRecord::Base
 
   def self.alphabetized(letter = nil)
     if letter == '#'
-      conditions = ['login REGEXP ?', "^[^a-z]"]
-    elsif not letter.blank?
+      conditions = ['login REGEXP ?', '^[^a-z]']
+    elsif !letter.blank?
       conditions = ['login LIKE ?', "#{letter}%"]
     end
     where(conditions).alphabetic_order
   end
 
   def self.named_like(filter)
-    where "users.login LIKE ? OR users.display_name LIKE ?",
-      filter, filter
+    where 'users.login LIKE ? OR users.display_name LIKE ?',
+          filter, filter
   end
 
   ##
   ## USER IDENTITY
   ##
-
 
   def cache_key
     "user/#{id}-#{version}"
@@ -96,12 +93,10 @@ class User < ActiveRecord::Base
   before_validation :clean_names
 
   def clean_names
-    write_attribute(:login, (read_attribute(:login)||'').downcase)
+    write_attribute(:login, (read_attribute(:login) || '').downcase)
 
     t_name = read_attribute(:display_name)
-    if t_name
-      write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
-    end
+    write_attribute(:display_name, t_name.gsub(/[&<>]/, '')) if t_name
   end
 
   before_save :display_name_update
@@ -135,25 +130,26 @@ class User < ActiveRecord::Base
 
   # the user's handle, in same namespace as group name,
   # must be url safe.
-  def name; login; end
+  def name
+    login
+  end
 
   # displays both display_name and name
   def both_names
     if read_attribute('display_name').present? && read_attribute('display_name') != name
-      '%s (%s)' % [display_name,name]
+      format('%s (%s)', display_name, name)
     else
       name
     end
   end
-  alias :to_s :both_names   # used for indexing
+  alias to_s both_names # used for indexing
 
   def cut_name
     name[0..20]
   end
 
-
   def to_param
-    return login
+    login
   end
 
   def path
@@ -161,8 +157,8 @@ class User < ActiveRecord::Base
   end
 
   def banner_style
-    #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
-    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
+    # @style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
+    @style ||= Style.new(color: '#eef', background_color: '#1B5790')
   end
 
   def online?
@@ -181,7 +177,7 @@ class User < ActiveRecord::Base
   #
   def ghostify!
     update_attribute :type, 'Ghost'
-    User.find(self.id)
+    User.find(id)
   end
 
   # overwritten in user_ghost
@@ -196,15 +192,14 @@ class User < ActiveRecord::Base
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
 
   has_one :public_profile,
-    -> { where stranger: true },
-    as: 'entity',
-    class_name: 'Profile'
-
+          -> { where stranger: true },
+          as: 'entity',
+          class_name: 'Profile'
 
   has_one :private_profile,
-    -> { where friend: true },
-    as: 'entity',
-    class_name: 'Profile'
+          -> { where friend: true },
+          as: 'entity',
+          class_name: 'Profile'
 
   ##
   ## USER SETTINGS
@@ -214,7 +209,7 @@ class User < ActiveRecord::Base
 
   # allow us to call user.setting.x even if user.setting is nil
   def setting_with_safety(*args)
-    setting_without_safety(*args) or User::Setting.new;
+    setting_without_safety(*args) or User::Setting.new
   end
   alias_method_chain :setting, :safety
 
@@ -231,7 +226,7 @@ class User < ActiveRecord::Base
   # and email when someone sends them a page notification
   # message.
   def wants_notification_email?
-    self.email.present?
+    email.present?
   end
 
   ##
@@ -239,10 +234,9 @@ class User < ActiveRecord::Base
   ##
 
   has_many :task_participations,
-    class_name: 'Task::Participation',
-    dependent: :destroy
+           class_name: 'Task::Participation',
+           dependent: :destroy
   has_many :tasks, through: :task_participations do
-
     def pending
       where('completed_at IS NULL')
     end
@@ -274,14 +268,13 @@ class User < ActiveRecord::Base
     rating_for(rateable) ? true : false
   end
 
-
   ##
   ## PERMISSIONS
   ##
 
   # keyring_code used by castle_gates and pathfinder
   def keyring_code
-    "%04d" % "1#{id}"
+    format('%04d', "1#{id}")
   end
 
   # all codes of the entities I have access to:
@@ -289,9 +282,9 @@ class User < ActiveRecord::Base
     codes = [0] # public
     return codes if new_record?
     codes << keyring_code.to_i # me
-    codes.concat friend_id_cache.map{|id| "7#{id}".to_i} # friends
-    codes.concat all_group_id_cache.map{|id| "8#{id}".to_i} # peers
-    codes.concat peer_id_cache.map{|id| "9#{id}".to_i} # groups
+    codes.concat friend_id_cache.map { |id| "7#{id}".to_i } # friends
+    codes.concat all_group_id_cache.map { |id| "8#{id}".to_i } # peers
+    codes.concat peer_id_cache.map { |id| "9#{id}".to_i } # groups
   end
 
   # Returns true if self has the specified level of access on the protected thing.
@@ -305,11 +298,9 @@ class User < ActiveRecord::Base
   # we in-memory cache the result.
   #
   def may?(perm, protected_thing)
-    begin
-      may!(perm, protected_thing)
-    rescue PermissionDenied
-      false
-    end
+    may!(perm, protected_thing)
+  rescue PermissionDenied
+    false
   end
 
   def may!(perm, protected_thing)
@@ -317,7 +308,7 @@ class User < ActiveRecord::Base
     return true if protected_thing.new_record?
     # users may perform all actions on themselves
     return true if self == protected_thing
-    key = "#{protected_thing}"
+    key = protected_thing.to_s
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
@@ -332,7 +323,7 @@ class User < ActiveRecord::Base
       @access[key] ||= {}
       @access[key][perm] = result
     end
-    result or raise PermissionDenied.new("Permission denied!")
+    result or raise PermissionDenied.new('Permission denied!')
   end
 
   #
@@ -365,5 +356,4 @@ class User < ActiveRecord::Base
       end
     end
   end
-
 end

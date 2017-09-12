@@ -4,23 +4,22 @@
 # posts is currently used in routes from the moderation mod.
 #
 unless defined?(FORBIDDEN_NAMES)
-  FORBIDDEN_NAMES = %w{
+  FORBIDDEN_NAMES = %w[
     account admin none assets avatars chat code debug do groups
     javascripts me networks page pages people pictures places posts
     issues session static stats stylesheets theme wikis
-  }
+  ].freeze
 end
 
 #  See http://guides.rubyonrails.org/v3.1.0/routing.html
 
 Crabgrass::Application.routes.draw do
-
   ##
   ## CRON JOBS
   ##
 
   post '/do/cron/run(/:id)', to: 'cron#run', format: false,
-    constraints: {ip: /127.0.0.1/}
+                             constraints: { ip: /127.0.0.1/ }
 
   ##
   ## STATIC FILES AND ASSETS
@@ -29,18 +28,18 @@ Crabgrass::Application.routes.draw do
   # same as the asset_path without
   resources :assets, only: [:destroy], as: 'destroy_asset'
   get '/assets/:id/versions/:version/*path',
-    to: 'assets#show',
-    as: 'asset_version'
+      to: 'assets#show',
+      as: 'asset_version'
   get '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
 
   scope format: false do
-    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar', constraints: {size: /#{Avatar::SIZES.keys.join('|')}/}
+    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar', constraints: { size: /#{Avatar::SIZES.keys.join('|')}/ }
     get 'theme/:name/*file.css', to: 'theme#show'
   end
 
   get 'pictures/:id1/:id2(/:geometry)',
-    to: 'pictures#show',
-    as: 'pictures'
+      to: 'pictures#show',
+      as: 'pictures'
 
   ##
   ## ME
@@ -48,22 +47,22 @@ Crabgrass::Application.routes.draw do
 
   namespace 'me' do
     delete 'notices/destroy_all', to: 'notices#destroy_all', as: 'notices_destroy_all'
-    resources :notices, only: [:index, :show, :destroy]
+    resources :notices, only: %i[index show destroy]
     get '', to: 'notices#index', as: 'home'
     # resource  :page, only: [:new, :create]
     resources :recent_pages, only: [:index]
-    match 'pages(/*path)', to: 'pages#index', as: 'pages', via: [:get, :post]
+    match 'pages(/*path)', to: 'pages#index', as: 'pages', via: %i[get post]
     resources :discussions, path: 'messages', only: :index do
       resources :posts, except: [:new]
     end
-    resource  :settings, only: [:show, :update]
-    resource  :destroy, only: [:show, :update]
-    resource  :password, only: [:edit, :update]
-    resources :permissions, only: [:index, :update]
-    resource  :profile, controller: 'profile', only: [:edit, :update]
-    resources :requests, only: [:index, :update, :destroy, :show]
+    resource  :settings, only: %i[show update]
+    resource  :destroy, only: %i[show update]
+    resource  :password, only: %i[edit update]
+    resources :permissions, only: %i[index update]
+    resource  :profile, controller: 'profile', only: %i[edit update]
+    resources :requests, only: %i[index update destroy show]
     # resources :events, only: [:index]
-    resource :avatar, only: [:create, :edit, :update, :destroy]
+    resource :avatar, only: %i[create edit update destroy]
     resources :tasks, only: [:index]
   end
 
@@ -80,20 +79,18 @@ Crabgrass::Application.routes.draw do
   ## ACCOUNT
   ##
 
-  resource :account, only: [:new, :create]
+  resource :account, only: %i[new create]
   match 'account/reset_password(/:token)',
-    as: 'reset_password',
-    to: 'accounts#reset_password',
-    via: [:get, :post]
-
+        as: 'reset_password',
+        to: 'accounts#reset_password',
+        via: %i[get post]
 
   post 'session/language', as: 'language', to: 'session#language'
-  post 'session/login', as: 'login',  to: 'session#login'
+  post 'session/login', as: 'login', to: 'session#login'
   post 'session/logout', as: 'logout', to: 'session#logout'
   # ajax login form
-  get   'session/login_form', as: 'login_form', to: 'session#login_form',
-    constraints: lambda{|request| request.xhr?}
-
+  get 'session/login_form', as: 'login_form', to: 'session#login_form',
+                            constraints: ->(request) { request.xhr? }
 
   ##
   ## ENTITIES
@@ -101,22 +98,22 @@ Crabgrass::Application.routes.draw do
 
   # autocomplete queries, restricted to ajax
   resources :entities, only: [:index],
-    constraints: lambda{|request| request.xhr?}
+                       constraints: ->(request) { request.xhr? }
 
   ##
   ## PEOPLE
   ##
 
   match 'people/directory(/*path)',
-    as: 'people_directory',
-    to: 'person/directory#index',
-    via: [:get, :post]
+        as: 'people_directory',
+        to: 'person/directory#index',
+        via: %i[get post]
 
   resources :people, module: 'person', controller: 'home', only: :show do
-    resource  :home, only: :show, controller: 'home'
-    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
+    resource :home, only: :show, controller: 'home'
+    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: %i[get post]
     # resources :messages
-    resource :friend_request, only: [:new, :create, :destroy]
+    resource :friend_request, only: %i[new create destroy]
   end
 
   ##
@@ -126,26 +123,26 @@ Crabgrass::Application.routes.draw do
   get 'networks/directory(/*path)', as: 'networks_directory', to: 'group/directory#index'
   get 'groups/directory(/*path)', as: 'groups_directory', to: 'group/directory#index'
 
-  resources :groups, module: 'group', only: [:new, :create, :destroy] do
+  resources :groups, module: 'group', only: %i[new create destroy] do
     # content related
-    resource  :home, only: [:show], controller: 'home'
-    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: [:get, :post]
-    resource  :avatar, only: [:create, :edit, :update]
-    resources :wikis, only: [:create, :index]
+    resource :home, only: [:show], controller: 'home'
+    match 'pages(/*path)', as: 'pages', to: 'pages#index', via: %i[get post]
+    resource  :avatar, only: %i[create edit update]
+    resources :wikis, only: %i[create index]
 
     # membership related
-    resources :memberships, only: [:index, :create, :destroy]
-    resources :my_memberships, only: [:create, :destroy]
-    resources :membership_requests , except: [:new, :edit]
-    resource  :invite, only: [:new, :create]
+    resources :memberships, only: %i[index create destroy]
+    resources :my_memberships, only: %i[create destroy]
+    resources :membership_requests, except: %i[new edit]
+    resource  :invite, only: %i[new create]
 
     # settings related
-    resource  :settings, only: [:show, :update]
-    resources :requests , except: [:new, :edit]
-    resources :permissions, only: [:index, :update]
-    resource  :profile, only: [:edit, :update]
-    resource  :structure, only: [:show, :new, :create, :update]
- end
+    resource  :settings, only: %i[show update]
+    resources :requests, except: %i[new edit]
+    resources :permissions, only: %i[index update]
+    resource  :profile, only: %i[edit update]
+    resource  :structure, only: %i[show new create update]
+  end
 
   ##
   ## DEBUGGING
@@ -164,45 +161,45 @@ Crabgrass::Application.routes.draw do
 
   # default page creator
   get '/pages/create(/:owner(/:type))',
-    as: 'page_creation',
-    to: 'page/create#new'
+      as: 'page_creation',
+      to: 'page/create#new'
   post '/pages/create(/:owner(/:type))',
-    to: 'page/create#create'
+       to: 'page/create#create'
 
   # base page
-  resources :pages, module: 'page', controller: 'base', only: [] do |pages|
-    resources :participations, only: [:index, :update, :create]
-    #resources :changes
-    resources :assets, only: [:index, :update, :create]
-    resources :tags, only: [:index, :create, :destroy, :show]
+  resources :pages, module: 'page', controller: 'base', only: [] do |_pages|
+    resources :participations, only: %i[index update create]
+    # resources :changes
+    resources :assets, only: %i[index update create]
+    resources :tags, only: %i[index create destroy show]
     resources :posts, except: [:new]
 
     # page sidebar/popup controllers:
     resource :sidebar,    only: [:show]
-    resource :share,      only: [:show, :update],
-      constraints: lambda{|request| request.xhr?}
+    resource :share,      only: %i[show update],
+                          constraints: ->(request) { request.xhr? }
     resource :details,    only: [:show]
     resource :history,    only: [:show], controller: 'history'
     resource :attributes, only: [:update]
-    resource :title,      only: [:edit, :update], controller: 'title'
-    resource :trash,      only: [:edit, :update], controller: 'trash'
+    resource :title,      only: %i[edit update], controller: 'title'
+    resource :trash,      only: %i[edit update], controller: 'trash'
   end
 
-  resources :posts, only: [] do |posts|
-    resource :star, only: [:create, :destroy]
+  resources :posts, only: [] do |_posts|
+    resource :star, only: %i[create destroy]
   end
 
   ##
   ## WIKI
   ##
 
-  resources :wikis, module: 'wiki', only: [:show, :edit, :update] do
+  resources :wikis, module: 'wiki', only: %i[show edit update] do
     member do
       get 'print'
     end
-    resource :lock, only: [:destroy, :update]
-    resources :assets, only: [:new, :create]
-    resources :versions, only: [:index, :show] do
+    resource :lock, only: %i[destroy update]
+    resources :assets, only: %i[new create]
+    resources :versions, only: %i[index show] do
       member do
         post 'revert'
       end
@@ -221,14 +218,14 @@ Crabgrass::Application.routes.draw do
   ## SPECIAL PATH ROUTES for PAGES and ENTITIES
   ##
 
-  resources :contexts, path: "", only: :show do
-    resources :pages, path: "",
-      controller: :context_pages,
-      only: [:show, :edit] do
-        member do
-          get 'print'
-        end
+  resources :contexts, path: '', only: :show do
+    resources :pages, path: '',
+                      controller: :context_pages,
+                      only: %i[show edit] do
+      member do
+        get 'print'
       end
+    end
   end
 
   #
@@ -240,13 +237,11 @@ Crabgrass::Application.routes.draw do
   # Instead we probably want
   # /pages/:page_id/...
   #
-  #scope path: ':context_id/:page_id/:controller' do
+  # scope path: ':context_id/:page_id/:controller' do
   #  resources :context_page_items, path: '' do
   #    collection do
   #      post :sort
   #    end
   #  end
-  #end
-
+  # end
 end
-

@@ -12,9 +12,9 @@ module Crabgrass::Page
           MATCH(page_terms.access_ids, page_terms.tags)
           AGAINST (? IN BOOLEAN MODE)
         EOSQL
-        select("#{table_name}.*").
-          joins(:page_terms).
-          where access_filter_sql, access_filter
+        select("#{table_name}.*")
+          .joins(:page_terms)
+          .where access_filter_sql, access_filter
       end
 
       def most_recent
@@ -23,7 +23,7 @@ module Crabgrass::Page
 
       def exclude_ids(ids)
         if ids.any? and ids.is_a? Array
-          {conditions: ["#{table_name}.id NOT IN (?)", ids]}
+          { conditions: ["#{table_name}.id NOT IN (?)", ids] }
         else
           {}
         end
@@ -31,13 +31,14 @@ module Crabgrass::Page
     end
 
     included do
-
       # ruby has unexpected syntax for checking if Page is a superclass
       unless self <= ::Page
         has_many :pages, as: :data
         belongs_to :page_terms,
-          class_name: 'Page::Terms'
-        def page; pages.first; end
+                   class_name: 'Page::Terms'
+        def page
+          pages.first
+        end
       end
 
       before_save :ensure_page_terms
@@ -53,10 +54,9 @@ module Crabgrass::Page
     protected
 
     def ensure_page_terms
-      if self.page_terms.nil?
-        self.page_terms = self.page.page_terms if self.page
+      if page_terms.nil?
+        self.page_terms = page.page_terms if page
       end
     end
-
   end
 end

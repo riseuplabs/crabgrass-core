@@ -30,27 +30,26 @@ class Group::Federating < ActiveRecord::Base
   validate :group_is_not_network, on: :create
   validate :group_is_not_network_committee, on: :create
 
-
   # optional
   belongs_to :council, class_name: 'Group'
   belongs_to :delegation, class_name: 'Group'
 
-  alias :entity :group
+  alias entity group
 
   # this does not deal with users - in contrast to Memberships
-  def user?; false; end
+  def user?
+    false
+  end
 
   protected
 
   def group_is_not_network
-    if group.network?
-      errors.add(:group, "may not be a network.")
-    end
+    errors.add(:group, 'may not be a network.') if group.network?
   end
 
   def group_is_not_network_committee
     if group.committee? && group.parent.network?
-      errors.add(:group, "may not be a networks committee.")
+      errors.add(:group, 'may not be a networks committee.')
     end
   end
 end

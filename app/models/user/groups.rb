@@ -18,15 +18,13 @@ module User::Groups
   extend ActiveSupport::Concern
 
   included do
-
     has_many :memberships, foreign_key: 'user_id',
-      class_name: 'Group::Membership',
-      dependent: :destroy,
-      before_add: :check_duplicate_memberships
+                           class_name: 'Group::Membership',
+                           dependent: :destroy,
+                           before_add: :check_duplicate_memberships
 
     has_many :groups, foreign_key: 'user_id', through: :memberships do
-
-      def <<(*dummy)
+      def <<(*_dummy)
         raise "don't call << on user.groups"
       end
 
@@ -40,18 +38,18 @@ module User::Groups
       end
 
       def by_visited
-        self.order('memberships.visited_at DESC')
+        order('memberships.visited_at DESC')
       end
 
       # groups we have visited most recently, including their parent groups.
-      def recently_active(options={})
+      def recently_active(options = {})
         options[:limit] ||= 20
-        grps = self.by_visited.
-          limit(options[:limit]).
-          includes(:parent).
-          to_a
+        grps = by_visited
+               .limit(options[:limit])
+               .includes(:parent)
+               .to_a
         grps += grps.map(&:parent).compact
-        grps.sort_by{|g|g.name}.uniq{|g|g.name}
+        grps.sort_by(&:name).uniq(&:name)
       end
     end
 
@@ -63,35 +61,35 @@ module User::Groups
     # including committees only when necessary. primary_groups_and_networks is the same
     # but it includes networks in addition to just groups.
     has_many :primary_groups,
-      ->(owner) { where owner.primary_groups_condition },
-      class_name: 'Group',
-      through: :memberships,
-      source: :group
+             ->(owner) { where owner.primary_groups_condition },
+             class_name: 'Group',
+             through: :memberships,
+             source: :group
 
     has_many :primary_networks,
-      -> { where type: 'Network' },
-      class_name: 'Group',
-      through: :memberships,
-      source: :group
+             -> { where type: 'Network' },
+             class_name: 'Group',
+             through: :memberships,
+             source: :group
 
     has_many :primary_groups_and_networks,
-      ->(owner) { where owner.primary_groups_and_networks_condition },
-      class_name: 'Group',
-      through: :memberships,
-      source: :group
+             ->(owner) { where owner.primary_groups_and_networks_condition },
+             class_name: 'Group',
+             through: :memberships,
+             source: :group
 
     # just groups and networks the user is a member of, no committees.
     has_many :groups_and_networks,
-      -> { where GROUPS_AND_NETWORKS_CONDITION },
-      class_name: 'Group',
-      through: :memberships,
-      source: :group
+             -> { where GROUPS_AND_NETWORKS_CONDITION },
+             class_name: 'Group',
+             through: :memberships,
+             source: :group
 
     serialize_as IntArray,
-      :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
+                 :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
 
     initialized_by :update_membership_cache,
-      :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
+                   :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache
   end
 
   #
@@ -124,7 +122,7 @@ module User::Groups
   # (or any of the associated groups)
   def member_of?(group)
     if group.is_a? Array
-      group.detect{|g| member_of?(g)}
+      group.detect { |g| member_of?(g) }
     elsif group.is_a? Integer
       all_group_ids.include?(group)
     elsif group.is_a? Group
@@ -135,7 +133,7 @@ module User::Groups
   # is the user a direct member of the group?
   def direct_member_of?(group)
     if group.is_a? Array
-      group.detect{|g| direct_member_of?(g)}
+      group.detect { |g| direct_member_of?(g) }
     elsif group.is_a? Integer
       group_ids.include?(group)
     elsif group.is_a? Group
@@ -147,7 +145,7 @@ module User::Groups
   # returns true if and only if the group has a council and the user is a member of it.
   #
   def council_member_of?(group)
-    group.has_a_council? && self.direct_member_of?(group.council)
+    group.has_a_council? && direct_member_of?(group.council)
   end
 
   #
@@ -156,21 +154,19 @@ module User::Groups
   def longterm_member_of?(group)
     if group.created_at > 1.week.ago
       member_of?(group)
-    elsif membership = group.memberships.find_by_user_id(self.id)
+    elsif membership = group.memberships.find_by_user_id(id)
       membership.created_at < 1.week.ago
     end
   end
 
   def check_duplicate_memberships(membership)
-    if self.group_ids.include?(membership.group_id)
+    if group_ids.include?(membership.group_id)
       raise AssociationError.new(I18n.t(:invite_error_already_member))
     end
   end
 
   private
 
-  GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'
-  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
-
+  GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'.freeze
+  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'.freeze
 end
-

@@ -7,11 +7,10 @@ class AdminMailer < Mailer
     mail from: @from_address, to: user.email, subject: @subject
   end
 
-
   def notify_inappropriate(user, options)
     setup(options)
     setup_user(user)
-    @subject += "Inappropriate Content"
+    @subject += 'Inappropriate Content'
     @message = options[:body]
     @url = link(options[:url])
     @owner = options[:owner]
@@ -21,8 +20,7 @@ class AdminMailer < Mailer
   protected
 
   def setup_user(user)
-    @subject    = @site.title + ": "
+    @subject = @site.title + ': '
     @user = user
   end
-
 end

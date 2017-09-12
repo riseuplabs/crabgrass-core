@@ -1,5 +1,4 @@
 class AddCaptionToAssets < ActiveRecord::Migration
-
   def self.up
     add_column :assets, :caption,  :string
     add_column :assets, :taken_at, :datetime
@@ -11,5 +10,4 @@ class AddCaptionToAssets < ActiveRecord::Migration
     remove_column :assets, :taken_at
     remove_column :assets, :credit
   end
-
 end

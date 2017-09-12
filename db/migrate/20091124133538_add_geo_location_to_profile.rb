@@ -1,6 +1,6 @@
 class AddGeoLocationToProfile < ActiveRecord::Migration
   def self.up
-    add_column :profiles, :geo_location_id, :int, :limit => 11
+    add_column :profiles, :geo_location_id, :int, limit: 11
   end
 
   def self.down

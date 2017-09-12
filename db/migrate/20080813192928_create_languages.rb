@@ -5,8 +5,8 @@ class CreateLanguages < ActiveRecord::Migration
       t.string :code
       t.timestamps
     end
-    add_index(:languages, [:name,:code], { :name => 'languages_index', :unique => true })
-    add_column :groups, :language, :string, :limit => 5
+    add_index(:languages, %i[name code], name: 'languages_index', unique: true)
+    add_column :groups, :language, :string, limit: 5
   end
 
   def self.down

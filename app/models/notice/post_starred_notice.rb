@@ -1,11 +1,10 @@
 class Notice::PostStarredNotice < Notice
-
   alias_attr :post, :noticable
   attr_accessor :from
 
   def display_title
     I18n.t :activity_twinkled,
-      user: data[:from], post: display_body.truncate(39)
+           user: data[:from], post: display_body.truncate(39)
   end
 
   def display_body_as_quote?
@@ -13,7 +12,7 @@ class Notice::PostStarredNotice < Notice
   end
 
   def display_body
-    noticable.try.body || ""
+    noticable.try.body || ''
   end
 
   def redirect_path
@@ -27,8 +26,6 @@ class Notice::PostStarredNotice < Notice
   before_create :encode_data
   def encode_data
     self.avatar_id = from.try.avatar_id
-    self.data = {from: from.try.name}
+    self.data = { from: from.try.name }
   end
-
 end
-

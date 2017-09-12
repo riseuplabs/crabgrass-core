@@ -4,7 +4,9 @@
 # or a vote can be a rating (0 to 5 for example) for every possibility
 class Poll < ActiveRecord::Base
   has_many :pages, as: :data
-  def page; pages.first; end
+  def page
+    pages.first
+  end
 
   has_many :possibles, dependent: :destroy
 end

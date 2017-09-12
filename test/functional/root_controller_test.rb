@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class RootControllerTest < ActionController::TestCase
-
-
   def test_show
     get :index
     assert_response :success

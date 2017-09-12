@@ -1,10 +1,9 @@
 require 'test_helper'
 
 class Group::HomeControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user!(@user)
     @pub = @group.profiles.public.create_wiki body: 'hello'
     @priv = @group.profiles.private.create_wiki body: 'pssst'
@@ -65,5 +64,4 @@ class Group::HomeControllerTest < ActionController::TestCase
       end
     end
   end
-
 end

@@ -47,7 +47,7 @@ class Page::CreateController < ApplicationController
   # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
-  def initialize(seed={})
+  def initialize(seed = {})
     super()
     @user  = seed[:user]   # the user context, if any
     @group = seed[:group]  # the group context, if any
@@ -66,9 +66,9 @@ class Page::CreateController < ApplicationController
   def catch_cancel
     if params[:cancel]
       redirect_to new_page_url(params.slice(:owner))
-      return false
+      false
     else
-      return true
+      true
     end
   end
 
@@ -76,9 +76,9 @@ class Page::CreateController < ApplicationController
   # options for the form
   #
   def init_options
-    @form_sections = ['title', 'summary', 'tags']
+    @form_sections = %w[title summary tags]
     @multipart     = false
-    return true
+    true
   end
 
   def set_owner
@@ -119,30 +119,30 @@ class Page::CreateController < ApplicationController
     render template: 'page/create/new'
   end
 
-#  def create_page
-#    begin
-#      # create basic page instance
-#      @page = build_new_page
+  #  def create_page
+  #    begin
+  #      # create basic page instance
+  #      @page = build_new_page
 
-#      # setup the data (done by subclasses)
-#      @data = build_page_data
-#      raise ActiveRecord::RecordInvalid.new(@data) if @data and !@data.valid?
+  #      # setup the data (done by subclasses)
+  #      @data = build_page_data
+  #      raise ActiveRecord::RecordInvalid.new(@data) if @data and !@data.valid?
 
-#      # save the page (also saves the data)
-#      @page.data = @data
-#      @page.save!
+  #      # save the page (also saves the data)
+  #      @page.data = @data
+  #      @page.save!
 
-#      # success!
-#      return redirect_to(page_url(@page))
+  #      # success!
+  #      return redirect_to(page_url(@page))
 
-#    rescue exc
-#      # failure!
-#      destroy_page_data
-#      # in case page gets saved before the exception happens
-#      @page.destroy if @page and !@page.new_record?
-#      raise exc
-#    end
-#  end
+  #    rescue exc
+  #      # failure!
+  #      destroy_page_data
+  #      # in case page gets saved before the exception happens
+  #      @page.destroy if @page and !@page.new_record?
+  #      raise exc
+  #    end
+  #  end
 
   #
   # method to build the unsaved page object, with correct access.
@@ -154,9 +154,9 @@ class Page::CreateController < ApplicationController
 
   def build_params
     page_params.merge access: access_param,
-      share_with: params[:recipients],
-      owner: @owner,
-      user: current_user
+                      share_with: params[:recipients],
+                      owner: @owner,
+                      user: current_user
   end
 
   def page_params
@@ -165,7 +165,7 @@ class Page::CreateController < ApplicationController
 
   def access_param
     access = page_params[:access].to_s
-    if %w/admin edit view/.include?(access)
+    if %w[admin edit view].include?(access)
       access.to_sym
     else
       Conf.default_page_access
@@ -173,35 +173,32 @@ class Page::CreateController < ApplicationController
   end
 
   def param_to_page_class(param)
-    if param
-      Page.param_id_to_class(param)
-    end
+    Page.param_id_to_class(param) if param
   end
 
-  #def extra_form_sections(options)
+  # def extra_form_sections(options)
   #  @extra_form_sections << options[:add] if options[:add]
   #  @extra_form_sections.delete(options[:remove) if options[:remove]
-  #end
+  # end
   #
-  #def remove_form_section(section)
+  # def remove_form_section(section)
   #  @basic_form_sections.delete(section)
-  #end
+  # end
 
+  #  # returns a new data object for page initialization.
+  #  # subclasses override this to build their own data objects
+  #  def build_page_data
+  #    # if something goes terribly wrong with the data do this:
+  #    # @page.errors.add :base, I18n.t(:terrible_wrongness)
+  #    # raise ActiveRecord::RecordInvalid.new(@page)
+  #    # return new data if everything goes well
+  #  end
 
-#  # returns a new data object for page initialization.
-#  # subclasses override this to build their own data objects
-#  def build_page_data
-#    # if something goes terribly wrong with the data do this:
-#    # @page.errors.add :base, I18n.t(:terrible_wrongness)
-#    # raise ActiveRecord::RecordInvalid.new(@page)
-#    # return new data if everything goes well
-#  end
-
-#  def destroy_page_data
-#    if @data and !@data.new_record?
-#      @data.destroy
-#    end
-#  end
+  #  def destroy_page_data
+  #    if @data and !@data.new_record?
+  #      @data.destroy
+  #    end
+  #  end
 
   def setup_context
     case @owner
@@ -212,6 +209,4 @@ class Page::CreateController < ApplicationController
     end
     super
   end
-
 end
-

@@ -19,9 +19,7 @@ class Group::DirectoryController < ApplicationController
   protected
 
   def set_default_path
-    if params[:path].empty?
-      params[:path] = default_path
-    end
+    params[:path] = default_path if params[:path].empty?
   end
 
   def default_path
@@ -71,4 +69,3 @@ class Group::DirectoryController < ApplicationController
     end
   end
 end
-

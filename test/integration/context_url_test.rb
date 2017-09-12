@@ -4,7 +4,6 @@ require 'integration_test'
 # Tests for the special shortcut urls based on contexts
 #
 class ContextUrlTest < IntegrationTest
-
   def test_group_page
     login users(:blue)
     visit '/rainbow/rainbow_page'
@@ -40,5 +39,4 @@ class ContextUrlTest < IntegrationTest
     visit '/rainbow/new_rainbow_page'
     assert_content 'could not find'
   end
-
 end

@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class Page::ShareTest < ActiveSupport::TestCase
-
-
-
   def test_share_hash
     user = users(:kangaroo)
     group = groups(:animals)
@@ -11,7 +8,7 @@ class Page::ShareTest < ActiveSupport::TestCase
     page = Page.create(title: 'x', user: user, access: :admin)
 
     share = Page::Share.new page, user
-    share.with "animals" => {access: "edit"}, "red" => {access: "edit"}
+    share.with 'animals' => { access: 'edit' }, 'red' => { access: 'edit' }
 
     assert group.may?(:edit, page)
     assert !group.may?(:admin, page)
@@ -23,12 +20,12 @@ class Page::ShareTest < ActiveSupport::TestCase
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
-    page = Page.create!(title: 'title', user: creator, share_with: ['red', 'rainbow', 'animals'], access: :admin)
+    page = Page.create!(title: 'title', user: creator, share_with: %w[red rainbow animals], access: :admin)
 
     share = Page::Share.new page, creator,
-      send_notice: true,
-      send_message: 'hi'
-    share.with ['red', 'rainbow', 'animals']
+                            send_notice: true,
+                            send_message: 'hi'
+    share.with %w[red rainbow animals]
     page.save!
     page.reload
 
@@ -36,7 +33,7 @@ class Page::ShareTest < ActiveSupport::TestCase
       creator.may?(:pester, user)
     end
 
-    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+    assert_equal all_users.collect(&:name).sort, page.users.collect(&:name).sort
   end
 
   def test_notify_with_hash
@@ -44,24 +41,24 @@ class Page::ShareTest < ActiveSupport::TestCase
     red = users(:red)
     rainbow = groups(:rainbow)
     page = Page.create!(title: 'title', user: creator,
-     share_with: {"rainbow"=>{"access"=>"admin"}, "red"=>{"access"=>"admin"}},
-     access: :view)
+                        share_with: { 'rainbow' => { 'access' => 'admin' }, 'red' => { 'access' => 'admin' } },
+                        access: :view)
     assert rainbow.may?(:admin, page)
 
     share = Page::Share.new page, creator,
-      "send_notice"=>true,
-      "send_message"=>"",
-      "send_email"=>false
-    share.with "rainbow" => "1", "red"=> "1", ":contributors" => "0"
+                            'send_notice' => true,
+                            'send_message' => '',
+                            'send_email' => false
+    share.with 'rainbow' => '1', 'red' => '1', ':contributors' => '0'
 
     page.save!
     page.reload
 
-    all_users = (groups(:rainbow).users).uniq.select do |user|
+    all_users = groups(:rainbow).users.uniq.select do |user|
       creator.may?(:pester, user)
     end
     all_users << creator
-    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+    assert_equal all_users.collect(&:name).sort, page.users.collect(&:name).sort
   end
 
   # send notification to special symbols :participants or :contributors
@@ -77,8 +74,8 @@ class Page::ShareTest < ActiveSupport::TestCase
     end
 
     # send notice to contributors
-    page.add(users(:penguin),changed_at: Time.now) # simulate contribution
-    page.add(users(:kangaroo),changed_at: Time.now)
+    page.add(users(:penguin), changed_at: Time.now) # simulate contribution
+    page.add(users(:kangaroo), changed_at: Time.now)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(users(:kangaroo).id).changed_at
     assert_difference('Notice::PageNotice.count', 2) do
@@ -89,8 +86,7 @@ class Page::ShareTest < ActiveSupport::TestCase
   protected
 
   def create_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     Page.create(defaults.merge(options))
   end
-
 end

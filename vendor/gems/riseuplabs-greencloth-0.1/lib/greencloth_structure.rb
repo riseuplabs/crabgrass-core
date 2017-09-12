@@ -16,18 +16,18 @@ module GreenclothStructure
   # but be warned that to_html will mangled the string and it will not the
   # original!
   def green_tree
-    unless @green_tree
+    if @green_tree
+      @green_tree
+    else
       extract_headings
       @green_tree = convert_to_tree(@headings)
-    else
-      @green_tree
     end
   end
 
   protected
 
   # called by the formatter whenever it encounters h1..h4 tags
-  def add_heading(indent,text)
+  def add_heading(indent, text)
     text = extract_offtags(text.dup)
     # strip ALL markup, modifies variable text.
     formatter.clean_html(text, {})
@@ -35,13 +35,11 @@ module GreenclothStructure
     @heading_names ||= {}
     if text
       name = text.nameize
-      if @heading_names[name]
-        name = find_available_name(@heading_names, name)
-      end
+      name = find_available_name(@heading_names, name) if @heading_names[name]
       @heading_names[name] = true # mark as taken
       @headings << [indent, text, name]
     end
-    return name
+    name
   end
 
   # called by greencloth when [[toc]] is encountered
@@ -104,10 +102,8 @@ module GreenclothStructure
   def find_available_name(headings, original_name)
     i = 1
     name = original_name
-    while headings[name]
-      name = "#{original_name}_#{i+=1}"
-    end
-    return name
+    name = "#{original_name}_#{i += 1}" while headings[name]
+    name
   end
 
   #  EXAMPLE TOC:
@@ -128,16 +124,15 @@ module GreenclothStructure
   #      <li class="toc2"><a href="#green-beans"><span>2.2</span> Green Beans</a></li>
   #    </ul>
   #  </ul>
-  def generate_toc_html(tree, level, prefix='')
+  def generate_toc_html(tree, level, prefix = '')
     html = ["<ul#{level == 1 ? ' class="toc"' : ''}>"]
-    tree.children.each_with_index do |node,i|
-      number = [prefix, i+1].join
-      link = '<a href="#%s"><span>%s</span> %s</a>' % [node.name, number, node.text]
-      html << '<li class="toc%i">%s</li>' % [level, link]
-      html << generate_toc_html(node.children, level+1, number+'.') unless node.leaf?
+    tree.children.each_with_index do |node, i|
+      number = [prefix, i + 1].join
+      link = format('<a href="#%s"><span>%s</span> %s</a>', node.name, number, node.text)
+      html << format('<li class="toc%i">%s</li>', level, link)
+      html << generate_toc_html(node.children, level + 1, number + '.') unless node.leaf?
     end
-    html << "</ul>"
+    html << '</ul>'
     html.join("\n")
   end
-
 end

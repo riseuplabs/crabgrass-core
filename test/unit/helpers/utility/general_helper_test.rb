@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Common::Utility::GeneralHelperTest < ActionController::TestCase
-
   include ::Common::Utility::GeneralHelper
 
   def test_force_wrap

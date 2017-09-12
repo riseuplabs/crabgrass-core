@@ -1,5 +1,4 @@
 module Mailers::Request
-
   #
   # Send an email to invite some one to a group via email.
   #
@@ -49,6 +48,4 @@ module Mailers::Request
     # @body[:user] = @created_by
     # @body[:group] = @group
   end
-
 end
-

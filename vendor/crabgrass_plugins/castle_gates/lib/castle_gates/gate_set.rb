@@ -6,15 +6,14 @@
 
 module CastleGates
   class GateSet < HashWithIndifferentAccess
-
     #
     # Add a gate to the set.
     #
     def add(gate)
       if self[gate.name]
-        raise Exception.new('gate name "%s" already exists' % gate.name)
+        raise Exception.new(format('gate name "%s" already exists', gate.name))
       elsif id_taken?(gate.id)
-        raise Exception.new('gate id "%s" already exists' % gate.id)
+        raise Exception.new(format('gate id "%s" already exists', gate.id))
       end
       self[gate.name] = gate
     end
@@ -39,25 +38,25 @@ module CastleGates
     #
     # OPTIMIZE: self.values ??
     #
-    def bits(gate_names=nil)
+    def bits(gate_names = nil)
       if gate_names.nil?
         @bits ||= begin
-          gates = self.values
+          gates = values
           gates.inject(0) do |bits_so_far, gate|
             bits_so_far | gate.bit
           end
         end
       else
-        self.select(gate_names).bits
+        select(gate_names).bits
       end
     end
 
     #
     # return true if any gates in this set may be opened by any of the keys
     #
-    #def opened_by?(keys)
+    # def opened_by?(keys)
     #  (bits & ~keys.gate_bitfield) == 0
-    #end
+    # end
 
     #
     # given an array of gate names, return a GateSet that has just the gates
@@ -73,7 +72,7 @@ module CastleGates
           if gate = self[gate_name]
             result[gate_name] = gate
           else
-            raise ArgumentError.new 'bad gate name: %s' % gate_name
+            raise ArgumentError.new format('bad gate name: %s', gate_name)
           end
         end
         result
@@ -85,7 +84,7 @@ module CastleGates
     #
     def invalid_gates(gate_names)
       gate_names = Array(gate_names)
-      gate_names.select {|gate| !valid_gate?(gate)}
+      gate_names.reject { |gate| valid_gate?(gate) }
     end
 
     def valid_gate?(gate)
@@ -95,10 +94,9 @@ module CastleGates
     private
 
     def id_taken?(id)
-      self.values.detect do |gate|
+      values.detect do |gate|
         gate.id == id
       end
     end
-
   end
 end

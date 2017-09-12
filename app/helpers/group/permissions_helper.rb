@@ -1,9 +1,8 @@
 module Group::PermissionsHelper
-
   def publicly_visible_checkbox(form)
     form.row do |r|
       r.input castle_gate_tag(@group, :view, @holders, label: :group_publicly_visible.t(group: @group.group_type))
-      r.info :group_publicly_visible_description.t(domain: current_site.domain,group: @group.group_type.capitalize)
+      r.info :group_publicly_visible_description.t(domain: current_site.domain, group: @group.group_type.capitalize)
     end
   end
 
@@ -72,6 +71,4 @@ module Group::PermissionsHelper
   def group_closed?
     !@group.access?(public: :request_membership)
   end
-
 end
-

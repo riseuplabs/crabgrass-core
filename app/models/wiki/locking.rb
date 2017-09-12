@@ -12,7 +12,6 @@
 #
 #
 module Wiki::Locking
-
   #
   # EXCEPTIONS
   #
@@ -101,9 +100,7 @@ module Wiki::Locking
   # Release the section held by user.
   #
   def release_my_lock!(section, user)
-    if may_modify_lock?(section, user)
-      section_locks.unlock!(section)
-    end
+    section_locks.unlock!(section) if may_modify_lock?(section, user)
   end
 
   #
@@ -165,5 +162,4 @@ module Wiki::Locking
   def section_exists?(section)
     all_sections.include?(section)
   end
-
 end

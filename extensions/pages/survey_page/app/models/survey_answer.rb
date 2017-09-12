@@ -9,7 +9,7 @@
 #  end
 
 class SurveyAnswer < ActiveRecord::Base
-  CHOICE_FOR_UNCHECKED = "__UNCHECKED"
+  CHOICE_FOR_UNCHECKED = '__UNCHECKED'.freeze
 
   belongs_to :question, class_name: 'SurveyQuestion'
   belongs_to :response, class_name: 'SurveyResponse'
@@ -19,5 +19,3 @@ class SurveyAnswer < ActiveRecord::Base
     value
   end
 end
-
-

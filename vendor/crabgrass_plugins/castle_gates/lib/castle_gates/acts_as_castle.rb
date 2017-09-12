@@ -12,9 +12,7 @@ module CastleGates
           extend  CastleGates::Castle::ClassMethods
           include CastleGates::Castle::InstanceMethods
 
-          if gate_definitions.any?
-            self.add_locks(*gate_definitions)
-          end
+          add_locks(*gate_definitions) if gate_definitions.any?
         end
 
         def self.acts_as_castle2(*gate_definitions)
@@ -24,7 +22,7 @@ module CastleGates
 
           if gate_definitions.any?
             gate_definitions.each do |gate_definition|
-              self.add_gate(gate_definition)
+              add_gate(gate_definition)
             end
           end
         end
@@ -32,5 +30,3 @@ module CastleGates
     end
   end
 end
-
-
