@@ -63,7 +63,8 @@ require 'fileutils'
 dirs.each do |dir|
   unless File.directory?(dir)
     if File.exist?(dir)
-      raise format('ERROR: %s is supposed to be a directory, but file already exists', dir)
+      msg = 'ERROR: %s is supposed to be a directory, but file already exists'
+      raise format(msg, dir)
     else
       FileUtils.mkdir_p(dir)
     end

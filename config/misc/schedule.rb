@@ -1,6 +1,6 @@
 #
-# This is a configuration file for crabgrass crontab. The gem 'whenever' reads this
-# file and uses it to create a crontab.
+# This is a configuration file for crabgrass crontab. The gem 'whenever'
+# reads this file and uses it to create a crontab.
 #
 # To see what crontab this would generate:
 #
@@ -12,8 +12,8 @@
 #
 # For use with capistrano, at top of deploy.rb:
 #
-#   require 'whenever/capistrano'
-#   set :whenever_command, 'whenever -f config/misc/schedule.rb'
+#   require 'whenever/capistrano' set :whenever_command, 'whenever -f
+#   config/misc/schedule.rb'
 #
 # See https://github.com/javan/whenever for more details.
 #

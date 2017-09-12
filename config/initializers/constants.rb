@@ -3,7 +3,11 @@
 ## levels of page access
 ##
 
-ACCESS = HashWithIndifferentAccess.new(admin: 1, edit: 2, view: 3, none: nil).freeze
+ACCESS = HashWithIndifferentAccess.new(admin: 1,
+                                       edit: 2,
+                                       view: 3,
+                                       none: nil).freeze
+
 ACCESS_TO_SYM = { 1 => :admin, 2 => :edit, 3 => :view }.freeze
 
 ACCESS_ADMIN = 1

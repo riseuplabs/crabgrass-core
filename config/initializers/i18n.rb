@@ -25,7 +25,8 @@ end
 # trim load_path #2
 #
 #   for English only load files from locales/en/*.yml, not en.yml.
-#   en.yml is only needed for transiflex (rake cg:i18n:bundle to generate en.yml)
+#   en.yml is only needed for transiflex
+#   (rake cg:i18n:bundle to generate en.yml)
 #
 load_path = load_path.reject do |path|
   path.include?('en.yml')

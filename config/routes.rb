@@ -33,7 +33,10 @@ Crabgrass::Application.routes.draw do
   get '/assets/:id(/*path)', to: 'assets#show', as: 'asset'
 
   scope format: false do
-    get 'avatars/:id/:size.jpg', to: 'avatars#show', as: 'avatar', constraints: { size: /#{Avatar::SIZES.keys.join('|')}/ }
+    get 'avatars/:id/:size.jpg',
+      to: 'avatars#show',
+      as: 'avatar',
+      constraints: { size: /#{Avatar::SIZES.keys.join('|')}/ }
     get 'theme/:name/*file.css', to: 'theme#show'
   end
 
@@ -46,7 +49,9 @@ Crabgrass::Application.routes.draw do
   ##
 
   namespace 'me' do
-    delete 'notices/destroy_all', to: 'notices#destroy_all', as: 'notices_destroy_all'
+    delete 'notices/destroy_all',
+      to: 'notices#destroy_all',
+      as: 'notices_destroy_all'
     resources :notices, only: %i[index show destroy]
     get '', to: 'notices#index', as: 'home'
     # resource  :page, only: [:new, :create]
@@ -120,8 +125,12 @@ Crabgrass::Application.routes.draw do
   ## GROUP
   ##
 
-  get 'networks/directory(/*path)', as: 'networks_directory', to: 'group/directory#index'
-  get 'groups/directory(/*path)', as: 'groups_directory', to: 'group/directory#index'
+  get 'networks/directory(/*path)',
+    as: 'networks_directory',
+    to: 'group/directory#index'
+  get 'groups/directory(/*path)',
+    as: 'groups_directory',
+    to: 'group/directory#index'
 
   resources :groups, module: 'group', only: %i[new create destroy] do
     # content related

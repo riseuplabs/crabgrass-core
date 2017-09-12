@@ -10,3 +10,10 @@ Style/EmptyElse:
   AutoCorrect: false
 Style/RaiseArgs:
   AutoCorrect: false
+Metrics/LineLength:
+  Exclude:
+    - 'Vagrantfile'
+    - 'config/initializers/notification.rb'
+    - 'config/deploy.rb'
+    - 'config/permissions.rb'
+    - 'lib/**/*'
