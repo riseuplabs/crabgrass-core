@@ -3,7 +3,6 @@
 require 'javascript_integration_test'
 
 class PageSidebarTest < JavascriptIntegrationTest
-  include GroupRecords
 
   fixtures :users, :groups, 'group/memberships'
 

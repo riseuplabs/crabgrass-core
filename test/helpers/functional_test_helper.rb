@@ -1,5 +1,5 @@
 module FunctionalTestHelper
-  def assert_permission_denied(_failure_message = 'missing "permission denied" message')
+  def assert_permission_denied
     if block_given?
       begin
         yield
@@ -8,7 +8,7 @@ module FunctionalTestHelper
       end
     end
     errors = flash_messages :warning
-    assert message_text(errors).grep('Permission Denied')
+    assert_includes message_text(errors), 'Permission Denied'
   end
 
   def assert_login_required(&block)
@@ -19,9 +19,10 @@ module FunctionalTestHelper
     ActiveRecord::RecordNotFound,
     ErrorNotFound
   ].freeze
+
   def assert_not_found
     if block_given?
-      assert_raises *NOT_FOUND_ERRORS do
+      assert_raises(*NOT_FOUND_ERRORS) do
         yield
       end
     else
@@ -36,9 +37,9 @@ module FunctionalTestHelper
     assert errors.present?, 'there should have been flash errors'
     if arg
       if arg.is_a?(Regexp)
-        assert message_text(errors).grep(arg).present?, format('error message did not match %s. it was %s.', arg.inspect, message_text(errors).inspect)
+        assert_match arg, message_text(errors)
       elsif arg.is_a?(Symbol) or arg.is_a?(String)
-        assert message_text(errors).detect { |text| text == arg.t }, format('error message did not match %s. it was %s', arg.inspect, message_text(errors).inspect)
+        assert_includes message_text(errors), arg.t
       end
     end
   end
@@ -46,17 +47,7 @@ module FunctionalTestHelper
   def assert_message(regexp = nil)
     assert flash_messages.present?, 'no flash messages'
     if regexp
-      assert message_text(flash_messages).grep(regexp).present?, format('flash message did not match %s. it was %s.', regexp.inspect, message_text(flash_messages).inspect)
-    end
-  end
-
-  def assert_success_message(title_regexp = nil, text_regexp = nil)
-    assert_equal 'success', flash[:type]
-    if title_regexp
-      assert flash[:title] =~ title_regexp, format('success message title did not match %s. it was %s.', title_regexp.inspect, flash[:text])
-    end
-    if text_regexp
-      assert flash[:text] =~ text_regexp, format('success message text did not match %s. it was %s.', text_regexp, flash[:text])
+      assert_match regexp, message_text(flash_messages)
     end
   end
 
@@ -92,46 +83,6 @@ module FunctionalTestHelper
     @controller.url_for(options)
   end
 
-  #   # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
-  #   def assert_redirected_to_with_partial_hash(options={ }, message=nil)
-  #     clean_backtrace do
-  #       assert_response(:redirect, message)
-  #       return true if options == @response.redirected_to
-  #
-  #       if @response.redirected_to.is_a?(Hash) && options.all? { |(key, value)|
-  #             response_value = @response.redirected_to[key].to_s.dup
-  #             test_value = value.to_s
-  #             # remove leading / when redirected_to :controller
-  #             response_value.gsub!(/^\//, "") if key.to_sym == :controller
-  #             test_value == response_value
-  #           }
-  #         return true
-  #       elsif options.is_a?(String) || @response.redirected_to.is_a?(String)
-  #         url = @response.redirected_to.kind_of?(Hash) ? url_for(@response.redirected_to.merge(:only_path => true)) : @response.redirected_to
-  #         options_url = options.kind_of?(Hash) ? url_for(options.merge(:only_path => (url =~ /^http:/ ? false : true))) : options
-  #         assert_equal options_url, url[0..(options_url.size - 1)], (message || "Excpected response to be redirected to a url beginning with <#{options_url}>, but was a redirect to <#{url}>")
-  #         return true
-  #       end
-  #     end
-  #     assert_redirected_to_without_partial_hash(options, message)
-  #   end
-  #
-  #   def self.included(base)
-  #     base.class_eval do
-  #       class << self
-  #         def determine_default_controller_class_with_removing_for(name)
-  #           name.sub! /TestFor.*$/, 'Test'
-  #           determine_default_controller_class_without_removing_for name
-  #         end
-  #         alias_method_chain :determine_default_controller_class, :removing_for
-  #       end
-  #     end
-  #
-  #     base.instance_eval do
-  #       alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
-  #     end
-  #   end
-
   private
 
   def flash_messages(type = nil)
@@ -155,6 +106,6 @@ module FunctionalTestHelper
       end
       texts += message[:list] if message[:list]
     end
-    texts
+    texts.join
   end
 end

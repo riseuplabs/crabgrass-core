@@ -26,7 +26,12 @@ module PageRecords
       options = type
       type = nil
     end
-    page_options = options.slice :title, :summary, :created_by, :owner, :flow, :public
+    page_options = options.slice :title,
+      :summary,
+      :created_by,
+      :owner,
+      :flow,
+      :public
     page_options[:created_at] = Time.now
     page_options[:updated_at] = Time.now
     if type

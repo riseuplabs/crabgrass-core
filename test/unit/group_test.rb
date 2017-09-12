@@ -112,8 +112,8 @@ class GroupTest < ActiveSupport::TestCase
     # note: if the group has a committee, and the user is a member of that
     # committee, then the user's version will increment by more than one,
     # since the committees also experience a name change.
-    assert_increases(user, :version) do
-      assert_preserves(user, :updated_at) do
+    assert_difference 'user.reload.version' do
+      assert_no_difference 'user.reload.updated_at' do
         group.name = 'diggers'
         group.save!
       end

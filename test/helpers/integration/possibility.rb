@@ -1,11 +1,15 @@
 module Integration
   module Possibility
     def open_new_possibility_form
-      click_link 'Add new Possibility' unless page.has_button? 'Add new Possibility'
+      unless page.has_button? 'Add new Possibility'
+        click_link 'Add new Possibility'
+      end
     end
 
     def close_new_possibility_form
-      click_link 'Add new Possibility' if page.has_button? 'Add new Possibility'
+      if page.has_button? 'Add new Possibility'
+        click_link 'Add new Possibility'
+      end
     end
 
     def add_possibility(description = nil, detail = nil)

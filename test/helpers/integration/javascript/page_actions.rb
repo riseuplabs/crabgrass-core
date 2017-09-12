@@ -66,7 +66,8 @@ module PageActions
     find('a', text: 'Permissions').click
     select permission
     if PERMISSION_ICONS.keys.include? permission
-      assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
+      assert_selector "#permissions_tab " +
+        ".tiny_#{PERMISSION_ICONS[permission]}_16"
     else
       wait_for_ajax
     end
@@ -117,10 +118,14 @@ module PageActions
   # verify that the little thumbnail image actually gets displayed
   def check_attachment_thumbnail
     find('#attachments a.attachment img').synchronize do
-      unless evaluate_script("$$('#attachments a.attachment img').first().naturalWidth != 0")
-        raise Capybara::ExpectationNotMet.new('Thumbnail could not be loaded')
+      unless evaluate_script(look_for_thumbnail_js)
+        raise Capybara::ExpectationNotMet, 'Thumbnail could not be loaded'
       end
     end
+  end
+
+  def look_for_thumbnail_js
+    "$$('#attachments a.attachment img').first().naturalWidth != 0"
   end
 
   def close_popup

@@ -19,7 +19,8 @@ module AjaxPending
 
     def message
       req = @reqs.last
-      "The #{req.method} request to #{req.url} was not answered during the test."
+      "The #{req.method} request to #{req.url} " +
+        'was not answered during the test.'
     end
   end
 

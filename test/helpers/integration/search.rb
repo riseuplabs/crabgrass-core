@@ -17,7 +17,8 @@ module Integration
 
     def teardown
       if @_ts_old_settings.present?
-        sphinx_settings.merge! @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+        overwritten = @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+        sphinx_settings.merge! overwritten
       end
       super
     end

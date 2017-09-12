@@ -27,7 +27,6 @@ class ActiveSupport::TestCase
   include FunctionalTestHelper
   include DebugTestHelper
   include CrabgrassTestHelper
-  include CachingTestHelper
   # for fixture_file_upload
   include ActionDispatch::TestProcess
 
@@ -64,8 +63,9 @@ end
 #
 require 'mocha/mini_test'
 
-# ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class' and 'is_a?'
-# on all values. This happens when assembling 'assigns' in tests.
+# ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class'
+# and 'is_a?' on all values. This happens when assembling 'assigns' in
+# tests.
 # This little hack will make those tests pass.
 MiniTest::Mock.class_eval do
   def class

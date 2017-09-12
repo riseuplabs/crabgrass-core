@@ -11,7 +11,8 @@ module LoginTestHelper
     @controller.instance_variable_set :@current_user, user
   end
 
-  # the normal acts_as_authenticated 'login_as' does not work for integration tests
+  # the normal acts_as_authenticated 'login_as' does not work for
+  # integration tests
   def login(user)
     post '/account/login', login: user.to_s, password: user.to_s
   end

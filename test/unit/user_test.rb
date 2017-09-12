@@ -133,8 +133,8 @@ class UserTest < ActiveSupport::TestCase
     red = users(:red)
     rainbow = groups(:rainbow)
 
-    assert_increases(rainbow, :version) do
-      assert_preserves(rainbow, :updated_at) do
+    assert_difference 'rainbow.reload.version', 2 do
+      assert_no_difference 'rainbow.reload.updated_at' do
         red.display_name = 'rojo'
         red.save
       end
@@ -144,7 +144,7 @@ class UserTest < ActiveSupport::TestCase
   def test_changing_display_name_increments_version
     red = users(:red)
 
-    assert_increases(red, :version) do
+    assert_difference 'red.reload.version', 3 do
       red.display_name = 'rojo'
       red.save
     end

@@ -60,14 +60,9 @@ class Wiki::LockingTest < ActiveSupport::TestCase
       assert @wiki.sections_locked_for(@different_user).empty?, msg
     end
 
-    'should have not section locked for either user'.tap do |msg|
-      assert @wiki.sections_locked_for(@user).empty?, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
-    end
-
     'should have all sections open for either user'.tap do |msg|
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -76,14 +71,9 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! 'section-two', @user
     @wiki.body = @wiki.body.sub('section two', 'section 2')
 
-    'should have no section locked for either user'.tap do |msg|
-      assert @wiki.sections_locked_for(@user).empty?, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
-    end
-
     'should have all sections open for either user'.tap do |msg|
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -177,13 +167,12 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.release_my_lock! 'section-two', @user
 
     'should appear the same to that user and to a different user'.tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user), msg
-      assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user), msg
+      assert_same_sections_open_for @user, @different_user, msg
+      assert_same_sections_locked_for @user, @different_user, msg
     end
 
     'should appear to a different user that all sections can be edited and none are locked'.tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -216,13 +205,11 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     end
 
     'should appear to that user that all sections can be edited and none are locked'.tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@user).empty?, msg
+      assert_all_sections_open_for @user, msg
     end
 
     'should appear to a different user that no sections can be edited and all are locked'.tap do |msg|
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections, msg
+      assert_all_sections_locked_for @different_user, msg
     end
 
     'should raise an exception (and keep the same state) when a different user tries to lock the document'.tap do |msg|
@@ -230,9 +217,8 @@ class Wiki::LockingTest < ActiveSupport::TestCase
         @wiki.lock! :document, @different_user
       end
 
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_locked_for @different_user, msg
     end
 
     'should raise an exception (and keep the same state) when a different user tries to lock a section'.tap do |msg|
@@ -240,9 +226,8 @@ class Wiki::LockingTest < ActiveSupport::TestCase
         @wiki.lock! 'section-one', @different_user
       end
 
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_locked_for @different_user, msg
     end
 
     'should raise a Wiki::OtherSectionLockedError if that user tries to lock another section'.tap do |msg|
@@ -266,13 +251,46 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     end
 
     'should appear the same to that user and to a different user'.tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user), msg
-      assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user), msg
+      assert_same_sections_open_for @user, @different_user, msg
+      assert_same_sections_locked_for @user, @different_user, msg
     end
 
     'should appear to a different user that all sections can be edited and none are locked'.tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
+      assert_all_sections_open_for @different_user, msg
     end
+  end
+
+  protected
+
+  def assert_all_sections_open_for(user, msg)
+    assert @wiki.sections_locked_for(user).empty?, msg
+    assert_same_sections @wiki.all_sections,
+      @wiki.sections_open_for(user),
+      msg
+  end
+
+  def assert_all_sections_locked_for(user, msg)
+    assert @wiki.sections_open_for(user).empty?, msg
+    assert_same_sections @wiki.all_sections,
+      @wiki.sections_locked_for(user),
+      msg
+  end
+
+  def assert_same_sections_open_for(user, other, msg)
+    assert_same_sections @wiki.sections_open_for(user),
+      @wiki.sections_open_for(other),
+      msg
+  end
+
+  def assert_same_sections_locked_for(user, other, msg)
+    assert_same_sections @wiki.sections_locked_for(user),
+      @wiki.sections_locked_for(other),
+      msg
+  end
+
+  def assert_same_sections(collection, other, msg)
+    assert_equal collection.map(&:to_s).sort,
+      other.map(&:to_s).sort,
+      msg
   end
 end

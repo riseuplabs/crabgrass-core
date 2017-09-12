@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class PageCreationTest < JavascriptIntegrationTest
-  include GroupRecords
 
   fixtures :users, :groups, 'group/memberships'
 
@@ -49,5 +48,30 @@ class PageCreationTest < JavascriptIntegrationTest
     fill_in 'Tags', with: 'a, few, tags'
     click_on :create.t
     assert_page_tags 'a, few, tags'
+  end
+
+  protected
+
+  def group
+    records[:group] ||= FactoryGirl.create(:group)
+  end
+
+  def public_group_to_pester
+    records[:public_group_to_pester] ||=
+      FactoryGirl.create(:group).tap do |pester|
+        pester.grant_access! public: %i[view pester]
+      end
+  end
+
+  def group_to_pester
+    records[:group_to_pester] ||= FactoryGirl.create(:group).tap do |pester|
+      pester.grant_access! public: :pester
+    end
+  end
+
+  def public_group
+    records[:public_group] ||= FactoryGirl.create(:group).tap do |pub|
+      pub.grant_access! public: :view
+    end
   end
 end
