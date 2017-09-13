@@ -13,8 +13,6 @@ cache:
     - vendor/ruby
 
 before_script:
-  - export DEBIAN_FRONTEND=noninteractive
-  - sudo apt update -qq && sudo apt upgrade -y
   - ruby -v
   - which ruby
   - bundle install -j $(nproc) --path vendor "${FLAGS[@]}"
