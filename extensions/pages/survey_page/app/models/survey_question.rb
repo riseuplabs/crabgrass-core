@@ -14,21 +14,20 @@
 #    t.boolean  "private",                  :default => false
 #  end
 
-
 class SurveyQuestion < ActiveRecord::Base
   belongs_to :survey
   serialize :choices, Array
   serialize_default :choices, []
 
   has_many(:answers, dependent: :destroy, class_name: 'SurveyAnswer',
-           foreign_key: 'question_id')
+                     foreign_key: 'question_id')
 
   def answer_class
     TextAnswer
   end
 
   def build_answer(answer_attributes = {})
-    answer_attributes[:question_id] = self.id
+    answer_attributes[:question_id] = id
     answer_class.new(answer_attributes)
   end
   # def answer!(response, value)
@@ -40,15 +39,15 @@ class SurveyQuestion < ActiveRecord::Base
   end
 
   def newline_delimited_choices=(text)
-    if text
-      self.choices = text.split(/\r?\n/)
-    else
-      self.choices = []
-    end
+    self.choices = if text
+                     text.split(/\r?\n/)
+                   else
+                     []
+                   end
   end
 
   def newline_delimited_choices
-    self.choices.join("\n")
+    choices.join("\n")
   end
 
   # the name of the partial to use for this question
@@ -60,9 +59,7 @@ class SurveyQuestion < ActiveRecord::Base
   def to_s
     label
   end
-
 end
-
 
 ######### SHORT TEXT ###################
 class ShortTextQuestion < SurveyQuestion
@@ -71,7 +68,6 @@ class ShortTextQuestion < SurveyQuestion
   end
 end
 
-
 ######### LONG TEXT ###################
 class LongTextQuestion < SurveyQuestion
   def add_question_link_text
@@ -79,14 +75,12 @@ class LongTextQuestion < SurveyQuestion
   end
 end
 
-
 ######### SELECT ONE ###################
 class SelectOneQuestion < SurveyQuestion
   def add_question_link_text
     I18n.t(:add_select_one_question_link)
   end
 end
-
 
 ######### SELECT MANY ###################
 class SelectManyQuestion < SurveyQuestion
@@ -116,7 +110,6 @@ class VideoLinkQuestion < SurveyQuestion
     VideoLinkAnswer
   end
 end
-
 
 ######### BOOLEAN ###################
 class BooleanQuestion < SurveyQuestion

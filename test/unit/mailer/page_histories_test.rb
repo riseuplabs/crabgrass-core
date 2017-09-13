@@ -1,8 +1,6 @@
 require 'test_helper'
 
-class Mailer::PageHistoriesTest <  ActionMailer::TestCase
-
-
+class Mailer::PageHistoriesTest < ActionMailer::TestCase
   def setup
     @user = users(:blue)
     watch_page
@@ -24,7 +22,7 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     updated_page_as users(:red)
     mail = mailer_class.deliver_digests.first
     assert ActionMailer::Base.deliveries.present?
-    assert_includes mail.body, "Red! has modified the page title"
+    assert_includes mail.body, 'Red! has modified the page title'
   end
 
   def test_send_paranoid_digest
@@ -33,8 +31,8 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     updated_page_as users(:red)
     mail = mailer_class.deliver_digests.first
     assert ActionMailer::Base.deliveries.present?
-    assert_includes mail.body, "A page that you are watching has been modified"
-    assert_not_includes mail.body, "Red! has modified the page title"
+    assert_includes mail.body, 'A page that you are watching has been modified'
+    assert_not_includes mail.body, 'Red! has modified the page title'
   end
 
   def test_wont_send_empty_update
@@ -50,8 +48,8 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     updated_page_as users(:red), 1.minute.ago
     mail = mailer_class.deliver_updates_for(page, to: [@user]).first
     assert ActionMailer::Base.deliveries.present?
-    assert_includes mail.body, "Red! has modified the page title"
-    assert_includes mail.body, "Green! has modified the page title"
+    assert_includes mail.body, 'Red! has modified the page title'
+    assert_includes mail.body, 'Green! has modified the page title'
   end
 
   def test_send_paranoid_update
@@ -60,8 +58,8 @@ class Mailer::PageHistoriesTest <  ActionMailer::TestCase
     updated_page_as users(:red), 1.minute.ago
     mail = mailer_class.deliver_updates_for(page, to: [@user]).first
     assert ActionMailer::Base.deliveries.present?
-    assert_not_includes mail.body, "Red! has modified the page title"
-    assert_includes mail.body, "A page that you are watching has been modified"
+    assert_not_includes mail.body, 'Red! has modified the page title'
+    assert_includes mail.body, 'A page that you are watching has been modified'
   end
 
   protected

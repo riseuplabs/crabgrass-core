@@ -3,7 +3,7 @@ class CreateWikiLocks < ActiveRecord::Migration
     create_table :wiki_locks do |t|
       t.integer :wiki_id
       t.text :locks
-      t.integer :lock_version, :default => 0
+      t.integer :lock_version, default: 0
     end
   end
 

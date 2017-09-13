@@ -1,20 +1,18 @@
 class Person::FriendRequestsController < Person::BaseController
-
   before_filter :login_required
 
   guard create: :may_request_contact?,
-    new: :may_request_contact?,
-    destroy: :may_remove_contact?
+        new: :may_request_contact?,
+        destroy: :may_remove_contact?
 
-  def new
-  end
+  def new; end
 
   def create
     if params[:cancel]
       redirect_to entity_url(@user)
     else
       req = RequestToFriend.create! recipient: @user, created_by: current_user,
-        message: params[:message]
+                                    message: params[:message]
       if req.valid?
         success req
         create_notice req
@@ -37,5 +35,4 @@ class Person::FriendRequestsController < Person::BaseController
   def create_notice(request_obj)
     Notice::RequestNotice.create! request_obj
   end
-
 end

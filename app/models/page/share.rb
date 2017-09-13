@@ -44,7 +44,6 @@
 #
 
 class Page::Share
-
   attr_reader :page, :sender, :defaults
 
   def initialize(page, sender, defaults = {})
@@ -87,7 +86,7 @@ class Page::Share
       share_with_groups(rec.groups + rec.groups_from_specials, rec.options)
     end.flatten.uniq
 
-    return uparts, gparts
+    [uparts, gparts]
   end
 
   # if we notify people the page should show up on their dashboard
@@ -97,22 +96,22 @@ class Page::Share
     uparts = share_with_users(rec.users + rec.users_from_specials, rec.options)
     if send_notices?
       uparts += share_with_users rec.users_from_groups,
-        rec.options.merge(access: nil)
+                                 rec.options.merge(access: nil)
     end
     uparts
   end
 
   def share_with_users(users, options = {})
     options = defaults.merge options
-    users.map{|user| share_with_user!(user, options)}
+    users.map { |user| share_with_user!(user, options) }
   end
 
   def share_with_groups(groups, options = {})
     options = defaults.merge options
-    groups.map{|group| share_with_group!(group, options)}
+    groups.map { |group| share_with_group!(group, options) }
   end
 
-  def share_with_user!(user, options={})
+  def share_with_user!(user, options = {})
     may_share_with_user!(user, options)
 
     page.add(user, user_participation_attrs(user, options)).tap do |upart|
@@ -120,7 +119,7 @@ class Page::Share
     end
   end
 
-  def share_with_group!(group, options={})
+  def share_with_group!(group, options = {})
     may_share_with_group!(group, options)
 
     page.add(group, group_participation_attrs(options)).tap do |gpart|
@@ -147,7 +146,7 @@ class Page::Share
     if options.key?(:access) # might be nil
       { access: options[:access] }
     else
-      { grant_access: options[:grant_access] || :view}
+      { grant_access: options[:grant_access] || :view }
     end
   end
 
@@ -167,11 +166,9 @@ class Page::Share
     if page.public? and !sender.may?(:pester, user)
       :share_pester_error
     elsif access.nil?
-      if !user.may?(:view,page)
-        :share_grant_required_error
-      end
+      :share_grant_required_error unless user.may?(:view, page)
     elsif !user.may?(access, page)
-      if !sender.may?(:admin,page)
+      if !sender.may?(:admin, page)
         :share_permission_denied_error
       elsif !sender.may?(:pester, user)
         :share_pester_error
@@ -192,11 +189,11 @@ class Page::Share
     defaults[:send_notice]
   end
 
-  def send_notices users
+  def send_notices(users)
     Notice::PageNotice.create! recipients: users,
-      page: page,
-      from: sender,
-      message: defaults[:send_message]
+                               page: page,
+                               from: sender,
+                               message: defaults[:send_message]
   end
 
   def send_emails?
@@ -206,12 +203,11 @@ class Page::Share
   def send_emails(users)
     users.select!(&:wants_notification_email?)
     users.each do |user|
-      #logger.debug '----------------- emailing %s' % user.email
+      # logger.debug '----------------- emailing %s' % user.email
       mail = Mailer.share_notice user,
-        defaults[:send_message],
-        defaults[:mailer_options]
+                                 defaults[:send_message],
+                                 defaults[:mailer_options]
       mail.deliver
     end
   end
-
 end

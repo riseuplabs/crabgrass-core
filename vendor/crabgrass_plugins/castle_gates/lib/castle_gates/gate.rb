@@ -24,10 +24,9 @@
 #
 module CastleGates
   class Gate
-
     attr_accessor :name, :id, :bit, :label, :info
 
-    def initialize(id, name, options={})
+    def initialize(id, name, options = {})
       self.name = name
       self.id = id
       self.label = options[:label]
@@ -35,7 +34,7 @@ module CastleGates
       if id == 0
         raise 'gate with id = 0 is reserved. start with 1.'
       else
-        self.bit = 2 ** (id)
+        self.bit = 2**id
       end
     end
 

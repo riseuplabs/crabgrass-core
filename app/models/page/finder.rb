@@ -12,7 +12,6 @@
 # scale. So I removed this to reduce complexity.
 
 class Page::Finder
-
   def initialize(context_handle, page_handle)
     @handle = page_handle
     @context, @group, @user = find_context(context_handle)
@@ -26,27 +25,26 @@ class Page::Finder
       # (the url actually looks like "page-title+52", but pluses are interpreted
       # as spaces). find by id will always return a globally unique page so we
       # can ignore context
-      Page.find( $~[1] )
+      Page.find($~[1])
     elsif context
       context.find_page(handle)
     end
   end
 
   protected
-  attr_reader :handle, :context
 
+  attr_reader :handle, :context
 
   def find_context(name)
     if name
       if name =~ /\ /
         # we are dealing with a committee!
-        name = name.sub(' ','+')
+        name = name.sub(' ', '+')
       end
       group = Group.find_by_name(name)
       return group, group, nil if group
-      user  = User.find_by_login(name)
-      return user, nil, user
+      user = User.find_by_login(name)
+      [user, nil, user]
     end
   end
-
 end

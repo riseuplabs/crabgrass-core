@@ -2,35 +2,30 @@
 ## TEST DATABASE
 ##
 
-if (ADAPTER == :sqlite)
-  DB_FILE = "#{File.dirname(__FILE__)}/test.sqlite"
-  if !File.exist?(DB_FILE)
-    TEST_OPTIONS[:rebuild] = true
-  end
+if ADAPTER == :sqlite
+  DB_FILE = "#{File.dirname(__FILE__)}/test.sqlite".freeze
+  TEST_OPTIONS[:rebuild] = true unless File.exist?(DB_FILE)
   ActiveRecord::Base.establish_connection(
-    adapter: "sqlite3",
+    adapter: 'sqlite3',
     database: DB_FILE
   )
 else
   # if you want to test BIT_OR aggregation function
   ActiveRecord::Base.establish_connection(
-    adapter: "mysql",
-    host: "localhost",
-    database: "castle_gates",
-    user: "root"
+    adapter: 'mysql',
+    host: 'localhost',
+    database: 'castle_gates',
+    user: 'root'
   )
 end
 
 #
 # show all db activity
 #
-if SHOW_SQL
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-end
+ActiveRecord::Base.logger = Logger.new(STDOUT) if SHOW_SQL
 
 def setup_db
   ActiveRecord::Schema.define(version: 1) do
-
     create_table :castle_gates_keys do |p|
       p.integer :castle_id
       p.string  :castle_type
@@ -65,7 +60,6 @@ def setup_db
       t.integer :user_id
       t.integer :minion_id
     end
-
   end
 end
 

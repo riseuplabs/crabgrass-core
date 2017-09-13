@@ -25,11 +25,10 @@
 #
 
 module PathFinder::Sphinx::BuilderFilters
-
   protected
 
   def filter_unread
-    raise Exception.new("sphinx cannot search for unread")
+    raise Exception.new('sphinx cannot search for unread')
   end
 
   def filter_pending
@@ -37,27 +36,27 @@ module PathFinder::Sphinx::BuilderFilters
   end
 
   def filter_interesting
-    raise Exception.new("sphinx cannot search for interesting")
+    raise Exception.new('sphinx cannot search for interesting')
   end
 
   def filter_watching
-    raise Exception.new("sphinx cannot search for watching")
+    raise Exception.new('sphinx cannot search for watching')
   end
 
   def filter_inbox
-    raise Exception.new("sphinx cannot search for inbox")
+    raise Exception.new('sphinx cannot search for inbox')
   end
 
   def filter_attending
-    raise Exception.new("sphinx cannot search for attending")
+    raise Exception.new('sphinx cannot search for attending')
   end
 
   def filter_starred
-    raise Exception.new("sphinx cannot search for starred")
+    raise Exception.new('sphinx cannot search for starred')
   end
 
   def filter_changed
-    raise Exception.new("sphinx cannot search for changed")
+    raise Exception.new('sphinx cannot search for changed')
   end
 
   #--
@@ -103,7 +102,7 @@ module PathFinder::Sphinx::BuilderFilters
   #   @order << 'pages.starts_at DESC'
   # end
 
-  def filter_ago(near,far)
+  def filter_ago(near, far)
     @with << [:page_updated_at, range(far.to_i.days.ago, near.to_i.days.ago)]
   end
 
@@ -144,7 +143,7 @@ module PathFinder::Sphinx::BuilderFilters
     end
 
     if page_group =~ /^media-(image|audio|video|document)$/
-      media_type = page_group.sub(/^media-/,'').to_sym
+      media_type = page_group.sub(/^media-/, '').to_sym
       @with << [:media, MEDIA_TYPE[media_type]] # indexed as multi array of ints.
     end
 
@@ -172,22 +171,22 @@ module PathFinder::Sphinx::BuilderFilters
   end
 
   def filter_not_created_by(id)
-    @without[:created_by_id] ||= ""
+    @without[:created_by_id] ||= ''
     @without[:created_by_id] += " #{id}"
   end
 
   def filter_tag(tag_name)
-    @conditions[:tags] ||= ""
+    @conditions[:tags] ||= ''
     @conditions[:tags] += " #{tag_name}"
   end
 
   def filter_name(name)
-    @conditions[:name] ||= ""
+    @conditions[:name] ||= ''
     @conditions[:name] += " #{name}"
   end
 
   def filter_stars(star_count)
-    @with << [:stars_count, range(star_count, 10000)]
+    @with << [:stars_count, range(star_count, 10_000)]
   end
 
   def filter_starred
@@ -218,11 +217,9 @@ module PathFinder::Sphinx::BuilderFilters
 
   def filter_limit(limit)
     offset = 0
-    if limit.instance_of? String
-      limit, offset = limit.split('-')
-    end
+    limit, offset = limit.split('-') if limit.instance_of? String
     @per_page = limit.to_i if limit
-    @page = ((offset.to_f/limit.to_f) + 1).floor.to_i if @per_page > 0
+    @page = ((offset.to_f / limit.to_f) + 1).floor.to_i if @per_page > 0
   end
 
   def filter_text(text)
@@ -233,8 +230,7 @@ module PathFinder::Sphinx::BuilderFilters
   ### HELPER ###
   #++
 
-  def range(min,max)
+  def range(min, max)
     min.to_i..max.to_i
   end
 end
-

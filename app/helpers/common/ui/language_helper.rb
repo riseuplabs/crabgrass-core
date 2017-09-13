@@ -1,5 +1,4 @@
 module Common::Ui::LanguageHelper
-
   def language_select_tag
     unless @language_form_already_rendered
       @language_form_already_rendered = true
@@ -18,9 +17,9 @@ module Common::Ui::LanguageHelper
 
   def language_direction
     @language_direction ||= if I18n.languages[session[:language_code]].rtl
-      "rtl"
-    else
-      "ltr"
+                              'rtl'
+                            else
+                              'ltr'
     end
   end
 
@@ -36,10 +35,8 @@ module Common::Ui::LanguageHelper
     end
   end
 
-  def options_for_language(selected=nil)
+  def options_for_language(selected = nil)
     selected ||= current_language.to_s
     options_for_select(enabled_language_array, selected)
   end
-
 end
-

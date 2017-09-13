@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Person::HomeControllerTest < ActionController::TestCase
-
-
   def test_show
     login_as :blue
     get :show, person_id: 'blue'
@@ -30,7 +28,7 @@ class Person::HomeControllerTest < ActionController::TestCase
   def test_missing_user
     login_as :blue
     assert_not_found do
-      get :show, person_id: "missinguserlogin"
+      get :show, person_id: 'missinguserlogin'
     end
   end
 
@@ -42,5 +40,4 @@ class Person::HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal user, assigns[:user]
   end
-
 end

@@ -1,7 +1,5 @@
 module Formy
-
   class ToggleBugs < Tabs
-
     class Bug < Formy::Tab
       protected
 
@@ -19,10 +17,8 @@ module Formy
     end
 
     def close_group
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       puts '</div>'
     end
   end
 end
-
-

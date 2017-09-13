@@ -4,6 +4,5 @@ class DestroyMessagePageActivity < ActiveRecord::Migration
     Activity.delete_all "type = 'MessageReplyActivity'"
   end
 
-  def self.down
-  end
+  def self.down; end
 end

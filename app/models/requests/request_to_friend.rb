@@ -7,7 +7,6 @@
 #
 #
 class RequestToFriend < Request
-
   validates_format_of :recipient_type, with: /User/
   validate :no_friendship_yet, on: :create
 
@@ -25,9 +24,11 @@ class RequestToFriend < Request
     pending.created_by(options[:from]).to_user(options[:to]).first
   end
 
-  def requestable_required?() false end
+  def requestable_required?
+    false
+  end
 
-  def may_create?(user)
+  def may_create?(_user)
     true
   end
 
@@ -56,11 +57,10 @@ class RequestToFriend < Request
   end
 
   def description
-    [:request_to_friend_description, {user: user_span(created_by), other_user: user_span(recipient)}]
+    [:request_to_friend_description, { user: user_span(created_by), other_user: user_span(recipient) }]
   end
 
   def short_description
-    [:request_to_friend_short, {user: user_span(created_by), other_user: user_span(recipient)}]
+    [:request_to_friend_short, { user: user_span(created_by), other_user: user_span(recipient) }]
   end
-
 end

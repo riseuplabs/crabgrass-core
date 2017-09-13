@@ -34,7 +34,7 @@ module AccountManagement
   # this function can take a single user as the argument and will
   # log you in as that user and run the code block.
   # It also takes an array of users and does so for each one in turn.
-  def as_a(users,&block)
+  def as_a(users, &block)
     assert_for_all users do |user|
       run_for_user(user, &block)
     end

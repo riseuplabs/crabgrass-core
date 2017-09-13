@@ -1,5 +1,4 @@
 module Group::DirectoryHelper
-
   #
   # entry for group directory
   #
@@ -7,11 +6,11 @@ module Group::DirectoryHelper
     place = h(group.profiles.public.place)
     count = :group_membership_count.t(count: group.users.count)
     summary = group.profiles.public.summary_html
-    if may_list_group_committees?(group)
-      committees = group.real_committees
-    else
-      committees = nil
-    end
+    committees = if may_list_group_committees?(group)
+                   group.real_committees
+                 else
+                   nil
+                 end
 
     haml do
       haml '.display-name', link_to_group(group)
@@ -29,6 +28,4 @@ module Group::DirectoryHelper
       end
     end
   end
-
 end
-

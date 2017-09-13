@@ -1,5 +1,4 @@
 module Common::Utility::GeneralHelper
-
   ##
   ## GENERAL UTILITY
   ##
@@ -20,30 +19,29 @@ module Common::Utility::GeneralHelper
     if content.present?
       return content_tag(name, content, opts, escape)
     else
-      return ""
+      return ''
     end
   end
 
   #
   # create ul list by calling block repeatedly for each item.
   #
-  def ul_list_tag(items, options={}, &block)
+  def ul_list_tag(items, options = {})
+    header_tag = if (header = options.delete(:header))
+                   content_tag(:li, header, class: 'header')
+                 else
+                   ''
+                 end
 
-    if (header = options.delete(:header))
-      header_tag = content_tag(:li, header, class: 'header')
-    else
-      header_tag = ""
-    end
-
-    if (footer = options.delete(:footer))
-      footer_tag = content_tag(:li, footer, class: 'footer')
-    else
-      footer_tag = ""
-    end
+    footer_tag = if (footer = options.delete(:footer))
+                   content_tag(:li, footer, class: 'footer')
+                 else
+                   ''
+                 end
 
     content_tag(:ul, options) do
       (header_tag +
-       items.collect {|item| content_tag(:li, yield(item))}.join.html_safe +
+       items.collect { |item| content_tag(:li, yield(item)) }.join.html_safe +
         footer_tag).html_safe
     end
   end
@@ -59,10 +57,10 @@ module Common::Utility::GeneralHelper
   #
   # see http://www.quirksmode.org/oddsandends/wbr.html
   #
-  def force_wrap(text,max_length=20)
+  def force_wrap(text, max_length = 20)
     h(text).gsub(/(\w{#{max_length},})/) do |word|
       split_up_word = word.scan(/.{#{max_length}}/)
-      word_remainder = word.split(/.{#{max_length}}/).select{|str| str.present?}
+      word_remainder = word.split(/.{#{max_length}}/).select(&:present?)
       (split_up_word + word_remainder).join('&shy;')
     end.html_safe
   end
@@ -73,18 +71,18 @@ module Common::Utility::GeneralHelper
     for str in args
       return str if str.present?
     end
-    return args.last
+    args.last
   end
 
   ## converts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
-      '%s MB' % (bytes / 1.megabyte)
+      format('%s MB', (bytes / 1.megabyte))
     elsif bytes > 1.kilobyte
-      '%s KB' % (bytes / 1.kilobyte)
+      format('%s KB', (bytes / 1.kilobyte))
     else
-      '%s B' % bytes
+      format('%s B', bytes)
     end
   end
 
@@ -126,7 +124,7 @@ module Common::Utility::GeneralHelper
   def safe_call(method, *args)
     if method.is_a? Proc
       method.call(*args)
-    elsif method.is_a?(Symbol) && self.respond_to?(method, true)
+    elsif method.is_a?(Symbol) && respond_to?(method, true)
       send(method, *args)
     else
       false
@@ -139,7 +137,7 @@ module Common::Utility::GeneralHelper
   # 2. Merge the 'body' variable into our options hash
   # 3. Render the partial with the given options hash. Just like calling the partial directly.
   def block_to_partial(partial_name, options = {}, &block)
-    options.merge!(body: capture(&block))
+    options[:body] = capture(&block)
     concat(render(partial: partial_name, locals: options))
   end
 
@@ -147,5 +145,4 @@ module Common::Utility::GeneralHelper
     user_agent = request.env['HTTP_USER_AGENT'].try.downcase
     user_agent =~ /msie/ and user_agent !~ /opera/
   end
-
 end

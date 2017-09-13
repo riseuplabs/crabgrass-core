@@ -1,5 +1,4 @@
 class User::Ghost < User
-
   validate :no_ghost, on: :create
 
   def no_ghost
@@ -34,16 +33,16 @@ class User::Ghost < User
     task_participations.destroy_all
     participations.destroy_all
     memberships.destroy_all # should we use remove_user! ?
-    relationships.each { |relationship| self.remove_contact!(User.find(relationship.contact_id)) }
+    relationships.each { |relationship| remove_contact!(User.find(relationship.contact_id)) }
     keys.destroy_all
     destroy_comments! if options[:scrub_comments]
     anonymize! if options[:scrub_name]
     clear_cache
     update_attributes clean_attributes
     # updated_at should be last so it isn't re-set
-    update_attribute("updated_at", nil)
+    update_attribute('updated_at', nil)
   end
-  #handle_asynchronously :retire!
+  # handle_asynchronously :retire!
 
   #
   # gets rid of the users name
@@ -52,15 +51,15 @@ class User::Ghost < User
     self.display_name = nil
     self.login = nil
   end
-  #handle_asynchronously :anonymize!
+  # handle_asynchronously :anonymize!
 
   #
   # gets rid of all comments
   #
   def destroy_comments!
-    self.posts.destroy_all
+    posts.destroy_all
   end
-  #handle_asynchronously :destroy_comments!
+  # handle_asynchronously :destroy_comments!
 
   # can't do anything with a user_ghost
   def has_access!(_perm, _user)
@@ -74,10 +73,9 @@ class User::Ghost < User
   private
 
   def clean_attributes
-    attrs_to_keep = %w(id type login display_name)
+    attrs_to_keep = %w[id type login display_name]
     clean_attrs = attributes.except(*attrs_to_keep)
     clean_attrs.each { |k, _v| clean_attrs[k] = nil }
     clean_attrs
   end
-
 end

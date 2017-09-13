@@ -1,9 +1,8 @@
 SearchFilter.new('/owned-by-me/') do
-
-  mysql do |query, type, id|
+  mysql do |query, _type, _id|
     query.add_sql_condition(
       'pages.owner_type = "User" AND pages.owner_id = ?',
-       query.current_user.id
+      query.current_user.id
     )
   end
 
@@ -15,7 +14,7 @@ SearchFilter.new('/owned-by-me/') do
   self.section = :my_pages
   self.exclude = :owned
   self.singleton = true
-  self.label   = :owned_by_me
+  self.label = :owned_by_me
 
   label do |opts|
     if opts[:add]
@@ -24,6 +23,4 @@ SearchFilter.new('/owned-by-me/') do
       :owned_by_user.t(user: :me.t)
     end
   end
-
 end
-

@@ -1,11 +1,10 @@
 class AdoptThumbnailParentType < ActiveRecord::Migration
-
   def up
-    changes.each {|k,v| change_asset(k,v) }
+    changes.each { |k, v| change_asset(k, v) }
   end
 
   def down
-    changes.each {|k,v| change_asset(v,k) }
+    changes.each { |k, v| change_asset(v, k) }
   end
 
   protected
@@ -19,14 +18,13 @@ class AdoptThumbnailParentType < ActiveRecord::Migration
   end
 
   def changes
-    { "AudioAsset"=>"Asset::Audio",
-      "DocAsset"=>"Asset::Doc",
-      "GifAsset"=>"Asset::Gif",
-      "ImageAsset"=>"Asset::Image",
-      "PngAsset"=>"Asset::Png",
-      "SpreadsheetAsset"=>"Asset::Spreadsheet",
-      "SvgAsset"=>"Asset::Svg",
-      "TextAsset"=>"Asset::Text"
-    }
+    { 'AudioAsset' => 'Asset::Audio',
+      'DocAsset' => 'Asset::Doc',
+      'GifAsset' => 'Asset::Gif',
+      'ImageAsset' => 'Asset::Image',
+      'PngAsset' => 'Asset::Png',
+      'SpreadsheetAsset' => 'Asset::Spreadsheet',
+      'SvgAsset' => 'Asset::Svg',
+      'TextAsset' => 'Asset::Text' }
   end
 end

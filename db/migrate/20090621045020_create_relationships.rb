@@ -1,7 +1,7 @@
 class CreateRelationships < ActiveRecord::Migration
   def self.up
     rename_table :contacts, :relationships
-    add_column :relationships, :type, :string, :limit => 10
+    add_column :relationships, :type, :string, limit: 10
     add_column :relationships, :discussion_id, :integer
     execute 'ALTER TABLE relationships ADD COLUMN id int(11) NOT NULL auto_increment, ADD PRIMARY KEY (id)'
 

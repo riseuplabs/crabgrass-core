@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class CommentTest < IntegrationTest
-
   def setup
     super
     @blue = users(:blue)
@@ -9,9 +8,9 @@ class CommentTest < IntegrationTest
     @rainbow = groups(:rainbow)
     @page = FactoryGirl.create :page, created_by: @blue, owner: @rainbow
     @blue_comment = @page.add_post @blue,
-      body: 'test comment that already existed'
+                                   body: 'test comment that already existed'
     @red_comment = @page.add_post @red,
-      body: 'test comment by red that already existed'
+                                  body: 'test comment by red that already existed'
   end
 
   def test_star_comments
@@ -32,9 +31,9 @@ class CommentTest < IntegrationTest
   def may_star?(comment, value)
     within_comment(comment) do
       if value
-        assert_selector('a.shy', visible: false, text: "Add Star")
-      else assert_no_content("Star")
-        assert_no_selector('a.shy', visible: false, text: "Add Star")
+        assert_selector('a.shy', visible: false, text: 'Add Star')
+      else assert_no_content('Star')
+           assert_no_selector('a.shy', visible: false, text: 'Add Star')
       end
     end
   end
@@ -53,7 +52,7 @@ class CommentTest < IntegrationTest
 
   def star_count(comment)
     within_comment(comment) do
-      find('[data-stars]')["data-stars"].to_i
+      find('[data-stars]')['data-stars'].to_i
     end
   end
 

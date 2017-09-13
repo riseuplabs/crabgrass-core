@@ -11,7 +11,6 @@
 require 'integration_test'
 
 class ErrorFlowTest < IntegrationTest
-
   def test_login_required
     visit '/me/pages'
     assert_content 'Login Required'
@@ -44,5 +43,4 @@ class ErrorFlowTest < IntegrationTest
     assert_content 'Not Found'
     assert_equal '/asdfswera', current_path
   end
-
 end

@@ -1,8 +1,7 @@
 namespace :cg do
   namespace :upgrade do
-
-    desc "Turn the Rating records for posts into Star records"
-    task(:migrate_ratings_to_stars => :environment) do
+    desc 'Turn the Rating records for posts into Star records'
+    task(migrate_ratings_to_stars: :environment) do
       old_count = Star.count
       Star.connection.execute <<-EOSQL
       INSERT INTO stars
@@ -17,8 +16,8 @@ namespace :cg do
       end
     end
 
-    desc "Reset star counters to match the actual number of stars"
-    task(:reset_star_counters => :environment) do
+    desc 'Reset star counters to match the actual number of stars'
+    task(reset_star_counters: :environment) do
       deleted = 0
       updated = 0
       Star.where(starred_type: 'Post').pluck(:starred_id).uniq.each do |starred|

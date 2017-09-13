@@ -98,7 +98,6 @@
 #
 
 module Common::Application::Permissions
-
   def self.included(base)
     base.extend ClassMethods
     base.send :include, InstanceMethods
@@ -141,7 +140,6 @@ module Common::Application::Permissions
         add_template_helper(permission_class)
       end
     end
-
   end
 
   module InstanceMethods
@@ -167,7 +165,7 @@ module Common::Application::Permissions
       when :allow
         true
       when Symbol, String
-        self.send(method)
+        send(method)
       else
         false
       end
@@ -186,12 +184,7 @@ module Common::Application::Permissions
 
     # log perm info for the combination
     def add_permission_log(method)
-      if Rails.env.development?
-        permission_log[@permission_log_key] = method
-      end
+      permission_log[@permission_log_key] = method if Rails.env.development?
     end
-
   end # end instance methods
-
 end # end module
-

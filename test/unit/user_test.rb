@@ -1,15 +1,14 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
   end
 
   def test_user_fixtures_are_valid
     orange = users(:orange)
     orange.valid?
-    assert_equal Hash.new, orange.errors.messages
+    assert_equal({}, orange.errors.messages)
     assert orange.valid?
   end
 
@@ -23,7 +22,7 @@ class UserTest < ActiveSupport::TestCase
     orange = users(:orange)
     orange.email = nil
     orange.valid?
-    assert_equal Hash.new, orange.errors.messages
+    assert_equal({}, orange.errors.messages)
     assert orange.valid?
   end
 
@@ -42,19 +41,19 @@ class UserTest < ActiveSupport::TestCase
     user.save!
     assert_nil user.receive_notifications
 
-    user.receive_notifications = "Any"
+    user.receive_notifications = 'Any'
     user.save!
     assert_nil user.receive_notifications
 
-    user.receive_notifications = "Digest"
+    user.receive_notifications = 'Digest'
     user.save!
-    assert_equal "Digest", user.receive_notifications
+    assert_equal 'Digest', user.receive_notifications
 
-    user.receive_notifications = "Single"
+    user.receive_notifications = 'Single'
     user.save!
-    assert_equal "Single", user.receive_notifications
+    assert_equal 'Single', user.receive_notifications
 
-    user.receive_notifications = ""
+    user.receive_notifications = ''
     user.save!
     assert_nil user.receive_notifications
   end
@@ -106,12 +105,12 @@ class UserTest < ActiveSupport::TestCase
     group1 = groups(:true_levellers)
     group1.add_user! user
     channel1 = ChatChannel.create(name: group1.name, group_id: group1.id)
-    ChatChannelsUser.create({channel: channel1, user: user})
+    ChatChannelsUser.create(channel: channel1, user: user)
 
     group2 = groups(:rainbow)
     group2.add_user! user
     channel2 = ChatChannel.create(name: group2.name, group_id: group2.id)
-    ChatChannelsUser.create({channel: channel2, user: user})
+    ChatChannelsUser.create(channel: channel2, user: user)
 
     user.destroy
     assert ChatChannelsUser.where(user_id: user_id).empty?
@@ -134,8 +133,8 @@ class UserTest < ActiveSupport::TestCase
     red = users(:red)
     rainbow = groups(:rainbow)
 
-    assert_increases(rainbow, :version) do
-      assert_preserves(rainbow, :updated_at) do
+    assert_difference 'rainbow.reload.version', 2 do
+      assert_no_difference 'rainbow.reload.updated_at' do
         red.display_name = 'rojo'
         red.save
       end
@@ -145,20 +144,18 @@ class UserTest < ActiveSupport::TestCase
   def test_changing_display_name_increments_version
     red = users(:red)
 
-    assert_increases(red, :version) do
+    assert_difference 'red.reload.version', 3 do
       red.display_name = 'rojo'
       red.save
     end
   end
 
-
   #
   # creating users no longer adds keys
   #
-  #def test_user_creation_adds_keys
+  # def test_user_creation_adds_keys
   #  assert_difference 'Key.count', 3 do
   #    user = User.make
   #  end
-  #end
-
+  # end
 end

@@ -15,15 +15,14 @@ require 'action_controller'
 # only the submit button that was pressed contributes to the request params.
 
 class ActionView::Base
-  alias_method :rails_submit_tag, :submit_tag
-  def submit_tag(value = "Save changes", options = {})
+  alias rails_submit_tag submit_tag
+  def submit_tag(value = 'Save changes', options = {})
     # disable buttons on submit by default
     options[:data] ||= {}
     options[:data].reverse_merge! disable_with: value
     rails_submit_tag(value, options)
   end
 end
-
 
 ###
 ### LINK_TO FOR COMMITTEES
@@ -36,9 +35,9 @@ class ActionView::Base
   def link_to_with_pretty_plus_signs(*args)
     link = link_to_without_pretty_plus_signs(*args)
     if link.html_safe?
-      link.sub('%2B','+').html_safe
+      link.sub('%2B', '+').html_safe
     else
-      link.sub('%2B','+')
+      link.sub('%2B', '+')
     end
   end
   alias_method_chain :link_to, :pretty_plus_signs
@@ -54,13 +53,11 @@ end
 # and will mess up your layout. but there is a way to customize them
 # http://pivotallabs.com/users/frmorio/blog/articles/267-applying-different-error-display-styles
 
-#class ActionView::Base
+# class ActionView::Base
 #  def with_error_proc(error_proc)
 #    pre = ActionView::Base.field_error_proc
 #    ActionView::Base.field_error_proc = error_proc
 #    yield
 #    ActionView::Base.field_error_proc = pre
 #  end
-#end
-
-
+# end

@@ -1,13 +1,13 @@
 module Formy
-  FORM_CLASS = 'form'
-  ROW_CLASS = 'form-row'
-  LABEL_CLASS = 'form-label'
-  INFO_CLASS = 'form-info'
-  INPUT_CLASS = 'form-input'
-  TITLE_CLASS = 'form-title'
-  HEADING_CLASS = 'form-heading'
-  BUTTONS_CLASS = 'form-buttons'
-  SPACER_CLASS = 'form-spacer'
+  FORM_CLASS = 'form'.freeze
+  ROW_CLASS = 'form-row'.freeze
+  LABEL_CLASS = 'form-label'.freeze
+  INFO_CLASS = 'form-info'.freeze
+  INPUT_CLASS = 'form-input'.freeze
+  TITLE_CLASS = 'form-title'.freeze
+  HEADING_CLASS = 'form-heading'.freeze
+  BUTTONS_CLASS = 'form-buttons'.freeze
+  SPACER_CLASS = 'form-spacer'.freeze
 end
 
 require 'formy/element'

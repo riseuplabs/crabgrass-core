@@ -7,7 +7,6 @@
 #
 
 class AccountsController < ApplicationController
-
   layout 'notice'
 
   ##
@@ -42,9 +41,6 @@ class AccountsController < ApplicationController
   ##
 
   # removed
-
-
-
 
   ##
   ## PASSWORD RESET
@@ -81,7 +77,7 @@ class AccountsController < ApplicationController
       user_params[:email] = session[:signup_email_address]
     end
     user_params.permit :login, :email, :password, :password_confirmation,
-      :language, :display_name
+                       :language, :display_name
   end
 
   def reset_password_form
@@ -100,7 +96,7 @@ class AccountsController < ApplicationController
       return
     end
 
-    sleep(rand*3) # an attempt to make timing attacks harder
+    sleep(rand * 3) # an attempt to make timing attacks harder
 
     user = User.find_by_email params[:email]
     if user
@@ -147,5 +143,4 @@ class AccountsController < ApplicationController
       return false
     end
   end
-
 end

@@ -15,41 +15,41 @@ module Groups
     end
 
     def test_may_create_council_for_single_user_group
-      @group = stub_group(:single_user? => true)
+      @group = stub_group(single_user?: true)
       self.current_user = stub_admin
       assert may_create_council?
     end
 
     def test_may_create_council_for_recent_group
-      @group = stub_group(:recent? => true)
+      @group = stub_group(recent?: true)
       self.current_user = stub_admin
       assert may_create_council?
     end
 
     def test_may_not_create_duplicate_council
-      @group = stub_group(:has_a_council? => true)
+      @group = stub_group(has_a_council?: true)
       self.current_user = stub_admin
       assert !may_create_council?
     end
 
     def test_may_not_create_council_for_class_without_councils
-      @group = stub_group(class: stub(:can_have_council? => false))
+      @group = stub_group(class: stub(can_have_council?: false))
       self.current_user = stub_admin
       assert !may_create_council?
     end
 
     def test_may_not_create_council_if_no_admin
-      @group = stub_group(:recent? => true)
+      @group = stub_group(recent?: true)
       self.current_user = stub_admin(@group, false)
       assert !may_create_council?
     end
 
     def stub_group(options = {})
       defaults = {
-        :class => stub(:can_have_council? => true),
-        :has_a_council? => false,
-        :recent? => false,
-        :single_user? => false
+        class: stub(can_have_council?: true),
+        has_a_council?: false,
+        recent?: false,
+        single_user?: false
       }
       stub(defaults.merge(options))
     end
@@ -59,6 +59,5 @@ module Groups
       user.expects(:may?).with(:admin, group).returns(ret).at_most_once
       user
     end
-
   end
 end

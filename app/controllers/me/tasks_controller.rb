@@ -1,10 +1,9 @@
 class Me::TasksController < Me::BaseController
-
   def index
     @pages = pages_with_tasks
-      .not_deleted
-      .order('pages.updated_at DESC')
-      .limit(20)
+             .not_deleted
+             .order('pages.updated_at DESC')
+             .limit(20)
   end
 
   protected
@@ -24,5 +23,4 @@ class Me::TasksController < Me::BaseController
   def completed?
     params[:view] == 'completed'
   end
-
 end

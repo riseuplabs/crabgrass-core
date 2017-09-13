@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class TaskTest < ActiveSupport::TestCase
-
-
   def test_creation
     assert Task.create
   end

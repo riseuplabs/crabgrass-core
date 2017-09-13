@@ -1,5 +1,4 @@
 class Group::HomeController < Group::BaseController
-
   skip_before_filter :login_required
   # fetch_group already checks may_show_group?
   skip_before_filter :authorization_required
@@ -16,10 +15,9 @@ class Group::HomeController < Group::BaseController
     @group = options[:group]
   end
 
-
   def show
     @pages = Page.paginate_by_path '/descending/updated_at/limit/30/',
-      options_for_group(@group), pagination_params
+                                   options_for_group(@group), pagination_params
     track
   end
 
@@ -42,19 +40,17 @@ class Group::HomeController < Group::BaseController
   end
 
   def track_visit
-    memberships.update_all [ "total_visits = total_visits + 1, visited_at = ?",
-                            Time.now ]
+    memberships.update_all ['total_visits = total_visits + 1, visited_at = ?',
+                            Time.now]
   end
 
   def memberships
     @group.memberships.where(user_id: current_user)
   end
 
-  #helper_method :coming_from_wiki?
+  # helper_method :coming_from_wiki?
   # will return true if we came from the wiki editor, versions or diffs
-  #def coming_from_wiki?(wiki)
+  # def coming_from_wiki?(wiki)
   #  wiki and params[:wiki_id].to_i == wiki.id
-  #end
-
+  # end
 end
-

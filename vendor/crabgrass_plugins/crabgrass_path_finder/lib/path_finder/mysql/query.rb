@@ -58,7 +58,6 @@
 #
 
 class PathFinder::Mysql::Query < PathFinder::Query
-
   ##
   ## OVERRIDES
   ##
@@ -96,9 +95,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def apply_filter(filter, args)
     query_filter = filter.query_block || filter.mysql_block
-    if query_filter
-      query_filter.call(self, *args)
-    end
+    query_filter.call(self, *args) if query_filter
   end
 
   ##
@@ -126,7 +123,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   ##
 
   def add_sql_condition(*args)
-    [:user_participations, :group_participations].each do |j|
+    %i[user_participations group_participations].each do |j|
       joins(j) if /#{j.to_s}\./ =~ args.first
     end
     where(*args)
@@ -147,7 +144,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def add_tag_constraint(tag)
-    @tags << "+" + Page.searchable_tag_list([tag]).first
+    @tags << '+' + Page.searchable_tag_list([tag]).first
   end
 
   def set_flow_constraint(flow)
@@ -156,11 +153,11 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def add_order(order_sql)
     if @order # if set to nil, this means we must skip sorting
-      if order_sql =~ /\./
-        @order << order_sql
-      else
-        @order << "#{@klass.table_name}.#{order_sql}"
-      end
+      @order << if order_sql =~ /\./
+                  order_sql
+                else
+                  "#{@klass.table_name}.#{order_sql}"
+                end
     end
   end
 
@@ -170,35 +167,35 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def cleanup_sort_column(column)
     case column
-      when 'views' then 'views_count'
-      when 'stars' then 'stars_count'
+    when 'views' then 'views_count'
+    when 'stars' then 'stars_count'
       # MISSING: when 'edits' then 'edits_count'
-      when 'contributors' then 'contributors_count'
-      when 'posts' then 'posts_count'
-      else column
+    when 'contributors' then 'contributors_count'
+    when 'posts' then 'posts_count'
+    else column
     end
-    return column.gsub(/[^[:alnum:]]+/, '_')
+    column.gsub(/[^[:alnum:]]+/, '_')
   end
 
   def add_most_condition(what, num, unit)
-    unit=unit.downcase.pluralize
-    name= what=="edits" ? "contributors" : what
+    unit = unit.downcase.pluralize
+    name = what == 'edits' ? 'contributors' : what
     num.gsub!(/[^\d]+/, ' ')
-    if unit=="months"
-      unit = "days"
+    if unit == 'months'
+      unit = 'days'
       num = num.to_i * 31
-    elsif unit=="years"
-      unit = "days"
+    elsif unit == 'years'
+      unit = 'days'
       num = num.to_i * 365
     end
-    if unit=="days"
+    if unit == 'days'
       joins :dailies
-      where "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      where format('dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY', num)
       @order << "SUM(dailies.#{what}) DESC"
       select "pages.*, SUM(dailies.#{what}) AS #{name}_count"
-    elsif unit=="hours"
+    elsif unit == 'hours'
       joins :hourlies
-      where "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      where format('hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR', num)
       @order << "SUM(hourlies.#{what}) DESC"
       select "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
@@ -214,11 +211,11 @@ class PathFinder::Mysql::Query < PathFinder::Query
       # safe because media_type is limited by parge_page_type
       where "pages.is_#{media_type} = ?", true
     elsif page_type
-     where 'pages.type = ?',
-       Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+      where 'pages.type = ?',
+            Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
     elsif page_group
       where 'pages.type IN (?)',
-        Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+            Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
     else
       # we didn't find either a type or a group for arg
     end
@@ -247,8 +244,8 @@ class PathFinder::Mysql::Query < PathFinder::Query
       # it is absolutely vital that we MATCH against both access_ids and tags,
       # because this is how the index is specified.
       joins :page_terms
-      where "MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)",
-        fulltext_filter.join(' ')
+      where 'MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)',
+            fulltext_filter.join(' ')
     end
   end
 
@@ -268,9 +265,9 @@ class PathFinder::Mysql::Query < PathFinder::Query
   end
 
   def access_filter(options)
-    active_options = options.select{|k,v| v.present?}
+    active_options = options.select { |_k, v| v.present? }
     if active_options.present?
-      "+(%s)" % Page.access_ids_for(active_options).join(' ')
+      format('+(%s)', Page.access_ids_for(active_options).join(' '))
     end
   end
 
@@ -292,7 +289,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
   # TODO: make this more generall so it works with all aggregation functions.
   def sql_for_group(order_string)
     if match = /SUM\(.*\)/.match(order_string)
-      "pages.id"
+      'pages.id'
     end
   end
 
@@ -305,7 +302,7 @@ class PathFinder::Mysql::Query < PathFinder::Query
 
   def sql_for_order
     if @order.nil?
-      return nil
+      nil
     else
       if @order.empty? and SearchFilter['descending']
         apply_filter(SearchFilter['descending'], 'updated-at')
@@ -321,7 +318,6 @@ class PathFinder::Mysql::Query < PathFinder::Query
   def apply_flow_filter
     return if @flow.blank?
     return unless @klass == Page
-    where flow: Array(@flow).map{|f| FLOW[f]}
+    where flow: Array(@flow).map { |f| FLOW[f] }
   end
-
 end

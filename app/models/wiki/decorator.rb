@@ -1,7 +1,6 @@
 require 'nokogiri'
 
 class Wiki::Decorator
-
   delegate :to_html, to: :doc
 
   def initialize(wiki, view)
@@ -20,14 +19,13 @@ class Wiki::Decorator
   end
 
   protected
+
   attr_reader :wiki, :doc, :view
 
   def find_heading_node(doc, section)
     return nil if section.nil?
-    anchor = doc.at %Q/a[@name="#{section}"]/
-    if anchor.nil?
-      raise Wiki::SectionNotFoundError.new(section)
-    end
+    anchor = doc.at %(a[@name="#{section}"])
+    raise Wiki::SectionNotFoundError.new(section) if anchor.nil?
     anchor.parent
   end
 
@@ -43,11 +41,15 @@ class Wiki::Decorator
     heading['class'] = "#{heading['class']} shy_parent"
   end
 
-  def wrap_in_div(wiki, doc, section, is_full_wiki)
+  def wrap_in_div(wiki, doc, section, _is_full_wiki)
     # this is the heading node we want to wrap with its content
     heading = find_heading_node(doc, section)
     # everything between heading and end_node should be wrapped
-    end_before = find_heading_node(doc, wiki.successor_for_section(section).try.name) rescue nil
+    end_before = begin
+                   find_heading_node(doc, wiki.successor_for_section(section).try.name)
+                 rescue
+                   nil
+                 end
 
     wrap = Nokogiri.make view.div_for(wiki, section.underscore)
     heading.previous = wrap
@@ -57,5 +59,4 @@ class Wiki::Decorator
       current = wrap.next
     end
   end
-
 end

@@ -1,3 +1,2 @@
 module Me::SettingsHelper
-
 end

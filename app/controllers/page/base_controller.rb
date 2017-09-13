@@ -3,7 +3,6 @@
 #
 
 class Page::BaseController < ApplicationController
-
   public
 
   before_filter :login_required, except: :show
@@ -39,7 +38,7 @@ class Page::BaseController < ApplicationController
   # ... after all the others
   after_filter :save_if_needed, except: :create
   after_filter :update_viewed, only: :show
-  after_filter :update_view_count, only: [:show, :edit, :create]
+  after_filter :update_view_count, only: %i[show edit create]
 
   include Page::BeforeFilters
 
@@ -56,6 +55,7 @@ class Page::BaseController < ApplicationController
 
   # to be overridden by subclasses
   def fetch_data; end
+
   def setup_options; end
 
   ##
@@ -81,14 +81,12 @@ class Page::BaseController < ApplicationController
 
   def setup_context
     if @page and @page.owner
-      if @page.owner == current_user
-        @context = Context::Me.new(current_user)
-      else
-        @context = Context.find(@page.owner)
-      end
+      @context = if @page.owner == current_user
+                   Context::Me.new(current_user)
+                 else
+                   Context.find(@page.owner)
+                 end
     end
     super
   end
-
 end
-

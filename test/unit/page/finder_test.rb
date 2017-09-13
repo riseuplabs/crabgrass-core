@@ -2,7 +2,6 @@ require 'test_helper'
 require 'page/finder'
 
 class Page::FinderTest < ActiveSupport::TestCase
-
   def test_finds_page
     page = pages(:blue_page)
     finder = find 'blue', 'blue_page'
@@ -44,5 +43,4 @@ class Page::FinderTest < ActiveSupport::TestCase
   def find(context, handle)
     Page::Finder.new(context, handle)
   end
-
 end

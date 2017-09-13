@@ -1,5 +1,4 @@
 module Group::BasePermission
-
   protected
 
   # allow immediate destruction for groups no larger than:
@@ -35,5 +34,4 @@ module Group::BasePermission
       group.committee? or group.council? or group.users.count <= MAX_SIZE_FOR_QUICK_DESTROY_GROUP
     )
   end
-
 end

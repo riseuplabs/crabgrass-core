@@ -1,6 +1,6 @@
 class RankedVotePageController < Page::BaseController
   before_filter :fetch_poll
-  before_filter :find_possibles, only: [:show, :edit]
+  before_filter :find_possibles, only: %i[show edit]
 
   def show
     # we need to specify the whole page_url not just the action here
@@ -8,17 +8,16 @@ class RankedVotePageController < Page::BaseController
     redirect_to page_url(@page, action: :edit) unless @poll.possibles.any?
 
     @who_voted_for = @poll.tally
-    @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+    @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id) }
   end
 
-  def edit
-  end
+  def edit; end
 
   def print
     @who_voted_for = @poll.tally
-    @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+    @sorted_possibles = @poll.ranked_candidates.collect { |id| @poll.possibles.find(id) }
 
-    render layout: "printer-friendly"
+    render layout: 'printer-friendly'
   end
 
   protected
@@ -49,6 +48,4 @@ class RankedVotePageController < Page::BaseController
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.votes.by_user(current_user).first.try.value || -1 }
   end
-
 end
-

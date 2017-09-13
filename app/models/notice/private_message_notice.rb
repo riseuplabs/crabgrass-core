@@ -4,13 +4,12 @@ class Notice::PrivateMessageNotice < Notice
   attr_accessor :from
 
   class << self
-    alias_method :find_all_by_private_message, :find_all_by_noticable
-    alias_method :destroy_all_by_private_message, :destroy_all_by_noticable
+    alias find_all_by_private_message find_all_by_noticable
+    alias destroy_all_by_private_message destroy_all_by_noticable
 
-    def create!(args={})
+    def create!(args = {})
       super(args)
     end
-
   end
 
   ##
@@ -22,7 +21,7 @@ class Notice::PrivateMessageNotice < Notice
   end
 
   def display_title
-     I18n.t(:unread_private_message, user: data[:from])
+    I18n.t(:unread_private_message, user: data[:from])
   end
 
   def display_body_as_quote?
@@ -49,12 +48,11 @@ class Notice::PrivateMessageNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {message: message, from: from.name}
+    self.data = { message: message, from: from.name }
   end
 
   before_create :set_avatar
   def set_avatar
     self.avatar_id = from.avatar_id if from.avatar_id
   end
-
 end

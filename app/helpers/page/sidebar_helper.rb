@@ -4,11 +4,10 @@
 #
 
 module Page::SidebarHelper
-
   protected
 
   def rebuild_sidebar(page)
-    page.replace 'page_sidebar', :partial => 'page/sidebar/sidebar'
+    page.replace 'page_sidebar', partial: 'page/sidebar/sidebar'
   end
 
   ##
@@ -17,9 +16,9 @@ module Page::SidebarHelper
 
   def link_to_user_participation(upart)
     icon = case upart.access_sym
-      when :admin then 'tiny_wrench_16'
-      when :edit then 'tiny_pencil_16'
-      when :view then ''
+           when :admin then 'tiny_wrench_16'
+           when :edit then 'tiny_pencil_16'
+           when :view then ''
     end
     label = content_tag :span, upart.user.display_name, class: icon
     link_to_entity(upart.user, avatar: 'xsmall', label: label)
@@ -27,9 +26,9 @@ module Page::SidebarHelper
 
   def link_to_group_participation(gpart)
     icon = case gpart.access_sym
-      when :admin then 'tiny_wrench_16'
-      when :edit then 'tiny_pencil_16'
-      when :view then ''
+           when :admin then 'tiny_wrench_16'
+           when :edit then 'tiny_pencil_16'
+           when :view then ''
     end
     label = content_tag :span, gpart.group.display_name, class: icon
     link_to_entity(gpart.group, avatar: 'xsmall', label: label)
@@ -43,8 +42,8 @@ module Page::SidebarHelper
     icon = checked ? 'check_on' : 'check_off'
     link_to_remote(
       text,
-      {url: url, method: options[:method], complete: ''},
-      {icon: icon, id: options[:id], title: options[:title]}
+      { url: url, method: options[:method], complete: '' },
+      icon: icon, id: options[:id], title: options[:title]
     )
   end
 
@@ -61,9 +60,9 @@ module Page::SidebarHelper
       existing_watch = (@upart and @upart.watch?) or false
       li_id = 'watch_li'
       checkbox_id = 'watch_checkbox'
-      url = page_participations_path(@page, :watch => (!existing_watch).inspect)
-      content_tag :li, :id => li_id do
-        sidebar_checkbox(I18n.t(:watch_checkbox), existing_watch, url, :id => checkbox_id, :method => 'post')
+      url = page_participations_path(@page, watch: (!existing_watch).inspect)
+      content_tag :li, id: li_id do
+        sidebar_checkbox(I18n.t(:watch_checkbox), existing_watch, url, id: checkbox_id, method: 'post')
       end
     end
   end
@@ -73,16 +72,16 @@ module Page::SidebarHelper
   #
   def public_line
     if may_admin_page?
-      url = page_attributes_path(@page, :public => (!@page.public?).inspect)
-      content_tag :li, :id => 'public_li' do
+      url = page_attributes_path(@page, public: (!@page.public?).inspect)
+      content_tag :li, id: 'public_li' do
         sidebar_checkbox(I18n.t(:public_checkbox),
-          @page.public?, url, :id => 'public_checkbox',
-          :method => 'put', :title => I18n.t(:public_checkbox_help))
+                         @page.public?, url, id: 'public_checkbox',
+                                             method: 'put', title: I18n.t(:public_checkbox_help))
       end
     else
       checked = @page.public? ? 'check_on_16' : 'check_off_16'
       content_tag :li do
-        content_tag :span, :class => "a icon #{checked}" do
+        content_tag :span, class: "a icon #{checked}" do
           :public_checkbox.t
         end
       end
@@ -97,16 +96,16 @@ module Page::SidebarHelper
       if @upart and @upart.star?
         icon = 'star'
         add = false
-        label = I18n.t(:remove_star_link, :star_count => @page.stars_count)
+        label = I18n.t(:remove_star_link, star_count: @page.stars_count)
       else
         icon = 'star_empty_dark'
         add = true
-        label = I18n.t(:add_star_link, :star_count => @page.stars_count)
+        label = I18n.t(:add_star_link, star_count: @page.stars_count)
       end
-      url = page_participations_path(@page, :star => add.inspect)
-      content_tag :li, :id => 'star_li' do
-        link_to_remote label, {url: url, method: 'post'},
-          {id: 'star', icon: icon}
+      url = page_participations_path(@page, star: add.inspect)
+      content_tag :li, id: 'star_li' do
+        link_to_remote label, { url: url, method: 'post' },
+                       id: 'star', icon: icon
       end
     end
   end
@@ -117,7 +116,7 @@ module Page::SidebarHelper
   def undelete_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote_with_icon(I18n.t(:undelete_from_trash), :url => page_trash_path(@page, :type => 'undelete'), :method => 'put', :icon => 'refresh')
+        link_to_remote_with_icon(I18n.t(:undelete_from_trash), url: page_trash_path(@page, type: 'undelete'), method: 'put', icon: 'refresh')
       end
     end
   end
@@ -128,22 +127,22 @@ module Page::SidebarHelper
   def destroy_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote_with_icon(:destroy_page_via_shred.t, :icon => 'minus', :confirm => :destroy_confirmation.t(:thing => :page.t), :url => page_trash_path(@page, :type => 'destroy'), :method => 'put')
+        link_to_remote_with_icon(:destroy_page_via_shred.t, icon: 'minus', confirm: :destroy_confirmation.t(thing: :page.t), url: page_trash_path(@page, type: 'destroy'), method: 'put')
       end
     end
   end
 
-#  def view_line
-#    if @show_print != false
-#      printable = link_to I18n.t(:print_view_link), page_url(@page, :action => "print")
-#      content_tag :li, printable, :class => 'small_icon printer_16'
-#    end
-#  end
+  #  def view_line
+  #    if @show_print != false
+  #      printable = link_to I18n.t(:print_view_link), page_url(@page, :action => "print")
+  #      content_tag :li, printable, :class => 'small_icon printer_16'
+  #    end
+  #  end
 
-#  def history_line
-#    link = link_to I18n.t(:history), page_url(@page, :action => "page_history")
-#    content_tag :li, link, :class => 'small_icon table_16'
-#  end
+  #  def history_line
+  #    link = link_to I18n.t(:history), page_url(@page, :action => "page_history")
+  #    content_tag :li, link, :class => 'small_icon table_16'
+  #  end
 
   ##
   ## SIDEBAR COLLECTIONS
@@ -159,7 +158,7 @@ module Page::SidebarHelper
 
   def page_attachment(asset)
     link_to page_attachment_image(asset), asset.url,
-      class: "attachment", title: asset.filename
+            class: 'attachment', title: asset.filename
   end
 
   def page_attachment_image(asset)
@@ -184,7 +183,7 @@ module Page::SidebarHelper
   # the function, when called, will remove itself.
   #
   def refresh_sidebar_on_close
-    javascript_tag('afterHide = function(){%s; afterHide = null;}' % remote_function(url: page_sidebar_path(@page), method: :get))
+    javascript_tag(format('afterHide = function(){%s; afterHide = null;}', remote_function(url: page_sidebar_path(@page), method: :get)))
   end
 
   #
@@ -205,11 +204,11 @@ module Page::SidebarHelper
   def edit_attachments_line
     if may_edit_page?
       popup_line name: 'assets',
-        label: :edit_attachments_link.t,
-        icon: 'attach',
-        title: :edit_attachments.t,
-        url: page_assets_path(@page),
-        after_load: 'initAjaxUpload();'
+                 label: :edit_attachments_link.t,
+                 icon: 'attach',
+                 title: :edit_attachments.t,
+                 url: page_assets_path(@page),
+                 after_load: 'initAjaxUpload();'
     end
   end
 
@@ -267,5 +266,4 @@ module Page::SidebarHelper
       )
     end
   end
-
 end

@@ -28,13 +28,11 @@
 #
 
 module Common::Application::RescueErrors
-
   def self.included(base)
     base.extend ClassMethods
     base.class_eval do
-
       class_attribute :rescue_render_map,
-        instance_writer: false, instance_reader: false
+                      instance_writer: false, instance_reader: false
 
       # order of precedence is bottom to top.
       rescue_from ActiveRecord::RecordInvalid, with: :render_error
@@ -49,8 +47,8 @@ module Common::Application::RescueErrors
       rescue_from AuthenticationRequired,      with: :raise
       rescue_from PermissionDenied,            with: :raise
 
-      #helper_method :rescues_path
-      #alias_method_chain :rescue_action_locally, :js
+      # helper_method :rescues_path
+      # alias_method_chain :rescue_action_locally, :js
     end
   end
 
@@ -78,7 +76,7 @@ module Common::Application::RescueErrors
     #
     #   rescue_render :update => lambda { blah blah }
     #
-    def rescue_render(hsh=nil)
+    def rescue_render(hsh = nil)
       if hsh
         # this has to be a copy so the super class is not affected.
         # see http://apidock.com/rails/v4.0.2/Class/class_attribute
@@ -92,20 +90,20 @@ module Common::Application::RescueErrors
 
   protected
 
-#  # allows us to set a new path for the rescue templates
-#  def rescues_path(template_name)
-#    file = "#{Rails.root}/app/views/rescues/#{template_name}.erb"
-#    if File.exists?(file)
-#      return file
-#    else
-#      return super(template_name)
-#    end
-#  end
+  #  # allows us to set a new path for the rescue templates
+  #  def rescues_path(template_name)
+  #    file = "#{Rails.root}/app/views/rescues/#{template_name}.erb"
+  #    if File.exists?(file)
+  #      return file
+  #    else
+  #      return super(template_name)
+  #    end
+  #  end
 
   #
   # handles suspected "cross-site request forgery" errors
   #
-  def render_csrf_error(exception=nil)
+  def render_csrf_error(_exception = nil)
     render template: 'account/csrf_error', layout: 'notice'
   end
 
@@ -114,11 +112,11 @@ module Common::Application::RescueErrors
   # for ajax, no problem, we render some rjs.
   # for html, we try to to figure out the best template to render.
   #
-  def render_error(exception=nil, options={})
+  def render_error(exception = nil, options = {})
     if exception
-    #  options[:template] ||= exception.template
-    #  options[:redirect] ||= exception.redirect
-    #  options[:record] ||= exception.record
+      #  options[:template] ||= exception.template
+      #  options[:redirect] ||= exception.redirect
+      #  options[:record] ||= exception.record
       options[:status] ||= status_for_exception(exception)
     end
     respond_to do |format|
@@ -152,35 +150,31 @@ module Common::Application::RescueErrors
   #
   # How is this different than 'render_error' with format.js?
   #
-#  def rescue_action_locally_with_js(exception)
-#    respond_to do |format|
-#      format.html do
-#        if Rails.env.production? or Rails.env.development?
-#          rescue_action_locally_without_js(exception)
-#        else
-#          render plain: exception
-#         end
-#      end
-#      format.js do
-#        add_variables_to_assigns
-#        @template.instance_variable_set("@exception", exception)
-#        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
-#        @template.send!(:assign_variables_from_controller)
-#        render :template => 'rescues/diagnostics.rjs', :layout => false
-#      end
-#    end
-#  end
+  #  def rescue_action_locally_with_js(exception)
+  #    respond_to do |format|
+  #      format.html do
+  #        if Rails.env.production? or Rails.env.development?
+  #          rescue_action_locally_without_js(exception)
+  #        else
+  #          render plain: exception
+  #         end
+  #      end
+  #      format.js do
+  #        add_variables_to_assigns
+  #        @template.instance_variable_set("@exception", exception)
+  #        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
+  #        @template.send!(:assign_variables_from_controller)
+  #        render :template => 'rescues/diagnostics.rjs', :layout => false
+  #      end
+  #    end
+  #  end
 
   private
 
-  def render_error_html(exception=nil, options={})
-    if exception
-      alert_message :error, exception
-    end
+  def render_error_html(exception = nil, options = {})
+    alert_message :error, exception if exception
 
-    if options[:redirect]
-      redirect_to options[:redirect]
-    end
+    redirect_to options[:redirect] if options[:redirect]
 
     #
     # try to guess the best template to use for rendering the error.
@@ -200,15 +194,15 @@ module Common::Application::RescueErrors
               render action: action
             end
           elsif action.is_a?(Proc)
-            self.instance_eval(&action)
+            instance_eval(&action)
           end
         elsif params[:action] == 'update'
           render action: 'edit'
         elsif params[:action] == 'create'
           render action: 'new'
         elsif params[:action]
-          render action: params[:action]  # this is generally a bad idea. it probably means
-                                             # that a GET request resulted in an error.
+          render action: params[:action] # this is generally a bad idea. it probably means
+          # that a GET request resulted in an error.
         end
       end
     rescue ActionView::MissingTemplate => exc
@@ -217,17 +211,15 @@ module Common::Application::RescueErrors
     end
 
     # if we ended up redirecting, then ensure that any :now flash is changed to :later
-    if @preformed_redirect
-      force_later_alert
-    end
+    force_later_alert if @preformed_redirect
   end
 
-  def render_error_js(exception=nil, options={})
+  def render_error_js(exception = nil, options = {})
     error exception if exception.present?
     log_exception(exception)
-    return if performed?  # error in after_filter
-    render template: 'error/alert', locals: {exception: exception},
-      status: options[:status]
+    return if performed? # error in after_filter
+    render template: 'error/alert', locals: { exception: exception },
+           status: options[:status]
   end
 
   def log_exception(exception)
@@ -236,7 +228,7 @@ module Common::Application::RescueErrors
     Rails.logger.warn Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
   end
 
-  #def flash_auth_error(mode)
+  # def flash_auth_error(mode)
   #  if mode == :now
   #    flsh = flash.now
   #  else
@@ -248,7 +240,5 @@ module Common::Application::RescueErrors
   #  else
   #    add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
   #  end
-  #end
-
+  # end
 end
-

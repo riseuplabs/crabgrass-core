@@ -1,7 +1,6 @@
 require_relative '../integration_test'
 
 class VisibilityTest < IntegrationTest
-
   def test_hidden_is_visible_to_self
     as_a hidden_user do |me|
       visit "/#{me.login}"
@@ -12,7 +11,7 @@ class VisibilityTest < IntegrationTest
   # regression test for #6757
   def test_hidden_user_can_see_own_pages
     as_a hidden_user do |me|
-      visit "/me/pages"
+      visit '/me/pages'
       assert_content me.display_name
     end
   end
@@ -56,7 +55,7 @@ class VisibilityTest < IntegrationTest
 
   def test_not_found_looks_like_hidden
     as_a [user, visitor] do
-      visit "/something-that-does-not-exist"
+      visit '/something-that-does-not-exist'
       assert_not_found
     end
   end
@@ -76,5 +75,4 @@ class VisibilityTest < IntegrationTest
       assert_not_found
     end
   end
-
 end

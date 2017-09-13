@@ -13,7 +13,6 @@
 #  end
 #
 class Thumbnail < ActiveRecord::Base
-
   #
   # Our parent could be the main asset, or it could be a *version* of the
   # asset.
@@ -41,13 +40,13 @@ class Thumbnail < ActiveRecord::Base
 
   # finds or initializes a Thumbnail
   def self.find_or_init(thumbnail_name, parent_id, asset_class)
-    self.find_or_initialize_by name: thumbnail_name.to_s,
-      parent_id: parent_id,
-      parent_type: asset_class
+    find_or_initialize_by name: thumbnail_name.to_s,
+                          parent_id: parent_id,
+                          parent_type: asset_class
   end
 
   def self.clone(orig, options = {})
-    self.create orig.attributes.except('id').merge(options)
+    create orig.attributes.except('id').merge(options)
   end
 
   #
@@ -56,11 +55,11 @@ class Thumbnail < ActiveRecord::Base
   # if force is true, then generate the thumbnail even if it already
   # exists.
   #
-  def generate(force=false)
+  def generate(force = false)
     if proxy?
-      return
+      nil
     elsif !force and File.exist?(private_filename) and File.size(private_filename) > 0
-      return
+      nil
     else
       if depends_on
         depends_on.generate(force)
@@ -75,7 +74,7 @@ class Thumbnail < ActiveRecord::Base
 
       options = {
         size: thumbdef.size,
-        input_file: input_file,  input_type: input_type,
+        input_file: input_file, input_type: input_type,
         output_file: output_file, output_type: output_type
       }
 
@@ -85,9 +84,9 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def versioned
-    if !parent.is_version?
-      asset = parent.versions.detect{|v|v.version == parent.version}
-      asset.thumbnail(self.name) if asset
+    unless parent.is_version?
+      asset = parent.versions.detect { |v| v.version == parent.version }
+      asset.thumbnail(name) if asset
     end
   end
 
@@ -115,17 +114,17 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def exists?
-    parent.thumbnail_exists?(self.name)
+    parent.thumbnail_exists?(name)
   end
 
   def thumbdef
-    definition = parent.thumbdefs[self.name.to_sym]
+    definition = parent.thumbdefs[name.to_sym]
     return definition if definition
-    raise RuntimeError.new("No thumbnail definition found for #{name} #{id}")
+    raise "No thumbnail definition found for #{name} #{id}"
   end
 
   def ok?
-    not failure?
+    !failure?
   end
 
   #
@@ -175,11 +174,10 @@ class Thumbnail < ActiveRecord::Base
     # by the time we figure out what the thumbnail dimensions are,
     # the duplicate thumbnails for the version have already been created.
     # so, when our dimensions change, update the versioned thumb as well.
-    if (vthumb = versioned()).present?
-      vthumb.width, vthumb.height = [self.width, self.height]
+    if (vthumb = versioned).present?
+      vthumb.width = width
+      vthumb.height = height
       vthumb.save
     end
   end
-
 end
-

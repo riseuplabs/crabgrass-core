@@ -14,18 +14,14 @@ class Activity::UserProposedToDestroyGroup < Activity
     end
   end
 
-
-  def description(view=nil)
+  def description(_view = nil)
     I18n.t(:request_to_destroy_our_group_description,
-              user: user_span(:user),
-              group_type: group_class(:group),
-              group: group_span(:group))
+           user: user_span(:user),
+           group_type: group_class(:group),
+           group: group_span(:group))
   end
 
   def icon
     'minus'
   end
-
-
 end
-

@@ -25,7 +25,6 @@
 #
 
 class PathFinder::Sphinx::Query < PathFinder::Query
-
   ##
   ## OVERRIDES
   ##
@@ -41,13 +40,13 @@ class PathFinder::Sphinx::Query < PathFinder::Query
 
     add_access_constraint options.slice(:public, :group_ids, :user_ids)
     add_access_constraint group_ids: options[:secondary_group_ids],
-      user_ids: options[:secondary_user_ids]
+                          user_ids: options[:secondary_user_ids]
     add_access_constraint site_ids: options[:site_ids]
 
     @without      = {}
     @conditions   = {}
-    @order        = ""
-    @search_text  = ""
+    @order        = ''
+    @search_text  = ''
     @per_page    = options[:per_page] || PathFinder.default_pagination_size
     @page        = options[:page] || 1
     @flow        = options.delete(:flow)
@@ -59,9 +58,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
 
   def apply_filter(filter, args)
     query_filter = filter.query_block || filter.sphinx_block
-    if query_filter
-      query_filter.call(self, *args)
-    end
+    query_filter.call(self, *args) if query_filter
   end
 
   ##
@@ -74,10 +71,10 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     # is no explicit order set, we want to additionally sort by page_updated_at.
     if @order.blank?
       @sort_mode = :extended
-      @order = "weight() DESC, page_updated_at DESC"
+      @order = 'weight() DESC, page_updated_at DESC'
     end
 
-    #puts "Page::Terms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
+    # puts "Page::Terms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
@@ -95,7 +92,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
       # but sometimes it does, and if it does we don't want to bomb out.
     end
     page_terms.replace(pages)
-    return page_terms
+    page_terms
   end
 
   def find
@@ -118,12 +115,12 @@ class PathFinder::Sphinx::Query < PathFinder::Query
 
   def search_options(options = {})
     options.reverse_merge page: @page,
-      per_page: @per_page,
-      include: :page,
-      with_all: @with,
-      without_all: @without,
-      conditions: @conditions,
-      order: @order
+                          per_page: @per_page,
+                          include: :page,
+                          with_all: @with,
+                          without_all: @without,
+                          conditions: @conditions,
+                          order: @order
   end
 
   def fallback
@@ -149,8 +146,8 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   end
 
   def add_tag_constraint(tag)
-    @conditions[:tags] ||= ""
-    @conditions[:tags] << " "
+    @conditions[:tags] ||= ''
+    @conditions[:tags] << ' '
     @conditions[:tags] << Page.searchable_tag_list([tag]).first
   end
 
@@ -168,10 +165,10 @@ class PathFinder::Sphinx::Query < PathFinder::Query
     @page = 1
   end
 
-  #def add_offset(limit, offset)
+  # def add_offset(limit, offset)
   #  @per_page = limit
   #  @page = ((offset.to_f/limit.to_f) + 1).floor.to_i
-  #end
+  # end
 
   def add_text_filter(text)
     @search_text += Riddle::Query.escape " #{text}"
@@ -199,16 +196,16 @@ class PathFinder::Sphinx::Query < PathFinder::Query
 
   def cleanup_sort_column(column)
     column = case column
-      when 'updated_at' then 'page_updated_at'
-      when 'created_at' then 'page_created_at'
-      when 'views' then 'views_count'
-      when 'stars' then 'stars_count'
-      # MISSING: when 'edits' then 'edits_count' missing
-      # MISSING: when 'contributors' then 'contributors_count'
-      # MISSING: when 'posts' then 'posts_count'
-      else column
+             when 'updated_at' then 'page_updated_at'
+             when 'created_at' then 'page_created_at'
+             when 'views' then 'views_count'
+             when 'stars' then 'stars_count'
+             # MISSING: when 'edits' then 'edits_count' missing
+             # MISSING: when 'contributors' then 'contributors_count'
+             # MISSING: when 'posts' then 'posts_count'
+             else column
     end
-    return column.gsub(/[^[:alnum:]]+/, '_')
+    column.gsub(/[^[:alnum:]]+/, '_')
   end
 
   private
@@ -224,7 +221,7 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   # https://github.com/riseuplabs/crabgrass-core/pull/306
   #
   def access_limit(access_hash)
-    real_access = access_hash.select{|_k,v| v.present?}
+    real_access = access_hash.select { |_k, v| v.present? }
     [Page.access_ids_for(real_access)]
   end
 
@@ -233,9 +230,6 @@ class PathFinder::Sphinx::Query < PathFinder::Query
   # symbols can converted to integers via FLOW constant
   #
   def apply_flow
-    if @flow
-      add_attribute_constraint('flow', FLOW[@flow])
-    end
+    add_attribute_constraint('flow', FLOW[@flow]) if @flow
   end
-
 end

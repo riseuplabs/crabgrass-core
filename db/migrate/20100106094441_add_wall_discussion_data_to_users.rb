@@ -1,7 +1,6 @@
 class AddWallDiscussionDataToUsers < ActiveRecord::Migration
-
   def self.up
-    already_done = Discussion.where(commentable_type: "User")
+    already_done = Discussion.where(commentable_type: 'User')
     done_ids = already_done.select(:commentable_id).map(&:commentable_id)
     puts "already have #{done_ids.size} wall discussions"
     Discussion.connection.execute <<-EOSQL
@@ -13,6 +12,6 @@ class AddWallDiscussionDataToUsers < ActiveRecord::Migration
   end
 
   def self.down
-    Discussions.where(commentable_type: "User").destroy_all
+    Discussions.where(commentable_type: 'User').destroy_all
   end
 end

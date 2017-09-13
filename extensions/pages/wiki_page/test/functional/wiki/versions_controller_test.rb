@@ -15,7 +15,7 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     # create versions
     %w[yellow orange blue yellow red purple].each do |user|
       wiki.update_section! :document, users(user), nil,
-        "text from %s for the wiki" % user
+                           format('text from %s for the wiki', user)
     end
 
     login_as :orange
@@ -36,7 +36,7 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
   def test_show_invalid_version
     pages(:wiki).add groups(:rainbow), access: :edit
     wiki = pages(:wiki).data
-    wiki.update_section!(:document, users(:purple), 1, "text for the wiki")
+    wiki.update_section!(:document, users(:purple), 1, 'text for the wiki')
     login_as :orange
     # should fail gracefully for non-existant version
     get :show, wiki_id: wiki.id, id: 7
@@ -48,15 +48,14 @@ class Wiki::VersionsControllerTest < ActionController::TestCase
     login_as :orange
     page = pages(:wiki)
     wiki = page.data
-    wiki.update_section!(:document, users(:blue), 1, "version 1")
-    wiki.update_section!(:document, users(:yellow), 2, "version 2")
+    wiki.update_section!(:document, users(:blue), 1, 'version 1')
+    wiki.update_section!(:document, users(:yellow), 2, 'version 2')
     post :revert, wiki_id: wiki.id, id: 1
 
     wiki.reload
 
     assert_redirected_to wiki_versions_path(wiki),
-      "revert should redirect to wiki versions list"
-    assert_equal "version 1", wiki.body
+                         'revert should redirect to wiki versions list'
+    assert_equal 'version 1', wiki.body
   end
-
 end

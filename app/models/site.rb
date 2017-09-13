@@ -15,7 +15,6 @@
 # files we may as well use plain ruby now.
 
 class Site
-
   def initialize(domain = nil)
     @domain = domain
   end
@@ -31,7 +30,7 @@ class Site
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
       define_method(attribute) do
-        value = config[attribute.to_s.sub(/\?$/,'')]
+        value = config[attribute.to_s.sub(/\?$/, '')]
         # note: using || below would overwrite falsy values
         value.nil? ? Conf.send(attribute) : value
       end
@@ -39,9 +38,9 @@ class Site
   end
 
   proxy_to_conf :title, :domain, :theme,
-    :pagination_size, :default_language, :login_redirect_url,
-    :email_sender, :email_sender_name, :dev_email,
-    :show_exceptions
+                :pagination_size, :default_language, :login_redirect_url,
+                :email_sender, :email_sender_name, :dev_email,
+                :show_exceptions
 
   protected
 

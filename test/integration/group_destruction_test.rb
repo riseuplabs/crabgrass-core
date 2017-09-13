@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class GroupDestructionTest < IntegrationTest
-
   def test_visit_own_group
     @user = users(:blue)
     login
@@ -19,6 +18,4 @@ class GroupDestructionTest < IntegrationTest
     click_on 'Groups'
     assert_no_content 'animals'
   end
-
-
 end

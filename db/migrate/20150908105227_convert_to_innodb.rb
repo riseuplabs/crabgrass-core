@@ -13,15 +13,15 @@ class ConvertToInnodb < ActiveRecord::Migration
   # because it used to be the default.
   #
   def self.up
-    execute("ALTER TABLE trackings ENGINE=InnoDB")
-    execute("ALTER TABLE migrations_info ENGINE=InnoDB")
-    execute("ALTER TABLE schema_migrations ENGINE=InnoDB")
+    execute('ALTER TABLE trackings ENGINE=InnoDB')
+    execute('ALTER TABLE migrations_info ENGINE=InnoDB')
+    execute('ALTER TABLE schema_migrations ENGINE=InnoDB')
     if ActiveRecord::Base.connection.table_exists? 'plugin_schema_info'
-      execute("ALTER TABLE plugin_schema_info ENGINE=InnoDB")
+      execute('ALTER TABLE plugin_schema_info ENGINE=InnoDB')
     end
   end
 
   def self.down
-    execute("ALTER TABLE trackings ENGINE=MyISAM")
+    execute('ALTER TABLE trackings ENGINE=MyISAM')
   end
 end

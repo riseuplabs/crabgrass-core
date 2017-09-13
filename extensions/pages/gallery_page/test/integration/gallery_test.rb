@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 require 'javascript_integration_test'
 
 class GalleryTest < JavascriptIntegrationTest
@@ -6,7 +7,7 @@ class GalleryTest < JavascriptIntegrationTest
 
   def test_create_gallery_with_images
     login
-    create_page :gallery,  title: 'my pictures'
+    create_page :gallery, title: 'my pictures'
     assert_content 'my pictures'
     attach_file_to_hidden 'upload-input', fixture_file('photo.jpg')
     assert_content 'photo'
@@ -22,7 +23,6 @@ class GalleryTest < JavascriptIntegrationTest
     assert_no_content 'Image'
     # assert_content 'Click thumbnail to see full image.'
   end
-
 
   def assert_image_file(filename)
     src = find('.gallery-item img')['src']

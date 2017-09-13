@@ -8,10 +8,10 @@ module Group::Pages
 
   included do
     has_many :participations,
-      -> { order  :featured_position },
-      class_name: 'Group::Participation',
-      dependent: :delete_all,
-      inverse_of: :group
+             -> { order  :featured_position },
+             class_name: 'Group::Participation',
+             dependent: :delete_all,
+             inverse_of: :group
     has_many :pages, through: :participations
 
     has_many :pages_owned, class_name: 'Page', as: :owner, dependent: :nullify
@@ -58,7 +58,7 @@ module Group::Pages
     end
     page.association_will_change(:groups)
     page.groups_changed = true
-    return participation
+    participation
   end
 
   def remove_page(page)
@@ -71,11 +71,9 @@ module Group::Pages
 
   # DEPRECATED
   def may?(perm, page)
-    begin
-      may!(perm,page)
-    rescue PermissionDenied
-      false
-    end
+    may!(perm, page)
+  rescue PermissionDenied
+    false
   end
 
   # DEPRECATED
@@ -84,14 +82,12 @@ module Group::Pages
   def may!(perm, page)
     gparts = page.participation_for_groups(group_and_committee_ids)
     if gparts.any?
-      part_with_best_access = gparts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      return ( part_with_best_access.access || ACCESS[:view] ) <= (ACCESS[perm] || -100)
+      part_with_best_access = gparts.min do |a, b|
+        (a.access || 100) <=> (b.access || 100)
+      end
+      return (part_with_best_access.access || ACCESS[:view]) <= (ACCESS[perm] || -100)
     else
       raise PermissionDenied.new
     end
   end
-
 end
-

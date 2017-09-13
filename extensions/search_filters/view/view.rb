@@ -4,9 +4,6 @@
 #
 
 SearchFilter.new('/view/:mode/') do
-
   self.singleton = true
   self.path_order = 1000
-
 end
-

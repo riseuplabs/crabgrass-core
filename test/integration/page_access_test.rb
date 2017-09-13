@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class PageAccessTest < JavascriptIntegrationTest
-
   def test_loosing_access
     page = public_page
     login

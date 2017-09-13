@@ -20,396 +20,391 @@
 #
 
 module PathFinder
-class ParsedPath < Array
+  class ParsedPath < Array
+    ##
+    ## CLASS METHODS
+    ##
 
-  ##
-  ## CLASS METHODS
-  ##
-
-  def self.parse(path)
-    if path.is_a?(ParsedPath)
-      path
-    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
-      # i am not sure where this is used
-      ParsedPath.new(path[0])
-    else
-      ParsedPath.new(path)
-    end
-  end
-
-  ##
-  ## CONSTRUCTOR
-  ##
-
-  # constructs a ParsedPath from a path string, array, or hash
-  #
-  # Examples:
-  #  string --  /unread/tag/urgent --> [['unread'],['tag','urgent']]
-  #  array  --  ['person','23','starred'] --> [['person','23'],['starred']]
-  #  hash   --  {"month"=>"6", "pending"=>"true"} --> [['month','6'],['pending']]
-  #
-  # the hash form is used to generate a path from the params from a search form.
-  #
-  def initialize(path=nil)
-    return unless path
-    @unparsable = []
-    @last = nil
-    if path.is_a? String or path.is_a? Array
-      path = path.split('/') if path.instance_of? String
-      new_from_array(path)
-    elsif path.is_a? Hash
-      new_from_hash(path)
-    end
-    # special post processing for some keywords
-    # well, this is sure hacky.
-    self.each do |element|
-      if element[0] == 'type' and element[1].present?
-        element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
-      end
-    end
-    if @last == 'rss' and @unparsable.include?('rss')
-      @format = last.to_s
-    end
-    return self
-  end
-
-  ##
-  ## CONVERSION
-  ##
-
-  #
-  # converts a parsed path to a string, suitable for a url.
-  #
-  def to_path
-    '/' + self.flatten.collect{|i|CGI.escape i}.join('/') + (@format || '')
-  end
-  alias_method :to_s, :to_path     # manual string conversion
-  alias_method :to_str, :to_path   # automatic string conversion
-
-  # skip the cgi escaping
-  def to_raw_path
-    '/' + self.flatten.join('/') + (@format || '')
-  end
-
-  #  HASH_PATH_SEGMENT_DIVIDER = '.'
-  #  ENCODED_DIVIDER = '%' + HASH_PATH_SEGMENT_DIVIDER[0].to_s(16)
-  #  # path used for the window.location.hash
-  #  # [['public'],['created_by','blue']] --> /public/created_by.blue/
-  #  def to_hash_path
-  #    path = collect{|segment|
-  #      segment.collect{|part|
-  #        CGI.escape(part).
-  #        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
-  #      }.join(HASH_PATH_SEGMENT_DIVIDER)
-  #    }.join("/")
-  #    unless path.empty?
-  #      return "/#{path}/"
-  #    else
-  #      return ""
-  #    end
-  #  end
-
-  def to_param
-    self.flatten + (@format ? [@format] : [])
-  end
-  def join(char=nil)
-    to_param.join(char)
-  end
-
-  #
-  # generates a string useful for display in the page title
-  #
-  def title
-    self.collect{|segment| segment.join(' ')}.join(' > ')
-  end
-
-  ##
-  ## PUBLIC ACCESS METHODS
-  ##
-
-  # returns an array of SearchFilter objects that correspond to the path, loaded
-  # with the arguments contained in this ParsedPath.
-  def filters
-    @filters ||= self.collect do |segment|
-      keyword = segment[0]
-      args = segment[1..-1]
-      search_filter = SearchFilter[keyword]
-      [search_filter, args]
-    end
-  end
-
-  # return true if keyword is in the path
-  def keyword?(word)
-    detect{|e| e[0] == word}
-  end
-
-  # returns a parsed path for one segment in the path
-  def segment(word)
-    ParsedPath.new(detect{|e| e[0] == word})
-  end
-
-  # returns the first argument of the pathkeyword
-  # if:   path = "/person/23"
-  # then: first_arg_for('person') == 23
-  def first_arg_for(word)
-    element = keyword?(word)
-    return nil unless element
-    return element[1]
-  end
-  alias :arg_for :first_arg_for
-
-  # returns first argument of the keyword as an Integer
-  # or 0 if the argument is not set
-  def int_for(word)
-    (arg_for(word)||0).to_i
-  end
-
-  # returns all the arguments for the keyword, as an array
-  def args_for(keyword)
-    segment = detect{|e| e[0] == keyword}
-    if segment and segment.length > 1
-      segment[1..-1]
-    else
-      []
-    end
-  end
-
-  # assuming this parsed path contains just one keyword, this returns the
-  # args for it.
-  #def args()
-  #  args_for(first[0])
-  #end
-
-  # returns the search text, if any
-  # ie returns "glorious revolution" if path == "/text/glorious+revolution"
-  def search_text
-    search_string = arg_for 'text'
-    search_string and search_string.gsub('+', ' ')
-  end
-
-  # returns true if arg is the value for a sort keyword
-  # ie sort_arg('created_at') is true if path == /ascending/created_at
-  def sort_arg?(arg=nil)
-    if arg
-      (keyword?('ascending') and first_arg_for('ascending') == arg) or (keyword?('descending') and first_arg_for('descending') == arg)
-    else
-      keyword?('ascending') or keyword?('descending')
-    end
-  end
-
-  def sort_by_time?
-    sort_arg?('created_at') or sort_arg?('updated_at')
-  end
-
-
-  ##
-  ## SETTERS
-  ##
-
-  def remove_sort!
-    self.delete_if{|e| e[0] == 'ascending' or e[0] == 'descending' }
-  end
-
-  # adds the sort field, but only if there is none set yet.
-  def default_sort(field, direction='descending')
-    unless sort_arg?
-      self << [direction, field]
-    end
-    self
-  end
-
-  def remove_pagination!
-    self.delete_if{|e| e[0] == 'page' }
-  end
-
-  #
-  # merge two parsed paths together.
-  # for duplicate keywords, use the ones in the path_b.
-  #
-  def merge(path_b)
-    self.dup.merge!(path_b)
-  end
-
-  # same as merge, but replaces self.
-  def merge!(path_b)
-    if path_b.empty?
-      return self
-    elsif self.empty?
-      return replace(path_b)
-    else
-      path_b = ParsedPath.parse(path_b)
-      if path_b.first == ['all']
-        return replace(remove(path_b))
+    def self.parse(path)
+      if path.is_a?(ParsedPath)
+        path
+      elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+        # i am not sure where this is used
+        ParsedPath.new(path[0])
       else
-        if path_b.sort_arg?
-          remove_sort!
-        else
-          remove_pagination!
-        end
-        return unique_union!(path_b)
+        ParsedPath.new(path)
       end
     end
-  end
 
-  # removes the path elements in path_b from self, returns a copy
-  def remove(path_b)
-    path_b = ParsedPath.parse(path_b)
-    new_path = self.dup
-    if path_b.first == ['all']
-      # when we remove 'all', keep filters that don't have queries.
-      new_path = new_path.select do |segment|
-        filter = SearchFilter[segment[0]]
-        !filter.has_query?
+    ##
+    ## CONSTRUCTOR
+    ##
+
+    # constructs a ParsedPath from a path string, array, or hash
+    #
+    # Examples:
+    #  string --  /unread/tag/urgent --> [['unread'],['tag','urgent']]
+    #  array  --  ['person','23','starred'] --> [['person','23'],['starred']]
+    #  hash   --  {"month"=>"6", "pending"=>"true"} --> [['month','6'],['pending']]
+    #
+    # the hash form is used to generate a path from the params from a search form.
+    #
+    def initialize(path = nil)
+      return unless path
+      @unparsable = []
+      @last = nil
+      if path.is_a? String or path.is_a? Array
+        path = path.split('/') if path.instance_of? String
+        new_from_array(path)
+      elsif path.is_a? Hash
+        new_from_hash(path)
       end
-    else
-      # intersect self with path_b
-      path_b.each do |remove_segment|
-        remove_keyword = remove_segment[0]
-        remove_filter  = SearchFilter[remove_keyword]
-        new_path = new_path.select do |segment|
-          if remove_filter.singleton? or !remove_filter.has_args?
-            # if the filter is a singleton, or has no args, then
-            # just compare the keyword.
-            segment[0] != remove_keyword
+      # special post processing for some keywords
+      # well, this is sure hacky.
+      each do |element|
+        if element[0] == 'type' and element[1].present?
+          element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
+        end
+      end
+      @format = last.to_s if @last == 'rss' and @unparsable.include?('rss')
+      self
+    end
+
+    ##
+    ## CONVERSION
+    ##
+
+    #
+    # converts a parsed path to a string, suitable for a url.
+    #
+    def to_path
+      '/' + flatten.collect { |i| CGI.escape i }.join('/') + (@format || '')
+    end
+    alias to_s to_path     # manual string conversion
+    alias to_str to_path   # automatic string conversion
+
+    # skip the cgi escaping
+    def to_raw_path
+      '/' + flatten.join('/') + (@format || '')
+    end
+
+    #  HASH_PATH_SEGMENT_DIVIDER = '.'
+    #  ENCODED_DIVIDER = '%' + HASH_PATH_SEGMENT_DIVIDER[0].to_s(16)
+    #  # path used for the window.location.hash
+    #  # [['public'],['created_by','blue']] --> /public/created_by.blue/
+    #  def to_hash_path
+    #    path = collect{|segment|
+    #      segment.collect{|part|
+    #        CGI.escape(part).
+    #        gsub(HASH_PATH_SEGMENT_DIVIDER, ENCODED_DIVIDER)
+    #      }.join(HASH_PATH_SEGMENT_DIVIDER)
+    #    }.join("/")
+    #    unless path.empty?
+    #      return "/#{path}/"
+    #    else
+    #      return ""
+    #    end
+    #  end
+
+    def to_param
+      flatten + (@format ? [@format] : [])
+    end
+
+    def join(char = nil)
+      to_param.join(char)
+    end
+
+    #
+    # generates a string useful for display in the page title
+    #
+    def title
+      collect { |segment| segment.join(' ') }.join(' > ')
+    end
+
+    ##
+    ## PUBLIC ACCESS METHODS
+    ##
+
+    # returns an array of SearchFilter objects that correspond to the path, loaded
+    # with the arguments contained in this ParsedPath.
+    def filters
+      @filters ||= collect do |segment|
+        keyword = segment[0]
+        args = segment[1..-1]
+        search_filter = SearchFilter[keyword]
+        [search_filter, args]
+      end
+    end
+
+    # return true if keyword is in the path
+    def keyword?(word)
+      detect { |e| e[0] == word }
+    end
+
+    # returns a parsed path for one segment in the path
+    def segment(word)
+      ParsedPath.new(detect { |e| e[0] == word })
+    end
+
+    # returns the first argument of the pathkeyword
+    # if:   path = "/person/23"
+    # then: first_arg_for('person') == 23
+    def first_arg_for(word)
+      element = keyword?(word)
+      return nil unless element
+      element[1]
+    end
+    alias arg_for first_arg_for
+
+    # returns first argument of the keyword as an Integer
+    # or 0 if the argument is not set
+    def int_for(word)
+      (arg_for(word) || 0).to_i
+    end
+
+    # returns all the arguments for the keyword, as an array
+    def args_for(keyword)
+      segment = detect { |e| e[0] == keyword }
+      if segment and segment.length > 1
+        segment[1..-1]
+      else
+        []
+      end
+    end
+
+    # assuming this parsed path contains just one keyword, this returns the
+    # args for it.
+    # def args()
+    #  args_for(first[0])
+    # end
+
+    # returns the search text, if any
+    # ie returns "glorious revolution" if path == "/text/glorious+revolution"
+    def search_text
+      search_string = arg_for 'text'
+      search_string and search_string.tr('+', ' ')
+    end
+
+    # returns true if arg is the value for a sort keyword
+    # ie sort_arg('created_at') is true if path == /ascending/created_at
+    def sort_arg?(arg = nil)
+      if arg
+        (keyword?('ascending') and first_arg_for('ascending') == arg) or (keyword?('descending') and first_arg_for('descending') == arg)
+      else
+        keyword?('ascending') or keyword?('descending')
+      end
+    end
+
+    def sort_by_time?
+      sort_arg?('created_at') or sort_arg?('updated_at')
+    end
+
+    ##
+    ## SETTERS
+    ##
+
+    def remove_sort!
+      delete_if { |e| e[0] == 'ascending' or e[0] == 'descending' }
+    end
+
+    # adds the sort field, but only if there is none set yet.
+    def default_sort(field, direction = 'descending')
+      self << [direction, field] unless sort_arg?
+      self
+    end
+
+    def remove_pagination!
+      delete_if { |e| e[0] == 'page' }
+    end
+
+    #
+    # merge two parsed paths together.
+    # for duplicate keywords, use the ones in the path_b.
+    #
+    def merge(path_b)
+      dup.merge!(path_b)
+    end
+
+    # same as merge, but replaces self.
+    def merge!(path_b)
+      if path_b.empty?
+        self
+      elsif empty?
+        replace(path_b)
+      else
+        path_b = ParsedPath.parse(path_b)
+        if path_b.first == ['all']
+          return replace(remove(path_b))
+        else
+          if path_b.sort_arg?
+            remove_sort!
           else
-            segment != remove_segment
+            remove_pagination!
           end
+          return unique_union!(path_b)
         end
       end
     end
-    return ParsedPath.new().replace(new_path)
-  end
 
-  # removes the path elements in path_b from self
-  def remove!(path_b)
-    self.replace(remove(path_b))
-  end
-
-  # replace one keyword with another.
-  def replace_keyword(keyword, newkeyword, arg1=nil, arg2=nil)
-    ParsedPath.new.replace(collect{|elem|
-      if elem[0] == keyword
-        [newkeyword,arg1,arg2].compact
+    # removes the path elements in path_b from self, returns a copy
+    def remove(path_b)
+      path_b = ParsedPath.parse(path_b)
+      new_path = dup
+      if path_b.first == ['all']
+        # when we remove 'all', keep filters that don't have queries.
+        new_path = new_path.reject do |segment|
+          filter = SearchFilter[segment[0]]
+          filter.has_query?
+        end
       else
-        elem
+        # intersect self with path_b
+        path_b.each do |remove_segment|
+          remove_keyword = remove_segment[0]
+          remove_filter  = SearchFilter[remove_keyword]
+          new_path = new_path.select do |segment|
+            if remove_filter.singleton? or !remove_filter.has_args?
+              # if the filter is a singleton, or has no args, then
+              # just compare the keyword.
+              segment[0] != remove_keyword
+            else
+              segment != remove_segment
+            end
+          end
+        end
       end
-    })
-  end
-
-  def sort_by_order
-    self.sort {|a,b| path_order(a[0]) <=> path_order(b[0])}
-  end
-
-  # sets the value of the keyword in the parsed path,
-  # replacing existing value or adding to the path as necessary.
-  def set_keyword(keyword, arg1=nil, arg2=nil)
-    if keyword?(keyword)
-      replace_keyword(keyword,keyword,arg1,arg2)
-    else
-      self << [keyword,arg1,arg2].compact
+      ParsedPath.new.replace(new_path)
     end
-  end
 
-  # returns a new path with the specified format.
-  # if arg is nil, just returns the current format.
-  def format(format_type=nil)
-    if format_type.nil?
-      @format
-    else
-      path = self.dup
-      path.format = format_type
-      path
+    # removes the path elements in path_b from self
+    def remove!(path_b)
+      replace(remove(path_b))
     end
-  end
-  def format=(value)
-    @format = value.to_s
-  end
 
-  ##
-  ## PRIVATE METHODS
-  ##
+    # replace one keyword with another.
+    def replace_keyword(keyword, newkeyword, arg1 = nil, arg2 = nil)
+      ParsedPath.new.replace(collect do |elem|
+        if elem[0] == keyword
+          [newkeyword, arg1, arg2].compact
+        else
+          elem
+        end
+      end)
+    end
 
-  protected
+    def sort_by_order
+      sort { |a, b| path_order(a[0]) <=> path_order(b[0]) }
+    end
 
-  # returns an array of just the keywords
-  def keywords
-    self.collect {|segment| segment[0] }
-  end
+    # sets the value of the keyword in the parsed path,
+    # replacing existing value or adding to the path as necessary.
+    def set_keyword(keyword, arg1 = nil, arg2 = nil)
+      if keyword?(keyword)
+        replace_keyword(keyword, keyword, arg1, arg2)
+      else
+        self << [keyword, arg1, arg2].compact
+      end
+    end
 
-  #
-  # unique_union(path)
-  #
-  # adds two paths together, removing duplicates of search filters
-  # defined as singletons.
-  #
-  def unique_union(path_b)
-    seen = {}
-    new_path = ParsedPath.new([])
-    [path_b, self].each do |path|
-      path.reverse.each do |segment|
-        keyword = segment.first
-        if SearchFilter[keyword].singleton?
-          unless seen[keyword]
+    # returns a new path with the specified format.
+    # if arg is nil, just returns the current format.
+    def format(format_type = nil)
+      if format_type.nil?
+        @format
+      else
+        path = dup
+        path.format = format_type
+        path
+      end
+    end
+
+    def format=(value)
+      @format = value.to_s
+    end
+
+    ##
+    ## PRIVATE METHODS
+    ##
+
+    protected
+
+    # returns an array of just the keywords
+    def keywords
+      collect { |segment| segment[0] }
+    end
+
+    #
+    # unique_union(path)
+    #
+    # adds two paths together, removing duplicates of search filters
+    # defined as singletons.
+    #
+    def unique_union(path_b)
+      seen = {}
+      new_path = ParsedPath.new([])
+      [path_b, self].each do |path|
+        path.reverse.each do |segment|
+          keyword = segment.first
+          if SearchFilter[keyword].singleton?
+            unless seen[keyword]
+              new_path << segment
+              seen[keyword] = true
+            end
+          else
             new_path << segment
-            seen[keyword] = true
+          end
+        end
+      end
+      new_path.sort_by_order
+    end
+
+    def unique_union!(path_b)
+      replace(unique_union(path_b))
+    end
+
+    private
+
+    def path_order(keyword)
+      SearchFilter[keyword].try(:path_order) || 10_000
+    end
+
+    def new_from_array(path)
+      @last = path.last
+      pathqueue = path.reverse
+      while keyword = pathqueue.pop
+        search_filter = SearchFilter[keyword]
+        if search_filter
+          element = [keyword]
+          search_filter.path_argument_count.times do |_i|
+            element << pathqueue.pop if pathqueue.any?
+          end
+          self << element
+        else
+          @unparsable << keyword
+        end
+      end
+    end
+
+    def new_from_hash(path)
+      path = path.sort_by_order
+      path.each do |key, value|
+        next unless value.present?
+        keyword = key.to_s
+        search_filter = SearchFilter[keyword]
+        if search_filter
+          # if keyword == 'page_state' and value.present? # handle special pseudo keyword...
+          #  self << [value.to_s]
+          arg_count =  search_filter.path_argument_count
+          if arg_count == 0
+            self << [keyword]
+          elsif arg_count == 1
+            self << [keyword, value.to_s]
+          elsif arg_count == 2
+            self << [keyword, value[0].to_s, value[1].to_s]
           end
         else
-          new_path << segment
+          @unparsable << keyword
         end
       end
     end
-    new_path.sort_by_order
   end
-
-  def unique_union!(path_b)
-    self.replace(self.unique_union(path_b))
-  end
-
-  private
-
-  def path_order(keyword)
-   SearchFilter[keyword].try(:path_order) || 10000
-  end
-
-  def new_from_array(path)
-    @last = path.last
-    pathqueue = path.reverse
-    while keyword = pathqueue.pop
-      search_filter = SearchFilter[keyword]
-      if search_filter
-        element = [keyword]
-        search_filter.path_argument_count.times do |i|
-          element << pathqueue.pop if pathqueue.any?
-        end
-        self << element
-      else
-        @unparsable << keyword
-      end
-    end
-  end
-
-  def new_from_hash(path)
-    path = path.sort_by_order
-    path.each do |key,value|
-      next unless value.present?
-      keyword = key.to_s
-      search_filter = SearchFilter[keyword]
-      if search_filter
-        #if keyword == 'page_state' and value.present? # handle special pseudo keyword...
-        #  self << [value.to_s]
-        arg_count =  search_filter.path_argument_count
-        if arg_count == 0
-          self << [keyword]
-        elsif arg_count == 1
-          self << [keyword, value.to_s]
-        elsif arg_count == 2
-          self << [keyword, value[0].to_s, value[1].to_s]
-        end
-      else
-        @unparsable << keyword
-      end
-    end
-  end
-
-end
 end

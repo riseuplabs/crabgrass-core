@@ -27,7 +27,7 @@ class Person::DirectoryController < ApplicationController
     @query = params[:q] || params[:query]
     if @query.present?
       self.path += '/'       unless path.ends_with? '/'
-      self.path += "search/" unless path.ends_with? 'search/'
+      self.path += 'search/' unless path.ends_with? 'search/'
       self.path += @query.strip
     end
   end
@@ -47,6 +47,4 @@ class Person::DirectoryController < ApplicationController
       'search'
     end
   end
-
 end
-

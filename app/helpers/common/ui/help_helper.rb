@@ -1,11 +1,10 @@
 module Common::Ui::HelpHelper
-
   protected
 
   def formatting_reference_link(options = {})
-    options.reverse_merge! class: "icon help_16",
-      href: "/do/static/greencloth",
-      onclick: "quickRedReference(); return false;"
+    options.reverse_merge! class: 'icon help_16',
+                           href: '/do/static/greencloth',
+                           onclick: 'quickRedReference(); return false;'
     content_tag(:a, options) do
       :formatting_reference_link.t
     end
@@ -31,6 +30,4 @@ module Common::Ui::HelpHelper
       content_tag(:span, caption, class: 'caption') + content_tag(:span, content, class: 'content')
     end
   end
-
 end
-

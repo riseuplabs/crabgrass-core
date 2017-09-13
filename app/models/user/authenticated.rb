@@ -27,12 +27,12 @@ module User::Authenticated
     # the current site (set tmp on a per-request basis)
     attr_accessor :current_site
 
-    validates :password, length: {minimum: 8, allow_blank: true}
+    validates :password, length: { minimum: 8, allow_blank: true }
 
     with_options unless: :ghost? do |alive|
       alive.validates :login, presence: true,
-        length: { within: 3..40 },
-        format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
+                              length: { within: 3..40 },
+                              format: { with: /\A[a-z0-9]+([-_]*[a-z0-9]+){1,39}\z/ }
 
       # uniqueness is validated elsewhere
     end
@@ -45,9 +45,13 @@ module User::Authenticated
     end
 
     # set to the currently logged in user.
-    def current; Thread.current[:user]; end
-    def current=(user); Thread.current[:user] = user; end
+    def current
+      Thread.current[:user]
+    end
 
+    def current=(user)
+      Thread.current[:user] = user
+    end
   end
 
   def remember_token?
@@ -68,8 +72,13 @@ module User::Authenticated
   end
 
   # authenticated users are real, unathenticated are unknown
-  def real?;    true; end
-  def unknown?; false; end
+  def real?
+    true
+  end
+
+  def unknown?
+    false
+  end
 
   # Update last_seen_at if have passed 5 minutes from the last time
   def seen!
@@ -77,5 +86,4 @@ module User::Authenticated
     return unless last_seen_at.nil? || last_seen_at < now - 5.minutes
     update_column :last_seen_at, now
   end
-
 end

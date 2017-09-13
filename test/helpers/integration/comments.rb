@@ -7,7 +7,7 @@ module Integration
     def post_comment(text = nil)
       text ||= Faker::Lorem.paragraph
       fill_in :post_body, with: text
-      click_on "Post Message"
+      click_on 'Post Message'
       text
     end
 

@@ -1,5 +1,4 @@
 module Common::Application::Authentication
-
   def self.included(base)
     base.send :helper_method, :current_user, :logged_in?
   end
@@ -80,8 +79,8 @@ module Common::Application::Authentication
     if user && user.remember_token?
       user.remember_me
       self.current_user = user
-      cookies[:auth_token] = { value: self.current_user.remember_token , expires: self.current_user.remember_token_expires_at }
-      flash[:notice] = "Logged in successfully"
+      cookies[:auth_token] = { value: current_user.remember_token, expires: current_user.remember_token_expires_at }
+      flash[:notice] = 'Logged in successfully'
     end
   end
 
@@ -103,20 +102,17 @@ module Common::Application::Authentication
 
   private
 
-  @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
+  @@http_auth_headers = %w[X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization]
   # gets BASIC auth info
   def get_auth_data
-    auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+    auth_key  = @@http_auth_headers.detect { |h| request.env.key?(h) }
     auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
-    return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
+    auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
   end
 
   def load_user(id)
     user = User.find_by_id(id)
-    if user
-      user.seen!
-    end
-    return user
+    user.seen! if user
+    user
   end
-
 end

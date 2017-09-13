@@ -1,15 +1,13 @@
 class Page::TrashController < Page::SidebarsController
-
   guard :may_admin_page?
   helper 'page/trash'
   track_actions :update
 
   # loads popup
-  def edit
-  end
+  def edit; end
 
   def update
-    if %w/delete destroy undelete/.include? params[:type]
+    if %w[delete destroy undelete].include? params[:type]
       @page.public_send params[:type]
     else
       raise ErrorMessage, 'unknown type'
@@ -39,6 +37,4 @@ class Page::TrashController < Page::SidebarsController
     end
   end
   helper_method :new_url
-
 end
-

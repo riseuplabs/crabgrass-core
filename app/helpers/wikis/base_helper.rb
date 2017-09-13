@@ -1,10 +1,9 @@
 module Wikis::BaseHelper
-
   #
   # html element options for the main div enclosing the wiki
   #
   def wiki_div(wiki)
-    {id: dom_id(wiki)}
+    { id: dom_id(wiki) }
   end
 
   ##
@@ -14,7 +13,7 @@ module Wikis::BaseHelper
   #
   # note: js events are bound to a.wiki_tab and a.wiki_away
   #
-  def wiki_tabs(formy, wiki, options={})
+  def wiki_tabs(formy, wiki, options = {})
     unless wiki.new_record?
       formy.tab do |t|
         t.label :show.t
@@ -53,16 +52,16 @@ module Wikis::BaseHelper
   ##
 
   def create_wiki_toolbar(wiki)
-   "wikiEditAddToolbar('#{dom_id(wiki, 'textarea')}', function() {#{image_popup_function(wiki)}});"
+    "wikiEditAddToolbar('#{dom_id(wiki, 'textarea')}', function() {#{image_popup_function(wiki)}});"
   end
 
   def image_popup_function(wiki)
     if wiki.new_record?
-      "alert('%s');" % :save_wiki_before_adding_image.t
+      format("alert('%s');", :save_wiki_before_adding_image.t)
     else
       modalbox_function new_wiki_asset_path(wiki),
-        title: I18n.t(:insert_image),
-        complete: "initAjaxUpload();"
+                        title: I18n.t(:insert_image),
+                        complete: 'initAjaxUpload();'
     end
   end
 
@@ -73,20 +72,20 @@ module Wikis::BaseHelper
     wiki_id = wiki.id
     text_area_id = dom_id(wiki, 'textarea')
     message = I18n.t(:leave_editing_wiki_page_warning)
-    %Q[confirmWikiDiscard.setTextArea("#{wiki_id}", "#{text_area_id}", "#{message}");]
+    %[confirmWikiDiscard.setTextArea("#{wiki_id}", "#{text_area_id}", "#{message}");]
   end
 
   #
   # tiggered by events to .wiki_away elements. see wiki.js
   #
-  def release_lock_on_unload(wiki, section=:document)
+  def release_lock_on_unload(wiki, section = :document)
     unless wiki.new_record?
       url = if section != :document
-        wiki_lock_path(wiki, section: section)
-      else
-        wiki_lock_path(wiki)
+              wiki_lock_path(wiki, section: section)
+            else
+              wiki_lock_path(wiki)
       end
-      %Q[wikiLock.autoRelease("#{wiki.id}", "#{url}");]
+      %[wikiLock.autoRelease("#{wiki.id}", "#{url}");]
     end
   end
 
@@ -94,7 +93,7 @@ module Wikis::BaseHelper
   # try to guess a good default textarea height
   #
   def wiki_textarea_rows(text, min_height = 8, max_height = 30)
-    lines = word_wrap(text||"", line_width: 60).count("\n") + 5
+    lines = word_wrap(text || '', line_width: 60).count("\n") + 5
     [[lines, max_height].min, min_height].max
   end
 
@@ -107,8 +106,7 @@ module Wikis::BaseHelper
       other_user = @wiki.locker_of(:document)
       section_they_have_locked = @wiki.section_edited_by(other_user)
       msg = Wiki::Locking::SectionLockedError.new(section_they_have_locked, other_user).to_s
-      content_tag(:div, msg, class: "alert alert-info")
+      content_tag(:div, msg, class: 'alert alert-info')
     end
   end
-
 end

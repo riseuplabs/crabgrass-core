@@ -21,29 +21,24 @@
 # and so on...
 #
 
-unless defined?(DEFAULT_INFO_LEVEL)
-  DEFAULT_INFO_LEVEL = -1
-end
+DEFAULT_INFO_LEVEL = -1 unless defined?(DEFAULT_INFO_LEVEL)
 
-unless defined?(INFO_PAD_CHARACTER)
-  INFO_PAD_CHARACTER = '-'
-end
+INFO_PAD_CHARACTER = '-'.freeze unless defined?(INFO_PAD_CHARACTER)
 
 # make sure to use only prefixed methods like STDOUT.print in here.
 # otherwise they might conflict with methods in the current context
 # like a Controller#print action.
-def info(str,level=0)
+def info(str, level = 0)
   if (ENV['INFO'] and ENV['INFO'].to_i >= level) or (DEFAULT_INFO_LEVEL >= level)
     str = str.to_s
     if INFO_PAD_CHARACTER.chars.any?
-      prefix = (INFO_PAD_CHARACTER * 2 * (level+1)) + ' ' + str + ' '
-      postfix = INFO_PAD_CHARACTER * ([80 - prefix.length, 0].max)
+      prefix = (INFO_PAD_CHARACTER * 2 * (level + 1)) + ' ' + str + ' '
+      postfix = INFO_PAD_CHARACTER * [80 - prefix.length, 0].max
       STDOUT.print prefix
       STDOUT.puts postfix
     else
-      STDOUT.puts(('  '*level) + str)
+      STDOUT.puts(('  ' * level) + str)
     end
     STDOUT.flush
   end
 end
-

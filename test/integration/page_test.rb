@@ -1,10 +1,9 @@
-#encoding: utf-8
+# encoding: utf-8
 
 require 'integration_test'
 
 class PageTest < IntegrationTest
-
-  PAGE_TYPES = [:wiki_page, :gallery, :discussion_page, :rate_many_page, :task_list_page, :ranked_vote_page, :asset_page]
+  PAGE_TYPES = %i[wiki_page gallery discussion_page rate_many_page task_list_page ranked_vote_page asset_page].freeze
 
   def test_create_all_page_types
     login
@@ -30,9 +29,8 @@ class PageTest < IntegrationTest
 
   def test_page_with_umlaut_title
     login
-    create_page title: "Ümläute in the títlè"
+    create_page title: 'Ümläute in the títlè'
     page_title = current_url.to_s.split('/').last.split('+').first
     assert_equal URI.encode('Ümläute-in-the-títlè'), page_title
   end
-
 end

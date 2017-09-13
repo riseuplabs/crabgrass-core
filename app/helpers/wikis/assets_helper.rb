@@ -1,11 +1,10 @@
 module Wikis::AssetsHelper
-
   def image_size_buttons
-    entries = [[:small.t, "small"], [:medium.t, "medium"], [:large.t, "large"], [:full.t, "full"]]
+    entries = [[:small.t, 'small'], [:medium.t, 'medium'], [:large.t, 'large'], [:full.t, 'full']]
     inline_radio_buttons 'image_size', entries,
-      id: 'image_size',
-      selected: 'medium',
-      onchange: "updatePreview();"
+                         id: 'image_size',
+                         selected: 'medium',
+                         onchange: 'updatePreview();'
   end
 
   def image_full_size_link_checkbox
@@ -25,15 +24,15 @@ module Wikis::AssetsHelper
 
   def img_selector_tag(image)
     content_tag(:div,
-      thumbnail_img_tag(image, :small),
-      class: 'image_selector')
+                thumbnail_img_tag(image, :small),
+                class: 'image_selector')
   end
 
   def data_tag_for_image(image)
     content_tag :input, '',
-      id: "#{image.id}_thumbnail_data",
-      value: thumbnail_urls_to_json(image),
-      type: 'hidden'
+                id: "#{image.id}_thumbnail_data",
+                value: thumbnail_urls_to_json(image),
+                type: 'hidden'
   end
 
   def thumbnail_urls_to_json(asset)
@@ -46,12 +45,11 @@ module Wikis::AssetsHelper
   def insert_image_button(options = {})
     options[:class] = 'btn btn-primary'
     button_to_function :insert_image.t,
-      insert_image_function + close_modal_function,
-      options
+                       insert_image_function + close_modal_function,
+                       options
   end
 
   def insert_image_function
-    "insertImage('%s');" % dom_id(@wiki, 'textarea')
+    format("insertImage('%s');", dom_id(@wiki, 'textarea'))
   end
-
 end

@@ -1,5 +1,4 @@
 class Notice::PageUpdateNotice < Notice::PageNotice
-
   def display_title
     I18n.t(:page_updated, data).html_safe
   end
@@ -9,11 +8,10 @@ class Notice::PageUpdateNotice < Notice::PageNotice
   end
 
   def display_body
-    ""
+    ''
   end
 
   def display_label
     I18n.t :page_update
   end
-
 end

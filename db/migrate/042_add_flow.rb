@@ -13,4 +13,3 @@ class AddFlow < ActiveRecord::Migration
     remove_column :pages, :flow
   end
 end
-

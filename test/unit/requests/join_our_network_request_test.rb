@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class JoinOurNetworkRequestTest < ActiveSupport::TestCase
-
   def setup
     @user    = FactoryGirl.create(:user)
     @group   = FactoryGirl.create(:group)
@@ -12,8 +11,8 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
     @network.add_user! @user
     assert_difference 'Request.count' do
       RequestToJoinOurNetwork.create! created_by: @user,
-        recipient: @group,
-        requestable: @network
+                                      recipient: @group,
+                                      requestable: @network
     end
   end
 
@@ -22,8 +21,8 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
     @network.add_group! @group
     assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do
       RequestToJoinOurNetwork.create! created_by: @user,
-        recipient: @group,
-        requestable: @network
+                                      recipient: @group,
+                                      requestable: @network
     end
   end
 
@@ -32,8 +31,8 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
     @group.add_user! @user
     assert_raises ActiveRecord::RecordInvalid, 'PERMISSIONS DISABLED: non member is able to invite to network' do
       RequestToJoinOurNetwork.create! created_by: @user,
-        recipient: @group,
-        requestable: @network
+                                      recipient: @group,
+                                      requestable: @network
     end
   end
 
@@ -42,14 +41,12 @@ class JoinOurNetworkRequestTest < ActiveSupport::TestCase
     inviter = FactoryGirl.create(:user)
     @network.add_user! inviter
     req = RequestToJoinOurNetwork.create! created_by: inviter,
-      recipient: @group,
-      requestable: @network
+                                          recipient: @group,
+                                          requestable: @network
     assert !@network.groups(true).include?(@group)
     assert_nothing_raised do
       req.approve_by!(@user)
     end
     assert @network.groups(true).include?(@group)
   end
-
 end
-

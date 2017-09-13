@@ -1,10 +1,9 @@
 class SetPollAndVoteTypes < ActiveRecord::Migration
-
   def self.up
-    update_poll_type("RankingPoll", "RankedVotePage")
-    update_vote_type("RankingVote", "RankingPoll")
-    update_poll_type("RatingPoll", "RateManyPage")
-    update_vote_type("RatingVote", "RatingPoll")
+    update_poll_type('RankingPoll', 'RankedVotePage')
+    update_vote_type('RankingVote', 'RankingPoll')
+    update_poll_type('RatingPoll', 'RateManyPage')
+    update_vote_type('RatingVote', 'RatingPoll')
   end
 
   def self.down
@@ -37,5 +36,4 @@ class SetPollAndVoteTypes < ActiveRecord::Migration
     EOSQL
     Vote.connection.execute sql
   end
-
 end

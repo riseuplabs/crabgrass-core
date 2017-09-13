@@ -21,11 +21,10 @@
 #
 #
 module Page::Assets
-
   def self.included(base)
     base.instance_eval do
       has_many   :assets, dependent: :destroy
-      belongs_to :cover, class_name: "Asset"
+      belongs_to :cover, class_name: 'Asset'
 
       before_save :update_media_flags, if: :data_id_changed?
       after_save :update_attachment_access, if: :public_changed?
@@ -49,24 +48,22 @@ module Page::Assets
   # - :cover -- if true, make this asset a cover asset
   # - :filename -- if set, rename the asset using this filename
   #
-  def add_attachment!(asset, options={})
-    if asset.is_a? Hash
-      asset = Asset.build(asset)
-    end
+  def add_attachment!(asset, options = {})
+    asset = Asset.build(asset) if asset.is_a? Hash
     asset.parent_page = self
 
-    self.assets << asset
+    assets << asset
     self.cover = asset if options[:cover]
     asset.base_filename = options[:filename] if options[:filename].present?
 
     asset.save! if asset.persisted?
 
-    if self.persisted?
-      self.assets.reset
-      self.save! if self.cover_id_changed?
+    if persisted?
+      assets.reset
+      save! if cover_id_changed?
     end
 
-    return asset
+    asset
   end
 
   protected
@@ -77,19 +74,18 @@ module Page::Assets
 
   # sets the default media flags for this page. can be overridden by the subclasses.
   def update_media_flags
-    if self.data
-      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
-      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
-      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
-      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
+    if data
+      self.is_image = data.is_image? if data.respond_to?('is_image?')
+      self.is_audio = data.is_audio? if data.respond_to?('is_audio?')
+      self.is_video = data.is_video? if data.respond_to?('is_video?')
+      self.is_document = data.is_document? if data.respond_to?('is_document?')
     end
     true
   end
 
   # update attachment permissions
   def update_attachment_access
-    assets.each { |asset| asset.update_access }
+    assets.each(&:update_access)
     true
   end
-
 end

@@ -6,16 +6,14 @@
 #
 
 class Page::ParticipationsController < Page::SidebarsController
-
-  guard :may_show_page?, actions: [:update, :create]
+  guard :may_show_page?, actions: %i[update create]
   helper 'page/participation', 'page/share'
 
   before_filter :fetch_data
   track_actions :update
 
   # this is used for ajax pagination
-  def index
-  end
+  def index; end
 
   def update
     if params[:access]
@@ -67,7 +65,7 @@ class Page::ParticipationsController < Page::SidebarsController
     end
   end
 
-  def track_action(event = nil, event_options = nil)
+  def track_action(_event = nil, _event_options = nil)
     super participation: participation
   end
 
@@ -81,12 +79,10 @@ class Page::ParticipationsController < Page::SidebarsController
   # watching group participations.
   def fetch_data
     return unless params[:access] && params[:id]
-    if params[:group] && params[:group]!= 'false'
-      @part = @page.group_participations.find(params[:id])
-    else
-      @part = @page.user_participations.find(params[:id])
-    end
+    @part = if params[:group] && params[:group] != 'false'
+              @page.group_participations.find(params[:id])
+            else
+              @page.user_participations.find(params[:id])
+            end
   end
-
 end
-

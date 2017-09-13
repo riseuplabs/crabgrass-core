@@ -1,5 +1,4 @@
 class Group::PermissionsController < Group::BaseController
-
   helper 'castle_gates'
 
   def index
@@ -18,9 +17,7 @@ class Group::PermissionsController < Group::BaseController
       # don't allow altering any other holder than :public or
       # the group itself.
       # otherwise you could do all kinds of nasty things.
-      if holder != @group
-        head :bad_request and return
-      end
+      head :bad_request and return if holder != @group
     end
 
     ## FIXME: should we prevent the following cases?
@@ -45,6 +42,4 @@ class Group::PermissionsController < Group::BaseController
     group_permission_path(@group, id, *args)
   end
   helper_method :key_holder_path
-
 end
-

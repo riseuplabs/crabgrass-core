@@ -1,19 +1,17 @@
 require 'test_helper'
 
 class Group::MembershipRequestsControllerTest < ActionController::TestCase
-
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     login_as @user
   end
 
   def test_request_to_join
     @group.grant_access! public: :view
-    assert_difference "RequestToJoinYou.count" do
+    assert_difference 'RequestToJoinYou.count' do
       post :create, group_id: @group.to_param,
-        type: :join
+                    type: :join
     end
     req = RequestToJoinYou.last
     assert_response :redirect
@@ -25,10 +23,10 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
     # group which already has members
     @group = groups(:animals)
     @req = RequestToJoinYou.create recipient: @group, created_by: @user
-    assert_no_difference "RequestToJoinYou.count" do
-      assert_no_difference "Notice.count" do
+    assert_no_difference 'RequestToJoinYou.count' do
+      assert_no_difference 'Notice.count' do
         xhr :post, :create, group_id: @group.to_param,
-          type: :join
+                            type: :join
       end
     end
     assert_response :redirect
@@ -38,10 +36,10 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
     @group.add_user! @user
     @remove_me = FactoryGirl.create(:user)
     @group.add_user! @remove_me
-    assert_difference "RequestToRemoveUser.count" do
+    assert_difference 'RequestToRemoveUser.count' do
       post :create, group_id: @group.to_param,
-        entity: @remove_me.login,
-        type: :destroy
+                    entity: @remove_me.login,
+                    type: :destroy
     end
     req = RequestToRemoveUser.last
     assert_response :redirect
@@ -57,8 +55,8 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
     @group.add_user! @remove_me
 
     @req = RequestToRemoveUser.create! group: @group,
-      user: @remove_me,
-      created_by: @other
+                                       user: @remove_me,
+                                       created_by: @other
 
     assert_difference '@group.users.count', -1 do
       put :update, group_id: @group.to_param, id: @req.id, mark: :approve

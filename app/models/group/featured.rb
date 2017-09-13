@@ -2,11 +2,10 @@ module Group::Featured
   extend ActiveSupport::Concern
 
   included do
-
     has_many :featured_pages,
-      -> { where ["`group_participations`.static = ?", true] },
-      through: :participations,
-      source: :page
+             -> { where ['`group_participations`.static = ?', true] },
+             through: :participations,
+             source: :page
   end
 
   ##
@@ -18,7 +17,6 @@ module Group::Featured
   # def featured_pages
   # find_static.map(&:id)
   # end
-
 
   # # gets all the featured pages for one group, using group-context
   # def find_static options={}
@@ -74,14 +72,13 @@ module Group::Participation::Featured
 
   def feature!
     # find and increment the higest sibling position
-    position = self.group.participations.maximum(:featured_position).to_i + 1
-    self.update_attributes!({static: true, featured_position: position})
+    position = group.participations.maximum(:featured_position).to_i + 1
+    update_attributes!(static: true, featured_position: position)
   end
 
   def unfeature!
-    self.update_attributes!({static: false, featured_position: nil})
+    update_attributes!(static: false, featured_position: nil)
   end
-
 
   ##
   ## DISABLED
@@ -134,5 +131,4 @@ module Group::Participation::Featured
   #     raise ArgumentError.new(I18n.t(:page_is_not_static))
   #   end
   # end
-
 end

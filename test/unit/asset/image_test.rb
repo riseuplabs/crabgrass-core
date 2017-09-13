@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Asset::ImageTest < ActiveSupport::TestCase
-
   def test_thumbnail_definitions
     @asset = FactoryGirl.build :image_asset
     assert @asset.thumbdefs.any?, 'asset should have thumbdefs'
@@ -17,8 +16,8 @@ class Asset::ImageTest < ActiveSupport::TestCase
 
     assert thumbnails.any?, 'asset should have thumbnail objects'
     assert_equal 3, thumbnails.count, 'there should be three thumbnails'
-    sizes = [:small, :medium, :large]
-    assert sizes.none? {|size| @asset.thumbnail_exists?(size)}
+    sizes = %i[small medium large]
+    assert sizes.none? { |size| @asset.thumbnail_exists?(size) }
     sizes.each do |size|
       thumbdef = @asset.thumbdefs[size]
       thumbnail = @asset.thumbnail(size)
@@ -26,5 +25,4 @@ class Asset::ImageTest < ActiveSupport::TestCase
       assert_equal @asset.thumbnail_filename(thumbdef), thumbnail.filename
     end
   end
-
 end

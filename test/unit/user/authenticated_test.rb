@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class User::AuthenticatedTest < ActiveSupport::TestCase
-
-
-
   def test_last_seen
-    quentin = create_user(login: "Tarantino")
+    quentin = create_user(login: 'Tarantino')
     last_seen_at = quentin.last_seen_at
     quentin.seen!
     assert_not_equal quentin.last_seen_at.to_f, last_seen_at.to_f
@@ -43,10 +40,10 @@ class User::AuthenticatedTest < ActiveSupport::TestCase
   end
 
   def test_reset_password
-    pwd = "new password"
+    pwd = 'new password'
     user = users(:quentin)
     user.update_attributes password: pwd,
-      password_confirmation: pwd
+                           password_confirmation: pwd
     assert user.save
     assert_equal users(:quentin), User.authenticate('quentin', pwd)
   end
@@ -80,8 +77,6 @@ class User::AuthenticatedTest < ActiveSupport::TestCase
 
   # just like User.create this will return the user even if it's invalid
   def create_user(attrs = {})
-    FactoryGirl.build(:user, attrs).tap do |u|
-      u.save
-    end
+    FactoryGirl.build(:user, attrs).tap(&:save)
   end
 end

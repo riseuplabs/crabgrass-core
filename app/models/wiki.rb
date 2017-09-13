@@ -34,7 +34,7 @@ class Wiki < ActiveRecord::Base
   attr_accessor :private # marks private group wikis during creation
   attr_accessor :last_seen_at
 
-  has_one :section_locks, class_name: "Wiki::Lock", dependent: :destroy
+  has_one :section_locks, class_name: 'Wiki::Lock', dependent: :destroy
 
   serialize :raw_structure, Hash
 
@@ -61,7 +61,7 @@ class Wiki < ActiveRecord::Base
   after_save :save_page_after_save
 
   # section locks should never be nil
-  alias_method :existing_section_locks, :section_locks
+  alias existing_section_locks section_locks
   def section_locks(force_reload = false)
     # current section_locks or create a new one if it doesn't exist
     locks = (existing_section_locks(force_reload) || build_section_locks(wiki: self))
@@ -72,9 +72,9 @@ class Wiki < ActiveRecord::Base
   end
 
   def label
-    return :create_a_new_thing.t(thing: 'Wiki') if self.new_record?
-    if self.profile
-      self.profile.public? ? :public_wiki : :private_wiki
+    return :create_a_new_thing.t(thing: 'Wiki') if new_record?
+    if profile
+      profile.public? ? :public_wiki : :private_wiki
     else
       :page_wiki
     end
@@ -84,9 +84,7 @@ class Wiki < ActiveRecord::Base
   # search index gets updated. For some reason this doesn't happen automatically
   # when saving the wiki, so we trigger a page save here.
   def save_page_after_save
-    if page && page.type == 'WikiPage' && page.valid?
-      page.save!
-    end
+    page.save! if page && page.type == 'WikiPage' && page.valid?
   end
 
   #
@@ -149,7 +147,7 @@ class Wiki < ActiveRecord::Base
   end
 
   # sets the block used for rendering the body to html
-  def render_body_html_proc &block
+  def render_body_html_proc(&block)
     @render_body_html_proc = block
   end
 
@@ -165,14 +163,14 @@ class Wiki < ActiveRecord::Base
   # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
   def needs_rendering?
     read_attribute(:body_html).blank? or
-    read_attribute(:raw_structure).blank?
+      read_attribute(:raw_structure).blank?
   end
 
   # reload the association
   def reload_versions_and_locks
-    self.versions(true)
+    versions(true)
     # will clear out obsolete locks (expired or non-existant sections)
-    self.section_locks(true)
+    section_locks(true)
   end
 
   ##
@@ -183,7 +181,7 @@ class Wiki < ActiveRecord::Base
   # a group or the wikis pages context.
 
   def context
-    self.group || self.page.try.owner
+    group || page.try.owner
   end
 
   ##
@@ -196,17 +194,17 @@ class Wiki < ActiveRecord::Base
   def self.clear_all_html(owner)
     # for wiki's owned by pages
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ? ",
-      owner.id,
-      owner.class.base_class.name
-    ]))
+                                        "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ? ",
+                                        owner.id,
+                                        owner.class.base_class.name
+                                      ]))
 
     # for wiki's owned by by profiles
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?",
-      owner.id,
-      owner.class.base_class.name
-    ]))
+                                        'UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?',
+                                        owner.id,
+                                        owner.class.base_class.name
+                                      ]))
   end
 
   ##
@@ -230,10 +228,10 @@ class Wiki < ActiveRecord::Base
     # the user does not have a lock,
     # only then throw an exception.
     if edited_version &&
-      self.version > edited_version.to_i &&
-      user != locker_of(section)
+       version > edited_version.to_i &&
+       user != locker_of(section)
 
-      raise VersionExistsError.new(self.versions.last)
+      raise VersionExistsError.new(versions.last)
     end
     release_my_lock!(section, user)
   end
@@ -241,7 +239,7 @@ class Wiki < ActiveRecord::Base
   # # used when wiki is rendered for deciding the prefix for some link urls
   def link_context
     if page and page.owner_name
-      #.sub(/\+.*$/,'') # remove everything after +
+      # .sub(/\+.*$/,'') # remove everything after +
       page.owner_name
     elsif profile
       profile.entity.name

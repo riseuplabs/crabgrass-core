@@ -3,22 +3,19 @@ class RankedVotePage < Page
 
   # Return string of all poll possibilities, for the full text search index
   def body_terms
-    return "" unless poll and poll.possibles
+    return '' unless poll and poll.possibles
     poll.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
   end
 
-  alias_method :poll, :data
+  alias poll data
+
   protected
 
   #
   # create the RankingPoll object if it does not already exist
   #
   def create_poll
-    unless self.data_id
-      self.data = Poll::RankingPoll.new
-    end
-    return true # ensure we don't halt on this callback
+    self.data = Poll::RankingPoll.new unless data_id
+    true # ensure we don't halt on this callback
   end
-
 end
-

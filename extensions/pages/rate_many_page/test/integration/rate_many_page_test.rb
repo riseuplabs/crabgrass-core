@@ -32,6 +32,4 @@ class RateManyPageTest < JavascriptIntegrationTest
       assert_content @user.login
     end
   end
-
-
 end

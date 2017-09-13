@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 class Symbol
-  def t(options={})
-    I18n.t(self,options)
+  def t(options = {})
+    I18n.t(self, options)
   end
 
   # translates a string, but capitalizes the first letter of the result.
@@ -11,7 +11,7 @@ class Symbol
   # and from String.titlecase (which makes the first letter of each word
   # a capital letter).
   #
-  def tcap(options={})
+  def tcap(options = {})
     result = I18n.t(self, options).mb_chars
     result[0..0].upcase + result[1..-1]
   end
@@ -31,8 +31,7 @@ class String
 end
 
 module I18n
-
-  Lang = Struct.new("Lang", :name, :code, :order, :rtl)
+  Lang = Struct.new('Lang', :name, :code, :order, :rtl)
 
   class << self
     def languages
@@ -40,10 +39,10 @@ module I18n
         hsh = HashWithIndifferentAccess.new(Lang.new('Unknown', :xx, false))
         # In order of number of speakers worldwide
         # http://en.wikipedia.org/wiki/Most_spoken_languages
-        hsh[:zh] = Lang.new('中文',      'zh',  1, false)
+        hsh[:zh] = Lang.new('中文', 'zh', 1, false)
         hsh[:es] = Lang.new('Español',   'es',  2, false)
         hsh[:en] = Lang.new('English',   'en',  3, false)
-        hsh[:hi] = Lang.new('हिन्दी',     'hi',  4, false)
+        hsh[:hi] = Lang.new('हिन्दी', 'hi', 4, false)
         hsh[:ar] = Lang.new('العربية',   'ar',  5, true)
         hsh[:pt] = Lang.new('Português', 'pt',  6, false)
         hsh[:ru] = Lang.new('Pyccĸий',   'ru',  7, false)
@@ -53,7 +52,7 @@ module I18n
         hsh[:it] = Lang.new('Italiano',  'it', 11, false)
         hsh[:pl] = Lang.new('Polski',    'pl', 12, false)
         hsh[:sw] = Lang.new('Kiswahili', 'sw', 13, false)
-        hsh[:nl] = Lang.new('Nederlands','nl', 14, false)
+        hsh[:nl] = Lang.new('Nederlands', 'nl', 14, false)
         hsh[:el] = Lang.new('Ελληνικά',  'el', 15, false)
         hsh[:sv] = Lang.new('Svenska',   'sv', 16, false)
         hsh[:he] = Lang.new('עִבְרִית',     'he', 17, true)
@@ -61,26 +60,24 @@ module I18n
         hsh[:ca] = Lang.new('Català',    'ca', 19, false)
         hsh[:da] = Lang.new('Dansk',     'da', 20, false)
         hsh[:no] = Lang.new('Norsk',     'no', 21, false)
-        hsh[:eu] = Lang.new('Euskara',   'eu',101, false)
+        hsh[:eu] = Lang.new('Euskara',   'eu', 101, false)
         hsh
       end
     end
 
     def sorted_languages
-      @sorted_languages ||= languages.values.sort do |a, b|
-        a.order <=> b.order
-      end
+      @sorted_languages ||= languages.values.sort_by(&:order)
     end
 
-    #def language_for_locale(locale)
+    # def language_for_locale(locale)
     #  load_available_languages if @languages.blank?
     #  languages[locale.to_sym]
-    #end
+    # end
 
-    #def available_languages
+    # def available_languages
     #  load_available_languages if @languages.blank?
     #  @languages.values.compact.sort_by(&:id)
-    #end
+    # end
 
     def translate_with_exception_handler(*args)
       translate_without_exception_handler(*args)
@@ -98,11 +95,11 @@ module I18n
     alias_method_chain :translate, :exception_handler
 
     # refresh the alias to include the chain
-    alias_method :t, :translate
+    alias t translate
 
     protected
 
-    #def load_available_languages
+    # def load_available_languages
     #  #  @languages = {
     #  #   :en => #<Language code:"en" ...>,
     #  #   :es => #<Language code:"es" ..>
@@ -112,7 +109,7 @@ module I18n
     #  I18n.available_locales.each do |code|
     #    @languages[code] = Language.find_by_code(code.to_s)
     #  end
-    #end
+    # end
   end
 end
 
@@ -138,9 +135,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
   end
 
   # raise exceptions when running in development mode
-  if !Rails.env.production? && Conf.raise_i18n_exceptions
-    raise exception
-  end
+  raise exception if !Rails.env.production? && Conf.raise_i18n_exceptions
 
   # use the humanized version of the key as a fallback
   key.to_s.humanize

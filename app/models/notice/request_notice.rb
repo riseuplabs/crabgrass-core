@@ -1,10 +1,9 @@
 class Notice::RequestNotice < Notice
-
   alias_attr :request, :noticable
 
   class << self
-    alias_method :find_all_by_request, :find_all_by_noticable
-    alias_method :destroy_all_by_request, :destroy_all_by_noticable
+    alias find_all_by_request find_all_by_noticable
+    alias destroy_all_by_request destroy_all_by_noticable
 
     #
     # like normal create!, but optionally takes a single arg that is a request object.
@@ -28,7 +27,6 @@ class Notice::RequestNotice < Notice
         end
       end
     end
-
   end
 
   def button_text
@@ -51,7 +49,7 @@ class Notice::RequestNotice < Notice
 
   before_create :encode_data
   def encode_data
-    self.data = {body: request.description, title: request.name}
+    self.data = { body: request.description, title: request.name }
   end
 
   before_create :set_avatar
@@ -60,5 +58,4 @@ class Notice::RequestNotice < Notice
     # That way it matches the message notification
     self.avatar_id = request.created_by.avatar_id
   end
-
 end

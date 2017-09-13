@@ -20,4 +20,3 @@ class SpellGroupPrivacyFlagsCorrectly < ActiveRecord::Migration
     add_column :groups, :publicly_visable_members, :boolean
   end
 end
-

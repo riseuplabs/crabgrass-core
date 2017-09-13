@@ -40,11 +40,10 @@ class BordaVote
       votes_to_candidates[votes_count] << candidate
     end
 
-
     winners_votes = votes_to_candidates.keys.sort.last
     @winners = votes_to_candidates[winners_votes] || []
 
-     # { "c" => 1, "a" => 2, "b" => 2}
+    # { "c" => 1, "a" => 2, "b" => 2}
     @ranks = {}
 
     # keys are vote counts sorted from highest to lowest
@@ -61,5 +60,4 @@ class BordaVote
   def rank(possibility)
     @ranks[possibility]
   end
-
 end

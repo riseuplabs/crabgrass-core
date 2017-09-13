@@ -1,56 +1,50 @@
-=begin
-
-THIS CODE IS DISABLED FOR NOW, BECAUSE WE DON'T YET HAVE A NEED FOR POLYMORPHIC
-PAGE LINKING, OR NON-POLYMORPHIC FOR THAT MATTER.
-
-here is the migration for polymorphic links:
-
-class CreatePolyLinks < ActiveRecord::Migration
-  def self.up
-    # even though this is a join table, we need a primary id
-    # because that is what acts_as_list wants
-    create_table "links", :force => true do |t|
-      t.references :parent
-      t.references :child, :polymorphic => true
-      t.integer :position, :default => 0
-    end
-
-    # note: the name suffixes with digits are specifying the key length to schema.rb
-    execute "CREATE INDEX pc_0_0_2 ON links (parent_id, child_id, child_type(2))"
-    execute "CREATE INDEX cp_0_2_0 ON links (child_id, child_type(2), parent_id)"
-  end
-
-  def self.down
-    drop_table :links
-  end
-end
-
-here is the migration for non poly links:
-
-class CreatePolyLinks < ActiveRecord::Migration
-  def self.up
-    # even though this is a join table, we need a primary id
-    # because that is what acts_as_list wants
-    create_table "links", :force => true do |t|
-      t.references :parent
-      t.references :child
-      t.integer :position, :default => 0
-    end
-
-    add_index :links, [:parent_id, :child_id], :name => :pc
-    add_index :links, [:child_id, :parent_id], :name => :cp
-  end
-
-  def self.down
-    drop_table :links
-  end
-end
-
-=end
-
-
-
-
+#
+# THIS CODE IS DISABLED FOR NOW, BECAUSE WE DON'T YET HAVE A NEED FOR POLYMORPHIC
+# PAGE LINKING, OR NON-POLYMORPHIC FOR THAT MATTER.
+#
+# here is the migration for polymorphic links:
+#
+# class CreatePolyLinks < ActiveRecord::Migration
+#   def self.up
+#     # even though this is a join table, we need a primary id
+#     # because that is what acts_as_list wants
+#     create_table "links", :force => true do |t|
+#       t.references :parent
+#       t.references :child, :polymorphic => true
+#       t.integer :position, :default => 0
+#     end
+#
+#     # note: the name suffixes with digits are specifying the key length to schema.rb
+#     execute "CREATE INDEX pc_0_0_2 ON links (parent_id, child_id, child_type(2))"
+#     execute "CREATE INDEX cp_0_2_0 ON links (child_id, child_type(2), parent_id)"
+#   end
+#
+#   def self.down
+#     drop_table :links
+#   end
+# end
+#
+# here is the migration for non poly links:
+#
+# class CreatePolyLinks < ActiveRecord::Migration
+#   def self.up
+#     # even though this is a join table, we need a primary id
+#     # because that is what acts_as_list wants
+#     create_table "links", :force => true do |t|
+#       t.references :parent
+#       t.references :child
+#       t.integer :position, :default => 0
+#     end
+#
+#     add_index :links, [:parent_id, :child_id], :name => :pc
+#     add_index :links, [:child_id, :parent_id], :name => :cp
+#   end
+#
+#   def self.down
+#     drop_table :links
+#   end
+# end
+#
 
 #
 # Page::Linking -- All things related to pages linking to other pages.
@@ -116,15 +110,13 @@ end
 #
 
 module Page::Linking
-
   def self.included(base)
     base.instance_eval do
-
       has_many_polymorphs :children, as: :parent, through: :links,
-       order: 'position', from: [:pages, :assets],
-       rename_individual_collections: true, dependent: :destroy
+                                     order: 'position', from: %i[pages assets],
+                                     rename_individual_collections: true, dependent: :destroy
 
-      alias_method :parents, :parents_of_children
+      alias parents parents_of_children
     end
   end
 
@@ -145,7 +137,7 @@ module Page::Linking
   end
 
   def remove_child!(child)
-    link = self.links.detect{|link| link.child_id == child.id}
+    link = links.detect { |link| link.child_id == child.id }
     reset_links(child)
     link.destroy
   end
@@ -166,30 +158,24 @@ module Page::Linking
       child.links.reset
     end
     child.parents_of_children.reset
-    self.links.reset
-    self.children.reset
+    links.reset
+    children.reset
   end
-
 end
 
-
-=begin
-
-  I am not sure that I am happy with polymorphic links
-
-  Here is the non-polymorphic code:
-
-  class Page
-    has_many :up_links, :as => :child, :class_name => 'Link', :dependent => :destroy
-    has_many :collections, :through => :up_links, :source => :parent, :order => 'links.position'
-  end
-
-  class Collection
-    has_many :down_links, :foreign_key => 'parent_id', :class_name => 'Link',
-      :order => 'position', :dependent => :destroy
-    has_many :pages, :through => :down_links, :source => :child, :order => 'links.position'
-  end
-
-=end
-
-
+#
+#   I am not sure that I am happy with polymorphic links
+#
+#   Here is the non-polymorphic code:
+#
+#   class Page
+#     has_many :up_links, :as => :child, :class_name => 'Link', :dependent => :destroy
+#     has_many :collections, :through => :up_links, :source => :parent, :order => 'links.position'
+#   end
+#
+#   class Collection
+#     has_many :down_links, :foreign_key => 'parent_id', :class_name => 'Link',
+#       :order => 'position', :dependent => :destroy
+#     has_many :pages, :through => :down_links, :source => :child, :order => 'links.position'
+#   end
+#

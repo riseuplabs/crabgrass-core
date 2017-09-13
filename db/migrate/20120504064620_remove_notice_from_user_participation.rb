@@ -5,7 +5,7 @@ class RemoveNoticeFromUserParticipation < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :user_participations, :inbox, :boolean, :default => false
+    add_column :user_participations, :inbox, :boolean, default: false
     add_column :user_participations, :notice, :text
   end
 end

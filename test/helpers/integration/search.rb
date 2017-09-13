@@ -4,11 +4,10 @@
 #
 module Integration
   module Search
-
     SPHINX_ENABLED_SETTINGS = {
       attribute_updates: true,
       quiet_deltas: true
-    }
+    }.freeze
 
     def setup
       super
@@ -18,7 +17,8 @@ module Integration
 
     def teardown
       if @_ts_old_settings.present?
-        sphinx_settings.merge! @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+        overwritten = @_ts_old_settings.slice(SPHINX_ENABLED_SETTINGS.keys)
+        sphinx_settings.merge! overwritten
       end
       super
     end
@@ -30,7 +30,5 @@ module Integration
     def sphinx_settings
       sphinx_config.settings
     end
-
   end
 end
-

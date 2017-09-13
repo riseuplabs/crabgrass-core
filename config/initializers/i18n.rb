@@ -25,10 +25,11 @@ end
 # trim load_path #2
 #
 #   for English only load files from locales/en/*.yml, not en.yml.
-#   en.yml is only needed for transiflex (rake cg:i18n:bundle to generate en.yml)
+#   en.yml is only needed for transiflex
+#   (rake cg:i18n:bundle to generate en.yml)
 #
-load_path = load_path.select do |path|
-  !path.include?('en.yml')
+load_path = load_path.reject do |path|
+  path.include?('en.yml')
 end
 
 #
@@ -47,10 +48,8 @@ I18n.exception_handler = :crabgrass_i18n_exception_handler
 
 I18n.load_path.flatten!
 
-
 # let's enable the use of cascade
 I18n::Backend::Simple.send(:include, I18n::Backend::Cascade)
-
 
 #
 # Turn off reloading of .yml files after every request if in BOOST mode.
@@ -58,8 +57,8 @@ I18n::Backend::Simple.send(:include, I18n::Backend::Cascade)
 #
 if ENV['BOOST']
   module SkipReloading
-    def skip_reload!
-    end
+    def skip_reload!; end
+
     def self.included(backend)
       backend.class_eval do
         alias_method :reload_for_real!, :reload!
@@ -69,4 +68,3 @@ if ENV['BOOST']
   end
   I18n::Backend::Simple.send(:include, SkipReloading)
 end
-

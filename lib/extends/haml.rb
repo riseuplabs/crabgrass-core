@@ -14,7 +14,6 @@ class Haml::Buffer
   include ActionView::RecordIdentifier
 
   def parse_object_ref(array)
-    {'id' => dom_id(*array), 'class' => dom_class(*array)}
+    { 'id' => dom_id(*array), 'class' => dom_class(*array) }
   end
-
 end

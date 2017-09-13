@@ -1,9 +1,7 @@
 class Me::DestroysController < Me::BaseController
-
   rescue_render update: :show
 
-  def show
-  end
+  def show; end
 
   def update
     # these will be cleared after retire!
@@ -30,5 +28,4 @@ class Me::DestroysController < Me::BaseController
     notification = Notification.new(:user_destroyed, username: current_user.name)
     notification.create_notices_for(users_to_notify)
   end
-
 end

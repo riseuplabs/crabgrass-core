@@ -4,8 +4,6 @@
 #
 
 module Common::Application::ContextNavigation
-
-
   def self.included(base)
     base.class_eval do
       helper_method :setup_navigation
@@ -19,8 +17,7 @@ module Common::Application::ContextNavigation
   ##
 
   def setup_navigation(nav)
-    return nav
+    nav
     # this can be implemented by controller subclasses
   end
-
 end

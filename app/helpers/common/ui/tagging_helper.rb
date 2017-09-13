@@ -20,15 +20,14 @@
 #
 
 module Common::Ui::TaggingHelper
-
   # Not using this currently:
-  def tag_cloud(tags, options={})
-    options = {classes: ['tag1','tag2','tag3','tag4'], max: false}.merge(options)
+  def tag_cloud(tags, options = {})
+    options = { classes: %w[tag1 tag2 tag3 tag4], max: false }.merge(options)
     return if tags.empty?
     max_count = tags.sort_by(&:count).last.count.to_f
     if options[:max]
       if tags.size >= options[:max]
-        max_list_count = tags.sort_by(&:count)[0-options[:max_list]].count
+        max_list_count = tags.sort_by(&:count)[0 - options[:max_list]].count
       elsif tags.size < options[:max]
         max_list_count = tags.sort_by(&:count)[0].count
       end
@@ -47,8 +46,7 @@ module Common::Ui::TaggingHelper
     end
   end
 
-
-  def tag_link(tag, owner, css_class='tag2')
+  def tag_link(tag, owner, css_class = 'tag2')
     name = CGI.escape tag.name
     if owner.try.name and owner.is_a? Group
       # should probably use group_pages_path but wasn't able to get it to work yet:
@@ -59,5 +57,4 @@ module Common::Ui::TaggingHelper
     end
     link_to h(tag.name), link_path, class: css_class
   end
-
 end

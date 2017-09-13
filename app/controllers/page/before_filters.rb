@@ -4,7 +4,6 @@
 #
 
 module Page::BeforeFilters
-
   protected
 
   ##
@@ -32,8 +31,8 @@ module Page::BeforeFilters
   rescue ErrorNotFound => e
     @exception = e
     render 'exceptions/show',
-      status: 404,
-      layout: request.xhr? ? nil : 'notice'
+           status: 404,
+           layout: request.xhr? ? nil : 'notice'
   end
 
   def default_setup_options
@@ -51,20 +50,20 @@ module Page::BeforeFilters
     true
   end
 
-  #def choose_layout
+  # def choose_layout
   #  if action?(:create, :new)
   #    return 'application'
   #  else
   #    return 'page'
   #  end
-  #end
+  # end
 
   # don't require a login for public pages
   def login_or_public_page_required
     if action_name == 'show' and @page and @page.public?
       true
     else
-      return login_required
+      login_required
     end
   end
 
@@ -72,9 +71,7 @@ module Page::BeforeFilters
     if @options.show_posts and request.get? and !@page.nil?
       # use params[:posts] for pagination
       @posts = @page.posts(page: params[:posts])
-      if @options.show_reply
-        @post = Post.new
-      end
+      @post = Post.new if @options.show_reply
     end
   end
 
@@ -83,9 +80,9 @@ module Page::BeforeFilters
   # adding comments. It's really odd if these disappear when you navigate
   # back.
   def bust_cache
-    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
 
   ##
@@ -109,9 +106,9 @@ module Page::BeforeFilters
   def update_view_count
     return true unless @page and @page.id
     action = case params[:action]
-      when 'create' then :edit
-      when 'edit' then :edit
-      when 'show' then :view
+             when 'create' then :edit
+             when 'edit' then :edit
+             when 'show' then :view
     end
     return true unless action
 
@@ -123,9 +120,7 @@ module Page::BeforeFilters
       elsif @page.owner.is_a?(Group)
         group = @page.owner
       end
-      if @page.owner.is_a?(User)
-        user = @page.owner
-      end
+      user = @page.owner if @page.owner.is_a?(User)
     end
     Tracking::Page.insert(
       page: @page, current_user: current_user, action: action,
@@ -133,6 +128,4 @@ module Page::BeforeFilters
     )
     true
   end
-
 end
-

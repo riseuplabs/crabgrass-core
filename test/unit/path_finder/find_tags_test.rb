@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class FindTagsTest < ActiveSupport::TestCase
-
   def test_find_with_spaces
     page = DiscussionPage.create! title: 'classical sociologists', public: true
     page.tag_list = 'max weber, emile durkheim, karl marx'
@@ -15,5 +14,4 @@ class FindTagsTest < ActiveSupport::TestCase
     assert pages.any?
     assert_equal page.id, pages.first.id
   end
-
 end

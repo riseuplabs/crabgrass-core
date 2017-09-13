@@ -18,7 +18,6 @@
 #   *azul
 
 module Common::Page::UrlHelper
-
   def sort_page_items_url(*args)
     add_page_item_defaults_to_args! args
     super
@@ -55,7 +54,7 @@ module Common::Page::UrlHelper
     end
   end
 
-  def add_defaults_to_args!(args, defaults={})
+  def add_defaults_to_args!(args, defaults = {})
     arg_options = args.extract_options!
     arg_options.reverse_merge! defaults
     args << arg_options

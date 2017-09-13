@@ -1,11 +1,10 @@
 module Common::Utility::ContextHelper
-
   # we only show the context if you either:
   # * are allowed to do what you are doing
   # * can see the context entity anyway (for error messages)
   def visible_context?
     @context &&
-      ( @authorized || current_user.may?(:view, @context.entity) )
+      (@authorized || current_user.may?(:view, @context.entity))
   end
 
   #
@@ -38,7 +37,7 @@ module Common::Utility::ContextHelper
   def context_titles
     return [] unless @context
     @context.breadcrumbs.collect do |i|
-      truncate( crumb_to_s(i) )
+      truncate(crumb_to_s(i))
     end.reverse
   end
 
@@ -52,25 +51,25 @@ module Common::Utility::ContextHelper
 
   def context_banner_style
     @context_banner_style ||= if banner_picture
-      if banner_picture.add_geometry(banner_geometry)
-        url = banner_picture.url(banner_geometry)
-        if banner_picture.average_color
-          bg = rgb_to_hex(banner_picture.average_color)
-          fg = contrasting_color(banner_picture.average_color)
-          if fg == '#fff'
-            shadow = '#000'
-            nav_shade = 'rgba(0,0,0,0.2)'
-          else
-            shadow = '#fff'
-            nav_shade = 'rgba(255,255,255,0.3)'
-          end
-          "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n"+
-          "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 1px 1px 1px}\n"+
-          "ul#banner_nav_ul li.tab a.tab {color: #{fg}; background-color: #{nav_shade}}"
-        else
-          "#banner_content {background-image: url(#{url})}"
-        end
-      end
+                                if banner_picture.add_geometry(banner_geometry)
+                                  url = banner_picture.url(banner_geometry)
+                                  if banner_picture.average_color
+                                    bg = rgb_to_hex(banner_picture.average_color)
+                                    fg = contrasting_color(banner_picture.average_color)
+                                    if fg == '#fff'
+                                      shadow = '#000'
+                                      nav_shade = 'rgba(0,0,0,0.2)'
+                                    else
+                                      shadow = '#fff'
+                                      nav_shade = 'rgba(255,255,255,0.3)'
+                                    end
+                                    "#banner_content {background-image: url(#{url}); background-color: #{bg}}\n" \
+                                      "#banner_content a.title {color: #{fg}; text-shadow: #{shadow} 1px 1px 1px}\n" \
+                                      "ul#banner_nav_ul li.tab a.tab {color: #{fg}; background-color: #{nav_shade}}"
+                                  else
+                                    "#banner_content {background-image: url(#{url})}"
+                                  end
+                                end
     end
   end
 
@@ -86,7 +85,7 @@ module Common::Utility::ContextHelper
   # let the css expand or shrink the banner as needed.
   #
   def banner_geometry
-    {max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height}
+    { max_width: banner_width, min_width: banner_width, max_height: banner_height, min_height: banner_height }
   end
 
   def banner_width
@@ -111,10 +110,10 @@ module Common::Utility::ContextHelper
   #
   def context?(symbol)
     case symbol
-      when :none  then @context.nil?
-      when :me    then @context.is_a?(Context::Me)
-      when :group then @context.is_a?(Context::Group)
-      when :user  then @context.is_a?(Context::User)
+    when :none  then @context.nil?
+    when :me    then @context.is_a?(Context::Me)
+    when :group then @context.is_a?(Context::Group)
+    when :user  then @context.is_a?(Context::User)
     end
   end
 
@@ -124,7 +123,7 @@ module Common::Utility::ContextHelper
   # e.g. [255, 0, 0] => '#ff0000'
   #
   def rgb_to_hex(rgb)
-    '#' + rgb.map{|color|"%02x"%color}.join
+    '#' + rgb.map { |color| format('%02x', color) }.join
   end
 
   #
@@ -133,8 +132,10 @@ module Common::Utility::ContextHelper
   #
   def contrasting_color(rgb)
     gamma = 2.2
-    red, green, blue = rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0
-    luminance = (0.2126*(red**gamma)) + (0.7152*(green**gamma)) + (0.0722*(blue**gamma))
+    red = rgb[0] / 255.0
+    green = rgb[1] / 255.0
+    blue = rgb[2] / 255.0
+    luminance = (0.2126 * (red**gamma)) + (0.7152 * (green**gamma)) + (0.0722 * (blue**gamma))
     if luminance >= 0.5
       '#000'
     else
@@ -151,5 +152,4 @@ module Common::Utility::ContextHelper
       crumb.to_s
     end
   end
-
 end

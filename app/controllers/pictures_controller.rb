@@ -6,7 +6,6 @@
 #
 
 class PicturesController < ApplicationController
-
   before_filter :fetch_picture
 
   #
@@ -30,6 +29,4 @@ class PicturesController < ApplicationController
     @picture  = Picture.find id.to_i
     @geometry = Picture::Geometry[params[:geometry]]
   end
-
 end
-

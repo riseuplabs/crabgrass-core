@@ -1,5 +1,4 @@
 module PagesPermission
-
   protected
 
   ##
@@ -18,7 +17,7 @@ module PagesPermission
     current_user.may?(:edit, page)
   end
 
-  def may_admin_page?(page = @page)
+  def may_admin_page?(_page = @page)
     current_user.may?(:admin, @page)
   end
 
@@ -30,8 +29,8 @@ module PagesPermission
     !page or may_admin_page?
   end
 
-  alias_method :may_destroy_page?, :may_admin_page?
-  alias_method :may_delete_page?, :may_edit_page?
+  alias may_destroy_page? may_admin_page?
+  alias may_delete_page? may_edit_page?
 
   ##
   ## SHARING
@@ -53,7 +52,7 @@ module PagesPermission
 
   # if true, then you can choose access permissions when sharing pages. this is
   # used by cc.net. Not sure if this is a hack or a useful general feature.
-  def may_select_access_participation?(page=@page)
+  def may_select_access_participation?(page = @page)
     page.nil? or current_user.may? :admin, page
   end
 
@@ -84,6 +83,4 @@ module PagesPermission
       false
     end
   end
-
 end
-

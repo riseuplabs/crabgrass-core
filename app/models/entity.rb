@@ -8,12 +8,10 @@
 #
 
 class Entity
-
   # returns a user or group with +name+ and throws a not found exception otherwise.
   def self.find_by_name!(name)
     User.where(login: name).first!
   rescue ActiveRecord::RecordNotFound
     Group.where(name: name).first!
   end
-
 end

@@ -20,12 +20,10 @@ class User::Relationship < ActiveRecord::Base
       new_unread_count = 0
     elsif as == :unread
       # mark unread if necessary
-      if self.unread_count.blank? or self.unread_count < 1
-        new_unread_count = 1
-      end
+      new_unread_count = 1 if unread_count.blank? or unread_count < 1
     end
 
-    self.update_attribute(:unread_count, new_unread_count) if new_unread_count
+    update_attribute(:unread_count, new_unread_count) if new_unread_count
   end
 
   def send_message(body, in_reply_to = nil)
@@ -35,13 +33,13 @@ class User::Relationship < ActiveRecord::Base
 
     discussion.increment_unread_for!(contact)
     PrivatePost.create body: body,
-      in_reply_to: in_reply_to,
-      discussion: discussion,
-      recipient: contact,
-      user: user
+                       in_reply_to: in_reply_to,
+                       discussion: discussion,
+                       recipient: contact,
+                       user: user
   end
 
-  def ensure_discussion(*attrs)
+  def ensure_discussion(*_attrs)
     return if discussion.present?
     create_discussion.tap do |discuss|
       inverse.update_attribute :discussion, discuss

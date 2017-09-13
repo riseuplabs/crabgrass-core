@@ -1,5 +1,4 @@
 class GalleryImageController < Page::BaseController
-
   helper 'gallery'
 
   # show and edit use base page permissions
@@ -27,7 +26,6 @@ class GalleryImageController < Page::BaseController
   #
   # If you want to bring back some of the old features you might be
   # interested in looking at the git history
-
 
   # removed an non ajax fallback, azul
   def sort

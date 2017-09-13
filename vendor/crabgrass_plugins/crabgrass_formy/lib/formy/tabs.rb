@@ -1,5 +1,4 @@
 module Formy
-
   class Tabs < Root
     #
     # options:
@@ -9,9 +8,9 @@ module Formy
 
     sub_element Tab
 
-    def initialize(options={})
+    def initialize(options = {})
       super(options)
-      @opts[:separator] ||= "|"
+      @opts[:separator] ||= '|'
     end
 
     def open
@@ -28,15 +27,13 @@ module Formy
 
     def open_group
       puts "<div style='height:1%'>" # this is to force hasLayout in ie
-      puts '<ul class="nav nav-tabs %s" data-toggle="buttons-radio">' % @opts[:class]
+      puts format('<ul class="nav nav-tabs %s" data-toggle="buttons-radio">', @opts[:class])
     end
 
     def close_group
-      @elements.each {|e| raw_puts e}
-      puts "<li></li></ul>"
-      puts "</div>"
+      @elements.each { |e| raw_puts e }
+      puts '<li></li></ul>'
+      puts '</div>'
     end
-
   end
-
 end

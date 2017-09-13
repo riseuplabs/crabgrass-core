@@ -11,4 +11,3 @@ class AddSiteIdToEverything < ActiveRecord::Migration
     remove_column :requests, :site_id
   end
 end
-

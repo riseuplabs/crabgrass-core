@@ -23,7 +23,7 @@ class SearchFilter
   attr_accessor :html_options   # options for rendering the html
   attr_accessor :description    # hints for the user on how this filter works
   attr_accessor :exclude        # if set to the keyword of another filter, then the other filter
-                                # may not be active when this one is
+  # may not be active when this one is
 
   def initialize(path_definition, &block)
     self.path_definition     = path_definition
@@ -31,10 +31,10 @@ class SearchFilter
     self.path_argument_count = path_definition.count(':')
     self.singleton           = true
     self.exclude             = false
-    self.instance_eval &block
+    instance_eval &block
   ensure
-    SearchFilter.add_filter(self.path_keyword, self)
-    SearchFilter.add_to_section(self.section, self)
+    SearchFilter.add_filter(path_keyword, self)
+    SearchFilter.add_to_section(section, self)
   end
 
   ##
@@ -45,9 +45,7 @@ class SearchFilter
 
   # return the filter triggered by keyword
   def self.[](keyword)
-    if keyword.is_a?(PathFinder::ParsedPath)
-      keyword = keyword.first
-    end
+    keyword = keyword.first if keyword.is_a?(PathFinder::ParsedPath)
     SearchFilter.filters[keyword]
   end
 
@@ -57,16 +55,19 @@ class SearchFilter
   end
 
   # map: keyword -> filter object.
-  def self.filters(); @@filters ||= {}; end
+  def self.filters
+    @@filters ||= {}
+  end
 
   # map: section name -> filter object array.
-  def self.sections(); @@sections ||= {}; end
+  def self.sections
+    @@sections ||= {}
+  end
 
   private
 
-
   def self.add_to_section(section_name, search_filter)
-     (SearchFilter.sections[section_name] ||= []) << search_filter
+    (SearchFilter.sections[section_name] ||= []) << search_filter
   end
 
   def self.add_filter(keyword, filter)
@@ -80,7 +81,7 @@ class SearchFilter
   public
 
   def has_args?
-    self.path_argument_count != 0
+    path_argument_count != 0
   end
 
   def has_query?
@@ -92,15 +93,15 @@ class SearchFilter
   end
 
   def has_control_ui?
-    self.section.present?
+    section.present?
   end
 
   def options
-    self.html_options
+    html_options
   end
 
   # return the path of this filter, with these particular args.
-  def path(args=nil)
+  def path(args = nil)
     if args
       [@path_keyword, *args].join('/')
     else
@@ -112,8 +113,8 @@ class SearchFilter
   # return a unique name that can be given to ui elements for this filter
   # bound to these particular args.
   #
-  def name(args=nil)
-    path(args).gsub(/[^0-9a-zA-Z]/,'')
+  def name(args = nil)
+    path(args).gsub(/[^0-9a-zA-Z]/, '')
   end
 
   ##
@@ -142,8 +143,8 @@ class SearchFilter
     self.query_block = block
   end
 
-  def html(options={},&block)
-    self.html_options = {submit_button: true}.merge(options)
+  def html(options = {}, &block)
+    self.html_options = { submit_button: true }.merge(options)
     self.html_block = block
   end
 
@@ -154,7 +155,7 @@ class SearchFilter
   protected
 
   def user_id(id)
-    User.where(login: id).limit(1).pluck(:id).first || 
+    User.where(login: id).limit(1).pluck(:id).first ||
       raise(ErrorNotFound.new("#{:user.t} #{id.inspect}"))
   end
 
@@ -176,7 +177,7 @@ class SearchFilter
   # label is. The args are the actual current args for the filter, if it is
   # active. Otherwise, the args will be empty.
   #
-  def label(args=[], options={}, &block)
+  def label(args = [], options = {}, &block)
     if block
       set_label(&block)
     else
@@ -192,17 +193,17 @@ class SearchFilter
   # returns the label for this filter, given a particular path.
   # some filters may change what the label says depending on the currently
   # active path (they do this by defining @label_block)
-#  def label_from_path(path)
-#    unless @label or @label_block
-#      return nil
-#    end
-#    args = path.args_for(@path_keyword)
-#    if args.size < @path_argument_count
-#      args = [nil] * @path_argument_count
-#    end
-#    lbl = @label || @label_block.call(*args)
-#    return lbl.t
-#  end
+  #  def label_from_path(path)
+  #    unless @label or @label_block
+  #      return nil
+  #    end
+  #    args = path.args_for(@path_keyword)
+  #    if args.size < @path_argument_count
+  #      args = [nil] * @path_argument_count
+  #    end
+  #    lbl = @label || @label_block.call(*args)
+  #    return lbl.t
+  #  end
 
   #
   # resolves the path definition of this filter based on the content of the
@@ -212,18 +213,16 @@ class SearchFilter
   #   returns /created-by/green/ for a filter with definition /created-by/:user_id/
   #   if the current path contains /created-by/green/
   #
-  #def path_segment(path)
+  # def path_segment(path)
   #  args = path.args_for(@path_keyword).reverse
   #  return @path_definition.gsub(/\/:\w+/) {|segment| "/#{args.pop}/"}
-  #end
+  # end
 
   private
 
   def get_label(args, options)
     if @label_block
-      if has_args?
-        options = options.merge(path_args_to_hash(args))
-      end
+      options = options.merge(path_args_to_hash(args)) if has_args?
       @label_block.call(options)
     elsif @label
       @label.t
@@ -251,12 +250,10 @@ class SearchFilter
     if args.any?
       @path_definition.split('/').each do |segment|
         if segment.starts_with?(':')
-          hsh[segment[1..-1].to_sym] = args.shift  # pop off the front
+          hsh[segment[1..-1].to_sym] = args.shift # pop off the front
         end
       end
     end
-    return hsh
+    hsh
   end
-
 end
-

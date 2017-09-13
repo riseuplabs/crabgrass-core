@@ -1,7 +1,6 @@
 require 'action_controller'
 
 ActionController::Base.class_eval do
-
   #
   # methods to help load our core extensions to ActionController::Base
   # Rails.root is not loaded yet when these are called, so we use __FILE__
@@ -12,13 +11,13 @@ ActionController::Base.class_eval do
     prefix = "#{root}/app/controllers/"
     full_path = "#{prefix}#{include_path}"
     if File.directory?(full_path)
-      file_paths = Dir.glob(full_path + '/*.rb').collect{|f|f.chomp('.rb')}
+      file_paths = Dir.glob(full_path + '/*.rb').collect { |f| f.chomp('.rb') }
     else
       file_paths = [full_path]
     end
     file_paths.each do |file_path|
-      relative_path = file_path.sub(/^#{Regexp.escape(prefix)}/, "")
-      #require(relative_path)
+      relative_path = file_path.sub(/^#{Regexp.escape(prefix)}/, '')
+      # require(relative_path)
       include(relative_path.camelize.constantize)
       ActiveSupport::Dependencies.explicitly_unloadable_constants << relative_path.camelize
     end
@@ -32,5 +31,4 @@ ActionController::Base.class_eval do
       helper("common/#{dirname}/#{basename}")
     end
   end
-
 end

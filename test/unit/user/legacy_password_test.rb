@@ -7,16 +7,15 @@ require 'digest/sha1'
 # This test is for all of that.
 
 class User::LegacyPasswordTest < ActiveSupport::TestCase
-
   def test_old_password_encryption
     old_password = 'my dear old password'
     user = User.new login: 'long_time_no_see',
-      password: old_password
+                    password: old_password
     # create old sha1 digest
     user.send :use_legacy_password_fields!
     assert user.salt.present?
     assert_equal Digest::SHA1.hexdigest("--#{user.salt}--#{user.password}--"),
-      user.crypted_password
+                 user.crypted_password
   end
 
   def test_bcrypt_wrapper_for_old_password

@@ -5,10 +5,10 @@
 #
 class IndexProfilesByWiki < ActiveRecord::Migration
   def self.up
-    add_index :profiles, [:wiki_id, :entity_id], :name => "profiles_for_wikis"
+    add_index :profiles, %i[wiki_id entity_id], name: 'profiles_for_wikis'
   end
 
   def self.down
-    remove_index :profiles, :name => "profiles_for_wikis"
+    remove_index :profiles, name: 'profiles_for_wikis'
   end
 end

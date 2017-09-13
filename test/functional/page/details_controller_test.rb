@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Page::DetailsControllerTest < ActionController::TestCase
-
-
   def test_show_details
     user = users(:blue)
     page = user.pages.last
@@ -11,4 +9,3 @@ class Page::DetailsControllerTest < ActionController::TestCase
     assert_response :success
   end
 end
-

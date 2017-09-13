@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class Page::AttachmentTest < ActiveSupport::TestCase
-
-
-
   def setup
     Page::History.delete_all
     setup_assets
@@ -75,5 +72,4 @@ class Page::AttachmentTest < ActiveSupport::TestCase
       end
     end
   end
-
 end

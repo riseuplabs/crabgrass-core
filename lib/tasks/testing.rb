@@ -9,25 +9,25 @@
 namespace :test do
   namespace :fast do
     Rake::TestTask.new(:units) do |t|
-      t.libs << "test"
+      t.libs << 'test'
       t.pattern = 'test/unit/**/*_test.rb'
       t.verbose = true
     end
-    Rake::Task['test:fast:units'].comment = "Run test:units without db:test:prepare"
+    Rake::Task['test:fast:units'].comment = 'Run test:units without db:test:prepare'
 
     Rake::TestTask.new(:functionals) do |t|
-      t.libs << "test"
+      t.libs << 'test'
       t.pattern = 'test/functional/**/*_test.rb'
       t.verbose = true
     end
-    Rake::Task['test:fast:functionals'].comment = "Run test:functionals without db:test:prepare"
+    Rake::Task['test:fast:functionals'].comment = 'Run test:functionals without db:test:prepare'
 
     Rake::TestTask.new(:integration) do |t|
-      t.libs << "test"
+      t.libs << 'test'
       t.pattern = 'test/integration/**/*_test.rb'
       t.verbose = true
     end
-    Rake::Task['test:fast:integration'].comment = "Run test:integration without db:test:prepare"
+    Rake::Task['test:fast:integration'].comment = 'Run test:integration without db:test:prepare'
   end
 end
 
@@ -53,9 +53,9 @@ namespace :test do
         def split_array(array, direction)
           raise ArgumentError.new('direction must be L or R') unless direction == 'L' or direction == 'R'
           if direction == 'L'
-            array[0..(array.length/2-1)]
+            array[0..(array.length / 2 - 1)]
           else
-            array[(array.length/2)..-1]
+            array[(array.length / 2)..-1]
           end
         end
 
@@ -70,49 +70,47 @@ namespace :test do
           files = split_array(files, direction)
         end
         files << target
-        t.libs << "test"
+        t.libs << 'test'
         t.test_files = files
         t.verbose = true
       end
     end
-    Rake::Task['test:unit:binarysearch'].comment = "binary search to find problem with failing test"
+    Rake::Task['test:unit:binarysearch'].comment = 'binary search to find problem with failing test'
   end
 end
-
 
 #
 # Testing mods
 #
 namespace :test do
   namespace :mods do
+    desc 'Run the plugin tests in extensions/mods/**/test (or specify with MOD=name)'
+    task all: %i[units functionals integration]
 
-    desc "Run the plugin tests in extensions/mods/**/test (or specify with MOD=name)"
-    task all: [:units, :functionals, :integration]
-
-    desc "Run all plugin unit tests"
+    desc 'Run all plugin unit tests'
     Rake::TestTask.new(units: :setup_plugin_fixtures) do |t|
-      t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/unit/**/*_test.rb"
+      t.pattern = "extensions/mods/#{ENV['MOD'] || '**'}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Run all plugin functional tests"
+    desc 'Run all plugin functional tests'
     Rake::TestTask.new(functionals: :setup_plugin_fixtures) do |t|
-      t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/functional/**/*_test.rb"
+      t.pattern = "extensions/mods/#{ENV['MOD'] || '**'}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Integration test engines"
+    desc 'Integration test engines'
     Rake::TestTask.new(integration: :setup_plugin_fixtures) do |t|
-      t.pattern = "extensions/mods/#{ENV['MOD'] || "**"}/test/integration/**/*_test.rb"
+      t.pattern = "extensions/mods/#{ENV['MOD'] || '**'}/test/integration/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Mirrors plugin fixtures into a single location to help plugin tests"
+    desc 'Mirrors plugin fixtures into a single location to help plugin tests'
     task setup_plugin_fixtures: :environment do
       if ENV['MOD']
-        plugin = Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}
+        plugin = Engines.plugins.detect { |plugin| plugin.name == ENV['MOD'] }
         unless plugin
-          puts 'ERROR: mod plugin named "%s" not found.' % ENV['MOD']
+          puts format('ERROR: mod plugin named "%s" not found.', ENV['MOD'])
           exit
         end
         Engines::Testing.setup_plugin_fixtures([plugin])
@@ -120,7 +118,6 @@ namespace :test do
         Engines::Testing.setup_plugin_fixtures
       end
     end
-
   end
 end
 
@@ -129,66 +126,60 @@ end
 #
 namespace :test do
   namespace :pages do
+    desc 'Run the plugin tests in extensions/pages/**/test (or specify with PAGE=name)'
+    task all: %i[units functionals integration]
 
-    desc "Run the plugin tests in extensions/pages/**/test (or specify with PAGE=name)"
-    task all: [:units, :functionals, :integration]
-
-    desc "Run all pages unit tests"
+    desc 'Run all pages unit tests'
     Rake::TestTask.new(units: :setup_plugin_fixtures) do |t|
-      t.libs << "test"
-      t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/unit/**/*_test.rb"
+      t.libs << 'test'
+      t.pattern = "extensions/pages/#{ENV['PAGE'] || '**'}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Run all pages functional tests"
+    desc 'Run all pages functional tests'
     Rake::TestTask.new(functionals: :setup_plugin_fixtures) do |t|
-      t.libs << "test"
-      t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/functional/**/*_test.rb"
+      t.libs << 'test'
+      t.pattern = "extensions/pages/#{ENV['PAGE'] || '**'}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Integration test engines for pages"
+    desc 'Integration test engines for pages'
     Rake::TestTask.new(integration: :setup_plugin_fixtures) do |t|
-      t.libs << "test"
-      t.pattern = "extensions/pages/#{ENV['PAGE'] || "**"}/test/integration/**/*_test.rb"
+      t.libs << 'test'
+      t.pattern = "extensions/pages/#{ENV['PAGE'] || '**'}/test/integration/**/*_test.rb"
       t.verbose = true
     end
 
-    desc "Mirrors plugin fixtures into a single location to help plugin tests"
+    desc 'Mirrors plugin fixtures into a single location to help plugin tests'
     task setup_plugin_fixtures: :environment do
       # Engines::Testing.setup_plugin_fixtures
     end
-
   end
 end
 
 namespace :test do
-
   def all_file_list
     # don't include mods by default
-    list = FileList["test/**/*_test.rb"]
-    list += FileList["extensions/pages/**/test/**/*_test.rb"]
+    list = FileList['test/**/*_test.rb']
+    list += FileList['extensions/pages/**/test/**/*_test.rb']
     # FileList["mods/**/test/**/*_test.rb"]
     # find and add just the enabled  mods
     pwd = File.dirname(__FILE__)
-    if conf = YAML.load_file(pwd + "/../../config/crabgrass/crabgrass.test.yml")
+    if conf = YAML.load_file(pwd + '/../../config/crabgrass/crabgrass.test.yml')
       mods = conf['enabled_mods'] || []
-      mods.each { |m|
+      mods.each do |m|
         list += FileList["mods/#{m}/test/**/*_test.rb"]
-      }
+      end
     end
 
-    return list
+    list
   end
 
-  desc "Test everything: crabgrass, pages and mods."
+  desc 'Test everything: crabgrass, pages and mods.'
   Rake::TestTask.new(:everything) do |t|
-
-    t.libs << "test"
+    t.libs << 'test'
 
     t.test_files = all_file_list
     t.verbose = true
-
   end
 end
-

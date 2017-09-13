@@ -2,11 +2,10 @@
 #
 
 class DispatchController < ApplicationController
-
   # this is *not* an action, but the 'dispatch' method from ActionController::Metal
   # The only change here is that we don't return to_a(), but instead whatever
   # process() returns.
-  def dispatch(action, request, response = ActionDispatch::Response.new)
+  def dispatch(action, request, _response = ActionDispatch::Response.new)
     @action = action
     @_request = request
     @_env = request.env
@@ -32,7 +31,7 @@ class DispatchController < ApplicationController
 
   # We want the modification to also apply to the newly instantiated controller.
   # So we have to modify the request - not just the Parameters instance.
-  def modify_params(options={})
+  def modify_params(options = {})
     request.parameters.merge! options
     @_params = nil
   end
@@ -41,5 +40,4 @@ class DispatchController < ApplicationController
     modify_params action: action
     @action = action
   end
-
 end

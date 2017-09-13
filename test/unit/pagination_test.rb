@@ -1,14 +1,12 @@
 require 'test_helper'
 
 class PaginationTest < ActiveSupport::TestCase
-
-
   def test_tracking_most_views_in_days_pagination
     user = users(:blue)
     group = groups(:rainbow)
 
     # test parameters
-    all_pages = (group.pages.reject{|p| p.deleted?}).uniq
+    all_pages = group.pages.reject(&:deleted?).uniq
     all_pages_ids = all_pages.collect(&:id)
     per_page = 5
     total_pagination_pages = (all_pages.size.to_f / per_page).ceil
@@ -18,12 +16,13 @@ class PaginationTest < ActiveSupport::TestCase
       # last page gets only 1 view
       # lets us test that pagination sorts them properly
       (all_pages.size - index).times do
+        # make sure trackings will be processed into dailies
         Tracking::Page.insert(current_user: user,
-          user: user,
-          group: group,
-          page: page,
-          action: :view,
-          time: Time.now - 3.days)  # make sure trackings will be processed into dailies
+                              user: user,
+                              group: group,
+                              page: page,
+                              action: :view,
+                              time: Time.now - 3.days)
       end
     end
 
@@ -39,9 +38,11 @@ class PaginationTest < ActiveSupport::TestCase
       current_user: user,
       group_ids: [group.id],
       per_page: per_page,
-      page: 1}
+      page: 1
+    }
 
-    pages = Page.paginate_by_path(["most-views-in", "30", "days"], paginate_options)
+    pages = Page.paginate_by_path ['most-views-in', '30', 'days'],
+      paginate_options
 
     assert_equal all_pages_ids.size, pages.total_entries
     assert_equal all_pages_ids[0, per_page], pages.collect(&:id).sort

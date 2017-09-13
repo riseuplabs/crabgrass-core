@@ -31,7 +31,7 @@ module Formy
     #
 
     element_attr :label, :link, :show_tab, :url, :function, :selected, :icon, :id,
-      :style, :class, :hash, :default, :active, :options
+                 :style, :class, :hash, :default, :active, :options
 
     def close
       put_item
@@ -53,59 +53,57 @@ module Formy
       else
         # sadly, the link_to stuff that would be good to include here is not
         # present until a later version of rails.
-        #if @url
+        # if @url
         #  link_to(@label, @url, link_options) + postfix_for_link
-        #else
-          content_tag(:a, @label, link_options) + postfix_for_link
-        #end
+        # else
+        content_tag(:a, @label, link_options) + postfix_for_link
+        # end
       end
     end
 
     def link_options
       @options ||= {}
-      if @show_tab =~ /_panel$/
-         @id = @show_tab.sub(/_panel$/, '_link')
-      end
+      @id = @show_tab.sub(/_panel$/, '_link') if @show_tab =~ /_panel$/
       css_class = [
         @class,
         ("icon #{@icon}_16" if @icon),
-        ("active" if @selected || @active),
+        ('active' if @selected || @active),
         @options.delete(:class)
       ].compact.join(' ')
       options = {
-          class: css_class,
-          style: @style,
-          id: @id,
-          onclick: @function
+        class: css_class,
+        style: @style,
+        id: @id,
+        onclick: @function
       }
       if @url
         options[:href] = @url
       elsif @show_tab
         options[:onclick] = onclick_for_show_tab
       elsif @function
-        options[:href] = "#"
+        options[:href] = '#'
       end
-      return options.merge(@options)
+      options.merge(@options)
     end
 
     def onclick_for_show_tab
       if @show_tab =~ /_panel$/
-        @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
-        onclick = "showTab(this, $('%s'), '%s');" % [@show_tab, @hash]
+        @hash ||= @show_tab.sub(/_panel$/, '').tr('_', '-')
+        onclick = format("showTab(this, $('%s'), '%s');", @show_tab, @hash)
       else
-        onclick = "showTab(this, $('%s'));" % @show_tab
+        onclick = format("showTab(this, $('%s'));", @show_tab)
       end
       if @function
         @function += ';' unless @function[-1].chr == ';'
         onclick = @function + onclick
       end
-      return onclick.html_safe
+      onclick.html_safe
     end
 
     def postfix_for_link
       @show_tab && @default ?
-        javascript_tag('defaultHash = "%s"' % @hash) :
-        ""
+        javascript_tag(format('defaultHash = "%s"', @hash)) :
+        ''
     end
   end
 end

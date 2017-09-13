@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Wiki::VersioningTest < ActiveSupport::TestCase
-
   include WikiTestHelper
 
   def setup
@@ -47,11 +46,11 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
       update_wiki body: 'vey', user: @user
     end
 
-    assert_equal ['oi', 'vey'], @wiki.versions.collect(&:body),
-      "should have only 'oi' and 'vey' versions"
+    assert_equal %w[oi vey], @wiki.versions.collect(&:body),
+                 "should have only 'oi' and 'vey' versions"
 
     assert_equal [@user, @user], @wiki.versions.collect(&:user),
-       "should have the right user for its versions"
+                 'should have the right user for its versions'
   end
 
   def test_soft_revert
@@ -62,9 +61,9 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
 
     @wiki.revert_to_version(@wiki.find_version(3), users(:purple))
     assert_equal '3', @wiki.versions.find_by_version(5).body,
-      "should create a new version equal to the older version"
+                 'should create a new version equal to the older version'
     assert_equal '3', @wiki.body,
-      "should revert wiki body"
+                 'should revert wiki body'
   end
 
   def test_hard_revert
@@ -74,11 +73,11 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
     update_wiki user: @different_user
 
     @wiki.revert_to_version!(2, users(:purple))
-    assert_equal '2', @wiki.body,  "should revert wiki body"
+    assert_equal '2', @wiki.body, 'should revert wiki body'
     assert_equal 2, @wiki.versions(true).size,
-      "should delete all newer versions"
+                 'should delete all newer versions'
     assert_equal '2', @wiki.versions.find_by_version(2).body,
-      "should keep version 2"
+                 'should keep version 2'
     assert_equal 2, @wiki.version
   end
 
@@ -115,5 +114,4 @@ class Wiki::VersioningTest < ActiveSupport::TestCase
       heading_level: 0
     }
   end
-
 end

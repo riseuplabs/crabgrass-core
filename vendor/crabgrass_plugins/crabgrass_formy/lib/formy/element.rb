@@ -1,26 +1,21 @@
 
-#require 'action_view/helpers/tag_helper'
-#require 'active_view/helpers/java_script_helper'
+# require 'action_view/helpers/tag_helper'
+# require 'active_view/helpers/java_script_helper'
 
 require 'action_view/helpers'
 
 module Formy
-
   class Element
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::JavaScriptHelper
-    #include ActionView::Helpers::UrlHelper
+    # include ActionView::Helpers::UrlHelper
 
-    def initialize(form,options={})
+    def initialize(form, options = {})
       @base = form
       @opts = options
-      if @opts[:hide]
-        @opts[:style] = ['display:none;', @opts[:style]].combine
-      end
-      if @opts[:disabled]
-        @opts[:class] = ['disabled', @opts[:class]].combine
-      end
-      @elements = []                     # sub elements held by this element
+      @opts[:style] = ['display:none;', @opts[:style]].combine if @opts[:hide]
+      @opts[:class] = ['disabled', @opts[:class]].combine if @opts[:disabled]
+      @elements = [] # sub elements held by this element
       @element_count = 0
       @buffer = Buffer.new
     end
@@ -30,7 +25,7 @@ module Formy
     def get_object_attr(object_dot_attr)
       object =  object_dot_attr[/^([^\.]*)\./, 1] || @base.options['object']
       attr = object_dot_attr[/([^\.]*)$/]
-      return [object,attr]
+      [object, attr]
     end
 
     def push
@@ -44,13 +39,13 @@ module Formy
     end
 
     def open
-      puts "<!-- begin #{self.classname} -->" if @opts[:annotate]
+      puts "<!-- begin #{classname} -->" if @opts[:annotate]
       @base.current_element.push(self)
     end
 
     def close
       @base.current_element.pop
-      puts "<!-- end #{self.classname} -->" if @opts[:annotate]
+      puts "<!-- end #{classname} -->" if @opts[:annotate]
     end
 
     def classname
@@ -67,11 +62,11 @@ module Formy
 
     def indent(str)
       if str.is_a? Array
-        str.collect {|i|
+        str.collect do |i|
           indent(i)
-        }.join
+        end.join
       else
-        ("  " * @base.depth) + str.to_s + "\n"
+        ('  ' * @base.depth) + str.to_s + "\n"
       end
     end
 
@@ -93,13 +88,13 @@ module Formy
       @base.current_element[-2]
     end
 
-    def tag(element_tag, value, options={})
-      content_tag(element_tag, value, {style: @opts[:style], class: @opts[:class], id: @opts[:id]})
+    def tag(element_tag, value, _options = {})
+      content_tag(element_tag, value, style: @opts[:style], class: @opts[:class], id: @opts[:id])
     end
 
     def self.sub_element(*class_names)
       for class_name in class_names
-        method_name = class_name.to_s.gsub(/^.*::/,'').downcase
+        method_name = class_name.to_s.gsub(/^.*::/, '').downcase
         module_eval <<-"end_eval"
         def #{method_name}(options={})
           element = #{class_name}.new(@base,{:index => @element_count}.merge(options))
@@ -146,10 +141,7 @@ module Formy
 
     # work around rails 2.3.5 to_json circular reference problem
     def to_json
-      self.inspect
+      inspect
     end
-
   end
-
 end
-

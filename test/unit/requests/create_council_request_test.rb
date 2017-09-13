@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CreateCouncilRequestTest < ActiveSupport::TestCase
-
   def setup
     @requesting_user = FactoryGirl.create(:user)
     @accepting_user = FactoryGirl.create(:user)
@@ -32,12 +31,12 @@ class CreateCouncilRequestTest < ActiveSupport::TestCase
   end
 
   def test_may_approve
-    assert(! @request.may_approve?(@requesting_user),
-      "Expected the requesting user not to be able to approve this request")
-    assert(! @request.may_approve?(@new_user),
-      "Expected a new user not to be able to approve this request")
+    assert(!@request.may_approve?(@requesting_user),
+           'Expected the requesting user not to be able to approve this request')
+    assert(!@request.may_approve?(@new_user),
+           'Expected a new user not to be able to approve this request')
     assert(@request.may_approve?(@accepting_user),
-      "Expected a long-term member to be able to approve this request")
+           'Expected a long-term member to be able to approve this request')
   end
 
   def test_approve_creates_council
@@ -60,5 +59,4 @@ class CreateCouncilRequestTest < ActiveSupport::TestCase
     @request.mark! :approve, @accepting_user
     assert_equal 2, @group.reload.council.memberships.count
   end
-
 end

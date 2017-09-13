@@ -14,7 +14,7 @@ class ConvertToolsToPagePlugins < ActiveRecord::Migration
       'Tool::Info'              => 'InfoPage'
     }
     changes.each do |from, to|
-       Page.connection.execute "UPDATE pages SET type = '#{to}' WHERE type = '#{from}'"
+      Page.connection.execute "UPDATE pages SET type = '#{to}' WHERE type = '#{from}'"
     end
   end
 
@@ -33,8 +33,7 @@ class ConvertToolsToPagePlugins < ActiveRecord::Migration
       'Tool::Info'              => 'InfoPage'
     }
     changes.each do |to, from|
-       Page.connection.execute "UPDATE pages SET type = '#{to}' WHERE type = '#{from}'"
+      Page.connection.execute "UPDATE pages SET type = '#{to}' WHERE type = '#{from}'"
     end
   end
 end
-

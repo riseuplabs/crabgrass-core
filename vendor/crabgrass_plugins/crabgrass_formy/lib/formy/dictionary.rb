@@ -4,7 +4,7 @@ module Formy
     element_attr :title
 
     def title(value)
-      puts '<h2 class="title">%s</h2>' % value
+      puts format('<h2 class="title">%s</h2>', value)
     end
 
     def open
@@ -15,7 +15,7 @@ module Formy
     end
 
     def close
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       puts '</dl></div>'
       super
     end
@@ -28,10 +28,8 @@ module Formy
       end
 
       def close
-        puts '<dt class="%s %s icon" style="%s">%s</dt>' % \
-          [@classes, (@icon+'_16' if @icon), @style, @label]
-        puts '<dd class="%s icon" style="%s">%s</dd>' % \
-          [@classes, @style, @info]
+        puts format('<dt class="%s %s icon" style="%s">%s</dt>', @classes, (@icon + '_16' if @icon), @style, @label)
+        puts format('<dd class="%s icon" style="%s">%s</dd>', @classes, @style, @info)
         super
       end
     end

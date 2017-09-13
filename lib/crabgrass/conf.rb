@@ -6,7 +6,6 @@ require 'active_support'
 # The variables defined there are available as Config.varname
 #
 class Conf
-
   ##
   ## CLASS ATTRIBUTES
   ##
@@ -66,17 +65,28 @@ class Conf
   cattr_accessor :raise_i18n_exceptions
 
   # cattr_accessor doesn't work with ?
-  def self.limited?; self.limited; end
-  def self.paranoid_emails?; self.paranoid_emails; end
-  def self.tracking?; self.tracking; end
-  def self.ensure_page_owner?; self.ensure_page_owner; end
+  def self.limited?
+    limited
+  end
+
+  def self.paranoid_emails?
+    paranoid_emails
+  end
+
+  def self.tracking?
+    tracking
+  end
+
+  def self.ensure_page_owner?
+    ensure_page_owner
+  end
 
   ##
   ## LOADING
   ##
 
   def self.load_defaults
-    self.name                 = 'default'
+    self.name = 'default'
 
     # site defaults
     self.title             = 'crabgrass'
@@ -92,7 +102,7 @@ class Conf
     self.domain            = 'localhost'
     self.dev_email         = ''
     self.login_redirect_url = '/me'
-    self.theme             = 'default'
+    self.theme = 'default'
 
     # global configuration
     self.enabled_pages = []
@@ -103,11 +113,11 @@ class Conf
     self.default_page_access = :admin
     self.default_group_permissions = {
       'members' => :all,
-      'public' => ['view', 'request_membership']
+      'public' => %w[view request_membership]
     }
     self.default_user_permissions = {
-      'friends' => [:view, :pester, :see_groups, :see_contacts],
-      'peers' => [:pester, :request_contact],
+      'friends' => %i[view pester see_groups see_contacts],
+      'peers' => %i[pester request_contact],
       'public' => []
     }
     self.remote_processing = false
@@ -118,27 +128,27 @@ class Conf
   end
 
   def self.load(filename)
-    self.load_defaults
+    load_defaults
     self.configuration_filename = CRABGRASS_CONFIG_DIRECTORY + filename
     hsh = YAML.load_file(configuration_filename) || {}
     hsh.each do |key, value|
       method = key.to_s + '='
-      if self.respond_to?(method)
-        self.send(method,value) unless value.nil?
+      if respond_to?(method)
+        send(method, value) unless value.nil?
       else
-        puts "ERROR (%s): unknown option '%s'" % [configuration_filename,key]
+        puts format("ERROR (%s): unknown option '%s'", configuration_filename, key)
       end
     end
 
     ## convert some strings in config to symbols
     ['default_page_access'].each do |conf_var|
-      self.send(conf_var+'=', self.send(conf_var).to_sym)
+      send(conf_var + '=', send(conf_var).to_sym)
     end
 
     ## convert enabled_languages into a hash
-    self.enabled_languages_hash = self.enabled_languages.to_h {|i| [i, true]}
+    self.enabled_languages_hash = enabled_languages.to_h { |i| [i, true] }
 
-    return true
+    true
   end
 
   ##
@@ -161,7 +171,6 @@ class Conf
   ##
 
   def self.language_enabled?(lang_code)
-    self.enabled_languages_hash[lang_code]
+    enabled_languages_hash[lang_code]
   end
-
 end

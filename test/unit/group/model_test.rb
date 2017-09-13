@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Group::ModelTest < ActiveSupport::TestCase
-
   def setup
     @group = FactoryGirl.build(:group)
   end
@@ -61,5 +60,4 @@ class Group::ModelTest < ActiveSupport::TestCase
     assert !Group::Committee.can_have_council?
     assert !Group::Committee.can_have_committees?
   end
-
 end

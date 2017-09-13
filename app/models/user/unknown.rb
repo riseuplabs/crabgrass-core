@@ -1,20 +1,19 @@
 class User::Unknown
-
   def login
     :anonymous.t
   end
-  alias :name :login
-  alias :display_name :login
+  alias name login
+  alias display_name login
 
   def id
     nil
   end
 
   def cache_key
-    "anonymous-1"
+    'anonymous-1'
   end
 
-  def may?(access,thing)
+  def may?(access, thing)
     # nothing but viewing for now.
     return false unless access == :view
     case thing
@@ -30,7 +29,7 @@ class User::Unknown
   end
 
   def current_status
-    ""
+    ''
   end
 
   def friends
@@ -44,18 +43,23 @@ class User::Unknown
   def groups
     Group.none
   end
-  alias_method :all_groups, :groups
+  alias all_groups groups
 
-  def member_of?(group)
+  def member_of?(_group)
     false
   end
 
-  def friend_of?(user)
+  def friend_of?(_user)
     false
   end
 
-  def friend_ids; [] ; end
-  def peer_ids;   [] ; end
+  def friend_ids
+    []
+  end
+
+  def peer_ids
+    []
+  end
 
   def method_missing(method)
     raise PermissionDenied.new("Tried to access #{method} on an unauthorized user.")
@@ -73,5 +77,4 @@ class User::Unknown
   def time_zone
     Time.zone_default
   end
-
 end

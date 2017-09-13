@@ -6,9 +6,6 @@ module User::Participation::Starring
   end
 
   def update_stars
-    if page_id and self.star_changed?
-      page.update_star_count
-    end
+    page.update_star_count if page_id and star_changed?
   end
-
 end

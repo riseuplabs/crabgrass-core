@@ -5,7 +5,6 @@ require 'test_helper'
 # Test the versioning capabilities of the Asset Model
 
 class Asset::VersionTest < ActiveSupport::TestCase
-
   def setup
     @asset = FactoryGirl.create :png_asset
   end
@@ -40,7 +39,7 @@ class Asset::VersionTest < ActiveSupport::TestCase
     assert_equal 'photo_small.jpg', @version.thumbnail_filename(:small)
     assert_equal "/assets/#{@asset.id}/versions/2/photo.jpg", @version.url
     assert read_file('photo.jpg') == File.read(@version.private_filename),
-      'version 2 data should match photo.jpg'
+           'version 2 data should match photo.jpg'
   end
 
   def test_new_version_replaces_main_file
@@ -49,15 +48,15 @@ class Asset::VersionTest < ActiveSupport::TestCase
     @new_filename = @asset.private_filename
 
     refute File.exist?(@old_filename),
-      'old file can only be accessed through version'
+           'old file can only be accessed through version'
     assert File.exist?(@new_filename),
-      'current file can be accessed directly through asset'
+           'current file can be accessed directly through asset'
   end
 
   def test_user_versions
     asset = Asset.create! uploaded_data: upload_data('empty.jpg')
     asset.update_attributes user: users(:blue),
-      uploaded_data: upload_data('photo.jpg')
+                            uploaded_data: upload_data('photo.jpg')
     assert_nil asset.versions.first.user
     assert_equal users(:blue), asset.versions.last.user
   end
@@ -68,5 +67,4 @@ class Asset::VersionTest < ActiveSupport::TestCase
     @asset.uploaded_data = upload_data('photo.jpg')
     @asset.save
   end
-
 end

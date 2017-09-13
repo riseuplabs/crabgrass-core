@@ -4,17 +4,14 @@ class Tracking::PageTest < ActiveSupport::TestCase
   # otherwise transactions fail because UNLOCK TABLES implicitly commits the transaction
   self.use_transactional_fixtures = false
 
-
-
-  def setup
-  end
+  def setup; end
 
   def test_group_view_tracked
     Tracking::Page.process
     user = users(:blue)
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
-    assert_difference('group.memberships.find(%d).total_visits'%membership.id) do
+    assert_difference(format('group.memberships.find(%d).total_visits', membership.id)) do
       Tracking::Page.insert(current_user: user, group: group)
       Tracking::Page.process
     end
@@ -35,7 +32,7 @@ class Tracking::PageTest < ActiveSupport::TestCase
 
   def test_page_view_tracked_fully
     user = users(:blue)
-    page = pages(:wiki) #id = 210
+    page = pages(:wiki) # id = 210
     group = groups(:rainbow)
     action = :view
     # let's clean things up first so they do not get in the way...
@@ -71,22 +68,21 @@ class Tracking::PageTest < ActiveSupport::TestCase
   private
 
   # Insert delayed is not delaysed for testing so this should not cause problems.
-  def assert_tracking(user, group, page, action, time=nil)
+  def assert_tracking(user, group, page, action, time = nil)
     Tracking::Page.insert(current_user: user, group: group, page: page, action: action, time: time)
-    track=Tracking::Page.last
-    assert_equal track.current_user_id, user.id, "User not stored correctly in Tracking"
-    assert_equal track.group_id, group.id, "Group not stored correctly in Tracking"
-    assert_equal track.page_id, page.id, "Page not stored correctly in Tracking"
+    track = Tracking::Page.last
+    assert_equal track.current_user_id, user.id, 'User not stored correctly in Tracking'
+    assert_equal track.group_id, group.id, 'Group not stored correctly in Tracking'
+    assert_equal track.page_id, page.id, 'Page not stored correctly in Tracking'
     if action != :unstar
-      assert_equal "#{action}s", ["views", "edits", "stars"].find{|a| Tracking::Page.last.send a},
-        'Tracking did not count the right action.'
-      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking::Page.last.send a}.size,
-        'There shall be exactly one action counted.'
+      assert_equal "#{action}s", %w[views edits stars].find { |a| Tracking::Page.last.send a },
+                   'Tracking did not count the right action.'
+      assert_equal 1, %w[views edits stars].select { |a| Tracking::Page.last.send a }.size,
+                   'There shall be exactly one action counted.'
     else
       # TODO: check this before ActiveRecord gets in the way.
-      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking::Page.last.send a}.size,
-        'For :unstar all values should evaluate to false.'
+      assert_equal 0, %w[views edits stars].select { |a| Tracking::Page.last.send a }.size,
+                   'For :unstar all values should evaluate to false.'
     end
   end
-
 end

@@ -1,6 +1,5 @@
 class ReplaceMeDashboardInSiteRedirectUrls < ActiveRecord::Migration
-
-  @@redirects = ['signup_redirect_url', 'login_redirect_url']
+  @@redirects = %w[signup_redirect_url login_redirect_url]
 
   def self.up
     Site.find(:all).each do |site|

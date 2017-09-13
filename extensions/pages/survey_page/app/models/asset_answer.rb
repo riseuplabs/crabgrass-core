@@ -6,10 +6,10 @@ class AssetAnswer < SurveyAnswer
   end
 
   def value=(val)
-    self.asset.destroy if asset
+    asset.destroy if asset
     begin
       self.asset = Asset.create_from_params uploaded_data: val
-      self.asset.generate_thumbnails
+      asset.generate_thumbnails
       write_attribute(:value, val.original_path) if val.respond_to?(:original_path)
     rescue ActiveRecord::RecordInvalid => exc
       write_attribute(:value, nil)

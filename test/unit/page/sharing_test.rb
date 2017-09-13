@@ -1,16 +1,13 @@
 require 'test_helper'
 
 class Page::SharingTest < ActiveSupport::TestCase
-
-
-
   def test_better_permission_takes_precedence
     creator = users(:kangaroo)
     red = users(:red)
     rainbow = groups(:rainbow)
 
     page = Page.create(title: 'a very popular page', user: creator)
-    assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
+    assert page.valid?, format('page should be valid: %s', page.errors.full_messages.to_s)
 
     assert creator.may?(:admin, page), 'creator should be able to admin page'
     assert_equal false, red.may?(:view, page), 'user red should not see the page'
@@ -32,7 +29,7 @@ class Page::SharingTest < ActiveSupport::TestCase
     user = users(:kangaroo)
     group = groups(:animals)
     page = Page.create(title: 'fun fun', user: user, share_with: group, access: :admin)
-    assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
+    assert page.valid?, format('page should be valid: %s', page.errors.full_messages.to_s)
     assert group.may?(:admin, page), 'group be able to admin group'
 
     page.add(group, grant_access: :view).save
@@ -45,9 +42,9 @@ class Page::SharingTest < ActiveSupport::TestCase
     group = groups(:animals)
     recipients = [group]
     page = Page.create! title: 'an unkindness of ravens',
-      user: user,
-      share_with: recipients,
-      access: :view
+                        user: user,
+                        share_with: recipients,
+                        access: :view
 
     assert group.may?(:view, page), 'group must have view access'
     assert !group.may?(:admin, page), 'group must not have admin access'
@@ -63,14 +60,14 @@ class Page::SharingTest < ActiveSupport::TestCase
     assert !user_in_other_group.member_of?(group)
 
     page = Page.create! title: 'an unkindness of ravens',
-      user: user,
-      share_with: group,
-      access: :view
+                        user: user,
+                        share_with: group,
+                        access: :view
 
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
 
     page.add(other_user, access: :admin).save
-    #assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
+    # assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
     assert_equal true, other_user.may?(:admin, page), 'should have admin access'
 
@@ -84,10 +81,10 @@ class Page::SharingTest < ActiveSupport::TestCase
     share.with other_group
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
-    #assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
+    # assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
     assert_equal false,
-      page.user_participations.find_by_user_id(user_in_other_group.id).viewed?,
-      'should be marked unread'
+                 page.user_participations.find_by_user_id(user_in_other_group.id).viewed?,
+                 'should be marked unread'
   end
 
   def test_add_page
@@ -137,8 +134,8 @@ class Page::SharingTest < ActiveSupport::TestCase
     group = groups(:animals)
     page = Page.create!(title: 'title', user: creator, share_with: 'animals', access: 'admin')
     share = Page::Share.new page, creator,
-      send_notice: true,
-      send_message: "here's a page for you"
+                            send_notice: true,
+                            send_message: "here's a page for you"
     share.with group
 
     page.save!
@@ -187,8 +184,7 @@ class Page::SharingTest < ActiveSupport::TestCase
   protected
 
   def create_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     Page.create(defaults.merge(options))
   end
-
 end

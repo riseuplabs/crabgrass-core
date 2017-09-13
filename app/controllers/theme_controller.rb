@@ -15,15 +15,14 @@
 # a nice stylesheet specific error message if there is a sass syntax error.
 #
 
-
 class ThemeController < ApplicationController
   include_controllers 'common/always_perform_caching'
 
   attr_accessor :cache_css
-  caches_page :show, if: Proc.new {|ctrl| ctrl.cache_css}
+  caches_page :show, if: proc { |ctrl| ctrl.cache_css }
 
   def show
-    if stale?(@theme, file: @file,  last_modified: css_last_modified)
+    if stale?(@theme, file: @file, last_modified: css_last_modified)
       render :show, content_type: 'text/css', formats: [:css]
     end
   rescue Sass::SyntaxError => exc
@@ -41,13 +40,13 @@ class ThemeController < ApplicationController
     self.cache_css = true
     [params[:name], *params[:file]].each do |param|
       if param =~ /_refresh/
-        param.sub!('_refresh','')
+        param.sub!('_refresh', '')
         self.cache_css = false
       end
     end
     @theme = Crabgrass::Theme[params[:name]]
     @file = File.join(params[:file])
-    @theme.clear_cache(@file) unless self.cache_css
+    @theme.clear_cache(@file) unless cache_css
   end
 
   def css_last_modified
@@ -56,7 +55,6 @@ class ThemeController < ApplicationController
   helper_method :css_last_modified
 
   def css_updated_at
-    Dir.glob("app/stylesheets/**/*").map{|f| File.mtime(f)}.max
+    Dir.glob('app/stylesheets/**/*').map { |f| File.mtime(f) }.max
   end
-
 end

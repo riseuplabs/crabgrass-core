@@ -4,8 +4,8 @@ class Poll::RequestVote < Poll::Vote
 
   validates_format_of :votable_type, with: /Request/
   validates_inclusion_of :value,
-    in: [REJECT, APPROVE],
-    message: "has to be 0 (reject) or 1 (approve)"
+                         in: [REJECT, APPROVE],
+                         message: 'has to be 0 (reject) or 1 (approve)'
 
   def self.approved
     where(value: APPROVE)

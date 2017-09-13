@@ -3,10 +3,10 @@ class AddMissingUniqueIndices < ActiveRecord::Migration
   def self.up
     add_index :tags, :name, unique: true
 
-    remove_index "taggings", name: 'tag_id_index'
-    remove_index "taggings", name: "taggable_id_index"
+    remove_index 'taggings', name: 'tag_id_index'
+    remove_index 'taggings', name: 'taggable_id_index'
     add_index :taggings,
-              [:tag_id, :taggable_id, :taggable_type, :context, :tagger_id, :tagger_type],
+              %i[tag_id taggable_id taggable_type context tagger_id tagger_type],
               unique: true, name: 'taggings_idx'
   end
 
@@ -15,8 +15,8 @@ class AddMissingUniqueIndices < ActiveRecord::Migration
 
     remove_index :taggings, name: 'taggings_idx'
     add_index :taggings, :tag_id,
-      :name => "tag_id_index"
-    add_index :taggings, [:taggable_id, :taggable_type, :context],
-      :name => "taggable_id_index"
+              name: 'tag_id_index'
+    add_index :taggings, %i[taggable_id taggable_type context],
+              name: 'taggable_id_index'
   end
 end

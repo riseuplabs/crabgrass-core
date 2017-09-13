@@ -16,4 +16,3 @@ class AddPrivacyFlagsToGroups < ActiveRecord::Migration
     remove_column :groups, :accept_new_membership_requests
   end
 end
-

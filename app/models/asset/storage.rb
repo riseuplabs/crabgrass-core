@@ -7,8 +7,6 @@
 require 'fileutils'
 
 module Asset::Storage
-
-
   def self.included(base) #:nodoc:
     base.before_update :rename_file
     base.after_destroy :destroy_file
@@ -32,7 +30,7 @@ module Asset::Storage
     files = []
     if filename
       files << private_filename
-      thumbdefs.each do |name,thumbdef|
+      thumbdefs.each do |_name, thumbdef|
         files << private_filename(thumbnail_filename(thumbdef))
       end
     end
@@ -52,9 +50,7 @@ module Asset::Storage
   # Sets a new base filename, without changing the extension
   def base_filename=(value)
     return unless value
-    if read_attribute(:filename) and !value.ends_with?(ext)
-      value += ext
-    end
+    value += ext if read_attribute(:filename) and !value.ends_with?(ext)
     self.filename = value
   end
 
@@ -62,20 +58,18 @@ module Asset::Storage
   # and the files for self (which are in a versioned directory)
   def clone_files_from(orig_model)
     if is_version? and filename
-      hard_link orig_model.private_filename, self.private_filename
-      thumbdefs.each do |name, thumbdef|
-       thumbnail_filename = thumbnail_filename(thumbdef)
+      hard_link orig_model.private_filename, private_filename
+      thumbdefs.each do |_name, thumbdef|
+        thumbnail_filename = thumbnail_filename(thumbdef)
         hard_link orig_model.private_filename(thumbnail_filename),
-          self.private_filename(thumbnail_filename)
+                  private_filename(thumbnail_filename)
       end
     end
   end
 
   def hard_link(source, dest)
     FileUtils.mkdir_p(File.dirname(dest))
-    if File.exist?(source) and !File.exist?(dest)
-      FileUtils.ln(source, dest)
-    end
+    FileUtils.ln(source, dest) if File.exist?(source) and !File.exist?(dest)
   end
 
   protected
@@ -105,7 +99,7 @@ module Asset::Storage
   #
   def rename_file
     if filename_changed? and !new_record? and !uploaded_data_changed?
-      Dir.chdir( File.dirname(private_filename) ) do
+      Dir.chdir(File.dirname(private_filename)) do
         FileUtils.mv filename_was, filename
       end
     end
@@ -116,7 +110,7 @@ module Asset::Storage
     if File.exist?(temp_path)
       FileUtils.mkdir_p(File.dirname(private_filename))
       FileUtils.cp(temp_path, private_filename)
-      File.chmod(0644, private_filename)
+      File.chmod(0o644, private_filename)
     end
     true
   end
@@ -126,7 +120,7 @@ module Asset::Storage
   end
 
   def symlink_missing?
-    self.public? and !has_symlink?
+    public? and !has_symlink?
   end
   public :symlink_missing?
 
@@ -140,17 +134,15 @@ module Asset::Storage
       real_private_path = Pathname.new(private_filename).realpath.dirname
       real_public_path  = Path.public_storage.realpath
       public_to_private = real_private_path.relative_path_from(real_public_path)
-      real_public_path += "#{path.id}"
-      #puts "FileUtils.ln_s(#{public_to_private}, #{real_public_path})"
+      real_public_path += path.id.to_s
+      # puts "FileUtils.ln_s(#{public_to_private}, #{real_public_path})"
       FileUtils.ln_s(public_to_private, real_public_path)
     end
   end
 
   # removes symlink from public directory
   def remove_symlink
-    if has_symlink?
-      FileUtils.rm(File.dirname(public_filename))
-    end
+    FileUtils.rm(File.dirname(public_filename)) if has_symlink?
   end
 
   ##
@@ -172,7 +164,7 @@ module Asset::Storage
       #  hypen
       #  space
       #  period
-      #name.gsub! /[^\w\.\ ]+/, '-'
+      # name.gsub! /[^\w\.\ ]+/, '-'
 
       # don't allow the thumbnail separator
       name.gsub! /#{THUMBNAIL_SEPARATOR}/, ' '
@@ -194,5 +186,4 @@ module Asset::Storage
       File.unlink(file) if file and File.exist?(file)
     end
   end
-
 end

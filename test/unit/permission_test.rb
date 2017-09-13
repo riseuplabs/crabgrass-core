@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class PermissionTest < ActiveSupport::TestCase
-
-
   #
   # This test uses user.clear_access_cache. This is needed after a structure change because the user object has
   # in-memory cached the previous results.
@@ -22,17 +20,17 @@ class PermissionTest < ActiveSupport::TestCase
     committee = FactoryGirl.create(:committee)
     group.add_committee! committee
 
-    assert user.may?(:admin, committee), "should admin committee of my group."
+    assert user.may?(:admin, committee), 'should admin committee of my group.'
 
     # add a council
     committee_for_council = FactoryGirl.create(:committee, name: 'astrophysicists')
     group.add_council!(committee_for_council)
     council = Group.find(committee_for_council.id)
     user.clear_access_cache
-    assert !user.may?(:admin, group), "should not admin group"
+    assert !user.may?(:admin, group), 'should not admin group'
     assert user.may?(:edit, committee)
     assert user.may?(:edit, group)
-    #assert !user.may?(:admin, committee), "should not admin committee of group with council."
+    # assert !user.may?(:admin, committee), "should not admin committee of group with council."
     # ^^ i am not sure if group members should stripped of admin rights for
     # committees if there is a council. I think that it is OK if they
     # keep their admin rights to committees.
@@ -55,13 +53,13 @@ class PermissionTest < ActiveSupport::TestCase
 
     # test search
     correct_visible_groups = Group.where('type IS NULL').select do |g|
-      user.may?(:view,g)
+      user.may?(:view, g)
     end
     visible_groups = Group.with_access(user => :view).only_groups
-    correct_names = correct_visible_groups.collect{|g|g.name}.sort
+    correct_names = correct_visible_groups.collect(&:name).sort
     names         = visible_groups.pluck(:name).sort
 
-    assert names.length > 0
+    assert !names.empty?
     assert_equal correct_names, names
   end
 
@@ -74,7 +72,7 @@ class PermissionTest < ActiveSupport::TestCase
     assert !user.may?(:view, invisible), "should not view group i'm not in."
 
     # add back ability so see
-    invisible.grant_access!(public: [:view, :pester])
+    invisible.grant_access!(public: %i[view pester])
     assert user.may?(:pester, invisible)
   end
 
@@ -82,11 +80,11 @@ class PermissionTest < ActiveSupport::TestCase
     user = users(:red)
 
     correct_visible_groups = Group::Committee.all.select do |g|
-      user.may?(:view,g)
+      user.may?(:view, g)
     end
     visible_groups = Group::Committee.with_access(user => :view)
 
-    correct_names = correct_visible_groups.collect{|g|g.name}.sort
+    correct_names = correct_visible_groups.collect(&:name).sort
     names         = visible_groups.pluck(:name).sort
 
     assert_equal  correct_names, names

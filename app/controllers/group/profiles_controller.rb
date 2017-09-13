@@ -1,10 +1,8 @@
 class Group::ProfilesController < Group::BaseController
-
   before_filter :fetch_profile
   helper :profile
 
-  def edit
-  end
+  def edit; end
 
   def update
     if params[:clear_photo]
@@ -19,13 +17,11 @@ class Group::ProfilesController < Group::BaseController
   private
 
   def fetch_profile
-    if @group
-      @profile = @group.profiles.public
-    end
+    @profile = @group.profiles.public if @group
     true
   end
 
   def profile_params
-    params.require(:profile).permit :place, :summary, {:picture => [ :upload ]}
+    params.require(:profile).permit :place, :summary, picture: [:upload]
   end
 end

@@ -6,26 +6,26 @@ class MessageTest < JavascriptIntegrationTest
   fixtures :users, 'castle_gates/keys'
 
   def test_send_message
-    msg = "Here is my Message"
+    msg = 'Here is my Message'
     login users(:blue)
     send_message msg, to: 'red'
     assert_content msg
   end
 
   def test_send_message_from_discussion
-    msg = "Here is my Message"
+    msg = 'Here is my Message'
     login users(:blue)
     send_message msg, to: 'red'
     assert_content msg
-    fill_in 'post_body', with: "other message"
+    fill_in 'post_body', with: 'other message'
     click_on 'Post Message'
-    assert_selector '.private_post', text: "other message"
+    assert_selector '.private_post', text: 'other message'
     save_screenshot '/tmp/posted.png'
   end
 
   def test_edit_message
-    msg = "Here is my Message"
-    new_msg = "Now here is something new!"
+    msg = 'Here is my Message'
+    new_msg = 'Now here is something new!'
     login users(:blue)
     send_message msg, to: 'red'
     edit_comment msg, new_msg
@@ -34,7 +34,7 @@ class MessageTest < JavascriptIntegrationTest
   end
 
   def test_delete_message
-    text = "Here is my Message"
+    text = 'Here is my Message'
     blue = users(:blue)
     red = users(:red)
     login blue
@@ -60,6 +60,4 @@ class MessageTest < JavascriptIntegrationTest
     fill_in 'Message', with: msg
     click_on 'Send'
   end
-
 end
-

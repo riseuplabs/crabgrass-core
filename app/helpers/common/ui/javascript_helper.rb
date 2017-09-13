@@ -2,16 +2,13 @@
 # This way, if we need to switch javascript libraries, we can just edit the code here.
 
 module Common::Ui::JavascriptHelper
-
   ##
   ## rjs page updates
   ##
 
   def standard_update(page)
     update_alert_messages(page)
-    if alert_messages_have_errors?
-      hide_spinners(page)
-    end
+    hide_spinners(page) if alert_messages_have_errors?
   end
 
   def hide_spinners(page)
@@ -33,15 +30,15 @@ module Common::Ui::JavascriptHelper
   #
   # requires crabgrass's javascript class 'Style'
   #
-  #def set_style(selector, css)
+  # def set_style(selector, css)
   #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
   #  "Style.set('%s','%s {%s}');" % [id, selector, css]
-  #end
+  # end
   #
-  #def clear_style(selector)
+  # def clear_style(selector)
   #  id = selector.downcase.gsub(' ','_').gsub(/[^a-z0-9_]/,'') + '_dynamic_style'
   #  "Style.clear('%s');" % id
-  #end
+  # end
 
   ##
   ## request queueing
@@ -58,7 +55,7 @@ module Common::Ui::JavascriptHelper
   #
   def queued_remote_function(options)
     # open function call
-    function = "RequestQueue.add("
+    function = 'RequestQueue.add('
 
     # argument 1: url
     url_options = options[:url]
@@ -68,7 +65,7 @@ module Common::Ui::JavascriptHelper
     # argument 2: options
     js_options = build_callbacks(options)
     if method = options[:method]
-      method = "'#{method}'" unless (method.is_a?(String) and !method.index("'").nil?)
+      method = "'#{method}'" unless method.is_a?(String) and !method.index("'").nil?
       js_options['method'] = method
     end
     javascript_options = options_for_javascript(js_options)
@@ -84,19 +81,17 @@ module Common::Ui::JavascriptHelper
       end
       parameters << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
     end
-    if parameters
-      function << ", '#{escape_javascript(parameters)}'"
-    end
+    function << ", '#{escape_javascript(parameters)}'" if parameters
 
     # close function call
-    function << ")"
+    function << ')'
 
     # after, before or condition
     function = "#{options[:before]}; #{function}" if options[:before]
     function = "#{function}; #{options[:after]}"  if options[:after]
     function = "if (#{options[:condition]}) { #{function}; }" if options[:condition]
 
-    return function
+    function
   end
 
   ##
@@ -106,7 +101,7 @@ module Common::Ui::JavascriptHelper
   def dom_loaded
     concat "document.observe('dom:loaded',function(){"
     yield
-    concat "});"
+    concat '});'
   end
 
   ##
@@ -114,33 +109,34 @@ module Common::Ui::JavascriptHelper
   ##
 
   # produces javascript to hide the given id or object
-  def hide(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+  def hide(id, extra = nil)
+    id = dom_id(id, extra) if id.is_a?(ActiveRecord::Base)
     "$('%s').hide();".html_safe % id
   end
 
   # produces javascript to show the given id or object
-  def show(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+  def show(id, extra = nil)
+    id = dom_id(id, extra) if id.is_a?(ActiveRecord::Base)
     "$('%s').show();".html_safe % id
   end
 
   # produces javascript to show the given id or object
-  def toggle(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+  def toggle(id, extra = nil)
+    id = dom_id(id, extra) if id.is_a?(ActiveRecord::Base)
     "$('%s').toggle();".html_safe % id
   end
 
-  def remove(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+  def remove(id, extra = nil)
+    id = dom_id(id, extra) if id.is_a?(ActiveRecord::Base)
     "$('%s').remove();".html_safe % id
   end
 
   def hide_spinner(id)
-    "$('%s').hide();" % spinner_id(id)
+    format("$('%s').hide();", spinner_id(id))
   end
+
   def show_spinner(id)
-    "$('%s').show();" % spinner_id(id)
+    format("$('%s').show();", spinner_id(id))
   end
 
   def activate_panel_row(item, load_url_function)
@@ -162,22 +158,22 @@ module Common::Ui::JavascriptHelper
   #
 
   def activate_sliding_row(url)
-    #left_domid = 'content'
-    #right_domid = 'sliding-item'
-    #right_path = url
-    #"activateSlidingRow({domid:'%s',path:window.location.pathname}, {domid:'%s',path:'%s'})" %
+    # left_domid = 'content'
+    # right_domid = 'sliding-item'
+    # right_path = url
+    # "activateSlidingRow({domid:'%s',path:window.location.pathname}, {domid:'%s',path:'%s'})" %
     #  [left_domid, right_domid, right_path]
 
-    "window.location.href = '%s'" % url
+    format("window.location.href = '%s'", url)
   end
 
   # we'll hopefully migrate to jquery soon - so i don't feel like
   # cleaning this mess up now.
   def tab_remote_function(options, tab = nil)
     options.reverse_merge! method: :get,
-      success: ''
+                           success: ''
     options[:success] += 'tabLink.removeClassName("spinner_icon icon");'
-    return <<-EOJS
+    <<-EOJS
       var tabLink = #{get_dom_element(tab, :tab)};
       #{remote_function(options)};
       activateTabLink(tabLink, true);
@@ -193,7 +189,7 @@ module Common::Ui::JavascriptHelper
       "$('#{dom_id(identifier, context)}')"
     when nil
       '$(this)'
-    when /^\$\(/  # already uses prototype
+    when /^\$\(/ # already uses prototype
       identifier
     when String
       "$('#{identifier}')"
@@ -206,9 +202,7 @@ module Common::Ui::JavascriptHelper
 
   def replace_class_name(element_id, old_class, new_class)
     if element_id.is_a? String
-      if element_id != 'this'
-        element_id = "$('" + element_id + "')"
-      end
+      element_id = "$('" + element_id + "')" if element_id != 'this'
     else
       element_id = "$('" + dom_id(element_id) + "')"
     end
@@ -216,17 +210,13 @@ module Common::Ui::JavascriptHelper
   end
 
   def add_class_name(element_id, class_name)
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    "$('%s').addClassName('%s');" % [element_id, class_name]
+    element_id = dom_id(element_id) unless element_id.is_a? String
+    format("$('%s').addClassName('%s');", element_id, class_name)
   end
 
   def remove_class_name(element_id, class_name)
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    "$('%s').removeClassName('%s');" % [element_id, class_name]
+    element_id = dom_id(element_id) unless element_id.is_a? String
+    format("$('%s').removeClassName('%s');", element_id, class_name)
   end
 
   ##
@@ -235,11 +225,11 @@ module Common::Ui::JavascriptHelper
 
   def replace_html(element_id, html)
     element_id = dom_id(element_id) unless element_id.is_a?(String)
-    %[$('%s').update(%s);] % [element_id, html.inspect]
+    format(%[$('%s').update(%s);], element_id, html.inspect)
   end
 
   def dom_loaded_javascript_tag(javascript)
-    javascript_tag %Q[
+    javascript_tag %[
       document.observe('dom:loaded', function() {
         #{javascript}
       })
@@ -260,7 +250,7 @@ module Common::Ui::JavascriptHelper
   # add to text area or input field onkeypress attribute
   # to keep Enter key from submiting the form
   def eat_enter
-    "return(!enterPressed(event));"
+    'return(!enterPressed(event));'
   end
 
   # used with text input elements that have some value set which acts like help text
@@ -279,8 +269,7 @@ module Common::Ui::JavascriptHelper
 
   # toggle all checkboxes off and then toggle a subset of them on
   # selectors are css expressions
-  #def checkboxes_subset_function(all_selector, subset_selector)
+  # def checkboxes_subset_function(all_selector, subset_selector)
   #  "toggleAllCheckboxes(false, '#{all_selector}'); toggleAllCheckboxes(true, '#{subset_selector}')"
-  #end
+  # end
 end
-

@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class Me::RequestsControllerTest < ActionController::TestCase
-
-
-
   def test_destroy
     login_as users(:blue)
     request = RequestToJoinUs.created_by(users(:blue)).first
@@ -18,10 +15,10 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve_friend_request
-    @user  = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
     requesting = FactoryGirl.create(:user)
     request = RequestToFriend.create created_by: requesting,
-      recipient: @user
+                                     recipient: @user
     login_as @user
     assert_difference 'Activity.count', 2 do
       xhr :post, :update, id: request.id, mark: 'approve'
@@ -30,13 +27,13 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve_group_request
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user! @user
     login_as @user
     requesting = FactoryGirl.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
-      recipient: @group
+                                      recipient: @group
     assert_difference 'Activity.count', 2 do
       xhr :post, :update, id: request.id, mark: 'approve'
     end
@@ -44,13 +41,13 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_group_request
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user! @user
     login_as @user
     requesting = FactoryGirl.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
-      recipient: @group
+                                      recipient: @group
     assert_difference 'RequestToJoinYou.count', -1 do
       xhr :delete, :destroy, id: request.id
     end
@@ -58,7 +55,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_other_requests_hidden
-    @user  = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
     login_as @user
     assert_not_found do
       get :show, id: Request.last

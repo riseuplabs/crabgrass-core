@@ -1,13 +1,12 @@
 class User::Finder
-
   # There can only be one scope per path.
   # The keys are the path parts that identify the scope
   # The values need to match methods that can be called on @user.
-  PATH_SCOPES = {contacts: :friends, peers: :peers}
+  PATH_SCOPES = { contacts: :friends, peers: :peers }.freeze
 
   # queries take a parameter and there could be multiple in a single path
   # These will be called as methods in the User::Finder.
-  QUERIES = ['search']
+  QUERIES = ['search'].freeze
 
   def initialize(user, path)
     @user = user
@@ -16,7 +15,7 @@ class User::Finder
 
   def find
     conditions.each do |method, args|
-      self.send method, args
+      send method, args
     end
     @search_results || find_without_search_term
   end
@@ -31,14 +30,13 @@ class User::Finder
 
   def queries
     query = nil
-      @path.split('/').inject(Hash.new) do |hash, part|
+    @path.split('/').each_with_object({}) do |part, hash|
       if query.present?
         hash[query] = part
         query = nil
       else
         query = part if QUERIES.include?(part)
       end
-      hash
     end
   end
 
@@ -57,7 +55,7 @@ class User::Finder
   end
 
   def scope_method
-    @path.split('/').map{|part| PATH_SCOPES[part.to_sym]}.compact.first
+    @path.split('/').map { |part| PATH_SCOPES[part.to_sym] }.compact.first
   end
 
   def find_without_search_term
@@ -80,6 +78,6 @@ class User::Finder
   end
 
   def access
-    {@user => :view}
+    { @user => :view }
   end
 end

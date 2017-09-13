@@ -6,8 +6,6 @@ require 'test_helper'
 #
 
 class Wiki::LockingTest < ActiveSupport::TestCase
-
-
   def setup
     @user = users(:blue)
     @different_user = users(:red)
@@ -15,14 +13,14 @@ class Wiki::LockingTest < ActiveSupport::TestCase
 
   def test_wiki_after_locking
     @wiki = Wiki.new
-    assert_difference "Wiki.count" do
-      assert_difference "Wiki::Lock.count" do
+    assert_difference 'Wiki.count' do
+      assert_difference 'Wiki::Lock.count' do
         assert_nothing_raised do
           @wiki.lock!(:document, @user)
         end
       end
     end
-    assert !@wiki.new_record?, "wiki should be saved"
+    assert !@wiki.new_record?, 'wiki should be saved'
     lock = Wiki::Lock.find_by_wiki_id(@wiki.id)
     refute_nil lock, 'lock should exist'
     lock_user = lock.locks[:document][:by]
@@ -31,12 +29,12 @@ class Wiki::LockingTest < ActiveSupport::TestCase
 
   def test_lock_missing_section
     # currently, locking sections that don't exist just fails silently:
-    #assert_raises(Wiki::LockedError, "should raise LockedError when locking a non-existant section") do
+    # assert_raises(Wiki::LockedError, "should raise LockedError when locking a non-existant section") do
     #  @wiki.lock! 'bad-nonexistant-section-header', @user
-    #end
-    #assert_raises(Wiki::LockedError, "should raise LockedError when unlocking a non-existant section") do
+    # end
+    # assert_raises(Wiki::LockedError, "should raise LockedError when unlocking a non-existant section") do
     #  @wiki.unlock! 'bad-nonexistant-section-header', @user
-    #end
+    # end
   end
 
   def test_double_lock
@@ -55,21 +53,16 @@ class Wiki::LockingTest < ActiveSupport::TestCase
 
     # now a different user goes and modifies the section titles, bypassing locks
     body = @wiki.body.sub('section two', 'section 2')
-    @wiki.update_attributes!({user: @different_user, body: body, body_html: nil})
+    @wiki.update_attributes!(user: @different_user, body: body, body_html: nil)
 
-    "should be no locks".tap do |msg|
+    'should be no locks'.tap do |msg|
       assert @wiki.sections_locked_for(@user).empty?, msg
       assert @wiki.sections_locked_for(@different_user).empty?, msg
     end
 
-    "should have not section locked for either user".tap do |msg|
-      assert @wiki.sections_locked_for(@user).empty?, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
-    end
-
-    "should have all sections open for either user".tap do |msg|
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user), msg
+    'should have all sections open for either user'.tap do |msg|
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -78,14 +71,9 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! 'section-two', @user
     @wiki.body = @wiki.body.sub('section two', 'section 2')
 
-    "should have no section locked for either user".tap do |msg|
-      assert @wiki.sections_locked_for(@user).empty?, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
-    end
-
-    "should have all sections open for either user".tap do |msg|
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user), msg
+    'should have all sections open for either user'.tap do |msg|
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -94,10 +82,10 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! 'section-two', @user
 
     assert_equal 'section-two', @wiki.section_edited_by(@user),
-      "section-two is being edited by user"
+                 'section-two is being edited by user'
 
     assert_nil @wiki.section_edited_by(@different_user),
-      "should be nil from section_edited_by for a section_edited_by user"
+               'should be nil from section_edited_by for a section_edited_by user'
 
     #
     # from @user's point of view
@@ -136,12 +124,12 @@ class Wiki::LockingTest < ActiveSupport::TestCase
 
       # current behavior is to silently ignore
       # attempts to unlock something you are not allowed to.
-      #assert_raises(Wiki::SectionLockedError, "should raise Wiki::SectionLockedError when unlocking #{section_heading.inspect} section") do
+      # assert_raises(Wiki::SectionLockedError, "should raise Wiki::SectionLockedError when unlocking #{section_heading.inspect} section") do
       #  @wiki.release_my_lock! section_heading, @user
-      #end
+      # end
     end
 
-    "should have the neighborhing sections open".tap do |msg|
+    'should have the neighborhing sections open'.tap do |msg|
       assert @wiki.sections_open_for(@different_user).include?('section-one'), msg
       assert !@wiki.sections_locked_for(@different_user).include?('section-one'), msg
       assert @wiki.sections_open_for(@different_user).include?('second-oversection'), msg
@@ -164,13 +152,13 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! 'section-one', @different_user
 
     assert @wiki.sections_open_for(@user).include?('section-two'),
-      "should appear to user that 'section-two' is open"
+           "should appear to user that 'section-two' is open"
 
     assert !@wiki.sections_open_for(@user).include?('section-one'),
-      "should not appear to user that 'section-one' is open"
+           "should not appear to user that 'section-one' is open"
 
     assert @wiki.sections_open_for(@different_user).include?('section-one'),
-      "should appear to the different user that 'section-one' is open"
+           "should appear to the different user that 'section-one' is open"
   end
 
   def test_lock_then_unlock
@@ -178,14 +166,13 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! 'section-two', @user
     @wiki.release_my_lock! 'section-two', @user
 
-    "should appear the same to that user and to a different user".tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user), msg
-      assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user), msg
+    'should appear the same to that user and to a different user'.tap do |msg|
+      assert_same_sections_open_for @user, @different_user, msg
+      assert_same_sections_locked_for @user, @different_user, msg
     end
 
-    "should appear to a different user that all sections can be edited and none are locked".tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
+    'should appear to a different user that all sections can be edited and none are locked'.tap do |msg|
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
@@ -193,61 +180,57 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki = wikis(:multi_section)
     @wiki.lock! :document, @user
 
-    "should appear that this user is a locker_of document".tap do |msg|
+    'should appear that this user is a locker_of document'.tap do |msg|
       assert_equal @user, @wiki.locker_of(:document), msg
     end
 
-    "should appear that this user is a locker_of a subsection".tap do |msg|
+    'should appear that this user is a locker_of a subsection'.tap do |msg|
       assert_equal @user, @wiki.locker_of('section-one'), msg
     end
 
-    "should appear to the same user that document is open for editing".tap do |msg|
+    'should appear to the same user that document is open for editing'.tap do |msg|
       assert @wiki.section_open_for?(:document, @user), msg
     end
 
-    "should appear to the same user that a document subsection is open for editing".tap do |msg|
+    'should appear to the same user that a document subsection is open for editing'.tap do |msg|
       assert @wiki.section_open_for?('section-one', @user), msg
     end
 
-    "should appear to a different user that document is locked for editing".tap do |msg|
+    'should appear to a different user that document is locked for editing'.tap do |msg|
       assert @wiki.section_locked_for?(:document, @different_user), msg
     end
 
-    "should appear to a different user that a document subsection is locked for editing".tap do |msg|
+    'should appear to a different user that a document subsection is locked for editing'.tap do |msg|
       assert @wiki.section_locked_for?('section-one', @different_user), msg
     end
 
-    "should appear to that user that all sections can be edited and none are locked".tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@user).empty?, msg
+    'should appear to that user that all sections can be edited and none are locked'.tap do |msg|
+      assert_all_sections_open_for @user, msg
     end
 
-    "should appear to a different user that no sections can be edited and all are locked".tap do |msg|
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections, msg
+    'should appear to a different user that no sections can be edited and all are locked'.tap do |msg|
+      assert_all_sections_locked_for @different_user, msg
     end
 
-    "should raise an exception (and keep the same state) when a different user tries to lock the document".tap do |msg|
+    'should raise an exception (and keep the same state) when a different user tries to lock the document'.tap do |msg|
       assert_raises(Wiki::SectionLockedError, msg) do
         @wiki.lock! :document, @different_user
       end
 
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_locked_for @different_user, msg
     end
 
-    "should raise an exception (and keep the same state) when a different user tries to lock a section".tap do |msg|
+    'should raise an exception (and keep the same state) when a different user tries to lock a section'.tap do |msg|
       assert_raises(Wiki::SectionLockedError, msg) do
         @wiki.lock! 'section-one', @different_user
       end
 
-      assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user), msg
-      assert @wiki.sections_open_for(@different_user).empty?, msg
-      assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user), msg
+      assert_all_sections_open_for @user, msg
+      assert_all_sections_locked_for @different_user, msg
     end
 
-    "should raise a Wiki::OtherSectionLockedError if that user tries to lock another section".tap do |msg|
+    'should raise a Wiki::OtherSectionLockedError if that user tries to lock another section'.tap do |msg|
       assert_raises(Wiki::OtherSectionLockedError, msg) do
         @wiki.lock! 'section-one', @user
       end
@@ -259,24 +242,55 @@ class Wiki::LockingTest < ActiveSupport::TestCase
     @wiki.lock! :document, @user
     @wiki.release_my_lock! :document, @user
 
-    "should appear that no user is a locker_of document".tap do |msg|
+    'should appear that no user is a locker_of document'.tap do |msg|
       assert_nil @wiki.locker_of(:document), msg
     end
 
-    "should appear that no user is a locker_of a subsection".tap do |msg|
+    'should appear that no user is a locker_of a subsection'.tap do |msg|
       assert_nil @wiki.locker_of('section-one'), msg
     end
 
-    "should appear the same to that user and to a different user".tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user), msg
-      assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user), msg
+    'should appear the same to that user and to a different user'.tap do |msg|
+      assert_same_sections_open_for @user, @different_user, msg
+      assert_same_sections_locked_for @user, @different_user, msg
     end
 
-    "should appear to a different user that all sections can be edited and none are locked".tap do |msg|
-      assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections, msg
-      assert @wiki.sections_locked_for(@different_user).empty?, msg
+    'should appear to a different user that all sections can be edited and none are locked'.tap do |msg|
+      assert_all_sections_open_for @different_user, msg
     end
   end
 
-end
+  protected
 
+  def assert_all_sections_open_for(user, msg)
+    assert @wiki.sections_locked_for(user).empty?, msg
+    assert_same_sections @wiki.all_sections,
+      @wiki.sections_open_for(user),
+      msg
+  end
+
+  def assert_all_sections_locked_for(user, msg)
+    assert @wiki.sections_open_for(user).empty?, msg
+    assert_same_sections @wiki.all_sections,
+      @wiki.sections_locked_for(user),
+      msg
+  end
+
+  def assert_same_sections_open_for(user, other, msg)
+    assert_same_sections @wiki.sections_open_for(user),
+      @wiki.sections_open_for(other),
+      msg
+  end
+
+  def assert_same_sections_locked_for(user, other, msg)
+    assert_same_sections @wiki.sections_locked_for(user),
+      @wiki.sections_locked_for(other),
+      msg
+  end
+
+  def assert_same_sections(collection, other, msg)
+    assert_equal collection.map(&:to_s).sort,
+      other.map(&:to_s).sort,
+      msg
+  end
+end

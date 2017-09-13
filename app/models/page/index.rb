@@ -13,8 +13,8 @@ module Page::Index
 
   included do
     has_one :page_terms,
-      class_name: 'Page::Terms',
-      dependent: :destroy
+            class_name: 'Page::Terms',
+            dependent: :destroy
     before_save :update_page_terms_in_background
   end
 
@@ -39,20 +39,20 @@ module Page::Index
     #  * prefix group ids with 8
     #  * 0001 means the page is marked public.
     #
-    def access_ids_for(args={})
+    def access_ids_for(args = {})
       id_array = []
-      id_array += ["0001"] if args[:public]
-      id_array += args[:group_ids].collect {|id| encode_group_id(id)} if args[:group_ids]
-      id_array += args[:user_ids].collect  {|id| encode_user_id(id)} if args[:user_ids]
-      return id_array
+      id_array += ['0001'] if args[:public]
+      id_array += args[:group_ids].collect { |id| encode_group_id(id) } if args[:group_ids]
+      id_array += args[:user_ids].collect  { |id| encode_user_id(id) } if args[:user_ids]
+      id_array
     end
 
     def encode_user_id(id)
-      "%04d" % "1#{id}"
+      format('%04d', "1#{id}")
     end
 
     def encode_group_id(id)
-      "%04d" % "8#{id}"
+      format('%04d', "8#{id}")
     end
 
     # converts a tag list array into a tag list array suitable for searching a
@@ -81,7 +81,7 @@ module Page::Index
         s = s.gsub(/[\s\.\+]/, '_') # characters that should be skipped by CGI.escape
         s = CGI.escape(s)
         s = s.gsub('%', 'QQ')
-        ("%4s" % s).gsub(/\s|^(\d)/,'_\1')
+        format('%4s', s).gsub(/\s|^(\d)/, '_\1')
       end
     end
 
@@ -97,9 +97,7 @@ module Page::Index
         end
       end
     end
-
   end
-
 
   def update_page_terms_in_background
     if false # backgroundrb_running?
@@ -109,11 +107,11 @@ module Page::Index
       begin
         # first, immediately update access, because that needs to always be up to date.
         Page.with_deltas_disabled do
-          terms = (self.page_terms || self.create_page_terms)
-          PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
+          terms = (page_terms || create_page_terms)
+          PageTerms.update_all(format("access_ids = '%s'", access_ids), format('id = %i', terms.id))
         end
         # fire off background task
-        MiddleMan.worker(:indexing_worker).async_update_page_terms(arg: self.id)
+        MiddleMan.worker(:indexing_worker).async_update_page_terms(arg: id)
       rescue BackgrounDRb::NoServerAvailable => err
         logger.error "Warning: #{err}; performing synchronous update of page index"
         update_page_terms
@@ -126,13 +124,13 @@ module Page::Index
   end
 
   def update_page_terms
-    terms = (self.page_terms ||= self.build_page_terms)
+    terms = (self.page_terms ||= build_page_terms)
 
     # attributes
     %w[updated_at created_at created_by_id updated_by_id
-      created_by_login updated_by_login owner_name resolved
-      flow contributors_count stars_count].each do |field|
-      terms.send("#{field}=",self.send(field))
+       created_by_login updated_by_login owner_name resolved
+       flow contributors_count stars_count].each do |field|
+      terms.send("#{field}=", send(field))
     end
 
     # text
@@ -143,23 +141,21 @@ module Page::Index
     terms.comments  = comment_terms
 
     # meta
-    terms.page_type = self.type
-    terms.media = self.media_flags()
+    terms.page_type = type
+    terms.media = media_flags
 
     # access control
-    terms.access_ids = self.access_ids()
-    if self.owner_type == 'User'
-      terms.owner_id = Page.encode_user_id(self.owner_id)
-    else
-      terms.owner_id = Page.encode_group_id(self.owner_id)
-    end
+    terms.access_ids = access_ids
+    terms.owner_id = if owner_type == 'User'
+                       Page.encode_user_id(owner_id)
+                     else
+                       Page.encode_group_id(owner_id)
+                     end
 
     # additional hook for subclasses
     custom_page_terms(terms)
 
-    if !self.new_record? and terms.changed?
-      terms.save!
-    end
+    terms.save! if !new_record? and terms.changed?
   end
 
   # :nodoc:
@@ -182,29 +178,27 @@ module Page::Index
     ret
   end
 
-
   # Returns the text to be included in the body of the page index.
   # Subclasses of Page should override this method as appropriate.
   # For example WikiPage should return wiki.body, and TaskListPage
   # will merge all of the tasks associated with it.
   # Defaults to empty string.
   def body_terms
-    ""
+    ''
   end
 
   # Returns text that should be weighted low.
   # Defaults to all the comments, but can be overriden by the page subclass.
   def comment_terms
-    discussion ? discussion.posts.visible.includes(:user) * "\n" : ""
+    discussion ? discussion.posts.visible.includes(:user) * "\n" : ''
   end
 
   # Returns the text that should be included with the body in the page index.
   # Defaults to the page name, title, and summary.
   def summary_terms
-    [name, title, summary] * "\n"
+    [name, title, summary].join("\n")
   end
 
   # to be overriden by subclasses
   def custom_page_terms(terms) end
-
 end

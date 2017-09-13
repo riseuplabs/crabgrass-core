@@ -1,5 +1,4 @@
 module WikisPermission
-
   protected
 
   def may_show_wiki?(wiki = @wiki)
@@ -27,6 +26,4 @@ module WikisPermission
   def may_show_wiki_diff?(version = @version)
     version.previous and may_edit_wiki?(version.wiki)
   end
-
 end
-

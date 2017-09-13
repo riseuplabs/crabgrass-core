@@ -1,0 +1,19 @@
+AllCops:
+  Exclude:
+    - 'bin/*'
+  DisplayCopNames: true
+Layout/IndentHeredoc:
+  EnforcedStyle: active_support
+Style/AndOr:
+  AutoCorrect: false
+Style/EmptyElse:
+  AutoCorrect: false
+Style/RaiseArgs:
+  AutoCorrect: false
+Metrics/LineLength:
+  Exclude:
+    - 'Vagrantfile'
+    - 'config/initializers/notification.rb'
+    - 'config/deploy.rb'
+    - 'config/permissions.rb'
+    - 'lib/**/*'

@@ -1,16 +1,13 @@
-=begin
-
-=end
+#
 
 class ProfileLocation < ActiveRecord::Base
-
   self.table_name = 'locations'
 
   belongs_to  :profile
 
   before_save :set_geocode
-  after_save {|record| record.profile.save if record.profile}
-  after_destroy {|record| record.profile.save if record.profile}
+  after_save { |record| record.profile.save if record.profile }
+  after_destroy { |record| record.profile.save if record.profile }
 
   validate :part_of_address_is_present
 
@@ -23,12 +20,12 @@ class ProfileLocation < ActiveRecord::Base
   end
 
   def lat
-    latitude = self.geocode.split(',').first
+    latitude = geocode.split(',').first
     latitude.blank? ? nil : latitude.to_f
   end
 
   def long
-    longitude = self.geocode.split(',').last
+    longitude = geocode.split(',').last
     longitude.blank? ? nil : longitude.to_f
   end
 
@@ -37,18 +34,17 @@ class ProfileLocation < ActiveRecord::Base
   end
 
   def self.options
-    [:Home, :Work, :School, :Other].to_localized_select
+    %i[Home Work School Other].to_localized_select
   end
 
   def icon
     'world'
   end
 
-
   protected
 
   def part_of_address_is_present
-    errors.add(nil, "The address can not be entirely blank") if (street.to_s + city.to_s + state.to_s + postal_code.to_s + country_name.to_s).strip.blank?
+    errors.add(nil, 'The address can not be entirely blank') if (street.to_s + city.to_s + state.to_s + postal_code.to_s + country_name.to_s).strip.blank?
   end
 
   # turns an address string into an array of lat/long strings
@@ -56,7 +52,7 @@ class ProfileLocation < ActiveRecord::Base
     host = 'rpc.geocoder.us'
     path = '/service/csv?address='
 
-    response = Net::HTTP.get_response(host, path + ERB::Util.url_encode(self.geocode_address))
+    response = Net::HTTP.get_response(host, path + ERB::Util.url_encode(geocode_address))
     location = response.body.split(',')[0..1]
     location
   end
@@ -64,5 +60,4 @@ class ProfileLocation < ActiveRecord::Base
   def set_geocode
     self.geocode = get_geocode_address.join(',') if @@geocode_addresses
   end
-
 end

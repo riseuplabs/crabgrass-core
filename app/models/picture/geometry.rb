@@ -17,34 +17,33 @@
 # (2) Array, like [50,0,0,0]
 # (3) String, like "50-0-0-0"
 #
-  #
-  # Picture::Geometry class
-  #
-  # We ensure that the attributes consists only of integers or nil.
-  # This is important, because we might have got the geometry source
-  # from a url.
-  #
+#
+# Picture::Geometry class
+#
+# We ensure that the attributes consists only of integers or nil.
+# This is important, because we might have got the geometry source
+# from a url.
+#
 class Picture::Geometry
-
   attr_accessor :min_width, :max_width, :min_height, :max_height
 
-  def initialize(source=nil)
+  def initialize(source = nil)
     set_limits *limits_from_source(source)
   end
 
   def self.[](geo)
     if geo.class == self
-      return geo
+      geo
     else
-      return new(geo)
+      new(geo)
     end
   end
 
-  def limits_from_source(source=nil)
+  def limits_from_source(source = nil)
     case source
     when Hash
       [source[:min_width], source[:max_width], source[:min_height], source[:max_height]]
-    when  Array
+    when Array
       source
     when String
       source.split('-')
@@ -53,19 +52,19 @@ class Picture::Geometry
     end
   end
 
-  def set_limits(minw=nil, maxw=nil, minh=nil, maxh=nil)
+  def set_limits(minw = nil, maxw = nil, minh = nil, maxh = nil)
     self.min_width  = minw.to_i if minw
-    self.min_width  = nil       if self.min_width == 0
+    self.min_width  = nil       if min_width == 0
     self.max_width  = maxw.to_i if maxw
-    self.max_width  = nil       if self.max_width == 0
+    self.max_width  = nil       if max_width == 0
     self.min_height = minh.to_i if minh
-    self.min_height = nil       if self.min_height == 0
+    self.min_height = nil       if min_height == 0
     self.max_height = maxh.to_i if maxh
-    self.max_height = nil       if self.max_height == 0
+    self.max_height = nil       if max_height == 0
   end
 
   def empty?
-    not any?
+    !any?
   end
 
   def any?
@@ -77,7 +76,7 @@ class Picture::Geometry
   end
 
   def to_a
-    empty? ? [] : [min_width||0, max_width||0, min_height||0, max_height||0]
+    empty? ? [] : [min_width || 0, max_width || 0, min_height || 0, max_height || 0]
   end
 
   #
@@ -111,7 +110,7 @@ class Picture::Geometry
 
   def gm_crop_param
     if max_width or max_height
-      "%sx%s" % [max_width||10000000, max_height||10000000]
+      format('%sx%s', max_width || 10_000_000, max_height || 10_000_000)
     else
       nil
     end
@@ -131,21 +130,21 @@ class Picture::Geometry
 
   def scale_by_width(old_width, new_width)
     if old_width < new_width
-      "%sx^" % new_width # bigger
+      format('%sx^', new_width) # bigger
     elsif old_width == new_width
       nil
     else
-      "%sx" % new_width  # smaller
+      format('%sx', new_width)  # smaller
     end
   end
 
   def scale_by_height(old_height, new_height)
     if old_height < new_height
-      "x%s^" % new_height # bigger
+      format('x%s^', new_height) # bigger
     elsif old_height == new_height
       nil
     else
-      "x%s" % new_height  # smaller
+      format('x%s', new_height)  # smaller
     end
   end
 end

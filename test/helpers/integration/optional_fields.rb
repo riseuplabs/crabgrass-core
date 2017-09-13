@@ -1,5 +1,4 @@
 module OptionalFields
-
   def try_to_fill_in(locator, options = {})
     return if options[:with].blank?
     finder_options = options.except(:with, :fill_options)

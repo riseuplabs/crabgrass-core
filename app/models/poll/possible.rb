@@ -1,16 +1,18 @@
 class Poll::Possible < ActiveRecord::Base
   self.table_name = 'possibles'
   model_name.instance_variable_set(:@i18n_key, 'possible')
-  def to_partial_path; 'possibles/possible'; end
+  def to_partial_path
+    'possibles/possible'
+  end
 
   acts_as_list
   belongs_to :poll
   has_many :votes, dependent: :destroy do
     # disable votes collection builder, since we want the vote to take it's type from the poll
-    %w(build create create!).each do |method_name|
-      define_method(method_name) {
+    %w[build create create!].each do |method_name|
+      define_method(method_name) do
         raise "Don't call 'possible.votes.#{method_name}' -- use 'votable.votes.#{method_name}' instead"
-      }
+      end
     end
   end
 
@@ -20,20 +22,19 @@ class Poll::Possible < ActiveRecord::Base
   # returns a color that is very green if the score is high, white if it is close to zero,
   # and very red if the score is low.
   def color
-    rgb = {'r'=>255, 'g'=>255, 'b'=>255}
+    rgb = { 'r' => 255, 'g' => 255, 'b' => 255 }
     offset = (15 * (score.abs > 17 ? 17 : score.abs))
     if score < 0
-       rgb['g'] = rgb['g'] - offset;
-       rgb['b'] = rgb['b'] - offset;
+      rgb['g'] = rgb['g'] - offset
+      rgb['b'] = rgb['b'] - offset
     elsif score > 0
-       rgb['r'] = rgb['r'] - offset;
-       rgb['b'] = rgb['b'] - offset;
+      rgb['r'] = rgb['r'] - offset
+      rgb['b'] = rgb['b'] - offset
     else
-      return "efefef"
+      return 'efefef'
     end
-    "%02x%02x%02x" % [ rgb['r'], rgb['g'], rgb['b'] ]
+    format('%02x%02x%02x', rgb['r'], rgb['g'], rgb['b'])
   end
-
 
   protected
 
@@ -49,10 +50,9 @@ class Poll::Possible < ActiveRecord::Base
         scores[vote.value] += 1
       end
     end
-    scores.each do |weight,count|
+    scores.each do |weight, count|
       @score += weight * count
     end
     @score
   end
-
 end

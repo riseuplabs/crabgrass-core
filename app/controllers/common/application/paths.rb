@@ -4,7 +4,6 @@
 #
 
 module Common::Application::Paths
-
   def self.included(base)
     base.class_eval do
       helper_method :entity_path
@@ -36,25 +35,25 @@ module Common::Application::Paths
 
   def entity_path(entity)
     if entity.is_a? String
-      "/"+name
+      '/' + name
     else
-      "/"+entity.name
+      '/' + entity.name
     end
   end
-  alias_method :user_path, :entity_path
-  alias_method :group_path, :entity_path
+  alias user_path entity_path
+  alias group_path entity_path
 
   def entity_url(entity)
     urlize entity_path(entity)
   end
-  alias_method :user_url, :entity_url
-  alias_method :group_url, :entity_url
+  alias user_url entity_url
+  alias group_url entity_url
 
   #
   # allow direct paths that bypass the dispatcher.
   #
-  def direct_group_path(group,options={})
-    "/groups/" + group.name + build_query_string(options)
+  def direct_group_path(group, options = {})
+    '/groups/' + group.name + build_query_string(options)
   end
 
   ##
@@ -66,24 +65,24 @@ module Common::Application::Paths
   # this is not a resource route, but we create paths methods as if it was for consistency.
   #
 
-  def new_page_path(options={})
+  def new_page_path(options = {})
     options[:owner] ||= params[:owner] || :me
     custom_create_path(options) || page_creation_path(options)
   end
-  alias_method :create_page_path, :new_page_path
+  alias create_page_path new_page_path
 
   #
   # if page definition has a custom constroller, return a path for it.
   # otherwise, returns nil and modifies options hash as needed.
   #
-  def custom_create_path(options={})
+  def custom_create_path(options = {})
     if (page_type = options.delete(:page_type)).present?
       if (controller = page_type.definition.creation_controller).present?
         url_for controller: "/#{controller}", action: :new,
-          owner: options[:owner]
+                owner: options[:owner]
       else
         options[:type] = page_type.url
-        return nil
+        nil
       end
     end
   end
@@ -115,27 +114,26 @@ module Common::Application::Paths
   #
   # pretty page path
   #
-  def page_path(page, options={})
-
+  def page_path(page, options = {})
     # (1) context
-    if page.owner_name
-      path = [page.owner_name, page.name_url]
-    elsif page.created_by_login
-      # we can't use page.name_url, because there might be multiple pages
-      # with the same name created by the same user.
-      path = [page.created_by_login, page.friendly_url]
-    else
-      # there is some data corruption. not sure what to do.
-      path = ['page', page.friendly_url]
-    end
+    path = if page.owner_name
+             [page.owner_name, page.name_url]
+           elsif page.created_by_login
+             # we can't use page.name_url, because there might be multiple pages
+             # with the same name created by the same user.
+             [page.created_by_login, page.friendly_url]
+           else
+             # there is some data corruption. not sure what to do.
+             ['page', page.friendly_url]
+           end
 
     # (2) controller
     controller = options.delete(:controller)
     if controller and Rails.env == 'development' and controller.is_a?(Symbol)
-       cntr = page.controller + '_' + controller.to_s
-       unless page.controllers.include?(cntr)
-        raise 'controller %s not defined for page type %s' % [cntr, page.class.name]
-      end
+      cntr = page.controller + '_' + controller.to_s
+      unless page.controllers.include?(cntr)
+        raise format('controller %s not defined for page type %s', cntr, page.class.name)
+     end
     end
     path << controller
 
@@ -144,7 +142,7 @@ module Common::Application::Paths
 
     # (4) action
     action = options.delete(:action)
-    path << action if [:sort, :new, :edit].include? action.to_sym
+    path << action if %i[sort new edit].include? action.to_sym
 
     anchor = options.delete :anchor
     path_string = '/' + path.select(&:present?).join('/')
@@ -153,11 +151,11 @@ module Common::Application::Paths
     URI.encode(path_string)
   end
 
-  def page_url(page, options={})
+  def page_url(page, options = {})
     urlize page_path(page, options)
   end
 
-  def post_url(post, options={})
+  def post_url(post, _options = {})
     page_post_url post.discussion.page, post
   end
   ##
@@ -188,7 +186,7 @@ module Common::Application::Paths
   # the query string. The query string will correctly build array parameter
   # values.
   #
-  def build_query_string(hash, only_keys=nil)
+  def build_query_string(hash, only_keys = nil)
     elements = []
 
     only_keys ||= hash.keys
@@ -199,13 +197,13 @@ module Common::Application::Paths
       if value.class == Array
         key <<  '[]'
       else
-        value = [ value ]
+        value = [value]
       end
       value.each { |val| elements << "#{key}=#{CGI.escape(val.to_param.to_s)}" }
     end
 
-    query_string = "?#{elements.join("&")}" unless elements.empty?
-    query_string || ""
+    query_string = "?#{elements.join('&')}" unless elements.empty?
+    query_string || ''
   end
 
   private
@@ -214,4 +212,3 @@ module Common::Application::Paths
     request.protocol + request.host_with_port + path
   end
 end
-

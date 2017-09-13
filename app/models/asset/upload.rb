@@ -10,7 +10,6 @@ module Asset::Upload
   extend ActiveSupport::Concern
 
   included do
-
     validate :validate_upload_data
     before_validation :process_attachment
     after_update :finalize_attachment  #  \  both are
@@ -20,11 +19,10 @@ module Asset::Upload
   end
 
   module ClassMethods
-
-    ZIP_MIME_TYPES = %w(application/zip multipart/zip application/zip-compressed)
+    ZIP_MIME_TYPES = %w[application/zip multipart/zip application/zip-compressed].freeze
 
     def create_from_param_with_zip_extraction(param)
-      return [] if param.size == 0
+      return [] if param.empty?
       begin
         make_from_zip(param).first
       rescue Zip::ZipError
@@ -34,7 +32,7 @@ module Asset::Upload
     end
 
     def make_from_zip(file)
-      file=ensure_temp_file(file)
+      file = ensure_temp_file(file)
       zipfile = Zip::ZipFile.new(file.path)
       assets = []
       # array of filenames for which processing failed
@@ -46,7 +44,7 @@ module Asset::Upload
       zipfile.each do |entry|
         begin
           next if entry.directory?
-          tmp_file=File.join(tmp_dir, entry.name)
+          tmp_file = File.join(tmp_dir, entry.name)
           FileUtils.mkdir_p(File.dirname(tmp_file))
           zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)
           asset = create_from_params uploaded_data: FileData.new(tmp_file)
@@ -56,14 +54,16 @@ module Asset::Upload
           exc.backtrace.each do |bt|
             logger.fatal(bt)
           end
-          failures << entry.name rescue nil
+          begin
+            failures << entry.name
+          rescue
+            nil
+          end
         end
       end
       # tidy up
-      if tmp_dir && File.exist?(tmp_dir)
-        FileUtils.rm_r(tmp_dir)
-      end
-      return [assets, failures.compact]
+      FileUtils.rm_r(tmp_dir) if tmp_dir && File.exist?(tmp_dir)
+      [assets, failures.compact]
     end
 
     protected
@@ -78,10 +78,9 @@ module Asset::Upload
         file = temp_file
         temp_file.close
       end
-      return file
+      file
     end
   end
-
 
   def validate_upload_data
     if new_record?
@@ -114,12 +113,12 @@ module Asset::Upload
   def process_attachment
     if @uploaded_data
       # temporarily capture old filenames
-      @old_files = self.all_filenames || []
+      @old_files = all_filenames || []
 
       # create @temp_file from uploaded file
       self.content_type  = Asset.mime_type_from_data(@uploaded_data)
       self.filename      = @uploaded_data.original_filename
-      self.filename_will_change! # just in case nothing is different, force dirty.
+      filename_will_change! # just in case nothing is different, force dirty.
       @temp_file = Media::TempFile.new(@uploaded_data, content_type)
       @uploaded_data = nil
 
@@ -155,7 +154,7 @@ module Asset::Upload
   def alter_asset_class(content_type)
     asset_class = Asset.class_for_mime_type(content_type)
     if self.class != asset_class
-      self.thumbnails.clear
+      thumbnails.clear
       klass = Media::MimeType.asset_class_from_mime_type(content_type)
       self.type = klass.constantize.sti_name
       self.thumbdefs = asset_class.class_thumbdefs
@@ -164,9 +163,8 @@ module Asset::Upload
 
   def extract_metadata(file)
     self.size = File.size(file.path)
-    if Media.has_dimensions?(self.content_type)
+    if Media.has_dimensions?(content_type)
       self.width, self.height = Media.dimensions(file.path)
     end
   end
-
 end

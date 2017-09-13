@@ -10,7 +10,6 @@
 #
 
 class Crabgrass::Initializer < Rails::Initializer
-
   def load_environment
     info 'LOAD ENVIRONMENT'
     super
@@ -46,4 +45,3 @@ class Crabgrass::Initializer < Rails::Initializer
     super
   end
 end
-

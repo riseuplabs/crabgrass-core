@@ -4,10 +4,8 @@
 # Displays a modal dialog box
 #
 
-
 module ModalboxHelper
-
-  def self.included(base)
+  def self.included(_base)
     unless ActionView::Base.method_defined? :link_to_with_confirm
       ActionView::Base.send(:include, ActionViewExtension)
     end
@@ -32,7 +30,7 @@ module ModalboxHelper
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
   #
   #
-  def link_to_modal(label, options={}, html_options={})
+  def link_to_modal(label, options = {}, html_options = {})
     options[:title] ||= label
     icon = options.delete(:icon) || html_options.delete(:icon)
     if options[:html]
@@ -41,20 +39,18 @@ module ModalboxHelper
       unless contents =~ /<.+>/
         # ensure there are some tags in the html, otherwise modalbox
         # will not recognize it as html.
-        contents = "<p>%s</p>" % contents
+        contents = format('<p>%s</p>', contents)
       end
     elsif options[:url]
       static_html = false
       contents = options.delete(:url)
-      if contents.is_a? Hash
-        contents = url_for contents
-      end
+      contents = url_for contents if contents.is_a? Hash
     else
       raise ArgumentError.new 'must give :html or :url'
     end
     if icon
-      html_options[:id] ||= 'link%s'%rand(1000000)
-      if !static_html
+      html_options[:id] ||= format('link%s', rand(1_000_000))
+      unless static_html
         # skip these ajax options if we are just directly showing some
         # static content.
         options.merge!(
@@ -73,11 +69,11 @@ module ModalboxHelper
   end
 
   # close the modal box
-  def close_modal_button(label=nil)
+  def close_modal_button(label = nil)
     button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();', class: 'btn btn-default')
   end
 
-  def cancel_modal_button()
+  def cancel_modal_button
     close_modal_button(:cancel)
   end
 
@@ -93,18 +89,18 @@ module ModalboxHelper
 
   def modalbox_function(contents, options)
     contents = escape_javascript(contents)
-    "Modalbox.show('%s', %s)" % [contents, options_for_modalbox_function(options)]
+    format("Modalbox.show('%s', %s)", contents, options_for_modalbox_function(options))
   end
 
-  def close_modal_function()
+  def close_modal_function
     'Modalbox.hide();'
   end
 
   def localize_modalbox_strings
-    "Modalbox.setStrings(%s)" % {
-       ok: I18n.t(:ok_button), cancel: I18n.t(:cancel_button), close: I18n.t(:close_button),
-       alert: I18n.t(:alert), confirm: I18n.t(:confirm), loading: I18n.t(:loading_progress)
-     }.to_json
+    format('Modalbox.setStrings(%s)', {
+      ok: I18n.t(:ok_button), cancel: I18n.t(:cancel_button), close: I18n.t(:close_button),
+      alert: I18n.t(:alert), confirm: I18n.t(:confirm), loading: I18n.t(:loading_progress)
+    }.to_json)
   end
 
   private
@@ -119,22 +115,22 @@ module ModalboxHelper
 
     # i tried making callbacks a constant, but then rails complains loudly.
     # not sure why...
-    callbacks = [:before_load, :after_load, :before_hide, :after_hide,
-      :after_resize, :on_show, :on_update]
+    callbacks = %i[before_load after_load before_hide after_hide
+                   after_resize on_show on_update]
 
-    options.each do |key,value|
-       if ActionView::Helpers::PrototypeHelper::CALLBACKS.include?(key)
-         name = 'on' + key.to_s.capitalize
-         hash[name] = "function(request){#{value}}"
-       elsif callbacks.include?(key)
-         name = key.to_s.camelize
-         name[0] = name.at(0).downcase
-         hash[name] = "function(request){#{value}}"
-       elsif value === true or value === false
-         hash[key] = value
-       else
-         hash[key] = array_or_string_for_javascript(value)
-       end
+    options.each do |key, value|
+      if ActionView::Helpers::PrototypeHelper::CALLBACKS.include?(key)
+        name = 'on' + key.to_s.capitalize
+        hash[name] = "function(request){#{value}}"
+      elsif callbacks.include?(key)
+        name = key.to_s.camelize
+        name[0] = name.at(0).downcase
+        hash[name] = "function(request){#{value}}"
+      elsif value === true or value === false
+        hash[key] = value
+      else
+        hash[key] = array_or_string_for_javascript(value)
+      end
     end
     options_for_javascript(hash)
   end
@@ -142,7 +138,6 @@ module ModalboxHelper
   public
 
   module ActionViewExtension
-
     def self.included(base)
       base.class_eval do
         alias_method_chain :link_to_remote, :confirm
@@ -163,17 +158,17 @@ module ModalboxHelper
     # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
     #
     def link_to_remote_with_confirm(name, options = {}, html_options = {})
-      if options.is_a?(Hash) and options[:confirm]
-        message = options.delete(:confirm)
-      else
-        message = html_options.delete(:confirm)
-      end
+      message = if options.is_a?(Hash) and options[:confirm]
+                  options.delete(:confirm)
+                else
+                  html_options.delete(:confirm)
+                end
 
       if message
         ## if called when the modalbox is already open, it is important that we
         ## call back() before the other complete callbacks. Otherwise, the html
         ## they expect to be there might be missing.
-        options[:loading]  = ['Modalbox.spin()', options[:loading]].compact.join('; ')
+        options[:loading] = ['Modalbox.spin()', options[:loading]].compact.join('; ')
         options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
         ok_function = remote_function(options)
         link_to_function(name, %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{name}"})], html_options)
@@ -181,7 +176,7 @@ module ModalboxHelper
         link_to_remote_without_confirm(name, options, html_options)
       end
     end
-    #alias_method_chain :link_to_remote, :confirm
+    # alias_method_chain :link_to_remote, :confirm
 
     #
     # redefines link_to to use Modalbox.confirm() if options[:confirm] is set.
@@ -205,7 +200,6 @@ module ModalboxHelper
         message = nil
       end
 
-
       if message
         method ||= 'post'
         token = form_authenticity_token
@@ -214,18 +208,15 @@ module ModalboxHelper
         title = options[:title] || name
         cancel = options[:cancel] || I18n.t(:cancel_button)
         link_to_function(name,
-              %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
-              html_options)
+                         %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
+                         html_options)
       else
         link_to_without_confirm(name, options, html_options)
       end
     end
-    #alias_method_chain :link_to, :confirm
-
+    # alias_method_chain :link_to, :confirm
   end
-
 end
-
 
 # creates a popup-link using modalbox
 #  def link_to_modalbox(url, label, params={}, options={})
@@ -241,4 +232,3 @@ end
 #    end
 #    "Modalbox.show('#{url}',{title:'#{label}', params:'#{params}', method:'#{request_method}', overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
 #  end
-

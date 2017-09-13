@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class Group::MembershipTest < ActiveSupport::TestCase
-
-
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
   end
 
   def test_memberships
@@ -15,20 +12,20 @@ class Group::MembershipTest < ActiveSupport::TestCase
     oldversion = g.version
 
     g.add_user! u
-    assert oldcount < g.users.count, "group should have more users after add user"
-    assert_nothing_raised("group.users.find should return user") do
+    assert oldcount < g.users.count, 'group should have more users after add user'
+    assert_nothing_raised('group.users.find should return user') do
       g.users.find(u.id)
     end
-    assert_nothing_raised("user.group.find should return group") do
+    assert_nothing_raised('user.group.find should return group') do
       u.groups.find(g.id)
     end
     assert u.member_of?(g), 'user must be a member_of? group'
 
-    assert_equal oldversion+1, g.version, 'group version should increment'
+    assert_equal oldversion + 1, g.version, 'group version should increment'
 
     u.groups.delete g
     assert !u.member_of?(g), 'user must NOT be a member_of? group'
-    assert_equal oldversion+2, g.version, 'group version should increment'
+    assert_equal oldversion + 2, g.version, 'group version should increment'
   end
 
   def test_deleting_memberships
@@ -107,7 +104,7 @@ class Group::MembershipTest < ActiveSupport::TestCase
     u.reload
 
     assert_equal [g.id, c.id].sort, u.all_group_ids.sort, 'should be two groups after cache refresh (all id)'
-    assert_equal [g, c].sort_by {|g| g.id}, u.all_groups.sort_by {|g| g.id},
+    assert_equal [g, c].sort_by(&:id), u.all_groups.sort_by(&:id),
                  'should be two groups overall (all)'
   end
 
@@ -119,33 +116,31 @@ class Group::MembershipTest < ActiveSupport::TestCase
     g1.add_user! u
     g2.add_user! u
 
-    #u.clear_cache
-    #u = User.find_by_login 'peter'
-    #assert_equal [g1.id, g2.id], all_group_id_cache, 'the serialize as intarray is not working!'
+    # u.clear_cache
+    # u = User.find_by_login 'peter'
+    # assert_equal [g1.id, g2.id], all_group_id_cache, 'the serialize as intarray is not working!'
     u = User.find_by_login 'peter'
     assert_equal [g1.id, g2.id], u.all_group_id_cache, 'the serialize as intarray is not working!!'
-    #y u.all_group_id_cache
+    # y u.all_group_id_cache
   end
 
   def test_create_many_groups_join_some
     u = create_user login: 'pippi'
 
     g = []
-    to_join = [2,3,5,7,11,13,17,19]
+    to_join = [2, 3, 5, 7, 11, 13, 17, 19]
     for i in 0..19
-      g[i] = Group.create name: 'group-%d' % i
-      if to_join.include? i
-        g[i].add_user! u
-      end
+      g[i] = Group.create name: format('group-%d', i)
+      g[i].add_user! u if to_join.include? i
     end
 
-    assert_equal to_join.collect{ |i| g[i].id}, u.group_ids.sort,
+    assert_equal to_join.collect { |i| g[i].id }, u.group_ids.sort,
                  'wrong groups (id)'
-    assert_equal to_join.collect { |i| g[i].id}, u.all_group_ids.sort,
+    assert_equal to_join.collect { |i| g[i].id }, u.all_group_ids.sort,
                  'wrong groups (all id)'
-    assert_equal to_join.collect { |i| g[i]}, u.groups.sort_by {|x| x.id},
+    assert_equal to_join.collect { |i| g[i] }, u.groups.sort_by(&:id),
                  'wrong groups'
-    assert_equal to_join.collect { |i| g[i]}, u.all_groups.sort_by {|x| x.id},
+    assert_equal to_join.collect { |i| g[i] }, u.all_groups.sort_by(&:id),
                  'wrong groups (all)'
   end
 
@@ -159,25 +154,24 @@ class Group::MembershipTest < ActiveSupport::TestCase
 
     ## create groups
     max_groups.times do |i|
-      group = Group.create(name: ('group-%d' % i))
+      group = Group.create(name: format('group-%d', i))
       groups << group
-      (rand(max_committees_per_group+1)).times do |j|
-        group.add_committee! Group::Committee.create( name: ('subgroup-%d-%d' % [i, j]) )
+      rand(max_committees_per_group + 1).times do |j|
+        group.add_committee! Group::Committee.create(name: format('subgroup-%d-%d', i, j))
       end
     end
 
     ## create memberships
     groups.each do |group|
-      if rand(2)==0
-        group.add_user! u
-        correct_group_ids     << group.id
-        correct_all_group_ids << group.id
-        group.committees.each do |c|
-          correct_all_group_ids << c.id
-          if rand(2)==0
-            correct_group_ids << c.id
-            c.add_user! u
-          end
+      next unless rand(2) == 0
+      group.add_user! u
+      correct_group_ids     << group.id
+      correct_all_group_ids << group.id
+      group.committees.each do |c|
+        correct_all_group_ids << c.id
+        if rand(2) == 0
+          correct_group_ids << c.id
+          c.add_user! u
         end
       end
     end
@@ -185,32 +179,34 @@ class Group::MembershipTest < ActiveSupport::TestCase
     assert_equal(
       correct_group_ids.sort,
       u.group_ids.sort,
-      'wrong groups (ids)')
+      'wrong groups (ids)'
+    )
 
     assert_equal(
       correct_all_group_ids.sort,
       u.all_group_ids.sort,
-      'wrong groups (all ids)')
+      'wrong groups (all ids)'
+    )
 
     assert_equal(
-      correct_group_ids.sort.collect { |i| Group.find(i)},
-      u.groups.sort_by {|x| x.id},
+      correct_group_ids.sort.collect { |i| Group.find(i) },
+      u.groups.sort_by(&:id),
       'wrong groups'
     )
 
     assert_equal(
-      correct_all_group_ids.sort.collect { |i| Group.find(i)},
-      u.all_groups.sort_by {|x| x.id},
+      correct_all_group_ids.sort.collect { |i| Group.find(i) },
+      u.all_groups.sort_by(&:id),
       'wrong groups (all)'
     )
-
   end
 
   protected
-    def create_user(options = {})
-      user = FactoryGirl.build :user, options
-      user.profiles.build first_name: "Test", last_name: "Test", friend: true
-      user.save!
-      user
-    end
+
+  def create_user(options = {})
+    user = FactoryGirl.build :user, options
+    user.profiles.build first_name: 'Test', last_name: 'Test', friend: true
+    user.save!
+    user
+  end
 end

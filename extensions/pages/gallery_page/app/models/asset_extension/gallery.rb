@@ -14,7 +14,7 @@ module AssetExtension
         raise StandardError.new(I18n.t(:file_must_be_image_error))
       end
       self.uploaded_data = data
-      self.save!
+      save!
     end
 
     # update galleries after an image was saved which has galleries.
@@ -26,11 +26,7 @@ module AssetExtension
     # -elijah
 
     def update_galleries
-      if galleries.any?
-        galleries.each { |g| g.save }
-      end
+      galleries.each(&:save) if galleries.any?
     end
-
   end
-
 end

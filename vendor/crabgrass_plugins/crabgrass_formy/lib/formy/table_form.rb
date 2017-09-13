@@ -1,5 +1,4 @@
 module Formy
-
   class TableForm < Root
     element_attr :buttons
 
@@ -7,7 +6,7 @@ module Formy
       puts "<tr class='#{TITLE_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>"
     end
 
-    def label(value="&nbsp;".html_safe)
+    def label(value = '&nbsp;'.html_safe)
       @elements << indent("<tr class='#{LABEL_CLASS} #{first}'><td colspan='2'>#{value}</td></tr>")
     end
 
@@ -34,7 +33,7 @@ module Formy
     end
 
     def close
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       if @buttons
         puts "<tr><td colspan='2' class='#{BUTTONS_CLASS}'>#{@buttons}</td></tr>"
       end
@@ -42,12 +41,12 @@ module Formy
       super
     end
 
-#    class Section < Element
-#      sub_element :row
-#      def label(value)
-#        puts "label(#{value})<br>"
-#      end
-#    end
+    #    class Section < Element
+    #      sub_element :row
+    #      def label(value)
+    #        puts "label(#{value})<br>"
+    #      end
+    #    end
 
     class Row < Element
       element_attr :info, :label, :label_for, :input, :id, :style, :classes
@@ -63,26 +62,24 @@ module Formy
         if @opts[:style] == :hang
           @label ||= '&nbsp;'.html_safe
           labelspan = inputspan = 1
-          #labelspan = 2 if @label and not @input
-          #inputspan = 2 if @input and not @label
-          puts '<tr class="row %s %s" id="%s" style="%s">' % [parent.first, @classes, @id, @style]
-          puts '<td colspan="%s" class="%s"><label for="%s">%s</label></td>' % [labelspan, LABEL_CLASS, @label_for, @label]
+          # labelspan = 2 if @label and not @input
+          # inputspan = 2 if @input and not @label
+          puts format('<tr class="row %s %s" id="%s" style="%s">', parent.first, @classes, @id, @style)
+          puts format('<td colspan="%s" class="%s"><label for="%s">%s</label></td>', labelspan, LABEL_CLASS, @label_for, @label)
           if @input
-            puts '<td colspan="%s" class="%s">' % [inputspan, INPUT_CLASS]
-            puts '<div class="%s">%s</div>' % [INPUT_CLASS, @input]
-            if @info
-              puts '<div class="%s">%s</div>' % [INFO_CLASS, @info]
-            end
+            puts format('<td colspan="%s" class="%s">', inputspan, INPUT_CLASS)
+            puts format('<div class="%s">%s</div>', INPUT_CLASS, @input)
+            puts format('<div class="%s">%s</div>', INFO_CLASS, @info) if @info
             puts '</td>'
           end
           puts '</tr>'
         elsif @opts[:style] == :stack
           if @label
-            puts '<tr><td class="%s">%s</td></tr>' % [LABEL_CLASS, @label]
+            puts format('<tr><td class="%s">%s</td></tr>', LABEL_CLASS, @label)
           end
-          puts '<tr class="%s">' % @opts[:class]
-          puts '<td class="%s">%s</td>' % [INPUT_CLASS, @input]
-          puts '<td class="%s">%s</td>' % [INFO_CLASS, @info]
+          puts format('<tr class="%s">', @opts[:class])
+          puts format('<td class="%s">%s</td>', INPUT_CLASS, @input)
+          puts format('<td class="%s">%s</td>', INFO_CLASS, @info)
           puts '</tr>'
         end
         super
@@ -91,12 +88,12 @@ module Formy
       class Checkboxes < Element
         def open
           super
-          puts "<table>"
+          puts '<table>'
         end
 
         def close
           puts @elements.join("\n")
-          puts "</table>"
+          puts '</table>'
           super
         end
 
@@ -122,6 +119,5 @@ module Formy
       sub_element TableForm::Row::Checkboxes
     end
     sub_element TableForm::Row
-
   end
 end

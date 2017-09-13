@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
-
-
   def teardown
     ActionMailer::Base.deliveries.clear
   end
@@ -16,7 +14,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   def test_should_require_login_on_signup
     assert_no_difference 'User.count' do
-      post_signup_form(user: {login: nil})
+      post_signup_form(user: { login: nil })
       assert assigns(:user).errors[:login]
       assert_response :success
     end
@@ -24,7 +22,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   def test_should_require_password_on_signup
     assert_no_difference 'User.count' do
-      post_signup_form(user: {password: nil})
+      post_signup_form(user: { password: nil })
       assert assigns(:user).errors[:password]
       assert_response :success
     end
@@ -32,77 +30,72 @@ class AccountsControllerTest < ActionController::TestCase
 
   def test_should_require_password_confirmation_on_signup
     assert_no_difference 'User.count' do
-      post_signup_form(user: {password_confirmation: ''})
+      post_signup_form(user: { password_confirmation: '' })
       assert assigns(:user).errors[:password_confirmation]
       assert_response :success
     end
   end
 
   def test_should_not_allow_duplicate_username_or_groupname
-    [ users(:quentin).login, groups(:rainbow).name ].each { |login|
+    [users(:quentin).login, groups(:rainbow).name].each do |login|
       assert_no_difference 'User.count', "number of users should not increase when creating #{login}" do
-        post_signup_form(user: {login: login,
-                    password: 'passwd',
-                    password_confirmation: 'passwd'})
+        post_signup_form(user: { login: login,
+                                 password: 'passwd',
+                                 password_confirmation: 'passwd' })
         assert assigns(:user).errors[:login], "flash should yield error for #{login}"
         assert_response :success, "response to creating #{login} should be success"
       end
-    }
+    end
   end
 
   def test_should_require_email_on_signup
     Conf.stub :require_user_email, true do
       assert_no_difference 'User.count' do
-        post_signup_form(user: {email: nil})
+        post_signup_form(user: { email: nil })
         assert assigns(:user).errors[:email]
         assert_response :success
       end
     end
   end
 
-=begin
-  #not enabled
-  def test_should_login_with_cookie
-    users(:quentin).remember_me
-    @request.cookies["auth_token"] = cookie_for(:quentin)
-    get :index
-    assert @controller.send(:logged_in?)
-  end
-=end
-
+  #   #not enabled
+  #   def test_should_login_with_cookie
+  #     users(:quentin).remember_me
+  #     @request.cookies["auth_token"] = cookie_for(:quentin)
+  #     get :index
+  #     assert @controller.send(:logged_in?)
+  #   end
 
   def test_reset_password
     get :reset_password
     assert_response :success
 
-    #old_count = User::Token.count
+    # old_count = User::Token.count
     assert_difference 'User::Token.count' do
       post :reset_password, email: users(:quentin).email
       assert_response :success
-      #assert_message /email has been sent.*reset.*password/i
+      # assert_message /email has been sent.*reset.*password/i
       # doesn't work becuse flash disappears with render_alert
       # could make sure we get the right message with new helper function
     end
-    #assert_equal old_count + 1, User::Token.count
+    # assert_equal old_count + 1, User::Token.count
 
     token = User::Token.last
-    assert_equal "recovery", token.action
+    assert_equal 'recovery', token.action
     assert_equal users(:quentin).id, token.user_id
 
     get :reset_password, token: token.value
     assert_response :success
 
     assert_difference 'User::Token.count', -1 do
-      post :reset_password, token: token.value, new_password: "abcdefgh", password_confirmation: "abcdefgh"
+      post :reset_password, token: token.value, new_password: 'abcdefgh', password_confirmation: 'abcdefgh'
       assert_response :redirect # test for success message
-
     end
     assert_equal users(:quentin), User.authenticate('quentin', 'abcdefgh')
-
   end
 
   def test_forgot_password_invalid_email_should_stay_put
-    post :reset_password, email: "not rfc822-compliant"
+    post :reset_password, email: 'not rfc822-compliant'
     assert_response :success
   end
 
@@ -113,16 +106,15 @@ class AccountsControllerTest < ActionController::TestCase
     get :reset_password, token: user_tokens(:strange).value
     assert_error_message(:invalid_token)
 
-    get :reset_password, token: "invalid"
+    get :reset_password, token: 'invalid'
     assert_error_message(:invalid_token)
 
     get :reset_password, token: user_tokens(:tokens_003).value
     assert_response :success
   end
 
-
   def test_invalid_looking_email_should_fail
-    assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(user: {email: "BADEMAIL"}) }
+    assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(user: { email: 'BADEMAIL' }) }
     assert assigns(:user).errors[:email]
     assert_response :success
   end
@@ -132,8 +124,7 @@ class AccountsControllerTest < ActionController::TestCase
   def post_signup_form(options = {})
     post(:create, {
       user: FactoryGirl.attributes_for(:user, options.delete(:user)),
-      usage_agreement_accepted: "1"
+      usage_agreement_accepted: '1'
     }.merge(options))
   end
-
 end

@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class RankedVotePageControllerTest < ActionController::TestCase
-
-
   def setup
     user = users(:orange)
     login_as user
@@ -18,7 +16,7 @@ class RankedVotePageControllerTest < ActionController::TestCase
 
   def test_show_with_possible
     @poll.possibles.create do |pos|
-      pos.name = "new option"
+      pos.name = 'new option'
     end
     get :show, id: @page.id
     assert_response :success

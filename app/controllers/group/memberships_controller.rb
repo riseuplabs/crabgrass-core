@@ -53,9 +53,7 @@ class Group::MembershipsController < Group::BaseController
         @user = @membership.user
       end
     elsif action?(:create)
-      if params[:user_name]
-        @user = User.find_by_login(params[:user_name])
-      end
+      @user = User.find_by_login(params[:user_name]) if params[:user_name]
     end
   end
 
@@ -63,6 +61,4 @@ class Group::MembershipsController < Group::BaseController
     params[:view] == 'groups'
   end
   helper_method :federation_view?
-
 end
-

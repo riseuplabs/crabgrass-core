@@ -44,15 +44,15 @@ class SilentNil
   delegate :to_s, :inspect, :nil?, :empty?, :zero?, :blank?, to: :nil
   delegate :|, :&, :^, :=~, :===, :==, :<=>, :"!", to: :nil
 
-  def method_missing(*args)
+  def method_missing(*_args)
     nil
   end
 
   protected
+
   def nil
     nil
   end
-
 end
 
 class NilClass
@@ -74,4 +74,3 @@ class Object
     end
   end
 end
-

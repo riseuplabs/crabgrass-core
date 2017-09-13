@@ -1,5 +1,4 @@
 Crabgrass::Application.configure do
-
   ##
   ## STANDARD RAILS OPTIONS
   ##
@@ -11,7 +10,7 @@ Crabgrass::Application.configure do
   config.action_controller.allow_forgery_protection    = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :test
-  config.action_mailer.default_url_options = { :host => "localhost" }
+  config.action_mailer.default_url_options = { host: 'localhost' }
 
   # use the exceptions app
   config.action_dispatch.show_exceptions = true
@@ -21,20 +20,19 @@ Crabgrass::Application.configure do
   config.serve_static_files = true
   config.static_cache_control = 'public, max-age=3600'
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
+  # Use SQL instead of Active Record's schema dumper when creating the
+  # test database.  This is necessary if your schema can't be completely
+  # dumped by the schema dumper, like if you have constraints or
+  # database-specific column types
   # config.active_record.schema_format = :sql
 
   ##
   ## CRABGRASS OPTIONS
   ##
 
-  ENV['INFO'] ||= "0"
+  ENV['INFO'] ||= '0'
 
-  if ENV["REMOTE"]
-    Conf.remote_processing = 'http://localhost:3002'
-  end
+  Conf.remote_processing = 'http://localhost:3002' if ENV['REMOTE']
 
   ##
   ## DEBUGGING

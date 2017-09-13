@@ -1,5 +1,4 @@
 class String
-
   ##
   ## NOTE: you will want to translit non-ascii slugs to ascii.
   ## resist this impulse. nameized strings must remain utf8.
@@ -9,38 +8,38 @@ class String
   ##
 
   def nameize
-    str = self.dup
-    str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
+    str = dup
+    str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/, '') # remove html entitities
     str.gsub!(/[^[[:word:]]\+]+/, ' ') # all non-word chars to spaces
     str.strip!            # ohh la la
     str.downcase!         # upper case characters in urls are confusing
     str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-    return str[0..49]
+    str[0..49]
   end
 
   def denameize
-    self.gsub('-',' ')
+    tr('-', ' ')
   end
 
   # returns false if any char is detected that is not allowed in
   # 'nameized' strings
   def nameized?
-    self == self.nameize
+    self == nameize
   end
 
   def shell_escape
     if empty?
       "''"
-    elsif self =~ %r{\A[0-9A-Za-z+_-]+\z}
+    elsif self =~ /\A[0-9A-Za-z+_-]+\z/
       self
     else
       result = ''
       scan(/('+)|[^']+/) do
-        if $1
-          result << %q{\'} * $1.length
-        else
-          result << %Q{'#{$&}'}
-        end
+        result << if Regexp.last_match(1)
+                    %q(\') * Regexp.last_match(1).length
+                  else
+                    %('#{$&}')
+                  end
       end
       result
     end
@@ -72,18 +71,16 @@ class String
       start_offset = str_index
 
       end_offset = indexes[i + 1]
-      end_offset ||= self.length
+      end_offset ||= length
 
-      substrings << self.slice(start_offset...end_offset)
+      substrings << slice(start_offset...end_offset)
     end
 
-    return substrings
+    substrings
   end
 
   # returns true if the string is an integer
   def is_integer?
     self =~ /^-?\d+$/
   end
-
 end
-

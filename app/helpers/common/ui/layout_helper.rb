@@ -1,5 +1,4 @@
 module Common::Ui::LayoutHelper
-
   protected
 
   ##
@@ -15,12 +14,11 @@ module Common::Ui::LayoutHelper
   ##
 
   def local_class
-    case
-    when @page
+    if @page
       @page.definition.url
-    when @group
+    elsif @group
       @group.type.try.underscore || 'group'
-    when @user
+    elsif @user
       @user.class.name.underscore
     end
   end
@@ -35,7 +33,7 @@ module Common::Ui::LayoutHelper
 
   def optional_stylesheets
     stylesheet = controller.class.stylesheets || {}
-    return [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
+    [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect { |i| "as_needed/#{i}" }
   end
 
   # crabgrass_stylesheets()
@@ -45,10 +43,10 @@ module Common::Ui::LayoutHelper
   def crabgrass_stylesheets
     lines = []
 
-    lines << stylesheet_link_tag( current_theme.stylesheet_url('screen') )
+    lines << stylesheet_link_tag(current_theme.stylesheet_url('screen'))
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheets.collect do |sheet|
-       stylesheet_link_tag( current_theme.stylesheet_url(sheet) )
+      stylesheet_link_tag(current_theme.stylesheet_url(sheet))
     end
     # we currently do not ship the right to left css
     # if language_direction == "rtl"
@@ -59,9 +57,9 @@ module Common::Ui::LayoutHelper
 
   def favicon_link
     if current_theme[:favicon_png] and current_theme[:favicon_ico]
-    '<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />' % [current_theme.url(:favicon_ico), current_theme.url(:favicon_png)]
+      format('<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />', current_theme.url(:favicon_ico), current_theme.url(:favicon_png))
     elsif current_theme[:favicon]
-      '<link rel="icon" href="%s" type="image/x-icon" />' % current_theme.url(:favicon)
+      format('<link rel="icon" href="%s" type="image/x-icon" />', current_theme.url(:favicon))
     end.html_safe
   end
 
@@ -69,7 +67,7 @@ module Common::Ui::LayoutHelper
   ## JAVASCRIPT
   ##
 
-  SPROCKETS_PREFIX = '/static/'
+  SPROCKETS_PREFIX = '/static/'.freeze
 
   #
   # Includes the correct javascript tags for the current request.
@@ -78,13 +76,13 @@ module Common::Ui::LayoutHelper
   def javascript_include_tags
     scripts = controller.class.javascripts || {}
     files = [:application] # asset pipeline js
-    files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
+    files += [scripts[:all], scripts[params[:action].to_sym]].flatten.compact.collect { |i| "as_needed/#{i}" }
 
     includes = []
     files.each do |file|
       includes << javascript_include_tag(file.to_s)
     end
-    return includes
+    includes
   end
 
   def crabgrass_javascripts
@@ -136,40 +134,40 @@ module Common::Ui::LayoutHelper
   ##
 
   # banner stuff
-  #def banner_style
+  # def banner_style
   #  "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
-  #end
-  #def banner_background
+  # end
+  # def banner_background
   #  @banner_style.background_color if @banner_style
-  #end
-  #def banner_foreground
+  # end
+  # def banner_foreground
   #  @banner_style.color if @banner_style
-  #end
+  # end
 
   ##
   ## CONTEXT STYLES
   ##
 
-  #def background_color
+  # def background_color
   #  "#ccc"
-  #end
-  #def background
+  # end
+  # def background
   #  #'url(/images/test/grey-to-light-grey.jpg) repeat-x;'
   #  'url(/images/background/grey.png) repeat-x;'
-  #end
+  # end
 
   # return all the custom css which might apply just to this one group
-#  def context_styles
-#    style = []
-#     if @banner
-#       style << '#banner {%s}' % banner_style
-#       style << '#banner a.name_link {color: %s; text-decoration: none;}' %
-#                banner_foreground
-#       style << '#topmenu li.selected span a {background: %s; color: %s}' %
-#                [banner_background, banner_foreground]
-#     end
-#    style.join("\n")
-#  end
+  #  def context_styles
+  #    style = []
+  #     if @banner
+  #       style << '#banner {%s}' % banner_style
+  #       style << '#banner a.name_link {color: %s; text-decoration: none;}' %
+  #                banner_foreground
+  #       style << '#topmenu li.selected span a {background: %s; color: %s}' %
+  #                [banner_background, banner_foreground]
+  #     end
+  #    style.join("\n")
+  #  end
 
   ##
   ## LAYOUT STRUCTURE
@@ -180,9 +178,7 @@ module Common::Ui::LayoutHelper
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
-    if options[:balanced]
-      width= (100.to_f/cols.to_f).to_i
-    end
+    width = (100.to_f / cols.to_f).to_i if options[:balanced]
     lines << "<table class='#{options[:class]}' style='#{options[:style]}'>" unless options[:skip_table_tag]
     if options[:header]
       lines << "<tr><th colspan='#{cols}'>#{options[:header]}</th></tr>"
@@ -190,16 +186,16 @@ module Common::Ui::LayoutHelper
     for r in 1..rows
       lines << ' <tr>'
       for c in 1..cols
-         cell = ((r-1)*cols)+(c-1)
-         next unless items[cell]
-         lines << "  <td valign='top' #{"style='width:#{width}%'" if options[:balanced]}>"
-         if block
-           lines << yield(items[cell])
-         else
-           lines << '  %s' % items[cell]
-         end
-         #lines << "r%s c%s i%s" % [r,c,cell]
-         lines << '  </td>'
+        cell = ((r - 1) * cols) + (c - 1)
+        next unless items[cell]
+        lines << "  <td valign='top' #{"style='width:#{width}%'" if options[:balanced]}>"
+        lines << if block
+                   yield(items[cell])
+                 else
+                   format('  %s', items[cell])
+                 end
+        # lines << "r%s c%s i%s" % [r,c,cell]
+        lines << '  </td>'
       end
       lines << ' </tr>'
     end
@@ -225,7 +221,7 @@ module Common::Ui::LayoutHelper
   #
   def even_split(arry)
     cutoff = (arry.count + 1) / 2
-    return [arry[0..cutoff-1], arry[cutoff..-1]]
+    [arry[0..cutoff - 1], arry[cutoff..-1]]
   end
 
   #
@@ -251,16 +247,16 @@ module Common::Ui::LayoutHelper
   # wrapping the helper in a capture_haml call is very useful, because then
   # the helper can be used wherever a normal helper would be.
   #
-  def haml(name=nil, *args, &block)
+  def haml(name = nil, *args, &block)
     if name.present?
       if args.empty? and block.nil?
         haml_concat name
       else
         if name =~ /^(.*?\.[^\.]*)(\..*)$/
           # allow chaining of classes if there are multiple '.' in the first arg
-          name = $1
-          classes = $2.gsub('.',' ')
-          hsh = args.detect{|i| i.is_a?(Hash)}
+          name = Regexp.last_match(1)
+          classes = Regexp.last_match(2).tr('.', ' ')
+          hsh = args.detect { |i| i.is_a?(Hash) }
           unless hsh
             hsh = {}
             args << hsh
@@ -289,19 +285,19 @@ module Common::Ui::LayoutHelper
   # content_starts_here do
   #   %h1 my page
   #
-  #def content_starts_here(&block)
+  # def content_starts_here(&block)
   #  capture_haml do
   #    haml_tag :div, :id =>'main-content' do
   #      haml_concat capture_haml(&block)
   #    end
   #  end
-  #end
+  # end
 
   ##
   ## declare strings used for logins
   ##
   def login_context
-    @login_context ||={
+    @login_context ||= {
       strings: {
         login: I18n.t(:login),
         username: I18n.t(:username),
@@ -313,5 +309,4 @@ module Common::Ui::LayoutHelper
       }
     }
   end
-
 end

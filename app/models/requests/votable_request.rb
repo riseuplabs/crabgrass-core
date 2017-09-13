@@ -12,13 +12,12 @@
 #
 
 class VotableRequest < Request
-
   #
   # returns Requests for which the voting time has passed
   #
   # use lamba here so that VOTE_DURATION.ago is evaluated freshly each time
   def self.voting_completed
-    where("state = 'pending' AND created_at <= ?", self.vote_duration.ago)
+    where("state = 'pending' AND created_at <= ?", vote_duration.ago)
   end
 
   #
@@ -43,8 +42,8 @@ class VotableRequest < Request
   #
   def self.quick_approval_threshold(population)
     x = population
-    percent = 500.0/(x+10) + 5
-    return (x*percent/100).ceil
+    percent = 500.0 / (x + 10) + 5
+    (x * percent / 100).ceil
   end
 
   def approve_by!(user)
@@ -73,7 +72,7 @@ class VotableRequest < Request
   # we don't want to let people destroy votable requests, because you could
   # game the system by creating and destroying requests.
   #
-  def may_destroy?(user)
+  def may_destroy?(_user)
     false
   end
 
@@ -104,13 +103,13 @@ class VotableRequest < Request
         new_state = nil
       end
     elsif voting_period_over
-      if no_votes == 0
-        new_state = 'approved'
-      elsif yes_votes > no_votes
-        new_state = 'approved'
-      else
-        new_state = 'rejected'
-      end
+      new_state = if no_votes == 0
+                    'approved'
+                  elsif yes_votes > no_votes
+                    'approved'
+                  else
+                    'rejected'
+                  end
     end
 
     set_state!(new_state) if new_state
@@ -123,10 +122,8 @@ class VotableRequest < Request
   # that have reached the end of their voting period.
   #
   def self.tally_votes!
-    tally_requests = self.voting_completed
-    tally_requests.each do |request|
-      request.tally!
-    end
+    tally_requests = voting_completed
+    tally_requests.each(&:tally!)
   end
 
   def voting_period_over
@@ -137,7 +134,7 @@ class VotableRequest < Request
     created_at > self.class.vote_duration.ago
   end
 
-  def voting_population_count()
+  def voting_population_count
     raise 'subclass does not define voting_population_count()'
   end
 
@@ -145,8 +142,7 @@ class VotableRequest < Request
   # some users may be able to cut short the voting.
   # for example, if the vote is to expell a user and the user votes 'yes'
   #
-  def instant_approval(user)
+  def instant_approval(_user)
     false
   end
-
 end

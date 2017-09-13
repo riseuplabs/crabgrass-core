@@ -7,8 +7,7 @@ class Geo::Country < ActiveRecord::Base
   has_many :geo_places, class_name: 'Geo::Place'
 
   def self.with_public_profile
-    joins('AS gc JOIN geo_locations AS gl ON gc.id = gl.geo_country_id').
-    select('gc.name, gc.id')
+    joins('AS gc JOIN geo_locations AS gl ON gc.id = gl.geo_country_id')
+      .select('gc.name, gc.id')
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class User::UnknownTest < ActiveSupport::TestCase
-
   def setup
     @user = User::Unknown.new
   end

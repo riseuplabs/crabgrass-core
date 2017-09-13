@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Group::PagesControllerTest < ActionController::TestCase
-
-
   def test_index
     user = users(:penguin)
     group = groups(:rainbow)
@@ -12,6 +10,6 @@ class Group::PagesControllerTest < ActionController::TestCase
     end
     assert_response :success
     assert assigns('pages').any?
-    assert assigns('pages').all?{|p| p.public? || user.may?(:view, p)}
+    assert assigns('pages').all? { |p| p.public? || user.may?(:view, p) }
   end
 end

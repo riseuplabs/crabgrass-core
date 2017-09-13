@@ -1,7 +1,7 @@
 class CrabgrassException < StandardError
   attr_accessor :options
   attr_accessor :message
-  def initialize(message = nil, opts={})
+  def initialize(message = nil, opts = {})
     self.options = opts
     self.message = message
     super(message)
@@ -10,7 +10,7 @@ end
 
 # the user does not have permission to do that.
 class PermissionDenied < CrabgrassException
-  def initialize(message='', opts={})
+  def initialize(message = '', opts = {})
     super(message, opts)
   end
 end
@@ -49,12 +49,13 @@ end
 # a list of errors with a title. oooh lala!
 class ErrorMessages < ErrorMessage
   attr_accessor :title, :errors
-  def initialize(title,*errors)
+  def initialize(title, *errors)
     self.title = title
     self.errors = errors
   end
+
   def to_s
-    self.errors.join("\n")
+    errors.join("\n")
   end
 end
 
@@ -77,4 +78,3 @@ class StandardError
     nil
   end
 end
-

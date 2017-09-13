@@ -8,16 +8,16 @@ class ChatChannelsUser < ActiveRecord::Base
   validates_presence_of :channel, :user
 
   def typing?
-    return (self.status? and self.status > 0)
+    (status? and status > 0)
   end
 
   def join_message
-    channel.messages.order("id DESC").where("sender_id = ?", user.id).first
+    channel.messages.order('id DESC').where('sender_id = ?', user.id).first
   end
 
   def record_user_action(action = nil)
     # tell the database that is user is still in the channel, decrement is_typing
-    state = self.status ? self.status : Integer(0)
+    state = status ? status : Integer(0)
 
     if action == :not_typing
       if state > 0
@@ -37,7 +37,6 @@ class ChatChannelsUser < ActiveRecord::Base
 
     self.last_seen = Time.now.utc
     self.status = state
-    self.save
+    save
   end
-
 end

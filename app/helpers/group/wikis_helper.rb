@@ -1,5 +1,4 @@
 module Group::WikisHelper
-
   def should_render_group_wiki?
     @private_wiki.present? || @public_wiki.present?
   end
@@ -9,8 +8,8 @@ module Group::WikisHelper
   #
   def create_group_wiki_link(profile)
     link_to :create_thing.t(thing: :group_wiki.t),
-      group_wikis_path(@group, profile: profile),
-      method: :post, icon: :plus
+            group_wikis_path(@group, profile: profile),
+            method: :post, icon: :plus
   end
 
   def group_wiki_heading_or_toggles

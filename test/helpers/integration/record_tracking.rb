@@ -1,5 +1,4 @@
 module RecordTracking
-
   protected
 
   # keep track of all records created
@@ -8,5 +7,4 @@ module RecordTracking
   def records
     @records ||= {}
   end
-
 end

@@ -1,5 +1,4 @@
 class Notice < ActiveRecord::Base
-
   belongs_to :user
   belongs_to :noticable, polymorphic: true
   belongs_to :avatar
@@ -38,7 +37,7 @@ class Notice < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.data ||= Hash.new
+    self.data ||= {}
   end
 
   ##
@@ -75,8 +74,7 @@ class Notice < ActiveRecord::Base
   # should return the symbol for the path method to redirect to.
   # slightly dubious use of putting view code in the model, but makes things much easier.
   #
-  def redirect_path
-  end
+  def redirect_path; end
 
   # object to hand to redirect path, defaults to noticable
   def redirect_object
@@ -93,7 +91,7 @@ class Notice < ActiveRecord::Base
   # class, but i don't think we currently do this anywhere.)
   #
   def self.type_field(obj)
-    if self.store_full_sti_class
+    if store_full_sti_class
       obj.class.name
     else
       obj.class.base_class.name
@@ -108,8 +106,7 @@ class Notice < ActiveRecord::Base
     end
   rescue
     Rails.logger.error "Invalid attribute #{attr} in Notice ##{id}."
-    Rails.logger.debug "value: " + data[attr].inspect
+    Rails.logger.debug 'value: ' + data[attr].inspect
     raise
   end
-
 end

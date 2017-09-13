@@ -1,11 +1,11 @@
 namespace :db do
   namespace :data do
     desc 'Validates all records in the database'
-    task :validate => :environment do
+    task validate: :environment do
       invalid = []
       puts 'Validate database (this will take some time)...'
 
-      Dir["#{Rails.root}/app/models/**/*.rb"].each { |f| require "#{ f }" }
+      Dir["#{Rails.root}/app/models/**/*.rb"].each { |f| require f.to_s }
 
       ActiveRecord::Base.subclasses.each do |type|
         total = type.count
@@ -15,10 +15,10 @@ namespace :db do
           type.find_each do |record|
             index += 1
             invalid << track_invalid(record)
-            $stderr.print "\r #{index}/#{total}" if (index % 100 == 0 )
+            $stderr.print "\r #{index}/#{total}" if index % 100 == 0
           end
         rescue StandardError => e
-          print "\rAn exception occurred: #{ e.message }\n"
+          print "\rAn exception occurred: #{e.message}\n"
           # This error most likely uccured during batch instantiation.
           invalid << {
             class: type,
@@ -29,29 +29,27 @@ namespace :db do
       end
       invalid.compact!
 
-      File.open('log/invalid.yml', 'w') {|f| f.write invalid.to_yaml }
-
+      File.open('log/invalid.yml', 'w') { |f| f.write invalid.to_yaml }
     end
 
-    task :revalidate => :environment do
+    task revalidate: :environment do
       invalid = YAML.load_file('log/invalid.yml')
       total = invalid.count
       puts "Revalidating #{total} records."
       still_invalid = invalid.each_with_index.map do |track, index|
-        $stderr.print "\r #{index}/#{total}" if (index % 100 == 0 )
-        if track[:id]
-          begin
-            record = track[:class].find(track[:id])
-          rescue ActiveRecord::RecordNotFound
-            # The record is gone. That's fine. It's not invalid anymore.
-            next
-          end
-          track_invalid(record)
+        $stderr.print "\r #{index}/#{total}" if index % 100 == 0
+        next unless track[:id]
+        begin
+          record = track[:class].find(track[:id])
+        rescue ActiveRecord::RecordNotFound
+          # The record is gone. That's fine. It's not invalid anymore.
+          next
         end
-        #TODO: handle index by revalidating all records following that index
+        track_invalid(record)
+        # TODO: handle index by revalidating all records following that index
       end.compact
 
-      File.open('log/invalid.yml', 'w') {|f| f.write still_invalid.to_yaml }
+      File.open('log/invalid.yml', 'w') { |f| f.write still_invalid.to_yaml }
     end
 
     def track_invalid(record)
@@ -62,7 +60,7 @@ namespace :db do
         record.errors.add(:base, e.message)
         print_errors(record, e.message)
       end
-      return {
+      {
         class: record.class,
         id: record.id,
         error: record.errors.full_messages
@@ -70,7 +68,7 @@ namespace :db do
     end
 
     def print_errors(record, errors)
-      print "\r#<#{ record.class } id: #{ record.id }, errors: #{ errors }>\n"
+      print "\r#<#{record.class} id: #{record.id}, errors: #{errors}>\n"
     end
   end
 end

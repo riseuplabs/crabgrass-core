@@ -9,7 +9,7 @@ class DropLanguages < ActiveRecord::Migration
       t.string :code
       t.timestamps
     end
-    add_index(:languages, [:name,:code], { :name => 'languages_index', :unique => true })
-    Language.create! :name => "English", :code => 'en'
+    add_index(:languages, %i[name code], name: 'languages_index', unique: true)
+    Language.create! name: 'English', code: 'en'
   end
 end

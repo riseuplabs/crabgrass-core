@@ -4,12 +4,14 @@ class Asset::Version < ActiveRecord::Base
   # all our paths will have version info inserted into them
   def path
     @path ||= Asset::Storage::Path.new id: asset.id,
-      filename: filename,
-      version: version.to_s
+                                       filename: filename,
+                                       version: version.to_s
   end
 
   # this object is a version, not the main asset
-  def is_version?; true; end
+  def is_version?
+    true
+  end
 
   # delegate call to thumbdefs to our original Asset subclass.
   # eg: Asset::Version#thumbdefs --> Asset::Image.thumbdefs
@@ -26,6 +28,7 @@ class Asset::Version < ActiveRecord::Base
   def clone_files_from_asset
     clone_files_from(asset); true
   end
+
   def clone_thumbnails_from_asset
     clone_thumbnails_from(asset); true
   end

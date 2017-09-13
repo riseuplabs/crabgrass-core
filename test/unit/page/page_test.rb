@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class Page::BaseTest < ActiveSupport::TestCase
-
-
-
   def setup
     Page::History.delete_all
   end
@@ -18,9 +15,10 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_page_history_order
     user = users(:blue)
     page = WikiPage.create! owner: user, title: 'history'
-    action_1 = Page::History::AddStar.create!(page: page, user: user, created_at: "2007-10-10 10:10:10")
-    action_2 = Page::History::RemoveStar.create!(page: page, user: user, created_at: "2008-10-10 10:10:10")
-    action_3 = Page::History::StartWatching.create!(page: page, user: user, created_at: "2009-10-10 10:10:10")
+    attrs = { page: page, user: user, created_at: '2007-10-10 10:10:10' }
+    action_1 = Page::History::AddStar.create! attrs
+    action_2 = Page::History::RemoveStar.create! attrs
+    action_3 = Page::History::StartWatching.create! attrs
     assert_equal action_1, page.page_histories[2]
     assert_equal action_2, page.page_histories[1]
     assert_equal action_3, page.page_histories[0]
@@ -42,7 +40,7 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_unique_names_with_recipients
     user = users(:penguin)
 
-    params = ParamHash.new("title"=>"beet", "owner"=>user, "user"=>user, "share_with"=>{user.login=>{"access"=>"admin"}})
+    params = ParamHash.new('title' => 'beet', 'owner' => user, 'user' => user, 'share_with' => { user.login => { 'access' => 'admin' } })
 
     assert_difference 'Page.count' do
       assert_difference 'Page::Terms.count' do
@@ -61,7 +59,6 @@ class Page::BaseTest < ActiveSupport::TestCase
         end
       end
     end
-
   end
 
   def test_build
@@ -113,15 +110,14 @@ class Page::BaseTest < ActiveSupport::TestCase
     @page = WikiPage.create! title: 'this is a very fine test page'
     assert discussion = Discussion.create
     assert discussion.valid?, discussion.errors.full_messages.to_s
-    #discussion.pages << @page
+    # discussion.pages << @page
     @page.discussion = discussion
     @page.save
-    #discussion.save
-    #discussion.reload
+    # discussion.save
+    # discussion.reload
     assert_equal discussion.page, @page
     assert_equal @page.discussion, discussion
   end
-
 
   def test_user_associations
     @page = create_page title: 'this is a very fine test page'
@@ -130,12 +126,11 @@ class Page::BaseTest < ActiveSupport::TestCase
     @page.save
     assert_not_nil @page.created_by
     assert_nil @page.updated_by
-    #assert user.pages_created.first == @page
+    # assert user.pages_created.first == @page
 
     @page.updated_by = user
     @page.save
-    #assert user.pages_updated.first == @page
-
+    # assert user.pages_updated.first == @page
   end
 
   def test_denormalized
@@ -155,42 +150,40 @@ class Page::BaseTest < ActiveSupport::TestCase
     page = RateManyPage.create! title: 'longer lived', data: Poll.new
     poll_id = page.data.id
     assert_equal FLOW[:normal], page.flow,
-      'a new page should have normal flow'
+                 'a new page should have normal flow'
     page.delete
     assert_equal FLOW[:deleted], page.flow
     assert_equal Poll.find_by_id(poll_id), page.data,
-      'the page data must be preserved when deleting the page'
+                 'the page data must be preserved when deleting the page'
     page.undelete
     assert_equal FLOW[:normal], page.flow,
-      'undeleting a page should turn it back to flow nil'
+                 'undeleting a page should turn it back to flow nil'
   end
 
-=begin
-  def test_page_links
-    p1 = create_page :title => 'red fish'
-    p2 = create_page :title => 'two fish'
-    p3 = create_page :title => 'blue fish'
-
-    p1.add_link p2
-    assert_equal p1.links.length, 1
-    assert_equal p2.links.length, 1
-    assert_equal p1.links.first.title, p2.title
-    assert_equal p2.links.first.title, p1.title
-
-    p1.add_link p3
-    assert_equal p1.links.length, 2
-    assert_equal p3.links.length, 1
-    assert p1.links.include?(p3)
-
-    p1.add_link p3
-    p1.add_link p3
-    p1.save
-    assert_equal 2, p1.links.length, 'shouldnt be able to add same link twice'
-
-    p2.destroy
-    assert_equal 1, p1.links.length, 'after destroy, links should be removed'
-  end
-=end
+  #   def test_page_links
+  #     p1 = create_page :title => 'red fish'
+  #     p2 = create_page :title => 'two fish'
+  #     p3 = create_page :title => 'blue fish'
+  #
+  #     p1.add_link p2
+  #     assert_equal p1.links.length, 1
+  #     assert_equal p2.links.length, 1
+  #     assert_equal p1.links.first.title, p2.title
+  #     assert_equal p2.links.first.title, p1.title
+  #
+  #     p1.add_link p3
+  #     assert_equal p1.links.length, 2
+  #     assert_equal p3.links.length, 1
+  #     assert p1.links.include?(p3)
+  #
+  #     p1.add_link p3
+  #     p1.add_link p3
+  #     p1.save
+  #     assert_equal 2, p1.links.length, 'shouldnt be able to add same link twice'
+  #
+  #     p2.destroy
+  #     assert_equal 1, p1.links.length, 'after destroy, links should be removed'
+  #   end
 
   def test_associations
     assert check_associations(Page)
@@ -202,9 +195,9 @@ class Page::BaseTest < ActiveSupport::TestCase
   #      page.expects(:save_without_after_commit_callback)
   #      page.save
   #    else
-#      puts "thinking sphinx is not included"
-#    end
-#  end
+  #      puts "thinking sphinx is not included"
+  #    end
+  #  end
 
   def test_page_owner
     page = nil
@@ -214,7 +207,7 @@ class Page::BaseTest < ActiveSupport::TestCase
     assert_equal users(:green), page.owner
     assert users(:green).may?(:admin, page)
 
-    page.update_attributes({owner: users(:blue)})
+    page.update_attributes(owner: users(:blue))
     page.reload
     assert_equal users(:blue), page.owner, 'owner can be changed'
   end
@@ -222,7 +215,7 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_page_owner_and_others
     page = nil
     assert_nothing_raised do
-      page = DiscussionPage.create! title: 'x', user: users(:blue), owner: 'blue', share_with: {"green"=>{access: "edit"}}, access: :view
+      page = DiscussionPage.create! title: 'x', user: users(:blue), owner: 'blue', share_with: { 'green' => { access: 'edit' } }, access: :view
     end
     assert_equal users(:blue), page.owner
     assert users(:green).may?(:edit, page)
@@ -231,13 +224,13 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_page_default_owner
     Conf.ensure_page_owner = false
     page = Page.create! title: 'x', user: users(:blue),
-      share_with: groups(:animals), access: :admin
+                        share_with: groups(:animals), access: :admin
     assert_nil page.owner_name
     assert_nil page.owner_id
 
     Conf.ensure_page_owner = true
     page = Page.create! title: 'x', user: users(:blue),
-      share_with: groups(:animals), access: :admin
+                        share_with: groups(:animals), access: :admin
     assert_equal groups(:animals).name, page.owner_name
     assert_equal groups(:animals).id, page.owner_id
     assert_equal groups(:animals), page.owner
@@ -281,13 +274,12 @@ class Page::BaseTest < ActiveSupport::TestCase
   protected
 
   def create_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     Page.create!(defaults.merge(options))
   end
 
   def build_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     Page.build!(defaults.merge(options))
   end
 end
-

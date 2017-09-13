@@ -27,7 +27,6 @@
 #
 
 class ContextPagesController < DispatchController
-
   protected
 
   def find_controller
@@ -39,7 +38,7 @@ class ContextPagesController < DispatchController
 
   def finder
     @finder ||= Page::Finder.new params[:context_id],
-      params[:id]
+                                 params[:id]
   end
 
   def controller_name
@@ -73,7 +72,7 @@ class ContextPagesController < DispatchController
     modify_action :new
     modify_params owner: @group.name if create_group_page?
     modify_params type: 'wiki',
-      page: {title: new_title}
+                  page: { title: new_title }
   end
 
   def prepare_params_for_not_found
@@ -84,11 +83,10 @@ class ContextPagesController < DispatchController
     params[:id].sub(/\+\d*/, '').split('+').join(' ').humanize
   end
 
-  #def controller_for_list_of_pages(name)
+  # def controller_for_list_of_pages(name)
   #  params[:action] = 'index'
   #  params[:search] = {:text => name}
   #  params[:controller] = 'search'
   #  SearchController.new()
-  #end
-
+  # end
 end

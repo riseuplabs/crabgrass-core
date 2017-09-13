@@ -13,33 +13,33 @@ class Me::DiscussionsController < Me::BaseController
   # GET /me/messages
   # we currently lack pagination and filtering for unread
   def index
-    @posts = Post.private_messages(current_user).
-      last_in_discussion.
-      visible.
-      order("created_at DESC").
-      includes(:discussion)
+    @posts = Post.private_messages(current_user)
+                 .last_in_discussion
+                 .visible
+                 .order('created_at DESC')
+                 .includes(:discussion)
   end
 
   # GET /me/messages/penguin
-  #def show
+  # def show
   #  @other_user = User.find_by_login(params[:id])
   #  @discussion = current_user.discussions.from_user(@other_user).first
   #  @discussion.mark!(:read, current_user)
   #  @posts = @discussion.posts.paginate(post_pagination_params)
-  #rescue exc
+  # rescue exc
   #  render_error exc
-  #end
+  # end
 
   # PUT /me/messages/penguin
-  #def update
+  # def update
   #  @other_user = User.find_by_login(params[:id])
   #  @discussion = current_user.discussions.from_user(@user_user).first
   #  if params[:state]
   #    @discussion.mark!(params[:state], current_user)
   #  end
-  #rescue exc
+  # rescue exc
   #  render_error exc
-  #end
+  # end
 
   protected
 
@@ -47,5 +47,4 @@ class Me::DiscussionsController < Me::BaseController
     default_page = params[:page].blank? ? @discussion.last_page : nil
     pagination_params(page: default_page)
   end
-
 end

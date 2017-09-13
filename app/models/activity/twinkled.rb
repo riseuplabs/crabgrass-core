@@ -19,9 +19,9 @@ class Activity::Twinkled < Activity
     self.access = Activity::PRIVATE
   end
 
-  def description(view=nil)
+  def description(_view = nil)
     I18n.t(:activity_twinkled,
-              user: user_span(:twinkler), post: post_span(post))
+           user: user_span(:twinkler), post: post_span(post))
   end
 
   def post_span(post)
@@ -31,6 +31,4 @@ class Activity::Twinkled < Activity
   def icon
     'star'
   end
-
 end
-

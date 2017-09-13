@@ -20,18 +20,19 @@
 class IntArray < Array
   def initialize(arg)
     if arg.instance_of? String
-      super( arg.unpack('w*') )
+      super(arg.unpack('w*'))
     elsif arg.instance_of? Array
-      super( arg.map{|i|i.to_i} )
+      super(arg.map(&:to_i))
     else
       super()
     end
   end
+
   def to_s
-    self.pack('w*')
+    pack('w*')
   end
+
   def to_sql
-    self.any? ? self.join(',') : 'NULL'
+    any? ? join(',') : 'NULL'
   end
 end
-

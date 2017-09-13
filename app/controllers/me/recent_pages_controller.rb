@@ -1,4 +1,3 @@
 class Me::RecentPagesController < Me::BaseController
-  def index
-  end
+  def index; end
 end

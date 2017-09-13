@@ -4,7 +4,6 @@
 #
 
 module Common::Avatars
-
   ##
   ## ACTIONS
   ##
@@ -43,6 +42,4 @@ module Common::Avatars
       end
     end
   end
-
 end
-

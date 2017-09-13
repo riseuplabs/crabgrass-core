@@ -1,5 +1,4 @@
 class WikiPageController < Page::BaseController
-
   helper 'wikis/base', 'wikis/sections'
   permission_helper 'wikis'
 
@@ -25,7 +24,7 @@ class WikiPageController < Page::BaseController
 
   # called during BasePage::create
   def build_page_data
-    Wiki.new(user: current_user, body: "")
+    Wiki.new(user: current_user, body: '')
   end
 
   def fetch_data
@@ -46,5 +45,4 @@ class WikiPageController < Page::BaseController
   def default_to_edit?
     @wiki.body.blank? && may_edit_page?
   end
-
 end

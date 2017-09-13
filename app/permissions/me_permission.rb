@@ -1,5 +1,4 @@
 module MePermission
-
   protected
 
   # always have access to self
@@ -11,5 +10,4 @@ module MePermission
   def may_message?
     may_access_me?
   end
-
 end
