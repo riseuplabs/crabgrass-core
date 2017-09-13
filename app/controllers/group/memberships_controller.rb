@@ -29,6 +29,7 @@ class Group::MembershipsController < Group::BaseController
   #
   def destroy
     @group.remove_user! @user # memberships must be destroyed via group.remove_user!
+    Notice::UserRemovedNotice.create! group: @group, user: @user
   end
 
   #

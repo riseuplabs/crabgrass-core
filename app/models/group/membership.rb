@@ -18,7 +18,7 @@
 class Group::Membership < ActiveRecord::Base
   self.table_name = 'memberships'
 
-  attr_accessor :skip_destroy_notification
+#  attr_accessor :skip_destroy_notification
 
   belongs_to :user
   belongs_to :group

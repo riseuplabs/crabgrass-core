@@ -165,7 +165,7 @@ module Group::Users
     self.memberships.each do |membership|
       user = membership.user
       user_names << user.name
-      membership.skip_destroy_notification = true
+#      membership.skip_destroy_notification = true
       user.clear_peer_cache_of_my_peers
       membership.destroy
       user.update_membership_cache
