@@ -26,8 +26,10 @@ class TaggingTest < ActiveSupport::TestCase
     assert_equal Page.tagged_with('ipa', on: :tags), result1
 
     result2 = [@obj1.id, @obj2.id].sort
-    assert_equal result2, Page.tagged_with('seasonal', on: :tags).map(&:id).sort
-    assert_equal result2, Page.tagged_with(%w[seasonal lager], on: :tags).map(&:id).sort
+    assert_equal result2,
+      Page.tagged_with('seasonal', on: :tags).map(&:id).sort
+    assert_equal result2,
+      Page.tagged_with(%w[seasonal lager], on: :tags).map(&:id).sort
   end
 
   def test_users_tag_cache

@@ -10,7 +10,9 @@ class RequestTest < ActiveSupport::TestCase
     assert !u1.friend_of?(u2)
     assert !u2.friend_of?(u1)
 
-    req = RequestToFriend.create!(created_by: u1, recipient: u2, message: 'hi, lets be friends')
+    req = RequestToFriend.create! created_by: u1,
+      recipient: u2,
+      message: 'hi, lets be friends'
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
       RequestToFriend.create!(created_by: u1, recipient: u2)
@@ -97,15 +99,16 @@ class RequestTest < ActiveSupport::TestCase
     group    = groups(:animals)
     assert !outsider.member_of?(group)
 
-    req = RequestToJoinYou.create(
-      created_by: outsider, recipient: insider, requestable: group
-    )
-    assert !req.valid?, 'request should be invalid: a user recipient should not be allowed'
+    req = RequestToJoinYou.create created_by: outsider,
+      recipient: insider,
+      requestable: group
+    assert !req.valid?,
+      'request should be invalid: a user recipient should not be allowed'
 
-    req = RequestToJoinYou.create(
-      created_by: outsider, recipient: group
-    )
-    assert req.valid?, format('request should be valid: %s', req.errors.full_messages.to_s)
+    req = RequestToJoinYou.create created_by: outsider,
+      recipient: group
+    assert req.valid?,
+      format('request should be valid: %s', req.errors.full_messages.to_s)
 
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
       RequestToJoinYou.create!(created_by: outsider, recipient: group)
@@ -113,10 +116,11 @@ class RequestTest < ActiveSupport::TestCase
 
     assert_equal req, Request.approvable_by(insider)
       .having_state('pending')
-                             .where(created_by_id: outsider)
-                             .first
+      .where(created_by_id: outsider)
+      .first
 
-    assert_raises PermissionDenied, 'PERMISSIONS DISABLED: non member is able to accept request for a group' do
+    assert_raises PermissionDenied,
+      'only members should be able to accept request for a group' do
       req.approve_by!(outsider)
     end
 
@@ -141,7 +145,8 @@ class RequestTest < ActiveSupport::TestCase
       created_by: insider, email: 'root@example.org', requestable: group
     )
 
-    assert req.valid?, format('request should be valid: %s', req.errors.full_messages.to_s)
+    assert req.valid?,
+      format('request should be valid: %s', req.errors.full_messages.to_s)
     assert req.code.length >= 6
 
     req = RequestToJoinUsViaEmail.where(code: req.code).find(req.id)
@@ -149,7 +154,8 @@ class RequestTest < ActiveSupport::TestCase
 
     req.approve_by!(outsider)
 
-    assert_raises ErrorMessage, 'should only be able to redeem pending requests' do
+    assert_raises ErrorMessage,
+      'should only be able to redeem pending requests' do
       req.redeem_code!(outsider)
     end
 
@@ -162,7 +168,8 @@ class RequestTest < ActiveSupport::TestCase
 
     req = RequestToFriend.create!(created_by: u1, recipient: u2)
     u1.destroy
-    assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
+    assert_raises ActiveRecord::RecordNotFound,
+      'request should have been destroyed' do
       Request.find(req.id)
     end
 
@@ -175,7 +182,8 @@ class RequestTest < ActiveSupport::TestCase
     )
 
     group.destroy
-    assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
+    assert_raises ActiveRecord::RecordNotFound,
+      'request should have been destroyed' do
       Request.find(req.id)
     end
   end

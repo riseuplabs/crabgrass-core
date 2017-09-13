@@ -30,8 +30,8 @@ class Activity::Test < ActiveSupport::TestCase
     @group.add_user!(ruth)
     Tracking::Action.track :create_membership, group: @group, user: ruth
 
-    assert_nil Activity::UserJoinedGroup.for_all(@red).find_by_subject_id(ruth.id),
-               "The new peers don't get UserJoinedGroupActivities."
+    act = Activity::UserJoinedGroup.for_all(@red).find_by_subject_id(ruth.id)
+    assert_nil act, "The new peers don't get UserJoinedGroupActivities."
 
     act = Activity::GroupGainedUser.for_all(@red).last
     assert_equal @group.id, act.group.id,
@@ -88,16 +88,17 @@ class Activity::Test < ActiveSupport::TestCase
 
     friend_act = Activity::Friend.find_by_subject_id(@blue.id)
     user_joined_act = Activity::UserJoinedGroup.find_by_subject_id(@blue.id)
-    group_gained_act = Activity::GroupGainedUser.find_by_subject_id(new_group.id)
+    gained_act = Activity::GroupGainedUser.find_by_subject_id(new_group.id)
     post_act = Activity::MessageSent.find_by_subject_id(@red.id)
     # we do not create PrivatePost Activities anymore
     assert_nil post_act
 
     # the person doing the thing should be the avatar for it
-    # disregarding whatever is the subject (in the gramatical/language sense) of the activity
+    # disregarding whatever is the subject (in the gramatical/language
+    # sense) of the activity
     assert_equal @blue, friend_act.avatar
     assert_equal @blue, user_joined_act.avatar
-    assert_equal @blue, group_gained_act.avatar
+    assert_equal @blue, gained_act.avatar
     # assert_equal @blue, post_act.avatar
   end
 

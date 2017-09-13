@@ -21,7 +21,8 @@ class User::TokenTest < ActiveSupport::TestCase
 
   def test_find_token
     token = User::Token.to_recover.create(user: users(:blue))
-    assert_equal token, User::Token.to_recover.active.find_by_param(token.to_param)
+    assert_equal token,
+      User::Token.to_recover.active.find_by_param(token.to_param)
     assert_nil User::Token.active.find_by_param(User::Token.new.to_param)
   end
 end

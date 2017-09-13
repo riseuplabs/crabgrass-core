@@ -24,18 +24,21 @@ class AssetTest < ActiveSupport::TestCase
   def test_simple_upload
     @asset = FactoryGirl.create :png_asset
     assert File.exist?(@asset.private_filename), 'the private file should exist'
-    assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
+    assert read_file('image.png') == File.read(@asset.private_filename),
+      'full_filename should be the uploaded_data'
   end
 
   def test_single_table_inheritance
     @asset = FactoryGirl.create :png_asset
     assert_equal 'Png', @asset.type, 'initial asset should be a png'
-    assert_equal 'image/png', @asset.content_type, 'initial asset should be a png'
+    assert_equal 'image/png', @asset.content_type,
+      'initial asset should be a png'
 
     @asset.uploaded_data = upload_data('photo.jpg')
     @asset.save
     assert_equal 'Image', @asset.type, 'then the asset should be a jpg'
-    assert_equal 'image/jpeg', @asset.content_type, 'then the asset should be a jpg'
+    assert_equal 'image/jpeg', @asset.content_type,
+      'then the asset should be a jpg'
   end
 
   def test_rename
@@ -43,9 +46,11 @@ class AssetTest < ActiveSupport::TestCase
     @asset.base_filename = 'newimage'
     @asset.save
 
-    assert_equal format('%s/0000/%04d/newimage.png', ASSET_PRIVATE_STORAGE, @asset.id), @asset.private_filename
-    assert File.exist?(@asset.private_filename)
-    assert !File.exist?(format('%s/0000/%04d/image.png', ASSET_PRIVATE_STORAGE, @asset.id))
+    path = format '%s/0000/%04d/', ASSET_PRIVATE_STORAGE, @asset.id
+
+    assert_equal path + 'newimage.png', @asset.private_filename
+    assert File.exist?(path + 'newimage.png')
+    refute File.exist?(path + 'image.png')
   end
 
   def test_file_cleanup_on_destroy
@@ -53,9 +58,12 @@ class AssetTest < ActiveSupport::TestCase
     @asset.update_access
     @asset.destroy
 
-    assert !File.exist?(@asset.private_filename), 'private file should not exist'
-    assert !File.exist?(File.dirname(@asset.private_filename)), 'dir for private file should not exist'
-    assert !File.exist?(@asset.public_filename), 'public file should not exist'
+    assert !File.exist?(@asset.private_filename),
+      'private file should not exist'
+    assert !File.exist?(File.dirname(@asset.private_filename)),
+      'dir for private file should not exist'
+    assert !File.exist?(@asset.public_filename),
+      'public file should not exist'
   end
 
   def test_thumbnail_generation_handled_by_thumbnails

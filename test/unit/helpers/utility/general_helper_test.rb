@@ -4,8 +4,12 @@ class Common::Utility::GeneralHelperTest < ActionController::TestCase
   include ::Common::Utility::GeneralHelper
 
   def test_force_wrap
-    title = 'VeryLongTitleWithNoSpaceThatWillBeFarTooLongToFitIntoTheTableColumnAndInTurnBreakTheLayoutUnlessItIsBrokenUsingHiddenHyphens'
-    expected = 'VeryLongTitleWithNoS&shy;paceThatWillBeFarToo&shy;LongToFitIntoTheTabl&shy;eColumnAndInTurnBrea&shy;kTheLayoutUnlessItIs&shy;BrokenUsingHiddenHyp&shy;hens'
+    title = 'VeryLongTitleWithNoSpaceThatWillBeFarTooLong' +
+      'ToFitIntoTheTableColumnAndInTurnBreakTheLayout' +
+      'UnlessItIsBrokenUsingHiddenHyphens'
+    expected = 'VeryLongTitleWithNoS&shy;paceThatWillBeFarToo&shy;Long' +
+      'ToFitIntoTheTabl&shy;eColumnAndInTurnBrea&shy;kTheLayout' +
+      'UnlessItIs&shy;BrokenUsingHiddenHyp&shy;hens'
     assert_equal expected, force_wrap(title)
   end
 end

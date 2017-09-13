@@ -29,7 +29,8 @@ class Page::TermsTest < ActiveSupport::TestCase
     '^&#, +, **, %, ə'.split(', ').each do |char|
       found = Page.find_by_path(['tag', char]).first
       assert found, format('there should be a page tagged %s', char)
-      assert_equal page.id, found.id, format('the page ids should match for tag %s', char)
+      assert_equal page.id, found.id,
+        format('the page ids should match for tag %s', char)
     end
   end
 end

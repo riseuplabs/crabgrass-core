@@ -51,7 +51,8 @@ class GroupTest < ActiveSupport::TestCase
     g.revoke_access! public: :view
     u = User.create login: 'user'
 
-    assert u.may?(:pester, g) == false, 'should not be able to pester private group'
+    assert u.may?(:pester, g) == false,
+      'should not be able to pester private group'
   end
 
   def test_can_pester_public_group
@@ -73,10 +74,12 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_committee_access
     g = groups(:public_group)
-    assert_equal [groups(:public_committee)],
+    private_committee = groups(:private_committee)
+    public_committee = groups(:public_committee)
+    assert_equal [public_committee],
                  g.committees_for(users(:red)).sort_by(&:id),
                  'should find 1 public committee'
-    assert_equal [groups(:public_committee), groups(:private_committee)].sort_by(&:id),
+    assert_equal [public_committee, private_committee].sort_by(&:id),
                  g.committees_for(users(:blue)).sort_by(&:id),
                  'should find 2 committee with private access'
   end
@@ -155,8 +158,10 @@ class GroupTest < ActiveSupport::TestCase
   def test_avatar
     # must have GM installed
     unless Media::GraphicsMagickTransmogrifier.available?
-      puts 'GraphicsMagick converter is not available. Either GraphicsMagick is not installed or it can not be started. Skipping GroupTest#test_avatar.'
-      return
+      skip <<-EOERR.strip_heredoc
+        GraphicsMagick converter is not available.
+        Either GraphicsMagick is not installed or it can not be started.
+      EOERR
     end
 
     group = nil
@@ -217,7 +222,9 @@ class GroupTest < ActiveSupport::TestCase
     group = Group.create name: 'hold-hands-and-join-the-circle'
     assert group.valid?
 
-    group.profiles.public.update_attributes! membership_policy: Profile::MEMBERSHIP_POLICY[:open]
+    profile = group.profiles.public
+    open = Profile::MEMBERSHIP_POLICY[:open]
+    profile.update_attributes! membership_policy: open
 
     assert !users(:blue).may?(:join, group)
 

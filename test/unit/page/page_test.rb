@@ -15,9 +15,10 @@ class Page::BaseTest < ActiveSupport::TestCase
   def test_page_history_order
     user = users(:blue)
     page = WikiPage.create! owner: user, title: 'history'
-    action_1 = Page::History::AddStar.create!(page: page, user: user, created_at: '2007-10-10 10:10:10')
-    action_2 = Page::History::RemoveStar.create!(page: page, user: user, created_at: '2008-10-10 10:10:10')
-    action_3 = Page::History::StartWatching.create!(page: page, user: user, created_at: '2009-10-10 10:10:10')
+    attrs = { page: page, user: user, created_at: '2007-10-10 10:10:10' }
+    action_1 = Page::History::AddStar.create! attrs
+    action_2 = Page::History::RemoveStar.create! attrs
+    action_3 = Page::History::StartWatching.create! attrs
     assert_equal action_1, page.page_histories[2]
     assert_equal action_2, page.page_histories[1]
     assert_equal action_3, page.page_histories[0]

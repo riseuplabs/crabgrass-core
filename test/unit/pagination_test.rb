@@ -16,12 +16,13 @@ class PaginationTest < ActiveSupport::TestCase
       # last page gets only 1 view
       # lets us test that pagination sorts them properly
       (all_pages.size - index).times do
+        # make sure trackings will be processed into dailies
         Tracking::Page.insert(current_user: user,
                               user: user,
                               group: group,
                               page: page,
                               action: :view,
-                              time: Time.now - 3.days) # make sure trackings will be processed into dailies
+                              time: Time.now - 3.days)
       end
     end
 
@@ -40,7 +41,8 @@ class PaginationTest < ActiveSupport::TestCase
       page: 1
     }
 
-    pages = Page.paginate_by_path(['most-views-in', '30', 'days'], paginate_options)
+    pages = Page.paginate_by_path ['most-views-in', '30', 'days'],
+      paginate_options
 
     assert_equal all_pages_ids.size, pages.total_entries
     assert_equal all_pages_ids[0, per_page], pages.collect(&:id).sort
