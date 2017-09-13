@@ -23,6 +23,7 @@ en:
   councils: "Councils"
   members: "Members"
   structure: "Structure"
+  membership: "Membership"
 
   ##
   ## GROUP CREATION
@@ -57,7 +58,8 @@ en:
   group_membership_count: "%{count} Members"
   membership_exists_error: "Membership already exists for %{member}"
   ## you_are_a_member_already_error: "You are a member already"
-  ##!  membership_leave_message: "You have been removed from %{group}"
+  membership_notification: "Membership notification"
+  membership_leave_message: "You have been removed from %{group}"
   ##!  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
   membership_destroy_confirm_message: "Are you sure you want to remove %{entity} from %{group}?"
   ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
