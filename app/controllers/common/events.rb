@@ -1,3 +1,2 @@
 module Common::Events
-
 end

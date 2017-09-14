@@ -1,12 +1,11 @@
 require 'test_helper'
 
 class Asset::TextTest < ActiveSupport::TestCase
-
   def test_asset_type_from_file
     @asset = FactoryGirl.create :word_asset
     assert_equal Asset::Text, @asset.class, 'asset should be a Asset::Text'
     assert_equal 'Text', @asset.versions.earliest.versioned_type,
-      'version should by of type Asset::Text'
+                 'version should by of type Asset::Text'
   end
 
   def test_text_asset_thumb_defs
@@ -39,8 +38,8 @@ class Asset::TextTest < ActiveSupport::TestCase
 
       assert thumbnails.any?, 'asset should have thumbnail objects'
       assert_equal 6, thumbnails.count, 'there should be three thumbnails'
-      names = [:small, :medium, :large]
-      assert names.none? {|name| @asset.thumbnail_exists?(name)}
+      names = %i[small medium large]
+      assert names.none? { |name| @asset.thumbnail_exists?(name) }
       names.each do |name|
         thumbdef = @asset.thumbdefs[name]
         thumbnail = @asset.thumbnail(name)

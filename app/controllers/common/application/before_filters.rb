@@ -84,9 +84,7 @@ module Common::Application::BeforeFilters
   # sets the current locale
   #
   def set_session_locale
-    if !language_allowed?(session[:language_code])
-      session[:language_code] = nil
-    end
+    session[:language_code] = nil unless language_allowed?(session[:language_code])
     session[:language_code] ||= discover_language_code
     I18n.locale = session[:language_code].to_sym
   end
@@ -153,9 +151,9 @@ module Common::Application::BeforeFilters
       'en'
     elsif !logged_in? || current_user.language.empty?
       if Conf.enabled_languages.any?
-         code = http_accept_language.compatible_language_from(Conf.enabled_languages)
+        code = http_accept_language.compatible_language_from(Conf.enabled_languages)
       else
-         code = http_accept_language.user_preferred_languages.first
+        code = http_accept_language.user_preferred_languages.first
       end
       code ||= current_site.default_language
       code ||= 'en'
@@ -166,6 +164,4 @@ module Common::Application::BeforeFilters
       'en'
     end
   end
-
 end
-

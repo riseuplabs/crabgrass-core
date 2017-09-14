@@ -4,6 +4,6 @@ class RemoveNeedsEmailVerificationFromSites < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :sites, :needs_email_verification, :boolean, :default => false
+    add_column :sites, :needs_email_verification, :boolean, default: false
   end
 end

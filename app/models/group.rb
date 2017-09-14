@@ -1,31 +1,29 @@
-=begin
-create_table "groups", :force => true do |t|
-  t.string   "name"
-  t.string   "full_name"
-  t.string   "summary"
-  t.string   "url"
-  t.string   "type"
-  t.integer  "parent_id",  :limit => 11
-  t.integer  "council_id", :limit => 11
-  t.datetime "created_at"
-  t.datetime "updated_at"
-  t.integer  "avatar_id",  :limit => 11
-  t.string   "style"
-  t.string   "language",   :limit => 5
-  t.integer  "version",    :limit => 11, :default => 0
-  t.integer  "min_stars",  :limit => 11, :default => 1
-  t.integer  "site_id",    :limit => 11
-end
-
-  associations:
-  group.children   => groups
-  group.parent     => group
-  group.council    => nil or group
-  group.users      => users
-=end
+# create_table "groups", :force => true do |t|
+#   t.string   "name"
+#   t.string   "full_name"
+#   t.string   "summary"
+#   t.string   "url"
+#   t.string   "type"
+#   t.integer  "parent_id",  :limit => 11
+#   t.integer  "council_id", :limit => 11
+#   t.datetime "created_at"
+#   t.datetime "updated_at"
+#   t.integer  "avatar_id",  :limit => 11
+#   t.string   "style"
+#   t.string   "language",   :limit => 5
+#   t.integer  "version",    :limit => 11, :default => 0
+#   t.integer  "min_stars",  :limit => 11, :default => 1
+#   t.integer  "site_id",    :limit => 11
+# end
+#
+#   associations:
+#   group.children   => groups
+#   group.parent     => group
+#   group.council    => nil or group
+#   group.users      => users
 
 class Group < ActiveRecord::Base
-  extend RouteInheritance          # subclasses use /groups routes
+  extend RouteInheritance # subclasses use /groups routes
 
   # core group extentions
   include Group::Groups     # group <--> group behavior
@@ -51,7 +49,7 @@ class Group < ActiveRecord::Base
   def self.without_member(user)
     group_ids = user.all_group_ids
     group_ids.any? ?
-      where("NOT groups.id IN (?)", group_ids) :
+      where('NOT groups.id IN (?)', group_ids) :
       self
   end
 
@@ -74,14 +72,14 @@ class Group < ActiveRecord::Base
   end
 
   def self.all_networks_for(user)
-    only_type('Network').
-      where(id: user.all_group_id_cache)
+    only_type('Network')
+      .where(id: user.all_group_id_cache)
   end
 
   # alphabetized and (optional) limited to +letter+
   def self.alphabetized(letter)
     if letter == '#'
-      where('name REGEXP ?', "^[^a-z]").alphabetical_order
+      where('name REGEXP ?', '^[^a-z]').alphabetical_order
     elsif letter.present?
       where('name LIKE ?', "#{letter}%").alphabetical_order
     else
@@ -109,7 +107,7 @@ class Group < ActiveRecord::Base
   end
 
   def self.recent
-    by_created_at.where("groups.created_at > ?", RECENT_TIME.ago)
+    by_created_at.where('groups.created_at > ?', RECENT_TIME.ago)
   end
 
   def self.by_created_at
@@ -123,8 +121,8 @@ class Group < ActiveRecord::Base
   # filters the groups based on their name and full name
   # filter is a sql query string
   def self.named_like(filter)
-    where "(groups.name LIKE ? OR groups.full_name LIKE ? )",
-      filter, filter
+    where '(groups.name LIKE ? OR groups.full_name LIKE ? )',
+          filter, filter
   end
 
   ##
@@ -141,41 +139,49 @@ class Group < ActiveRecord::Base
 
   def clean_names
     t_name = read_attribute(:name)
-    if t_name
-      write_attribute(:name, t_name.downcase)
-    end
+    write_attribute(:name, t_name.downcase) if t_name
 
     t_name = read_attribute(:full_name)
-    if t_name
-      write_attribute(:full_name, t_name.gsub(/[&<>]/,''))
-    end
+    write_attribute(:full_name, t_name.gsub(/[&<>]/, '')) if t_name
   end
 
   # the code shouldn't call find_by_name directly, because the group name
   # might contain a space in it, which we store in the database as a plus.
   def self.find_by_name(name)
     return nil unless name.present?
-    Group.where(name: name.gsub(' ','+')).first
+    Group.where(name: name.tr(' ', '+')).first
   end
 
   # keyring_code used by acts_as_locked and pathfinder
   def keyring_code
-    "%04d" % "8#{id}"
+    format('%04d', "8#{id}")
   end
 
   # name stuff
-  def to_param; name; end
-  def display_name; full_name.presence || name; end
-  def short_name; name; end
-  def cut_name; name[0..20]; end
+  def to_param
+    name
+  end
+
+  def display_name
+    full_name.presence || name
+  end
+
+  def short_name
+    name
+  end
+
+  def cut_name
+    name[0..20]
+  end
+
   def both_names
     return name if name == display_name
-    return "%s (%s)" % [display_name, name]
+    format('%s (%s)', display_name, name)
   end
 
   # visual identity
   def banner_style
-    @style ||= Style.new(color: "#eef", background_color: "#1B5790")
+    @style ||= Style.new(color: '#eef', background_color: '#1B5790')
   end
 
   #
@@ -184,21 +190,26 @@ class Group < ActiveRecord::Base
   def committee?
     read_attribute(:type) == 'Committee' || instance_of?(Committee)
   end
+
   def network?
     read_attribute(:type) == 'Network' || instance_of?(Network)
   end
+
   def council?
     read_attribute(:type) == 'Council' || instance_of?(Council)
   end
+
   def normal?
     read_attribute(:type).empty? || instance_of?(Group)
   end
 
-  def group_type; self.class.model_name.human; end
+  def group_type
+    self.class.model_name.human
+  end
 
   # age of group
   def recent?
-    self.created_at > RECENT_TIME.ago
+    created_at > RECENT_TIME.ago
   end
 
   ##
@@ -208,14 +219,14 @@ class Group < ActiveRecord::Base
   has_many :profiles, as: 'entity', dependent: :destroy, extend: ProfileMethods
 
   has_one :public_profile,
-    -> { where stranger: true },
-    as: 'entity',
-    class_name: "Profile"
+          -> { where stranger: true },
+          as: 'entity',
+          class_name: 'Profile'
 
   has_one :private_profile,
-    -> { where friend: true },
-    as: 'entity',
-    class_name: "Profile"
+          -> { where friend: true },
+          as: 'entity',
+          class_name: 'Profile'
 
   has_many :wikis, through: :profiles
 
@@ -264,7 +275,7 @@ class Group < ActiveRecord::Base
 
   after_destroy :update_networks
   def update_networks
-    self.networks.each do |network|
+    networks.each do |network|
       Group.increment_counter(:version, network.id)
     end
   end
@@ -309,14 +320,13 @@ class Group < ActiveRecord::Base
   def update_name_copies
     if name_changed? and !name_was.nil?
       pages_owned.update_all(owner_name: name)
-      Wiki.clear_all_html(self)   # in case there were links using the old name
+      Wiki.clear_all_html(self) # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c|
+      committees.each do |c|
         c.parent_name_changed
         c.save if c.name_changed?
-      }
-      User.increment_version(self.user_ids)
+      end
+      User.increment_version(user_ids)
     end
   end
-
 end

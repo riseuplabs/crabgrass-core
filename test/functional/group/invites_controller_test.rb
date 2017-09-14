@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Group::InvitesControllerTest < ActionController::TestCase
-
   def setup
     @user                          = FactoryGirl.create(:user)
     @user_not_in_group             = FactoryGirl.create(:user)
@@ -17,7 +16,6 @@ class Group::InvitesControllerTest < ActionController::TestCase
     @network.add_user! @user_not_in_group
   end
 
-
   def test_new
     login_as @user
     assert_permission :may_admin_group? do
@@ -32,7 +30,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUs.count' do
         post :create, group_id: @group.to_param,
-         recipients: recipient.name
+                      recipients: recipient.name
       end
     end
     assert_response :redirect
@@ -48,7 +46,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinOurNetwork.count' do
         post :create, group_id: @network.to_param,
-          recipients: @group.name
+                      recipients: @group.name
       end
     end
     assert_response :redirect
@@ -56,12 +54,12 @@ class Group::InvitesControllerTest < ActionController::TestCase
   end
 
   def test_create_email_invite
-    email =  "test@mail.me"
+    email =  'test@mail.me'
     login_as @user
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUsViaEmail.count' do
         post :create, group_id: @group.to_param,
-          recipients: email
+                      recipients: email
       end
     end
     assert_response :redirect
@@ -88,7 +86,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
     # As @user already member of a group it should not be notified
     assert_notice_for recipient, @user_not_in_group do
       post :create, group_id: @group.to_param,
-        recipients: "#{recipient.name}, #{@user.name}, #{@user_not_in_group.name}"
+                    recipients: "#{recipient.name}, #{@user.name}, #{@user_not_in_group.name}"
     end
   end
 
@@ -119,7 +117,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
   end
 
   def test_invite_by_email_does_not_notify_internally
-    email =  "test@mail.me"
+    email =  'test@mail.me'
     login_as @user
     assert_no_notice do
       post :create, group_id: @group.to_param, recipients: email
@@ -140,5 +138,4 @@ class Group::InvitesControllerTest < ActionController::TestCase
       assert_equal recipients[i].id, notice.user_id
     end
   end
-
 end

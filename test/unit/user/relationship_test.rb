@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class User::RelationshipTest < ActiveSupport::TestCase
-
-
   def test_add_contact
     a = users(:red)
     b = users(:green)
@@ -64,7 +62,7 @@ class User::RelationshipTest < ActiveSupport::TestCase
     end
 
     assert_equal 1, a.relationships.with(b).count,
-      'should be only be one contact, but there are really two'
+                 'should be only be one contact, but there are really two'
   end
 
   def test_different_types
@@ -95,7 +93,7 @@ class User::RelationshipTest < ActiveSupport::TestCase
       assert_equal discussion, b.relationships.with(a).first.discussion
     end
 
-    relationships = discussion.relationships.sort_by {|r|r.id}
+    relationships = discussion.relationships.sort_by(&:id)
     assert_equal relationships[0], discussion.relationships.for_user(b)
     assert_equal relationships[1], discussion.relationships.for_user(a)
     assert_equal a, relationships[1].user
@@ -110,6 +108,4 @@ class User::RelationshipTest < ActiveSupport::TestCase
   def test_associations
     assert check_associations(User::Relationship)
   end
-
 end
-

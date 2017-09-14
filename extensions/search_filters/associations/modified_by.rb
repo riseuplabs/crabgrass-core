@@ -3,13 +3,12 @@
 #
 
 SearchFilter.new('/modified-by/:user_id/') do
-
   mysql do |query, id|
     query.add_sql_condition(
       'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL',
       user_id(id)
     )
-    query.add_order("user_participations.changed_at DESC")
+    query.add_order('user_participations.changed_at DESC')
   end
 
   # TODO: currently, updated_by_id is not a multi-attribute... it just hold
@@ -19,6 +18,4 @@ SearchFilter.new('/modified-by/:user_id/') do
   sphinx do |query, id|
     query.add_attribute_constraint(:updated_by_id, user_id(id))
   end
-
 end
-

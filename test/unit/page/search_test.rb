@@ -9,8 +9,7 @@ require 'test_helper'
 require 'set'
 
 class Page::SearchTest < ActiveSupport::TestCase
-
-  def self.helper_method(method); end
+  def self.helper_method(_method); end
 
   include PathFinder::ControllerExtension
 
@@ -23,14 +22,14 @@ class Page::SearchTest < ActiveSupport::TestCase
   def test_search_is_escaped
     login(:blue)
     assert_path_filters '/text/@test.me' do |page|
-      page.title.try.include? "@test.me"
+      page.title.try.include? '@test.me'
     end
   end
 
   def test_search_by_type
     login(:blue)
     assert_path_filters '/type/discussion' do |page|
-      !page.deleted? && page['type'] == "DiscussionPage"
+      !page.deleted? && page['type'] == 'DiscussionPage'
     end
   end
 
@@ -59,8 +58,8 @@ class Page::SearchTest < ActiveSupport::TestCase
     login(:blue)
     assert_path_filters '/tag/surprise/tag/anticipation' do |p|
       !p.deleted? &&
-        p.tag_list.include?("surprise") &&
-        p.tag_list.include?("anticipation")
+        p.tag_list.include?('surprise') &&
+        p.tag_list.include?('anticipation')
     end
   end
 
@@ -73,35 +72,33 @@ class Page::SearchTest < ActiveSupport::TestCase
 
   def test_search_deleted
     login(:blue)
-    assert_path_filters '/deleted' do |p|
-      p.deleted?
-    end
+    assert_path_filters '/deleted', &:deleted?
   end
 
   #
   # Test a path filter within mysql and sphinx for a user and a group.
   #
-  def assert_path_filters(path, &filter)
+  def assert_path_filters(path)
     methods = [:mysql]
     methods << :sphinx if sphinx_working?
     methods.each do |method|
       options = options_for_me method: method,
-        per_page:1000,
-        context: current_user
+                               per_page: 1000,
+                               context: current_user
 
-      my_filter = Proc.new do |page|
-        filter.call(page) && current_user.may?(:view, page)
+      my_filter = proc do |page|
+        yield(page) && current_user.may?(:view, page)
       end
 
       assert_path_filter(path, options, &my_filter)
 
       group = groups(:rainbow)
       options = options_for_group group,
-        method: method,
-        per_page:1000,
-        context: group
+                                  method: method,
+                                  per_page: 1000,
+                                  context: group
 
-      group_filter = Proc.new do |page|
+      group_filter = proc do |page|
         my_filter.call(page) && group.may?(:view, page)
       end
 
@@ -114,17 +111,16 @@ class Page::SearchTest < ActiveSupport::TestCase
   def assert_path_filter(path, options, &filter)
     context = options.delete :context
     searched_pages = Page.find_by_path(path, options)
-    actual_pages = Page.order("updated_at DESC").to_a.select(&filter)
+    actual_pages = Page.order('updated_at DESC').to_a.select(&filter)
     assert actual_pages.any?,
-      'a filter with no results is a bad test (user `%s`, context `%s`, filter `%s`)' %
-      [current_user.name, context.name, path]
+           format('a filter with no results is a bad test (user `%s`, context `%s`, filter `%s`)', current_user.name, context.name, path)
     actual_set = page_ids(actual_pages)
     searched_set = page_ids(searched_pages)
     assert actual_set == searched_set, <<-EOM
       #{path} query with #{options[:method]} should match results.
       user: #{current_user.name}, context: #{context.name}
-      pages missing from result: #{(actual_set-searched_set).to_a.sort}
-      extra pages in result: #{(searched_set-actual_set).to_a.sort}
+      pages missing from result: #{(actual_set - searched_set).to_a.sort}
+      extra pages in result: #{(searched_set - actual_set).to_a.sort}
     EOM
   end
 
@@ -137,15 +133,13 @@ class Page::SearchTest < ActiveSupport::TestCase
     @logged_in
   end
 
-  def current_user
-    @current_user
-  end
+  attr_reader :current_user
 
   private
 
-  #def controller
+  # def controller
   #  self.controller ||= MockController.new
-  #end
+  # end
 
   def login(user = :blue)
     @logged_in = true
@@ -164,14 +158,15 @@ class Page::SearchTest < ActiveSupport::TestCase
   # the page is not added to the set.
   #
   def page_ids(array)
-    return Set.new() unless array.any?
+    return Set.new unless array.any?
     Set.new(
-      array.collect{|record|
-
+      array.collect do |record|
         if record.is_a?(Page)
-          page, id = record, record.id
+          page = record
+          id = record.id
         elsif record.respond_to? :page_id
-          page, id = record.page_id, nil
+          page = record.page_id
+          id = nil
         else
           raise "invalid record: #{record.inspect}"
         end
@@ -181,7 +176,7 @@ class Page::SearchTest < ActiveSupport::TestCase
         else
           id
         end
-      }.compact
+      end.compact
     )
   end
 
@@ -194,5 +189,4 @@ class Page::SearchTest < ActiveSupport::TestCase
   def sphinx_working?
     ThinkingSphinx::Configuration.instance.controller.running?
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Page::TitleControllerTest < ActionController::TestCase
-
   def setup
     @user = FactoryGirl.create(:user)
     @page = FactoryGirl.create(:page, owner: @user)
@@ -18,7 +17,7 @@ class Page::TitleControllerTest < ActionController::TestCase
 
   def test_update_title
     login_as @user
-    xhr :put, :update, page_id: @page.id, page: { title: "sunset" }
+    xhr :put, :update, page_id: @page.id, page: { title: 'sunset' }
     assert_equal @page.reload.title, 'sunset'
     assert_template 'page/title/update'
   end
@@ -34,6 +33,4 @@ class Page::TitleControllerTest < ActionController::TestCase
     assert_equal @page.reload.name, 'new-name'
     assert_template 'page/title/update'
   end
-
 end
-

@@ -2,10 +2,9 @@ source 'https://rubygems.org'
 
 # ensure github urls use https rather than insecure git protocol.
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-
 
 ##
 #  Core components
@@ -55,7 +54,7 @@ gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 # legacy helper for form_remote_for and link_to_remote
 # there's only a 0.0.0 version out there it seems
 gem 'prototype_legacy_helper', '0.0.0',
-  github: 'rails/prototype_legacy_helper'
+    github: 'rails/prototype_legacy_helper'
 
 ##
 # Upgrade pending
@@ -101,7 +100,7 @@ gem 'will_paginate', '~> 3.1'
 
 # state-machine for requests
 # locking in to latest major to fix API
-gem 'aasm' , '~> 3.4'
+gem 'aasm', '~> 3.4'
 
 # lists used for tasks and choices in votes so far
 # continuation of the old standart rails plugin
@@ -128,7 +127,7 @@ gem 'RedCloth', '~> 4.2'
 
 # extension of the redcloth markup lang
 gem 'greencloth', require: 'greencloth',
-  path: 'vendor/gems/riseuplabs-greencloth-0.1'
+                  path: 'vendor/gems/riseuplabs-greencloth-0.1'
 
 # media upload post processing has it's own repo
 # version is rather strict for now as api may still change.
@@ -190,7 +189,6 @@ group :test, :development do
 end
 
 group :test, :ci do
-
   ##
   ## TESTS
   ##
@@ -224,4 +222,3 @@ group :test, :ci do
 end
 
 gem 'bundler-audit'
-

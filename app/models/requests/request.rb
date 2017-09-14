@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
-=begin
-    create_table "requests", :force => true do |t|
-      t.integer  "created_by_id"
-      t.integer  "approved_by_id"
-
-      t.integer  "recipient_id"
-      t.string   "recipient_type", :limit => 5
-
-      t.string   "email"
-      t.string   "code", :limit => 8
-
-      t.integer  "requestable_id"
-      t.string   "requestable_type", :limit => 10
-
-      t.integer  "shared_discussion_id"
-      t.integer  "private_discussion_id"
-
-      t.string   "state", :limit => 10
-      t.string   "type"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-
-      t.integer  "site_id"
-    end
-=end
+#     create_table "requests", :force => true do |t|
+#       t.integer  "created_by_id"
+#       t.integer  "approved_by_id"
+#
+#       t.integer  "recipient_id"
+#       t.string   "recipient_type", :limit => 5
+#
+#       t.string   "email"
+#       t.string   "code", :limit => 8
+#
+#       t.integer  "requestable_id"
+#       t.string   "requestable_type", :limit => 10
+#
+#       t.integer  "shared_discussion_id"
+#       t.integer  "private_discussion_id"
+#
+#       t.string   "state", :limit => 10
+#       t.string   "type"
+#       t.datetime "created_at"
+#       t.datetime "updated_at"
+#
+#       t.integer  "site_id"
+#     end
 
 #
 # Anytime an action needs approval, a Request is made.
@@ -38,7 +36,7 @@ class Request < ActiveRecord::Base
 
   belongs_to :created_by, class_name: 'User'
   belongs_to :approved_by, class_name: 'User'
-  alias_method :rejected_by, :approved_by
+  alias rejected_by approved_by
 
   belongs_to :recipient, polymorphic: true
   belongs_to :requestable, polymorphic: true
@@ -47,8 +45,8 @@ class Request < ActiveRecord::Base
   belongs_to :private_discussion, class_name: 'Discussion', dependent: :destroy
 
   has_many :notices, as: :noticable,
-    dependent: :delete_all,
-    class_name: 'Notice::RequestNotice'
+                     dependent: :delete_all,
+                     class_name: 'Notice::RequestNotice'
 
   # most requests are non-vote based. they just need a single 'approve' action
   # to get approved
@@ -58,9 +56,9 @@ class Request < ActiveRecord::Base
   # 'ignore' is another vote that could be use by otherwise non-votable requests
   # so that each person has a distinct 'ignore'/'non-ignore' state
   has_many :votes,
-    as: :votable,
-    class_name: "Poll::RequestVote",
-    dependent: :delete_all
+           as: :votable,
+           class_name: 'Poll::RequestVote',
+           dependent: :delete_all
 
   validates_presence_of :created_by
   validates_presence_of :recipient,   if: :recipient_required?
@@ -76,7 +74,7 @@ class Request < ActiveRecord::Base
   ##
 
   def self.having_state(state)
-    where("requests.state = ?", state.to_s)
+    where('requests.state = ?', state.to_s)
   end
 
   # i think this is a nice idea, but... i am not sure about the UI for this. by making the view dependent
@@ -86,7 +84,7 @@ class Request < ActiveRecord::Base
 
   ## same as having_state, but take into account
   ## that user can vote reject/approve on some requests without changing the state
-  #def :having_state_for_user(state, user)
+  # def :having_state_for_user(state, user)
   #  votes_conditions = if state == :pending
   #    "votes.value IS NULL AND requests.state = 'pending'"
   #  else
@@ -95,7 +93,7 @@ class Request < ActiveRecord::Base
   #  { :conditions => votes_conditions,
   #    :select => "requests.*",
   #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
-  #}
+  # }
 
   def self.pending
     where("state = 'pending'")
@@ -120,13 +118,13 @@ class Request < ActiveRecord::Base
   # you only get to approve group requests for groups that you are an admin for
   def self.approvable_by(user)
     where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')",
-      user.id, user.admin_for_group_ids
+          user.id, user.admin_for_group_ids
   end
 
   def self.to_or_created_by_user(user)
     # you only get to approve group requests for groups that you are an admin for
     where "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
-      user.id, user.admin_for_group_ids, user.id
+          user.id, user.admin_for_group_ids, user.id
   end
 
   def self.to_group(group)
@@ -139,7 +137,7 @@ class Request < ActiveRecord::Base
 
   def self.regarding_group(group)
     where '(recipient_id = ? AND recipient_type = ?) OR (requestable_id = ? AND requestable_type = ?)',
-      group.id, 'Group', group.id, 'Group'
+          group.id, 'Group', group.id, 'Group'
   end
 
   def self.for_recipient(recipient)
@@ -160,15 +158,14 @@ class Request < ActiveRecord::Base
     where visibility_condition, id: user.id, group_ids: user.all_group_ids
   end
 
-
-  MEMBERSHIP_TYPES = [
-    'RequestToJoinOurNetwork',
-    'RequestToJoinUs',
-    'RequestToJoinUsViaEmail',
-    'RequestToJoinYou',
-    'RequestToJoinYourNetwork',
-    'RequestToRemoveUser'
-  ]
+  MEMBERSHIP_TYPES = %w[
+    RequestToJoinOurNetwork
+    RequestToJoinUs
+    RequestToJoinUsViaEmail
+    RequestToJoinYou
+    RequestToJoinYourNetwork
+    RequestToRemoveUser
+  ].freeze
 
   #
   # find only requests related to membership.
@@ -190,13 +187,13 @@ class Request < ActiveRecord::Base
   # Allows Request.create(..., :message => 'hi')
   #
   def message=(msg)
-    @initial_post = msg   # see build_discussion
+    @initial_post = msg # see build_discussion
   end
 
   before_save :build_discussion
   def build_discussion
     if @initial_post.present?
-      self.build_shared_discussion(post: {body: @initial_post, user: created_by})
+      build_shared_discussion(post: { body: @initial_post, user: created_by })
     end
   end
 
@@ -205,7 +202,7 @@ class Request < ActiveRecord::Base
   # Can, and should, be overridden by subclasses when appropriate.
   #
   def icon_entity
-    self.created_by
+    created_by
   end
 
   ##
@@ -215,27 +212,21 @@ class Request < ActiveRecord::Base
   #
   # change the state of the request, testing to see if the user is allowed to.
   #
-  def set_state!(newstate, user=nil)
-    if new_record?
-      raise 'record must be saved first'
-    end
+  def set_state!(newstate, user = nil)
+    raise 'record must be saved first' if new_record?
 
     command = case newstate
-      when 'approved' then 'approve!'
-      when 'rejected' then 'reject!'
-      else raise 'state must be approved or rejected'
+              when 'approved' then 'approve!'
+              when 'rejected' then 'reject!'
+              else raise 'state must be approved or rejected'
     end
 
-    if user.nil?
-      raise_denied(nil,newstate)
-    end
+    raise_denied(nil, newstate) if user.nil?
 
-    self.approved_by = user  # approve or rejecte both use approved_by
-    self.send(command)       # FSM call, eg approve!()
+    self.approved_by = user # approve or rejecte both use approved_by
+    send(command) # FSM call, eg approve!()
 
-    unless self.state == newstate
-      raise_denied(user, newstate)
-    end
+    raise_denied(user, newstate) unless state == newstate
 
     save!
   end
@@ -261,11 +252,11 @@ class Request < ActiveRecord::Base
   end
 
   def approve_by!(user)
-    set_state!('approved',user)
+    set_state!('approved', user)
   end
 
   def reject_by!(user)
-    set_state!('rejected',user)
+    set_state!('rejected', user)
   end
 
   def destroy_by!(user)
@@ -286,31 +277,55 @@ class Request < ActiveRecord::Base
   ##
 
   def event() end
-  def event_attrs(); {}; end
-  def description() end
-  def short_description() end
-  def votable?() false end
 
-  def may_create?(user)  false end
-  def may_destroy?(user) false end
-  def may_approve?(user) false end
-  def may_view?(user)    false end
+  def event_attrs
+    {}
+  end
+
+  def description() end
+
+  def short_description() end
+
+  def votable?
+    false
+  end
+
+  def may_create?(_user)
+    false
+  end
+
+  def may_destroy?(_user)
+    false
+  end
+
+  def may_approve?(_user)
+    false
+  end
+
+  def may_view?(_user)
+    false
+  end
 
   def after_approval() end
 
-  def recipient_required?()   true end
-  def requestable_required?() true end
+  def recipient_required?
+    true
+  end
+
+  def requestable_required?
+    true
+  end
 
   def flash_message(options = {})
     # WARNING: don't pass the whole 'options' hash here, as 'human' will
     #     add :default and :scope options, which break our translations.
     thing = self.class.model_name.human(count: options[:count])
-    options.merge! thing: thing,
-      recipient: recipient.try.display_name || email
-    if self.errors.any?
+    options[:thing] = thing
+    options[:recipient] = recipient.try.display_name || email
+    if errors.any?
       { type: :error,
         text: :thing_was_not_sent.t(options),
-        list: self.errors.full_messages }
+        list: errors.full_messages }
     else
       { type: :success,
         text: :thing_was_sent.t(options) }
@@ -354,13 +369,13 @@ class Request < ActiveRecord::Base
   def user_span(user = nil)
     user ||= self.user
     return nil if user.blank?
-    ('<user>%s</user>' % user.name).html_safe
+    format('<user>%s</user>', user.name).html_safe
   end
 
   def group_span(group = nil)
     group ||= self.group
     return nil if group.blank?
-    ('<group>%s</group>' % group.name).html_safe
+    format('<group>%s</group>', group.name).html_safe
   end
 
   #
@@ -391,7 +406,6 @@ class Request < ActiveRecord::Base
     regarding_group(group).where("type != 'RequestToDestroyOurGroup'").destroy_all
   end
 
-
   protected
 
   ##
@@ -399,15 +413,13 @@ class Request < ActiveRecord::Base
   ##
 
   def set_default_state
-    self.state = "pending" # needed despite FSM so that validations on create will work.
+    self.state = 'pending' # needed despite FSM so that validations on create will work.
   end
 
   def check_create_permission
     # created_by has it's own validations - so let's not bomb out
     return if created_by.blank?
-    unless may_create?(created_by)
-      errors.add(:base, I18n.t(:permission_denied))
-    end
+    errors.add(:base, I18n.t(:permission_denied)) unless may_create?(created_by)
   end
 
   def no_duplicate
@@ -422,9 +434,9 @@ class Request < ActiveRecord::Base
 
   def self.vote_value_for_action(vote_state)
     case vote_state.to_s
-      when 'reject' then 0;
-      when 'approve' then 1;
-      when 'ignore' then 2;
+    when 'reject' then 0
+    when 'approve' then 1
+    when 'ignore' then 2
     end
   end
 
@@ -433,6 +445,4 @@ class Request < ActiveRecord::Base
     votes.by_user(user).delete_all
     votes.create!(value: value, user: user)
   end
-
 end
-

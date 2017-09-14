@@ -11,4 +11,3 @@
 
 class LinkRenderer::Pages < WillPaginate::ViewHelpers::LinkRenderer
 end
-

@@ -1,9 +1,6 @@
 
 SearchFilter.new('/public/') do
-
-  query do |query|
-    query.add_public
-  end
+  query(&:add_public)
 
   #
   # ui
@@ -13,6 +10,4 @@ SearchFilter.new('/public/') do
   self.section = :access
   self.label = :public
   self.singleton = true
-
 end
-

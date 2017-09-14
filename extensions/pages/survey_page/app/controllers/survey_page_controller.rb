@@ -5,17 +5,17 @@ class SurveyPageController < Page::BaseController
   guard :may_ACTION_survey?
   permissions 'survey_page'
 
-#  def new
-#    @survey = Survey.new
-#  end
-#
-#  def make
-#    @survey = Survey.create! params[:survey]
-#    @page.data = @survey
-#    @page.save
-#  rescue exc
-#    warning exc
-#  end
+  #  def new
+  #    @survey = Survey.new
+  #  end
+  #
+  #  def make
+  #    @survey = Survey.create! params[:survey]
+  #    @page.data = @survey
+  #    @page.save
+  #  rescue exc
+  #    warning exc
+  #  end
 
   def show
     if @page.data.nil?
@@ -40,21 +40,20 @@ class SurveyPageController < Page::BaseController
       redirect_to page_url(@page, action: 'edit')
     end
   rescue
-    @survey.errors.each {|e| flash_message error: e.message }
+    @survey.errors.each { |e| flash_message error: e.message }
   end
 
   protected
 
   def fetch_data
-    @survey=@page.data || Survey.new
+    @survey = @page.data || Survey.new
   end
 
-  def setup_view #maybe want to change
+  def setup_view # maybe want to change
     @show_right_column = true
   end
 
   def setup_options
-    @options.show_tabs   = true
+    @options.show_tabs = true
   end
-
 end

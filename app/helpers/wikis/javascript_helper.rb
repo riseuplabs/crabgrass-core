@@ -1,5 +1,4 @@
 module Wikis::JavascriptHelper
-
   def render_wiki(page, wiki: @wiki, section: @section, template: :show)
     section = section.presence || :document
     if section == :document
@@ -10,5 +9,4 @@ module Wikis::JavascriptHelper
       page << "$$('.wiki-section-edit').invoke('hide')"
     end
   end
-
 end

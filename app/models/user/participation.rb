@@ -14,7 +14,6 @@
 #
 
 class User::Participation < ActiveRecord::Base
-
   include Page::ParticipationAccess
 
   belongs_to :page, inverse_of: :user_participations
@@ -33,15 +32,21 @@ class User::Participation < ActiveRecord::Base
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe
 
-  def entity; user; end
-  def group?; false;  end
-  def user? ; true; end
+  def entity
+    user
+  end
+
+  def group?
+    false
+  end
+
+  def user?
+    true
+  end
 
   protected
 
   def clear_tag_cache
     user.clear_tag_cache
   end
-
 end
-

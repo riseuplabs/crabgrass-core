@@ -1,5 +1,4 @@
 module UserRecords
-
   def hidden_user
     records[:hidden_user] ||= FactoryGirl.create(:user).tap do |hide|
       hide.revoke_access! friends: :view
@@ -48,5 +47,4 @@ module UserRecords
       group.add_user! peer
     end
   end
-
 end

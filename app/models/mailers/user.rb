@@ -1,5 +1,4 @@
 module Mailers::User
-
   def forgot_password(token, options)
     setup(options)
     setup_email(token.user)
@@ -18,10 +17,9 @@ module Mailers::User
   protected
 
   def setup_email(user)
-    @recipients   = "#{user.email}"
-    @from         = "%s <%s>" % [I18n.t(:reset_password), @from_address]
-    @subject      = @site.title + ": "
+    @recipients   = user.email.to_s
+    @from         = format('%s <%s>', I18n.t(:reset_password), @from_address)
+    @subject      = @site.title + ': '
     @user       ||= user
   end
-
 end

@@ -1,8 +1,10 @@
 module PageRecords
-
   def own_page(type = nil, options = {})
-    options, type = type, nil  if type.is_a? Hash
-    options.merge! created_by: user
+    if type.is_a? Hash
+      options = type
+      type = nil
+    end
+    options[:created_by] = user
     page = new_page(type, options)
     save_and_index(page)
   end
@@ -19,10 +21,19 @@ module PageRecords
     end
   end
 
-  def new_page(type=nil, options = {})
-    options, type = type, nil  if type.is_a? Hash
-    page_options = options.slice :title, :summary, :created_by, :owner, :flow, :public
-    page_options.merge! created_at: Time.now, updated_at: Time.now
+  def new_page(type = nil, options = {})
+    if type.is_a? Hash
+      options = type
+      type = nil
+    end
+    page_options = options.slice :title,
+      :summary,
+      :created_by,
+      :owner,
+      :flow,
+      :public
+    page_options[:created_at] = Time.now
+    page_options[:updated_at] = Time.now
     if type
       @page = records[type] ||= FactoryGirl.build(type, page_options)
     else
@@ -43,7 +54,10 @@ module PageRecords
   end
 
   def create_page(type, options = {})
-    options, type = type, :discussion_page if type.is_a? Hash
+    if type.is_a? Hash
+      options = type
+      type = :discussion_page
+    end
     prepare_page(type, options)
     click_on :create.t
   end
@@ -62,9 +76,7 @@ module PageRecords
   end
 
   def save_and_index(page)
-    if page.new_record?
-      page.save
-    end
+    page.save if page.new_record?
     page
   end
 end

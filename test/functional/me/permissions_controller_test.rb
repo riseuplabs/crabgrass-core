@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class Me::PermissionsControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
   end
 
   def test_not_logged_in
@@ -18,5 +17,4 @@ class Me::PermissionsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 3, assigns(:holders).count
   end
-
 end

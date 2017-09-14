@@ -6,7 +6,7 @@ module Crabgrass::Theme::Helper
   def theme_render(value)
     return unless value
     if value.is_a? Proc
-      self.instance_eval &value
+      instance_eval &value
     elsif value.is_a? Hash
       render value
     elsif value.is_a? String
@@ -24,6 +24,4 @@ module Crabgrass::Theme::Helper
       0
     end
   end
-
 end
-

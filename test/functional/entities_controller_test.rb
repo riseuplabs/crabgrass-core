@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class EntitiesControllerTest < ActionController::TestCase
-
-
   def test_preloading_entities
     login_as :blue
     blue = users(:blue)
@@ -12,8 +10,8 @@ class EntitiesControllerTest < ActionController::TestCase
     friends_and_peers = (blue.friends + blue.peers).uniq
     total_count = friends_and_peers.count + blue.all_groups.count
     assert_equal total_count, assigns(:entities).count
-    assert_equal total_count, response["suggestions"].size,
-      "suggestions should contain all friends, peers and groups."
+    assert_equal total_count, response['suggestions'].size,
+                 'suggestions should contain all friends, peers and groups.'
     assert_holds_entities(response, '', 5)
   end
 
@@ -31,7 +29,7 @@ class EntitiesControllerTest < ActionController::TestCase
     # did not have any groups.
     login_as :quentin
     assert_equal 0, users(:quentin).groups.count,
-      "quentin should not be in any groups."
+                 'quentin should not be in any groups.'
     xhr :get, :index, format: :json, view: :all, query: 'an'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
@@ -44,7 +42,7 @@ class EntitiesControllerTest < ActionController::TestCase
     # did not have any friends.
     login_as :red
     assert_equal 0, users(:red).friends.count,
-      "red should not have any friends."
+                 'red should not have any friends.'
     xhr :get, :index, format: :json, view: :all, query: 'qu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
@@ -54,7 +52,7 @@ class EntitiesControllerTest < ActionController::TestCase
   def test_entities_respect_group_privacy
     login_as :red
     assert !users(:red).member_of?(groups(:private_group)),
-      "red should not be in the private group."
+           'red should not be in the private group.'
     xhr :get, :index, format: :json, view: :all, query: 'pri'
     assert_no_suggestions "red can't see any group starting with 'pri'"
   end
@@ -88,22 +86,21 @@ class EntitiesControllerTest < ActionController::TestCase
   #    assert response["suggestions"].size > 0
   #  end
 
-  def assert_holds_entities(response, query=nil, min_results = 0)
-    assert_equal response["suggestions"].size, response["data"].size,
-      "there should be as many data objects as suggestions."
-    assert response["suggestions"].size > min_results,
-      "There should be results for the query '#{query}'."
+  def assert_holds_entities(response, query = nil, min_results = 0)
+    assert_equal response['suggestions'].size, response['data'].size,
+                 'there should be as many data objects as suggestions.'
+    assert response['suggestions'].size > min_results,
+           "There should be results for the query '#{query}'."
     return unless query
-    assert_equal response["query"], query,
-      "response.query should contain the query string."
+    assert_equal response['query'], query,
+                 'response.query should contain the query string.'
   end
 
   protected
 
-  def assert_no_suggestions(message = "did not expect autocomplete suggestions")
+  def assert_no_suggestions(message = 'did not expect autocomplete suggestions')
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal [], response["suggestions"], message
+    assert_equal [], response['suggestions'], message
   end
-
 end

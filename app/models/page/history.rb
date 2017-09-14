@@ -10,15 +10,15 @@ class Page::History < ActiveRecord::Base
   after_create :send_single_notification, if: :single_notification_wanted?
 
   def send_single_notification
-    return if self.reload.notification_sent?
+    return if reload.notification_sent?
     Mailer::PageHistories.deliver_updates_for page,
-      to: recipients_for_single_notification
+                                              to: recipients_for_single_notification
   end
 
   # Let's wait 30 minutes so notifications for all changes to the same page
   # within that timeframe can be combined.
   handle_asynchronously :send_single_notification,
-    run_at: Proc.new { 30.minutes.from_now }
+                        run_at: proc { 30.minutes.from_now }
 
   def single_notification_wanted?
     recipients_for_single_notification.present?
@@ -38,13 +38,13 @@ class Page::History < ActiveRecord::Base
   end
 
   def recipients_for_single_notification
-    page.users.where(receive_notifications: 'Single').
-      where(user_participations: {watch: true}).
-      where("users.id <> ?", user_id)
+    page.users.where(receive_notifications: 'Single')
+        .where(user_participations: { watch: true })
+        .where('users.id <> ?', user_id)
   end
 
   def description_key
-    self.class.name.underscore.gsub('/', '_')
+    self.class.name.underscore.tr('/', '_')
   end
 
   # params to substitute in the translation of the description key
@@ -53,17 +53,16 @@ class Page::History < ActiveRecord::Base
   end
 
   def user_name
-    user.try.display_name || "Unknown/Deleted"
+    user.try.display_name || 'Unknown/Deleted'
   end
 
   def item_name
     case item
     when Group then item.full_name
     when User then item.display_name
-    else "Unknown/Deleted"
+    else 'Unknown/Deleted'
     end
   end
-
 
   # no details by default
   def details_key; end
@@ -71,7 +70,7 @@ class Page::History < ActiveRecord::Base
   protected
 
   def page_updated_at
-    Page.where(id: self.page).update_all updated_at: self.created_at
+    Page.where(id: page).update_all updated_at: created_at
   end
 end
 
@@ -114,7 +113,7 @@ class Page::History::ChangeTitle < Page::History
 
   def details_from_page
     {
-      from: page.previous_changes["title"].first,
+      from: page.previous_changes['title'].first,
       to: page.title
     }
   end
@@ -147,12 +146,14 @@ class Page::History::UpdateParticipation < Page::History
   protected
 
   def self.class_for_update(participation)
-    subclasses.detect{|klass|
+    subclasses.detect do |klass|
       klass.tracks participation.previous_changes, participation
-    }
+    end
   end
 
-  def self.tracks(changes, part); false; end
+  def self.tracks(_changes, _part)
+    false
+  end
 
   def self.activated(old = nil, new = nil)
     new && !old
@@ -175,13 +176,13 @@ class Page::History::RemoveStar < Page::History::UpdateParticipation
   end
 end
 
-class Page::History::StartWatching  < Page::History::UpdateParticipation
+class Page::History::StartWatching < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     activated(*changes[:watch])
   end
 end
 
-class Page::History::StopWatching  < Page::History::UpdateParticipation
+class Page::History::StopWatching < Page::History::UpdateParticipation
   def self.tracks(changes, _part)
     deactivated(*changes[:watch])
   end
@@ -202,7 +203,7 @@ module Page::History::GrantAccess
     view:  :read,
     edit:  :write,
     admin: :full
-  }
+  }.freeze
   def access_from_participation(participation = nil)
     ACCESS_FROM_PARTICIPATION_SYM[participation.try.access_sym]
   end
@@ -256,7 +257,7 @@ class Page::History::GrantGroupReadAccess < Page::History::GrantGroupAccess; end
 class Page::History::RevokedGroupAccess < Page::History::UpdateParticipation
   after_save :page_updated_at
 
-  def self.tracks(changes, part)
+  def self.tracks(_changes, part)
     # destroyed? does not work here because we destroy the participation via
     # page.groups
     part.group? && !part.class.exists?(id: part.id)
@@ -302,7 +303,7 @@ class Page::History::GrantUserWriteAccess < Page::History::GrantUserAccess; end
 class Page::History::GrantUserReadAccess < Page::History::GrantUserAccess; end
 
 class Page::History::RevokedUserAccess < Page::History::UpdateParticipation
-  def self.tracks(changes, part)
+  def self.tracks(_changes, part)
     # destroyed? does not work here because we destroy the participation via
     # page.users
     part.user? && !part.class.exists?(id: part.id)
@@ -331,6 +332,6 @@ class Page::History::ForComment < Page::History
   end
 end
 
-class Page::History::AddComment < Page::History::ForComment ; end
-class Page::History::UpdateComment < Page::History::ForComment ; end
-class Page::History::DestroyComment < Page::History::ForComment ; end
+class Page::History::AddComment < Page::History::ForComment; end
+class Page::History::UpdateComment < Page::History::ForComment; end
+class Page::History::DestroyComment < Page::History::ForComment; end

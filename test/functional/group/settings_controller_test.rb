@@ -1,10 +1,9 @@
 require 'test_helper'
 
 class Group::SettingsControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.grant_access! public: :view
     @group.add_user!(@user)
   end
@@ -45,10 +44,9 @@ class Group::SettingsControllerTest < ActionController::TestCase
   def test_update
     login_as @user
     assert_permission :may_admin_group? do
-      post :update, group: {full_name: 'full name'}, group_id: @group.to_param
+      post :update, group: { full_name: 'full name' }, group_id: @group.to_param
     end
     assert_response 302
     assert_equal 'full name', assigns('group').full_name
   end
-
 end

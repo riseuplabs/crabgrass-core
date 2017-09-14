@@ -6,11 +6,9 @@
 class Style # < ActiveRecord:Base
   attr_accessor :color, :background_color, :background_image, :background_position, :background_repeat
 
-  def initialize(hsh={})
-    hsh.each do |key,value|
-      self.send("#{key}=",value)
+  def initialize(hsh = {})
+    hsh.each do |key, value|
+      send("#{key}=", value)
     end
   end
-
 end
-

@@ -20,7 +20,7 @@ class Wiki::Lock < ActiveRecord::Base
   #
   # accessor for +locks+ attribute. The default value is +{}+
   serialize :locks, Hash
-  serialize_default :locks, Hash.new
+  serialize_default :locks, {}
 
   after_find :update_expired_locks!
 
@@ -29,8 +29,8 @@ class Wiki::Lock < ActiveRecord::Base
   end
 
   def lock!(section, user)
-    locks[section] = {by: user.id, expires_at: Time.now.utc + LOCKING_PERIOD}
-    update_attributes!({locks: locks})
+    locks[section] = { by: user.id, expires_at: Time.now.utc + LOCKING_PERIOD }
+    update_attributes!(locks: locks)
   end
 
   #
@@ -44,7 +44,7 @@ class Wiki::Lock < ActiveRecord::Base
         locks.delete(section)
       end
     end
-    update_attributes!({locks: locks})
+    update_attributes!(locks: locks)
   end
 
   def sections_open_for(user)
@@ -66,7 +66,7 @@ class Wiki::Lock < ActiveRecord::Base
 
   # returns the first section locked by user, or nil
   def section_locked_by(user)
-    section, lock = locks.find {|section, lock| lock[:by] == user.id}
+    section, lock = locks.find { |_section, lock| lock[:by] == user.id }
     section
   end
 
@@ -76,6 +76,7 @@ class Wiki::Lock < ActiveRecord::Base
   end
 
   protected
+
   # this should be called every time Wiki::Lock is loaded from db
   # so that we may never see any expired locks
   def update_expired_locks!

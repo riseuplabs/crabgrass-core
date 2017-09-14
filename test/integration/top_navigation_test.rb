@@ -17,5 +17,4 @@ class TopNavigationTest < IntegrationTest
       assert_content v
     end
   end
-
 end

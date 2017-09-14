@@ -1,7 +1,6 @@
 module Wiki::Sections
-
   class SectionNotFoundError < CrabgrassException
-    def initialize(section = 'document', options = {})
+    def initialize(section = 'document', _options = {})
       message = :cant_find_wiki_section.t(section: section)
       super(message)
     end
@@ -14,9 +13,9 @@ module Wiki::Sections
   def save_section!(section, text)
     section = structure.find_section(section) unless section.is_a? GreenTree
     updated_body = section.sub_markup(text)
-    return if self.body == updated_body
+    return if body == updated_body
     self.body = updated_body
-    self.save!
+    save!
   end
 
   def get_body_for_section(section)

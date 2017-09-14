@@ -7,7 +7,6 @@ require 'test_helper'
 #
 
 class Asset_Media_Test < ActiveSupport::TestCase
-
   def setup
     setup_assets
   end
@@ -21,7 +20,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
     assert asset.public?
     asset.update_access
 
-    assert File.exist?(asset.public_filename), 'public file "%s" should exist' % asset.public_filename
+    assert File.exist?(asset.public_filename), format('public file "%s" should exist', asset.public_filename)
     assert File.symlink?(File.dirname(asset.public_filename)), 'dir of public file should be a symlink'
     asset.instance_eval do
       def public?
@@ -41,8 +40,8 @@ class Asset_Media_Test < ActiveSupport::TestCase
     thumb_file = asset.thumbnail_filename(:small)
     thumb1 = asset.private_filename thumb_file
     thumb_v1 = asset.versions.latest.private_filename thumb_file
-    assert File.exist?(thumb1), '%s should exist' % thumb1
-    assert File.exist?(thumb_v1), '%s should exist' % thumb_v1
+    assert File.exist?(thumb1), format('%s should exist', thumb1)
+    assert File.exist?(thumb_v1), format('%s should exist', thumb_v1)
 
     asset.uploaded_data = upload_data('image.png')
     asset.save
@@ -59,12 +58,12 @@ class Asset_Media_Test < ActiveSupport::TestCase
     thumb2 = asset.private_filename thumb_file
     thumb_v2 = asset.versions.latest.private_filename thumb_file
 
-    assert File.exist?(thumb2), '%s should exist (new thumb)' % @thumb2
-    assert File.exist?(thumb_v2), '%s should exist (new versioned thumb)' % @thumb_v2
-    assert !File.exist?(thumb1), '%s should NOT exist (old filename)' % @thumb1
+    assert File.exist?(thumb2), format('%s should exist (new thumb)', @thumb2)
+    assert File.exist?(thumb_v2), format('%s should exist (new versioned thumb)', @thumb_v2)
+    assert !File.exist?(thumb1), format('%s should NOT exist (old filename)', @thumb1)
 
     end_thumb_count = Thumbnail.count
-    assert_equal start_thumb_count+9, end_thumb_count, 'there should be exactly 9 more thumbnail objects'
+    assert_equal start_thumb_count + 9, end_thumb_count, 'there should be exactly 9 more thumbnail objects'
   end
 
   def test_type_changes
@@ -108,7 +107,6 @@ class Asset_Media_Test < ActiveSupport::TestCase
     assert_equal 64, asset.thumbnail(:small).height, 'guess height should match actual'
   end
 
-
   def test_dimension_integration
     skip_if_missing :GraphicsMagick
     asset = FactoryGirl.create :image_asset
@@ -119,8 +117,8 @@ class Asset_Media_Test < ActiveSupport::TestCase
     assert_equal 43, asset.versions.latest.thumbnail(:small).width, 'actual width of versioned thumb should be 43'
     assert_equal 64, asset.versions.latest.thumbnail(:small).height, 'actual height of versioned thumb should be 64'
 
-    assert_equal ["43","64"], Media.dimensions(asset.thumbnail(:small).private_filename)
-    assert_equal ["133","200"], Media.dimensions(asset.thumbnail(:medium).private_filename)
+    assert_equal %w[43 64], Media.dimensions(asset.thumbnail(:small).private_filename)
+    assert_equal %w[133 200], Media.dimensions(asset.thumbnail(:medium).private_filename)
   end
 
   def test_odt_integration
@@ -217,15 +215,15 @@ class Asset_Media_Test < ActiveSupport::TestCase
 
   def transmogrifier_for(options = {})
     Media::Transmogrifier.stubs(:new).with(all_of(
-      has_key(:input_file),
-      has_key(:output_file),
-      has_entries(options)
+                                             has_key(:input_file),
+                                             has_key(:output_file),
+                                             has_entries(options)
     ))
   end
 
   def assert_thumb_exists(asset, thumb)
     name = asset.thumbnail_filename(thumb)
     assert asset.thumbnail_exists?(thumb),
-      "Could not find #{asset.private_filename(name)}"
+           "Could not find #{asset.private_filename(name)}"
   end
 end

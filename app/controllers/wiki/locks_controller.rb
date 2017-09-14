@@ -1,5 +1,4 @@
 class Wiki::LocksController < Wiki::BaseController
-
   #
   # triggered when the user hits the 'cancel' or 'break lock' button
   # when given the wiki locked error
@@ -25,5 +24,4 @@ class Wiki::LocksController < Wiki::BaseController
   rescue Wiki::Sections::SectionNotFoundError
     head :not_found
   end
-
 end

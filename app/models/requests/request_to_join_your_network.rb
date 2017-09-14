@@ -6,22 +6,26 @@
 # created_by: person in group who want their group in the network
 #
 class RequestToJoinYourNetwork < Request
-
   validates_format_of :recipient_type, with: /Group/
   validates_format_of :requestable_type, with: /Group/
 
   validate :no_federating_yet, on: :create
   validate :recipient_is_network
 
-  def group() requestable end
-  def network() recipient end
+  def group
+    requestable
+  end
+
+  def network
+    recipient
+  end
 
   def may_create?(user)
-    user.may?(:admin,group)
+    user.may?(:admin, group)
   end
 
   def may_approve?(user)
-    user.may?(:admin,network)
+    user.may?(:admin, network)
   end
 
   def may_destroy?(user)
@@ -37,11 +41,11 @@ class RequestToJoinYourNetwork < Request
   end
 
   def description
-    [:request_to_join_your_network_description, {group: group_span(group), network: group_span(network)}]
+    [:request_to_join_your_network_description, { group: group_span(group), network: group_span(network) }]
   end
 
   def short_description
-    [:request_to_join_your_network_short, {group: group_span(group), network: group_span(network)}]
+    [:request_to_join_your_network_short, { group: group_span(group), network: group_span(network) }]
   end
 
   protected
@@ -57,6 +61,4 @@ class RequestToJoinYourNetwork < Request
       errors.add(:base, I18n.t(:membership_exists_error, member: group.name))
     end
   end
-
 end
-

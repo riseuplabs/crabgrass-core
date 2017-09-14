@@ -4,13 +4,9 @@
 #
 
 SearchFilter.new('/limit/:limit_count') do
-
   query do |query, limit_count|
     limit = limit_count.to_i
     # don't allow really large limits
-    if limit < 512
-      query.add_limit(limit)
-    end
+    query.add_limit(limit) if limit < 512
   end
-
 end

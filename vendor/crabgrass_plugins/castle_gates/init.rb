@@ -13,9 +13,11 @@ end
 
 ActionController::Base.class_eval do
   protected
+
   def key_holders(*args)
-    args.collect{|arg| CastleGates::Holder[arg]}
+    args.collect { |arg| CastleGates::Holder[arg] }
   end
+
   def find_holder_by_code(code)
     CastleGates::Holder.find_by_code(code)
   end

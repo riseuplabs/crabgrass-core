@@ -14,5 +14,4 @@ module Common::AlwaysPerformCaching
       true
     end
   end
-
 end

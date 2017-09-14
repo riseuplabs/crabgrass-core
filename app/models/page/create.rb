@@ -1,9 +1,9 @@
 module Page::Create
   def self.included(base)
     base.extend(ClassMethods)
-    #base.instance_eval do
+    # base.instance_eval do
     #  include InstanceMethods
-    #end
+    # end
   end
 
   #
@@ -29,18 +29,16 @@ module Page::Create
       page
     end
 
-    def create(attributes={}, &block)
-      begin
-        create!(attributes, &block)
-      rescue ActiveRecord::RecordInvalid => exc
-        exc.record
-      end
+    def create(attributes = {}, &block)
+      create!(attributes, &block)
+    rescue ActiveRecord::RecordInvalid => exc
+      exc.record
     end
 
     #
     # build a page in memory, but don't save anything.
     #
-    def build!(attributes={}, &block)
+    def build!(attributes = {}, &block)
       if attributes.is_a?(Array)
         # act like normal create
         super(attributes, &block)
@@ -62,8 +60,8 @@ module Page::Create
           if user
             if recipients
               share = Page::Share.new page, user,
-                access: access,
-                send_notice: inbox
+                                      access: access,
+                                      send_notice: inbox
               share.with recipients
             end
             # Maybe we already build a user participation because the user
@@ -71,9 +69,9 @@ module Page::Create
             # with notification.
             # Please note that at this point the participation only exists
             # in memory. So do not try to use where(user_id: ...) here.
-            participation = page.user_participations.select { |part|
+            participation = page.user_participations.select do |part|
               part.user == user
-            }.first
+            end.first
             participation ||= page.user_participations.build(user_id: user.id)
             participation.access = ACCESS[:admin]
             participation.changed_at = Time.now
@@ -82,9 +80,5 @@ module Page::Create
         end
       end
     end
-
-
   end # ClassMethods
 end # Page::Create
-
-

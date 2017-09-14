@@ -11,7 +11,7 @@ class AssetTypeChangeTest < JavascriptIntegrationTest
 
   def test_replacing_with_different_file_type
     assert_page_header
-    assert_content "bee"
+    assert_content 'bee'
     update_asset 'test.pdf'
     assert_content 'Portable Document Format'
     click_page_tab 'History'

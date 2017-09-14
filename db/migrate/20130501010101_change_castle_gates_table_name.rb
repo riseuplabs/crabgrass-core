@@ -5,11 +5,11 @@ class ChangeCastleGatesTableName < ActiveRecord::Migration
       p.integer :castle_id
       p.string  :castle_type
       p.integer :holder_code
-      p.integer :gate_bitfield, :default => 1
+      p.integer :gate_bitfield, default: 1
     end
     add_index :castle_gates_keys,
-      [:castle_id, :castle_type, :holder_code],
-      name: 'index_castle_gates_by_castle_and_holder_code'
+              %i[castle_id castle_type holder_code],
+              name: 'index_castle_gates_by_castle_and_holder_code'
   end
 
   def self.down
@@ -18,8 +18,8 @@ class ChangeCastleGatesTableName < ActiveRecord::Migration
       p.integer :castle_id
       p.string  :castle_type
       p.integer :holder_code
-      p.integer :gate_bitfield, :default => 1
+      p.integer :gate_bitfield, default: 1
     end
-    add_index :keys, [:castle_id, :castle_type, :holder_code]
+    add_index :keys, %i[castle_id castle_type holder_code]
   end
 end

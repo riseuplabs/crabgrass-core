@@ -8,11 +8,11 @@ class User::Token < ActiveRecord::Base
   before_create :generate_value
 
   def self.expired
-    where ["created_at < ?", Time.now - @@validity_time]
+    where ['created_at < ?', Time.now - @@validity_time]
   end
 
   def self.active
-    where ["created_at >= ?", Time.now - @@validity_time]
+    where ['created_at >= ?', Time.now - @@validity_time]
   end
 
   def self.to_recover
@@ -30,22 +30,26 @@ class User::Token < ActiveRecord::Base
 
   # Return true if token has expired
   def expired?
-    return Time.now > self.created_at + @@validity_time
+    Time.now > created_at + @@validity_time
   end
 
-  def to_s; value; end
-  alias_method :to_param, :to_s
+  def to_s
+    value
+  end
+  alias to_param to_s
 
   protected
+
   def generate_value
     self.value = self.class.generate_token_value
   end
 
   private
+
   def self.generate_token_value
-    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    chars = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
     token_value = ''
-    20.times { |i| token_value << chars[rand(chars.size-1)] }
+    20.times { |_i| token_value << chars[rand(chars.size - 1)] }
     token_value
   end
 end

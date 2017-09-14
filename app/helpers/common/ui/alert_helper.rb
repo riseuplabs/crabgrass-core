@@ -1,12 +1,12 @@
 # encoding: utf-8
+
 #
 ##
 ## DISPLAYING ALERTS
 ##
 
 module Common::Ui::AlertHelper
-
-  FADE_TIMEOUT = 5;
+  FADE_TIMEOUT = 5
 
   #
   # generates the html for the floating alert messages
@@ -33,7 +33,7 @@ module Common::Ui::AlertHelper
 
   def alert_messages_have_errors?
     flash[:messages].present? &&
-      flash[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
+      flash[:messages].detect { |m| m[:type] == :error or m[:type] == :warning }
   end
 
   def clear_alert_messages
@@ -65,9 +65,7 @@ module Common::Ui::AlertHelper
 
   def render_alert_messages(allow_fade = true)
     render partial: 'ui/alert',
-      collection: flash[:messages],
-      locals: {allow_fade: allow_fade, timeout: FADE_TIMEOUT}
+           collection: flash[:messages],
+           locals: { allow_fade: allow_fade, timeout: FADE_TIMEOUT }
   end
-
 end
-

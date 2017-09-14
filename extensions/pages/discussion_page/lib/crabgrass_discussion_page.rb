@@ -5,10 +5,9 @@ module CrabgrassDiscussionPage
     include Crabgrass::Page::Engine
 
     register_page_type 'DiscussionPage',
-      controller: 'discussion_page',
-      icon: 'page_discussion',
-      class_group: ['text', 'discussion'],
-      order: 2
-
+                       controller: 'discussion_page',
+                       icon: 'page_discussion',
+                       class_group: %w[text discussion],
+                       order: 2
   end
 end

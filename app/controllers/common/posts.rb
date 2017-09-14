@@ -14,15 +14,12 @@
 #
 #
 module Common::Posts
-
   def edit
     render template: 'common/posts/edit'
   end
 
   def update
-    if params[:save]
-      @post.update_attribute('body', params[:post][:body])
-    end
+    @post.update_attribute('body', params[:post][:body]) if params[:save]
     redirect_to action: :show
   end
 
@@ -30,6 +27,4 @@ module Common::Posts
     @post.destroy
     render template: 'common/posts/destroy'
   end
-
 end
-

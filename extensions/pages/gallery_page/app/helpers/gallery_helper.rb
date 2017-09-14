@@ -1,6 +1,5 @@
 module GalleryHelper
-
-  def gallery_detail_view_url gallery, image=nil, this_id=nil
+  def gallery_detail_view_url(gallery, image = nil, this_id = nil)
     image = (image.is_a?(Showing) ? image.asset : image)
     page_url(gallery, action: 'detail_view', id: (image ? image.id :
                                                         this_id))
@@ -21,19 +20,19 @@ module GalleryHelper
   # Elements need to be passed as symbols or strings. They will appear in the
   # order they are given.
   # Raises an argument error if the element doesn't exist.
-  def gallery_navigation *elements
+  def gallery_navigation(*_elements)
     available_elements = {
       detail_view: lambda {
-        @detail_view_navigation or ""
+        @detail_view_navigation or ''
       },
       add_existing: lambda {
         link_to(I18n.t(:add_existing_image),
                 page_url(@page, action: 'find'),
-                class: "small_icon plus_16")
-      },
+                class: 'small_icon plus_16')
+      }
     }
 
-    output  = '<div class="gallery-nav" align="right">'
+    output = '<div class="gallery-nav" align="right">'
     output << available_elements[:detail_view].call
     output << '<span class="gallery-actions">'
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
@@ -41,54 +40,53 @@ module GalleryHelper
     output << '</span>'
     output << '</div>'
 
-    return output
+    output
   end
 
   def gallery_display_image_position
     if @image_index
-                         I18n.t(:image_count, number: @image_index.to_s, count: @image_count.to_s )
-                       else
-                         I18n.t(:image_count_total, count: @image_count.to_s )
+      I18n.t(:image_count, number: @image_index.to_s, count: @image_count.to_s)
+    else
+      I18n.t(:image_count_total, count: @image_count.to_s)
                        end
   end
 
   def upload_images_link
     link_to_modal(I18n.t(:add_images_to_gallery_link),
-      { url: page_url(@page, action: 'new', controller: :image),
-        complete: 'styleUpload();'},
-      class: "icon plus_16")
+                  { url: page_url(@page, action: 'new', controller: :image),
+                    complete: 'styleUpload();' },
+                  class: 'icon plus_16')
   end
 
-  def gallery_delete_image(image, position)
+  def gallery_delete_image(image, _position)
     url = page_url(@page, controller: :image, action: 'destroy', id: image.id, method: :delete)
     link_to_remote('&nbsp;', {
-        url: url,
-        confirm: I18n.t(:confirm_image_delete),
-        title: I18n.t(:remove_from_gallery),
-        update: 'message-container',
-        success: "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
-      }, title: I18n.t(:remove_from_gallery),
-      class: 'small_icon empty trash_16')
+                     url: url,
+                     confirm: I18n.t(:confirm_image_delete),
+                     title: I18n.t(:remove_from_gallery),
+                     update: 'message-container',
+                     success: "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
+                   }, title: I18n.t(:remove_from_gallery),
+                      class: 'small_icon empty trash_16')
   end
 
   def gallery_edit_image(image)
     url = page_url @page,
-      controller: :image,
-      action: 'edit',
-      id: image.id
+                   controller: :image,
+                   action: 'edit',
+                   id: image.id
     link_to_modal '&nbsp;',
-      { url: url,
-        title: I18n.t(:edit_image)
-      },
-      class: 'small_icon empty pencil_16',
-      title: I18n.t(:edit_image)
+                  { url: url,
+                    title: I18n.t(:edit_image) },
+                  class: 'small_icon empty pencil_16',
+                  title: I18n.t(:edit_image)
   end
 
   def gallery_make_images_sortable_js
-    sortable_element "assets_list",
-      constraint: false,
-      overlap: :horizontal,
-      url: sort_images_url(page_id: @page)
+    sortable_element 'assets_list',
+                     constraint: false,
+                     overlap: :horizontal,
+                     url: sort_images_url(page_id: @page)
   end
 
   def gallery_move_image_without_js(image)
@@ -108,24 +106,24 @@ module GalleryHelper
                       id: image.id,
                       direction: 'right')
     output += '</noscript>'
-    return output
+    output
   end
 
   def render_image_form_with_progress
     render_form_with_progress_for @image,
-      url: gallery_image_form_url,
-      upload_id: @image_upload_id
+                                  url: gallery_image_form_url,
+                                  upload_id: @image_upload_id
   end
 
   def gallery_image_form_url
     page_url @page,
-      :controller => :image,
-      :action => @image ? 'update' : 'create' ,
-      'X-Progress-ID' => @image_upload_id,
-      :id => @image && @image.id
+             :controller => :image,
+             :action => @image ? 'update' : 'create',
+             'X-Progress-ID' => @image_upload_id,
+             :id => @image && @image.id
   end
 
-  def js_style var, style
+  def js_style(var, style)
     output = []
     style.split(';').each do |part|
       key, value = part.split(':')
@@ -135,12 +133,12 @@ module GalleryHelper
   end
 
   def gallery_make_cover(image)
-    extra_output = ""
+    extra_output = ''
     html_options = {
       id: "make_cover_link_#{image.id}"
     }
     if image.is_cover_of?(@page)
-      html_options[:style] = "display:none;"
+      html_options[:style] = 'display:none;'
       extra_output += javascript_tag("var current_cover = #{image.id};")
     end
     options = {
@@ -152,67 +150,67 @@ module GalleryHelper
       success: "$('make_cover_link_'+current_cover).show();
                    $('make_cover_link_#{image.id}').hide();"
     }
-    link_to_remote(image_tag("png/16/mime_image.png", title:                              I18n.t(:make_album_cover)),
-                   options, html_options)+extra_output
+    link_to_remote(image_tag('png/16/mime_image.png', title: I18n.t(:make_album_cover)),
+                   options, html_options) + extra_output
   end
 
-  def star_for_image image
+  def star_for_image(image)
     star = (@upart and @upart.star?)
     add_options = {
-      id: "add_star_link"
+      id: 'add_star_link'
     }
     remove_options = {
-      id: "remove_star_link"
+      id: 'remove_star_link'
     }
     star_img = image_tag('icons/small_png/star_outline.png')
     nostar_img = image_tag('icons/small_png/star.png')
-    (star ? add_options : remove_options).merge!(style: "display:none;")
+    (star ? add_options : remove_options)[:style] = 'display:none;'
     content_tag(:span, link_to_remote(star_img + I18n.t(:add_star_link),
                                       url: page_url(@page,
-                                        action: 'add_star',
-                                        id: image.id),
-                                      update: 'tfjs'), add_options)+
+                                                    action: 'add_star',
+                                                    id: image.id),
+                                      update: 'tfjs'), add_options) +
       content_tag(:span, link_to_remote(nostar_img + I18n.t(:remove_star_link),
                                         url: page_url(@page,
-                                          action: 'remove_star',
-                                          id: image.id),
+                                                      action: 'remove_star',
+                                                      id: image.id),
                                         update: 'tfjs'), remove_options)
   end
 
-  def image_title image
+  def image_title(image)
     change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
     caption = image.caption ? h(image.caption) : '[click here to edit caption]'
     output = content_tag :p, caption, class: 'description small_icon pencil_16',
-       id: 'detail_image_title', onclick: change_title
+                                      id: 'detail_image_title', onclick: change_title
     output << render('change_image_title', image: image)
-    return output
+    output
   end
 
-  #form_options = {
+  # form_options = {
   #  :url => image_url(image, page_id: @page)
   #  :update => 'detail_image_title',
   #  :complete => "$('detail_image_title').show()",
   #  :pending => "$('change_title_spinner').show()"
-  #}
-  def save_caption_form_options page, image
-    {url: page_url(page,
-                      controller: :image,
-                      action: 'update',
-                      id: image.id),
-     update: 'detail_image_title',
-     complete: %Q{$('detail_image_title').show();
+  # }
+  def save_caption_form_options(page, image)
+    { url: page_url(page,
+                    controller: :image,
+                    action: 'update',
+                    id: image.id),
+      update: 'detail_image_title',
+      complete: %{$('detail_image_title').show();
                     $('change_title_form').hide();
                     $('save_caption_buttons').show();
                     $('change_title_spinner').hide();},
-     loading: "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
+      loading: "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
 
   def next_image_link
     if @next
       url = image_url(@next.asset_id, page_id: @page)
       link_to_remote :next.t,
-        {url: url, method: :get},
-        {class: 'btn btn-default', icon: 'right'}
+                     { url: url, method: :get },
+                     class: 'btn btn-default', icon: 'right'
     else
       "<span class='btn btn-default disabled icon right_16'>#{:next.t}</span>".html_safe
     end
@@ -222,11 +220,10 @@ module GalleryHelper
     if @previous
       url = image_url(@previous.asset_id, page_id: @page)
       link_to_remote :previous.t,
-        {url: url, method: :get},
-        {class: 'btn btn-default', icon: 'left'}
+                     { url: url, method: :get },
+                     class: 'btn btn-default', icon: 'left'
     else
       "<span class='btn btn-default disabled icon left_16'>#{:previous.t}</span>".html_safe
     end
   end
-
 end

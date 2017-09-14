@@ -9,5 +9,3 @@ class CreatePolls < ActiveRecord::Migration
     drop_table :polls
   end
 end
-
-

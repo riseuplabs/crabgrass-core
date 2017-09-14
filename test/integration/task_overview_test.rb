@@ -2,7 +2,6 @@ require 'test_helper'
 require 'javascript_integration_test'
 
 class TaskOverviewTest < JavascriptIntegrationTest
-
   fixtures :users, :pages, 'page/terms', :tasks, 'task/participations'
 
   def test_list_only_pages_with_assigned_tasks
@@ -24,7 +23,4 @@ class TaskOverviewTest < JavascriptIntegrationTest
     assert_no_selector 'h2', text: 'another task list'
     assert_no_content 'task4'
   end
-
-
-
 end

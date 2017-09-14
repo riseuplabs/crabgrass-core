@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'capybara/rails'
-require "active_support/test_case"
+require 'active_support/test_case'
 
 # require all integration helpers
 Dir[File.dirname(__FILE__) + '/helpers/integration/*.rb'].each do |file|
@@ -48,9 +48,9 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     return unless self.class.use_transactional_fixtures
     Page::Terms.delete_all
     ActiveRecord::FixtureSet.cache_fixtures ActiveRecord::Base.connection,
-      'page/terms' => nil
+                                            'page/terms' => nil
     ActiveRecord::FixtureSet.create_fixtures Rails.root + 'test/fixtures',
-      'page/terms'
+                                             'page/terms'
   end
 
   def group
@@ -73,16 +73,13 @@ class IntegrationTest < ActionDispatch::IntegrationTest
           yield one
         rescue MiniTest::Assertion => e
           # preserve the backtrace but add the run number to the message
-          message  = "#{$!} in run #{i+1} with #{one.class.name}"
+          message  = "#{$ERROR_INFO} in run #{i + 1} with #{one.class.name}"
           message += " #{one}" if one.respond_to? :to_s
-          raise $!, message, $!.backtrace
+          raise $ERROR_INFO, message, $ERROR_INFO.backtrace
         end
       end
     else
       yield one_or_many
     end
   end
-
-
 end
-

@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class GalleryControllerTest < ActionController::TestCase
-
-
   def setup
     # let's make some gallery
     # there are no galleries in fixtures yet.
@@ -21,8 +19,8 @@ class GalleryControllerTest < ActionController::TestCase
 
   def test_show_empty
     login_as :blue
-    gallery = Gallery.create!( user: users(:blue),
-      title: "Empty Gallery")
+    gallery = Gallery.create!(user: users(:blue),
+                              title: 'Empty Gallery')
     get :show, id: gallery.id
     assert_response :redirect
     assert_redirected_to @controller.send(:page_url, gallery, action: 'edit')
@@ -33,5 +31,4 @@ class GalleryControllerTest < ActionController::TestCase
     get :edit, id: @gallery.id
     assert_response :success
   end
-
 end

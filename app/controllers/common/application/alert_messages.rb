@@ -48,8 +48,6 @@
 require 'active_support/multibyte/chars'
 
 module Common::Application::AlertMessages
-
-
   def self.included(base)
     base.class_eval do
       helper_method :translate_exception
@@ -79,13 +77,13 @@ module Common::Application::AlertMessages
   end
 
   def alert_message(*args)
-    options = Hash[args.collect {|i| [i, true] if i.is_a?(Symbol)}.compact]
+    options = Hash[args.collect { |i| [i, true] if i.is_a?(Symbol) }.compact]
     type = determine_type(options)
     flsh = determine_flash(type, options)
     flsh[:messages] ||= []
     add_flash(type, *args).each do |msg|
       # allow options to override the defaults
-      flsh[:messages] << msg.merge(options);
+      flsh[:messages] << msg.merge(options)
     end
   end
 
@@ -93,7 +91,7 @@ module Common::Application::AlertMessages
   # forces the alert messages to come later, even if we previously said :now.
   # this is used in case we did :now but then redirected later.
   #
-  def force_later_alert()
+  def force_later_alert
     flash[:messages] = flash.now[:messages]
   end
 
@@ -110,7 +108,7 @@ module Common::Application::AlertMessages
   # At the same time redirect would alter the url in the users browser.
   # Maybe they just typed it wrong. So we better leave it there.
   #
-  def raise_not_found(thing=nil)
+  def raise_not_found(thing = nil)
     raise ErrorNotFound.new(thing)
   end
 
@@ -121,13 +119,13 @@ module Common::Application::AlertMessages
   ##
 
   def add_flash(type, *args)
-    if exception = args.detect{|a|a.is_a? Exception}
+    if exception = args.detect { |a| a.is_a? Exception }
       add_flash_exception(exception)
-    elsif record = args.detect{|a|a.is_a? ActiveRecord::Base}
+    elsif record = args.detect { |a| a.is_a? ActiveRecord::Base }
       add_flash_record(record, args.extract_options!)
-    elsif (messages = args.select{|a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars)}).any?
+    elsif (messages = args.select { |a| a.is_a?(String) or a.is_a?(ActiveSupport::Multibyte::Chars) }).any?
       add_flash_message(type, messages)
-    elsif message_array = args.detect{|a| a.is_a?(Array)}
+    elsif message_array = args.detect { |a| a.is_a?(Array) }
       add_flash_message(type, message_array)
     else
       add_flash_default(type)
@@ -135,41 +133,41 @@ module Common::Application::AlertMessages
   end
 
   def add_flash_message(type, message)
-    [{type: type, text: message}]
+    [{ type: type, text: message }]
   end
 
   def add_flash_default(type)
-    msg = if(type == :error or type == :warning)
-      :alert_not_saved.t;
-    else
-      :alert_saved.t;
+    msg = if type == :error or type == :warning
+            :alert_not_saved.t
+          else
+            :alert_saved.t
     end
     add_flash_message(type, msg)
   end
 
   def add_flash_exception(exception)
     if exception.is_a? PermissionDenied
-      [{type: :warning, text: [:alert_permission_denied.t, :permission_denied_description.t]}]
+      [{ type: :warning, text: [:alert_permission_denied.t, :permission_denied_description.t] }]
     elsif exception.is_a? AuthenticationRequired
-      [{type: :notice, text: [:login_required.t, :login_required_description.t]}]
+      [{ type: :notice, text: [:login_required.t, :login_required_description.t] }]
     elsif exception.is_a? ErrorMessages
       exception.errors.collect do |msg|
-        {type: :error, text: msg}
+        { type: :error, text: msg }
       end
     elsif exception.is_a? ActiveRecord::RecordInvalid
       add_flash_record(exception.record)
     elsif exception.is_a? CrabgrassException
-      [{type: exception.options[:type] || :error, text: exception.message}]
+      [{ type: exception.options[:type] || :error, text: exception.message }]
     else
-      text = exception.respond_to?(:message) ? exception.message  : exception
-      [{type: :error, text: text.to_s}]
+      text = exception.respond_to?(:message) ? exception.message : exception
+      [{ type: :error, text: text.to_s }]
     end
   end
 
   def add_flash_record(record, options = {})
     if record.respond_to?(:flash_message) && record.flash_message
       options[:count] ||= 1
-      [ record.flash_message(options) ]
+      [record.flash_message(options)]
     elsif record.errors.any?
       [{ type: :error,
          text: [:alert_not_saved.t, :alert_field_errors.t],
@@ -217,27 +215,26 @@ module Common::Application::AlertMessages
     I18n.t key, scope: scope, thing: thing, cascade: true
   end
 
-#  def exception_detailed_message(exception=nil)
-#    return "Warning: Trying to get detailed message but no exception given." unless exception
-#    message = exception.clean_message
-#    file, line = exception.backtrace.first.split(":")[0, 2]
-#    if File.exists?(file)
-#      message << "\n\n"
-#      code = File.readlines(file)
-#      line = line.to_i
-#      min = [line - 2, 0].max
-#      max = line + 2
-#      (min..max).each do |n|
-#        if n == line
-#          message << "=> "
-#        else
-#          message << "   "
-#        end
-#        message << ("%4d" % n)
-#        message << code[n].to_s
-#      end
-#    end
-#    message
-#  end
+  #  def exception_detailed_message(exception=nil)
+  #    return "Warning: Trying to get detailed message but no exception given." unless exception
+  #    message = exception.clean_message
+  #    file, line = exception.backtrace.first.split(":")[0, 2]
+  #    if File.exists?(file)
+  #      message << "\n\n"
+  #      code = File.readlines(file)
+  #      line = line.to_i
+  #      min = [line - 2, 0].max
+  #      max = line + 2
+  #      (min..max).each do |n|
+  #        if n == line
+  #          message << "=> "
+  #        else
+  #          message << "   "
+  #        end
+  #        message << ("%4d" % n)
+  #        message << code[n].to_s
+  #      end
+  #    end
+  #    message
+  #  end
 end
-

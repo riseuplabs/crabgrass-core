@@ -1,7 +1,6 @@
 require 'javascript_integration_test'
 
 class TaskListTest < JavascriptIntegrationTest
-
   fixtures :users
 
   def setup
@@ -47,8 +46,8 @@ class TaskListTest < JavascriptIntegrationTest
     open_task_form
     fill_in 'task_name', with: options[:description]
     fill_in 'task_description', with: options[:detail]
-    click_button "Add new Task"
-    return options
+    click_button 'Add new Task'
+    options
   end
 
   def unassign_task_from(user)

@@ -9,9 +9,9 @@ class CreateUserParticipations < ActiveRecord::Migration
       t.column :changed_at, :datetime
       t.column :watch,     :boolean
       t.column :star,      :boolean
-      t.column :resolved,  :boolean, :default => true
+      t.column :resolved,  :boolean, default: true
       t.column :viewed,    :boolean
-      t.column :message_count, :integer, :default => 0
+      t.column :message_count, :integer, default: 0
     end
   end
 

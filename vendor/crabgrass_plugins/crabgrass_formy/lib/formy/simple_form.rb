@@ -35,26 +35,20 @@ module Formy
       def close
         if @input && @input =~ /type=.checkbox./
           puts_push '<div class="checkbox">'
-            puts_push '<label>'
-              puts @input
-              puts @label
-              if @info
-                puts '<span class="help-block">%s</span>' % @info
-              end
-            puts_pop '</label>'
+          puts_push '<label>'
+          puts @input
+          puts @label
+          puts format('<span class="help-block">%s</span>', @info) if @info
+          puts_pop '</label>'
           puts_pop '</div>'
         else
-          if @label.is_a? Array
-            @label, @label_for = @label
-          end
+          @label, @label_for = @label if @label.is_a? Array
           html = []
           if @label
-            html << '<label for="%s">%s</label>' % [@label_for, @label]
+            html << format('<label for="%s">%s</label>', @label_for, @label)
           end
           html << @input
-          if @info
-            html << '<span class="help-block">%s</span>' % @info
-          end
+          html << format('<span class="help-block">%s</span>', @info) if @info
           puts_push '<div class="form-group">'
           puts html
           puts_pop '</div>'
@@ -70,15 +64,15 @@ module Formy
     end
 
     def close
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       if @buttons
         puts_push '<div class="buttons">'
-          @buttons.each do |button|
-            puts button
-          end
+        @buttons.each do |button|
+          puts button
+        end
         puts_pop '</div>'
       end
-      puts_pop "</fieldset>"
+      puts_pop '</fieldset>'
       super
     end
   end

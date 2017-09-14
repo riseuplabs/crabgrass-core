@@ -1,11 +1,10 @@
 # These currently only work with javascript.
 module PageActions
-
   PERMISSION_ICONS = {
     'Write Ability' => :pencil,
     'Read Only' => :no_pencil,
     'Full Access' => :wrench
-  }
+  }.freeze
 
   def share_page_with(*entities)
     click_on 'Share Page'
@@ -42,7 +41,7 @@ module PageActions
       click_on 'Edit'
     end
     find('span', text: tag).hover
-    within ".shy_parent:hover" do
+    within '.shy_parent:hover' do
       click_on 'Remove'
     end
     click_button 'Close'
@@ -77,7 +76,8 @@ module PageActions
     find('a', text: 'Permissions').click
     select permission
     if PERMISSION_ICONS.keys.include? permission
-      assert_selector "#permissions_tab .tiny_#{PERMISSION_ICONS[permission]}_16"
+      assert_selector "#permissions_tab " +
+        ".tiny_#{PERMISSION_ICONS[permission]}_16"
     else
       wait_for_ajax
     end
@@ -100,7 +100,7 @@ module PageActions
     page.page_terms.committed!
   end
 
-  def attach_file_to_page(file = fixture_file('photo.jpg'), page = @page)
+  def attach_file_to_page(file = fixture_file('photo.jpg'), _page = @page)
     within '#attachments' do
       click_on 'Edit'
     end
@@ -127,11 +127,15 @@ module PageActions
 
   # verify that the little thumbnail image actually gets displayed
   def check_attachment_thumbnail
-    find("#attachments a.attachment img").synchronize do
-      unless evaluate_script("$$('#attachments a.attachment img').first().naturalWidth != 0")
-        raise Capybara::ExpectationNotMet.new("Thumbnail could not be loaded")
+    find('#attachments a.attachment img').synchronize do
+      unless evaluate_script(look_for_thumbnail_js)
+        raise Capybara::ExpectationNotMet, 'Thumbnail could not be loaded'
       end
     end
+  end
+
+  def look_for_thumbnail_js
+    "$$('#attachments a.attachment img').first().naturalWidth != 0"
   end
 
   def close_popup

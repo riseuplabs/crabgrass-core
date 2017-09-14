@@ -1,11 +1,9 @@
 require 'test_helper'
 
 class User::FinderTest < ActiveSupport::TestCase
-
-
   def test_find_all_by_default
     finder = User::Finder.new(users(:blue), 'search/a')
-    assert_equal "a", finder.query_term
+    assert_equal 'a', finder.query_term
     assert_same_entities [users(:aaron)], finder.find
   end
 
@@ -35,5 +33,4 @@ class User::FinderTest < ActiveSupport::TestCase
       Got #{actual.map(&:name).to_sentence}".
     EOMESSAGE
   end
-
 end

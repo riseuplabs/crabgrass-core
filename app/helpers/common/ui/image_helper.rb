@@ -4,12 +4,9 @@
 ##
 
 module Common::Ui::ImageHelper
-
-  IMAGE_SIZES = Hash.new(200).merge({
-    small: 64,
-    medium: 200,
-    large: 500
-  }).freeze
+  IMAGE_SIZES = Hash.new(200).merge(small: 64,
+                                    medium: 200,
+                                    large: 500).freeze
 
   ##
   ## ICON
@@ -24,10 +21,9 @@ module Common::Ui::ImageHelper
     content_tag :i, ' ', class: "small_icon #{icon}_#{size}", title: title
   end
 
-#  def pushable_icon_tag(icon, size = 16, id = nil)
-#    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
-#  end
-
+  #  def pushable_icon_tag(icon, size = 16, id = nil)
+  #    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
+  #  end
 
   ##
   ## PAGES
@@ -64,22 +60,22 @@ module Common::Ui::ImageHelper
   #  :class -- add css classes to the spinner
   #  :spinner -- used a different image for the spinner
   #
-  def spinner(id = nil, options={})
-    display = ("display:none;" unless options.delete(:show))
+  def spinner(id = nil, options = {})
+    display = ('display:none;' unless options.delete(:show))
     align = "vertical-align:#{options[:align] || 'middle'}"
-    options.reverse_merge! spinner: "spinner.gif",
-      style: "#{display} #{align};",
-      class: 'spin',
-      id: id && spinner_id(id),
-      alt: ''
+    options.reverse_merge! spinner: 'spinner.gif',
+                           style: "#{display} #{align};",
+                           class: 'spin',
+                           id: id && spinner_id(id),
+                           alt: ''
     options[:src] = "/images/#{options.delete(:spinner)}"
     tag :img, options
   end
 
-  def text_spinner(text, id, options={})
+  def text_spinner(text, id, options = {})
     span_options = {
       id: spinner_id(id),
-      style: ("display:none;" unless options.delete(:show)),
+      style: ('display:none;' unless options.delete(:show)),
       class: 'spin'
     }
     content_tag :span, span_options do
@@ -106,8 +102,8 @@ module Common::Ui::ImageHelper
     "replaceClassName(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
-  def big_spinner()
-    content_tag :div, '', style: "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", class: 'spin'
+  def big_spinner
+    content_tag :div, '', style: 'background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;', class: 'spin'
   end
 
   # we can almost do this to trick ie into working with event.target,
@@ -122,7 +118,6 @@ module Common::Ui::ImageHelper
   #  }
   #
   # however, this can be used for non-ajax js.
-
 
   ##
   ## ASSET THUMBNAILS
@@ -146,19 +141,19 @@ module Common::Ui::ImageHelper
   #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options = {}, html_options = {})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]
       if options[:crop] or options[:scale]
-        target_width, target_height = (options[:crop]||options[:scale]).split(/x/).map(&:to_f)
+        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
         if target_width > thumbnail.width || target_height > thumbnail.height
           # thumbnail is actually _smaller_ than our target area
           border_width = 1
           margin_x = ((target_width - thumbnail.width) / 2) - border_width
           margin_y = ((target_height - thumbnail.height) / 2) - border_width
           img = image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
-            style: "margin: #{margin_y}px #{margin_x}px;"))
+                                                            style: "margin: #{margin_y}px #{margin_x}px;"))
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
@@ -185,39 +180,39 @@ module Common::Ui::ImageHelper
   end
 
   # links to an asset with a thumbnail preview
-  def link_to_asset(asset, thumbnail_name, options={})
+  def link_to_asset(asset, thumbnail_name, options = {})
     thumbnail = asset.thumbnail(thumbnail_name)
     img = thumbnail_img_tag(asset, thumbnail_name, options)
-    if size = (options[:crop]||options[:scale]||options[:crop!])
+    if size = (options[:crop] || options[:scale] || options[:crop!])
       target_width, target_height = size.split(/x/).map(&:to_f)
     elsif thumbnail and thumbnail.width and thumbnail.height
       target_width = thumbnail.width
       target_height = thumbnail.height
     else
-      target_width = 32;
-      target_height = 32;
+      target_width = 32
+      target_height = 32
     end
     options[:class] ||= 'thumbnail'
     options[:title] ||= asset.filename
     options[:style]   = "height:#{target_height}px;width:#{target_width}px"
-    url     = options[:url] || asset.url
+    url = options[:url] || asset.url
     # options[:method] ||= 'get'
     # span = content_tag(:span, asset.filename)
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 
   # links to an asset with a thumbnail preview
-  def old_link_to_asset(asset, thumbnail_name, options={})
+  def old_link_to_asset(asset, thumbnail_name, options = {})
     thumbnail = asset.thumbnail(thumbnail_name)
-    img = thumbnail_img_tag(asset, thumbnail_name,options)
-    if size = (options[:crop]||options[:scale]||options[:crop!])
+    img = thumbnail_img_tag(asset, thumbnail_name, options)
+    if size = (options[:crop] || options[:scale] || options[:crop!])
       target_width, target_height = size.split(/x/).map(&:to_f)
     elsif thumbnail and thumbnail.width and thumbnail.height
       target_width = thumbnail.width
       target_height = thumbnail.height
     else
-      target_width = 32;
-      target_height = 32;
+      target_width = 32
+      target_height = 32
     end
     style   = "height:#{target_height}px;width:#{target_width}px"
     klass   = options[:class] || 'thumbnail'
@@ -226,7 +221,7 @@ module Common::Ui::ImageHelper
     link_to img, url, class: klass, title: asset.filename, style: style, method: method
   end
 
-  def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
+  def thumbnail_or_icon(asset, thumbnail, width = nil, height = nil, html_options = {})
     if thumbnail
       image_tag(thumbnail.url, html_options)
     else
@@ -238,11 +233,11 @@ module Common::Ui::ImageHelper
     image_tag "/images/png/16/#{asset.big_icon}.png", style: 'vertical-align: middle'
   end
 
-  def mini_icon_for(asset, width=nil, height=nil)
+  def mini_icon_for(asset, width = nil, height = nil)
     if width.nil? or height.nil?
       image_tag "/images/png/16/#{asset.small_icon}.png", style: 'vertical-align: middle;'
     else
-      image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height-22)/2}px #{(width-22)/2}px;"
+      image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
     end
   end
 
@@ -250,15 +245,15 @@ module Common::Ui::ImageHelper
   ## AGNOSTIC MEDIA
   ##
 
-  def display_media(media, size=:medium)
+  def display_media(media, size = :medium)
     if media.respond_to?(:is_image?) and media.is_image?
       if media.respond_to?(:thumbnail)
         thumbnail = media.thumbnail(size)
         if thumbnail.nil? or thumbnail.failure?
           dims = case size
-            when :small  then '64x64'
-            when :medium then '200x200'
-            when :large  then '500x500'
+                 when :small  then '64x64'
+                 when :medium then '200x200'
+                 when :large  then '500x500'
           end
           image_tag('/images/ui/corrupted/corrupted.png', size: dims)
         else
@@ -282,20 +277,19 @@ module Common::Ui::ImageHelper
   # 'size' can be either a Symbol :small, :medium, :large, or a Hash
   # of the format used by Picture geometry (see picture.rb)
   #
-  def picture_tag(picture, size=:medium)
+  def picture_tag(picture, size = :medium)
     content_tag :div, '', style: picture_style(picture, size)
   end
 
-  def picture_style(picture, size=:medium)
+  def picture_style(picture, size = :medium)
     if size.is_a? Symbol
-      pixels = IMAGE_SIZES[size];
-      geometry = {max_width: pixels, min_width: pixels, max_height: pixels*2}
+      pixels = IMAGE_SIZES[size]
+      geometry = { max_width: pixels, min_width: pixels, max_height: pixels * 2 }
     else
       geometry = size
     end
     geometry = picture.add_geometry(geometry)
     width, height = picture.size(geometry)
-    "width: 100%%; max-width: %spx; height: %spx; background: url(%s)" % [width, height, picture.url(geometry)]
+    format('width: 100%%; max-width: %spx; height: %spx; background: url(%s)', width, height, picture.url(geometry))
   end
-
 end

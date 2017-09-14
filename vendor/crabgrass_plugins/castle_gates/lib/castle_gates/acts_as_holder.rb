@@ -6,7 +6,7 @@ module CastleGates
   module ActsAsHolder
     module InstanceMethods
       def holder_code_suffix
-        self.id
+        id
       end
     end
   end

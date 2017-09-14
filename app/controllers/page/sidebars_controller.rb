@@ -25,7 +25,7 @@ class Page::SidebarsController < ApplicationController
   end
 
   def refresh_sidebar
-   render template: 'page/sidebar/reset'
+    render template: 'page/sidebar/reset'
   end
 
   def fetch_page
@@ -35,5 +35,4 @@ class Page::SidebarsController < ApplicationController
       @upart = @page.participation_for_user(current_user)
     end
   end
-
 end

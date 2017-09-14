@@ -3,19 +3,15 @@
 ##
 
 module Common::Utility::RssHelper
-
   protected
 
   def group_search_rss
-    '<link rel="alternate" href="%s" title="%s" type="application/rss+xml" />' % [
-       url_for(group_search_url(action: params[:action], path: current_rss_path)),
-       I18n.t(:rss_feed)
-    ]
+    format('<link rel="alternate" href="%s" title="%s" type="application/rss+xml" />', url_for(group_search_url(action: params[:action], path: current_rss_path)), I18n.t(:rss_feed))
   end
 
   def me_rss
-    # TODO - fix rss
-    #'<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
+    # TODO: - fix rss
+    # '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
   end
 
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
@@ -25,9 +21,9 @@ module Common::Utility::RssHelper
     if rss_request?
       response.headers['Content-Type'] = 'application/rss+xml'
       render partial: '/pages/rss', locals: locals
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
@@ -43,6 +39,4 @@ module Common::Utility::RssHelper
   def current_rss_path
     @path.format('rss') # returns a copy of @path with format set
   end
-
 end
-

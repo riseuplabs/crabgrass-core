@@ -1,5 +1,4 @@
 class CreateAssetPageController < Page::CreateController
-
   before_filter :ensure_asset, only: :create
 
   def new
@@ -38,4 +37,3 @@ class CreateAssetPageController < Page::CreateController
     end
   end
 end
-

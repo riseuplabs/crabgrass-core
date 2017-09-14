@@ -1,9 +1,7 @@
 class Me::PasswordsController < Me::BaseController
-
   rescue_render update: :edit
 
-  def edit
-  end
+  def edit; end
 
   def update
     if params[:user][:password].empty?

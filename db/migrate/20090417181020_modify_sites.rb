@@ -4,7 +4,7 @@ class ModifySites < ActiveRecord::Migration
     add_column :sites, :enforce_ssl, :boolean
     add_column :sites, :show_exceptions, :boolean
     add_column :sites, :require_user_email, :boolean
-    add_index  :sites, :name, :unique => true
+    add_index  :sites, :name, unique: true
   end
 
   def self.down
@@ -15,4 +15,3 @@ class ModifySites < ActiveRecord::Migration
     remove_index  :sites, :name
   end
 end
-

@@ -1,5 +1,4 @@
 class Group::BaseController < ApplicationController
-
   before_filter :fetch_group
 
   # default permission for all group controllers
@@ -19,9 +18,7 @@ class Group::BaseController < ApplicationController
   end
 
   def setup_context
-    if @group and !@group.new_record?
-      @context = Context.find(@group)
-    end
+    @context = Context.find(@group) if @group and !@group.new_record?
     super
   end
 
@@ -34,6 +31,4 @@ class Group::BaseController < ApplicationController
     new_group_structure_path(group, type: 'council')
   end
   helper_method :new_group_council_path
-
 end
-

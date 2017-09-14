@@ -8,7 +8,6 @@
 #
 
 module Common::Application::UrlIdentifiers
-
   def self.included(base)
     base.class_eval do
       helper_method :action?
@@ -35,7 +34,7 @@ module Common::Application::UrlIdentifiers
         action == action_string
       elsif action.is_a? Symbol
         if action == :none
-          action_string == nil
+          action_string.nil?
         else
           action == action_symbol
         end
@@ -58,7 +57,7 @@ module Common::Application::UrlIdentifiers
         return true if cntr == controller_symbol
       end
     end
-    return false
+    false
   end
 
   # return true if the current controller is page related.
@@ -81,7 +80,7 @@ module Common::Application::UrlIdentifiers
         return true if obj.to_s == params[:id].to_s
       end
     end
-    return false
+    false
   end
 
   ##
@@ -110,9 +109,9 @@ module Common::Application::UrlIdentifiers
     if url_path.is_a?(String) or url_path.is_a?(Hash)
       url_for(url_path) =~ /^#{Regexp.escape(request.path)}$/i
     elsif url_path.is_a?(Array)
-      !url_path.select { |path|
-        url_for(path).match(/^#{Regexp.escape(request.path)}$/i) ? true : false
-      }.empty?
+      !url_path.select do |path|
+        url_for(path) =~ /^#{Regexp.escape(request.path)}$/i ? true : false
+      end.empty?
     else
       false
     end
@@ -120,7 +119,7 @@ module Common::Application::UrlIdentifiers
 
   private
 
-  def compare_param(a,b)
+  def compare_param(a, b)
     a = a.to_param
     b = b.to_param
     if b.empty?
@@ -145,7 +144,7 @@ module Common::Application::UrlIdentifiers
   end
 
   def controller_symbol
-    @controller_symbol ||= controller_string.gsub('/','_').to_sym
+    @controller_symbol ||= controller_string.tr('/', '_').to_sym
   end
 
   def action_string
@@ -159,6 +158,4 @@ module Common::Application::UrlIdentifiers
       nil
     end
   end
-
 end
-

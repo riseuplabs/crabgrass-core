@@ -3,7 +3,6 @@
 #
 
 class Me::PostsController < Me::BaseController
-
   include_controllers 'common/posts'
 
   prepend_before_filter :fetch_data
@@ -12,7 +11,7 @@ class Me::PostsController < Me::BaseController
   permissions 'posts'
   guard :may_ALIAS_post?
   guard index: :allow,
-    show: :allow
+        show: :allow
 
   # /me/discussions/green/posts
   def index
@@ -50,9 +49,7 @@ class Me::PostsController < Me::BaseController
       error(:thing_not_found.t(thing: :recipient.t), :later)
       redirect_to me_discussions_url
     end
-    if params[:id] && @discussion
-      @post = @discussion.posts.find(params[:id])
-    end
+    @post = @discussion.posts.find(params[:id]) if params[:id] && @discussion
   end
 
   private

@@ -23,9 +23,9 @@ class Asset::ThumbnailDefinition
   def initialize(name, hsh)
     self.name = name
     self.binary = true
-    hsh.each do |key,value|
-      self.send("#{key}=",value)
+    hsh.each do |key, value|
+      send("#{key}=", value)
     end
-    self.mime_type ||= Media::MimeType.mime_type_from_extension(self.ext) if self.ext
+    self.mime_type ||= Media::MimeType.mime_type_from_extension(ext) if ext
   end
 end

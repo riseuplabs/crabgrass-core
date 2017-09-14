@@ -14,7 +14,7 @@ module Common::Requests
     helper_method :current_state
     helper_method :request_path
     helper_method :requests_path
-    before_filter :fetch_request, only: [:update, :destroy, :show]
+    before_filter :fetch_request, only: %i[update destroy show]
 
     track_actions :update, if: :approved?
 
@@ -57,9 +57,9 @@ module Common::Requests
 
   def current_state
     case params[:state]
-      when 'approved' then :approved;
-      when 'rejected' then :rejected;
-      else :pending;
+    when 'approved' then :approved
+    when 'rejected' then :rejected
+    else :pending
     end
   end
 
@@ -67,11 +67,11 @@ module Common::Requests
     :thing_destroyed.tcap thing: I18n.t(@req.name, count: 1)
   end
 
-  def request_path(*args)
+  def request_path(*_args)
     raise 'you forgot to override this method'
   end
 
-  def requests_path(*args)
+  def requests_path(*_args)
     raise 'you forgot to override this method'
   end
 
@@ -92,8 +92,8 @@ module Common::Requests
 
   def mark
     case params[:mark]
-      when 'reject' then :reject;
-      when 'approve' then :approve;
+    when 'reject' then :reject
+    when 'approve' then :approve
     end
   end
 
@@ -122,4 +122,3 @@ module Common::Requests
     mark == :approve
   end
 end
-

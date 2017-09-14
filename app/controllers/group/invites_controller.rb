@@ -5,12 +5,10 @@
 # update and destroy are handled by Me::RequestsController
 
 class Group::InvitesController < Group::BaseController
+  # requrires may_admin_group? as Group::BaseController
+  # TODO: if it is an open group, admin should not be required.
 
-# requrires may_admin_group? as Group::BaseController
-# TODO: if it is an open group, admin should not be required.
-
-  def new
-  end
+  def new; end
 
   #
   # create some new invites, possibly of the type:
@@ -32,17 +30,17 @@ class Group::InvitesController < Group::BaseController
 
     users.each do |user|
       reqs << RequestToJoinUs.create(created_by: current_user,
-        recipient: user, requestable: @group)
+                                     recipient: user, requestable: @group)
     end
 
     groups.each do |group|
       reqs << RequestToJoinOurNetwork.create(created_by: current_user,
-        recipient: group, requestable: @group)
+                                             recipient: group, requestable: @group)
     end
 
     emails.each do |email|
       req = RequestToJoinUsViaEmail.create(created_by: current_user,
-         email: email, requestable: @group, language: I18n.locale.to_s)
+                                           email: email, requestable: @group, language: I18n.locale.to_s)
       Mailer.invite_to_join_us(req, mailer_options).deliver
       reqs << req
     end
@@ -62,7 +60,7 @@ class Group::InvitesController < Group::BaseController
       end
     else
       success reqs.first, count: reqs.size
-      params[:recipients] = ""
+      params[:recipients] = ''
     end
   end
 
@@ -71,5 +69,4 @@ class Group::InvitesController < Group::BaseController
       .select { |req| req.valid? && !req.is_a?(RequestToJoinUsViaEmail) }
       .each { |req| Notice::RequestNotice.create! req }
   end
-
 end

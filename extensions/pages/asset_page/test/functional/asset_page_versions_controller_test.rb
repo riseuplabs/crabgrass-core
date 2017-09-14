@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class AssetPageVersionsControllerTest < ActionController::TestCase
-
-
   def setup
     setup_assets
     @asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
@@ -24,7 +22,7 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
     @asset.save
     user.updated(@page)
 
-    assert_difference 'Asset::Version.count', -1, "destroy should remove a version" do
+    assert_difference 'Asset::Version.count', -1, 'destroy should remove a version' do
       xhr :delete, :destroy, page_id: @page, id: 1
     end
     assert File.exist?(@asset.private_filename)
@@ -38,7 +36,7 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
     create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Thumbnail.count', 0,
-      "the first time an asset is shown, it should call generate preview" do
+                      'the first time an asset is shown, it should call generate preview' do
       xhr :post, 'create', page_id: @page
     end
     assert_response :success
@@ -50,15 +48,16 @@ class AssetPageVersionsControllerTest < ActionController::TestCase
     create_page created_by: users(:gerrard), asset: @asset
 
     assert_difference 'Thumbnail.count', 0,
-      "the first time an asset is shown, it should call generate preview" do
+                      'the first time an asset is shown, it should call generate preview' do
       xhr :post, 'create', page_id: @page
     end
     assert_response :success
   end
 
   protected
+
   def create_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     @page = AssetPage.create(defaults.merge(options))
   end
 end

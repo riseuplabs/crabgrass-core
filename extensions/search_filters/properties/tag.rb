@@ -1,5 +1,4 @@
 SearchFilter.new('/tag/:tag_name/') do
-
   query do |query, tag_name|
     query.add_tag_constraint(tag_name)
   end
@@ -18,7 +17,7 @@ SearchFilter.new('/tag/:tag_name/') do
   #
   html(delayed: true, submit_button: false) do
     ret = content_tag(:p) do
-      content_tag(:strong, :tag.tcap) + " " + text_field_tag('tag_name', nil, class: 'form-control', onkeydown: submit_form('page_search_form'))
+      content_tag(:strong, :tag.tcap) + ' ' + text_field_tag('tag_name', nil, class: 'form-control', onkeydown: submit_form('page_search_form'))
     end
     ret += "\n"
 
@@ -34,13 +33,13 @@ SearchFilter.new('/tag/:tag_name/') do
     end
 
     tags = tag_cloud(tags_to_show) do |tag, css_class|
-      link_to_page_search tag.name, {tag_name: tag.name}, class: css_class
+      link_to_page_search tag.name, { tag_name: tag.name }, class: css_class
     end
-    if tags
-      ret += safe_join(tags, ' ')
-    else
-      ret += :no_things_found.t things: :tags.t
-    end
+    ret += if tags
+             safe_join(tags, ' ')
+           else
+             :no_things_found.t things: :tags.t
+           end
     ret
   end
 
@@ -54,6 +53,4 @@ SearchFilter.new('/tag/:tag_name/') do
       "#{:tag.t}: #{tag_name}"
     end
   end
-
 end
-

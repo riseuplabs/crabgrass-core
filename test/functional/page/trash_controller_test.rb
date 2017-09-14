@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Page::TrashControllerTest < ActionController::TestCase
-
   def setup
     @user = FactoryGirl.create(:user)
     @page = FactoryGirl.create(:page, owner: @user)

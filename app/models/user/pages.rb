@@ -16,9 +16,9 @@ module User::Pages
   def self.included(base)
     base.instance_eval do
       has_many :participations,
-        class_name: 'User::Participation',
-        dependent: :destroy,
-        inverse_of: :user
+               class_name: 'User::Participation',
+               dependent: :destroy,
+               inverse_of: :user
 
       has_many :pages, through: :participations do
         def recent_pages
@@ -31,27 +31,27 @@ module User::Pages
       has_many :pages_updated, class_name: 'Page', foreign_key: :updated_by_id, dependent: :nullify
 
       def self.most_active_on(site, time)
-        condition = time && ["user_participations.changed_at >= ?", time]
-        joins(user_participations: :pages).
-          where(condition).
-          where(pages => {site_id: site}).
-          where("pages.type != 'AssetPage'").
-          group('users.id').
-          order('count(user_participations.id) DESC').
-          select('users.*, user_participations.changed_at')
+        condition = time && ['user_participations.changed_at >= ?', time]
+        joins(user_participations: :pages)
+          .where(condition)
+          .where(pages => { site_id: site })
+          .where("pages.type != 'AssetPage'")
+          .group('users.id')
+          .order('count(user_participations.id) DESC')
+          .select('users.*, user_participations.changed_at')
       end
 
       def self.most_active_since(time)
-        joins(:user_participations).
-          group('users.id').
-          order('count(user_participations.id) DESC').
-          where("user_participations.changed_at >= ?", time).
-          select("users.*")
+        joins(:user_participations)
+          .group('users.id')
+          .order('count(user_participations.id) DESC')
+          .where('user_participations.changed_at >= ?', time)
+          .select('users.*')
       end
 
       def self.not_inactive
-        if self.respond_to? :inactive_user_ids
-          where("users.id NOT IN (?)", inactive_user_ids)
+        if respond_to? :inactive_user_ids
+          where('users.id NOT IN (?)', inactive_user_ids)
         end
       end
 
@@ -59,9 +59,8 @@ module User::Pages
       # These need has many relationships so they get cleaned up if a user
       # is destroyed.
       has_many :votes,
-        dependent: :destroy,
-        class_name: 'Poll::Vote'
-
+               dependent: :destroy,
+               class_name: 'Poll::Vote'
     end
   end
 
@@ -132,7 +131,7 @@ module User::Pages
   end
 
   def find_or_build_participation(page)
-    page.participation_for_user(self) || page.user_participations.build(user_id: self.id)
+    page.participation_for_user(self) || page.user_participations.build(user_id: id)
   end
 
   # This should be called when a user modifies a page and that modification
@@ -145,14 +144,12 @@ module User::Pages
   #  :resolved -- user's participation is resolved with this page
   #  :all_resolved -- everyone's participation is resolved.
   #
-  def updated(page, options={})
+  def updated(page, options = {})
     benchmark 'User#updated' do
       return if page.blank?
       now = Time.now
 
-      unless page.contributor?(self)
-        page.contributors_count += 1
-      end
+      page.contributors_count += 1 unless page.contributor?(self)
 
       # update everyone's participation
       if options[:all_resolved]
@@ -174,7 +171,7 @@ module User::Pages
       page.updated_by = self
       page.user_participations.where(watch: true).each do |part|
         notices = Notice::PageUpdateNotice.for_page(page).where(dismissed: false, user_id: part.user_id)
-          .select { |notice| notice.data[:from] == self.name }
+                                          .select { |notice| notice.data[:from] == name }
         if notices.any?
           notices.each &:touch
         else
@@ -183,7 +180,6 @@ module User::Pages
       end
     end
   end
-
 
   # return true if the user may still admin a page even if we
   # destroy the particular participation object
@@ -197,7 +193,7 @@ module User::Pages
     page = Page.find(page.id)
     proxy = page.send(method)
     proxy.load_target
-    proxy.target.delete_if {|part| part.id == participation.id}
+    proxy.target.delete_if { |part| part.id == participation.id }
     begin
       result = page.has_access!(:admin, self)
     rescue PermissionDenied

@@ -4,10 +4,12 @@ class Group::GroupsController < Group::BaseController
   # restricting the before filter to { :only => :destroy } doesn't work, because
   # then it changes position in the filter chain and runs after the guards, but
   # may_admin_group? requires @group to be set.
-  def fetch_group() super if action? :destroy end
+  def fetch_group
+    super if action? :destroy
+  end
   protected :fetch_group
 
-  before_filter :initialize_group,  only: ['new', 'create']
+  before_filter :initialize_group, only: %w[new create]
   before_filter :fetch_associations, only: :destroy
 
   track_actions :create
@@ -15,8 +17,7 @@ class Group::GroupsController < Group::BaseController
 
   guard :may_ALIAS_group?
 
-  def new
-  end
+  def new; end
 
   #
   # responsible for creating groups and networks.

@@ -17,7 +17,6 @@ class CreateDailyAndHourlyTrackings < ActiveRecord::Migration
       t.date :created_at
     end
     add_index :dailies, :page_id
-
   end
 
   def self.down

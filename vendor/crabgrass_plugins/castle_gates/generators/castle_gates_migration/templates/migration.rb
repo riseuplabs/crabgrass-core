@@ -7,8 +7,8 @@ class InstallCastleGates < ActiveRecord::Migration
       p.integer :gate_bitfield, default: 1
     end
     add_index :castle_gates_keys,
-      [:castle_id, :castle_type, :holder_code],
-      name: 'index_castle_gates_by_castle_and_holder_code'
+              %i[castle_id castle_type holder_code],
+              name: 'index_castle_gates_by_castle_and_holder_code'
   end
 
   def self.down

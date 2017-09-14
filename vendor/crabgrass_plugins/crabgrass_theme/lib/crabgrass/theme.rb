@@ -2,7 +2,6 @@
 ## Theme - A set of configured customizations to the appearance of crabgrass
 ##
 
-
 module Crabgrass
   class Theme
   end
@@ -14,7 +13,6 @@ end
 
 module Crabgrass
   class Theme
-
     include Crabgrass::Theme::Renderer
     include Crabgrass::Theme::Cache
     include Crabgrass::Theme::Loader
@@ -22,7 +20,7 @@ module Crabgrass
     THEME_ROOT = Rails.root.join('extensions', 'themes')  # where theme configs live
     SASS_ROOT  = Rails.root.join('app', 'stylesheets')    # where the sass source files live
     CSS_ROOT   = Rails.root.join('public', 'theme')       # where the rendered css files live
-    CORE_CSS_SHEET = 'screen'
+    CORE_CSS_SHEET = 'screen'.freeze
 
     attr_reader :directory, :public_directory, :name, :data
     attr_reader :navigation
@@ -37,8 +35,12 @@ module Crabgrass
     attr_accessor :controller
 
     def initialize(theme_name)
-      @directory  = Theme::theme_directory(theme_name)
-      @name       = File.basename(@directory) rescue nil
+      @directory  = Theme.theme_directory(theme_name)
+      @name       = begin
+                      File.basename(@directory)
+                    rescue
+                      nil
+                    end
       @public_directory = CSS_ROOT + @name
       @data       = nil
       @style      = nil
@@ -63,13 +65,13 @@ module Crabgrass
     #   Theme['default'] => <theme>
     #
     def self.[](theme_name)
-      @@themes[theme_name] ||= Loader::create_and_load(theme_name)
+      @@themes[theme_name] ||= Loader.create_and_load(theme_name)
     end
 
     # return true if the theme's directory exists.
     def self.exists?(theme_name)
       return if theme_name.blank?
-      File.directory? Theme::theme_directory(theme_name)
+      File.directory? Theme.theme_directory(theme_name)
     end
 
     ##
@@ -97,7 +99,7 @@ module Crabgrass
     #
     def int_var(key)
       if self[key].present?
-        self[key].gsub(/[^0-9]/,'').to_i
+        self[key].gsub(/[^0-9]/, '').to_i
       else
         0
       end
@@ -120,7 +122,7 @@ module Crabgrass
 
     def stylesheet_url(sheet_name)
       clear_cache_if_needed(sheet_name)
-      File.join('','theme', @name, sheet_name + '.css')
+      File.join('', 'theme', @name, sheet_name + '.css')
     end
 
     # given a resource or file, returns an absolute url path that
@@ -133,7 +135,7 @@ module Crabgrass
     # in order to allow themes to selectively override images.
     def url(image_name)
       filename = @data[image_name.to_sym] || image_name
-      File.join('','theme', @name, 'images', filename)
+      File.join('', 'theme', @name, 'images', filename)
     end
 
     private
@@ -142,14 +144,12 @@ module Crabgrass
       THEME_ROOT + theme_name.to_s
     end
 
-    #def self.theme_loaded?(theme_name)
+    # def self.theme_loaded?(theme_name)
     #  not @@themes[theme_name].nil?
-    #end
+    # end
 
-    #def self.needs_reloading?(theme_name)
+    # def self.needs_reloading?(theme_name)
     #  Cache::directory_changed_since?(theme_directory(theme_name), @@theme_timestamps[theme_name])
-    #end
-
+    # end
   end
 end
-

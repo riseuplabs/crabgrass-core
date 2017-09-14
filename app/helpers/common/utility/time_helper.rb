@@ -1,5 +1,4 @@
 module Common::Utility::TimeHelper
-
   protected
 
   #
@@ -24,16 +23,16 @@ module Common::Utility::TimeHelper
   # just takes a lot of logic.
   #
 
-  WeekdaySymbols = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
+  WeekdaySymbols = %i[sunday monday tuesday wednesday thursday friday saturday].freeze
 
   def friendly_date(time, options = {})
     return '' if time.nil?
     classes = [:date]
     classes += [:icon, "#{options[:icon]}_16"] if options[:icon]
     content_tag :span,
-      short_date(time, true),
-      class: classes,
-      title: l(time)
+                short_date(time, true),
+                class: classes,
+                title: l(time)
   end
 
   def friendly_time(time, format = :long)
@@ -46,9 +45,9 @@ module Common::Utility::TimeHelper
 
     if date == @today
       # 4:30PM
-      format = html ? "%l:%M<span>%p</span>" : "%l:%M %p"
+      format = html ? '%l:%M<span>%p</span>' : '%l:%M %p'
       time.strftime(format).html_safe
-    elsif @today > date and (@today-date) < 7
+    elsif @today > date and (@today - date) < 7
       # I18n.t(:wednesday) => Wednesday
       I18n.t(WeekdaySymbols[time.wday])
     elsif date.year != @today.year
@@ -62,14 +61,14 @@ module Common::Utility::TimeHelper
 
   def localize_month(month)
     # for example => :month_short_january
-    month_sym = ('month_short_'+month.downcase).to_sym
+    month_sym = ('month_short_' + month.downcase).to_sym
     I18n.t(month_sym)
   end
 
   # formats a time, in full detail
   # for example: Sunday 2007/July/3 2:13PM PST
   def full_time(time)
-    (I18n.locale == :en) ?
+    I18n.locale == :en ?
       time.strftime('%A %Y/%b/%d %I:%M%p') :
       I18n.l(time)
   end
@@ -78,9 +77,9 @@ module Common::Utility::TimeHelper
     date.strftime('%A %d/%b/%Y')
   end
 
-#  def to_local(time)
-#    Time.zone.utc_to_local(time)
-#  end
+  #  def to_local(time)
+  #    Time.zone.utc_to_local(time)
+  #  end
 
   def to_utc(time)
     Time.zone.local_to_utc(time)
@@ -121,23 +120,20 @@ module Common::Utility::TimeHelper
     (Time.now.to_i / num.days).floor
   end
 
-
   ##############################################
   ## UI helpers
 
-  def calendar_tag(field_id, date=nil)
+  def calendar_tag(_field_id, date = nil)
     include_calendar_tags
-    calendar_date_select_tag( date ? date.to_date.to_formatted_s( :long ) : nil )
+    calendar_date_select_tag(date ? date.to_date.to_formatted_s(:long) : nil)
   end
 
   def include_calendar_tags
     unless @calendar_tags_included
       @calendar_tags_included = true
       content_for :end_tags do
-        calendar_date_select_includes "default"
+        calendar_date_select_includes 'default'
       end
     end
   end
-
 end
-

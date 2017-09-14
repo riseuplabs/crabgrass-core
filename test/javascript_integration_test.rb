@@ -22,14 +22,14 @@ class JavascriptIntegrationTest < IntegrationTest
   def setup
     super
     Capybara.current_driver = Capybara.javascript_driver
-    Capybara.default_max_wait_time = 15 if ENV["TRAVIS"]
-    page.driver.add_headers "Accept-Language" => "en"
+    Capybara.default_max_wait_time = 15 if ENV['TRAVIS']
+    page.driver.add_headers 'Accept-Language' => 'en'
   end
 
   protected
 
   def clear_session
     Capybara.reset_sessions!
-    page.driver.add_headers "Accept-Language" => "en"
+    page.driver.add_headers 'Accept-Language' => 'en'
   end
 end

@@ -3,7 +3,6 @@
 #
 
 class MembershipRequest < Request
-
   def initialize(*args)
     raise "Cannot directly instantiate a #{self.class}" if self.class == MembershipRequest
     super
@@ -20,5 +19,4 @@ class MembershipRequest < Request
   def event_attrs
     { user: user, group: group }
   end
-
 end

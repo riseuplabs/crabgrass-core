@@ -1,5 +1,4 @@
 class Activity::Unread < Activity
-
   validates_format_of :subject_type, with: /User/
   validates_presence_of :subject_id
   validate :has_unread_count, on: :create
@@ -10,7 +9,7 @@ class Activity::Unread < Activity
 
   def has_unread_count
     unless unread_count > 0
-      errors.add("unread_count", "must be greater than zero")
+      errors.add('unread_count', 'must be greater than zero')
     end
   end
 
@@ -27,7 +26,7 @@ class Activity::Unread < Activity
   # Activity.
   before_validation :destroy_twins, on: :create
   def destroy_twins
-    self.class.destroy_all 'subject_id = %s' % user.id
+    self.class.destroy_all format('subject_id = %s', user.id)
   end
 
   public
@@ -39,18 +38,18 @@ class Activity::Unread < Activity
   def description(view)
     if unread_count == 1
       str = I18n.t(:activity_unread_singular)
-      if author
-        link = view.send(:my_private_message_path, author)
-      else
-        link = view.send(:my_private_messages_path)
-      end
+      link = if author
+               view.send(:my_private_message_path, author)
+             else
+               view.send(:my_private_messages_path)
+             end
     else
       str = I18n.t(:activity_unread, count: unread_count)
       link = view.send(:my_private_messages_path)
     end
 
-    str.sub(/\[(.*)\]/) do |match|
-      view.link_to($1, link)
+    str.sub(/\[(.*)\]/) do |_match|
+      view.link_to(Regexp.last_match(1), link)
     end
   end
 
@@ -61,5 +60,4 @@ class Activity::Unread < Activity
   def icon
     'page_message'
   end
-
 end

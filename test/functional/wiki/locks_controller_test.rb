@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class Wiki::LocksControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
     @user2  = FactoryGirl.create(:user)
     @group  = FactoryGirl.create(:group)
     @group.add_user! @user
@@ -54,5 +53,4 @@ class Wiki::LocksControllerTest < ActionController::TestCase
     assert_equal [:document], @wiki.reload.sections_open_for(@user)
     assert_equal [:document], @wiki.reload.sections_locked_for(@user2)
   end
-
 end

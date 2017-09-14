@@ -1,95 +1,93 @@
-=begin
-
-example usage
----------------------------------------
-
-greencloth = GreenCloth.new(body, context_name, [:outline])
-greencloth.to_html
-
-Greencloth.new takes three argument:
-
-(1) the raw greencloth markup text
-(2) the context name for resolving links
-(3) an array of greencloth options. useful options include:
-    :outline -- turn on the generation of outline data and markup
-    :lite_mode -- disable blocks, only allow some markup.
-
-passing a block to to_html()
------------------------------
-
-Greencloth.to_html can take a block. The block is passed data regarding every link
-that it encounteres while processing links.
-
-You can use this to do custom rendering of links. For example:
-
-  html = GreenCloth.new(test_text,'mygroup').to_html() do |link_data|
-    process_link(link_data)
-  end
-
-process_link should return either nil or an <a> tag. If nil, then the greencloth
-default is used.
-
-link_date is a hash that might include: url, label, context_name, page_name
-
-custom GreenCloth filters, without messing up <code> blocks
-------------------------------------------------------------
-
-We need to be able to apply global filters to the text, but we don't want our
-filters to apply to preformatted code. Greencloth does not let us intervene in
-the filtering process to just apply something to non-code blocks (or to just
-apply to code blocks). It comes close, but there is a bug in the way escape_pre
-is called.
-
-Some problems:
-
-* We can't just run our filters before redcloth, because then the filters will
-  apply to code blocks.
-
-* We could un-offtag code blocks after they have been offtagged by a global
-  greencloth filter, but escape_pre often gets a single char at a time, so it
-  won't work.
-
-* we could do the un-offtagging in formatter code(), pre(), and snip(), but these
-  are only sometimes called.
-
-* we can't apply custom greencloth filters in formatter.p(), because auto links
-  might have already been messed up by redcloth entity formatting.
-
-So, this is our strategy:
-
-(1) first, we offtag the obvious code blocks.
-
-(2) then we apply our custom greencloth filters.
-
-    a. one of the things these filters do is to offtag all the greencloth and
-       auto url links. this is necessary at this stage so that redcloth can't
-       mess up the urls
-
-(3) redcloth transformations are run
-
-    a. if the formatter discovers code blocks during the redcloth run, we
-       remove any offtags from those blocks (since the code block must not have
-       formatting and the offtags is from our previous pass looking for
-       greencloth links). This happens in GreenClothFormatterHTML.code().
-
-offtags
-----------------------------------
-
-offtags work like this:
-
-  "<p>hello <code>there</code></p>"
-  "<p>hello <code>}offtag#1{</code></p>"
-
-=end
+#
+# example usage
+# ---------------------------------------
+#
+# greencloth = GreenCloth.new(body, context_name, [:outline])
+# greencloth.to_html
+#
+# Greencloth.new takes three argument:
+#
+# (1) the raw greencloth markup text
+# (2) the context name for resolving links
+# (3) an array of greencloth options. useful options include:
+#     :outline -- turn on the generation of outline data and markup
+#     :lite_mode -- disable blocks, only allow some markup.
+#
+# passing a block to to_html()
+# -----------------------------
+#
+# Greencloth.to_html can take a block. The block is passed data regarding every link
+# that it encounteres while processing links.
+#
+# You can use this to do custom rendering of links. For example:
+#
+#   html = GreenCloth.new(test_text,'mygroup').to_html() do |link_data|
+#     process_link(link_data)
+#   end
+#
+# process_link should return either nil or an <a> tag. If nil, then the greencloth
+# default is used.
+#
+# link_date is a hash that might include: url, label, context_name, page_name
+#
+# custom GreenCloth filters, without messing up <code> blocks
+# ------------------------------------------------------------
+#
+# We need to be able to apply global filters to the text, but we don't want our
+# filters to apply to preformatted code. Greencloth does not let us intervene in
+# the filtering process to just apply something to non-code blocks (or to just
+# apply to code blocks). It comes close, but there is a bug in the way escape_pre
+# is called.
+#
+# Some problems:
+#
+# * We can't just run our filters before redcloth, because then the filters will
+#   apply to code blocks.
+#
+# * We could un-offtag code blocks after they have been offtagged by a global
+#   greencloth filter, but escape_pre often gets a single char at a time, so it
+#   won't work.
+#
+# * we could do the un-offtagging in formatter code(), pre(), and snip(), but these
+#   are only sometimes called.
+#
+# * we can't apply custom greencloth filters in formatter.p(), because auto links
+#   might have already been messed up by redcloth entity formatting.
+#
+# So, this is our strategy:
+#
+# (1) first, we offtag the obvious code blocks.
+#
+# (2) then we apply our custom greencloth filters.
+#
+#     a. one of the things these filters do is to offtag all the greencloth and
+#        auto url links. this is necessary at this stage so that redcloth can't
+#        mess up the urls
+#
+# (3) redcloth transformations are run
+#
+#     a. if the formatter discovers code blocks during the redcloth run, we
+#        remove any offtags from those blocks (since the code block must not have
+#        formatting and the offtags is from our previous pass looking for
+#        greencloth links). This happens in GreenClothFormatterHTML.code().
+#
+# offtags
+# ----------------------------------
+#
+# offtags work like this:
+#
+#   "<p>hello <code>there</code></p>"
+#   "<p>hello <code>}offtag#1{</code></p>"
+#
 
 require 'rubygems'
 begin
   # try redcloth 4.1
-#  gem 'redcloth', '>= 4.1'
+  #  gem 'redcloth', '>= 4.1'
   require 'redcloth'
 rescue Exception
   # try redcloth 4.0
-#  gem 'RedCloth', '>= 4.0'
+  #  gem 'RedCloth', '>= 4.0'
   require 'RedCloth'
 end
 
@@ -101,7 +99,7 @@ if RUBY_VERSION < '1.9' #
   require 'jcode' # / encoding
 end
 
-$: << File.dirname( __FILE__)  # add this dir to search path.
+$LOAD_PATH << File.dirname(__FILE__) # add this dir to search path.
 require 'greencloth_structure'
 require 'exceptions'
 
@@ -120,33 +118,33 @@ module GreenClothFormatterHTML
 
   # alas, so close, but so far away. most times this is called with a single
   # char at a time, so this won't work:
-  #def escape_pre(text)
+  # def escape_pre(text)
   #  original.revert_offtags(text)
   #  original.offtag_it html_esc(text, :html_escape_preformatted)
-  #end
+  # end
 
   def code(opts)
-    "<code#{pba(opts)}>%s</code>" % original.revert_offtags(opts[:text])
+    format("<code#{pba(opts)}>%s</code>", original.revert_offtags(opts[:text]))
   end
 
   # add class='left' or class='right' to <p> to make it possible to set the
   # margins in the stylesheet.
   def p(opts)
-    klass = opts[:float] ? ' class="%s"'%opts[:float] : ''
+    klass = opts[:float] ? format(' class="%s"', opts[:float]) : ''
     "<p#{pba(opts)}#{klass}>#{opts[:text]}</p>\n"
   end
 
   ##
   ## Allow some html, but not all
   ## (now handled by ALLOWED_TAGS)
-  #ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
-  #def inline_html(opts)
+  # ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
+  # def inline_html(opts)
   #  if opts[:text] =~ ALLOWED_HTML_TAGS_RE
   #    "#{opts[:text]}" # nil-safe
   #  else
   #    html_esc(opts[:text], :html_escape_preformatted)
   #  end
-  #end
+  # end
 
   # convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
   def li_open(opts)
@@ -164,7 +162,7 @@ module GreenClothFormatterHTML
     super
   end
 
-  def even_odd()
+  def even_odd
     @parity ||= 'even'
     @parity = @parity == 'odd' ? 'even' : 'odd'
     @parity
@@ -191,41 +189,46 @@ module GreenClothFormatterHTML
   # </h2>
   #
   def heading(number, opts)
-    name = original.add_heading(number,opts[:text])
+    name = original.add_heading(number, opts[:text])
     if original.outline
-      %[<h%s%s><a name="%s"></a>%s<a class="anchor" href="#%s">&para;</a></h%s>\n] % [number, pba(opts), name, opts[:text], name, number]
+      format(%(<h%s%s><a name="%s"></a>%s<a class="anchor" href="#%s">&para;</a></h%s>\n), number, pba(opts), name, opts[:text], name, number)
     else
-      %Q[<h#{number}#{pba(opts)}>#{opts[:text]}</h#{number}>\n]
+      %(<h#{number}#{pba(opts)}>#{opts[:text]}</h#{number}>\n)
     end
   end
 
   def h1(opts)
     if !@hit_h_already
       @hit_h_already = true
-      heading(1, {:class => 'first'}.merge(opts))
+      heading(1, { class: 'first' }.merge(opts))
     else
-      heading(1,opts)
+      heading(1, opts)
     end
   end
 
   def h2(opts)
     if !@hit_h_already
       @hit_h_already = true
-      heading(2, {:class => 'first'}.merge(opts))
+      heading(2, { class: 'first' }.merge(opts))
     else
-      heading(2,opts)
+      heading(2, opts)
     end
   end
 
-  def h3(opts); heading(3,opts); end
-  def h4(opts); heading(4,opts); end
+  def h3(opts)
+    heading(3, opts)
+  end
+
+  def h4(opts)
+    heading(4, opts)
+  end
 
   ## Most notably, we do not allow <script>, <div>, <textarea>, or <form>.
   ## These tags might really mess up the layout of the page or are a security
   ## risk. Also, unsafe attributes like 'onmouseover' are not allowed.
   ALLOWED_TAGS = {
-    'a' => ['href', 'title'],
-    'img' => ['src', 'alt', 'title'],
+    'a' => %w[href title],
+    'img' => %w[src alt title],
     'br' => [],
     'i' => nil,
     'u' => nil,
@@ -242,13 +245,13 @@ module GreenClothFormatterHTML
     'del' => nil,
     'table' => nil,
     'tr' => nil,
-    'td' => ['colspan', 'rowspan'],
+    'td' => %w[colspan rowspan],
     'th' => nil,
     'ol' => ['start'],
     'ul' => nil,
     'li' => nil,
-    'p' => ['class','style'],
-    'span' => ['class','style'],
+    'p' => %w[class style],
+    'span' => %w[class style],
     'h1' => nil,
     'h2' => nil,
     'h3' => nil,
@@ -257,10 +260,10 @@ module GreenClothFormatterHTML
     'h6' => nil,
     'notextile' => nil,
     'blockquote' => ['cite'],
-    'object' => ['width', 'height'],
-    'param' => ['name','value'],
-    'embed' => ['src','type','width','height','allowscriptaccess', 'allowfullscreen']
-  }
+    'object' => %w[width height],
+    'param' => %w[name value],
+    'embed' => %w[src type width height allowscriptaccess allowfullscreen]
+  }.freeze
 
   def before_transform(text)
     clean_html(text, ALLOWED_TAGS) if sanitize_html # (sanitize_html should always be true)
@@ -272,25 +275,26 @@ module GreenClothFormatterHTML
   # This only happens with RedCloth 4.1.9. Debugging doesn't help, probably
   # because it is calling some C code instead of this method. This method
   # is copied here so that greencloth will work with redcloth 4.1.9.
-  def clean_html( text, allowed_tags = BASIC_TAGS )
-    text.gsub!( /<!\[CDATA\[/, '' )
-    text.gsub!( /<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/ ) do |m|
-      raw = $~
+  def clean_html(text, allowed_tags = BASIC_TAGS)
+    text.gsub!(/<!\[CDATA\[/, '')
+    text.gsub!(/<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/) do |m|
+      raw = $LAST_MATCH_INFO
       tag = raw[2].downcase
-      if allowed_tags.has_key? tag
+      if allowed_tags.key? tag
         pcs = [tag]
-        allowed_tags[tag].each do |prop|
-          ['"', "'", ''].each do |q|
-            q2 = ( q != '' ? q : '\s' )
-            if raw[3] =~ /#{prop}\s*=\s*#{q}([^#{q2}]+)#{q}/i
-              attrv = $1
-              next if (prop == 'src' or prop == 'href') and not attrv =~ %r{^(http|https|ftp):}
+        if allowed_tags[tag]
+          allowed_tags[tag].each do |prop|
+            ['"', "'", ''].each do |q|
+              q2 = (q != '' ? q : '\s')
+              next unless raw[3] =~ /#{prop}\s*=\s*#{q}([^#{q2}]+)#{q}/i
+              attrv = Regexp.last_match(1)
+              next if (prop == 'src' or prop == 'href') and attrv !~ /^(http|https|ftp):/
               pcs << "#{prop}=\"#{attrv.gsub('"', '\\"')}\""
               break
             end
           end
-        end if allowed_tags[tag]
-        "<#{raw[1]}#{pcs.join " "}#{raw[4]}>"
+        end
+        "<#{raw[1]}#{pcs.join ' '}#{raw[4]}>"
       else # Unauthorized tag
         if block_given?
           yield m
@@ -300,9 +304,7 @@ module GreenClothFormatterHTML
       end
     end
   end
-
 end
-
 
 ##
 ## GREENCLOTH PARSER
@@ -320,7 +322,7 @@ class GreenCloth < RedCloth::TextileDoc
   attr_accessor :formatter
 
   # custom restrictions
-  attr_accessor :outline   # if true, enable table of contents
+  attr_accessor :outline # if true, enable table of contents
 
   def initialize(string, default_owner_name = 'page', restrictions = [])
     @default_owner = default_owner_name
@@ -346,28 +348,28 @@ class GreenCloth < RedCloth::TextileDoc
 
   def to_html(*before_filters, &block)
     @block = block
-    @original_markup = self.clone()
+    @original_markup = clone
 
-    before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
-      :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
-      :normalize_heading_blocks, :quoted_block, :tables_with_tabs, :wrap_long_words]
+    before_filters += %i[delete_leading_whitespace normalize_code_blocks
+                         offtag_obvious_code_blocks dynamic_symbols bracket_links auto_links
+                         normalize_heading_blocks quoted_block tables_with_tabs wrap_long_words]
 
-    formatter = self.clone()                   # \  in case one of the before filters
-    formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
+    formatter = clone # \  in case one of the before filters
+    formatter.extend(GreenClothFormatterHTML) # /  needs the formatter.
 
     apply_rules(before_filters)
     html = to(GreenClothFormatterHTML)
 
     extract_offtags(html)
 
-    return html
+    html
   end
 
   def to_structure
     # force extract headings being run
     # prevents formatter mangled HTML from being used to find headings
     extract_headings
-    self.green_tree.to_hash
+    green_tree.to_hash
   end
 
   # populates @headings, and then restores the string to its original form.
@@ -377,12 +379,12 @@ class GreenCloth < RedCloth::TextileDoc
     @headings = []
     @heading_names = {}
 
-    formatter = self.clone()                   # \  in case one of the before filters
-    formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
+    formatter = clone # \  in case one of the before filters
+    formatter.extend(GreenClothFormatterHTML) # /  needs the formatter.
 
-    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :normalize_heading_blocks])
+    apply_rules(%i[normalize_code_blocks offtag_obvious_code_blocks dynamic_symbols bracket_links normalize_heading_blocks])
     to(GreenClothFormatterHTML)
-    self.replace(formatter)
+    replace(formatter)
   end
 
   # what is this used for???
@@ -407,14 +409,14 @@ class GreenCloth < RedCloth::TextileDoc
   HEADINGS_RE = /^(.+?)\s*\r?\n([=-])[=-]+\s*?(\r?\n\r?\n?|$)/
   def normalize_heading_blocks(text)
     text.gsub!(HEADINGS_RE) do
-      tag = $2=="=" ? "h1" : "h2"
-      "#{ tag }. #{$1}\n\n"
+      tag = Regexp.last_match(2) == '=' ? 'h1' : 'h2'
+      "#{tag}. #{Regexp.last_match(1)}\n\n"
     end
   end
 
   # why is this needed?
-  def delete_leading_whitespace(text)
-    self.sub!(/\A */, '')
+  def delete_leading_whitespace(_text)
+    sub!(/\A */, '')
   end
 
   # convert greencloth specific markup for code blocks into redcloth
@@ -433,30 +435,30 @@ class GreenCloth < RedCloth::TextileDoc
 
   # this is called automatically when line starts with "codetitle."
   def codetitle(opts)
-    %(<div class="codetitle">%s</div>\n) % opts[:text]
+    format(%(<div class="codetitle">%s</div>\n), opts[:text])
   end
 
   CODE_TAGS = /(code|pre)/
   CODE_TAG_RE = /(.?)(?:(<\/?#{ CODE_TAGS }[^>]*>))(.*?)(<\/?\3>|\Z)/mi
 
-  def offtag_obvious_code_blocks( text )
-    text.gsub!( CODE_TAG_RE ) do |line|
-      leading_character = $1
-      tag        = $2  # eg '<code>'
-      codebody   = $4  # what is between <code> and </code>
-      tag.gsub!(/<(.+)? (.*)>/,'<\\1>') # prevent <code onmouseover='something nasty'>
+  def offtag_obvious_code_blocks(text)
+    text.gsub!(CODE_TAG_RE) do |_line|
+      leading_character = Regexp.last_match(1)
+      tag        = Regexp.last_match(2)  # eg '<code>'
+      codebody   = Regexp.last_match(4)  # what is between <code> and </code>
+      tag.gsub!(/<(.+)? (.*)>/, '<\\1>') # prevent <code onmouseover='something nasty'>
       leading_character + format_block_code(tag, codebody, leading_character)
     end
   end
 
-  def format_block_code(tag, body, leading_character='')
-    body = self.formatter.html_esc(body, :html_escape_preformatted)
-    body.gsub!(/\A\r?\n/,'')
+  def format_block_code(tag, body, leading_character = '')
+    body = formatter.html_esc(body, :html_escape_preformatted)
+    body.gsub!(/\A\r?\n/, '')
     # ^^^ get ride of leading returns. This makes it so the text in
     # <pre> doesn't appear in the browser with an empty first line.
     offtag = offtag_it(body)
     if tag == '<pre>' or (leading_character && leading_character.strip != '')
-      "#{tag}#{offtag}#{tag.sub('<','</')}"
+      "#{tag}#{offtag}#{tag.sub('<', '</')}"
     else
       "<pre><code>#{offtag}</code></pre>"
     end
@@ -469,30 +471,26 @@ class GreenCloth < RedCloth::TextileDoc
   # blockquotes
   QUOTED_BLOCK_RE = /(^>.*$(.+\n)*\n*)+/
 
-  def quoted_block( text )
-    text.gsub!( QUOTED_BLOCK_RE ) do |blk|
+  def quoted_block(text)
+    text.gsub!(QUOTED_BLOCK_RE) do |blk|
       blk.gsub!(/^> ?/, '')
       flush_left blk
       "<blockquote>#{blk}</blockquote>\n"
     end
   end
 
-  def flush_left( text )
+  def flush_left(text)
     indt = 0
     if text =~ /^ /
-       while text !~ /^ {#{indt}}\S/
-          indt += 1
-       end unless text.empty?
-       if indt.nonzero?
-         text.gsub!( /^ {#{indt}}/, '' )
-       end
+      indt += 1 while text !~ /^ {#{indt}}\S/ unless text.empty?
+      text.gsub!(/^ {#{indt}}/, '') if indt.nonzero?
     end
   end
 
   TABLE_TABS_RE = /^\t.*\t(\r?\n|$)/
-  def tables_with_tabs( text )
-    text.gsub!( TABLE_TABS_RE ) do |row|
-      row.gsub /\t/, '|'
+  def tables_with_tabs(text)
+    text.gsub!(TABLE_TABS_RE) do |row|
+      row.tr "\t", '|'
     end
   end
 
@@ -500,43 +498,43 @@ class GreenCloth < RedCloth::TextileDoc
   ## OFFTAGS
   ##
 
-  OFFTAG_PREFIX = 'offtag'
-  OFFTAG_RE = /\}#{OFFTAG_PREFIX}#([\d]+)\{/  # matches }offtag#55{ -> $1 == 55
-                                              # why }{ instead of {}? so offtags will work with tables.
+  OFFTAG_PREFIX = 'offtag'.freeze
+  OFFTAG_RE = /\}#{OFFTAG_PREFIX}#([\d]+)\{/ # matches }offtag#55{ -> $1 == 55
+  # why }{ instead of {}? so offtags will work with tables.
 
-  MACROTAG_PREFIX = 'macrotag'
+  MACROTAG_PREFIX = 'macrotag'.freeze
   MACROTAG_RE = /<p>\}#{MACROTAG_PREFIX}#([\d]+)\{<\/p>/
 
   # text: the text to offtag
   # original: the original raw text before transformation. we keep it in case
   #           we need to undo the offtagging for a particular block.
   # symbol: if set, when extracting this offtag, we use a callback instead of the text.
-  def offtag_it(text, original='')
+  def offtag_it(text, original = '')
     @count ||= 0
     @offtags ||= []
     @count += 1
     @offtags << [text, original]
-    '}offtag#%s{' % @count
+    format('}offtag#%s{', @count)
   end
 
-  def macrotag_it(symbol, original='')
+  def macrotag_it(symbol, _original = '')
     @count ||= 0
     @offtags ||= []
     @count += 1
-    @offtags << [symbol, original='']
-    "\n}macrotag#%s{\n" % @count
+    @offtags << [symbol, original = '']
+    format("\n}macrotag#%s{\n", @count)
   end
 
   def extract_offtags(html)
-    html.gsub!(OFFTAG_RE) do |m|
-      offtag = self.offtags[$1.to_i-1]
+    html.gsub!(OFFTAG_RE) do |_m|
+      offtag = offtags[Regexp.last_match(1).to_i - 1]
       offtag[0] # replace offtag with the corresponding entry
     end
-    html.gsub!(MACROTAG_RE) do |m|
-      macrotag = self.offtags[$1.to_i-1]
-      method = 'symbol_'+macrotag[0]
-      if self.respond_to?(method, true)
-        self.send(method)
+    html.gsub!(MACROTAG_RE) do |_m|
+      macrotag = offtags[Regexp.last_match(1).to_i - 1]
+      method = 'symbol_' + macrotag[0]
+      if respond_to?(method, true)
+        send(method)
       else
         "<p>#{macrotag[1]}</p>"
       end
@@ -546,9 +544,9 @@ class GreenCloth < RedCloth::TextileDoc
 
   # replace offtag with the original text
   def revert_offtags(html)
-    html.gsub!(OFFTAG_RE) do |m|
-      #puts m.inspect; puts self.offtags
-      str = self.offtags[$1.to_i-1][1]
+    html.gsub!(OFFTAG_RE) do |_m|
+      # puts m.inspect; puts self.offtags
+      str = offtags[Regexp.last_match(1).to_i - 1][1]
     end
     html
   end
@@ -558,9 +556,9 @@ class GreenCloth < RedCloth::TextileDoc
   ##
 
   # hyperlinks to external pages
-  URL_CHAR = '\w' + Regexp::quote('+%$*\'()-~')
-  URL_PUNCT = Regexp::quote(',.;:!?')
-  PROTOCOL = '(?:sips?|https?|s?ftps?)'
+  URL_CHAR = '\w' + Regexp.quote('+%$*\'()-~')
+  URL_PUNCT = Regexp.quote(',.;:!?')
+  PROTOCOL = '(?:sips?|https?|s?ftps?)'.freeze
   AUTO_LINK_RE = %r{
     (                          # (a) LEADING TEXT
       <\w+.*?>|                # leading HTML tag, or
@@ -588,7 +586,11 @@ class GreenCloth < RedCloth::TextileDoc
 
   def auto_links(text)
     text.gsub!(AUTO_LINK_RE) do
-      all, a, b, c, d = $&, $1, $2, $3, $4
+      all = $&
+      a = Regexp.last_match(1)
+      b = Regexp.last_match(2)
+      c = Regexp.last_match(3)
+      d = Regexp.last_match(4)
       if a =~ /<a\s/i # don't replace URL's that are already linked
         all
       elsif c.nil?
@@ -602,17 +604,15 @@ class GreenCloth < RedCloth::TextileDoc
         end
         label = c
 
-        url = ((b == "www.") ? "http://www." : b).to_s + c.to_s
+        url = (b == 'www.' ? 'http://www.' : b).to_s + c.to_s
         # url = %(#{b=="www."?"http://www.":b}#{c})
         link = nil
-        if @block
-          link = @block.call(:auto => true, :url => url)
-        end
+        link = @block.call(auto: true, url: url) if @block
         unless link
-          text = truncate(label, 42).sub(/\/$/,'')
-          link = '<a href="%s">%s</a>' % [url, self.formatter.html_esc(text)]
+          text = truncate(label, 42).sub(/\/$/, '')
+          link = format('<a href="%s">%s</a>', url, formatter.html_esc(text))
         end
-        a + offtag_it(link, b+c ) + d
+        a + offtag_it(link, b + c) + d
       end
     end
   end
@@ -628,10 +628,10 @@ class GreenCloth < RedCloth::TextileDoc
     (.)\]         # end ] ($4 => last char)
   /x
 
-  def bracket_links( text )
-    text.gsub!( BRACKET_LINK_RE ) do |m|
+  def bracket_links(text)
+    text.gsub!(BRACKET_LINK_RE) do |_m|
       begin
-        all, preceding_char, first_char, link_text, last_char = $~[0..4]
+        all, preceding_char, first_char, link_text, last_char = $LAST_MATCH_INFO[0..4]
         if preceding_char == '\\'
           # the bracket is escaped and so we should ignore
           all.sub('\\[', '[').sub('\\]', ']')
@@ -639,8 +639,8 @@ class GreenCloth < RedCloth::TextileDoc
           # make this a named anchor tag, instead of a link
           label, anchor = link_text.split(/\s*->\s*/)[0..1]
           anchor ||= label
-          a_tag = '<a name="%s">%s</a>' % [anchor.nameize, htmlesc(label.strip)]
-          all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+          a_tag = format('<a name="%s">%s</a>', anchor.nameize, htmlesc(label.strip))
+          all = all.sub(/^#{Regexp.escape(preceding_char)}/, '')
           preceding_char + offtag_it(a_tag, all)
         elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
           # the brackets are for wiki formatting, not links
@@ -652,8 +652,8 @@ class GreenCloth < RedCloth::TextileDoc
           if link_text =~ /^.+\s*->\s*.+$/
             # link_text == "from -> to"
             from, to = link_text.split(/\s*->\s*/)[0..1]
-            from = "" unless from.instance_of? String # \ sanity check for
-            to   = "" unless from.instance_of? String # / badly formed links
+            from = '' unless from.instance_of? String # \ sanity check for
+            to   = '' unless from.instance_of? String # / badly formed links
           else
             # link_text == "to" (ie, no link label)
             from = nil
@@ -680,31 +680,31 @@ class GreenCloth < RedCloth::TextileDoc
                 # relative anchor on this page
                 page_name = page_name[1..-1] # chomp first char
                 from ||= page_name.denameize
-                a_tag = '<a href="#%s">%s</a>' % [page_name.nameize, htmlesc(from.strip)]
+                a_tag = format('<a href="#%s">%s</a>', page_name.nameize, htmlesc(from.strip))
               else
                 page_name = page_name.sub(/#(.*)$/, '')
-                anchor = '#' + $1.nameize if $1  # everything after the # in the link.
+                anchor = '#' + Regexp.last_match(1).nameize if Regexp.last_match(1) # everything after the # in the link.
               end
             else
               anchor = ''
             end
             if @block and a_tag.nil?
-              a_tag = @block.call(:label => from, :context => context_name, :page => page_name, :anchor => anchor)
+              a_tag = @block.call(label: from, context: context_name, page: page_name, anchor: anchor)
             end
             unless a_tag
               from ||= page_name.nameized? ? page_name.denameize : page_name
               context_name ||= @default_owner
-              to = '/%s/%s%s' % [context_name.nameize, page_name.nameize, anchor]
+              to = format('/%s/%s%s', context_name.nameize, page_name.nameize, anchor)
             end
           end
-          a_tag ||= '<a href="%s">%s</a>' % [htmlesc(to), htmlesc(from)]
-          all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+          a_tag ||= format('<a href="%s">%s</a>', htmlesc(to), htmlesc(from))
+          all = all.sub(/^#{Regexp.escape(preceding_char)}/, '')
           preceding_char + offtag_it(a_tag, all)
         end
       rescue Exception => exc
         # something horribly wrong has happened
-        a_tag = '<a href="%s">%s</a>' % ["#error",from]
-        #comment = '<!-- %s -->' % exc.to_s
+        a_tag = format('<a href="%s">%s</a>', '#error', from)
+        # comment = '<!-- %s -->' % exc.to_s
         preceding_char + offtag_it(a_tag, all)
       end
     end
@@ -728,7 +728,7 @@ class GreenCloth < RedCloth::TextileDoc
     text.gsub!(LONG_WORDS_RE) do |word|
       chopped = word.scan(/.{#{LONG_WORD_CHAR_MAX}}/)
       offtag = offtag_it("<wbr/><span class='break'> </span>")
-      remainder = word.split(/.{#{LONG_WORD_CHAR_MAX}}/).select{|str| str && str.strip != ''}
+      remainder = word.split(/.{#{LONG_WORD_CHAR_MAX}}/).select { |str| str && str.strip != '' }
       (chopped + remainder).join(offtag)
     end
   end
@@ -739,11 +739,11 @@ class GreenCloth < RedCloth::TextileDoc
 
   # dynamic symbols are expanded using some callback ruby code.
 
-  DYNAMIC_SYMBOLS = ['toc']
+  DYNAMIC_SYMBOLS = ['toc'].freeze
   DYNAMIC_SYMBOLS_RE = /^\s*\[\[(#{DYNAMIC_SYMBOLS.join('|')})\]\]\s*$/
   def dynamic_symbols(text)
     text.gsub!(DYNAMIC_SYMBOLS_RE) do |line|
-      symbol = $1
+      symbol = Regexp.last_match(1)
       macrotag_it(symbol, line)
     end
   end
@@ -757,23 +757,22 @@ class GreenCloth < RedCloth::TextileDoc
   private
 
   # from actionview texthelper
-  def truncate(text, length = 30, truncate_string = "...")
-    if text.nil? then return end
+  def truncate(text, length = 30, truncate_string = '...')
+    return if text.nil?
     l = length - truncate_string.length
     text.length > length ? text[0...l] + truncate_string : text
   end
 
   def htmlesc(string)
-    self.formatter.html_esc(string)
+    formatter.html_esc(string)
   end
-
 end
 
 ##
 ## CORE STRING EXTENSIONS
 ##
 
-unless "".respond_to? 'nameize'
+unless ''.respond_to? 'nameize'
 
   ##
   ## NOTE: you will want to translit non-ascii slugs to ascii.
@@ -782,23 +781,24 @@ unless "".respond_to? 'nameize'
 
   class String
     def nameize
-      str = self.dup
-      str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
+      str = dup
+      str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/, '') # remove html entitities
       str.gsub!(/[^[[:word:]]\+]+/, ' ') # all non-word chars to spaces
       str.strip!            # ohh la la
       str.downcase!         # upper case characters in urls are confusing
       str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      return str[0..49]
+      str[0..49]
     end
+
     def denameize
-      self.gsub('-',' ')
+      tr('-', ' ')
     end
+
     # returns false if any char is detected that is not allowed in
     # 'nameized' strings
     def nameized?
-      self == self.nameize
+      self == nameize
     end
   end
 
 end
-

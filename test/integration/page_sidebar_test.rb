@@ -3,7 +3,6 @@
 require 'javascript_integration_test'
 
 class PageSidebarTest < JavascriptIntegrationTest
-  include GroupRecords
 
   fixtures :users, :groups, 'group/memberships', :pages
 
@@ -116,8 +115,15 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_page_tags 'winter'
   end
 
+  def test_history
+    create_page title: "Test page"
+    click_on 'Page Details'
+    find('a', text: 'History').click
+    assert_content 'Blue! has created the page'
+  end
+
   def test_tag
-    tags = %w/some tags for this páge/
+    tags = %w[some tags for this páge]
     tag_page tags
     assert_page_tags tags
     remove_page_tag 'páge'

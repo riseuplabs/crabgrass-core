@@ -1,5 +1,4 @@
 class Activity::Friend < Activity
-
   validates_format_of :subject_type, with: /User/
   validates_format_of :item_type, with: /User/
   validates_presence_of :subject_id
@@ -14,25 +13,25 @@ class Activity::Friend < Activity
   def set_access
     # this has a weird side effect of creating public and private
     # profiles if they don't already exist.
-    if user.access? public: :see_contacts
-      self.access = Activity::PUBLIC
-    elsif user.access? user.associated(:friends) => :see_contacts
-      self.access = Activity::DEFAULT
-    else
-      self.access = Activity::PRIVATE
-    end
+    self.access = if user.access? public: :see_contacts
+                    Activity::PUBLIC
+                  elsif user.access? user.associated(:friends) => :see_contacts
+                    Activity::DEFAULT
+                  else
+                    Activity::PRIVATE
+                  end
   end
 
   def create_twin
     twin.first_or_create do |other|
-      other.key = self.key
+      other.key = key
     end
   end
 
-  def description(view=nil)
+  def description(_view = nil)
     I18n.t(:activity_contact_created,
-            user: user_span(:user),
-            other_user: user_span(:other_user))
+           user: user_span(:user),
+           other_user: user_span(:other_user))
   end
 
   # Warning: Do not use self.class or even Activity::Friend here...
@@ -42,13 +41,11 @@ class Activity::Friend < Activity
   # at the same time.
   def twin
     Activity.where type: 'Friend',
-      subject_id: item_id, subject_type: 'User',
-      item_id: subject_id, item_type: 'User'
+                   subject_id: item_id, subject_type: 'User',
+                   item_id: subject_id, item_type: 'User'
   end
 
   def icon
     'user_add'
   end
-
 end
-

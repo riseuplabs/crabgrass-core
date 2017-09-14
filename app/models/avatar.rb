@@ -17,14 +17,12 @@
 require 'open-uri'
 
 class Avatar < ActiveRecord::Base
-
   # This is only used in singular resources and avatar_path.
   # So we use this workaround for form_for paths:
   # https://github.com/rails/rails/issues/1769#issuecomment-41025758
   model_name.instance_variable_set(:@route_key, 'avatar')
 
-
-  DEFAULT_DIR = "#{Rails.root}/public/images/default"
+  DEFAULT_DIR = "#{Rails.root}/public/images/default".freeze
 
   SIZES = Hash.new(32).merge(
     'tiny'   => 16,
@@ -51,15 +49,15 @@ class Avatar < ActiveRecord::Base
   # return binary data of the image at the specified size
   #
   def resize(size, content_type = 'image/jpeg')
-    resize_from_blob(self.image_file_data, size, content_type)
+    resize_from_blob(image_file_data, size, content_type)
   end
 
   def image_file=(file)
     # mime_type = Asset.mime_type_from_data(data) we don't do this yet :(
     self.image_file_data = if file.path
-      resize_from_file(file.path, 'huge')
-    else
-      resize_from_blob(file.read, 'huge')
+                             resize_from_file(file.path, 'huge')
+                           else
+                             resize_from_blob(file.read, 'huge')
     end
   end
 
@@ -77,7 +75,7 @@ class Avatar < ActiveRecord::Base
 
   def resize_from_blob(blob, size, content_type = 'image/jpeg')
     if blob.nil?
-      return IO.read(default_file(size))
+      IO.read(default_file(size))
     else
       Media::TempFile.open(blob) do |image_file|
         return resize_from_file(image_file.path, size, content_type)
@@ -91,7 +89,7 @@ class Avatar < ActiveRecord::Base
     if !File.exist?(filename)
       IO.read(default_file(size))
     else
-      Media::TempFile.open(nil,content_type) do |dest_file|
+      Media::TempFile.open(nil, content_type) do |dest_file|
         status = Media::GraphicsMagickTransmogrifier.new(input_file: filename, output_file: dest_file, size: dimensions, crop: crop, background: 'white').try.run
         if status == :success
           return IO.read(dest_file.path)
@@ -107,6 +105,4 @@ class Avatar < ActiveRecord::Base
   def default_file(size)
     DEFAULT_DIR + '/' + SIZES[size].to_s + '.jpg'
   end
-
 end
-

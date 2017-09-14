@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class User::ParticipationTest < ActiveSupport::TestCase
-
-
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
   end
 
   def test_associations
@@ -15,22 +12,24 @@ class User::ParticipationTest < ActiveSupport::TestCase
   def test_name_changed
     u = users(:orange)
     p = Page.create title: 'hello', user: u
-    assert p.valid?, 'page should be valid'
+    assert_predicate p, :valid?
     u.updated(p)
     p.save
-    assert_equal 'orange', p.updated_by_login, 'cached updated_by_login should be "orange"'
+    assert_equal 'orange', p.updated_by_login,
+      'cached updated_by_login should be "orange"'
     u.login = 'banana'
     assert u.save
     p.reload
     assert_equal 'banana', u.reload.login
-    assert_equal 'banana', p.updated_by_login, 'cached updated_by_login should be "banana"'
+    assert_equal 'banana', p.updated_by_login,
+      'cached updated_by_login should be "banana"'
   end
 
   def test_updated
     g = groups(:animals)
     u = users(:blue)
     page = Page.create title: 'hello', owner: g
-    assert_difference 'Page.find(%d).contributors_count' % page.id do
+    assert_difference format('Page.find(%d).contributors_count', page.id) do
       u.updated(page)
       page.save
     end
@@ -46,21 +45,29 @@ class User::ParticipationTest < ActiveSupport::TestCase
     page.add(group, access: :admin)
     page.save! # save required after .add()
 
-    assert user.may?(:admin,page), 'user must be able to admin page'
-    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'
-    assert user.pages.include?(page), 'user must have an association with page'
-    assert group.pages.include?(page), 'group must have an association with page'
+    assert user.may?(:admin, page),
+      'user must be able to admin page'
+    assert page.user_participations.find_by_user_id(user.id).star,
+      'user association attributes must be set'
+    assert_includes user.pages, page,
+      'user must have an association with page'
+    assert_includes group.pages, page,
+      'group must have an association with page'
 
     # page.users and page.groups are not updated until a reload
     page.reload
-    assert page.users.include?(user), 'page must have an association with user'
-    assert page.groups.include?(group), 'page must have an association with group'
+    assert_includes page.users, user,
+      'page must have an association with user'
+    assert_includes page.groups, group,
+      'page must have an association with group'
 
     page.remove(user)
     page.remove(group)
     page.save!
-    assert !page.users.include?(user), 'page must NOT have an association with user'
-    assert !page.groups.include?(group), 'page must NOT have an association with group'
+    assert !page.users.include?(user),
+      'page must NOT have an association with user'
+    assert !page.groups.include?(group),
+      'page must NOT have an association with group'
   end
 
   def test_user_destroyed
@@ -69,7 +76,7 @@ class User::ParticipationTest < ActiveSupport::TestCase
     page.add(user)
     page.save!
     user.destroy
-    assert !page.user_participations(true).any?
+    assert page.user_participations(true).none?
   end
 
   def test_ids_update
@@ -92,19 +99,23 @@ class User::ParticipationTest < ActiveSupport::TestCase
     gpart = nil
     assert_no_difference 'User::Participation.count' do
       upart = page.participation_for_user(user)
-      assert !user.may_admin_page_without?(page, upart), 'cannot remove upart and still have access'
+      assert !user.may_admin_page_without?(page, upart),
+        'cannot remove upart and still have access'
 
       gpart = page.add group, access: :admin
       gpart.save!
 
-      assert user.may_admin_page_without?(page, gpart), 'can remove gpart'
-      assert user.may_admin_page_without?(page, upart), 'can remove upart'
+      assert user.may_admin_page_without?(page, gpart),
+        'can remove gpart'
+      assert user.may_admin_page_without?(page, upart),
+        'can remove upart'
     end
 
     page.remove(user)
     page.reload
 
-    assert !user.may_admin_page_without?(page, gpart), 'cannot remove gpart'
+    assert !user.may_admin_page_without?(page, gpart),
+      'cannot remove gpart'
   end
 
   def test_stars_update
@@ -121,6 +132,4 @@ class User::ParticipationTest < ActiveSupport::TestCase
     assert_equal 0, page.stars_count
     assert_equal 0, page.reload.stars_count
   end
-
 end
-

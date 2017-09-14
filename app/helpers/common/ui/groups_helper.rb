@@ -1,5 +1,4 @@
 module Common::Ui::GroupsHelper
-
   #
   # returns a bunch of <option></option> tags usable in a select menu to choose a group.
   #
@@ -17,23 +16,20 @@ module Common::Ui::GroupsHelper
   #
   #  no options are set by default.
   #
-  def options_for_select_group(options={})
+  def options_for_select_group(options = {})
+    items = if options[:without_networks]
+              current_user.primary_groups
+            else
+              current_user.primary_groups_and_networks
+            end
 
-    if options[:without_networks]
-      items = current_user.primary_groups
-    else
-      items = current_user.primary_groups_and_networks
-    end
-
-    if options[:as_admin]
-      items = items.with_admin(current_user)
-    end
+    items = items.with_admin(current_user) if options[:as_admin]
 
     items.order(:name)
 
     # make sure to act on a copy so we do not alter the relation
     items = items.map do |group|
-      { value: group.name, label: group.name, group: group}
+      { value: group.name, label: group.name, group: group }
     end
 
     selected_item = nil
@@ -43,7 +39,7 @@ module Common::Ui::GroupsHelper
         # this method was called with :selected => nil indicating that there should be 'none' selected.
         options[:include_none] = true
       elsif options[:selected].is_a? String
-        selected_item = options[:selected].sub(' ', '+')   # sub '+' for committee names
+        selected_item = options[:selected].sub(' ', '+') # sub '+' for committee names
       elsif options[:selected].respond_to?(:name)
         selected_item = options[:selected].name
       end
@@ -55,11 +51,11 @@ module Common::Ui::GroupsHelper
     end
 
     if options[:include_me]
-      items.unshift(value: current_user.name, label: "%s (%s)" % [I18n.t(:only_me), current_user.name], style: 'font-style: italic')
+      items.unshift(value: current_user.name, label: format('%s (%s)', I18n.t(:only_me), current_user.name), style: 'font-style: italic')
       selected_item ||= current_user.name
     end
 
-    unless items.detect{|i| i[:value] == selected_item}
+    unless items.detect { |i| i[:value] == selected_item }
       # we have a problem: item list does not include the one that is supposed to be selected. so, add it.
       items.unshift(value: selected_item, label: selected_item)
     end
@@ -76,20 +72,18 @@ module Common::Ui::GroupsHelper
         selected: selected,
         style: item[:style]
       )
-      if item[:group] and options[:include_committees]
-        item[:group].committees.each do |committee|
-          selected = ('selected' if committee.name == selected_item)
-          html << content_tag(
-            :option,
-            "&nbsp; + ".html_safe + truncate(committee.short_name, length: 40),
-            value: committee.name,
-            class: 'indented',
-            selected: selected
-          )
-        end
+      next unless item[:group] and options[:include_committees]
+      item[:group].committees.each do |committee|
+        selected = ('selected' if committee.name == selected_item)
+        html << content_tag(
+          :option,
+          '&nbsp; + '.html_safe + truncate(committee.short_name, length: 40),
+          value: committee.name,
+          class: 'indented',
+          selected: selected
+        )
       end
     end
     html.join("\n").html_safe
   end
-
 end

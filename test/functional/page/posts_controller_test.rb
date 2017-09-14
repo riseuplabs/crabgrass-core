@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Page::PostsControllerTest < ActionController::TestCase
-
   def setup
     @user = FactoryGirl.create :user
     @page = FactoryGirl.create(:page, owner: @user)
@@ -17,7 +16,7 @@ class Page::PostsControllerTest < ActionController::TestCase
   end
 
   def test_edit_post
-    @post = Post.create! @page, @user, {body: "Test Contetn"}
+    @post = Post.create! @page, @user, body: 'Test Contetn'
     login_as @user
     xhr :get, :edit, page_id: @page.id, id: @post.id
     assert_response :success
@@ -46,13 +45,13 @@ class Page::PostsControllerTest < ActionController::TestCase
   end
 
   def assert_history_tracked(subclass_string, item = nil)
-    assert history = @page.page_histories.last, "Missing history record"
+    assert history = @page.page_histories.last, 'Missing history record'
     assert_equal @user, history.user
     assert_equal "Page::History::#{subclass_string}", history.class.name
     assert_equal item, history.item if item.present?
   end
 
   def body
-    "Test Message"
+    'Test Message'
   end
 end

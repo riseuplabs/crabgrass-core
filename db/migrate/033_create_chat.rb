@@ -1,14 +1,14 @@
 class CreateChat < ActiveRecord::Migration
   def self.up
     create_table :channels do |t|
-       t.column :name, :string
-       t.column :group_id, :integer
-       t.column :public, :boolean, :default => false
+      t.column :name, :string
+      t.column :group_id, :integer
+      t.column :public, :boolean, default: false
     end
     create_table :channels_users do |t|
-       t.column :channel_id, :integer
-       t.column :user_id, :integer
-       t.column :last_seen, :datetime
+      t.column :channel_id, :integer
+      t.column :user_id, :integer
+      t.column :last_seen, :datetime
     end
     create_table :messages do |t|
       t.column :created_at, :datetime
@@ -21,6 +21,7 @@ class CreateChat < ActiveRecord::Migration
     end
     add_index :messages, :channel_id
   end
+
   def self.down
     drop_table :channels
     drop_table :channels_users

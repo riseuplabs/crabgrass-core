@@ -9,10 +9,10 @@ class RemoveTaskListIdFromTasks < ActiveRecord::Migration
 
   def down
     add_column :tasks, :task_list_id, :integer
-    add_index "tasks", ['task_list_id'],
-      name: 'index_tasks_task_list_id'
-    add_index "tasks", ['task_list_id','completed', 'position'],
-      name: 'index_tasks_completed_positions'
+    add_index 'tasks', ['task_list_id'],
+              name: 'index_tasks_task_list_id'
+    add_index 'tasks', %w[task_list_id completed position],
+              name: 'index_tasks_completed_positions'
   end
 
   private

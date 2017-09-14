@@ -1,5 +1,4 @@
 class Me::PermissionsController < Me::BaseController
-
   helper 'castle_gates'
 
   def index
@@ -28,5 +27,4 @@ class Me::PermissionsController < Me::BaseController
     me_permission_path(id, *args)
   end
   helper_method :key_holder_path
-
 end

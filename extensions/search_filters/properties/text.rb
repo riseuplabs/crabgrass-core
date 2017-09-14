@@ -1,5 +1,4 @@
 SearchFilter.new('/text/:text/') do
-
   #
   # This is a pretty useless search condition, and exists only
   # in cases where sphinx is not available.
@@ -33,6 +32,4 @@ SearchFilter.new('/text/:text/') do
       "#{:search.t}: #{h(text)}"
     end
   end
-
 end
-

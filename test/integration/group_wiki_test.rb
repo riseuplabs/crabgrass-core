@@ -22,7 +22,7 @@ class GroupWikiTest < JavascriptIntegrationTest
     visit '/groups/rainbow/wikis'
     create_group_wiki :public
     edit_group_wiki :public
-    fill_in "wiki[body]", with: "h2. test content\n\n"
+    fill_in 'wiki[body]', with: "h2. test content\n\n"
     click_on 'Save'
     assert_content 'Changes saved'
     assert_selector '.wiki h2', text: 'test content'
@@ -60,6 +60,6 @@ class GroupWikiTest < JavascriptIntegrationTest
   end
 
   def assert_wiki_content(text)
-    assert_selector 'article div.wiki', text: text.gsub("\n", " ")
+    assert_selector 'article div.wiki', text: text.tr("\n", ' ')
   end
 end

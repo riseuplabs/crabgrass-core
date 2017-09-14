@@ -2,12 +2,11 @@
 # This is a link renderer that all our other custom link renderers inherit from.
 #
 class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
-
   def page_link(page, text, attributes = {})
     @template.content_tag(:li, page_link_to(page, text, attributes))
   end
 
-  def page_span(page, text, attributes = {})
+  def page_span(_page, text, attributes = {})
     if attributes[:class] =~ /disabled/
       li_class = 'disabled'
     elsif attributes[:class] =~ /current/
@@ -44,7 +43,7 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
   def to_html
     links_html = pagination.map do |page|
       case page
-      when Fixnum
+      when Integer
         page_link_or_span(page, page == @collection.current_page ? 'current' : '', page.to_s)
       when :gap
         gap_marker
@@ -60,24 +59,24 @@ class LinkRenderer::CrabgrassBase < WillPaginate::ViewHelpers::LinkRenderer
         ''
       end
     end.join(@options[:separator]).html_safe
-    ul = @template.content_tag(:ul, class: @options[:class]) {links_html}
+    ul = @template.content_tag(:ul, class: @options[:class]) { links_html }
     (html_before + ul + html_after).html_safe
   end
 
   # may be overridden by subclasses
   def html_before
-    ""
+    ''
   end
+
   def html_after
-    ""
+    ''
   end
 
   def url_for(page)
     if @options[:params]
-      @template.url_for(@options[:params].merge({param_name => page}))
+      @template.url_for(@options[:params].merge(param_name => page))
     else
       "?#{param_name}=#{page}"
     end
   end
-
 end

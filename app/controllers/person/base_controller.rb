@@ -1,5 +1,4 @@
 class Person::BaseController < ApplicationController
-
   before_filter :fetch_person
   before_filter :authorization_required
 
@@ -18,6 +17,4 @@ class Person::BaseController < ApplicationController
     @context = Context.find(@user)
     super
   end
-
 end
-

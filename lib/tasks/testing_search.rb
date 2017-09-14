@@ -11,12 +11,12 @@ require 'yaml'
 
 namespace :cg do
   namespace :test do
-    desc "refreshes the auto-generated fixtures"
+    desc 'refreshes the auto-generated fixtures'
     task update_fixtures: :environment do
       #
       # load existing fixtures
       #
-      Rake::Task["db:fixtures:load"].invoke
+      Rake::Task['db:fixtures:load'].invoke
       Page::Terms.delete_all
 
       #
@@ -33,23 +33,22 @@ namespace :cg do
       #
       # save page_terms to fixture yaml file
       #
-      sql  = "SELECT * FROM %s"
+      sql = 'SELECT * FROM %s'
       ActiveRecord::Base.establish_connection
       table_name = 'page_terms'
       fixture_name = 'page/terms'
-      i = "000"
+      i = '000'
       File.open(Rails.root + "test/fixtures/#{fixture_name}.yml", 'w') do |file|
         data = ActiveRecord::Base.connection.select_all(sql % table_name)
-        file.write data.inject({}) { |hash, record|
+        file.write data.each_with_object({}) { |record, hash|
           hash["#{table_name}_#{i.succ!}"] = record
-          hash
         }.to_yaml
       end
 
       #
       # ensure the test db is updated too
       #
-      #Rake::Taks["db:test:prepare"].invoke
+      # Rake::Taks["db:test:prepare"].invoke
     end
   end
 end
@@ -62,9 +61,9 @@ end
 # That way, the changes we make here are not lost in schema.rb,
 # instead they are captured in development_structure.sql.
 
-#desc "optimize mysql tables for crabgrass."
-#task(:optimize => :environment) do
+# desc "optimize mysql tables for crabgrass."
+# task(:optimize => :environment) do
 #  connection = ActiveRecord::Base.connection
 #  connection.execute 'ALTER TABLE page_terms ENGINE = MyISAM'
 #  connection.execute 'CREATE FULLTEXT INDEX idx_fulltext ON page_terms(access_ids, tags)'
-#end
+# end

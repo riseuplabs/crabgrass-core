@@ -1,5 +1,4 @@
 module Common::Ui::AutocompleteHelper
-
   #
   # creates the javascript for autocomplete on text field with field_id
   #
@@ -13,55 +12,55 @@ module Common::Ui::AutocompleteHelper
   #  :container -- the dom id of an element that will be the container for the popup. optional
   #
 
-#  def autocomplete_entity_tag(field_id, options={})
-#    options[:url] ||= '/entities'
-#    options[:onselect] ||= 'null'
-#    auto_complete_js = %Q[
-#      new Autocomplete('#{field_id}', {
-#        serviceUrl:'#{options[:url]}',
-#        minChars:2,
-#        maxHeight:400,
-#        width:300,
-#        onSelect: #{options[:onselect]},
-#        message: '#{escape_javascript(options[:message])}',
-#        container: '#{options[:container]}',
-#        preloadedOnTop: true,
-#        rowRenderer: #{render_entity_row_function},
-#        selectValue: #{extract_value_from_entity_row_function}
-#      });
-#    ]
-#    javascript_tag(auto_complete_js)
-#  end
+  #  def autocomplete_entity_tag(field_id, options={})
+  #    options[:url] ||= '/entities'
+  #    options[:onselect] ||= 'null'
+  #    auto_complete_js = %Q[
+  #      new Autocomplete('#{field_id}', {
+  #        serviceUrl:'#{options[:url]}',
+  #        minChars:2,
+  #        maxHeight:400,
+  #        width:300,
+  #        onSelect: #{options[:onselect]},
+  #        message: '#{escape_javascript(options[:message])}',
+  #        container: '#{options[:container]}',
+  #        preloadedOnTop: true,
+  #        rowRenderer: #{render_entity_row_function},
+  #        selectValue: #{extract_value_from_entity_row_function}
+  #      });
+  #    ]
+  #    javascript_tag(auto_complete_js)
+  #  end
 
   # autocomplete that submits the form on select
   def autocomplete_input_tag(attribute, entities, options = {})
-    options.reverse_merge!  autoSubmit: true,
-      container: 'autocomplete_container',
-      onkeypress: false
+    options.reverse_merge! autoSubmit: true,
+                           container: 'autocomplete_container',
+                           onkeypress: false
     options[:view] = entities
     autocomplete_entity_field_tag(attribute, options)
   end
 
   # this searches on recipients - people you may pester.
   def autocomplete_recipients_field_tag(field_id, options = {})
-    options.merge! view: 'recipients'
-    autocomplete_entity_field_tag(field_id, options) #should this always be recipients?
+    options[:view] = 'recipients'
+    autocomplete_entity_field_tag(field_id, options) # should this always be recipients?
   end
 
   # just for groups
   def autocomplete_groups_field_tag(field_id, options = {})
-    options.merge! view: 'groups'
+    options[:view] = 'groups'
     autocomplete_entity_field_tag(field_id, options)
   end
 
   # just for group members
   def autocomplete_members_field_tag(field_id, options = {})
-    options.merge! view: 'members'
+    options[:view] = 'members'
     autocomplete_entity_field_tag(field_id, options)
   end
 
   # for groups and users
-  def autocomplete_entity_field_tag(field_id, options={})
+  def autocomplete_entity_field_tag(field_id, options = {})
     # setup options
     options[:view] ||= 'all'
     options[:class] = 'form-control'
@@ -84,14 +83,13 @@ module Common::Ui::AutocompleteHelper
     path_options[:format] = 'json'
     url = options.delete(:url) || entities_path(path_options)
 
-    options.select! { |_, v| !v.nil? }
+    options.reject! { |_, v| v.nil? }
     onselect = options.delete :onselect
     option_string = options.to_json
     if onselect.present?
       option_string = option_string.sub(/}$/, ", onSelect: #{onselect}}")
     end
-    javascript_tag("cgAutocompleteEntities('%s', '%s', %s)" % [
-      field_id, url, option_string ])
+    javascript_tag(format("cgAutocompleteEntities('%s', '%s', %s)", field_id, url, option_string))
   end
 
   private
@@ -102,12 +100,11 @@ module Common::Ui::AutocompleteHelper
   # popup row.
   #
   def render_entity_row_function
-    %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
+    %[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
   end
 
   # called to convert the row data into a value
   def extract_value_from_entity_row_function
-    %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+    %[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
   end
-
 end

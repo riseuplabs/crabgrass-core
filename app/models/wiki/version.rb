@@ -1,6 +1,4 @@
 class Wiki::Version < ActiveRecord::Base
-
-
   before_destroy :confirm_existance_of_other_version
 
   def self.most_recent
@@ -10,7 +8,7 @@ class Wiki::Version < ActiveRecord::Base
   self.per_page = 10
 
   def confirm_existance_of_other_version
-    self.previous || self.next || false
+    previous || self.next || false
   end
 
   def to_s
@@ -18,15 +16,14 @@ class Wiki::Version < ActiveRecord::Base
   end
 
   def to_param
-    self.version.to_s
+    version.to_s
   end
 
   def diff_id
-    "#{previous.to_param}-#{self.to_param}"
+    "#{previous.to_param}-#{to_param}"
   end
 
   def body_html
     read_attribute(:body_html).try.html_safe
   end
-
 end

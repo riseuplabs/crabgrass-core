@@ -1,11 +1,7 @@
 require 'test_helper'
 
 class Page::AccessTest < ActiveSupport::TestCase
-
-
-
-  def setup
-  end
+  def setup; end
 
   def test_access_via_group
     user  = users(:red)
@@ -26,7 +22,7 @@ class Page::AccessTest < ActiveSupport::TestCase
   end
 
   def test_access_levels
-    user  = users(:red)
+    user = users(:red)
     page = create_page title: 'private page'
 
     assert !user.may?(:view, page), 'user should NOT have any access to the page'
@@ -48,8 +44,7 @@ class Page::AccessTest < ActiveSupport::TestCase
   protected
 
   def create_page(options = {})
-    defaults = {title: 'untitled page', public: false}
+    defaults = { title: 'untitled page', public: false }
     Page.create(defaults.merge(options))
   end
-
 end

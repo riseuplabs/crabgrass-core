@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Group::CouncilTest < ActiveSupport::TestCase
-
-
   def test_add_council
     network = groups(:cnt)
     council = Group::Council.create!(name: 'council')
@@ -80,7 +78,6 @@ class Group::CouncilTest < ActiveSupport::TestCase
 
     network.reload
     assert_nil network.council
-
   end
 
   def test_destroying_group_destroys_council
@@ -98,5 +95,3 @@ class Group::CouncilTest < ActiveSupport::TestCase
     end
   end
 end
-
-

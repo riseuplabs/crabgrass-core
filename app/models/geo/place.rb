@@ -4,7 +4,7 @@ class Geo::Place < ActiveRecord::Base
   belongs_to :geo_country, class_name: 'Geo::Country'
   belongs_to :geo_admin_code, class_name: 'Geo::AdminCode'
 
-  def self.with_names_matching(name, country_id, params={})
+  def self.with_names_matching(name, country_id, params = {})
     geo_country = Geo::Country.find(country_id)
     if params[:admin_code_id] =~ /\d+/
       geo_admin_code = geo_country.geo_admin_codes.find(params[:admin_code_id])
@@ -20,18 +20,16 @@ class Geo::Place < ActiveRecord::Base
         places.each do |place|
           @places << place
         end
-      elsif ! places.nil?
+      elsif !places.nil?
         @places << places
       end
     end
-    return @places unless (@places.empty? or params[:search_alternates])
+    return @places unless @places.empty? or params[:search_alternates]
     ### search for LIKE in name and alternatenames
     admin_codes.each do |ac|
       @places << find(:all,
-        conditions: ['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"]
-      )
+                      conditions: ['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"])
     end
-    return @places.flatten!
+    @places.flatten!
   end
-
 end

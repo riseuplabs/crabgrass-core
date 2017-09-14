@@ -7,7 +7,6 @@
 #
 
 class Group::MembershipRequestsController < Group::BaseController
-
   include_controllers 'common/requests'
 
   # may_admin_group? is required by default.
@@ -15,12 +14,12 @@ class Group::MembershipRequestsController < Group::BaseController
   guard create: :allow, update: :allow, destroy: :allow
 
   def index
-    @requests = Request.
-      membership_related.
-      having_state(current_state).
-      send(current_view, @group).
-      by_updated_at.
-      paginate(pagination_params)
+    @requests = Request
+                .membership_related
+                .having_state(current_state)
+                .send(current_view, @group)
+                .by_updated_at
+                .paginate(pagination_params)
     render template: 'common/requests/index'
   end
 
@@ -41,16 +40,16 @@ class Group::MembershipRequestsController < Group::BaseController
 
   def type
     case params[:type]
-      when 'destroy' then :destroy
-      when 'join' then :join
+    when 'destroy' then :destroy
+    when 'join' then :join
     end
   end
 
   def current_view
     case params[:view]
-      when "incoming" then :to_group
-      when "outgoing" then :from_group
-      else :regarding_group;
+    when 'incoming' then :to_group
+    when 'outgoing' then :from_group
+    else :regarding_group
     end
   end
 
@@ -63,7 +62,7 @@ class Group::MembershipRequestsController < Group::BaseController
   end
 
   def create_join_request
-    if !params[:cancel]
+    unless params[:cancel]
       @req = RequestToJoinYou.create recipient: @group, created_by: current_user
       alert_message @req
     end
@@ -84,5 +83,4 @@ class Group::MembershipRequestsController < Group::BaseController
     success @req
     redirect_to requests_path(@req)
   end
-
 end

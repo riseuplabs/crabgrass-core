@@ -1,13 +1,12 @@
 class GalleryController < Page::BaseController
-
   def show
     @images = @page.images.paginate(page: params[:page])
     redirect_to page_path(@page, action: :edit) if @images.blank?
-    #@cover = @page.cover
+    # @cover = @page.cover
   end
 
   def edit
-    #@images = @page.images.paginate(page: params[:page])
+    # @images = @page.images.paginate(page: params[:page])
     # I have disabled pagination on the edit view. If you paginate
     # during edit, then you can't fully reorder the images.
     @images = @page.images(page: params[:page])
@@ -27,15 +26,15 @@ class GalleryController < Page::BaseController
   def build_page_data
     @assets ||= []
     params[:assets].each do |file|
-      next if file.size == 0 # happens if no file was selected
+      next if file.empty? # happens if no file was selected
       build_asset_data(@assets, file)
     end
 
     # gallery page has no 'data' field
-    return nil
+    nil
   end
 
-  def build_asset_data(assets, file)
+  def build_asset_data(_assets, file)
     asset = Asset.create_from_param_with_zip_extraction(file) do |asset|
       asset.parent_page = @page
     end
@@ -47,7 +46,7 @@ class GalleryController < Page::BaseController
     @assets
   end
 
-  def build_zip_file_data(assets, file)
+  def build_zip_file_data(_assets, file)
     zip_assets, failures = Asset.make_from_zip(file)
     zip_assets.each do |asset|
       asset.parent_page = @page
@@ -90,6 +89,4 @@ class GalleryController < Page::BaseController
     params[:page] ||= 1
     Asset.visible_to(current_user).paginate(page: params[:page], conditions: ['assets.id IN (?)', @page.image_ids])
   end
-
 end
-

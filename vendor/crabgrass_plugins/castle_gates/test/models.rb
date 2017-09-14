@@ -43,20 +43,20 @@ class UnauthenticatedUser < User
 end
 
 class Fort < ActiveRecord::Base
-  #acts_as_castle
-  #add_gate 1, :draw_bridge
-  #add_gate 2, :sewers, :default_open => :admin
-  #add_gate 3, :tunnel, :default_open => [:public, :user]
-  #add_gate 4, :door, :default_open => :user
+  # acts_as_castle
+  # add_gate 1, :draw_bridge
+  # add_gate 2, :sewers, :default_open => :admin
+  # add_gate 3, :tunnel, :default_open => [:public, :user]
+  # add_gate 4, :door, :default_open => :user
 end
 
 class Bunker < Fort
 end
 
 class Tower < ActiveRecord::Base
-  #acts_as_castle
-  #add_gate 1, :door, :default_open => true
-  #add_gate 2, :window
+  # acts_as_castle
+  # add_gate 1, :door, :default_open => true
+  # add_gate 2, :window
   # def after_grant_access(holder, gates)
   #   if holder == :public
   #     grant_access! :admin => gates
@@ -76,7 +76,6 @@ class Rabbit
 end
 
 CastleGates.define do
-
   castle Fort do
     gate 1, :draw_bridge
     gate 2, :sewers
@@ -84,10 +83,11 @@ CastleGates.define do
     gate 4, :door
 
     protected
+
     after_create :create_permissions
     def create_permissions
       grant_access! admin: :sewers
-      grant_access! public: [:door, :tunnel]
+      grant_access! public: %i[door tunnel]
     end
   end
 
@@ -104,15 +104,11 @@ CastleGates.define do
     end
 
     def after_grant_access(holder, gates)
-      if holder == :public
-        grant_access! admin: gates
-      end
+      grant_access! admin: gates if holder == :public
     end
 
     def after_revoke_access(holder, gates)
-      if holder == :admin
-        revoke_access! public: gates
-      end
+      revoke_access! public: gates if holder == :admin
     end
   end
 
@@ -129,13 +125,13 @@ CastleGates.define do
 
   holder 1, :user, model: User do
     def holder_codes
-      [:public, {holder: :clan, ids: self.clan_ids}]
+      [:public, { holder: :clan, ids: clan_ids }]
     end
   end
 
   holder 2, :minion, model: Minion do
     def holder_codes
-      {holder: :minion_of_user, ids: self.user_ids}
+      { holder: :minion_of_user, ids: user_ids }
     end
   end
 
@@ -150,5 +146,4 @@ CastleGates.define do
   holder 6, :admin
 
   holder nil, :no_prefix_holder
-
 end

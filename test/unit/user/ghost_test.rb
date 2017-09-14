@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class User::GhostTest < ActiveSupport::TestCase
-
-
   # you are not supposed to create ghosts from scratch.
   # existing users are turned into ghosts with ghostify.
   def test_valid_without_attributes
@@ -14,11 +12,11 @@ class User::GhostTest < ActiveSupport::TestCase
     user = user.ghostify!
     user.retire!
     user.reload
-    user.attributes.except("id", "type", "login", "display_name").each do |k, v|
+    user.attributes.except('id', 'type', 'login', 'display_name').each do |k, v|
       assert v.blank?, "expected #{k} to be cleared"
     end
-    assert_equal "Blue!", user.display_name
-    assert_equal "blue", user.name
+    assert_equal 'Blue!', user.display_name
+    assert_equal 'blue', user.name
     assert_equal [], user.keys
   end
 

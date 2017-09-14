@@ -20,7 +20,6 @@
 # If the options are "0" the recipient is skipped. This is useful for checkboxes.
 
 class Page::Recipients
-
   attr_reader :options, :page, :param, :users, :groups, :emails, :specials, :errors
 
   def initialize(param, page = nil)
@@ -32,9 +31,9 @@ class Page::Recipients
 
   def users_from_groups
     group_ids = groups.map(&:id) + groups_from_specials.map(&:id)
-    User.joins(:memberships).
-      where(memberships: {group_id: group_ids}).
-      readonly(false).to_a
+    User.joins(:memberships)
+        .where(memberships: { group_id: group_ids })
+        .readonly(false).to_a
   end
 
   #
@@ -55,7 +54,7 @@ class Page::Recipients
 
   def groups_from_specials
     return page.groups.to_a if specials.include?(':participants')
-    return []
+    []
   end
 
   def empty?

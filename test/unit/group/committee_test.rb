@@ -1,12 +1,10 @@
 require 'test_helper'
 
 class Group::CommitteeTest < ActiveSupport::TestCase
-
-
   def setup
-    #@group = groups[:rainbow]
-    #@c1 = groups[:warm]
-    #@c2 = groups[:cold]
+    # @group = groups[:rainbow]
+    # @c1 = groups[:warm]
+    # @c2 = groups[:cold]
   end
 
   def test_creation_and_deletion
@@ -14,17 +12,17 @@ class Group::CommitteeTest < ActiveSupport::TestCase
     c1 = Group::Committee.create name: 'finance'
     c2 = Group::Committee.create name: 'food'
 
-    assert_difference 'Group.find(%d).version'%g.id do
+    assert_difference format('Group.find(%d).version', g.id) do
       g.add_committee!(c1)
     end
-    assert_difference 'Group.find(%d).version'%g.id do
+    assert_difference format('Group.find(%d).version', g.id) do
       g.add_committee!(c2)
     end
     g.reload
     assert_equal g, c1.parent, "committee's parent should match group"
 
-    assert_difference 'Group.find(%d).version'%g.id do
-      assert_difference 'Group.find(%d).committees.count'%g.id, -1 do
+    assert_difference format('Group.find(%d).version', g.id) do
+      assert_difference format('Group.find(%d).committees.count', g.id), -1 do
         c1.destroy
       end
     end
@@ -69,16 +67,16 @@ class Group::CommitteeTest < ActiveSupport::TestCase
     c = Group::Committee.new name: 'outreach'
     g.add_committee!(c)
     assert_equal 'riseup+outreach', c.name,
-      'committee name should be in the form <groupname>+<committeename>'
+                 'committee name should be in the form <groupname>+<committeename>'
     c.name = 'legal'
     c.save
     assert_equal 'riseup+legal', c.name,
-      'committee name update when changed.'
+                 'committee name update when changed.'
     g.reload
     g.name = 'riseup-collective'
     g.save
     assert_equal 'riseup-collective+legal', g.committees.first.name,
-      'committee name update when group name changed.'
+                 'committee name update when group name changed.'
   end
 
   def test_create
@@ -102,18 +100,18 @@ class Group::CommitteeTest < ActiveSupport::TestCase
     g.add_user!(other_user)
 
     group_page = Page.create! title: 'a group page',
-      public: false,
-      user: other_user,
-      share_with: g, access: :admin
+                              public: false,
+                              user: other_user,
+                              share_with: g, access: :admin
     group_page.save
     committee_page = Page.create! title: 'a committee page',
-      public: false,
-      user: other_user,
-      share_with: c, access: :admin
+                                  public: false,
+                                  user: other_user,
+                                  share_with: c, access: :admin
     committee_page.save
 
-    assert user.may?(:view, committee_page), "should be able to view committee page"
-    assert !user.may?(:view, group_page), "should not be able to view group page"
+    assert user.may?(:view, committee_page), 'should be able to view committee page'
+    assert !user.may?(:view, group_page), 'should not be able to view group page'
   end
 
   def test_cant_pester_private_committee
@@ -128,9 +126,9 @@ class Group::CommitteeTest < ActiveSupport::TestCase
 
   def test_can_pester_public_committee
     g = Group.create name: 'riseup'
-    g.grant_access! public: [:view, :pester, :see_committees]
+    g.grant_access! public: %i[view pester see_committees]
     c = Group::Committee.create name: 'outreach'
-    c.grant_access! public: [:view, :pester]
+    c.grant_access! public: %i[view pester]
     g.add_committee!(c)
 
     u = User.create login: 'user'

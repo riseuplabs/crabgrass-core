@@ -10,7 +10,6 @@
 #  end
 
 class Post < ActiveRecord::Base
-
   ##
   ## ASSOCIATIONS
   ##
@@ -54,7 +53,6 @@ class Post < ActiveRecord::Base
     EOSQL
   end
 
-
   ##
   ## ATTIBUTES
   ##
@@ -63,13 +61,13 @@ class Post < ActiveRecord::Base
   validates_presence_of :user, :body
   validate :in_reply_to_matches_recipient
 
-  alias :created_by :user
+  alias created_by user
 
-  attr_accessor :in_reply_to    # the post this post was in reply to.
-                                # it is tmp var used when post activities.
+  attr_accessor :in_reply_to # the post this post was in reply to.
+  # it is tmp var used when post activities.
 
-  attr_accessor :recipient      # for private posts, a tmp var to store who
-                                # this post is being sent to. used by activities.
+  attr_accessor :recipient # for private posts, a tmp var to store who
+  # this post is being sent to. used by activities.
 
   ##
   ## METHODS
@@ -121,15 +119,11 @@ class Post < ActiveRecord::Base
       attributes[:discussion] = page.discussion
       attributes[:page_terms_id] = page.page_terms.id
     end
-    if discussion
-      attributes[:discussion] = discussion
-    end
-    if user
-      attributes[:user] = user
-    end
+    attributes[:discussion] = discussion if discussion
+    attributes[:user] = user if user
     post = Post.new(attributes, &block)
     post.save!
-    return post
+    post
   end
 
   # used for default context, if present, to set for any embedded links
@@ -144,7 +138,7 @@ class Post < ActiveRecord::Base
 
   # not used anymore
   def editable_by?(user)
-    user.id == self.user_id
+    user.id == user_id
   end
 
   def starred_by?(user)
@@ -156,7 +150,7 @@ class Post < ActiveRecord::Base
   # We implement a similar interface as for pages to ease things there.
 
   def flow=(value)
-    value.to_i == FLOW[:deleted] ? self.delete : self.undelete
+    value.to_i == FLOW[:deleted] ? delete : undelete
   end
 
   def delete
@@ -164,9 +158,13 @@ class Post < ActiveRecord::Base
     post_destroyed(true)
   end
 
-  def deleted? ; !!deleted_at ; end
+  def deleted?
+    !!deleted_at
+  end
 
-  def deleted_changed? ; deleted_at_changed? ; end
+  def deleted_changed?
+    deleted_at_changed?
+  end
 
   def undelete
     update_attribute :deleted_at, nil
@@ -176,10 +174,11 @@ class Post < ActiveRecord::Base
   # this should be able to be handled in the subclasses, but sometimes
   # when you create a new post, the subclass is not set yet.
   def public?
-    ['Post', 'PublicPost', 'StatusPost'].include?(read_attribute(:type))
+    %w[Post PublicPost StatusPost].include?(read_attribute(:type))
   end
+
   def private?
-    'PrivatePost' == read_attribute(:type)
+    read_attribute(:type) == 'PrivatePost'
   end
 
   def default?
@@ -187,11 +186,11 @@ class Post < ActiveRecord::Base
   end
 
   def lite_html
-    GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
+    GreenCloth.new(body, 'page', [:lite_mode]).to_html
   end
 
   def body_id
-   "post_#{self.id}_body"
+    "post_#{id}_body"
   end
 
   protected
@@ -200,9 +199,9 @@ class Post < ActiveRecord::Base
     discussion.post_created(self)
   end
 
-  def post_destroyed(force_decrement=false)
+  def post_destroyed(force_decrement = false)
     # don't decrement if post is already marked deleted.
-    decrement = force_decrement || self.deleted_at.nil?
+    decrement = force_decrement || deleted_at.nil?
     discussion.post_destroyed(self, decrement) if discussion
   end
 
@@ -214,8 +213,7 @@ class Post < ActiveRecord::Base
     return if in_reply_to.blank?
     if in_reply_to.user_id != recipient.id
       errors.add :in_reply_to,
-        "Ugh. The user and the post you are replying to don't match."
+                 "Ugh. The user and the post you are replying to don't match."
     end
   end
 end
-

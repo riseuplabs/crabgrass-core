@@ -10,4 +10,3 @@ class AddDescriptionToPossibles < ActiveRecord::Migration
     remove_column :possibles, :description_html
   end
 end
-

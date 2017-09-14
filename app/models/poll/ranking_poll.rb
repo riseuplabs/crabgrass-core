@@ -1,8 +1,8 @@
 class Poll::RankingPoll < Poll
   has_many :votes,
-    foreign_key: :votable_id,
-    class_name: "RankingVote",
-    dependent: :delete_all
+           foreign_key: :votable_id,
+           class_name: 'RankingVote',
+           dependent: :delete_all
 
   def vote(user, picks)
     votes.by_user(user).delete_all
@@ -14,7 +14,7 @@ class Poll::RankingPoll < Poll
     end
   end
 
-  #delegate :winners, :rank, :ranked_candidates, :to => :results
+  # delegate :winners, :rank, :ranked_candidates, :to => :results
 
   # TODO: uncomment in rails2.3. still not working in rails 2.3.11
   # delegate :winners, :rank, ... :to => :results
@@ -29,7 +29,6 @@ class Poll::RankingPoll < Poll
   def rank(possible)
     @results.rank(possible)
   end
-
 
   # returns:
   # a hash mapping possible name to an array of users who picked ranked this highest
@@ -59,9 +58,9 @@ class Poll::RankingPoll < Poll
     ## votes, sorted in order of their preference
     ## eg. [ ["A", "B"],  ["B", "A"], ["B", "A"] ]
     hash.each_pair do |user_id, votes|
-      sorted_by_value = votes.sort_by{|vote|vote[1]}
+      sorted_by_value = votes.sort_by { |vote| vote[1] }
       top_choice_name = sorted_by_value.first[0]
-      ballots << sorted_by_value.collect{|vote|vote[0]}
+      ballots << sorted_by_value.collect { |vote| vote[0] }
       who_voted_for[top_choice_name] ||= []
       who_voted_for[top_choice_name] << user_id
     end
@@ -69,6 +68,6 @@ class Poll::RankingPoll < Poll
     ballots << [] if ballots.blank?
     @results = BordaVote.new(ballots)
 
-    return who_voted_for
+    who_voted_for
   end
 end

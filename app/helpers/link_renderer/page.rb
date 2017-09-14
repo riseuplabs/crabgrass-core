@@ -19,4 +19,3 @@ class LinkRenderer::Page < LinkRenderer::CrabgrassBase
     end
   end
 end
-

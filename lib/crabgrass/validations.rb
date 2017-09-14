@@ -27,9 +27,9 @@ module Crabgrass
         validates_each(attr_names, configuration) do |record, attr_name, value|
           unless value.present?
             record.errors.add(attr_name, 'must exist')
-            next #can't use return cause it raises a LocalJumpError
+            next # can't use return cause it raises a LocalJumpError
           end
-          unless (3..50).include? value.length
+          unless (3..50).cover? value.length
             record.errors.add(attr_name, 'must be at least 3 and no more than 50 characters')
           end
           unless /^[a-z0-9]+([-\+_]*[a-z0-9]+){1,49}$/ =~ value

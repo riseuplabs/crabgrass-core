@@ -17,7 +17,7 @@ class Page::PostsController < ApplicationController
   track_actions :create, :update, :destroy
 
   # if something goes wrong with create, redirect to the page url.
-  rescue_render create: lambda { |controller| redirect_to(page_url(@page)) }
+  rescue_render create: ->(_controller) { redirect_to(page_url(@page)) }
 
   # do we still want this?...
   # cache_sweeper :social_activities_sweeper, :only => :create
@@ -62,4 +62,3 @@ class Page::PostsController < ApplicationController
     super item: @post
   end
 end
-

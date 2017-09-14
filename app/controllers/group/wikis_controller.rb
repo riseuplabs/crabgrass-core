@@ -1,5 +1,4 @@
 class Group::WikisController < Group::BaseController
-
   guard :may_edit_group?
   permissions 'wikis'
 
@@ -20,5 +19,4 @@ class Group::WikisController < Group::BaseController
     @private_wiki = @group.private_wiki
     @public_wiki  = @group.public_wiki
   end
-
 end

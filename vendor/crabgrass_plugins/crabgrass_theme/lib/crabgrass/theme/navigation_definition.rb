@@ -3,22 +3,21 @@
 ##
 
 class Crabgrass::Theme::NavigationDefinition
-
-  def self.parse(theme, parent_nav=nil, &block)
-    if parent_nav
-      tree = parent_nav.root.deep_clone
-    else
-      tree = nil
-    end
+  def self.parse(theme, parent_nav = nil, &block)
+    tree = if parent_nav
+             parent_nav.root.deep_clone
+           else
+             nil
+           end
     navigation = Crabgrass::Theme::NavigationDefinition.new(theme, tree)
     if block
       # parse the navigation.rb file:
       navigation.instance_eval(&block)
     end
-    return navigation
+    navigation
   end
 
-  def initialize(theme, tree=nil)
+  def initialize(theme, tree = nil)
     @theme = theme
     if tree
       # work with an existing inherited tree
@@ -41,7 +40,6 @@ class Crabgrass::Theme::NavigationDefinition
     end
   end
 
-
   # creates a new section to the navigation. anything defined in the section
   # definition block is put under this section. if the named section already
   # exists, then we redefine it.
@@ -49,13 +47,13 @@ class Crabgrass::Theme::NavigationDefinition
   def section(name)
     section = current_section.seek(name) || current_section.add(Crabgrass::Theme::NavigationItem.new(name, @theme))
     @section_stack.push(section)
-      yield
+    yield
     @section_stack.pop
   end
 
-  alias :global_section :section
-  alias :context_section :section
-  alias :local_section :section
+  alias global_section section
+  alias context_section section
+  alias local_section section
 
   # removes the named section from the tree, at the *current* level
   # based on the section stack.
@@ -78,5 +76,4 @@ class Crabgrass::Theme::NavigationDefinition
   def current_section
     @section_stack.last
   end
-
 end

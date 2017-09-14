@@ -8,7 +8,6 @@ unless defined? Minitest::Test
 end
 
 class CastleGatesTest < Minitest::Test
-
   def setup
     @fort = Fort.find :first
     @tower = Tower.find :first
@@ -24,7 +23,6 @@ class CastleGatesTest < Minitest::Test
 
     @faction = Faction.find :first
     @bunker = Bunker.find :first
-
   end
 
   def teardown
@@ -41,10 +39,10 @@ class CastleGatesTest < Minitest::Test
     assert_raises ArgumentError do
       @fort.grant_access!(public: :not_a_gate)
     end
-    #TODO
-    #assert_raises ArgumentError do
+    # TODO
+    # assert_raises ArgumentError do
     #  @fort.access?(@me.minions => :draw_bridge)
-    #end
+    # end
   end
 
   def test_simple_grant
@@ -71,7 +69,7 @@ class CastleGatesTest < Minitest::Test
       assert !@fort.access?(@me => :draw_bridge), 'no access yet'
       assert @fort.access?(@me => :door), 'access to defaults'
 
-      @fort.set_access!(:public => :draw_bridge)
+      @fort.set_access!(public: :draw_bridge)
       assert @fort.access?(@me => :draw_bridge), 'should have access now'
       assert !@fort.access?(@me => :door), 'defaults do not apply with set'
 
@@ -125,8 +123,8 @@ class CastleGatesTest < Minitest::Test
 
   def test_multivalue_arguments
     ActiveRecord::Base.transaction do
-      @fort.grant_access! :public => [:draw_bridge, :sewers],
-        @me => [:draw_bridge, :sewers]
+      @fort.grant_access! :public => %i[draw_bridge sewers],
+                          @me => %i[draw_bridge sewers]
       assert @fort.access? public: :draw_bridge
       assert @fort.access? public: :sewers
       assert @fort.access? @me => :draw_bridge
@@ -183,7 +181,7 @@ class CastleGatesTest < Minitest::Test
       assert !@fort.access?(admin: :sewers), 'default should get overridden'
 
       @fort.set_access!(@me => :sewers) # create a key that has no access to tunnel
-      assert @fort.access?(:public => :tunnel), 'tunnel is open to public by default'
+      assert @fort.access?(public: :tunnel), 'tunnel is open to public by default'
       assert @fort.access?(@me => :tunnel), 'tunnel should still be open for @me as a part of the public'
 
       assert @me.access?(@minion => :follow), "me's minion should have access by default"
@@ -289,6 +287,4 @@ class CastleGatesTest < Minitest::Test
       raise ActiveRecord::Rollback
     end
   end
-
 end
-

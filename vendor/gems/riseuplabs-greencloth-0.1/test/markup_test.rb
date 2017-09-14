@@ -3,25 +3,24 @@ require 'minitest/autorun'
 require 'byebug'
 require 'yaml'
 
-test_dir =  File.dirname(File.expand_path(__FILE__))
+test_dir = File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../lib/greencloth.rb'
 
-if ARGV[0] and ARGV[0] =~ /\.yml/
-  SINGLE_FILE_OVERRIDE = [ARGV[0]]
-else
-  SINGLE_FILE_OVERRIDE = nil
-end
+SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] =~ /\.yml/
+                         [ARGV[0]].freeze
+                       else
+                         nil
+                       end
 
 class TestMarkup < MiniTest::Test
-
   def setup
-    files = SINGLE_FILE_OVERRIDE || Dir[File.dirname(__FILE__) + "/fixtures/*.yml"]
+    files = SINGLE_FILE_OVERRIDE || Dir[File.dirname(__FILE__) + '/fixtures/*.yml']
     @fixtures = {}
     files.each do |testfile|
       begin
-        YAML::load_documents( File.open( testfile ) ) do |doc|
-          @fixtures[ File.basename(testfile) ] ||= []
-          @fixtures[ File.basename(testfile) ] << doc
+        YAML.load_documents(File.open(testfile)) do |doc|
+          @fixtures[File.basename(testfile)] ||= []
+          @fixtures[File.basename(testfile)] << doc
         end
       rescue SyntaxError
         puts "Failed to load #{testfile}"
@@ -29,7 +28,7 @@ class TestMarkup < MiniTest::Test
       end
     end
     @special = ['outline.yml']
-    @markup_fixtures = @fixtures.reject{|key,value| @special.include? key}
+    @markup_fixtures = @fixtures.reject { |key, _value| @special.include? key }
   end
 
   def test_general_markup
@@ -47,14 +46,14 @@ class TestMarkup < MiniTest::Test
     end
   end
 
-  #def test_sections
+  # def test_sections
   #  return unless @fixtures['sections.yml']
   #  @fixtures['sections.yml'].each do |doc|
   #    greencloth = GreenCloth.new( doc['in'] )
   #    greencloth.wrap_section_html = true
   #    assert_markup('sections.yml', doc, greencloth.to_html)
   #  end
-  #end
+  # end
 
   protected
 
@@ -62,11 +61,11 @@ class TestMarkup < MiniTest::Test
     in_markup = doc['in']
     expected = doc['out'] || doc['html']
     return unless in_markup and expected
-    html.gsub!( /\n+/, "\n" )
-    expected.gsub!( /\n+/, "\n" )
-    assert_equal expected, html, <<-EOFAIL
-\n------- #{filename} failed: -------
-#{in_markup}
+    html.gsub!(/\n+/, "\n")
+    expected.gsub!(/\n+/, "\n")
+    assert_equal expected, html, <<-EOFAIL.strip_heredoc
+      \n------- #{filename} failed: -------
+      #{in_markup}
     EOFAIL
   end
 end

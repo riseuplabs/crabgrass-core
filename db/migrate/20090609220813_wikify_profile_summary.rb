@@ -9,4 +9,3 @@ class WikifyProfileSummary < ActiveRecord::Migration
     remove_column :profiles, :summary_html
   end
 end
-

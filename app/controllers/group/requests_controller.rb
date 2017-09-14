@@ -6,7 +6,6 @@
 #
 #
 class Group::RequestsController < Group::BaseController
-
   include_controllers 'common/requests'
 
   # guard defaults to may_admin_group?
@@ -18,11 +17,11 @@ class Group::RequestsController < Group::BaseController
   rescue_render create: :index
 
   def index
-    @requests = Request.
-      having_state(current_state).
-      send(current_view, @group).
-      by_updated_at.
-      paginate(pagination_params)
+    @requests = Request
+                .having_state(current_state)
+                .send(current_view, @group)
+                .by_updated_at
+                .paginate(pagination_params)
     render template: 'common/requests/index'
   end
 
@@ -32,8 +31,8 @@ class Group::RequestsController < Group::BaseController
   #
   def create
     @req = requested_class.create! recipient: @group,
-      requestable: @group,
-      created_by: current_user
+                                   requestable: @group,
+                                   created_by: current_user
     success @req
     redirect_to request_path(@req)
   end
@@ -50,16 +49,14 @@ class Group::RequestsController < Group::BaseController
   end
 
   def track_action
-    if REQUEST_TYPES.has_key? params[:type]
-      super "request_to_#{params[:type]}"
-    end
+    super "request_to_#{params[:type]}" if REQUEST_TYPES.key? params[:type]
   end
 
   def current_view
     case params[:view]
-      when "incoming" then :to_group
-      when "outgoing" then :from_group
-      else :regarding_group
+    when 'incoming' then :to_group
+    when 'outgoing' then :from_group
+    else :regarding_group
     end
   end
 
@@ -70,5 +67,4 @@ class Group::RequestsController < Group::BaseController
   def requests_path(*args)
     group_requests_path(@group, *args)
   end
-
 end

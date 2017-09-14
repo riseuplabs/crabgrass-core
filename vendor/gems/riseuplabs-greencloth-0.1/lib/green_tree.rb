@@ -13,12 +13,12 @@ class GreenTree < Array
 
   def to_hash
     hash = {
-      :name => self.name,
-      :start_index => self.start_index,
-      :end_index => self.end_index,
-      :heading_level => self.heading_level,
-      :children => self.collect {|child| child.to_hash}
-      }
+      name: name,
+      start_index: start_index,
+      end_index: end_index,
+      heading_level: heading_level,
+      children: collect(&:to_hash)
+    }
   end
 
   def self.from_hash(hash, greencloth)
@@ -52,39 +52,41 @@ class GreenTree < Array
 
   def inspect
     if leaf?
-      %Q["#{name}(#{start_index}..#{end_index})"]
+      %["#{name}(#{start_index}..#{end_index})"]
     else
-      %Q["#{name||'document'}(#{start_index}..#{end_index})" -> [#{self.map{|i|i.inspect}.join(', ')}]]
+      %["#{name || 'document'}(#{start_index}..#{end_index})" -> [#{map(&:inspect).join(', ')}]]
     end
   end
 
   def ==(other)
-    return self.name == other.name &&
-            self.heading_level == other.heading_level &&
-            self.parent == other.parent
+    name == other.name &&
+      heading_level == other.heading_level &&
+      parent == other.parent
   end
 
-  alias :to_s :inspect
-  alias :leaf? :empty?
+  alias to_s inspect
+  alias leaf? empty?
 
   def root?
-    self.parent.nil?
+    parent.nil?
   end
 
-  def children; self; end
+  def children
+    self
+  end
 
   def add_child(text, name, heading_level)
     self << GreenTree.new(text, name, heading_level, self)
-    return self.last
+    last
   end
 
   # returns a list of siblings for this node (including itself)
   # in their original order
   def siblings
     # this node has no siblings since it's a root node
-    return [] if self.root?
+    return [] if root?
     # we have some siblings
-    return self.parent.children
+    parent.children
   end
 
   # the sibling after this node
@@ -102,23 +104,23 @@ class GreenTree < Array
 
   # parent and parents parent for this node (excluding itself)
   def ancestors
-    return [] if self.root?
-    [self.parent] + self.parent.ancestors
+    return [] if root?
+    [parent] + parent.ancestors
   end
 
   # children and childrens children for this node (including itself)
   def descendants
     all = [self]
-    children.each { |child|  all += child.descendants }
+    children.each { |child| all += child.descendants }
     all.compact
   end
 
   # returns the node after this one
   def successor
     # this node has no successor since it's a root node
-    return nil if self.root?
+    return nil if root?
 
-    sibling = self.next_sibling
+    sibling = next_sibling
     if sibling
       return sibling
     else
@@ -137,14 +139,14 @@ class GreenTree < Array
         return node unless node.nil?
       end
     end
-    return nil # not found
+    nil # not found
   end
 
   # get the list of all the available heading names in this tree
   # order from text top to text bottom
   def section_names
     names = []
-    names << self.name
+    names << name
     children.each do |child|
       names.concat child.section_names
     end
@@ -152,19 +154,19 @@ class GreenTree < Array
   end
 
   def prepare_markup_indexes
-    if self.parent
+    if parent
       raise GreenClothException, "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
     else
-      markup = self.greencloth.to_s.clone
-      self.prepare_markup_start_index!(markup)
-      self.prepare_markup_end_index!(markup)
+      markup = greencloth.to_s.clone
+      prepare_markup_start_index!(markup)
+      prepare_markup_end_index!(markup)
       self.end_index = markup.size - 1
     end
   end
 
   # returns the markup text for this section
   def markup
-    greencloth[self.start_index..self.end_index]
+    greencloth[start_index..end_index]
   end
 
   # returns the whole greencloth text, with this section replaced with +markup+
@@ -177,14 +179,13 @@ class GreenTree < Array
 
     # don't apprend the trailing whitespace to the sections that
     # hit the end of the document text
-    unless self.root? or self.successor.nil?
+    unless root? or successor.nil?
       section_markup << "\n\n" if markup_newlines.length < 2
     end
 
-    current_markup[self.start_index..self.end_index] = section_markup
+    current_markup[start_index..end_index] = section_markup
     current_markup
   end
-
 
   protected
 
@@ -208,24 +209,24 @@ class GreenTree < Array
     # and is better than 'nil' start_index for nodes that can't be be found in the markup
     self.start_index = 0
 
-    if self.text
+    if text
       # find the first occurance of this node in the markup
-      self.start_index = markup.index(self.markup_regexp, offset)
-      if self.start_index.nil?
+      self.start_index = markup.index(markup_regexp, offset)
+      if start_index.nil?
         raise GreenClothHeadingError.new(text, markup, markup_regexp)
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
-        markup[self.start_index] = "\000"
+        markup[start_index] = "\000"
       end
     end
-    return self.start_index
+    start_index
   end
 
   def prepare_markup_end_index!(markup)
     # self and all children have start index
     # traverse the tree depth first, left-to-right (directly top-to-bottom in greencloth text layout)
-    self.children.each do |child_node|
+    children.each do |child_node|
       child_node.prepare_markup_end_index!(markup)
       child_node_successor = child_node.successor
       if child_node_successor and child_node_successor.start_index
@@ -255,18 +256,18 @@ class GreenTree < Array
 
   def regexp_text
     @regexp_text ||=
-    # take out carriage returns
-    Regexp.escape(self.text.gsub(/\r\n/, "\n")).
+      # take out carriage returns
+      Regexp.escape(text.gsub(/\r\n/, "\n")).
       # look for the words - but allow special chars in between
       gsub(/\\\s/, '[\W_](.*[\W_])?').
       # remove html entities, and let them match one to several characters
-      gsub(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.{1,3}').
+      gsub(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/, '.{1,3}').
       # add back carriage returns as optional
       gsub('\\n', '\\r?\\n')
   end
 
   def heading_underline_regexp
-    underline = (heading_level == 1) ? '=' : '-'
+    underline = heading_level == 1 ? '=' : '-'
     /^
     [^\n]*#{regexp_text}[^\n]*\s*
     \n#{underline}+\s*?(\r?\n\r?\n?|$)
@@ -281,4 +282,3 @@ class GreenTree < Array
     /x
   end
 end
-

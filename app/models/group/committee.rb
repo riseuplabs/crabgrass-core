@@ -1,6 +1,4 @@
 class Group::Committee < Group
-
-
   ##
   ## NAMING
   ##
@@ -11,7 +9,7 @@ class Group::Committee < Group
 
   # committee name without parent
   def short_name
-    (read_attribute(:name)||'').sub(/^.*\+/,'')
+    (read_attribute(:name) || '').sub(/^.*\+/, '')
   end
 
   # what we show to the user
@@ -31,10 +29,10 @@ class Group::Committee < Group
     t_name = read_attribute(:name)
     return unless t_name
     if parent
-      name_without_parent = t_name.sub(/^#{parent.name}\+/,'').gsub('+','-')
+      name_without_parent = t_name.sub(/^#{parent.name}\+/, '').tr('+', '-')
       write_attribute(:name, parent.name + '+' + name_without_parent)
     else
-      write_attribute(:name, t_name.gsub('+','-'))
+      write_attribute(:name, t_name.tr('+', '-'))
     end
   end
 
@@ -77,10 +75,9 @@ class Group::Committee < Group
   # and destroy_permissions explicitly once it is added to a
   # parent group.
   #
-  def call_create_permissions
-  end
-  def call_destroy_permissions
-  end
+  def call_create_permissions; end
+
+  def call_destroy_permissions; end
 
   ##
   ## ORGANIZATIONAL
@@ -93,5 +90,4 @@ class Group::Committee < Group
     parent.remove_committee!(self)
     true
   end
-
 end

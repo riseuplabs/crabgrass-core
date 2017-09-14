@@ -1,5 +1,4 @@
 class Wiki::BaseController < ApplicationController
-
   before_filter :fetch_wiki
 
   permissions 'wikis'
@@ -28,5 +27,4 @@ class Wiki::BaseController < ApplicationController
     @context = Context.find(@wiki.context) if @wiki.context
     super
   end
-
 end

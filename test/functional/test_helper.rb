@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ActionController::TestCase
-
   protected
 
   # get assigns without going through the whole request
@@ -15,6 +14,6 @@ class ActionController::TestCase
   end
 
   def flashed_errors
-    @controller.send(:flash)[:messages].detect {|m| m[:type] == :error or m[:type] == :warning}
+    @controller.send(:flash)[:messages].detect { |m| m[:type] == :error or m[:type] == :warning }
   end
 end

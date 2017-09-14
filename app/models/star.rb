@@ -11,7 +11,7 @@ class Star < ActiveRecord::Base
 
   def one_star_per_user_only
     if starred.stars.exists?(user_id: user_id)
-      errors.add(starred_type, "has already been starred")
+      errors.add(starred_type, 'has already been starred')
     end
   end
 end

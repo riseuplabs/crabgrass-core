@@ -1,29 +1,27 @@
-define_theme(parent: 'default') {
-
-  masthead {
+define_theme(parent: 'default') do
+  masthead do
     logo url('logo')
-  }
+  end
 
-  footer {
-    content {
+  footer do
+    content do
       html partial: 'themes/riseup/footer'
-    }
-  }
+    end
+  end
 
-  home {
-    content {
+  home do
+    content do
       html partial: 'themes/riseup/home'
-    }
-  }
+    end
+  end
 
-  link {
+  link do
     # this is the color of the menu background in the banner navigation.
     # (banner background with a dark overlay)
     # It works both for normal fonts and for headings
-    standard_color "#2a5183"
-  }
-
-}
+    standard_color '#2a5183'
+  end
+end
 
 style %{
   body {

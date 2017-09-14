@@ -1,5 +1,4 @@
 class Asset::Corrupted < Asset
-
   def is_image
     true
   end
@@ -13,15 +12,15 @@ class Asset::Corrupted < Asset
   end
 
   def content_type
-    "image/png"
+    'image/png'
   end
 
   def filename
-    "corrupted.png"
+    'corrupted.png'
   end
 
   def height
-    200 #512
+    200 # 512
   end
 
   def width
@@ -32,14 +31,11 @@ class Asset::Corrupted < Asset
   # make this corrupted asset also work for a corrupted thumbnail
   #
 
-  def generate
-  end
+  def generate; end
 
   define_thumbnails(
-    small: {size: '64x64>',   ext: 'jpg', title: 'Small Thumbnail'},
-    medium: {size: '200x200>', ext: 'jpg', title: 'Medium Thumbnail'},
-    large: {size: '500x500>', ext: 'jpg', title: 'Large Thumbnail'}
+    small: { size: '64x64>', ext: 'jpg', title: 'Small Thumbnail' },
+    medium: { size: '200x200>', ext: 'jpg', title: 'Medium Thumbnail' },
+    large: { size: '500x500>', ext: 'jpg', title: 'Large Thumbnail' }
   )
-
 end
-

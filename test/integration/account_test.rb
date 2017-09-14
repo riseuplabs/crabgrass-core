@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class AccountTest < IntegrationTest
-
   def test_account_livecycle
     visit '/'
     signup

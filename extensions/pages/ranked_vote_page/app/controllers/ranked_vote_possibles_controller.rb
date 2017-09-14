@@ -1,6 +1,6 @@
 class RankedVotePossiblesController < Page::BaseController
   before_filter :fetch_poll
-  before_filter :fetch_possible, only: [:edit, :update, :destroy]
+  before_filter :fetch_possible, only: %i[edit update destroy]
 
   guard :may_edit_page?
 
@@ -28,8 +28,7 @@ class RankedVotePossiblesController < Page::BaseController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @possible.update_attributes possible_params.permit(:description)
@@ -48,7 +47,7 @@ class RankedVotePossiblesController < Page::BaseController
   end
 
   def sort_params
-    params.permit(:sort_list_voted => []).require :sort_list_voted
+    params.permit(sort_list_voted: []).require :sort_list_voted
   end
 
   def fetch_poll
@@ -74,5 +73,4 @@ class RankedVotePossiblesController < Page::BaseController
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.votes.by_user(current_user).first.try.value || -1 }
   end
-
 end

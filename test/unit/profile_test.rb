@@ -1,12 +1,9 @@
 require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
-
-
-
   def setup
-    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
-    Media::Transmogrifier.verbose = false  # set to true to see all the commands being run.
+    Time.zone = ActiveSupport::TimeZone['Pacific Time (US & Canada)']
+    Media::Transmogrifier.verbose = false # set to true to see all the commands being run.
     FileUtils.mkdir_p(ASSET_PRIVATE_STORAGE)
     FileUtils.mkdir_p(ASSET_PUBLIC_STORAGE)
   end
@@ -21,12 +18,11 @@ class ProfileTest < ActiveSupport::TestCase
     p.save_from_params(
       last_name: 'McBlue',
       phone_numbers: {
-        1 => {phone_number_type: 'Home', phone_number: '(206) 555-1111'},
-        2 => {phone_number_type: 'Cell', phone_number: '(206) 555-2222'}
+        1 => { phone_number_type: 'Home', phone_number: '(206) 555-1111' },
+        2 => { phone_number_type: 'Cell', phone_number: '(206) 555-2222' }
       }
     )
     assert_equal '(206) 555-1111', p.phone_numbers.first.phone_number, 'save_from_params should update phone_numbers'
-
   end
 
   def test_public_private
@@ -46,11 +42,11 @@ class ProfileTest < ActiveSupport::TestCase
 
     profile = blue.profiles.visible_by(red)
     assert profile, 'red should be able to view blue profile'
-    assert_equal "rainbows", profile.organization, "should show organization 'rainbows' in profile"
+    assert_equal 'rainbows', profile.organization, "should show organization 'rainbows' in profile"
 
     profile = blue.profiles.visible_by(nil)
     assert profile, 'there should be a public profile'
-    assert_equal "none", profile.organization, "should show organization 'none' in profile"
+    assert_equal 'none', profile.organization, "should show organization 'none' in profile"
   end
 
   def test_single_table_inheritance
@@ -84,8 +80,8 @@ class ProfileTest < ActiveSupport::TestCase
 
     assert_difference 'Picture.count' do
       profile.save_from_params('picture' => {
-        'upload' => upload_data('image.png'), 'caption' => 'pigeon point'
-      })
+                                 'upload' => upload_data('image.png'), 'caption' => 'pigeon point'
+                               })
     end
 
     assert_not_nil profile.picture(true).public_file_path
@@ -94,8 +90,8 @@ class ProfileTest < ActiveSupport::TestCase
     if defined?(ExternalVideo)
       assert_difference 'ExternalVideo.count' do
         profile.save_from_params(video: {
-          media_embed: external_videos(:beauty_is_in_the_street_video).media_embed
-        })
+                                   media_embed: external_videos(:beauty_is_in_the_street_video).media_embed
+                                 })
       end
     else
       skip 'ExternalVideo not defined'
@@ -109,6 +105,4 @@ class ProfileTest < ActiveSupport::TestCase
   def test_associations
     assert check_associations(Profile)
   end
-
 end
-

@@ -16,7 +16,6 @@
 
 module PathFinder
   module ControllerExtension
-
     def self.included(base)
       base.class_eval do
         helper_method :parse_filter_path
@@ -45,7 +44,7 @@ module PathFinder
       if path =~ /\/:\w+\//
         parsed.each do |segment|
           next if segment.length == 1
-          for i in 1..segment.length    # (start at 1 to skip keyword)
+          for i in 1..segment.length # (start at 1 to skip keyword)
             if segment[i] =~ /^:/
               arg = segment[i].sub(/^:/, '')
               segment[i] = params[arg] if params[arg]
@@ -53,17 +52,17 @@ module PathFinder
           end
         end
       end
-      return parsed
+      parsed
     end
 
     # used to parse filter paths that come from window.location.hash.
     # this paths are slightly different in how they encode arguments.
     def parse_hash_filter_path(path)
-      ParsedPath.parse(path.gsub('.','/'))
+      ParsedPath.parse(path.tr('.', '/'))
     end
 
     # access options for pages current_user has access to
-    def options_for_me(args={})
+    def options_for_me(args = {})
       default_options.merge(
         callback: :options_for_me
       ).merge(args)
@@ -71,21 +70,21 @@ module PathFinder
 
     # used from the student mod
     # access options for pages current_users students have access to
-    def options_for_mentor(args={})
+    def options_for_mentor(args = {})
       default_options.merge(
         callback: :options_for_mentor
       ).merge(args)
     end
 
     # access options for all public pages (only)
-    def options_for_public(args={})
+    def options_for_public(args = {})
       default_options.merge(
         callback: :options_for_public
       ).merge(args)
     end
 
     # access options for pages in my inbox
-    def options_for_inbox(args={})
+    def options_for_inbox(args = {})
       default_options.merge(
         callback: :options_for_inbox,
         method: :sql
@@ -94,7 +93,7 @@ module PathFinder
 
     # access options for pages I have access to
     # and that +group+ has participated in.
-    def options_for_group(group,args={})
+    def options_for_group(group, args = {})
       default_options.merge(
         callback: :options_for_group,
         callback_arg_group: group
@@ -103,7 +102,7 @@ module PathFinder
 
     # access options for pages I have access to
     # and that +group+ has participated in.
-    def options_for_groups(groups,args={})
+    def options_for_groups(groups, args = {})
       default_options.merge(
         callback: :options_for_groups,
         callback_arg_groups: groups
@@ -112,7 +111,7 @@ module PathFinder
 
     # access options for pages I have access to
     # and that +user+ has participated in.
-    def options_for_user(user,args={})
+    def options_for_user(user, args = {})
       default_options.merge(
         callback: :options_for_user,
         callback_arg_user: user
@@ -121,7 +120,7 @@ module PathFinder
 
     private
 
-    def default_options   # :nodoc:
+    def default_options # :nodoc:
       options = {
         #:controller => get_controller,
         public: false,
@@ -136,25 +135,24 @@ module PathFinder
       end
 
       # limit pages to the current site.
-      #if get_controller.current_site.limited?
-        # why site_ids instead of just site_id? perhaps in the future
-        # we will enable a user to login and see a configurable subset of the
-        # sites they have available to them.
+      # if get_controller.current_site.limited?
+      # why site_ids instead of just site_id? perhaps in the future
+      # we will enable a user to login and see a configurable subset of the
+      # sites they have available to them.
       #  options[:site_ids] = [current_site.id]
-      #end
+      # end
 
       options
     end
 
     # this module might be included in helpers and it might be included
     # in controllers. either way, we want to know what the controller is.
-    def get_controller   # :nodoc:
-      if self.is_a? ActionController::Base
-        return self
+    def get_controller # :nodoc:
+      if is_a? ActionController::Base
+        self
       else
-        return self.controller
+        controller
       end
     end
-
   end
 end

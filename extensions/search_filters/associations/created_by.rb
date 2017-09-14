@@ -1,6 +1,5 @@
 
 SearchFilter.new('/created-by/:user_id/') do
-
   query do |query, id|
     query.add_attribute_constraint(:created_by_id, user_id(id))
   end
@@ -25,10 +24,8 @@ SearchFilter.new('/created-by/:user_id/') do
   self.description = :created_by_user_description
   html do
     content_tag(:p, id: :created_by_autocomplete) do
-      content_tag(:strong, :person.tcap) + " " +
-      autocomplete_input_tag('user_id', :users, container: :created_by_autocomplete)
+      content_tag(:strong, :person.tcap) + ' ' +
+        autocomplete_input_tag('user_id', :users, container: :created_by_autocomplete)
     end
   end
-
 end
-

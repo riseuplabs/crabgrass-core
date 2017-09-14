@@ -2,10 +2,9 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-
   protect_from_forgery
 
-  layout proc{ |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
+  layout proc { |c| c.request.xhr? ? false : 'application' } # skip layout for ajax
   hide_action :_layout_from_proc
 
   include_controllers 'common/application'
@@ -20,7 +19,9 @@ class ApplicationController < ActionController::Base
   # this is used by the code that is included for both controllers and helpers.
   # this way, they don't need to know if they are in a view or a controller,
   # they can always just reference controller().
-  def controller(); self; end
+  def controller
+    self
+  end
 
   # view() method lets controllers have access to the view helpers.
   def view
@@ -29,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   # proxy for view's content_tag
   def content_tag(*args, &block)
-    view.content_tag(*args,&block)
+    view.content_tag(*args, &block)
   end
 
   #
@@ -37,18 +38,19 @@ class ApplicationController < ActionController::Base
   # overridden, but these defaults are pretty good. See models/mailer.rb.
   #
   def mailer_options
-    from_address = current_site.email_sender.
-      sub('$current_host',request.host)
-    from_name    = current_site.email_sender_name.
-      sub('$user_name', current_user.display_name).
-      sub('$site_title', current_site.title)
+    from_address = current_site.email_sender
+                               .sub('$current_host', request.host)
+    from_name    = current_site.email_sender_name
+                               .sub('$user_name', current_user.display_name)
+                               .sub('$site_title', current_site.title)
     opts = {
-     site: current_site,   current_user: current_user,
-     host: request.host,   protocol: request.protocol,
-     page: @page,          from_address: from_address,
-     from_name: from_name }
-    opts[:port] = request.port_string.sub(':','') if request.port_string.present?
-    return opts
+      site: current_site, current_user: current_user,
+      host: request.host,   protocol: request.protocol,
+      page: @page,          from_address: from_address,
+      from_name: from_name
+    }
+    opts[:port] = request.port_string.sub(':', '') if request.port_string.present?
+    opts
   end
 
   ##
@@ -76,7 +78,7 @@ class ApplicationController < ActionController::Base
   # as needed stylesheets are kept in public/stylesheets/as_needed
   #
   def self.stylesheet(*css_files)
-    self.stylesheets = merge_requirements(self.stylesheets, *css_files)
+    self.stylesheets = merge_requirements(stylesheets, *css_files)
   end
 
   # We currently include all javascript in application.js as it's cached,
@@ -93,7 +95,7 @@ class ApplicationController < ActionController::Base
   # They'll be accessible in the class_attribute javascripts
   #
   def self.javascript(*js_files)
-    self.javascripts = merge_requirements(self.javascripts, *js_files)
+    self.javascripts = merge_requirements(javascripts, *js_files)
   end
 
   def self.merge_requirements(current, *new_files)
@@ -104,5 +106,4 @@ class ApplicationController < ActionController::Base
     value += new_files
     current.merge index => value.uniq
   end
-
 end

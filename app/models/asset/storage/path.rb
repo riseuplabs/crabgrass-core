@@ -35,7 +35,7 @@ require 'pathname'
 class Asset::Storage::Path
   @@private_storage = ASSET_PRIVATE_STORAGE # \ set in environments/*.rb
   @@public_storage  = ASSET_PUBLIC_STORAGE  # /
-  @@public_url_path = "/assets"
+  @@public_url_path = '/assets'
   mattr_reader :public_url_path
 
   def self.private_storage
@@ -83,7 +83,7 @@ class Asset::Storage::Path
 
   # with a id of 4, returns ['0000','0004']
   def partitioned_path
-    ("%08d" % id).scan(/..../)
+    format('%08d', id).scan(/..../)
   end
 
   # TODO: do we still need this?
@@ -91,5 +91,4 @@ class Asset::Storage::Path
   def path(*args)
     args.flatten.compact.join('/')
   end
-
 end

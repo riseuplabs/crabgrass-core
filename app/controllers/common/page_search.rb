@@ -3,7 +3,6 @@
 #
 
 module Common::PageSearch
-
   def self.included(base)
     base.class_eval do
       helper_method :xhr_page_search?
@@ -21,12 +20,12 @@ module Common::PageSearch
   def apply_path_modifiers(path)
     if params[:add]
       add_segment = parse_filter_path(params[:add])
-      return path.merge(add_segment)
+      path.merge(add_segment)
     elsif params[:remove]
       remove_segment = parse_filter_path(params[:remove])
-      return path.remove(remove_segment)
+      path.remove(remove_segment)
     else
-      return path
+      path
     end
   end
 
@@ -63,7 +62,7 @@ module Common::PageSearch
   # the page search code relies on this being defined by controllers that
   # include this mixin.
   #
-  def page_search_path(*args)
+  def page_search_path(*_args)
     raise 'you must define page_search_path()'
   end
 
@@ -71,9 +70,7 @@ module Common::PageSearch
   # controllers including this mixin may define this to control which
   # filters are shown.
   #
-  def show_filter?(filter)
+  def show_filter?(_filter)
     true
   end
-
 end
-

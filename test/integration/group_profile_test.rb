@@ -1,7 +1,6 @@
 require 'integration_test'
 
 class GroupProfileTest < IntegrationTest
-
   def setup
     super
     @user = users(:blue)
@@ -17,5 +16,4 @@ class GroupProfileTest < IntegrationTest
     assert_selector 'div[style*="background"][style*="pictures"]'
     assert_content 'Summary'
   end
-
 end

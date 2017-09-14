@@ -6,7 +6,6 @@
 #   chat_channel has many users through chat_channels_users
 #
 module User::ChatChannels
-
   ##
   ## ASSOCIATIONS
   ##

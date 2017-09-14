@@ -18,24 +18,23 @@ module CastleGates
   end
 
   def self.define(&block)
-    self.instance_eval(&block)
+    instance_eval(&block)
   end
 
   def self.castle(model_class, &block)
     model_class.class_eval(&block)
   end
 
-  def self.holder(prefix, name, options=nil, &block)
-    Holder::add_holder(prefix, name, options, &block)
+  def self.holder(prefix, name, options = nil, &block)
+    Holder.add_holder(prefix, name, options, &block)
   end
 
   def self.holder_alias(name, options)
-    Holder::add_holder_alias(name, options[:model])
+    Holder.add_holder_alias(name, options[:model])
   end
-
 end
 
-libraries = ['key', 'gate', 'gate_set', 'acts_as_castle', 'holder_definition', 'holder', 'acts_as_holder', 'associations']
+libraries = %w[key gate gate_set acts_as_castle holder_definition holder acts_as_holder associations]
 libraries.each do |file|
   require "#{File.dirname(__FILE__)}/castle_gates/#{file}"
 end

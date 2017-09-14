@@ -2,7 +2,6 @@ require 'greencloth'
 
 class DropSummaryFromGroups < ActiveRecord::Migration
   def self.up
-
     # I have decided that using activerecord in migrations should be avoided.
     # It causes more trouble than it is worth: when migrating a database,
     # the model code that is used is based on the very newest database, and if
@@ -39,8 +38,7 @@ class DropSummaryFromGroups < ActiveRecord::Migration
   end
 
   def self.down
-    #not reversible
+    # not reversible
     add_column :groups, :summary, :string
   end
-
 end

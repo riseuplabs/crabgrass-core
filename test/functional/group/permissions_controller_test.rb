@@ -1,11 +1,10 @@
 require 'test_helper'
 
 class Group::PermissionsControllerTest < ActionController::TestCase
-
   def setup
-    @user  = FactoryGirl.create(:user)
-    @other_user  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryGirl.create(:user)
+    @other_user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
     @group.add_user!(@user)
   end
 
@@ -29,13 +28,12 @@ class Group::PermissionsControllerTest < ActionController::TestCase
     login_as @user
     assert_permission :may_admin_group? do
       xhr :post, :update,
-        group_id: @group.to_param,
-        id: public_code,
-        gate: 'view',
-        new_state: 'open'
+          group_id: @group.to_param,
+          id: public_code,
+          gate: 'view',
+          new_state: 'open'
     end
     assert_response :success
     assert @group.has_access?(:view, :public)
   end
-
 end

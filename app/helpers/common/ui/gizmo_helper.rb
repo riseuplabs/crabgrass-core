@@ -9,8 +9,6 @@
 #
 
 module Common::Ui::GizmoHelper
-
-
   ##
   ## TOGGLE_BUG
   ##
@@ -63,6 +61,7 @@ module Common::Ui::GizmoHelper
   def deactivate_toggle_bugs
     "$$('.toggle_bug li').invoke('removeClassName', 'active');"
   end
+
   def activate_toggle_bug(id)
     deactivate_toggle_bugs + "$('#{id}').addClassName('active');"
   end
@@ -99,14 +98,8 @@ module Common::Ui::GizmoHelper
   private
 
   def spinbox_function_options(options)
-    options.merge!(
-      before: spinner_icon_on(options[:icon], options[:id]),
-      condition: "isEnabled(this)"
-      # no :complete option, because in cases where this is used, so
-      # far we end up replacing the spinbox itself. but maybe this could be
-      # necessary someday:
-      # :complete => spinner_icon_off(options[:icon], options[:id])
-    )
+    options[:before] = spinner_icon_on(options[:icon], options[:id])
+    options[:condition] = 'isEnabled(this)'
     options.slice(:url, :before, :with, :method, :success, :condition)
   end
 
@@ -117,6 +110,4 @@ module Common::Ui::GizmoHelper
       link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon, :title, :class))
     end
   end
-
 end
-

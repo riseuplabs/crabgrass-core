@@ -1,6 +1,5 @@
 module Wikis::SectionsHelper
-
-  def decorate_wiki_sections(wiki, section=:document)
+  def decorate_wiki_sections(wiki, section = :document)
     decorator = Wiki::Decorator.new wiki, self
     decorator.decorate section
     decorator.to_html.html_safe
@@ -8,9 +7,8 @@ module Wikis::SectionsHelper
 
   def edit_wiki_section_link(wiki, section)
     link_to_remote :edit.t,
-      {url: edit_wiki_path(wiki, section: section), method: 'get'},
-      title: :wiki_section_edit.t, id: "#{section}_edit_link",
-      icon: 'pencil', class: 'edit shy wiki-section-edit'
+                   { url: edit_wiki_path(wiki, section: section), method: 'get' },
+                   title: :wiki_section_edit.t, id: "#{section}_edit_link",
+                   icon: 'pencil', class: 'edit shy wiki-section-edit'
   end
 end
-

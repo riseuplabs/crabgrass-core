@@ -1,25 +1,21 @@
 class AssetPageController < Page::BaseController
-  #before_filter :fetch_asset
+  # before_filter :fetch_asset
 
   def show
-    if @asset.nil?
-      redirect_to page_url(@page, action: 'new')
-    end
+    redirect_to page_url(@page, action: 'new') if @asset.nil?
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    unless params[:asset]
-      raise ErrorMessage, :no_data_uploaded_label.t
-    else
+    if params[:asset]
       @asset.update_attributes! asset_params
       current_user.updated(@page)
       redirect_to page_url(@page)
+    else
+      raise ErrorMessage, :no_data_uploaded_label.t
     end
   end
-
 
   protected
 
@@ -33,9 +29,6 @@ class AssetPageController < Page::BaseController
 
   def setup_options
     @options.show_assets = false
-    if action?(:show, :edit)
-      @options.show_tabs   = true
-    end
+    @options.show_tabs = true if action?(:show, :edit)
   end
-
 end

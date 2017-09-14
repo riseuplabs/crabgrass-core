@@ -34,11 +34,11 @@ class ExceptionsControllerTest < ActiveSupport::TestCase
 
   def assert_translations(exception, thing = '', scope = nil)
     assert_response_with_translation exception,
-      thing: thing,
-      scope: ( [:exception, :title, scope].compact )
+                                     thing: thing,
+                                     scope: [:exception, :title, scope].compact
     assert_response_with_translation exception,
-      thing: thing,
-      scope: ( [:exception, :description, scope].compact )
+                                     thing: thing,
+                                     scope: [:exception, :description, scope].compact
   end
 
   def assert_response_with_translation(*args)

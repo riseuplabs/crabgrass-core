@@ -50,7 +50,6 @@ class StarsController < ApplicationController
 
   def track_action
     super from: current_user, user: @starred.user,
-      noticable: @starred
+          noticable: @starred
   end
-
 end

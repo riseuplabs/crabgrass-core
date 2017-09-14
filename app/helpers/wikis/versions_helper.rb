@@ -1,15 +1,14 @@
 module Wikis::VersionsHelper
-
   #
   # DISPLAY
   #
 
   def short_description(version, link_to_version = false)
-    version_text = "Version&nbsp;".html_safe + version.version.to_s
+    version_text = 'Version&nbsp;'.html_safe + version.version.to_s
     if link_to_version
       version_text = link_to(version_text, wiki_version_path(@wiki, version))
     end
-    version_text + " created by " + version_user_link(version)
+    version_text + ' created by ' + version_user_link(version)
   end
 
   #
@@ -18,7 +17,7 @@ module Wikis::VersionsHelper
 
   def version_action_links(version)
     link_line version_diff_link(version),
-      version_revert_link(version)
+              version_revert_link(version)
   end
 
   def show_version_remote_function(version)
@@ -33,15 +32,15 @@ module Wikis::VersionsHelper
   def list_versions_link
     label = :list_things.t(things: :versions.t)
     url = wiki_versions_path(@wiki)
-    link_to_remote_with_icon(label, {url: url, method: :get}, {class: 'btn btn-default', icon: 'left'})
+    link_to_remote_with_icon(label, { url: url, method: :get }, class: 'btn btn-default', icon: 'left')
   end
 
   def next_version_link
     version = @version.version + 1
     if version <= @wiki.versions.count
       link_to_remote :next.t,
-        {url: wiki_version_path(@wiki, version), method: :get},
-        {class: 'btn btn-default', icon: 'left'}
+                     { url: wiki_version_path(@wiki, version), method: :get },
+                     class: 'btn btn-default', icon: 'left'
     else
       "<span class='btn btn-default disabled icon left_16'>#{:next.t}</span>".html_safe
     end
@@ -51,8 +50,8 @@ module Wikis::VersionsHelper
     version = @version.version - 1
     if version >= 1
       link_to_remote :previous.t,
-        {url: wiki_version_path(@wiki, version), method: :get},
-        {class: 'btn btn-default right', icon: 'right'}
+                     { url: wiki_version_path(@wiki, version), method: :get },
+                     class: 'btn btn-default right', icon: 'right'
     else
       "<span class='btn btn-default disabled icon right_16 right'>#{:previous.t}</span>".html_safe
     end
@@ -77,8 +76,8 @@ module Wikis::VersionsHelper
     return unless may_show_wiki_diff?(version)
     if remote
       link_to_remote :diff_link.t,
-        url: wiki_diff_path(@wiki, version.diff_id),
-        method: :get
+                     url: wiki_diff_path(@wiki, version.diff_id),
+                     method: :get
     else
       link_to :diff_link.t, wiki_diff_path(@wiki, version.diff_id)
     end
@@ -87,7 +86,7 @@ module Wikis::VersionsHelper
   def version_revert_link(version)
     return unless may_revert_wiki_version?(version)
     link_to :wiki_version_revert_link.t,
-      revert_wiki_version_path(@wiki, version),
-      method: :post, remote: true
+            revert_wiki_version_path(@wiki, version),
+            method: :post, remote: true
   end
 end

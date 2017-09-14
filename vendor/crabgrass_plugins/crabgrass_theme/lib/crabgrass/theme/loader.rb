@@ -6,7 +6,6 @@ require 'fileutils'
 require 'pathname'
 
 module Crabgrass::Theme::Loader
-
   ##
   ## CALLED BY THEME DEFINITION
   ##
@@ -31,11 +30,11 @@ module Crabgrass::Theme::Loader
   #
   # Called by the theme's init.rb.
   #
-  def define_theme(args={}, &block)
+  def define_theme(args = {}, &block)
     if args[:parent]
       @parent = Crabgrass::Theme[args[:parent]]
       if @parent.nil?
-        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
+        puts format("ERROR: no such parent theme '%s' available for theme '%s'", args[:parent], @name)
       else
         starting_data = @parent.data_copy
       end
@@ -50,16 +49,16 @@ module Crabgrass::Theme::Loader
   #
   # Called by the theme's navigation.rb
   #
-  def define_navigation(args={}, &block)
+  def define_navigation(args = {}, &block)
     if args[:parent]
       @navigation_parent = Crabgrass::Theme[args[:parent]]
       if @navigation_parent.nil?
-        puts "ERROR: no such parent theme '%s' available for theme '%s'" % [args[:parent], @name]
+        puts format("ERROR: no such parent theme '%s' available for theme '%s'", args[:parent], @name)
       else
         starting_data = @navigation_parent.navigation
       end
     end
-    starting_data ||= self.navigation
+    starting_data ||= navigation
     @navigation = Crabgrass::Theme::NavigationDefinition.parse(self, starting_data, &block)
   end
 
@@ -107,40 +106,37 @@ module Crabgrass::Theme::Loader
     ensure_dir(@public_directory)
     if @parent
       # mirror the parent theme's image directory
-      mirror_directory_with_symlinks(@parent.directory + "images", @directory + "images")
+      mirror_directory_with_symlinks(@parent.directory + 'images', @directory + 'images')
     end
-    symlink(@directory + "images", @public_directory + "images")
+    symlink(@directory + 'images', @public_directory + 'images')
 
-    Rails.logger.debug 'Loaded theme %s (%sms)' %
-      [@directory, (Time.now - start_time)*1000]
+    Rails.logger.debug format('Loaded theme %s (%sms)', @directory, (Time.now - start_time) * 1000)
   end
 
   def reload!
-    if @parent
-      @parent.reload!
-    end
+    @parent.reload! if @parent
     @navigation = nil
-    Rails.logger.debug 'Reloading theme %s' % @name
-    load()
+    Rails.logger.debug format('Reloading theme %s', @name)
+    load
   end
 
   #
   # returns all the file paths that have theme definition data in them.
   #
-  #def init_paths
+  # def init_paths
   #  paths = []
   #  paths << @directory+'init.rb' if File.exist?(@directory+'init.rb')
   #  paths << @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
   #  raise 'ERROR: no theme definition files in %s' % @directory unless paths.any?
   #  return paths
-  #end
+  # end
 
   def data_path
-    @directory+'init.rb' if File.exist?(@directory+'init.rb')
+    @directory + 'init.rb' if File.exist?(@directory + 'init.rb')
   end
 
   def navigation_path
-    @directory+'navigation.rb' if File.exist?(@directory+'navigation.rb')
+    @directory + 'navigation.rb' if File.exist?(@directory + 'navigation.rb')
   end
 
   #
@@ -168,7 +164,7 @@ module Crabgrass::Theme::Loader
   private
 
   def self.create_and_load(theme_name)
-    theme = Crabgrass::Theme.new( theme_name )
+    theme = Crabgrass::Theme.new(theme_name)
     theme.load
     theme
   end
@@ -192,7 +188,7 @@ module Crabgrass::Theme::Loader
     elsif File.symlink?(dst)
       FileUtils.rm(dst)
     elsif File.exist?(dst)
-      raise 'For the theme to work, the file "%s" must not exist.' % dst
+      raise format('For the theme to work, the file "%s" must not exist.', dst)
     end
 
     real_src_path = Pathname.new(src).realpath
@@ -221,13 +217,9 @@ module Crabgrass::Theme::Loader
 
   # ensures the directory exists
   def ensure_dir(dir)
-    unless File.exist?(dir)
-      FileUtils.mkdir_p(dir)
-    end
+    FileUtils.mkdir_p(dir) unless File.exist?(dir)
     unless File.directory?(dir)
-      raise 'For the theme to work, "%s" must be a directory.' % dir
+      raise format('For the theme to work, "%s" must be a directory.', dir)
     end
   end
-
 end
-

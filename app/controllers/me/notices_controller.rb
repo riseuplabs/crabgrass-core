@@ -1,22 +1,21 @@
 class Me::NoticesController < Me::BaseController
-
-  before_filter :fetch_notice, only: [:show, :destroy]
+  before_filter :fetch_notice, only: %i[show destroy]
 
   def index
-    @notices = Notice.for_user(current_user).
-      dismissed(params[:view] == 'old').
-      includes(:noticable).
-      order('created_at DESC').
-      paginate(pagination_params)
+    @notices = Notice.for_user(current_user)
+                     .dismissed(params[:view] == 'old')
+                     .includes(:noticable)
+                     .order('created_at DESC')
+                     .paginate(pagination_params)
 
     @pages = Page.paginate_by_path '', options_for_me, pagination_params
   end
 
   def show
-    url = self.send(@notice.redirect_path, @notice.redirect_object)
+    url = send(@notice.redirect_path, @notice.redirect_object)
     respond_to do |format|
       format.html { redirect_to url }
-      format.js  { render(:update){|page| page.redirect_to url} }
+      format.js { render(:update) { |page| page.redirect_to url } }
     end
   end
 

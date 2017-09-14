@@ -3,20 +3,18 @@
 ##
 
 module Formy
-
   class Sidebar < Root
-
     class Link < Element
       element_attr :label, :link, :selected
       def close
-        selected = 'active' if "#{@selected}" == "true"
+        selected = 'active' if @selected.to_s == 'true'
         puts "<div class='sidelink #{selected}'>"
         if @label.present?
           puts "<a href='#{@link}'>#{@label}</a>"
         else
           puts @link
         end
-        puts "</div>"
+        puts '</div>'
         super
       end
     end
@@ -27,8 +25,8 @@ module Formy
       def close
         puts "<div class='sidesubsection'>"
         puts "<div class='sidelabel'>#{@label}</div>" if @label
-        @elements.each {|e| raw_puts e}
-        puts "</div>"
+        @elements.each { |e| raw_puts e }
+        puts '</div>'
         super
       end
     end
@@ -40,9 +38,9 @@ module Formy
       def close
         puts "<div class='sidesection'>"
         puts "<div class='sidehead'>#{@label}</div>" if @label
-        @elements.each {|e| raw_puts e}
+        @elements.each { |e| raw_puts e }
         puts "<div class='sidetail'></div>"
-        puts "</div>"
+        puts '</div>'
         super
       end
     end
@@ -54,10 +52,8 @@ module Formy
     end
 
     def close
-      @elements.each {|e| raw_puts e}
+      @elements.each { |e| raw_puts e }
       super
     end
-
   end
-
 end

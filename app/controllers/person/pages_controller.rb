@@ -1,10 +1,9 @@
 class Person::PagesController < Person::BaseController
-
   include_controllers 'common/page_search'
   guard :may_show_home?
 
   def index
-    @path  = apply_path_modifiers( parsed_path() )
+    @path  = apply_path_modifiers(parsed_path)
     @pages = Page.paginate_by_path(@path, options_for_user(@user), pagination_params)
     render template: 'common/pages/search/index'
   end
@@ -13,10 +12,10 @@ class Person::PagesController < Person::BaseController
 
   def setup_navigation(nav)
     nav[:local] = [
-      {active: true,  visible: true, html: {partial: 'common/pages/search/controls_active'}},
-      {active: false, visible: true, html: {partial: 'common/pages/search/controls_possible'}}
+      { active: true,  visible: true, html: { partial: 'common/pages/search/controls_active' } },
+      { active: false, visible: true, html: { partial: 'common/pages/search/controls_possible' } }
     ]
-    return nav
+    nav
   end
 
   #
@@ -32,6 +31,4 @@ class Person::PagesController < Person::BaseController
   def show_filter?(filter)
     filter.section != :my_pages
   end
-
 end
-

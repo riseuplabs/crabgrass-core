@@ -1,34 +1,35 @@
 require 'test_helper'
 
 class TaggingTest < ActiveSupport::TestCase
-
   def setup
     @obj1 = Page.new title: 'test_tags1'
-    @obj1.tag_list = "pale"
+    @obj1.tag_list = 'pale'
     @obj1.save
 
     @obj2 = Page.new title: 'test_tags2'
-    @obj2.tag_list = "pale, imperial"
+    @obj2.tag_list = 'pale, imperial'
     @obj2.save
   end
 
   def test_tag_list
-    @obj2.tag_list = "hoppy, pilsner"
-    assert_equal ["hoppy", "pilsner"], @obj2.tag_list
+    @obj2.tag_list = 'hoppy, pilsner'
+    assert_equal %w[hoppy pilsner], @obj2.tag_list
   end
 
   def test_tagged_with
-    @obj1.tag_list = "seasonal, lager, ipa"
+    @obj1.tag_list = 'seasonal, lager, ipa'
     @obj1.save
-    @obj2.tag_list = "lager, stout, fruity, seasonal"
+    @obj2.tag_list = 'lager, stout, fruity, seasonal'
     @obj2.save
 
     result1 = [@obj1]
-    assert_equal Page.tagged_with("ipa", on: :tags), result1
+    assert_equal Page.tagged_with('ipa', on: :tags), result1
 
     result2 = [@obj1.id, @obj2.id].sort
-    assert_equal result2, Page.tagged_with("seasonal", on: :tags).map(&:id).sort
-    assert_equal result2, Page.tagged_with(["seasonal", "lager"], on: :tags).map(&:id).sort
+    assert_equal result2,
+      Page.tagged_with('seasonal', on: :tags).map(&:id).sort
+    assert_equal result2,
+      Page.tagged_with(%w[seasonal lager], on: :tags).map(&:id).sort
   end
 
   def test_users_tag_cache
@@ -49,8 +50,8 @@ class TaggingTest < ActiveSupport::TestCase
     page.tags_will_change! # for now, manual dirty tracking
     page.save!
     user.reload
-    user_tags = user.tags.collect{|t| t.name}.sort
-    assert_equal ['aaaa','bbbb','cccc'], user_tags
+    user_tags = user.tags.collect(&:name).sort
+    assert_equal %w[aaaa bbbb cccc], user_tags
 
     page.destroy
     user.reload
@@ -66,5 +67,4 @@ class TaggingTest < ActiveSupport::TestCase
     page = Page.find(page.id)
     assert page.tag_list.include?('one')
   end
-
 end

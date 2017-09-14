@@ -1,8 +1,8 @@
 class AddFieldsToExternalVideo < ActiveRecord::Migration
   def self.up
-    add_column :external_videos, :height, :integer, :limit => 3
-    add_column :external_videos, :width, :integer, :limit => 3
-    add_column :external_videos, :player, :integer, :limit => 1
+    add_column :external_videos, :height, :integer, limit: 3
+    add_column :external_videos, :width, :integer, limit: 3
+    add_column :external_videos, :player, :integer, limit: 1
   end
 
   def self.down

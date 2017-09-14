@@ -1,9 +1,8 @@
 class Task < ActiveRecord::Base
-
   belongs_to :page
-#  has_and_belongs_to_many :users, :foreign_key => 'task_id'
+  #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
   has_many :participations,
-    dependent: :destroy
+           dependent: :destroy
   has_many :users, through: :participations
   acts_as_list scope: :page
   format_attribute :description
@@ -13,7 +12,7 @@ class Task < ActiveRecord::Base
   belongs_to :updated_by, class_name: 'User'
 
   def self.completed
-    where "completed_at IS NOT NULL"
+    where 'completed_at IS NOT NULL'
   end
 
   def self.pending
@@ -22,9 +21,7 @@ class Task < ActiveRecord::Base
 
   before_create :set_user
   def set_user
-    if self.created_by
-      self.updated_by = self.created_by
-    end
+    self.updated_by = created_by if created_by
     true
   end
 
@@ -33,8 +30,8 @@ class Task < ActiveRecord::Base
   end
 
   def state=(state)
-    self.complete if state == 'complete'
-    self.pending if state == 'pending'
+    complete if state == 'complete'
+    pending if state == 'pending'
   end
 
   def complete
@@ -46,13 +43,12 @@ class Task < ActiveRecord::Base
   end
 
   def completed
-    completed_at != nil && completed_at < Time.now
+    !completed_at.nil? && completed_at < Time.now
   end
-  alias :completed? :completed
+  alias completed? completed
 
   def past_due?
     !completed? && due_at && due_at.to_date < Date.today
   end
-  alias :overdue? :past_due?
-
+  alias overdue? past_due?
 end

@@ -1,7 +1,6 @@
 
 
 module Page::CreationHelper
-
   #
   # new_page_path is used for showing the selection of page types.
   #
@@ -9,10 +8,10 @@ module Page::CreationHelper
   # for a particular page type. It might be the default page creation controller (pages/create),
   # or it could be a custom controller.
   #
-  #def page_creation_path(page_class)
+  # def page_creation_path(page_class)
   #  controller = page_class.definition.creation_controller || 'pages/create'
   #  url_for(:controller => controller, :action => 'new', :type => page_class.url, :group => params[:group_id])
-  #end
+  # end
 
   #
   # generates the links used to choose a page type when creating a page
@@ -23,12 +22,9 @@ module Page::CreationHelper
         grouping[:pages].collect do |page|
           link_text = "<b>#{page.class_display_name}</b><br/>#{page.class_description}"
           url = new_page_path(page_type: page)
-          link_to(link_text.html_safe, url, {class: "p icon top #{page.icon}_16"})
+          link_to(link_text.html_safe, url, class: "p icon top #{page.icon}_16")
         end.join.html_safe
       end
     end
   end
-
-
 end
-

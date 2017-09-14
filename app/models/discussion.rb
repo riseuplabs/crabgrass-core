@@ -12,7 +12,6 @@
 #
 
 class Discussion < ActiveRecord::Base
-
   ##
   ## ASSOCIATIONS
   ##
@@ -27,17 +26,17 @@ class Discussion < ActiveRecord::Base
   # remove all posts without creating PageHistory::DestroyComment
   # if we clean up the whole discussion.
   has_many :posts,
-    -> { order 'posts.created_at' },
-    dependent: :delete_all
+           -> { order 'posts.created_at' },
+           dependent: :delete_all
 
   belongs_to :commentable, polymorphic: true
 
   # if we are a private discussion (or 'messages')
   has_many :relationships,
-    class_name: 'User::Relationship',
-    inverse_of: :discussion do
+           class_name: 'User::Relationship',
+           inverse_of: :discussion do
     def for_user(user)
-      self.detect {|relationship| relationship.user_id == user.id}
+      detect { |relationship| relationship.user_id == user.id }
     end
   end
 
@@ -65,10 +64,9 @@ class Discussion < ActiveRecord::Base
   # this discussion is between 2 people
   # takes one user, returns the other
   def user_talking_to(user)
-    relationship_to_other_user = self.relationships.for_user(user)
+    relationship_to_other_user = relationships.for_user(user)
     relationship_to_other_user.try.contact
   end
-
 
   # each pair of users (if they are contacts)
   # shares a discussion. a single user has a list of discussions, one per friend.
@@ -115,7 +113,7 @@ class Discussion < ActiveRecord::Base
   #  Discussion.create(:post => {:body => x, :user => current_user})
   #
   def post=(post_attributes)
-    self.posts.build(post_attributes)
+    posts.build(post_attributes)
   end
 
   ##
@@ -125,7 +123,7 @@ class Discussion < ActiveRecord::Base
   #
   # returns the total number of pagination pages, given the pagination size.
   #
-  def last_page(pagination_size=nil)
+  def last_page(pagination_size = nil)
     pagination_size ||= Conf.pagination_size
     if posts_count > 0
       (posts_count.to_f / pagination_size.to_f).ceil
@@ -144,26 +142,23 @@ class Discussion < ActiveRecord::Base
 
     if post.private?
       post.private_message_notices.create! from: post.user,
-        user: post.discussion.user_talking_to(post.user),
-        message: post.body_html
+                                           user: post.discussion.user_talking_to(post.user),
+                                           message: post.body_html
     end
   end
 
   #
   # called whenever a new post is destroyed, or marked as deleted.
   #
-  def post_destroyed(post, decrement=true)
-    if decrement
-      self.posts_count -= 1
-    end
+  def post_destroyed(_post, decrement = true)
+    self.posts_count -= 1 if decrement
     update_attributes_from_posts
   end
 
   def update_attributes_from_posts
     update_attributes! posts_count: posts_count,
-      last_post: posts.visible.last,
-      replied_by_id: posts.visible.last.try.user_id,
-      replied_at: posts.visible.last.try.updated_at
+                       last_post: posts.visible.last,
+                       replied_by_id: posts.visible.last.try.user_id,
+                       replied_at: posts.visible.last.try.updated_at
   end
-
 end

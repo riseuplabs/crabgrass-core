@@ -11,7 +11,7 @@
 :request_to_remove_user.t
 :votable_request.t
 
-# groups: 
+# groups:
 
 :group_description.t
 :committee_description.t

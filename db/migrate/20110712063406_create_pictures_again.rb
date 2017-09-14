@@ -18,4 +18,3 @@ class CreatePicturesAgain < ActiveRecord::Migration
     drop_table :pictures
   end
 end
-

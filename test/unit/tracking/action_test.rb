@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Tracking::ActionTest < ActiveSupport::TestCase
-
   def test_class_lookup
     Activity::Friend.expects(:create!)
     Tracking::Action.track :create_friendship

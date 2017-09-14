@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-
-    :castle_gates_keys
+  :castle_gates_keys
 
   def teardown
     Group.clear_key_cache # required! see CastleGates README
@@ -20,9 +19,7 @@ class GroupTest < ActiveSupport::TestCase
 
     assert u.member_of?(g), 'user should be member of group'
 
-    g.memberships.each do |m|
-      m.destroy
-    end
+    g.memberships.each(&:destroy)
     g.reload
     assert_equal 0, g.users.size, 'there should be no users'
   end
@@ -54,12 +51,13 @@ class GroupTest < ActiveSupport::TestCase
     g.revoke_access! public: :view
     u = User.create login: 'user'
 
-    assert u.may?(:pester, g) == false, 'should not be able to pester private group'
+    assert u.may?(:pester, g) == false,
+      'should not be able to pester private group'
   end
 
   def test_can_pester_public_group
     g = Group.create name: 'riseup'
-    g.grant_access! public: [:view, :pester]
+    g.grant_access! public: %i[view pester]
     g.reload
     u = User.create login: 'user'
 
@@ -67,21 +65,23 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   # disabled mocha test
-  #def test_association_callbacks
+  # def test_association_callbacks
   #  g = Group.create :name => 'callbacks'
   #  g.expects(:check_duplicate_memberships)
   #  u = users(:blue)
   #  g.add_user!(u)
-  #end
+  # end
 
   def test_committee_access
     g = groups(:public_group)
-    assert_equal [groups(:public_committee)],
-                 g.committees_for(users(:red)).sort_by{|c| c.id},
-                 "should find 1 public committee"
-    assert_equal [groups(:public_committee), groups(:private_committee)].sort_by{|c| c.id},
-                 g.committees_for(users(:blue)).sort_by{|c| c.id},
-                 "should find 2 committee with private access"
+    private_committee = groups(:private_committee)
+    public_committee = groups(:public_committee)
+    assert_equal [public_committee],
+                 g.committees_for(users(:red)).sort_by(&:id),
+                 'should find 1 public committee'
+    assert_equal [public_committee, private_committee].sort_by(&:id),
+                 g.committees_for(users(:blue)).sort_by(&:id),
+                 'should find 2 committee with private access'
   end
 
   def test_councils
@@ -115,8 +115,8 @@ class GroupTest < ActiveSupport::TestCase
     # note: if the group has a committee, and the user is a member of that
     # committee, then the user's version will increment by more than one,
     # since the committees also experience a name change.
-    assert_increases(user, :version) do
-      assert_preserves(user, :updated_at) do
+    assert_difference 'user.reload.version' do
+      assert_no_difference 'user.reload.updated_at' do
         group.name = 'diggers'
         group.save!
       end
@@ -146,20 +146,22 @@ class GroupTest < ActiveSupport::TestCase
     g = groups(:warm)
     red = users(:red)
 
-    assert_difference 'Group::Membership.count', (-1) * g.users.count do
+    assert_difference 'Group::Membership.count', -1 * g.users.count do
       g.destroy
     end
 
     assert_nil pages(:committee_page).reload.owner_id
     assert_nil Activity::GroupLostUser.for_all(red).first,
-      "there should be no user left group message"
+               'there should be no user left group message'
   end
 
   def test_avatar
     # must have GM installed
-    if !Media::GraphicsMagickTransmogrifier.available?
-      puts "GraphicsMagick converter is not available. Either GraphicsMagick is not installed or it can not be started. Skipping GroupTest#test_avatar."
-      return
+    unless Media::GraphicsMagickTransmogrifier.available?
+      skip <<-EOERR.strip_heredoc
+        GraphicsMagick converter is not available.
+        Either GraphicsMagick is not installed or it can not be started.
+      EOERR
     end
 
     group = nil
@@ -171,33 +173,32 @@ class GroupTest < ActiveSupport::TestCase
     end
 
     group.reload
-    assert group.avatar.image_file_data.size > 0
+    assert !group.avatar.image_file_data.empty?
     avatar_id = group.avatar.id
 
     group.avatar.image_file = upload_avatar('photo.jpg')
     group.avatar.save!
     group.save!
     group.reload
-    assert group.avatar.image_file_data.size > 0
+    assert !group.avatar.image_file_data.empty?
     assert_equal avatar_id, group.avatar.id
 
     group.avatar.image_file = upload_avatar('bee.jpg')
     group.avatar.save!
     group.reload
     assert_equal avatar_id, group.avatar.id
-    assert group.avatar.image_file_data.size > 0
+    assert !group.avatar.image_file_data.empty?
 
     assert_difference 'Avatar.count', -1 do
       group.destroy
     end
-
-  end
+    end
 
   def test_group_hidden_by_default
     group = Group.create name: 'hidden-from-the-world'
-    assert !users(:blue).may?(:view, group), "new groups should be hidden"
+    assert !users(:blue).may?(:view, group), 'new groups should be hidden'
     group.migrate_permissions!
-    assert !users(:blue).may?(:view, group), "new groups should remain hidden"
+    assert !users(:blue).may?(:view, group), 'new groups should remain hidden'
   end
 
   def test_migrate_public_group
@@ -208,22 +209,24 @@ class GroupTest < ActiveSupport::TestCase
     group.profiles.public.update_attributes! may_see: true
 
     assert !users(:blue).may?(:view, group),
-      "initially blue should not be able to view the group"
+           'initially blue should not be able to view the group'
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
     assert users(:blue).may?(:view, group),
-      "after migration blue should not be able to view the group"
+           'after migration blue should not be able to view the group'
   end
 
   def test_migrate_open_group
     group = Group.create name: 'hold-hands-and-join-the-circle'
     assert group.valid?
 
-    group.profiles.public.update_attributes! membership_policy: Profile::MEMBERSHIP_POLICY[:open]
+    profile = group.profiles.public
+    open = Profile::MEMBERSHIP_POLICY[:open]
+    profile.update_attributes! membership_policy: open
 
-    assert ! users(:blue).may?(:join, group)
+    assert !users(:blue).may?(:join, group)
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
@@ -239,13 +242,13 @@ class GroupTest < ActiveSupport::TestCase
 
     group.profiles.public.update_attributes! may_request_membership: true
 
-    assert ! users(:blue).may?(:join, group)
-    assert ! users(:blue).may?(:request_membership, group)
+    assert !users(:blue).may?(:join, group)
+    assert !users(:blue).may?(:request_membership, group)
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
-    assert ! users(:blue).may?(:join, group)
+    assert !users(:blue).may?(:join, group)
     assert users(:blue).may?(:request_membership, group)
   end
 
@@ -256,15 +259,14 @@ class GroupTest < ActiveSupport::TestCase
     group.profiles.public.update_attributes! may_request_membership: true
 
     # defaults in effect
-    assert ! users(:blue).may?(:join, group)
-    assert ! users(:blue).may?(:request_membership, group)
+    assert !users(:blue).may?(:join, group)
+    assert !users(:blue).may?(:request_membership, group)
 
     group.migrate_permissions!
     users(:blue).clear_access_cache
 
     # defaults overwritten to match profile setting
-    assert ! users(:blue).may?(:join, group)
+    assert !users(:blue).may?(:join, group)
     assert users(:blue).may?(:request_membership, group)
   end
-
 end

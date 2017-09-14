@@ -27,10 +27,9 @@ ActionController::Base.send(:include, PathFinder::ControllerExtension)
 #
 
 info 'loading search filters', 2
-Dir.glob(SEARCH_FILTERS_DIRECTORY+'*').each do |subdir|
+Dir.glob(SEARCH_FILTERS_DIRECTORY + '*').each do |subdir|
   Dir.glob("#{subdir}/*.rb").each do |file|
     info "loading #{file}", 3
     require file
   end
 end
-

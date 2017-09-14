@@ -3,7 +3,6 @@
 #
 
 module Common::Ui::EntityDisplayHelper
-
   protected
 
   #
@@ -21,15 +20,15 @@ module Common::Ui::EntityDisplayHelper
   # If you do not specify the avatar_id no avatar will be displayed.
   # If you use and avatar id of 0 the fallback avatar will be used instead.
   #
-  def link_to_name(name, avatar_id=nil)
+  def link_to_name(name, avatar_id = nil)
     if name
-      display_name = name.length > 16 ? force_wrap(name,16) : name
+      display_name = name.length > 16 ? force_wrap(name, 16) : name
       if avatar_id.nil?
-        '<a href="/%s" title="%s">%s</a>'.html_safe % [name, name, h(display_name)]
+        format('<a href="/%s" title="%s">%s</a>'.html_safe, name, name, h(display_name))
       else
         # with the id, we can also display the icon
-        icon_url = '/avatars/%s/xsmall.jpg' % avatar_id
-        '<a href="/%s" title="%s" class="icon xsmall single" style="background-image: url(%s)">%s</a>'.html_safe % [name, name, icon_url, h(display_name)]
+        icon_url = format('/avatars/%s/xsmall.jpg', avatar_id)
+        format('<a href="/%s" title="%s" class="icon xsmall single" style="background-image: url(%s)">%s</a>'.html_safe, name, name, icon_url, h(display_name))
       end.html_safe
     else
       :unknown.t
@@ -39,7 +38,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # provides placeholder for when the user or group record has been destroyed.
   #
-  #def link_to_unknown(options)
+  # def link_to_unknown(options)
   #  styles  = [options[:style]]
   #  classes = [options[:class]]
   #  if options[:avatar]
@@ -48,7 +47,7 @@ module Common::Ui::EntityDisplayHelper
   #    styles  << avatar_style(nil, options[:avatar])
   #  end
   #  content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
-  #end
+  # end
 
   ##
   ## GROUPS
@@ -57,7 +56,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # creates a link to a group. see display_entity for options
   #
-  def link_to_group(group, options=nil)
+  def link_to_group(group, options = nil)
     options = (options || {}).dup
     if group
       unless options[:url] or options[:remote] or options[:function]
@@ -67,7 +66,6 @@ module Common::Ui::EntityDisplayHelper
     display_entity(group, options)
   end
 
-
   ##
   ## USERS
   ##
@@ -75,7 +73,7 @@ module Common::Ui::EntityDisplayHelper
   #
   # creates a link to a user. see display entity for options
   #
-  def link_to_user(user, options=nil)
+  def link_to_user(user, options = nil)
     options = (options || {}).dup
     if user
       unless options[:url] or options[:remote] or options[:function]
@@ -89,7 +87,7 @@ module Common::Ui::EntityDisplayHelper
     display_entity(user, options)
   end
 
-  #def link_to_user_avatar(arg, options={})
+  # def link_to_user_avatar(arg, options={})
   #  login, path, display_name = login_and_path_for_user(arg,options)
   #  return "" if login.blank?
   #
@@ -101,13 +99,13 @@ module Common::Ui::EntityDisplayHelper
   #  options[:alt] ||= display_name
   #
   #  avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
-  #end
+  # end
 
   ##
   ## GENERIC PERSON OR GROUP
   ##
 
-  def link_to_entity(entity, options={})
+  def link_to_entity(entity, options = {})
     return '' unless entity
 
     if entity.is_a? String
@@ -146,8 +144,8 @@ module Common::Ui::EntityDisplayHelper
   #   :class => added to the elements's class
   #   :style => added to the element's style
   #
-  def display_entity(entity, options={})
-    options  ||= {}
+  def display_entity(entity, options = {})
+    options ||= {}
     format   = options[:format] || :full
     styles   = [options[:style]]
     classes  = [options[:class], 'entity']
@@ -163,30 +161,30 @@ module Common::Ui::EntityDisplayHelper
     # label
 
     display, title = if entity.nil?
-      [:unknown.t, nil]
-    elsif options[:label]
-      [options[:label], nil]
-    elsif format == :short
-      classes << 'single'
-      [entity.name, h(entity.display_name)]
-    elsif format == :full
-      classes << 'single'
-      [h(entity.display_name), entity.name]
-    elsif format == :both
-      classes << 'single'
-      [h(entity.both_names), nil]
-    elsif format == :two
-      if entity.name != entity.display_name
-        ["#{entity.name}<br/>#{h(entity.display_name)}", nil]
-      else
-        classes << 'single'
-        [entity.name, nil]
-      end
+                       [:unknown.t, nil]
+                     elsif options[:label]
+                       [options[:label], nil]
+                     elsif format == :short
+                       classes << 'single'
+                       [entity.name, h(entity.display_name)]
+                     elsif format == :full
+                       classes << 'single'
+                       [h(entity.display_name), entity.name]
+                     elsif format == :both
+                       classes << 'single'
+                       [h(entity.both_names), nil]
+                     elsif format == :two
+                       if entity.name != entity.display_name
+                         ["#{entity.name}<br/>#{h(entity.display_name)}", nil]
+                       else
+                         classes << 'single'
+                         [entity.name, nil]
+                       end
     end
 
     # element
 
-    element_options = {class: classes.join(' '), style: styles.join(';'), title: title}
+    element_options = { class: classes.join(' '), style: styles.join(';'), title: title }
     if options[:remote]
       link_to_remote(display, options[:remote], element_options)
     elsif options[:function]
@@ -202,10 +200,10 @@ module Common::Ui::EntityDisplayHelper
   # used when generating json to return for autocomplete popups
   #
   def entity_autocomplete_line(entity)
-    "<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
+    format('<em>%s</em>%s', entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name))
   end
 
-  def entity_list(entities, options={})
+  def entity_list(entities, options = {})
     if entities.any?
       footer_with_more(entities, options)
       entities = entities.limit(options.delete(:limit)) if options[:limit]
@@ -222,8 +220,6 @@ module Common::Ui::EntityDisplayHelper
       options[:footer] ||= link_to((:see_all_link.t + '&nbsp;&raquo;').html_safe, options[:more])
     end
   end
-
-
 
   #
   # used to display a list of entities
@@ -289,17 +285,17 @@ module Common::Ui::EntityDisplayHelper
   #
   # used to convert the text produced by activities & requests into actual links
   #
-  def expand_links(text, options=nil)
+  def expand_links(text, options = nil)
     if block_given?
       options = text if text.is_a? Hash
       text = yield
     end
     with_html_safety(text) do
-      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |_match|
         if options
-          content_tag(:b, link_to_entity($2, options))
+          content_tag(:b, link_to_entity(Regexp.last_match(2), options))
         else
-          content_tag(:b, link_to_name($2))
+          content_tag(:b, link_to_name(Regexp.last_match(2)))
         end
       end
     end
@@ -311,8 +307,8 @@ module Common::Ui::EntityDisplayHelper
   def embold_links(text = nil)
     text = yield if block_given?
     with_html_safety(text) do
-      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |match|
-        content_tag(:b, $2)
+      text.to_str.gsub(/<(user|group)>(.*?)<\/(user|group)>/) do |_match|
+        content_tag(:b, Regexp.last_match(2))
       end
     end
   end
@@ -320,5 +316,4 @@ module Common::Ui::EntityDisplayHelper
   def with_html_safety(text)
     text.html_safe? ? yield.html_safe : yield
   end
-
 end

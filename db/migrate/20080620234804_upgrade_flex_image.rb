@@ -1,12 +1,10 @@
-=begin
-
-  The new version of Fleximage has it hardcoded what the name of the column
-  must be if you are storing images in the database. Weird.
-
-  In the long run, we should not be storing images in the database anyway.
-  For now, we will change the name of the column to match what Fleximage needs
-
-=end
+#
+#   The new version of Fleximage has it hardcoded what the name of the column
+#   must be if you are storing images in the database. Weird.
+#
+#   In the long run, we should not be storing images in the database anyway.
+#   For now, we will change the name of the column to match what Fleximage needs
+#
 
 class UpgradeFlexImage < ActiveRecord::Migration
   def self.up

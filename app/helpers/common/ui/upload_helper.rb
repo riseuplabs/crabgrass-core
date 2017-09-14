@@ -1,5 +1,4 @@
 module Common::Ui::UploadHelper
-
   #
   # asset_upload_form_for
   #
@@ -11,13 +10,12 @@ module Common::Ui::UploadHelper
   def asset_upload_form_for(target, options = {})
     target = target.becomes(Page) if target.is_a?(Page)
     render partial: '/common/asset_upload',
-      locals: options.merge({target: target})
+           locals: options.merge(target: target)
   end
 
   def upload_form_options(options = {})
-   html = { enctype: "multipart/form-data", id: 'upload-form' }
-   html[:class] = 'single' if options[:single]
-   return { html: html }
+    html = { enctype: 'multipart/form-data', id: 'upload-form' }
+    html[:class] = 'single' if options[:single]
+    { html: html }
   end
-
 end

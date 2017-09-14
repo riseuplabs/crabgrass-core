@@ -1,68 +1,68 @@
-=begin
+require 'English'
 
-PAGE.RB
-
-A Page is the main content class. All actual content is a subclass of this class.
-
-denormalization
----------------
-
-  * updated_by_login
-  * created_by_login
-  * owner_name
-
-Upon further investigation, I am not sure that these are needed.
-
-schema
---------
-
-  create_table "pages", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "resolved",                         :default => true
-    t.boolean  "public"
-    t.integer  "created_by_id",      :limit => 11
-    t.integer  "updated_by_id",      :limit => 11
-    t.text     "summary"
-    t.string   "type"
-    t.integer  "message_count",      :limit => 11, :default => 0
-    t.integer  "data_id",            :limit => 11
-    t.string   "data_type"
-    t.integer  "contributors_count", :limit => 11, :default => 0
-    t.string   "name"
-    t.string   "updated_by_login"
-    t.string   "created_by_login"
-    t.integer  "flow",               :limit => 11
-    t.integer  "stars",              :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
-    t.integer  "owner_id",           :limit => 11
-    t.string   "owner_type"
-    t.string   "owner_name"
-    t.boolean  "is_image"
-    t.boolean  "is_audio"
-    t.boolean  "is_video"
-    t.boolean  "is_document"
-    t.integer  "site_id",            :limit => 11
-    t.datetime "happens_at"
-  end
-
-  add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
-  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
-  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-  add_index "pages", ["type"], :name => "index_pages_on_type"
-  add_index "pages", ["flow"], :name => "index_pages_on_flow"
-  add_index "pages", ["public"], :name => "index_pages_on_public"
-  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
-  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
-  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
-
-  Yeah, so, there are way too many indices on the pages table.
-=end
+#
+# PAGE.RB
+#
+# A Page is the main content class. All actual content is a subclass of this class.
+#
+# denormalization
+# ---------------
+#
+#   * updated_by_login
+#   * created_by_login
+#   * owner_name
+#
+# Upon further investigation, I am not sure that these are needed.
+#
+# schema
+# --------
+#
+#   create_table "pages", :force => true do |t|
+#     t.string   "title"
+#     t.datetime "created_at"
+#     t.datetime "updated_at"
+#     t.boolean  "resolved",                         :default => true
+#     t.boolean  "public"
+#     t.integer  "created_by_id",      :limit => 11
+#     t.integer  "updated_by_id",      :limit => 11
+#     t.text     "summary"
+#     t.string   "type"
+#     t.integer  "message_count",      :limit => 11, :default => 0
+#     t.integer  "data_id",            :limit => 11
+#     t.string   "data_type"
+#     t.integer  "contributors_count", :limit => 11, :default => 0
+#     t.string   "name"
+#     t.string   "updated_by_login"
+#     t.string   "created_by_login"
+#     t.integer  "flow",               :limit => 11
+#     t.integer  "stars",              :limit => 11, :default => 0
+#     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+#     t.integer  "owner_id",           :limit => 11
+#     t.string   "owner_type"
+#     t.string   "owner_name"
+#     t.boolean  "is_image"
+#     t.boolean  "is_audio"
+#     t.boolean  "is_video"
+#     t.boolean  "is_document"
+#     t.integer  "site_id",            :limit => 11
+#     t.datetime "happens_at"
+#   end
+#
+#   add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
+#   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+#   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+#   add_index "pages", ["type"], :name => "index_pages_on_type"
+#   add_index "pages", ["flow"], :name => "index_pages_on_flow"
+#   add_index "pages", ["public"], :name => "index_pages_on_public"
+#   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+#   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+#   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+#   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+#
+#   Yeah, so, there are way too many indices on the pages table.
 
 class Page < ActiveRecord::Base
-  extend RouteInheritance          # subclasses use /pages routes
+  extend RouteInheritance # subclasses use /pages routes
 
   include Page::Users           # page <> users relationship
   include Page::Groups          # page <> group relationship
@@ -75,12 +75,10 @@ class Page < ActiveRecord::Base
   include Page::Stats           # page tracking views, edits and stars
   include Page::HistoryTracking # page <> page_history
 
-
   has_many :page_notices,
-    class_name: 'Notice::PageNotice',
-    as: :noticable,
-    dependent: :delete_all
-
+           class_name: 'Notice::PageNotice',
+           as: :noticable,
+           dependent: :delete_all
 
   # disable timestamps, we set the updated_at field through certain Page::History subclasses
   self.record_timestamps = false
@@ -93,7 +91,7 @@ class Page < ActiveRecord::Base
   end
 
   def self.not_deleted
-    where("pages.flow != %s", FLOW[:deleted])
+    where('pages.flow != %s', FLOW[:deleted])
   end
 
   ##
@@ -122,7 +120,7 @@ class Page < ActiveRecord::Base
   validate :unique_name_in_context
   def unique_name_in_context
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
-      context = self.owner || self.created_by
+      context = owner || created_by
       errors.add 'name', "is already used for another page by #{context.display_name}"
     elsif name_changed? and name.present?
       errors.add 'name', 'name is invalid' if name != name.nameize
@@ -142,12 +140,12 @@ class Page < ActiveRecord::Base
     return id if title.blank?
     s = title.nameize
     # limit name length, and remove any half-cut trailing word
-    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42
+    s = s[0..40].sub(/-([^-])*$/, '') if s.length > 42
     "#{s}+#{id}"
   end
-  alias_method :to_param, :friendly_url
+  alias to_param friendly_url
   # used for caching access
-  alias_method :to_s, :friendly_url
+  alias to_s friendly_url
 
   # using only knowledge of this page, returns
   # best guess uri string, sans protocol/host/port.
@@ -158,23 +156,23 @@ class Page < ActiveRecord::Base
 
   # returns true if self's unique page name is already in use by the same owner.
   def name_taken?
-    return false unless self.name.present?
-    if self.owner
-      pages = Page.where name: self.name, owner_id: self.owner
-    else
-      pages = Page.where name: self.name, created_by_id: self.created_by_id
-    end
-    pages.detect{|p| p != self and p.flow != FLOW[:deleted]}
+    return false unless name.present?
+    pages = if owner
+              Page.where name: name, owner_id: owner
+            else
+              Page.where name: name, created_by_id: created_by_id
+            end
+    pages.detect { |p| p != self and p.flow != FLOW[:deleted] }
   end
 
   ##
   ## Livecycle
   ##
 
-  def flow= flow
-    if flow.kind_of?(Integer) || flow.nil?
+  def flow=(flow)
+    if flow.is_a?(Integer) || flow.nil?
       write_attribute(:flow, flow)
-    elsif flow.kind_of?(Symbol) && FLOW[flow]
+    elsif flow.is_a?(Symbol) && FLOW[flow]
       write_attribute(:flow, FLOW[flow])
     else
       raise TypeError.new("Flow needs to be an integer or one of [#{FLOW.keys.join(', ')}]")
@@ -182,13 +180,13 @@ class Page < ActiveRecord::Base
   end
 
   def delete
-    self.flow=:deleted
-    self.save
+    self.flow = :deleted
+    save
   end
 
   def undelete
     write_attribute(:flow, FLOW[:normal])
-    self.save
+    save
   end
 
   def deleted?
@@ -206,9 +204,7 @@ class Page < ActiveRecord::Base
   before_save :clear_tag_cache
 
   def clear_tag_cache
-    if @tags_changed
-      User.clear_tag_cache(self.user_ids)
-    end
+    User.clear_tag_cache(user_ids) if @tags_changed
   end
 
   #
@@ -231,12 +227,13 @@ class Page < ActiveRecord::Base
   def unresolve
     resolve(false)
   end
-  def resolve(value=true)
+
+  def resolve(value = true)
     user_participations.each do |up|
       up.resolved = value
       up.save
     end
-    self.resolved=value
+    self.resolved = value
     save
   end
 
@@ -253,11 +250,11 @@ class Page < ActiveRecord::Base
     return true unless @associations_to_save
     @associations_to_save.uniq.each do |assn|
       if assn == :posts
-        discussion.posts.each {|post| post.save! if post.changed?}
+        discussion.posts.each { |post| post.save! if post.changed? }
       elsif assn == :users
-        user_participations.each {|up| up.save! if up.changed?}
+        user_participations.each { |up| up.save! if up.changed? }
       elsif assn == :groups
-        group_participations.each {|gp| gp.save! if gp.changed?}
+        group_participations.each { |gp| gp.save! if gp.changed? }
       end
     end
     true
@@ -285,7 +282,6 @@ class Page < ActiveRecord::Base
   # :edit should return false for deleted pages.
   #
   def has_access!(perm, user)
-
     ########################################################
     ## THESE ARE TEMPORARY HACKS...
     return false if tmp_hack_for_deleted_pages?(perm)
@@ -307,7 +303,7 @@ class Page < ActiveRecord::Base
     elsif entity.is_a? Group
       parts << participation_for_group(entity)
     end
-    parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
+    parts.compact.min { |a, b| (a.access || 100) <=> (b.access || 100) }
   end
 
   # this should be in the database, for now hardwired as "true".
@@ -320,7 +316,7 @@ class Page < ActiveRecord::Base
 
   # do not allow comments or editing of deleted pages:
   def tmp_hack_for_deleted_pages?(perm)
-    self.deleted? and (perm == :edit)
+    deleted? and (perm == :edit)
   end
 
   ##
@@ -335,13 +331,13 @@ class Page < ActiveRecord::Base
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be added to pages!
-  def add(entity, attributes={})
+  def add(entity, attributes = {})
     if entity.is_a? Enumerable
       entity.collect do |e|
-        e.add_page(self,attributes)
+        e.add_page(self, attributes)
       end
     else
-      entity.add_page(self,attributes)
+      entity.add_page(self, attributes)
     end
   end
 
@@ -379,19 +375,19 @@ class Page < ActiveRecord::Base
         self.owner_name = nil
         self.owner_type = nil
       end
-    elsif self.owner_name != entity.name
+    elsif owner_name != entity.name
       self.owner_id = entity.id
       self.owner_name = entity.name
       if entity.is_a? Group
-        self.owner_type = "Group"
+        self.owner_type = 'Group'
       elsif entity.is_a? User
-        self.owner_type = "User"
+        self.owner_type = 'User'
       else
         raise 'must be user or group'
       end
       part = most_privileged_participation_for(entity)
-      self.add(entity, access: :admin) unless part and part.access == ACCESS[:admin]
-      return self.owner
+      add(entity, access: :admin) unless part and part.access == ACCESS[:admin]
+      return owner
     end
   end
 
@@ -400,7 +396,6 @@ class Page < ActiveRecord::Base
   def participation_for(entity)
     entity.is_a?(User) ? participation_for_user(entity) : participation_for_group(entity)
   end
-
 
   ##
   ## MISC. HELPERS
@@ -425,7 +420,6 @@ class Page < ActiveRecord::Base
   protected
 
   def save_timestamps
-    self.created_at = self.updated_at = Time.now if self.new_record?
+    self.created_at = self.updated_at = Time.now if new_record?
   end
-
 end

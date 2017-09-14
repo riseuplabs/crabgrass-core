@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class Group::PermissionTest < ActiveSupport::TestCase
-
-
   def test_can_revoke_edit
     group = Group.create name: 'group_with_council'
     council = Group::Council.new(name: 'council')
@@ -12,5 +10,4 @@ class Group::PermissionTest < ActiveSupport::TestCase
     assert !group.has_access?(:edit, group)
     assert group.has_access?(:edit, council)
   end
-
 end

@@ -7,10 +7,9 @@ class AddEditLocksToWikis < ActiveRecord::Migration
     remove_column :wikis, :locked_by_id
   end
 
-
   def self.down
     add_column :wikis, :locked_at, :datetime
-    add_column :wikis, :locked_by_id, :integer, :limit => 11
+    add_column :wikis, :locked_by_id, :integer, limit: 11
 
     remove_column :wikis, :edit_locks
   end

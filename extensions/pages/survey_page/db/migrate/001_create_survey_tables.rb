@@ -36,12 +36,10 @@ class CreateSurveyTables < ActiveRecord::Migration
       t.integer :response_id
       t.integer :asset_id
       t.text :value
-      t.string :type #STI
+      t.string :type # STI
       t.datetime :created_at
     end
   end
 
-  def self.down
-
-  end
+  def self.down; end
 end

@@ -32,7 +32,6 @@ class RankedVoteTest < JavascriptIntegrationTest
     assert_first_choice_of(@user, option)
   end
 
-
   def test_multiple_options
     add_possibility
     option, description = add_possibility
@@ -55,7 +54,7 @@ class RankedVoteTest < JavascriptIntegrationTest
   end
 
   def finish_voting
-    click_page_tab "Show results"
+    click_page_tab 'Show results'
   end
 
   def assert_not_voted_yet

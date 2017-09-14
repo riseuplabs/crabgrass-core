@@ -6,7 +6,7 @@ unless Vagrant.has_plugin?('vagrant-vbguest')
 end
 
 VAGRANTFILE_API_VERSION = 2
-SPHINX_DEV_CONF_PATH = 'config/sphinx/development.conf'
+SPHINX_DEV_CONF_PATH = 'config/sphinx/development.conf'.freeze
 
 ruby_version_file = File.join(File.dirname(__FILE__), '.ruby-version')
 RUBY_VER = File.exist?(ruby_version_file) ? File.read(ruby_version_file) : '2.1.5'
@@ -56,7 +56,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   SHELL
 
   config.vm.provision "Install RVM and Ruby #{RUBY_VER} and Bundler",
-    type: 'shell', privileged: false, inline: <<-SHELL
+                      type: 'shell', privileged: false, inline: <<-SHELL
       gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>&1
       curl -sSL https://get.rvm.io | bash -s stable > /dev/null 2>&1
       source $HOME/.rvm/scripts/rvm
@@ -111,13 +111,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   SHELL
 
   config.vm.provision 'Start Thinking Sphinx', run: 'always', type: 'shell',
-    privileged: false, inline: <<-SHELL
+                                               privileged: false, inline: <<-SHELL
       cd /vagrant/
       rake ts:start > /dev/null 2>&1
   SHELL
 
   config.vm.provision 'PROVISIONING COMPLETE!', run: 'always', type: 'shell',
-    privileged: false, inline: <<-SHELL
+                                                privileged: false, inline: <<-SHELL
       echo -e '\nTo run the server:\n'
       echo -e '\n vagrant ssh\n'
       echo -e '\n cd /vagrant/\n'
@@ -127,4 +127,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vbguest.auto_reboot = true
   config.vbguest.auto_update = true
 end
-
