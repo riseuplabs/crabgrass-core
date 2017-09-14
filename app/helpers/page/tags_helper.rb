@@ -42,7 +42,12 @@ module Page::TagsHelper
   end
 
   def page_tag_add_links
-    tags = Page.tags_for_group(@group, current_user) - @page.tags
+    if @page.owner_type == 'Group'
+      tags = Page.tags_for_group(@page.owner, current_user)
+    else
+      tags = current_user.tags
+    end
+    tags = tags - @page.tags
     top_tags = tags.sort_by{|t| -t[:taggings_count]}.take(10)
 
     haml do
