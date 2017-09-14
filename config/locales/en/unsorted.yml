@@ -368,7 +368,9 @@ en:
   add_one_or_more_tags: "Add one or more tags, separated by commas"
   separate_tags: "Separate tags using commas."
   add_tags: "Add Tags"
-  current_tags: "Current Tags"
+  add_popular_tags: "Add popular tags"
+  add_rare_tags: "Add rare tags"
+  current_tags: "Current tags"
 
 
   ##

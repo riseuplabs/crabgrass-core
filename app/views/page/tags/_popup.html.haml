@@ -3,7 +3,10 @@
     - f.label :current_tags.t
     - f.row do |r|
       - r.input page_tag_delete_links
-    - f.label :add_tags.t
+    - f.label :add_rare_tags.t
+    - f.row do |r|
+      - r.input page_tag_add_links rare=true
+    - f.label :add_popular_tags.t
     - f.row do |r|
       - r.input page_tag_add_links
     - f.row do |r|

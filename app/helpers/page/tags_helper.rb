@@ -1,4 +1,5 @@
 module Page::TagsHelper
+  
   def remove_tag_link(tag)
     link = link_to_remote(
       :remove.t,
@@ -41,19 +42,21 @@ module Page::TagsHelper
     end
   end
 
-  def page_tag_add_links
+  def page_tag_add_links rare=false, count=6
     if @page.owner_type == 'Group'
       tags = Page.tags_for_group(@page.owner, current_user)
     else
       tags = current_user.tags
     end
-    tags = tags - @page.tags
-    top_tags = tags.sort_by{|t| -t[:taggings_count]}.take(10)
-
+    if rare == true
+      tags = tags.least_used(count) - @page.tags
+    else 
+      tags = tags.most_used(count) - @page.tags
+    end
     haml do
       if tags.any?
         haml '.two_column_float' do
-          top_tags.each do |tag|
+          tags.each do |tag|
             haml '.column_item', add_tag_link(tag)
           end
         end
