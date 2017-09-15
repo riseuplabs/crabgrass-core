@@ -102,10 +102,12 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_tag_from_suggestion
-    @rainbow_page = pages(:rainbow_page)
-    @rainbow_page.tag_list = "summer"
-    @rainbow_page.save
-    assert_no_page_tags 'summer'
+    create_page title: "Page with many tags"
+    tags = %w[we need many tags because we want to separate popular tags like summer and rare tags]
+    tag_page tags
+    create_page title: "Page with popular tag"
+    tag_page %w[summer]
+    create_page title: "Tag for tag suggestions"
     tag_page_from_suggestion 'summer'
     assert_page_tags 'summer'
     assert_no_page_tags 'winter'
