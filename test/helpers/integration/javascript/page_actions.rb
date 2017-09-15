@@ -31,7 +31,7 @@ module PageActions
       click_on 'Edit'
     end
     find('span', text: tag).hover
-    within ".shy_parent:hover" do
+    within '.shy_parent:hover' do
       click_on 'Add Tags'
     end
   end
