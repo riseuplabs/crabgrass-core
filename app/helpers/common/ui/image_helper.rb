@@ -140,38 +140,41 @@ module Common::Ui::ImageHelper
   def thumbnail_img_tag(asset, thumbnail_name, options = {}, html_options = {})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
-      options[:crop] ||= options[:crop!]
-      if options[:crop] or options[:scale]
-        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
-        if target_width > thumbnail.width || target_height > thumbnail.height
-          # thumbnail is actually _smaller_ than our target area
-          border_width = 1
-          margin_x = ((target_width - thumbnail.width) / 2) - border_width
-          margin_y = ((target_height - thumbnail.height) / 2) - border_width
-          image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
-                                                            style: "margin: #{margin_y}px #{margin_x}px;"))
-        elsif options[:crop]
-          # extra thumbnail will be hidden by overflow:hidden
-          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
-          ratio  = [1, ratio].min
-          height = (thumbnail.height * ratio).round
-          width  = (thumbnail.width * ratio).round
-          image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
-        elsif options[:scale]
-          # set image tag to use new scale
-          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
-          height = (thumbnail.height * ratio).round
-          width  = (thumbnail.width * ratio).round
-          image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
-        end
-      else
-        image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}"))
-      end
-    elsif options[:crop!]
-      target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
-      thumbnail_or_icon(asset, thumbnail, target_width, target_height, html_options)
+      thumb_options = thumbnail_img_options(thumbnail, options)
+      image_tag thumbnail.url, html_options.merge(thumb_options)
     else
-      thumbnail_or_icon(asset, thumbnail, html_options)
+      width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
+      thumbnail_or_icon(asset, thumbnail, width, height, html_options)
+    end
+  end
+
+  def thumbnail_img_options(thumbnail, options = {})
+    options[:crop] ||= options[:crop!]
+    if options[:crop] or options[:scale]
+      target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
+      if target_width > thumbnail.width || target_height > thumbnail.height
+        # thumbnail is actually _smaller_ than our target area
+        border_width = 1
+        margin_x = ((target_width - thumbnail.width) / 2) - border_width
+        margin_y = ((target_height - thumbnail.height) / 2) - border_width
+        return { size: "#{thumbnail.width}x#{thumbnail.height}",
+               style: "margin: #{margin_y}px #{margin_x}px;" }
+      elsif options[:crop]
+        # extra thumbnail will be hidden by overflow:hidden
+        ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
+        ratio  = [1, ratio].min
+        height = (thumbnail.height * ratio).round
+        width  = (thumbnail.width * ratio).round
+        return { size: "#{width}x#{height}" }
+      elsif options[:scale]
+        # set image tag to use new scale
+        ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
+        height = (thumbnail.height * ratio).round
+        width  = (thumbnail.width * ratio).round
+        return { size: "#{width}x#{height}" }
+      end
+    else
+      return { size: "#{thumbnail.width}x#{thumbnail.height}" }
     end
   end
 
@@ -193,26 +196,6 @@ module Common::Ui::ImageHelper
     options[:style]   = "height:#{target_height}px;width:#{target_width}px"
     url = options[:url] || asset.url
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
-  end
-
-  # links to an asset with a thumbnail preview
-  def old_link_to_asset(asset, thumbnail_name, options = {})
-    thumbnail = asset.thumbnail(thumbnail_name)
-    img = thumbnail_img_tag(asset, thumbnail_name, options)
-    if size = (options[:crop] || options[:scale] || options[:crop!])
-      target_width, target_height = size.split(/x/).map(&:to_f)
-    elsif thumbnail and thumbnail.width and thumbnail.height
-      target_width = thumbnail.width
-      target_height = thumbnail.height
-    else
-      target_width = 32
-      target_height = 32
-    end
-    style   = "height:#{target_height}px;width:#{target_width}px"
-    klass   = options[:class] || 'thumbnail'
-    url     = options[:url] || asset.url
-    method  = options[:method] || 'get'
-    link_to img, url, class: klass, title: asset.filename, style: style, method: method
   end
 
   def thumbnail_or_icon(asset, thumbnail, width = nil, height = nil, html_options = {})
