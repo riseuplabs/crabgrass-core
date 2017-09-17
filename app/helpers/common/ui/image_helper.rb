@@ -148,7 +148,7 @@ module Common::Ui::ImageHelper
           border_width = 1
           margin_x = ((target_width - thumbnail.width) / 2) - border_width
           margin_y = ((target_height - thumbnail.height) / 2) - border_width
-          img = image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
+          image_tag(thumbnail.url, html_options.merge(size: "#{thumbnail.width}x#{thumbnail.height}",
                                                             style: "margin: #{margin_y}px #{margin_x}px;"))
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
@@ -156,7 +156,7 @@ module Common::Ui::ImageHelper
           ratio  = [1, ratio].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          img = image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
+          image_tag(thumbnail.url, html_options.merge(size: "#{width}x#{height}"))
         elsif options[:scale]
           # set image tag to use new scale
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
@@ -169,7 +169,7 @@ module Common::Ui::ImageHelper
       end
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
-      img = thumbnail_or_icon(asset, thumbnail, target_width, target_height, html_options)
+      thumbnail_or_icon(asset, thumbnail, target_width, target_height, html_options)
     else
       thumbnail_or_icon(asset, thumbnail, html_options)
     end
