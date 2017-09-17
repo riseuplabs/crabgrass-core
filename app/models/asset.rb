@@ -4,7 +4,8 @@
 #   Asset          -- main asset class.
 #   Asset::Image   -- a subclass of Asset using STI, for example.
 #   Asset::Version -- all the past and present versions of the main asset.
-#   Thumbnail      -- a processed representation of an Asset (usually a small image)
+#   Thumbnail      -- a processed representation of an Asset
+#                     (usually a small image)
 #
 #   Every asset has many versions. Each asset, and each version, also
 #   have many thumbnails.
@@ -18,9 +19,10 @@
 #
 # TODO:
 #
-#   * Image assets that are smaller than the thumbnails should not get thumbnails,
-#     or should only get one thumbnail if the format differs. It is a waste of space
-#     to keep four copies of the same image! (albeit, a very tiny image)
+#   * Image assets that are smaller than the thumbnails should not get
+#     thumbnails, or should only get one thumbnail if the format
+#     differs.  It is a waste of space to keep four copies of the same
+#     image! (albeit, a very tiny image)
 
 class Asset < ApplicationRecord
   include Crabgrass::Page::Data
@@ -84,7 +86,7 @@ class Asset < ApplicationRecord
   # Returns true if this Asset is currently the cover of the given `gallery'.
   # A Gallery can only have one cover at a time.
   def is_cover_of?(gallery)
-    raise ArgumentError.new unless gallery.is_a? Gallery
+    raise ArgumentError unless gallery.is_a? Gallery
     showing = gallery.showings.find_by_asset_id(id)
     !showing.nil? && showing.is_cover
   end
@@ -95,7 +97,7 @@ class Asset < ApplicationRecord
 
   # one of :image, :audio, :video, :document
   def self.media_type(type)
-    raise TypeError.new unless %i[image audio video document].include?(type)
+    raise TypeError unless %i[image audio video document].include?(type)
     where("is_#{type} = ?", true)
   end
 
@@ -116,19 +118,8 @@ class Asset < ApplicationRecord
       base.has_many :thumbnails, class_name: '::Thumbnail', as: :parent,
                                  dependent: :destroy do
         def preview_images
-          small, medium, large = nil
-          each do |tn|
-            if tn.name == 'small'
-              small = tn
-            elsif tn.name == 'medium'
-              medium = tn
-            elsif tn.name == 'large'
-              large = tn
-            end
-          end
-          large = nil if medium && large && large.size == medium.size
-          medium = nil if small && medium && medium.size == small.size
-          [small, medium, large].compact
+          select { |t| %w[small medium large].include?(t.name) }.
+            sort_by(&:size).uniq(&:size)
         end
 
         def other_formats
