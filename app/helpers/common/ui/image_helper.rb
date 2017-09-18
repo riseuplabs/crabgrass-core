@@ -174,27 +174,27 @@ module Common::Ui::ImageHelper
     end
 
     def size
+      height = (thumbnail.height * ratio).round
+      width  = (thumbnail.width * ratio).round
+      return "#{width}x#{height}"
+    end
+
+    def ratio
       if options[:crop] or options[:scale]
         target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
         if target_width > thumbnail.width || target_height > thumbnail.height
           # thumbnail is actually _smaller_ than our target area
-          return "#{thumbnail.width}x#{thumbnail.height}"
+          return 1
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
-          ratio  = [1, ratio].min
-          height = (thumbnail.height * ratio).round
-          width  = (thumbnail.width * ratio).round
-          return "#{width}x#{height}"
+          return [1, ratio].min
         elsif options[:scale]
           # set image tag to use new scale
-          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
-          height = (thumbnail.height * ratio).round
-          width  = (thumbnail.width * ratio).round
-          return "#{width}x#{height}"
+          return [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
         end
       else
-        return "#{thumbnail.width}x#{thumbnail.height}"
+        return 1
       end
     end
 
