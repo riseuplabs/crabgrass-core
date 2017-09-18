@@ -153,35 +153,48 @@ module Common::Ui::ImageHelper
       @asset = asset
       @thumbnail = asset.thumbnail(thumbnail_name)
       @options = options
+      @options[:crop] ||= @options[:crop!]
     end
 
     def thumbnail_img_options
-      options[:crop] ||= options[:crop!]
+      style_options.merge size: size
+    end
+
+    def style_options
+      if options[:crop] or options[:scale]
+        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
+        if target_width > thumbnail.width || target_height > thumbnail.height
+          border_width = 1
+          margin_x = ((target_width - thumbnail.width) / 2) - border_width
+          margin_y = ((target_height - thumbnail.height) / 2) - border_width
+          return { style: "margin: #{margin_y}px #{margin_x}px;" }
+        end
+      end
+      return {}
+    end
+
+    def size
       if options[:crop] or options[:scale]
         target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
         if target_width > thumbnail.width || target_height > thumbnail.height
           # thumbnail is actually _smaller_ than our target area
-          border_width = 1
-          margin_x = ((target_width - thumbnail.width) / 2) - border_width
-          margin_y = ((target_height - thumbnail.height) / 2) - border_width
-          return { size: "#{thumbnail.width}x#{thumbnail.height}",
-                   style: "margin: #{margin_y}px #{margin_x}px;" }
+          return "#{thumbnail.width}x#{thumbnail.height}"
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
           ratio  = [1, ratio].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          return { size: "#{width}x#{height}" }
+          return "#{width}x#{height}"
         elsif options[:scale]
           # set image tag to use new scale
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          return { size: "#{width}x#{height}" }
+          return "#{width}x#{height}"
         end
       else
-        return { size: "#{thumbnail.width}x#{thumbnail.height}" }
+        return "#{thumbnail.width}x#{thumbnail.height}"
       end
     end
 
