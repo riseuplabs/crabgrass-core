@@ -161,16 +161,11 @@ module Common::Ui::ImageHelper
     end
 
     def style_options
-      if options[:crop] or options[:scale]
-        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
-        if target_width > thumbnail.width || target_height > thumbnail.height
-          border_width = 1
-          margin_x = ((target_width - thumbnail.width) / 2) - border_width
-          margin_y = ((target_height - thumbnail.height) / 2) - border_width
-          return { style: "margin: #{margin_y}px #{margin_x}px;" }
-        end
+      if target_width > thumbnail.width || target_height > thumbnail.height
+        { style: "margin: #{margin_y}px #{margin_x}px;" }
+      else
+        {}
       end
-      return {}
     end
 
     def size
@@ -180,22 +175,8 @@ module Common::Ui::ImageHelper
     end
 
     def ratio
-      if options[:crop] or options[:scale]
-        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
-        if target_width > thumbnail.width || target_height > thumbnail.height
-          # thumbnail is actually _smaller_ than our target area
-          return 1
-        elsif options[:crop]
-          # extra thumbnail will be hidden by overflow:hidden
-          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
-          return [1, ratio].min
-        elsif options[:scale]
-          # set image tag to use new scale
-          return [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
-        end
-      else
-        return 1
-      end
+      # never scale up
+      [1, fit_ratio].min
     end
 
     def url
@@ -205,6 +186,42 @@ module Common::Ui::ImageHelper
     protected
 
     attr_reader :asset, :thumbnail, :options
+
+    def fit_ratio
+      if options[:crop]
+        ratios.max
+      else
+        ratios.min
+      end
+    end
+
+    def ratios
+      [target_width / thumbnail.width, target_height / thumbnail.height]
+    end
+
+    def margin_x
+      ((target_width - thumbnail.width) / 2) - border_width
+    end
+
+    def margin_y
+      ((target_height - thumbnail.height) / 2) - border_width
+    end
+
+    def target_width
+      target_size.split(/x/).map(&:to_f).first || thumbnail.width
+    end
+
+    def target_height
+      target_size.split(/x/).map(&:to_f).second || thumbnail.height
+    end
+
+    def target_size
+      (options[:crop] || options[:scale] || '')
+    end
+
+    def border_width
+      1
+    end
   end
 
   # links to an asset with a thumbnail preview
