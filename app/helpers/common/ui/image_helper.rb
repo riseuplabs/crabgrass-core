@@ -140,42 +140,58 @@ module Common::Ui::ImageHelper
   def thumbnail_img_tag(asset, thumbnail_name, options = {}, html_options = {})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
-      thumb_options = thumbnail_img_options(thumbnail, options)
-      image_tag thumbnail.url, html_options.merge(thumb_options)
+      display = ThumbnailDisplay.new(asset, thumbnail_name, options)
+      image_tag display.url, html_options.merge(display.thumbnail_img_options)
     else
       width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
       thumbnail_or_icon(asset, thumbnail, width, height, html_options)
     end
   end
 
-  def thumbnail_img_options(thumbnail, options = {})
-    options[:crop] ||= options[:crop!]
-    if options[:crop] or options[:scale]
-      target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
-      if target_width > thumbnail.width || target_height > thumbnail.height
-        # thumbnail is actually _smaller_ than our target area
-        border_width = 1
-        margin_x = ((target_width - thumbnail.width) / 2) - border_width
-        margin_y = ((target_height - thumbnail.height) / 2) - border_width
-        return { size: "#{thumbnail.width}x#{thumbnail.height}",
-               style: "margin: #{margin_y}px #{margin_x}px;" }
-      elsif options[:crop]
-        # extra thumbnail will be hidden by overflow:hidden
-        ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
-        ratio  = [1, ratio].min
-        height = (thumbnail.height * ratio).round
-        width  = (thumbnail.width * ratio).round
-        return { size: "#{width}x#{height}" }
-      elsif options[:scale]
-        # set image tag to use new scale
-        ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
-        height = (thumbnail.height * ratio).round
-        width  = (thumbnail.width * ratio).round
-        return { size: "#{width}x#{height}" }
-      end
-    else
-      return { size: "#{thumbnail.width}x#{thumbnail.height}" }
+  class ThumbnailDisplay
+    def initialize(asset, thumbnail_name, options = {})
+      @asset = asset
+      @thumbnail = asset.thumbnail(thumbnail_name)
+      @options = options
     end
+
+    def thumbnail_img_options
+      options[:crop] ||= options[:crop!]
+      if options[:crop] or options[:scale]
+        target_width, target_height = (options[:crop] || options[:scale]).split(/x/).map(&:to_f)
+        if target_width > thumbnail.width || target_height > thumbnail.height
+          # thumbnail is actually _smaller_ than our target area
+          border_width = 1
+          margin_x = ((target_width - thumbnail.width) / 2) - border_width
+          margin_y = ((target_height - thumbnail.height) / 2) - border_width
+          return { size: "#{thumbnail.width}x#{thumbnail.height}",
+                   style: "margin: #{margin_y}px #{margin_x}px;" }
+        elsif options[:crop]
+          # extra thumbnail will be hidden by overflow:hidden
+          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
+          ratio  = [1, ratio].min
+          height = (thumbnail.height * ratio).round
+          width  = (thumbnail.width * ratio).round
+          return { size: "#{width}x#{height}" }
+        elsif options[:scale]
+          # set image tag to use new scale
+          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
+          height = (thumbnail.height * ratio).round
+          width  = (thumbnail.width * ratio).round
+          return { size: "#{width}x#{height}" }
+        end
+      else
+        return { size: "#{thumbnail.width}x#{thumbnail.height}" }
+      end
+    end
+
+    def url
+      thumbnail.url
+    end
+
+    protected
+
+    attr_reader :asset, :thumbnail, :options
   end
 
   # links to an asset with a thumbnail preview
@@ -231,7 +247,7 @@ module Common::Ui::ImageHelper
                  when :small  then '64x64'
                  when :medium then '200x200'
                  when :large  then '500x500'
-          end
+                 end
           image_tag('/images/ui/corrupted/corrupted.png', size: dims)
         else
           image_tag(thumbnail.url, height: thumbnail.height, width: thumbnail.width)
