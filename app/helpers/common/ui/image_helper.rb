@@ -175,29 +175,6 @@ module Common::Ui::ImageHelper
   end
 
   ##
-  ## AGNOSTIC MEDIA
-  ##
-
-  def display_media(media, size = :medium)
-    if media.respond_to?(:is_image?) and media.is_image?
-      if media.respond_to?(:thumbnail)
-        thumbnail = media.thumbnail(size)
-        if thumbnail.nil? or thumbnail.failure?
-          pixels = IMAGE_SIZES[size]
-          dims = pixels.to_s + 'x' + pixels.to_s
-          image_tag('/images/ui/corrupted/corrupted.png', size: dims)
-        else
-          image_tag(thumbnail.url, height: thumbnail.height, width: thumbnail.width)
-        end
-      else
-        # not sure what we are trying to display
-      end
-    elsif media.respond_to?(:is_video?) and media.is_video?
-      media.build_embed
-    end
-  end
-
-  ##
   ## PICTURES
   ##
 
