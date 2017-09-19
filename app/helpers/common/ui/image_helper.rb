@@ -144,7 +144,15 @@ module Common::Ui::ImageHelper
       image_tag display.url, html_options.merge(display.thumbnail_img_options)
     else
       width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
-      thumbnail_or_icon(asset, thumbnail, width, height, html_options)
+      if thumbnail
+        image_tag(thumbnail.url, html_options)
+      else
+        if width.nil? or height.nil?
+          image_tag "/images/png/16/#{asset.small_icon}.png", style: 'vertical-align: middle;'
+        else
+          image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
+        end
+      end
     end
   end
 
@@ -244,24 +252,8 @@ module Common::Ui::ImageHelper
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 
-  def thumbnail_or_icon(asset, thumbnail, width = nil, height = nil, html_options = {})
-    if thumbnail
-      image_tag(thumbnail.url, html_options)
-    else
-      mini_icon_for(asset, width, height)
-    end
-  end
-
   def icon_for(asset)
     image_tag "/images/png/16/#{asset.big_icon}.png", style: 'vertical-align: middle'
-  end
-
-  def mini_icon_for(asset, width = nil, height = nil)
-    if width.nil? or height.nil?
-      image_tag "/images/png/16/#{asset.small_icon}.png", style: 'vertical-align: middle;'
-    else
-      image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
-    end
   end
 
   ##
