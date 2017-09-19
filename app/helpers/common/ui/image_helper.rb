@@ -60,6 +60,19 @@ module Common::Ui::ImageHelper
     image_tag display.url, html_options.merge(display.thumbnail_img_options)
   end
 
+  # links to an asset with a thumbnail preview
+  def link_to_asset(asset, thumbnail_name, options = {})
+    display = ThumbnailDisplay.new(asset, thumbnail_name, options)
+    target_width = display.target_width || 32
+    target_height = display.target_height || 32
+    options[:class] ||= 'thumbnail'
+    options[:title] ||= asset.filename
+    options[:style]   = "height:#{target_height}px;width:#{target_width}px"
+    url = options[:url] || asset.url
+    img = image_tag display.url, display.thumbnail_img_options
+    link_to img, url, options.slice(:class, :title, :style, :method, :remote)
+  end
+
   class ThumbnailDisplay
     def initialize(asset, thumbnail_name, options = {})
       @asset = asset
@@ -114,6 +127,16 @@ module Common::Ui::ImageHelper
       end
     end
 
+    def target_width
+      target_size.split(/x/).map(&:to_f).first ||
+        (thumbnail && thumbnail.width)
+    end
+
+    def target_height
+      target_size.split(/x/).map(&:to_f).second ||
+        (thumbnail && thumbnail.height)
+    end
+
     protected
 
     attr_reader :asset, :thumbnail, :options
@@ -138,14 +161,6 @@ module Common::Ui::ImageHelper
       ((target_height - thumbnail.height) / 2) - border_width
     end
 
-    def target_width
-      target_size.split(/x/).map(&:to_f).first || thumbnail.width
-    end
-
-    def target_height
-      target_size.split(/x/).map(&:to_f).second || thumbnail.height
-    end
-
     def target_size
       (options[:crop] || options[:scale] || '')
     end
@@ -153,26 +168,6 @@ module Common::Ui::ImageHelper
     def border_width
       1
     end
-  end
-
-  # links to an asset with a thumbnail preview
-  def link_to_asset(asset, thumbnail_name, options = {})
-    thumbnail = asset.thumbnail(thumbnail_name)
-    img = thumbnail_img_tag(asset, thumbnail_name, options)
-    if size = (options[:crop] || options[:scale] || options[:crop!])
-      target_width, target_height = size.split(/x/).map(&:to_f)
-    elsif thumbnail and thumbnail.width and thumbnail.height
-      target_width = thumbnail.width
-      target_height = thumbnail.height
-    else
-      target_width = 32
-      target_height = 32
-    end
-    options[:class] ||= 'thumbnail'
-    options[:title] ||= asset.filename
-    options[:style]   = "height:#{target_height}px;width:#{target_width}px"
-    url = options[:url] || asset.url
-    link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 
   def icon_for(asset)
