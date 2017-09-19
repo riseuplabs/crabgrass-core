@@ -14,10 +14,8 @@ module Common::Ui::ImageHelper
   #
   # for example: icon_tag('pencil')
   #
-  # currently, any 'size' argument other than the default will not display well.
-  #
-  def icon_tag(icon, size: 16, title: '')
-    content_tag :i, ' ', class: "small_icon #{icon}_#{size}", title: title
+  def icon_tag(icon, title: '')
+    content_tag :i, ' ', class: "small_icon #{icon}_16", title: title
   end
 
   ##
@@ -92,6 +90,19 @@ module Common::Ui::ImageHelper
     img = image_tag display.url, display.thumbnail_img_options
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
+
+  def icon_for(asset)
+    image_tag "/images/png/16/#{asset.big_icon}.png",
+              style: 'vertical-align: middle'
+  end
+
+  ##
+  ## UTILITY
+  ##
+
+  #
+  # these are not meant to be used outside the helpers above...
+  #
 
   # Helper Class to handle all the scaling and cropping logic
   class ThumbnailDisplay
@@ -193,10 +204,5 @@ module Common::Ui::ImageHelper
     def border_width
       1
     end
-  end
-
-  def icon_for(asset)
-    image_tag "/images/png/16/#{asset.big_icon}.png",
-              style: 'vertical-align: middle'
   end
 end
