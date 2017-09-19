@@ -32,6 +32,28 @@ module Common::Ui::ImageHelper
     content_tag :i, ' ', class: "page_icon #{page.icon}_16"
   end
 
+  ##
+  ## PICTURES
+  ##
+
+  #
+  # Displays a Picture object as the background image of an empty div.
+  #
+  # 'size' can be either a Symbol :small, :medium, :large, or a Hash
+  # of the format used by Picture geometry (see picture.rb)
+  #
+  def picture_tag(picture, geometry)
+    content_tag :div, '', style: picture_style(picture, geometry)
+  end
+
+  def picture_style(picture, geometry)
+    geometry = picture.add_geometry(geometry)
+    width, height = picture.size(geometry)
+    format 'width: 100%%; max-width: %spx; height: %spx; background: url(%s)',
+      width,
+      height,
+      picture.url(geometry)
+  end
 
   ##
   ## ASSET THUMBNAILS
@@ -171,32 +193,8 @@ module Common::Ui::ImageHelper
   end
 
   def icon_for(asset)
-    image_tag "/images/png/16/#{asset.big_icon}.png", style: 'vertical-align: middle'
+    image_tag "/images/png/16/#{asset.big_icon}.png",
+      style: 'vertical-align: middle'
   end
 
-  ##
-  ## PICTURES
-  ##
-
-  #
-  # Displays a Picture object as the background image of an empty div.
-  #
-  # 'size' can be either a Symbol :small, :medium, :large, or a Hash
-  # of the format used by Picture geometry (see picture.rb)
-  #
-  def picture_tag(picture, size = :medium)
-    content_tag :div, '', style: picture_style(picture, size)
-  end
-
-  def picture_style(picture, size = :medium)
-    if size.is_a? Symbol
-      pixels = IMAGE_SIZES[size]
-      geometry = { max_width: pixels, min_width: pixels, max_height: pixels * 2 }
-    else
-      geometry = size
-    end
-    geometry = picture.add_geometry(geometry)
-    width, height = picture.size(geometry)
-    format('width: 100%%; max-width: %spx; height: %spx; background: url(%s)', width, height, picture.url(geometry))
-  end
 end
