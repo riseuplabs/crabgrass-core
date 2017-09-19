@@ -138,22 +138,8 @@ module Common::Ui::ImageHelper
   #       link_to_asset.
   #
   def thumbnail_img_tag(asset, thumbnail_name, options = {}, html_options = {})
-    thumbnail = asset.thumbnail(thumbnail_name)
-    if thumbnail and thumbnail.height and thumbnail.width
-      display = ThumbnailDisplay.new(asset, thumbnail_name, options)
-      image_tag display.url, html_options.merge(display.thumbnail_img_options)
-    else
-      width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
-      if thumbnail
-        image_tag(thumbnail.url, html_options)
-      else
-        if width.nil? or height.nil?
-          image_tag "/images/png/16/#{asset.small_icon}.png", style: 'vertical-align: middle;'
-        else
-          image_tag "/images/png/16/#{asset.small_icon}.png", style: "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
-        end
-      end
-    end
+    display = ThumbnailDisplay.new(asset, thumbnail_name, options)
+    image_tag display.url, html_options.merge(display.thumbnail_img_options)
   end
 
   class ThumbnailDisplay
@@ -164,8 +150,14 @@ module Common::Ui::ImageHelper
       @options[:crop] ||= @options[:crop!]
     end
 
+    #TODO: take crop! into account
     def thumbnail_img_options
-      style_options.merge size: size
+      return { style: fallback_style } unless thumbnail
+      if thumbnail.width && thumbnail.height
+        style_options.merge size: size
+      else
+        {}
+      end
     end
 
     def style_options
@@ -182,13 +174,26 @@ module Common::Ui::ImageHelper
       return "#{width}x#{height}"
     end
 
+    def fallback_style
+      width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
+      if width.nil? or height.nil?
+        'vertical-align: middle;'
+      else
+        "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
+      end
+    end
+
     def ratio
       # never scale up
       [1, fit_ratio].min
     end
 
     def url
-      thumbnail.url
+      if thumbnail.present?
+        thumbnail.url
+      else
+        "/images/png/16/#{asset.small_icon}.png"
+      end
     end
 
     protected
