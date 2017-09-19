@@ -2,7 +2,6 @@
 ## Here in lies all the helpers for displaying icons, avatars
 ## and various images.
 ##
-
 module Common::Ui::ImageHelper
   IMAGE_SIZES = Hash.new(200).merge(small: 64,
                                     medium: 200,
@@ -61,7 +60,8 @@ module Common::Ui::ImageHelper
 
   #
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
-  # the image to meet new dimensions (using html/css, not actually scaling/cropping)
+  # the image to meet new dimensions.
+  # (using html/css, not actually scaling/cropping)
   #
   # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
   #
@@ -85,16 +85,15 @@ module Common::Ui::ImageHelper
   # links to an asset with a thumbnail preview
   def link_to_asset(asset, thumbnail_name, options = {})
     display = ThumbnailDisplay.new(asset, thumbnail_name, options)
-    target_width = display.target_width || 32
-    target_height = display.target_height || 32
     options[:class] ||= 'thumbnail'
     options[:title] ||= asset.filename
-    options[:style]   = "height:#{target_height}px;width:#{target_width}px"
+    options[:style]   = display.wrapper_style
     url = options[:url] || asset.url
     img = image_tag display.url, display.thumbnail_img_options
     link_to img, url, options.slice(:class, :title, :style, :method, :remote)
   end
 
+  # Helper Class to handle all the scaling and cropping logic
   class ThumbnailDisplay
     def initialize(asset, thumbnail_name, options = {})
       @asset = asset
@@ -113,6 +112,22 @@ module Common::Ui::ImageHelper
       end
     end
 
+    def url
+      if thumbnail.present?
+        thumbnail.url
+      else
+        "/images/png/16/#{asset.small_icon}.png"
+      end
+    end
+
+    def wrapper_style
+      "height:#{target_height}px;width:#{target_width}px"
+    end
+
+    protected
+
+    attr_reader :asset, :thumbnail, :options
+
     def style_options
       if target_width > thumbnail.width || target_height > thumbnail.height
         { style: "margin: #{margin_y}px #{margin_x}px;" }
@@ -129,7 +144,7 @@ module Common::Ui::ImageHelper
 
     def fallback_style
       width, height = (options[:crop!] || '').split(/x/).map(&:to_f)
-      if width.nil? or height.nil?
+      if width.nil? || height.nil?
         'vertical-align: middle;'
       else
         "margin: #{(height - 22) / 2}px #{(width - 22) / 2}px;"
@@ -141,14 +156,6 @@ module Common::Ui::ImageHelper
       [1, fit_ratio].min
     end
 
-    def url
-      if thumbnail.present?
-        thumbnail.url
-      else
-        "/images/png/16/#{asset.small_icon}.png"
-      end
-    end
-
     def target_width
       target_size.split(/x/).map(&:to_f).first ||
         (thumbnail && thumbnail.width)
@@ -158,10 +165,6 @@ module Common::Ui::ImageHelper
       target_size.split(/x/).map(&:to_f).second ||
         (thumbnail && thumbnail.height)
     end
-
-    protected
-
-    attr_reader :asset, :thumbnail, :options
 
     def fit_ratio
       if options[:crop]
