@@ -50,9 +50,9 @@ module Common::Ui::ImageHelper
     geometry = picture.add_geometry(geometry)
     width, height = picture.size(geometry)
     format 'width: 100%%; max-width: %spx; height: %spx; background: url(%s)',
-      width,
-      height,
-      picture.url(geometry)
+           width,
+           height,
+           picture.url(geometry)
   end
 
   ##
@@ -103,7 +103,7 @@ module Common::Ui::ImageHelper
       @options[:crop] ||= @options[:crop!]
     end
 
-    #TODO: take crop! into account
+    # TODO: take crop! into account
     def thumbnail_img_options
       return { style: fallback_style } unless thumbnail
       if thumbnail.width && thumbnail.height
@@ -124,7 +124,7 @@ module Common::Ui::ImageHelper
     def size
       height = (thumbnail.height * ratio).round
       width  = (thumbnail.width * ratio).round
-      return "#{width}x#{height}"
+      "#{width}x#{height}"
     end
 
     def fallback_style
@@ -194,7 +194,6 @@ module Common::Ui::ImageHelper
 
   def icon_for(asset)
     image_tag "/images/png/16/#{asset.big_icon}.png",
-      style: 'vertical-align: middle'
+              style: 'vertical-align: middle'
   end
-
 end
