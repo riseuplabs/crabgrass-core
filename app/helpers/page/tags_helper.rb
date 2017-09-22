@@ -54,7 +54,7 @@ module Page::TagsHelper
   end
 
 
-  def page_tag_add_links tags, count=6
+  def page_tag_add_links tags
     haml do
       if tags.any?
         haml '.two_column_float' do

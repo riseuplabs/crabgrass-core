@@ -21,7 +21,11 @@ class Page::TagsController < Page::SidebarsController
     @page.updated_by = current_user
     @page.tags_will_change!
     @page.save!
-    refresh_sidebar
+    if params[:commit]
+      close_popup
+    else 
+      refresh_sidebar
+    end
   end
 
   def destroy
