@@ -4,7 +4,7 @@ class Page::TagsController < Page::SidebarsController
 
   def index
     if @page.owner_type == 'Group'
-        tags = Page.tags_for_group(@page.owner, current_user, order_by="created_at DESC") 
+        tags = Page.tags_for_group(@page.owner, current_user) 
     else
       tags = current_user.tags 
     end

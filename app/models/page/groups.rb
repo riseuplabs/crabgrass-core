@@ -122,12 +122,10 @@ module Page::Groups
     # has access to but is not the owner of. It would be slower to limit it to owned pages, so we don't yet.
     #
 
-=begin
-
     def tags_for_group(group, current_user)
       filter = access_filter(group: group, current_user: current_user)
       ActsAsTaggableOn::Tag.find_by_sql(%[
-        SELECT tags.*, count(name) as count
+        SELECT tags.*, count(name) as count 
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
         INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
@@ -136,20 +134,6 @@ module Page::Groups
         ORDER BY name
       ])
     end
-=end
-
-   def tags_for_group(group, current_user, order_by="name")
-      filter = access_filter(group: group, current_user: current_user)
-      ActsAsTaggableOn::Tag.find_by_sql(%[
-        SELECT tags.*, taggings.created_at
-        FROM tags 
-        INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
-        INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
-        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{filter}' IN BOOLEAN MODE)
-        ORDER BY #{order_by}
-      ])
-    end
-
 
     def access_filter(options)
       group = options[:group]
