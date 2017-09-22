@@ -13,6 +13,11 @@ module Page::TagsHelper
         link
     end
   end
+  
+  def insert_remove_tag_link(tag)
+    link = '<div class="column_item">' + remove_tag_link(tag) + '</div>'
+    return link
+  end  
 
   def page_tag_delete_links
     haml do
@@ -21,9 +26,13 @@ module Page::TagsHelper
           @page.tags.sort_by(&:name).each do |tag|
             haml '.column_item', remove_tag_link(tag)
           end
+          haml '#added', ''
         end
       else
-        haml '.p', :no_tags.t
+        haml '.two_column_float' do
+          haml '#added', ''
+        end
+        haml '.p', :no_tags.t # TODO: show only if no added tag present
       end
     end
   end
@@ -32,8 +41,10 @@ module Page::TagsHelper
     link = link_to_remote(
       :add_tags.t,
       {
-        url: {action: :create, controller: 'tags', add: tag.name},
-        },
+        url: {action: :create, controller: 'tags'},
+        success: hide("tag_#{tag.id}"),
+        complete: "$('added').insert({before: '#{insert_remove_tag_link(tag)}'})",
+        with: "'add=#{tag.name}'" },
       { class: 'shy inline', icon: 'plus'}
     )
     content_tag(:div, id: "tag_#{tag.id}", class: 'shy_parent p') do
@@ -42,17 +53,8 @@ module Page::TagsHelper
     end
   end
 
-  def page_tag_add_links rare=false, count=6
-    if @page.owner_type == 'Group'
-      tags = Page.tags_for_group(@page.owner, current_user)
-    else
-      tags = current_user.tags
-    end
-    if rare == true
-      tags = tags.least_used(count) - @page.tags
-    else 
-      tags = tags.most_used(count) - @page.tags
-    end
+
+  def page_tag_add_links tags, count=6
     haml do
       if tags.any?
         haml '.two_column_float' do

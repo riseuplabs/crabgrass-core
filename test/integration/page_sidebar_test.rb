@@ -101,7 +101,7 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_content own_page.title
   end
 
-  def test_tag_from_suggestion
+  def test_tag_from_user_suggestion
     create_page title: "Page with many tags"
     tags = %w[we need many tags because we want to separate popular tags like summer and rare tags]
     tag_page tags
@@ -128,6 +128,7 @@ class PageSidebarTest < JavascriptIntegrationTest
     tags = %w[some tags for this páge]
     tag_page tags
     assert_page_tags tags
+    click_button 'Close'
     remove_page_tag 'páge'
     assert_no_page_tags 'páge'
   end
@@ -140,4 +141,5 @@ class PageSidebarTest < JavascriptIntegrationTest
     remove_file_from_page
     assert_no_selector '#attachments a.attachment'
   end
+  
 end
