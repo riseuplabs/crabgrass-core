@@ -4,13 +4,13 @@ class Page::TagsController < Page::SidebarsController
 
   def index
     if @page.owner_type == 'Group'
-        tags = Page.tags_for_group(@page.owner, current_user) 
+      tags = Page.tags_for_group(@page.owner, current_user) 
     else
       tags = current_user.tags 
     end
-    tags = tags - @page.tags 
+    tags -= @page.tags 
     @recent_tags = tags.select { |t| t[:taggings_count] > 0 }.sort_by { |t| -t[:id] }.take(SUGGESTION_COUNT) 
-    tags = tags - @recent_tags
+    tags -= @recent_tags
     tags = ActsAsTaggableOn::Tag.where(id: tags.map(&:id))
     @popular_tags = tags.where.not(taggings_count: 0).most_used(SUGGESTION_COUNT) # should not be necessary to ask for taggings_count: 0
     render partial: 'page/tags/popup', content_type: 'text/html'

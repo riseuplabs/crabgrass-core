@@ -128,7 +128,6 @@ class PageSidebarTest < JavascriptIntegrationTest
     tags = %w[some tags for this páge]
     tag_page tags
     assert_page_tags tags
-    click_button 'Close'
     remove_page_tag 'páge'
     assert_no_page_tags 'páge'
   end
