@@ -101,22 +101,6 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_no_content own_page.title
   end
 
-  def test_tag_from_user_suggestion
-    create_page title: "Page with many tags"
-    tags = %w[we need many tags because we want to separate popular tags like summer and rare tags]
-    tag_page tags
-    create_page title: "Page with popular tag"
-    tag_page %w[summer]
-    create_page title: "Tag for tag suggestions"
-    tag_page_from_suggestion 'summer'
-    assert_page_tags 'summer'
-    assert_no_page_tags 'winter'
-    assert_raise do
-      tag_page_from_suggestion 'winter'
-    end
-    assert_no_page_tags 'winter'
-  end
-
   def test_history
     create_page title: "Test page"
     click_on 'Page Details'
@@ -140,5 +124,53 @@ class PageSidebarTest < JavascriptIntegrationTest
     remove_file_from_page
     assert_no_selector '#attachments a.attachment'
   end
+  
+  def test_tag_from_user_suggestion
+    create_page title: "Page with many tags"
+    tags = %w[tag suggestions consist of six recent and popular tags like summer]
+    tag_page tags
+    create_page title: "Page with popular tag"
+    tag_page %w[summer]
+    create_page title: "Tag for tag suggestions"
+    tag_page_from_suggestion 'summer'
+    assert_page_tags 'summer'
+  end
+
+  def test_tag_from_group_suggestion_as_non_member
+    group_page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
+    group_page.tag_list = ['rainbowsecret']
+    group_page.save!
+    @page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
+    @page.tag_list = ['nosecret']
+    @page.add(users(:dolphin), access: :edit)
+    @page.save!
+    logout
+    @user = users(:dolphin)
+    own_page
+    login
+    visit '/rainbow/' + @page.name_url
+    assert_page_tags 'nosecret'
+    assert_no_content 'rainbowsecret'
+  end
+
+ def test_tag_from_group_suggestion_as_member
+    group_page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
+    group_page.add(groups(:rainbow))
+    group_page.tag_list = ['rainbowsecret']
+    group_page.save!
+    @page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
+    @page.add(users(:red), access: :admin)
+    @page.save!
+    logout
+    @user = users(:red)
+    own_page
+    login
+    visit '/rainbow/' + @page.name_url
+    tag_page_from_suggestion 'rainbowsecret'
+    assert_page_tags 'rainbowsecret'
+    @page.tags(true)
+    assert @page.tags.map(&:name).include? 'rainbowsecret'
+  end
+
   
 end

@@ -16,7 +16,6 @@ module Page::TagsHelper
   
   def insert_remove_tag_link(tag)
     link = '<div class="column_item">' + remove_tag_link(tag) + '</div>'
-    return link
   end  
 
   def page_tag_delete_links
@@ -32,7 +31,7 @@ module Page::TagsHelper
         haml '.two_column_float' do
           haml '#added', ''
         end
-        haml '.p', :no_tags.t # TODO: show only if no added tag present
+     #  haml '.p', :no_tags.t # TODO: show only if no added tag present
       end
     end
   end
@@ -48,7 +47,7 @@ module Page::TagsHelper
       { class: 'shy inline', icon: 'plus'}
     )
     content_tag(:div, id: "tag_#{tag.id}", class: 'shy_parent p') do
-      content_tag(:span, h(tag.name + " ("+ tag.taggings_count.to_s + ")"), class: 'icon tag_16 inline') + ' ' +
+      content_tag(:span, h(tag.name), class: 'icon tag_16 inline') + ' ' +
       link
     end
   end
