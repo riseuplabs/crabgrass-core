@@ -1,4 +1,6 @@
 - content_for :left_column do
+  .margin-bottom
+    = link_to :create_page.t, new_page_path(owner: @group), icon: 'plus'
   = render 'sidecolumn'
 
 - if should_render_group_wiki?
