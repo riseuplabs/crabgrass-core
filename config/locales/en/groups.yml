@@ -36,7 +36,7 @@ en:
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
 
-  committee_choose_group: 'Choose a group for this committee:'
+  committee_choose_group: "Choose a group for this %{group_type}:" 
   network_committees_may_not_join_networks: 'Committees of other networks may not join.'
   networks_may_not_join_networks: 'Networks may not join other networks.'
 
@@ -261,5 +261,3 @@ en:
   ##!  select_visible_group_widgets: "Select the widgets visible on your group's front page"
 
   ##!  widget_index: "Widget %{index}"
-
-

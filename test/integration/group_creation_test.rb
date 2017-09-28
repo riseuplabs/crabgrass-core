@@ -1,6 +1,7 @@
 require 'integration_test'
 
 class GroupCreationTest < IntegrationTest
+
   def setup
     super
     @user = users(:blue)
@@ -32,6 +33,8 @@ class GroupCreationTest < IntegrationTest
     create_group :council, parent: @group
     assert_group_created
   end
+
+  protected
 
   def visit_new_group_form(type = :group)
     type = :organization if type == :group
