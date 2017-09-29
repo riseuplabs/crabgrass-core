@@ -26,6 +26,16 @@ module PageActions
     click_on 'Add'
   end
 
+  def tag_page_from_suggestion(tag)
+    within '#tag_li' do
+      click_on 'Edit'
+    end
+    find('span', text: tag).hover
+    within '.shy_parent:hover' do
+      click_on 'Add Tags'
+    end
+  end
+
   def remove_page_tag(tag)
     within '#tag_li' do
       click_on 'Edit'

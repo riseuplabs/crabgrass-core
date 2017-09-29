@@ -121,10 +121,11 @@ module Page::Groups
     # So, in order to do that, we need to use page_terms. Currently, this query includes pages the group
     # has access to but is not the owner of. It would be slower to limit it to owned pages, so we don't yet.
     #
+
     def tags_for_group(group, current_user)
       filter = access_filter(group: group, current_user: current_user)
       ActsAsTaggableOn::Tag.find_by_sql(%[
-        SELECT tags.*, count(name) as count
+        SELECT tags.*, count(name) as count 
         FROM tags
         INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
         INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
