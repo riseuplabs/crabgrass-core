@@ -3,8 +3,14 @@ class Page::TagsController < Page::SidebarsController
   SUGGESTION_COUNT = 6
 
   def index
+    tags = []
     if @page.owner_type == 'Group'
       tags = Page.tags_for_group(@page.owner, current_user) 
+    elsif @page.group_participations.any?
+      @page.group_participations.each do |participation|
+        group = Group.find_by_id(participation.group_id)
+        tags += Page.tags_for_group(group, current_user)
+      end
     else
       tags = current_user.tags 
     end

@@ -155,7 +155,6 @@ class PageSidebarTest < JavascriptIntegrationTest
 
  def test_tag_from_group_suggestion_as_member
     group_page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
-    group_page.add(groups(:rainbow))
     group_page.tag_list = ['rainbowsecret']
     group_page.save!
     @page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
@@ -170,6 +169,29 @@ class PageSidebarTest < JavascriptIntegrationTest
     assert_page_tags 'rainbowsecret'
     @page.tags(true)
     assert @page.tags.map(&:name).include? 'rainbowsecret'
+  end
+
+  def test_tag_suggested_from_group_participation
+    group_page = FactoryGirl.create :page, created_by: users(:blue)
+    group_page.tag_list = ['sharedtag', 'ourtag']
+    group_page.add(users(:dolphin))
+    group_page.add(groups(:rainbow))
+    group_page.save!
+    @page = FactoryGirl.create :page, created_by: users(:blue)
+    @page.add(groups(:rainbow))
+    @page.add(users(:dolphin), access: :admin)
+    @page.save!
+    logout
+    @user = users(:dolphin)
+    own_page
+    login
+    visit '/rainbow/' + @page.name_url
+    tag_page_from_suggestion 'sharedtag'
+    click_on 'Close', match: :first
+    tag_page_from_suggestion 'ourtag'
+    assert_page_tags ['sharedtag', 'ourtag']
+    @page.tags(true)
+    assert @page.tags.map(&:name).include? 'sharedtag'
   end
 
   
