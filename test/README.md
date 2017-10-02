@@ -67,6 +67,14 @@ All these should be tested in isolation and it might even make sense to break th
 == Fixtures
 
 We're using fixtures mostly for integration tests and functional tests.
+Please make sure to always use fixtures for all types of objects you
+create. Other objects will not be rolled back by transactional fixtures
+and thus remain in the database after your test run. The easiest way to
+avoid this is a plain
+```
+  fixtures :all
+```
+
 For unit tests you should be able to create the object under test using
 Factory Girl and use stubs and mocks for classes other than the one you
 want to test. This way tests are less coupled and database access can be

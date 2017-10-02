@@ -4,7 +4,7 @@ require 'javascript_integration_test'
 
 class TagSuggestionTest < JavascriptIntegrationTest
 
-  fixtures :users, :groups, 'group/memberships', :pages
+  fixtures :all
 
   def setup
     super
@@ -25,7 +25,6 @@ class TagSuggestionTest < JavascriptIntegrationTest
 
   def test_tag_from_group_suggestion_as_non_member
     group_page = create_group_page tag_list: ['rainbowsecret']
-    group_page.save!
     @page = create_group_page tag_list: ['nosecret']
     @page.add(users(:dolphin), access: :edit)
     @page.save!
@@ -40,10 +39,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
 
   def test_tag_from_group_suggestion_as_member
     group_page = create_group_page tag_list: ['rainbowsecret']
-    group_page.save!
     @page = create_group_page
-    @page.add(users(:red), access: :admin)
-    @page.save!
     logout
     @user = users(:red)
     own_page
