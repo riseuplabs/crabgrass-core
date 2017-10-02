@@ -52,8 +52,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
   end
 
   def test_tag_suggested_from_group_participation
-    tag_source_page = FactoryGirl.create :page, created_by: users(:blue)
-    tag_source_page.tag_list = ['sharedtag', 'ourtag']
+    tag_source_page = create_user_page tag_list: ['sharedtag', 'ourtag']
     tag_source_page.add(users(:dolphin))
     tag_source_page.add(groups(:rainbow))
     tag_source_page.save!
@@ -80,4 +79,8 @@ class TagSuggestionTest < JavascriptIntegrationTest
     FactoryGirl.create :page, attrs
   end
 
+  def create_user_page(options = {})
+    attrs = options.reverse_merge created_by: users(:blue)
+    FactoryGirl.create :page, attrs
+  end
 end
