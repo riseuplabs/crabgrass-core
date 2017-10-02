@@ -6,7 +6,6 @@ SearchFilter.new('/tag/:tag_name/') do
   #
   # ui
   #
-
   self.path_order = 100
   self.section = :properties
   self.singleton = false

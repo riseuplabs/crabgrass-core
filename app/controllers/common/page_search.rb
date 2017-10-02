@@ -37,17 +37,8 @@ module Common::PageSearch
   # params[:filter] is a path that is added to the request by the
   # javascript function FilterPath.encode() based on the window.location.hash.
   #
-  # The encoding of :filter and :path are different, so we need to call different
-  # methods to convert them to a ParsedPath.
-  #
   def parsed_path
-    if params[:path].present?
-      parse_filter_path(params[:path])
-    elsif params[:filter]
-      parse_hash_filter_path(params[:filter])
-    else
-      parse_filter_path([])
-    end
+    parse_filter_path(params[:path] || params[:filter] || [])
   end
 
   #

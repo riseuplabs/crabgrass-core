@@ -55,12 +55,6 @@ module PathFinder
       parsed
     end
 
-    # used to parse filter paths that come from window.location.hash.
-    # this paths are slightly different in how they encode arguments.
-    def parse_hash_filter_path(path)
-      ParsedPath.parse(path.tr('.', '/'))
-    end
-
     # access options for pages current_user has access to
     def options_for_me(args = {})
       default_options.merge(
