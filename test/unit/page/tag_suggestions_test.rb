@@ -2,17 +2,19 @@ require 'test_helper'
 
 class Page::TagSuggestionsTest < ActiveSupport::TestCase
   
-  fixtures :users
+  fixtures :all
  
-  def test_recent_and_popular_tags
-    tag_list = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
+  def test_recent_tags
+    tag_list = ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
+    new_tags = ['eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
     create_user_page tag_list: tag_list
+    create_user_page tag_list: new_tags
     page = create_user_page
     suggestor = tag_suggestor(page, users(:blue))  
     recent = recent_tags(suggestor) 
     assert_equal ['eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen'].sort, recent
-    popular = popular_tags suggestor
-    assert_equal  ["one", "two", "three", "four", "five", "six"], popular
+    #popular = popular_tags suggestor
+    #assert_equal  ["one", "two", "three", "four", "five", "six"], popular
   end
 
   def test_popular_tags
