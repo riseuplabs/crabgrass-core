@@ -6,49 +6,35 @@ class TagSuggestionTest < JavascriptIntegrationTest
 
   fixtures :all
 
-  def setup
-    super
-    @user = users(:blue)
-    login
-  end
-
   def test_tag_from_user_suggestion
-    create_page title: "Page with many tags"
-    tags = %w[tag suggestions consist of six recent and popular tags like summer]
-    tag_page tags
-    create_page title: "Page with popular tag"
-    tag_page %w[summer]
-    create_page title: "Tag for tag suggestions"
+    create_user_page tag_list: %w[summer winter],
+      created_by: users(:dolphin)
+    tag_me = create_user_page created_by: users(:dolphin)
+    login users(:dolphin)
+    visit '/dolphin/' + tag_me.name_url
     tag_page_from_suggestion 'summer'
     assert_page_tags 'summer'
   end
 
   def test_tag_from_group_suggestion_as_non_member
     group_page = create_group_page tag_list: ['rainbowsecret']
-    @page = create_group_page tag_list: ['nosecret']
-    @page.add(users(:dolphin), access: :edit)
-    @page.save!
-    logout
-    @user = users(:dolphin)
-    own_page
-    login
-    visit '/rainbow/' + @page.name_url
+    tag_me = create_group_page tag_list: ['nosecret']
+    tag_me.add(users(:dolphin), access: :edit)
+    tag_me.save!
+    login users(:dolphin)
+    visit '/rainbow/' + tag_me.name_url
     assert_page_tags 'nosecret'
     assert_no_content 'rainbowsecret'
   end
 
   def test_tag_from_group_suggestion_as_member
     group_page = create_group_page tag_list: ['rainbowsecret']
-    @page = create_group_page
-    logout
-    @user = users(:red)
-    own_page
-    login
-    visit '/rainbow/' + @page.name_url
+    tag_me = create_group_page
+    login users(:red)
+    visit '/rainbow/' + tag_me.name_url
     tag_page_from_suggestion 'rainbowsecret'
     assert_page_tags 'rainbowsecret'
-    @page.tags(true)
-    assert @page.tags.map(&:name).include? 'rainbowsecret'
+    assert tag_me.tags.map(&:name).include? 'rainbowsecret'
   end
 
   def test_tag_suggested_from_group_participation
@@ -56,21 +42,17 @@ class TagSuggestionTest < JavascriptIntegrationTest
     tag_source_page.add(users(:dolphin))
     tag_source_page.add(groups(:rainbow))
     tag_source_page.save!
-    @page = FactoryGirl.create :page, created_by: users(:blue)
-    @page.add(groups(:rainbow))
-    @page.add(users(:dolphin), access: :admin)
-    @page.save!
-    logout
-    @user = users(:dolphin)
-    own_page
-    login
-    visit '/rainbow/' + @page.name_url
+    tag_me = FactoryGirl.create :page, created_by: users(:blue)
+    tag_me.add(groups(:rainbow))
+    tag_me.add(users(:dolphin), access: :admin)
+    tag_me.save!
+    login users(:dolphin)
+    visit '/rainbow/' + tag_me.name_url
     tag_page_from_suggestion 'sharedtag'
     click_on 'Close', match: :first
     tag_page_from_suggestion 'ourtag'
     assert_page_tags ['sharedtag', 'ourtag']
-    @page.tags(true)
-    assert @page.tags.map(&:name).include? 'sharedtag'
+    assert tag_me.tags.map(&:name).include? 'sharedtag'
   end
 
   def create_group_page(options = {})
