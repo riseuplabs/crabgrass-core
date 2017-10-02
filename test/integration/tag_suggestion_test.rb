@@ -9,9 +9,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
   def setup
     super
     @user = users(:blue)
-    own_page
     login
-    click_on own_page.title
   end
 
   def test_tag_from_user_suggestion
@@ -26,11 +24,9 @@ class TagSuggestionTest < JavascriptIntegrationTest
   end
 
   def test_tag_from_group_suggestion_as_non_member
-    group_page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
-    group_page.tag_list = ['rainbowsecret']
+    group_page = create_group_page tag_list: ['rainbowsecret']
     group_page.save!
-    @page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
-    @page.tag_list = ['nosecret']
+    @page = create_group_page tag_list: ['nosecret']
     @page.add(users(:dolphin), access: :edit)
     @page.save!
     logout
@@ -42,11 +38,10 @@ class TagSuggestionTest < JavascriptIntegrationTest
     assert_no_content 'rainbowsecret'
   end
 
- def test_tag_from_group_suggestion_as_member
-    group_page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
-    group_page.tag_list = ['rainbowsecret']
+  def test_tag_from_group_suggestion_as_member
+    group_page = create_group_page tag_list: ['rainbowsecret']
     group_page.save!
-    @page = FactoryGirl.create :page, created_by: users(:blue), owner: groups(:rainbow)
+    @page = create_group_page
     @page.add(users(:red), access: :admin)
     @page.save!
     logout
@@ -61,11 +56,11 @@ class TagSuggestionTest < JavascriptIntegrationTest
   end
 
   def test_tag_suggested_from_group_participation
-    group_page = FactoryGirl.create :page, created_by: users(:blue)
-    group_page.tag_list = ['sharedtag', 'ourtag']
-    group_page.add(users(:dolphin))
-    group_page.add(groups(:rainbow))
-    group_page.save!
+    tag_source_page = FactoryGirl.create :page, created_by: users(:blue)
+    tag_source_page.tag_list = ['sharedtag', 'ourtag']
+    tag_source_page.add(users(:dolphin))
+    tag_source_page.add(groups(:rainbow))
+    tag_source_page.save!
     @page = FactoryGirl.create :page, created_by: users(:blue)
     @page.add(groups(:rainbow))
     @page.add(users(:dolphin), access: :admin)
@@ -83,5 +78,10 @@ class TagSuggestionTest < JavascriptIntegrationTest
     assert @page.tags.map(&:name).include? 'sharedtag'
   end
 
+  def create_group_page(options = {})
+    attrs = options.reverse_merge created_by: users(:blue),
+      owner: groups(:rainbow)
+    FactoryGirl.create :page, attrs
+  end
 
 end
