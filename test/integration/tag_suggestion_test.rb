@@ -17,7 +17,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
   end
 
   def test_tag_from_group_suggestion_as_non_member
-    group_page = create_group_page tag_list: ['rainbowsecret']
+    create_group_page tag_list: ['rainbowsecret']
     tag_me = create_group_page tag_list: ['nosecret']
     tag_me.add(users(:dolphin), access: :edit)
     tag_me.save!
@@ -28,7 +28,7 @@ class TagSuggestionTest < JavascriptIntegrationTest
   end
 
   def test_tag_from_group_suggestion_as_member
-    group_page = create_group_page tag_list: ['rainbowsecret']
+    create_group_page tag_list: ['rainbowsecret']
     tag_me = create_group_page
     login users(:red)
     visit '/rainbow/' + tag_me.name_url
@@ -39,19 +39,15 @@ class TagSuggestionTest < JavascriptIntegrationTest
 
   def test_tag_suggested_from_group_participation
     tag_source_page = create_user_page tag_list: ['sharedtag', 'ourtag']
-    tag_source_page.add(users(:dolphin))
-    tag_source_page.add(groups(:rainbow))
+    tag_source_page.add [users(:dolphin), groups(:rainbow)]
     tag_source_page.save!
-    tag_me = FactoryGirl.create :page, created_by: users(:blue)
-    tag_me.add(groups(:rainbow))
+    tag_me = create_group_page
     tag_me.add(users(:dolphin), access: :admin)
     tag_me.save!
     login users(:dolphin)
     visit '/rainbow/' + tag_me.name_url
     tag_page_from_suggestion 'sharedtag'
-    click_on 'Close', match: :first
-    tag_page_from_suggestion 'ourtag'
-    assert_page_tags ['sharedtag', 'ourtag']
+    assert_page_tags 'sharedtag'
     assert tag_me.tags.map(&:name).include? 'sharedtag'
   end
 
