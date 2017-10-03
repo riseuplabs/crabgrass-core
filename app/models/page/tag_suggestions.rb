@@ -1,22 +1,30 @@
 #
-# Page TagSuggestions
-#
 # Page::TagSuggestions 
 #
-# TagSuggestions are taken either from the group participations of a page or from the user tags 
-#
-#
-#
+# TagSuggestions are used when editing tags via the sidebar. 
+# 
+# The N most recent tags will be suggested as "Recent tags" and the most popular 
+# tags as "Popular tags"
+
+# If a page is accessible by group(s), TagSuggestions are taken from all pages of
+# those groups accessible to the user. 
+# If a page is not accessible by groups, TagSuggestions are taken from the user
+# tags. 
+# 
+# The attribute @tags holds all tags which could be suggested. We currently do
+# not use those tags (we just display either recent or popular tags). 
+# We will need them for an autocomplete function for tags which will hopefully 
+# be implemented soon.
 
 
 class Page::TagSuggestions
   
-  attr_reader :recent_tags, :popular_tags
+  attr_reader :tags, :recent_tags, :popular_tags
 
   SUGGESTION_COUNT = 6
 
   def initialize(page, user)
-    @tags = tags(page, user)
+    @tags = prepare_tags(page, user)
     @recent_tags = prepare_recent_tags
     @popular_tags = prepare_popular_tags
   end
@@ -33,7 +41,7 @@ class Page::TagSuggestions
     tags -= @recent_tags
   end
 
-  def tags page, user 
+  def prepare_tags page, user 
     tags = []
     if page.owner_type == 'Group'
       tags = Page.tags_for_group(page.owner, user)
