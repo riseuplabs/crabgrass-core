@@ -25,7 +25,7 @@ en:
 
   ##!  my_requests_headline: "My Requests"
 
-  ##!  private_profile: "Private Profile"
+  private_profile: "Private Profile"
   ##!  public_profile: "Public Profile"
 
   ##!  create_task_list: create new task list

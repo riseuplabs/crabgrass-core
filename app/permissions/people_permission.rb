@@ -2,6 +2,10 @@ module PeoplePermission
   protected
 
   def may_show_home?
+    (current_user.may?(:view, @user) || current_user.may?(:pester, @user) || current_user.may?(:request_contact, @user))
+  end
+
+  def may_show_profile?
     current_user.may?(:view, @user)
   end
 

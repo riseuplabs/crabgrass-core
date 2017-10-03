@@ -15,30 +15,34 @@
 -#%div.margin-bottom(style="position: relative")
 -#  %div{:style => 'position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 202px; max-width: 202px;' + avatar_style(@user, 'huge')}
 
-%img.margin-bottom{:style => "display:block; width: 100% !important; height: auto !important", :src => avatar_url_for(@user, :huge)}
+- if may_show_profile?
 
-- if @profile.summary.present?
-  - anything = true
-  .profile-text
-    = @profile.summary_html
 
-- if @profile.organization.present?
-  - anything = true
-  .margin-bottom
-    =h @profile.organization
-    - if @profile.role.present?
-      %br
-      %i=h @profile.role
+  %img.margin-bottom{:style => "display:block; width: 100% !important; height: auto !important", :src => avatar_url_for(@user, :huge)}
 
-- if @profile.place.present?
-  - anything = true
-  .margin-bottom
-    %b= h @profile.place
+  - if @profile.summary.present?
+    - anything = true
+    .profile-text
+      = @profile.summary_html
 
-- unless anything
-  = :private.t
+  - if @profile.organization.present?
+    - anything = true
+    .margin-bottom
+      =h @profile.organization
+      - if @profile.role.present?
+        %br
+        %i=h @profile.role
+
+  - if @profile.place.present?
+    - anything = true
+    .margin-bottom
+      %b= h @profile.place
+
+  - unless anything
+    = :private.t
 
 %hr
 = profile_contact_link
+
 %br
 = profile_send_message_link
