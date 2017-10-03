@@ -10,7 +10,7 @@ class Page::TagsController < Page::SidebarsController
   end
 
   def create
-    @page.tag_list.add(params[:add], parse: true)
+    @page.tag_list.add(params[:add], parse: true, parser: Page::TagDowncaseParser)
     @page.updated_by = current_user
     @page.tags_will_change!
     @page.save!

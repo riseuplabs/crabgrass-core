@@ -52,7 +52,9 @@ module Page::Create
         access     = (attributes.delete(:access) || :admin).to_sym
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
-
+        if attributes[:tag_list]
+          attributes[:tag_list] = attributes[:tag_list].downcase # TODO: find a better solution 
+        end
         Page.transaction do
           page = new(attributes)
           page.owner = owner if owner

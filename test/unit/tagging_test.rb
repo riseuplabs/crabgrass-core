@@ -61,7 +61,7 @@ class TaggingTest < ActiveSupport::TestCase
   def test_create_with_tags
     page = nil
     assert_nothing_raised do
-      page = DiscussionPage.create! title: 'tag me!', tag_list: 'one,two,three'
+      page = DiscussionPage.create! title: 'tag me!', tag_list: 'One,two,three'
     end
     assert page.tag_list.include?('one')
     page = Page.find(page.id)
