@@ -37,12 +37,12 @@ class TagSuggestionTest < JavascriptIntegrationTest
     assert tag_me.tags.map(&:name).include? 'rainbowsecret'
   end
 
-  def test_tag_suggested_from_group_participation
-    tag_source_page = create_user_page tag_list: ['sharedtag', 'ourtag']
+  def test_tag_suggested_via_group_participations
+    tag_source_page = create_user_page tag_list: ['sharedtag']
     tag_source_page.add [users(:dolphin), groups(:rainbow)]
     tag_source_page.save!
-    tag_me = create_group_page
-    tag_me.add(users(:dolphin), access: :admin)
+    tag_me = create_user_page
+    tag_me.add [users(:dolphin), groups(:rainbow)], access: :edit
     tag_me.save!
     login users(:dolphin)
     visit '/rainbow/' + tag_me.name_url
