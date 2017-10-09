@@ -8,8 +8,24 @@ module UserRecords
 
   def blocking_user
     records[:blocking_user] ||= FactoryGirl.create(:user).tap do |blocking|
+      blocking.revoke_access! friends: :request_contact
+      blocking.revoke_access! peers: :request_contact
       blocking.revoke_access! friends: :pester
       blocking.revoke_access! peers: :pester
+    end
+  end
+
+  def message_blocking_user
+    records[:blocking_user] ||= FactoryGirl.create(:user).tap do |blocking|
+      blocking.revoke_access! friends: :pester
+      blocking.revoke_access! peers: :pester
+    end
+  end
+
+  def contact_blocking_user
+    records[:blocking_user] ||= FactoryGirl.create(:user).tap do |blocking|
+      blocking.revoke_access! friends: :request_contact
+      blocking.revoke_access! peers: :request_contact
     end
   end
 

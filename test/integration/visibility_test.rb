@@ -16,11 +16,33 @@ class VisibilityTest < IntegrationTest
     end
   end
 
-  def test_not_visible_to_others
-    as_a [friend_of(hidden_user), peer_of(hidden_user), user, visitor] do
+  def test_profile_not_visible_to_others
+    as_a [friend_of(hidden_user), peer_of(hidden_user), user] do
       visit "/#{hidden_user.login}"
-      assert_not_found
+      assert_content "Private Profile"
     end
+  end
+
+  def test_send_messages_not_visible
+    as_a  [friend_of(message_blocking_user), peer_of(message_blocking_user), user, other_user, visitor] do
+      visit "/#{message_blocking_user.login}"
+      assert_no_content "Send Message"
+    end
+  end
+
+   def test_add_contact_not_visible
+    as_a  [friend_of(contact_blocking_user), peer_of(contact_blocking_user), user, other_user, visitor] do
+      visit "/#{contact_blocking_user.login}"
+      assert_no_content "Add To My Contacts"
+    end
+  end
+
+  def test_send_messages_add_contact_not_visible
+    as_a  [friend_of(blocking_user), peer_of(blocking_user), user, other_user, visitor] do
+      visit "/#{blocking_user.login}"
+      assert_no_content "Send Message"
+      assert_no_content "Add To My Contacts"
+    end 
   end
 
   def test_visible_to_friends_by_default
@@ -31,7 +53,14 @@ class VisibilityTest < IntegrationTest
   end
 
   def test_not_visible_to_peers_and_strangers
-    as_a [peer_of(user), other_user, visitor] do
+    as_a [peer_of(user), other_user] do
+      visit "/#{user.login}"
+      assert_content "Private Profile"
+    end
+  end
+
+   def test_not_visible_to_external_visitors
+    as_a visitor do
       visit "/#{user.login}"
       assert_not_found
     end
@@ -47,7 +76,15 @@ class VisibilityTest < IntegrationTest
 
   def test_not_visible_to_strangers
     user.grant_access! peers: :view
-    as_a [other_user, visitor] do
+    as_a other_user do
+      visit "/#{user.login}"
+      assert_content "Private Profile"
+    end
+  end
+
+  def test_not_visible_to_external_visitors
+    user.grant_access! peers: :view
+    as_a visitor do
       visit "/#{user.login}"
       assert_not_found
     end
