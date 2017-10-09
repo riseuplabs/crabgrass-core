@@ -66,6 +66,8 @@ class Group::GroupsController < Group::BaseController
   def group_type
     if Conf.networks && params[:type].to_s == 'network'
       :network
+    elsif %w/council committee/.include? params[:type].to_s
+      params[:type].to_sym
     else
       :group
     end

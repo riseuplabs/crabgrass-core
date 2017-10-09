@@ -5,7 +5,7 @@
   = "#{group_type}_description".to_sym.t
 
 .p
-  %b= :committee_choose_group.t
+  %b= :committee_choose_group.t(group_type: group_type.t)
 
 .two_column_float
   - current_user.groups_and_networks.each do |group|
