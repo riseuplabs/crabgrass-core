@@ -109,8 +109,9 @@ class PageSidebarTest < JavascriptIntegrationTest
   end
 
   def test_tag
-    tags = %w[some tags for this páge a.tag]
+    tags = %w[Some tags for this páge a.tag]
     tag_page tags
+    assert_page_tags 'some'
     assert_page_tags 'páge'
     assert_page_tags 'a.tag'
     remove_page_tag 'a.tag'
