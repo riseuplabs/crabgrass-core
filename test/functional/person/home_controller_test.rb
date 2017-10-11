@@ -20,9 +20,9 @@ class Person::HomeControllerTest < ActionController::TestCase
   def test_new_user_hidden
     user = FactoryGirl.create :user
     login_as :blue
-    assert_not_found do
-      get :show, person_id: user.login
-    end
+    assert !users(:blue).may?(:view, user)
+    assert users(:blue).may?(:pester, user)
+    assert users(:blue).may?(:request_contact, user) # TODO: this is not a controller test. Either replace by integration test or find another way of testing it in the controller. 
   end
 
   def test_missing_user
