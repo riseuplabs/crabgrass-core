@@ -2,7 +2,7 @@
 - if groups.any?
   - content_for(:left_column) do
     .margin-bottom
-      = link_to :create_page.t, new_page_path(owner: current_user), icon: 'plus'
+      = link_to :create_page.t, new_page_path, icon: 'plus'
     %h2.space-ui-bottom.first=:groups.t
     = render 'groups/list_with_committees',
       groups: groups,
