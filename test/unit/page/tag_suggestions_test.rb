@@ -4,7 +4,23 @@ class Page::TagSuggestionsTest < ActiveSupport::TestCase
 
   fixtures :all
 
+  def test_empty
+    assert_equal [], suggest_tags(nil, users(:blue))
+  end
+
   def test_user_tag
+    create_user_page tag_list: "user tag"
+    tags = suggest_tags(users(:blue), users(:blue))
+    assert tags.include? "user tag"
+  end
+
+  def test_other_users_tags
+    create_user_page tag_list: "user tag"
+    tags = suggest_tags(users(:blue), users(:red))
+    assert_equal [], tags
+  end
+
+  def test_user_page_tag
     create_user_page tag_list: "user tag"
     user_page = create_user_page
     tags = suggest_tags(user_page, users(:blue))
@@ -51,18 +67,18 @@ class Page::TagSuggestionsTest < ActiveSupport::TestCase
 
   protected
 
-  def suggest_tags page, user
-    suggestions = Page::TagSuggestions.new(page, user)
+  def suggest_tags source, user
+    suggestions = Page::TagSuggestions.new(source, user)
     suggestions.all.map(&:name).sort
   end
 
-  def suggest_recent_tags page, user
-    suggestions = Page::TagSuggestions.new(page, user)
+  def suggest_recent_tags source, user
+    suggestions = Page::TagSuggestions.new(source, user)
     suggestions.recent.map(&:name).sort
   end
 
-  def suggest_popular_tags page, user
-    suggestions = Page::TagSuggestions.new(page, user)
+  def suggest_popular_tags source, user
+    suggestions = Page::TagSuggestions.new(source, user)
     suggestions.popular.map(&:name).sort
   end
 
