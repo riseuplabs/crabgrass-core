@@ -2,6 +2,6 @@
   from_user: @user.display_name,
   group: @group.display_name,
   accept_invite_link: me_request_url(@request, code: @request.code),
-  group_home_link: group_url(@group)
+  group_home_link: group_home_url(@group)
   )
 %>
