@@ -3,9 +3,7 @@ class Page::TagsController < Page::SidebarsController
   SUGGESTION_COUNT = 6
 
   def index
-    tag_suggestions = Page::TagSuggestions.new(@page, current_user)
-    @recent_tags = tag_suggestions.recent_tags
-    @popular_tags = tag_suggestions.popular_tags    
+    @tag_suggestions = Page::TagSuggestions.new(@page, current_user)
     render partial: 'page/tags/popup', content_type: 'text/html'
   end
 
@@ -16,7 +14,7 @@ class Page::TagsController < Page::SidebarsController
     @page.save!
     if params[:commit]
       close_popup
-    else 
+    else
       refresh_sidebar
     end
   end

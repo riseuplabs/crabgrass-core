@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class Page::TagSuggestionsTest < ActiveSupport::TestCase
-  
+
   fixtures :all
- 
+
   def test_user_tag
     create_user_page tag_list: "user tag"
     user_page = create_user_page
@@ -53,24 +53,24 @@ class Page::TagSuggestionsTest < ActiveSupport::TestCase
 
   def suggest_tags page, user
     suggestions = Page::TagSuggestions.new(page, user)
-    suggestions.tags.map(&:name).sort
+    suggestions.all.map(&:name).sort
   end
 
   def suggest_recent_tags page, user
     suggestions = Page::TagSuggestions.new(page, user)
-    suggestions.recent_tags.map(&:name).sort
+    suggestions.recent.map(&:name).sort
   end
 
   def suggest_popular_tags page, user
     suggestions = Page::TagSuggestions.new(page, user)
-    suggestions.popular_tags.map(&:name).sort
+    suggestions.popular.map(&:name).sort
   end
 
-  def create_group_page(options = {})     
+  def create_group_page(options = {})
     attrs = options.reverse_merge created_by: users(:blue),
-    owner: groups(:rainbow)     
-    FactoryGirl.create :page, attrs   
-  end   
+    owner: groups(:rainbow)
+    FactoryGirl.create :page, attrs
+  end
 
   def create_user_page(options = {})
     attrs = options.reverse_merge created_by: users(:blue)
