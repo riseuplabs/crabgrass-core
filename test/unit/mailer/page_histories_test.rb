@@ -52,6 +52,16 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
     assert_includes mail.body, 'Green! has modified the page title'
   end
 
+  def test_send_simple_update_comment_and_wiki
+    receive_notifications 'Single'
+    added_comment_as users(:red), 1.minute.ago
+    updated_wiki_as users(:red), 1.minute.ago
+    mail = mailer_class.deliver_updates_for(page, to: [@user]).first
+    assert ActionMailer::Base.deliveries.present?
+    assert_includes mail.body, 'Red! added a comment'
+    assert_includes mail.body, 'Red! has updated the page content'
+  end
+
   def test_send_paranoid_update
     with_paranoid_emails
     receive_notifications 'Single'
@@ -86,6 +96,23 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
     page.save
     Page::History::ChangeTitle.create user: user, page: page, created_at: time
   end
+
+  def added_comment_as(user, time = 1.day.ago)
+    post = FactoryGirl.create(:post) 
+    page.add_post(user, body: post)
+    page.updated_by user
+    page.save
+    assert page.discussion.present?
+    Page::History::AddComment.create user: user, page: page, created_at: time, item: post
+  end 
+  
+  def updated_wiki_as(user, time = 1.day.ago)
+    page.updated_by user
+    page.save
+    assert page.discussion.present?
+    Page::History::UpdatedContent.create user: user, page: page, created_at: time
+  end 
+
 
   def page
     @page ||= pages(:blue_page)

@@ -13,6 +13,7 @@ Crabgrass::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.log_level = Conf.log_level || :debug
 
+  config.action_mailer.default_url_options = { host: 'localhost' }
   ## FIXME: when reloading plugins is enabled, SearchFilter.filters will be
   ##        empty after the first request.
   config.reload_plugins = false

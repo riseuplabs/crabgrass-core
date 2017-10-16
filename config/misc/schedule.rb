@@ -40,3 +40,8 @@ every 1.day do
   curl 'codes_expire'
   curl 'tracking_update_dailies'
 end
+
+every 1.hour, :at => '0:20' do
+  curl 'deliver_digests'
+end
+

@@ -19,6 +19,8 @@ class CronController < ActionController::Base
       Tracking::Daily.update
     when 'codes_expire'
       Page::AccessCode.cleanup_expired
+    when 'deliver_digests'
+      Mailer::PageHistories.deliver_digests
     else
       raise 'no such cron action'
     end
