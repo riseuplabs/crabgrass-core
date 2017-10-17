@@ -12,24 +12,23 @@ SearchFilter.new('/tag/:tag_name/') do
   self.description = :filter_tag_description
 
   #
-  # this gets invoked in the view with instance_eval, so it has the view's variables.
+  # this gets invoked in the view with instance_eval, so it has the
+  # view's variables.
   #
   html(delayed: true, submit_button: false) do
     ret = content_tag(:p) do
-      content_tag(:strong, :tag.tcap) + ' ' + text_field_tag('tag_name', nil, class: 'form-control', onkeydown: submit_form('page_search_form'))
+      content_tag(:strong, :tag.tcap) + ' ' +
+        text_field_tag('tag_name', nil, class: 'form-control', onkeydown: submit_form('page_search_form'))
     end
     ret += "\n"
 
-    # TODO---This means that we get the tags when loading the group or user page list. Instead, could we only figure out/load the tags if the user does a search by tag? It would be quicker, but maybe not enough to matter?
-    tags_to_show = begin
-      if @user == current_user
-        current_user.tags
-      elsif @group
-        Page.tags_for_group(@group, current_user)
-      else
-        # Page.tags_for_user(@context, current_user)
-      end
-    end
+    # TODO: This means that we get the tags when loading the group or
+    # user page list. Instead, could we only figure out/load the tags if
+    # the user does a search by tag? It would be quicker, but maybe not
+    # enough to matter?
+    source = @user if @user == current_user
+    source ||= @group
+    tags_to_show = Page::TagSuggestions.new(source, current_user).all
 
     tags = tag_cloud(tags_to_show) do |tag, css_class|
       link_to_page_search tag.name, { tag_name: tag.name }, class: css_class
