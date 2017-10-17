@@ -41,7 +41,7 @@ every 1.day do
   curl 'tracking_update_dailies'
 end
 
-every 1.hour, :at => '0:20' do
+every 1.day, :at => '0:20 am' do
   curl 'deliver_digests'
 end
 
