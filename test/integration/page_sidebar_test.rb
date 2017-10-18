@@ -87,7 +87,7 @@ class PageSidebarTest < JavascriptIntegrationTest
     visit path
     undelete_page
     assert_content 'Delete Page'
-    click_on 'Dashboard'
+    click_on 'Me'
     assert_content own_page.title
   end
 

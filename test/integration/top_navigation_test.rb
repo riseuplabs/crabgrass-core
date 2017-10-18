@@ -6,8 +6,6 @@ class TopNavigationTest < IntegrationTest
   def test_me_menu
     login
     entries = {
-      'Create Page' => 'Create a new page',
-      'Dashboard' => 'Recent Pages',
       'Pages' => 'Active Filters',
       'Messages' => 'Recipient',
       'Settings' => 'Account Settings'
