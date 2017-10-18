@@ -71,6 +71,10 @@ module Crabgrass
 
     config.exceptions_app = Crabgrass::PublicExceptions.new(Rails.public_path)
 
+    
+   # FIXME: Needed for Rails 4.2 according to the documentation
+#  config.active_job.queue_adapter = :delayed_job
+
     ##
     ## PLUGINS
     ##

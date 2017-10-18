@@ -77,7 +77,7 @@ class Mailer::PageHistories < ActionMailer::Base
   def self.page_histories
     Page::History.where(notification_digest_sent_at: nil)
                  .where('DATE(page_histories.created_at) >= DATE(?)', DIGEST_TIMESPAN.ago)
-                 .where('DATE(page_histories.created_at) < DATE(?)', Time.now)
+  #               .where('DATE(page_histories.created_at) < DATE(?)', Time.now) # do we need this? we do not have histories from the future
   end
 
   def page_histories_for(user)
