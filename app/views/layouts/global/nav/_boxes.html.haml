@@ -8,4 +8,5 @@
     - for entity in entities
       - css_class = entity.is_a?(Group) && entity.parent_id ? 'indent' : ''
       %li= link_to_entity(entity, avatar: 'tiny', class: css_class)
-    %li= link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url
+    - if see_all_url 
+      %li= link_to (I18n.t(:see_all_link) + ARROW).html_safe, see_all_url

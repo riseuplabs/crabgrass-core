@@ -1,7 +1,8 @@
 - if logged_in?
   - entities = current_user.groups.recently_active
+  - see_all_url = groups_directory_path(path: ['my']) if entities.size < current_user.groups.size
   = render '/layouts/global/nav/boxes', id: 'groups',
     entities: entities,
     heading: I18n.t(:my_groups),
-    see_all_url: groups_directory_path(path: ['my'])
+    see_all_url: see_all_url
 

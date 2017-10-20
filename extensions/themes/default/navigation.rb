@@ -25,6 +25,14 @@ define_navigation do
     active  { context?(:me) || controller?(:account, :session, :root) }
     html    partial: '/layouts/global/nav/me_menu'
 
+    context_section :create_page do
+      label   { :create_thing.t(thing: :page.t) }
+      url     { new_page_path }
+      active  false
+      icon    :plus
+      visible { @drop_down_menu }
+    end
+
     context_section :pages do
       label  { :pages.t }
       url    { me_pages_path }
