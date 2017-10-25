@@ -2,7 +2,8 @@ en:
 
   ## TODO: use a namespace for the menu prefixes rather than adding it
   # to the string.
-  home: Home
+  home: "Home"
+  profile: "Profile"
   menu_me: "Me"
   menu_groups: "Groups"
   menu_chat: "Chat"

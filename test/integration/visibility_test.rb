@@ -4,7 +4,7 @@ class VisibilityTest < IntegrationTest
   def test_hidden_is_visible_to_self
     as_a hidden_user do |me|
       visit "/#{me.login}"
-      assert_landing_page(me)
+      assert_profile_page(me)
     end
   end
 
@@ -48,7 +48,7 @@ class VisibilityTest < IntegrationTest
   def test_visible_to_friends_by_default
     as_a friend_of(user) do
       visit "/#{user.login}"
-      assert_landing_page(user)
+      assert_profile_page(user)
     end
   end
 
@@ -70,7 +70,7 @@ class VisibilityTest < IntegrationTest
     user.grant_access! peers: :view
     as_a friend_of(user) do
       visit "/#{user.login}"
-      assert_landing_page(user)
+      assert_profile_page(user)
     end
   end
 
@@ -100,7 +100,7 @@ class VisibilityTest < IntegrationTest
   def test_publicly_visible
     as_a [other_user, visitor] do
       visit "/#{public_user.login}"
-      assert_landing_page(public_user)
+      assert_profile_page(public_user)
     end
   end
 
