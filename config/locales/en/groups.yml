@@ -166,6 +166,7 @@ en:
   ##!  network_directory_link: "network directory"
 
   my_groups: "My Groups"
+  all_groups: "All Groups"
   ##!  group_directory: "Group Directory"
   ##!  directory_of_networks: "Directory of Networks"
   ##!  directory_of_groups: "Directory of Groups"

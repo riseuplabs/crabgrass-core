@@ -26,7 +26,7 @@ class Group::DirectoryController < ApplicationController
     if logged_in? && current_user.groups.any?
       'my'
     else
-      'search'
+      'all'
     end
   end
 
