@@ -178,8 +178,8 @@ define_navigation do
       end
     end
 
-    context_section :home do
-      label  { :home.t }
+    context_section :profile do
+      label  { :profile.t }
       icon   :house
       url    { entity_path(@user) }
       visible { current_user.may?(:view, @user) }

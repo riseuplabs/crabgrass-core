@@ -13,6 +13,11 @@ module ContentAssertions
     assert_local_tab 'Home'
   end
 
+  def assert_profile_page(owner)
+    assert_content owner.display_name
+    assert_local_tab 'Profile'
+  end
+
   NOT_FOUND_ERRORS = [
     ActiveRecord::RecordNotFound
   ].freeze

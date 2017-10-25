@@ -82,10 +82,13 @@ en:
 ########################################
 ### en/crabgrass.yml
   crabgrass:
-    powered_by_html: |
-      This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-    description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL software libre</a> for network organizing.
+    powered_by_html: 'This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+  
+  '
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL
+      software libre</a> for network organizing.
+  
+  '
     report_a_bug: Report a Bug
     request_a_feature: Request a Feature
     help_pages: Crabgrass Help Pages
@@ -375,6 +378,7 @@ en:
   councils: Councils
   members: Members
   structure: Structure
+  membership: Membership
   group_creation_info: 'There are four types of groups:'
   group_description: Organizations are groups that are autonomous and have people as
     members.
@@ -391,7 +395,7 @@ en:
   council_description_details: By default, all members may modify the %{group}. If you
     want to restrict administrative powers to certain users, create a council and add
     users to it.
-  committee_choose_group: 'Choose a group for this committee:'
+  committee_choose_group: 'Choose a group for this %{group_type}:'
   network_committees_may_not_join_networks: Committees of other networks may not join.
   networks_may_not_join_networks: Networks may not join other networks.
   may_request_membership_description: A "join %{group}" link will appear on your %{group}
@@ -404,6 +408,8 @@ en:
   membership_requests: Membership Requests
   group_membership_count: "%{count} Members"
   membership_exists_error: Membership already exists for %{member}
+  membership_notification: Membership notification
+  membership_leave_message: You have been removed from %{group}
   membership_destroy_confirm_message: Are you sure you want to remove %{entity} from
     %{group}?
   group_invite_subject: Invitation to join group "%{group}"
@@ -473,7 +479,8 @@ en:
 
 ########################################
 ### en/me.yml
-  my_dashboard: Dashboard
+  my_dashboard: My Dashboard
+  private_profile: Private Profile
   uploaded_image_cropped: Uploaded image will be cropped and stretched to 202 pixels
     square.
   select_image_file: select image file
@@ -502,7 +509,7 @@ en:
 
 ########################################
 ### en/navigation.yml
-  home: Home
+  home: Profile
   menu_me: Me
   menu_groups: Groups
   menu_chat: Chat
@@ -1004,7 +1011,9 @@ en:
   add_one_or_more_tags: Add one or more tags, separated by commas
   separate_tags: Separate tags using commas.
   add_tags: Add Tags
-  current_tags: Current Tags
+  popular_tags: Popular tags
+  recent_tags: Recent tags
+  current_tags: Current tags
   welcome_title: Welcome to %{site_title}
   welcome_message: Crabgrass enables social change organizations to get things done,
     get the word out, collaborate, and network.
