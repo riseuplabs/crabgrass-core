@@ -122,6 +122,10 @@ class Profile < ActiveRecord::Base
            class_name: '::ProfileWebsite',
            dependent: :destroy
 
+  has_many :crypt_keys,
+           :class_name => '::ProfileCryptKey',
+           :dependent => :destroy
+
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
@@ -130,7 +134,8 @@ class Profile < ActiveRecord::Base
                       peer picture video summary admins_may_moderate]
 
     collections = {
-      'websites'  => ::ProfileWebsite
+      'websites' => ::ProfileWebsite,
+      'crypt_keys' => ::ProfileCryptKey
     }
 
     profile_params.stringify_keys!
