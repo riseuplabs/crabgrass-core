@@ -227,9 +227,9 @@ define_navigation do
       end
 
       local_section :search do
-        label { :search.t }
-        url { groups_directory_path(path: ['search']) }
-        active { controller?('group/directory') and params[:path].try(:include?, 'search') }
+        label { :all_groups.t }
+        url { groups_directory_path(path: ['all']) }
+        active { controller?('group/directory') and params[:path].try(:include?, 'all') }
       end
 
       local_section :create do
