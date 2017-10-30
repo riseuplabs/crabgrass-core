@@ -1,4 +1,9 @@
 module ProfileHelper
+
+  def edit_profile_link
+      link_to :edit_profile_link.t, edit_me_profile_path
+  end
+
   def banner_field(formy)
     formy.heading :banner.t
 

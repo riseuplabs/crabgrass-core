@@ -6,7 +6,7 @@
 # consistency please make sure deliver_all finishes on the same day it
 # started.
 
-class Mailer::PageHistories < ActionMailer::Base
+class Mailer::PageHistories < Mailer::ApplicationMailer
   DIGEST_TIMESPAN = 1.day
   UPDATE_TIMESPAN = 1.hour
 
@@ -49,6 +49,12 @@ class Mailer::PageHistories < ActionMailer::Base
 
   protected
 
+  def add_encrypt_options(options) # FIXME: first try is only needed for tests
+    return options unless @recipient.try.profiles.try.first.try.encrypt
+    key = @recipient.profiles.first.crypt_keys.first.key
+    options.merge gpg: {encrypt: true, keys: { @recipient.email => key }}
+  end
+
   def init_mail_to(recipient)
     @site = Site.default
     @recipient = recipient
@@ -58,7 +64,10 @@ class Mailer::PageHistories < ActionMailer::Base
   def mail(options = {})
     return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
+    options = add_encrypt_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
+
+
   end
 
   def self.digest_recipients

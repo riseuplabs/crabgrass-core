@@ -131,13 +131,12 @@ class Profile < ActiveRecord::Base
   def save_from_params(profile_params)
     valid_params = %w[first_name middle_name last_name role
                       organization place membership_policy
-                      peer picture video summary admins_may_moderate]
+                      peer picture video summary admins_may_moderate encrypt]
 
     collections = {
       'websites' => ::ProfileWebsite,
       'crypt_keys' => ::ProfileCryptKey
     }
-
     profile_params.stringify_keys!
 
     params = profile_params.delete_if { |k, _v| !valid_params.include?(k) && !collections.keys.include?(k) }
@@ -159,7 +158,6 @@ class Profile < ActiveRecord::Base
                                   []
                                 end
     end
-
     picture_params = params.delete('picture')
     if picture_params && picture_params['upload']
       params['picture'] = Picture.new(picture_params)
