@@ -12,14 +12,12 @@
   login_failed: Kunne ikke logge inn
   login: Innlogging
   signup_title: Opprett konto
-  signup_email: Din e-post
   forgot_password_text: Hvis du har glemt passordet du bruker for å logge inn, kan vi sende deg en e-postlenke hvor du kan generere et nytt passord.
   reset_password_text: Hei %{user}. Hvis du har glemt passordet du bruker for å logge inn, så kan du sette et nytt passord her.
   forgot_password_mail_greeting: "%{user}, for å tilbakestille passordet ditt, gå til"
   forgot_password_mail_expiry: Denne lenken vil være gyldig i 24 timer. Hvis du trenger å tilbakestille passordet ditt etter det, må du besøke glemt passord-siden på nytt for å be om en ny lenke.
   reset_password_mail_greeting: "%{user}, passordet ditt er tilbakestilt som du ba om."
   reset_password_mail_warning: Hvis du ikke har bedt om å få passordet ditt endret, vær vennlig å kontakt oss.
-  your_login: Din innlogging
   invalid_email_text: E-postadressen du oppga er ugyldig.
   reset_password: Tilbakestill passord
   reset_password_email_sent: Dersom denne e-postadressen er forbundet med et brukernavn, så har en e-post blitt sendt med instruksjoner for å tilbakestille passordet ditt.
@@ -46,9 +44,7 @@
   change_password: Bytt passord
   password: Passord
   password_confirmation: Passordbekreftelse
-  signup_confirm_password: Bekreft passord
   login_password: Passord
-  signup_password: Ditt passord
   remove_your_account: Fjern din brukerkonto
   anonymize_display_name: Anonymiser visningsnavn
   anonymize_display_name_info: Erstatter ditt navn med 'Anonym' overalt
@@ -456,16 +452,6 @@
   page_history_updated_comment: "%{user_name} oppdaterte en kommentar"
   page_history_updated_content: "%{user_name} har oppdatert sideinnhold"
   page_history_user_created_page: "%{user_name} har opprettet siden"
-  page_history_mailer_hello_user_name: Hei %{user_name}
-  page_history_mailer: 'Endre dine innstillinger for e-postvarsler her: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : En side har blitt endret"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    En side du følger har blitt endret %{histories_count} siden siste varsel,
-    du kan se siden her:
-  page_history_mailer_a_page_you_are_watching: En side du følger har blitt endret, du kan se siden her
-  page_history_the_page_you_are_watching_description: Siden du følger "%{page_title}" har blitt endret
-  page_history_mailer_expire_link: Lenken utløper om %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Du kan velge å slå av e-postvarsler, motta sammendrag av endringer, eller få en e-post hver gang en side endres.
   wiki_page_description: Opprett et redigerbart tekstdokument i fritt format.
   wiki_page_display: Wikiside
   gallery_description: Last opp flere bilder eller organiser eksisterende bilder i et sett.
@@ -764,14 +750,14 @@
   private_wiki: Privat Wiki
   edit_wiki: Rediger Wiki
   wiki_existed_new_version_created: Denne wikien har allerede blitt opprettet av en annen bruker. Dine endringer er lagret som en ny versjon.
-  wiki_is_locked_html: Denne wikien er for øyeblikket låst av <b>%{user}</b>.
+  wiki_is_locked: Denne wikien er for øyeblikket låst av %{user}.
   wiki_section_is_locked: Seksjonen %{section} er for øyeblikket låst av %{user}.
   leave_editing_wiki_page_warning: Du vil miste dine endringer hvis du forlater denne siden.
-  cant_edit_section_html: Kan ikke redigere <b>%{section}</b>.
-  user_locked_section_html: "<b>%{user}</b> har låst <b>%{section}</b>."
+  cant_edit_section: Kan ikke redigere %{section}.
+  user_locked_section: "%{user} har låst %{section}."
   can_still_save: Du kan fremdeles lagre.
   changes_might_be_overwritten: Dine endringer kan bli skrevet over.
-  other_section_locked_error_html: Du kan bare låse en seksjon av gangen. Du har allerede låst <b>%{section}</b>.
+  other_section_locked_error: Du kan bare låse en seksjon av gangen. Du har allerede låst %{section}.
   break_lock_button: Åpne lås
   force_save_button: Åpne lås og lagre
   versions: Versjoner
