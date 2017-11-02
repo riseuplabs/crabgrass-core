@@ -1,6 +1,6 @@
 - if logged_in?
-  - entities = current_user.friends.most_active
-  - see_all_url = people_directory_path(path: 'contacts') if (entities.size < current_user.friends.size)
+  - entities = current_user.friends.most_active limit: 13 # default is 13 
+  - see_all_url = people_directory_path(path: 'contacts') if current_user.friends.size > entities.size
   = render '/layouts/global/nav/boxes', id: 'people',
     entities: entities.sort_by{|u| u.display_name.downcase},
     heading: I18n.t(:my_contacts),

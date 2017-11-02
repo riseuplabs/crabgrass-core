@@ -168,5 +168,6 @@ module User::Groups
   private
 
   GROUPS_AND_NETWORKS_CONDITION = '(type IS NULL OR type = \'Network\')'.freeze
-  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'.freeze
+# TODO: check if this is obsolete
+#  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'.freeze
 end
