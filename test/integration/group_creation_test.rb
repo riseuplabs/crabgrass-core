@@ -36,6 +36,15 @@ class GroupCreationTest < IntegrationTest
     assert_group_created
   end
 
+  def test_groups_menu
+    for i in 0..20
+      visit_new_group_form
+      create_group :group, name: 'new_organization' + i.to_s
+    end
+    find('#menu_group').click_on("See All", visible: false)
+    assert_content "My Groups"
+  end
+
   protected
 
   def visit_new_group_form(type = :group)
