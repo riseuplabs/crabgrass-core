@@ -33,13 +33,6 @@ define_navigation do
       visible { @drop_down_menu }
     end
 
-    context_section :notices do
-      label  { :my_dashboard.t }
-      url    { me_home_path }
-      active { controller?('me/notices') }
-      icon   :info
-    end
-
     context_section :pages do
       label  { :pages.t }
       url    { me_pages_path }
