@@ -8,7 +8,6 @@ class Asset::Text < Asset
   end
 
   define_thumbnails(
-    txt: { ext: 'txt', remote: true },
     odt: { ext: 'odt', remote: true },
     pdf: { ext: 'pdf', remote: true },
     large: { size: '500x500>', ext: 'jpg', depends: :pdf, title: 'Large Thumbnail' },

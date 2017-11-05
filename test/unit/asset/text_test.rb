@@ -10,7 +10,7 @@ class Asset::TextTest < ActiveSupport::TestCase
 
   def test_text_asset_thumb_defs
     @asset = FactoryGirl.build :word_asset
-    assert_equal 6, @asset.thumbdefs.count
+    assert_equal 5, @asset.thumbdefs.count
   end
 
   def test_text_asset_creates_thumbnails
@@ -35,9 +35,8 @@ class Asset::TextTest < ActiveSupport::TestCase
     Media.stub :may_produce?, true do
       @asset = FactoryGirl.create :word_asset
       thumbnails = @asset.thumbnails
-
       assert thumbnails.any?, 'asset should have thumbnail objects'
-      assert_equal 6, thumbnails.count, 'there should be three thumbnails'
+      assert_equal 5, thumbnails.count, 'there should be three thumbnails'
       names = %i[small medium large]
       assert names.none? { |name| @asset.thumbnail_exists?(name) }
       names.each do |name|
