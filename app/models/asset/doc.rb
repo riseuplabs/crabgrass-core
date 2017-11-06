@@ -12,7 +12,6 @@ class Asset::Doc < Asset
   end
 
   define_thumbnails(
-    txt: {ext: 'txt', remote: true},
     pdf: { ext: 'pdf', remote: true },
     large: { size: '500x500>', ext: 'jpg', depends: :pdf, title: 'Large Thumbnail' },
     medium: { size: '200x200>', ext: 'jpg', depends: :large, title: 'Medium Thumbnail' },
