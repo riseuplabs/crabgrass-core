@@ -6,7 +6,7 @@
 # created_by: person who wants in
 #
 class RequestToJoinYou < MembershipRequest
-  validates_format_of :recipient_type, with: /Group/
+  validates_format_of :recipient_type, with: /\AGroup\z/
 
   validate :no_membership_yet, on: :create
 
