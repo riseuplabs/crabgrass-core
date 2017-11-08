@@ -115,71 +115,22 @@ class Profile < ActiveRecord::Base
   ##
 
   belongs_to :wiki, dependent: :destroy
-  belongs_to :wall,
-             class_name: 'Discussion',
-             foreign_key: 'discussion_id',
-             dependent: :destroy
-
-  # belongs_to :photo, :class_name => "Asset", :dependent => :destroy
   belongs_to :picture, dependent: :destroy
   belongs_to :video, class_name: 'ExternalVideo', dependent: :destroy
-
-  has_many :locations,
-           class_name: '::ProfileLocation',
-           dependent: :destroy
-
-  has_many :email_addresses,
-           class_name: '::ProfileEmailAddress',
-           dependent: :destroy
-
-  has_many :im_addresses,
-           class_name: '::ProfileImAddress',
-           dependent: :destroy
-
-  has_many :phone_numbers,
-           class_name: '::ProfilePhoneNumber',
-           dependent: :destroy
 
   has_many :websites,
            class_name: '::ProfileWebsite',
            dependent: :destroy
-
-  has_many :notes,
-           class_name: '::ProfileNote',
-           dependent: :destroy
-
-  # has_many :crypt_keys,
-  #  :class_name => '::ProfileCryptKey',
-  #  :dependent => :destroy, :order => "preferred desc"
-
-  belongs_to :geo_location
-
-  # UNTESTED!
-  #
-  # you can be as specific as needed. From just the country down to
-  # specifying the city id.
-  def self.in_location(options)
-    location_conditions = {
-      country_id: options[:country_id],
-      geo_admin_code_id: options[:state_id],
-      geo_place_id: options[:city_id]
-    }.delete_if { |_k, v| v.blank? }
-    joins(:geo_location).where(geo_location: location_conditions)
-  end
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
     valid_params = %w[first_name middle_name last_name role
                       organization place membership_policy
-                      peer picture video summary admins_may_moderate
-                      country_id state_id city_id]
+                      peer picture video summary admins_may_moderate]
 
     collections = {
-      'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
-      'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
-      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote
-      # 'crypt_keys'      => ::ProfileCryptKey
+      'websites'  => ::ProfileWebsite
     }
 
     profile_params.stringify_keys!
@@ -210,23 +161,6 @@ class Profile < ActiveRecord::Base
     end
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
-    geo_location_options = {
-      geo_country_id: params.delete('country_id'),
-      geo_admin_code_id: params.delete('state_id'),
-      geo_place_id: params.delete('city_id')
-    }
-    # prevent making blank geo_location objects
-    if Geo::Country.exists?(geo_location_options[:geo_country_id])
-      if geo_location.nil?
-        params['geo_location'] = Geo::Location.new(geo_location_options)
-      else
-        ### do not create new records.
-        geo_location.update_attributes(geo_location_options)
-      end
-    elsif !geo_location.nil?
-      geo_location.destroy
-    end
-
     update_attributes(params)
     reload # huh? why is this needed?
     self
@@ -239,25 +173,6 @@ class Profile < ActiveRecord::Base
 
   def cover
     picture || video
-  end
-
-  def country_id
-    return nil if geo_location.nil?
-    geo_location.geo_country_id.to_s
-  end
-
-  def state_id
-    return nil if geo_location.nil?
-    geo_location.geo_admin_code_id.to_s
-  end
-
-  def geo_city_name
-    geo_location.try.geo_place.name
-  end
-
-  def city_id
-    return nil if geo_location.nil?
-    geo_location.geo_place_id
   end
 
   # UPGRADE FUNCTIONALITY
@@ -308,21 +223,4 @@ class Profile < ActiveRecord::Base
     super.try :html_safe
   end
 
-  # DEPRECATED
-  def create_wiki(opts = {})
-    return wiki unless wiki.nil?
-    opts[:profile] = self
-    wiki = Wiki.create opts
-    save
-    wiki
-  end
-
-  # DEPRECATED
-  def ensure_wall
-    unless wall
-      self.wall = Discussion.create
-      save!
-    end
-    wall
-  end
 end # class

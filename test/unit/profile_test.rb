@@ -17,12 +17,8 @@ class ProfileTest < ActiveSupport::TestCase
 
     p.save_from_params(
       last_name: 'McBlue',
-      phone_numbers: {
-        1 => { phone_number_type: 'Home', phone_number: '(206) 555-1111' },
-        2 => { phone_number_type: 'Cell', phone_number: '(206) 555-2222' }
-      }
     )
-    assert_equal '(206) 555-1111', p.phone_numbers.first.phone_number, 'save_from_params should update phone_numbers'
+    assert_equal 'McBlue', p.last_name, 'save_from_params should update last_name'
   end
 
   def test_public_private
