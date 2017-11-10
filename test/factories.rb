@@ -126,12 +126,4 @@ FactoryGirl.define do
     end
   end
 
-  factory(:geo_country)    {}
-  factory(:geo_admin_code) {}
-  factory(:geo_location)   {}
-  factory :geo_place do
-    latitude  1.0
-    longitude 1.0
-    geonameid 2
-  end
 end

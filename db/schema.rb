@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108114602) do
+ActiveRecord::Schema.define(version: 20171110091051) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -172,15 +172,6 @@ ActiveRecord::Schema.define(version: 20171108114602) do
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
 
-  create_table "email_addresses", force: :cascade do |t|
-    t.integer "profile_id",    limit: 4
-    t.boolean "preferred",                 default: false
-    t.string  "email_type",    limit: 255
-    t.string  "email_address", limit: 255
-  end
-
-  add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
-
   create_table "event_recurrencies", force: :cascade do |t|
     t.integer  "event_id",          limit: 4
     t.datetime "start"
@@ -231,40 +222,6 @@ ActiveRecord::Schema.define(version: 20171108114602) do
   add_index "federatings", ["group_id", "network_id"], :name => "gn"
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
-  create_table "geo_admin_codes", force: :cascade do |t|
-    t.integer "geo_country_id", limit: 4,   null: false
-    t.string  "admin1_code",    limit: 10,  null: false
-    t.string  "name",           limit: 255, null: false
-  end
-
-  add_index "geo_admin_codes", ["geo_country_id", "admin1_code"], :name => "geo_admin_codes_index", :unique => true
-
-  create_table "geo_countries", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-    t.string "code", limit: 3,   null: false
-  end
-
-  add_index "geo_countries", ["name", "code"], :name => "geo_countries_index", :unique => true
-
-  create_table "geo_locations", force: :cascade do |t|
-    t.integer "geo_country_id",    limit: 4, null: false
-    t.integer "geo_admin_code_id", limit: 4
-    t.integer "geo_place_id",      limit: 4
-  end
-
-  create_table "geo_places", force: :cascade do |t|
-    t.integer "geo_country_id",    limit: 4,                              null: false
-    t.string  "name",              limit: 255,                            null: false
-    t.string  "alternatenames",    limit: 5000
-    t.decimal "latitude",                       precision: 24, scale: 20, null: false
-    t.decimal "longitude",                      precision: 24, scale: 20, null: false
-    t.integer "geo_admin_code_id", limit: 4,                              null: false
-  end
-
-  add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
-  add_index "geo_places", ["geo_country_id"], :name => "index_geo_places_on_geo_country_id"
-  add_index "geo_places", ["geo_admin_code_id"], :name => "index_geo_places_on_geo_admin_code_id"
-
   create_table "group_participations", force: :cascade do |t|
     t.integer  "group_id",          limit: 4
     t.integer  "page_id",           limit: 4
@@ -313,29 +270,6 @@ ActiveRecord::Schema.define(version: 20171108114602) do
   end
 
   add_index "hourlies", ["page_id"], :name => "index_hourlies_on_page_id"
-
-  create_table "im_addresses", force: :cascade do |t|
-    t.integer "profile_id", limit: 4
-    t.boolean "preferred",              default: false
-    t.string  "im_type",    limit: 255
-    t.string  "im_address", limit: 255
-  end
-
-  add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
-
-  create_table "locations", force: :cascade do |t|
-    t.integer "profile_id",    limit: 4
-    t.boolean "preferred",                 default: false
-    t.string  "location_type", limit: 255
-    t.string  "street",        limit: 255
-    t.string  "city",          limit: 255
-    t.string  "state",         limit: 255
-    t.string  "postal_code",   limit: 255
-    t.string  "geocode",       limit: 255
-    t.string  "country_name",  limit: 255
-  end
-
-  add_index "locations", ["profile_id"], :name => "locations_profile_id_index"
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id",     limit: 4
@@ -491,16 +425,6 @@ ActiveRecord::Schema.define(version: 20171108114602) do
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
   add_index "pages", ["data_id", "data_type"], :name => "index_pages_on_data_id_and_data_type"
 
-  create_table "phone_numbers", force: :cascade do |t|
-    t.integer "profile_id",        limit: 4
-    t.boolean "preferred",                     default: false
-    t.string  "provider",          limit: 255
-    t.string  "phone_number_type", limit: 255
-    t.string  "phone_number",      limit: 255
-  end
-
-  add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
-
   create_table "pictures", force: :cascade do |t|
     t.string  "content_type",  limit: 255
     t.string  "caption",       limit: 255
@@ -545,15 +469,6 @@ ActiveRecord::Schema.define(version: 20171108114602) do
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
-
-  create_table "profile_notes", force: :cascade do |t|
-    t.integer "profile_id", limit: 4
-    t.boolean "preferred",                   default: false
-    t.string  "note_type",  limit: 255
-    t.text    "body",       limit: 16777215
-  end
-
-  add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "entity_id",              limit: 4

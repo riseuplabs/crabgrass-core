@@ -31,7 +31,6 @@ class Conf
   cattr_accessor :default_page_access
   cattr_accessor :default_group_permissions
   cattr_accessor :default_user_permissions
-  cattr_accessor :use_full_geonames_data
   cattr_accessor :remote_processing
   cattr_accessor :committees
   cattr_accessor :councils

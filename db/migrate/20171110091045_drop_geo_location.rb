@@ -1,6 +1,6 @@
-class DropLocations < ActiveRecord::Migration
+class DropGeoLocation < ActiveRecord::Migration
   def up
-    drop_table :locations
+    drop_table :geo_locations
   end
 
   def down

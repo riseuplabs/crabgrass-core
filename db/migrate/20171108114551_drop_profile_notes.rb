@@ -1,6 +1,7 @@
-class DropLocations < ActiveRecord::Migration
+class DropProfileNotes < ActiveRecord::Migration
+
   def up
-    drop_table :locations
+    drop_table :profile_notes
   end
 
   def down
