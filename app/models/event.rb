@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
   has_many :pages, as: :data
   format_attribute :description
 
-  # validates_presence_of :location
   #  validates_presence_of :starts_at # only commented out to test
   ##  validates_presence_of :ends_at # only commented out to test
 

@@ -26,10 +26,10 @@ en:
   organizational_role: Organizational Role
   ##!  descriptions: Descriptions
   ##!  add_description: Add Description
-  phone_number: Phone Number
+  ##!  phone_number: Phone Number
   ##!  phone_numbers: Phone Numbers
   ##!  add_phone_number: Add Phone Number
-  email_addresses: Email Addresses
+  ##!  email_addresses: Email Addresses
   ##!  add_email_address: Add Email Address
   ##!  locations: Locations
   ##!  location: Location

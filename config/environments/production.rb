@@ -67,8 +67,7 @@ Crabgrass::Application.configure do
   # For debugging having the ids of the records should suffice.
   config.filter_parameters += %i[body description name summary comment]
   config.filter_parameters += %i[caption code email location im_address]
-  config.filter_parameters += %i[street city state title content data]
-  config.filter_parameters += %i[details phone_number organization role]
+  config.filter_parameters += %i[title content data details organization role]
   config.filter_parameters += %i[value sms login]
 
   ANALYZABLE_PRODUCTION_LOG = '/var/log/rails.log'.freeze
