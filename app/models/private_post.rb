@@ -4,6 +4,8 @@ class PrivatePost < Post
           dependent: :delete,
           class_name: 'Activity::MessageSent'
 
+  # deleted because they are also notices and Post.notices is
+  # dependent: :delete_all
   has_many :private_message_notices,
            class_name: 'Notice::PrivateMessageNotice',
            as: :noticable

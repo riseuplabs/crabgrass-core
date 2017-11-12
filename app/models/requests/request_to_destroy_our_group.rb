@@ -62,18 +62,4 @@ class RequestToDestroyOurGroup < Request
       group_type: group.group_type,
       user:       user_span(created_by) }
   end
-
-  protected
-
-  #
-  # for votable, if we ever do that:
-  #
-  # def voting_population_count
-  #   group.users.count
-  # end
-  #
-  # def instant_approval(voter)
-  #   xxxx
-  # end
-  #
 end
