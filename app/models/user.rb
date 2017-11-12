@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   include User::Groups     # user <--> groups
   include User::Pages      # user <--> pages
   include User::Tags       # user <--> tags
-  include User::ChatChannels # user <--> chat channels
   include User::Authenticated
   include User::LegacyPasswords
 

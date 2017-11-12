@@ -98,24 +98,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u.peers, User.peers_of(u)
   end
 
-  def test_removal_deletes_chat_channels_users
-    user = FactoryGirl.create :user
-    user_id = user.id
-
-    group1 = groups(:true_levellers)
-    group1.add_user! user
-    channel1 = ChatChannel.create(name: group1.name, group_id: group1.id)
-    ChatChannelsUser.create(channel: channel1, user: user)
-
-    group2 = groups(:rainbow)
-    group2.add_user! user
-    channel2 = ChatChannel.create(name: group2.name, group_id: group2.id)
-    ChatChannelsUser.create(channel: channel2, user: user)
-
-    user.destroy
-    assert ChatChannelsUser.where(user_id: user_id).empty?
-  end
-
   def test_friends_or_peers_with_access
     red = users(:red)
     blue = users(:blue)

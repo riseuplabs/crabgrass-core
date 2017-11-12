@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110091051) do
+ActiveRecord::Schema.define(version: 20171112160223) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -97,23 +97,6 @@ ActiveRecord::Schema.define(version: 20171110091051) do
   end
 
   add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
-
-  create_table "channels", force: :cascade do |t|
-    t.string  "name",     limit: 255
-    t.integer "group_id", limit: 4
-    t.boolean "public",               default: false
-  end
-
-  add_index "channels", ["group_id"], :name => "index_channels_group_id"
-
-  create_table "channels_users", force: :cascade do |t|
-    t.integer  "channel_id", limit: 4
-    t.integer  "user_id",    limit: 4
-    t.datetime "last_seen"
-    t.integer  "status",     limit: 4
-  end
-
-  add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
 
   create_table "crypt_keys", force: :cascade do |t|
     t.integer "profile_id",  limit: 8
@@ -283,20 +266,6 @@ ActiveRecord::Schema.define(version: 20171110091051) do
 
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
-
-  create_table "messages", force: :cascade do |t|
-    t.datetime "created_at"
-    t.string   "type",        limit: 255
-    t.text     "content",     limit: 16777215
-    t.integer  "channel_id",  limit: 4
-    t.integer  "sender_id",   limit: 4
-    t.string   "sender_name", limit: 255
-    t.string   "level",       limit: 255
-    t.datetime "deleted_at"
-  end
-
-  add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
-  add_index "messages", ["sender_id"], :name => "index_messages_channel"
 
   create_table "migrations_info", force: :cascade do |t|
     t.datetime "created_at"
@@ -511,7 +480,6 @@ ActiveRecord::Schema.define(version: 20171110091051) do
     t.text     "summary_html",           limit: 65535
     t.integer  "geo_location_id",        limit: 4
     t.integer  "picture_id",             limit: 4
-    t.boolean  "encrypt",                              default: false
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -795,7 +763,6 @@ ActiveRecord::Schema.define(version: 20171110091051) do
     t.string   "receive_notifications",     limit: 255
     t.string   "type",                      limit: 255
     t.string   "password_digest",           limit: 255
-    t.boolean  "encrypted_notification",                  default: false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

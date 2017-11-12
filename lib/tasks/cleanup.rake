@@ -24,8 +24,6 @@ namespace :cg do
       :remove_dead_memberships,
       :remove_empty_posts,
       :remove_dead_posts,
-      :remove_dead_chat_channels,
-      :remove_dead_chat_messages,
       :remove_unused_tags,
       :merge_duplicate_tags,
       :remove_duplicate_taggings,
@@ -142,26 +140,6 @@ namespace :cg do
     task(remove_dead_posts: :environment) do
       count = Post.where(dead_entity_sql('user')).delete_all
       puts "Removed #{count} posts with a blank user"
-    end
-
-    desc 'Remove Chat Channels of groups that do not exist anymore'
-    task(remove_dead_chat_channels: :environment) do
-      count = ChatChannel.where(dead_entity_sql('group')).delete_all
-      puts "Removed #{count} chat channels of former groups"
-    end
-
-    desc 'Remove Chat Channel users of channels that do not exist anymore'
-    task(remove_dead_chat_channels: :environment) do
-      count = ChatChannelsUser.where(dead_entity_sql('channel')).delete_all
-      puts "Removed #{count} chat users of former channels"
-    end
-
-    desc 'Remove Chat Messages of users that do not exist anymore'
-    task(remove_dead_chat_messages: :environment) do
-      count = ChatMessage.where(dead_entity_sql('sender', 'users')).delete_all
-      puts "Removed #{count} chat messages with a blank sender"
-      count = ChatMessage.where(dead_entity_sql('channel')).delete_all
-      puts "Removed #{count} chat messages without a channel"
     end
 
     desc 'Remove dead taggings'
