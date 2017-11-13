@@ -70,18 +70,4 @@ class RequestToRemoveUser < Request
     user
   end
 
-  protected
-
-  #
-  # for votable, if we ever do that:
-  #
-  # def voting_population_count
-  #   group.users.count
-  # end
-  #
-  # def instant_approval(voter)
-  #   user == voter
-  # end
-
-  private
 end

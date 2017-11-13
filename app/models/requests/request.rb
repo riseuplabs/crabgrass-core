@@ -48,18 +48,6 @@ class Request < ActiveRecord::Base
                      dependent: :delete_all,
                      class_name: 'Notice::RequestNotice'
 
-  # most requests are non-vote based. they just need a single 'approve' action
-  # to get approved
-  # some requests (ex: RequestToDestroyOurGroup) are approved only
-  # when they get sufficient votes for approval and (in some cases)
-  # when a period of time has passed
-  # 'ignore' is another vote that could be use by otherwise non-votable requests
-  # so that each person has a distinct 'ignore'/'non-ignore' state
-  has_many :votes,
-           as: :votable,
-           class_name: 'Poll::RequestVote',
-           dependent: :delete_all
-
   validates_presence_of :created_by
   validates_presence_of :recipient,   if: :recipient_required?
   validates_presence_of :requestable, if: :requestable_required?
@@ -76,24 +64,6 @@ class Request < ActiveRecord::Base
   def self.having_state(state)
     where('requests.state = ?', state.to_s)
   end
-
-  # i think this is a nice idea, but... i am not sure about the UI for this. by making the view dependent
-  # on the user, you make it hard to find requests that are still pending but have been approved by you
-  # and not others. I think it is better to show these requests as pending, but indicate in the view
-  # that you have already voted on this. so, i am commented out this complicated bit of code:
-
-  ## same as having_state, but take into account
-  ## that user can vote reject/approve on some requests without changing the state
-  # def :having_state_for_user(state, user)
-  #  votes_conditions = if state == :pending
-  #    "votes.value IS NULL AND requests.state = 'pending'"
-  #  else
-  #    ["votes.value = ? OR requests.state = ?", vote_value_for_state(state), state.to_s]
-  #  end
-  #  { :conditions => votes_conditions,
-  #    :select => "requests.*",
-  #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
-  # }
 
   def self.pending
     where("state = 'pending'")
@@ -286,10 +256,6 @@ class Request < ActiveRecord::Base
 
   def short_description() end
 
-  def votable?
-    false
-  end
-
   def may_create?(_user)
     false
   end
@@ -430,19 +396,5 @@ class Request < ActiveRecord::Base
 
   def duplicates
     self.class.pending.with_requestable(requestable).for_recipient(recipient)
-  end
-
-  def self.vote_value_for_action(vote_state)
-    case vote_state.to_s
-    when 'reject' then 0
-    when 'approve' then 1
-    when 'ignore' then 2
-    end
-  end
-
-  def add_vote!(response, user)
-    value = self.class.vote_value_for_action(response)
-    votes.by_user(user).delete_all
-    votes.create!(value: value, user: user)
   end
 end

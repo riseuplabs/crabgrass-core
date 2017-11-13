@@ -9,7 +9,6 @@
 :request_to_destroy_our_group.t
 :request_to_join_us_via_email.t
 :request_to_remove_user.t
-:votable_request.t
 
 # groups:
 
