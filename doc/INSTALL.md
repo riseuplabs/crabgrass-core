@@ -16,6 +16,13 @@ For installation using Vagrant, see [doc/development/vagrant.md](development/vag
     sudo apt-get install ruby ruby-dev rake mysql-server mysql-client
     libmysqld-dev git make libssl-dev g++ sphinxsearch graphicsmagick
 
+##### Debian stable
+
+On Debian stable 9, mysql has been replaced by MariaDB. To set up the environment, we need to replace libmysql-dev by libmariadb-dev.
+
+    sudo apt-get install ruby ruby-dev rake mysql-server mysql-client
+    libmariadb-dev git make libssl-dev g++ sphinxsearch graphicsmagick
+
 Depending on what you are running, you might need to install `git-core`
 instead of `git`. You might also need libopenssl-ruby.
 If installing using bundler, you may need `libmysqlclient-dev` and `libsqlite3-dev`.
@@ -24,7 +31,9 @@ If installing using bundler, you may need `libmysqlclient-dev` and `libsqlite3-d
 
     yum install ruby ruby-devel rubygem-rake mysql-server mysql-devel git gcc make
     ImageMagick
+
 ####OSX system
+
 This install will assume you are using a Ruby versioning tool such as [rbenv](https://github.com/sstephenson/rbenv) and [zsh](http://www.zsh.org/). These tools are by no means OSX dependent. You can replace .zshrc with .bash_profile if you use bash.
 
 If you don't have git:
@@ -66,6 +75,7 @@ Alternately, do a shallow clone. This will only check out a copy of the most rec
     git clone --depth 1 https://github.com/riseuplabs/crabgrass-core.git
 
 ###Install bundler
+
 If you don't yet have bundler, install it now as root.
 
     sudo gem install bundler
@@ -82,18 +92,17 @@ Create a secret
     rake create_a_secret
 
 ###Create the database
-This will also set up your test database.
+
+This will also set up your test database. Prior to running the `rake db:create` command, you will need to set up the `crabgrass_development` and `crabgrass_test` databases and configure them in the database.yml file according to your mysql or mariadb set up. In addition, I needed	 to set up my databases with mariadb with `utf8` encoding. [See here.](https://stackoverflow.com/questions/11644804/rails-creating-schema-migrations-mysql2error-specified-key-was-too-long#13143985)
 
     cp config/database.yml.example config/database.yml
     rake db:create
     rake db:schema:load
     rake db:fixtures:load
 
-You might have to adjust config/database.yml according to your mysql setup.
-
 ###Run the server
 
-    BOOST=1 bundle exec rails server thin
+    BOOST=1 bundle exec rails server
 
 Connect to the web application from your browser:
 
@@ -112,6 +121,7 @@ Install for testing
     sudo RAILS_ENV=test bundle install
 
 ###Create testing database
+
 If you haven't run rake db:create already.
 
     sudo mysqladmin create crabgrass_test
