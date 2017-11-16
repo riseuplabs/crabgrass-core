@@ -18,7 +18,7 @@
         - r.label "%s (%s)" % [:summary.tcap, :preview.t]
         - r.input @profile.summary_html
     - f.row do |r|
-      - r.label "PGP Public Key" 
+      - r.label "PGP Public Key"
       - r.input text_area_tag("profile[crypt_keys][0][key]", @profile.crypt_keys[0].try.key, rows: 5, class: 'form-control', placeholder: "Enter a public PGP Key")
     - if @profile.crypt_keys.any?
       - f.row do |r|

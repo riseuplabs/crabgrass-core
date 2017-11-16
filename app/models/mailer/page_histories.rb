@@ -6,7 +6,7 @@
 # consistency please make sure deliver_all finishes on the same day it
 # started.
 
-class Mailer::PageHistories < Mailer::ApplicationMailer
+class Mailer::PageHistories < ActionMailer::Base
   DIGEST_TIMESPAN = 1.day
   UPDATE_TIMESPAN = 1.hour
 
@@ -49,10 +49,14 @@ class Mailer::PageHistories < Mailer::ApplicationMailer
 
   protected
 
-  def add_encrypt_options(options) # FIXME: first try is only needed for tests
+  def add_encrypt_options(options)
     return options unless @recipient.try.profiles.try.first.try.encrypt
     key = @recipient.profiles.first.crypt_keys.first.key
-    options.merge gpg: {encrypt: true, keys: { @recipient.email => key }}
+    gpg_options =  {encrypt: true, keys: { @recipient.email => key }}
+    # TODO: signing not yet working. Uses local key chain.
+    # GPGME::Key.find(:secret, "robot@riseup.net", :sign) works on rails console but not here...
+    # gpg_options[:sign_as] = "robot@riseup.net" 
+    options.merge gpg: gpg_options
   end
 
   def init_mail_to(recipient)

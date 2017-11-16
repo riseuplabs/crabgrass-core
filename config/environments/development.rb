@@ -15,10 +15,6 @@ Crabgrass::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost' }
 
-# # FIXME: for mailcatcher - does not work yet
-#  config.action_mailer.delivery_method = :smtp
-#  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
-
   ## FIXME: when reloading plugins is enabled, SearchFilter.filters will be
   ##        empty after the first request.
   config.reload_plugins = false

@@ -849,7 +849,6 @@ ActiveRecord::Schema.define(version: 20171112160223) do
     t.string   "receive_notifications",     limit: 255
     t.string   "type",                      limit: 255
     t.string   "password_digest",           limit: 255
-    t.boolean  "encrypted_notification",                  default: false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
