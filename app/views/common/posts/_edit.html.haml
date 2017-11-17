@@ -11,7 +11,7 @@
     .buttons-right
       = spinner('edit_post')
       = submit_tag :cancel.t, name: 'cancel', class: 'btn btn-default'
-      = link_to :delete_button.t, post_path(post),
+      = link_to :delete.t, post_path(post),
         remote: true,
         data: {method: 'DELETE'},
         class: 'btn btn-danger'
