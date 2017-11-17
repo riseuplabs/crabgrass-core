@@ -47,6 +47,34 @@ def load_data
   [en, keys, orphaned, missing, duplicates]
 end
 
+def load_data_for_dups file, lang
+  unless File.exist?(file)
+    puts 'Skipping, no '+ file + '. This might be because you have not run `rake cg:i18n:bundle`.'
+    exit
+  end
+  en = YAML.load_file(file)[lang]
+  keys = extract_keys
+  orphaned = en.keys - keys.keys
+  missing = keys.keys - en.keys
+  duplicates = []
+  duplicate_hash = en.values.each_with_object(Hash.new(0)) { |i, h| h[i] += 1; }
+  duplicate_hash.each do |value, count|
+    duplicates << value if count > 1
+  end
+  duplicates_hash = Hash.new
+  duplicate_key_hash = en.map do |key, value|
+    if duplicates.include? value
+      if duplicates_hash[value]
+       duplicates_hash[value].push(key)
+      else
+       duplicates_hash[value] = [key]
+      end
+    end
+  end
+  [en, keys, orphaned, missing, duplicates_hash]
+end
+
+
 # This assumes you're already in a directory with a transifex.netrc
 # Typically this would be the config dir.
 def download_from_transifex(lang, resources)
@@ -92,7 +120,37 @@ namespace :cg do
     desc 'list duplicate values'
     task :dups do
       en, keys, orphaned, missing, dups = load_data
-      puts dups.sort.join("\n")
+      puts dups.join("\n")
+    end
+
+    desc 'duplicate key stats'
+    task :dups_stats do
+      lang_codes = ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es', 'pl']
+      keys_count = Hash.new(0)
+      dups_lang = Hash.new
+      lang_codes.each do |lang|
+        if lang == 'en'
+          file = 'config/en.yml'
+        else
+          file = 'config/locales/'+lang+'.yml'
+        end
+        all, keys, orphaned, missing, dups = load_data_for_dups file, lang
+        dups_lang[lang] = dups
+        dups.map do |key, vals|
+          vals.each do |val|
+            keys_count[val] += 1
+          end
+        end
+      end
+      sorted_counts = keys_count.sort_by {|k,v| v}.reverse
+      sorted_counts.each do |key, val|
+        puts key.to_s + ":" + val.to_s
+      end
+      dups_lang.each do |lang|
+        lang.each do |key, val|
+          puts key.to_s + ":" + val.to_s
+        end
+      end
     end
 
     #
