@@ -18,7 +18,7 @@ module AccountManagement
     visit '/' unless page.current_path.present?
     fill_in :login_name.t, with: @user.login
     fill_in :login_password.t, with: @user.password || @user.login
-    click_button :login_button.t
+    click_button :sign_in.t
   end
 
   def logout

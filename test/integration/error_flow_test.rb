@@ -17,7 +17,7 @@ class ErrorFlowTest < IntegrationTest
     assert_equal '/me/pages', current_path
     fill_in 'login', with: 'blue'
     fill_in 'password', with: 'blue'
-    click_button :login_button.t
+    click_button :sign_in.t
     assert_equal '/me/pages', current_path
   end
 
@@ -28,7 +28,7 @@ class ErrorFlowTest < IntegrationTest
     assert_equal '/private_group', current_path
     fill_in 'login', with: 'blue'
     fill_in 'password', with: 'blue'
-    click_button :login_button.t
+    click_button :sign_in.t
     assert_content 'private_group'
     assert_equal '/private_group', current_path
   end
@@ -39,7 +39,7 @@ class ErrorFlowTest < IntegrationTest
     assert_equal '/asdfswera', current_path
     fill_in 'login', with: 'blue'
     fill_in 'password', with: 'blue'
-    click_button :login_button.t
+    click_button :sign_in.t
     assert_content 'Not Found'
     assert_equal '/asdfswera', current_path
   end
