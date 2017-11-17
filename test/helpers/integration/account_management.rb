@@ -17,7 +17,7 @@ module AccountManagement
     records[:user] ||= @user ||= user || FactoryGirl.create(:user)
     visit '/' unless page.current_path.present?
     fill_in :username.t, with: @user.login
-    fill_in :login_password.t, with: @user.password || @user.login
+    fill_in :password.t, with: @user.password || @user.login
     click_button :sign_in.t
   end
 

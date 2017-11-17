@@ -16,7 +16,7 @@
         class: 'nofocus'
       = text_field_tag 'login', params['login'], id: 'login', tabindex: 1, class: 'form-control'
     %div.password
-      %label(for = 'password')= :login_password.t
+      %label(for = 'password')= :password.t
       %span= link_to(:forgot_password_link.t, reset_password_path, class: 'nofocus')
       = password_field_tag 'password', '', {id: 'password', tabindex: 2, class: 'form-control'}
     %div.buttons
