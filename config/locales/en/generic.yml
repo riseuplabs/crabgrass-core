@@ -2,7 +2,6 @@
 en:
   ## Entities
   approved_by_entity: "Approved by %{entity}"
-  created_by_entity: "Created by %{entity}"
   name: Name
   owner: Owner
   people: People
@@ -31,13 +30,11 @@ en:
   no_search_results: "No Results"
   no_things_found: "No %{things} found."
   none: None
-  not_found: "Not Found"
   or: or
   previous: Previous
   return: Return
   search: Search
   see_all_link: "See All"
-  see_less_link: Less
   see_more_link: More
   thing_not_found: "%{thing} not found"
   total: "%{count} total"
@@ -55,16 +52,13 @@ en:
   administration: Administration
   back: Back
   comments: Comments
-  content: Content
   contributed: Contributed
   description: Description
   details: Details
-  dismiss: Dismiss
   dismiss_all_notices: "Dismiss All"
   dismiss_all_notices_confirmation: "Are you sure want to dismiss all notices?"
   display: Display
   hide: Hide
-  invite: Invite
   locale: Locale
   me: Me
   membership: Membership
@@ -73,7 +67,6 @@ en:
   notice: Notice
   notices: Notices
   notification: Notification
-  options: Options
   page: Page
   permissions: Permissions
   print: Print
@@ -88,7 +81,6 @@ en:
   summary: Summary
   tags: Tags
   tasks: Tasks
-  text_message: "Text Message"
   title: Title
   visibility: Visibility
   visits: Visits

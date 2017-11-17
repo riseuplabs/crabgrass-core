@@ -4,10 +4,8 @@ en:
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
   email: Email
   language: Language
-  message_to_self_error: "Can't talk to yourself"
   message_user_wrote_caption: "%{user} wrote:"
   message_you_wrote_caption: "You wrote:"
-  messages_with: "Conversation with %{other_user}"
   my_dashboard: "My Dashboard"
   notification_select:
     digest: "Yes: a daily summary of changes"

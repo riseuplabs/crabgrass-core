@@ -8,15 +8,9 @@ en:
   alert: Alert
   approve: Approve
   approved: Approved
-  autocomplete:
-    placeholder:
-      enter_name_of_group: "Enter the name of a group"
-      enter_name_of_group_or_person: "Enter the name of a group or person"
-      enter_name_of_person: "Enter the name of a person"
   cancel: Cancel
   close_button: Close
   confirm: Confirm
-  confirmation: "Are you sure?"
   create_a_new_thing: "Create a new %{thing}"
   create_button: Create
   create_thing: "Create %{thing}"
@@ -29,10 +23,8 @@ en:
   destroy: Destroy
   destroy_confirmation: "Are you sure you want to delete this %{thing}? This action cannot be undone."
   destroy_thing: "Destroy %{thing}"
-  done: Done
   drop_files_here: "Drop files here"
   edit: Edit
-  files_pending: "#{pending} file(s) pending"
   loading_progress: Loading...
   ok_button: OK
   optional: Optional
