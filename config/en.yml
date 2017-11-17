@@ -776,7 +776,6 @@ en:
   request: Request
   request_pending: "%{request} is pending"
   requests: Requests
-  send_invites_button: Send Invites
   send_request_button: Send Request
   try_again: Try Again
   friend_remove_confirmation: Are you sure you wish to no longer be the contact of %{user}?
