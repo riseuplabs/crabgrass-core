@@ -17,6 +17,5 @@
   .buttons.reverse
     = submit_tag I18n.t(:save_button), class: 'btn btn-primary'
     = button_to_function I18n.t(:delete_button), delete_click, class: 'btn btn-danger'
-    = button_to_function I18n.t(:cancel_button), close_click, class: 'btn btn-default'
+    = button_to_function I18n.t(:cancel), close_click, class: 'btn btn-default'
     = spinner
-

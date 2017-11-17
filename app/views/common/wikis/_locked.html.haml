@@ -5,7 +5,7 @@
   = hidden_field_tag :section, @section if @section && @section != :document
   .buttons-right.p
     = spinner('unlock_wiki')
-    = f.submit :cancel_button.t, name: 'cancel', class: 'btn btn-default'
+    = f.submit :cancel.t, name: 'cancel', class: 'btn btn-default'
     = f.submit :break_lock_button.t, name: 'break_lock', class: 'btn btn-default'
   .p
     = text_area_tag('body', @body, rows: wiki_textarea_rows(@body, 4, 15), class: 'full_width', disabled: true)

@@ -1,6 +1,6 @@
 en:
   ok_button: "OK"
-  cancel_button: "Cancel"
+  cancel: "Cancel"
   close_button: "Close"
   alert: "Alert"
   confirm: "Confirm"

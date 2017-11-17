@@ -22,7 +22,7 @@
   .buttons-right.p
     -# NOTE: there is an event listener on input.wiki_button
     = spinner(spinner_id)
-    = f.submit :cancel_button.t, name: 'cancel', tabindex: 3,
+    = f.submit :cancel.t, name: 'cancel', tabindex: 3,
       class: 'btn btn-default wiki_button'
     - if @show_force_save_button
       = f.submit :force_save_button.t, name: 'force_save', tabindex: 2,
