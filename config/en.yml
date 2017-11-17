@@ -705,7 +705,6 @@ en:
   survey_average_rating_heading: 'Average Rating:'
   survey_description_explaination: This text will show up in the introduction tab, and
     will be the first thing that survey takers see.
-  survey_description_heading: Description
   survey_introduction_tab: Introduction
   survey_list_all_tab: List Responses
   survey_may_create_response: May create response?
