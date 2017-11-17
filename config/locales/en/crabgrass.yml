@@ -1,14 +1,10 @@
+---
 en:
   crabgrass:
-    powered_by_html: >
-      This site is powered by
-      <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-    description_html: >
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html">
-      AGPL software libre</a> for network organizing.
+    description_html: ", <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\"> AGPL software libre</a> for network organizing.\n"
+    get_involved: "Get Involved"
+    help_pages: "Crabgrass Help Pages"
+    help_translate: "Help Translate"
+    powered_by_html: "This site is powered by <a href=\"https://we.riseup.net/crabgrass\">crabgrass</a>%{description}\n"
     report_a_bug: "Report a Bug"
     request_a_feature: "Request a Feature"
-    help_pages: "Crabgrass Help Pages"
-    get_involved: "Get Involved"
-    help_translate: "Help Translate"
-

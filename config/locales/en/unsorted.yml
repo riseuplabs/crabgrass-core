@@ -1,481 +1,150 @@
+---
 en:
+  ## ACTION BAR
+  view_label: View
 
-  ##
-  ## Time Formats
-  ## (override the defaults in locale/rails)
-  ##
-
-  ##!  time:
-  ##  formats:
-  ##    default: "%a, %d %b %Y %H:%M:%S %z"
-  ##    # change to am/pm...
-  ##    short: "%d %b %I:%M %p"
-  ##    long: "%B %d, %Y %I:%M %p"
-
-
-  ##
-  ## TO BE DESTROYED
-  ##
-
-  #upload_attachment: "Upload Attachment"
-  #rename %{upload_images} -> %{upload}
-  ##!  create_committee: "create committee"
-  # used by page history
-  ##!  back_to_the_page: "Back to the page"
-  # unsorted for events
-  ##!  all_day_event: "all day event"
-  ##!  update_event: "Update event"
-  ##!  starts_at: "starts at"
-  ##!  ends_at: "ends at"
-  place: "place"
-
-  ##
-  ## UNUSED, BUT KEEP ANYWAY
-  ##
-
-  #logout: Logout
-  #edit_featured_content: edit featured content
-  #you_have_no_groups: "You have no groups"
-
-  ##
-  ## MEDIA
-  ##
-
-  icon: "Icon"
-  file: "File"
-  files: "Files"
-  photo: "Photo"
-  caption: "Caption"
-  photo_credit: "Photo Credit"
-  video_embed: "Embed"
-  ##!  height: "Height"
-  ##!  width: "Width"
-  size: "Size"
-
-
-  # labels
-  ##!  buttons_list_label: "Action"
-
-  ###
-  ### TO BE SORTED
-  ###
-
-  ##!  group_information: "%{group_type} Information"
-
-  illegal_redirect: "Illegal redirect"
-  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (%{url}) after your login. For security reasons we have removed this parameter from the URL."
-
-  ##!  subject_must_not_be_empty: subject must not be empty
-  ##!  at_least_one_recipient_is_required: at least one recipient is required
-  ##!  message_must_not_be_empty: message must not be empty
-  ##!  subject: subject
-  ##!  from: from
-  ##!  to: To
-  ##!  date_date: date
-  ##!  request_status: "This request is: %{status}."
-  ##!  status_resolved: resolved
-  ##!  status_pending: pending
-  ##!  approve_or_reject_link: approve or reject this request
-  ##!  request_status: This request was %{status} by %{user} on %{time}
-  ##!  discuss_request_link: discuss this request with %{person_or_group}
-
-  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
-  preview_selected_image: "Preview of selected image"
-  image_size_info: "Select the size of the image to insert"
-  small: small
-  medium: medium
-  large: large
-  full: full
-  image_options_info: "Should the image included in the wiki link to the fullsize image?"
-  include_full_checkbox: include link to full image
-  image_select_info: "Pick an image to insert from the images uploaded to the group previously"
-  image_upload_info: "Upload a new image to the group so it can be used in the wiki"
-
-  # private post activity links
-  a_message_link: "a message"
-  a_reply_link: "a reply"
-
-  confirm_discarding_text_area: "All your unsaved work will be lost. Press %{cancel} to continue editing."
-
-  ##!  is_required: "is required"
-
-
-  ##
   ## ACTIVITIES
-  ##
-
   activity_contact_created: "%{user} added %{other_user} as a friend"
-  ##!  activity_user_status: "%{user} is now %{status}"
-  activity_user_left_group: "%{user} has left %{group_type} %{group}"
-  activity_user_joined_group: "%{user} has joined %{group_type} %{group}"
-  activity_user_joined_site: "%{user} has joined %{group}"
-  activity_user_destroyed: "%{user} has retired"
   activity_group_created: "%{user} created %{group_type} %{group}"
   activity_group_destroyed: "%{group} was destroyed by %{user}"
-  activity_wall_message: "%{author} wrote to %{user}: %{message}"
   activity_message: "%{author} wrote: %{message}"
-  activity_unread: "You have %{count} unread [private messages]"
-  activity_unread_singular: "You have an unread [private message]"
-  activity_user_left_site: "%{user} has left %{group}"
   activity_message_received: "You received %{message_tag} from %{other_user}: %{title}"
   activity_twinkled: "%{user} has starred your post \"%{post}\""
+  activity_unread: "You have %{count} unread [private messages]"
+  activity_unread_singular: "You have an unread [private message]"
+  activity_user_destroyed: "%{user} has retired"
+  activity_user_joined_group: "%{user} has joined %{group_type} %{group}"
+  activity_user_joined_site: "%{user} has joined %{group}"
+  activity_user_left_group: "%{user} has left %{group_type} %{group}"
+  activity_user_left_site: "%{user} has left %{group}"
+  activity_wall_message: "%{author} wrote to %{user}: %{message}"
 
-  ##
   ## ASSETS
-  ##
-
-  ##!  media_audio: "Sound Recording"
-  ##!  media_audios: "Sound Recordings"
-  ##!  media_video: "Video"
-  ##!  media_videos: "Videos"
-  media_image: "Image"
-  media_images: "Images"
-  ##!  media_document: "Document"
-  ##!  media_documents: "Documents"
-  zip_file: "Zip File"
-  ##!  media_all: "Media"
-  ##!  media_alls: "Media"
-  ##!  media_for_group: "%{media_type} in %{group}"
-  ##!  media_without_group: "All %{media_type}"
-  history: "History"
-  other_formats: "Other Formats"
-  file_version_deleted: "file version deleted"
-  delete_version_confirm: "Are you sure you want to delete this version?"
-  ##!  delete_this_version: "delete this version"
-  galleries: "Galleries"
+  asset_version_list_version_heading: version
   created_on: "Created on"
+  delete_version_confirm: "Are you sure you want to delete this version?"
   file_size: "File size"
-  format: "Format"
+  file_version_deleted: "file version deleted"
+  format: Format
+  full: full
+  galleries: Galleries
+  history: History
+  image_options_info: "Should the image included in the wiki link to the fullsize image?"
+  image_select_info: "Pick an image to insert from the images uploaded to the group previously"
+  image_size_info: "Select the size of the image to insert"
+  image_upload_info: "Upload a new image to the group so it can be used in the wiki"
+  large: large
+  media_image: Image
+  media_images: Images
+  medium: medium
+  other_formats: "Other Formats"
   regenerate: "regenerate thumbnails"
+  small: small
   version_number: "version %{version}"
-  ##!  no_data_uploaded: "No data uploaded"
+  zip_file: "Zip File"
 
-  upload_image: "Upload Image"
-  ##!  remove_image: "Remove image"
+  ## AUTHENTICATED SYSTEM
+  anonymous: anonymous
+  login_required: "Login Required"
+  login_required_description: "Please login to perform that action."
+  permission_denied: "Permission Denied"
+  permission_denied_description: "You do not have sufficient permission to perform that action."
 
-  ##!  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
-
-  # avatar
-
-  ##!  avatar_image_upload_success: "Successfully uploaded a new avatar image."
-  ##!  confirm_delete_avatar: "Do you really want to delete your user image?"
-
-  # favicon
-
-  ##!  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
-  ##!  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
-
-  asset_version_list_version_heading: "version"
-
-  ##
-  ## GALLERY
-  ##
-
-  order_changed: Order changed.
-  error_saving_new_order_message: "Error saving new order: %{error_message}"
-  successfully_removed_image: Successfully removed image! (%{undo_link})
-  view_slideshow: View Slideshow
-  ##!  show_gallery: Show Gallery
-  edit_gallery: Edit Gallery
-  back_to_gallery_link: "Back to Gallery"
-  gallery_changing_cover_message: "Changing cover..."
-  download: Download
-  download_gallery: Download Gallery
-  gallery_slideshow_apply_settings_button: "apply"
-  gallery_undo_link: "undo"
-  remove_from_gallery: Remove from gallery
-  removing_image: Removing Image...
-  move_image_left: Move image left
-  move_image_right: Move image right
-  successful_undelete_image: Successfully undeleted image.
-  saved_new_order: Saved new order!
-  error_saving_new_order: Error saving new order!
-  ##!  no_title_given: (no title given)
-  saving_your_changes: Saving your changes...
-  activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
-  drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
-  no_images_in_gallery: No images in Gallery
-  add_existing_image: Add Photo
-  ##!  type_your_messages_here: "Type your messages here and press enter..."
-  add_photo_to_gallery: "Click on a Photo to add it"
-  cancel_link: "cancel"
-  file_must_be_image_error: "File must be an image to be part of a gallery."
-  ##!  group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
-  add_another_file: "Add another file"
-  slideshow_delay_input: "Update every %{input_field} seconds"
-  ##!  add_comment: "Add Comment"
-  make_album_cover: "make this image the album cover"
-  album_cover_changed: "Album Cover Changed"
-  ##!  image_title: "Image title: %{title}"
-  ##!  upload_zip_file_link: "Upload a ZIP-File"
-  upload_images_link: "Upload Images"
-  ##!  too_tall_image_error: "Uploaded image is too tall (%{count} pixels is the max height)"
-  ##!  too_wide_image_error: "Uploaded image must be exactly  %{count} pixels wide"
-  ##!  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
-  upload_a_zip_file_link: "Upload a ZIP-File"
-  upload_images_link: "Upload"
-  you_are_not_allowed_to_do_that: "You are not allowed to do that!"
-
-  ##
-  ## ACTION BAR
-  ##
-
-  ##!  select_filter_label: "Select:"
-  ##!  mark_as_label: "Mark as:"
-  view_label: "View"
-
-  ##!  select_all: "All"
-  ##!  select_none: "None"
-  ##!  select_unread: "Unread"
-
-
-  ##
   ## DATES
-  ##
-  sunday: Sunday
+  date_all_time: "All Time"
+  date_this_month: "This Month"
+  date_this_week: "This Week"
+  date_this_year: "This Year"
+  date_today: Today
+  friday: Friday
   monday: Monday
+  saturday: Saturday
+  sunday: Sunday
+  thursday: Thursday
   tuesday: Tuesday
   wednesday: Wednesday
-  thursday: Thursday
-  friday: Friday
-  saturday: Saturday
-  ##!  month_short_january: Jan
-  ##!  month_short_february: Feb
-  ##!  month_short_march: Mar
-  ##!  month_short_april: Apr
-  ##!  month_short_may: May
-  ##!  month_short_june: Jun
-  ##!  month_short_july: Jul
-  ##!  month_short_august: Aug
-  ##!  month_short_september: Sep
-  ##!  month_short_october: Oct
-  ##!  month_short_november: Nov
-  ##!  month_short_december: Dec
-  date_today: Today
-  ##!  date_yesterday: Yesterday
-  date_this_week: This Week
-  date_this_month: This Month
-  date_this_year: This Year
-  date_all_time: All Time
-  ##!  date_older: Older
-  ##!  date_centuries: centuries
-  ##!  date_years: years
-  ##!  date_months: months
-  ##!  date_weeks: weeks
-  ##!  date_days: days
-  ##!  date_hours: hours
-  ##!  date_minutes: minutes
-  ##!  date_seconds: seconds
 
-  ##
   ## ERRORS
-  ##
-
-  alert_not_saved: "Changes could not be saved"
   alert_field_errors: "There are problems with the following fields"
+  alert_not_saved: "Changes could not be saved"
   alert_saved: "Changes saved"
-  alert_permission_denied: "Permission Denied"
-  ##!  alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
-  ##!  alert_error: "Error"
-
-  ##!  exception_title: "System Error"
-  ##!  exception_headline: "Oops! We experienced an error."
-  ##!  exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
-  ##!  exception_back_link: "Go Back"
-  ##!  exception_bug_report_link: "Submit Bug Report"
-  ##!  exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
-
   csrf_error_message: "Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again."
+  error_saving_new_order_message: "Error saving new order: %{error_message}"
 
+  ## GALLERY
+  activate_js_to_rearrange_photos: "Activate JavaScript to use Drag&Drop to rearrange photos!"
+  add_another_file: "Add another file"
+  add_existing_image: "Add Photo"
+  add_photo_to_gallery: "Click on a Photo to add it"
+  album_cover_changed: "Album Cover Changed"
+  back_to_gallery_link: "Back to Gallery"
+  cancel_link: cancel
+  download: Download
+  download_gallery: "Download Gallery"
+  drag_and_drop_to_rearrange_photos: "Drag & Drop images to rearrange them"
+  edit_gallery: "Edit Gallery"
+  error_saving_new_order: "Error saving new order!"
+  file_must_be_image_error: "File must be an image to be part of a gallery."
+  gallery_changing_cover_message: "Changing cover..."
+  gallery_slideshow_apply_settings_button: apply
+  gallery_undo_link: undo
+  make_album_cover: "make this image the album cover"
+  move_image_left: "Move image left"
+  move_image_right: "Move image right"
+  no_images_in_gallery: "No images in Gallery"
+  order_changed: "Order changed."
+  remove_from_gallery: "Remove from gallery"
+  removing_image: "Removing Image..."
+  saved_new_order: "Saved new order!"
+  saving_your_changes: "Saving your changes..."
+  slideshow_delay_input: "Update every %{input_field} seconds"
+  successful_undelete_image: "Successfully undeleted image."
+  successfully_removed_image: "Successfully removed image! (%{undo_link})"
+  upload_images_link: "Upload Images"
+  you_are_not_allowed_to_do_that: "You are not allowed to do that!"
 
-  ##
-  ## WALL
-  ##
+  ## MEDIA
+  caption: Caption
+  file: File
+  files: Files
+  icon: Icon
+  photo: Photo
+  photo_credit: "Photo Credit"
+  size: Size
+  video_embed: Embed
 
-  set_status_button: "Update Status"
-  ##!  say_message_button: "Say"
-  ##!  wall_heading: "Public Message Wall"
-  ##!  wall_post_button: "Post New Message"
-  ##!  wall_say_form_submit_caption: "Post to %{user}'s activity feed"
-
-  ##!  my_status_heading: "Your Current Status"
-  # ^^ no longer used
-
-  ##!  users_wall: "%{user}'s Wall"
-  ## ^^ no longer used
-
-  ##!  recent_wall_posts: "Recent Wall Posts"
-  ## ^^ no longer used
-
-  ##
   ## PEOPLE (i.e., PeopleController)
-  ##
-
-  ##!  last_seen: "last seen"
-
-  ##!  directory_of_people: Directory of People
-  ##!  directory_peers_description: "A list of your friends and all the people in your groups and networks."
-  ##!  no_contacts_msg: You have no friends.
-  ##!  my_peers_explain: users I share a common group with
-  ##!  no_peers_msg: You have no peers.
-  ##!  my_contacts_link: my friends
   my_contacts: Contacts
-  ##!  new_people: New People
-  ##!  new_people_link: new people
-  ##!  no_public_profiles: No public profiles yet...
-  ##!  all_people_link: all people
-  ##!  all_people: All People
-  ##!  my_peers_link: my peers
-  ##!  my_peers: My Peers
-  ##!  my_peers_description: users I share a common group with
-  ##!  you_have_no_contacts: 'You have no friends'
-  ##!  you_have_no_peers: 'You have no peers'
 
-  ##!  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
-  ##!  remove_contact: "Remove contact %{user}"
-  ##!  remove_contact_button: "Remove Contact"
-
-  ##
-  ## AUTHENTICATED SYSTEM
-  ##
-
-  anonymous: "anonymous"
-  login_required: 'Login Required'
-  login_required_description: 'Please login to perform that action.'
-  permission_denied_description: 'You do not have sufficient permission to perform that action.'
-  permission_denied: 'Permission Denied'
-
-  ##
-  ## CHAT
-  ##
-
-  chat: "Chat"
-  ##!  joins_the_chatroom: 'joins the chatroom'
-  left_the_chatroom: 'left the chatroom'
-  ##!  chat_archive_headline: "Chat Archive"
-  ##!  chat_archive_link: "view the chat room archive"
-  ##!  leave_channel: "Leave channel"
-  ##!  trash_chat_message: "move message to trash"
-
-  ##
   ## TAGS
-  ##
-
-  tag: "Tag"
-  tags: "Tags"
-  ##!  edit_tags: "Edit Tags"
-  no_tags: "no tags"
-  add_one_or_more_tags: "Add one or more tags, separated by commas"
-  separate_tags: "Separate tags using commas."
   add_tags: "Add Tags"
+  current_tags: "Current tags"
+  no_tags: "no tags"
   popular_tags: "Popular tags"
   recent_tags: "Recent tags"
-  current_tags: "Current tags"
+  separate_tags: "Separate tags using commas."
+  tag: Tag
+  tags: Tags
 
+  ## WALL
+  set_status_button: "Update Status"
 
-  ##
   ## WELCOME
-  ##
-
-  ##!  welcome_show_link: "Show Welcome"
-  ##!  welcome_hide_link: "Hide Welcome"
-  welcome_title: "Welcome to %{site_title}"
-  ##!  welcome_heading: "Welcome to %{site_title}, %{user_name}!"
-  welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
   welcome_login_message: ""
+  welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
+  welcome_title: "Welcome to %{site_title}"
 
-  ##!  welcome_edit_profile_link: "Edit your profile"
-  ##!  welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
-
-  ##!  welcome_upload_icon_link: "Upload a user icon"
-  ##!  welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
-
-  ##!  welcome_find_people_link: "Find people"
-  ##!  welcome_find_people_text: "Browse the user directory for people you know."
-
-  ##!  welcome_find_groups_link: "Find groups"
-  ##!  welcome_find_groups_text: "Browse the group directory for groups to join."
-
-  ##!  welcome_create_group_link: "Create a new group"
-  ##!  welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
-
-  ##!  welcome_create_page_link: "Create a new page"
-  ##!  welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
-
-  ##
-  ## SITE HOME
-  ##
-
-  ##!  have_your_say: "Have Your Say!"
-  ##!  contribute_to_site: "Contribute to Site"
-  ##!  create_a_group: "Create a Group"
-  ##!  create_a_network: "Create a Network"
-  ##!  see_tips_to_get_started: "See Tips to get started"
-  ##!  hide_tips: "Hide Tips"
-  ##!  most_active_members: "Most Active Members"
-  ##!  recently_active_members: "Recently Active Members"
-  ##!  most_active_groups: "Most Active Groups"
-  ##!  recently_active_groups: "Recently Active Groups"
-  ##!  network_settings: "Network Settings"
-
-  ##!  administer_site: "Administer Site"
-  ##!  edit_appearance: "Edit Appearance"
-
-  ##
-  ## MODERATION
-  ##
-
-  ##!  flag_button: "Flag"
-  ##!  flag_appropriate: "flag as appropriate"
-  ##!  flag_inappropriate: "flag as inappropriate"
-  ##!  confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  ##!  confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
-  ##!  chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
-  ##!  offensive_behavior: "Offensive Behavior"
-  ##!  off_topic: "Off Topic"
-  ##!  offensive_language: "Offensive Language"
-  ##!  other_reason: "Other Reason"
-  ##!  inappropriate_content: "Inappropriate content"
-
-  ##!  make_public_requested: "Make Public Requested"
-  ##!  moderation: "Moderation"
-  ##!  admins_may_moderate: "Allow council members to moderate the content of the group"
-  ##!  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
-
-  ##
-  ## ADMIN
-  ##
-
-  ##!  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
-  ##!  signup_mode_closed_description: "Signup is closed."
-  ##!  signup_mode_invite_only_description: "Signup is allowed by invitation only."
-  ##!  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
-
-  ##!  sign_up_settings: "Sign Up Settings"
-  ##!  profile_settings: "Profile Settings"
-  ##!  email_blasts: "Email Blasts"
-
-
-  # custom appearances
-
-  ##!  succesfully_updated_custom_appearance: "Updated custom appearance #%{appearance_id} options!"
-  ##!  enable_masthead_question: "Enable masthead image?"
-  ##!  masthead: "Masthead"
-  ##!  select_masthead_background_color: "Select masthead background color."
-  ##!  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  ##!  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
-
-  ##!  masthead: "Masthead"
-  ##!  advanced: "Advanced"
-  ##!  favicon: "Browser Icon"
-  ##!  color_theme: "Color Theme"
-
-  ##!  update_color_theme: "Update Color Theme"
-  ##!  update_favicon: "Update Favicon"
-  ##!  update_masthead: "Update Masthead"
-
-  # other
-
-  ##!  page_make_public_link: "make public"
-  ##!  page_make_public_pending_link: "make public (pending)"
-
+  ## UNSORTED
+  a_message_link: "a message"
+  a_reply_link: "a reply"
+  add_one_or_more_tags: "Add one or more tags, separated by commas"
+  chat: Chat
+  confirm_discarding_text_area: "All your unsaved work will be lost. Press %{cancel} to continue editing."
+  illegal_redirect: "Illegal redirect"
+  include_full_checkbox: "include link to full image"
+  left_the_chatroom: "left the chatroom"
+  place: place
+  preview_selected_image: "Preview of selected image"
+  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (%{url}) after your login. For security reasons we have removed this parameter from the URL."
+  save_wiki_before_adding_image: "Please save the wiki before adding an image to it."
+  view_slideshow: "View Slideshow"

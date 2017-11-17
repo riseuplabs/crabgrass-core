@@ -1,283 +1,32 @@
+---
 en:
-
-  pages: "Pages"
-  recent_pages: "Recent Pages"
-  #group_pages: "Group Pages"
-
-  #my_pages: "My Pages"
-  #view_work_pages_option: "All My Work Pages"
-  #view_watched_pages_option: "My Watched Pages"
-  #view_editor_pages_option: "My Page Edits"
-  #view_owner_pages_option: "Pages I Own"
-  #view_unread_pages_option: "Unread Pages"
-  #view_public_pages_option: "The World"
-  #view_networks_pages_option: "My World"
-  #view_groups_pages_option: "My Groups and Me"
-
-  #view_work_pages_description: "Pages that you own, participated in, or are watching."
-  #view_watched_pages_description: "Pages that you are watching."
-  #view_editor_pages_description: "Pages you participated in."
-  #view_owner_pages_description: "Pages you own."
-  #view_unread_pages_description: "Unread pages that you own, participated in, or are watching."
-  #view_public_pages_description: "All pages that you have access too, including public pages."
-  #view_networks_pages_description: "All pages of your groups and networks and those shared between you and other users."
-  #view_groups_pages_description: "All pages of your groups and your own pages."
-
-  # search filter sections
+  access: Access
+  action: Action
+  advanced: Advanced
   my_pages: "My Pages"
-  properties: "Properties"
+  pages: Pages
   popular_pages: "Popular Pages"
-  advanced: "Advanced"
-  access: "Access"
+  properties: Properties
+  recent_pages: "Recent Pages"
 
-  ##
-  ## PAGE SEARCH
-  ##
+  ## EXTERNAL VIDEO
+  current_video_sources: "Currently supported: youtube, blip.tv, google video, vimeo."
+  video_embed_code_description: "This is not the website address. It is a code surrounded by < and > that the video site – youtube, etc – makes available to you for putting the video on other sites."
+  video_embed_code_prompt: "Embed code from external video source."
 
-  active_filters: "Active Filters"
-
-  all_pages: "All Pages"
-
-  created_by_me: "Created"
-  created_by_user: "Created By %{user}"
-  created_by_user_description: "Search for pages created by a particular person."
-  created_by_dotdotdot: "Created By..."
-
-  starred_by_me: "Starred"
-  starred_by_user: "Starred By %{user}"
-  ##!  starred_by_user_description: "Search for pages starred by a particular person."
-  ##!  starred_by_dotdotdot: "Starred By..."
-
-  watched_by_me: "Watching"
-  watched_by_user: "Watched By %{user}"
-  ##!  watched_by_user_description: "Search for pages watched by a particular person."
-  ##!  watched_by_dotdotdot: "Watched By..."
-
-  edited_by_me: "Edited"
-  edited_by_user: "Edited By %{user}"
-  ##!  edited_by_user_description: "Search for pages edited by a particular person."
-  ##!  edited_by_dotdotdot: "Edited By..."
-
-  owned_by_me: "Own"
-  owned_by_user: "Owned By %{user}"
-  ##!  owned_by_user_description: "Search for pages owned by a particular person."
-  ##!  owned_by_dotdotdot: "Owned By..."
-
-  most_active: "Most Active"
-  most_stars: "Most Stars"
-  most_viewed: "Most Viewed"
-
-  filter_user_description: "Search for pages with access by a particular user."
-  filter_group_description: "Search for pages with access by a particular group."
-
-  starred: "Starred"
-  viewed: "Viewed"
-  edited: "Edited"
-
-  ##!  watched: "Watched"
-  ##!  unwatched: "Unwatched"
-
-  type: "Type"
-
-  all_page_types: "all page types"
-  edit_title: "edit title"
-  data_for_page_missing: "The data for this page is missing."
-  no_change: "no change"
-  updated: "updated"
-  created: "created"
-  unread: "unread"
-  read: "read"
-  ##!  all_people: "All People"
-  ##!  all_groups: "All Groups"
-  ##!  all_networks: "All Networks"
-  # ^^ i think this should go away soon, as soon as we have a better group directory.
-  ##!  all_states: "All States"
-  page_name_description: "Optional unique name (used to create the URL for this page)"
-
-  filter_tag_description: "Search for pages with a particular tag."
-
-  # page list
-
-  #page_list_heading_updated_by: "updated by"
-  #page_list_heading_created_by: "created by"
-  #page_list_heading_deleted_by: "deleted by"
-
-  #page_list_heading_title: "title"
-  #page_list_heading_new: "new"
-  #page_list_heading_created: "created"
-  #page_list_heading_updated: "updated"
-  #page_list_heading_deleted: "deleted"
-  #page_list_heading_posts: "posts"
-  #page_list_heading_owner: "owner"
-  #page_list_heading_contribution: "contribution"
-  #page_list_heading_last_updated: "last updated"
-  #page_list_heading_stars: "stars"
-  #page_list_heading_happens: "happens"
-  #page_list_heading_last_post: "last post"
-  #page_list_heading_views: "views"
-  #page_owned_by: "'%{title}' is owned by %{entity} '%{name}'"
-
-  ##
   ## NOTIFICATION
-  ##
-
-  page_notice: "Page Notice"
-  email_notice_subject: 'Check out page "%{title}"'
-  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the message: %{message}"
-  email_notice_hello: "Hello, %{from} has sent you a web page."
-  email_notice_access: "You may access this page here:"
   email_link_expires: "This link will expire in %{days} days."
-  page_notice_title: '<user>%{from}</user> sent you page "%{page_title}"'
-  page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}" with the message:'
-  page_updated: '<user>%{from}</user> updated the page "%{page_title}"'
+  email_notice_access: "You may access this page here:"
+  email_notice_hello: "Hello, %{from} has sent you a web page."
+  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the message: %{message}"
+  email_notice_subject: "Check out page \"%{title}\""
+  page_notice: "Page Notice"
+  page_notice_title: "<user>%{from}</user> sent you page \"%{page_title}\""
+  page_notice_title_with_message: "<user>%{from}</user> sent you page \"%{page_title}\" with the message:"
   page_update: "Page Update"
+  page_updated: "<user>%{from}</user> updated the page \"%{page_title}\""
 
-
-  ##!  page_notice_message: "%{user} notified you about this page on %{date}"
-  ##!  page_with_message: "with message"
-  ##!  view_posts_link: "view"
-
-  ##
-  ## PAGE SIDEBAR
-  ##
-
-  ##!  move_this_page: "Move This Page"
-  ##!  move_page_to_different_group: "Move this page to a different group"
-
-  ##!  announcements: "Announcements"
-  watch_checkbox: "Watch For Updates"
-  add_star_link: "Add Star (%{star_count})"
-  remove_star_link: "Remove Star (%{star_count})"
-  public_checkbox: "Public"
-  public_checkbox_help: "If checked, anyone may view this page."
-  ##!  move_page_link: "Move %{page_class}"
-  page_details_link: "%{page_class} Details"
-  ##!  print_view_link: "Printable"
-
-  # trash
-
-  ##!  trash: "Trash"
-  ##!  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking %{undelete} or permanently destroy a page by clicking %{destroy}."
-
-  delete_page_link: "Delete %{page_class}"
-
-  destroy_page_via_shred: "Destroy Immediately"
-  destroy_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
-  destroy_page_via_trash: "Move To Trash"
-  destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
-
-  undelete_from_trash: "Undelete"
-
-  ##!  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
-  ##!  destroy_page_link: "Shred %{page_class}"
-  ##!  trash_page_link: "Move %{page_class} to trash"
-
-
-
-  # details
-
-  ##!  page_details: "Page Details"
-  participation: "Participation"
-  ##!  user_or_group_name: "User or group name"
-  information: "Information"
-  ##!  remove_last_access_error: "You cannot remove your last remaining access to this page."
-  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
-
-  # tags
-
-  edit_tags_link: "Edit"
-  separate_tags: "Separate tags using commas."
-
-  # attachments
-
-  edit_attachments_link: "Edit"
-  attachments: "Attachments"
-  edit_attachments: "Edit Attachments"
-  current_attachments: "Current Attachments"
-  add_new_attachment: "Add New Attachment"
-  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
-  ##!  use_as_cover: "Use as cover"
-
-  # share/notify
-
-  page_access_admin: "Full Access"
-  page_access_edit: "Write Ability"
-  page_access_none: "No Access"
-  page_access_view: "Read Only"
-
-  ##!  grant_access: "Grant Access"
-  ##!  share_page_email: "Send an email notification"
-  ##!  share_page_message: "Send a message (optional)"
-  share_page_link: "Share %{page_class}"
-  ##!  share_page_options: "Choose options"
-  share_page_recipients: "Share page with"
-  ##!  share_page_recipients_sections: "Choose from your groups or friends"
-  ##!  share_page_recipients_selection: "Make your selection"
-  ##!  share_page_recipients_results: "This %{page_class} will be shared with"
-  notify_page_link: "Send Notification"
-  notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
-  notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
-  ##!  notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
-  notification_message: "Notification Message"
-
-  send_only_with_encryption: "Send only if encrypted distribution is possible"
-  ##!  share_additional_notification: "Send additional notification via"
-  share_send_notification: "Send notification"
-  send_email: "Send Email"
-  share_include_message: "Include a custom message"
-
-  ##!  share_all_checkbox: "Shared with all users"
-  ##!  share_all_checkbox_help: "If checked, all Users can access this page."
-
-  shared_page_success: "You successfully shared this page."
-  notify_success: "You successfully sent notifications."
-
-  ##!  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
-  share_grant_required_error: "%{name} is not allowed to view this page. They must be granted greater access first."
-  share_permission_denied_error: "You are not allowed to change the access permissions of this page"
-  notify_no_access_error: 'Sorry, "%{name}" does not have access to this page.'
-  share_already_exists_error: '"%{name}" already has access to this page.'
-  share_pester_error: 'Sorry, you are not allowed to share with "%{name}".'
-  name_or_email_not_found: '"%{name}" does not match the name of any users or groups and is not a valid email address.'
-
-  ##!  notice_with_message: "with message %{message}"
-
-  # creating
-
-  contribute_content_link: "Create Page"
-  ##!  contribute_group_content_link: "Add Page To %{group}"
-  page_create_owner: "Page Owner"
-  ##!  create_page_information: "%{page_class} Information"
-  ##!  create_page_data: "%{page_class} Data"
-  create_page: "Create Page"
-  only_me: "Me"
-  ##!  create_page_button: "Create %{page_class}"
-  page_added_to_group: "This page will be added to %{group_type} %{group_name}."
-  additional_page_access: "Additional Access"
-  page_owner_error: "Page owner cannot be empty."
-
-  # help
-
-  ##!  title_help: "Required. The title is used to identify this page."
-  ##!  summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
-  ##!  tags_help: "Optional. For tags, use a few words that best describe this page."
-  ##!  page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
-  ##!  sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
-  ##!  coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
-  ##!  participant_help: "<b>Write Ability</b> will allow editing of this page."
-  ##!  viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
-  ##!  wiki_body_help: "Optional. Enter here the initial body text for the page."
-  ##!  upload_image_help: "Optional. Select an initial image file to upload to this page."
-  ##!  upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
-  ##!  upload_file_help: "Required. Select a file to upload to this page."
-
-  page_is_public: "This page is public."
-
-  ##
   ## PAGE HISTORY
-  ##
-
-  action: "Action"
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"
   page_history_change_title: "%{user_name} has modified the page title"
@@ -301,198 +50,176 @@ en:
   page_history_updated_content: "%{user_name} has updated the page content"
   page_history_user_created_page: "%{user_name} has created the page"
 
+  ## PAGE SEARCH
+  active_filters: "Active Filters"
+  all_page_types: "all page types"
+  all_pages: "All Pages"
+  created: created
+  created_by_dotdotdot: "Created By..."
+  created_by_me: Created
+  created_by_user: "Created By %{user}"
+  created_by_user_description: "Search for pages created by a particular person."
+  data_for_page_missing: "The data for this page is missing."
+  edit_title: "edit title"
+  edited: Edited
+  edited_by_user: "Edited By %{user}"
+  filter_group_description: "Search for pages with access by a particular group."
+  filter_tag_description: "Search for pages with a particular tag."
+  filter_user_description: "Search for pages with access by a particular user."
+  most_active: "Most Active"
+  most_stars: "Most Stars"
+  most_viewed: "Most Viewed"
+  no_change: "no change"
+  owned_by_me: Own
+  owned_by_user: "Owned By %{user}"
+  page_name_description: "Optional unique name (used to create the URL for this page)"
+  read: read
+  starred: Starred
+  starred_by_user: "Starred By %{user}"
+  type: Type
+  unread: unread
+  updated: updated
+  viewed: Viewed
+  watched_by_me: Watching
+  watched_by_user: "Watched By %{user}"
 
-  ##
+  ## PAGE SIDEBAR
+  add_star_link: "Add Star (%{star_count})"
+  delete_page_link: "Delete %{page_class}"
+  destroy_page_via_shred: "Destroy Immediately"
+  destroy_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
+  destroy_page_via_trash: "Move To Trash"
+  destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
+  information: Information
+  page_details_link: "%{page_class} Details"
+  page_is_public: "This page is public."
+  participation: Participation
+  public_checkbox_help: "If checked, anyone may view this page."
+  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
+  remove_star_link: "Remove Star (%{star_count})"
+  separate_tags: "Separate tags using commas."
+  undelete_from_trash: Undelete
+  watch_checkbox: "Watch For Updates"
+  add_new_attachment: "Add New Attachment"
+  page_access_admin: "Full Access"
+  page_access_edit: "Write Ability"
+  page_access_none: "No Access"
+  page_access_view: "Read Only"
+  edit_attachments: "Edit Attachments"
+  current_attachments: "Current Attachments"
+  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
+  share_already_exists_error: "\"%{name}\" already has access to this page."
+  share_grant_required_error: "%{name} is not allowed to view this page. They must be granted greater access first."
+  share_include_message: "Include a custom message"
+  share_page_link: "Share %{page_class}"
+  share_page_recipients: "Share page with"
+  share_send_notification: "Send notification"
+  shared_page_success: "You successfully shared this page."
+  share_permission_denied_error: "You are not allowed to change the access permissions of this page"
+  share_pester_error: "Sorry, you are not allowed to share with \"%{name}\"."
+  notification_message: "Notification Message"
+  notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
+  notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
+  notify_no_access_error: "Sorry, \"%{name}\" does not have access to this page."
+  notify_page_link: "Send Notification"
+  notify_success: "You successfully sent notifications."
+  send_only_with_encryption: "Send only if encrypted distribution is possible"
+  send_email: "Send Email"
+  name_or_email_not_found: "\"%{name}\" does not match the name of any users or groups and is not a valid email address."
+
   ## PAGE TYPES
-  ##
-
-  ##!  announcement_page_description: "An announcement."
-  ##!  announcement_page_display: "Announcement"
-  ##!  announcements_page_display: "Announcement"
-
-  ##!  article_page_description: "Create a blog post or news article."
-  ##!  article_page_display: "Article"
-
-  wiki_page_description: "Create an editable free-form text document."
-  wiki_page_display: "Wiki Page"
-  ##!  wiki: "Wiki"
-
-  #collection_class_description: "Special pages that hold other pages."
-  #collection_page_display: "collection"
-
-  ##!  folder_class_description: "Create a folder to organize other pages."
-  ##!  folder_display: "Folder"
-
-  gallery_description: "Upload multiple images or organize existing images into a set."
-  gallery_display: "Gallery"
-
+  additional_page_access: "Additional Access"
   asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
-  asset_page_display: "File"
-  select_file_to_upload: "Select a file to upload."
-
-  ##!  external_video_page_description: "Show a video hosted on an external website."
-  ##!  external_video_page_display: "External Video"
-
+  attachments: Attachments
+  contribute_content_link: "Create Page"
+  create_page: "Create Page"
   discussion_page_description: "Discuss a particular topic with groups or other users."
   discussion_page_display: "Group Discussion"
-
-  ##!  message_page_description: "Send a personal message to individual recipients."
-  ##!  message_page_display: "Personal Message"
-
+  gallery_description: "Upload multiple images or organize existing images into a set."
+  gallery_display: Gallery
+  page_added_to_group: "This page will be added to %{group_type} %{group_name}."
+  page_create_owner: "Page Owner"
+  page_owner_error: "Page owner cannot be empty."
   ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
   ranked_vote_page_display: "Ranked Vote"
-
-  ##!  survey_page_description: "Create a series of questions for people to answer."
-  survey_page_display: "Survey"
-
   rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
   rate_many_page_display: "Approval Poll"
-
+  select_file_to_upload: "Select a file to upload."
+  survey_page_display: Survey
   task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
   task_list_page_display: "Task List"
+  wiki_page_description: "Create an editable free-form text document."
+  wiki_page_display: "Wiki Page"
 
-  ##!  event_page_description: "A calendar event."
-  ##!  event_page_display: "Event"
-
-  ##
   ## PAGE TYPE GROUPINGS
-  ##
-
-  # the main four
-  page_group_vote: Polls and Votes
-  page_group_text: Text and Discussions
+  assign_to: "Assign to"
+  completed: Completed
+  completed_tasks: "Completed tasks"
+  no_completed_tasks: "No completed tasks"
+  no_pending_tasks: "No pending tasks"
   page_group_media: Multimedia
-  page_group_planning: Planning Tools
+  page_group_planning: "Planning Tools"
+  page_group_text: "Text and Discussions"
+  page_group_vote: "Polls and Votes"
+  pending_tasks: "Pending tasks"
 
-  # media types
-  ##!  page_group_media_image: Images
-  ##!  page_group_media_audio: Audio
-  ##!  page_group_media_video: Videos
-  ##!  page_group_media_document: Documents
-
-  # alt ways of searching
-  ##!  page_group_discussion: Discussions
-  ##!  page_group_collection: Collections
-  ##!  page_group_event: Events
-  ##!  page_group_task: Tasks
-
-  ##
-  ## Task List Page
-  ##
-
-  pending_tasks: 'Pending tasks'
-  completed_tasks: 'Completed tasks'
-  no_pending_tasks: 'No pending tasks'
-  no_completed_tasks: 'No completed tasks'
-  assign_to: 'Assign to'
-  completed: 'Completed'
-
-  ##
   ## RANKED VOTE & RATE MANY
-  ##
-
-  vote:
-    really_remove_this: 'Do you really want to remove this option?'
-    you_have_not_ranked: 'You have not ranked yet:'
-    voted_on: 'Voted on'
-    not_voted_on: 'Not voted on'
-
-  vote_good: "good"
-  vote_ok: "ok"
-  vote_bad: "bad"
-  vote_none: "none"
-  vote_no: "no"
-
-  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom."
-
   confirm_vote_button: "Confirm Vote"
   edit_my_vote_tab: "Edit my vote"
+  first_choice_of: "first choice of"
+  ranked_vote_instructions: "Drag and drop the items on the following list until they are in order from most preferred at the top to least preferred at the bottom."
   show_results_tab: "Show results"
   top_pick: "top pick"
-  first_choice_of: "first choice of"
+  vote:
+    not_voted_on: "Not voted on"
+    really_remove_this: "Do you really want to remove this option?"
+    voted_on: "Voted on"
+    you_have_not_ranked: "You have not ranked yet:"
+  vote_bad: bad
+  vote_good: good
+  vote_no: "no"
+  vote_none: none
+  vote_ok: ok
 
-  ##
   ## SURVEY PAGE
-  ##
-
-  # design page
-
-  save_survey_button: "Save Survey"
-
-  ##!  survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
-  ##!  survey_rating_enabled: "Enable the rating of responses?"
-
-  survey_may_create_response: "May create response?"
-  survey_may_see_responses: "May see responses?"
-  survey_may_rate: "May rate responses?"
-  survey_may_see_ratings: "May see ratings?"
-
-  survey_question_label: "Question:"
-  survey_description_heading: "Description"
-  survey_description_explaination: "This text will show up in the introduction tab, and will be the first thing that survey takers see."
-  select_many_choices_label: "Select many answer choices:"
-  select_one_choices_label: "Select one answer choices:"
-  video_embed_code_description: "This is not the website address. It is a code surrounded by < and > that the video site – youtube, etc – makes available to you for putting the video on other sites."
-  private_question_label: "Private Question"
-  their_answer_goes_here_label: "Their answer goes here..."
-
-  # responses
-
-  ##!  survey: "Survey"
-  survey_response_by: "Response by %{login}"
-
-  see_whole_response_link: "see whole response"
-  survey_average_rating_heading: "Average Rating:"
-  survey_previous_result: "Previously"
-  survey_rated_by_1_person_caption: "Rated by one person."
-  survey_rated_by_x_people_caption: "Rated by %{count} people."
-  survey_respond_button: "Respond"
-  survey_rate_this_response_heading: "Rate This Response"
-  survey_select_a_rating_message: "Select a rating to see the next item."
-  survey_skip_next_link: "Skip To Next"
-  survey_you_already_rated_response_with_rating_heading: "You already rated this response - You gave it a %{rating}."
-  survey_you_previousely_rated_message: "You previously rated this item with %{rating}."
-  survey_your_rating_heading: "Your Rating:"
-
-
-
-  # questions
-
-  survey_questions: "Questions"
   add_long_text_question_link: "Long Answer"
   add_select_many_question_link: "Select Multiple Answers"
   add_select_one_question_link: "Select One Answer"
   add_short_text_question_link: "Short Answer"
-  upload_image_question_link: "Upload Image"
-  video_link_question_link: "Video Link"
-
-
-
-  # tabs
-
-  survey_introduction_tab: "Introduction"
-  ##!  survey_create_tab: "Create Survey"
-  ##!  survey_edit_tab: "Edit Survey"
-  survey_list_all_tab: "List Responses"
-  survey_my_response_tab: "My Response"
-  ##!  survey_rate_responses_tab: "Rate Responses"
-  ##!  survey_take_tab: "Take Survey"
-
-  # unsorted
-
-  survey_please_check_and_rate_message: "Please check your answers and rate other peoples responses."
-  survey_please_check_message: "Please check your answers."
-  survey_thanks_submit_message: "Thank you for submitting your response."
-
   drag_to_move_tip: "drag to move"
   each_line_is_a_choice_caption: "(each line is a possible choice)"
   no_data_uploaded_label: "No data uploaded"
-
-
-  ##
-  ## EXTERNAL VIDEO
-  ##
-
-  ##!  video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
-  current_video_sources: "Currently supported: youtube, blip.tv, google video, vimeo."
-  video_embed_code_prompt: "Embed code from external video source."
+  private_question_label: "Private Question"
+  save_survey_button: "Save Survey"
+  see_whole_response_link: "see whole response"
+  select_many_choices_label: "Select many answer choices:"
+  select_one_choices_label: "Select one answer choices:"
+  survey_average_rating_heading: "Average Rating:"
+  survey_description_explaination: "This text will show up in the introduction tab, and will be the first thing that survey takers see."
+  survey_description_heading: Description
+  survey_introduction_tab: Introduction
+  survey_list_all_tab: "List Responses"
+  survey_may_create_response: "May create response?"
+  survey_may_rate: "May rate responses?"
+  survey_may_see_ratings: "May see ratings?"
+  survey_may_see_responses: "May see responses?"
+  survey_my_response_tab: "My Response"
+  survey_please_check_and_rate_message: "Please check your answers and rate other peoples responses."
+  survey_please_check_message: "Please check your answers."
+  survey_previous_result: Previously
+  survey_question_label: "Question:"
+  survey_questions: Questions
+  survey_rate_this_response_heading: "Rate This Response"
+  survey_rated_by_1_person_caption: "Rated by one person."
+  survey_rated_by_x_people_caption: "Rated by %{count} people."
+  survey_respond_button: Respond
+  survey_response_by: "Response by %{login}"
+  survey_select_a_rating_message: "Select a rating to see the next item."
+  survey_skip_next_link: "Skip To Next"
+  survey_thanks_submit_message: "Thank you for submitting your response."
+  survey_you_already_rated_response_with_rating_heading: "You already rated this response. You gave it a %{rating}."
+  survey_you_previousely_rated_message: "You previously rated this item with %{rating}."
+  survey_your_rating_heading: "Your Rating:"
+  their_answer_goes_here_label: "Their answer goes here..."
+  upload_image_question_link: "Upload Image"
+  video_link_question_link: "Video Link"

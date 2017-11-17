@@ -1,8 +1,8 @@
+---
 en:
   headings:
-    page_search: "Search for pages"
-    recent_pages: "Recent Pages"
     info:
       page_search: "Find all pages you have access to directly or via your groups"
       recent_pages: "These pages were created or updated recently."
-
+    page_search: "Search for pages"
+    recent_pages: "Recent Pages"

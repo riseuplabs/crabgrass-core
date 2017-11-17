@@ -1,136 +1,64 @@
+---
 en:
-
-  requests: "Requests"
-  request: "Request"
-  incoming: "Incoming"
-  outgoing: "Outgoing"
-  request_pending: "%{request} is pending"
-  not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
-  try_again: "Try Again"
-  send_request_button: "Send Request"
-  send_invites_button: "Send Invites"
   all_requests: "All Requests"
+  incoming: Incoming
+  not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
+  outgoing: Outgoing
+  request: Request
+  request_pending: "%{request} is pending"
+  requests: Requests
+  send_invites_button: "Send Invites"
+  send_request_button: "Send Request"
+  try_again: "Try Again"
 
-  ##
-  ## REQUEST TYPES
-  ##
-  ## these strings are all used in the request models.
-  ##
+  ## FRIENDS
+  friend_remove_confirmation: "Are you sure you wish to no longer be the contact of %{user}?"
+  friend_request_message_label: "Tell %{user} why you want to be their contact."
 
-  activerecord:
-    models:
-      request_to_friend: "Request to Become Contacts"
-      request_to_join_our_network:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
-      request_to_destroy_our_group: "Request to Destroy Group"
-      request_to_join_us:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
-      request_to_join_us_via_email:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
-      request_to_join_you: "Request to Join"
-      request_to_join_your_network: "Request to Join"
-      request_to_create_council: "Request to Create Council"
-      request_to_remove_user: "Request to Remove Member"
-
-  request_to_friend: "Request to Become Contacts"
-  request_to_friend_short: "Shall %{user} become a contact of %{other_user}?"
-  request_to_friend_description: "User %{user} has requested to become a contact of user %{other_user}."
-  request_to_join_our_network:
-    one: "Invitation to Join"
-    other: "Invitations to Join"
-
-  request_to_destroy_our_group: "Request to Destroy Group"
-  request_to_join_our_network_short: "Shall %{group} join %{network}?"
-  request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
-
-  request_to_join_us:
-    one: "Invitation to Join"
-    other: "Invitations to Join"
-  request_to_join_us_short: "Shall %{user} join %{group}?"
-  request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
-
-  request_to_join_us_via_email:
-    one: "Invitation to Join"
-    other: "Invitations to Join"
-  request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
-  request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
-
-  request_to_join_you: "Request to Join"
-  request_to_join_you_short: "Shall %{user} join %{group}?"
-  request_to_join_you_description: "The user %{user} requested to join the group %{group}."
-
-  request_to_join_your_network: "Request to Join"
-  request_to_join_your_network_short: "Shall %{group} join %{network}?"
-  request_to_join_your_network_description: "The group %{group} requested to join the network %{network}."
-
-  request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
-  request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
-
-  request_to_create_council: "Request to Create Council"
-  request_to_create_council_short: "Shall %{group} have a council?"
-  request_to_create_council_description: "The user %{user} has proposed to create a council for %{group_type} %{group}."
-
-  request_to_remove_user: "Request to Remove Member"
-  request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
-  request_to_remove_user_description: "The user %{user} has proposed to remove %{member} from %{group_type} %{group}."
-
-
-  ##
   ## MEMBERSHIP REQUESTS
-  ##
-
-  invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
-
-  invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
-  request_exists_error: "Request already exists for %{recipient}"
-  ##!  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: %{my_requests_url}."
+  invite_error_redeemed: "Invite has already been redeemed."
+  invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %{group_type}."
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
+  request_exists_error: "Request already exists for %{recipient}"
   you_are_invited: "You are invited to join."
 
-  ##
-  ## FRIENDS
-  ##
-
-  friend_request_message_label: "Tell %{user} why you want to be their contact."
-  friend_remove_confirmation: "Are you sure you wish to no longer be the contact of %{user}?"
-
-  ##
-  ## ATTIC
-  ##
-
-  ##!  removal_requested: "Removal Requested"
-  ##!  invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
-  ##!  invite_accept_headline: 'Accept invitation to join group "%{group_name}"'
-  ##!  invite_accept_via_existing_account: "I already have an account"
-  ##!  invite_accept_via_register: "I need to register a new account"
-  ##!  join_group_success: "You have joined group %{group_name}"
-  ##!  state: "State"
-  ##!  ignore: "Ignore"
-  ##!  my_requests_link: "My requests"
-  ##!  all_requests: "All Requests"
-  ##!  requests_to_me: "Requests to me"
-  ##!  requests_from_me: "Requests from me"
-  ##!  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
-
-  ##!  request_to_remove_coordinator_user_tooltip_description: |
-  ##  <p>There is a running tally of the  votes.</p><br/>
-  ##  <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
-  ##  <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
-  ##  <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
-  ##!  request_to_remove_coordinator_user_description: "%{user} has proposed to remove %{target_user} from %{group_type} %{group}. %{target_user} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. %{tooltip}"
-
-  ##request_to_destroy_our_group_email: |
-  ##  The %{group_type} '%{group}' will be destroyed enough members approve this proposal.
-  ##  If no one or one member rejects this proposal and all other members of the %{group} it, then the %{group} will get destroyed immediatelly.
-  ##  If there are some approvals, then after one month votes will be tallied and the group will get destroyed if 2/3 or more of the votes are to approve.
-  ##  Finally, for a group with a coordinating council, only the council members can vote on destroying the group.
-  ##request_votes_tally_info: "%{approved_count} voted to approve / %{rejected_count} voted to reject"
-
-  ##!  send_contact_button: "Send contact invitation"
-  ##!  send_contacts_title: "Send contact invitation to %{user}"
-  ##!  send_invites_headline: "Send invitations to join %{group}"
+  ## REQUEST TYPES
+  activerecord:
+    models:
+      invitation_to_join:
+        one: "Invitation to Join"
+        other: "Invitations to Join"
+      request_to_create_council: "Request to Create Council"
+      request_to_destroy_our_group: "Request to Destroy Group"
+      request_to_friend: "Request to Become Contacts"
+      request_to_join_you: "Request to Join"
+      request_to_join_your_network: "Request to Join"
+      request_to_remove_user: "Request to Remove Member"
+  invitation_to_join:
+    one: "Invitation to Join"
+    other: "Invitations to Join"
+  request_to_create_council: "Request to Create Council"
+  request_to_create_council_description: "The user %{user} has proposed to create a council for %{group_type} %{group}."
+  request_to_create_council_short: "Shall %{group} have a council?"
+  request_to_destroy_our_group: "Request to Destroy Group"
+  request_to_destroy_our_group_description: "The user %{user} has proposed to destroy %{group_type} %{group}."
+  request_to_destroy_our_group_short: "Shall %{group} be destroyed?"
+  request_to_friend: "Request to Become Contacts"
+  request_to_friend_description: "User %{user} has requested to become a contact of user %{other_user}."
+  request_to_friend_short: "Shall %{user} become a contact of %{other_user}?"
+  request_to_join: "Request to Join"
+  request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
+  request_to_join_our_network_short: "Shall %{group} join %{network}?"
+  request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
+  request_to_join_us_short: "Shall %{user} join %{group}?"
+  request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
+  request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
+  request_to_join_you_description: "The user %{user} requested to join the group %{group}."
+  request_to_join_you_short: "Shall %{user} join %{group}?"
+  request_to_join_your_network_description: "The group %{group} requested to join the network %{network}."
+  request_to_join_your_network_short: "Shall %{group} join %{network}?"
+  request_to_remove_user: "Request to Remove Member"
+  request_to_remove_user_description: "The user %{user} has proposed to remove %{member} from %{group_type} %{group}."
+  request_to_remove_user_short: "Shall %{member} be removed from %{group}?"
