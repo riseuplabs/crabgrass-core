@@ -147,7 +147,7 @@ module Common::Application::AlertMessages
 
   def add_flash_exception(exception)
     if exception.is_a? PermissionDenied
-      [{ type: :warning, text: [:alert_permission_denied.t, :permission_denied_description.t] }]
+      [{ type: :warning, text: [:permission_denied.t, :permission_denied_description.t] }]
     elsif exception.is_a? AuthenticationRequired
       [{ type: :notice, text: [:login_required.t, :login_required_description.t] }]
     elsif exception.is_a? ErrorMessages

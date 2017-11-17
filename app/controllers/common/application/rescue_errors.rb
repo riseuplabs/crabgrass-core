@@ -236,7 +236,7 @@ module Common::Application::RescueErrors
   #  end
   #
   #  if logged_in?
-  #    add_flash_message(flsh, :title => I18n.t(:alert_permission_denied), :error => I18n.t(:permission_denied_description))
+  #    add_flash_message(flsh, :title => I18n.t(:permission_denied), :error => I18n.t(:permission_denied_description))
   #  else
   #    add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
   #  end
