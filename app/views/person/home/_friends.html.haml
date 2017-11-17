@@ -1,7 +1,5 @@
 - cache [current_language, @user.version_cache_key, current_user.version_cache_key] do
-  %h3= :friends.t
+  %h3= :contacts.t
   = entity_list @user.friends.with_access(current_user => :view).most_active(limit: 10),
     {link_options: {avatar: 'small'},
     after: ''}
-
-

@@ -113,9 +113,6 @@ en:
   size: Size
   video_embed: Embed
 
-  ## PEOPLE (i.e., PeopleController)
-  my_contacts: Contacts
-
   ## TAGS
   add_tags: "Add Tags"
   current_tags: "Current tags"
