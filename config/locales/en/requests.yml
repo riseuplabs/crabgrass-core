@@ -27,15 +27,21 @@ en:
   ## REQUEST TYPES
   activerecord:
     models:
-      invitation_to_join:
-        one: "Invitation to Join"
-        other: "Invitations to Join"
-      request_to_create_council: "Request to Create Council"
-      request_to_destroy_our_group: "Request to Destroy Group"
-      request_to_friend: "Request to Become Contacts"
-      request_to_join_you: "Request to Join"
-      request_to_join_your_network: "Request to Join"
-      request_to_remove_user: "Request to Remove Member"
+      request_to_create_council: Request to Create Council
+      request_to_destroy_our_group: Request to Destroy Group
+      request_to_friend: Request to Become Contacts
+      request_to_join_our_network:
+        one: Invitation to Join
+        other: Invitations to Join
+      request_to_join_us:
+        one: Invitation to Join
+        other: Invitations to Join
+      request_to_join_us_via_email:
+        one: Invitation to Join
+        other: Invitations to Join
+      request_to_join_you: Request to Join
+      request_to_join_your_network: Request to Join
+      request_to_remove_user: Request to Remove Member
   invitation_to_join:
     one: "Invitation to Join"
     other: "Invitations to Join"

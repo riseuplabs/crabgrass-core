@@ -8,6 +8,7 @@ en:
       not_found: "Sorry, we could not find what you were looking for."
       unauthorized: "Please login to perform that action."
     title:
+      forbidden: Permission Denied
       group:
         not_found: "Group Not Found"
       not_found: "%{thing} Not Found"
