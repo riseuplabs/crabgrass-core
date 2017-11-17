@@ -17,7 +17,7 @@ module Common::Page::PostHelper
         will_paginate(posts, class: 'pagination',
                              param_name: param_name,
                              renderer: LinkRenderer::Page,
-                             previous_label: :pagination_previous.t,
+                             previous_label: :previous.t,
                              next_label: :next.t)
       end
     end
