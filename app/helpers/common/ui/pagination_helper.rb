@@ -48,7 +48,7 @@ module Common::Ui::PaginationHelper
 
     defaults = {
       previous_label: format('&laquo; %s', :pagination_previous.t).html_safe,
-      next_label: format('%s &raquo;', :pagination_next.t).html_safe,
+      next_label: format('%s &raquo;', :next.t).html_safe,
       inner_window: 2,
       outer_window: 0,
       renderer: pagination_link_renderer
