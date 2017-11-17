@@ -10,7 +10,7 @@
     .cookie_warning.alert.alert-danger{style: "display: none"}
       = :cookie_disabled_warning.t
     %div
-      %label(for = 'login')= :login_name.t
+      %label(for = 'login')= :username.t
       %span= link_to :signup_link.t,
         new_account_path(redirect: request.original_fullpath),
         class: 'nofocus'
