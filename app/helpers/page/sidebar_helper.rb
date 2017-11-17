@@ -204,7 +204,7 @@ module Page::SidebarHelper
   def edit_attachments_line
     if may_edit_page?
       popup_line name: 'assets',
-                 label: :edit_attachments_link.t,
+                 label: :edit.t,
                  icon: 'attach',
                  title: :edit_attachments.t,
                  url: page_assets_path(@page),
@@ -217,7 +217,7 @@ module Page::SidebarHelper
       popup_line(
         id: 'tag_li',
         icon: 'tag',
-        label: I18n.t(:edit_tags_link),
+        label: I18n.t(:edit),
         url: page_tags_path(@page)
       )
     end
