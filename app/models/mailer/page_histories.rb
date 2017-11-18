@@ -52,12 +52,19 @@ class Mailer::PageHistories < ActionMailer::Base
   def add_encrypt_options(options)
     return options unless @recipient.try.profiles.try.first.try.encrypt
     key = @recipient.profiles.first.crypt_keys.first.key
+    # the users key is automatically imported into our keyring
     gpg_options =  {encrypt: true, keys: { @recipient.email => key }}
-    # TODO: signing not yet working. Uses local key chain.
-    # GPGME::Key.find(:secret, "robot@riseup.net", :sign) works on rails console but not here...
-    # gpg_options[:sign_as] = "robot@riseup.net" 
+   # gpg_options = add_sign_options(gpg_options)  # FIXME: does not work on build system. do we want a dummy key there?
     options.merge gpg: gpg_options
   end
+
+  def add_sign_options(gpg_options)
+    # FIXME: this has to be done elsewhere 
+    ENV['GPGKEY'] = Rails.root.join('assets','keyfile', 'robot_secret_key.asc').to_s
+    GPGME::Key.import File.open(ENV['GPGKEY'])
+    gpg_options.merge sign_as: "robot@riseup.net"
+  end
+
 
   def init_mail_to(recipient)
     @site = Site.default
@@ -90,7 +97,6 @@ class Mailer::PageHistories < ActionMailer::Base
   def self.page_histories
     Page::History.where(notification_digest_sent_at: nil)
                  .where('DATE(page_histories.created_at) >= DATE(?)', DIGEST_TIMESPAN.ago)
-  #               .where('DATE(page_histories.created_at) < DATE(?)', Time.now) # do we need this? we do not have histories from the future
   end
 
   def page_histories_for(user)

@@ -23,11 +23,13 @@ class ProfileCryptKey < ActiveRecord::Base
     end
   end
 
+  # TODO: not sure if we really should create a new keyring each time a user uploads a key
+  # This has the advantage, that the keyring will not contain old and unused keys
   def create_fresh_gpg_directory
-    gpg_dir = "assets/keyrings/tmp"
+    gpg_dir = Rails.root.join('assets','keyrings', "tmp").to_s
     FileUtils.rm_rf(gpg_dir) if File.exist?(gpg_dir)
-    FileUtils.rm(gpg_dir) if File.exist?(gpg_dir)
-    Dir.mkdir(gpg_dir)
+   # FileUtils.rm(gpg_dir) if File.exist?(gpg_dir)
+    FileUtils.makedirs(gpg_dir)
     ENV['GNUPGHOME']=gpg_dir
   end
 

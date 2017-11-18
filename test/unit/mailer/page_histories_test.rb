@@ -60,6 +60,7 @@ j1Rx6t+EEw==
 =5G6T
 -----END PGP PUBLIC KEY BLOCK-----
 END
+
     ProfileCryptKey.create(profile_id: 11, key: key)
     @user.reload
     watch_page
