@@ -1,5 +1,4 @@
-#=PathFinder::ParsedPath
-# A simple class for parsing and generating 'readable url query paths'
+#PathFinder::ParsedPath Parse and generate 'readable url query paths'
 #
 # Given a path string like so:
 #
@@ -9,12 +8,12 @@
 #
 #  [ ['unread'], ['tag','urgent'], ['person',23], ['starred'] ]
 #
-# To create a ParsedPath, we identify the key words and their arguments, and split
-# up that path into an array where each element is a different keyword (with its
-# included arguments).
+# To create a ParsedPath, we identify the key words and their arguments,
+# and split up that path into an array where each element is a different
+# keyword (with its included arguments).
 #
-# This class has grown over time. It would have been much cleaner to implement
-# as a hash.
+# This class has grown over time. It would have been much cleaner to
+# implement as a hash.
 #
 #:include:FILTERS
 #
