@@ -30,9 +30,6 @@
 -  # we clear the recipient_name field so that we don't get a double submit
 -
 -  after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
--
--# autocomplete_tag = autocomplete_entity_tag('recipient_name', onselect: after_update_function, message: I18n.t(:entity_autocomplete_tip), container: 'autocomplete_container')
--
 
 %table.share_page_recipient_add.full_width
   %tr
@@ -54,4 +51,3 @@
 
 #share_page_recipient_area.autocomplete_results_area.p{style: "display:none"}
   = render 'page/shares/list_of_recipients'
-
