@@ -42,3 +42,4 @@ vendor/bundle
 bin/
 .byebug*
 coverage
+extensions/themes/blueberry/
