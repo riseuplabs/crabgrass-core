@@ -12,14 +12,12 @@ nl:
   login_failed: Je kan niet ingelogd worden
   login: Login
   signup_title: Je toegang opstellen
-  signup_email: Je email
   forgot_password_text: Wanneer je jouw wachtwoord heeft vergeten kunnen we jou een link mailen met die je een nieuwe paswoord kan genereren.
   reset_password_text: Hoi, %{user}. Wanneer je jou wachtwoord heeft vergeten kan je hier een nieuwe paswoord opstellen.
   forgot_password_mail_greeting: "%{user}, teneinde jou wachtwoord te resetten, ga naar"
   forgot_password_mail_expiry: Dit link blijft geldig voor 24 uurtjes. Wanneer je je wachtwoord later wil resetten, mout je weer na de pagina van het vergeten wachtwoord gaan en een nieuwe link opvragen.
   reset_password_mail_greeting: "%{user}, als je opgevraagd hebt, was je wachtwoord gereset."
   reset_password_mail_warning: Wanneer je niet opgevraagd hebt of je wachtwoord mag veranderd worden, dan kontakteer ons, alsjeblieft.
-  your_login: Je login
   invalid_email_text: Het emailadres je heeft ingeschreven is niet geldig.
   reset_password: Wachtwoord resetten
   reset_password_email_sent: Als deze emailadres met een gebruikers naam / gebruiksters naam is geassociëert was een mailtje gestuurd met instructies voor het resetten van je wachtwoord.
@@ -51,9 +49,7 @@ nl:
   change_password: Wachtwoord veranderen
   password: Wachtwoord
   password_confirmation: Wachtwoord confirmatie
-  signup_confirm_password: Wachtwoord herhalen
   login_password: Wachtwoord
-  signup_password: Je wachtwoord
   remove_your_account: Je toegang deleten
   anonymize_display_name: Gewijzte naam anoniemizeren
   anonymize_display_name_info: Vervangt je gewijzte naam door "Anoniem" overal.
@@ -468,16 +464,6 @@ nl:
   page_history_updated_comment: "%{user_name} heeft een commentaar geupdated"
   page_history_updated_content: "%{user_name} heeft de inhoud van de pagina geupdated"
   page_history_user_created_page: "%{user_name} heeft de pagina opgesteld"
-  page_history_mailer_hello_user_name: Hoi %{user_name}
-  page_history_mailer: 'Verander je instellingen voor email aankondigingen hier: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Een pagina was gemodificeerd"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Een pagina die je bekijkt was gemodificeerd %{histories_count} sinds de laatste aankondiging,
-    je kan de pagina hier vinden:
-  page_history_mailer_a_page_you_are_watching: Een pagina die je bekijkt was gemodificeerd, je kan ze hier bereiken
-  page_history_the_page_you_are_watching_description: De pagina die je bekijkt "%{page_title}" was gemodificeerd
-  page_history_mailer_expire_link: De link gaat in %{expire_time} aflopen
-  page_history_mailer_choose_turn_off_notifications: Je kan kiezen de email aankondigingen aftezetten, een samenvatting van veranderingen te krijgen of een mailte te krijgen wanneer de pagina wordt veranderd
   wiki_page_description: Stel en vrij-vorm tekst geschrift op, die je kan veranderen.
   wiki_page_display: Wiki pagina
   gallery_description: Merdere afbeeldingen uploaden of bestaande afbeeldingen in een set organiseren.
@@ -778,14 +764,14 @@ nl:
   private_wiki: Privé wiki
   edit_wiki: Wiki editeren
   wiki_existed_new_version_created: Deze wiki was al opgesteld van een andere gebruiker / gebruikster. Je veranderingen zijn opgeslaan als nieuwe versie.
-  wiki_is_locked_html: Deze wiki is op dit moment afgesluiten door <b>%{user}</b>.
+  wiki_is_locked: Deze wiki is op dit moment afgesluiten door %{user}.
   wiki_section_is_locked: Het gedeelte %{section} is op dit moment afgesluiten door %{user}.
   leave_editing_wiki_page_warning: Wanneer je deze pagina verlat ga jij je veranderingen verliezen.
-  cant_edit_section_html: Kan niet <b>%{section}</b> editeren.
-  user_locked_section_html: "<b>%{user}</b> heeft <b>%{section}</b> afgesluiten."
+  cant_edit_section: Kan niet %{section} editeren.
+  user_locked_section: "%{user} heeft %{section} afgesluiten."
   can_still_save: Je kan nog steeds opslaan.
   changes_might_be_overwritten: Je veranderingen kunnen overgeschreven worden.
-  other_section_locked_error_html: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds <b>%{section}</b> afgesluiten.
+  other_section_locked_error: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds %{section} afgesluiten.
   break_lock_button: Slot breken
   force_save_button: Brek slot en sla op
   versions: Versies

@@ -11,12 +11,10 @@ pl:
   logout_success_message: Wylogowano z systemu.
   signup_button: Zarejestruj się
   login_failed: Nie udało się zalogować
-  signup_login_name: Twój login
   login_button: Zaloguj się
   login: Login
   sign_in: Zaloguj się
   signup_title: Stwórz swoje konto
-  signup_email: Twój mejl
   forgot_password_text: Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło.
   reset_password_text: Cześć, %{user}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj.
   forgot_password_mail_greeting: "%{user}, żeby zresetować swoje hasło wejdź na"
@@ -25,7 +23,6 @@ pl:
     ponownie ustawić swoje hasło po tym czasie, musisz ponownie odwiedzić stronę z zapomnianym hasłem i poprosić o nowy link.'
   reset_password_mail_greeting: "%{user}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
   reset_password_mail_warning: Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami.
-  your_login: Twój login
   invalid_email_text: Adres e-mail który zsotał wprowadzony jest błędny.
   reset_password: Ustaw hasło na nowo
   reset_password_email_sent: Został wysłany e-mail zawierający instrukcje w jaki sposób ustawić hasło na nowo.
@@ -40,13 +37,20 @@ pl:
   confirm_new_password: Powtórz nowe hasło
   congratulations_you_have_signed_up: Gratulacje! Pomyślnie zarejestrowano na %{site_title}.
   you_should_receive_instructions_email: Powinien przyjść do ciebie email z instrukcjami jak zakończyć rejestrację twojego konta.
-  email_verification_body: "Zarejestrowano twoje konto na %{site_title} (% {host}).\n\nZanim się zalogujesz musisz potwierdzić ze to twój adres meblowy. \n\nKliknij poniższy link albo skopiuj i wklej go do swojej przeglądarki:\n\n%{verify_email_link}\n\nJeśli nie chcesz dołączyć, po prostu zignoruj tego mejla."
+  email_verification_body: |-
+    Zarejestrowano twoje konto na %{site_title} (% {host}).
+
+    Zanim się zalogujesz musisz potwierdzić ze to twój adres meblowy.
+
+    Kliknij poniższy link albo skopiuj i wklej go do swojej przeglądarki:
+
+    %{verify_email_link}
+
+    Jeśli nie chcesz dołączyć, po prostu zignoruj tego mejla.
   change_password: Zmiana hasła
   password: Hasło
   password_confirmation: Potwierdzenie hasła
-  signup_confirm_password: Potwierdź hasło
   login_password: Hasło
-  signup_password: Twoje hasło
   remove_your_account: Skasuj konto
   anonymize_display_name: 'Animizuj wyświetlany login '
   anonymize_display_name_info: Zastępuje twój login "Anonimem" wszędzie gdzie występuje.
@@ -177,10 +181,12 @@ pl:
   thing_was_sent:
     one: "Do %{recipient} wysłano %{thing}."
     few: "Wysłano %{count} %{thing}."
+    many: "Wysłano %{count} %{thing}."
     other: "Wysłano %{count} %{thing}."
   thing_was_not_sent:
     one: "%{thing} do %{recipient} nie został/a wysłana."
     few: "Nie udało się wysłać %{count} %{thing}."
+    many: "Nie udało się wysłać %{count} %{thing}."
     other: "Nie udało się wysłać %{count} %{thing}."
   user: Użytkownik/Użytkowniczka
   users: Użytkownicy/Użytkowniczki
@@ -267,11 +273,11 @@ pl:
 
     Jeśli chcesz do niej dołączyć, kliknij tutaj:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     Strona domowa tej grupy znajduje się tutaj:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
   group_destroyed_subject: "%{user} zdecydował/a o osunięciu %{group_type} %{group}!"
@@ -473,16 +479,6 @@ pl:
   page_history_updated_comment: "%{user_name} zaktualizował/zaktualizowała komentarz"
   page_history_updated_content: "%{user_name} zaktualizował/zaktualizowała zawartość strony"
   page_history_user_created_page: "%{user_name} utworzył/utworzyła stronę"
-  page_history_mailer_hello_user_name: Cześć %{user_name}
-  page_history_mailer: 'Tutaj możesz zmienić opcje powiadomień e-mail''owych: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Strona została zmodyfikowana"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Strona którą oglądasz została zmodyfikowana %{histories_count} od czasu ostatniego powiadomienia,
-    tutaj możesz wejść na stronę:
-  page_history_mailer_a_page_you_are_watching: Strona którą oglądasz została zmodyfikowana, tutaj możesz na nią wejść
-  page_history_the_page_you_are_watching_description: Strona którą pzreglądasz "%{page_title}" została zmieniona
-  page_history_mailer_expire_link: Link wygaśnie w ciągu %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Możesz wybrać opcję wyłączania powiadomień mejlem, otrzymywać zestawienie zmian, albo otrzymywać mejl za każdym razem gdy strona jest modyfikowana
   wiki_page_description: Niesformatowany dokument tekstowy.
   wiki_page_display: Wiki
   gallery_description: Kolekjcja obrazów.
@@ -612,15 +608,18 @@ pl:
       request_to_join_our_network:
         one: Zaproszenie do dołączenia
         few: Zaproszenia do dołączenia
+        many: Zaproszenia do dołączenia
         other: Zaproszenia do dołączenia
       request_to_destroy_our_group: Poproś o skasowanie grupy
       request_to_join_us:
         one: Zaproszenie do dołączenia
         few: Zaproszenia do dołączenia
+        many: Zaproszenia do dołączenia
         other: Zaproszenia do dołączenia
       request_to_join_us_via_email:
         one: Zaproszenie do dołączenia
         few: Zaproszenia do dołączenia
+        many: Zaproszenia do dołączenia
         other: Zaproszenia do dołączenia
       request_to_join_you: Prośba o dołącznie
       request_to_join_your_network: Prośba o dołącznie
@@ -633,10 +632,12 @@ pl:
   request_to_join_our_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}
   request_to_join_us:
+    many: Zaproszenia do dołączenia
     other: Zaproszenia do dołączenia
   request_to_join_us_short: Czy %{user} ma dołączyć do %{group}?
   request_to_join_us_description: '%{user} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email:
+    many: Zaproszenia do dołączenia
     other: Zaproszenia do dołączenia
   request_to_join_us_via_email_short: Czy %{email} ma dołączyć do %{group}?
   request_to_join_us_via_email_description: '%{email} otrzyma zaproszenie do %{group}'
@@ -793,14 +794,14 @@ pl:
   private_wiki: Prywatne wiki
   edit_wiki: Edytuj wiki
   wiki_existed_new_version_created: To wiki zostało już przez kogoś stworzone. Twoje zmiany zostaną zapisane jako nowa wersja.
-  wiki_is_locked_html: To wiki jest obecnie zablokowane przez <b>%{user}</b>
+  wiki_is_locked: To wiki jest obecnie zablokowane przez %{user}
   wiki_section_is_locked: Sekcja %{section} jest obecnie zablokowana przez %{user}.
   leave_editing_wiki_page_warning: Jeśli opuścisz tą stronę bez zapisania wiki lub anulowania edytowania, wtedy inni użytkownicy/inne użytkowniczki dostaną komunikat, że ta strona jest zablokowana przez Ciebie i nie będzie można jej edytować. Również, jeśli nie zapiszesz wiki, stracisz zmiany, które zostały przez Ciebie wprowadzone.
-  cant_edit_section_html: Nie można edytować <b>%{section}</b>.
-  user_locked_section_html: "<b>%{user}</b> zablokował/a <b>%{section}</b>."
+  cant_edit_section: Nie można edytować %{section}.
+  user_locked_section: "%{user} zablokował/a %{section}."
   can_still_save: Możesz jeszcze zapisać
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
-  other_section_locked_error_html: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już <b>%{section}</b>.
+  other_section_locked_error: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już %{section}.
   break_lock_button: Usuń blokadę
   force_save_button: Złam blokadę i zapisz.
   versions: Wersje

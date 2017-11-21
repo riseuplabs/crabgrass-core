@@ -99,22 +99,6 @@ module Page::ShareHelper
     }
   end
 
-  # (1) submit the form when the enter key is pressed in the text box
-  # (2) don't submit the form if the recipient name field is empty
-  # (3) eat the event by returning false on a enter key so that the form
-  #     is not submitted.
-  def add_recipient_widget_autocomplete_tag(add_action)
-    # this is called after an item in the popup has been selected.
-    # it makes it so selecting an item is like hitting the add button
-    # we clear the recipient_name field so that we don't get a double submit
-    after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
-
-    autocomplete_entity_tag('recipient_name',
-                            onselect: after_update_function,
-                            message: I18n.t(:entity_autocomplete_tip),
-                            container: 'autocomplete_container')
-  end
-
   def add_recipient_widget_key_press_function(add_action)
     eat_enter = 'return(!enterPressed(event));'
     only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"

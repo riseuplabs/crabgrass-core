@@ -1,9 +1,9 @@
 es:
-  cookie_disabled_warning: Las cookies están bloqueadas por tu navegador. No puedes iniciar sesión hasta que les actives.
+  cookie_disabled_warning: Las cookies están bloqueadas en tu navegador. No puedes iniciar sesión hasta que las actives.
   signup_link: ¿Necesitas una cuenta?
   signup_email_info: 'Opcional: se usará si olvidas tu contaseña'
   forgot_password_link: ¿Olvidaste tu contraseña?
-  login_failure_reason: Nombre de usari@ o contraseña incorrecta.
+  login_failure_reason: Nombre de usuari@ o contraseña incorrecta.
   signup_success_message: ¡Gracias por inscribirte!
   login_name: Usuari@
   signup_success: Registro exitoso
@@ -11,19 +11,16 @@ es:
   logout_success_message: Te has desconectado.
   signup_button: Inscríbete
   login_failed: No puedes ingresar
-  signup_login_name: Tu usuari@
   login_button: Acceder
   login: Ingresar
   sign_in: Acceder
   signup_title: Crea tu cuenta
-  signup_email: Tu e-mail
   forgot_password_text: Si has olvidado tu contraseña, podemos enviarte un link por e-mail con el que puedes generar una nueva.
   reset_password_text: Hola, %{user}. Si has olvidado tu contraseña, puedes crear una nueva aquí.
   forgot_password_mail_greeting: "%{user}, para restablecer tu contraseña, por favor visita"
   forgot_password_mail_expiry: Este link es válido por 24 horas. Si necesitas reiniciar tu contraseña transcurrido ese tiempo, deberás visitar nuevamente la pagina para recuperar tu contraseña y pedir un nuevo link.
   reset_password_mail_greeting: "%{user}, tu contraseña fue restablecida como lo solicitaste."
   reset_password_mail_warning: Si no has solicitado cambiar tu contraseña, por favor contáctanos.
-  your_login: Tu login
   invalid_email_text: La dirección de email no es válida.
   reset_password: Restablecer contraseña
   reset_password_email_sent: Si esta dirección electrónica es asociada con un nombre de usari@, hemos enviado un e-mail con instruciones para reinicializar tu contraseña.
@@ -51,9 +48,7 @@ es:
   change_password: Cambiar contraseña
   password: Contraseña
   password_confirmation: Confirmación de contraseña
-  signup_confirm_password: Confirmar contraseña
   login_password: Contraseña
-  signup_password: Tu contraseña
   remove_your_account: Quitar tu acceso
   anonymize_display_name: Anonimizar nombre mostrado
   anonymize_display_name_info: Reemplaza tu nombre mostrado von "Anónim@" en todas partes
@@ -76,7 +71,7 @@ es:
   cancel: Cancelar
   optional: Opcional
   required: Necesario
-  thing_required: "%{thing} Lo Necesario"
+  thing_required: "Es necesario %{thing}"
   edit: Editar
   upload: Cargar
   select_files: Seleccione los archivos
@@ -85,7 +80,7 @@ es:
   return_link: Retorno
   back_button: Volver
   send_button: Enviar
-  close_button: Cerca
+  close_button: Cerrar
   share_button: Compartir
   save_button: Guardar
   add_button: Añadir
@@ -128,6 +123,18 @@ es:
       add: Añadir nuevo Grupo
     possible:
       add: Añadir nuevo Posibilidad
+  mailer:
+    hello: Hola %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Una página ha sido modificada"
+      pages_you_are_watching_have_been_modified:
+        one: Una página que estabas viendo ha sido modificada desde la última notificación.
+        other: '%{count} pages that you are watching have been modified since the last notification.   '
+      we_leave_out_details: Omitimos los detalles en este email para proteger la información que quieras mantener privada.
+      you_can_find_updates_here: 'Encontrarás más detalles y una lista de páginas con cambios recientes aquí:'
+      the_page_you_are_watching_description: La página que estás viendo "%{page_title}" ha sido modificada
+      change_your_settings_here: 'Cambia tus ajustes de notificaciones por correo electrónico aquí: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Desactivar las notificaciones por correo, recibir un resumen de cambios, o recibir un correo cada vez que la página es cambiada
   exception:
     title:
       not_found: "%{thing} No Encontrad@"
@@ -138,6 +145,7 @@ es:
     description:
       not_found: los sentimos, no pudimos encontrar lo que estabas buscando
       unauthorized: Inicie sesión para realizar esa acción.
+      forbidden: Lo sentimos. No puedes realizar esa acción.
       group:
         not_found: Lo sentimos, no pudimos encontrar el grupo que buscabas.
   image_count: Imagen %{number} de %{count}
@@ -159,12 +167,12 @@ es:
   image_title: 'Título de la imagen: %{title}'
   upload_zip_file_link: Subir un archivo Zip
   add_images_to_gallery_link: Añadir imágenes a la galería
-  too_tall_image_error: La imagen subida es demasiado grande (%{count} pixeles es la altura máxima)
+  too_tall_image_error: La imagen subida es demasiado grande (%{count} píxeles es la altura máxima)
   too_wide_image_error: La imagen subida deber ser de %{count} píxeles de ancho
   cant_detect_image_height_error: No se puede detectar la altura de la imagen. O la imagen está dañada o el servidor tuvo un error
   edit_image_header: Editar Imagen y música
   upload_images_and_zip_files_help: 'Opcional: Seleccione los archivos zip para subir o imagen.'
-  close_and_reload_gallery: Cierre y recarga galería
+  close_and_reload_gallery: Cerrar y recargar galería
   search: Buscar
   go: Ir
   thing_not_found: "%{thing} no se encuentra"
@@ -224,7 +232,10 @@ es:
   notification: Notificación
   notice: Aviso
   notices: Avisos
-  dismiss: Despedir
+  dismiss: Descartar
+  dismiss_all_notices: Descartar todo
+  dismiss_all_notices_confirmation: ¿Estás seguro que deseas eliminar todos los avisos?
+  action_cannot_be_undone: Esta acción no se puede deshacer.
   locale: Lugar
   description: Descripción
   details: Detalles
@@ -269,6 +280,8 @@ es:
   may_request_membership_description: Un enlace "Unirse al grupo" aparecerá en la página de tu grupo. Esto enviará una solicitud de membresía a tu grupo que puede ser aceptada o rechazada.
   open_group: Abrir Grupo
   open_group_description: Las usuarias se agregan inmediatamente al grupo - la solicitud no tiene que ser aprobada
+  shared_groups: Grupos compartidos
+  public_groups: Grupos públicos
   membership_requests: Las solicitudes de afiliación
   group_membership_count: "%{count} personas"
   membership_exists_error: Ya %{member} tiene una afiliación
@@ -279,11 +292,11 @@ es:
 
     Si deseas unirte a este grupo, usa este enlace:
 
-       %{accept_invite_link}
+    %{accept_invite_link}
 
     La página principal de este grupo se puede encontrar aquí:
 
-       %{group_home_link}
+    %{group_home_link}
 
     Si no deseas participar, simplemente ignora este mensaje de correo electrónico.
   group_destroyed_subject: "¡%{group_type} %{group} ha sido eliminado por %{user}!"
@@ -328,11 +341,13 @@ es:
     recent_pages: Paginas Recientes
     info:
       page_search: Encuentra todas las páginas que tiene acceso directamente oa través de sus grupos
+      recent_pages: Estas páginas han sido creadas o actualizadas recientemente.
   my_dashboard: Salpicadero
   uploaded_image_cropped: La foto cargada será recortada y estirada a 96 píxeles cuadrados.
   select_image_file: seleccionar archivo de foto
   or_image_url: o URL de la foto
   upload_image_link: Subir imagen
+  remove_image_link: eliminar imagen
   save_changes: Guardar Cambios
   username: Usuario
   display_name: Nombre mostrado
@@ -381,6 +396,7 @@ es:
   edited_by_me: Editado
   edited_by_user: Editado por %{user}
   owned_by_me: Propio
+  owned_by_user: De %{user}
   most_active: Más activo
   most_stars: Más votado (estrellas)
   most_viewed: Más Vistos
@@ -484,15 +500,6 @@ es:
   page_history_updated_comment: "%{user_name} actualizó un comentario"
   page_history_updated_content: "%{user_name} ha actualizado el contenido de la página"
   page_history_user_created_page: "%{user_name} creó la página"
-  page_history_mailer_hello_user_name: Hola %{user_name}
-  page_history_mailer: 'Cambia tu correo electrónico de notificación aquí: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Una página ha sido modificada"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: |-
-    Una página que estás observando ha sido modificada %{histories_count} desde la última notificación, puedes acceder a esta página aquí:
-  page_history_mailer_a_page_you_are_watching: Una página que estás observando ha sido modificada, puedes acceder a esta aquí
-  page_history_the_page_you_are_watching_description: La página que estás observando "%{page_title}" ha sido modificada
-  page_history_mailer_expire_link: El enlace expirará el %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Puedes elegir desactivar las notificaciones por correo, recibir un resumen de cambios, o recibir un correo cada vez que la página es cambiada
   wiki_page_description: Un documento con texto de formato libre
   wiki_page_display: Wiki
   gallery_description: Subir múltiples imágenes u organizar las existentes en un conjunto.
@@ -637,29 +644,52 @@ es:
       request_to_join_us_via_email:
         one: Invitación para Unirse
         other: Invitaciones para Unirse
+      request_to_join_you: Pide entrar
+      request_to_join_your_network: Pide entrar
+      request_to_create_council: Solicitud para crear un consejo
       request_to_remove_user: Petición para Remover Miembro
   request_to_friend: Solicitud para convertirse en Contactos
   request_to_friend_short: ¿Debe %{user} ser contacto de %{other_user}?
   request_to_friend_description: '%{user} quiere ser el contacto de %{other_user}'
+  request_to_join_our_network:
+    one: Invitación a unirse
+    other: Invitaciones a unirse
   request_to_destroy_our_group: Petición para Eliminar Grupo
   request_to_join_our_network_short: ¿Debe %{group} ser parte de %{network}?
   request_to_join_our_network_description: grupo %{group} fue invitado a unirse a la red %{network}
+  request_to_join_us:
+    one: Invitación a unirse
+    other: Invitaciones a unirse
   request_to_join_us_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_us_description: '%{user} fue invitado a unirse %{group}'
+  request_to_join_us_via_email:
+    one: Invitaciones para unirse
+    other: Invitaciones para unirse
   request_to_join_us_via_email_short: ¿Debe %{email} unirse a %{group}?
   request_to_join_us_via_email_description: '%{email} fue invitado a unirse a %{group}'
+  request_to_join_you: Pide entrar
   request_to_join_you_short: ¿Debe %{user} unirse a %{group}?
   request_to_join_you_description: '%{user} solicito unirse a %{group}'
+  request_to_join_your_network: Pide entrar
   request_to_join_your_network_short: ¿Debe %{group} ser parte de %{network}?
   request_to_join_your_network_description: '%{group} solicito unirse a la red %{network}'
+  request_to_destroy_our_group_short: Debe %{group} ser destruido?
   request_to_destroy_our_group_description: '%{user} ha propuesto borrar %{group_type} %{group}'
+  request_to_create_council: Solicitud para crear un consejo
+  request_to_create_council_short: ¿Debería %{group} tener un consejo?
+  request_to_create_council_description: El usuario %{user} ha propuesto crear un consejo para %{group_type} %{group}.
   request_to_remove_user: Petición para Remover Miembro
+  request_to_remove_user_short: ¿Debe %{member} ser eliminado de %{group}?
+  request_to_remove_user_description: El usuario %{user} ha propuesto borrar %{member} de %{group_type} %{group}.
   invite_info: Proporciona una lista de cuentas de este sitio (o direcciones de correo) de personas que quieres que participen en este(a) %{group_type}
   invite_error_redeemed: La invitación ya fue retirada.
   invite_error_already_member: Ya eres parte de ese grupo.
   request_exists_error: Ya existe una solicitud para %{recipient}
   network_invite_info: Ingresa el nombre de los grupos que te gustaría invitar a esta red.
   recipient_tip: Separa a los destinatarios con comas, espacios o escribiendolos en líneas nuevas.
+  you_are_invited: Has sido invitado a integrarte.
+  friend_request_message_label: Dile a %{user} porqué quieres contactarlo.
+  friend_remove_confirmation: ¿Estás seguro de que deseas dejar de tener contacto con %{user}?
   place: lugar
   icon: Icono
   file: Archivo
@@ -678,7 +708,10 @@ es:
   medium: medio
   large: grande
   full: completo
+  image_options_info: ¿La imagen incluída en el wiki debe enlazar para verla en tamaño completo?
   include_full_checkbox: incluir enlace a la imagen completa
+  image_select_info: De las imágenes subidas previamente al grupo, elige una para insertar.
+  image_upload_info: Sube una nueva imagen al grupo, así ésta podrá ser usada en el wiki
   a_message_link: un mensaje
   a_reply_link: una respuesta
   confirm_discarding_text_area: Todo el trabajo que no has guardado se perderá. Presiona %{cancel} para continuar editando.
@@ -780,17 +813,30 @@ es:
   current_tags: Etiquetas actuales
   welcome_title: Bienvenido a %{site_title}
   welcome_message: Crabgrass permite que organizaciones que trabajan por el cambio social ejecuten acciones, difundan mensajes, colaboren y creen redes.
+  wiki: Wiki
   public_wiki: Wiki Público
   private_wiki: Wiki Privado
   edit_wiki: Editar Wiki
+  wiki_existed_new_version_created: Este wiki fue creado por otro usuario. Tus cambios serán guardados como una nueva versión.
+  wiki_is_locked: Este wiki está bloqueado por %{user}
+  wiki_section_is_locked: La sección %{section} está bloqueada por %{user}.
+  leave_editing_wiki_page_warning: Si sales de esta página perderás los cambios que hayas realizado.
+  cant_edit_section: No puedes editar %{section}
+  user_locked_section: "%{user} ha bloqueado la sección %{section}"
+  can_still_save: Todavía puedes guardar.
+  changes_might_be_overwritten: Los cambios serán sobreescritos.
+  other_section_locked_error: Solo puedes bloquear un sección a la vez. Has bloqueado %{section}.
   break_lock_button: Romper el bloqueo
+  force_save_button: Romper el bloqueo y guardar
   versions: versiones
   version: Versión
   comparing_changes_header: Comparando cambios hechos por %{user} en fecha %{when} de %{old_version} a %{new_version}
+  changes_made: Cambios realizados en %{when}.
   prev_change: cambio anterior
   next_change: próximo cambio
   formatting_reference_link: Referencia de formatos
   version_doesnt_exist: No hay versión %{version}
+  version_exists_error: Este wiki está bloqueado porque %{user} ha guardado nuevos cambios recientemente. Puedes guardar tus cambios, pero éstos se guardarán como una nueva versión.
   you_are_viewing_version: Usted está viendo la versión %{version} by %{usuario}
   diff_link: Ver cambios
   version_link: ver versión
