@@ -422,7 +422,7 @@ en:
   send_message_link: Send Message
   time_zone: Time Zone
   unread_private_message: You have an unread private message from %{user}
-  upload_image: upload image
+  upload_image: Upload Image
   uploaded_image_cropped: Uploaded image will be cropped and stretched to 202 pixels
     square.
   username: Username

@@ -160,7 +160,7 @@ module Group::LinksHelper
 
   def edit_avatar_link
     url = @group.avatar ? edit_group_avatar_path(@group, @group.avatar) : new_group_avatar_path(@group)
-    link_to_modal(:upload_image.tcap, url: url, icon: 'picture_edit')
+    link_to_modal(:upload_image.t, url: url, icon: 'picture_edit')
   end
 
   ##
