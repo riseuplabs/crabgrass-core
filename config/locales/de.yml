@@ -52,7 +52,7 @@ de:
   remove_your_account: Lösche dein Konto
   anonymize_display_name: Anonymisiere deinen Anzeige-Namen
   anonymize_display_name_info: Ersetzt überall deinen Anzeige-Namen mit 'Anonym'
-  destroy_comments: Kommentare vernichten
+  destroy_comments: Kommentare löschen.
   destroy_comments_info: 'Alle deine zu Seiten erstellten Kommentare werden gelöscht. Dadurch könnte es schwierig werden, die verbleibenden Kommentare von anderen zu verstehen. '
   confirm_account_removal: Bist du sicher, dass du dein Konto löschen willst? Dieser Schritt kann nicht rückgängig gemacht werden und deine Daten werden gelöscht.
   account_successfully_removed: Dein Zugang wurde gelöscht. Wir werden ihn und alle damit in Verbindung stehenden Daten aus unserer Datenbank entfernen.
@@ -105,7 +105,7 @@ de:
   rejected: Abgelehnt
   approved: Angenommen
   saved: Gespeichert
-  destroy: Vernichten
+  destroy: Löschen
   thing_destroyed: "%{thing} vernichtet"
   destroy_thing: Vernichte %{thing}
   delete_thing: Lösche %{thing}
@@ -341,7 +341,7 @@ de:
     recent_pages: Aktuelle Seiten
     info:
       page_search: Finde alle Seiten, zu denen du direkt oder über deine Gruppen Zugang hast
-      recent_pages: Seiten, die in letzter Zeit angelegt oder bearbeitet wurden.
+      recent_pages: Diese Seiten sind vor Kurzem angelegt oder bearbeitet worden.
   my_dashboard: Meine Übersicht
   uploaded_image_cropped: Hochgeladenes Bild wird auf 202 Pixel im Quadrat zugeschnitten/gestreckt.
   select_image_file: Wähle Bilddatei
@@ -433,8 +433,8 @@ de:
   public_checkbox_help: Wenn markiert, kann jede_r diese Seite ansehen.
   page_details_link: "%{page_class} Details"
   delete_page_link: Lösche %{page_class}
-  destroy_page_via_shred: Sofort vernichten
-  destroy_page_via_shred_info: Das wird die Seite dauerhaft vernichten. Diese Aktion kann nicht rückgängig gemacht werden!
+  destroy_page_via_shred: Sofort löschen
+  destroy_page_via_shred_info: Die Seite wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden!
   destroy_page_via_trash: In den Müll verschieben
   destroy_page_via_trash_info: Das wird die Seite in den Müll verschieben, von wo sie später wiederhergestellt werden kann.
   undelete_from_trash: Wiederherstellen
@@ -630,7 +630,7 @@ de:
       request_to_join_our_network:
         one: Einladung beizutreten
         other: Einladungen beizutreten
-      request_to_destroy_our_group: Anfrage Gruppe zu vernichten
+      request_to_destroy_our_group: Anfrage Gruppe zu löschen
       request_to_join_us:
         one: Einladung beizutreten
         other: Einladungen beizutreten
@@ -647,7 +647,7 @@ de:
   request_to_join_our_network:
     one: Einladung beizutreten
     other: Einladungen beizutreten
-  request_to_destroy_our_group: Anfrage Gruppe zu vernichten
+  request_to_destroy_our_group: Anfrage Gruppe zu löschen
   request_to_join_our_network_short: Soll %{group} dem Netzwerk %{network} beitreten?
   request_to_join_our_network_description: Gruppe %{group} wurde eingeladen, sich dem Netzwerk %{network} anzuschließen
   request_to_join_us:
@@ -667,7 +667,7 @@ de:
   request_to_join_your_network_short: Soll %{group} %{network} beitreten?
   request_to_join_your_network_description: Die Gruppe %{group} möchte sich dem Netzwerk %{network} anschließen
   request_to_destroy_our_group_short: Soll %{group} zerstört werden?
-  request_to_destroy_our_group_description: Der_die Nutzer_in %{user} hat vorgeschlagen, %{group_type} %{group} zu vernichten.
+  request_to_destroy_our_group_description: Der_die Nutzer_in %{user} hat vorgeschlagen, %{group_type} %{group} zu löschen.
   request_to_create_council: Anfrage einen Rat zu erstellen
   request_to_create_council_short: Soll %{group} einen Rat haben?
   request_to_create_council_description: Der_die Nutzer_in %{user} hat vorgeschlagen, einen Rat für %{group_type} %{group} zu erstellen.
@@ -811,14 +811,14 @@ de:
   private_wiki: Privates Wiki
   edit_wiki: Bearbeite Wiki
   wiki_existed_new_version_created: Dieses Wiki wurde bereits von einer anderen Nutzer_in erstellt. Deine Veränderungen wurden als neue Version gespeichert.
-  wiki_is_locked_html: Dieses Wiki ist momentan gesperrt durch <b>%{user}</b>
+  wiki_is_locked: Dieses Wiki ist momentan gesperrt durch %{user}
   wiki_section_is_locked: Der Abschnitt %{section} ist gerade durch %{user} gesperrt.
   leave_editing_wiki_page_warning: Wenn du diese Seite verlässt, gehen deine Änderungen verloren.
-  cant_edit_section_html: Kann <b>%{section}</b> nicht bearbeiten.
-  user_locked_section_html: "<b>%{user}</b> hat <b>%{section}</b> gesperrt."
+  cant_edit_section: Kann %{section} nicht bearbeiten.
+  user_locked_section: "%{user} hat %{section} gesperrt."
   can_still_save: Du kannst immer noch speichern.
   changes_might_be_overwritten: Deine Veränderungen könnten überschrieben werden.
-  other_section_locked_error_html: Es kann immer nur eine Sektion zur Zeit gesperrt werden. Du hast bereits <b>%{section}</b> gesperrt.
+  other_section_locked_error: Es kann immer nur eine Sektion zur Zeit gesperrt werden. Du hast bereits %{section} gesperrt.
   break_lock_button: Sperre aufheben
   force_save_button: Sperre aufheben und speichern
   versions: Versionen

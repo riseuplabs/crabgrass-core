@@ -11,19 +11,16 @@ it:
   logout_success_message: Disconnessione effettuata con successo.
   signup_button: Registrati
   login_failed: Impossibile accedere
-  signup_login_name: Il tuo nome utente
   login_button: Accedi
   login: Accesso
   sign_in: Accedi
   signup_title: Crea il tuo account
-  signup_email: La tua e-mail
   forgot_password_text: Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetterà di generarne una nuova.
   reset_password_text: Ciao, %{user}. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.
   forgot_password_mail_greeting: "%{user}, per cambiare la tua password, visita"
   forgot_password_mail_expiry: Questo link rimarrà valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password.
   reset_password_mail_greeting: "%{user}, la tua password è stata reimpostata come hai richiesto."
   reset_password_mail_warning: Se non hai richiesto che la tua password fosse cambiata, contattaci.
-  your_login: Il tuo login
   invalid_email_text: L'indirizzo email che hai inserito non è valido.
   reset_password: Reimposta Password
   reset_password_email_sent: Ti è stata inviata un'email contenente le istruzioni per reimpostare la tua password.
@@ -51,9 +48,7 @@ it:
   change_password: Modifica Password
   password: Password
   password_confirmation: Conferma password
-  signup_confirm_password: Conferma password
   login_password: Password
-  signup_password: La tua password
   remove_your_account: Elimina il tuo account
   anonymize_display_name: Anonimo
   anonymize_display_name_info: Sostituisce il tuo nome display con 'Anonimo' dappertutto
@@ -273,11 +268,11 @@ it:
 
     Se vuoi entrare a far parte di questo gruppo, fai click qui:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     Ecco il link alla pagina iniziale di questo gruppo:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
   group_destroyed_subject: "%{group_type} %{group} è stata eliminata da %{user}!"
@@ -479,14 +474,6 @@ it:
   page_history_updated_comment: "%{user_name} ha aggiornato un commento"
   page_history_updated_content: "%{user_name} ha aggiornato il contenuto della pagina"
   page_history_user_created_page: "%{user_name} ha creato la pagina"
-  page_history_mailer_hello_user_name: Ciao %{user_name}
-  page_history_mailer: 'Cambia le tue impostazioni per gli avvisi via Email qui: %{page_link}'
-  page_history_mailer_a_page_has_been_modified: "%{site_title} : Una pagina è stata modificata"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Una pagina che tieni sotto controllo è stata modificata %{histories_count} volte dall'ultimo avviso, \npuoi accedere alla pagina da qui:"
-  page_history_mailer_a_page_you_are_watching: 'Una pagina che tieni sotto controllo è stata modificata, puoi accedere alla pagina da qui:'
-  page_history_the_page_you_are_watching_description: La pagina che tieni sotto controllo "%{page_title}"  è stata modificata
-  page_history_mailer_expire_link: Il link scadrà tra %{expire_time}
-  page_history_mailer_choose_turn_off_notifications: Puoi decidere di non ricevere avvisi via email, di ricevere dei riassunti delle modifiche avvenute, oppure di ricevere una email per ogni volta che una pagina viene modificata.
   wiki_page_description: Un documento di testo a forma libera.
   wiki_page_display: Wiki
   gallery_description: Carica immagini multiple o organizza le immagini esistenti in una raccolta.
@@ -794,14 +781,14 @@ it:
   private_wiki: Wiki Privata
   edit_wiki: Modifica Wiki
   wiki_existed_new_version_created: Questa wiki era già stata creata da un altro utente. Le tue modifiche sono state salvate come una nuova versione.
-  wiki_is_locked_html: Questo wiki è bloccato da <b>%{user}</b>
+  wiki_is_locked: Questo wiki è bloccato da %{user}
   wiki_section_is_locked: Questa sezione %{section} è al momento bloccata da %{user}.
   leave_editing_wiki_page_warning: Perdi le tue modifiche se lasci questa pagina.
-  cant_edit_section_html: Impossibile modificare  <b>%{section}</b>.
-  user_locked_section_html: "<b>%{user}</b> ha bloccato <b>%{section}</b>."
+  cant_edit_section: Impossibile modificare  %{section}.
+  user_locked_section: "%{user} ha bloccato %{section}."
   can_still_save: Tu puoi ancora salvare.
   changes_might_be_overwritten: Le tue modifiche potrebbero venire soprascritte.
-  other_section_locked_error_html: Si può bloccare solo una sezione alla volta. Tu hai già bloccato <b>%{section}</b>.
+  other_section_locked_error: Si può bloccare solo una sezione alla volta. Tu hai già bloccato %{section}.
   break_lock_button: Annulla Blocco
   force_save_button: Sblocca e Salva
   versions: versioni
