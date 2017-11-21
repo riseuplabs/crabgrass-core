@@ -95,6 +95,11 @@ en:
 
 ########################################
 ### en/crud-and-forms.yml
+  actions:
+    possible:
+      add: Add new Possibility
+    task:
+      add: Add new Task
   add_button: Add
   alert: Alert
   approve: Approve

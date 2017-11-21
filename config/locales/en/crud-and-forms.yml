@@ -4,6 +4,11 @@
 # 'remove' is different. You remove a user from a group, or a user from your contacts.
 ---
 en:
+  actions:
+    possible:
+      add: "Add new Possibility"
+    task:
+      add: "Add new Task"
   add_button: Add
   alert: Alert
   approve: Approve
