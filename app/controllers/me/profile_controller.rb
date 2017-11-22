@@ -22,6 +22,6 @@ class Me::ProfileController < Me::BaseController
 
   def profile_params
     params[:profile].permit :place, :organization, :role, :summary,
-                             :encrypt, picture: [:upload], crypt_keys: [:key]
+                             picture: [:upload]
   end
 end

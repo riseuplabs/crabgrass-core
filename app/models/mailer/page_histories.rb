@@ -50,8 +50,8 @@ class Mailer::PageHistories < ActionMailer::Base
   protected
 
   def add_encrypt_options(options)
-    return options unless @recipient.try.profiles.try.first.try.encrypt
-    key = @recipient.profiles.first.crypt_keys.first.key
+    return options unless @recipient.try.pgp_key
+    key = @recipient.pgp_key.key
     # the users key is automatically imported into our keyring
     gpg_options =  {encrypt: true, keys: { @recipient.email => key }}
    # gpg_options = add_sign_options(gpg_options)  # FIXME: does not work on build system. do we want a dummy key there?
@@ -77,8 +77,6 @@ class Mailer::PageHistories < ActionMailer::Base
     @histories = @histories.group_by(&:page).to_a
     options = add_encrypt_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
-
-
   end
 
   def self.digest_recipients

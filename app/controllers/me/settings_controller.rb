@@ -1,7 +1,9 @@
 class Me::SettingsController < Me::BaseController
   rescue_render update: :show
 
-  def show; end
+  def show
+    @user.pgp_key ||= PgpKey.new
+  end
 
   def update
     current_user.update_attributes!(user_params)
@@ -14,6 +16,6 @@ class Me::SettingsController < Me::BaseController
 
   def user_params
     params.require(:user).permit :login, :display_name,
-                                 :email, :receive_notifications, :language, :time_zone
+                                 :email, :receive_notifications, :language, :time_zone, pgp_key_attributes: [:key]
   end
 end

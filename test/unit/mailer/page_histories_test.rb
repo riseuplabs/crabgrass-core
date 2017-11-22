@@ -4,8 +4,8 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
 
   def setup
     @user = users(:blue)
-    @user = profiles(:public_profile_for_blue).user
-    @user.profiles.first.update_attribute(:encrypt, true)
+
+# TODO: use a key which never expires instead
     key = <<-END
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v2
@@ -61,7 +61,7 @@ j1Rx6t+EEw==
 -----END PGP PUBLIC KEY BLOCK-----
 END
 
-    ProfileCryptKey.create(profile_id: 11, key: key)
+    PgpKey.create(user_id: 4, key: key)
     @user.reload
     watch_page
   end
@@ -83,7 +83,7 @@ END
     mail = mailer_class.deliver_digests.first
     assert ActionMailer::Base.deliveries.present?
     assert_includes mail.body, 'Red! has modified the page title'
-    assert Mail::TestMailer.deliveries.first.encrypted?
+    assert ActionMailer::Base.deliveries.first.encrypted?
   end
 
   def test_send_paranoid_digest
@@ -94,7 +94,7 @@ END
     assert ActionMailer::Base.deliveries.present?
     assert_includes mail.body, 'A page that you are watching has been modified'
     assert_not_includes mail.body, 'Red! has modified the page title'
-    assert Mail::TestMailer.deliveries.first.encrypted?
+    assert ActionMailer::Base.deliveries.first.encrypted?
   end
 
   def test_wont_send_empty_update
@@ -112,7 +112,7 @@ END
     assert ActionMailer::Base.deliveries.present?
     assert_includes mail.body, 'Red! has modified the page title'
     assert_includes mail.body, 'Green! has modified the page title'
-    assert Mail::TestMailer.deliveries.first.encrypted?
+    assert ActionMailer::Base.deliveries.first.encrypted?
   end
 
   def test_send_simple_update_comment_and_wiki
@@ -123,7 +123,7 @@ END
     assert ActionMailer::Base.deliveries.present?
     assert_includes mail.body, 'Red! added a comment'
     assert_includes mail.body, 'Red! has updated the page content'
-    assert Mail::TestMailer.deliveries.first.encrypted?
+    assert ActionMailer::Base.deliveries.first.encrypted?
   end
 
   def test_send_paranoid_update
@@ -134,7 +134,7 @@ END
     assert ActionMailer::Base.deliveries.present?
     assert_not_includes mail.body, 'Red! has modified the page title'
     assert_includes mail.body, 'A page that you are watching has been modified'
-    assert Mail::TestMailer.deliveries.first.encrypted?
+    assert ActionMailer::Base.deliveries.first.encrypted?
   end
 
   protected
