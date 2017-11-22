@@ -27,9 +27,9 @@ class ExceptionsControllerTest < ActiveSupport::TestCase
   end
 
   def test_404_translates_thing
-    get '404', {}, not_found_env(:invite)
+    get '404', {}, not_found_env(:page)
     assert last_response.not_found?
-    assert_translations :not_found, I18n.t(:invite)
+    assert_translations :not_found, I18n.t(:page)
   end
 
   def assert_translations(exception, thing = '', scope = nil)

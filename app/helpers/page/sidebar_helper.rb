@@ -74,7 +74,7 @@ module Page::SidebarHelper
     if may_admin_page?
       url = page_attributes_path(@page, public: (!@page.public?).inspect)
       content_tag :li, id: 'public_li' do
-        sidebar_checkbox(I18n.t(:public_checkbox),
+        sidebar_checkbox(I18n.t(:public),
                          @page.public?, url, id: 'public_checkbox',
                                              method: 'put', title: I18n.t(:public_checkbox_help))
       end
@@ -82,7 +82,7 @@ module Page::SidebarHelper
       checked = @page.public? ? 'check_on_16' : 'check_off_16'
       content_tag :li do
         content_tag :span, class: "a icon #{checked}" do
-          :public_checkbox.t
+          :public.t
         end
       end
     end
@@ -204,7 +204,7 @@ module Page::SidebarHelper
   def edit_attachments_line
     if may_edit_page?
       popup_line name: 'assets',
-                 label: :edit_attachments_link.t,
+                 label: :edit.t,
                  icon: 'attach',
                  title: :edit_attachments.t,
                  url: page_assets_path(@page),
@@ -217,7 +217,7 @@ module Page::SidebarHelper
       popup_line(
         id: 'tag_li',
         icon: 'tag',
-        label: I18n.t(:edit_tags_link),
+        label: I18n.t(:edit),
         url: page_tags_path(@page)
       )
     end

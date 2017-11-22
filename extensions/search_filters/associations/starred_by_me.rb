@@ -24,7 +24,7 @@ SearchFilter.new('/starred-by-me/') do
     if opts[:remove]
       :starred_by_user.t(user: :me.t)
     else
-      :starred_by_me.t
+      :starred.t
     end
   end
 end

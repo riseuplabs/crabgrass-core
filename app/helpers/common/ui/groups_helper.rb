@@ -51,7 +51,7 @@ module Common::Ui::GroupsHelper
     end
 
     if options[:include_me]
-      items.unshift(value: current_user.name, label: format('%s (%s)', I18n.t(:only_me), current_user.name), style: 'font-style: italic')
+      items.unshift(value: current_user.name, label: format('%s (%s)', I18n.t(:me), current_user.name), style: 'font-style: italic')
       selected_item ||= current_user.name
     end
 

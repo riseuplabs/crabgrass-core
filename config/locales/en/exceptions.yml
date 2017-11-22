@@ -1,22 +1,15 @@
-#
-# Translations of error messages.
-#
-# These can be very generic or fine grained. So some of them are marked as optional.
-#
+---
 en:
   exception:
+    description:
+      forbidden: "Sorry. You do not have the ability to perform that action."
+      group:
+        not_found: "Sorry, we could not find the group you were looking for."
+      not_found: "Sorry, we could not find what you were looking for."
+      unauthorized: "Please login to perform that action."
     title:
-      # %{thing} is optional here. Please make sure the string works without it.
+      forbidden: Permission Denied
+      group:
+        not_found: "Group Not Found"
       not_found: "%{thing} Not Found"
       unauthorized: "Login Required"
-      forbidden: "Permission Denied"
-      # optional - falls back to translation of not_found
-      group:
-        not_found: Group Not Found
-    description:
-      not_found: Sorry, we could not find what you were looking for.
-      unauthorized: "Please login to perform that action."
-      forbidden: "Sorry. You do not have the ability to perform that action."
-      # optional - falls back to exception.description.not_found
-      group:
-        not_found: Sorry, we could not find the group you were looking for.

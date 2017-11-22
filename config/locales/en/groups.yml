@@ -1,264 +1,97 @@
+---
 en:
-
   activerecord:
     models:
-      group: "organization"
-      network: "network"
-      council: "council"
-      committee: "committee"
+      committee: committee
+      council: council
+      group: organization
+      network: network
 
-  ##
   ## BASIC TERMS
-  ##
+  all_groups: "All Groups"
+  basic_settings: "Basic Settings"
+  committee: Committee
+  committees: Committees
+  council: Council
+  councils: Councils
+  group: Group
+  groups: Groups
+  language: Language
+  my_groups: "My Groups"
+  members: Members
+  membership: Membership
+  network: Network
+  networks: Networks
+  organization: Organization
+  organizations: Organizations
+  structure: Structure
 
-  group: "Group"
-  groups: "Groups"
-  organization: "Organization"
-  organizations: "Organizations"
-  network: "Network"
-  networks: "Networks"
-  committee: "Committee"
-  committees: "Committees"
-  council: "Council"
-  councils: "Councils"
-  members: "Members"
-  structure: "Structure"
-  membership: "Membership"
+  ## EMAIL
+  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
+  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
+  group_invite_email: |-
+    %{from_user} has invited you to join group %{group}. If you wish to join this group, click here:
 
-  ##
+      %{accept_invite_link}
+
+      The home page of this group can be found here:
+        %{group_home_link}
+
+        If you do not wish to join this group, simply ignore this email.
+  group_invite_subject: "Invitation to join group \"%{group}\""
+
   ## GROUP CREATION
-  ##
-
-  group_creation_info: "There are four types of groups:"
-  group_description: "Organizations are groups that are autonomous and have people as members."
-  network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
+  committee_choose_group: "Choose a group for this %{group_type}:"
   committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network. A user added to the committee from outside the organization or network will only have access to the committee."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
+  group_creation_info: "There are four types of groups:"
+  group_description: "Organizations are groups that are autonomous and have people as members."
+  network_committees_may_not_join_networks: "Committees of other networks may not join."
+  network_description: "Networks are groups that can have organizations as members. A network can be used as an association of multiple organizations, or a place for two organizations to collaborate."
+  networks_may_not_join_networks: "Networks may not join other networks."
 
-  committee_choose_group: "Choose a group for this %{group_type}:" 
-  network_committees_may_not_join_networks: 'Committees of other networks may not join.'
-  networks_may_not_join_networks: 'Networks may not join other networks.'
+  ## MEMBERSHIP
+  group_membership_count: "%{count} Members"
+  membership_destroy_confirm_message: "Are you sure you want to remove %{entity} from %{group}?"
+  membership_exists_error: "Membership already exists for %{member}"
+  membership_requests: "Membership Requests"
+  public_groups: "Public Groups"
+  shared_groups: "Shared Groups"
 
-  ##
   ## PERMISSIONS
-  ##
-
   may_request_membership_description: "A \"join %{group}\" link will appear on your %{group} page. This will send a request for membership that can be accepted or rejected."
   open_group: "Open %{group}"
   open_group_description: "Users are immediately added to the %{group} - no requests have to be approved"
 
-  ##
-  ## MEMBERSHIP
-  ##
-
-  shared_groups: "Shared Groups"
-  public_groups: "Public Groups"
-  membership_requests: "Membership Requests"
-  group_membership_count: "%{count} Members"
-  membership_exists_error: "Membership already exists for %{member}"
-  ## you_are_a_member_already_error: "You are a member already"
-  membership_notification: "Membership notification"
-  membership_leave_message: "You have been removed from %{group}"
-  ##!  membership_removed_message: "%{user} has been removed from %{group_type} %{group}"
-  membership_destroy_confirm_message: "Are you sure you want to remove %{entity} from %{group}?"
-  ##!  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '%{user}'?"
-
-  ##
-  ## EMAIL
-  ##
-
-  group_invite_subject: 'Invitation to join group "%{group}"'
-  group_invite_email: "%{from_user} has invited you to join group %{group}. If you wish to join this group, click here:\n\n %{accept_invite_link}\n\nThe home page of this group can be found here:\n%{group_home_link}\n\nIf you do not wish to join this group, simply ignore this email."
-  group_destroyed_subject: "%{group_type} %{group} has been deleted by %{user}!"
-  group_destroyed_email: "%{group_type} %{group} has been destroyed!"
-
-  ##
   ## WIKIS
-  ##
-
   group_wiki: "Group Wiki"
-
-  ##!  create_group_wiki: "Create Group Wiki"
-  create_public_group_wiki: "Public"
-  create_private_group_wiki: "Private"
-  public_group_wiki: "Public"
-  private_group_wiki: "Private"
-
-  ##
-  ## UNSORTED
-  ##
-
-  ##!  group_join_chat: "Join Chat"
-  ##!  group_privacy_settings: '%{group} Privacy Settings'
-  group_publicly_visible: 'Make %{group} Publicly Visible'
-  committee_publicly_visible: 'Make Committees Publicly Visible'
-  networks_publicly_visible: 'Make Networks Publicly Visible'
-  allow_membership_requests: 'Allow Membership Requests'
-  ##!  group_home_headline: "%{group_type} Home"
-  ##!  group_home_welcome: "Welcome"
-  ##!  group_administration_not_allowed: "You cannot administer this group."
-  ##!  page_not_part_of_group: "Page not part of this group"
-  ##!  group_successfully_updated: "Group was successfully updated."
-  ##!  only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
-  group_successfully_created: "Group was successfully created."
-  ##!  group_successfully_created_details: "Now make sure to configure your group"
-  ##!  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
-
-
-
-  ##!  dont_understand_group_type: "Could not understand group type %{type}"
-  ##!  dont_have_permission_to_create_committees: "You do not have permission to create committees under %{group}"
-  group_publicly_visible_description: "%{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname."
-  committee_publicly_visible_description: Committees are visible to non-members at %{domain}/yourgroupname
-  networks_publicly_visible_description: Networks are visible to non-members at %{domain}/yourgroupname
-  group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description: Members are visible to non-members at %{domain}/yourgroupname. %{group} can be listed on the profile page of members (%{domain}/username)
   members_may_edit_wiki: "All members may edit the wiki"
   members_may_edit_wiki_description: "If unchecked, only council members may edit the %{group} wiki."
-  ##!  page_list: Page list
-  ##!  recent_network_pages: "Recent Network Pages"
-  ##!  recent_member_group_pages: "Recent Activity from Your Groups in %{network}"
-  ##!  create_group_link: "create group"
-  ##!  typing: typing
-  ##!  away: away
-  ##!  you_are_not_member_of_any_group: You are not a member of any group.
-  ##!  back_to_group: back_to %{group_name}
-  ##!  when_does_feature_expire: When does this feature expire?
-  ##!  unfeature_button: Unfeature!
-  ##!  feature_button: Feature!
-  ##!  reactivate_button: Reactivate!
-  ##!  no_group_named: there is no group named <b>%{name}</b>.
-  group_wiki: Group Wiki
-  rss_feed: RSS Feed
-  ##!  group_has_no_public_profile: This group does not have a public profile.
-  ##!  no_committees: no committees
-  ##!  category: Category
-  ##!  founded: Founded
-  ##!  not_set: not set
-  ##!  no_members: (no members)
-  ##!  new_group: "New group"
-  group_language: "The main language of this %{group}."
-  ##!  group_location: "The main location of this %{group}."
-  ##!  group_summary: "Brief information regarding this %{group}."
-  ##!  new_network: "New network"
-  ##!  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='%{new_group_url}'>create a group</a>?"
 
-  # featured
-
-  ##!  featured_content_header: "Featured"
-  ##!  edit_featured_content_for_group: Edit Featured Content For %{group_name}
-  ##!  edit_featured_content_link: "edit featured content"
-  ##!  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
-  ##!  current_featured_content: Current Featured Content
-  ##!  not_featured_content: Not yet Featured Content
-  ##!  expired_featured_content: Expired Featured Content
-  ##!  featured_content: Featured Content
-  ##!  featured_pages: "Featured Pages"
-  ##!  enter_page_title: "enter page title"
-  ##!  updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
-
-
-  # directory
-
-  my_networks: "My Networks"
-  ##!  my_networks_link: "my networks"
-  ##!  network_directory_link: "network directory"
-
-  my_groups: "My Groups"
-  all_groups: "All Groups"
-  ##!  group_directory: "Group Directory"
-  ##!  directory_of_networks: "Directory of Networks"
-  ##!  directory_of_groups: "Directory of Groups"
-
-  ##!  my_groups_link: "My Groups"
-  ##!  group_directory_link: "Group Directory"
-
-  ##!  new_people_in_weeks: "new people in last 2 weeks"
-
-  ##!  discover_groups: "Discover %{groups_type}"
-  ##!  browse_groups: "Browse %{groups_type}"
-
-  ##!  browse_groups_desc: "Below is an alphabetized list of all %{groups_type}. You can filter this list by location to find %{groups_type} near you."
-  ##!  discover_groups_desc: "Below is a list of recently created %{groups_type}. You can filter this list by location to find %{groups_type} near you."
-
-  # commands
-
-  ##!  edit_settings: "Edit Settings"
-  basic_settings: "Basic Settings"
-  ##!  basic_info: "Basic Information"
-  ##!  view_all: "View All"
-  send_invites: "Send Invites"
-  view_requests: "View Requests"
+  ## UNSORTED
   add_members_to_committee: "Add a group member to this committee. To add people not in the parent group, send an invite instead."
-  ##!  destroy_group_link: "Destroy %{group_type}"
-  ##!  propose_to_destroy_group_link: "Propose to Destroy %{group_type}"
-  ##!  propose_to_destroy_group_confirmation: "Are you sure you want to propose to delete this %{group_type}? The %{group_type} will be deleted if enough members approve the proposal."
-
-  join_group_link: "Join %{group_type}"
-  leave_group_link: "Leave %{group_type}"
-  leave_group_confirmation: "Are you sure you want to leave this %{group_type}?"
-  request_join_group_link: "Request to Join %{group_type}"
-  ##!  send_join_request: "Send request to join %{group_name}"
-  ##!  group_destroyed_message: "%{group_type} Destroyed"
-  request_exists: "Your request to join is waiting for approval."
-  join_group_confirmation: "Are you sure you want to join this %{group_type}?"
-
-  ##!  remove_group_link: "Remove Group"
-
-
-  # results
-
-  ##!  page_is_not_static: "Page is not static"
-
-  ##!  archive_headline: "Archive"
-  ##!  archive_filter_created_link: "Date Created"
-  ##!  archive_filter_updated_link: "Last Date Updated"
-
-  # create/edit forms
-
-  link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
-  ##!  fullname: "Full Name"
+  allow_membership_requests: "Allow Membership Requests"
+  committee_publicly_visible: "Make Committees Publicly Visible"
+  committee_publicly_visible_description: "Committees are visible to non-members at %{domain}/yourgroupname"
   descriptive_name_for_display: "A descriptive name used for display"
-  ##!  link_name: "Link Name"
-  language: "Language"
-
-  # council
-
-  ##!  coordinating_council: "Coordinating Council"
-  ##!  this_is_coordinating: "This is the <strong>coordinating council</strong> for %{parent_group}."
-  ##!  new_council: "New council for group %{group_name}"
-  ##!  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-  # committee
-
-  this_is_committee: "This committee is part of %{parent_group}."
-  ##!  new_committee: "New committee for group %{group_name}"
-  ##!  dual_memberships: "Dual memberships"
-  ##!  dual_membership_info: "Members of %{group_type} %{group_name} who should also be in committee %{committee_name}"
-  ##!  edit_committe: "Edit Committee"
-  ##!  create_committee: "Create Committee"
-
-  # networks
-
+  group_language: "The main language of this %{group}."
+  group_members_publicly_visible: "Make Members Publicly Visible"
+  group_members_publicly_visible_description: "Members are visible to non-members at %{domain}/yourgroupname. %{group} can be listed on the profile page of members (%{domain}/username)"
+  group_publicly_visible: "Make %{group} Publicly Visible"
+  group_publicly_visible_description: "%{group} appears in the public directory. The <i>profile</i> is visible by non-members at %{domain}/yourgroupname."
+  group_successfully_created: "Group was successfully created."
+  join_group_confirmation: "Are you sure you want to join this %{group_type}?"
+  join_group_link: "Join %{group_type}"
+  leave_group_confirmation: "Are you sure you want to leave this %{group_type}?"
+  leave_group_link: "Leave %{group_type}"
+  link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
   network_initial_member: "Choose an organization to be an initial member of this network."
-
-  # menu items
-
-  ##!  menu_items: "Navigation Bar"
-  ##!  external_link_menu_item: "external link"
-  ##!  local_link_menu_item: "local link"
-  ##!  page_menu_item: "page"
-  ##!  search_menu_item: "search"
-  ##!  tag_menu_item: "tag"
-  ##!  add_menu_item: "Add Item"
-
-  ##!  updating_this_list_will_update_menu_items: "Adding, removing and reordering menu items on this list will immediately update what menu items users see."
-
-  # appearance
-
-  ##!  edit_layout_heading: "Edit Layout"
-  ##!  group_icon: "Group Icon"
-  ##!  select_page_types: "Select Page Types"
-  ##!  select_visible_group_widgets: "Select the widgets visible on your group's front page"
-
-  ##!  widget_index: "Widget %{index}"
+  networks_publicly_visible: "Make Networks Publicly Visible"
+  networks_publicly_visible_description: "Networks are visible to non-members at %{domain}/yourgroupname"
+  request_exists: "Your request to join is waiting for approval."
+  request_join_group_link: "Request to Join %{group_type}"
+  rss_feed: "RSS Feed"
+  send_invites: "Send Invites"
+  this_is_committee: "This committee is part of %{parent_group}."
+  view_requests: "View Requests"

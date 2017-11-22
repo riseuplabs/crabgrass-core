@@ -1,29 +1,9 @@
+---
 en:
-
-  ## TODO: use a namespace for the menu prefixes rather than adding it
-  # to the string.
-  home: "Home"
-  profile: "Profile"
-  menu_me: "Me"
-  menu_groups: "Groups"
-  menu_chat: "Chat"
-  menu_people: "People"
-  menu_networks: "Networks"
-  menu_link_logout: "Logout %{user}"
-  ##!  menu_link_account: "Account"
-  menu_admin: "Admin"
-  ##!  menu_moderation: "Moderation"
-
-  ##!  pages_tab: "Pages"
-  ##!  social_activities_tab: "Social Activity"
-  ##!  messages_tab: "Messages"
-  ##!  requests_tab: "Requests"
-
-  ##!  my_work_tab: "My Work"
-  ##!  all_pages_tab: "All Pages"
-  ##!  notification_tab: "Notifications"
-
   account_settings: "Account Settings"
-
-  back_to_page: "Back to the page"
   back_to_group: "Back to the group"
+  back_to_page: "Back to the page"
+  home: Home
+  menu_admin: Admin
+  menu_link_logout: "Logout %{user}"
+  profile: Profile

@@ -70,7 +70,7 @@ module ModalboxHelper
 
   # close the modal box
   def close_modal_button(label = nil)
-    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();', class: 'btn btn-default')
+    button_to_function((label == :cancel ? I18n.t(:cancel) : I18n.t(:close_button)), 'Modalbox.hide();', class: 'btn btn-default')
   end
 
   def cancel_modal_button
@@ -98,7 +98,7 @@ module ModalboxHelper
 
   def localize_modalbox_strings
     format('Modalbox.setStrings(%s)', {
-      ok: I18n.t(:ok_button), cancel: I18n.t(:cancel_button), close: I18n.t(:close_button),
+      ok: I18n.t(:ok_button), cancel: I18n.t(:cancel), close: I18n.t(:close_button),
       alert: I18n.t(:alert), confirm: I18n.t(:confirm), loading: I18n.t(:loading_progress)
     }.to_json)
   end
@@ -206,7 +206,7 @@ module ModalboxHelper
         action = url_for(action) if action.is_a?(Hash)
         ok = options[:ok] || I18n.t(:ok_button)
         title = options[:title] || name
-        cancel = options[:cancel] || I18n.t(:cancel_button)
+        cancel = options[:cancel] || I18n.t(:cancel)
         link_to_function(name,
                          %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
                          html_options)

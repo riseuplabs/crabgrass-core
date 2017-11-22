@@ -92,7 +92,7 @@ end
 ######### IMAGE UPLOAD ###################
 class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
-    I18n.t(:upload_image_question_link)
+    I18n.t(:upload_image)
   end
 
   def answer_class

@@ -44,7 +44,7 @@ class Page::SharesController < Page::SidebarsController
   #
   # there are four ways to submit the forms:
   #
-  #   (1) cancel button (params[:cancel_button]==true)
+  #   (1) cancel button (params[:cancel]==true)
   #       -> before_filter :close_popup
   #   (2) add button or return in add field (params[:add]==true)
   #       -> before_filter :add_recipients
@@ -101,7 +101,7 @@ class Page::SharesController < Page::SidebarsController
   end
 
   def cancel_update?
-    params[:cancel_button]
+    params[:cancel]
   end
 
   def add_recipients

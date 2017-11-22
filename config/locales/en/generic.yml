@@ -1,158 +1,86 @@
+---
 en:
+  ## Entities
+  approved_by_entity: "Approved by %{entity}"
+  name: Name
+  owner: Owner
+  people: People
+  person: Person
+  recipient: Recipient
+  recipients: Recipients
+  rejected_by_entity: "Rejected by %{entity}"
+  user: User
+  users: Users
 
-  ##
-  ## Searching
-  ##
-
-  search: "Search"
-  go: "Go"
-  thing_not_found: "%{thing} not found"
-  no_things_found: "No %{things} found."
-  no_search_results: "No Results"
-  not_found: "Not Found"
-  ##!  see_count_more_link: "See %{count} more"
-  ##!  see_count_less_link: "See %{count} less"
-  see_all_link: "See All"
-  ##!  empty_results: "None"
-  ##!  thing_not_found_description: "Sorry, we were unable to locate '%{thing}'"
-  total: "%{count} total"
-  all: "All"
-  none: "None"
-  or: "or"
-  new: "new"
-  modified: "modified"
-  ##!  not_found_description: "Sorry, we could not find what you were looking for."
-  unknown: "Unknown"
-  ##!  search_headline: "Search"
-  ##!  search_this_group: "this group only"
-  ##!  search_this_person: "this person only"
-  ##!  search_link: "Search"
-  next: "Next"
-  previous: "Previous"
-  pagination_next: "Next"
-  pagination_previous: "Previous"
-  return: "Return"
-  ##!  pagination_older: "Older"
-  ##!  pagination_newer: "Newer"
-  see_more_link: "More"
-  see_less_link: "Less"
-  list_things: "List %{things}"
-
-  ##
   ## Messaging
-  ##
-
+  thing_was_not_sent:
+    one: "%{thing} could not be sent to %{recipient}."
+    other: "%{count} %{thing} could not be sent."
   thing_was_sent:
     one: "%{thing} was sent to %{recipient}."
     other: "%{count} %{thing} were sent."
 
-  thing_was_not_sent:
-    one: "%{thing} could not be sent to %{recipient}."
-    other: "%{count} %{thing} could not be sent."
+  ## Searching
+  all: All
+  go: Go
+  list_things: "List %{things}"
+  modified: modified
+  new: new
+  next: Next
+  no_search_results: "No Results"
+  no_things_found: "No %{things} found."
+  none: None
+  or: or
+  previous: Previous
+  return: Return
+  search: Search
+  see_all_link: "See All"
+  see_more_link: More
+  thing_not_found: "%{thing} not found"
+  total: "%{count} total"
+  unknown: Unknown
 
-  ##
-  ## Entities
-  ##
-
-  user: "User"
-  users: "Users"
-  people: "People"
-  person: "Person"
-  name: "Name"
-  ##!  coordinator: "Coordinator"
-  ##!  participant: "Participant"
-  ##!  viewer: "Viewer"
-  ##!  coordinators: "Coordinators"
-  ##!  participants: "Participants"
-  ##!  viewers: "Viewers"
-  recipients: "Recipients"
-  recipient: "Recipient"
-  owner: "Owner"
-  created_by_entity: "Created by %{entity}"
-  approved_by_entity: "Approved by %{entity}"
-  rejected_by_entity: "Rejected by %{entity}"
-
-
-  ##
   ## Social
-  ##
-
-  ##!  contact: "Contact"
-  contacts: "Contacts"
-  friends: "Contacts"
-  my_contacts: "My Contacts"
+  contacts: Contacts
   member_groups_of_network: "Member Groups"
-  peers: "Peers"
+  my_contacts: "My Contacts"
+  peers: Peers
 
-  ##
   ## Other
-  ##
-
-  ##!  thing_settings: "%{thing} Settings"
-  #approved_when_by: "Approved by %{user} on %{when}."
-  ##!  at: "at"
-  access: "Access"
-  me: "Me"
-  ##!  to: "To"
-  ##!  link: "Link"
-  back: "Back"
-  share: "Share"
-  contributed: "Contributed"
-  ##!  contributions: "Contributions"
-  ##!  contributors: "Contributors"
-  profile: "Profile"
-  ##!  all_content: "All Content"
-  content: "Content"
-  ##!  more_information: "More Information"
-  ##!  more: "more"
-  ##!  about: "about"
-  comments: "Comments"
-  ##!  browse: "Browse"
-  ##!  discover: "Discover"
-  ##!  recent_activity: "Recent Activity"
-  ##!  activity: "Activity"
-  ##!  recently_created: "Recently Created"
-  ##!  check_all: "Check All"
-  statistics: "Statistics"
-  summary: "Summary"
-  ##!  open: "Open"
-  private: "Private"
-  public: "Public"
-  options: "Options"
-  permissions: "Permissions"
-  notification: "Notification"
-  notice: "Notice"
-  notices: "Notices"
-  dismiss: "Dismiss"
+  access: Access
+  action_cannot_be_undone: "This action cannot be undone."
+  administration: Administration
+  back: Back
+  comments: Comments
+  contributed: Contributed
+  description: Description
+  details: Details
   dismiss_all_notices: "Dismiss All"
   dismiss_all_notices_confirmation: "Are you sure want to dismiss all notices?"
-  action_cannot_be_undone: "This action cannot be undone."
-  locale: "Locale"
-  description: "Description"
-  details: "Details"
-  invite: "Invite"
-  membership: "Membership"
-  visibility: "Visibility"
-  administration: "Administration"
-  settings: "Settings"
-  messages: "Messages"
-  ##!  popular: "Popular"
-  page: "Page"
-  ##!  discussions: "Discussions"
-  tags: "Tags"
-  ##!  archive: "Archive"
-  tasks: "Tasks"
-  title: "Title"
-  summary: "Summary"
-  text_message: "Text Message"
-  print: "Print"
-  show: "Show"
-  hide: "Hide"
-  display: "Display"
-  message: "Message"
+  display: Display
+  hide: Hide
+  locale: Locale
+  me: Me
+  membership: Membership
+  message: Message
+  messages: Messages
+  notice: Notice
+  notices: Notices
+  notification: Notification
+  page: Page
+  permissions: Permissions
+  print: Print
+  private: Private
   private_message_notice: "Private Message Notice"
-  ##!  success: "Success"
-  ##!  error: "Error"
-  ##!  status: "Status"
-  visits: "Visits"
-  ##! return_to_list: "Return to List"
+  profile: Profile
+  public: Public
+  settings: Settings
+  share: Share
+  show: Show
+  statistics: Statistics
+  summary: Summary
+  tags: Tags
+  tasks: Tasks
+  title: Title
+  visibility: Visibility
+  visits: Visits
