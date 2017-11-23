@@ -34,6 +34,8 @@ Crabgrass::Application.configure do
 
   Conf.remote_processing = 'http://localhost:3002' if ENV['REMOTE']
 
+#  ENV['GPGKEY'] = Rails.root.join('assets','keyfile', 'robot_secret_key.asc').to_s
+
   ##
   ## DEBUGGING
   ## See doc/DEBUGGING for tips.

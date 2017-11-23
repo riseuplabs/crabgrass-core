@@ -50,32 +50,33 @@ class Mailer::PageHistories < ActionMailer::Base
   protected
 
   def add_encrypt_options(options)
-    return options unless @recipient.try.pgp_key
-    key = @recipient.pgp_key.key
-    # the users key is automatically imported into our keyring
-    gpg_options =  {encrypt: true, keys: { @recipient.email => key }}
-   # gpg_options = add_sign_options(gpg_options)  # FIXME: does not work on build system. do we want a dummy key there?
-    options.merge gpg: gpg_options
+    return options unless @recipient.pgp_key
+    gpg =  {encrypt: true, keys: { @recipient.email => @recipient.pgp_key.key }}
+    options.merge gpg: gpg
   end
 
   def add_sign_options(gpg_options)
-    # FIXME: this has to be done elsewhere 
-    ENV['GPGKEY'] = Rails.root.join('assets','keyfile', 'robot_secret_key.asc').to_s
-    GPGME::Key.import File.open(ENV['GPGKEY'])
-    gpg_options.merge sign_as: "robot@riseup.net"
+    begin
+      GPGME::Key.import File.open(ENV['GPGKEY'])
+    rescue => e
+      logger.error 'Error: ' + e.message
+      logger.error e.backtrace.join("\n")
+    end
+    # TODO: email address should be configurable
+    gpg_options.merge sign_as: "robot@riseup.net" if ENV['GPGKEY']
+    return gpg_options
   end
-
 
   def init_mail_to(recipient)
     @site = Site.default
     @recipient = recipient
   end
 
-  # add some defaults
   def mail(options = {})
     return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
     options = add_encrypt_options(options)
+    options = add_sign_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
   end
 

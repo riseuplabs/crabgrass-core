@@ -130,8 +130,9 @@ class Profile < ActiveRecord::Base
                       peer picture video summary admins_may_moderate]
 
     collections = {
-      'websites' => ::ProfileWebsite
+      'websites'  => ::ProfileWebsite
     }
+
     profile_params.stringify_keys!
 
     params = profile_params.delete_if { |k, _v| !valid_params.include?(k) && !collections.keys.include?(k) }
@@ -153,6 +154,7 @@ class Profile < ActiveRecord::Base
                                   []
                                 end
     end
+
     picture_params = params.delete('picture')
     if picture_params && picture_params['upload']
       params['picture'] = Picture.new(picture_params)
