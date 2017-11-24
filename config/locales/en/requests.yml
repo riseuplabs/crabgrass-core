@@ -60,6 +60,7 @@ en:
   request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
   request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
   request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
+  request_to_join_you: "Request to Join"
   request_to_join_you_description: "The user %{user} requested to join the group %{group}."
   request_to_join_your_network_description: "The group %{group} requested to join the network %{network}."
   request_to_remove_user: "Request to Remove Member"
