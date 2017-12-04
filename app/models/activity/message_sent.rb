@@ -1,8 +1,8 @@
 class Activity::MessageSent < Activity
-  validates_format_of :subject_type, with: /User/
+  validates_format_of :subject_type, with: /\AUser\z/
   validates_presence_of :subject_id
 
-  validates_format_of :item_type, with: /User/
+  validates_format_of :item_type, with: /\AUser\z/
   validates_presence_of :item_id
 
   alias_attr :user_to, :subject

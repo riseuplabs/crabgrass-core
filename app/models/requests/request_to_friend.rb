@@ -7,7 +7,7 @@
 #
 #
 class RequestToFriend < Request
-  validates_format_of :recipient_type, with: /User/
+  validates_format_of :recipient_type, with: /\AUser\z/
   validate :no_friendship_yet, on: :create
 
   def no_friendship_yet

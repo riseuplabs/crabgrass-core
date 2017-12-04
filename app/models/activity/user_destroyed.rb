@@ -1,5 +1,5 @@
 class Activity::UserDestroyed < Activity
-  validates_format_of :subject_type, with: /User/
+  validates_format_of :subject_type, with: /\AUser\z/
   validates_presence_of :subject_id
   validates_presence_of :extra
 

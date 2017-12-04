@@ -7,8 +7,8 @@
 #
 
 class RequestToDestroyOurGroup < Request
-  validates_format_of :recipient_type,   with: /Group/
-  validates_format_of :requestable_type, with: /Group/
+  validates_format_of :recipient_type,   with: /\AGroup\z/
+  validates_format_of :requestable_type, with: /\AGroup\z/
 
   alias_attr :group, :recipient
 

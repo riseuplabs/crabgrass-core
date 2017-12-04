@@ -4,8 +4,8 @@
 # created_by: person who sent the invite
 #
 class RequestToJoinOurNetwork < Request
-  validates_format_of :requestable_type, with: /Group/
-  validates_format_of :recipient_type, with: /Group/
+  validates_format_of :requestable_type, with: /\AGroup\z/
+  validates_format_of :recipient_type, with: /\AGroup\z/
 
   validate :no_membership_yet, on: :create
   validate :requestable_is_network

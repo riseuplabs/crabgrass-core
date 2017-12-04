@@ -7,8 +7,8 @@
 #
 
 class RequestToRemoveUser < Request
-  validates_format_of :recipient_type,   with: /Group/
-  validates_format_of :requestable_type, with: /User/
+  validates_format_of :recipient_type,   with: /\AGroup\z/
+  validates_format_of :requestable_type, with: /\AUser\z/
 
   alias_attr :group, :recipient
   alias_attr :user,  :requestable
