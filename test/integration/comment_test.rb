@@ -6,7 +6,7 @@ class CommentTest < IntegrationTest
     @blue = users(:blue)
     @red = users(:red)
     @rainbow = groups(:rainbow)
-    @page = FactoryGirl.create :page, created_by: @blue, owner: @rainbow
+    @page = FactoryBot.create :page, created_by: @blue, owner: @rainbow
     @blue_comment = @page.add_post @blue,
                                    body: 'test comment that already existed'
     @red_comment = @page.add_post @red,

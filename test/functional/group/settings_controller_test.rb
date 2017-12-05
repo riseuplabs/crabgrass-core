@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::SettingsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.grant_access! public: :view
     @group.add_user!(@user)
   end
@@ -24,7 +24,7 @@ class Group::SettingsControllerTest < ActionController::TestCase
   end
 
   def test_not_a_member
-    stranger = FactoryGirl.create(:user)
+    stranger = FactoryBot.create(:user)
     login_as stranger
     assert_permission :may_admin_group?, false do
       assert_permission_denied do

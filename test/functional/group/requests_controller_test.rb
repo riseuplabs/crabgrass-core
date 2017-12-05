@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::RequestsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user! @user
     login_as @user
   end
@@ -26,7 +26,7 @@ class Group::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve
-    @other = FactoryGirl.create(:user)
+    @other = FactoryBot.create(:user)
     @group.add_user! @other
     @req = RequestToCreateCouncil.create! group: @group,
                                           requestable: @group,

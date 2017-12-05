@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Wiki::WikisControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
   end
 
@@ -24,7 +24,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
 
   def test_edit_locked
     @wiki = create_profile_wiki
-    other_user = FactoryGirl.create(:user)
+    other_user = FactoryBot.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
@@ -140,7 +140,7 @@ class Wiki::WikisControllerTest < ActionController::TestCase
 
   def test_edit_locked_section
     @wiki = create_profile_wiki
-    other_user = FactoryGirl.create(:user)
+    other_user = FactoryBot.create(:user)
     @wiki.lock! :document, other_user
     login_as @user
     assert_permission :may_edit_wiki? do
@@ -179,8 +179,8 @@ class Wiki::WikisControllerTest < ActionController::TestCase
   end
 
   def create_page_wiki
-    owner = FactoryGirl.create :user
-    @page = FactoryGirl.build :wiki_page, owner: owner
+    owner = FactoryBot.create :user
+    @page = FactoryBot.build :wiki_page, owner: owner
     @page.data = Wiki.new(user: owner, body: '')
     @page.save
     @page.wiki.save

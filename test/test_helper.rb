@@ -41,9 +41,9 @@ class ActiveSupport::TestCase
                     'page/terms' => Page::Terms
 end
 
-require 'factory_girl'
+require 'factory_bot'
 
-class FactoryGirl::SyntaxRunner
+class FactoryBot::SyntaxRunner
   # for fixture_file_upload
   include ActionDispatch::TestProcess
 

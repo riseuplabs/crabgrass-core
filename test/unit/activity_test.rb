@@ -26,7 +26,7 @@ class Activity::Test < ActiveSupport::TestCase
   end
 
   def test_create_membership
-    ruth = FactoryGirl.create(:user)
+    ruth = FactoryBot.create(:user)
     @group.add_user!(ruth)
     Tracking::Action.track :create_membership, group: @group, user: ruth
 
@@ -78,7 +78,7 @@ class Activity::Test < ActiveSupport::TestCase
   end
 
   def test_avatar
-    new_group = FactoryGirl.create(:group)
+    new_group = FactoryBot.create(:group)
 
     @blue.add_contact!(@red, :friend)
     Tracking::Action.track :create_friendship, user: @blue, other_user: @red

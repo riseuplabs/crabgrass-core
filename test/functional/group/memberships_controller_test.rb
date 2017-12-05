@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::MembershipsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
   end
 
@@ -16,10 +16,10 @@ class Group::MembershipsControllerTest < ActionController::TestCase
   end
 
   def test_destroy
-    @council = FactoryGirl.create(:committee)
+    @council = FactoryBot.create(:committee)
     @group.add_council! @council
     @council.add_user! @user
-    other_user = FactoryGirl.create(:user)
+    other_user = FactoryBot.create(:user)
     @group.add_user! other_user
     membership = @group.memberships.find_by_user_id(other_user.id)
     login_as @user

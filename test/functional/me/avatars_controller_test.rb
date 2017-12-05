@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Me::AvatarsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   def test_user_could_upload_avatar_from_file

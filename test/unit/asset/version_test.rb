@@ -6,7 +6,7 @@ require 'test_helper'
 
 class Asset::VersionTest < ActiveSupport::TestCase
   def setup
-    @asset = FactoryGirl.create :png_asset
+    @asset = FactoryBot.create :png_asset
   end
 
   def test_associations

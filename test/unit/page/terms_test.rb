@@ -21,7 +21,7 @@ class Page::TermsTest < ActiveSupport::TestCase
 
   def test_tagging_with_odd_characters
     name = 'test page'
-    page = FactoryGirl.create :wiki_page,
+    page = FactoryBot.create :wiki_page,
                               title: name.titleize,
                               name: name.nameize,
                               tag_list: '^&#, +, **, %, ə'

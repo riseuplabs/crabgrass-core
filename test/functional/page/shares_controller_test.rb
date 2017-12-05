@@ -2,20 +2,20 @@ require 'test_helper'
 
 class Page::SharesControllerTest < ActionController::TestCase
   def setup
-    @owner = FactoryGirl.create(:user)
-    @recipient = FactoryGirl.create(:user)
+    @owner = FactoryBot.create(:user)
+    @recipient = FactoryBot.create(:user)
   end
 
   def test_show_share_popup
     login_as @owner
-    page = FactoryGirl.create :page, created_by: @owner
+    page = FactoryBot.create :page, created_by: @owner
     xhr :get, :show, page_id: page.id, mode: 'share'
     assert_response :success
   end
 
   def test_show_notify_popup
     login_as @owner
-    page = FactoryGirl.create :page, created_by: @owner
+    page = FactoryBot.create :page, created_by: @owner
     xhr :get, :show, page_id: page.id, mode: 'notify'
     assert_response :success
   end
@@ -32,7 +32,7 @@ class Page::SharesControllerTest < ActionController::TestCase
   end
 
   def test_share_page_with_multiple_recipients
-    page = FactoryGirl.create :page, created_by: @owner
+    page = FactoryBot.create :page, created_by: @owner
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count', 2 do
@@ -45,7 +45,7 @@ class Page::SharesControllerTest < ActionController::TestCase
   end
 
   def test_share_page_with_group
-    page = FactoryGirl.create :page, created_by: @owner
+    page = FactoryBot.create :page, created_by: @owner
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count' do
@@ -60,7 +60,7 @@ class Page::SharesControllerTest < ActionController::TestCase
   end
 
   def test_share_page_with_user
-    page = FactoryGirl.create :page, created_by: @owner
+    page = FactoryBot.create :page, created_by: @owner
     login_as @owner
     admin = { access: 'admin' }
     assert_difference 'Page::History.count' do

@@ -15,7 +15,7 @@ require 'test_helper'
 module Migration
   class UserPermissionTest < ActiveSupport::TestCase
     def setup
-      @user = FactoryGirl.create :user
+      @user = FactoryBot.create :user
     end
 
     def test_migrate_public_may_view

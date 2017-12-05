@@ -35,9 +35,9 @@ module PageRecords
     page_options[:created_at] = Time.now
     page_options[:updated_at] = Time.now
     if type
-      @page = records[type] ||= FactoryGirl.build(type, page_options)
+      @page = records[type] ||= FactoryBot.build(type, page_options)
     else
-      @page ||= FactoryGirl.build(:discussion_page, page_options)
+      @page ||= FactoryBot.build(:discussion_page, page_options)
     end
   end
 

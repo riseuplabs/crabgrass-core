@@ -77,6 +77,6 @@ class User::AuthenticatedTest < ActiveSupport::TestCase
 
   # just like User.create this will return the user even if it's invalid
   def create_user(attrs = {})
-    FactoryGirl.build(:user, attrs).tap(&:save)
+    FactoryBot.build(:user, attrs).tap(&:save)
   end
 end

@@ -2,9 +2,9 @@ require 'test_helper'
 
 class Group::PermissionsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @other_user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @other_user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
   end
 

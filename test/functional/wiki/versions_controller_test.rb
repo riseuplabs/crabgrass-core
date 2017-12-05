@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Wiki::VersionsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
     @wiki = @group.profiles.public.create_wiki body: 'test'
     @wiki.body = @original_body = 'original wiki body'

@@ -13,9 +13,9 @@ class Page::HistoryTest < ActiveSupport::TestCase
   def setup
     Page.delete_all
 
-    @user = FactoryGirl.create(:user, login: 'pepe')
+    @user = FactoryBot.create(:user, login: 'pepe')
 
-    @page = FactoryGirl.create(:page, created_by: @user)
+    @page = FactoryBot.create(:page, created_by: @user)
     Page::History::PageCreated.create page: @page, user: @user
   end
 
@@ -37,11 +37,11 @@ class Page::HistoryTest < ActiveSupport::TestCase
   end
 
   def test_set_update_at_of_the_page
-    post = FactoryGirl.create(:post)
-    user = FactoryGirl.create(:user)
-    group = FactoryGirl.create(:group)
+    post = FactoryBot.create(:post)
+    user = FactoryBot.create(:user)
+    group = FactoryBot.create(:group)
 
-    page = FactoryGirl.create :page,
+    page = FactoryBot.create :page,
       created_at: 3.months.ago,
       updated_at: 2.months.ago
 
@@ -65,7 +65,7 @@ class Page::HistoryTest < ActiveSupport::TestCase
   end
 
   def test_change_title_saves_old_and_new_value
-    page = FactoryGirl.create(:page, title: 'Bad title')
+    page = FactoryBot.create(:page, title: 'Bad title')
     page.update_attribute :title, 'Nice title'
     Tracking::Action.track :update_title, user: @user, page: page
     page_history = Page::History::ChangeTitle.where(page_id: page).first
@@ -74,10 +74,10 @@ class Page::HistoryTest < ActiveSupport::TestCase
   end
 
   def test_recipients_for_single_notifications
-    user   = FactoryGirl.create(:user, receive_notifications: nil)
-    user_a = FactoryGirl.create(:user, receive_notifications: 'Digest')
-    user_b = FactoryGirl.create(:user, receive_notifications: 'Single')
-    user_c = FactoryGirl.create(:user, receive_notifications: 'Single')
+    user   = FactoryBot.create(:user, receive_notifications: nil)
+    user_a = FactoryBot.create(:user, receive_notifications: 'Digest')
+    user_b = FactoryBot.create(:user, receive_notifications: 'Single')
+    user_c = FactoryBot.create(:user, receive_notifications: 'Single')
 
     watch_page user
     watch_page user_a
@@ -100,7 +100,7 @@ class Page::HistoryTest < ActiveSupport::TestCase
   private
 
   def watch_page(user)
-    part = FactoryGirl.build :user_participation,
+    part = FactoryBot.build :user_participation,
       page: @page,
       user: user,
       watch: true

@@ -2,9 +2,9 @@ require 'test_helper'
 
 class JoinYourNetworkRequestTest < ActiveSupport::TestCase
   def setup
-    @user    = FactoryGirl.create(:user)
-    @group   = FactoryGirl.create(:group)
-    @network = FactoryGirl.create(:network)
+    @user    = FactoryBot.create(:user)
+    @group   = FactoryBot.create(:group)
+    @network = FactoryBot.create(:network)
   end
 
   def test_valid_request
@@ -38,7 +38,7 @@ class JoinYourNetworkRequestTest < ActiveSupport::TestCase
 
   def test_valid_approval
     @network.add_user! @user
-    inviter = FactoryGirl.create(:user)
+    inviter = FactoryBot.create(:user)
     @group.add_user! inviter
     req = RequestToJoinYourNetwork.create! created_by: inviter,
                                            recipient: @network,

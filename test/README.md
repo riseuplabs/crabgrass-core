@@ -25,7 +25,7 @@ Controller tests are the next step in isolating the problem / testing
 the feature. They should run one http request and make assertions on the
 response. Please don't run multiple requests from the same test but
 split the test in separate ones. If you need to create some data
-structures either use fixtures or FactoryGirl or call functions on the
+structures either use fixtures or FactoryBot or call functions on the
 models themselves.
 
 Try to avoid complex controllers so that you can still cover the main

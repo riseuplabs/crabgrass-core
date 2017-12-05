@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::HomeControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
     @pub = @group.profiles.public.create_wiki body: 'hello'
     @priv = @group.profiles.private.create_wiki body: 'pssst'
@@ -45,7 +45,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   # end
 
   def test_show_public_only
-    login_as FactoryGirl.create(:user)
+    login_as FactoryBot.create(:user)
     @group.grant_access! public: :view
     assert_permission :may_show_group? do
       get :show, group_id: @group.to_param
@@ -56,7 +56,7 @@ class Group::HomeControllerTest < ActionController::TestCase
   end
 
   def test_may_not_show
-    login_as FactoryGirl.create(:user)
+    login_as FactoryBot.create(:user)
     @group.revoke_access! public: :view
     assert_permission :may_show_group?, false do
       assert_not_found do
