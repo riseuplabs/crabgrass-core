@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Wiki::AssetsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user!(@user)
     @wiki = @group.profiles.public.create_wiki body: 'test'
     @old_image = Asset.build uploaded_data: upload_data('bee.jpg')

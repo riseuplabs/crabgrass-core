@@ -15,8 +15,8 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve_friend_request
-    @user = FactoryGirl.create(:user)
-    requesting = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
+    requesting = FactoryBot.create(:user)
     request = RequestToFriend.create created_by: requesting,
                                      recipient: @user
     login_as @user
@@ -27,11 +27,11 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_approve_group_request
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user! @user
     login_as @user
-    requesting = FactoryGirl.create(:user)
+    requesting = FactoryBot.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: @group
     assert_difference 'Activity.count', 2 do
@@ -41,11 +41,11 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_group_request
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user! @user
     login_as @user
-    requesting = FactoryGirl.create(:user)
+    requesting = FactoryBot.create(:user)
     request = RequestToJoinYou.create created_by: requesting,
                                       recipient: @group
     assert_difference 'RequestToJoinYou.count', -1 do
@@ -55,7 +55,7 @@ class Me::RequestsControllerTest < ActionController::TestCase
   end
 
   def test_other_requests_hidden
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     login_as @user
     assert_not_found do
       get :show, id: Request.last

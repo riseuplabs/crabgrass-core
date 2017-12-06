@@ -54,7 +54,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def group
-    records[:group] ||= FactoryGirl.create(:group)
+    records[:group] ||= FactoryBot.create(:group)
   end
 
   #

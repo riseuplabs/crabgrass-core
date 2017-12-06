@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::CreateControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   def test_new_page_view
@@ -33,7 +33,7 @@ class Page::CreateControllerTest < ActionController::TestCase
   end
 
   def test_create_page_for_group
-    @group = FactoryGirl.create(:group)
+    @group = FactoryBot.create(:group)
     login_as @user
     assert_difference 'WikiPage.count' do
       post :create,
@@ -80,7 +80,7 @@ class Page::CreateControllerTest < ActionController::TestCase
 
   def test_create_shared_with_group
     login_as @user
-    @group = FactoryGirl.create(:group)
+    @group = FactoryBot.create(:group)
     @group.add_user! @user
 
     post 'create', page_id: 'me', type: 'discussion',

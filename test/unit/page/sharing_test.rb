@@ -88,11 +88,11 @@ class Page::SharingTest < ActiveSupport::TestCase
   end
 
   def test_add_page
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
 
     page = nil
     assert_nothing_raised do
-      page = FactoryGirl.create(:page, title: 'fun fun')
+      page = FactoryBot.create(:page, title: 'fun fun')
     end
 
     page.add(user, access: :edit)

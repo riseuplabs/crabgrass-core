@@ -13,7 +13,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_user_factories_create_passwords
-    user = FactoryGirl.create :user
+    user = FactoryBot.create :user
     refute_nil user.password_digest
   end
 
@@ -27,7 +27,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_ensure_values_in_receive_notifications
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
 
     user.receive_notifications = nil
     user.save!
@@ -61,14 +61,14 @@ class UserTest < ActiveSupport::TestCase
   ## ensure that a user and a group cannot have the same handle
   def test_namespace
     assert_no_difference 'User.count' do
-      u = FactoryGirl.build :user, login: 'groups'
+      u = FactoryBot.build :user, login: 'groups'
       assert !u.valid?
       assert u.errors[:login]
     end
 
     g = Group.create name: 'robot-overlord'
     assert_no_difference 'User.count' do
-      u = FactoryGirl.build :user, login: 'robot-overlord'
+      u = FactoryBot.build :user, login: 'robot-overlord'
       assert !u.valid?
       assert u.errors[:login]
     end
@@ -83,7 +83,7 @@ class UserTest < ActiveSupport::TestCase
 
     # find numeric group names
     assert_equal 0, User.alphabetized('#').size
-    FactoryGirl.create :user, login: '2unlimited', password: '3qasdb43!sdaAS...', password_confirmation: '3qasdb43!sdaAS...'
+    FactoryBot.create :user, login: '2unlimited', password: '3qasdb43!sdaAS...', password_confirmation: '3qasdb43!sdaAS...'
     assert_equal 1, User.alphabetized('#').size
 
     # case insensitive

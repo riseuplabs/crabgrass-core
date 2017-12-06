@@ -16,7 +16,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
   end
 
   def test_access
-    asset = FactoryGirl.create :png_asset
+    asset = FactoryBot.create :png_asset
     assert asset.public?
     asset.update_access
 
@@ -34,7 +34,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
 
   def test_thumbnail_integration
     start_thumb_count = Thumbnail.count
-    asset = FactoryGirl.create :image_asset
+    asset = FactoryBot.create :image_asset
     asset.generate_thumbnails
 
     thumb_file = asset.thumbnail_filename(:small)
@@ -67,8 +67,8 @@ class Asset_Media_Test < ActiveSupport::TestCase
   end
 
   def test_type_changes
-    asset = FactoryGirl.create :image_asset
-    word_asset = FactoryGirl.create :word_asset
+    asset = FactoryBot.create :image_asset
+    word_asset = FactoryBot.create :word_asset
     assert_equal 'Image', asset.type
     assert_equal 3, asset.thumbnails.count
 
@@ -90,7 +90,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
   end
 
   def test_thumbnail_size_after_new_upload
-    asset = FactoryGirl.create :small_image_asset
+    asset = FactoryBot.create :small_image_asset
     assert_equal 64, asset.width, 'width must match file'
     assert_equal 64, asset.height, 'height must match file'
     asset.uploaded_data = upload_data('bee.jpg')
@@ -100,7 +100,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
   end
 
   def test_thumbnail_size_guess
-    asset = FactoryGirl.create :image_asset
+    asset = FactoryBot.create :image_asset
     assert_equal 333, asset.width, 'width must match after new upload'
     assert_equal 500, asset.height, 'height must match after new upload'
     assert_equal 43, asset.thumbnail(:small).width, 'guess width should match actual'
@@ -109,7 +109,7 @@ class Asset_Media_Test < ActiveSupport::TestCase
 
   def test_dimension_integration
     skip_if_missing :GraphicsMagick
-    asset = FactoryGirl.create :image_asset
+    asset = FactoryBot.create :image_asset
     asset.generate_thumbnails
     assert_equal 43, asset.thumbnail(:small).width, 'actual width should be 43'
     assert_equal 64, asset.thumbnail(:small).height, 'actual height should be 64'

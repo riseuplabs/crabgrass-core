@@ -4,8 +4,8 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
   # TODO: tests for vote, clear votes, sort
 
   def setup
-    @user = FactoryGirl.create :user
-    @page = FactoryGirl.create :rate_many_page, title: 'Show this page!', created_by: @user
+    @user = FactoryBot.create :user
+    @page = FactoryBot.create :rate_many_page, title: 'Show this page!', created_by: @user
   end
 
   def test_add_possibility
@@ -41,7 +41,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
   def test_stranger_may_not_vote
     poll = @page.data
     possible = poll.possibles.create name: 'my option', description: 'undescribable'
-    stranger = FactoryGirl.create :user
+    stranger = FactoryBot.create :user
 
     login_as stranger
     xhr :post, :update, page_id: @page.id, id: possible.id, value: '2'
@@ -52,7 +52,7 @@ class RateManyPossiblesControllerTest < ActionController::TestCase
   def test_participant_may_vote
     poll = @page.data
     possible = poll.possibles.create name: 'my option', description: 'undescribable'
-    participant = FactoryGirl.create :user
+    participant = FactoryBot.create :user
     @page.add(participant, access: :edit).save
     assert participant.may?(:edit, @page)
 

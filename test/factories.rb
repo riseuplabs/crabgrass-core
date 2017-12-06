@@ -1,6 +1,6 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:created_date) { |n| (n + 5 + rand(5)).days.ago.to_s(:db) }
   sequence(:updated_date) { |n| (n + 5 + rand(5)).days.ago.to_s(:db) }
   sequence(:boolean)      { |_n| rand(2) == 1 ? true : false }
@@ -37,7 +37,7 @@ FactoryGirl.define do
     factory(:committee, class: Group::Committee) {}
     factory(:council, class: Group::Council) {}
     factory(:network, class: Group::Network) do
-      initial_member_group { FactoryGirl.create(:group) }
+      initial_member_group { FactoryBot.create(:group) }
     end
   end
 

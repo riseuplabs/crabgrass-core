@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Page::TitleControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, owner: @user)
+    @user = FactoryBot.create(:user)
+    @page = FactoryBot.create(:page, owner: @user)
 
     assert @user, 'no user!'
     assert @page, 'no page!'

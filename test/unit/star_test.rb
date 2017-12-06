@@ -2,8 +2,8 @@ require 'test_helper'
 
 class StarTest < ActiveSupport::TestCase
   def setup
-    @post = FactoryGirl.create :post
-    @user = FactoryGirl.create :user
+    @post = FactoryBot.create :post
+    @user = FactoryBot.create :user
   end
 
   def test_counter_cache_increment

@@ -56,7 +56,7 @@ class GroupCreationTest < IntegrationTest
 
   def create_group(type = :group, attrs = {})
     member = attrs.delete :member
-    @group = FactoryGirl.build type, attrs
+    @group = FactoryBot.build type, attrs
     fill_in 'Name', with: @group.name
     fill_in 'Display Name', with: @group.display_name
     # include parent in name
@@ -67,7 +67,7 @@ class GroupCreationTest < IntegrationTest
   end
 
   def create_parent_group(type = :group, attrs = {})
-    @parent_group = FactoryGirl.build type, attrs
+    @parent_group = FactoryBot.build type, attrs
     fill_in 'Name', with: @parent_group.name
     fill_in 'Display Name', with: @parent_group.display_name
     click_on 'Create'

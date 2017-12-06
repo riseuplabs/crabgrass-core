@@ -2,8 +2,8 @@ require 'test_helper'
 
 class User::PermissionTest < ActiveSupport::TestCase
   def setup
-    @me = FactoryGirl.create(:user)
-    @other = FactoryGirl.create(:user)
+    @me = FactoryBot.create(:user)
+    @other = FactoryBot.create(:user)
   end
 
   def test_defaults

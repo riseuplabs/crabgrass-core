@@ -123,7 +123,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   def post_signup_form(options = {})
     post(:create, {
-      user: FactoryGirl.attributes_for(:user, options.delete(:user)),
+      user: FactoryBot.attributes_for(:user, options.delete(:user)),
       usage_agreement_accepted: '1'
     }.merge(options))
   end

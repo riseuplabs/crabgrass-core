@@ -49,7 +49,7 @@ class User::LegacyPasswordTest < ActiveSupport::TestCase
   protected
 
   def user_with_legacy_password
-    FactoryGirl.build(:user).tap do |user|
+    FactoryBot.build(:user).tap do |user|
       user.send :use_legacy_password_fields!
     end
   end

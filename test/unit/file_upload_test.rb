@@ -25,8 +25,8 @@ class FileUploadTest < ActiveSupport::TestCase
     assert File.exist?(@asset.private_filename), 'the private file should exist'
   end
 
-  def test_using_factory_girl_instead
-    @asset = FactoryGirl.create :image_asset
+  def test_using_factory_bot_instead
+    @asset = FactoryBot.create :image_asset
     assert_equal 'Asset::Image', @asset.class.name
     assert File.exist?(@asset.private_filename), 'the private file should exist'
     assert_equal 500, @asset.height

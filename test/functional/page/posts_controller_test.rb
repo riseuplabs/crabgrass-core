@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Page::PostsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create :user
-    @page = FactoryGirl.create(:page, owner: @user)
+    @user = FactoryBot.create :user
+    @page = FactoryBot.create(:page, owner: @user)
   end
 
   def test_create_post
@@ -24,7 +24,7 @@ class Page::PostsControllerTest < ActionController::TestCase
   end
 
   def test_post_on_public_page
-    public_page = FactoryGirl.create(:page, public: true)
+    public_page = FactoryBot.create(:page, public: true)
     login_as @user
     xhr :post, :create, page_id: public_page, post: {
       body: body

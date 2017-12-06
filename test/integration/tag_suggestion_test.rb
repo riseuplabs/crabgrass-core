@@ -54,11 +54,11 @@ class TagSuggestionTest < JavascriptIntegrationTest
   def create_group_page(options = {})
     attrs = options.reverse_merge created_by: users(:blue),
       owner: groups(:rainbow)
-    FactoryGirl.create :page, attrs
+    FactoryBot.create :page, attrs
   end
 
   def create_user_page(options = {})
     attrs = options.reverse_merge created_by: users(:blue)
-    FactoryGirl.create :page, attrs
+    FactoryBot.create :page, attrs
   end
 end

@@ -2,9 +2,9 @@ require 'test_helper'
 
 class Wiki::LocksControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @user2  = FactoryGirl.create(:user)
-    @group  = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @user2  = FactoryBot.create(:user)
+    @group  = FactoryBot.create(:group)
     @group.add_user! @user
     @group.add_user! @user2
     @wiki = Wiki.create group: @group

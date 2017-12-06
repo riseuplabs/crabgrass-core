@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Asset::ImageTest < ActiveSupport::TestCase
   def test_thumbnail_definitions
-    @asset = FactoryGirl.build :image_asset
+    @asset = FactoryBot.build :image_asset
     assert @asset.thumbdefs.any?, 'asset should have thumbdefs'
     assert_equal 3, @asset.thumbdefs.count
   end
@@ -11,7 +11,7 @@ class Asset::ImageTest < ActiveSupport::TestCase
   # Main thing is content_type and filename as they are use to create the
   # actual file later on.
   def test_thumbnail_creation
-    @asset = FactoryGirl.create :image_asset
+    @asset = FactoryBot.create :image_asset
     thumbnails = @asset.thumbnails
 
     assert thumbnails.any?, 'asset should have thumbnail objects'

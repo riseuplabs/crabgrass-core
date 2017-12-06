@@ -1,6 +1,6 @@
 module AccountManagement
   def signup
-    @user ||= FactoryGirl.build :user
+    @user ||= FactoryBot.build :user
     @user.display_name = nil
     click_on :signup_link.t
     fill_in 'user_login', with: @user.login
@@ -14,7 +14,7 @@ module AccountManagement
 
   def login(user = nil)
     # Create a user wihtout the lengthy signup procedure
-    records[:user] ||= @user ||= user || FactoryGirl.create(:user)
+    records[:user] ||= @user ||= user || FactoryBot.create(:user)
     visit '/' unless page.current_path.present?
     fill_in :username.t, with: @user.login
     fill_in :password.t, with: @user.password || @user.login
