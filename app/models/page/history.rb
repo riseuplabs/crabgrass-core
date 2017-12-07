@@ -233,7 +233,7 @@ class Page::History::GrantGroupAccess < Page::History::UpdateParticipation
   after_save :page_updated_at
 
   validates_presence_of :item_id
-  validates_format_of :item_type, with: /Group/
+  validates_format_of :item_type, with: /\AGroup\z/
 
   def participation=(part)
     self.item = part.try.group
@@ -267,7 +267,7 @@ class Page::History::RevokedGroupAccess < Page::History::UpdateParticipation
     self.item = part.try.group
   end
 
-  validates_format_of :item_type, with: /Group/
+  validates_format_of :item_type, with: /\AGroup\z/
   validates_presence_of :item_id
 end
 
@@ -281,7 +281,7 @@ class Page::History::GrantUserAccess < Page::History::UpdateParticipation
   after_save :page_updated_at
 
   validates_presence_of :item_id
-  validates_format_of :item_type, with: /User/
+  validates_format_of :item_type, with: /\AUser\z/
 
   def participation=(part)
     self.item = part.try.user
@@ -315,14 +315,14 @@ class Page::History::RevokedUserAccess < Page::History::UpdateParticipation
 
   after_save :page_updated_at
 
-  validates_format_of :item_type, with: /User/
+  validates_format_of :item_type, with: /\AUser\z/
   validates_presence_of :item_id
 end
 
 class Page::History::ForComment < Page::History
   after_save :page_updated_at
 
-  validates_format_of :item_type, with: /Post/
+  validates_format_of :item_type, with: /\APost\z/
   validates_presence_of :item_id
 
   # use past tense

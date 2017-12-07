@@ -4,7 +4,7 @@ class RankedVotePossiblesControllerTest < ActionController::TestCase
   def setup
     user = users(:orange)
     login_as user
-    @page = FactoryGirl.create :ranked_vote_page, created_by: user
+    @page = FactoryBot.create :ranked_vote_page, created_by: user
     @poll = @page.data
   end
 

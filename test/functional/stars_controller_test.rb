@@ -2,8 +2,8 @@ require 'test_helper'
 
 class StarsControllerTest < ActionController::TestCase
   def setup
-    @page = FactoryGirl.create :page
-    @user = FactoryGirl.create :user
+    @page = FactoryBot.create :page
+    @user = FactoryBot.create :user
     @post = @page.add_post(@user, body: 'test post')
     login_as @user
   end

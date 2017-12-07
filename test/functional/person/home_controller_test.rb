@@ -18,7 +18,7 @@ class Person::HomeControllerTest < ActionController::TestCase
   end
 
   def test_new_user_hidden
-    user = FactoryGirl.create :user
+    user = FactoryBot.create :user
     login_as :blue
     assert !users(:blue).may?(:view, user)
     assert users(:blue).may?(:pester, user)
@@ -33,7 +33,7 @@ class Person::HomeControllerTest < ActionController::TestCase
   end
 
   def test_new_user_visible_to_friends
-    user = FactoryGirl.create :user
+    user = FactoryBot.create :user
     user.add_contact! users(:blue), :friend
     login_as :blue
     get :show, person_id: user.login

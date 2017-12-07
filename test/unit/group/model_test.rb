@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Group::ModelTest < ActiveSupport::TestCase
   def setup
-    @group = FactoryGirl.build(:group)
+    @group = FactoryBot.build(:group)
   end
 
   def test_recent_is_false_for_old_group
@@ -17,13 +17,13 @@ class Group::ModelTest < ActiveSupport::TestCase
 
   def test_single_user_is_true_with_one_user
     @group.save!
-    @group.add_user!(FactoryGirl.create(:user))
+    @group.add_user!(FactoryBot.create(:user))
     assert @group.single_user?
   end
 
   def test_single_user_is_false_with_two_users
     @group.save!
-    2.times { @group.add_user!(FactoryGirl.create(:user)) }
+    2.times { @group.add_user!(FactoryBot.create(:user)) }
     assert !@group.single_user?
   end
 

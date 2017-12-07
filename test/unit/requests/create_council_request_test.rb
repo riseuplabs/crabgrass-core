@@ -2,9 +2,9 @@ require 'test_helper'
 
 class CreateCouncilRequestTest < ActiveSupport::TestCase
   def setup
-    @requesting_user = FactoryGirl.create(:user)
-    @accepting_user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create :group
+    @requesting_user = FactoryBot.create(:user)
+    @accepting_user = FactoryBot.create(:user)
+    @group = FactoryBot.create :group
     @group.add_user! @requesting_user
     @group.add_user! @accepting_user
 
@@ -15,7 +15,7 @@ class CreateCouncilRequestTest < ActiveSupport::TestCase
     end
 
     # this user is *not* a long-term member
-    @new_user = FactoryGirl.create(:user)
+    @new_user = FactoryBot.create(:user)
     @group.add_user!(@new_user)
 
     @request = RequestToCreateCouncil.create!(

@@ -8,7 +8,7 @@ class ImageTest < IntegrationTest
   end
 
   def test_get_asset
-    asset = FactoryGirl.create :image_asset
+    asset = FactoryBot.create :image_asset
     visit asset.url
     assert_equal 200, status_code
   end
@@ -18,7 +18,7 @@ class ImageTest < IntegrationTest
   # Now this old link will lead to utf-8 errors as the chars > \xF0 are
   # invalid. Let's make sure the old link still works...
   def test_get_asset_with_strange_char
-    asset = FactoryGirl.create :image_asset
+    asset = FactoryBot.create :image_asset
     visit asset.url.sub('.jpg', '%F3.jpg')
     assert_equal 200, status_code
   end

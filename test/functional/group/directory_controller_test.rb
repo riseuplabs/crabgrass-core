@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Group::DirectoryControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   def test_index_requires_login

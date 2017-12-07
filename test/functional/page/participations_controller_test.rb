@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Page::ParticipationsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create :user
-    @page = FactoryGirl.create :page
+    @user = FactoryBot.create :user
+    @page = FactoryBot.create :page
     @upart = @page.add(@user, access: :admin)
     @upart.save
     login_as @user
@@ -17,7 +17,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_star_as_create
-    @other = FactoryGirl.create :user
+    @other = FactoryBot.create :user
     login_as @other
     @page.update_attribute :public, true
     assert_difference 'User::Participation.count' do
@@ -45,7 +45,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_user_participation
-    other_user = FactoryGirl.create :user
+    other_user = FactoryBot.create :user
     other_upart = @page.add(other_user, access: :view)
     other_upart.save
     assert_difference 'Page::History.count' do
@@ -55,7 +55,7 @@ class Page::ParticipationsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_group_participation
-    group = FactoryGirl.create :group
+    group = FactoryBot.create :group
     gpart = @page.add(group, access: :view)
     gpart.save
     assert_difference 'Page::History.count' do

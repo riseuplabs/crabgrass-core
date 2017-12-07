@@ -18,7 +18,7 @@ class AccountTest < IntegrationTest
   end
 
   def test_password_reset
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     request_password_reset
     confirm_password_reset
     login

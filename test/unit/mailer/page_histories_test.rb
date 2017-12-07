@@ -98,7 +98,7 @@ class Mailer::PageHistoriesTest < ActionMailer::TestCase
   end
 
   def added_comment_as(user, time = 1.day.ago)
-    post = FactoryGirl.create(:post) 
+    post = FactoryBot.create(:post) 
     page.add_post(user, body: post)
     page.updated_by user
     page.save

@@ -2,13 +2,13 @@ require 'test_helper'
 
 class RequestNoticeTest < ActiveSupport::TestCase
   def setup
-    @user_in_network  = FactoryGirl.create(:user)
-    @user_in_group_1  = FactoryGirl.create(:user)
-    @user_in_group_2  = FactoryGirl.create(:user)
-    @user_council     = FactoryGirl.create(:user)
-    @group            = FactoryGirl.create(:group)
-    @council          = FactoryGirl.create(:council)
-    @network          = FactoryGirl.create(:network)
+    @user_in_network  = FactoryBot.create(:user)
+    @user_in_group_1  = FactoryBot.create(:user)
+    @user_in_group_2  = FactoryBot.create(:user)
+    @user_council     = FactoryBot.create(:user)
+    @group            = FactoryBot.create(:group)
+    @council          = FactoryBot.create(:council)
+    @network          = FactoryBot.create(:network)
 
     @group.add_user! @user_in_group_1
     @group.add_user! @user_in_group_2

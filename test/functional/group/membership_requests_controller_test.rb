@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::MembershipRequestsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     login_as @user
   end
 
@@ -34,7 +34,7 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
 
   def test_request_to_remove
     @group.add_user! @user
-    @remove_me = FactoryGirl.create(:user)
+    @remove_me = FactoryBot.create(:user)
     @group.add_user! @remove_me
     assert_difference 'RequestToRemoveUser.count' do
       post :create, group_id: @group.to_param,
@@ -49,8 +49,8 @@ class Group::MembershipRequestsControllerTest < ActionController::TestCase
 
   def test_approve
     @group.add_user! @user
-    @other = FactoryGirl.create(:user)
-    @remove_me = FactoryGirl.create(:user)
+    @other = FactoryBot.create(:user)
+    @remove_me = FactoryBot.create(:user)
     @group.add_user! @other
     @group.add_user! @remove_me
 

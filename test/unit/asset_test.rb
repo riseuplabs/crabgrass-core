@@ -22,14 +22,14 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_simple_upload
-    @asset = FactoryGirl.create :png_asset
+    @asset = FactoryBot.create :png_asset
     assert File.exist?(@asset.private_filename), 'the private file should exist'
     assert read_file('image.png') == File.read(@asset.private_filename),
       'full_filename should be the uploaded_data'
   end
 
   def test_single_table_inheritance
-    @asset = FactoryGirl.create :png_asset
+    @asset = FactoryBot.create :png_asset
     assert_equal 'Png', @asset.type, 'initial asset should be a png'
     assert_equal 'image/png', @asset.content_type,
       'initial asset should be a png'
@@ -42,7 +42,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_rename
-    @asset = FactoryGirl.create :png_asset
+    @asset = FactoryBot.create :png_asset
     @asset.base_filename = 'newimage'
     @asset.save
 
@@ -54,7 +54,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_file_cleanup_on_destroy
-    @asset = FactoryGirl.create :png_asset
+    @asset = FactoryBot.create :png_asset
     @asset.update_access
     @asset.destroy
 
@@ -67,7 +67,7 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_thumbnail_generation_handled_by_thumbnails
-    @asset = FactoryGirl.create :image_asset
+    @asset = FactoryBot.create :image_asset
     @asset.thumbnails.each { |thumb| thumb.expects(:generate) }
     @asset.generate_thumbnails
   end

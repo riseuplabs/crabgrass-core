@@ -6,8 +6,8 @@
 # created_by: person in group who want their group in the network
 #
 class RequestToJoinYourNetwork < Request
-  validates_format_of :recipient_type, with: /Group/
-  validates_format_of :requestable_type, with: /Group/
+  validates_format_of :recipient_type, with: /\AGroup\z/
+  validates_format_of :requestable_type, with: /\AGroup\z/
 
   validate :no_federating_yet, on: :create
   validate :recipient_is_network

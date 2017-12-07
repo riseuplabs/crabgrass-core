@@ -193,7 +193,7 @@ group :test, :ci do
   ## TESTS
   ##
 
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker', '~> 1.0.0'
 
   gem 'minitest', require: false

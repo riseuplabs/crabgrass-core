@@ -8,10 +8,10 @@ Install for development
 
 For installation using Vagrant, see [doc/development/vagrant.md](development/vagrant.md).
 
-###Install basic ruby environment
+### Install basic ruby environment
 (Tested with ruby 2.1, at least ruby 2.0)
 
-####Debian-based system
+#### Debian-based system
 
     sudo apt-get install ruby ruby-dev rake mysql-server mysql-client
     libmysqld-dev git make libssl-dev g++ sphinxsearch graphicsmagick
@@ -27,12 +27,12 @@ Depending on what you are running, you might need to install `git-core`
 instead of `git`. You might also need libopenssl-ruby.
 If installing using bundler, you may need `libmysqlclient-dev` and `libsqlite3-dev`.
 
-####Redhat-based system
+#### Redhat-based system
 
     yum install ruby ruby-devel rubygem-rake mysql-server mysql-devel git gcc make
     ImageMagick
 
-####OSX system
+#### OSX system
 
 This install will assume you are using a Ruby versioning tool such as [rbenv](https://github.com/sstephenson/rbenv) and [zsh](http://www.zsh.org/). These tools are by no means OSX dependent. You can replace .zshrc with .bash_profile if you use bash.
 
@@ -64,7 +64,7 @@ If you run into any problems bundling with bundle install (a few steps down), ma
 
 	xcode-select --install
 
-###Checkout the codebase
+### Checkout the codebase
 
     git clone ssh://git@github.com/riseuplabs/crabgrass-core.git
     or
@@ -74,7 +74,7 @@ Alternately, do a shallow clone. This will only check out a copy of the most rec
 
     git clone --depth 1 https://github.com/riseuplabs/crabgrass-core.git
 
-###Install bundler
+### Install bundler
 
 If you don't yet have bundler, install it now as root.
 
@@ -82,7 +82,7 @@ If you don't yet have bundler, install it now as root.
 
 Alternatively you can install bundler with your package manager.
 
-###Install rails and required gems
+### Install rails and required gems
 
     cd crabgrass-core
     bundle install
@@ -91,7 +91,7 @@ Create a secret
 
     rake create_a_secret
 
-###Create the database
+### Create the database
 
 This will also set up your test database. Prior to running the `rake db:create` command, you will need to set up the `crabgrass_development` and `crabgrass_test` databases and configure them in the database.yml file according to your mysql or mariadb set up. In addition, I needed	 to set up my databases with mariadb with `utf8` encoding. [See here.](https://stackoverflow.com/questions/11644804/rails-creating-schema-migrations-mysql2error-specified-key-was-too-long#13143985)
 
@@ -100,7 +100,7 @@ This will also set up your test database. Prior to running the `rake db:create` 
     rake db:schema:load
     rake db:fixtures:load
 
-###Run the server
+### Run the server
 
     BOOST=1 bundle exec rails server
 
@@ -116,11 +116,11 @@ See doc/development/* for more notes on development.
 Install for testing
 ====================================================
 
-###Install additional gems needed for testing
+### Install additional gems needed for testing
 
     sudo RAILS_ENV=test bundle install
 
-###Create testing database
+### Create testing database
 
 If you haven't run rake db:create already.
 
@@ -128,7 +128,7 @@ If you haven't run rake db:create already.
     cd crabgrass-core
     rake db:test:prepare
 
-###Run tests:
+### Run tests:
 
     bundle exec rake
 

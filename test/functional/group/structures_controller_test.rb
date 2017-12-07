@@ -2,8 +2,8 @@ require 'test_helper'
 
 class Group::StructuresControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user! @user
   end
 
@@ -81,6 +81,6 @@ class Group::StructuresControllerTest < ActionController::TestCase
   end
 
   def committee_attributes(attrs = {})
-    FactoryGirl.attributes_for(:committee).merge(attrs)
+    FactoryBot.attributes_for(:committee).merge(attrs)
   end
 end

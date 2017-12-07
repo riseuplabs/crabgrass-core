@@ -1,6 +1,6 @@
 class Activity::UserProposedToDestroyGroup < Activity
-  validates_format_of :subject_type, with: /User/
-  validates_format_of :item_type, with: /Group/
+  validates_format_of :subject_type, with: /\AUser\z/
+  validates_format_of :item_type, with: /\AGroup\z/
   validates_presence_of :subject_id
   validates_presence_of :item_id
 

@@ -11,19 +11,19 @@ class PermissionTest < ActiveSupport::TestCase
   #
   def test_group_permissions_with_committee_and_council
     # create a group and user
-    user = FactoryGirl.create(:user, login: 'earth')
-    group = FactoryGirl.create(:group, name: 'planets')
+    user = FactoryBot.create(:user, login: 'earth')
+    group = FactoryBot.create(:group, name: 'planets')
     group.add_user! user
     assert user.may?(:admin, group), "should admin group i'm in"
 
     # add a committee
-    committee = FactoryGirl.create(:committee)
+    committee = FactoryBot.create(:committee)
     group.add_committee! committee
 
     assert user.may?(:admin, committee), 'should admin committee of my group.'
 
     # add a council
-    committee_for_council = FactoryGirl.create(:committee, name: 'astrophysicists')
+    committee_for_council = FactoryBot.create(:committee, name: 'astrophysicists')
     group.add_council!(committee_for_council)
     council = Group.find(committee_for_council.id)
     user.clear_access_cache
@@ -64,10 +64,10 @@ class PermissionTest < ActiveSupport::TestCase
   end
 
   def test_group_visibility
-    user = FactoryGirl.create(:user, login: 'earth')
+    user = FactoryBot.create(:user, login: 'earth')
 
     # create an invisible group
-    invisible = FactoryGirl.create(:group)
+    invisible = FactoryBot.create(:group)
     invisible.revoke_access!(public: :view)
     assert !user.may?(:view, invisible), "should not view group i'm not in."
 

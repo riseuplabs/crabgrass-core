@@ -11,7 +11,7 @@
 # been redeemed and an account created and that account is set to recipient.
 
 class RequestToJoinUsViaEmail < MembershipRequest
-  validates_format_of :requestable_type, with: /Group/
+  validates_format_of :requestable_type, with: /\AGroup\z/
   validates :email, presence: true,
                     email_format: true
   validates_length_of :code, in: 6..8

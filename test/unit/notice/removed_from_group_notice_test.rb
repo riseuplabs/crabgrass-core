@@ -3,8 +3,8 @@ require 'test_helper'
 class RemovedFromGroupNoticeTest < ActiveSupport::TestCase
 
   def setup
-    @user = FactoryGirl.create :user
-    @group = FactoryGirl.create :group
+    @user = FactoryBot.create :user
+    @group = FactoryBot.create :group
   end
 
   def test_remove_from_group

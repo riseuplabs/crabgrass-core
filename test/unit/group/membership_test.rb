@@ -204,7 +204,7 @@ class Group::MembershipTest < ActiveSupport::TestCase
   protected
 
   def create_user(options = {})
-    user = FactoryGirl.build :user, options
+    user = FactoryBot.build :user, options
     user.profiles.build first_name: 'Test', last_name: 'Test', friend: true
     user.save!
     user

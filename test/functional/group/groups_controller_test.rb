@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Group::GroupsControllerTest < ActionController::TestCase
   def setup
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   def test_new_group_requires_login
@@ -77,7 +77,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_group_with_duplicate_name
-    FactoryGirl.create(:group, name: 'flowers')
+    FactoryBot.create(:group, name: 'flowers')
     login_as @user
     assert_no_difference 'Group.count' do
       post :create, group: { name: 'flowers' }
@@ -86,7 +86,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_network_with_group_member
-    group = FactoryGirl.create(:group, name: 'pine')
+    group = FactoryBot.create(:group, name: 'pine')
     group.add_user! @user
     login_as @user
     assert_difference 'Group::Network.count' do
@@ -101,7 +101,7 @@ class Group::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_no_network_with_network_member
-    network = FactoryGirl.create(:network, name: 'flowers')
+    network = FactoryBot.create(:network, name: 'flowers')
     network.add_user! @user
     login_as @user
     assert_no_difference 'Group.count' do
@@ -112,8 +112,8 @@ class Group::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_group
-    user = FactoryGirl.create(:user)
-    group = FactoryGirl.create(:group)
+    user = FactoryBot.create(:user)
+    group = FactoryBot.create(:group)
     group.add_user!(user)
     login_as user
     assert_difference 'Group.count', -1 do

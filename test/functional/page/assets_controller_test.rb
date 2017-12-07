@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Page::AssetsControllerTest < ActionController::TestCase
   def setup
-    @page = FactoryGirl.create :page, created_by: users(:blue)
+    @page = FactoryBot.create :page, created_by: users(:blue)
     @asset = @page.add_attachment! uploaded_data: upload_data('photo.jpg')
     users(:blue).updated(@page)
     login_as :blue

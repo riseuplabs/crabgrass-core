@@ -3,7 +3,7 @@ require 'test_helper'
 class GalleryToolTest < ActiveSupport::TestCase
   def setup
     setup_assets
-    @user = FactoryGirl.create :user
+    @user = FactoryBot.create :user
     @gal = Gallery.create! title: 'kites', user: @user
     @asset = @gal.add_image!(uploaded_data: upload_data('image.png'))
   end

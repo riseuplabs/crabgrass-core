@@ -2,13 +2,13 @@ require 'test_helper'
 
 class Group::InvitesControllerTest < ActionController::TestCase
   def setup
-    @user                          = FactoryGirl.create(:user)
-    @user_not_in_group             = FactoryGirl.create(:user)
-    @user_not_in_network           = FactoryGirl.create(:user)
-    @user_council                  = FactoryGirl.create(:user)
-    @group                         = FactoryGirl.create(:group)
-    @council                       = FactoryGirl.create(:council)
-    @network                       = FactoryGirl.create(:network)
+    @user                          = FactoryBot.create(:user)
+    @user_not_in_group             = FactoryBot.create(:user)
+    @user_not_in_network           = FactoryBot.create(:user)
+    @user_council                  = FactoryBot.create(:user)
+    @group                         = FactoryBot.create(:group)
+    @council                       = FactoryBot.create(:council)
+    @network                       = FactoryBot.create(:network)
     @council.add_user! @user_council
     @group.add_user! @user
     @group.add_user! @user_not_in_network
@@ -26,7 +26,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_create
     login_as @user
-    recipient = FactoryGirl.create(:user)
+    recipient = FactoryBot.create(:user)
     assert_permission :may_admin_group? do
       assert_difference 'RequestToJoinUs.count' do
         post :create, group_id: @group.to_param,
@@ -72,7 +72,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_invite_to_join_us_notifies_recipient
     login_as @user
-    recipient = FactoryGirl.create(:user)
+    recipient = FactoryBot.create(:user)
 
     assert_notice_for(recipient) do
       post :create, group_id: @group.to_param, recipients: recipient.name
@@ -81,7 +81,7 @@ class Group::InvitesControllerTest < ActionController::TestCase
 
   def test_invite_to_join_us_notifies_all_valid_recipients
     login_as @user
-    recipient = FactoryGirl.create(:user)
+    recipient = FactoryBot.create(:user)
 
     # As @user already member of a group it should not be notified
     assert_notice_for recipient, @user_not_in_group do
