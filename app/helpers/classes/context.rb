@@ -65,7 +65,7 @@ class Context
   end
 
   def self.model_name
-    @_model_name ||= wrapped_base_class.model_name.tap do |name|
+    @_model_name ||= wrapped_base_class.model_name.dup.tap do |name|
       name.singleton_class.send(:define_method, :param_key) { 'context_id' }
       name.singleton_class.send(:define_method, :singular_route_key) { 'context' }
     end
