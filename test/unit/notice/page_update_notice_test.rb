@@ -3,8 +3,11 @@ require 'test_helper'
 class PageUpdateNoticeTest < ActiveSupport::TestCase
   def setup
     @blue = users(:blue)
+    @red = users(:red)
     @orange = users(:orange)
     create_page_for_user @blue
+    watch_page @blue, @page
+    watch_page @red, @page
   end
 
   def teardown
@@ -79,8 +82,6 @@ class PageUpdateNoticeTest < ActiveSupport::TestCase
                                    summary: 'Test page for cool users',
                                    owner: owner,
                                    user: owner)
-
-    watch_page owner, @page
   end
 
   def watch_page(user, page)

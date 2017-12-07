@@ -21,7 +21,7 @@ class Notice::PageNotice < Notice
           create!(args.merge(user: user))
         end
       else
-        super(args)
+        super(args) unless args[:user_id] ==  args[:page].updated_by_id
       end
     end
   end
