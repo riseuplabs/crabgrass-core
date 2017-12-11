@@ -12,7 +12,7 @@ end
 
 # Rails is the framework we use.
 # use the 4.2 series including all security fixes
-gem 'rails', '~> 4.2.7'
+gem 'rails', '~> 4.2.10'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -73,7 +73,7 @@ gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
 gem 'ts-delayed-delta', '~> 2.0'
 
 # Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 3.5'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 # Page Caching has been removed from rails 4.
 # migrate it and drop this.
