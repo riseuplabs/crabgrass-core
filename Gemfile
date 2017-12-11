@@ -65,8 +65,8 @@ gem 'prototype_legacy_helper', '0.0.0',
 # with rails 3.2 but they should not affect us
 # 3.1.3 prints warnings with latest sphinx:
 # https://github.com/pat/thinking-sphinx/issues/882
-gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
-
+#gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
+gem 'thinking-sphinx', '~> 3.4.2'
 #
 # Use delayed job to postpone the delta processing
 # latest version available. Stick to major release
