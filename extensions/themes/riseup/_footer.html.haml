@@ -9,27 +9,27 @@
   .col-xs-offset-1.col-xs-5
     %img{src: '/theme/riseup/images/riseup.png', style: 'padding-top: 30px; padding-bottom: 4px'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
-      =t 'riseup.run_by_html', description: t('riseup.description'),
+      =t 'riseup.run_by_html', description: I18n.t('riseup.description'),
         provider: link_to('riseup.net', 'https://riseup.net'),
         default: 'Run by riseup.net'
       %ul.styled
-        %li= link_to t('riseup.donate'),
+        %li= link_to I18n.t('riseup.donate'),
           "https://help.riseup.net/#{locale}/donate"
-        %li= link_to t('riseup.about_us'),
+        %li= link_to I18n.t('riseup.about_us'),
           "https://help.riseup.net/#{locale}/about-us"
-        %li= link_to t('riseup.email_accounts'),
+        %li= link_to I18n.t('riseup.email_accounts'),
           "https://mail.riseup.net/"
-        %li= link_to t('riseup.mailing_lists'),
+        %li= link_to I18n.t('riseup.mailing_lists'),
           "https://lists.riseup.net/"
         %li
-          = link_to t('riseup.privacy_policy'), "https://help.riseup.net/#{locale}/privacy-policy"
+          = link_to I18n.t('riseup.privacy_policy'), "https://help.riseup.net/#{locale}/privacy-policy"
           = "/"
-          = link_to t('riseup.terms_of_service'), "https://help.riseup.net/#{locale}/tos"
+          = link_to I18n.t('riseup.terms_of_service'), "https://help.riseup.net/#{locale}/tos"
   .col-xs-5
     %img{src: '/theme/riseup/images/crabgrass.png', style: 'padding-top: 13px; padding-bottom: 4px'}
     %div{style: 'font-size: 1.1em; line-height: 1.5;'}
       =t 'crabgrass.powered_by_html',
-        description: t('crabgrass.description_html'),
+        description: I18n.t('crabgrass_description_html'),
         default: 'Powered by crabgrass'
       %ul.styled
         %li= link_to :'crabgrass.report_a_bug'.tcap,
