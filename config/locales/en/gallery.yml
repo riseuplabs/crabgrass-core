@@ -8,6 +8,7 @@ en:
   confirm_image_delete: "Do you really want to delete this image? This action can not be undone."
   edit_image: "Edit Image"
   error_saving_new_order_message: "Error saving new order: {{error_message}}"
+  edit_gallery_explanation: "Add new images or drag images to rearrange their order."
   file_must_be_image_error: "File must be an image to be part of a gallery."
   gallery_changing_cover_message: "Changing cover..."
   image_count: "Image %{number} of %{count}"
