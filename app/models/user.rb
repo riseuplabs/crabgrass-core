@@ -1,4 +1,15 @@
+module SettingWithSafety
+
+  # allow us to call user.setting.x even if user.setting is nil
+  def setting(*args)
+    super(*args) or User::Setting.new
+  end
+
+end
+
 class User < ActiveRecord::Base
+  prepend SettingWithSafety
+
   ##
   ## CORE EXTENSIONS
   ##
@@ -211,12 +222,6 @@ class User < ActiveRecord::Base
 
   has_one :setting, dependent: :destroy
 
-  # allow us to call user.setting.x even if user.setting is nil
-  def setting_with_safety(*args)
-    setting_without_safety(*args) or User::Setting.new
-  end
-  alias_method_chain :setting, :safety
-
   def update_setting(attrs)
     if setting.id
       setting.attributes = attrs
@@ -361,3 +366,4 @@ class User < ActiveRecord::Base
     end
   end
 end
+

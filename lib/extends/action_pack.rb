@@ -15,6 +15,7 @@ require 'action_controller'
 # only the submit button that was pressed contributes to the request params.
 
 class ActionView::Base
+
   alias rails_submit_tag submit_tag
   def submit_tag(value = 'Save changes', options = {})
     # disable buttons on submit by default
@@ -31,17 +32,22 @@ end
 # I really want to be able to use link_to(:id => 'group+name') and not have
 # it replace '+' with some ugly '%2B' character.
 
-class ActionView::Base
-  def link_to_with_pretty_plus_signs(*args)
-    link = link_to_without_pretty_plus_signs(*args)
+module LinkToWithPrettyPlusSigns
+
+  def link(*args)
+    link = method(:link).super_method.call(type_name)
     if link.html_safe?
       link.sub('%2B', '+').html_safe
     else
       link.sub('%2B', '+')
     end
   end
-  alias_method_chain :link_to, :pretty_plus_signs
 end
+
+class ActionView::Base
+  prepend LinkToWithPrettyPlusSigns  
+end
+
 
 ###
 ### CUSTOM FORM ERROR FIELDS
