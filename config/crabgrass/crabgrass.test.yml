@@ -11,5 +11,5 @@
 
 title: "Crabgrass Testing"
 
-raise_i18n_exceptions: false
+raise_i18n_exceptions: true
 enforce_ssl: false

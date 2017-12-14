@@ -16,6 +16,7 @@ en:
   cancel: Cancel
   close_button: Close
   confirm: Confirm
+  create: Create
   create_a_new_thing: "Create a new %{thing}"
   create_button: Create
   create_thing: "Create %{thing}"
@@ -30,6 +31,7 @@ en:
   destroy_thing: "Destroy %{thing}"
   drop_files_here: "Drop files here"
   edit: Edit
+  files_pending: Files pending
   loading_progress: Loading...
   ok_button: OK
   optional: Optional

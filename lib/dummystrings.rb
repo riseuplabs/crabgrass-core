@@ -78,3 +78,9 @@
 :thursday.t
 :friday.t
 :saturday.t
+
+# additional keys for fixing tests in translation
+
+:friends.t
+:request_to_join_you.t
+:enter_name_of_group_or_person.t

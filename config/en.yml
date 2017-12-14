@@ -107,6 +107,7 @@ en:
   cancel: Cancel
   close_button: Close
   confirm: Confirm
+  create: Create
   create_a_new_thing: Create a new %{thing}
   create_button: Create
   create_thing: Create %{thing}
@@ -122,6 +123,7 @@ en:
   destroy_thing: Destroy %{thing}
   drop_files_here: Drop files here
   edit: Edit
+  files_pending: Files pending
   loading_progress: Loading...
   ok_button: OK
   optional: Optional
@@ -211,6 +213,7 @@ en:
 ########################################
 ### en/generic.yml
   approved_by_entity: Approved by %{entity}
+  friends: Friends
   name: Name
   owner: Owner
   people: People
@@ -227,6 +230,11 @@ en:
     one: "%{thing} was sent to %{recipient}."
     other: "%{count} %{thing} were sent."
   all: All
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Enter the name of a group or a person
+      enter_name_of_group: Enter the name of a group
+      enter_name_of_person: Enter the name of a person
   go: Go
   list_things: List %{things}
   modified: modified
@@ -577,12 +585,15 @@ en:
   name_or_email_not_found: '"%{name}" does not match the name of any users or groups
     and is not a valid email address.'
   additional_page_access: Additional Access
+  article_page_display: Article
   asset_page_description: Upload an image, document, spreadsheet, presentation, or any
     file.
+  asset_page_display: File
   attachments: Attachments
   create_page: Create Page
   discussion_page_description: Discuss a particular topic with groups or other users.
   discussion_page_display: Group Discussion
+  event_page_display: Event
   gallery_description: Upload multiple images or organize existing images into a set.
   gallery_display: Gallery
   page_added_to_group: This page will be added to %{group_type} %{group_name}.
@@ -764,6 +775,7 @@ en:
   request_to_join_our_network_description: The group %{group} was invited to join then
     network %{network}.
   request_to_join_short: Shall %{user} join %{group}?
+  request_to_join_us: Request to Join
   request_to_join_us_description: The user %{user} was invited to join the group %{group}.
   request_to_join_us_via_email_description: The email address %{email} was invited to
     join the group %{group}.

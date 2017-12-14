@@ -129,11 +129,14 @@ en:
 
   ## PAGE TYPES
   additional_page_access: "Additional Access"
+  article_page_display: "Article"
   asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
+  asset_page_display: "File"
   attachments: Attachments
   create_page: "Create Page"
   discussion_page_description: "Discuss a particular topic with groups or other users."
   discussion_page_display: "Group Discussion"
+  event_page_display: "Event"
   gallery_description: "Upload multiple images or organize existing images into a set."
   gallery_display: Gallery
   page_added_to_group: "This page will be added to %{group_type} %{group_name}."

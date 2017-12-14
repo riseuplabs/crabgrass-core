@@ -57,6 +57,7 @@ en:
   request_to_join_network_short: "Shall %{group} join %{network}?"
   request_to_join_our_network_description: "The group %{group} was invited to join then network %{network}."
   request_to_join_short: "Shall %{user} join %{group}?"
+  request_to_join_us: "Request to Join"
   request_to_join_us_description: "The user %{user} was invited to join the group %{group}."
   request_to_join_us_via_email_description: "The email address %{email} was invited to join the group %{group}."
   request_to_join_us_via_email_short: "Shall %{email} join %{group}?"
