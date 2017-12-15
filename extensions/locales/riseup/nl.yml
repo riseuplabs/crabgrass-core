@@ -2,9 +2,3 @@ nl:
   riseup:
     run_by_html: "Deze website werkt met %{provider}%{description}"
     description: ", je vriendelijk, autonoom techniek-collectief sinds 1999."
-    privacy_policy: "bescherming van de privacy richtlijn"
-    about_us: "over ons"
-    email_accounts: "e-mailaccounts"
-    mailing_lists: "verzendlijsten"
-    system_status: "status van het systeem"
-    donate: "doneren aan riseup"

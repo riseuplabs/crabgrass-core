@@ -1,17 +1,17 @@
 es:
   riseup:
     run_by_html: "Esta página funciona gracias a %{provider} %{description}"
-    description: ", tu amable colectivo técnico presente desde 1999."
+    description: ", tu amable colectivo técnico, desde 1999."
     privacy_policy: "Política de privacidad"
-    terms_of_service: "Términos del Servicio"
-    about_us: "Acerca de..."
+    terms_of_service: "Términos del servicio"
+    about_us: "Sobre nosotros"
     email_accounts: "Cuentas de correo"
     mailing_lists: "Listas de correo"
-    system_status: "Estado del Sistema"
+    system_status: "Estado del sistema"
     donate: "Donar a Riseup"
     riseup_black: "Riseup Negro"
     riseup_red: "Riseup Rojo"
     accounts_note: >
         NOTA: las cuentas de usuario de este sitio son independientes de otros servicios
-        de riseup.net. En otras palabras, no puedes usar tu cuenta %{riseup_black}
-        o %{riseup_red} para entrar en este sitio.
+        de riseup.net. Es decir, no puedes usar tu cuenta %{riseup_black} o %{riseup_red}
+        para entrar en este sitio.
