@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211140257) do
+ActiveRecord::Schema.define(version: 20171215201046) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -206,12 +206,6 @@ ActiveRecord::Schema.define(version: 20171211140257) do
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
-
-  create_table "group_settings", force: :cascade do |t|
-    t.integer "group_id",      limit: 4
-    t.string  "template_data", limit: 255
-    t.string  "allowed_tools", limit: 255
-  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",                limit: 255
@@ -712,37 +706,6 @@ ActiveRecord::Schema.define(version: 20171211140257) do
 
   add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true
   add_index "user_participations", ["user_id", "changed_at"], :name => "recent_changes"
-
-  create_table "user_settings", force: :cascade do |t|
-    t.integer  "user_id",                    limit: 4
-    t.string   "email_address",              limit: 255
-    t.string   "sms_number",                 limit: 255
-    t.string   "sms_carrier",                limit: 255
-    t.string   "im_address",                 limit: 255
-    t.string   "im_type",                    limit: 255
-    t.boolean  "allow_insecure_email",                   default: false
-    t.boolean  "allow_insecure_im",                      default: false
-    t.boolean  "allow_insecure_sms",                     default: false
-    t.integer  "email_crypt_key_id",         limit: 4
-    t.integer  "sms_crypt_key_id",           limit: 4
-    t.boolean  "email_allowed",                          default: true
-    t.boolean  "sms_allowed",                            default: false
-    t.boolean  "im_allowed",                             default: false
-    t.boolean  "receive_digest",                         default: true
-    t.integer  "digest_frequency",           limit: 4,   default: 2
-    t.integer  "digest_day",                 limit: 4
-    t.integer  "preferred_reception_method", limit: 4,   default: 1
-    t.string   "languages_spoken",           limit: 255
-    t.integer  "level_of_expertise",         limit: 4
-    t.boolean  "show_welcome",                           default: true
-    t.integer  "login_landing",              limit: 4,   default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "preferred_editor",           limit: 1
-  end
-
-  add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"
-  add_index "user_settings", ["receive_digest", "digest_frequency", "digest_day"], :name => "digest"
 
   create_table "users", force: :cascade do |t|
     t.string   "login",                     limit: 255

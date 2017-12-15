@@ -1,14 +1,4 @@
-module SettingWithSafety
-
-  # allow us to call user.setting.x even if user.setting is nil
-  def setting(*args)
-    super(*args) or User::Setting.new
-  end
-
-end
-
 class User < ActiveRecord::Base
-  prepend SettingWithSafety
 
   ##
   ## CORE EXTENSIONS
@@ -214,22 +204,6 @@ class User < ActiveRecord::Base
   has_one :pgp_key, dependent: :destroy
 
   accepts_nested_attributes_for :pgp_key
-
-
-  ##
-  ## USER SETTINGS
-  ##
-
-  has_one :setting, dependent: :destroy
-
-  def update_setting(attrs)
-    if setting.id
-      setting.attributes = attrs
-      setting.save if setting.changed?
-    else
-      create_setting(attrs)
-    end
-  end
 
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
