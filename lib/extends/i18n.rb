@@ -30,6 +30,24 @@ class String
   end
 end
 
+module I18nWithException
+
+  def translate(*args)
+    super(*args)
+    rescue ArgumentError => exception
+     # MissingTranlationData is already handled in translate.
+     # If it shows up here the handler already reraised and so do we.
+    raise if exception.is_a? I18n::MissingTranslationData
+      options  = args.last.is_a?(Hash) ? args.pop.dup : {}
+      key      = args.shift
+      locale   = options.delete(:locale) || config.locale
+      handling = options.delete(:throw) && :throw || options.delete(:raise) && :raise
+      handle_exception(handling, exception, locale, key, options)
+   end
+end
+
+I18n.singleton_class.prepend I18nWithException
+
 module I18n
   Lang = Struct.new('Lang', :name, :code, :order, :rtl)
 
@@ -78,24 +96,6 @@ module I18n
     #  load_available_languages if @languages.blank?
     #  @languages.values.compact.sort_by(&:id)
     # end
-
-    def translate_with_exception_handler(*args)
-      translate_without_exception_handler(*args)
-    rescue ArgumentError => exception
-      # MissingTranlationData is already handled in translate.
-      # If it shows up here the handler already reraised and so do we.
-      raise if exception.is_a? MissingTranslationData
-      options  = args.last.is_a?(Hash) ? args.pop.dup : {}
-      key      = args.shift
-      locale   = options.delete(:locale) || config.locale
-      handling = options.delete(:throw) && :throw || options.delete(:raise) && :raise
-      handle_exception(handling, exception, locale, key, options)
-    end
-
-    alias_method_chain :translate, :exception_handler
-
-    # refresh the alias to include the chain
-    alias t translate
 
     protected
 

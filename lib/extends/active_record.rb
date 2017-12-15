@@ -1,6 +1,56 @@
 require 'rubygems'
 require 'active_record'
 
+module ComputeTypeWithPageFallback
+
+  #
+  # This is an intervention into how activerecord deals with STI (single table
+  # inheritance). Normally, activerecord throws a SubclassNotFound exception
+  # if it is not able to find a class name that matches the type.
+  #
+  # This makes a lot of sense normally. However, because crabgrass lets you add
+  # and remove page types easily, we want to make it so that unknown page types
+  # don't cause rails to bomb out. Rather, it should just instantiate a generic
+  # page.
+  #
+  # The method 'compute_type(type_name)' is a protected class method called by
+  # ActiveRecord#instantiate(record) in order to create a ActiveRecord object
+  # from a database record using STI if needed. compute_type() should raise
+  # NameError if the type can't be found.
+  #
+  # The variable type_name comes from the 'type' column of the record.
+  #
+  # rails notes:
+  # Returns the class type of the record using the current module as a prefix. So descendants of
+  # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
+  #
+
+  protected
+
+  def compute_type(type_name)
+    super(type_name)
+  rescue NameError => e
+    if type_name =~ /Page$/
+      ActiveSupport::Dependencies.constantize('DiscussionPage')
+    else
+      raise e
+    end
+
+    # Some of our models break the usual path <-> name relationship (such as "RequestNotice" within
+    # app/models/notice/request_notice.rb). So in cases where "Notice" is asked to compute the type
+    # "RequestNotice", it finds the correct file (because it first tries Notice::RequestNotice), but
+    # then fails when that file doesn't define the expected "Notice::RequestNotice".
+    # We solve such situations by falling back to asking ActiveRecord::Base to compute the type,
+    # which will fall back to the bare 'type_name', because there is no file "active_record/base/request_notice.rb".
+  rescue LoadError => e
+    raise e if self == ActiveRecord::Base
+    ActiveRecord::Base.compute_type(type_name)
+  end
+
+end
+
+ActiveRecord::Base.singleton_class.prepend ComputeTypeWithPageFallback
+
 ActiveRecord::Base.class_eval do
   #
   # Crabgrass uses exceptions in most places to display error messages.
@@ -87,53 +137,6 @@ ActiveRecord::Base.class_eval do
     self.class.record_timestamps = true
   end
 
-  #
-  # This is an intervention into how activerecord deals with STI (single table
-  # inheritance). Normally, activerecord throws a SubclassNotFound exception
-  # if it is not able to find a class name that matches the type.
-  #
-  # This makes a lot of sense normally. However, because crabgrass lets you add
-  # and remove page types easily, we want to make it so that unknown page types
-  # don't cause rails to bomb out. Rather, it should just instantiate a generic
-  # page.
-  #
-  # The method 'compute_type(type_name)' is a protected class method called by
-  # ActiveRecord#instantiate(record) in order to create a ActiveRecord object
-  # from a database record using STI if needed. compute_type() should raise
-  # NameError if the type can't be found.
-  #
-  # The variable type_name comes from the 'type' column of the record.
-  #
-  # rails notes:
-  # Returns the class type of the record using the current module as a prefix. So descendants of
-  # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
-  #
-
-  protected
-
-  def self.compute_type_with_page_fallback(type_name)
-    compute_type_without_page_fallback(type_name)
-  rescue NameError => e
-    if type_name =~ /Page$/
-      ActiveSupport::Dependencies.constantize('DiscussionPage')
-    else
-      raise e
-    end
-
-    # Some of our models break the usual path <-> name relationship (such as "RequestNotice" within
-    # app/models/notice/request_notice.rb). So in cases where "Notice" is asked to compute the type
-    # "RequestNotice", it finds the correct file (because it first tries Notice::RequestNotice), but
-    # then fails when that file doesn't define the expected "Notice::RequestNotice".
-    # We solve such situations by falling back to asking ActiveRecord::Base to compute the type,
-    # which will fall back to the bare 'type_name', because there is no file "active_record/base/request_notice.rb".
-  rescue LoadError => e
-    raise e if self == ActiveRecord::Base
-    ActiveRecord::Base.compute_type(type_name)
-  end
-
-  class << self
-    alias_method_chain :compute_type, :page_fallback
-  end
 end
 
 #

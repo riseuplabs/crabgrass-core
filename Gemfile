@@ -12,7 +12,7 @@ end
 
 # Rails is the framework we use.
 # use the 4.2 series including all security fixes
-gem 'rails', '~> 4.2.7'
+gem 'rails', '~> 4.2.10'
 
 # Rake is rubys make... performing tasks
 # locking in to latest major to fix API
@@ -65,15 +65,15 @@ gem 'prototype_legacy_helper', '0.0.0',
 # with rails 3.2 but they should not affect us
 # 3.1.3 prints warnings with latest sphinx:
 # https://github.com/pat/thinking-sphinx/issues/882
-gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
-
+#gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
+gem 'thinking-sphinx', '~> 3.4.2'
 #
 # Use delayed job to postpone the delta processing
 # latest version available. Stick to major release
 gem 'ts-delayed-delta', '~> 2.0'
 
 # Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 3.5'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 # Page Caching has been removed from rails 4.
 # migrate it and drop this.

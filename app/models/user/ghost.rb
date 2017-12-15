@@ -28,7 +28,6 @@ class User::Ghost < User
   #
   def retire!(options = {})
     avatar.destroy if avatar
-    # setting.destroy #TODO not sure if settings are ever used.
     profiles.destroy_all
     task_participations.destroy_all
     participations.destroy_all

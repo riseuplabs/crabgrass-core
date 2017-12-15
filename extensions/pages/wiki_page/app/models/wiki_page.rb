@@ -12,10 +12,8 @@ class WikiPage < Page
     data.body
   end
 
-  protected
-
-  def wiki_with_auto_create(*args)
-    wiki_without_auto_create(*args) or begin
+  def wiki(*args)
+    data(*args) or begin
       newwiki = Wiki.new do |w|
         w.user = created_by
         w.body = ''
@@ -27,8 +25,7 @@ class WikiPage < Page
     end
   end
 
-  alias wiki data
-  alias_method_chain :wiki, :auto_create
+  protected
 
   before_save :update_wiki_group
   def update_wiki_group

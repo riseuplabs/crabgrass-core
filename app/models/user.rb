@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   ##
   ## CORE EXTENSIONS
   ##
@@ -204,28 +205,6 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :pgp_key
 
-
-  ##
-  ## USER SETTINGS
-  ##
-
-  has_one :setting, dependent: :destroy
-
-  # allow us to call user.setting.x even if user.setting is nil
-  def setting_with_safety(*args)
-    setting_without_safety(*args) or User::Setting.new
-  end
-  alias_method_chain :setting, :safety
-
-  def update_setting(attrs)
-    if setting.id
-      setting.attributes = attrs
-      setting.save if setting.changed?
-    else
-      create_setting(attrs)
-    end
-  end
-
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
   # message.
@@ -361,3 +340,4 @@ class User < ActiveRecord::Base
     end
   end
 end
+

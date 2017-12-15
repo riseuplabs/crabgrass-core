@@ -29,19 +29,40 @@ end
 # export STOP_ON_SQL='SELECT * FROM `users` WHERE (`users`.`id` = 633)'
 # script/server
 #
+module LogWithDebug
 
-if ENV['STOP_ON_SQL'].present?
-  STOP_ON_SQL_MATCH = Regexp.escape(ENV['STOP_ON_SQL']).gsub(/\\\s+/, '\s+')
-  class ActiveRecord::ConnectionAdapters::AbstractAdapter
-    def log_with_debug(sql, name, &block)
+    def log(sql, name, &block)
       if sql.match(STOP_ON_SQL_MATCH)
         debugger
         true
       end
-      log_without_debug(sql, name, &block)
+      super(sql, name, &block)
     end
-    alias_method_chain :log, :debug
+end
+
+
+if ENV['STOP_ON_SQL'].present?
+  STOP_ON_SQL_MATCH = Regexp.escape(ENV['STOP_ON_SQL']).gsub(/\\\s+/, '\s+')
+  class ActiveRecord::ConnectionAdapters::AbstractAdapter
+    prepend LogWithDebug
   end
+end
+
+module CallWithDebug
+
+    def call(*args, &block)
+      @@active_record_callbacks ||= Hash[@@debug_callbacks.collect do |callback|
+        methods = ActiveRecord::Base.send("#{callback}_callback_chain").collect(&:method)
+        [callback, methods]
+      end]
+
+      if should_run_callback?(*args) and method.is_a?(Symbol) and @@debug_callbacks.include?(kind) and !@@active_record_callbacks[kind].include?(method)
+        puts "++++ #{kind} #{'+' * 60}" if @@last_kind != kind
+        puts "---- #{method} ----"
+        @@last_kind = kind
+      end
+      call(*args, &block)
+    end
 end
 
 #
@@ -53,6 +74,9 @@ if ENV['DEBUG_CALLBACKS'].present?
   # if enabled, this will print out when each callback gets called.
   #
   class ActiveSupport::Callbacks::Callback
+
+    prepend CallWithDebug
+
     @@last_kind = nil
 
     @@debug_callbacks = %i[before_validation before_validation_on_create after_validation
@@ -60,20 +84,6 @@ if ENV['DEBUG_CALLBACKS'].present?
 
     @@active_record_callbacks = nil
 
-    def call_with_debug(*args, &block)
-      @@active_record_callbacks ||= Hash[@@debug_callbacks.collect do |callback|
-        methods = ActiveRecord::Base.send("#{callback}_callback_chain").collect(&:method)
-        [callback, methods]
-      end]
-
-      if should_run_callback?(*args) and method.is_a?(Symbol) and @@debug_callbacks.include?(kind) and !@@active_record_callbacks[kind].include?(method)
-        puts "++++ #{kind} #{'+' * 60}" if @@last_kind != kind
-        puts "---- #{method} ----"
-        @@last_kind = kind
-      end
-      call_without_debug(*args, &block)
-    end
-    alias_method_chain :call, :debug
   end
 
   # this is most useful in combination with ActiveRecord::Base.logger = Logger.new(STDOUT)
