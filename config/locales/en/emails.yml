@@ -4,6 +4,7 @@ en:
     hello: "Hello %{user_name}"
     pgp_key:
       key_uploaded: "You just uploaded a new key. It will be used for encrypted email notifications (experimental feature, coming soon)."
+      key_uploaded_subject: "Notification"
     page_histories:
       change_your_settings_here: "Change your email notification settings here: %{page_link}"
       daily_digest: "%{site} : Daily summary of page modifications"

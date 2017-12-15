@@ -25,7 +25,7 @@ class Mailer::PgpKeyUploadMailer < ActionMailer::Base
   end
 
   def subject
-    I18n.t('mailer.page_histories.daily_digest', site: @site.title)
+    I18n.t('mailer.pgp_key.key_uploaded_subject', site: @site.title)
   end
 
   def sender
