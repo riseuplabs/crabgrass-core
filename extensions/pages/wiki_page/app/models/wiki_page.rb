@@ -1,22 +1,4 @@
-module WikiWithAutoCreate
-
-  def wiki(*args)
-    super(*args) or begin
-      newwiki = Wiki.new do |w|
-        w.user = created_by
-        w.body = ''
-      end
-      self.data = newwiki
-      return newwiki if new_record?
-      save
-      newwiki.reload
-    end
-  end
-
-end
-
 class WikiPage < Page
-  prepend WikiWithAutoCreate
   include Page::RssData
 
   def title=(value)
@@ -30,9 +12,20 @@ class WikiPage < Page
     data.body
   end
 
-  protected
+  def wiki(*args)
+    data(*args) or begin
+      newwiki = Wiki.new do |w|
+        w.user = created_by
+        w.body = ''
+      end
+      self.data = newwiki
+      return newwiki if new_record?
+      save
+      newwiki.reload
+    end
+  end
 
-  alias wiki data
+  protected
 
   before_save :update_wiki_group
   def update_wiki_group
