@@ -197,6 +197,7 @@ en:
     be undone.
   edit_image: Edit Image
   error_saving_new_order_message: 'Error saving new order: {{error_message}}'
+  edit_gallery_explanation: Add new images or drag images to rearrange their order.
   file_must_be_image_error: File must be an image to be part of a gallery.
   gallery_changing_cover_message: Changing cover...
   image_count: Image %{number} of %{count}
@@ -585,18 +586,31 @@ en:
   name_or_email_not_found: '"%{name}" does not match the name of any users or groups
     and is not a valid email address.'
   additional_page_access: Additional Access
+  announcement_page_description: An announcement.
+  announcement_page_display: Announcement
+  announcements_page_display: Announcements
   article_page_description: Create a blog post or news article.
   article_page_display: Article
   asset_page_description: Upload an image, document, spreadsheet, presentation, or any
     file.
   asset_page_display: File
   attachments: Attachments
+  collection_class_description: Special pages that hold other pages.
+  collection_page_display: Collection
+  contribute_content_link: Create Page
   create_page: Create Page
   discussion_page_description: Discuss a particular topic with groups or other users.
   discussion_page_display: Group Discussion
+  event_page_description: A calendar event.
   event_page_display: Event
+  external_video_page_description: Show a video hosted on an external website.
+  external_video_page_display: External Video
+  folder_class_description: Create a folder to organize other pages.
+  folder_display: Folder
   gallery_description: Upload multiple images or organize existing images into a set.
   gallery_display: Gallery
+  message_page_description: Send a personal message to individual recipients.
+  message_page_display: Personal Message
   page_added_to_group: This page will be added to %{group_type} %{group_name}.
   page_create_owner: Page Owner
   page_group_event: Event
@@ -608,26 +622,13 @@ en:
     of.
   rate_many_page_display: Approval Poll
   select_file_to_upload: Select a file to upload.
+  survey_page_description: Create a series of questions for people to answer.
   survey_page_display: Survey
   task_list_page_description: Create a list of todo items and assign tasks to yourself
     or others.
   task_list_page_display: Task List
   wiki_page_description: Create an editable free-form text document.
   wiki_page_display: Wiki Page
-  announcement_page_description: An announcement.
-  announcement_page_display: Announcement
-  announcements_page_display: Announcement
-  collection_class_description: Special pages that hold other pages.
-  collection_page_display: collection
-  folder_class_description: Create a folder to organize other pages.
-  folder_display: Folder
-  external_video_page_description: Show a video hosted on an external website.
-  external_video_page_display: External Video
-  contribute_content_link: Create Page
-  message_page_description: Send a personal message to individual recipients.
-  message_page_display: Personal Message
-  survey_page_description: Create a series of questions for people to answer.
-  event_page_description: A calendar event.
   assign_to: Assign to
   completed: Completed
   completed_tasks: Completed tasks
@@ -772,6 +773,9 @@ en:
       request_to_join_your_network: Request to Join
       request_to_remove_user: Request to Remove Member
   invitation_to_join:
+    one: Invitation to Join
+    other: Invitations to Join
+  request_to_join_us_via_email:
     one: Invitation to Join
     other: Invitations to Join
   request_to_create_council: Request to Create Council
