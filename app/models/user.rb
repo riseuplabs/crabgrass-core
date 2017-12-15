@@ -200,6 +200,11 @@ class User < ActiveRecord::Base
           as: 'entity',
           class_name: 'Profile'
 
+  has_one :pgp_key, dependent: :destroy
+
+  accepts_nested_attributes_for :pgp_key
+
+
   ##
   ## USER SETTINGS
   ##

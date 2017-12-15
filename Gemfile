@@ -156,6 +156,10 @@ gem 'rubyzip', '~> 1.2.1', require: false
 # TODO: use the new zip api and remove gem zip-zip
 gem 'zip-zip', require: 'zip'
 
+# gnupg for email encryption
+#
+gem 'mail-gpg'
+
 ##
 # Environment specific
 ##

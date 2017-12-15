@@ -3,6 +3,7 @@ en:
   display_name: "Display Name"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
   email: Email
+  fingerprint: Fingerprint
   language: Language
   message_user_wrote_caption: "%{user} wrote:"
   message_you_wrote_caption: "You wrote:"
@@ -12,6 +13,11 @@ en:
     none: "No: no emails for changes"
     single: "Yes: an email per change"
   or_image_url: "or image URL"
+  pgp_key: "PGP Key"
+  pgp_public_key: "Public Key"
+  pgp_key_description: "Experimental: Upload your PGP public key if you want to receive encrypted email notifications (new feature coming soon). We will send you an encrypted confirmation email."
+  pgp_key_invalid: "The key you entered cannot be imported. Did you really paste a public PGP key?"
+  pgp_key_expired: "The PGP key you entered is expired."
   private_profile: "Private Profile"
   remove_image_link: "remove image"
   save_changes: "Save Changes"

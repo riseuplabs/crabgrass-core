@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112160223) do
+ActiveRecord::Schema.define(version: 20171122172054) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -97,16 +97,6 @@ ActiveRecord::Schema.define(version: 20171112160223) do
   end
 
   add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
-
-  create_table "crypt_keys", force: :cascade do |t|
-    t.integer "profile_id",  limit: 8
-    t.boolean "preferred",                 default: false
-    t.text    "key",         limit: 65535
-    t.string  "keyring",     limit: 255
-    t.string  "fingerprint", limit: 255
-    t.string  "name",        limit: 255
-    t.string  "description", limit: 255
-  end
 
   create_table "custom_appearances", force: :cascade do |t|
     t.text     "parameters",        limit: 65535
@@ -394,6 +384,15 @@ ActiveRecord::Schema.define(version: 20171112160223) do
   add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
   add_index "pages", ["data_id", "data_type"], :name => "index_pages_on_data_id_and_data_type"
 
+  create_table "pgp_keys", force: :cascade do |t|
+    t.text     "key",         limit: 65535
+    t.string   "fingerprint", limit: 255
+    t.integer  "user_id",     limit: 4
+    t.datetime "expires"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "pictures", force: :cascade do |t|
     t.string  "content_type",  limit: 255
     t.string  "caption",       limit: 255
@@ -480,6 +479,7 @@ ActiveRecord::Schema.define(version: 20171112160223) do
     t.text     "summary_html",           limit: 65535
     t.integer  "geo_location_id",        limit: 4
     t.integer  "picture_id",             limit: 4
+    t.boolean  "encrypt",                              default: false
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"

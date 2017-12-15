@@ -49,15 +49,34 @@ class Mailer::PageHistories < ActionMailer::Base
 
   protected
 
+  def add_encrypt_options(options)
+    return options unless @recipient.pgp_key
+    gpg =  {encrypt: true, keys: { @recipient.email => @recipient.pgp_key.key }}
+    options.merge gpg: gpg
+  end
+
+  def add_sign_options(gpg_options)
+    begin
+      GPGME::Key.import File.open(ENV['GPGKEY'])
+    rescue => e
+      logger.error 'Error: ' + e.message
+      logger.error e.backtrace.join("\n")
+    end
+    # TODO: email address should be configurable
+    gpg_options.merge sign_as: "robot@riseup.net" if ENV['GPGKEY']
+    return gpg_options
+  end
+
   def init_mail_to(recipient)
     @site = Site.default
     @recipient = recipient
   end
 
-  # add some defaults
   def mail(options = {})
     return if @histories.blank? || @recipient.email.blank?
     @histories = @histories.group_by(&:page).to_a
+    options = add_encrypt_options(options)
+    options = add_sign_options(options)
     super options.reverse_merge from: sender, to: @recipient.email
   end
 
@@ -77,7 +96,6 @@ class Mailer::PageHistories < ActionMailer::Base
   def self.page_histories
     Page::History.where(notification_digest_sent_at: nil)
                  .where('DATE(page_histories.created_at) >= DATE(?)', DIGEST_TIMESPAN.ago)
-  #               .where('DATE(page_histories.created_at) < DATE(?)', Time.now) # do we need this? we do not have histories from the future
   end
 
   def page_histories_for(user)
