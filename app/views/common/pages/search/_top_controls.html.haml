@@ -24,22 +24,20 @@
 -#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
 - with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
-- text_filter_submit_options = {url: page_search_path, with: with}
+- text_filter_submit_options = {url: page_search_path, with: with, remote: true}
 - clear_filter_options = {url: page_search_path(remove: '/text/:text'), with: 'FilterPath.encode()'}
 - key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
 
 #page_search_table
   %div
-    = # search_view_toggle_links(page_search_path)
     = spinner('view_toggle')
   %div.p
     = form_tag '', id: 'page_search_form', class: 'form-inline' do
       .input-group
         %span.input-group-btn
-          = link_to_remote icon_tag('tiny_clear'), clear_filter_options, class: 'btn btn-default btn-sm'
-          -# = link_to_remote '<span class="close">&times;</span>', clear_filter_options, :class => 'btn btn-default btn-sm'
+          = link_to icon_tag('tiny_clear'), clear_filter_options, class: 'btn btn-default btn-sm'
         = text_field_tag 'text', '', size: 40, id: 'search_text_field', onkeypress: key_pressed, placeholder: :search.t, class: 'form-control input-sm'
         %span.input-group-btn
-          = link_to_remote icon_tag('magnifier'), text_filter_submit_options, id: 'search_submit', class: 'btn btn-default btn-sm'
+          = link_to icon_tag('magnifier'), text_filter_submit_options, id: 'search_submit', class: 'btn btn-default btn-sm'
 
 = focus_form 'page_search_form'

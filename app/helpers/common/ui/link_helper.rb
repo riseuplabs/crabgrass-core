@@ -3,16 +3,6 @@
 #
 
 module Common::Ui::LinkHelper
-  # link to if and only if...
-  # like link_to_if, but return nil if the condition is false
-  # not widely used. candidate for purging.
-  # def link_to_iff(condition, name, options = {}, html_options = {}, &block)
-  #  if condition
-  #    link_to(name, options, html_options, &block)
-  #  else
-  #    nil
-  #  end
-  # end
 
   ##
   ## FORMS
@@ -60,27 +50,12 @@ module Common::Ui::LinkHelper
   # just like link_to, but sets the <a> tag to have class 'active'
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
-  # TODO: the signature of this helper should be changed to match that
-  # of link_to_remote_active.
   def link_to_active(link_label, url_hash, active = nil, html_options = {})
     active ||= url_active?(url_hash)
     selected_class = active ? 'active' : ''
     classes = [selected_class, html_options[:class]]
     html_options[:class] = classes.join(' ')
     link_to(link_label, url_hash, html_options)
-  end
-
-  # like link_to_remote, but sets the class to be 'active' if the link is
-  # active (:active => true)
-  def link_to_remote_active(link_label, options, html_options = {})
-    active = options.delete(:active) || html_options.delete(:active)
-    selected_class = active ? 'active' : ''
-    html_options[:class] = [html_options[:class], selected_class].combine
-    if options[:icon] or html_options[:icon]
-      link_to_remote(link_label, options, html_options)
-    else
-      link_to_remote(link_label, options, html_options)
-    end
   end
 
   ##
@@ -133,28 +108,6 @@ module Common::Ui::LinkHelper
     function += "linkToggle(eventTarget(event), '#{id}', fn)"
     link_to_function label, function, options
   end
-
-  #  # makes an icon button to a remote action. when you click on the icon, it turns
-  #  # into a spinner. when done, the icon returns. any id passed to html_options
-  #  # is passed on the icon, and not the <a> tag.
-  #  def link_to_remote_icon(icon, options={}, html_options={})
-  #    icon_options = {
-  #      :loading => "event.target.blur();" + spinner_icon_on(icon),
-  #      :complete => "event.target.blur();" + spinner_icon_off(icon)
-  #    }
-  #    link_to_remote(
-  #      pushable_icon_tag(icon,16,html_options.delete(:id)),
-  #      options.merge(icon_options),
-  #      html_options
-  #    )
-  #  end
-  #  def link_to_function_icon(icon, function, html_options={})
-  #    link_to_function(
-  #      pushable_icon_tag(icon),
-  #      function,
-  #      html_options
-  #    )
-  #  end
 
   private
 

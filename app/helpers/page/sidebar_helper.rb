@@ -40,11 +40,12 @@ module Page::SidebarHelper
 
   def sidebar_checkbox(text, checked, url, options = {})
     icon = checked ? 'check_on' : 'check_off'
-    link_to_remote(
-      text,
-      { url: url, method: options[:method], complete: '' },
-      icon: icon, id: options[:id], title: options[:title]
-    )
+    link_to(text, url,
+      remote: true,
+      method: options[:method],
+      icon: icon,
+      id: options[:id],
+      title: options[:title])
   end
 
   ##
@@ -104,8 +105,11 @@ module Page::SidebarHelper
       end
       url = page_participations_path(@page, star: add.inspect)
       content_tag :li, id: 'star_li' do
-        link_to_remote label, { url: url, method: 'post' },
-                       id: 'star', icon: icon
+        link_to(label, url,
+          remote: true,
+          method: 'post',
+          id: 'star',
+          icon: icon)
       end
     end
   end
@@ -116,33 +120,29 @@ module Page::SidebarHelper
   def undelete_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote(I18n.t(:undelete_from_trash), url: page_trash_path(@page, type: 'undelete'), method: 'put', icon: 'refresh')
+        link_to(I18n.t(:undelete_from_trash), page_trash_path(@page, type: 'undelete'),
+          remote: true,
+          method: 'put',
+          icon: 'refresh')
       end
     end
   end
 
   #
   # used in the sidebar of deleted pages
+  # FIXME: icon is not shown
   #
   def destroy_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote(:destroy_page_via_shred.t, icon: 'minus', confirm: :destroy_confirmation.t(thing: :page.t), url: page_trash_path(@page, type: 'destroy'), method: 'put')
+        link_to(:destroy_page_via_shred.t, url: page_trash_path(@page, type: 'destroy'),
+          remote: true,
+          method: 'put',
+          icon: 'minus',
+          confirm: :destroy_confirmation.t(thing: :page.t))
       end
     end
   end
-
-  #  def view_line
-  #    if @show_print != false
-  #      printable = link_to I18n.t(:print_view_link), page_url(@page, :action => "print")
-  #      content_tag :li, printable, :class => 'small_icon printer_16'
-  #    end
-  #  end
-
-  #  def history_line
-  #    link = link_to I18n.t(:history), page_url(@page, :action => "page_history")
-  #    content_tag :li, link, :class => 'small_icon table_16'
-  #  end
 
   ##
   ## SIDEBAR COLLECTIONS

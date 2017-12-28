@@ -53,27 +53,23 @@ gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 
 # legacy helper for form_remote_for and link_to_remote
 # there's only a 0.0.0 version out there it seems
+# only needed for form_remote_tag
 gem 'prototype_legacy_helper', '0.0.0',
     github: 'rails/prototype_legacy_helper'
+
+# Full text search for the database
+gem 'thinking-sphinx', '~> 3.4.2'
+
+# Enhanced Tagging lib. Used to tag pages
+gem 'acts-as-taggable-on', '~> 4.0'
 
 ##
 # Upgrade pending
 ##
 
-# Full text search for the database
-# thinking-sphinx version 3.1.4 has dropped support for some features
-# with rails 3.2 but they should not affect us
-# 3.1.3 prints warnings with latest sphinx:
-# https://github.com/pat/thinking-sphinx/issues/882
-#gem 'thinking-sphinx', '3.1.4', require: 'thinking_sphinx'
-gem 'thinking-sphinx', '~> 3.4.2'
-#
 # Use delayed job to postpone the delta processing
 # latest version available. Stick to major release
 gem 'ts-delayed-delta', '~> 2.0'
-
-# Enhanced Tagging lib. Used to tag pages
-gem 'acts-as-taggable-on', '~> 4.0'
 
 # Page Caching has been removed from rails 4.
 # migrate it and drop this.

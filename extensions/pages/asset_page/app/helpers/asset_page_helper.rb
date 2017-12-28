@@ -11,12 +11,6 @@ module AssetPageHelper
   end
 
   def load_preview_tag
-    # if false and thumbnail.width
-    #  width = thumbnail.width
-    #  height = thumbnail.height
-    # else
-    #  width, height = thumbnail.thumbdef.size.split /[x><]/
-    # end
     width = 300
     height = 300
     style = "height:#{height}px; width:#{width}px;"
@@ -28,24 +22,16 @@ module AssetPageHelper
     remote_function method: :post, url: versions_url(page_id: @page)
   end
 
-  # def download_link
-  #  image_tag('actions/download.png', :size => '32x32', :style => 'vertical-align: middle;') + link_to("Download", @asset.url)
-  # end
-
-  # def upload_link
-  #  image_tag('actions/upload.png', :size => '32x32', :style => 'vertical-align: middle;') + link_to_function("Upload new version", "$('upload_new').toggle()") if current_user.may?(:edit, @page)
-  # end
-
   def destroy_version_link(version)
     if may_edit_page? and version.version < @asset.version
-      action = {
+      options = {
         url: version_url(version.version, page_id: @page),
         method: :delete,
-        confirm: I18n.t(:delete_version_confirm)
-        #:before => "$($(this).up('td')).addClassName('busy')",
-        #:failure => "$($(this).up('td')).removeClassName('busy')"
+        remote: true,
+        confirm: I18n.t(:delete_version_confirm) # FIXME: should be removed, needed for now as a flag for link_to to recognize remote call
       }
-      link_to_remote(:remove.t, action, icon: 'tiny_trash')
+      html_options = { confirm: I18n.t(:delete_version_confirm), icon: 'tiny_trash' }
+      link_to(:remove.t, options, html_options)
     end
   end
 

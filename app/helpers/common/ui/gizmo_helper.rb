@@ -24,7 +24,7 @@ module Common::Ui::GizmoHelper
   #
   #   and one of:
   #   (1) :url    -- creates a normal link_to
-  #   (2) :remote -- creates a link_to_remote
+  #   (2) :remote -- creates a remote link_to
   #   (3) :function -- creates a link_to_function
   #
   # example button group:
@@ -47,7 +47,7 @@ module Common::Ui::GizmoHelper
         ].combine
         if link[:remote]
           link[:url] = link[:remote]
-          link_to_remote link[:label], link.slice(:url, :method), link.slice(:class, :id)
+          link_to link[:label], link.slice(:url, :method).merge(remote: true), link.slice(:class, :id)
         elsif link[:function]
           link_to_function link[:label], link[:function], link.slice(:class, :id)
         else
