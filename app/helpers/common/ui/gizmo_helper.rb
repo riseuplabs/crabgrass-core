@@ -107,7 +107,7 @@ module Common::Ui::GizmoHelper
     if options[:label].blank?
       link_to_function_icon(options[:icon], function, options.slice(:url, :id, :title, :class))
     else
-      link_to_function_with_icon(options[:label], function, options.slice(:url, :id, :icon, :title, :class))
+      link_to_function(options[:label], function, options.slice(:url, :id, :icon, :title, :class))
     end
   end
 end

@@ -47,8 +47,6 @@ module Common::Application::RescueErrors
       rescue_from AuthenticationRequired,      with: :raise
       rescue_from PermissionDenied,            with: :raise
 
-      # helper_method :rescues_path
-      # alias_method_chain :rescue_action_locally, :js
     end
   end
 

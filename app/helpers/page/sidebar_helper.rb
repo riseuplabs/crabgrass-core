@@ -116,7 +116,7 @@ module Page::SidebarHelper
   def undelete_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote_with_icon(I18n.t(:undelete_from_trash), url: page_trash_path(@page, type: 'undelete'), method: 'put', icon: 'refresh')
+        link_to_remote(I18n.t(:undelete_from_trash), url: page_trash_path(@page, type: 'undelete'), method: 'put', icon: 'refresh')
       end
     end
   end
@@ -127,7 +127,7 @@ module Page::SidebarHelper
   def destroy_line
     if may_admin_page?
       content_tag :li do
-        link_to_remote_with_icon(:destroy_page_via_shred.t, icon: 'minus', confirm: :destroy_confirmation.t(thing: :page.t), url: page_trash_path(@page, type: 'destroy'), method: 'put')
+        link_to_remote(:destroy_page_via_shred.t, icon: 'minus', confirm: :destroy_confirmation.t(thing: :page.t), url: page_trash_path(@page, type: 'destroy'), method: 'put')
       end
     end
   end
