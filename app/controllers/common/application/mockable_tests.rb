@@ -39,27 +39,18 @@ module Common::Application::MockableTests
       # * raise an ReturnValueError otherwise
       def expect_or_raise(*args)
         mock.expect *args
-        orig = args[0].to_s
-        if '!?'.include?(orig[-1])
-          mock = "#{orig[0..-2]}_with_mock#{orig.last}"
-          no_mock = "#{orig[0..-2]}_without_mock#{orig.last}"
-        else
-          mock = "#{orig}_with_mock"
-          no_mock = "#{orig}_without_mock"
-        end
+        func = args[0].to_s
         class_eval <<-EOMETA
-          def #{mock}(*args)
-            expected = self.mock.#{orig}(*args)
-            run = #{no_mock}(*args)
+          def #{func}(*args)
+            expected = self.mock.#{func}
+            run = super
             unless expected == run
-              message = "Expected #{orig} to return " + expected.to_s + ".\n"
+              message = "Expected #{func} to return " + expected.to_s + ".\n"
               message += "Instead it returned " + run.to_s + "."
               raise ReturnValueError.new(message)
             end
             return run
           end
-
-          alias_method_chain :#{orig}, :mock
         EOMETA
       end
 
