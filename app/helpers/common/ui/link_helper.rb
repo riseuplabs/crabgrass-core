@@ -77,7 +77,7 @@ module Common::Ui::LinkHelper
     selected_class = active ? 'active' : ''
     html_options[:class] = [html_options[:class], selected_class].combine
     if options[:icon] or html_options[:icon]
-      link_to_remote_with_icon(link_label, options, html_options)
+      link_to_remote(link_label, options, html_options)
     else
       link_to_remote(link_label, options, html_options)
     end

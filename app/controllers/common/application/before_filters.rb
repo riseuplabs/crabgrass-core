@@ -1,3 +1,14 @@
+module Common::Application::RenderWithViewSetup
+
+  def render(*args)
+    setup_theme
+    setup_context
+    super(*args)
+  end
+
+
+end
+
 module Common::Application::BeforeFilters
   extend ActiveSupport::Concern
 
@@ -7,17 +18,11 @@ module Common::Application::BeforeFilters
     before_filter :set_session_timezone
     before_filter :header_hack_for_ie6
     before_filter :redirect_unverified_user
-
-    alias_method_chain :render, :view_setup
   end
 
   private
 
-  def render_with_view_setup(*args)
-    setup_theme
-    setup_context
-    render_without_view_setup(*args)
-  end
+  prepend Common::Application::RenderWithViewSetup
 
   def header_hack_for_ie6
     #

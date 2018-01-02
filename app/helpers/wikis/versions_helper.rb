@@ -32,7 +32,7 @@ module Wikis::VersionsHelper
   def list_versions_link
     label = :list_things.t(things: :versions.t)
     url = wiki_versions_path(@wiki)
-    link_to_remote_with_icon(label, { url: url, method: :get }, class: 'btn btn-default', icon: 'left')
+    link_to_remote(label, { url: url, method: :get }, class: 'btn btn-default', icon: 'left')
   end
 
   def next_version_link

@@ -1,16 +1,87 @@
-#
-# Modalbox
+#  Modalbox
 #
 # Displays a modal dialog box
 #
 
-module ModalboxHelper
-  def self.included(_base)
-    unless ActionView::Base.method_defined? :link_to_with_confirm
-      ActionView::Base.send(:include, ActionViewExtension)
+module LinkWithConfirm
+
+  ##
+  ## USE MODALBOX FOR CONFIRM
+  ##
+
+  #
+  # redefines link_to_remote to use Modalbox.confirm() if options[:confirm] is set.
+  #
+  # If cancel is pressed, then nothing happens.
+  # If OK is pressed, then the remote function is fired off.
+  #
+  # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
+  #
+  def link_to_remote(name, options = {}, html_options = {})
+    message = if options.is_a?(Hash) and options[:confirm]
+		options.delete(:confirm)
+	      else
+		html_options.delete(:confirm)
+	      end
+
+    if message
+      ## if called when the modalbox is already open, it is important that we
+      ## call back() before the other complete callbacks. Otherwise, the html
+      ## they expect to be there might be missing.
+      options[:loading] = ['Modalbox.spin()', options[:loading]].compact.join('; ')
+      options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
+      ok_function = remote_function(options)
+      link_to_function(name, %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{name}"})], html_options)
+    else
+      super(name, options, html_options)
     end
   end
 
+  #
+  # redefines link_to to use Modalbox.confirm() if options[:confirm] is set.
+  #
+  # If cancel is pressed, then nothing happens.
+  # If OK is pressed, then a form submit happens, using the action and method specified.
+  #
+  def link_to(name, options = {}, html_options = nil)
+    if options.is_a?(Hash) and options[:confirm]
+      # this seems like a bad form. the confirm should be in html_options.
+      # is this really used anywhere?
+      message = options[:confirm]
+      action = options[:url]
+      method = options[:method]
+    elsif html_options.is_a?(Hash) and html_options[:confirm]
+      action = options
+      message = html_options.delete(:confirm)
+      method = html_options.delete(:method)
+      options = html_options
+    else
+      message = nil
+    end
+
+    if message
+      method ||= 'post'
+      token = form_authenticity_token
+      action = url_for(action) if action.is_a?(Hash)
+      ok = options[:ok] || I18n.t(:ok_button)
+      title = options[:title] || name
+      cancel = options[:cancel] || I18n.t(:cancel)
+      link_to_function(name,
+		       %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
+		       html_options)
+    else
+      super(name, options, html_options)
+    end
+  end
+
+  alias_method :link_to_remote_with_confirm, :link_to_remote # needed only once...
+
+end
+
+
+module ModalboxHelper
+
+  prepend LinkWithConfirm
   ##
   ## Modalbox dialog popup helpers
   ##
@@ -64,7 +135,7 @@ module ModalboxHelper
       link_to_function_with_icon(label, function, html_options)
     else
       function = modalbox_function(contents, options)
-      link_to_function_without_icon(label, function, html_options)
+      link_to_function(label, function, html_options)# FIXME: should be _without_icon
     end
   end
 
@@ -135,100 +206,4 @@ module ModalboxHelper
     options_for_javascript(hash)
   end
 
-  public
-
-  module ActionViewExtension
-    def self.included(base)
-      base.class_eval do
-        alias_method_chain :link_to_remote, :confirm
-        alias_method_chain :link_to, :confirm
-      end
-    end
-
-    ##
-    ## USE MODALBOX FOR CONFIRM
-    ##
-
-    #
-    # redefines link_to_remote to use Modalbox.confirm() if options[:confirm] is set.
-    #
-    # If cancel is pressed, then nothing happens.
-    # If OK is pressed, then the remote function is fired off.
-    #
-    # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
-    #
-    def link_to_remote_with_confirm(name, options = {}, html_options = {})
-      message = if options.is_a?(Hash) and options[:confirm]
-                  options.delete(:confirm)
-                else
-                  html_options.delete(:confirm)
-                end
-
-      if message
-        ## if called when the modalbox is already open, it is important that we
-        ## call back() before the other complete callbacks. Otherwise, the html
-        ## they expect to be there might be missing.
-        options[:loading] = ['Modalbox.spin()', options[:loading]].compact.join('; ')
-        options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
-        ok_function = remote_function(options)
-        link_to_function(name, %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{name}"})], html_options)
-      else
-        link_to_remote_without_confirm(name, options, html_options)
-      end
-    end
-    # alias_method_chain :link_to_remote, :confirm
-
-    #
-    # redefines link_to to use Modalbox.confirm() if options[:confirm] is set.
-    #
-    # If cancel is pressed, then nothing happens.
-    # If OK is pressed, then a form submit happens, using the action and method specified.
-    #
-    def link_to_with_confirm(name, options = {}, html_options = nil)
-      if options.is_a?(Hash) and options[:confirm]
-        # this seems like a bad form. the confirm should be in html_options.
-        # is this really used anywhere?
-        message = options[:confirm]
-        action = options[:url]
-        method = options[:method]
-      elsif html_options.is_a?(Hash) and html_options[:confirm]
-        action = options
-        message = html_options.delete(:confirm)
-        method = html_options.delete(:method)
-        options = html_options
-      else
-        message = nil
-      end
-
-      if message
-        method ||= 'post'
-        token = form_authenticity_token
-        action = url_for(action) if action.is_a?(Hash)
-        ok = options[:ok] || I18n.t(:ok_button)
-        title = options[:title] || name
-        cancel = options[:cancel] || I18n.t(:cancel)
-        link_to_function(name,
-                         %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
-                         html_options)
-      else
-        link_to_without_confirm(name, options, html_options)
-      end
-    end
-    # alias_method_chain :link_to, :confirm
-  end
 end
-
-# creates a popup-link using modalbox
-#  def link_to_modalbox(url, label, params={}, options={})
-#    link_to_function(label, modalbox_js(url, label, params, options))
-#  end
-#
-#  def modalbox_js(url, label, params={}, options={})
-#    request_method = options[:method] || 'get'
-#    if !params.empty?
-#      params = params.each_pair.map do |key, value|
-#        "#{key}=#{url_encode(value)}"
-#      end.join('&')
-#    end
-#    "Modalbox.show('#{url}',{title:'#{label}', params:'#{params}', method:'#{request_method}', overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
-#  end
