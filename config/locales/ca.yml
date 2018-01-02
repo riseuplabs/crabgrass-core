@@ -69,6 +69,11 @@ ca:
   delete_button: Eliminar
   deleted: Eliminat
   remove: Eliminar
+  mailer:
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Una pàgina ha sigut modificada"
+      the_page_you_are_watching_description: La pàgina "%{page_title}" que segueixes ha sigut modificada
+      change_your_settings_here: 'Canvia les teves preferències de correu electrònic aquí: %{page_link}'
   exception:
     title:
       unauthorized: Autenticació Requerida
@@ -105,7 +110,7 @@ ca:
   name: Nom
   recipients: Recipients
   contacts: Amics
-  friends: Amics i Amigues
+  friends: Amics
   member_groups_of_network: Grups Membres
   peers: Companys
   me: Jo
@@ -407,7 +412,7 @@ ca:
   alert_permission_denied: Permís Denegat
   csrf_error_message: 'El teu intent d''autenticació té la pinta d''un atac contra aquesta pàgina.  No et preocupis: això passa sovint, fins i tot amb intents innocents d''autenticar-se.  El que passa és que som super paranoics.  Abans d''intentar de nou, torna a carregar aquesta pàgina.  També pots seguir aquest enllaç.    '
   set_status_button: Actualitzar Estatus
-  my_contacts: El meus amics i amigues
+  my_contacts: Amics
   login_required: Autenticació Requerida
   login_required_description: Autentica't per poder fer això.
   permission_denied_description: No tens permisos suficients per complir aquella acció.
@@ -422,7 +427,7 @@ ca:
   current_tags: Etiquetes Actuals
   welcome_title: 'Benvingut/da a %{site_title} '
   welcome_message: Crabgrass (pastura de quaresma) ajuda a grups que treballen pel canvi social a treballar, organitzar-se, col·laborar i fer xarxa.
-  wiki_is_locked_html: Aquest wiki està bloquejat per <b>%{user}</b>
+  wiki_is_locked: Aquest wiki està bloquejat per %{user}
   leave_editing_wiki_page_warning: Si deixes aquesta pàgina de wiki sense guardar-hi els canvis i sense cancel·lar la seva edició, altres usuaris veuran que la tens bloquejada i no la podran editar.  Tanmateix, si no guardes el wiki, perdràs els canvis.
   break_lock_button: Desbloquejar
   versions: Versions

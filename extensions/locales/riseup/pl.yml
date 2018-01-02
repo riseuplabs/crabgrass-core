@@ -2,3 +2,9 @@ pl:
   riseup:
     run_by_html: "Strona prowadzona przez %{provider}%{description}"
     description: ", przyjacielski wolnościowy kolektyw techniczny działający od 1999."
+    privacy_policy: "polityka prywatności"
+    about_us: "o nas"
+    email_accounts: "konta pocztowe"
+    mailing_lists: "listy mejlingowe"
+    system_status: "stan systemów"
+    donate: "wesprzyj riseup"

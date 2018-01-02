@@ -1,25 +1,30 @@
 ar:
+  cookie_disabled_warning: لابد من تمكين الكوكيز فى المتصفح لاتمام عملية تسجيل الدخول
   signup_link: سجِّل الآن
   signup_email_info: 'اختياري: يُستخدم إذا نسيت كلمة المرور'
-  forgot_password_link: نسيت كلمة المرور
+  forgot_password_link: نسيت كلمة المرور؟
   login_failure_reason: خطأ في إسم المستخدم أو كلمة المرور.
   signup_success_message: شكراً لك على التسجيل!
   login_name: اسم المستخدم
   signup_success: تم التسجيل بنجاح
   logout_success: وداعاً
   logout_success_message: تم تسجيل الخروج بنجاح.
+  signup_button: إنشاء حساب
   login_failed: لم تتم عملية تسجيل الدخول
+  login_button: تسجيل الدخول
   login: دخول
+  sign_in: تسجيل الدخول
   signup_title: تسجيل حساب جديد
-  signup_email: البريد الإلكتروني
+  forgot_password_text: لو فقدت كلمة المرور . يمكننا إرسال رابط لبريدك الإليكترونى لإنشاء كلمة مرور جديدة
+  reset_password_text: مرحباً %{user} .لو فقدت كلمة المرور الخاصة بك يمكنك إنشاء كلمة مرور جديدة
   forgot_password_mail_greeting: "%{user}, لتغيير كلمة المرور، الرجاء زيارة"
+  forgot_password_mail_expiry: هذا الرابط صالح لإعادة إنشاء كلمة مرور جديدة فى خلال 24 ساعة .بعد ذلك يجب طلب رابط جديد
   reset_password_mail_greeting: "%{user}, تم تغيير كلمة المرور حسب طلبك."
   reset_password_mail_warning: الرجاء الإتصال بنا إذا لم تطلب تغيير كلمة المرور
-  your_login: معلومات الدخول
   invalid_email_text: عنوان البريد الإلكتروني غير صحيح
   reset_password: تغيير كلمة المرور
   reset_password_email_sent: تم إرسال بريد إلكتروني لك يحتوي تعليمات حوا تغيير كلمة المرور
-  invalid_token: رابط غير صحيح
+  invalid_token: رمز غير صحيح
   invalid_token_text: ' رابط تغيير كلمة المرور غير صحيح، إما أنَّهُ تمّ استخدامُه أو انقضى الوقت المخصّص لإستخدام الرابط'
   password_reset: تغيير كلمة المرور
   password_reset_ok_text: تم تغيير كلمة المرور بنجاح. يمكنك الآن استخدام كلمة المرور الجديدة للدخول
@@ -28,17 +33,50 @@ ar:
   forgotten_email_address: ما هو البريد الإلكتروني الذي أدخلتُه عندما قمت بالتسجيل لأوّل مرة؟
   new_password: كلمة مرور جديدة
   confirm_new_password: 'تأكيد كلمة المرور الجديدة '
+  congratulations_you_have_signed_up: تهانينا ! تم إنشاء حساب جديد على %{site_title} .
+  you_should_receive_instructions_email: سوف تتلقى رسالة بريد إليكترونى بالتعليمات اللازمة لتفعيل حسابك.
+  email_verification_body: |-
+    لقد قمت بإنشاء حساب جديد على %{site_title} (%{host}).
+
+    قبل أن تتمكن من تسجيل الدخول يجب التحقق من بريدك الإلكترونى.
+
+    إضغط على الرابط فى الاسفل أو قم بنسخ العنوان ووجه المتصفح الى الرابط.
+
+    %{verify_email_link}
+
+    إذا لم ترغب فى التسجيل يمكنك تجاهل هذه الرسالة.
+  change_password: تغيير كلمة المرور
   password: كلمة المرور
   password_confirmation: تأكيد كلمة المرور
-  signup_confirm_password: تأكيد كلمة المرور
   login_password: كلمة المرور
-  signup_password: كلمة المرور
+  remove_your_account: إغلاق حسابك
+  anonymize_display_name: عدم إظهار إسمك الحقيقى
+  anonymize_display_name_info: لن يتم إظهار شخصيتك الحقيقية أبداً
+  destroy_comments: إزالة التعليقات
+  destroy_comments_info: سيتم إزالة التعليقات المكتوبة فى هذه الصفحة. ربما سيكون من الصعب على الآخرين فهم التعليقات الأخرى .
+  confirm_account_removal: انت الآن تقوم يإغلاق حسابك نهائيا. هذه الخطوة لا يمكن التراجع عنها. لن يمكنك استرجاع بياناتك.
+  account_successfully_removed: لقد تمت عملية إزالة حسابك بنجاح .و سيتم التأكد من إزالة جميع المعطيات المرتبطة به من قاعدة البيانات.
+  crabgrass:
+    powered_by_html: |
+      يتم تشغيل هذا الموقع بواسطة<a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      ,<a href="https://www.gnu.org/licenses/agpl-3.0.html">التطبيقات مفتوحة المصدر</a>لتنظيم هيكل شبكة الانترنت.
+    report_a_bug: أخبرنا عن مشكلة تقنية
+    request_a_feature: إقترح تحديث
+    help_pages: دليل مستخدم  Crabgrass
+    get_involved: شارك
+    help_translate: ساعد بالترجمة
   destroy_confirmation: هل أنت متأكد أنك راغب في حذف هذا/هذه %{thing}؟ لا يمكن الرجوع عن هذه النشاط.
   confirmation: هل أنت متأكد؟
   cancel: إلغاء
+  optional: إختيارى
   required: (مطلوب)
+  thing_required: "%{thing} لازم"
   edit: تحرير
   upload: تحميل
+  select_files: إختار الملفات
+  drop_files_here: إسحب الملفات إلى هنا
+  files_pending: "#{مُعَلق} ملف(ملفات) مُعَلق"
   return_link: العودة
   back_button: رجوع
   send_button: إرسال
@@ -48,39 +86,103 @@ ar:
   add_button: إضافة
   cancel_button: إلغاء
   create_button: إنشاء
+  ok_button: حسناً
+  done: تم
+  show_button: إظهار
+  show_thing: إظهار %{thing}
+  confirm: تأكيد
+  alert: إخطار
+  loading_progress: تحميل...
+  loadingdotdotdot: تحميل...
   create_a_new_thing: إنشاء جديد للـ %{thing}
+  create_thing: إنشاء %{thing}
   created_by: أٌنشئ بواسطة
+  updated_by: تم التحديث بواسطة
   created_by_user_on: أُنشئ في %{when} بواسطة %{user}
   approve: موافق
   reject: رفض
   pending: في الإنتظار
   rejected: تم الرفض
   approved: تمت الموافقة
+  saved: تم الحفظ
   destroy: الغاء
+  thing_destroyed: "تمت إزالة %{thing}"
+  destroy_thing: إزالة %{thing}
+  delete_thing: حذف %{thing}
   delete: حذف
   delete_button: حذف
+  deleted: تم الحذف
   remove: حذف
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: أدخل إسم شخص أو مجموعة
+      enter_name_of_group: أدخل إسم مجموعة
+      enter_name_of_person: أدخل إسم شخص
+  actions:
+    task:
+      add: إضافة مهمة جديدة
+    possible:
+      add: إضافة إمكانية جديدة
+  mailer:
+    hello: مرحباً %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : الصفحة تم تعديلها"
+      we_leave_out_details: تم إغفال التفاصيل فى هذه الرسالة الإلكترونية بغرض حماية بياناتك الخاصة
+      you_can_find_updates_here: 'يمكنك الحصول على مزيد من التفاصيل و قائمة يالصفحات المعدلة هنا :'
+      the_page_you_are_watching_description: الصفحة التى تشاهدها الآن "%{page_title}" تم تعديلها
+      change_your_settings_here: 'عدِل الإخطارات التى تتلقاها على بريدك الإليكترونى هنا: %{page_link}'
+      you_can_turn_of_or_configure_notifications: التوقف عن تلقى إخطارات بالبريد الإليكترونى, إستلام ملخص بالتغييرات, أو الحصول على رسالة بريد إليكترونى فقط عندما يتم تعديل الصفحة
   exception:
     title:
+      not_found: "%{thing} لم يتم العثور عليها"
       unauthorized: الدخول مطلوب
       forbidden: لا يوجد صلاحيات
+      group:
+        not_found: لم يتم العثور على المجموعة
     description:
+      not_found: عفوا , لا توجد نتائج لبحثك.
       unauthorized: الرجاء الدخول للقيا بهذا النشاط
+      forbidden: عفوا , ليس لديك الصلاحية لتنفيذ هذه الخطوة.
+      group:
+        not_found: عفوا ,لم يتم العثور على المجموعة التى تبحث عنها.
+  image_count: الصورة %{number} من %{count}
   image_count_total: "%{count} صور"
   show_gallery: إظهار معرض الصور
+  edit_gallery_explanation: أضف صور جديدة أو إسحب الصور لإعادة ترتيبها.
+  edit_image: تحرير الصورة
+  show_gallery_explaination: إضغط على الأيقونة لمشاهدة الصورة كاملة
+  add_images_or_zips: إضافة صور أو ملف مضغوط بصيغة "Zip"
+  add_images_or_zips_explaination: سوف يتم استخراج الملفات من الملف المضغوط بصيغة "ZIP", و إضافتها للمعرض
+  confirm_image_delete: هل تريد حذف الصورة؟ الحذف لا يمكن التراجع عنه
   no_title_given: "(لم يتم ادخال العنوان)"
+  add_images: إضافة صور
+  edit_images: تحرير الصور
   upload_new_image: حمِّل صورة جديدة
   type_your_messages_here: أدخل رسالتك هنا ثم اضغط على مفتاح ادخال (enter) في لوحة المفاتيح...
   group_not_allowed_to_view_image_error: لا يُسمح للمجموعة التي تملك هذه الصفحة أن تشاهد هذه الصورة.
   add_comment: إضافة تعليق
   image_title: 'عنوان الصورة: %{title}'
+  upload_zip_file_link: تحميل ملف مضغوط بصيغة  "Zip"
+  add_images_to_gallery_link: أضف صور للمعرض
+  too_tall_image_error: الصورة تجاوزت الطول المسموح  ({{count}} بيكسل هو الحد الاقصى للطول)
+  too_wide_image_error: 'الصورة  التى تم تحميلها يجب ان تكون بالضبط بمقياس {{count}} بيكسل عرضا '
+  cant_detect_image_height_error: لا يمكن تحديد مقياس طول الصورة .ملف الصورة ربما تلف او قد يكون هناك عطل بالخادم
+  edit_image_header: تحرير صورة و صوت
+  upload_images_and_zip_files_help: 'إختيارى: إختر صورة أو ملف مضغوط يصيغة "Zip" للتحميل'
+  close_and_reload_gallery: إغلاق و إعادة تحميل المعرض
   search: بحث
+  go: بحث
   thing_not_found: "%{thing} غير موجود"
-  no_search_results: لم يفلح البحث في إظهار أية نتائج
+  no_things_found: لا يوجد %{things}
+  no_search_results: لا توجد نتائج
   not_found: غير موجود
   see_all_link: مشاهدة الكل
+  total: "المجموع %{count}"
   all: كل
   none: لا أحد
+  or: أو
+  new: جديد
+  modified: تم تعديله
   unknown: غير معروف
   next: التالي
   previous: السابق
@@ -88,10 +190,33 @@ ar:
   pagination_previous: السابق
   return: العودة
   see_more_link: المزيد
+  see_less_link: أقل
+  list_things: قائمة %{things}
+  thing_was_sent:
+    zero: "%{count} %{thing} تم إرسالها."
+    one: "%{thing} تم إرسالها إلى %{recipient}"
+    two: "%{thing} تم إرسالها إلى%{recipient}."
+    few: "%{thing} تم إرسالها إلى %{recipient}."
+    many: "%{thing}تم إرسالها إلى %{recipient}."
+    other: "%{count} %{thing} تم إرسالها."
+  thing_was_not_sent:
+    zero: "%{count} %{thing} تعذر إرساله."
+    one: "%{thing} تعذر إرساله إلى%{recipient}."
+    two: "%{thing} تعذر إرسالهم إلى %{recipient}."
+    few: "%{thing} تعذر إرسالهم إلى%{recipient}."
+    many: "%{thing} تعذر إرسالهم إلى %{recipient}."
+    other: "%{count} %{thing} تعذر إرسالها."
   user: المستخدم
+  users: مستخدمين
   people: المشتركون
+  person: شخص
   name: الإسم
   recipients: المستقبلون
+  recipient: مُتَلقى رسالة
+  owner: مالِك
+  created_by_entity: أُنشِأ بواسطة %{entity}
+  approved_by_entity: مُصَدق عليه بواسطة %{entity}
+  rejected_by_entity: رُفِض بواسطة %{entity}
   contacts: الأصدقاء
   friends: الأصدقاء
   member_groups_of_network: أعضاء المجموعات
@@ -100,43 +225,87 @@ ar:
   back: رجوع
   share: مشاركة
   contributed: مشارك
+  profile: بروفيل
+  content: مٌحتَوى
+  comments: تعليقات
+  statistics: إحصائيّات
   summary: الخلاصة
   private: خاص
   public: عام
   options: خيارات
   permissions: صلاحيات
+  notification: إخطارات
+  notice: ملاحظة
+  notices: ملاحظات
+  dismiss: إلغاء
+  dismiss_all_notices: إلغاء الكل
+  dismiss_all_notices_confirmation: هل ترغب فى إلغاء جميع الملاحظات؟
+  action_cannot_be_undone: هذا الفِعل لا يمكن التراجع عنه.
+  locale: موقِع
+  description: الوصف
+  details: تفاصيل
   invite: ادعو
   membership: عضوية
   visibility: مرئي
   administration: إدارة
   settings: الإعدادات
+  messages: رسائل
   page: صفحة
+  tasks: مَهام
   title: العنوان
+  text_message: رسائل نصية
+  print: طباعة
+  show: إظهار
+  hide: إخفاء
+  display: عرض
   message: الرسالة
+  private_message_notice: إشعار عن رسالة خاصة
+  visits: زيارات
   group: مجموعة
   groups: المجموعات
   organization: المنظمة
-  network: شبكة
-  networks: الشبكات
+  organizations: منظمات
+  network: شبكة عمل
+  networks: شبكات عمل
   committee: لجنة
   committees: اللجان
   council: مجلس
   councils: مجالس
   members: الأعضاء
+  structure: البِنْية
+  group_creation_info: 'هناك أربع أنواع من المجموعات:'
+  group_description: المنظمات هى مجموعات مُسْتقِله و لها أعضاء
+  network_description: الشبكات هى مجموعات يتكون أعضاءها من المنظمات. الشبكة هى إتحاد عدة منظمات .حيث يمكن لمنظمتين أو أكثر التعاون
+  committee_description: اللجان هى مجموعات داخل المنظمة أو شبكة العمل.اللجان هى تابعة تماما للمنظمة الأم أو شبكة العمل. المستخدم الذى سيتم إضافته إلى لجنة و هو غير مشترك فى المنظمة أو شبكة العمل لن يكون له صلاحية الدخول إلا إلى هذه اللجنة
+  council_description: المجمع الاستشارى هى مجموعات بصلاحيات فائقة . كل منظمة أو مجموعة عمل قد يتواجد بها أكثر من مجمع إستشارى . الأشخاص فى هذا المجمع سيكون لهم صلاحيات إدارية فى المجموعات و شبكات العمل.
+  council_description_details: كل الأعضاء لهم صلاحية تعديل %{group}. إذا كنت تريد إختصاص أعضاء معينين بهذه الصلاحية قم بإنشاء مجمع إستشارى و أضف إليها هؤلاء الاعضاء.
+  committee_choose_group: 'إختار مجموعة لهذه اللجنة:'
+  network_committees_may_not_join_networks: اللجان من شبكات العمل المختلفة لا يمكنها الإنضمام.
+  networks_may_not_join_networks: شبكات العمل لا يمكنها الإنضمام لشبكات العمل الأخرى.
+  may_request_membership_description: وصلة "الإنضمام ل %{group}" سوف تظهر على صفحة مجموعتك %{group}.سيتم إرسال طلب العضوية حيث يمكن قبوله أو رفضه.
+  open_group: فتح %{group}
+  open_group_description: المستخدمين تم إضافتهم للمجموعة %{group} - لا داعى لطلبات أو موافقات أخرى.
+  shared_groups: مجموعات  مُتَشاركة
+  public_groups: مجموعة عامة
+  membership_requests: طلب عضوية
   group_membership_count: "%{count} عضو"
+  membership_exists_error: '%{member} عضو مسجل بالفعل'
+  membership_destroy_confirm_message: هل تريد حذف %{entity} من %{group}؟
   group_invite_subject: دعوة للانضمام إلى مجموعة "%{group}"
   group_invite_email: |
     %{from_user} قام بدعوتك للانضمام إلى مجموعة "%{group}".
 
     إذا كنت ترغب في أن تنضم إلى هذه المجموعة ، انقر هنا
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     الصفحة الرئيسية لهذه المجموعة يمكن ان تجدها هنا:
 
-      %{group_home_link}
+    %{group_home_link}
 
     إذا كنت لا ترغب في الانضمام إلى هذه المجموعة ، ببساطة تجاهل هذه البريد الالكتروني.
+  group_destroyed_subject: "%{group_type} %{group} تم إزالاتها بواسطة %{user}!"
+  group_destroyed_email: "%{group_type} %{group} لم يعد لها وجود !"
   group_wiki: مجموعة ويكي
   create_public_group_wiki: عام
   create_private_group_wiki: خاص
@@ -144,54 +313,104 @@ ar:
   private_group_wiki: خاص
   group_publicly_visible: إجعل %{group} مرئي للجميع
   committee_publicly_visible: إجعل هذه اللجنة مرئية للجميع
+  networks_publicly_visible: جعل شبكة العمل مرئية للجميع
   allow_membership_requests: السماح بتقديم طلبات العضوية
   group_successfully_created: تم إنشاء المجموعة بنجاح
   group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط %{domain}/yourgroupname."
   committee_publicly_visible_description: يمكن مشاهدة اللجان لغير الأعضاء على %{domain}/yourgroupname
+  networks_publicly_visible_description: شبكات العمل مرئية لغير الاعضاء من خلال yourgroupname/%{domain}
   group_members_publicly_visible: جعل الأعضاء مرئيين للجميع
   group_members_publicly_visible_description: يمكن لغير المشتركين مشاهدة المشتركين على الرابط %{domain}/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط(%{domain}/username)
-  rss_feed: RSS تغذية
-  group_language: اللغة الرئيسية لهذا %{group}.
+  members_may_edit_wiki: كل الأعضاء لهم حق تحرير الويكى
+  members_may_edit_wiki_description: فى حالة عدم التحديد, فقط الاعضاء يمكنهم تحرير الويكى الخاصة ب%{group}
+  rss_feed: رسائل RSS
+  group_language: اللغة الرئيسية لمجموعة%{group}.
+  my_networks: شبكات العمل الخاصة بى
   my_groups: مجموعاتي
   basic_settings: إعدادات أساسية
   send_invites: إرسال الدعوات
-  view_requests: اظهر الطلبات
+  view_requests: عرض الطلبات
+  add_members_to_committee: اضف عضو مجموعة إلى هذه اللجنة . لإضافة أشخاص ليسوا أعضاء فى المجموعة الأم يمكنك إرسال دعوات
   join_group_link: انضم ل%{group_type}
   leave_group_link: اترك %{group_type}
+  leave_group_confirmation: هل تريد إلغاء الإنضمام لهذه %{group_type}؟
   request_join_group_link: طلب الإنضمام لٍ %{group_type}
-  link_name_description: هذا الإسم سيشير إلى المجموعة في الروابط الإلكترونية. يجب أن يحتوي على أرقام أو حروف ولا يُسمح بوجود الفراغات
+  request_exists: طلبك بِالإنضمام بإنتظار الموافقة.
+  join_group_confirmation: هل ترغب فى الأنضمام ل%{group_type} ؟
+  link_name_description: هذا الإسم سيشير إلى المجموعة في الروابط و عناوين الانترنت. يجب أن يحتوي على أرقام أو حروف ولا يُسمح بوجود الفراغات
   descriptive_name_for_display: اسم توصيفي يستخدم للعرض
   this_is_committee: هذه اللجنة جزء من  %{parent_group}.
+  network_initial_member: إختار منظمة لتكون عضو مبدئى فى هذِه الشبكة
   headings:
+    page_search: بحث عن صفحات
     recent_pages: الصفحات التي زرتها حديثاً
-  uploaded_image_cropped: سوف يتم قص وتمديد الصور المحمّلة إلى 96 بكسل مُربّع
+    info:
+      page_search: العثور على جميع الصفحات التى تملك صلاحية للدخول المباشر لها أو من خلال مجموعتك
+      recent_pages: هذه الصفحات أُنشِأت أو تم تحديثها مؤخّراً
+  my_dashboard: لوحة البيانات
+  uploaded_image_cropped: سوف يتم قص وتمديد الصور المحمّلة إلى 202 بكسل مُربّع
   select_image_file: اختيار  ملف الصورة
   or_image_url: أو رابط الصورة
+  upload_image_link: تحميل صورة
+  remove_image_link: إزالة صورة
   save_changes: حفظ التغييرات
   username: اسم المستخدم
-  display_name: إظهار الإسم
+  display_name: ألإسم كما يبدو ظاهرا للمستخدمين الآخرين
   email: البريد الالكتروني
   language: اللغة
   time_zone: المنطقة الزمنية
-  send_message_link: أرسل الرسالة
+  do_you_want_to_receive_email_notifications: هل تريد إستلام رسائل إخطار بالتعديلات على الصفحات التى تشاهدها الآن؟
+  notification_select:
+    none: 'لا: عدم إرسال إخطارات بالتعديلات'
+    single: 'موافق: إرسال رسائل بالتعديلات'
+    digest: 'موافق: ملخص يومى بالتعديلات'
+  send_message_link: أرسل رسالة
+  messages_with: محادثة مع %{other_user}
+  message_to_self_error: لا يمكنك التحدث مع نفسك
+  message_you_wrote_caption: 'أنت كتبت:'
+  message_user_wrote_caption: "%{user} كتب:"
+  unread_private_message: لديك رسالة خاصة لم تقرأ بعد من %{user}
   home: الصفحة الرئيسية
   menu_me: أشيائي
   menu_groups: المجموعات
   menu_chat: دردشة
   menu_people: المشتركون
-  menu_networks: الشبكات
-  menu_link_logout: خروج
+  menu_networks: شبكات العمل
+  menu_link_logout: تسجيل الخروج %{user}
   menu_admin: مدير الموقع
-  back_to_group: رجوع لـ %{group_name}
+  account_settings: إعدادات الحساب
+  back_to_page: العودة للصفحة
+  back_to_group: رجوع لـمجموعة
+  pages: صفحات
   recent_pages: الصفحات التي زرتها حديثاً
   my_pages: صفحاتي
+  properties: خصائص
+  popular_pages: صفحات شائعة
+  advanced: متقدم
   access: الدخول
+  active_filters: تفضيلات البحث النشطة
+  all_pages: كل الصفحات
   created_by_me: تمّّ الإنشاء
-  starred_by_me: تقيم
+  created_by_user: أُنشِأت بواسطة %{user}
+  created_by_user_description: البحث عن صفحات أُنشِأت بواسطة شخص معين
+  created_by_dotdotdot: أُنشِأت بواسطة...
+  starred_by_me: تم وسمها
+  starred_by_user: تم وسمها بواسطة %{user}
+  watched_by_me: مشاهدة
+  watched_by_user: شاهدها %{user}
+  edited_by_me: قام بالتحرير
+  edited_by_user: فام بالتحرير %{user}
+  owned_by_me: ملْك
+  owned_by_user: مملوكة ل %{user}
   most_active: الأكثر نشاطاً
+  most_stars: الأكثر وسما
   most_viewed: الأكثر مشاهدة
-  starred: تقيم
+  filter_user_description: البحث عن صفحات التى يوجد لمستخدم مُعَين صلاحية الدخول لها
+  filter_group_description: البحث عن صفحات التى يوجد لمجموعة معينة صلاحية الدخول لها
+  starred: تم وسمها
   viewed: شوهِد
+  edited: قام بالتحرير
+  type: النوع
   all_page_types: كل أنواع الصفحات
   edit_title: 'تحرير العنوان
 
@@ -202,77 +421,199 @@ ar:
   created: تمّّ الإنشاء
   unread: غير مقروء
   read: إقرأ
+  page_name_description: إختيار إسم مُمَيز (يُستَخدم كعنوان ويب لهذه الصفحة)
+  filter_tag_description: البحث عن صفحات يعنوان مُعَين.
+  page_notice: إشعار عن الصفحة
   email_notice_subject: طالع صفحة "%{title}"
   email_notice_hello_with_message: 'مرحبا، أرسل لك %{from} صفحة وب و معها الرسالة التالية: %{message}'
   email_notice_hello: مرحبا، أرسل لك %{from} صفحة وب.
   email_notice_access: 'بإمكانك الوصول لهذه الصفحة هنا:'
   email_link_expires: هذا الرابط شوف تنتهي صلاحيته في %{days} أيام.
+  page_notice_title: <user>%{from}</user> أرسل لك صفحة "%{page_title}"
+  page_notice_title_with_message: '<user>%{from}</user> أرسل لك صفحة "%{page_title}" مع رِسالة'
+  page_updated: <user>%{from}</user> حدّثَ الصفحة "%{page_title}"
+  page_update: تحديث الصفحة
   watch_checkbox: مراقبة التعديلات
-  add_star_link: أضف تقييم (%{star_count})
-  remove_star_link: إحذف تقييم (%{star_count})
+  add_star_link: أضف وسم (%{star_count})
+  remove_star_link: إحذف وسم (%{star_count})
   public_checkbox: عام
-  public_checkbox_help: إذا أختير , بإمكان أي أحد أن يستعرض هذه الصفحة.
+  public_checkbox_help: إختار هنا,ليكون بإمكان أي أحد أن يستعرض هذه الصفحة.
   page_details_link: "%{page_class} تفاصيل"
   delete_page_link: حذف %{page_class}
-  destroy_page_via_shred: دمر حالا
-  destroy_page_via_shred_info: ستدمر هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء.
+  destroy_page_via_shred: حذف فوراً
+  destroy_page_via_shred_info: سيتم إزالة هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء.
   destroy_page_via_trash: انقل إلى المهملات
   destroy_page_via_trash_info: ستنقل الصفحة إلى المهملات، حيث يمكن استعادتها لاحقا.
   undelete_from_trash: عدم الحذف
-  participation: المشاركة
+  participation: إشتراك
   information: المعلومات
+  remove_access_error: صلاحية الدخول لهذه الصفحة لا يمكن إلغاؤه. لا يمكن إلغاء صلاحيات الدخول للمالك أو أى صلاحيات ضرورية لك لإدارة الصفحة
   edit_tags_link: تحرير
   edit_attachments_link: تحرير
   attachments: المرفقات
   edit_attachments: تحرير المرفقات
   current_attachments: المرفقات الحالية
   add_new_attachment: أضف مُرفق جديد
+  use_radio_buttons_to_select_page_cover: حدِد من الإختيارات لاختيار غلاف الصفحة
+  page_access_admin: السماح بالدخول بصلاحيات كاملة
+  page_access_edit: إمكانية الكتابة
+  page_access_none: عدم الصلاحية بالدخول
+  page_access_view: قراءة دون إمكانية التعديل
   share_page_link: شارك %{page_class}
-  share_page_recipients: شارك %{page_class} مع
+  share_page_recipients: شارك الصفحة مع
   notify_page_link: أرسل إشعار
-  notify_contribution: "<b>تبرع سابق:</b>إشعار الناس الذين قدموا<b>تبرعات</b>لهذه الصفحة."
-  notify_current_access: "<b>العنوان الحالي:</b>إشعار الناس أو الجماعات التي تقوم حاليا بالدخول الى هذه الصفحة."
-  contribute_content_link: إنشاء
+  notify_contribution: "<b>تبرع سابق:</b>إشعار المتبرعين الذين قدموا<b>تبرعات</b>لهذه الصفحة."
+  notify_current_access: "<b>العنوان الحالي:</b>إشعار الناس أو المجموعات التي تقوم حاليا بالدخول الى هذه الصفحة."
+  notification_message: رسالة بإشعار
+  send_only_with_encryption: الإرسال فقط إذا أمكن تشفير الرسالة
+  share_send_notification: إرسال إشعار
+  send_email: إرسال بريد إليكترونى
+  share_include_message: إدراج رسالة مخصصة
+  shared_page_success: هذه الصفحة نم عرضها للمشاركة بنجاح
+  notify_success: لقد أرسلت إشعارات بنجاح
+  share_grant_required_error: "%{name} غير مسموح لهم بمشاهدة هذه  الصفحة. يجب السماح لهم بمذيد من الصلاحيات أولا"
+  share_permission_denied_error: غير مسموح لك بتغير صلاحيات التحكم فى هذه الصفحة
+  notify_no_access_error: عفواً, "%{name}" ليس له صلاحية الدخول إلى هذه الصفحة
+  share_already_exists_error: '"%{name}" يملك صلاحية الدخول إلى هذه الصفحة.'
+  share_pester_error: عفواً, غير مسموح لك مشاركة المستخدم "%{name}"
+  name_or_email_not_found: '"%{name}" ليس له وجود فى بيانات الأسماء أو المستخدمين أو البريد الإلكترونى'
+  contribute_content_link: إنشاء صفحة
   page_create_owner: مالك الصفحة
-  create_page: إنشاء
+  create_page: إنشاء صفحة
   only_me: أشيائي
   page_added_to_group: هذه الصفحة سيتم إضافتها لِ%{group_type} %{group_name}.
   additional_page_access: وصول إضافي
+  page_owner_error: يجب كتابة إسم مالك الصفحة
   action: نشاط
+  page_history_add_star: "%{user_name} أضاف وسم"
+  page_history_added_comment: "%{user_name} أضاف تعليق"
+  page_history_change_title: "%{user_name} عدّلَ عنوان الصفحة"
+  page_history_deleted_page: "%{user_name} قام بحذف الصفحة"
+  page_history_destroyed_comment: "%{user_name} قام بإزالة تعليق"
+  page_history_details_change_title: 'من: "%{from}" إلى: "%{to}"'
+  page_history_granted_group_full_access: "%{user_name} أعطى للمجموعة %{item_name} صلاحيات الدخول والتحكم الكامل"
+  page_history_granted_group_read_access: "%{user_name} أعطى المجموعة %{item_name}صلاحيات الدخول للقراءة"
+  page_history_granted_group_write_access: "%{user_name} أعطى للمجموعة %{item_name} صلاحية الدخول للكتابة "
+  page_history_granted_user_full_access: "%{user_name} أعطى للمستخدم %{item_name} صلاحية الدخول و التحكم الكامل"
+  page_history_granted_user_read_access: "%{user_name} أعطى للمستخدم %{item_name} صلاحية الدخول للقراءة"
+  page_history_granted_user_write_access: "%{user_name} أعطى للمستخدم %{item_name} صلاحية الدخول للكتابة"
+  page_history_make_private: "%{user_name} بتغيير خصائص الصفحة لتصبح عامة "
+  page_history_make_public: "%{user_name} عدّلَ  الصفحة لتصبح عامة"
+  page_history_remove_star: "%{user_name} أزال وسم \"نجمة\""
+  page_history_revoked_group_access: "%{user_name} ألغى إمكانية الدخول للمجموعة %{item_name}"
+  page_history_revoked_user_access: "%{user_name} ألغى إمكانية الدخول للمستخدم %{item_name}"
+  page_history_start_watching: "%{user_name} بدأ مشاهدة هذه الصفحة"
+  page_history_stop_watching: "%{user_name} إنقطع عن مشاهدة هذه الصفحة"
+  page_history_updated_comment: "%{user_name} عدّلَ تعليق"
+  page_history_updated_content: "%{user_name} قام بتحديث مكونات الصفحة"
+  page_history_user_created_page: "%{user_name} أنشأ الصفحة"
   wiki_page_description: أنشىء وثيقة نصية حرة  قابلة للتعديل
   wiki_page_display: صفحة ويكي
   gallery_description: ارفع عددا من الصور أو نظم صورا موجودة في مجموعة.
   gallery_display: معرض الصور
   asset_page_description: ارفع صورة، أو وثيقة، أو جدولا ممتدا، أو عرضا، أو أي ملف آخر
   asset_page_display: الملف
+  select_file_to_upload: إختر ملف للتحميل
   discussion_page_description: ناقش موضوعا معينا في مجموعة أو مع مستخدمين آخرين.
   discussion_page_display: مناقشة جماعية
   ranked_vote_page_description: أنشىء قائمة من الخيارات المتاحة للأشخاص للتصنيف حسب الأفضلية.
   ranked_vote_page_display: صوت مصنف
-  survey_page_display: ' دراسة'
+  survey_page_display: إستطلاع
   rate_many_page_description: أنشىء قائمة من الخيارات المتاحة للأشخاص من أجل الموافقة أو عدم الموافقة.
-  rate_many_page_display: استطلاع موافق عليه
+  rate_many_page_display: استطلاع تمت إجازته
   task_list_page_description: أنشىء قائمة بالأشياء التي يجب عملها وأسند المهام لك أو للأخرين.
   task_list_page_display: قائمة المهام
   page_group_vote: استطلاعات الرأي والتصويت
   page_group_text: النص والمناقشات
   page_group_media: الوسائط المتعددة
   page_group_planning: أدوات التخطيط
+  pending_tasks: مَهام فى الإنتظار "مُعَلَقة"
+  completed_tasks: مَهام مُكتَملَة
+  no_pending_tasks: لا توجد مَهام مُعَلَقة
+  no_completed_tasks: لا توجد مَهام مكتملَة
+  assign_to: مُوكلة إلى
+  completed: مُكتمل
+  vote:
+    really_remove_this: هل تريد إزالة هذه الخاصية ؟
+    you_have_not_ranked: 'لم يتِم تصنيفك بعد:'
+    voted_on: تم التصويت على
+    not_voted_on: لم يتم التصويت على
+  vote_good: جيِد
+  vote_ok: حسناً
+  vote_bad: سيئ
+  vote_none: لا شيئ
+  vote_no: 'لا'
+  ranked_vote_instructions: قم بسحب ما تريده  لتغيير مكانه فى القائمة و إعادة الترتيب "إستمر بالضغط على الماوس حتى الوقوف على المكان الجديد حرِّر زر الماوس"
+  confirm_vote_button: تأكيد التصويت
+  edit_my_vote_tab: تعديل التصويت الخاص بى
+  show_results_tab: إعرض النتائج
+  top_pick: الإختيار الاول
+  first_choice_of: أول إختيار ل
   save_survey_button: حفظ  دراسة
+  survey_may_create_response: إنشاء إستجابة؟
   survey_may_see_responses: ممكن مشاهدة الردود؟
   survey_may_rate: ممكن تقييم الردود؟
   survey_may_see_ratings: ممكن تقييم الردود؟
+  survey_question_label: 'سؤال:'
+  survey_description_heading: الوصف
+  survey_description_explaination: هذا النص سوف يتم عرضه فى المقدمة, وسيكون أول ما يقرؤه القائم بالإستبيان
+  select_many_choices_label: 'إختيار إجابات متعددة'
+  select_one_choices_label: 'إختيار إجابة واحدة'
+  video_embed_code_description: هذا ليس عن عنوان انترنت. هذا كود بين قوسين < and > حيث يمكن لمواقع الڤيديو مثل يوتيوب و غيره جعل ملفات الڤيديو  متاحة فى مواقع أخرى
+  private_question_label: سؤال خاص
+  their_answer_goes_here_label: 'إجابتهم يمكن رؤيتها هنا '
   survey_response_by: تم الرد من قبل %{login}
+  see_whole_response_link: شاهد كل ردود الفعل
+  survey_average_rating_heading: 'متوسط التقييم'
+  survey_previous_result: سابقاً
+  survey_rated_by_1_person_caption: تم تقييمها بواسطة شخص واحد
+  survey_rated_by_x_people_caption: تم تقييمها بواسطة%{count} أشخاص
+  survey_respond_button: إستجابة
   survey_rate_this_response_heading: قيًم هذا الرد
+  survey_select_a_rating_message: حدد تصنيف للمواصلة إلى التالى.
+  survey_skip_next_link: الإنتقال للتالى
+  survey_you_already_rated_response_with_rating_heading: أنت بالفعل قمت بتقييم هذه الإستجابة - لقد قيمتها ب%{rating}
+  survey_you_previousely_rated_message: لقد قمت مؤخرا بالتقييم. قيمتها ب%{rating}.
   survey_your_rating_heading: 'تقييمك لهذا الرد'
   survey_questions: الأسئلة
+  add_long_text_question_link: إجابة طويلة
+  add_select_many_question_link: تحديد إجابات متعددة
+  add_select_one_question_link: تحديد إجابة واحدة
+  add_short_text_question_link: إجابة قصيرة
   upload_image_question_link: تحميل صورة
+  video_link_question_link: وصلة ڨيديو
+  survey_introduction_tab: مقدمة
   survey_list_all_tab: قائمة جميع الردود
   survey_my_response_tab: ردي
+  survey_please_check_and_rate_message: من فضلك إفحص إجاباتك و قيّم ردود فعل الآخرين.
+  survey_please_check_message: من فضلك إفحص إجاباتك.
+  survey_thanks_submit_message: شكرا لتفاعلك.
+  drag_to_move_tip: إسحب لتحريك
+  each_line_is_a_choice_caption: "(أى سطر هو إحتمال قائم)"
+  no_data_uploaded_label: لم يتم تحميل أى بيانات
   current_video_sources: 'حالياً ندعم: youtube, blip.tv, google video, vimeo'
   video_embed_code_prompt: تضمين الكود من مصدر فيديو خارجي
+  permissions_key: مفتاح
+  public_description: كل شخص على الإنترنت
+  peers_description: أعضاء فى مجموعاتك
+  friends_description: أصدقاءك
+  may_view_label: شاهد البروفيل الخاص بى؟
+  may_view_description: فى حال عدم التحديد, البروفايل الخاص بك لن يظهر لأى شخص
+  may_see_contacts_label: مشاهدة جهات الإتصال الخاصة بى؟
+  may_see_contacts_description: السماح للآخرين بمشاهدة جهات الإتصال الخاصة بى.
+  may_see_groups_label: شاهد مجموعتى؟؟
+  may_see_groups_description: السماح للجميع بمعرفة المجموعات التى أنتمى إليها.
+  may_pester_label: مشاركتى؟
+  may_pester_description: السماح للجميع بإرسال رسائل أو صفحات أو دعوات لك
+  may_request_contact_label: جهة الإتصال الخاصة بالطلب؟
+  may_request_contact_description: السماح للجميع بطلب التواجد فى جهات الاتصال الخاصة بك
+  sharing_and_requests: المشاركة و الطلبات
+  view_profile: مشاهدة البروفايل
   profile_member_since: عضو منذ
+  banner: لافتة
+  banner_info: الأبعاد المثالية هى %{optimal_dimensions} بيكسيلس
   organizational_role: دور المنظمة
+  phone_number: رقم الهاتف
   email_addresses: 'عنوان البريد الإلكتروني
 
     '
@@ -282,21 +623,80 @@ ar:
   edit_profile_link: 'تحرير الملف '
   profile_saved: تم حفظ ملفك الشخصي
   requests: الطلبات
+  request: طلب
   incoming: الوارد
   outgoing: السابق
+  request_pending: "%{request} مُعَلَق"
+  not_allowed_to_respond_to_request: "%{user} غير مسموح له ب%{command} الطلب"
   try_again: حاول لاحقاً
+  send_request_button: أرسِل طلب
   send_invites_button: إرسال الدعوات
+  all_requests: كل الطلبات
+  activerecord:
+    models:
+      request_to_friend: طلب لإضافتك فى جهات الاتصال
+      request_to_join_our_network:
+        zero: دعوة للانضمام
+        one: دعوة للإنضمام
+        two: دعوات للإنضمام
+        few: دعوات للإنضمام
+        many: دعوات للإنضمام
+        other: دعوات للإنضمام
+      request_to_destroy_our_group: طلب لإزالة مجموعة
+      request_to_join_us:
+        zero: دعوات للإنضمام
+        one: دعوة للإنضمام
+        two: دعوة للإنضمام
+        few: دعوة للإنضمام
+        many: دعوه للإنضمام
+        other: دعوات للإنضمام
+      request_to_join_us_via_email:
+        zero: دعوات للإنضمام
+        one: دعوة للإنضمام
+        two: دعوات للإنضمام
+        few: دعوات للإنضمام
+        many: دعوات للإنضمام
+        other: دعوات للإنضمام
+      request_to_join_you: طلب للإنضمام
+      request_to_join_your_network: طلب للإنضمام
+      request_to_create_council: طلب لإنشاء لجنة
+      request_to_remove_user: 'طلب لإزالة عضو '
+  request_to_friend: طلب لإضافتك فى جهات الاتصال
+  request_to_friend_short: هل سيصبح %{user} فى قائمة إتصال %{other_user}؟
   request_to_friend_description: '%{user} هل ترغب في ان تكون ضمن قائمة اتصال %{other_user}'
+  request_to_destroy_our_group: طلب لإزالة مجموعة
+  request_to_join_our_network_short: هل تريد من %{group} أن تنضم إلى %{network} ؟
   request_to_join_our_network_description: '%{group} تم دعوة المجوعة للإنضمام إلى شبكة %{network}'
+  request_to_join_us_short: هل ينضم %{user} إلى %{group}؟
   request_to_join_us_description: '%{user} تم دعوته للانضمام %{group}'
+  request_to_join_us_via_email_short: هل ينضم %{email} إلى %{group}؟
   request_to_join_us_via_email_description: '%{email} تم دعوته للإنضمام %{group}'
+  request_to_join_you: طلب للإنضمام
+  request_to_join_you_short: هل ينضم %{user} إلى %{group}؟
   request_to_join_you_description: '%{user} تم دعوته للإنضمام  %{group}'
+  request_to_join_your_network: طلب للإنضمام
+  request_to_join_your_network_short: هل تريد من %{group} أن تنضم إلى %{network} ؟
   request_to_join_your_network_description: '%{group} تم دعوته للإنضمام الى الشبكة   %{network}'
+  request_to_destroy_our_group_short: هل تريد إزالة%{group} كلياً
+  request_to_destroy_our_group_description: المستخدم %{user} إقترح إزالة %{group_type} %{group}.
+  request_to_create_council: طلب لإنشاء لجنة
+  request_to_create_council_short: هل سيتم إنشاء لجنة ل%{group}؟
+  request_to_create_council_description: المستخدم %{user} إقترح إنشاء لجنة من اجل %{group_type}%{group}.
+  request_to_remove_user: 'طلب لإزالة عضو '
+  request_to_remove_user_short: هل تريد إزالة العضو %{member} من %{group} ؟
+  request_to_remove_user_description: المستخدم%{user} إقتَرَح إزالة %{member} من %{group_type} %{group}
   invite_info: أدخل قائمة باسماء دخول المستخدمين او عنوان البريد الالكتروني للمشتركين الذين ترغب في دعوتهم للانضمام لهذه %{group_type}
+  invite_error_redeemed: الدعوة تم إرسالها بالفعل.
+  invite_error_already_member: أنت بالفعل عضو فى هذه المجموعة.
+  request_exists_error: الطلب موجود بالفِعل ل%{recipient}
   network_invite_info: 'أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة
 
     '
   recipient_tip: إفصل بين المستقبلين بواسطة الفاصلة،المسافة،أو سطر جديد
+  you_are_invited: أنت مدعو للإنضمام إلى.
+  friend_request_message_label: أخبِر %{user} لماذا تريد أن تكون فى جهات إتصاله.
+  friend_remove_confirmation: هل أنت متأكد من رغبتك فى عدم بقائك فى جهات الإتصال الخاصة  بالمستخدم %{user}؟
+  place: مكان
   icon: أيقونة
   file: الملف
   files: ملفات
@@ -304,15 +704,27 @@ ar:
   caption: 'عنوان '
   photo_credit: رصيد الصور
   video_embed: تضمين
+  size: حجم
+  illegal_redirect: إعادة توجيه غير مسموح به
   redirect_to_foreign_domain: أنت تحاول الدخول لموقع خارجي (%{url}) بعد الدخول ولأسباب أمنية ستتم إزالة المتغيِّر من العنوان
+  save_wiki_before_adding_image: من فضلك  إحفظ التغييرات فى الويكى قبل إدراج صورة.
+  preview_selected_image: 'مُعاينَة الصورة '
+  image_size_info: إختَر حجم الصورة لإدراجِها
   small: صغير
   medium: متوسط
   large: كبير
   full: كامل
+  image_options_info: هل يجب إدراج الصورة فى وصلة الويكى بحجمها الكامل؟
   include_full_checkbox: يشمل رابط للصورة كاملة
+  image_select_info: إختر صورة لإدراجها من الصور التى تم تحميلُها مسبقا للمجموعة
+  image_upload_info: حمِل صورة جديدة للمجموعة لإستخدامها فى الويكى.
+  a_message_link: رِسالة
+  a_reply_link: رد
+  confirm_discarding_text_area: سوف تفقد كل ما قمت بتعديله. إضغط %{cancel} لمواصلة التعديل.
   activity_contact_created: "قام %{user} بإضافة %{other_user} كجزء من قائمة الإتصال"
   activity_user_left_group: "%{user} ترك %{group_type} %{group}"
   activity_user_joined_group: "%{user} انضم لـ %{group_type} %{group}"
+  activity_user_joined_site: "%{user} قام بالإنضمام للمجموعة %{group}"
   activity_user_destroyed: "%{user} تقاعد"
   activity_group_created: "%{user} أنشأ %{group_type} %{group}"
   activity_group_destroyed: "تم الغاء %{group} بواسطة %{user}"
@@ -320,8 +732,12 @@ ar:
   activity_message: "%{author} كتب: %{message}"
   activity_unread: يوجد لديك %{count} رسالة خاصة غير مقروءة
   activity_unread_singular: يوجد لديك رسائل خاصة غير مقروءة
+  activity_user_left_site: "%{user} قام بترك %{group}"
+  activity_message_received: 'لقد إستلمت %{message_tag} من %{other_user}: %{title}'
+  activity_twinkled: '%{user} قام بوسم منشورك "%{post}"'
   media_image: صورة
   media_images: صور
+  zip_file: ملف مضغوط بصيغة Zip
   history: سِجِل
   other_formats: صيَغ أُخرى
   file_version_deleted: تم حذف نسخة الملف
@@ -333,12 +749,17 @@ ar:
   regenerate: إعادة تكوين المُصغَّرات
   version_number: نسخة رقم %{version}
   upload_image: تحميل صورة
+  asset_version_list_version_heading: إصدار
   order_changed: تم تغيير الترتيب.
+  error_saving_new_order_message: 'خطأ فى حفظ الترتيب الجديد : %{error_message}'
   successfully_removed_image: تمت إزالة الصورة! (%{undo_link})
   view_slideshow: عرض شرائح
   edit_gallery: تحرير معرض الصور
+  back_to_gallery_link: العودة لمعرض الصور
+  gallery_changing_cover_message: تغيير الغلاف
   download: حفظ
   download_gallery: حفظ معرض الصور
+  gallery_slideshow_apply_settings_button: تطبيق
   gallery_undo_link: تراجع
   remove_from_gallery: الإزالة من معرض الصور
   removing_image: يتم حذف الصورة...
@@ -358,7 +779,11 @@ ar:
   add_another_file: أضف ملفا آخرا
   slideshow_delay_input: 'إعادة التحميل كل: %{input_field} seconds'
   make_album_cover: إجعل هذه الصورة غلاف للألبوم
+  album_cover_changed: غلاف الألبوم تم تغييره
   upload_images_link: تحميل
+  upload_a_zip_file_link: تحميل ملف مضغوط بصيغة  "Zip"
+  you_are_not_allowed_to_do_that: لا تملك الصلاحية لفعل ذلك !
+  view_label: معاينة
   sunday: الأحد
   monday: الإثنين
   tuesday: الثلاثاء
@@ -369,6 +794,7 @@ ar:
   date_today: اليوم
   date_this_week: الأسبوع الماضي
   date_this_month: هذا الشهر
+  date_this_year: هذه السنة
   date_all_time: كل الوقت
   alert_not_saved: لم يتم حفظ التغييرات
   alert_field_errors: يوجد أخطاء في الحقول التالية
@@ -379,12 +805,14 @@ ar:
     '
   set_status_button: غير الحالة
   my_contacts: الأصدقاء
+  anonymous: مجهول
   login_required: الدخول مطلوب
   login_required_description: الرجاء الدخول للقيا بهذا النشاط
   permission_denied_description: لا يوجد لديك التصريح الكافي للقيام بهذا النشاط
   permission_denied: لا يوجد صلاحيات
   chat: دردشة
   left_the_chatroom: غادر غرفة محادثة
+  tag: عنوان
   tags: علامات
   no_tags: لا يوجد علامات
   add_one_or_more_tags: اضف علامة أو اكثر، افصل بينها بفواصل
@@ -393,15 +821,38 @@ ar:
   current_tags: العلامات الحالية
   welcome_title: مرحبا بك في  %{site_title}
   welcome_message: 'Crabgrass تمكن منظمات التغيير الاجتماعي من أجل انجاز الامور ، ونشر المبادئ ، والتعاون ، والإتصال. '
+  wiki: ويكى
+  public_wiki: ويكى عامة
+  private_wiki: ويكى خاصة
+  edit_wiki: تحرير ويكى
+  wiki_existed_new_version_created: هذه الويكى تم إنشاؤها بواسطة مستخدم آخر. تعديلاتك تم حفظها كنسخة جديدة
+  wiki_is_locked: المستخدم %{user} حظر تعديل الويكى فى الوقت الحالى
+  wiki_section_is_locked: الجزء %{section} حاليا مَحمى بواسطة %{user}
+  leave_editing_wiki_page_warning: سوف تفقد كل التعديلات التى أجريتها إذا تركت هذه الصفحة
+  cant_edit_section: لا يمكن تعديل %{section}
+  user_locked_section: "%{user} قام بحماية %{section}"
+  can_still_save: لا زال بإمكانك حفظ
+  changes_might_be_overwritten: تعديلاتك قد يتم تغييرها
+  other_section_locked_error: يمكن حماية جزء واحد كل مرة. لقد قمت بحماية %{section}
   break_lock_button: حجز القطع
+  force_save_button: كسر الحماية و الحفظ
   versions: النُسخ
+  version: إصدار
   comparing_changes_header: مقارنة تعديلات المستخدم %{user} في %{when} بين %{old_version} و %{new_version}
+  changes_made: التعديلات تمت بتاريخ %{when}.
   prev_change: التغيير السابق
   next_change: التغيير التالي
   formatting_reference_link: صياغة المرجع
   version_doesnt_exist: لا يوجدنسخة %{version}
+  version_exists_error: الويكى مغلقة للحماية لأن المستخدم %{user} قام بحفظ تعديلات جديدة. لا زال بإمكانك حفظ تعديلاتك. لكن هذا سيُعَدِل الإصدار الجديد .
   you_are_viewing_version: انت تستعرض النسخة %{version} by %{user}
   diff_link: معرفة الإختلاف
+  version_link: مُشاهدَة الإصدار
   wiki_section_edit: حرر هذا القسم
   wiki_revert_version: العودة إلى نسخة%{version}
+  wiki_version_creator_heading: شخص
+  wiki_version_revert_link: تراجُع
+  insert_image: إضافة صورة
   preview: معاينة
+  save_or_cancel_edit_lock_wiki_error: لقد قمت بإغلاق الويكى للحماية. المستخدمون الآخرون لن يكون بمقدورهم تعديلها حتى تقوم بضغط %{save_button} أو %{cancel_button} للتوقف عن التحرير.
+  cant_find_wiki_section: لا يمكن العثور على جزء الويكى %{section}

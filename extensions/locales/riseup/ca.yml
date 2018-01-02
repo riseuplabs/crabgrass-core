@@ -1,0 +1,7 @@
+ca:
+  riseup:
+    run_by_html: "Aquest lloc està administrat per %{provider}%{description}"
+    description: ", el teu col·lectiu autonom de tecnologia desde 1999."
+    about_us: "Sobre moatros"
+    riseup_black: "Riseup negre"
+    riseup_red: "Riseup vermell"

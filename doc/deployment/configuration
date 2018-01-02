@@ -42,9 +42,24 @@ If <tt>enabled_languages</tt> is left blank, then all available languages will b
 
   enabled_languages:
     - en
-    - es
-    - pt
     - ar
+    - bg
+    - ca
+    - cs
+    - de
+    - el
+    - es
+    - eu
+    - fr
+    - he
+    - it
+    - nl
+    - no
+    - pl
+    - pt
+    - ru
+    - sv
+    - tr
 
 === Email
 

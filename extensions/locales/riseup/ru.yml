@@ -1,0 +1,17 @@
+ru:
+  riseup:
+    run_by_html: "This site is run by %{provider}%{description}"
+    description: "Ваш дружественный коллектив автономной технологий с 1999 года."
+    privacy_policy: "Политика конфиденциальности"
+    terms_of_service: "Правила пользования сервисом"
+    about_us: "О нас"
+    email_accounts: "Почтовые ящики"
+    mailing_lists: "Листы рассылки"
+    system_status: "Статус"
+    donate: "Пожертвовать Riseup"
+    riseup_black: "Riseup Черный"
+    riseup_red: "Riseup Красный"
+    accounts_note: >
+        ПРИМЕЧАНИЕ: пользовательские аккаунты на этом вебсайте не связаны с другими
+        сервисами riseup.net. Другими словами, вы не можете использовать аккаунты  %{riseup_black}
+        или %{riseup_red} для авторизации на сайте.

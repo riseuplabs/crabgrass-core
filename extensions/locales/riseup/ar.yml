@@ -1,0 +1,17 @@
+ar:
+  riseup:
+    run_by_html: "يتم إدارة الموقع بواسطة%{provider}%{description}"
+    description: "مجموعة تقنيات إجتماعية مستقلة منذ سنة 1999"
+    privacy_policy: "سياسات الخصوصية"
+    terms_of_service: "شروط الإستخدام"
+    about_us: "من نحن"
+    email_accounts: "حسابات بريد إليكترونى"
+    mailing_lists: "قائمة المراسلات"
+    system_status: "حالة النظام"
+    donate: "تبرع ل Riseup"
+    riseup_black: "نظام Riseup الاسود"
+    riseup_red: "نظام Riseup الأحمر"
+    accounts_note: >
+        ملحوظة: حسابات المستخدم  لهذا الموقع الإليكترونى مستقلة عن خدمات riseup.net  بمعنى
+        لا يمكنك استخدام حسابات %{riseup_black} أو %{riseup_red} لتسجيل الدخول فى
+        هذا الموقع.

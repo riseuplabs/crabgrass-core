@@ -60,7 +60,7 @@ el:
     powered_by_html: |
       Ο ιστότοπος υποστηρίζεται από το <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
     description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> άδεια ελεύθερου λογισμικού AGPL</a> για την οργάνωση της δικτύωσης.
+      , <a href="https://www.gnu.org/licenses/agpl.html"> άδεια ελεύθερου λογισμικού AGPL</a> για την οργάνωση της δικτύωσης.
     report_a_bug: Αναφορά σφάλματος
     request_a_feature: Αίτημα για νέο χαρακτηριστικό
     help_pages: Σελίδες βοήθειας
@@ -127,9 +127,6 @@ el:
     hello: Γεια %{user_name}
     page_history:
       a_page_has_been_modified: "%{site_title} : Μια σελίδα έχει τροποποιηθεί"
-      pages_you_are_watching_have_been_modified:
-        one: Μια σελίδα σελίδα που παρακολουθείτε έχει τροποποιηθεί από την τελευταία ειδοποίηση.
-        other: '%{count} σελίδες που παρακολουθείτε έχουν τροποποιηθεί από την τελευταία ειδοποίηση.'
       we_leave_out_details: Σ' αυτό το μήνυμα, έχουμε παραλείψει τις λεπτομέρειες που μπορεί να θέλετε να κρατήσετε εμπιστευτικές.
       you_can_find_updates_here: 'Μπορείτε να βρείτε περισσότερες λεπτομέρειες καθώς και μια λίστα των πρόσφατα τροποποιημένων σελίδεων εδώ:'
       the_page_you_are_watching_description: Η σελίδα "%{page_title}" που παρακαολουθείτε έχει τροποποιηθεί
@@ -213,7 +210,7 @@ el:
   approved_by_entity: Εγκρίθηκε από %{entity}
   rejected_by_entity: Απορρίφθηκε από %{entity}
   contacts: Επαφές
-  friends: Φίλοι
+  friends: Επαφές
   member_groups_of_network: Ομάδες μελών
   peers: Ομότιμοι
   me: Εγώ
@@ -299,9 +296,9 @@ el:
   group_destroyed_subject: "Η/Το %{group_type} %{group} διαγράφτηκε από τον/την %{user}!"
   group_destroyed_email: "Η/Το %{group_type} %{group} διαγραφτηκε με ασφάλεια!"
   group_wiki: Wiki ομάδας
-  create_public_group_wiki: Δημόσιο
+  create_public_group_wiki: Δημόσια
   create_private_group_wiki: Προσωπικό
-  public_group_wiki: Δημόσιο
+  public_group_wiki: Δημόσια
   private_group_wiki: Προσωπικό
   group_publicly_visible: Κάντε την ομάδα %{group} δημόσια ορατή
   committee_publicly_visible: Κάνε τις επιτροπές δημόσια ορατές
@@ -363,10 +360,10 @@ el:
   message_user_wrote_caption: "Ο/Η %{user} έγραψε:"
   unread_private_message: Έχετε ένα μη αναγνωσμένο προσωπικό μήνυμα από %{user}
   home: Αρχικό μενού
-  menu_me: Εγώ
+  menu_me: Μόνο εγώ
   menu_groups: Ομάδες
   menu_chat: Chat
-  menu_people: Άνθρωποι
+  menu_people: Χρήστες
   menu_networks: Δίκτυα
   menu_link_logout: Αποσύνδεση %{user}
   menu_admin: Διαχείριση
@@ -640,24 +637,15 @@ el:
   request_to_friend: Αίτημα φιλίας
   request_to_friend_short: Να προστεθεί ο/η %{user} στις επαφές του/της %{other_user};
   request_to_friend_description: Ο/Η χρήστης %{user} ζήτησε να προστεθεί στις επαφές του/της χρήστη %{other_user}.
-  request_to_join_our_network:
-    one: Πρόσκληση εγγραφής
-    other: Προσκλήσεις εγγραφής
   request_to_destroy_our_group: Αίτημα για ασφαλή διαγραφή ομάδας
-  request_to_join_our_network_short: Να ενταχθεί η ομάδα %{group} στο  δίκτυο %{network};
+  request_to_join_our_network_short: Να ενταχθεί η ομάδα %{group} στο δίκτυο %{network};
   request_to_join_our_network_description: Η ομάδα %{group} καλέστηκε στο δίκτυο %{network}.
-  request_to_join_us:
-    one: Πρόσκληση επαφής
-    other: Προσκλήσεις εγγραφής
   request_to_join_us_short: Να ενταχθεί ο/η/το %{group} στην ομάδα %{group};
   request_to_join_us_description: Ο/Η χρήστης %{user} καλέστηκε στην ομάδα %{group}.
-  request_to_join_us_via_email:
-    one: Πρόσκληση εγγραφής
-    other: Προσκλήσεις εγγραφής
   request_to_join_us_via_email_short: Να ενταχθεί ο/η χρήστης  %{email} στην ομάδα %{group};
   request_to_join_us_via_email_description: Ο/Η χρήστης με διεύθυνση email %{email} έχει καλεστεί στην ομάδα %{group}.
   request_to_join_you: Αίτημα εγγραφής
-  request_to_join_you_short: Να ενταχθεί ο/η %{group} στην ομάδα %{group};
+  request_to_join_you_short: Να ενταχθεί ο/η/το %{group} στην ομάδα %{group};
   request_to_join_you_description: Ο/Η χρήστης %{user} ζήτησε να γραφτεί στην ομάδα %{group}.
   request_to_join_your_network: Αίτημα εγγραφής
   request_to_join_your_network_short: Να ενταχθεί η ομάδα %{group} στο δίκτυο %{network};
@@ -807,14 +795,14 @@ el:
   private_wiki: Κλειστό Wiki
   edit_wiki: Επεξεργασία Wiki
   wiki_existed_new_version_created: Αυτό το wiki έχει ήδη δημιουργηθεί από άλλο χρήστη. Οι αλλαγές σας αποθηκεύτηκαν ως νέα έκδοση.
-  wiki_is_locked_html: Το wiki έχει κλειδωθεί από τον/την <b>%{user}</b>.
+  wiki_is_locked: Το wiki έχει κλειδωθεί από τον/την %{user}.
   wiki_section_is_locked: Η ενότητα %{section} έχει κλειδωθεί από τον/την %{user}.
   leave_editing_wiki_page_warning: Οι αλλαγές σας θα χαθούν αν φύγετε από τη σελίδα.
-  cant_edit_section_html: Δεν μπορείτε να επεξεργαστείτε την ενότητα <b>%{section}</b>.
-  user_locked_section_html: "Ο/Η <b>%{user}</b> έχει κλειδώσει την ενότητα <b>%{section}</b>."
+  cant_edit_section: Δεν μπορείτε να επεξεργαστείτε την ενότητα %{section}.
+  user_locked_section: "Ο/Η %{user} έχει κλειδώσει την ενότητα %{section}."
   can_still_save: Μπορείτε ακόμα να αποθηκεύσετε.
   changes_might_be_overwritten: Οι αλλαγές σας μπορεί να αντικατασταθούν.
-  other_section_locked_error_html: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα <b>%{section}</b>.
+  other_section_locked_error: Μπορείτε να κλειδώσετε μια ενότητα τη φορά. Έχετε ήδη κλειδώσει την ενότητα %{section}.
   break_lock_button: Παύση κλειδώματος
   force_save_button: Παύση κλειδώματος και αποθήκευση
   versions: Εκδόσεις

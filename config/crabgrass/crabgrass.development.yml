@@ -18,7 +18,7 @@ title: "Crabgrass Development"
 default_language: en
 
 # ordered as in transifex (% covered, english language name alphabetically)
-enabled_languages: ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es', 'pl']
+enabled_languages: ['en', 'ar', 'bg', 'ca', 'cs', 'de', 'el', 'es', 'eu', 'fr', 'he', 'it', 'nl', 'no', 'pl', 'pt', 'ru', 'sv', 'tr']
 raise_i18n_exceptions: true
 
 #
@@ -98,4 +98,3 @@ sites:
 # bound to test.host
 #  - name: site2
 #    admin_group: superadmins
-

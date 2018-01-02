@@ -1,0 +1,18 @@
+el:
+  riseup:
+    run_by_html: "Αυτός ο ιστότοπος υποστηρίζεται από τη %{provider}%{description}"
+    description: ", μια αυτόνομη τεχνολογική κολεκτίβα που ιδρύθηκε το 1999."
+    privacy_policy: "Πολιτική απορρήτου"
+    terms_of_service: "Όροι Παροχής Υπηρεσιών"
+    about_us: "Σχετικά με εμάς"
+    email_accounts: "Email"
+    mailing_lists: "Λίστες ταχυδρομείου"
+    system_status: "Κατάσταση Συστήματος"
+    donate: "Στηρίξτε τη Riseup"
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+        ΣΗΜΕΙΩΣΗ: Οι λογαριασμοί χρηστών αυτού του ιστοτόπου είναι ανεξάρτητοι από
+        τις υπόλοιπες υπηρεσίες της riseup.net services. Με άλλα λόγια, δεν μπορείτε
+        να χρησιμοποιήσετε τους λογαριασμούς %{riseup_black} ή %{riseup_red} για να
+        συνδεθείτε σ' αυτό τον ιστότοπο.

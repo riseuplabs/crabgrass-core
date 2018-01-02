@@ -11,7 +11,6 @@ bg:
   login_failed: Неуспешен вход
   login: Вход
   signup_title: Създайте си регистрация
-  signup_email: Електронна поща
   forgot_password_text: 'Ако сте забравили паролата си, можем да Ви изпратим писмо с връзка, която ще ви позвли да генерирате нова.
 
     '
@@ -28,7 +27,6 @@ bg:
     '
   reset_password_mail_greeting: "%{user}, Паролата ви беше променена/reset както заявихте."
   reset_password_mail_warning: Ако не сте подали заявка за промяна на паролата, моля свържете се с нас.
-  your_login: Вашето потребителско име
   invalid_email_text: Дадената от Вас електронна поща е невалидна.
   reset_password: Промяна на парола
   reset_password_email_sent: Изпратена Ви е поща, съдържаща инструкции как да установите отново паролата си.
@@ -43,9 +41,7 @@ bg:
   confirm_new_password: Потвърдете новата парола
   password: Парола
   password_confirmation: Потвърждаване на парола
-  signup_confirm_password: Потвърдете паролата
   login_password: Парола
-  signup_password: Вашата парола
   destroy_confirmation: Сигурни ли сте, че искате да изтриете this %{thing}? Действието е окончателно.
   confirmation: Сигурни ли сте?
   cancel: Прекъсни
@@ -114,7 +110,7 @@ bg:
   name: Име
   recipients: Получатели
   contacts: Контакти
-  friends: Приятели
+  friends: Контакти
   member_groups_of_network: Групи участници
   peers: Peers
   me: Аз
@@ -153,11 +149,11 @@ bg:
 
     Ако желаете да се присъедините към групата, натиснете тук:
 
-      %{accept_invite_link}
+    %{accept_invite_link}
 
     Началната страница на групата може да бъде намерена тук:
 
-      %{group_home_link}
+    %{group_home_link}
 
     Ако не желаете да се присъедините към групата, просто игнорирайте това писмо.
   group_wiki: Wiki на групата
@@ -199,10 +195,10 @@ bg:
   time_zone: Времева зона
   send_message_link: Изпращане на съобщение
   home: Местоживеене
-  menu_me: Лична страница
+  menu_me: Аз
   menu_groups: Групи
   menu_chat: Беседа
-  menu_people: Потребители
+  menu_people: Хора
   menu_networks: Мрежи
   menu_link_logout: Изход
   back_to_group: Назад към %{group_name}
@@ -259,7 +255,7 @@ bg:
   share_already_exists_error: '"%{name}" вече има достъп до тази страница.'
   share_pester_error: За съжаление не Ви е позволено да споделяте с "%{name}".
   name_or_email_not_found: '"%{name}" не съвпада с името на потребител или група и не е валиден пощенски адрес.'
-  contribute_content_link: Нова страница
+  contribute_content_link: Създане на страница
   page_create_owner: Собственик на страница
   create_page: Създане на страница
   only_me: Аз
@@ -405,7 +401,7 @@ bg:
   alert_permission_denied: Достъпът е отказан
   csrf_error_message: 'Заявката Ви за регистрация прилича на опит за разбиване на защитата на системата. Не се притеснявайте. Тази грешка се появява често дори при невинни заявки. Ние сме просто малко по-загрижени. Всичко, което трябва да направите е да презаредите отново страницата преди нов опит за регистрация. Натиснете връзката, за да опитате отново.'
   set_status_button: Обновяване на състоянието
-  my_contacts: Приятели
+  my_contacts: Контакти
   login_required: Изисква се регистрация
   login_required_description: Моля регистрирайте се, за да изпълните това действие.
   permission_denied_description: Нямате достатъчно права, за да изпълните това действие.
@@ -420,7 +416,7 @@ bg:
   current_tags: Текущ етикет
   welcome_title: Добре дошли в %{site_title}
   welcome_message: Крабграс позволява на организациите за социална промяна преди всичко да извършват работа и още да представят идеите си пред по-широк кръг от хора, да си сътрудничат и да изграждат по между си социални комуникационни мрежи.
-  wiki_is_locked_html: Това wiki в момента е заключено от <b>%{user}</b>
+  wiki_is_locked: Това wiki в момента е заключено от %{user}
   leave_editing_wiki_page_warning: Ако напуснете страницата без да запазите или откажете промените, другите потребители ще видят, че вие сте заключили това wiki и няма да могат да го редактират. Ако не запазите промените, те ще бъдат загубени.
   break_lock_button: Отключете
   versions: Версии
