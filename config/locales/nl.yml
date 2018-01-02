@@ -1,6 +1,37 @@
 nl:
-  congratulations_you_have_signed_up: Gefeliciteerd! Je bent toegetreden tot %{site_title}.
   cookie_disabled_warning: Je heeft Cookies afgezet. Je kan niet inloggen tot je Cookies heeft toegelaten.
+  signup_link: Een nieuwe gebruiker / gebruikster opstellen
+  signup_email_info: 'Optionaal: Werd gebruikt als jij je wachtwoord vergeet.'
+  forgot_password_link: Wachtwoord vergeten?
+  login_failure_reason: Naam of wachtwoord is niet correct.
+  signup_success_message: Dank je wel voor je registratie!
+  login_name: Gebruikers naam / Gebruiksters naam
+  signup_success: Registratie was succesvol
+  logout_success: Tot ziens!
+  logout_success_message: Je bent uitgelogd nu.
+  login_failed: Je kan niet ingelogd worden
+  login: Login
+  signup_title: Je toegang opstellen
+  forgot_password_text: Wanneer je jouw wachtwoord heeft vergeten kunnen we jou een link mailen met die je een nieuwe paswoord kan genereren.
+  reset_password_text: Hoi, %{user}. Wanneer je jou wachtwoord heeft vergeten kan je hier een nieuwe paswoord opstellen.
+  forgot_password_mail_greeting: "%{user}, teneinde jou wachtwoord te resetten, ga naar"
+  forgot_password_mail_expiry: Dit link blijft geldig voor 24 uurtjes. Wanneer je je wachtwoord later wil resetten, mout je weer na de pagina van het vergeten wachtwoord gaan en een nieuwe link opvragen.
+  reset_password_mail_greeting: "%{user}, als je opgevraagd hebt, was je wachtwoord gereset."
+  reset_password_mail_warning: Wanneer je niet opgevraagd hebt of je wachtwoord mag veranderd worden, dan kontakteer ons, alsjeblieft.
+  invalid_email_text: Het emailadres je heeft ingeschreven is niet geldig.
+  reset_password: Wachtwoord resetten
+  reset_password_email_sent: Als deze emailadres met een gebruikers naam / gebruiksters naam is geassociëert was een mailtje gestuurd met instructies voor het resetten van je wachtwoord.
+  invalid_token: Teken niet geldig
+  invalid_token_text: De link voor het resetten van je wachtwoord is niet geldig. Vermoedelijk was de link al gebruikt of is vervallen.
+  password_reset: Paswoord resetten
+  password_reset_ok_text: Je paswoord was met succes gereset. Je kan nu met jij nieuw paswoord inloggen.
+  requested_forgot_password: Jij heeft een verandering van je paswoord opgevraagd
+  password_was_reset: Je paswoord was reset.
+  forgotten_email_address: Welke emailadres heeft je ons gegeven toen jij heeft je toegang opgesteld?
+  new_password: Nieuw wachtwoord
+  confirm_new_password: Nieuw wachtwoord bevestigen
+  congratulations_you_have_signed_up: Gefeliciteerd! Je bent toegetreden tot %{site_title}.
+  you_should_receive_instructions_email: Je zal een email krijgen met instructies voor hoe je kan besluiten je account optestellen.
   email_verification_body: |-
     Je heeft jezelf ingeschreven voor %{site_title} (%{host}).
 
@@ -15,288 +46,407 @@ nl:
 
 
     Wanneer je niet bijtreden wil kan je deze email gewoon ignoreren.
-  forgotten_email_address: Welke emailadres heeft je ons gegeven toen jij heeft je toegang opgesteld?
-  invalid_email_text: Het emailadres je heeft ingeschreven is niet geldig.
-  invalid_token: Teken niet geldig
-  invalid_token_text: De link voor het resetten van je wachtwoord is niet geldig. Vermoedelijk was de link al gebruikt of is vervallen.
-  login: Login
-  login_failed: Je kan niet ingelogd worden
-  login_failure_reason: Naam of wachtwoord is niet correct.
-  logout_success: Tot ziens!
-  logout_success_message: Je bent uitgelogd nu.
-  signup_email_info: 'Optionaal: Werd gebruikt als jij je wachtwoord vergeet.'
-  signup_link: Een nieuwe gebruiker / gebruikster opstellen
-  signup_success: Registratie was succesvol
-  signup_success_message: Dank je wel voor je registratie!
-  signup_title: Je toegang opstellen
-  you_should_receive_instructions_email: Je zal een email krijgen met instructies voor hoe je kan besluiten je account optestellen.
-  account_successfully_removed: Je account was met succes gewisst. Wij zullen het en alle gegevens, die daarmee geassociëret zijn van onze databank verwijderen.
-  anonymize_display_name: Gewijzte naam anoniemizeren
-  anonymize_display_name_info: Vervangt je gewijzte naam door "Anoniem" overal.
-  confirm_account_removal: Bent je zeker dat jij je toegang wil deleten? Deze stap kan niet ongedaan gemaakt worden en je bestand zal gewist worden.
-  destroy_comments: Commentaren verwoesten
-  destroy_comments_info: Dit zal alle commentaren van jou wissen. Daardoor kan het moelijk zijn blijvende commentaren van andere gebruikers / gebruiksters te begrijpen.
-  remove_your_account: Je toegang deleten
   change_password: Wachtwoord veranderen
-  confirm_new_password: Nieuw wachtwoord bevestigen
-  forgot_password_link: Wachtwoord vergeten?
-  forgot_password_mail_expiry: Dit link blijft geldig voor 24 uurtjes. Wanneer je je wachtwoord later wil resetten, mout je weer na de pagina van het vergeten wachtwoord gaan en een nieuwe link opvragen.
-  forgot_password_mail_greeting: "%{user}, teneinde jou wachtwoord te resetten, ga naar"
-  forgot_password_text: Wanneer je jouw wachtwoord heeft vergeten kunnen we jou een link mailen met die je een nieuwe paswoord kan genereren.
-  new_password: Nieuw wachtwoord
   password: Wachtwoord
   password_confirmation: Wachtwoord confirmatie
-  password_reset: Paswoord resetten
-  password_reset_ok_text: Je paswoord was met succes gereset. Je kan nu met jij nieuw paswoord inloggen.
-  password_was_reset: Je paswoord was reset.
-  requested_forgot_password: Jij heeft een verandering van je paswoord opgevraagd
-  reset_password: Wachtwoord resetten
-  reset_password_email_sent: Als deze emailadres met een gebruikers naam / gebruiksters naam is geassociëert was een mailtje gestuurd met instructies voor het resetten van je wachtwoord.
-  reset_password_mail_greeting: "%{user}, als je opgevraagd hebt, was je wachtwoord gereset."
-  reset_password_mail_warning: Wanneer je niet opgevraagd hebt of je wachtwoord mag veranderd worden, dan kontakteer ons, alsjeblieft.
-  reset_password_text: Hoi, %{user}. Wanneer je jou wachtwoord heeft vergeten kan je hier een nieuwe paswoord opstellen.
+  login_password: Wachtwoord
+  remove_your_account: Je toegang deleten
+  anonymize_display_name: Gewijzte naam anoniemizeren
+  anonymize_display_name_info: Vervangt je gewijzte naam door "Anoniem" overal.
+  destroy_comments: Commentaren verwoesten
+  destroy_comments_info: Dit zal alle commentaren van jou wissen. Daardoor kan het moelijk zijn blijvende commentaren van andere gebruikers / gebruiksters te begrijpen.
+  confirm_account_removal: Bent je zeker dat jij je toegang wil deleten? Deze stap kan niet ongedaan gemaakt worden en je bestand zal gewist worden.
+  account_successfully_removed: Je account was met succes gewisst. Wij zullen het en alle gegevens, die daarmee geassociëret zijn van onze databank verwijderen.
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL vrije software</a> voor de organisatie van netwerken.
-
-      '
-    powered_by_html: 'Deze pagina werkt met <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-
-      '
-  actions:
-    possible:
-      add: Een nieuwe mogelijkheid toevoegen
-    task:
-      add: Een nieuwe opdracht toevoegen
-  add_button: voeg toe
-  alert: Alarmeren
-  approve: Toestemmen
-  approved: Goedgekeurd
+    powered_by_html: |
+      Deze pagina werkt met <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    description_html: |
+      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL vrije software</a> voor de organisatie van netwerken.
+  destroy_confirmation: Bent je zeker, dat je deze %{thing} wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
+  confirmation: Bent je zeker?
   cancel: Afbreken
+  optional: Optionaal
+  required: Benodigd
+  thing_required: "%{thing} benodigd"
+  edit: Editeren
+  upload: Uploaden
+  select_files: Bestanden selecteren
+  drop_files_here: Bestanden hier plaatsen
+  files_pending: "#{pending} bestand(en) hangend"
+  return_link: Teruggaan
+  back_button: TerugTerug
+  send_button: Sturen
   close_button: Sluiten
-  confirm: Bevestigen
-  create_a_new_thing: Stel een nieuw %{thing} op
+  share_button: DelenDelen
+  save_button: Opslaan
+  add_button: voeg toe
+  cancel_button: Afbreken
   create_button: Opstellen
+  ok_button: okay
+  done: Gedaan
+  show_button: Laat me zien
+  show_thing: Laat me %{thing} zien
+  confirm: Bevestigen
+  alert: Alarmeren
+  loading_progress: Laden...
+  loadingdotdotdot: Laden...
+  create_a_new_thing: Stel een nieuw %{thing} op
   create_thing: Stel %{thing} op
   created_by: Opgesteld van
-  created_by_user_on: Opgesteld van %{user} op %{when}.
-  delete: Deleten
-  delete_thing: Wis %{thing}
-  deleted: Deleten
-  destroy: Vernietigd
-  destroy_confirmation: Bent je zeker, dat je deze %{thing} wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
-  destroy_thing: Vernietig %{thing}
-  drop_files_here: Bestanden hier plaatsen
-  edit: Editeren
-  loading_progress: Laden...
-  ok_button: okay
-  optional: Optionaal
-  pending: Hangend
-  reject: Afwijzen
-  rejected: Afgewezen
-  remove: Verwijderen
-  required: Benodigd
-  save_button: Opslaan
-  saved: Opgeslaan
-  select_files: Bestanden selecteren
-  send_button: Sturen
-  show_thing: Laat me %{thing} zien
-  thing_destroyed: "%{thing} vernietigd"
-  thing_required: "%{thing} benodigd"
   updated_by: Geactualiseerd van
-  upload: Uploaden
+  created_by_user_on: Opgesteld van %{user} op %{when}.
+  approve: Toestemmen
+  reject: Afwijzen
+  pending: Hangend
+  rejected: Afgewezen
+  approved: Goedgekeurd
+  saved: Opgeslaan
+  destroy: Vernietigd
+  thing_destroyed: "%{thing} vernietigd"
+  destroy_thing: Vernietig %{thing}
+  delete_thing: Wis %{thing}
+  delete: Deleten
+  delete_button: Deleten
+  deleted: Deleten
+  remove: Verwijderen
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Voer de naam van een groep of een persoon in
+      enter_name_of_group: Voer de naam van een groep in
+      enter_name_of_person: Voer den naam van een persoon in
+  actions:
+    task:
+      add: Een nieuwe opdracht toevoegen
+    possible:
+      add: Een nieuwe mogelijkheid toevoegen
   mailer:
-    page_histories:
-      change_your_settings_here: 'Verander je instellingen voor email aankondigingen hier: %{page_link}'
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Een pagina was gemodificeerd"
       the_page_you_are_watching_description: De pagina die je bekijkt "%{page_title}" was gemodificeerd
+      change_your_settings_here: 'Verander je instellingen voor email aankondigingen hier: %{page_link}'
   exception:
+    title:
+      unauthorized: Je moet ingeloggd zijn
+      forbidden: Permissie afgewezen
     description:
       unauthorized: Log in voor je deze actie uitvoert, alsjeblieft.
-    title:
-      forbidden: Permissie afgewezen
-      unauthorized: Je moet ingeloggd zijn
-  add_comment: Voeg Opmerking toe
-  add_images_to_gallery_link: Afbeeldingen tot de galerij toevoegen
-  close_and_reload_gallery: Sluit en reload galerij
-  confirm_image_delete: Bent je zeker, dat jij deze afbeeling wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
-  edit_image: Afbeelding editeren
   image_count: Afbeelding %{number} van %{count}
   image_count_total: "%{count} foto's"
+  show_gallery: Laat me galerij zien
+  edit_gallery_explanation: Voeg nieuw afbeeldingen toe of trek afbeeldingen heen en weer om hun rangorde te veranderen.
+  edit_image: Afbeelding editeren
+  show_gallery_explaination: Klik op kleine afbeeldingen om de heele afbeelding te zien.
+  add_images_or_zips: Voeg afbeeldingen of Zipfiles toe
+  add_images_or_zips_explaination: Zipfile zal automatisch uitgepakt en in de galerij geplaatst worden
+  confirm_image_delete: Bent je zeker, dat jij deze afbeeling wil wissen? Deze operatie kan niet ongedaan gemaakt worden.
+  no_title_given: "(geen opschrift)"
+  add_images: Voeg afbeeldingen toe
+  edit_images: Afbeeldingen editeren
   upload_new_image: Nieuw afbeelding omhoogladen
+  type_your_messages_here: Type je boodschappen hier en druk enter...
+  group_not_allowed_to_view_image_error: De groep die deze pagina bezit mag dit agbeelding niet zien.
+  add_comment: Voeg Opmerking toe
+  image_title: 'Opschrift van afbeelding: {{title}}'
   upload_zip_file_link: ZIP-bestand hoogladen
-  approved_by_entity: Toegestemd van %{entity}
-  name: Naam
-  owner: Opsteller
-  people: Mensen
-  person: Personen
-  recipient: Ontvanger
-  recipients: Ontvangers
-  rejected_by_entity: Afgewezen van %{entity}
-  user: Gebruiker / Gebruikster
-  users: Gebruiker / Gebruikster
-  thing_was_not_sent:
-    one: "%{thing} kon niet gestuurd worden naar %{recipient}."
-    other: "%{count} %{thing} kon niet gestuurd worden."
+  add_images_to_gallery_link: Afbeeldingen tot de galerij toevoegen
+  too_tall_image_error: Hooggeladen afbeelding is te hoog ({{count}} pixels zijn de maximale hoogte)
+  too_wide_image_error: Hooggeladen afbeelding moet precies {{count}} pixels breed zijn
+  cant_detect_image_height_error: Kan de hoogte van de afbeelding niet achterhalen. Of de afbeelding is verpest of de server heeft een defect
+  edit_image_header: Afbeelding en audio-bestand editeren
+  upload_images_and_zip_files_help: 'Optioneel: Afbeelding of ZIP-bestand selecteren voor upload.'
+  close_and_reload_gallery: Sluit en reload galerij
+  search: Zoek
+  thing_not_found: "%{thing} niet gevonden"
+  no_things_found: Geen %{things} gevonden.
+  no_search_results: Geen resultaat
+  not_found: Niet gevonden
+  see_all_link: Alle zien
+  total: "%{count} totaal"
+  all: allemaal
+  none: Geen
+  or: of
+  new: nieuw
+  modified: gemodificeerd
+  unknown: Onbekend
+  next: Volgend
+  previous: Vorig
+  pagination_next: Volgend
+  pagination_previous: Vorig
+  return: Teruggaan
+  see_more_link: Meer
+  see_less_link: Minder
+  list_things: Een List van alle %{things} opmaken
   thing_was_sent:
     one: "%{thing} was gestuurd naar %{recipient}."
     other: "%{count} %{thing} waren gestuurd."
-  all: allemaal
-  list_things: Een List van alle %{things} opmaken
-  modified: gemodificeerd
-  new: nieuw
-  next: Volgend
-  no_search_results: Geen resultaat
-  no_things_found: Geen %{things} gevonden.
-  none: Geen
-  or: of
-  previous: Vorig
-  return: Teruggaan
-  search: Zoek
-  see_all_link: Alle zien
-  see_more_link: Meer
-  thing_not_found: "%{thing} niet gevonden"
-  total: "%{count} totaal"
-  unknown: Onbekend
+  thing_was_not_sent:
+    one: "%{thing} kon niet gestuurd worden naar %{recipient}."
+    other: "%{count} %{thing} kon niet gestuurd worden."
+  user: Gebruiker / Gebruikster
+  users: Gebruiker / Gebruikster
+  people: Mensen
+  person: Personen
+  name: Naam
+  recipients: Ontvangers
+  recipient: Ontvanger
+  owner: Opsteller
+  created_by_entity: Opgesteld van %{entity}
+  approved_by_entity: Toegestemd van %{entity}
+  rejected_by_entity: Afgewezen van %{entity}
   contacts: Contacten
+  friends: Contacten
   member_groups_of_network: Lidgroepen
   peers: Peers
-  administration: Administratie
-  back: TerugTerug
-  comments: Commentaren
-  contributed: Bijgedragen
-  description: Beschrijving
-  details: Details
-  display: Weergeven
-  hide: Verbergen
-  locale: Schouwplaats
   me: Ik
-  message: Boodschap
-  messages: Boodschappen
-  notice: Melding
-  notices: Meldingen
-  notification: Bericht
-  page: Pagina
-  permissions: Fiats
-  print: Printen
-  private: Privé
-  private_message_notice: Privé boodschap bericht
-  public: Publiek
-  settings: Instellingen
+  back: TerugTerug
   share: DelenDelen
-  show: Laat me zien
+  contributed: Bijgedragen
+  profile: Profiel
+  content: Inhoud
+  comments: Commentaren
   statistics: Statistieken
   summary: Samenvatting
-  title: Opschrift
+  private: Privé
+  public: Publiek
+  options: Opties
+  permissions: Fiats
+  notification: Bericht
+  notice: Melding
+  notices: Meldingen
+  dismiss: Verwerpen
+  locale: Schouwplaats
+  description: Beschrijving
+  details: Details
+  invite: Inviteren
+  membership: Lidmaatschap
   visibility: Zichtbaarheid
+  administration: Administratie
+  settings: Instellingen
+  messages: Boodschappen
+  page: Pagina
+  title: Opschrift
+  text_message: Boodschap tekst
+  print: Printen
+  show: Laat me zien
+  hide: Verbergen
+  display: Weergeven
+  message: Boodschap
+  private_message_notice: Privé boodschap bericht
   visits: Bezoekjes
-  basic_settings: Elementair Instellingen
+  group: Groep
+  groups: Groepen
+  organization: Organisatie
+  organizations: Organisaties
+  network: Netwerk
+  networks: Netwerken
   committee: Werkgroep
   committees: Werkgroepen
   council: Raad
   councils: Raden
-  group: Groep
-  groups: Groepen
-  my_groups: Mijn groepen
   members: Leden
-  membership: Lidmaatschap
-  network: Netwerk
-  networks: Netwerken
-  organization: Organisatie
-  organizations: Organisaties
   structure: Structuur
-  group_destroyed_email: "%{group_type} %{group} was vernietigd!"
-  group_destroyed_subject: "%{group_type} %{group} was gewisst van %{user}!"
-  group_invite_subject: Uitnodiging de groep "%{group}" bijtetreden
+  group_creation_info: 'Er zijn vier types van groepen:'
+  group_description: Organisaties zijn groepen, die autonoom zijn een wier leden zijn mensen.
+  network_description: Netwerken zijn groepen wier leden organisaties zijn. Een netwerk kan als vereniging van verschillende organisaties gebruikt worden of als een plaats waar twee organisaties kunnen samenwerken.
   committee_description: Werkgroepen zijn groepen binnen een organisatie of netwerk. Een werkgroep is volledig ondergeschikt tegen haar hogere organisatie of netwerk. Een gebruiker / een gebruikster, die niet lid is van de organisatie of netwerk maar in de werkgroep word opgenomen, heeft allein maar toegang naar de werkgroep.
   council_description: Raden zijn groepen met speciaal administratief vermogen. Alle organisaties of netwerken mogen een raad hebben. Als ze een raad hebben kunnen de mensen in de raad macht oefenen over het netwerk of de organisatie.
   council_description_details: Automatisch mogen alle leden de %{group} modificeren. Als je administratiief vermogen wil beperken tot bepaalde gebruikers / gebruiksters kan je een raad opstellen en gebruikers / gebruiksters toevoeen.
-  group_creation_info: 'Er zijn vier types van groepen:'
-  group_description: Organisaties zijn groepen, die autonoom zijn een wier leden zijn mensen.
+  committee_choose_group: 'Kiez een groep voor deze werkgroep:'
   network_committees_may_not_join_networks: Werkgroepen van andere netwerken mogen niet bijtreden.
-  network_description: Netwerken zijn groepen wier leden organisaties zijn. Een netwerk kan als vereniging van verschillende organisaties gebruikt worden of als een plaats waar twee organisaties kunnen samenwerken.
   networks_may_not_join_networks: Netwerken mogen niet andere netwerken bijtreden.
-  group_membership_count: "%{count} leden"
-  membership_destroy_confirm_message: Bent je zeker, dat je %{entity} van %{group} wil verwijderen?
-  membership_exists_error: '%{member} is reeds een lid'
-  membership_requests: Lid-aanvragen
   may_request_membership_description: ' Een "bijtreden %{group}" link zal op je %{group} verschijnen. Daarmee wordt een aanvraag voor lidmaatschap gestuurd die accepteerd of afgewezen kan worden. '
   open_group: Open %{group}
   open_group_description: Gebruikers / Gebruiksters zijn meteen toegefoegd aan de %{group} - geen aanvraag moet toegestemd worden.
+  membership_requests: Lid-aanvragen
+  group_membership_count: "%{count} leden"
+  membership_exists_error: '%{member} is reeds een lid'
+  membership_destroy_confirm_message: Bent je zeker, dat je %{entity} van %{group} wil verwijderen?
+  group_invite_subject: Uitnodiging de groep "%{group}" bijtetreden
+  group_invite_email: |-
+    %{from_user} heeft je geïnviteerd de groep %{group} bijtetreden. Wanneer je deze groep bijtreden wil, klik hier:
+
+    %{accept_invite_link}
+
+    De website van deze groep kan je hier vinden:
+
+
+    %{group_home_link}
+
+
+    Wanneer je deze groep nit bijtreden wil kan je deze email gewoon ignoreren.
+  group_destroyed_subject: "%{group_type} %{group} was gewisst van %{user}!"
+  group_destroyed_email: "%{group_type} %{group} was vernietigd!"
   group_wiki: Groep Wiki
-  members_may_edit_wiki: Alle leden mogen het wiki editeren
-  members_may_edit_wiki_description: Wanneer niet geklikd kunnen raad-leden de %{group} wiki editeren.
-  add_members_to_committee: Voeg een groep lid naar deze werkgroep toe. Om mensen toetevoegen, die niet lid van de groep zijn, stuur in plaats daarvan een uitnodiging.
-  allow_membership_requests: Laat lid-aanvragen toe
+  create_public_group_wiki: Publiek
+  create_private_group_wiki: Privé
+  public_group_wiki: Publiek
+  private_group_wiki: Privé
+  group_publicly_visible: Maak %{group} publiek zichtbaar
   committee_publicly_visible: Maak werkgroepen publiek zichtbaar
+  networks_publicly_visible: Maak netwerken publiek zichtbaar
+  allow_membership_requests: Laat lid-aanvragen toe
+  group_successfully_created: Groep was met succes opgesteld
+  group_publicly_visible_description: "%{group} daagd op in de publiek groep-lijst. Het <i>profile</i> is zichtbaar voor niet-leden op %{domain}/yourgroupname."
   committee_publicly_visible_description: Werkgroepen zijn zichtbaar voor niet-leden op {domain}/yourgroupname
-  descriptive_name_for_display: Een beschrijvende naam voor tentoonstellen
-  group_language: De principaal taal van deze %{group}.
+  networks_publicly_visible_description: Netwerken zijn zichtbaar voor niet-leden op %{domain}/yourgroupname
   group_members_publicly_visible: Maakt leden publiek zichtbaar
   group_members_publicly_visible_description: Leden zijn zichbaar voor niet-leden op %{domain}/yourgroupname. %{group} kan op de profiel pagina van leden gelijst worden (%{domain}/username)
-  group_publicly_visible: Maak %{group} publiek zichtbaar
-  group_publicly_visible_description: "%{group} daagd op in de publiek groep-lijst. Het <i>profile</i> is zichtbaar voor niet-leden op %{domain}/yourgroupname."
-  group_successfully_created: Groep was met succes opgesteld
-  join_group_confirmation: Bent je zeker, dat je deze %{group_type} wil bijtreden?
-  join_group_link: '%{group_type} bijtreden'
-  leave_group_confirmation: Bent je zeker, dat je deze %{group_type} verlaten wil?
-  leave_group_link: '%{group_type} verlaten'
-  link_name_description: Deze naam is belangrijk voor het verwijzen van de groep in links en URLs. Je kan alleen maar alfanumeriek tekenen gebruiken en geen spatie.
-  network_initial_member: Kiez een organisatie voor het eerst lid van dit netwerk.
-  networks_publicly_visible: Maak netwerken publiek zichtbaar
-  networks_publicly_visible_description: Netwerken zijn zichtbaar voor niet-leden op %{domain}/yourgroupname
-  request_exists: Je aanvraag wacht voor toezegging.
-  request_join_group_link: Aanvragen om %{group_type} bijtetreden
+  members_may_edit_wiki: Alle leden mogen het wiki editeren
+  members_may_edit_wiki_description: Wanneer niet geklikd kunnen raad-leden de %{group} wiki editeren.
   rss_feed: RSS-feed
+  group_language: De principaal taal van deze %{group}.
+  my_networks: Mijn netwerken
+  my_groups: Mijn groepen
+  basic_settings: Elementair Instellingen
   send_invites: Uitnodigingen sturen
-  this_is_committee: Deze werkgroep is een onderdeel van %{parent_group}.
   view_requests: Aanvragen zien
+  add_members_to_committee: Voeg een groep lid naar deze werkgroep toe. Om mensen toetevoegen, die niet lid van de groep zijn, stuur in plaats daarvan een uitnodiging.
+  join_group_link: '%{group_type} bijtreden'
+  leave_group_link: '%{group_type} verlaten'
+  leave_group_confirmation: Bent je zeker, dat je deze %{group_type} verlaten wil?
+  request_join_group_link: Aanvragen om %{group_type} bijtetreden
+  request_exists: Je aanvraag wacht voor toezegging.
+  join_group_confirmation: Bent je zeker, dat je deze %{group_type} wil bijtreden?
+  link_name_description: Deze naam is belangrijk voor het verwijzen van de groep in links en URLs. Je kan alleen maar alfanumeriek tekenen gebruiken en geen spatie.
+  descriptive_name_for_display: Een beschrijvende naam voor tentoonstellen
+  this_is_committee: Deze werkgroep is een onderdeel van %{parent_group}.
+  network_initial_member: Kiez een organisatie voor het eerst lid van dit netwerk.
   headings:
-    info:
-      page_search: Vind alle paginas voor die je vlak of door je groepen toegang hebt
     page_search: Zoek voor paginas
     recent_pages: Recente paginas
+    info:
+      page_search: Vind alle paginas voor die je vlak of door je groepen toegang hebt
+  my_dashboard: Panel
+  uploaded_image_cropped: Hooggeladen afbeelding zal geknipt en gestrekt worden tot 202 pixels in het vierkant.
+  select_image_file: kiez afbeelding file
+  or_image_url: of afbeelding URL
+  upload_image_link: afbeelding uploaden
+  save_changes: Veranderingen opslaan
+  username: Gebruikers naam / Gebruiksters naam
   display_name: Gewijzde naam
-  do_you_want_to_receive_email_notifications: Wil je kennisgeving-emails krijgen over veranderingen van paginas die je "bekijkt"?
   email: Email
   language: Taal
-  message_user_wrote_caption: "%{user} heeft geschreven:"
-  message_you_wrote_caption: 'Je hebt geschreven:'
-  or_image_url: of afbeelding URL
-  save_changes: Veranderingen opslaan
-  select_image_file: kiez afbeelding file
-  send_message_link: Boodschap sturen
   time_zone: Tijdzone
+  do_you_want_to_receive_email_notifications: Wil je kennisgeving-emails krijgen over veranderingen van paginas die je "bekijkt"?
+  send_message_link: Boodschap sturen
+  messages_with: Gesprek met %{other_user}
+  message_to_self_error: Je kan niet met jezelf praten
+  message_you_wrote_caption: 'Je hebt geschreven:'
+  message_user_wrote_caption: "%{user} heeft geschreven:"
   unread_private_message: Je hebt een ongelezen privé boodschap van %{user}
-  upload_image: Afbeelding hoog laden
-  uploaded_image_cropped: Hooggeladen afbeelding zal geknipt en gestrekt worden tot 202 pixels in het vierkant.
-  username: Gebruikers naam / Gebruiksters naam
-  account_settings: Toegangs-instellingen
-  back_to_group: Terug naar de groep
-  back_to_page: Terug naar de pagina
   home: Thuis
-  menu_admin: Administrateur
+  menu_me: Ik
+  menu_groups: Groepen
+  menu_chat: Chat
+  menu_people: Mensen
+  menu_networks: Netwerken
   menu_link_logout: Logout %{user}
-  profile: Profiel
-  access: Toegang
-  action: actie
-  advanced: Geavonceerd
-  my_pages: Mijne paginas
+  menu_admin: Administrateur
+  account_settings: Toegangs-instellingen
+  back_to_page: Terug naar de pagina
+  back_to_group: Terug naar de groep
   pages: Paginas
-  popular_pages: Populaire paginas
-  properties: Eigenschappen
   recent_pages: Recente paginas
-  current_video_sources: 'Actueel ondersteunt: youtube, blip.tv, google video, vimeo.'
-  video_embed_code_description: Dit is niet de website adres. Het is een code omringd van < and > die de video website - youtube, etc. - beschikbaar maakt voor jou de video op andere websites de plaatsen.
-  video_embed_code_prompt: Bed code van externe video bron in.
-  email_link_expires: Deze link gaat in %{days} dagen aflopen.
-  email_notice_access: 'Je hebt toegang tot deze pagina hier:'
-  email_notice_hello: Hello, %{from} heeft je een website gestuurd.
-  email_notice_hello_with_message: 'Hoi, %{from} heeft je een website gestuurd met de boodschap: %{message} '
-  email_notice_subject: Kijk mal naar pagina "%{title}"
+  my_pages: Mijne paginas
+  properties: Eigenschappen
+  popular_pages: Populaire paginas
+  advanced: Geavonceerd
+  access: Toegang
+  active_filters: Actief filter
+  all_pages: Alle paginas
+  created_by_me: Opgesteld
+  created_by_user: Opgesteld van %{user}
+  created_by_user_description: Zoek paginas die van een bepaalde persoon zijn opgesteld.
+  created_by_dotdotdot: Opgesteld van...
+  starred_by_me: Gesterrd
+  starred_by_user: Gesterrd van %{user}
+  watched_by_me: Bekijkend
+  watched_by_user: Bekijkt van %{user}
+  edited_by_me: Geediteerd
+  edited_by_user: Geediteerd van %{user}
+  owned_by_me: Eigen
+  owned_by_user: Bezit van %{user}
+  most_active: Meest aktief
+  most_stars: Meest starretjes
+  most_viewed: Meest gezien
+  filter_user_description: Zoek naar paginas met toegang door een bepaalde gebruiker / gebruikster.
+  filter_group_description: Zoek naar paginas met toegang door een bepaalde groep.
+  starred: Gesterrd
+  viewed: Gezien
+  edited: Geediteerd
+  type: Type
+  all_page_types: alle pagina types
+  edit_title: Opschrift editeren
+  data_for_page_missing: De bestand van deze pagina is ontbrekend.
+  no_change: geen verandering
+  updated: geupdated
+  created: opstellen
+  unread: niet gelezen
+  read: lezen
+  page_name_description: Optioneel uniek naam (om een URL voor deze pagina optestellen)
+  filter_tag_description: Zoek pagina's met een bepaalde tag.
   page_notice: Pagina bericht
+  email_notice_subject: Kijk mal naar pagina "%{title}"
+  email_notice_hello_with_message: 'Hoi, %{from} heeft je een website gestuurd met de boodschap: %{message} '
+  email_notice_hello: Hello, %{from} heeft je een website gestuurd.
+  email_notice_access: 'Je hebt toegang tot deze pagina hier:'
+  email_link_expires: Deze link gaat in %{days} dagen aflopen.
   page_notice_title: <user>%{from}</user> heeft je deze pagina "%{page_title}" gestuurd
   page_notice_title_with_message: '<user>%{from}</user> heeft je deze pagina "%{page_title}" met deze boodschap gestuurd'
-  page_update: Pagina Update
   page_updated: <user>%{from}</user> heeft de pagina "%{page_title}" geupdated
+  page_update: Pagina Update
+  watch_checkbox: Voor Updates bekijken
+  add_star_link: Voeg Ster toe (%{star_count})
+  remove_star_link: Ster verwijderen (%{star_count})
+  public_checkbox: Publiek
+  public_checkbox_help: Wanneer geklikt kan ideren deze pagina zien.
+  page_details_link: "%{page_class} Details"
+  delete_page_link: Wis %{page_class}
+  destroy_page_via_shred: Verstoor zo snel mogelijk
+  destroy_page_via_shred_info: Dit wil de pagina blijvend verwoesten. Deze actie kan nie ongedaan gemakt worden.
+  destroy_page_via_trash: In de afvalbak werpen
+  destroy_page_via_trash_info: Hiermee ga je de pagina naar de afvalbak plaatsen, waar je ze later kan achterhalen.
+  undelete_from_trash: Niet wissen
+  participation: Deelname
+  information: Informatie
+  remove_access_error: De toegang naar deze pagina kan niet verwijderd worden. Je kan de toegang van de eigenaars niet verwijderen en je kan ook geen toegang verwijderen, die je nodig hebt om de pagina te administrateren.
+  edit_tags_link: Editeren
+  edit_attachments_link: Editeren
+  attachments: Attachments
+  edit_attachments: Attachments editeren
+  current_attachments: Actueele attachments
+  add_new_attachment: Voeg een Nieuwe Bijlage toe
+  use_radio_buttons_to_select_page_cover: Gebruik de radio knop om de pagina's omslag de kiezen
+  page_access_admin: Geheel toegang
+  page_access_edit: Permissie voor schrijven
+  page_access_none: Geen toegang
+  page_access_view: Alleen lezen
+  share_page_link: Deel %{page_class}
+  share_page_recipients: Deel pagina met
+  notify_page_link: Stuur bericht
+  notify_contribution: "<b>Eerste bijdrage:</b> adviseer mensen, die een <b>contribution</b> voor deze pagina gemaakt hebben."
+  notify_current_access: "<b>Actuele toegang:</b> adviseer mensen of groepen, die actueel toegang tot deze pagina hebben."
+  notification_message: Bekendmaking boodschap
+  send_only_with_encryption: Stuur alleen maar wanneer versleuteld distributie is mogelijk
+  share_send_notification: Stuur bekandmaking
+  send_email: Stuur email
+  share_include_message: Voeg een gebruikelijk boodschap aan
+  shared_page_success: Je hebt deze pagina met succes degeeld.
+  notify_success: Je hebt bekandmakingen met succes gestuurd.
+  share_grant_required_error: "%{name} mag deze pagina niet zien. Zij moeten eerst een grooter toegang krijgen."
+  share_permission_denied_error: Je mag de toegangspermissies voor deze pagina niet veranderen
+  notify_no_access_error: Sorry, "%{name}" heeft geen toegang tot deze pagina.
+  share_already_exists_error: '"%{name}" heeft reeds toegang tot deze pagina.'
+  share_pester_error: Sorry, je mag met "%{name}" niets delen.
+  name_or_email_not_found: '"%{name}" passt niet bij de naam van geen gebruiker / gebruikster of groep en is ook geen geldige email-adress.'
+  contribute_content_link: Pagina opstellen
+  page_create_owner: Eigenaar van pagina
+  create_page: Pagina opstellen
+  only_me: Ik
+  page_added_to_group: Deze pagina gaat toegevoegd worden naar %{group_type} %{group_name}.
+  additional_page_access: Extra toegang
+  page_owner_error: Eigenaar van pagina kan niet leeg zijn.
+  action: actie
   page_history_add_star: "%{user_name} heeft een starretje toegevoegd"
   page_history_added_comment: "%{user_name} heeft een commentaar toegevoegd"
   page_history_change_title: "%{user_name} heeft de titel van de pagina gemodificeerd"
@@ -319,206 +469,129 @@ nl:
   page_history_updated_comment: "%{user_name} heeft een commentaar geupdated"
   page_history_updated_content: "%{user_name} heeft de inhoud van de pagina geupdated"
   page_history_user_created_page: "%{user_name} heeft de pagina opgesteld"
-  active_filters: Actief filter
-  all_page_types: alle pagina types
-  all_pages: Alle paginas
-  created: opstellen
-  created_by_dotdotdot: Opgesteld van...
-  created_by_me: Opgesteld
-  created_by_user: Opgesteld van %{user}
-  created_by_user_description: Zoek paginas die van een bepaalde persoon zijn opgesteld.
-  data_for_page_missing: De bestand van deze pagina is ontbrekend.
-  edit_title: Opschrift editeren
-  edited: Geediteerd
-  edited_by_user: Geediteerd van %{user}
-  filter_group_description: Zoek naar paginas met toegang door een bepaalde groep.
-  filter_tag_description: Zoek pagina's met een bepaalde tag.
-  filter_user_description: Zoek naar paginas met toegang door een bepaalde gebruiker / gebruikster.
-  most_active: Meest aktief
-  most_stars: Meest starretjes
-  most_viewed: Meest gezien
-  no_change: geen verandering
-  owned_by_me: Eigen
-  owned_by_user: Bezit van %{user}
-  page_name_description: Optioneel uniek naam (om een URL voor deze pagina optestellen)
-  read: lezen
-  starred: Gesterrd
-  starred_by_user: Gesterrd van %{user}
-  type: Type
-  unread: niet gelezen
-  updated: geupdated
-  viewed: Gezien
-  watched_by_me: Bekijkend
-  watched_by_user: Bekijkt van %{user}
-  add_star_link: Voeg Ster toe (%{star_count})
-  delete_page_link: Wis %{page_class}
-  destroy_page_via_shred: Verstoor zo snel mogelijk
-  destroy_page_via_shred_info: Dit wil de pagina blijvend verwoesten. Deze actie kan nie ongedaan gemakt worden.
-  destroy_page_via_trash: In de afvalbak werpen
-  destroy_page_via_trash_info: Hiermee ga je de pagina naar de afvalbak plaatsen, waar je ze later kan achterhalen.
-  information: Informatie
-  page_details_link: "%{page_class} Details"
-  participation: Deelname
-  public_checkbox_help: Wanneer geklikt kan ideren deze pagina zien.
-  remove_access_error: De toegang naar deze pagina kan niet verwijderd worden. Je kan de toegang van de eigenaars niet verwijderen en je kan ook geen toegang verwijderen, die je nodig hebt om de pagina te administrateren.
-  remove_star_link: Ster verwijderen (%{star_count})
-  undelete_from_trash: Niet wissen
-  watch_checkbox: Voor Updates bekijken
-  add_new_attachment: Voeg een Nieuwe Bijlage toe
-  page_access_admin: Geheel toegang
-  page_access_edit: Permissie voor schrijven
-  page_access_none: Geen toegang
-  page_access_view: Alleen lezen
-  edit_attachments: Attachments editeren
-  current_attachments: Actueele attachments
-  use_radio_buttons_to_select_page_cover: Gebruik de radio knop om de pagina's omslag de kiezen
-  share_already_exists_error: '"%{name}" heeft reeds toegang tot deze pagina.'
-  share_grant_required_error: "%{name} mag deze pagina niet zien. Zij moeten eerst een grooter toegang krijgen."
-  share_include_message: Voeg een gebruikelijk boodschap aan
-  share_page_link: Deel %{page_class}
-  share_page_recipients: Deel pagina met
-  share_send_notification: Stuur bekandmaking
-  shared_page_success: Je hebt deze pagina met succes degeeld.
-  share_permission_denied_error: Je mag de toegangspermissies voor deze pagina niet veranderen
-  share_pester_error: Sorry, je mag met "%{name}" niets delen.
-  notification_message: Bekendmaking boodschap
-  notify_contribution: "<b>Eerste bijdrage:</b> adviseer mensen, die een <b>contribution</b> voor deze pagina gemaakt hebben."
-  notify_current_access: "<b>Actuele toegang:</b> adviseer mensen of groepen, die actueel toegang tot deze pagina hebben."
-  notify_no_access_error: Sorry, "%{name}" heeft geen toegang tot deze pagina.
-  notify_page_link: Stuur bericht
-  notify_success: Je hebt bekandmakingen met succes gestuurd.
-  send_only_with_encryption: Stuur alleen maar wanneer versleuteld distributie is mogelijk
-  send_email: Stuur email
-  name_or_email_not_found: '"%{name}" passt niet bij de naam van geen gebruiker / gebruikster of groep en is ook geen geldige email-adress.'
-  additional_page_access: Extra toegang
-  asset_page_description: Laad een afbeelding, document, spreadsheet, presentatie of een andere bestand hoog.
-  attachments: Attachments
-  create_page: Pagina opstellen
-  discussion_page_description: Bespreek een bijzonder thema met groepen of andere gebruikers / gebruiksters.
-  discussion_page_display: Groep discussie
-  gallery_description: Merdere afbeeldingen uploaden of bestaande afbeeldingen in een set organiseren.
-  gallery_display: Galerij
-  page_added_to_group: Deze pagina gaat toegevoegd worden naar %{group_type} %{group_name}.
-  page_create_owner: Eigenaar van pagina
-  page_owner_error: Eigenaar van pagina kan niet leeg zijn.
-  ranked_vote_page_description: Stel een lijst van keuze op, die mensen in die rangorde kunnen brengen, die ze prefereren.
-  ranked_vote_page_display: Gewaarderd stemming
-  rate_many_page_description: Stel een lijst van keuzen op, die mensen goedkeuren of afkeuren kunnen.
-  rate_many_page_display: Toestemmingpeiling
-  select_file_to_upload: Kiez een bestand ten hoogladen.
-  survey_page_display: Rondvraag
-  task_list_page_description: Stel een lijst van dingen op, die gedaan moeten worden en wijz ze jezelf of andere mensen toe.
-  task_list_page_display: Taaken lijst
   wiki_page_description: Stel en vrij-vorm tekst geschrift op, die je kan veranderen.
   wiki_page_display: Wiki pagina
+  gallery_description: Merdere afbeeldingen uploaden of bestaande afbeeldingen in een set organiseren.
+  gallery_display: Galerij
+  asset_page_description: Laad een afbeelding, document, spreadsheet, presentatie of een andere bestand hoog.
+  asset_page_display: Bestand
+  select_file_to_upload: Kiez een bestand ten hoogladen.
+  discussion_page_description: Bespreek een bijzonder thema met groepen of andere gebruikers / gebruiksters.
+  discussion_page_display: Groep discussie
+  ranked_vote_page_description: Stel een lijst van keuze op, die mensen in die rangorde kunnen brengen, die ze prefereren.
+  ranked_vote_page_display: Gewaarderd stemming
+  survey_page_display: Rondvraag
+  rate_many_page_description: Stel een lijst van keuzen op, die mensen goedkeuren of afkeuren kunnen.
+  rate_many_page_display: Toestemmingpeiling
+  task_list_page_description: Stel een lijst van dingen op, die gedaan moeten worden en wijz ze jezelf of andere mensen toe.
+  task_list_page_display: Taaken lijst
+  page_group_vote: Peilingen en stemmingen
+  page_group_text: Tekst en discussies
   page_group_media: Multimedia
   page_group_planning: Plaan werktuigen
-  page_group_text: Tekst en discussies
-  page_group_vote: Peilingen en stemmingen
+  vote:
+    really_remove_this: Wil je echt deze optie verwijderen?
+    you_have_not_ranked: 'Je heeft nog niet gewaarderd:'
+    voted_on: Gestemmd over
+    not_voted_on: Niet gestemmd over
+  vote_good: goed
+  vote_ok: ok
+  vote_bad: slecht
+  vote_none: geen
+  vote_no: 'nee'
   confirm_vote_button: Stemming vast leggen
   edit_my_vote_tab: Mijn stemming editeren
-  first_choice_of: eerste keuze van
   show_results_tab: Laat resultaaten zien
   top_pick: meest prefereerd
-  vote:
-    not_voted_on: Niet gestemmd over
-    really_remove_this: Wil je echt deze optie verwijderen?
-    voted_on: Gestemmd over
-    you_have_not_ranked: 'Je heeft nog niet gewaarderd:'
-  vote_bad: slecht
-  vote_good: goed
-  vote_no: 'nee'
-  vote_none: geen
-  vote_ok: ok
+  first_choice_of: eerste keuze van
+  save_survey_button: Rondvraag opslaan
+  survey_may_create_response: Mag een antwoord opgesteld worden?
+  survey_may_see_responses: Mag ik antwoorden zien?
+  survey_may_rate: Mag ik antwoorden waardeeren?
+  survey_may_see_ratings: Mag ik waardeering zien?
+  survey_question_label: 'Vraag:'
+  survey_description_heading: Beschrijving
+  survey_description_explaination: Deze tekst is in de introductie tab en het is de eerst die de deelnemers van de rondvraag kunnen zien.
+  select_many_choices_label: 'Kiez vele antwoord mogelijkheiden:'
+  select_one_choices_label: 'Kiez een antwoord mogelijkheid:'
+  video_embed_code_description: Dit is niet de website adres. Het is een code omringd van < and > die de video website - youtube, etc. - beschikbaar maakt voor jou de video op andere websites de plaatsen.
+  private_question_label: Privé vraag
+  their_answer_goes_here_label: Hun antwoord gaat hier...
+  survey_response_by: Antwoord van %{login}
+  see_whole_response_link: laat me heel antwoord zien
+  survey_average_rating_heading: 'Gemiddelde waardering:'
+  survey_previous_result: Eerder
+  survey_rated_by_1_person_caption: Gewaarderd van een persoon.
+  survey_rated_by_x_people_caption: Gewaarderd van %{count} personen.
+  survey_respond_button: Antwoord
+  survey_rate_this_response_heading: Waarder dit antwoord
+  survey_select_a_rating_message: Kiez een waardering om de volgende item te zien.
+  survey_skip_next_link: Slaag over naar volgende
+  survey_you_already_rated_response_with_rating_heading: Je hebt deze antwoord al gewaarderd - je hebt het een %{rating} gegeven.
+  survey_you_previousely_rated_message: Je hebt deze item eerder met %{rating} gewaarderd.
+  survey_your_rating_heading: 'Je waardering:'
+  survey_questions: Vragen
   add_long_text_question_link: Lang antwoord
   add_select_many_question_link: Kiez merdere antwoorden
   add_select_one_question_link: Kiez een antwoord
   add_short_text_question_link: Kort antwoord
-  drag_to_move_tip: trek om te bewegen
-  each_line_is_a_choice_caption: "(iedere regel is een mogelijk keuze)"
-  no_data_uploaded_label: Geen bestand hoog geladen
-  private_question_label: Privé vraag
-  save_survey_button: Rondvraag opslaan
-  see_whole_response_link: laat me heel antwoord zien
-  select_many_choices_label: 'Kiez vele antwoord mogelijkheiden:'
-  select_one_choices_label: 'Kiez een antwoord mogelijkheid:'
-  survey_average_rating_heading: 'Gemiddelde waardering:'
-  survey_description_explaination: Deze tekst is in de introductie tab en het is de eerst die de deelnemers van de rondvraag kunnen zien.
+  upload_image_question_link: Afbeelding hoog laden
+  video_link_question_link: Video-Link
   survey_introduction_tab: Introductie
   survey_list_all_tab: Antwoorden uitlisten
-  survey_may_create_response: Mag een antwoord opgesteld worden?
-  survey_may_rate: Mag ik antwoorden waardeeren?
-  survey_may_see_ratings: Mag ik waardeering zien?
-  survey_may_see_responses: Mag ik antwoorden zien?
   survey_my_response_tab: Mijn antwoord
   survey_please_check_and_rate_message: Kijk je antwoorden na en waarder de antwoorden van andere mensen, alsjeblieft.
   survey_please_check_message: Kijk je antwoorden na, alsjeblieft.
-  survey_previous_result: Eerder
-  survey_question_label: 'Vraag:'
-  survey_questions: Vragen
-  survey_rate_this_response_heading: Waarder dit antwoord
-  survey_rated_by_1_person_caption: Gewaarderd van een persoon.
-  survey_rated_by_x_people_caption: Gewaarderd van %{count} personen.
-  survey_respond_button: Antwoord
-  survey_response_by: Antwoord van %{login}
-  survey_select_a_rating_message: Kiez een waardering om de volgende item te zien.
-  survey_skip_next_link: Slaag over naar volgende
   survey_thanks_submit_message: Dank je wel voor je antwoord.
-  survey_you_previousely_rated_message: Je hebt deze item eerder met %{rating} gewaarderd.
-  survey_your_rating_heading: 'Je waardering:'
-  their_answer_goes_here_label: Hun antwoord gaat hier...
-  video_link_question_link: Video-Link
-  friends_description: Je vrienden
-  may_pester_description: Mensen toestaan je boodschapen, paginas en invitaties te sturen.
-  may_pester_label: Met me delen?
-  may_request_contact_description: Mensen toestaan je een aanvraag te stellen om je contact te worden.
-  may_request_contact_label: Contact aanvragen?
-  may_see_contacts_description: Laat mensen je contacten zien.
-  may_see_contacts_label: Mijn contacten zien?
-  may_see_groups_description: Mensen toestaan van welke groepen je lid bent.
-  may_see_groups_label: Mijn groepen zien?
-  may_view_description: Wanneer niet gekozen word je profiel volledig verborgen.
-  may_view_label: Mijn profiel zien?
-  peers_description: Leden van je groepen
+  drag_to_move_tip: trek om te bewegen
+  each_line_is_a_choice_caption: "(iedere regel is een mogelijk keuze)"
+  no_data_uploaded_label: Geen bestand hoog geladen
+  current_video_sources: 'Actueel ondersteunt: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_prompt: Bed code van externe video bron in.
   permissions_key: Sleutel
   public_description: Alle mensen in het internet
+  peers_description: Leden van je groepen
+  friends_description: Je vrienden
+  may_view_label: Mijn profiel zien?
+  may_view_description: Wanneer niet gekozen word je profiel volledig verborgen.
+  may_see_contacts_label: Mijn contacten zien?
+  may_see_contacts_description: Laat mensen je contacten zien.
+  may_see_groups_label: Mijn groepen zien?
+  may_see_groups_description: Mensen toestaan van welke groepen je lid bent.
+  may_pester_label: Met me delen?
+  may_pester_description: Mensen toestaan je boodschapen, paginas en invitaties te sturen.
+  may_request_contact_label: Contact aanvragen?
+  may_request_contact_description: Mensen toestaan je een aanvraag te stellen om je contact te worden.
   sharing_and_requests: Delen en aanvraen
+  view_profile: Profiel bekijken
+  profile_member_since: Lid sinds
   banner: Banner
   banner_info: Optimaal afmetingen zijn %{optimal_dimensions pixels
-  edit_profile_link: Profiel editeren
   organizational_role: Rol in organisatie
+  phone_number: Telefoonnummer
+  email_addresses: email-adres
   post_message: Boodschap sturen
-  profile_member_since: Lid sinds
-  profile_saved: Je profiel is opgeslaan.
-  remove_friend_link: Van mijn contacten verwijderen
   request_friend_link: Toe mijn contacten toevoegen
-  view_profile: Profiel bekijken
-  all_requests: Alle aanvragen
-  incoming: Inkomend
-  not_allowed_to_respond_to_request: "%{user} mag de aanvraag niet %{command}."
-  outgoing: Uitgaand
-  request: Aanvraag
-  request_pending: "%{request} wacht"
+  remove_friend_link: Van mijn contacten verwijderen
+  edit_profile_link: Profiel editeren
+  profile_saved: Je profiel is opgeslaan.
   requests: Aanvragen
-  send_request_button: Stuur aanvraag
+  request: Aanvraag
+  incoming: Inkomend
+  outgoing: Uitgaand
+  request_pending: "%{request} wacht"
+  not_allowed_to_respond_to_request: "%{user} mag de aanvraag niet %{command}."
   try_again: Verzoek nog eens
-  friend_remove_confirmation: Bent je zeker dat je niet meer langer de contact van %{user} zijn wil?
-  friend_request_message_label: Zeg %{user} waarom je hun contact wil zijn.
-  invite_error_already_member: Je bent al lid van deze groep.
-  invite_error_redeemed: Invitatie was al terug genomen.
-  invite_info: Geef een list van gebruikers / gebruiksters of email-adressen van de mensen die je in deze %{group_type} inviteren wil in.
-  network_invite_info: Geef de namen van de groepen in die je inviteren wil dit netwerk bijtetreden.
-  recipient_tip: Separeer ontvangers / ontvangsters met komma's, spaties of nieuw regels.
-  request_exists_error: Aanraag bestaad al voor %{recipient}
-  you_are_invited: Je bent geïnviteerd bijtetreden.
+  send_request_button: Stuur aanvraag
+  send_invites_button: Uitnodigingen sturen
+  all_requests: Alle aanvragen
   activerecord:
     models:
-      request_to_create_council: Aanvraag om een raad optestellen
-      request_to_destroy_our_group: Aanvraag groep te verwoesten
       request_to_friend: Aanvraag contacten te worden
       request_to_join_our_network:
         one: Invitatie om bijtetreden
         other: Invitaties om bijtetreden
+      request_to_destroy_our_group: Aanvraag groep te verwoesten
       request_to_join_us:
         one: Invitatie om bijtetreden
         other: Invitaties om bijtetreden
@@ -527,171 +600,196 @@ nl:
         other: Invitaties om bijtetreden
       request_to_join_you: Aanvraag om bijtetreden
       request_to_join_your_network: Aanvraag om bijtetreden
+      request_to_create_council: Aanvraag om een raad optestellen
       request_to_remove_user: Aanvraag lid te verwijderen
-  request_to_create_council: Aanraag om een raad optestellen
-  request_to_create_council_description: De gebruiker / gebruikster %{user} heeft voorgesteld een raad voor %{group_type} %{group} optestellen.
-  request_to_create_council_short: Zal %{group} een raad hebben?
-  request_to_destroy_our_group: Aanvrag om groep de verwoesten
-  request_to_destroy_our_group_description: De gebruiker / gebruikster %{user} heeft voorgesteld %{group_type} %{group} te verwoesten.
-  request_to_destroy_our_group_short: Zal %{group} verwoest worden?
   request_to_friend: Aanvraag contacten te worden
-  request_to_friend_description: Gebruiker / Gebruikster %{user} heeft een aanvraag gesteld een contact van gebruiker / gebruikster user %{other_user} te worden.
   request_to_friend_short: Zal %{user} een contact van %{other_user} worden?
-  request_to_join: Aanvraag om bijtetreden
-  request_to_join_network_short: Zal %{group} %{network} bijtreden?
+  request_to_friend_description: Gebruiker / Gebruikster %{user} heeft een aanvraag gesteld een contact van gebruiker / gebruikster user %{other_user} te worden.
+  request_to_destroy_our_group: Aanvrag om groep de verwoesten
+  request_to_join_our_network_short: Zal %{group} %{network} bijtreden?
   request_to_join_our_network_description: De groep %{group} was geïnviteerd de netwerk %{network} bijtetreden.
-  request_to_join_short: Zal %{user} %{group} bijtreden?
+  request_to_join_us_short: Zal %{user} %{group} bijtreden?
   request_to_join_us_description: De gebruiker / gebruikster %{user} was geïnviteerd de groep %{group} bijtetreden.
-  request_to_join_us_via_email_description: De email-adres &{email} was geïnviteerd de groep %{group} bijtetreden.
   request_to_join_us_via_email_short: Zal %{email} %{group} bijtreden?
+  request_to_join_us_via_email_description: De email-adres &{email} was geïnviteerd de groep %{group} bijtetreden.
   request_to_join_you: Aanvrag om bijtetreden
+  request_to_join_you_short: Zal %{user} %{group} bijtreden?
   request_to_join_you_description: De gebruiker / gebruikster %{user} heeft aangevraagd om de groep %{group} bijtetreden.
+  request_to_join_your_network: Aanvraag om bijtetreden
+  request_to_join_your_network_short: Zal %{group} %{network} bijtreden?
   request_to_join_your_network_description: De groep %{group} heeft aangevraagd om de netwerk %{network} bijtetreden.
+  request_to_destroy_our_group_short: Zal %{group} verwoest worden?
+  request_to_destroy_our_group_description: De gebruiker / gebruikster %{user} heeft voorgesteld %{group_type} %{group} te verwoesten.
+  request_to_create_council: Aanraag om een raad optestellen
+  request_to_create_council_short: Zal %{group} een raad hebben?
+  request_to_create_council_description: De gebruiker / gebruikster %{user} heeft voorgesteld een raad voor %{group_type} %{group} optestellen.
   request_to_remove_user: Aanvrag een lid te verwijderen
-  request_to_remove_user_description: De gebruiker / gebruikster %{user} heeft voorgesteld %{member} van %{group_type} %{group} te verwijderen.
   request_to_remove_user_short: Zal %{member} van %{group} verwijderd worden?
-  view_label: Bekijken
+  request_to_remove_user_description: De gebruiker / gebruikster %{user} heeft voorgesteld %{member} van %{group_type} %{group} te verwijderen.
+  invite_info: Geef een list van gebruikers / gebruiksters of email-adressen van de mensen die je in deze %{group_type} inviteren wil in.
+  invite_error_redeemed: Invitatie was al terug genomen.
+  invite_error_already_member: Je bent al lid van deze groep.
+  request_exists_error: Aanraag bestaad al voor %{recipient}
+  network_invite_info: Geef de namen van de groepen in die je inviteren wil dit netwerk bijtetreden.
+  recipient_tip: Separeer ontvangers / ontvangsters met komma's, spaties of nieuw regels.
+  you_are_invited: Je bent geïnviteerd bijtetreden.
+  friend_request_message_label: Zeg %{user} waarom je hun contact wil zijn.
+  friend_remove_confirmation: Bent je zeker dat je niet meer langer de contact van %{user} zijn wil?
+  place: plaats
+  icon: Pictogram
+  file: Bestand
+  files: Bestand
+  photo: Foto
+  caption: Onderschrift
+  photo_credit: Eigenaar van foto
+  video_embed: Inbedden
+  size: Grootte
+  illegal_redirect: Illegaal doorsturen
+  redirect_to_foreign_domain: Je verzoekt naar een vreemd domain (%{url}) door te sturen na je login. Veiligheidshalve hebben wij dit parameter van de URL gewisst.
+  save_wiki_before_adding_image: Stel de wiki op voor je een afbeelding toevoegt, alsjeblieft.
+  preview_selected_image: Vooruitblik van geselecteerd afbeelding
+  image_size_info: Select de grootte van de afbeelding die je invoegen wil
+  small: klein
+  medium: medium
+  large: groot
+  full: vol
+  image_options_info: Zal de afbeelding in de wiki wijzen naar de volledig afbeelding?
+  include_full_checkbox: voeg link naar volledig afbeelding in
+  image_select_info: Kies een afbeelding voor invoegen van de afbeeldingen die in je groep al hoog geladen zijn
+  image_upload_info: Laad een nieuw afbeelding in de groep hoog omdat het in de wiki kan gebruikt worden
+  a_message_link: een boodschap
+  a_reply_link: een antwoord
+  confirm_discarding_text_area: Je heel niet opgeslaan werk werd verloren gaan. Klik %{cancel} om verder te editeren.
   activity_contact_created: "%{user} heeft %{other_user} als vriend toegevoegd"
-  activity_group_created: "%{user} heeft %{group_type} %{group} opgesteld"
-  activity_group_destroyed: "%{group} was verwoest van %{user}"
-  activity_message: "%{author} heeft geschreven: %{message}"
-  activity_message_received: 'Je hebt %{message_tag} van %{other_user} gekregen: %{title}'
-  activity_twinkled: '%{user} heeft je boodschap "%{post}" een starretje gegeven'
-  activity_unread: Je hebt %{count} ongelezen [private messages]
-  activity_unread_singular: Je hebt een ongelezen [private message]
-  activity_user_destroyed: "%{user} is afgetreden"
+  activity_user_left_group: "%{user} heeft %{group_type} %{group} verlaten"
   activity_user_joined_group: "%{user} is %{group_type} %{group} bijgetreden"
   activity_user_joined_site: "%{user} is %{group} bijgetreden"
-  activity_user_left_group: "%{user} heeft %{group_type} %{group} verlaten"
-  activity_user_left_site: "%{user} heeft %{group} verlaten"
+  activity_user_destroyed: "%{user} is afgetreden"
+  activity_group_created: "%{user} heeft %{group_type} %{group} opgesteld"
+  activity_group_destroyed: "%{group} was verwoest van %{user}"
   activity_wall_message: "%{author} heeft %{user} geschreven: %{message}"
-  asset_version_list_version_heading: versie
-  created_on: Opgesteld op
-  delete_version_confirm: Bent je zeker dat je deze versie wil wissen?
-  file_size: Bestand grootte
-  file_version_deleted: Bestand versies gewisst
-  format: Formaat
-  full: vol
-  galleries: Galerijen
-  history: Geschiedenis
-  image_options_info: Zal de afbeelding in de wiki wijzen naar de volledig afbeelding?
-  image_select_info: Kies een afbeelding voor invoegen van de afbeeldingen die in je groep al hoog geladen zijn
-  image_size_info: Select de grootte van de afbeelding die je invoegen wil
-  image_upload_info: Laad een nieuw afbeelding in de groep hoog omdat het in de wiki kan gebruikt worden
-  large: groot
+  activity_message: "%{author} heeft geschreven: %{message}"
+  activity_unread: Je hebt %{count} ongelezen [private messages]
+  activity_unread_singular: Je hebt een ongelezen [private message]
+  activity_user_left_site: "%{user} heeft %{group} verlaten"
+  activity_message_received: 'Je hebt %{message_tag} van %{other_user} gekregen: %{title}'
+  activity_twinkled: '%{user} heeft je boodschap "%{post}" een starretje gegeven'
   media_image: Afbeelding
   media_images: Afbeeldingen
-  medium: medium
-  other_formats: Andere formaten
-  regenerate: ' kleine afbeeldingen heerstellen'
-  small: klein
-  version_number: versie %{version}
   zip_file: ZIP-Bestand
+  history: Geschiedenis
+  other_formats: Andere formaten
+  file_version_deleted: Bestand versies gewisst
+  delete_version_confirm: Bent je zeker dat je deze versie wil wissen?
+  galleries: Galerijen
+  created_on: Opgesteld op
+  file_size: Bestand grootte
+  format: Formaat
+  regenerate: ' kleine afbeeldingen heerstellen'
+  version_number: versie %{version}
+  upload_image: Afbeelding hoog laden
+  asset_version_list_version_heading: versie
+  order_changed: Rangorde veranderd
+  error_saving_new_order_message: 'Vergissing bij het opslaan van nieuw orde: %{error_message}'
+  successfully_removed_image: Afbeelding met succes verwijderd! (%{undo_link})
+  view_slideshow: Dia-voorstelling bekijken
+  edit_gallery: Galerij editeren
+  back_to_gallery_link: Terug naar galerij
+  gallery_changing_cover_message: Omslag veranderen...
+  download: Download
+  download_gallery: Galerij downloaden
+  gallery_slideshow_apply_settings_button: gebruiken
+  gallery_undo_link: ongedaan maken
+  remove_from_gallery: Van galerij verwijderen
+  removing_image: Afbeelding verwijderen...
+  move_image_left: Afbeelding naar links bewegen
+  move_image_right: Afbeelding naar rechts bewegen
+  successful_undelete_image: Afbeelding met succes gerestaureerd.
+  saved_new_order: Nieuw orde opgeslaan!
+  error_saving_new_order: Vergissing met het opslaan van nieuw orde!
+  saving_your_changes: Je veranderingen opslaan...
+  activate_js_to_rearrange_photos: Activeer JavaScript om Drag&Drop te gebruiken om je fotos te herordenen!
+  drag_and_drop_to_rearrange_photos: Trek en laat afbeeldingen vallen om ze teherordenen
+  no_images_in_gallery: Geen afbeeldingen in de galerij
+  add_existing_image: Voeg Foto toe
+  add_photo_to_gallery: Klik op een foto om toe te voegen
+  cancel_link: terugnemen
+  file_must_be_image_error: Bestand moet een afbeelding zijn om deel van de galerij te zijn.
+  add_another_file: Voeg nog een bestand toe
+  slideshow_delay_input: Update alle %{input_field} secunden
+  make_album_cover: maak deze afbeelding de omslag van de album
+  album_cover_changed: Omslag van album veranderd
+  upload_images_link: Uploaden
+  upload_a_zip_file_link: ZIP-bestand hoogladen
+  you_are_not_allowed_to_do_that: Je mag dat niet doen!
+  view_label: Bekijken
+  sunday: Zondag
+  monday: Maandag
+  tuesday: Dinsdag
+  wednesday: Woensdag
+  thursday: Donderdag
+  friday: Vrijdag
+  saturday: Zaterdag
+  date_today: Vandaag
+  date_this_week: Deze week
+  date_this_month: Deze maand
+  date_this_year: Deze jaar
+  date_all_time: Alle tijd
+  alert_not_saved: Veranderingen konden niet opgeslaan worden
+  alert_field_errors: Er zijn problemen met de volgende velden
+  alert_saved: Veranderingen opgeslaan
+  alert_permission_denied: Permissie afgewezen
+  csrf_error_message: 'Je aanvraag voor login lijkt een poging deze website te hacken. Maak je geen zorgen: Deze vergissing komt ook met onschuldige aanvragen voor. Wij zijn alleen maar een beetje extra paranoïd. Je moet alleen de pagina nog een keer laden voor je kan verzoeken inteloggen. Je kan deze link volgen om het nog een keer te verzoeken.'
+  set_status_button: Update status
+  my_contacts: Contacten
   anonymous: anoniem
   login_required: Je moet ingeloggd zijn
   login_required_description: Log in voor je deze actie uitvoert, alsjeblieft.
-  permission_denied: Permissie afgewezen
   permission_denied_description: Je heeft niet genoeg permissie deze actie uittevoeren.
-  date_all_time: Alle tijd
-  date_this_month: Deze maand
-  date_this_week: Deze week
-  date_this_year: Deze jaar
-  date_today: Vandaag
-  friday: Vrijdag
-  monday: Maandag
-  saturday: Zaterdag
-  sunday: Zondag
-  thursday: Donderdag
-  tuesday: Dinsdag
-  wednesday: Woensdag
-  alert_field_errors: Er zijn problemen met de volgende velden
-  alert_not_saved: Veranderingen konden niet opgeslaan worden
-  alert_saved: Veranderingen opgeslaan
-  csrf_error_message: 'Je aanvraag voor login lijkt een poging deze website te hacken. Maak je geen zorgen: Deze vergissing komt ook met onschuldige aanvragen voor. Wij zijn alleen maar een beetje extra paranoïd. Je moet alleen de pagina nog een keer laden voor je kan verzoeken inteloggen. Je kan deze link volgen om het nog een keer te verzoeken.'
-  error_saving_new_order_message: 'Vergissing bij het opslaan van nieuw orde: %{error_message}'
-  add_another_file: Voeg nog een bestand toe
-  add_existing_image: Voeg Foto toe
-  add_photo_to_gallery: Klik op een foto om toe te voegen
-  album_cover_changed: Omslag van album veranderd
-  back_to_gallery_link: Terug naar galerij
-  cancel_link: terugnemen
-  download: Download
-  download_gallery: Galerij downloaden
-  edit_gallery: Galerij editeren
-  error_saving_new_order: Vergissing met het opslaan van nieuw orde!
-  file_must_be_image_error: Bestand moet een afbeelding zijn om deel van de galerij te zijn.
-  gallery_changing_cover_message: Omslag veranderen...
-  gallery_slideshow_apply_settings_button: gebruiken
-  gallery_undo_link: ongedaan maken
-  make_album_cover: maak deze afbeelding de omslag van de album
-  move_image_left: Afbeelding naar links bewegen
-  move_image_right: Afbeelding naar rechts bewegen
-  no_images_in_gallery: Geen afbeeldingen in de galerij
-  order_changed: Rangorde veranderd
-  remove_from_gallery: Van galerij verwijderen
-  removing_image: Afbeelding verwijderen...
-  saved_new_order: Nieuw orde opgeslaan!
-  saving_your_changes: Je veranderingen opslaan...
-  slideshow_delay_input: Update alle %{input_field} secunden
-  successful_undelete_image: Afbeelding met succes gerestaureerd.
-  successfully_removed_image: Afbeelding met succes verwijderd! (%{undo_link})
-  you_are_not_allowed_to_do_that: Je mag dat niet doen!
-  caption: Onderschrift
-  file: Bestand
-  files: Bestand
-  icon: Pictogram
-  photo: Foto
-  photo_credit: Eigenaar van foto
-  size: Grootte
-  video_embed: Inbedden
-  add_tags: Voeg tags toe
-  no_tags: geen tags
-  separate_tags: Separeer tags met komma's.
+  permission_denied: Permissie afgewezen
+  chat: Chat
+  left_the_chatroom: chatroom verlaten
   tag: Tag
   tags: Tags
-  set_status_button: Update status
-  welcome_message: Crabgrass maakt organisaties voor sociale veranderingen mogelijk zaken te doen, erover te praten, te samentewerken en netwerken te vormen.
-  welcome_title: Welkom op %{site_title}
-  a_message_link: een boodschap
-  a_reply_link: een antwoord
+  no_tags: geen tags
   add_one_or_more_tags: Voeg een of merdere tags toe, separeer met komma's
-  chat: Chat
-  confirm_discarding_text_area: Je heel niet opgeslaan werk werd verloren gaan. Klik %{cancel} om verder te editeren.
-  illegal_redirect: Illegaal doorsturen
-  include_full_checkbox: voeg link naar volledig afbeelding in
-  left_the_chatroom: chatroom verlaten
-  place: plaats
-  preview_selected_image: Vooruitblik van geselecteerd afbeelding
-  redirect_to_foreign_domain: Je verzoekt naar een vreemd domain (%{url}) door te sturen na je login. Veiligheidshalve hebben wij dit parameter van de URL gewisst.
-  save_wiki_before_adding_image: Stel de wiki op voor je een afbeelding toevoegt, alsjeblieft.
-  view_slideshow: Dia-voorstelling bekijken
-  break_lock_button: Slot breken
-  can_still_save: Je kan nog steeds opslaan.
-  cant_find_wiki_section: Kan gedeelte %{section} van wiki niet vinden
-  changes_made: Veranderingen gedaan %{when}.
-  changes_might_be_overwritten: Je veranderingen kunnen overgeschreven worden.
-  comparing_changes_header: Vergelijk veranderingen tussen %{old_version} en %{new_version}.
-  diff_link: veranderingen bekijken
-  edit_wiki: Wiki editeren
-  force_save_button: Brek slot en sla op
-  formatting_reference_link: Hulp voor editeren
-  insert_image: Afbeelding invoegen
-  leave_editing_wiki_page_warning: Wanneer je deze pagina verlat ga jij je veranderingen verliezen.
-  next_change: Volgende verandering
-  prev_change: Vorige verandering
-  preview: Vooruitblik
-  private_wiki: Privé wiki
+  separate_tags: Separeer tags met komma's.
+  add_tags: Voeg tags toe
+  current_tags: Actueel tags
+  welcome_title: Welkom op %{site_title}
+  welcome_message: Crabgrass maakt organisaties voor sociale veranderingen mogelijk zaken te doen, erover te praten, te samentewerken en netwerken te vormen.
+  wiki: Wiki
   public_wiki: Publiek wiki
+  private_wiki: Privé wiki
+  edit_wiki: Wiki editeren
+  wiki_existed_new_version_created: Deze wiki was al opgesteld van een andere gebruiker / gebruikster. Je veranderingen zijn opgeslaan als nieuwe versie.
+  wiki_is_locked: Deze wiki is op dit moment afgesluiten door %{user}.
+  wiki_section_is_locked: Het gedeelte %{section} is op dit moment afgesluiten door %{user}.
+  leave_editing_wiki_page_warning: Wanneer je deze pagina verlat ga jij je veranderingen verliezen.
+  cant_edit_section: Kan niet %{section} editeren.
+  user_locked_section: "%{user} heeft %{section} afgesluiten."
+  can_still_save: Je kan nog steeds opslaan.
+  changes_might_be_overwritten: Je veranderingen kunnen overgeschreven worden.
+  other_section_locked_error: Kan alleen maar een gedeelte gelijkertijd afsluiten. Je heeft reeds %{section} afgesluiten.
+  break_lock_button: Slot breken
+  force_save_button: Brek slot en sla op
+  versions: Versies
   version: Versie
+  comparing_changes_header: Vergelijk veranderingen tussen %{old_version} en %{new_version}.
+  changes_made: Veranderingen gedaan %{when}.
+  prev_change: Vorige verandering
+  next_change: Volgende verandering
+  formatting_reference_link: Hulp voor editeren
   version_doesnt_exist: Er is geen versie %{version}
   version_exists_error: De wiki is afgesluiten omdat gebruiker / gebruikster %{user} net nieuwe veranderingen opgeslaan heeft. Je kan je veranderingen nog steeds opslaan, maar daardoor ga je de nieuw versie overschrijven.
+  you_are_viewing_version: Je bekijkt versie %{version} van %{user}
+  diff_link: veranderingen bekijken
   version_link: versie bekijken
-  versions: Versies
-  wiki: Wiki
-  wiki_existed_new_version_created: Deze wiki was al opgesteld van een andere gebruiker / gebruikster. Je veranderingen zijn opgeslaan als nieuwe versie.
-  wiki_revert_version: Teruggaan naar versie %{version}
   wiki_section_edit: Dit gedeelte editeren
-  wiki_section_is_locked: Het gedeelte %{section} is op dit moment afgesluiten door %{user}.
+  wiki_revert_version: Teruggaan naar versie %{version}
   wiki_version_creator_heading: persoon
   wiki_version_revert_link: teruggaan
-  you_are_viewing_version: Je bekijkt versie %{version} van %{user}
+  insert_image: Afbeelding invoegen
+  preview: Vooruitblik
+  save_or_cancel_edit_lock_wiki_error: Je heeft deze wiki afgesluiten. Andere gebruikers / gebruiksters zijn niet in staat om het de editeren totdat je ofwel je klik %{save_button} ofwel %{cancel_button} om het editeren de stoppen.
+  cant_find_wiki_section: Kan gedeelte %{section} van wiki niet vinden

@@ -1,39 +1,39 @@
 ru:
-  cookie_disabled_warning: У вас отключены куки. Вы не можете войти в систему, пока не включите куки
-  signup_link: Нужна новая учётная запись?
-  signup_email_info: 'Необязательное поле, используется если вы забудете пароль'
-  forgot_password_link: Я забыл свой пароль
-  login_failure_reason: Неверные логин или пароль
+  cookie_disabled_warning: У вас отключены куки. Вы не можете войти в систему, пока не включите куки.
+  signup_link: 'Регистрация '
+  signup_email_info: 'Необязательно, используется для восстановления пароля'
+  forgot_password_link: Забыли пароль?
+  login_failure_reason: Неверное имя пользователя или пароль.
   signup_success_message: Спасибо за регистрацию!
   login_name: Имя пользователя
-  signup_success: Успешно зарегистрировались
+  signup_success: Регистрация успешна
   logout_success: До свидания
   logout_success_message: Вы вышли из системы.
-  signup_button: 'Зарегистрировать '
+  signup_button: Зарегистрироваться
   login_failed: Невозможно авторизоваться
-  signup_login_name: Ваше имя пользователя
   login_button: Войти
   login: Авторизация
   sign_in: Войти
-  signup_title: Создать ваш аккаунт
-  signup_email: Электронная почта
+  signup_title: Создайте ваш аккаунт
   forgot_password_text: Если вы забыли пароль для входа в систему, мы можем выслать на почту ссылку для создания нового пароля.
-  reset_password_text: Привет, %{user}. Если вы забыли пароль, вы можете установить новый.
+  reset_password_text: Привет, %{user}. Если вы забыли пароль, вы можете создать новый здесь.
   forgot_password_mail_greeting: "%{user}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
-  forgot_password_mail_expiry: Ссылка будет доступна 24 часа. Если вы не успели установить пароль, вы можете перейти на страницу восстановления пароля и запросить новую ссылку.
-  reset_password_mail_greeting: "%{user}, по Вашему запросу пароль был изменён."
-  reset_password_mail_warning: 'Если Вы не запрашивали изменение этого пароля, свяжитесь с нами, пожалуйста. '
-  your_login: Ваш логин
-  invalid_email_text: Введенный адрес электронной почты не действителен.
-  reset_password: Смена пароля
-  invalid_token_text: Ссылка сброса пароля недействительная. Возможно она уже была использована или закончился срок ее действия.
+  forgot_password_mail_expiry: Ссылка будет доступна 24 часа. Если вы не успели установить пароль, вы можете вернуться на страницу восстановления пароля и запросить новую ссылку.
+  reset_password_mail_greeting: "%{user}, по вашему запросу пароль был изменён."
+  reset_password_mail_warning: 'Если вы не запрашивали изменение пароля, пожалуйста, свяжитесь с нами. '
+  invalid_email_text: Адрес email не соответствует формату.
+  reset_password: Сброс пароля
+  reset_password_email_sent: ' Инструкция по сбросу пароля была отправлена на указанный email.'
+  invalid_token: Неверный токен
+  invalid_token_text: Ссылка сброса пароля недействительна. Возможно, она уже была использована или закончился срок ее действия.
   password_reset: Сброс пароля
   password_reset_ok_text: Вы установили новый пароль. Вы можете авторизоваться с вашим новым паролем.
   requested_forgot_password: Вы запросили изменение пароля
   password_was_reset: Ваш пароль был сброшен
-  forgotten_email_address: Какую электронную почту вы использовали при создании аккаунта?
+  forgotten_email_address: Какой email вы использовали при создании аккаунта?
   new_password: Новый пароль
   confirm_new_password: Подтвердите новый пароль
+  congratulations_you_have_signed_up: Поздравляем! Вы подписались на  %{site_title}.
   you_should_receive_instructions_email: Вам отправлено письмо с инструкциями по завершению регистрации.
   email_verification_body: |-
     Вы зарегистрировались на сайте %{site_title} (%{host}).
@@ -48,26 +48,25 @@ ru:
   change_password: Изменить пароль
   password: Пароль
   password_confirmation: Подтверждение пароля
-  signup_confirm_password: Подтвердите пароль
   login_password: Пароль
-  signup_password: Ваш пароль
   remove_your_account: Удалить ваш аккаунт
   anonymize_display_name: Скрыть используемое имя
   anonymize_display_name_info: Заменить везде ваше отображаемое имя на "Аноним".
   destroy_comments: Удалить комментарии
   destroy_comments_info: Удалить все оставленные вами комментарии. Может оказаться сложным для понимания нити диалога другими.
-  confirm_account_removal: Вы действительно хотите удалить аккаунт? Эту операцию нельзя будет отменить и вся информация будет потеряна.
+  confirm_account_removal: Вы действительно хотите удалить аккаунт? Эту операцию нельзя отменить и вся информация будет потеряна.
   account_successfully_removed: Ваш аккаунт был удален. Вся связанная информация удалена из базы данных.
   crabgrass:
     powered_by_html: |
       Этот сайт использует  <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
     report_a_bug: Сообщить об ошибке
-    request_a_feature: Запросить функционал
-    help_pages: Помощь по системе
-    help_translate: Помочь перевести
-  destroy_confirmation: Вы уверены, что хотите удалить %{thing}? Это действие нельзя откатить.
+    request_a_feature: Внести предложение
+    help_pages: Помощь
+    get_involved: Помощь проекту
+    help_translate: Перевод
+  destroy_confirmation: Вы уверены, что хотите удалить %{thing}? Это действие нельзя отменить.
   confirmation: Вы уверены?
-  cancel: Отменить
+  cancel: Отмена
   optional: Не обязательно
   required: Обязательно
   thing_required: "%{thing} Необходимо"
@@ -75,6 +74,7 @@ ru:
   upload: Загрузить
   select_files: Выбрать файлы
   drop_files_here: Перетащите файлы сюда
+  files_pending: "ожидается #{pending} файл(ов)"
   return_link: Вернуться
   back_button: Назад
   send_button: Отправить
@@ -82,14 +82,14 @@ ru:
   share_button: Поделиться
   save_button: Сохранить
   add_button: Добавить
-  cancel_button: Отменить
+  cancel_button: Отмена
   create_button: Создать
-  ok_button: Окей
+  ok_button: ОК
   done: Готово
   show_button: Показать
   show_thing: Показать %{thing}
   confirm: Подтвердить
-  alert: Тревога
+  alert: Оповещение
   loading_progress: Загрузка...
   loadingdotdotdot: Загрузка...
   create_a_new_thing: Создать %{thing}
@@ -109,8 +109,8 @@ ru:
   delete_thing: Удалить %{thing}
   delete: Удалить
   delete_button: Удалить
-  deleted: Стёртый
-  remove: удалить
+  deleted: Удалено
+  remove: Убрать
   autocomplete:
     placeholder:
       enter_name_of_group_or_person: Введите название группы или имя человека
@@ -121,6 +121,15 @@ ru:
       add: Добавить задание
     possible:
       add: Добавить новую возможность
+  mailer:
+    hello: Hello, %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Страница была отредактирована"
+      we_leave_out_details: Мы опустим детали в этом письме, для того-что бы защитить информацию которую вы потенциально хотите сохранить приватной.
+      you_can_find_updates_here: 'Вы найдете больше деталей и лист недавно изменённых страниц тут:'
+      the_page_you_are_watching_description: Страница которую вы просматриваете "%{page_title}" была изменена
+      change_your_settings_here: 'Измените настройки email оповещений тут: %{page_link}'
+      you_can_turn_of_or_configure_notifications: Отключить email оповещения, получить сводку изменений, или получать email каждый раз как страница изменяется.
   exception:
     title:
       not_found: "%{thing} не найдено"
@@ -154,6 +163,7 @@ ru:
   upload_zip_file_link: Передать ZIP-архив
   add_images_to_gallery_link: Добавить изображения в галерею
   too_tall_image_error: Загруженное изображение слишком высокое (максимальная высота {{count}} пикселей)
+  too_wide_image_error: Загруженное изображение должно быть {{count}} пикселей по ширине.
   cant_detect_image_height_error: Не получается определить высоту изображения. Возможно файл поврежден или произошла ошибка на сервере.
   edit_image_header: Редактировать изображение и аудио
   upload_images_and_zip_files_help: 'Не обязательно: выберите изображение или zip фал для загрузки.'
@@ -180,6 +190,16 @@ ru:
   see_more_link: Далее
   see_less_link: Менее
   list_things: Список %{things}
+  thing_was_sent:
+    one: "%{thing} отправлено %{recipient}."
+    few: "%{thing} отправлены %{recipient}."
+    many: "%{thing} отправлены %{recipient}."
+    other: "%{count} %{thing} отправлены."
+  thing_was_not_sent:
+    one: "%{thing} невозможно отправить %{recipient}."
+    few: "%{thing} невозможно отправить %{recipient}."
+    many: "%{thing} невозможно отправить %{recipient}."
+    other: "%{count} %{thing} невозможно отправить."
   user: Пользователь
   users: Пользователи
   people: Люди
@@ -215,6 +235,7 @@ ru:
   dismiss_all_notices: Отклонить все
   dismiss_all_notices_confirmation: Вы действительно хотите отклонить все уведомления?
   action_cannot_be_undone: Эта операция не сможет быть отклонена.
+  locale: Локализация
   description: Описание
   details: Детали
   invite: Пригласить
@@ -250,9 +271,17 @@ ru:
   group_description: Организации это автономные группы людей.
   network_description: Сети это группы включающие в себя организации. Сеть может быть использована для объединения множества организаций или для взаимодействия двух организаций.
   committee_description: Комитет это группа внутри организации или сети. Комитет подчинен организации или сети. Пользователь добавленный в комитет и не включенный в организацию или сеть имеет доступ только к комитету.
+  council_description: Советы - группы со специальными административными возможностями. Любая организация или сеть может иметь совет. Если он есть, его участники будут обладать этими возможностями по сети или организации.
+  council_description_details: Все участники по умолчанию могут редактировать %{group}. если вы хотите ограничить административные полномочия для определенных пользователей, создайте совет и добавьте в него проверенных пользователей.
+  committee_choose_group: 'Выберите группу для этого комитета:'
+  networks_may_not_join_networks: Сеть может присоединить другие сети.
+  may_request_membership_description: Ссылка «Присоединиться к %{group}» появится у вас на странице %{group}. Она будет запрашивать разрешение на вступление, запрос можно принять или отклонить.
   open_group: Открыть %{group}
+  open_group_description: Пользователи уже добавлены в %{group}, для вступления  подтверждение не требуется.
   public_groups: Публичные группы
   group_membership_count: "%{count} участников"
+  membership_exists_error: '%{member} уже член сообщества.'
+  membership_destroy_confirm_message: Вы уверены, что хотите исключить %{entity} из %{group}?
   group_invite_subject: Приглашение вступить в группу "%{group}"
   group_invite_email: |-
     %{from_user} пригласил Вас вступить в группу "%{group}".
@@ -262,6 +291,8 @@ ru:
     %{accept_invite_link}
 
     Если Вы не желаете вступить в эту группу, просто проигнорируйте это письмо.
+  group_destroyed_subject: "%{group_type} %{group} была удалена %{user}!"
+  group_destroyed_email: "%{group_type} %{group} была уничтожена!"
   group_wiki: Wiki группы
   create_public_group_wiki: Публичный
   create_private_group_wiki: Приватный
@@ -275,6 +306,7 @@ ru:
   committee_publicly_visible_description: Комитеты доступны для просмотра нечленам по адресу %{domain}/yourgroupname
   group_members_publicly_visible: Сделать участников видимыми для всех
   group_members_publicly_visible_description: Участники видимы для не-участников по адресу %{domain}/yourgroupname. Также, имя группы будет внесено в список на странице профиля каждого из участников группы (%{domain}/username)
+  members_may_edit_wiki: Все участники могут редактировать запись
   rss_feed: RSS-канал
   group_language: 'Основной язык этой %{group}. '
   my_networks: мои сети
@@ -284,22 +316,43 @@ ru:
   view_requests: посмотреть запросы
   join_group_link: Вступить в %{group_type}
   leave_group_link: Покинуть %{group_type}
+  leave_group_confirmation: 'Вы уверены, что хотите покинуть страницу %{group_type}?
+
+     '
   request_join_group_link: Отправить запрос на присоединение к %{group_type}
+  request_exists: Ваш запрос ожидает подтверждения.
+  join_group_confirmation: Вы уверены, что хотите присоединиться к этой %{group_type}?
   link_name_description: 'Это название служит для указания на эту группу в ссылках и URL. Оно должно содержать только цифры и буквы, без пробелов. '
   descriptive_name_for_display: Наглядное имя, используемое для показа.
   this_is_committee: Этот комитет является частью %{parent_group}.
   headings:
+    page_search: Поиск на страницах
     recent_pages: Свежие страницы
+    info:
+      recent_pages: Эти страницы были созданы или обновлены недавно.
+  my_dashboard: Главная
   uploaded_image_cropped: Загруженное изображение будет обрезано и растянуто до квадрата со стороной 96 пикселов.
   select_image_file: выберите файл изображения
   or_image_url: или URL изображения
+  upload_image_link: Загрузить изображение
+  remove_image_link: Удалить изображение
   save_changes: Сохранить изменения
   username: Имя пользователя
   display_name: Отображаемое имя
   email: Электронный адрес
   language: Язык
   time_zone: Часовой пояс
+  do_you_want_to_receive_email_notifications: Вы хотите получать уведомления на электронную почту об изменениях на просматриваемых страницах?
+  notification_select:
+    none: 'Нет: не присылать уведомления об изменениях'
+    single: 'Да: присылать уведомления об изменениях'
+    digest: 'Да: ежедневный отчет об изменениях'
   send_message_link: Отправить сообщение
+  messages_with: Диалог с %{other_user}
+  message_to_self_error: Вы не можете говорить с собой
+  message_you_wrote_caption: 'Вы:'
+  message_user_wrote_caption: "%{user} :"
+  unread_private_message: Есть непрочитанное приватное сообщение от %{user}
   home: Домой
   menu_me: Я
   menu_groups: Группы
@@ -308,18 +361,33 @@ ru:
   menu_networks: Сети
   menu_link_logout: Выход
   menu_admin: Администрирование
+  account_settings: Настройки аккаунта
+  back_to_page: Вернуться на страницу
   back_to_group: назад к %{group_name}
+  pages: Страницы
   recent_pages: Свежие страницы
   my_pages: Мои страницы
+  properties: Свойства
+  popular_pages: Популярные страницы
   access: Доступ
+  active_filters: Активные фильтры
+  all_pages: Все страницы
   created_by_me: создано
+  created_by_user: Создано %{user}
+  created_by_user_description: Поиск страниц создан конкретным человеком.
+  created_by_dotdotdot: Создано...
   starred_by_me: отмеченно звёздочкой
+  starred_by_user: Отмечено пользователем %{user}
+  watched_by_user: Просмотрено %{user}
   edited_by_me: Редактированный
+  edited_by_user: Изменено %{user}
+  owned_by_user: Принадлежит %{user}
   most_active: Самые активные
   most_viewed: Наиболее просматриваемые
   starred: отмеченно звёздочкой
   viewed: Просмотрено
   edited: Редактированный
+  type: Тип
   all_page_types: все типы страниц
   edit_title: редактировать заглавие
   data_for_page_missing: Данные для этой страницы отсутствуют.
@@ -328,15 +396,22 @@ ru:
   created: создано
   unread: непрочитанные
   read: прочитано
+  page_name_description: Дополнительное уникальное имя (используется для создания URL для этой страницы)
+  filter_tag_description: Поиск страниц по определенным тэгам.
   email_notice_subject: Проверьте страницу "%{title}"
   email_notice_hello_with_message: 'Приветствуем, %{from} прислал(а) вам веб-страницу со следующим сообщением: %{message}'
   email_notice_hello: Приветствуем, %{from} прислал(а) вам веб-страницу.
   email_notice_access: 'У вас есть доступ к этой странице: '
   email_link_expires: Эта ссылка станет недействительной через %{days} дней.
+  page_notice_title: <user>%{from}</user> отправлена ваша страница "%{page_title}"
+  page_notice_title_with_message: '<user>%{from}</user> отправлена ваша страница "%{page_title}" с сообщением:'
+  page_updated: <user>%{from}</user> корректировал страницу "%{page_title}"
+  page_update: Страница обновлена
   watch_checkbox: Следить за обновлениями
   add_star_link: Добавить звёздочку (%{star_count})
   remove_star_link: Убрать звёздочку (%{star_count})
   public_checkbox: Публичный
+  public_checkbox_help: Если поставить здесь галочку, любой пользователь сможет просматривать эту страницу.
   page_details_link: "Детали %{page_class}"
   delete_page_link: Удалить %{page_class}
   destroy_page_via_shred: Уничтожить незамедлительно
@@ -352,11 +427,22 @@ ru:
   edit_attachments: Редактировать вложения
   current_attachments: Имеющиеся вложения
   add_new_attachment: Прикрепить новый материал
+  page_access_admin: Полный доступ
+  page_access_none: Нет доступа
+  page_access_view: Только чтение
   share_page_link: Поделиться %{page_class}
   share_page_recipients: Поделиться этой %{page_class} с
   notify_page_link: Отправить уведомление
   notify_current_access: "<b>Текущий доступ:</b> уведомлять людей или группы, которые уже имеют доступ к этой странице."
+  notification_message: Уведомление
+  send_only_with_encryption: Отправлять, только если возможно зашифрованное распространение
+  share_send_notification: Отправить уведомление
+  send_email: Отправить Email
+  shared_page_success: Вы успешно поделились этой страницей.
+  notify_success: Вы успешно отправили уведомления.
+  share_grant_required_error: "%{name} не может просматривать эту страницу. Нужно предоставить расширенный доступ."
   notify_no_access_error: К сожалению, "%{name}" не имеет доступа к этой странице.
+  share_already_exists_error: '"%{name}" уже имеет доступ к этой странице.'
   name_or_email_not_found: '«%{name}» не совпадает ни с одним именем пользователя или группы и не является действительным адресом электронной почты.'
   contribute_content_link: Создать страницу
   page_create_owner: Создатель страницы
@@ -364,35 +450,111 @@ ru:
   only_me: Я
   page_added_to_group: Эта страница будет добавлена в группу %{group_name} типа %{group_type}.
   additional_page_access: Дополнительный доступ
+  page_owner_error: Поле «Владелец» не может быть пустым.
   action: действие
+  page_history_add_star: "%{user_name} отметил звезду"
+  page_history_added_comment: "%{user_name} добавил комментарий"
+  page_history_change_title: "%{user_name} изменил название страницы"
+  page_history_deleted_page: "%{user_name} удалил страницу"
+  page_history_destroyed_comment: "%{user_name} удалил комментарий"
+  page_history_details_change_title: 'От: "%{from}" Кому: "%{to}"'
+  page_history_granted_group_full_access: "%{user_name} предоставил полный доступ к группе %{item_name}"
+  page_history_granted_group_read_access: "%{user_name} предоставил доступ к чтению группы %{item_name}"
+  page_history_granted_group_write_access: "%{user_name} предоставил возможность писать в группе %{item_name}"
+  page_history_granted_user_full_access: "%{user_name} предоставил полный доступ пользователю %{item_name}"
+  page_history_granted_user_read_access: "%{user_name} предоставил доступ к чтению для пользователя %{item_name}"
+  page_history_granted_user_write_access: "%{user_name} предоставил возможность писать пользователю %{item_name}"
+  page_history_make_public: "%{user_name} сделал страницу публичной"
+  page_history_remove_star: "%{user_name} убрал звезду"
+  page_history_revoked_group_access: "%{user_name} отменил доступ к группе %{item_name}"
+  page_history_revoked_user_access: "%{user_name} отменил доступп к группе пользователю %{item_name}"
+  page_history_start_watching: "%{user_name} начал просматривать эту страницу"
+  page_history_stop_watching: "%{user_name} закончил просматривать эту страницу"
+  page_history_updated_comment: "%{user_name} обновил комментарий"
+  page_history_updated_content: "%{user_name} обновил содержимое страницы"
+  page_history_user_created_page: "%{user_name} создал страницу"
   wiki_page_description: 'Текстовый документ свободной формы. '
   wiki_page_display: вики
   gallery_description: Загрузить множество изображений, или упорядочить имеющиеся изображения в набор.
   gallery_display: галерея
   asset_page_description: Загружайте изображение, документ, таблицу, презентацию или любой другой файл.
   asset_page_display: файл
+  select_file_to_upload: Выберите файл для загрузки.
   discussion_page_description: Групповое обсуждение отдельного вопроса.
   discussion_page_display: Обсуждение группой
+  ranked_vote_page_display: Оцениваемое голосование
   survey_page_display: Опрос
   rate_many_page_description: Одобрить, или отвергнуть каждый из вариантов.
   rate_many_page_display: голосование за одобрение
   task_list_page_description: Список пунктов для выполнения.
   task_list_page_display: список задач
+  page_group_vote: Опросы и голоса
+  page_group_text: Текст и обсуждение
+  page_group_media: Мультимедиа
+  page_group_planning: Инструменты для планирования.
+  pending_tasks: Приближающиеся задачи
+  completed_tasks: Выполненные задачи
+  no_pending_tasks: Нет приближающихся задач
+  no_completed_tasks: Нет выполненных задач
+  completed: Выполненно
+  vote:
+    really_remove_this: Вы действительно хотите удалить эту опцию?
+  vote_ok: хорошо
+  vote_bad: плохо
+  vote_none: Нет
+  vote_no: 'нет'
+  ranked_vote_instructions: Перетащите пункты в следующий список в порядке уменьшения от самого предпочтительного к наименее предпочтительному.
+  confirm_vote_button: Подтвердить голос
+  edit_my_vote_tab: Изменить мой голос
+  show_results_tab: Показать результаты
   save_survey_button: Сохранить опрос
   survey_may_see_responses: Можно ли видеть ответы?
   survey_may_rate: Можно ли оценивать ответы?
   survey_may_see_ratings: Можно ли видеть оценки?
+  survey_question_label: 'Вопрос:'
   survey_description_heading: Описание
+  select_many_choices_label: 'Выберите несколько вариантов ответа:'
+  select_one_choices_label: 'Выберите один из вариантов ответа:'
+  private_question_label: Приватный вопрос
   survey_response_by: Ответ от %{login}
+  survey_rated_by_1_person_caption: Оценил один человек
+  survey_rated_by_x_people_caption: Оценили %{count}
+  survey_respond_button: Ответить
   survey_rate_this_response_heading: Оценить этот ответ
   survey_your_rating_heading: 'Ваша оценка этого ответа'
   survey_questions: Вопросы
+  add_long_text_question_link: Развернутый ответ
+  add_select_many_question_link: Выберите несколько ответов
+  add_select_one_question_link: Выберите один ответ
+  add_short_text_question_link: Краткий ответ
   upload_image_question_link: Загрузить изображение
+  survey_introduction_tab: Вступление
   survey_list_all_tab: Перечислить все ответы
   survey_my_response_tab: Мой ответ
+  survey_please_check_and_rate_message: Проверьте, пожалуйста, свои ответы и оцените другие.
+  survey_please_check_message: Проверьте, пожалуйста, свои ответы.
+  survey_thanks_submit_message: Спасибо за ответ.
   current_video_sources: 'В настоящий момент поддерживаются: youtube, blip.tv, google video, vimeo'
   video_embed_code_prompt: Код для вставки видео из внешних источников
+  permissions_key: Ключ
+  public_description: Все в интернете
+  peers_description: Участники ваших групп
+  friends_description: Ваши друзья
+  may_view_label: Видит мой профиль?
+  may_see_contacts_label: Видит мои контакты?
+  may_see_contacts_description: Разрешите людям видеть Ваши контакты.
+  may_see_groups_label: Видит мои группы?
+  may_see_groups_description: Разрешите людям видеть Ваши группы.
+  may_pester_label: Поделиться со мной?
+  may_pester_description: Разрешите людям отправлять Вам сообщения, страницы и приглашения.
+  may_request_contact_label: Добавить контакт?
+  may_request_contact_description: Разрешите людям отправлять заявки в контакты.
+  view_profile: Просмотреть профиль
+  profile_member_since: Участник с
+  banner: Фон
+  banner_info: Оптимальный размер %{optimal_dimensions} пикселей
   organizational_role: роль в организации
+  phone_number: Номер телефона
   email_addresses: Электронные адреса
   post_message: Отправить сообщение
   request_friend_link: Добавить в мои контакты
@@ -400,34 +562,88 @@ ru:
   edit_profile_link: Редактировать профиль
   profile_saved: Ваш профиль был сохранён.
   requests: Запросы
+  request: Заявка
   incoming: Входящие
   outgoing: Исходящие
   try_again: Попробовать ещё
+  send_request_button: Отправить заявку
   send_invites_button: Отправить приглашения
+  all_requests: Все заявки
+  activerecord:
+    models:
+      request_to_friend: Заявки на добавление в контакты
+      request_to_join_our_network:
+        one: Приглашение
+        few: Приглашения
+        many: Приглашения
+        other: Приглашения
+      request_to_destroy_our_group: Запрос на удаление группы
+      request_to_join_us:
+        one: Приглашение
+        few: Приглашения
+        many: Приглашения
+        other: Приглашения
+      request_to_join_us_via_email:
+        one: Приглашение
+        few: Приглашения
+        many: Приглашения
+        other: Приглашения
+      request_to_join_you: Заявка
+      request_to_join_your_network: Заявка
+      request_to_create_council: Запрос на создание совета
+      request_to_remove_user: Запрос на исключение участника
+  request_to_friend: Заявки на добавление в контакты
   request_to_friend_description: Пользователь %{user} хотел бы стать товарищем пользователя %{other_user}
+  request_to_destroy_our_group: Запрос на удаление группы
+  request_to_join_our_network_short: Присоединить %{group} к %{network}?
   request_to_join_our_network_description: группе %{group} предложено присоединиться к сети %{network}
+  request_to_join_us_short: Присоединить %{user} к %{group}?
   request_to_join_us_description: '%{user} был приглашён в %{group}'
+  request_to_join_us_via_email_short: Связать %{email} с %{group}?
   request_to_join_us_via_email_description: '%{email} было предложено присоединиться к %{group}'
+  request_to_join_you: Заявка
+  request_to_join_you_short: Присоединить %{user} к %{group}?
   request_to_join_you_description: '%{user} запросил вступление в члены %{group}'
+  request_to_join_your_network: Заявка
+  request_to_join_your_network_short: Присоединить %{group} к %{network}?
   request_to_join_your_network_description: От группы %{group} поступил запрос на присоединение к сети %{network}
+  request_to_destroy_our_group_short: '%{group} будет уничтожена?'
+  request_to_destroy_our_group_description: Пользователь %{user} предложил уничтожить %{group_type} %{group}.
+  request_to_create_council: Запрос на создание совета
+  request_to_create_council_short: Создать совет для %{group}?
+  request_to_create_council_description: Пользователь %{user} предложил создать совет для %{group_type} %{group}.
+  request_to_remove_user: Запрос на исключение участника
+  request_to_remove_user_short: '%{member} будет исключен из %{group}?'
+  request_to_remove_user_description: Пользователь %{user} предложил исключить %{member} из %{group_type} %{group}.
   invite_info: Введите список авторизационных имён пользователей, или адресов электронной почты людей, которых вы хотите  пригласить для присоединения к это(му/той) %{group_type}.
   invite_error_already_member: Вы уже являетесь членом этой группы.
   network_invite_info: 'Введите имена групп, которым вы хотите предложить присоединиться к данной сети. '
   recipient_tip: Разделяйте получателей запятыми, пробелами или переводами строки.
+  you_are_invited: Вы получили приглашение.
+  friend_request_message_label: Сообщите %{user} почему вы хотите добавиться в контакты.
+  place: место
   icon: Пиктограмма
   file: файл
   files: Файлы
   photo: Фотография
   caption: Заглавие
   video_embed: Встроить
+  size: Размер
+  save_wiki_before_adding_image: Пожалуйста, сохраните запись, перед тем как пикрепить к ней изображение.
+  preview_selected_image: Предпросмотр выбранного изображения
+  small: маленький
   medium: средний
   large: большой
   full: полный
   include_full_checkbox: Включить ссылку на целое изображение
+  image_upload_info: Загрузите новое изображение в группу, чтобы его можно было использовать в wiki.
+  a_message_link: сообщение
+  a_reply_link: цитата
   confirm_discarding_text_area: Вся ваша несохранённая работа будет утрачена. Нажмите %{cancel}, чтобы продолжить редактирование.
   activity_contact_created: "%{user} добавил %{other_user} в число товарищей"
   activity_user_left_group: "%{user} покинул %{group_type} %{group}"
   activity_user_joined_group: "%{user} вступил в %{group_type} %{group}"
+  activity_user_joined_site: "%{user} присоединился к %{group}"
   activity_user_destroyed: "пользователь %{user} удалил свою учётную запись"
   activity_group_created: "%{user} создал %{group_type} %{group}"
   activity_group_destroyed: "группа %{group} была ликвидирована пользователем %{user}"
@@ -435,8 +651,11 @@ ru:
   activity_message: "%{author} написал(а): %{message}"
   activity_unread: У вас %{count} непрочитанных [личных сообщений]
   activity_unread_singular: У вас есть непрочитанное [private message]
+  activity_user_left_site: "%{user} покинул %{group}"
+  activity_message_received: 'Вы получили %{message_tag} от%{other_user}%{title}: '
   media_image: Изображение
   media_images: Изображеия
+  zip_file: Zip File
   history: История
   other_formats: Другие форматы
   file_version_deleted: версия файла удалена
@@ -448,12 +667,16 @@ ru:
   regenerate: пересоздать пиктограммы
   version_number: версия %{version}
   upload_image: Загрузить изображение
+  asset_version_list_version_heading: версия
   order_changed: Порядок изменён.
   successfully_removed_image: Изображение успешно удалено! (%{undo_link})
   view_slideshow: Показать слайд-шоу
   edit_gallery: Редактировать галерею
+  back_to_gallery_link: Вернуться в галерею
+  gallery_changing_cover_message: Меняю обложку...
   download: Скачать
   download_gallery: Скачать галерею
+  gallery_slideshow_apply_settings_button: применить
   gallery_undo_link: отменить
   remove_from_gallery: Удалить из галереи
   removing_image: Удаление изображения...
@@ -473,8 +696,10 @@ ru:
   add_another_file: Добавить ещё один файл
   slideshow_delay_input: Обновлять через каждые %{input_field} секунд
   make_album_cover: Сделать это изображение обложкой альбома
+  album_cover_changed: Обложка альбома изменена
   upload_images_link: Загрузить
   upload_a_zip_file_link: Передать ZIP-архив
+  view_label: Просмотр
   sunday: Воскресенье
   monday: Понедельник
   tuesday: Вторник
@@ -485,6 +710,7 @@ ru:
   date_today: Сегодня
   date_this_week: На этой неделе
   date_this_month: Текущий месяц
+  date_this_year: Этот год
   date_all_time: Любое время
   alert_not_saved: Изменения не могут быть сохранены
   alert_field_errors: Обнаружены проблемы со следующими полями
@@ -493,12 +719,14 @@ ru:
   csrf_error_message: 'Ваш запрос авторизации похож на попытку взлома этого сайта. Не волнуйтесь, такая ошибка часто случается даже для обычных запросов. Просто мы очень подозрительны. Вам всего лишь надо перезагрузить эту страницу перед следующей попыткой авторизации. Чтобы попробовать снова, Вы можете пройти по этой ссылке: '
   set_status_button: Установить статус
   my_contacts: Друзья
+  anonymous: аноним
   login_required: Необходимо войти
   login_required_description: 'Пожалуйста, войдите, чтобы произвести это действие. '
   permission_denied_description: У Вас не достаточно полномочий для выполнения этого действия.
   permission_denied: Запрещено
   chat: Чат
   left_the_chatroom: покинул комнату чата
+  tag: Тэг
   tags: Метки
   no_tags: без меток
   add_one_or_more_tags: Добавить одну или несколько меток, разделённых запятыми
@@ -507,14 +735,34 @@ ru:
   current_tags: Текущие метки
   welcome_title: Добро пожаловать на %{site_title}
   welcome_message: Crabgrass позволяет организациям, выступающим за изменение общества, выполнять поставленные задачи, высказываться, сотрудничать и связываться между собой.
+  wiki: Запись
+  public_wiki: Публичная запись
+  private_wiki: Приватная запись
+  edit_wiki: Редактировать запись
+  wiki_existed_new_version_created: Другой пользователь уже создал такую wiki-страницу. Внесенные вами изменения будут сохранены как новая версия.
+  wiki_is_locked: Эта wiki пока закрыта пользователем %{user}.
+  wiki_section_is_locked: Раздел %{section} пока закрыт пользователем %{user}.
+  leave_editing_wiki_page_warning: Если вы сейчас закроете эту страницу, ваши изменения не сохранятся.
+  cant_edit_section: Невозможно редактировать %{section}.
+  user_locked_section: "%{user} заблокировал %{section}."
+  can_still_save: Вы еще можете сохранить изменения.
+  changes_might_be_overwritten: Ваши изменения могут быть перезаписаны.
+  other_section_locked_error: За один раз вы можете закрыть только один раздел. Вы уже закрыли %{section}.
+  break_lock_button: Снять блокировку
+  force_save_button: Снять блокировку и сохранить
   versions: версии
+  version: Версия
   comparing_changes_header: Сравнение изменений, сделанных %{user} в %{when} с %{old_version}  до %{new_version}
+  changes_made: Изменения были внесены %{when}.
   prev_change: пред. изменение
   next_change: следующее изменение
   formatting_reference_link: описание форматирования
   version_doesnt_exist: Версии с номером %{version} не существует
   you_are_viewing_version: Вы просматриваете версию %{version} от пользователя %{user}
   diff_link: различия
+  version_link: посмотреть версию
   wiki_section_edit: Править этот раздел
   wiki_revert_version: Откатиться к версии %{version}
   preview: Предварительный просмотр
+  save_or_cancel_edit_lock_wiki_error: Вы закрыли эту wiki-страницу. Другие не смогут редактировать ее, пока вы не завершите редактирование, нажав или на кнопку %{save_button}, или %{cancel_button}.
+  cant_find_wiki_section: Не могу найти pаздел wiki %{section}

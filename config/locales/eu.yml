@@ -15,6 +15,11 @@ eu:
   login: Sartu
   sign_in: Hasi saioa
   signup_title: Sortu zure kontua
+  forgot_password_text: Izena emateko erabili zenuen pasahitza ahaztu baduzu, berri bat sortzea ahalbidetuko dizun esteka dakarren e-posta bat bidal diezazukegu.
+  reset_password_text: Kaixo, %{user}. Izena emateko erabili zenuen pasahitza ahaztu baduzu, hemen berri bat bidal dezakezu.
+  forgot_password_mail_greeting: "%{user}, zure pasahitza berrezartzeko, bisitatu"
+  forgot_password_mail_expiry: Esteka hau 24 ordu barru iraungiko da. Denbora hori igarotakoan zure pasahitza berrezarri beharko bazenu, pasahitza ahaztu dut orrialdea berriz bisitatu beharko duzu esteka berri bat eskatzeko.
+  reset_password_mail_greeting: "%{user}, zure pasahitza berrezarria izan da zuk eskatu bezala."
   reset_password_mail_warning: Zuk zure pasahitza aldatzerik eskatu ez baduzu, mesedez jarri gurekin harremanetan.
   invalid_email_text: Adierazi duzun e-posta helbidea okerra da.
   reset_password: Berrezi pasahitza
@@ -30,6 +35,16 @@ eu:
   confirm_new_password: Baieztatu pasahitz berria
   congratulations_you_have_signed_up: Zorionak! %{site_title}-(e)n izena eman duzu.
   you_should_receive_instructions_email: Zure kontua sortzea nola burutu azaltzen duen e-posta bat jaso behar zenuke.
+  email_verification_body: |-
+    %{site_title}(e)n izena eman duzu (%{host}).
+
+    Jarraitu aurretik zure e-posta hau dela frogatu behar duzu.
+
+    Egin klik ondoko estekan edo kopiatu eta itsatsi ezazu zure nabigatzailean:
+
+    %{verify_email_link}
+
+    Webgune honetan izena eman nahi ez baduzu, ez egin kasurik e-posta honi.
   change_password: Aldatu pasahitza
   password: Pasahitza
   password_confirmation: Pasahitzaren baieztapena
@@ -38,9 +53,12 @@ eu:
   anonymize_display_name: Izena anonimoa bihurtu
   anonymize_display_name_info: Leku guztietan zure izenaren ordez 'anonimoa' erakusten du
   destroy_comments: Suntsitu iruzkinak
+  destroy_comments_info: Honek orrialdeetan egin zenituen iruzkinak ezabatuko ditu eta besteek egin zituzten iruzkinak ulertzea zaildu dezake.
   confirm_account_removal: Ziur al zaude zure kontua ezabatu nahi duzula? Urrats hau ezin da desegin eta zure datuak galdu egin dira.
   account_successfully_removed: Zure kontua ondo ezabatu da. Bera eta berarekin lotutako datu guztiak ezabatuko ditugu datu-basetik.
   crabgrass:
+    powered_by_html: |
+      Gune hau <a href="https://we.riseup.net/crabgrass">crabgrass</a>-ekin eginda dago%{description}
     description_html: |+
       , sare-antolaketarako <a href="https://www.gnu.org/licenses/agpl.html">AGPL lizentziadun</a> software librea.
 
@@ -72,10 +90,26 @@ eu:
   ok_button: Ados
   done: Eginda
   show_button: Erakutsi
+  show_thing: Erakutsi %{thing}
   confirm: Baieztatu
+  alert: Alerta
   loading_progress: Kargatzen...
   loadingdotdotdot: Kargatzen...
+  create_a_new_thing: Sortu %{thing} berri bat
+  create_thing: Sortu %{thing}
+  created_by: 'Nork sortuta:'
+  updated_by: 'Nork eguneratuta:'
+  created_by_user_on: '%{user}(e)k sortua %{when}(e)an.'
+  approve: Onartu
+  reject: Baztertu
+  pending: Itxaroten
+  rejected: Baztertuta
+  approved: Onartuta
   saved: Gordeta
+  destroy: Suntsitu
+  thing_destroyed: "%{thing} suntsituta"
+  destroy_thing: Suntsitu %{thing}
+  delete_thing: Ezabatu %{thing}
   delete: Ezabatu
   delete_button: Ezabatu
   deleted: Ezabatuta
@@ -85,24 +119,48 @@ eu:
       enter_name_of_group_or_person: Sartu talde edo pertsona baten izena
       enter_name_of_group: Sartu talde baten izena
       enter_name_of_person: Sartu pertsona baten izena
+  actions:
+    task:
+      add: Gehitu ataza berria
   mailer:
     hello: Kaixo %{user_name}
+    page_history:
+      a_page_has_been_modified: "%{site_title} : Orrialde bat aldatu da"
+      you_can_find_updates_here: 'Hemen xehetasun gehiago aurkituko duzu eta baita duela gutxi aldatutako orrialdeen zerrenda ere:'
+      change_your_settings_here: 'Aldatu zure e-posta jakinarazpenen ezarpenak hemen: %{page_link}'
   exception:
     title:
+      not_found: "%{page_link} ez da aurkitu"
       unauthorized: Saioa hastea ezinbestekoa da
+      forbidden: Ez duzu baimenik
       group:
         not_found: Taldea ez da aurkitu
     description:
       not_found: Barkatu, ezin izan dugu bila zenbiltzana aurkitu.
       unauthorized: Mesedez, saioa has ezazu ekintza hori egiteko.
+      forbidden: Barkatu, ez daukazu eragiketa hau egiteko baimenik.
+      group:
+        not_found: Barkatu, ezin izan dugu bilatzen zenbiltzan taldea aurkitu.
+  image_count: '%{count}tik %{number}. irudia'
+  image_count_total: "%{count} argazki"
   show_gallery: Erakutsi galeria
   edit_image: Editatu irudia
+  add_images_or_zips: Gehitu irudiak edo Zip fitxategia
+  add_images_or_zips_explaination: Zip fitxategia automatikoki erauzia izango da eta galerian sartuko da
   confirm_image_delete: Ziur al zaude irudi hau ezabatu nahi duzula? Ekintza hau ezin da desegin.
+  no_title_given: "(izenbururik ezarri gabe)"
   add_images: Gehitu irudiak
   edit_images: Editatu irudiak
   upload_new_image: Igo irudi berria
+  type_your_messages_here: Idatzi zure mezuak hemen eta sakatu Enter...
+  group_not_allowed_to_view_image_error: Orrialde honen jabea den taldeak ez du irudi hau ikusteko baimenik.
   add_comment: Gehitu iruzkina
+  image_title: 'Irudiaren izenburua: {{title}}'
   upload_zip_file_link: Igo Zip fitxategi bat
+  add_images_to_gallery_link: Gehitu irudia galeriara
+  too_tall_image_error: Igotako irudia altuegia da (gehienezko garaiera {{count}} pixel dira)
+  too_wide_image_error: Igotako irudiak zehazki {{count}} pixeleko zabalera izan behar du
+  cant_detect_image_height_error: Ezin izan da irudiaren garaiera detektatu. Irudia hondatuta dago edo zerbitzarian errore bat gertatu da
   edit_image_header: Editatu irudia eta audioa
   upload_images_and_zip_files_help: 'Hautazkoa: hautatu igotzeko irudia edo zip fitxategiak.'
   close_and_reload_gallery: Itxi eta birkargatu galeria
@@ -113,6 +171,7 @@ eu:
   no_search_results: Emaitzarik ez
   not_found: Ez da aurkitu
   see_all_link: Ikusi denak
+  total: "%{count} guztira"
   all: Guztiak
   none: Bat ere ez
   or: edo
@@ -126,6 +185,7 @@ eu:
   return: Itzuli
   see_more_link: Gehiago
   see_less_link: Gutxiago
+  list_things: Zerrendatu %{things}(e)ak
   user: Erabiltzailea
   users: Erabiltzaileak
   people: Jendea
@@ -134,8 +194,12 @@ eu:
   recipients: Hartzaileak
   recipient: Hartzailea
   owner: Jabea
+  created_by_entity: '%{entity}(e)k sortua'
+  approved_by_entity: '%{entity}(e)k onartua'
+  rejected_by_entity: '%{entity}(e)k baztertua'
   contacts: Kontaktuak
   friends: Kontaktuak
+  member_groups_of_network: Kideak diren taldeak
   me: Ni
   back: Atzera
   share: Partekatu
@@ -165,6 +229,7 @@ eu:
   print: Inprimatu
   show: Erakutsi
   hide: Ezkutatu
+  display: Erakutsi
   message: Mezua
   private_message_notice: Mezu pribatuen jakinarazpena
   visits: Bisitak
@@ -174,12 +239,27 @@ eu:
   organizations: Erakundeak
   network: Sarea
   networks: Sareak
+  committee: Batzordea
+  committees: Batzordeak
+  council: Kontseilua
+  councils: Kontseiluak
   members: Kideak
   structure: Egitura
+  group_creation_info: 'Lau talde mota daude:'
+  group_description: Erakundeak, autonomoak diren taldeak dira eta beraien kideak pertsonak dira.
+  network_description: Sareak, erakundez osatutako taldeak dira. Erakunde bat hainbat erakunde elkartzeko erabil daiteke, edo bi erakundek elkarrekin lan egiteko.
+  committee_description: Batzordeak erakunde eta sareen barneko taldeak dira. Batzorde bat bere gurasoa den erakundearen edo sarearen guztiz menpekoa da. Erakundeko edo sareko kide ez den erabiltzaileren bat batzordera gehituz gero, erabiltzaileak batzordera bakarrik izango du sarrera.
+  council_description: Kontseiluak kudeaketa botere bereziak dituzten taldeak dira. Erakunde eta sare bakoitzak kontseilu bat izan behar du. Kontseilu horretako kide diren pertsonek sarea edo erakundea kudeatuko dute.
+  council_description_details: Lehenetsitakoa %{group} kide guztiek aldatu dezaketela da. Kudeaketa boterea erabiltzaile zehatz batzuek bakarrik izatea nahi izanez gero, sortu kontseilu bat eta gehi iezazkiozu erabiltzaileak.
+  committee_choose_group: 'Hautatu talde bat batzorde honetarako:'
+  network_committees_may_not_join_networks: Beste sareetako batzordeak ezin dira kide izan.
+  networks_may_not_join_networks: Sareak ezin dira beste sare batzuetako kide izan.
+  open_group: Ireki %{group}
   shared_groups: Partekatutako taldeak
   public_groups: Talde publikoak
   membership_requests: Kidetasun eskaerak
   group_membership_count: "%{count} kide"
+  group_invite_subject: '"%{group}" taldeko kide egiteko gonbidapena'
   group_destroyed_subject: "%{user}(e)k %{group} %{group_type} ezabatu du!"
   group_destroyed_email: "%{group} %{group_type} suntsitua izan da!"
   group_wiki: Taldeko wikia
@@ -188,10 +268,14 @@ eu:
   public_group_wiki: Publikoa
   private_group_wiki: Pribatua
   group_publicly_visible: Egin %{group} publikoki ikusgarria
+  committee_publicly_visible: Batzordeak publikoki erakutsi
   networks_publicly_visible: Egin sareak publikoki ikusgarriak
   allow_membership_requests: Baimendu kide izateko eskaerak
   group_successfully_created: Taldea ondo sortu da.
+  committee_publicly_visible_description: 'Kide ez direnek batzordeak hemen ikus ditzakete: %{domain}/zuretaldearenizena'
+  networks_publicly_visible_description: 'Kide ez direnek sareak hemen ikus ditzakete: %{domain}/zuretaldearenizena'
   group_members_publicly_visible: Egin kideak publikoki ikusgarriak
+  group_members_publicly_visible_description: 'Kide ez direnek kideak hemen ikus ditzakete: %{domain}/zuretaldearenizena. Kideen profil orrialdeetan %{group} zerrendatzen da (%{domain}/erabiltzaileizena)'
   members_may_edit_wiki: Kide guztiek editatu dezakete wikia
   rss_feed: RSS jarioa
   group_language: '%{group} honetako hizkuntza nagusia.'
@@ -200,12 +284,16 @@ eu:
   basic_settings: Oinarrizko ezarpenak
   send_invites: Bidali gonbidapenak
   view_requests: Ikusi eskaerak
-  join_group_link: Sartu %{group_type}(e)n
+  add_members_to_committee: Gehitu talde bat kide bezala batzorde honi. Talde gurasoko kide ez diren pertsonak gehitzeko gonbidapenak bidali.
+  join_group_link: '%{group_type}(e)n kide egin'
   leave_group_link: Utzi %{group_type}
   leave_group_confirmation: Ziur al zaude %{group_type} utzi nahi duzula?
-  request_join_group_link: Eskatu %{group_type}(e)n sartzea
-  request_exists: Zure sartze eskaera onarpenaren zain dago.
-  join_group_confirmation: Ziur al zaude %{group_type}(e)n sartu nahi duzula?
+  request_join_group_link: Eskatu %{group_type}(e)n kide egitea
+  request_exists: Kide egiteko zure eskaera onarpenaren zain dago.
+  join_group_confirmation: Ziur al zaude %{group_type}(e)n kide egin nahi zarela?
+  link_name_description: Izen honek taldea esteketan eta URLetan nola aipatuko duzun adierazten du. Hizkiak eta zenbakiak bakarrik izan ditzake, hutsunerik gabe.
+  descriptive_name_for_display: Bistaratuko den izen deskribatzaile bat
+  this_is_committee: Batzorde hau %{parent_group}(r)en parte da.
   network_initial_member: Hautatu erakunde bat sare honetako lehen kidea izateko.
   headings:
     page_search: Orrialdeak bilatu
@@ -451,12 +539,45 @@ eu:
   send_request_button: Bidali eskaera
   send_invites_button: Bidali gonbidapenak
   all_requests: Eskaera guztiak
+  activerecord:
+    models:
+      request_to_friend: Kontaktuak bihurtzeko eskaera
+      request_to_join_our_network:
+        one: Kide egiteko gonbidapena
+        other: Kide egiteko gonbidapenak
+      request_to_destroy_our_group: Taldea suntsitzeko eskaera
+      request_to_join_us:
+        one: Kide egiteko gonbidapena
+        other: Kide egiteko gonbidapenak
+      request_to_join_us_via_email:
+        one: Kide egiteko gonbidapena
+        other: Kide egiteko gonbidapenak
+      request_to_join_you: Kide egiteko eskera
+      request_to_join_your_network: Kide egiteko eskera
+      request_to_remove_user: Kidea kentzeko eskaera
+  request_to_friend: Kontaktuak bihurtzeko eskaera
+  request_to_destroy_our_group: Taldea suntsitzeko eskaera
+  request_to_join_our_network_short: '%{group} %{network}(r)en kide egin?'
+  request_to_join_our_network_description: '%{group} taldeak %{network} sareko kide egiteko gonbidapenak jaso du.'
+  request_to_join_us_short: '%{user} %{group}(r)en kide egin?'
+  request_to_join_us_description: '%{user} erabiltzaileak %{group} taldeko kide egiteko gonbidapena jaso du.'
+  request_to_join_us_via_email_short: '%{email} %{group}(r)en kide egin?'
+  request_to_join_us_via_email_description: '%{email} e-postal helbideak %{group} taldeko kide egiteko gonbidapena jaso du.'
+  request_to_join_you: Kide egiteko eskera
+  request_to_join_you_short: '%{user} %{group}(r)en kide egin?'
+  request_to_join_you_description: '%{user} erabiltzaileak %{group} taldeko kide egitea eskatu du.'
+  request_to_join_your_network: Kide egiteko eskera
+  request_to_join_your_network_short: '%{group} %{network}(r)en kide egin?'
+  request_to_join_your_network_description: '%{group} taldeak %{network} sareko kide egitea eskatu du.'
   request_to_destroy_our_group_description: '%{user} erabiltzaileak %{group} %{group_type} suntsitzea proposatu du.'
+  request_to_remove_user: Kidea kentzeko eskaera
   request_to_remove_user_short: '%{member} %{group} taldetik atera nahi duzu?'
   request_to_remove_user_description: '%{user} erabiltzaileak %{member} %{group} %{group_type}(e)tik ateratzea proposatu du.'
   invite_info: Sartu %{group_type} honetara sartzera gonbidatu nahi dituzun pertsonen erabiltzaile-izenak edo e-posta helbideak.
   invite_error_already_member: Dagoeneko talde horretako kidea zara.
+  network_invite_info: Sartu sare honetara gonbidatu nahi dituzun taldeen izenak.
   recipient_tip: Banatu hartzaileak komekin, hutsuneekin edo lerro berriekin.
+  you_are_invited: Kide egitera gonbidatuta zaude.
   friend_request_message_label: Esaiozu %{user}-(r)i zergatik nahi duzun bere kontaktua izan.
   friend_remove_confirmation: Ziur al zaude ez duzula %{user}-(r)en kontaktua izaten jarraitu nahi?
   place: lekua
@@ -475,10 +596,12 @@ eu:
   medium: ertaina
   large: handia
   full: osoa
+  include_full_checkbox: irudi osoa estekatu
   image_select_info: Hautatu txertatu beharreko irudia dagoeneko taldera igotakoen artetik
   image_upload_info: Igo irudi berri bat taldera wiki orrialdean erabili ahal izateko
   activity_user_left_group: "%{user}(e)k %{group} %{group_type}(e)tik atera da"
   activity_user_joined_group: "%{user} %{group} %{group_type}(e)ko kide egin da"
+  activity_user_joined_site: "%{user} %{group}(r)en kide egin da"
   activity_group_created: "%{user}(e)k %{group} %{group_type} sortu du"
   media_image: Irudia
   media_images: Irudiak
@@ -523,6 +646,7 @@ eu:
   upload_images_link: Igo
   upload_a_zip_file_link: Igo Zip fitxategi bat
   you_are_not_allowed_to_do_that: Zuk ezin duzu horrelakorik egin!
+  view_label: Ikusi
   sunday: Igandea
   monday: Astelehena
   tuesday: Asteartea
@@ -538,12 +662,14 @@ eu:
   alert_not_saved: Ezin izan dira aldaketak gorde
   alert_field_errors: Arazoak daude ondoko eremuekin
   alert_saved: Aldaketak gorde dira
+  alert_permission_denied: Ez duzu baimenik
   set_status_button: Eguneratu egoera
   my_contacts: Kontaktuak
   anonymous: anonimoa
   login_required: Saioa hastea ezinbestekoa da
   login_required_description: Mesedez, saioa has ezazu ekintza hori egiteko.
   permission_denied_description: Ez duzu behar haina baimenik ekitza hori egiteko.
+  permission_denied: Ez duzu baimenik
   chat: Txata
   left_the_chatroom: -(e)k txat-gela utzi du
   tag: Etiketa
@@ -559,8 +685,13 @@ eu:
   public_wiki: Wiki publikoa
   private_wiki: Wiki pribatua
   edit_wiki: Editatu wiki orrialdea
+  wiki_existed_new_version_created: Wiki hau dagoeneko beste erabiltzaile batek sortu du. Zure aldaketak bertsio berri bat bezala gorde dira.
+  cant_edit_section: Ezin %{section} editatu.
+  user_locked_section: "%{user}-(e)k %{section} blokeatu du."
+  other_section_locked_error: Aldi bakoitzean atal bakarra blokeatu dezakezu. Dagoeneko %{section} blokeatu duzu.
   versions: Bertsioak
   version: Bertsioa
+  comparing_changes_header: '%{old_version} eta %{new_version}(r)en arteko aldaketak alderatzen.'
   changes_made: 'Aldaketak noiz egin dira: %{when}'
   prev_change: Aurreko aldaketa
   next_change: Hurrengo aldaketa

@@ -204,7 +204,7 @@ tr:
   approved_by_entity: '%{entity} tarafından onaylandı'
   rejected_by_entity: '%{entity} tarafından reddedildi'
   contacts: Kişiler
-  friends: Arkadaşlar
+  friends: Kişiler
   member_groups_of_network: Üye Gruplar
   peers: Eşler
   me: Ben
@@ -265,10 +265,10 @@ tr:
 
     %{accept_invite_link}
   group_wiki: Vikipedi Grubu
-  create_public_group_wiki: Genel
-  create_private_group_wiki: Özel
-  public_group_wiki: Genel
-  private_group_wiki: Özel
+  create_public_group_wiki: Herkese açık
+  create_private_group_wiki: Gizli
+  public_group_wiki: Herkese açık
+  private_group_wiki: Gizli
   group_publicly_visible: '%{group}ları Herkes İçin Görünür Yap'
   committee_publicly_visible: Komiteleri Herkese Görünür Yap
   allow_membership_requests: Üyelik Taleplerine İzin Ver
@@ -335,7 +335,7 @@ tr:
   watch_checkbox: Güncellemeler İçin Gözatın
   add_star_link: Yıldız ekle (%{star_count})
   remove_star_link: İşareti Kaldır (%{star_count})
-  public_checkbox: Genel
+  public_checkbox: Herkese açık
   public_checkbox_help: Eğer kontrol edildiyse, herkes bu sayfayı görüntüleyebilir.
   page_details_link: "%{page_class} Detayları"
   delete_page_link: '%{page_class} ''ı Sil'
@@ -357,10 +357,10 @@ tr:
   notify_page_link: Bilgilendirme Gönder
   notify_contribution: "v<b>Prior Contribution:</b> kişileri bu sayfaya <b>katkıda bulunanlar</b> konusunda bilgilendirin."
   notify_current_access: "<b>Geçerli Erişim:</b> bu sayfaya erişimi olan insan veya gruplara haber ver."
-  contribute_content_link: Sayda oluştur
+  contribute_content_link: Sayfa Oluştur
   page_create_owner: Sayfa Sahibi
   create_page: Sayfa Oluştur
-  only_me: Sadece ben
+  only_me: Ben
   page_added_to_group: 'Bu sayfa şu gruba eklenecek: %{group_type} %{group_name}.'
   additional_page_access: Ek erişim
   action: uygulama
@@ -387,7 +387,7 @@ tr:
   survey_may_see_responses: Cevaplar görülebilir mi?
   survey_may_rate: Cevapları oylar mısınız?
   survey_may_see_ratings: Derecelendirmeler görülebilir mi?
-  survey_description_heading: Tanım
+  survey_description_heading: Açıklama
   survey_response_by: '%{login} tarafından verilen cevap'
   survey_rate_this_response_heading: Bu Cevabı Değerlendiriniz
   survey_your_rating_heading: 'Bu Cevap için Verdiğiniz Oy'
@@ -491,10 +491,10 @@ tr:
   alert_not_saved: Değişiklikler kaydedilemedi
   alert_field_errors: Bu alanlarda problemler var
   alert_saved: Değişiklikler kaydedildi
-  alert_permission_denied: İzin Reddedildi
+  alert_permission_denied: İzin Verilmedi
   csrf_error_message: 'Giriş başvurunuz, siteyi çökertmeye yönelik bir deneme görünümündedir. Endişelenmeyin: bu hata genellikle masum kullanıcıların başvurularında bile sık sık ortaya çıkabilmektedir. Bu tip aşırı önlemler sizin güvenliğiniz içindir. Bu aşamada yapmanız gereken giriş yapmadan önce sayfayı yeniden yüklemenizdir. Tekrar denemek için şu bağlantıyı takip edebilirsiniz:'
   set_status_button: Durumu ayarla
-  my_contacts: Arkadaşlarım
+  my_contacts: Kişiler
   login_required: Kullancı girişi gerekli
   login_required_description: Bunu yapmak için lütfen kullanıcı girişi yapın.
   permission_denied_description: Bu işlemi yürütmek için yeterli izniniz yok.
@@ -509,7 +509,7 @@ tr:
   current_tags: En Son Etiketler
   welcome_title: '%{site_title}''a hoşgediniz '
   welcome_message: Crabgrass, sosyal değişim örgütlerinin, işlemlerini yapmalarını, kararlar vermelerini, işbirliği yapmalarını ve ağ vasıtasıyla temasta olmalarını sağlar.
-  wiki_is_locked_html: Bu viki hâlen <b>%{user}</b> tarafından kilitlenmiş durumda
+  wiki_is_locked: Bu viki hâlen %{user} tarafından kilitlenmiş durumda
   break_lock_button: Kilitlemeyi Kaldır
   versions: Sürümler
   comparing_changes_header: '%{user} tarafından %{when} tarihinde %{old_version} sürümünden %{new_version} sürümüne yapılan değişiklikleri kıyaslıyor'

@@ -6,7 +6,7 @@
 #
 # For true/false and numeric values, you must not enclose the value in quotes.
 #
-# See doc/CONFIGURATION for more details.
+# See doc/deployment/configuration for more details.
 #
 
 title: "Crabgrass"
@@ -16,7 +16,7 @@ title: "Crabgrass"
 #
 
 default_language: en
-enabled_languages: ['en', 'es', 'pt', 'ar', 'de', 'fr']
+enabled_languages: ['en', 'ar', 'bg', 'ca', 'cs', 'de', 'el', 'es', 'eu', 'fr', 'he', 'it', 'nl', 'no', 'pl', 'pt', 'ru', 'sv', 'tr']
 
 #
 # EMAIL

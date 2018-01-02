@@ -1,4 +1,17 @@
 "no":
   riseup:
     run_by_html: "Denne siden driftes av %{provider}%{description}"
-    description: ", ditt vennlige autonome tech-kollektiv siden 1999."
+    description: ", ditt vennlige autonome teknologi-kollektiv siden 1999."
+    privacy_policy: "Personvernspraksis"
+    terms_of_service: "Tjenestevilkår"
+    about_us: "Om oss"
+    email_accounts: "E-postkontoer"
+    mailing_lists: "E-postlister"
+    system_status: "Systemstatus"
+    donate: "Doner til Riseup"
+    riseup_black: "Riseup svart"
+    riseup_red: "Riseup rød"
+    accounts_note: >
+        Merk: Brukerkontoene på denne siden er uavhengige av andre riseup.net-tjenester.
+        Med andre ord kan du ikke bruke din %{riseup_black} eller %{riseup_red} -konto
+        til å logge inn på denne nettsiden.

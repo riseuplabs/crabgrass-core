@@ -1,0 +1,17 @@
+cs:
+  riseup:
+    run_by_html: "Tuto stránku provozuje %{provider}%{description}"
+    description: ", váš přátelský autonomní technologický kolektiv - od roku 1999."
+    privacy_policy: "Ochrana soukromí"
+    terms_of_service: "Podmínky služeb"
+    about_us: "O nás"
+    email_accounts: "Emailové účty"
+    mailing_lists: "Mailing listy"
+    system_status: "Status systémů"
+    donate: "Přispějte na Riseup"
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+        POZNÁMKA: Uživatelské účty pro tuto stránku jsou nezávislé na ostátních službách
+        riseup.net. Jinými slovy, váš %{riseup_black} nebo %{riseup_red} účet pro
+        přihlášení na tuto stránku nelze použít.
