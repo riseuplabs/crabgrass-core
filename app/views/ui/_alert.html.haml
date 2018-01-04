@@ -24,7 +24,7 @@
   end
   alert_id = "message_alert_#{rand(100_000_000)}"
   fade_alert = alert[:fade] || alert[:quick] ||
-    ((alert[:type] == 'success' || alert[:type] == 'notice') && !alert[:nofade])
+    ((alert[:type] == :success || alert[:type] == :notice) && !alert[:nofade])
   timeout = 0.5 if alert[:quick]
   text = Array(alert[:text])
 
