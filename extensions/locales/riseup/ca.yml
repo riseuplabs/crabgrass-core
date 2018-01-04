@@ -1,10 +1,10 @@
 ca:
   riseup:
-    run_by_html: "Aquest lloc està administrat per %{provider}%{description}"
-    description: ", el teu col·lectiu autonom de tecnologia desde 1999."
+    run_by_html: "Aquest lloc web està administrat per %{provider}%{description}"
+    description: ", el vostre col·lectiu autònom de tecnologia des del 1999."
     privacy_policy: "Política de privadesa"
     terms_of_service: "Condicions del servei"
-    about_us: "Sobre moatros"
+    about_us: "Sobre nosaltres"
     email_accounts: "Comptes de correu"
     mailing_lists: "Llistes de distribució"
     system_status: "Estat del sistema"
@@ -14,4 +14,4 @@ ca:
     accounts_note: >
         NOTA: Els comptes d'usuari per aquest lloc web són independents dels altres
         serveis de riseup.net. En altres paraules, no podeu utilitzar el vostre compte
-        %{riseup_black} o %{riseup_red}per iniciar sessió en aquest lloc web.
+        %{riseup_black} o %{riseup_red} per iniciar sessió en aquest lloc web.

@@ -1,0 +1,17 @@
+tr:
+  riseup:
+    run_by_html: "Bu site 1999'da kurulan otonom teknoloji kolektifi %{provider}%{description}"
+    description: "tarafından hazırlanıyor."
+    privacy_policy: "Gizlilik"
+    terms_of_service: "Kullanım Şartları"
+    about_us: "Hakkımızda"
+    email_accounts: "E-posta Hesapları"
+    mailing_lists: "E-posta Listeleri"
+    system_status: "Sistem Durumu"
+    donate: "Riseup'a Bağış Yap"
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
+    accounts_note: >
+        NOT: Bu internet sitesi için kullanıcı hesapları, diğer riseup.net servislerinden
+        bağımsızdır. Başka bir deyişle %{riseup_black} veya %{riseup_net} hesaplarınızla
+        bu siteye giriş yapamazsınız.
