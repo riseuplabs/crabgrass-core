@@ -106,8 +106,8 @@ de:
   approved: Angenommen
   saved: Gespeichert
   destroy: Löschen
-  thing_destroyed: "%{thing} vernichtet"
-  destroy_thing: Vernichte %{thing}
+  thing_destroyed: "%{thing} gelöscht"
+  destroy_thing: '%{thing}Löschen'
   delete_thing: Lösche %{thing}
   delete: Löschen
   delete_button: Löschen
@@ -297,7 +297,7 @@ de:
 
     Wenn du der Gruppe nicht beitreten möchtest, kannst du diese Mail einfach ignorieren.
   group_destroyed_subject: "%{group_type} %{group} wurde von %{user} gelöscht!"
-  group_destroyed_email: "%{group_type} %{group} wurde vernichtet!"
+  group_destroyed_email: "%{group_type} %{group} wurde gelöscht!"
   group_wiki: Gruppen-Wiki
   create_public_group_wiki: Öffentlich
   create_private_group_wiki: Privat
@@ -479,7 +479,7 @@ de:
   page_history_added_comment: "%{user_name} hat einen Kommentar hinzugefügt"
   page_history_change_title: "%{user_name} hat den Seitentitel bearbeitet"
   page_history_deleted_page: "%{user_name} hat die Seite gelöscht"
-  page_history_destroyed_comment: "%{user_name} hat einen Kommentar vernichtet"
+  page_history_destroyed_comment: "%{user_name} hat einen Kommentar gelöscht"
   page_history_details_change_title: 'Von: "%{from}" An: "%{to}"'
   page_history_granted_group_full_access: "%{user_name} hat der Gruppe %{item_name} Vollzugriff erteilt"
   page_history_granted_group_read_access: "%{user_name} hat der Gruppe %{item_name} Leserechte erteilt"
@@ -701,7 +701,7 @@ de:
   activity_user_joined_site: "%{user} hat sich %{group} angeschlossen"
   activity_user_destroyed: "%{user} hat sein_ihr Konto gelöscht"
   activity_group_created: "%{user} hat %{group_type} %{group} erstellt"
-  activity_group_destroyed: "%{group} wurde durch %{user} vernichtet"
+  activity_group_destroyed: "%{group} wurde durch %{user} gelöscht"
   activity_wall_message: "%{author} schrieb an %{user}: %{message}"
   activity_message: "%{author} schrieb: %{message}"
   activity_unread: Du hast %{count} ungelesene [Privatnachrichten]
