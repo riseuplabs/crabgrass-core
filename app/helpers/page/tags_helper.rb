@@ -35,22 +35,18 @@ module Page::TagsHelper
   end
 
   def add_tag_link(tag)
-    link = link_to_remote(
-      :add_tags.t,
-      {
-        url: {action: :create, controller: 'tags'},
-        success: hide("tag_#{tag.id}"),
-        complete: "$('added').insert({before: '#{insert_remove_tag_link(tag)}'})",
-        with: "'add=#{tag.name}'",
-        remote: true },
-      { class: 'shy inline', icon: 'plus'}
-    )
+    link = link_to :add_tags.t, page_tags_url(add: tag.name),
+      remote: true,
+      method: :post,
+      data: {removetag: "tag_#{tag.id}", addtag: "#{insert_remove_tag_link(tag)}"},
+      class: 'shy inline',
+      icon: 'plus'
+
     content_tag(:div, id: "tag_#{tag.id}", class: 'shy_parent p') do
       content_tag(:span, h(tag.name), class: 'icon tag_16 inline') + ' ' +
       link
     end
   end
-
 
   def page_tag_add_links tags
     haml do
