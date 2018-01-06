@@ -201,11 +201,6 @@ group :test, :ci do
   gem 'faker', '~> 1.0.0'
 
   gem 'minitest', require: false
-  gem 'mocha', '~> 1.1', require: false
-  #
-  # mocha note: mocha must be loaded after the things it needs to patch.
-  #             so, we skip the 'require' here, and do it later.
-  #
 
   ##
   ## INTEGRATION TESTS
