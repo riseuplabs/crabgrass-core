@@ -27,17 +27,19 @@ class Me::DestroysControllerTest < ActionController::TestCase
   end
 
   def test_notification
-    notification_mock(:user_destroyed, username: @user.name)
-      .expects(:create_notices_for)
-      .with(@user.friends)
-
-    login_as @user
-    post :update, scrub_name: 1
+    expecting_notifications :user_destroyed, to: @user.friends do
+      login_as @user
+      post :update, scrub_name: 1
+    end
   end
 
-  def notification_mock(*args)
-    mock('notification').tap do |mock|
-      Notification.expects(:new).with(*args).returns mock
-    end
+  def expecting_notifications(event, to:, &block)
+    notification_mock = Minitest::Mock.new
+    notification_mock.expect :create_notices_for, nil, [to]
+    method_mock = Minitest::Mock.new
+    method_mock.expect :call, notification_mock, [event, Hash]
+    Notification.stub :new, method_mock, &block
+    method_mock.verify
+    notification_mock.verify
   end
 end
