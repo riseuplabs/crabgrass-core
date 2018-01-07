@@ -1,27 +1,27 @@
 ca:
   date:
     abbr_day_names:
-    - Dg
-    - Dl
-    - Dm
-    - Dc
-    - Dj
-    - Dv
-    - Ds
+    - dg
+    - dl
+    - dm
+    - dc
+    - dj
+    - dv
+    - ds
     abbr_month_names:
     - ~,
-    - Gen
-    - Feb
-    - Mar
-    - Abr
-    - Mai
-    - Jun
-    - Jul
-    - Ago
-    - Set
-    - Oct
-    - Nov
-    - Des
+    - gen
+    - feb
+    - mar
+    - abr
+    - mai
+    - jun
+    - jul
+    - ago
+    - set
+    - oct
+    - nov
+    - des
     day_names:
     - Diumenge
     - Dilluns
@@ -36,18 +36,18 @@ ca:
       short: ! '%d de %b'
     month_names:
     - 
-    - Gener
-    - Febrer
-    - Març
-    - Abril
-    - Maig
-    - Juny
-    - Juliol
-    - Agost
-    - Setembre
-    - Octubre
-    - Novembre
-    - Desembre
+    - gener
+    - febrer
+    - març
+    - abril
+    - maig
+    - juny
+    - juliol
+    - agost
+    - setembre
+    - octubre
+    - novembre
+    - desembre
     order:
     - :day
     - :month
@@ -64,8 +64,8 @@ ca:
         one: aproximadament 1 any
         other: aproximadament %{count} anys
       almost_x_years:
-        one: casi 1 any
-        other: casi %{count} anys
+        one: gairebé 1 any
+        other: gairebé %{count} anys
       half_a_minute: mig minut
       less_than_x_minutes:
         one: menys d'1 minut
@@ -89,12 +89,12 @@ ca:
         one: 1 segon
         other: ! '%{count} segons'
     prompts:
-      day: Dia
-      hour: Hora
-      minute: Minut
-      month: Mes
-      second: Segun
-      year: Any
+      day: dia
+      hour: hora
+      minute: minut
+      month: mes
+      second: segon
+      year: any
   errors: &errors
     format: ! '%{attribute} %{message}'
     messages:
@@ -113,12 +113,12 @@ ca:
       less_than_or_equal_to: ha de ser menor o igual a %{count}
       not_a_number: no és un número
       not_an_integer: ha de ser un enter
-      odd: ha de ser imparell
+      odd: ha de ser senar
       record_invalid: ! 'La validació ha fallat: %{errors}'
       taken: no està disponible
       too_long: és massa llarg (%{count} caràcters màxim)
       too_short: és massa curt (%{count} caràcters mínim)
-      wrong_length: no té la longitud correcte (%{count} caràcters exactament)
+      wrong_length: no té la longitud correcta (%{count} caràcters exactament)
     template:
       body: ! 'Hi ha hagut problemes amb els següents camps:'
       header:
@@ -126,11 +126,11 @@ ca:
         other: No s'ha pogut desar aquest/a %{model} perquè hi ha hagut %{count} errors
   helpers:
     select:
-      prompt: Si us plau tria
+      prompt: Trieu
     submit:
-      create: Crear %{model}
-      submit: Guardar %{model}
-      update: Actualizar %{model}
+      create: Crea %{model}
+      submit: Desa %{model}
+      update: Actualitza %{model}
   number:
     currency:
       format:
