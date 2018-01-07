@@ -17,7 +17,7 @@ module Page::BeforeFilters
   #
   def default_fetch_data
     @page ||= Page.find(params[:page_id] || params[:id])
-    raise ErrorNotFound, :page unless @page && may_show_page?
+    raise ErrorNotFound, :page unless @page && policy(@page).show?
 
     if logged_in?
       # grab the current user's participation from memory
@@ -39,7 +39,6 @@ module Page::BeforeFilters
     @options = Page::BaseController::Options.new
     @options.show_assets  = true
     @options.show_tags    = true
-    @options.show_sidebar = true
     @options.show_tabs    = false
     if request.get?
       @options.show_posts = action?(:show) || action?(:print)

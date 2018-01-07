@@ -15,11 +15,10 @@
 class Page::CreateController < ApplicationController
   include Common::Tracking::Action
 
-  before_filter :login_required, :authorization_required
+  before_filter :login_required
   before_filter :init_options, :set_owner, :catch_cancel
+  after_action :verify_authorized, only: :create
   helper 'page/share', 'page/owner', 'page/creation'
-  permissions :pages
-  guard :may_ACTION_page?
   track_actions :create
 
   # the page banner has links that the user cannot see when unauthorized, like membership.
@@ -39,6 +38,7 @@ class Page::CreateController < ApplicationController
 
   def create
     @page = build_new_page!
+    authorize @page
     @page.save!
     redirect_to page_url(@page)
   end

@@ -24,6 +24,7 @@ class AssetPageController < Page::BaseController
   end
 
   def fetch_data
+    authorize @page
     @asset = @page.data if @page
   end
 

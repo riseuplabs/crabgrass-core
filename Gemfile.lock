@@ -147,6 +147,8 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     public_suffix (2.0.5)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -272,6 +274,7 @@ DEPENDENCIES
   phantomjs-binaries (~> 2.1.1)
   poltergeist (~> 1.5)
   prototype-rails!
+  pundit (~> 1.1)
   rails (~> 4.2.10)
   rails-html-sanitizer (~> 1.0.4)
   rake (~> 10.0)

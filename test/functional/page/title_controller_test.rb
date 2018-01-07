@@ -15,11 +15,25 @@ class Page::TitleControllerTest < ActionController::TestCase
     assert_template 'page/title/edit'
   end
 
+  def test_edit_title_not_allowed
+    login_as users(:blue)
+    assert_permission_denied do
+      xhr :get, :edit, page_id: @page.id
+    end
+  end
+
   def test_update_title
     login_as @user
     xhr :put, :update, page_id: @page.id, page: { title: 'sunset' }
     assert_equal @page.reload.title, 'sunset'
     assert_template 'page/title/update'
+  end
+
+  def test_update_title_not_allowed
+    login_as users(:blue)
+    assert_permission_denied do
+      xhr :put, :update, page_id: @page.id, page: { title: 'sunset' }
+    end
   end
 
   def test_update_summary_and_name

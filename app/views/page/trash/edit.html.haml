@@ -4,7 +4,7 @@
       = radio_button_tag 'type', 'delete', true, class: 'radio'
       = I18n.t(:destroy_page_via_trash)
       %span.help-block.small= I18n.t(:destroy_page_via_trash_info)
-    - if may_destroy_page?
+    - if may_destroy? @page
       %label.radio
         = radio_button_tag 'type', 'destroy', false, class: 'radio'
         = I18n.t(:destroy_page_via_shred)

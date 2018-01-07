@@ -86,6 +86,10 @@ class Asset < ActiveRecord::Base
   ## ACCESS
   ##
 
+  def self.policy_class
+    ::AssetPolicy
+  end
+
   # checks wether the given `user' has permission `perm' on this Asset.
   #
   # This does not include checking if the asset is public.

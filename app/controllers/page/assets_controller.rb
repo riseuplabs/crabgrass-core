@@ -20,6 +20,7 @@ class Page::AssetsController < Page::SidebarsController
 
   def fetch_page
     super
+    authorize @page, :edit?
     @asset = @page.assets.find_by_id params[:id] if @page and params[:id]
   end
 

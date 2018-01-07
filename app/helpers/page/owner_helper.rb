@@ -2,7 +2,7 @@ module Page::OwnerHelper
   protected
 
   def change_page_owner
-    return unless may_admin_page?
+    return unless may_admin? @page
     link_to_static_modal :edit.t, title: :page_create_owner.t, icon: 'pencil' do
       render 'page/details/change_owner'
     end

@@ -6,12 +6,8 @@ class Page::BaseController < ApplicationController
   public
 
   before_filter :login_required, except: :show
-  before_filter :authorization_required
   before_filter :bust_cache, only: :show
-  permissions :pages
-  guard :may_ACTION_page?
-  guard print: :may_show_page?
-  guard update: :may_edit_page?
+  after_action :verify_authorized
 
   layout 'page'
 
@@ -69,7 +65,6 @@ class Page::BaseController < ApplicationController
     attr_accessor :show_reply     # show form to post new comment?
     attr_accessor :show_assets    # show assets for this page?
     attr_accessor :show_tags      # show tags for this page?
-    attr_accessor :show_sidebar   # show the page sidebar?
     attr_accessor :show_tabs      # load 'tabs' partial?
     attr_accessor :title          # html title
   end

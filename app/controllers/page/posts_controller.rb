@@ -3,26 +3,25 @@ class Page::PostsController < ApplicationController
 
   include_controllers 'common/posts'
 
-  permissions 'pages'
   permissions 'posts'
   helper 'page/post'
 
   prepend_before_filter :fetch_data
   before_filter :login_required, except: :show
-  before_filter :authorization_required
-  guard :may_ALIAS_post?
-  guard show: :may_show_page?
-  guard index: :may_show_page?
+  before_filter :authorization_required, only: :create
+  guard create: :may_create_post?
 
   track_actions :create, :update, :destroy
 
   # js action to rerender the posts
   def index
+    authorize @page, :show?
     @posts = @page.posts(pagination_params)
     @post = Post.new
   end
 
   def show
+    authorize @page
     respond_to do |format|
       format.js   { render 'common/posts/show' }
       format.html { redirect_to page_url(@page) + "#post-#{@post.id}" }

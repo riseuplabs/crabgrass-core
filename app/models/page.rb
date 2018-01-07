@@ -262,6 +262,10 @@ class Page < ActiveRecord::Base
   ## PAGE ACCESS CONTROL
   ##
 
+  def self.policy_class
+    PagePolicy
+  end
+
   public
 
   # This method should never be called directly. It should only be called

@@ -23,7 +23,7 @@ module AssetPageHelper
   end
 
   def destroy_version_link(version)
-    if may_edit_page? and version.version < @asset.version
+    if may_update?(@page) and version.version < @asset.version
       options = {
         url: version_url(version.version, page_id: @page),
         method: :delete,

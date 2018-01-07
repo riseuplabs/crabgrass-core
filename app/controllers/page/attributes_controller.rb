@@ -8,9 +8,8 @@ class Page::AttributesController < Page::SidebarsController
   before_filter :login_required
   track_actions :update
 
-  guard update: :may_admin_page?
-
   def update
+    authorize @page, :admin?
     if params[:public]
       @page.public = params[:public]
       @page.updated_by = current_user

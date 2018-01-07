@@ -13,6 +13,7 @@ class CreateAssetPageController < Page::CreateController
     @asset.validate!
 
     @page = build_new_page!
+    authorize @page
     @page.data = @asset
     @page[:title] = @asset.basename
     @page.save!

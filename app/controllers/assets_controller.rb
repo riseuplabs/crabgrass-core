@@ -1,13 +1,11 @@
 class AssetsController < ApplicationController
-  before_filter :authorization_required
   before_filter :symlink_public_asset, only: :show
-  permissions 'assets'
-  permission_helper 'pages'
-  guard :may_ACTION_asset?
+  after_action :verify_authorized
 
   prepend_before_filter :fetch_asset, only: %i[show destroy]
 
   def show
+    authorize @asset
     file = file_to_send
     send_file private_filename(file),
               type: file.content_type,
@@ -15,6 +13,7 @@ class AssetsController < ApplicationController
   end
 
   def destroy
+    authorize @asset
     @asset.destroy
     current_user.updated(@page)
     respond_to do |format|

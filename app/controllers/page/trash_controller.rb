@@ -1,12 +1,14 @@
 class Page::TrashController < Page::SidebarsController
-  guard :may_admin_page?
   helper 'page/trash'
   track_actions :update
 
   # loads popup
-  def edit; end
+  def edit
+    authorize @page, :admin?
+  end
 
   def update
+    authorize @page, :admin?
     if %w[delete destroy undelete].include? params[:type]
       @page.public_send params[:type]
     else

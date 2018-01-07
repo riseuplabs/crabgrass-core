@@ -5,19 +5,23 @@
 #  update:  page_participation_path   /pages/:page_id/participations/:id
 #
 
+# TODO: This should become restful... that would allow making full
+# use of pundit.
+
 class Page::ParticipationsController < Page::SidebarsController
-  guard :may_show_page?, actions: %i[update create]
   helper 'page/participation', 'page/share'
 
   before_filter :fetch_data
   track_actions :update
 
   # this is used for ajax pagination
-  def index; end
+  def index
+    authorize @page
+  end
 
   def update
+    authorize @page, :show?
     if params[:access]
-      raise PermissionDenied unless may_admin_page?
       access
     elsif params[:watch]
       watch
@@ -47,6 +51,7 @@ class Page::ParticipationsController < Page::SidebarsController
     if params[:access] == 'remove'
       destroy
     else
+      authorize @page, :admin?
       @part = @page.add(@part.entity, access: params[:access])
       @part.save!
     end
@@ -56,7 +61,8 @@ class Page::ParticipationsController < Page::SidebarsController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access.
   def destroy
-    if may_remove_participation?(@part)
+    authorize @page, :admin?
+    if policy(@part).destroy?
       @part.destroy
       entity = @part.entity
       entity.clear_access_cache if entity.respond_to? :clear_access_cache
