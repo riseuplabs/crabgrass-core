@@ -44,9 +44,10 @@ class Me::PagesControllerTest < ActionController::TestCase
     title = 'VeryLongTitleWithNoSpaceThatWillBeFarTooLongToFitIntoTheTableColumnAndInTurnBreakTheLayoutUnlessItIsBrokenUsingHiddenHyphens'
     expected = json_escape('VeryLongTitleWithNoS&shy;paceThatWillBeFarToo&shy;LongToFitIntoTheTabl&shy;eColumnAndInTurnBrea&shy;kTheLayoutUnlessItIs&shy;BrokenUsingHiddenHyp&shy;hens')
     page = FactoryBot.build :wiki_page, title: title, owner: users(:blue)
-    Page.expects(:paginate_by_path).returns([page])
-    login_as users(:blue)
-    xhr :get, :index
+    Page.stub :paginate_by_path, [page] do
+      login_as users(:blue)
+      xhr :get, :index
+    end
     assert_response :success
     assert assigns(:pages).include?(page)
     assert response.body.include?(expected), "Expected #{response.body} to include #{expected}."

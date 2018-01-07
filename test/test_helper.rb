@@ -57,12 +57,6 @@ end
 ## some special rules for integration tests
 ##
 
-#
-# mocha must be required last.
-# the libraries that it patches must be loaded before it is.
-#
-require 'mocha/mini_test'
-
 # ActiveSupport::HashWithIndifferentAccess#convert_value calls 'class'
 # and 'is_a?' on all values. This happens when assembling 'assigns' in
 # tests.

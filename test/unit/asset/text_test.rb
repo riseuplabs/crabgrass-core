@@ -14,9 +14,8 @@ class Asset::TextTest < ActiveSupport::TestCase
   end
 
   def test_text_asset_creates_thumbnails
-    @asset = FactoryBot.build :word_asset
-    @asset.expects :create_thumbnail_records
-    @asset.save
+    @asset = FactoryBot.create :word_asset
+    assert !@asset.thumbnails.count.zero?, 'should create thumbnails'
   end
 
   def test_only_creates_available_thumbnails

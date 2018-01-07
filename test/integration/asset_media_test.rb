@@ -146,7 +146,8 @@ class Asset_Media_Test < ActiveSupport::TestCase
   def test_binary
     asset = Asset.create_from_params uploaded_data: upload_data('raw_file.bin')
     assert_equal Asset, asset.class, 'asset should be an Asset'
-    assert_equal 'Asset', asset.versions.earliest.versioned_type, 'version should by of type Asset'
+    assert_equal 'Asset', asset.versions.earliest.versioned_type,
+      'version should by of type Asset'
   end
 
   def test_failure_on_corrupted_file
@@ -154,28 +155,6 @@ class Asset_Media_Test < ActiveSupport::TestCase
     asset.generate_thumbnails
     asset.thumbnails.each do |thumb|
       assert thumb.failure?, 'generating the thumbnail should have failed'
-    end
-  end
-
-  def test_failure
-    failing = mock
-    failing.stubs(:run).returns false
-    transmogrifier_for(input_type: 'image/jpeg').times(5).returns failing
-    asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
-    asset.generate_thumbnails
-    asset.thumbnails.each do |thumb|
-      assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
-    end
-  end
-
-  def test_success
-    failing = mock
-    failing.stubs(:run).returns true
-    transmogrifier_for(input_type: 'image/jpeg').times(5).returns failing
-    asset = Asset.create_from_params uploaded_data: upload_data('photo.jpg')
-    asset.generate_thumbnails
-    asset.thumbnails.each do |thumb|
-      assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
     end
   end
 

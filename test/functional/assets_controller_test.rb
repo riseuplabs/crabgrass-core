@@ -1,18 +1,30 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class AssetsControllerTest < ActionController::TestCase
+  include AssetTestHelper
+
+  def setup
+    super
+    setup_assets
+  end
+
+  def teardown
+    teardown_assets
+    super
+  end
+
   def test_get_permissions
-    image_assets_are_private
-    asset = FactoryBot.create :image_asset
+    page = FactoryBot.create :page
+    asset = FactoryBot.create :image_asset, parent_page: page
     assert_permission_denied do
       get :show, id: asset.id, path: asset.basename
     end
   end
 
   def test_get_with_escaped_chars
-    image_assets_are_private
-    @controller.stubs(:authorized?).returns(true)
     asset = FactoryBot.create :image_asset
+    get :show, id: asset.id, path: asset.basename + '\xF3'
+    assert_response :redirect
     get :show, id: asset.id, path: asset.basename + '\xF3'
     assert_response :success
   end
@@ -30,13 +42,11 @@ class AssetsControllerTest < ActionController::TestCase
   end
 
   def test_thumbnail_get
-    image_assets_are_private
     asset = FactoryBot.create :image_asset
-    @controller.stubs(:authorized?).returns(true)
-    @controller.expects(:private_filename).returns(asset.private_filename)
-    get :show, id: asset.id, path: asset.basename
-    @controller.expects(:private_filename).returns(thumbnail(asset.private_filename))
     get :show, id: asset.id, path: thumbnail(asset.basename)
+    assert_response :redirect
+    get :show, id: asset.id, path: thumbnail(asset.basename)
+    assert_response :success
   end
 
   def test_destroy
@@ -57,7 +67,4 @@ class AssetsControllerTest < ActionController::TestCase
     path.sub(/#{ext}$/, "_small#{ext}")
   end
 
-  def image_assets_are_private
-    Asset::Image.any_instance.stubs(:public?).returns(false)
-  end
 end
