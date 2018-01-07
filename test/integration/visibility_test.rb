@@ -1,4 +1,4 @@
-require_relative '../integration_test'
+require 'integration_test'
 
 class VisibilityTest < IntegrationTest
   def test_hidden_is_visible_to_self
@@ -42,7 +42,7 @@ class VisibilityTest < IntegrationTest
       visit "/#{blocking_user.login}"
       assert_no_content "Send Message"
       assert_no_content "Add To My Contacts"
-    end 
+    end
   end
 
   def test_visible_to_friends_by_default
