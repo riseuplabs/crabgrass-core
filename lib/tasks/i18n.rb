@@ -98,10 +98,12 @@ namespace :cg do
       puts format('Orphaned keys: %s (translated, but not in code)', orphaned.count)
       puts format('Missing keys: %s (in code, but not translated)', missing.count)
       puts format('Duplicate values: %s', dups.count)
+      puts format('Currently enabled languages: %s', Conf.enabled_languages.count)
       puts
       puts 'run "rake cg:i18n:orphaned" for a list of orphaned keys'
       puts 'run "rake cg:i18n:missing" for a list of missing keys'
       puts 'run "rake cg:i18n:dups" for a list of duplicate values'
+      puts 'run "rake cg:i18n:dups_stats" for a list of duplicate key statistics'
       puts 'run "rake cg:i18n:bundle" to combine the keys in config/locales/en/*.yml to config/en.yml'
     end
 
@@ -125,10 +127,9 @@ namespace :cg do
 
     desc 'duplicate key stats'
     task :dups_stats do
-      lang_codes = ['en', 'nl', 'de', 'it', 'pt', 'no', 'fr', 'es', 'pl']
       keys_count = Hash.new(0)
       dups_lang = Hash.new
-      lang_codes.each do |lang|
+      Conf.enabled_languages.each do |lang|
         if lang == 'en'
           file = 'config/en.yml'
         else
