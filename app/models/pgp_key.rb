@@ -10,9 +10,11 @@ class PgpKey < ActiveRecord::Base
 
   belongs_to :user
   before_validation :update_key
-  after_save :notify_user, if: :fingerprint_present?
-
+  after_save :notify_user, if: :key_changed?
+ 
   protected
+
+  @key_uploaded = false 
 
   def update_key
     if self.key_changed?
@@ -29,6 +31,7 @@ class PgpKey < ActiveRecord::Base
       if valid_key = GPGME::Key.find(:fingerprint, import_fingerprint).first
         self.fingerprint = import_fingerprint
         self.expires = valid_key.expires
+        @key_uploaded = true
       else
         errors.add :pgp_key, I18n.t(:pgp_key_expired)
       end
@@ -49,10 +52,6 @@ class PgpKey < ActiveRecord::Base
     FileUtils.rm_rf(gpg_dir) if File.exist?(gpg_dir)
     FileUtils.makedirs(gpg_dir)
     ENV['GNUPGHOME']=gpg_dir
-  end
-
-  def fingerprint_present?
-    fingerprint.present?
   end
 
 end
