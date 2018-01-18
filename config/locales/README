@@ -22,7 +22,7 @@ to get stats:
 curl -L --user {user}:{pass} -X GET https://www.transifex.net/api/2/project/crabgrass/resource/master/stats/
 
 It would be nice to upload new source files, but I haven't gotten that to work right. I was hoping something like this would work, but it does not:
- curl -L --user {user}:{pass} -X  PUT -H "Content-Type: multipart/form-data" --upload-file "config/locales/en.yml" https://www.transifex.net/api/2/project/crabgrass/resource/master/content 
+ curl -L --user {user}:{pass} -X  PUT -H "Content-Type: multipart/form-data" --upload-file "config/locales/en.yml" https://www.transifex.net/api/2/project/crabgrass/resource/master/content
 
 We can also explore using the transifix client:
 http://help.transifex.net/features/client/index.html
@@ -46,7 +46,7 @@ KEY CHANGES
 ADDITIONS
 ------------------------
 
-added in crabgrass-core, not translated:
+added in crabgrass, not translated:
 
   optional: "Optional"
 
