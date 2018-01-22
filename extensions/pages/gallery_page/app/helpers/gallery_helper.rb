@@ -58,19 +58,6 @@ module GalleryHelper
                   class: 'icon plus_16')
   end
 
-  def gallery_delete_image(image, _position)
-    url = page_url(@page, controller: :image, action: 'destroy', id: image.id, method: :delete)
-    link_to_remote('&nbsp;', {
-                     remote: true,
-                     url: url,
-                     data: { confirm: I18n.t(:confirm_image_delete) },
-                     title: I18n.t(:remove_from_gallery),
-                     update: 'message-container',
-                     success: "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
-                   }, title: I18n.t(:remove_from_gallery),
-                      class: 'small_icon empty trash_16')
-  end
-
   def gallery_edit_image(image)
     url = page_url @page,
                    controller: :image,
