@@ -39,7 +39,6 @@ vendor/crabgrass_plugins/castle_gates/test/tests.sqlite
 *.swp
 vendor/bundle
 .bundle
-bin/
 .byebug*
 coverage
 extensions/themes/blueberry/
