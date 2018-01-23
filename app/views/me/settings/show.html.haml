@@ -29,13 +29,13 @@
           [I18n.t('notification_select.single'), "Single"],
           [I18n.t('notification_select.digest'), "Digest"] ],
         {}, class: 'form-control'
-    = user_form.fields_for :pgp_key do |key_fields|
+    = user_form.fields_for :pgp_key, @user.pgp_key do |key_fields|
       - formy.label :pgp_key.t
       - formy.row do |r|
         - r.label :pgp_public_key.t
         - r.info :pgp_key_description.t
         - r.input key_fields.text_area(:key, rows: 5, class: 'form-control', placeholder: "Enter a public PGP Key")
-      - if @user.try.pgp_key.fingerprint
+      - if @user.pgp_key.fingerprint
         - formy.row do |r|
           - r.label :fingerprint.t
           - r.input @user.pgp_key.fingerprint

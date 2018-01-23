@@ -203,7 +203,7 @@ class User < ActiveRecord::Base
 
   has_one :pgp_key, dependent: :destroy
 
-  accepts_nested_attributes_for :pgp_key
+  accepts_nested_attributes_for :pgp_key, allow_destroy: true, reject_if: :all_blank
 
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
