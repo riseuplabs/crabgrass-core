@@ -8,9 +8,6 @@
 -#
 -# NOTES
 -#
--#   form_remote_tag does not support the :with option, so we must use some other method.
--#   (here we use link_to_remote).
--#
 -#   because we are not using form_remote_tag, we eat the return key and trigger a click
 -#   to the submit link.
 -#
@@ -24,9 +21,9 @@
 -#
 - add_or_remove = "($('search_text_field').value ? 'add' : 'remove')+'=/text/:text/'"
 - with = "#{add_or_remove}+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
-- text_filter_submit_options = {url: page_search_path, with: with, remote: true}
-- clear_filter_options = {url: page_search_path(remove: '/text/:text'), with: 'FilterPath.encode()'}
-- key_pressed = "if (enterPressed(event)) {$('search_submit').onclick(); return false;}"
+-# FIXME: current workaround: append Form.serialize (which is not needed here) to get a post request
+- clear_filter_options = "'remove=/text/:text/'+'&'+FilterPath.encode()+'&'+Form.serialize($('page_search_form'))"
+- key_pressed = "if (enterPressed(event)) {$('search_submit').click(); return false;}"
 
 #page_search_table
   %div
@@ -35,9 +32,15 @@
     = form_tag '', id: 'page_search_form', class: 'form-inline' do
       .input-group
         %span.input-group-btn
-          = link_to icon_tag('tiny_clear'), clear_filter_options, class: 'btn btn-default btn-sm'
+          = link_to icon_tag('tiny_clear'), page_search_path,
+              remote: true,
+              data: { with: clear_filter_options },
+              class: 'btn btn-default btn-sm'
         = text_field_tag 'text', '', size: 40, id: 'search_text_field', onkeypress: key_pressed, placeholder: :search.t, class: 'form-control input-sm'
         %span.input-group-btn
-          = link_to icon_tag('magnifier'), text_filter_submit_options, id: 'search_submit', class: 'btn btn-default btn-sm'
-
+          = link_to icon_tag('magnifier'), page_search_path,
+              remote: true,
+              data: { with: with },
+              id: 'search_submit',
+              class: 'btn btn-default btn-sm'
 = focus_form 'page_search_form'

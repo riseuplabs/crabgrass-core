@@ -12,7 +12,7 @@ class LinkRenderer::AjaxPages < LinkRenderer::Ajax
       with: 'FilterPath.encode()',
       method: :get,
       loading: @template.show_spinner(spinner_id)
-    } # FIXME: some JS needed here for with and loading
-    @template.link_to(text, options.merge(remote: true), attributes)
+    }
+    @template.link_to_remote(text, options, attributes)
   end
 end
