@@ -163,7 +163,7 @@ namespace :cg do
     # config/en.yml --> bundled locale file used for transifex and other cg:i18n tasks
     #
     # transifex is set to automatically pull from
-    # https://raw.githubusercontent.com/riseuplabs/crabgrass-core/develop/config/en.yml
+    # https://0xacab.org/riseuplabs/crabgrass/raw/master/config/en.yml
     #
     desc 'combine locales/en/*.yml to config/en.yml'
     task :bundle do

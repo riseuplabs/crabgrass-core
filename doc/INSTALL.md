@@ -66,13 +66,13 @@ If you run into any problems bundling with bundle install (a few steps down), ma
 
 ### Checkout the codebase
 
-    git clone ssh://git@github.com/riseuplabs/crabgrass-core.git
+    git clone ssh://git@0xacab.org:riseuplabs/crabgrass.git
     or
-    git clone https://github.com/riseuplabs/crabgrass-core.git
+    git clone https://0xacab.org/riseuplabs/crabgrass.git
 
 Alternately, do a shallow clone. This will only check out a copy of the most recent version.
 
-    git clone --depth 1 https://github.com/riseuplabs/crabgrass-core.git
+    git clone --depth 1 https://0xacab.org/riseuplabs/crabgrass.git
 
 ### Install bundler
 
@@ -84,7 +84,7 @@ Alternatively you can install bundler with your package manager.
 
 ### Install rails and required gems
 
-    cd crabgrass-core
+    cd crabgrass
     bundle install
 
 Create a secret
@@ -125,7 +125,7 @@ Install for testing
 If you haven't run rake db:create already.
 
     sudo mysqladmin create crabgrass_test
-    cd crabgrass-core
+    cd crabgrass
     rake db:test:prepare
 
 ### Run tests:

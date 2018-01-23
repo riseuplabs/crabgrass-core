@@ -17,7 +17,7 @@ require 'whenever/capistrano'
 set :application, 'crabgrass'
 set :user, 'crabgrass'
 
-set :repository, 'git://labs.riseup.net/crabgrass-core.git'
+set :repository, 'git://0xacab.org/riseuplabs/crabgrass.git'
 set :branch, 'develop'
 
 deploy_host = ''

@@ -30,8 +30,8 @@ Install NFS for folders and code synchronization
 Clone the Crabgrass repository or your own fork (cd to your development folder first)
 -----------------------
 
-    git clone --depth 1 git@github.com:riseuplabs/crabgrass-core.git
-    cd crabgrass-core/
+    git clone --depth 1 git@0xacab.org:riseuplabs/crabgrass.git
+    cd crabgrass/
 
 Add optional environment variables to the end of your `~/.bashrc` file:
 -----------------------
@@ -59,7 +59,7 @@ Typical workflow
 
 - CD to the project directory
 
-    `cd crabgrass-core/`
+    `cd crabgrass/`
 
 - Run Vagrant box
 
