@@ -21,11 +21,7 @@ module Common::Ui::GizmoHelper
   #
   #   :label  -- the text of the link
   #   :active -- link is shown hilighted if true.
-  #
-  #   and one of:
-  #   (1) :url    -- creates a normal link_to
-  #   (2) :remote -- creates a remote link_to
-  #   (3) :function -- creates a link_to_function
+  #   :url    -- creates a normal link_to
   #
   # example button group:
   #
@@ -45,14 +41,7 @@ module Common::Ui::GizmoHelper
           link == links.first ? 'first' : '',
           link == links.last ? 'last' : ''
         ].combine
-        if link[:remote]
-          link[:url] = link[:remote]
-          link_to link[:label], link.slice(:url, :method).merge(remote: true), link.slice(:class, :id)
-        elsif link[:function]
-          link_to_function link[:label], link[:function], link.slice(:class, :id)
-        else
-          link_to link[:label], link[:url], link.slice(:class, :id)
-        end
+        link_to link[:label], link[:url], link.slice(:class, :id)
       end.join.html_safe
     end
   end
