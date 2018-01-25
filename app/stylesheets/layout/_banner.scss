@@ -82,6 +82,7 @@
 }
 
 #context_banner {
+  direction: ltr;
   @include cutout_menu(
     $ul_id: 'banner_nav_ul',
     $tab_margin: 0px,
