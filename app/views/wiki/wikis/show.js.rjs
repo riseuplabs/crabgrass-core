@@ -1,4 +1,5 @@
 standard_update(page)
 page << "activateTabLink('%s')" % dom_id(@wiki, 'show_tab')
 page << "if ($('posts')) {$('posts').show()}"
-render_wiki(page)
+# rerender the whole document to include changes to toc and new sections
+render_wiki page, section: :document
