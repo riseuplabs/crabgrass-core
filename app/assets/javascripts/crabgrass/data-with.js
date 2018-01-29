@@ -1,13 +1,14 @@
-// Little ui helper that adds parameters specified in data-with
-// to ajax requests.
+// Little ui helper that constructs an ajax request containing parameters specified in data-with
+// used for link_to_remote_icon calls in the search form and for sharing pages via the plus button
 
 (function () {
   document.observe("dom:loaded", function() {
-
-    function addSearchParams(event, request) {
+    function addParams(event, request) {
       var params = request.readAttribute('data-with')
-      return new Ajax.Request('/me/pages', {asynchronous:true, evalScripts:true, parameters: eval(params)});
+      var complete = request.readAttribute('data-confirm')
+      var loading = request.readAttribute('data-loading')
+      new Ajax.Request(request.href, {asynchronous:true, evalScripts:true, parameters: eval(params), onComplete:function(request){eval(complete)}, onLoading:function(request){eval(loading)}});
     };
-    document.on('ajax:success', 'a[data-with]', addSearchParams);
+    document.on('ajax:success', 'a[data-with]', addParams);
   });
 })();

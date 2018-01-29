@@ -1,5 +1,6 @@
 -
 -  mode = 'share' if mode.nil? # either 'share' or 'notify'
+-  form_name = mode + '_page_form'
 -  add_button_id = 'add_recipient_button'
 -  access_value = may_select_access_participation? ? "$('recipient_access').value" : "'#{Conf.default_page_access}'"
 -
@@ -13,8 +14,7 @@
 -
 -  # the remote action that is triggered when the 'add' button is pressed (or
 -  # the popup item is selected).
--
--  add_action = {url: page_share_path(page, mode: mode, add: true).html_safe, method: 'put', with: "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}"}
+-   add_action = {url: page_share_path(page, mode: mode, add: true).html_safe, method: 'put', with: "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value} +'&'+Form.serialize($('" + form_name + "'))"}
 -  # (1) submit the form when the enter key is pressed in the text box
 -  # (2) don't submit the form if the recipient name field is empty
 -  # (3) eat the event by returning false on a enter key so that the form
@@ -23,7 +23,6 @@
 -  eat_enter = "return(!enterPressed(event));"
 -  only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
 -  key_pressed_function = remote_function(add_action.merge(condition: only_on_enter_press)) + eat_enter;
--
 -  # this is called after an item in the popup has been selected.
 -  # it makes it so selecting an item is like hitting the add button
 -  # we clear the recipient_name field so that we don't get a double submit

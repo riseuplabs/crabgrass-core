@@ -13,11 +13,9 @@ module Common::Ui::LinkWithIcon
   # thing happens, and the icon is set to a spinner. The icon is
   # restored when the ajax request completes.
   #
-  def link_to_remote(name, options, html_options = {})
+  def link_with_spinner_or_confirm(name, options, html_options = {})
     icon = html_options[:icon] || html_options[:button_icon]
-    if icon.nil?
-      super(name, options, html_options)
-    else
+    if icon
       add_icon_class(html_options)
       id = html_options[:id] || format('link%s', rand(1_000_000))
       html_options[:id] ||= id
@@ -34,8 +32,8 @@ module Common::Ui::LinkWithIcon
 	  icon_options[:complete] = [spinner_icon_off(icon, id), options[:complete]].combine(';')
 	end
       end
-      link_to_remote_with_confirm(name, options.merge(icon_options), html_options)
     end
+    link_to_remote_with_confirm(name, options.merge(icon_options), html_options)
   end
 
   def link_to_function(name, *args, &block)
@@ -81,7 +79,7 @@ module Common::Ui::LinkToIconHelper
 
   def link_to_remote_icon(icon, options = {}, html_options = {})
     html_options[:button_icon] = icon
-    link_to_remote('', options, html_options)
+    link_with_spinner_or_confirm('', options, html_options)
   end
 
   def link_to_function_icon(icon, function, html_options = {})

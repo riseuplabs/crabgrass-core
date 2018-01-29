@@ -9,7 +9,7 @@
       .label.label-primary
         = :completed.tcap
         = friendly_date(task.completed_at)
-  = form_remote_tag( *options_for_task_edit_form(task) ) do
+  = form_tag(task_url(task, page_id: task.page), *options_for_task_edit_form(task) ) do
     .form-group= text_field 'task', 'name', class: 'form-control'
     .form-group= text_area  'task', 'description', rows: 4, class: 'form-control'
     .form-group= checkboxes_for_assign_people_to_task(task, task.user_ids)

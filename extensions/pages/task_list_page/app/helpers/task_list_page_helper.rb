@@ -143,10 +143,12 @@ module TaskListPageHelper
   end
 
   def options_for_task_edit_form(task)
+  # FIXME: do we need the url here??? we pass it to the form separately (but maybe there is some magic...)
     [{
       url: task_url(task, page_id: task.page),
       loading: show_spinner(task),
       method: :put,
+      remote: :true,
       html: {}
     }]
   end

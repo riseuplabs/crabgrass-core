@@ -130,12 +130,11 @@ module Page::SidebarHelper
 
   #
   # used in the sidebar of deleted pages
-  # FIXME: icon is not shown
   #
   def destroy_line
     if may_admin_page?
       content_tag :li do
-        link_to(:destroy_page_via_shred.t, url: page_trash_path(@page, type: 'destroy'),
+        link_to(:destroy_page_via_shred.t, page_trash_path(@page, type: 'destroy'),
           remote: true,
           method: 'put',
           icon: 'minus',
