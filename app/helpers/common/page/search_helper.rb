@@ -129,18 +129,6 @@ module Common::Page::SearchHelper
     end
   end
 
-  # a helper used by search filters that define custom a UI.
-  # the options come from a member variable @filter_submit_options that
-  # is defined in /common/pages/search/_popup
-  def filter_submit_button(label, params)
-    if params.any?
-      options = @filter_submit_options.merge(url: (@filter_submit_options[:url] += '&' + safe_join(params.collect { |key, value| format('%s=%s', CGI.escape(key.to_s), CGI.escape(value.to_s)) }, '&')).html_safe)
-    else
-      options = @filter_submit_options
-    end
-    submit_to_remote 'submit', label, options
-  end
-
   #
   # a link used in the page search popup.
   # it creates a form element to match params, then submits the form.
