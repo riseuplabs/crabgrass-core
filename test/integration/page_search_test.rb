@@ -24,6 +24,21 @@ class PageSearchTest < JavascriptIntegrationTest
     assert_content page.title
   end
 
+  def test_search_word
+    user = users(:blue)
+    page = user.pages.last
+    login user
+    click_on 'Pages'
+    fill_in 'search_text_field', with: page.title
+    find('#search_submit').click
+    assert_content page.title
+    assert_content "Search: #{page.title[0..10]}"
+    find('.tiny_clear_16').click
+    assert_content page.title
+    assert_no_content "Search: #{page.title[0..10]}"
+  end
+
+
   def test_owned_by_me
     user = users(:blue)
     page = user.pages_owned.first
