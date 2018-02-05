@@ -28,6 +28,7 @@ en:
       enter_name_of_group_or_person: Enter the name of a group or a person
       enter_name_of_group: Enter the name of a group
       enter_name_of_person: Enter the name of a person
+  everybody: Everybody
   go: Go
   list_things: "List %{things}"
   modified: modified

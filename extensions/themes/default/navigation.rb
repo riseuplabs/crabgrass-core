@@ -171,10 +171,10 @@ define_navigation do
         active { params[:path].try(:include?, 'peers') }
       end
 
-      local_section :search do
-        label { :search.t }
-        url { people_directory_path(path: ['search']) }
-        active { params[:path].try(:include?, 'search') }
+      local_section :everybody do
+        label { :everybody.t }
+        url { people_directory_path(path: ['everybody']) }
+        active { params[:path].try(:include?, 'everybody') }
       end
     end
 
