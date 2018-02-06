@@ -1,8 +1,3 @@
-- #
-- # Note: the data-onvisible remote function gets called once
-- # when this menu becomes visible
-- #
-
 - if logged_in?
   - menu = current_theme.navigation.root.seek(:me)
   %ul.dropdown-menu(style="display:none")
@@ -10,11 +5,3 @@
       %li
         = link_to item.label, item.url, :icon => item.icon
 
-  -# list of recently modified pages....
-  -# cache [current_theme, current_language, browser_is_ie?] do
-    - load_recent_function = (remote_function(url: me_recent_pages_path, method: 'get') unless browser_is_ie?)
-    %ul.dropdown-menu{style: "display: none", 'data-onvisible' => load_recent_function}
-      - unless browser_is_ie?
-        .h3.first= :recent_pages.t
-        #recent_pages_dropdown{style: 'white-space:normal'}
-          = big_spinner

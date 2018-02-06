@@ -25,17 +25,7 @@ module Common::Ui::AssetsHelper
         complete: hide_spinner('popup')
       )
     end
-
     radio_button_tag 'cover_id', asset.id, checked, opts
   end
 
-  def remove_cover_asset_checkbox
-    opts = { onclick: remote_function(
-      url: { controller: 'base_page/assets', action: 'update', page_id: @page.id },
-      loading: show_spinner('popup'),
-      complete: hide_spinner('popup')
-    ) }
-
-    radio_button_tag 'cover_id', 'none', @page.cover.blank?, opts
-  end
 end

@@ -28,10 +28,10 @@ module AssetPageHelper
         url: version_url(version.version, page_id: @page),
         method: :delete,
         remote: true,
-        confirm: I18n.t(:delete_version_confirm) # FIXME: should be removed, needed for now as a flag for link_to to recognize remote call
+        confirm: I18n.t(:delete_version_confirm)
       }
       html_options = { confirm: I18n.t(:delete_version_confirm), icon: 'tiny_trash' }
-      link_to(:remove.t, options, html_options)
+      link_to_with_confirm(:remove.t, options, html_options)
     end
   end
 

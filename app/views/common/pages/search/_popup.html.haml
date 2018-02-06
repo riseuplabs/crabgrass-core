@@ -14,11 +14,6 @@
 -#
 -# notes:
 -#
--# form_remote_tag does not support the :with option, so we must use submit_to_remote.
--#
--# when we specify :with, it overrides the default parameters used by submit_to_remote.
--# therefore, we must manually specify Form.serialize.
--#
 -# When calculating the path, params submitted in this form are used to substitute
 -# into the path. For example,
 -#
@@ -27,7 +22,7 @@
 -#
 
 - with = "FilterPath.encode()+'&'+Form.serialize(this.form)"
-- @filter_submit_options = {url: url, with: with, loading: show_spinner('search_filter'), complete: close_modal_function, html: {class: 'btn btn-primary'}}
+- @filter_submit_options = {url: url, with: with, loading: show_spinner('search_filter'), complete: close_modal_function}
 
 = form_tag(url, id: 'page_search_form') do
   - if filter.description.present?
@@ -38,8 +33,8 @@
     - if filter.options[:submit_button]
       = spinner('search_filter')
       = close_modal_button
-      = submit_to_remote 'submit', :search.t, @filter_submit_options
+      = button_to_function :search.t, remote_function(@filter_submit_options), class: 'btn btn-primary', name: 'submit'
     - else
       = text_spinner('loading...', 'search_filter')
-      = submit_to_remote 'submit', '', @filter_submit_options.merge({html:{style: 'display:none'}})
+      = button_to_function '', remote_function(@filter_submit_options), style: 'display:none', name: 'submit'
 
