@@ -240,6 +240,8 @@ en:
       enter_name_of_group_or_person: Enter the name of a group or a person
       enter_name_of_group: Enter the name of a group
       enter_name_of_person: Enter the name of a person
+      enter_name_of_contact: Enter the name of a contact
+      enter_name_of_peer: Enter the name of a peer
   everybody: Everybody
   go: Go
   list_things: List %{things}
