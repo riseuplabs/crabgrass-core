@@ -78,6 +78,16 @@ module Common::Ui::AutocompleteHelper
       autocomplete_js_tag(options[:id] || field_id, js_options)
   end
 
+  def set_key_for_search_bar
+    if @path == "contacts"
+      :enter_name_of_contact
+    elsif @path == "peers"
+      :enter_name_of_peer
+    else
+      :enter_name_of_person
+    end
+  end
+
   def autocomplete_js_tag(field_id, options)
     path_options = options.extract! :view, :group
     path_options[:format] = 'json'

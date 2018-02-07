@@ -34,7 +34,7 @@ class PeopleDirectoryTest < JavascriptIntegrationTest
   def test_search
     login
     click_on 'People'
-    find('#column_left').click_on 'Search'
+    find('#column_left').click_on 'Everybody'
     within '#user_list' do
       assert_no_content 'Blue!'
     end
