@@ -6,13 +6,13 @@ en:
 
 ########################################
 ### en/account.yml
-  congratulations_you_have_signed_up: Congratulations! You have signed up for %{site_title}.
-  cookie_disabled_warning: You have cookies disabled. You will not be able to login
-    until you enable cookies.
-  email_verification_body: |-
+  congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}.
+  cookie_disabled_warning: You have cookies disabled. You will not be able to log in
+    until you enable cookies."
+  email_verification_body: "|-
     You have signed up for %{site_title} (%{host}).
   
-    Before you can login you must verify that this is your email.
+    Before you can log in you must verify that this is your email.
   
     Click the link below or copy and paste it into your browser:
   
@@ -20,75 +20,75 @@ en:
   
     If you do not wish to join, simply ignore this email.
   forgotten_email_address: What email address did you give us when you created your
-    account?
+    account?"
   invalid_email_text: The email address you provided is invalid.
   invalid_token: Invalid Token
   invalid_token_text: The password reset link you specified is invalid. Presumably it
     has already been used, or it has expired.
-  login: Login
+  login: Log in
   login_failed: Could not log in
-  login_failure_reason: Username or password is incorrect.
+  login_failure_reason: Username or password incorrect.
   logout_success: Goodbye
   logout_success_message: You have been logged out.
   sign_in: Sign In
   signup_button: Sign Up
-  signup_email_info: 'Optional: used if you forget your password'
+  signup_email_info: "Optional: used if you forget your password"
   signup_link: Create New User
-  signup_success: Registration successful
+  signup_success: Registered
   signup_success_message: Thanks for signing up!
   signup_title: Create Your Account
   you_should_receive_instructions_email: You should receive an email with instructions
     how to finish creating your account.
-  account_successfully_removed: Your account has successfully been removed. We'll clear
-    it and all it's associated data from the database.
+  account_successfully_removed: Your account has been removed. We''ll clear
+    it and all its associated data from the database.
   anonymize_display_name: Anonymize display name
-  anonymize_display_name_info: Replaces your display name with 'Anonymous' everywhere
+  anonymize_display_name_info: Replaces your display name with ''Anonymous'' everywhere
   confirm_account_removal: Are you sure you want to remove your account? This step cannot
     be undone and your data will be lost.
   destroy_comments: Destroy comments
-  destroy_comments_info: This will remove all comments you made to pages. It might make
-    it hard to understand remaining comments by others.
-  remove_your_account: Remove Your Account
-  change_password: Change Password
-  confirm_new_password: Confirm New Password
-  forgot_password_link: Forgot Password?
+  destroy_comments_info: This will remove all page comments you have made. It might make
+    it hard to understand surrounding comments by others.
+  remove_your_account: Remove your account
+  change_password: Change password
+  confirm_new_password: Confirm new password
+  forgot_password_link: Forgot your password?
   forgot_password_mail_expiry: This link will remain valid for 24 hours. If you need
     to reset your password after that, you will have to visit the forgotten password
     page again to request a new link.
   forgot_password_mail_greeting: "%{user}, to reset your password, please visit"
-  forgot_password_text: If you've forgotten the password you use to log in, we can send
+  forgot_password_text: If you''ve forgotten the password you use to log in, we can send
     you an email link which will allow you to generate a new one.
   new_password: New Password
   password: Password
-  password_confirmation: Password Confirmation
-  password_reset: Password Reset
-  password_reset_ok_text: Your password has been successfully reset. You can now sign
+  password_confirmation: Password confirmation
+  password_reset: Password reset
+  password_reset_ok_text: Your password has been reset. You can now sign
     in with your newly changed password.
   password_was_reset: Your password has been reset
-  requested_forgot_password: You have requested a change of password
+  requested_forgot_password: You have requested a password change
   reset_password: Reset Password
   reset_password_email_sent: If that email address is associated with a username, then
     an email has been sent containing instructions for resetting your password.
-  reset_password_mail_greeting: "%{user}, your password has been reset as you requested."
-  reset_password_mail_warning: If you did not request that your password be changed,
+  reset_password_mail_greeting: "%{user}, your password has been reset as per requested."
+  reset_password_mail_warning: If you did not request your password to be changed,
     please contact us.
-  reset_password_text: Hello, %{user}. If you've forgotten the password you use to log
-    in, you can set a new one here.
+  reset_password_text: "Hello, %{user}. If you''ve forgotten the password you use to log
+    in, you can set a new one here."
 
 
 ########################################
 ### en/crabgrass.yml
   crabgrass:
-    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL
-      software libre</a> for network organizing.
+    description_html: ", <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL
+      libre software</a> for network organizing.
   
-  '
+  "
     get_involved: Get Involved
     help_pages: Crabgrass Help Pages
     help_translate: Help Translate
-    powered_by_html: 'This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+    powered_by_html: "This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
   
-  '
+  "
     report_a_bug: Report a Bug
     request_a_feature: Request a Feature
 
@@ -124,7 +124,7 @@ en:
   drop_files_here: Drop files here
   edit: Edit
   files_pending: Files pending
-  loading_progress: Loading...
+  loading_progress: Loading…
   ok_button: OK
   optional: Optional
   pending: Pending
@@ -150,11 +150,11 @@ en:
   mailer:
     hello: Hello %{user_name}
     pgp_key:
-      key_uploaded: You just uploaded a new key. It will be used for encrypted email
-        notifications (experimental feature, coming soon).
+      key_uploaded: "You just uploaded a new key. It will be used for encrypted email
+        notifications (experimental feature, coming soon)."
       key_uploaded_subject: Notification
     page_histories:
-      change_your_settings_here: 'Change your email notification settings here: %{page_link}'
+      change_your_settings_here: "Change your email notification settings here: %{page_link}"
       daily_digest: "%{site} : Daily summary of page modifications"
       page_update: "%{site} : A page has been modified"
       pages_you_are_watching_have_been_modified:
@@ -163,12 +163,12 @@ en:
           notification."
       the_page_you_are_watching_description: The page you are watching "%{page_title}"
         has been modified
-      upload_your_public_pgp_key: To receive more detailed updates in encrypted emails
-        please upload your public pgp key.
-      we_leave_out_details: We leave out the details in this email to protect information
+      upload_your_public_pgp_key: To receive more detailed updates in encrypted emails,
+        please upload your public PGP key.
+      we_leave_out_details: Details in this email are left out to protect information
         you might want to keep private.
-      you_can_find_updates_here: 'You will find more details and a list of recently
-        changed pages here:'
+      you_can_find_updates_here: "You will find more details and a list of recently
+        changed pages here:"
       you_can_turn_off_or_configure_notifications: Turn off email notifications, receive
         a summary of changes, or get an email each time the page is changed
 
@@ -181,7 +181,7 @@ en:
       group:
         not_found: Sorry, we could not find the group you were looking for.
       not_found: Sorry, we could not find what you were looking for.
-      unauthorized: Please login to perform that action.
+      unauthorized: Please log in to perform that action.
     title:
       forbidden: Permission Denied
       group:
@@ -200,18 +200,18 @@ en:
   confirm_image_delete: Do you really want to delete this image? This action can not
     be undone.
   edit_image: Edit Image
-  error_saving_new_order_message: 'Error saving new order: {{error_message}}'
+  error_saving_new_order_message: "Error saving new order: {{error_message}}"
   edit_gallery_explanation: Add new images or drag images to rearrange their order.
   file_must_be_image_error: File must be an image to be part of a gallery.
-  gallery_changing_cover_message: Changing cover...
+  gallery_changing_cover_message: Changing cover…
   image_count: Image %{number} of %{count}
   image_count_total: "%{count} Photos"
-  make_album_cover: make this image the album cover
+  make_album_cover: Make this image the album cover
   move_image_left: Move image left
   move_image_right: Move image right
   order_changed: Order changed.
   remove_from_gallery: Remove from gallery
-  upload_new_image: Upload New Image
+  upload_new_image: Upload new image
   upload_zip_file_link: Upload a ZIP-File
 
 
@@ -332,7 +332,7 @@ en:
   
       %{accept_invite_link}
   
-      The home page of this group can be found here:
+      The homepage of this group can be found here:
         %{group_home_link}
   
         If you do not wish to join this group, simply ignore this email.
@@ -348,7 +348,7 @@ en:
   council_description_details: By default, all members may modify the %{group}. If you
     want to restrict administrative powers to certain users, create a council and add
     users to it.
-  group_creation_info: 'There are four types of groups:'
+  group_creation_info: "There are four types of groups:"
   group_description: Organizations are groups that are autonomous and have people as
     members.
   network_committees_may_not_join_networks: Committees of other networks may not join.
@@ -368,7 +368,7 @@ en:
   open_group: Open %{group}
   open_group_description: Users are immediately added to the %{group} - no requests
     have to be approved
-  group_wiki: Group Wiki
+  group_wiki: Group wiki
   members_may_edit_wiki: All members may edit the wiki
   members_may_edit_wiki_description: If unchecked, only council members may edit the
     %{group} wiki.
@@ -385,7 +385,7 @@ en:
   group_publicly_visible: Make %{group} Publicly Visible
   group_publicly_visible_description: "%{group} appears in the public directory. The
     <i>profile</i> is visible by non-members at %{domain}/yourgroupname."
-  group_successfully_created: Group was successfully created.
+  group_successfully_created: Group created.
   join_group_confirmation: Are you sure you want to join this %{group_type}?
   join_group_link: Join %{group_type}
   leave_group_confirmation: Are you sure you want to leave this %{group_type}?
@@ -422,30 +422,30 @@ en:
   fingerprint: Fingerprint
   language: Language
   message_user_wrote_caption: "%{user} wrote:"
-  message_you_wrote_caption: 'You wrote:'
+  message_you_wrote_caption: "You wrote:"
   my_dashboard: My Dashboard
   notification_select:
-    digest: 'Yes: a daily summary of changes'
-    none: 'No: no emails for changes'
-    single: 'Yes: an email per change'
+    digest: "Yes: a daily summary of changes"
+    none: "No: no emails for changes"
+    single: "Yes: an email per change"
   or_image_url: or image URL
   pgp_key: PGP Key
   pgp_public_key: Public Key
-  pgp_key_description: 'Experimental: Upload your PGP public key if you want to receive
-    encrypted email notifications (new feature coming soon). We will send you an encrypted
-    confirmation email.'
+  pgp_key_description: "Experimental: Upload your public PGP key if you want to receive
+    encrypted email notifications (new feature coming soon). An encrypted
+    confirmation email will be sent to you."
   pgp_key_invalid: The key you entered cannot be imported. Did you really paste a public
     PGP key?
-  pgp_key_expired: The PGP key you entered is expired.
+  pgp_key_expired: The PGP key you entered has expired.
   private_profile: Private Profile
-  remove_image_link: remove image
-  save_changes: Save Changes
-  select_image_file: select image file
-  send_message_link: Send Message
-  time_zone: Time Zone
+  remove_image_link: Remove image
+  save_changes: Save changes
+  select_image_file: Select image file
+  send_message_link: Send message
+  time_zone: Time zone
   unread_private_message: You have an unread private message from %{user}
-  upload_image: Upload Image
-  uploaded_image_cropped: Uploaded image will be cropped and stretched to 202 pixels
+  upload_image: Upload image
+  uploaded_image_cropped: The uploaded image will be cropped and stretched to 202 pixels
     square.
   username: Username
 
@@ -457,7 +457,7 @@ en:
   back_to_page: Back to the page
   home: Home
   menu_admin: Admin
-  menu_link_logout: Logout %{user}
+  menu_link_logout: Log out %{user}
   profile: Profile
 
 
@@ -471,29 +471,29 @@ en:
   popular_pages: Popular Pages
   properties: Properties
   recent_pages: Recent Pages
-  current_video_sources: 'Currently supported: youtube, blip.tv, google video, vimeo.'
+  current_video_sources: "Currently supported: YouTube and Vimeo."
   video_embed_code_description: This is not the website address. It is a code surrounded
-    by < and > that the video site – youtube, etc – makes available to you for putting
+    by < and > that the video site – YouTube, etc. – makes available to you for putting
     the video on other sites.
   video_embed_code_prompt: Embed code from external video source.
   email_link_expires: This link will expire in %{days} days.
-  email_notice_access: 'You may access this page here:'
+  email_notice_access: "You may access this page here:"
   email_notice_hello: Hello, %{from} has sent you a web page.
-  email_notice_hello_with_message: 'Hello, %{from} has sent you a web page with the
-    message: %{message}'
-  email_notice_subject: Check out page "%{title}"
+  email_notice_hello_with_message: "Hello, %{from} has sent you a web page with the
+    message: %{message}"
+  email_notice_subject: "Check out page ''%{title}''"
   page_notice: Page Notice
-  page_notice_title: <user>%{from}</user> sent you page "%{page_title}"
-  page_notice_title_with_message: '<user>%{from}</user> sent you page "%{page_title}"
-    with the message:'
+  page_notice_title: "<user>%{from}</user> sent you page ''%{page_title}''"
+  page_notice_title_with_message: "<user>%{from}</user> sent you page ''%{page_title}''
+    with the message:"
   page_update: Page Update
-  page_updated: <user>%{from}</user> updated the page "%{page_title}"
+  page_updated: "<user>%{from}</user> updated the page ''%{page_title}''"
   page_history_add_star: "%{user_name} has added a star"
   page_history_added_comment: "%{user_name} added a comment"
   page_history_change_title: "%{user_name} has modified the page title"
   page_history_deleted_page: "%{user_name} has deleted the page"
   page_history_destroyed_comment: "%{user_name} destroyed a comment"
-  page_history_details_change_title: 'From: "%{from}" To: "%{to}"'
+  page_history_details_change_title: "From: "%{from}" To: ''%{to}''"
   page_history_granted_group_full_access: "%{user_name} granted full access to the group
     %{item_name}"
   page_history_granted_group_read_access: "%{user_name} granted read access to the group
@@ -518,17 +518,17 @@ en:
   page_history_updated_content: "%{user_name} has updated the page content"
   page_history_user_created_page: "%{user_name} has created the page"
   active_filters: Active Filters
-  all_page_types: all page types
+  all_page_types: All page types
   all_pages: All Pages
-  created: created
-  created_by_dotdotdot: Created By...
+  created: Created
+  created_by_dotdotdot: Created By…
   created_by_me: Created
   created_by_user: Created By %{user}
   created_by_user_description: Search for pages created by a particular person.
   data_for_page_missing: The data for this page is missing.
-  edit_title: edit title
+  edit_title: Edit title
   edited: Edited
-  edited_by_user: Edited By %{user}
+  edited_by_user: "Edited By %{user}"
   filter_group_description: Search for pages with access by a particular group.
   filter_tag_description: Search for pages with a particular tag.
   filter_user_description: Search for pages with access by a particular user.
@@ -541,19 +541,19 @@ en:
   page_name_description: Optional unique name (used to create the URL for this page)
   read: read
   starred: Starred
-  starred_by_user: Starred By %{user}
+  starred_by_user: "Starred By %{user}"
   type: Type
-  unread: unread
-  updated: updated
+  unread: Unread
+  updated: Updated
   viewed: Viewed
   watched_by_me: Watching
-  watched_by_user: Watched By %{user}
-  add_star_link: Add Star (%{star_count})
-  delete_page_link: Delete %{page_class}
-  destroy_page_via_shred: Destroy Immediately
+  watched_by_user: "Watched by %{user}"
+  add_star_link: "Add star (%{star_count})"
+  delete_page_link: "Delete %{page_class}"
+  destroy_page_via_shred: Destroy immediately
   destroy_page_via_shred_info: This will permanently destroy the page. This action cannot
     be undone.
-  destroy_page_via_trash: Move To Trash
+  destroy_page_via_trash: Move to trash
   destroy_page_via_trash_info: This will move the page to the trash, where it can later
     be retrieved.
   information: Information
@@ -563,42 +563,42 @@ en:
   public_checkbox_help: If checked, anyone may view this page.
   remove_access_error: The access to this page could not be removed. You cannot remove
     the owners access or an access that is necessary for you to administrate the page.
-  remove_star_link: Remove Star (%{star_count})
+  remove_star_link: "Remove Star (%{star_count})"
   separate_tags: Separate tags using commas.
   undelete_from_trash: Undelete
-  watch_checkbox: Watch For Updates
-  add_new_attachment: Add New Attachment
-  page_access_admin: Full Access
-  page_access_edit: Write Ability
-  page_access_none: No Access
-  page_access_view: Read Only
-  edit_attachments: Edit Attachments
-  current_attachments: Current Attachments
+  watch_checkbox: Watch for updates
+  add_new_attachment: Add new attachment
+  page_access_admin: Full access
+  page_access_edit: Write ability
+  page_access_none: No access
+  page_access_view: Read only
+  edit_attachments: Edit attachments
+  current_attachments: Current attachments
   use_radio_buttons_to_select_page_cover: Use radio buttons to select the page cover
-  share_already_exists_error: '"%{name}" already has access to this page.'
-  share_grant_required_error: "%{name} is not allowed to view this page. They must be
+  share_already_exists_error: "''%{name}'' already has access to this page."
+  share_grant_required_error: "''%{name}'' is not allowed to view this page. The person must be
     granted greater access first."
   share_include_message: Include a custom message
-  share_page_link: Share %{page_class}
+  share_page_link: "Share %{page_class}"
   share_page_recipients: Share page with
   share_send_notification: Send notification
-  shared_page_success: You successfully shared this page.
+  shared_page_success: You shared this page.
   share_permission_denied_error: You are not allowed to change the access permissions
     of this page
-  share_pester_error: Sorry, you are not allowed to share with "%{name}".
+  share_pester_error: "Sorry, you are not allowed to share with ''%{name}''."
   notification_message: Notification Message
-  notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b>
+  notify_contribution: "<b>Prior Contribution:</b> Notify people who have made a <b>contribution</b>
     to this page."
-  notify_current_access: "<b>Current Access:</b> notify people or groups who currently
+  notify_current_access: "<b>Current Access:</b> Notify people or groups who currently
     have access to this page."
   notify_no_access_error: Sorry, "%{name}" does not have access to this page.
-  notify_page_link: Send Notification
-  notify_success: You successfully sent notifications.
+  notify_page_link: Send notifications
+  notify_success: You sent notifications.
   send_only_with_encryption: Send only if encrypted distribution is possible
-  send_email: Send Email
-  name_or_email_not_found: '"%{name}" does not match the name of any users or groups
-    and is not a valid email address.'
-  additional_page_access: Additional Access
+  send_email: Send email
+  name_or_email_not_found: "''%{name}'' does not match the name of any users or groups
+    and is not a valid email address."
+  additional_page_access: Additional access
   announcement_page_description: An announcement.
   announcement_page_display: Announcement
   announcements_page_display: Announcements
@@ -613,79 +613,79 @@ en:
   contribute_content_link: Create Page
   create_page: Create Page
   discussion_page_description: Discuss a particular topic with groups or other users.
-  discussion_page_display: Group Discussion
+  discussion_page_display: Group discussion
   event_page_description: A calendar event.
   event_page_display: Event
   external_video_page_description: Show a video hosted on an external website.
-  external_video_page_display: External Video
+  external_video_page_display: External video
   folder_class_description: Create a folder to organize other pages.
   folder_display: Folder
   gallery_description: Upload multiple images or organize existing images into a set.
   gallery_display: Gallery
   message_page_description: Send a personal message to individual recipients.
-  message_page_display: Personal Message
+  message_page_display: Personal message
   page_added_to_group: This page will be added to %{group_type} %{group_name}.
-  page_create_owner: Page Owner
+  page_create_owner: Page owner
   page_group_event: Event
   page_owner_error: Page owner cannot be empty.
   ranked_vote_page_description: Create a list of choices for people to rank in order
     of preference.
-  ranked_vote_page_display: Ranked Vote
+  ranked_vote_page_display: Ranked vote
   rate_many_page_description: Create a list of choices for people to approve or disapprove
     of.
-  rate_many_page_display: Approval Poll
+  rate_many_page_display: Approval poll
   select_file_to_upload: Select a file to upload.
   survey_page_description: Create a series of questions for people to answer.
   survey_page_display: Survey
   task_list_page_description: Create a list of todo items and assign tasks to yourself
     or others.
-  task_list_page_display: Task List
+  task_list_page_display: Task list
   wiki_page_description: Create an editable free-form text document.
-  wiki_page_display: Wiki Page
+  wiki_page_display: Wiki page
   assign_to: Assign to
   completed: Completed
   completed_tasks: Completed tasks
   no_completed_tasks: No completed tasks
   no_pending_tasks: No pending tasks
   page_group_media: Multimedia
-  page_group_planning: Planning Tools
-  page_group_text: Text and Discussions
-  page_group_vote: Polls and Votes
+  page_group_planning: Planning tools
+  page_group_text: Text and discussions
+  page_group_vote: Polls and votes
   pending_tasks: Pending tasks
-  confirm_vote_button: Confirm Vote
+  confirm_vote_button: Confirm vote
   edit_my_vote_tab: Edit my vote
-  first_choice_of: first choice of
+  first_choice_of: First choice of
   ranked_vote_instructions: Drag and drop the items on the following list until they
     are in order from most preferred at the top to least preferred at the bottom.
   show_results_tab: Show results
-  top_pick: top pick
-  vote:
+  top_pick: Top pick
+  Vote:
     not_voted_on: Not voted on
     really_remove_this: Do you really want to remove this option?
     voted_on: Voted on
-    you_have_not_ranked: 'You have not ranked yet:'
-  vote_bad: bad
-  vote_good: good
-  vote_no: 'no'
-  vote_none: none
-  vote_ok: ok
-  add_long_text_question_link: Long Answer
-  add_select_many_question_link: Select Multiple Answers
-  add_select_one_question_link: Select One Answer
-  add_short_text_question_link: Short Answer
-  drag_to_move_tip: drag to move
+    you_have_not_ranked: "You have not ranked yet:"
+  vote_bad: Bad
+  vote_good: Good
+  vote_no: ''No''
+  vote_none: None
+  vote_ok: OK
+  add_long_text_question_link: Long answer
+  add_select_many_question_link: Select multiple answers
+  add_select_one_question_link: Select one answer
+  add_short_text_question_link: Short answer
+  drag_to_move_tip: Drag to move
   each_line_is_a_choice_caption: "(each line is a possible choice)"
   no_data_uploaded_label: No data uploaded
-  private_question_label: Private Question
-  save_survey_button: Save Survey
-  see_whole_response_link: see whole response
-  select_many_choices_label: 'Select many answer choices:'
-  select_one_choices_label: 'Select one answer choices:'
-  survey_average_rating_heading: 'Average Rating:'
+  private_question_label: Private question
+  save_survey_button: Save survey
+  see_whole_response_link: See full response
+  select_many_choices_label: "Select many answer choices:"
+  select_one_choices_label: "Select one answer choices:"
+  survey_average_rating_heading: "Average rating:"
   survey_description_explaination: This text will show up in the introduction tab, and
     will be the first thing that survey takers see.
   survey_introduction_tab: Introduction
-  survey_list_all_tab: List Responses
+  survey_list_all_tab: List responses
   survey_may_create_response: May create response?
   survey_may_rate: May rate responses?
   survey_may_see_ratings: May see ratings?
@@ -695,22 +695,22 @@ en:
     responses.
   survey_please_check_message: Please check your answers.
   survey_previous_result: Previously
-  survey_question_label: 'Question:'
+  survey_question_label: "Question:"
   survey_questions: Questions
-  survey_rate_this_response_heading: Rate This Response
+  survey_rate_this_response_heading: Rate this response
   survey_rated_by_1_person_caption: Rated by one person.
   survey_rated_by_x_people_caption: Rated by %{count} people.
   survey_respond_button: Respond
   survey_response_by: Response by %{login}
   survey_select_a_rating_message: Select a rating to see the next item.
-  survey_skip_next_link: Skip To Next
+  survey_skip_next_link: Skip to next
   survey_thanks_submit_message: Thank you for submitting your response.
   survey_you_already_rated_response_with_rating_heading: You already rated this response.
     You gave it a %{rating}.
   survey_you_previousely_rated_message: You previously rated this item with %{rating}.
-  survey_your_rating_heading: 'Your Rating:'
-  their_answer_goes_here_label: Their answer goes here...
-  video_link_question_link: Video Link
+  survey_your_rating_heading: "Your rating:"
+  their_answer_goes_here_label: Their answer goes here…
+  video_link_question_link: Video link
 
 
 ########################################
@@ -728,35 +728,35 @@ en:
   may_view_label: See my profile?
   peers_description: Members of your groups
   permissions_key: Key
-  public_description: Everyone on the internet
-  sharing_and_requests: Sharing and Requests
+  public_description: Everyone on the Internet
+  sharing_and_requests: Sharing and requests
 
 
 ########################################
 ### en/profiles.yml
   banner: Banner
   banner_info: Optimal dimensions are %{optimal_dimensions} pixels
-  edit_profile_link: Edit Profile
-  organizational_role: Organizational Role
-  post_message: Post Message
-  profile_member_since: Member Since
+  edit_profile_link: Edit profile
+  organizational_role: Organizational role
+  post_message: Post message
+  profile_member_since: Member since
   profile_saved: Your profile has been saved.
-  remove_friend_link: Remove From My Contacts
-  request_friend_link: Add To My Contacts
-  view_profile: View Profile
+  remove_friend_link: Remove from ''My contacts''
+  request_friend_link: Add to ''My contacts''
+  view_profile: View profile
 
 
 ########################################
 ### en/requests.yml
-  all_requests: All Requests
+  all_requests: All requests
   incoming: Incoming
   not_allowed_to_respond_to_request: "%{user} is not allowed to %{command} the request."
   outgoing: Outgoing
   request: Request
   request_pending: "%{request} is pending"
   requests: Requests
-  send_request_button: Send Request
-  try_again: Try Again
+  send_request_button: Send request
+  try_again: Try again
   friend_remove_confirmation: Are you sure you wish to no longer be the contact of %{user}?
   friend_request_message_label: Tell %{user} why you want to be their contact.
   invite_error_already_member: You are already a member of that group.
@@ -770,54 +770,54 @@ en:
   you_are_invited: You are invited to join.
   activerecord:
     models:
-      request_to_create_council: Request to Create Council
-      request_to_destroy_our_group: Request to Destroy Group
-      request_to_friend: Request to Become Contacts
+      request_to_create_council: Request to create council
+      request_to_destroy_our_group: Request to destroy group
+      request_to_friend: Request to become contacts
       request_to_join_our_network:
-        one: Invitation to Join
-        other: Invitations to Join
+        one: Invitation to join
+        other: Invitations to join
       request_to_join_us:
-        one: Invitation to Join
-        other: Invitations to Join
+        one: Invitation to join
+        other: Invitations to join
       request_to_join_us_via_email:
-        one: Invitation to Join
-        other: Invitations to Join
-      request_to_join_you: Request to Join
-      request_to_join_your_network: Request to Join
-      request_to_remove_user: Request to Remove Member
+        one: Invitation to join
+        other: Invitations to join
+      request_to_join_you: Request to join
+      request_to_join_your_network: Request to join
+      request_to_remove_user: Request to remove member
   invitation_to_join:
-    one: Invitation to Join
-    other: Invitations to Join
+    one: Invitation to join
+    other: Invitations to join
   request_to_join_us_via_email:
-    one: Invitation to Join
-    other: Invitations to Join
-  request_to_create_council: Request to Create Council
+    one: Invitation to join
+    other: Invitations to join
+  request_to_create_council: Request to create council
   request_to_create_council_description: The user %{user} has proposed to create a council
     for %{group_type} %{group}.
   request_to_create_council_short: Shall %{group} have a council?
-  request_to_destroy_our_group: Request to Destroy Group
+  request_to_destroy_our_group: Request to destroy group
   request_to_destroy_our_group_description: The user %{user} has proposed to destroy
     %{group_type} %{group}.
   request_to_destroy_our_group_short: Shall %{group} be destroyed?
-  request_to_friend: Request to Become Contacts
+  request_to_friend: Request to become contacts
   request_to_friend_description: User %{user} has requested to become a contact of user
     %{other_user}.
   request_to_friend_short: Shall %{user} become a contact of %{other_user}?
-  request_to_join: Request to Join
+  request_to_join: Request to join
   request_to_join_network_short: Shall %{group} join %{network}?
   request_to_join_our_network_description: The group %{group} was invited to join then
     network %{network}.
   request_to_join_short: Shall %{user} join %{group}?
-  request_to_join_us: Request to Join
+  request_to_join_us: Request to join
   request_to_join_us_description: The user %{user} was invited to join the group %{group}.
   request_to_join_us_via_email_description: The email address %{email} was invited to
     join the group %{group}.
   request_to_join_us_via_email_short: Shall %{email} join %{group}?
-  request_to_join_you: Request to Join
+  request_to_join_you: Request to join
   request_to_join_you_description: The user %{user} requested to join the group %{group}.
   request_to_join_your_network_description: The group %{group} requested to join the
     network %{network}.
-  request_to_remove_user: Request to Remove Member
+  request_to_remove_user: Request to remove member
   request_to_remove_user_description: The user %{user} has proposed to remove %{member}
     from %{group_type} %{group}.
   request_to_remove_user_short: Shall %{member} be removed from %{group}?
@@ -830,8 +830,8 @@ en:
   activity_group_created: "%{user} created %{group_type} %{group}"
   activity_group_destroyed: "%{group} was destroyed by %{user}"
   activity_message: "%{author} wrote: %{message}"
-  activity_message_received: 'You received %{message_tag} from %{other_user}: %{title}'
-  activity_twinkled: '%{user} has starred your post "%{post}"'
+  activity_message_received: "You received %{message_tag} from %{other_user}: %{title}"
+  activity_twinkled: "%{user} has starred your post ''%{post}''"
   activity_unread: You have %{count} unread [private messages]
   activity_unread_singular: You have an unread [private message]
   activity_user_destroyed: "%{user} has retired"
@@ -840,11 +840,11 @@ en:
   activity_user_left_group: "%{user} has left %{group_type} %{group}"
   activity_user_left_site: "%{user} has left %{group}"
   activity_wall_message: "%{author} wrote to %{user}: %{message}"
-  asset_version_list_version_heading: version
+  asset_version_list_version_heading: Version
   created_on: Created on
   delete_version_confirm: Are you sure you want to delete this version?
   file_size: File size
-  file_version_deleted: file version deleted
+  file_version_deleted: File version deleted
   format: Format
   full: full
   galleries: Galleries
@@ -853,25 +853,25 @@ en:
   image_select_info: Pick an image to insert from the images uploaded to the group previously
   image_size_info: Select the size of the image to insert
   image_upload_info: Upload a new image to the group so it can be used in the wiki
-  large: large
+  large: Large
   media_image: Image
   media_images: Images
-  medium: medium
-  other_formats: Other Formats
-  regenerate: regenerate thumbnails
-  small: small
-  version_number: version %{version}
-  zip_file: Zip File
-  anonymous: anonymous
-  login_required: Login Required
-  login_required_description: Please login to perform that action.
-  permission_denied: Permission Denied
+  medium: Medium
+  other_formats: Other formats
+  regenerate: Regenerate thumbnails
+  small: Small
+  version_number: Version %{version}
+  zip_file: ZIP-file
+  anonymous: Anonymous
+  login_required: Login required
+  login_required_description: Please log in to perform that action.
+  permission_denied: Permission denied
   permission_denied_description: You do not have sufficient permission to perform that
     action.
-  date_all_time: All Time
-  date_this_month: This Month
-  date_this_week: This Week
-  date_this_year: This Year
+  date_all_time: All time
+  date_this_month: This month
+  date_this_week: This week
+  date_this_year: This year
   date_today: Today
   friday: Friday
   monday: Monday
@@ -883,48 +883,48 @@ en:
   alert_field_errors: There are problems with the following fields
   alert_not_saved: Changes could not be saved
   alert_saved: Changes saved
-  csrf_error_message: 'Your login request has the appearance of an attempt to hack this
+  csrf_error_message: "Your login request has the appearance of an attempt to hack this
     website. Don''t worry: this error happens frequently even for innocent requests.
     We are just being extra paranoid. All you have to do is to reload the page before
-    attempting to login. You can follow this link to try again.'
-  error_saving_new_order_message: 'Error saving new order: %{error_message}'
-  activate_js_to_rearrange_photos: Activate JavaScript to use Drag&Drop to rearrange
-    photos!
+    attempting to log in. You can follow this link to try again."
+  error_saving_new_order_message: "Error saving new order: %{error_message}"
+  activate_js_to_rearrange_photos: Activate JavaScript to use Drag & drop to rearrange
+    photos.
   add_another_file: Add another file
-  add_existing_image: Add Photo
-  add_photo_to_gallery: Click on a Photo to add it
-  album_cover_changed: Album Cover Changed
-  back_to_gallery_link: Back to Gallery
-  cancel_link: cancel
+  add_existing_image: Add photo
+  add_photo_to_gallery: Click on a photo to add it
+  album_cover_changed: Album cover changed
+  back_to_gallery_link: Back to ''Gallery''
+  cancel_link: Cancel
   download: Download
-  download_gallery: Download Gallery
-  drag_and_drop_to_rearrange_photos: Drag & Drop images to rearrange them
-  edit_gallery: Edit Gallery
-  error_saving_new_order: Error saving new order!
+  download_gallery: Download gallery
+  drag_and_drop_to_rearrange_photos: Drag & drop images to rearrange them
+  edit_gallery: Edit gallery
+  error_saving_new_order: Could not save new order.
   file_must_be_image_error: File must be an image to be part of a gallery.
-  gallery_changing_cover_message: Changing cover...
-  gallery_slideshow_apply_settings_button: apply
-  gallery_undo_link: undo
-  make_album_cover: make this image the album cover
+  gallery_changing_cover_message: Changing cover…
+  gallery_slideshow_apply_settings_button: Apply
+  gallery_undo_link: Undo
+  make_album_cover: Make this image the album cover
   move_image_left: Move image left
   move_image_right: Move image right
-  no_images_in_gallery: No images in Gallery
+  no_images_in_gallery: No images in ''Gallery''
   order_changed: Order changed.
-  remove_from_gallery: Remove from gallery
-  removing_image: Removing Image...
-  saved_new_order: Saved new order!
-  saving_your_changes: Saving your changes...
+  remove_from_gallery: Remove from ''Gallery''
+  removing_image: Removing Image…
+  saved_new_order: Saved new order.
+  saving_your_changes: Saving your changes…
   slideshow_delay_input: Update every %{input_field} seconds
-  successful_undelete_image: Successfully undeleted image.
-  successfully_removed_image: Successfully removed image! (%{undo_link})
-  upload_images_link: Upload Images
-  you_are_not_allowed_to_do_that: You are not allowed to do that!
+  successful_undelete_image: Undeleted image.
+  successfully_removed_image: "Removed image. (%{undo_link})"
+  upload_images_link: Upload images
+  you_are_not_allowed_to_do_that: You are not allowed to do that.
   caption: Caption
   file: File
   files: Files
   icon: Icon
   photo: Photo
-  photo_credit: Photo Credit
+  photo_credit: Photo credit
   size: Size
   video_embed: Embed
   add_tags: Add Tags
@@ -935,66 +935,66 @@ en:
   separate_tags: Separate tags using commas.
   tag: Tag
   tags: Tags
-  set_status_button: Update Status
+  set_status_button: Update status
   welcome_login_message: ''
-  welcome_message: Crabgrass enables social change organizations to get things done,
+  welcome_message: "Crabgrass enables social change organizations to get things done,
     get the word out, collaborate, and network.
-  welcome_title: Welcome to %{site_title}
-  a_message_link: a message
-  a_reply_link: a reply
+  welcome_title: Welcome to %{site_title}"
+  a_message_link: A message
+  a_reply_link: A reply
   add_one_or_more_tags: Add one or more tags, separated by commas
   chat: Chat
-  confirm_discarding_text_area: All your unsaved work will be lost. Press %{cancel}
-    to continue editing.
+  confirm_discarding_text_area: "All your unsaved work will be lost. Press %{cancel}
+    to continue editing."
   illegal_redirect: Illegal redirect
-  include_full_checkbox: include link to full image
-  left_the_chatroom: left the chatroom
-  place: place
+  include_full_checkbox: Include link to full image
+  left_the_chatroom: Left the chatroom
+  place: Place
   preview_selected_image: Preview of selected image
   redirect_to_foreign_domain: You are trying to redirect to a foreign domain (%{url})
     after your login. For security reasons we have removed this parameter from the URL.
   save_wiki_before_adding_image: Please save the wiki before adding an image to it.
-  view_slideshow: View Slideshow
+  view_slideshow: View slideshow
 
 
 ########################################
 ### en/wiki.yml
-  break_lock_button: Break Lock
+  break_lock_button: Break lock
   can_still_save: You can still save.
-  cant_edit_section_html: Can't edit <b>%{section}</b>.
-  cant_find_wiki_section: Can't find wiki section %{section}
-  changes_made: Changes made %{when}.
+  cant_edit_section_html: "Can''t edit <b>%{section}</b>."
+  cant_find_wiki_section: "Can''t find wiki section %{section}"
+  changes_made: "Changes made %{when}."
   changes_might_be_overwritten: Your changes might be overwritten.
-  comparing_changes_header: Comparing changes between %{old_version} and %{new_version}.
-  diff_link: view changes
-  edit_wiki: Edit Wiki
-  force_save_button: Break Lock and Save
-  formatting_reference_link: Editing Help
-  insert_image: Insert Image
+  comparing_changes_header: "Comparing changes between %{old_version} and %{new_version}."
+  diff_link: View changes
+  edit_wiki: Edit wiki
+  force_save_button: Break lock and save
+  formatting_reference_link: Editing help
+  insert_image: Insert image
   leave_editing_wiki_page_warning: You will lose your changes if you leave this page.
-  next_change: Next Change
-  other_section_locked_error_html: Can only lock one section at a time. You already
-    locked <b>%{section}</b>.
-  prev_change: Previous Change
+  next_change: Next change
+  other_section_locked_error_html: "Can only lock one section at a time. You already
+    locked <b>%{section}</b>."
+  prev_change: Previous change
   preview: Preview
-  private_wiki: Private Wiki
-  public_wiki: Public Wiki
-  save_or_cancel_edit_lock_wiki_error: You have locked this wiki. Other users will not
-    be able to edit it until you click either %{save_button} or %{cancel} to stop editing.
+  private_wiki: Private wiki
+  public_wiki: Public wiki
+  save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not
+    be able to edit it until you click either %{save_button} or %{cancel} to stop editing."
   user_locked_section_html: "<b>%{user}</b> has locked <b>%{section}</b>."
   version: Version
-  version_doesnt_exist: There is no version %{version}
-  version_exists_error: The wiki is locked because user %{user} has saved new changes
-    recently. You can still save your changes, but this will overwrite the new version.
-  version_link: view version
+  version_doesnt_exist: "There is no version %{version}"
+  version_exists_error: "The wiki is locked because user %{user} has saved new changes
+    recently. You can still save your changes, but this will overwrite the new version."
+  version_link: View version
   versions: Versions
   wiki: Wiki
   wiki_existed_new_version_created: This wiki had already been created by another user.
     Your changes have been saved as a new version.
-  wiki_is_locked_html: This wiki is currently locked by <b>%{user}</b>.
-  wiki_revert_version: Revert To Version %{version}
-  wiki_section_edit: Edit This Section
-  wiki_section_is_locked: The section %{section} is currently locked by %{user}.
-  wiki_version_creator_heading: person
-  wiki_version_revert_link: revert
-  you_are_viewing_version: You are viewing version %{version} by %{user}
+  wiki_is_locked_html: "This wiki is currently locked by <b>%{user}</b>."
+  wiki_revert_version: "Revert to version %{version}"
+  wiki_section_edit: Edit this section
+  wiki_section_is_locked: "The section %{section} is currently locked by %{user}."
+  wiki_version_creator_heading: Person
+  wiki_version_revert_link: Revert
+  you_are_viewing_version: "You are viewing version %{version} by %{user}"
