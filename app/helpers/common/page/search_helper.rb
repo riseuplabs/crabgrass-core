@@ -129,18 +129,6 @@ module Common::Page::SearchHelper
     end
   end
 
-  # a helper used by search filters that define custom a UI.
-  # the options come from a member variable @filter_submit_options that
-  # is defined in /common/pages/search/_popup
-  def filter_submit_button(label, params)
-    if params.any?
-      options = @filter_submit_options.merge(url: (@filter_submit_options[:url] += '&' + safe_join(params.collect { |key, value| format('%s=%s', CGI.escape(key.to_s), CGI.escape(value.to_s)) }, '&')).html_safe)
-    else
-      options = @filter_submit_options
-    end
-    submit_to_remote 'submit', label, options
-  end
-
   #
   # a link used in the page search popup.
   # it creates a form element to match params, then submits the form.
@@ -153,34 +141,5 @@ module Common::Page::SearchHelper
     # the form submission does not lead to duplicate encoding...
     function = format("$('page_search_form').insert(new Element('input', {name:decodeURIComponent('%s'), value:decodeURIComponent('%s'), style:'display:none'})); $('page_search_form').submit.click();", name, value)
     link_to_function(label, function)
-  end
-
-  #
-  # the toggle bug that allows you to change the view of the page search
-  # results (compact, detailed, grid).
-  #
-  # this uses the special queued ajax request, so that there are no race conditions
-  # in modifying the page search.
-  #
-  # this is used in _top_controls partial
-  #
-  def search_view_toggle_links(url)
-    with = 'FilterPath.encode()' # grab the current filterpath,
-    # at the time the request is made, not when it is queued.
-    options = { with: with, before: show_spinner('view_toggle') }
-    current_view = @path.arg_for('view') || 'compact'
-
-    # compact
-    function = queued_remote_function options.merge(url: url + '?add=/view/compact/')
-    compact_link = { label: 'compact', function: function, active: current_view == 'compact', id: 'toggle_view_compact' }
-    # detailed
-    function = queued_remote_function options.merge(url: url + '?add=/view/detailed/')
-    detailed_link = { label: 'detailed', function: function, active: current_view == 'detailed', id: 'toggle_view_detailed' }
-    # grid
-    # function = queued_remote_function options.merge(:url => url+'?add=/view/grid/')
-    # grid_link = {:label => 'grid', :function => function, :active => current_view == 'grid', :id => 'toggle_view_grid'}
-
-    # toggle_bug_links(compact_link, detailed_link, grid_link)
-    toggle_bug_links(compact_link, detailed_link)
   end
 end

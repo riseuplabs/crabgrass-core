@@ -35,20 +35,6 @@ module Common::Ui::EntityDisplayHelper
     end
   end
 
-  #
-  # provides placeholder for when the user or group record has been destroyed.
-  #
-  # def link_to_unknown(options)
-  #  styles  = [options[:style]]
-  #  classes = [options[:class]]
-  #  if options[:avatar]
-  #    classes << options[:avatar]
-  #    classes << 'icon'
-  #    styles  << avatar_style(nil, options[:avatar])
-  #  end
-  #  content_tag :span, :unknown.t, :class => classes.join(' '), :style => styles.join(';')
-  # end
-
   ##
   ## GROUPS
   ##
@@ -59,7 +45,7 @@ module Common::Ui::EntityDisplayHelper
   def link_to_group(group, options = nil)
     options = (options || {}).dup
     if group
-      unless options[:url] or options[:remote] or options[:function]
+      unless options[:url] or options[:function]
         options = options.merge url: group_path(group)
       end
     end
@@ -76,7 +62,7 @@ module Common::Ui::EntityDisplayHelper
   def link_to_user(user, options = nil)
     options = (options || {}).dup
     if user
-      unless options[:url] or options[:remote] or options[:function]
+      unless options[:url] or options[:function]
         if user.ghost?
           options[:class] = 'ghost'
         else
@@ -86,20 +72,6 @@ module Common::Ui::EntityDisplayHelper
     end
     display_entity(user, options)
   end
-
-  # def link_to_user_avatar(arg, options={})
-  #  login, path, display_name = login_and_path_for_user(arg,options)
-  #  return "" if login.blank?
-  #
-  #  style = options[:style] || ""                   # allow style override
-  #  label = options[:login] ? login : display_name  # use display_name for label by default
-  #  label = options[:label] || label                # allow label override
-  #  klass = options[:class] || 'icon'
-  #  options[:title] ||= display_name
-  #  options[:alt] ||= display_name
-  #
-  #  avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
-  # end
 
   ##
   ## GENERIC PERSON OR GROUP
@@ -138,8 +110,7 @@ module Common::Ui::EntityDisplayHelper
   #
   #   to create a link, specify one of one of:
   #     (1) :url      => creates a normal link_to
-  #     (2) :remote   => creates a link_to_remote
-  #     (3) :function => creates a link_to_function
+  #     (2) :function => creates a link_to_function
   #
   #   :class => added to the elements's class
   #   :style => added to the element's style
@@ -185,9 +156,7 @@ module Common::Ui::EntityDisplayHelper
     # element
 
     element_options = { class: classes.join(' '), style: styles.join(';'), title: title }
-    if options[:remote]
-      link_to_remote(display, options[:remote], element_options)
-    elsif options[:function]
+    if options[:function]
       link_to_function(display, options[:function], element_options)
     elsif options[:url]
       link_to(display, options[:url], element_options)

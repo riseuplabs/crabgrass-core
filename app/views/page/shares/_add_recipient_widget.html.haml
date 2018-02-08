@@ -1,5 +1,6 @@
 -
 -  mode = 'share' if mode.nil? # either 'share' or 'notify'
+-  form_name = mode + '_page_form'
 -  add_button_id = 'add_recipient_button'
 -  access_value = may_select_access_participation? ? "$('recipient_access').value" : "'#{Conf.default_page_access}'"
 -
@@ -13,9 +14,10 @@
 -
 -  # the remote action that is triggered when the 'add' button is pressed (or
 -  # the popup item is selected).
--
--  add_action = {url: page_share_path(page, mode: mode, add: true).html_safe, method: 'put', with: "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}", loading: spinner_icon_on('plus', add_button_id), complete: spinner_icon_off('plus', add_button_id)}
--
+-  with = "'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value} + '&_method=put'"
+-  add_action = {url: page_share_path(page, mode: mode, add: true).html_safe, method: 'put', with: with}
+
+
 -  # (1) submit the form when the enter key is pressed in the text box
 -  # (2) don't submit the form if the recipient name field is empty
 -  # (3) eat the event by returning false on a enter key so that the form
@@ -24,7 +26,6 @@
 -  eat_enter = "return(!enterPressed(event));"
 -  only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
 -  key_pressed_function = remote_function(add_action.merge(condition: only_on_enter_press)) + eat_enter;
--
 -  # this is called after an item in the popup has been selected.
 -  # it makes it so selecting an item is like hitting the add button
 -  # we clear the recipient_name field so that we don't get a double submit
@@ -47,7 +48,11 @@
       - else
         = hidden_field_tag 'recipient[access]'
     %td= "&nbsp;".html_safe
-    %td= link_to_remote_icon('plus', add_action, id: add_button_id)
+    %td= link_to icon_tag('plus'), page_share_path(page, mode: mode, add: true).html_safe,
+            remote: true,
+            method: :put,
+            data: { with: with, loading: spinner_icon_on('plus', add_button_id), complete: spinner_icon_off('plus', add_button_id )},
+            id: add_button_id
 
 #share_page_recipient_area.autocomplete_results_area.p{style: "display:none"}
   = render 'page/shares/list_of_recipients'

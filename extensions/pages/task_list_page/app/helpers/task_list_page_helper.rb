@@ -99,13 +99,6 @@ module TaskListPageHelper
     button_to_function :delete.t, function, class: 'btn btn-danger'
   end
 
-  # a button to replace the task detail with a tast edit form.
-  # def edit_task_details_button(task)
-  #  button_to_function :edit.t,
-  #    edit_task_details_function(task),
-  #    class: 'btn btn-primary'
-  # end
-
   def edit_task_details_function(task)
     remote_function(
       url: edit_task_url(task, page_id: task.page),
@@ -113,19 +106,6 @@ module TaskListPageHelper
       method: :get
     )
   end
-
-  # def no_pending_tasks(visible)
-  #  empty_list_item :no_pending_tasks, hidden: !visible
-  # end
-
-  # def no_completed_tasks(visible)
-  #  empty_list_item :no_completed_tasks, hidden: !visible
-  # end
-
-  # def empty_list_item(message, options = {})
-  #  content_tag :li, message.t, id: message,
-  #    style: (options[:hidden] && 'display:none')
-  # end
 
   ##
   ## edit task form
@@ -144,9 +124,9 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      url: task_url(task, page_id: task.page),
       loading: show_spinner(task),
       method: :put,
+      remote: :true,
       html: {}
     }]
   end
@@ -171,17 +151,4 @@ module TaskListPageHelper
     submit_tag :save_button.t, class: 'btn btn-primary'
   end
 
-  ###
-  ### new task form
-  ###
-
-  def options_for_new_task_form(page)
-    [{
-      url: tasks_url(page_id: page),
-      html: { id: 'new-task-form' },
-      loading: show_spinner('new-task'),
-      complete: hide_spinner('new-task'),
-      success: reset_form('new-task-form')
-    }]
-  end
 end

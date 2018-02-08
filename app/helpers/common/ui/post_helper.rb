@@ -27,7 +27,11 @@ module Common::Ui::PostHelper
   #
   def edit_post_link(post)
     if post.is_a?(Post) && may_edit_post?(post)
-      link_to_remote :edit.t, { url: edit_post_path(post), method: 'get' }, class: 'shy', icon: 'pencil'
+      link_to :edit.t, edit_post_path(post),
+        remote: true,
+        method: 'get',
+        class: 'shy',
+        icon: 'pencil'
     end
   end
 

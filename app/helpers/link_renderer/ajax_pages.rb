@@ -7,12 +7,12 @@
 #
 class LinkRenderer::AjaxPages < LinkRenderer::Ajax
   def page_link_to(page, text, attributes = {})
+    url = @template.page_search_path(add: "/page/#{page}")
     options = {
-      url: @template.page_search_path(add: "/page/#{page}"),
-      with: 'FilterPath.encode()',
+      remote: true,
       method: :get,
-      loading: @template.show_spinner(spinner_id)
+      data: { with: 'FilterPath.encode()', loading: @template.show_spinner(spinner_id) }
     }
-    @template.link_to_remote(text, options, attributes)
+    @template.link_to(text, url, options.merge(attributes))
   end
 end

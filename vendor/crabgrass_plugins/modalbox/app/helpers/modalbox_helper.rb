@@ -3,27 +3,29 @@
 # Displays a modal dialog box
 #
 
-module LinkWithConfirm
+module ModalboxHelper
 
   ##
   ## USE MODALBOX FOR CONFIRM
   ##
 
   #
-  # redefines link_to_remote to use Modalbox.confirm() if options[:confirm] is set.
+  # calls Modalbox.confirm() if options[:confirm] is set.
+  #
   #
   # If cancel is pressed, then nothing happens.
   # If OK is pressed, then the remote function is fired off.
   #
   # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
   #
-  def link_to_remote(name, options = {}, html_options = {})
+  # This method is only used for the deletion of attachments and galley files
+  #
+  def link_to_with_confirm(name, options = {}, html_options = {})
     message = if options.is_a?(Hash) and options[:confirm]
 		options.delete(:confirm)
 	      else
 		html_options.delete(:confirm)
 	      end
-
     if message
       ## if called when the modalbox is already open, it is important that we
       ## call back() before the other complete callbacks. Otherwise, the html
@@ -32,8 +34,6 @@ module LinkWithConfirm
       options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
       ok_function = remote_function(options)
       link_to_function(name, %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{name}"})], html_options)
-    else
-      super(name, options, html_options)
     end
   end
 
@@ -73,18 +73,6 @@ module LinkWithConfirm
       super(name, options, html_options)
     end
   end
-
-  alias_method :link_to_remote_with_confirm, :link_to_remote # needed only once...
-
-end
-
-
-module ModalboxHelper
-
-  prepend LinkWithConfirm
-  ##
-  ## Modalbox dialog popup helpers
-  ##
 
   #
   # creates a popup-link using modalbox
@@ -130,13 +118,10 @@ module ModalboxHelper
           showAfterLoading: true
         )
       end
-      function = modalbox_function(contents, options)
       html_options[:icon] = icon
-      link_to_function_with_icon(label, function, html_options)
-    else
-      function = modalbox_function(contents, options)
-      link_to_function(label, function, html_options)# FIXME: should be _without_icon
     end
+    function = modalbox_function(contents, options)
+    link_to_function_with_icon(label, function, html_options)
   end
 
   # close the modal box

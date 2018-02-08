@@ -167,19 +167,6 @@ module Common::Ui::JavascriptHelper
     format("window.location.href = '%s'", url)
   end
 
-  # we'll hopefully migrate to jquery soon - so i don't feel like
-  # cleaning this mess up now.
-  def tab_remote_function(options, tab = nil)
-    options.reverse_merge! method: :get,
-                           success: ''
-    options[:success] += 'tabLink.removeClassName("spinner_icon icon");'
-    <<-EOJS
-      var tabLink = #{get_dom_element(tab, :tab)};
-      #{remote_function(options)};
-      activateTabLink(tabLink, true);
-    EOJS
-  end
-
   #
   # returns a string that will get a prototype extended dom element.
   #

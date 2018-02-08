@@ -6,9 +6,12 @@ module Wikis::SectionsHelper
   end
 
   def edit_wiki_section_link(wiki, section)
-    link_to_remote :edit.t,
-                   { url: edit_wiki_path(wiki, section: section), method: 'get' },
-                   title: :wiki_section_edit.t, id: "#{section}_edit_link",
-                   icon: 'pencil', class: 'edit shy wiki-section-edit'
+    link_to :edit.t, edit_wiki_path(wiki, section: section),
+      remote: true,
+      method: 'get',
+      title: :wiki_section_edit.t,
+      id: "#{section}_edit_link",
+      icon: 'pencil',
+      class: 'edit shy wiki-section-edit'
   end
 end

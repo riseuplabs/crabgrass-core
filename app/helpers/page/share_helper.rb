@@ -74,34 +74,4 @@ module Page::ShareHelper
     select_tag name, options_for_select(select_options, selected.to_s), options
   end
 
-  protected
-
-  def add_action(recipient, access, spinner_id)
-    access ||= may_select_access_participation? ?
-      "$('recipient[access]').value" :
-      "'#{Conf.default_page_access}'"
-    {
-      url: { controller: 'base_page/share', action: 'update', page_id: nil, add: true },
-      with: %('recipient[name]=#{recipient.name}&recipient[access]=' + #{access}),
-      loading: spinner_icon_on('spacer', spinner_id),
-      complete: spinner_icon_off('spacer', spinner_id)
-    }
-  end
-
-  # the remote action that is triggered when the 'add' button is pressed (or
-  # the popup item is selected).
-  def widget_add_action(action, add_button_id, access_value)
-    {
-      url: { controller: 'base_page/share', action: action, page_id: @page.id, add: true },
-      with: %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}},
-      loading: spinner_icon_on('plus', add_button_id),
-      complete: spinner_icon_off('plus', add_button_id)
-    }
-  end
-
-  def add_recipient_widget_key_press_function(add_action)
-    eat_enter = 'return(!enterPressed(event));'
-    only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
-    remote_function(add_action.merge(condition: only_on_enter_press)) + eat_enter
-  end
 end

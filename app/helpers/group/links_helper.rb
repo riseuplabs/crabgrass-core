@@ -129,11 +129,10 @@ module Group::LinksHelper
         entity: content_tag(:b, membership.entity.name),
         group: content_tag(:b, @group.name)
       )
-      link_to_remote(:remove.t,
-                     { url: group_membership_path(@group, membership),
-                       method: 'delete',
-                       confirm: confirm },
-                     icon: 'minus')
+      link_to(:remove.t, group_membership_path(@group, membership),
+             remote: true,
+             method: 'delete',
+             icon: 'minus', data: {confirm: confirm })
     else
       if membership.entity.is_a? Group
         return 'not yet supported'
@@ -146,10 +145,10 @@ module Group::LinksHelper
         link_to :request_pending.t(request: req.class.model_name.human),
                 group_membership_request_path(@group, req)
       elsif may_create_expell_request?(membership)
-        link_to_remote(:remove.t,
-                       { url: group_membership_requests_path(@group, type: 'destroy', entity: membership.entity.name),
-                         method: 'post' },
-                       icon: 'minus')
+        link_to(:remove.t, group_membership_requests_path(@group, type: 'destroy', entity: membership.entity.name),
+               remote: true,
+               method: 'post',
+               icon: 'minus')
       end
     end
   end

@@ -58,18 +58,6 @@ module GalleryHelper
                   class: 'icon plus_16')
   end
 
-  def gallery_delete_image(image, _position)
-    url = page_url(@page, controller: :image, action: 'destroy', id: image.id, method: :delete)
-    link_to_remote('&nbsp;', {
-                     url: url,
-                     confirm: I18n.t(:confirm_image_delete),
-                     title: I18n.t(:remove_from_gallery),
-                     update: 'message-container',
-                     success: "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
-                   }, title: I18n.t(:remove_from_gallery),
-                      class: 'small_icon empty trash_16')
-  end
-
   def gallery_edit_image(image)
     url = page_url @page,
                    controller: :image,
@@ -132,51 +120,6 @@ module GalleryHelper
     output.join "\n"
   end
 
-  def gallery_make_cover(image)
-    extra_output = ''
-    html_options = {
-      id: "make_cover_link_#{image.id}"
-    }
-    if image.is_cover_of?(@page)
-      html_options[:style] = 'display:none;'
-      extra_output += javascript_tag("var current_cover = #{image.id};")
-    end
-    options = {
-      url: page_url(@page, action: 'make_cover', id: image.id),
-      update: 'gallery_notify_area',
-      loading: "$('gallery_notify_area').innerHTML = '#{I18n.t(:gallery_changing_cover_message)}';
-                   $('gallery_spinner').show();",
-      complete: "$('gallery_spinner').hide();",
-      success: "$('make_cover_link_'+current_cover).show();
-                   $('make_cover_link_#{image.id}').hide();"
-    }
-    link_to_remote(image_tag('png/16/mime_image.png', title: I18n.t(:make_album_cover)),
-                   options, html_options) + extra_output
-  end
-
-  def star_for_image(image)
-    star = (@upart and @upart.star?)
-    add_options = {
-      id: 'add_star_link'
-    }
-    remove_options = {
-      id: 'remove_star_link'
-    }
-    star_img = image_tag('icons/small_png/star_outline.png')
-    nostar_img = image_tag('icons/small_png/star.png')
-    (star ? add_options : remove_options)[:style] = 'display:none;'
-    content_tag(:span, link_to_remote(star_img + I18n.t(:add_star_link),
-                                      url: page_url(@page,
-                                                    action: 'add_star',
-                                                    id: image.id),
-                                      update: 'tfjs'), add_options) +
-      content_tag(:span, link_to_remote(nostar_img + I18n.t(:remove_star_link),
-                                        url: page_url(@page,
-                                                      action: 'remove_star',
-                                                      id: image.id),
-                                        update: 'tfjs'), remove_options)
-  end
-
   def image_title(image)
     change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
     caption = image.caption ? h(image.caption) : '[click here to edit caption]'
@@ -208,9 +151,11 @@ module GalleryHelper
   def next_image_link
     if @next
       url = image_url(@next.asset_id, page_id: @page)
-      link_to_remote :next.t,
-                     { url: url, method: :get },
-                     class: 'btn btn-default', icon: 'right'
+      link_to(:next.t, url,
+        remote: true,
+        method: :get,
+        class: 'btn btn-default',
+        icon: 'right')
     else
       "<span class='btn btn-default disabled icon right_16'>#{:next.t}</span>".html_safe
     end
@@ -219,9 +164,11 @@ module GalleryHelper
   def previous_image_link
     if @previous
       url = image_url(@previous.asset_id, page_id: @page)
-      link_to_remote :previous.t,
-                     { url: url, method: :get },
-                     class: 'btn btn-default', icon: 'left'
+      link_to(:previous.t, url,
+        remote: true,
+        method: :get,
+        class: 'btn btn-default',
+        icon: 'left')
     else
       "<span class='btn btn-default disabled icon left_16'>#{:previous.t}</span>".html_safe
     end
