@@ -1,13 +1,13 @@
 ---
 en:
-  display_name: "Display Name"
+  display_name: "Display name"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
   email: Email
   fingerprint: Fingerprint
   language: Language
   message_user_wrote_caption: "%{user} wrote:"
   message_you_wrote_caption: "You wrote:"
-  my_dashboard: "My Dashboard"
+  my_dashboard: "My dashboard"
   notification_select:
     digest: "Yes: a daily summary of changes"
     none: "No: no emails for changes"
@@ -15,16 +15,16 @@ en:
   or_image_url: "or image URL"
   pgp_key: "PGP Key"
   pgp_public_key: "Public Key"
-  pgp_key_description: "Experimental: Upload your PGP public key if you want to receive encrypted email notifications (new feature coming soon). We will send you an encrypted confirmation email."
+  pgp_key_description: "Experimental: Upload your public PGP key if you want to receive encrypted email notifications (new feature coming soon). An encrypted confirmation will be sent to you per email."
   pgp_key_invalid: "The key you entered cannot be imported. Did you really paste a public PGP key?"
-  pgp_key_expired: "The PGP key you entered is expired."
+  pgp_key_expired: "The PGP key you entered has expired."
   private_profile: "Private Profile"
   remove_image_link: "remove image"
   save_changes: "Save Changes"
   select_image_file: "select image file"
-  send_message_link: "Send Message"
-  time_zone: "Time Zone"
+  send_message_link: "Send message"
+  time_zone: "Time zone"
   unread_private_message: "You have an unread private message from %{user}"
-  upload_image: "Upload Image"
+  upload_image: "Upload image"
   uploaded_image_cropped: "Uploaded image will be cropped and stretched to 202 pixels square."
   username: Username
