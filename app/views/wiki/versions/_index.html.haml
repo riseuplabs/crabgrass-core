@@ -3,5 +3,5 @@
 
 %ul.clickable
   - @versions.each do |version|
-    %li{onmousedown: show_version_remote_function(version)}
+    %li{data: {wiki: { id:  @wiki.id, version: version}}}
       = render 'line_item', version: version
