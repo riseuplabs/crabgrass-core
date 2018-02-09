@@ -5,7 +5,8 @@
 #
 class LinkRenderer::Ajax < LinkRenderer::CrabgrassBase
   def page_link_to(page, text, attributes = {})
-    @template.link_to(text, link_options(page).merge(remote: true), attributes)
+    @template.link_to_remote(text, link_options(page), attributes)
+    #@template.link_to(text, link_options(page).merge(remote: true), attributes)
   end
 
   # def html_after

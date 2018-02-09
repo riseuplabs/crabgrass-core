@@ -51,6 +51,11 @@ gem 'sass'
 # needs special branch for rails 4.2
 gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 
+# legacy helper for form_remote_for and link_to_remote
+# there's only a 0.0.0 version out there it seems
+gem 'prototype_legacy_helper', '0.0.0',
+    github: 'rails/prototype_legacy_helper'
+
 # Full text search for the database
 gem 'thinking-sphinx', '~> 3.4.2'
 

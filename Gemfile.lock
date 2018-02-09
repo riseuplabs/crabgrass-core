@@ -6,6 +6,12 @@ GIT
     prototype-rails (4.0.0)
       rails (~> 4.0)
 
+GIT
+  remote: https://github.com/rails/prototype_legacy_helper.git
+  revision: a2cd95c3e3c1a4f7a9566efdab5ce59c886cb05f
+  specs:
+    prototype_legacy_helper (0.0.0)
+
 PATH
   remote: vendor/gems/riseuplabs-greencloth-0.1
   specs:
@@ -269,6 +275,7 @@ DEPENDENCIES
   phantomjs-binaries (~> 2.1.1)
   poltergeist (~> 1.5)
   prototype-rails!
+  prototype_legacy_helper (= 0.0.0)!
   rails (~> 4.2.10)
   rake (~> 10.0)
   rubyzip (~> 1.2.1)
