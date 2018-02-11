@@ -1,17 +1,16 @@
-- cache [current_theme, language_direction.to_s] do
-  %meta{ name:"description", content:""}
-  %meta{ name:"keywords", content:""}
-  %meta{"http-equiv"=>"Content-Type", content:"application/xhtml+xml;charset=utf-8"}
-  %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-  %meta(charset="UTF-8")
-  %meta(name="referrer" content="same-origin")
-  = favicon_link
-  / begin styling
-  = crabgrass_stylesheets
-  / end styling
-  / begin scripts
-  = crabgrass_javascripts
-  / end scripts
+%meta{ name:"description", content:""}
+%meta{ name:"keywords", content:""}
+%meta{"http-equiv"=>"Content-Type", content:"application/xhtml+xml;charset=utf-8"}
+%meta(name="viewport" content="width=device-width, initial-scale=1.0")
+%meta(charset="UTF-8")
+%meta(name="referrer" content="same-origin")
+= favicon_link
+/ begin styling
+= crabgrass_stylesheets
+/ end styling
+/ begin scripts
+= crabgrass_javascripts
+/ end scripts
 - if content_for?(:dom_loaded)
   :javascript
     document.observe("dom:loaded",function(){
