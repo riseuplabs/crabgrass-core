@@ -57,8 +57,8 @@ module Common::Ui::AvatarHelper
   end
 
   def upload_avatar_link(entity)
-    link_to_modal :upload_image.t,
-                  { url: edit_avatar_path(entity), icon: 'picture_edit' },
+    link_to_modal :upload_image.t, edit_avatar_path(entity),
+                  icon: 'picture_edit',
                   class: 'inline'
   end
 

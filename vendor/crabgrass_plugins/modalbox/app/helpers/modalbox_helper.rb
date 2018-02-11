@@ -75,50 +75,59 @@ module ModalboxHelper
   end
 
   #
-  # creates a popup-link using modalbox
-  #
-  # contents of the modalbox may be specified in options hash:
-  # - url: then contents for the modalbox are loaded via ajax
-  # - html: the html is used to populate the modalbox
-  #
-  # if options[:icon], then the modalbox is not shown until after its contents
-  # are loaded.
+  # create a link that will open a popup with the content
+  # rendered in the given block
   #
   # for example:
   #
-  #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
+  #   link_to_static_modal 'edit', icon: :pencil do
+  #     render 'edit_this_thing'
   #
-  #
-  def link_to_modal(label, options = {}, html_options = {})
+  def link_to_static_modal(label, options)
+    raise ArgumentError.new 'Yield content in block' unless block_given?
+    html_options = options.slice! :title, :width,
     options[:title] ||= label
-    icon = options.delete(:icon) || html_options.delete(:icon)
-    if options[:html]
-      static_html = true
-      contents = options.delete(:html)
-      unless contents =~ /<.+>/
-        # ensure there are some tags in the html, otherwise modalbox
-        # will not recognize it as html.
-        contents = format('<p>%s</p>', contents)
-      end
-    elsif options[:url]
-      static_html = false
-      contents = options.delete(:url)
-      contents = url_for contents if contents.is_a? Hash
-    else
-      raise ArgumentError.new 'must give :html or :url'
-    end
-    if icon
+    contents = yield
+    # ensure there are some tags in the html, otherwise modalbox
+    # will not recognize it as html.
+    contents = format('<p>%s</p>', contents) unless contents =~ /<.+>/
+    function = modalbox_function(contents, options)
+    link_to_function_with_icon(label, function, html_options)
+  end
+
+  #
+  # creates a popup-link using modalbox
+  #
+  # contents will be loaded from the specified url / url hash.
+  #
+  # if an icon is specified with options[:icon],
+  # then the modalbox is not shown until after its contents are loaded.
+  #
+  # for example:
+  #
+  #   link_to_modal 'edit', 'some/popup/action', icon: :pencil
+  #
+  # options can include both the html options for the link such as
+  #   id, data, class
+  # aswell as the modalbox options such as
+  #  title, width, after_load, ...
+  #
+  # Theoretically it could include all options to modalbox_function.
+  # However we only hand those on that are currently in use
+  # because we want to reduce the complexity involved
+  # and migrate to an unobstrusive js approach.
+  #
+  def link_to_modal(label, url, options = {})
+    html_options = options.slice! :title, :width,
+      :after_load, :after_hide, :complete
+    options[:title] ||= label
+    contents = url.is_a?(Hash) ? url_for(url) : url
+    icon = html_options[:icon]
+    if icon.present?
       html_options[:id] ||= format('link%s', rand(1_000_000))
-      unless static_html
-        # skip these ajax options if we are just directly showing some
-        # static content.
-        options.merge!(
-          loading: spinner_icon_on(icon, html_options[:id]),
+      options.merge! loading: spinner_icon_on(icon, html_options[:id]),
           complete: spinner_icon_off(icon, html_options[:id]),
           showAfterLoading: true
-        )
-      end
-      html_options[:icon] = icon
     end
     function = modalbox_function(contents, options)
     link_to_function_with_icon(label, function, html_options)

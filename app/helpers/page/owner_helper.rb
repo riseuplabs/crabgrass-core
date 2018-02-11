@@ -2,12 +2,9 @@ module Page::OwnerHelper
   protected
 
   def change_page_owner
-    if may_admin_page?
-      html = render 'page/details/change_owner'
-      link_to_modal :edit.t,
-                    html: html,
-                    title: :page_create_owner.tcap,
-                    icon: 'pencil'
+    return unless may_admin_page?
+    link_to_static_modal :edit.t, title: :page_create_owner.t, icon: 'pencil' do
+      render 'page/details/change_owner'
     end
   end
 

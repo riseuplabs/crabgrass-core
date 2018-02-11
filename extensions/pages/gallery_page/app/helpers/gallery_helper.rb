@@ -52,10 +52,10 @@ module GalleryHelper
   end
 
   def upload_images_link
-    link_to_modal(I18n.t(:add_images_to_gallery_link),
-                  { url: page_url(@page, action: 'new', controller: :image),
-                    complete: 'styleUpload();' },
-                  class: 'icon plus_16')
+    link_to_modal I18n.t(:add_images_to_gallery_link),
+                  page_url(@page, action: 'new', controller: :image),
+                  complete: 'styleUpload();',
+                  class: 'icon plus_16'
   end
 
   def gallery_edit_image(image)
@@ -63,11 +63,9 @@ module GalleryHelper
                    controller: :image,
                    action: 'edit',
                    id: image.id
-    link_to_modal '&nbsp;',
-                  { url: url,
-                    title: I18n.t(:edit_image) },
-                  class: 'small_icon empty pencil_16',
-                  title: I18n.t(:edit_image)
+    link_to_modal '&nbsp;', url,
+                  title: I18n.t(:edit_image),
+                  class: 'small_icon empty pencil_16'
   end
 
   def gallery_make_images_sortable_js
