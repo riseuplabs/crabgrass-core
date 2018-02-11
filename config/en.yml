@@ -6,9 +6,9 @@ en:
 
 ########################################
 ### en/account.yml
-  congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}.
+  congratulations_you_have_signed_up: "Congratulations! You have signed up for %{site_title}."
   cookie_disabled_warning: You have cookies disabled. You will not be able to log in
-    until you enable cookies."
+    until you enable cookies.
   email_verification_body: "|-
     You have signed up for %{site_title} (%{host}).
   
@@ -18,9 +18,9 @@ en:
   
     %{verify_email_link}
   
-    If you do not wish to join, simply ignore this email.
+    If you do not wish to join, simply ignore this email."
   forgotten_email_address: What email address did you give us when you created your
-    account?"
+    account?
   invalid_email_text: The email address you provided is invalid.
   invalid_token: Invalid Token
   invalid_token_text: The password reset link you specified is invalid. Presumably it
