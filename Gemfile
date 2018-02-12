@@ -81,6 +81,10 @@ gem 'actionpack-page_caching'
 # Bcrypt for has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+#
+gem 'secure_headers', '~> 4.0.2'
+
+
 # ?
 # locking in to latest major to fix API
 gem 'http_accept_language', '~> 2.0'
