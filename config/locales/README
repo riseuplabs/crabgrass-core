@@ -2,9 +2,10 @@ TRANSIFEX
 ------------------------
 To handle translations, we are using a system called Transifex. On transifex, the crabgrass home page is here:
 https://www.transifex.net/projects/p/crabgrass/
-To upload a new English source file using the web interface, go to 'Resources' -> 'master' -> 'Edit resource'
+To upload a new English source file using the web interface, go to 'Resources' -> 'develop' -> 'Update source file'
 In the screen to edit the resource, you can upload a new source file.
-We will upload just the en.yml as a resource, which is generated from the different English files. The en.yml file should not be edited directly, as then changes will be lost when somebody generates it again.
+We will upload just the en.yml as a resource, which is generated from the different English files.
+The en.yml file should not be edited directly, as then changes will be lost when somebody generates it again.
 
 There is transifex documentation at http://help.transifex.net/intro/getting-started.html
 and the Transifix API:
@@ -101,4 +102,3 @@ added in crabgrass, not translated:
   advanced: "Advanced"
   access: "Access"
   type: "Type"
-
