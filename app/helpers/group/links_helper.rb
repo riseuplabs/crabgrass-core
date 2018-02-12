@@ -87,13 +87,16 @@ module Group::LinksHelper
       if RequestToDestroyOurGroup.already_exists?(group: @group)
         '' # i guess do nothing?
       elsif may_destroy_group?
-        link_to(:destroy_thing.t(thing: @group.display_name),
-                { confirm: :destroy_confirmation.t(thing: @group.name),
-                  url: direct_group_path(@group), method: :delete }, class: 'btn btn-danger')
+        link_to :destroy_thing.t(thing: @group.display_name),
+                  direct_group_path(@group),
+                  method: :delete,
+                  class: 'btn btn-danger',
+                  confirm: :destroy_confirmation.t(thing: @group.name)
       elsif may_create_destroy_request?
-        link_to(:destroy_thing.t(thing: @group.display_name),
+        link_to :destroy_thing.t(thing: @group.display_name),
                 group_requests_path(@group, type: 'destroy_group'),
-                method: 'post', class: 'btn btn-danger')
+                method: 'post',
+                class: 'btn btn-danger'
       end
     end
   end
