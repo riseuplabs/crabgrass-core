@@ -231,7 +231,7 @@ module ActiveRecord #:nodoc:
 
           # find latest version of this record
           def self.latest
-            order("#{original_class.version_column} desc").first
+            order(original_class.version_column => :desc).first
           end
 
           def previous
