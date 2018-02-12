@@ -193,10 +193,7 @@ module Page::SidebarHelper
     options[:after_hide] =
       "if (typeof(afterHide) != 'undefined' || afterHide != null) { afterHide(); }"
     content_tag :li, id: options.delete(:id) do
-      link_to_modal(
-        options.delete(:label),
-        options
-      )
+      link_to_modal options.delete(:label), options.delete(:url), options
     end
   end
 

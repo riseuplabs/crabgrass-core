@@ -114,9 +114,11 @@ module Common::Page::SearchHelper
     if options[:disabled]
       link_to_function(label, '', icon: 'check_off', class: 'disabled')
     elsif mode == :add
-      html = render(partial: 'common/pages/search/popup',
-                    locals: { url: page_search_path(add: filter.path_definition), filter: filter })
-      link_to_modal(label, html: html, icon: 'check_off')
+      link_to_static_modal label, icon: 'check_off' do
+        render 'common/pages/search/popup',
+               url: page_search_path(add: filter.path_definition),
+               filter: filter
+      end
     elsif mode == :remove
       if label
         path = filter.path(args)
