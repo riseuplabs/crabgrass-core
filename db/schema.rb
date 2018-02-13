@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215201046) do
+ActiveRecord::Schema.define(version: 20180213083715) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "subject_id",   limit: 4
@@ -97,6 +97,21 @@ ActiveRecord::Schema.define(version: 20171215201046) do
   end
 
   add_index "castle_gates_keys", ["castle_id", "castle_type", "holder_code"], :name => "index_castle_gates_by_castle_and_holder_code"
+
+  create_table "csp_reports", force: :cascade do |t|
+    t.text     "document_uri",        limit: 65535
+    t.text     "referrer",            limit: 65535
+    t.text     "violated_directive",  limit: 65535
+    t.text     "effective_directive", limit: 65535
+    t.text     "original_policy",     limit: 65535
+    t.text     "blocked_uri",         limit: 65535
+    t.integer  "status_code",         limit: 4
+    t.text     "ip",                  limit: 65535
+    t.text     "user_agent",          limit: 65535
+    t.boolean  "report_only"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "custom_appearances", force: :cascade do |t|
     t.text     "parameters",        limit: 65535
