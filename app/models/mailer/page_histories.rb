@@ -17,8 +17,8 @@ class Mailer::PageHistories < ActionMailer::Base
     digest_recipients.map do |recipient|
       # let's throttle this a bit. We have ~2000 recipients
       # So this will take 2000 sec. < 40 Minutes total.
-      sleep 1
-      digest(recipient).deliver
+      digest = digest(recipient)
+      deliver_digest_with_delay(digest)
     end.tap do
       mark_digests_as_send
     end
@@ -48,6 +48,13 @@ class Mailer::PageHistories < ActionMailer::Base
   end
 
   protected
+
+  def self.deliver_digest_with_delay(digest)
+    if digest
+      sleep 1
+      digest.deliver_now
+    end
+  end
 
   def add_encrypt_options(options)
     return options unless @recipient.pgp_key
@@ -99,7 +106,7 @@ class Mailer::PageHistories < ActionMailer::Base
   end
 
   def page_histories_for(user)
-    self.class.page_histories.where(page_id: watched_pages(user))
+    self.class.page_histories.where(page_id: watched_pages(user)).where.not(user_id: user.id)
   end
 
   def watched_pages(user)
