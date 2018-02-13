@@ -43,34 +43,21 @@ module ModalboxHelper
   # If cancel is pressed, then nothing happens.
   # If OK is pressed, then a form submit happens, using the action and method specified.
   #
-  def link_to(name, options = {}, html_options = nil)
-    if options.is_a?(Hash) and options[:confirm]
-      # this seems like a bad form. the confirm should be in html_options.
-      # is this really used anywhere?
-      message = options[:confirm]
-      action = options[:url]
-      method = options[:method]
-    elsif html_options.is_a?(Hash) and html_options[:confirm]
-      action = options
-      message = html_options.delete(:confirm)
-      method = html_options.delete(:method)
-      options = html_options
+  def link_to(name, url, html_options = nil)
+    if html_options.is_a?(Hash) and html_options[:confirm].present?
+      url = url_for(url) if url.is_a?(Hash)
+      js = <<-EOJS
+      Modalbox.confirm("#{html_options.delete(:confirm)}", {
+        method:"#{html_options.delete(:method) || 'post'}",
+        action:"#{url}",
+        token:"#{form_authenticity_token}",
+        title:"#{html_options[:title] || name}",
+        ok:"#{html_options.delete(:ok) || I18n.t(:ok_button)}",
+        cancel:"#{html_options.delete(:cancel) || I18n.t(:cancel)}"})
+      EOJS
+      link_to_function name, js, html_options
     else
-      message = nil
-    end
-
-    if message
-      method ||= 'post'
-      token = form_authenticity_token
-      action = url_for(action) if action.is_a?(Hash)
-      ok = options[:ok] || I18n.t(:ok_button)
-      title = options[:title] || name
-      cancel = options[:cancel] || I18n.t(:cancel)
-      link_to_function(name,
-		       %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
-		       html_options)
-    else
-      super(name, options, html_options)
+      super
     end
   end
 
