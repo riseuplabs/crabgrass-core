@@ -86,17 +86,17 @@ class Page::TagSuggestions
   # of. It would be slower to limit it to owned pages, so we don't yet.
   #
   def tags_for_group(group)
-    ActsAsTaggableOn::Tag.find_by_sql(%[
-      SELECT tags.*, count(name) as count
-      FROM tags
-      INNER JOIN taggings ON tags.id = taggings.tag_id
-                          AND taggings.taggable_type = 'Page'
-      INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
-      WHERE MATCH(page_terms.access_ids, page_terms.tags)
-            AGAINST ('#{access_filter(group)}' IN BOOLEAN MODE)
-      GROUP BY name
-      ORDER BY name
-                                      ])
+    access_condition = <<-EOSQL
+      MATCH(page_terms.access_ids, page_terms.tags)
+      AGAINST (? IN BOOLEAN MODE)
+    EOSQL
+    ActsAsTaggableOn::Tag.select("tags.*, count(name) as count").
+      joins(:taggings).
+      where("taggings.taggable_type = 'Page'").
+      joins("INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id").
+      where([access_condition, access_filter(group)]).
+      group(:name).
+      order(:name)
   end
 
   def access_filter(group)

@@ -212,14 +212,16 @@ module ActiveRecord #:nodoc:
 
           # find first version before the given version
           def self.before(version)
-            where(["#{original_class.versioned_foreign_key} = ? and version < ?", version.send(original_class.versioned_foreign_key), version.version])
+            where({original_class.versioned_foreign_key => version.send(original_class.versioned_foreign_key)})
+            .where(["version < ?", version.version])
               .order('version DESC')
               .first
           end
 
           # find first version after the given version.
           def self.after(version)
-            where(["#{original_class.versioned_foreign_key} = ? and version > ?", version.send(original_class.versioned_foreign_key), version.version])
+            where({original_class.versioned_foreign_key => version.send(original_class.versioned_foreign_key)})
+            .where(["version > ?", version.version])
               .order('version ASC')
               .first
           end
@@ -231,7 +233,7 @@ module ActiveRecord #:nodoc:
 
           # find latest version of this record
           def self.latest
-            order("#{original_class.version_column} desc").first
+            order(original_class.version_column => :desc).first
           end
 
           def previous
@@ -286,7 +288,7 @@ module ActiveRecord #:nodoc:
           return if self.class.max_version_limit == 0
           excess_baggage = send(self.class.version_column).to_i - self.class.max_version_limit
           if excess_baggage > 0
-            self.class.versioned_class.delete_all ["#{self.class.version_column} <= ? and #{self.class.versioned_foreign_key} = ?", excess_baggage, id]
+            self.class.versioned_class.delete_all ["? <= ? and ? = ?", self.class.version_column, excess_baggage, self.class.versioned_foreign_key, id]
           end
         end
 

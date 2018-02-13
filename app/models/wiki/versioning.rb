@@ -88,7 +88,7 @@ module Wiki::Versioning
   protected
 
   def versions_since(version)
-    versions.where("version > #{version.version}").count
+    versions.where(["version > ?", version.version]).count
   end
 
   def destroy_versions_after(version_number)

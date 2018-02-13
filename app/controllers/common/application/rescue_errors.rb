@@ -70,9 +70,6 @@ module Common::Application::RescueErrors
     #   end
     #
     # this will render action :show when there is a caught error exception for :update.
-    # If a Proc is specified instead of a symbol, the resulting code is executed.
-    #
-    #   rescue_render :update => lambda { blah blah }
     #
     def rescue_render(hsh = nil)
       if hsh
@@ -191,8 +188,6 @@ module Common::Application::RescueErrors
             else
               render action: action
             end
-          elsif action.is_a?(Proc)
-            instance_eval(&action)
           end
         elsif params[:action] == 'update'
           render action: 'edit'

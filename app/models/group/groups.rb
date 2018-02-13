@@ -55,21 +55,11 @@ module Group::Groups
 
     # returns an array of committee ids given an array of group ids.
     def committee_ids(ids)
-      ids = [ids] unless ids.instance_of? Array
-      return [] unless ids.any?
-      ids = ids.join(',')
-      Group.connection.select_values(
-        "SELECT groups.id FROM groups WHERE parent_id IN (#{ids})"
-      ).collect(&:to_i)
+      Group.where(parent_id: ids).pluck(:id)
     end
 
     def parent_ids(ids)
-      ids = [ids] unless ids.instance_of? Array
-      return [] unless ids.any?
-      ids = ids.join(',')
-      Group.connection.select_values(
-        "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
-      ).collect(&:to_i)
+      Group.where(id: ids).pluck(:parent_id)
     end
 
     def can_have_committees?
