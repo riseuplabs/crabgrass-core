@@ -63,6 +63,7 @@ class Mailer::PageHistories < ActionMailer::Base
   end
 
   def add_sign_options(gpg_options)
+    return gpg_options unless ENV['GPGKEY'].present?
     begin
       GPGME::Key.import File.open(ENV['GPGKEY'])
     rescue => e
@@ -70,8 +71,7 @@ class Mailer::PageHistories < ActionMailer::Base
       logger.error e.backtrace.join("\n")
     end
     # TODO: email address should be configurable
-    gpg_options.merge sign_as: "robot@riseup.net" if ENV['GPGKEY']
-    return gpg_options
+    gpg_options.merge sign_as: "robot@riseup.net"
   end
 
   def init_mail_to(recipient)
