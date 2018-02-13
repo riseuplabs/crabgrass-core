@@ -10,11 +10,11 @@ def extract_keys
 
     lines.each do |line|
       # there could be multiple matches per line
-      matches = line.scan(/[^:]:([0-9a-zA-Z_]+)\.t?/)
+      matches = line.scan(/([^:]|^):([0-9a-zA-Z_]+)\.t?/)
       # catches :standard.t and :standard.tcap
 
       matches.each do |match|
-        (keys[match[0]] = true) if match
+        (keys[match[1]] = true) if match
       end
 
       # again, look for multiple matches in line
