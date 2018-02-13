@@ -22,6 +22,12 @@ Crabgrass::Application.routes.draw do
                              constraints: { ip: /127.0.0.1/ }
 
   ##
+  ## CSP Reports
+  ##
+
+  resource :csp_report, only: [:create]
+
+  ##
   ## STATIC FILES AND ASSETS
   ##
 
