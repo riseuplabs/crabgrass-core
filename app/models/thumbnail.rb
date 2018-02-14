@@ -118,9 +118,13 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def thumbdef
-    definition = parent.thumbdefs[name.to_sym]
-    return definition if definition
-    raise "No thumbnail definition found for #{name} #{id}"
+    begin
+      definition = parent.thumbdefs[name.to_sym]
+      return definition if definition
+      raise "No thumbnail definition found for #{name} #{id}"
+    rescue => e
+      logger.error 'Error: ' + e.message
+    end
   end
 
   def ok?
@@ -143,7 +147,7 @@ class Thumbnail < ActiveRecord::Base
   # This seems messy to me, there is probably a cleaner way.
   #
   def proxy?
-    thumbdef.proxy and parent.content_type == thumbdef.mime_type
+    thumbdef && thumbdef.proxy && parent.content_type == thumbdef.mime_type
   end
 
   private
