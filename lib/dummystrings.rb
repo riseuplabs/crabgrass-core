@@ -29,7 +29,6 @@
 :may_pester_description.t
 :may_request_contact_description.t
 
-:may_request_membership_label.t
 :may_view_label.t
 :may_see_contacts_label.t
 :may_see_groups_label.t
@@ -83,4 +82,3 @@
 
 :friends.t
 :request_to_join_you.t
-:enter_name_of_group_or_person.t
