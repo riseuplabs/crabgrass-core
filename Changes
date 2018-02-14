@@ -1,7 +1,7 @@
 Changes in Crabgrass 0.6.3
 --------------------------
 
-I18n improvemtents, dependency upgraded, doc fixes, performance tweaks,
+I18n improvements, dependency upgraded, doc fixes, performance tweaks,
 cleanups and refactorings - everything you would expect from a bugfix release.
 And of course bugfixes, bugfixes, bugfixes...
 Elijah brought back merging subsequent wiki edits by the same author into
