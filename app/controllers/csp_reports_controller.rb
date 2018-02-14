@@ -1,14 +1,18 @@
-class CspReportsController < ApplicationController  
+class CspReportsController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :require_user_signed_in
 
   def create
     report = JSON.parse(request.body.read)['csp-report']
+    Rails.logger.debug report.slice(
+      'blocked_uri',
+      'violated_directive',
+      'referrer',
+      'document-uri')
     CspReport.create!(
       blocked_uri: report['blocked-uri'],
       document_uri: report['document-uri'],
       effective_directive: report['effective-directive'],
-      ip: request.remote_ip,
       original_policy: report['original-policy'],
       report_only: params[:report_only] == 'true',
       referrer: report['referrer'],
@@ -18,4 +22,4 @@ class CspReportsController < ApplicationController
     )
     render nothing: true
   end
-end  
+end
