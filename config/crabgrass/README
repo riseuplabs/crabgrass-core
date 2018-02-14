@@ -173,7 +173,14 @@ email_sender_name:
   the default is: '$site_title ($user_name)'
 
 enforce_ssl:
-  if true, cookies will only work over tls/ssl.
+  This setting only takes effect in production environments.
+  Sets the force_ssl config setting of rails. It will:
+  * only accept https connections.
+  * set HSTS headers.
+  * cookies will only work over tls/ssl.
+  Note that we also use the secure headers gem which offers better
+  protection for cookies while also working on onion domains:
+  https://riseup.net/en/security/network-security/tor/onionservices-best-practices#onion-services-and-rails-4
 
 show_exceptions:
   if true, exceptions are show to the user.
