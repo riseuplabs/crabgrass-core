@@ -3,6 +3,14 @@
 #
 # for example: I18n.t @request.class.name.underscore
 #
+# for adding keys that are nested, you must add them in the following format:
+# for example: I18n.t("autocomplete.placeholder.enter_name_of_group_or_person")
+#
+# for adding keys that are not nested, add them in the following format:
+# for example: :friends.t
+#
+# otherwise the rake task cg:i18n: won't work properly
+#
 
 # requests:
 
