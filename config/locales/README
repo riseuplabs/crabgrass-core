@@ -7,7 +7,7 @@ In the screen to edit the resource, you can upload a new source file.
 We will upload just the en.yml as a resource, which is generated from the different English files.
 The en.yml file should not be edited directly, as then changes will be lost when somebody generates it again.
 
-There is transifex documentation at http://help.transifex.net/intro/getting-started.html
+There is transifex documentation at https://docs.transifex.com/
 and the Transifix API:
 http://help.transifex.net/features/api/api-v2.1.html
 

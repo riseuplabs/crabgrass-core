@@ -45,6 +45,8 @@ en:
   committee_description: "Committees are groups within an organization or network. A committee is entirely subordinate to its parent organization or network. A user added to the committee from outside the organization or network will only have access to the committee."
   council_description: "Councils are groups with special administrative powers. Every organization or network may have a council. If it does, people in the council will have power over the network or organization."
   council_description_details: "By default, all members may modify the %{group}. If you want to restrict administrative powers to certain users, create a council and add users to it."
+  create_public_group_wiki: "Public"
+  create_private_group_wiki: "Private"
   group_creation_info: "There are four types of groups:"
   group_description: "Organizations are groups that are autonomous and have people as members."
   network_committees_may_not_join_networks: "Committees of other networks may not join."
@@ -68,6 +70,8 @@ en:
   group_wiki: "Group Wiki"
   members_may_edit_wiki: "All members may edit the wiki"
   members_may_edit_wiki_description: "If unchecked, only council members may edit the %{group} wiki."
+  public_group_wiki: "Public"
+  private_group_wiki: "Private"
 
   ## UNSORTED
   add_members_to_committee: "Add a group member to this committee. To add people not in the parent group, send an invite instead."
