@@ -12,6 +12,11 @@ class PgpKey < ActiveRecord::Base
   before_validation :update_key
   after_save :notify_user, if: :key_changed?
 
+  def expired?
+    return false if self.expires == nil # valid forever
+    self.expires < 15.minutes.from_now
+  end
+
   protected
 
   def update_key
