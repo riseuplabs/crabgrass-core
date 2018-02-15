@@ -13,5 +13,5 @@ tr:
     riseup_red: "Riseup Red"
     accounts_note: >
         NOT: Bu internet sitesi için kullanıcı hesapları, diğer riseup.net servislerinden
-        bağımsızdır. Başka bir deyişle %{riseup_black} veya %{riseup_net} hesaplarınızla
+        bağımsızdır. Başka bir deyişle %{riseup_black} veya %{riseup_red} hesaplarınızla
         bu siteye giriş yapamazsınız.
