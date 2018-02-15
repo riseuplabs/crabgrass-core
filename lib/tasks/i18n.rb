@@ -4,7 +4,7 @@ require 'crabgrass/boot'
 
 def extract_keys
   keys = {}
-  ['app', 'lib', 'extensions', 'vendor/crabgrass_plugins'].each do |dir|
+  ['app', 'lib/dummystrings.rb', 'extensions', 'vendor/crabgrass_plugins'].each do |dir|
     # this will catch all non-commented-out lines that contain '.t'. It seems better to look at more lines and then distinguish $
     lines = `find #{dir} -type f -exec grep '\\.t' \\{\\} \\; | grep -v '^ *#'`.split "\n"
 
@@ -37,6 +37,7 @@ def load_data
   end
   en = YAML.load_file('config/en.yml')['en']
   keys = extract_keys
+  # FIXME orphaned includes namespaces like 'crabgrass' or 'activerecord'
   orphaned = en.keys - keys.keys
   missing = keys.keys - en.keys
   duplicates = []
@@ -212,7 +213,9 @@ namespace :cg do
               while line = f_bak.gets
                 orph = false
                 orphaned.each do |orphan| # these are just top-level keys
-                  next unless /^(\s\s)#{orphan}:/ =~ line # orphans only have top-level keys so we are only looking for keys indented by 2
+                  # orphans only have top-level keys
+                  # so we are only looking for keys indented by 2
+                  next unless /^(\s\s)#{orphan}:(\s+\S)/ =~ line
                   f.write('  ##!' + line)
                   orph = true
                   # break
