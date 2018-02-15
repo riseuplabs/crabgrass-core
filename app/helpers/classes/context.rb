@@ -52,7 +52,8 @@ class Context
   # returns the correct context for the given entity.
   def self.find(entity)
     return nil if entity.blank?
-    "Context::#{entity.class.name.demodulize}".constantize.new(entity)
+    name = entity.class.name.demodulize
+    "Context::#{name}".constantize.new(entity)
   end
 
   def initialize(entity)
@@ -147,7 +148,7 @@ class Context::User < Context
   end
 end
 
-class Context::UserGhost < Context::User
+class Context::Ghost < Context::User
   def define_crumbs
     push_crumb :people
   end

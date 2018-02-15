@@ -35,7 +35,7 @@ class Thumbnail < ActiveRecord::Base
 
   # returns the thumbnail object that we depend on, if any.
   def depends_on
-    @depends ||= parent.thumbnail(thumbdef.depends, true)
+    @depends ||= parent.thumbnail(thumbdef.try.depends, true)
   end
 
   # finds or initializes a Thumbnail
@@ -95,7 +95,7 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def title
-    thumbdef.title || Media::MimeType.description_from_mime_type(content_type)
+    thumbdef.try.title || Media::MimeType.description_from_mime_type(content_type)
   end
 
   # delegate path stuff to the parent
@@ -118,13 +118,11 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def thumbdef
-    begin
-      definition = parent.thumbdefs[name.to_sym]
-      return definition if definition
-      raise "No thumbnail definition found for #{name} #{id}"
-    rescue => e
-      logger.error 'Error: ' + e.message
+    definition = parent.thumbdefs[name.to_sym]
+    if definition.blank?
+      logger.error "Error: No thumbnail definition found for #{name} #{id}"
     end
+    definition
   end
 
   def ok?
@@ -147,7 +145,7 @@ class Thumbnail < ActiveRecord::Base
   # This seems messy to me, there is probably a cleaner way.
   #
   def proxy?
-    thumbdef && thumbdef.proxy && parent.content_type == thumbdef.mime_type
+    thumbdef.try.proxy && parent.content_type == thumbdef.mime_type
   end
 
   private
@@ -169,7 +167,7 @@ class Thumbnail < ActiveRecord::Base
 
   def update_metadata(options)
     # dimensions
-    if Media.has_dimensions?(options[:output_type]) and thumbdef.size.present?
+    if Media.has_dimensions?(options[:output_type]) and thumbdef.try.size.present?
       self.width, self.height = Media.dimensions(options[:output_file])
     end
     # size

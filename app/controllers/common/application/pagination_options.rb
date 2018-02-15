@@ -22,7 +22,14 @@ module Common::Application::PaginationOptions
   def pagination_params(opts = {})
     page = opts[:page] || params[:page] || pagination_default_page
     per_page = opts[:per_page]
-
+    if page.present?
+      if page.to_i == 0
+        Rails.logger.warn "Invalid value for page: #{page}"
+        page = 1
+      else
+        page = page.to_i
+      end
+    end
     { page: page, per_page: per_page }
   end
 
