@@ -16,6 +16,28 @@ class Page::ShareTest < ActiveSupport::TestCase
     assert !user2.may?(:admin, page)
   end
 
+  def test_notify_user_by_email
+    user = users(:kangaroo)
+    user2 = users(:red)
+    page = Page.create(title: 'x', user: user, access: :admin)
+
+    share = Page::Share.new page, user,
+                            'send_notice' => true,
+                            'send_message' => 'hello red',
+                            'send_email' => true,
+                            'mailer_options' =>  { site: Site.new,
+                                                   host: 'localhost',
+                                                   protocol: 'http://',
+                                                   port: '3000',
+                                                   page: page,
+                                                   current_user: user }
+    share.with 'red' => { access: 'edit' }
+    assert user2.may?(:edit, page)
+    assert !user2.may?(:admin, page)
+    mail = Mailer.deliveries.first
+    assert_includes mail.body, 'hello red'
+  end
+
   def test_notify_groups
     creator = users(:kangaroo)
     red = users(:red)
