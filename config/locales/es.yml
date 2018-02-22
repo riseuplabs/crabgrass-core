@@ -173,7 +173,7 @@ es:
   search: Buscar
   go: Ir
   thing_not_found: "%{thing} no se encuentra"
-  no_things_found: No hay %{thing} encontraron.
+  no_things_found: "No se encontraron %{things}."
   no_search_results: No hay resultados
   not_found: No Encontrado
   see_all_link: Ver Todos
