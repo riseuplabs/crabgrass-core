@@ -1,160 +1,132 @@
 sv:
-  forgot_password_link: Jag har glömt mitt lösenord
+  forgotten_email_address: Vad för e-postadress gav du oss när du skapade ditt konto?
+  invalid_email_text: E-postadressen du angivit är ogiltig.
+  invalid_token: Ogiltig symbol
+  invalid_token_text: Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut.
+  login: Logga in
+  login_failed: Kunde inte logga in
   login_failure_reason: Användarnamnet eller lösenordet stämmer inte.
   logout_success: Hejdå
   logout_success_message: Du är utloggad.
-  login_failed: Kunde inte logga in
-  login: Logga in
-  forgot_password_text: Om du har glömt lösenordet du använder för att logga in, kan vi skicka ett e-brev med en länk som gör att du kan skapa ett nytt.
-  forgot_password_mail_greeting: "%{user}, för att återställa lösenordet kan du besöka"
+  confirm_new_password: Bekräfta det nya lösenordet
+  forgot_password_link: Jag har glömt mitt lösenord
   forgot_password_mail_expiry: 'Den här länken kommer att fungera i 24 timmar. Om du behöver
 
     återställa lösenordet efter det måste du besöka sidan för glömt
 
     lösenord igen och begära en ny länk.'
-  invalid_email_text: E-postadressen du angivit är ogiltig.
-  invalid_token: Ogiltig symbol
-  invalid_token_text: Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut.
-  forgotten_email_address: Vad för e-postadress gav du oss när du skapade ditt konto?
-  confirm_new_password: Bekräfta det nya lösenordet
+  forgot_password_mail_greeting: "%{user}, för att återställa lösenordet kan du besöka"
+  forgot_password_text: Om du har glömt lösenordet du använder för att logga in, kan vi skicka ett e-brev med en länk som gör att du kan skapa ett nytt.
   password: Lösenord
-  login_password: Lösenord
-  cancel: Avbryt
-  edit: ändra
-  back_button: Tillbaka
-  close_button: Stäng
   add_button: Lägg till
-  cancel_button: Avbryt
-  create_button: Skapa
-  create_a_new_thing: skapa en ny %{thing}
-  created_by: Skapades av
   approve: bifall
   approved: bifallen
+  cancel: Avbryt
+  close_button: Stäng
+  create_a_new_thing: skapa en ny %{thing}
+  create_button: Skapa
+  created_by: Skapades av
   destroy: förstör
+  edit: ändra
   exception:
     title:
       forbidden: Åtkomst nekad
+  add_comment: lägg till kommentar
   image_count: Bild %{number} av %{count}
   image_count_total: "%{count} bilder"
-  group_not_allowed_to_view_image_error: Gruppen som äger sidan har inte tillåtelse att se den här bilden.
-  add_comment: lägg till kommentar
-  image_title: 'Bildtitel: %{title}'
   people: Folk
   contacts: kontakter
-  friends: Vänner
   member_groups_of_network: Medlemsgrupper
-  me: Jag
   back: Tillbaka
   description: beskrivning
-  group: Grupp
-  groups: Grupper
-  networks: Nätverk
+  me: Jag
   committee: kommitté
   committees: Kommittéer
+  group: Grupp
+  groups: Grupper
+  my_groups: Mina grupper
   members: Medlemmar
+  networks: Nätverk
   group_invite_subject: Inbjudan till "%{group}"
-  group_invite_email: |-
-    %{from_user} har bjudit in dig till "%{group}".
-
-    Klicka här om du vill gå med i gruppen:
-
-    %{accept_invite_link}
   group_wiki: Gruppwiki
-  group_successfully_created: Gruppen skapades utan problem.
-  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på %{domain}/gruppnamn."
   committee_publicly_visible_description: Kommittéer kan ses av ickemedlemmar på %{domain}/gruppnamn
+  descriptive_name_for_display: Ett beskrivande namn för uppvisning
   group_members_publicly_visible: Gör medlemmar synliga offentligt
   group_members_publicly_visible_description: Medlemmar syns av icke-medlemmar på %{domain}/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida (%{domain}/användarnamn)
-  my_groups: Mina grupper
-  descriptive_name_for_display: Ett beskrivande namn för uppvisning
-  my_dashboard: Min panel
+  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på %{domain}/gruppnamn."
+  group_successfully_created: Gruppen skapades utan problem.
   display_name: Visningsnamn
   email: e-post
   language: Språk
-  home: Hem
-  menu_me: Jag
-  menu_groups: Grupper
-  menu_chat: Chatt
-  menu_people: Folk
-  menu_networks: Nätverk
-  menu_link_logout: Logga ut
-  menu_admin: Admin
   back_to_group: tillbaka till %{group_name}
+  home: Hem
+  menu_admin: Admin
+  menu_link_logout: Logga ut
+  action: handling
   my_pages: Mina sidor
-  most_viewed: Mest sedda
+  current_video_sources: 'stöds för närvarande: youtube, blip.tv, google video, vimeo'
   all_page_types: alla sidtyper
-  data_for_page_missing: Datan för den här sidan saknas.
   created: skapad
+  data_for_page_missing: Datan för den här sidan saknas.
+  most_viewed: Mest sedda
   add_star_link: Stjärna (%{star_count})
   delete_page_link: Radera %{page_class}
   information: Information
-  edit_tags_link: Ändra
-  edit_attachments_link: Ändra
-  contribute_content_link: Skapa sida
-  create_page: Skapa sida
-  only_me: Jag
-  action: handling
-  gallery_display: galleri
   asset_page_display: Fil
+  create_page: Skapa sida
   discussion_page_description: En gruppdiskussion i ett särskilt ämne.
   discussion_page_display: gruppdiskussion
+  gallery_display: galleri
   rate_many_page_description: Bifall eller inte om varje möjlighet.
   rate_many_page_display: bifallsomröstning
-  survey_description_heading: beskrivning
-  current_video_sources: 'stöds för närvarande: youtube, blip.tv, google video, vimeo'
-  email_addresses: E-postadresser
   edit_profile_link: Ändra profil
   incoming: Inkommande
   invite_info: Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna %{group_type}.
-  file: Fil
-  medium: mellan
-  large: stor
-  full: full
-  include_full_checkbox: ta med länk till hela bilden
   activity_contact_created: "%{user} lade till %{other_user} som kontakt"
-  activity_user_left_group: "%{user} lämnade %{group_type} %{group}"
-  activity_user_joined_group: "%{user} gick med i %{group_type} %{group}"
-  activity_user_destroyed: "%{user} har dragit sig tillbaka"
   activity_group_created: "%{user} skapade en %{group_type} %{group}"
   activity_group_destroyed: "%{group} förstördes av %{user}"
+  activity_user_destroyed: "%{user} har dragit sig tillbaka"
+  activity_user_joined_group: "%{user} gick med i %{group_type} %{group}"
+  activity_user_left_group: "%{user} lämnade %{group_type} %{group}"
+  created_on: Skapad
+  delete_version_confirm: Vill du säkert radera den här informationen?
+  file_size: Filstorlek
+  file_version_deleted: filversion borttagen
+  format: Formatera
+  full: full
+  galleries: Gallerier
+  history: Historia
+  large: stor
   media_image: Bild
   media_images: Bilder
-  history: Historia
-  file_version_deleted: filversion borttagen
-  delete_version_confirm: Vill du säkert radera den här informationen?
-  galleries: Gallerier
-  created_on: Skapad
-  file_size: Filstorlek
-  format: Formatera
-  edit_gallery: Redigera galleri
-  download: Ladda ner
-  download_gallery: Ladda ner galleri
-  move_image_left: Flytta bilden åt vänster
-  move_image_right: Flytta bilden åt höger
-  error_saving_new_order: Det gick inte att spara den nya ordern!
-  activate_js_to_rearrange_photos: Aktivera Javascript om du vill använda drag-och-släpp-metoden för att flytta runt bilder!
-  drag_and_drop_to_rearrange_photos: Drag & släpp bilder för att flytta runt dem.
-  add_existing_image: Lägg till existerande bild
-  add_photo_to_gallery: 'Lägg till ett foto till ett galleri:'
-  cancel_link: avbryt
-  file_must_be_image_error: Filen måste vara en bild för att hamna i galleriet.
-  add_another_file: Lägg till ny fil
-  make_album_cover: gör denna bild till albumomslag
-  monday: måndag
-  friday: fredag
-  date_today: Idag
+  medium: mellan
+  permission_denied: Åtkomst nekad
   date_this_week: Senaste veckan
-  alert_not_saved: Det gick inte att spara förändringarna
+  date_today: Idag
+  friday: fredag
+  monday: måndag
   alert_field_errors: Något är fel med följande fält
+  alert_not_saved: Det gick inte att spara förändringarna
   alert_saved: Ändringarna sparades
-  alert_permission_denied: Åtkomst nekad
   csrf_error_message: 'Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:
 
     '
-  my_contacts: Vänner
-  permission_denied: Åtkomst nekad
+  add_another_file: Lägg till ny fil
+  add_existing_image: Lägg till existerande bild
+  add_photo_to_gallery: 'Lägg till ett foto till ett galleri:'
+  cancel_link: avbryt
+  download: Ladda ner
+  download_gallery: Ladda ner galleri
+  edit_gallery: Redigera galleri
+  error_saving_new_order: Det gick inte att spara den nya ordern!
+  file_must_be_image_error: Filen måste vara en bild för att hamna i galleriet.
+  make_album_cover: gör denna bild till albumomslag
+  move_image_left: Flytta bilden åt vänster
+  move_image_right: Flytta bilden åt höger
+  file: Fil
   chat: Chatt
+  include_full_checkbox: ta med länk till hela bilden
   break_lock_button: Bryt lås
   comparing_changes_header: Jämför ändringar av %{user} %{when} från %{old_version} till %{new_version}
-  formatting_reference_link: formateringsreferens
   diff_link: diff
+  formatting_reference_link: formateringsreferens

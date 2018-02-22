@@ -1,40 +1,6 @@
 "no":
-  cookie_disabled_warning: Du har blokkert informasjonskapsler. Du må tillate informasjonskapsler for å kunne logge inn.
-  signup_link: Lag ny bruker
-  signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
-  forgot_password_link: Glemt passordet?
-  login_failure_reason: Brukernavn eller passord er feil.
-  signup_success_message: Takk for registreringen!
-  login_name: Brukernavn
-  signup_success: Registrert
-  logout_success: Ha det!
-  logout_success_message: Du er nå logget ut.
-  signup_button: Registrer deg
-  login_failed: Kunne ikke logge inn
-  login_button: Logg inn
-  login: Innlogging
-  sign_in: Logg inn
-  signup_title: Opprett konto
-  forgot_password_text: Hvis du har glemt passordet du bruker for å logge inn, kan vi sende deg en e-postlenke hvor du kan generere et nytt passord.
-  reset_password_text: Hei %{user}. Hvis du har glemt passordet du bruker for å logge inn, så kan du sette et nytt passord her.
-  forgot_password_mail_greeting: "%{user}, for å tilbakestille passordet ditt, gå til"
-  forgot_password_mail_expiry: Denne lenken vil være gyldig i 24 timer. Hvis du trenger å tilbakestille passordet ditt etter det, må du besøke glemt passord-siden på nytt for å be om en ny lenke.
-  reset_password_mail_greeting: "%{user}, passordet ditt er tilbakestilt som du ba om."
-  reset_password_mail_warning: Hvis du ikke har bedt om å få passordet ditt endret, vær vennlig å kontakt oss.
-  invalid_email_text: E-postadressen du oppga er ugyldig.
-  reset_password: Tilbakestill passord
-  reset_password_email_sent: Dersom denne e-postadressen er forbundet med et brukernavn, så har en e-post blitt sendt med instruksjoner for å tilbakestille passordet ditt.
-  invalid_token: Ugyldig symbol
-  invalid_token_text: Lenken for å tilbakestille passordet ditt er ikke gyldig. Antakeligvis har den allerede blitt brukt, eller den har utløpt på tid.
-  password_reset: Passord tilbakestilt
-  password_reset_ok_text: Ditt passord er tilbakestilt. Du kan nå logge inn med ditt nye passord.
-  requested_forgot_password: Du har bedt om å bytte passord
-  password_was_reset: Ditt passord er nå tilbakestilt
-  forgotten_email_address: Hvilken e-postadresse oppga du når du opprettet din konto?
-  new_password: Nytt passord
-  confirm_new_password: Bekreft nytt passord
   congratulations_you_have_signed_up: Gratulerer! Du har registrert deg på %{site_title}.
-  you_should_receive_instructions_email: Du vil motta en e-post med instruksjoner for hvordan du fullfører opprettelsen av brukerkontoen din.
+  cookie_disabled_warning: Du har blokkert informasjonskapsler. Du må tillate informasjonskapsler for å kunne logge inn.
   email_verification_body: |-
     Du har registrert deg på %{site_title} (%{host}).
 
@@ -45,248 +11,242 @@
     %{verify_email_link}
 
     Hvis du ikke vil registrere deg, kan du se bort fra denne e-posten.
-  change_password: Bytt passord
-  password: Passord
-  password_confirmation: Passordbekreftelse
-  login_password: Passord
-  remove_your_account: Fjern din brukerkonto
+  forgotten_email_address: Hvilken e-postadresse oppga du når du opprettet din konto?
+  invalid_email_text: E-postadressen du oppga er ugyldig.
+  invalid_token: Ugyldig symbol
+  invalid_token_text: Lenken for å tilbakestille passordet ditt er ikke gyldig. Antakeligvis har den allerede blitt brukt, eller den har utløpt på tid.
+  login: Innlogging
+  login_failed: Kunne ikke logge inn
+  login_failure_reason: Brukernavn eller passord er feil.
+  logout_success: Ha det!
+  logout_success_message: Du er nå logget ut.
+  sign_in: Logg inn
+  signup_button: Registrer deg
+  signup_email_info: 'Valgfritt: brukes dersom du glemmer passordet ditt'
+  signup_link: Lag ny bruker
+  signup_success: Registrert
+  signup_success_message: Takk for registreringen!
+  signup_title: Opprett konto
+  you_should_receive_instructions_email: Du vil motta en e-post med instruksjoner for hvordan du fullfører opprettelsen av brukerkontoen din.
+  account_successfully_removed: Din konto er nå fjernet. Vi vil slette kontoen og alle assosierte data fra vår database.
   anonymize_display_name: Anonymiser visningsnavn
   anonymize_display_name_info: Erstatter ditt navn med 'Anonym' overalt
+  confirm_account_removal: Er du sikker på at du vil fjerne din brukerkonto? Dette kan ikke gjøres om og dine data vil gå tapt.
   destroy_comments: Destruer kommentarer
   destroy_comments_info: Dette fjerner alle dine kommentarer på sider. Det kan gjøre det vanskelig å forstå andres kommentarer som står igjen.
-  confirm_account_removal: Er du sikker på at du vil fjerne din brukerkonto? Dette kan ikke gjøres om og dine data vil gå tapt.
-  account_successfully_removed: Din konto er nå fjernet. Vi vil slette kontoen og alle assosierte data fra vår database.
+  remove_your_account: Fjern din brukerkonto
+  change_password: Bytt passord
+  confirm_new_password: Bekreft nytt passord
+  forgot_password_link: Glemt passordet?
+  forgot_password_mail_expiry: Denne lenken vil være gyldig i 24 timer. Hvis du trenger å tilbakestille passordet ditt etter det, må du besøke glemt passord-siden på nytt for å be om en ny lenke.
+  forgot_password_mail_greeting: "%{user}, for å tilbakestille passordet ditt, gå til"
+  forgot_password_text: Hvis du har glemt passordet du bruker for å logge inn, kan vi sende deg en e-postlenke hvor du kan generere et nytt passord.
+  new_password: Nytt passord
+  password: Passord
+  password_confirmation: Passordbekreftelse
+  password_reset: Passord tilbakestilt
+  password_reset_ok_text: Ditt passord er tilbakestilt. Du kan nå logge inn med ditt nye passord.
+  password_was_reset: Ditt passord er nå tilbakestilt
+  requested_forgot_password: Du har bedt om å bytte passord
+  reset_password: Tilbakestill passord
+  reset_password_email_sent: Dersom denne e-postadressen er forbundet med et brukernavn, så har en e-post blitt sendt med instruksjoner for å tilbakestille passordet ditt.
+  reset_password_mail_greeting: "%{user}, passordet ditt er tilbakestilt som du ba om."
+  reset_password_mail_warning: Hvis du ikke har bedt om å få passordet ditt endret, vær vennlig å kontakt oss.
+  reset_password_text: Hei %{user}. Hvis du har glemt passordet du bruker for å logge inn, så kan du sette et nytt passord her.
   crabgrass:
-    powered_by_html: |
-      Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-    description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> AGPL fri programvare</a> for nettverksorganisering.
+
+      '
+    get_involved: Involver deg
+    help_pages: Crabgrass-hjelpesider
+    help_translate: Hjelp til i oversettelsen
+    powered_by_html: 'Dette nettstedet kjøres ved hjelp av <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
     report_a_bug: Innrapporter en feil
     request_a_feature: Forespør en funksjon
-    help_pages: Crabgrass-hjelpesider
-    get_involved: Involver deg
-    help_translate: Hjelp til i oversettelsen
-  destroy_confirmation: Er du sikker på at du vil slette %{thing}? Denne handlingen kan ikke gjøres om.
-  confirmation: Er du sikker?
-  cancel: Avbryt
-  optional: Valgfritt
-  required: Påkrevd
-  thing_required: "%{thing} Påkrevd"
-  edit: Rediger
-  upload: Last opp
-  select_files: Velg filer
-  drop_files_here: Slipp filer her
-  files_pending: "#{pending} fil(er) venter"
-  return_link: Gå tilbake
-  back_button: Tilbake
-  send_button: Send
-  close_button: Lukk
-  share_button: Del
-  save_button: Lagre
-  add_button: Legg til
-  cancel_button: Avbryt
-  create_button: Opprett
-  ok_button: OK
-  done: Ferdig
-  show_button: Vis
-  show_thing: Vis  %{thing}
-  confirm: Bekreft
-  alert: Varsel
-  loading_progress: Laster inn…
-  loadingdotdotdot: Laster inn…
-  create_a_new_thing: Opprett ny %{thing}
-  create_thing: Opprett %{thing}
-  created_by: Opprettet av
-  updated_by: Oppdatert av
-  created_by_user_on: Opprettet av %{user} %{when}.
-  approve: Godkjenn
-  reject: Avvis
-  pending: Venter
-  rejected: Avvist
-  approved: Godkjent
-  saved: Lagret
-  destroy: Destruer
-  thing_destroyed: "%{thing} er destruert"
-  destroy_thing: Destruer %{thing}
-  delete_thing: Slett %{thing}
-  delete: Slett
-  delete_button: Slett
-  deleted: Slettet
-  remove: Fjern
-  autocomplete:
-    placeholder:
-      enter_name_of_group_or_person: Sett inn navn på grupper eller person
-      enter_name_of_group: Sett inn navn på gruppe
-      enter_name_of_person: Sett inn navn på person
   actions:
-    task:
-      add: Legg til ny oppgave
     possible:
       add: Legg til ny valgmulighet
+    task:
+      add: Legg til ny oppgave
+  add_button: Legg til
+  alert: Varsel
+  approve: Godkjenn
+  approved: Godkjent
+  cancel: Avbryt
+  close_button: Lukk
+  confirm: Bekreft
+  create: Opprett
+  create_a_new_thing: Opprett ny %{thing}
+  create_button: Opprett
+  create_thing: Opprett %{thing}
+  created_by: Opprettet av
+  created_by_user_on: Opprettet av %{user} %{when}.
+  delete: Slett
+  delete_thing: Slett %{thing}
+  deleted: Slettet
+  destroy: Destruer
+  destroy_confirmation: Er du sikker på at du vil slette %{thing}? Denne handlingen kan ikke gjøres om.
+  destroy_thing: Destruer %{thing}
+  drop_files_here: Slipp filer her
+  edit: Rediger
+  files_pending: Ventende filer
+  loading_progress: Laster inn…
+  ok_button: OK
+  optional: Valgfritt
+  pending: Venter
+  reject: Avvis
+  rejected: Avvist
+  remove: Fjern
+  required: Påkrevd
+  save_button: Lagre
+  saved: Lagret
+  select_files: Velg filer
+  send_button: Send
+  show_thing: Vis  %{thing}
+  thing_destroyed: "%{thing} er destruert"
+  thing_required: "%{thing} Påkrevd"
+  updated_by: Oppdatert av
+  upload: Last opp
   mailer:
     hello: Hei %{user_name}
-    page_history:
-      a_page_has_been_modified: "%{site_title} : En side har blitt endret"
+    pgp_key:
+      key_uploaded: Du har akkurat lastet opp en ny nøkkel. Den vil bli brukt for krypterte e-postmerknader (eksperimentell funksjon, kommer snart).
+      key_uploaded_subject: Merknad
+    page_histories:
+      change_your_settings_here: 'Endre dine e-postmerknadsinnstillinger her: %{page_link}'
+      daily_digest: "%{site}: Daglig sammendrag av sideendringer"
+      page_update: "%{site}: En side har blitt endret"
       pages_you_are_watching_have_been_modified:
-        one: En side du holder oppsyn med har endret seg siden siste merknad.
-        other: '%{count} sider du holder oppsyn med har endret seg siden siste merknad.'
-      we_leave_out_details: Detaljer i denne e-posten har blitt utelatt av hensyn til informasjon du kan ønske at skal forbli privat.
-      you_can_find_updates_here: 'Du kan finne flere detaljer og en liste over nylig endrede sider her:'
-      the_page_you_are_watching_description: Siden du følger "%{page_title}" har blitt endret
-      change_your_settings_here: 'Endre dine innstillinger for e-postvarsler her: %{page_link}'
-      you_can_turn_of_or_configure_notifications: Skru av e-postvarsler, motta et sammendrag over endringer, eller få en e-post hver gang siden endres
+        one: En side du holder oppsyn med har blitt endret siden siste merknad.
+        other: '%{count} sider du holder oppsyn med har blitt endret siden siste merknad.'
+      the_page_you_are_watching_description: Siden du holder oppsyn med "%{page_title}", har blitt endret
+      upload_your_public_pgp_key: Last opp din offentlige PGP-nøkkel for å motta mer detaljerte oppdateringer i krypterte e-poster.
+      we_leave_out_details: Detaljer i denne e-posten har blitt utelatt av hensyn til personvernet.
+      you_can_find_updates_here: 'Flere detaljer og en liste over nylig endrede sider her:'
+      you_can_turn_off_or_configure_notifications: Skru av e-postmerknader, motta et sammendrag over endringer, eller få en e-post hver gang siden har endret seg.
   exception:
-    title:
-      not_found: "%{thing} ikke funnet"
-      unauthorized: Innlogging påkrevd
-      forbidden: Tillatelse avslått
-      group:
-        not_found: Gruppe ble ikke funnet
     description:
-      not_found: Kunne ikke finne det du søkte.
-      unauthorized: Du må logge inn for å utføre denne handlingen.
       forbidden: Du har ikke mulighet til å utføre den handlingen.
       group:
         not_found: Kan ikke funne gruppen du søker.
+      not_found: Kunne ikke finne det du søkte.
+      unauthorized: Du må logge inn for å utføre denne handlingen.
+    title:
+      forbidden: Tillatelse avslått
+      group:
+        not_found: Gruppe ble ikke funnet
+      not_found: "%{thing} ikke funnet"
+      unauthorized: Innlogging påkrevd
+  add_comment: Legg til kommentar
+  add_images_to_gallery_link: Legg til bilder i galleri
+  close_and_reload_gallery: Lukk og last inn galleriet på nytt
+  confirm_image_delete: Vil du virkelig slette dette bildet? Denne handlingen kan ikke gjøres om.
+  edit_image: Rediger bilde
+  edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
   image_count: Bilde %{number} av %{count}
   image_count_total: "%{count} Fotoer"
-  show_gallery: Vis galleri
-  edit_gallery_explanation: Legg til nye bilder eller dra bilder for å gjøre om på rekkefølgen.
-  edit_image: Rediger bilde
-  show_gallery_explaination: Klikk på miniatyrbilde for å se bildet i full størrelse.
-  add_images_or_zips: Legg bilder til zipfil
-  add_images_or_zips_explaination: Zipfil blir automatisk pakket ut og lagt til galleriet
-  confirm_image_delete: Vil du virkelig slette dette bildet? Denne handlingen kan ikke gjøres om.
-  no_title_given: "(ingen tittel gitt)"
-  add_images: Legg til bilder
-  edit_images: Rediger bilder
   upload_new_image: Last opp nytt bilde
-  type_your_messages_here: Skriv meldingen her og trykk enter
-  group_not_allowed_to_view_image_error: Gruppen som eier denne siden har ikke tillatelse til å se dette bildet.
-  add_comment: Legg til kommentar
-  image_title: 'Bildetittel: {{title}}'
   upload_zip_file_link: Last opp en zipfil
-  add_images_to_gallery_link: Legg til bilder i galleri
-  too_tall_image_error: Bildet som ble lastet opp er for høyt ({{count}} pixler er maksimal høyde)
-  too_wide_image_error: Opplastet bilde må være nøyaktig {{count}} pixler bredt
-  cant_detect_image_height_error: Finner ikke bildehøyde. Enten er bildet korrumpert eller så har det skjedd en feil på serveren.
-  edit_image_header: Rediger Bilde og Lyd
-  upload_images_and_zip_files_help: 'Valgfritt: Velg bilde eller zipfiler til å laste opp.'
-  close_and_reload_gallery: Lukk og last inn galleriet på nytt
-  search: Søk
-  go: Kjør
-  thing_not_found: "%{thing} ikke funnet"
-  no_things_found: Ingen %{things} funnet.
-  no_search_results: Ingen resultater
-  not_found: Ikke funnet
-  see_all_link: Se alle
-  total: "%{count} totalt"
-  all: Alt
-  none: Ingen
-  or: eller
-  new: ny
-  modified: modifisert
-  unknown: Ukjent
-  next: Neste
-  previous: Forrige
-  pagination_next: Neste
-  pagination_previous: Forrige
-  return: Gå tilbake
-  see_more_link: Mer
-  see_less_link: Mindre
-  list_things: List %{things}
-  thing_was_sent:
-    one: "%{thing} ble sendt til %{recipient}."
-    other: "%{count} %{thing} ble sendt."
+  approved_by_entity: Godkjent av %{entity}
+  friends: Venner
+  name: Navn
+  owner: Eier
+  people: Folk
+  person: Person
+  recipient: Mottaker
+  recipients: Mottakere
+  rejected_by_entity: Avslått av %{entity}
+  user: Bruker
+  users: Brukere
   thing_was_not_sent:
     one: "%{thing} kunne ikke sendes til %{recipient}."
     other: "%{count} %{thing} kunne ikke sendes."
-  user: Bruker
-  users: Brukere
-  people: Folk
-  person: Person
-  name: Navn
-  recipients: Mottakere
-  recipient: Mottaker
-  owner: Eier
-  created_by_entity: Opprettet av %{entity}
-  approved_by_entity: Godkjent av %{entity}
-  rejected_by_entity: Avslått av %{entity}
+  thing_was_sent:
+    one: "%{thing} ble sendt til %{recipient}."
+    other: "%{count} %{thing} ble sendt."
+  all: Alt
+  autocomplete:
+    placeholder:
+      enter_name_of_group_or_person: Skriv inn navnet på gruppen eller en person
+      enter_name_of_group: Sett inn navn på gruppe
+      enter_name_of_person: Sett inn navn på person
+      enter_name_of_contact: Skriv inn navnet på en kontakt
+      enter_name_of_peer: Skriv inn navnet på en likemann
+  everybody: Alle
+  go: Kjør
+  list_things: List %{things}
+  modified: modifisert
+  new: ny
+  next: Neste
+  no_search_results: Ingen resultater
+  no_things_found: Ingen %{things} funnet.
+  none: Ingen
+  or: eller
+  previous: Forrige
+  return: Gå tilbake
+  search: Søk
+  see_all_link: Se alle
+  see_more_link: Mer
+  thing_not_found: "%{thing} ikke funnet"
+  total: "%{count} totalt"
+  unknown: Ukjent
   contacts: Kontakter
-  friends: Kontakter
   member_groups_of_network: Medlemsgrupper
+  my_contacts: Mine kontakter
   peers: Likemenn
-  me: Meg
-  back: Tilbake
-  share: Del
-  contributed: Bidratt
-  profile: Profil
-  content: Innhold
-  comments: Kommentarer
-  statistics: Statistikk
-  summary: Sammendrag
-  private: Privat
-  public: Offentlig
-  options: Valg
-  permissions: Tillatelser
-  notification: Varsel
-  notice: Merknad
-  notices: Merknader
-  dismiss: Avslå
-  dismiss_all_notices: Avslå alle
-  dismiss_all_notices_confirmation: Er du sikker på at du vil avslå alle merknader?
   action_cannot_be_undone: Denne handlingen kan ikke angres.
-  locale: Sted
+  administration: Administrasjon
+  back: Tilbake
+  comments: Kommentarer
+  contributed: Bidratt
   description: Beskrivelse
   details: Detaljer
-  invite: Invitasjon
-  membership: Medlemskap
-  visibility: Synlighet
-  administration: Administrasjon
-  settings: Innstillinger
+  dismiss_all_notices: Avslå alle
+  dismiss_all_notices_confirmation: Er du sikker på at du vil avslå alle merknader?
+  display: Visning
+  hide: Skjul
+  locale: Sted
+  me: Meg
+  message: Melding
   messages: Meldinger
+  notice: Merknad
+  notices: Merknader
+  notification: Varsel
   page: Side
+  permissions: Tillatelser
+  print: Utskrift
+  private: Privat
+  private_message_notice: Varsel om privat melding
+  public: Offentlig
+  settings: Innstillinger
+  share: Del
+  show: Vis
+  statistics: Statistikk
+  summary: Sammendrag
   tasks: Oppgaver
   title: Tittel
-  text_message: Tekstmelding
-  print: Utskrift
-  show: Vis
-  hide: Skjul
-  display: Visning
-  message: Melding
-  private_message_notice: Varsel om privat melding
+  visibility: Synlighet
   visits: Besøk
-  group: Gruppe
-  groups: Grupper
-  organization: Organisasjon
-  organizations: Organisasjoner
-  network: Nettverk
-  networks: Nettverk
+  all_groups: Alle grupper
+  basic_settings: Hovedinnstillinger
   committee: Komité
   committees: Komitéer
   council: Råd
   councils: Råd
+  group: Gruppe
+  groups: Grupper
+  my_groups: Mine grupper
   members: Medlemmer
+  membership: Medlemskap
+  network: Nettverk
+  networks: Nettverk
+  organization: Organisasjon
+  organizations: Organisasjoner
   structure: Struktur
-  group_creation_info: 'Det er fire typer grupper:'
-  group_description: Organisasjoner er grupper som er uavhengige og har folk som medlemmer.
-  network_description: Nettverk er grupper som kan ha organisasjoner som medlemmer. Et nettverk kan brukes som en forening av flere organisasjoner, eller som en plass for to organisasjoner som samarbeider.
-  committee_description: Komitéer er grupper innad i en organisasjon eller et nettverk. En komité er underlagt organisasjonen eller nettverket den tilhører. En bruker utenfor organisasjonen eller nettverket som legges til en komité, vil bare ha tilgang til komitéen.
-  council_description: Råd er grupper med spesielle administrative rettigheter. Alle organisasjoner eller nettverk kan ha et råd. Hvis man har et råd, så vil folk i rådet ha makt over nettverket eller organisasjonen.
-  council_description_details: I utgangspunktet kan alle medlemmer forandre %{group}. Hvis du vil reservere administrative rettigheter til enkelte brukere, lag et råd og legg brukere til der.
-  committee_choose_group: 'Velg en gruppe for denne komitéen:'
-  network_committees_may_not_join_networks: Komitéer fra andre nettverk kan ikke bli medlem.
-  networks_may_not_join_networks: Nettverk kan ikke bli medlem i andre nettverk.
-  may_request_membership_description: En "bli medlem i %{group}"-lenke vil vises på din %{group}-side. Denne sender en forespørsel om medlemskap som kan godkjennes eller avslås.
-  open_group: Åpen %{group}
-  open_group_description: Brukere blir lagt til %{group} med en gang - ingen forespørsler må godkjennes.
-  shared_groups: Delte grupper
-  public_groups: Offentlige grupper
-  membership_requests: Forespørsler om medlemskap
-  group_membership_count: "%{count} Medlemmer"
-  membership_exists_error: '%{member} er allerede medlem'
-  membership_destroy_confirm_message: Er du sikker på at du vil fjerne %{entity} fra %{group}?
-  group_invite_subject: Invitasjon til å bli medlem i gruppen "%{group}"
+  group_destroyed_email: "%{group_type} %{group} har blitt destruert!"
+  group_destroyed_subject: "%{group_type} %{group} har blitt slettet av %{user}!"
   group_invite_email: |-
     %{from_user} har invitert deg til å bli medlem i gruppen %{group}. Hvis du vil bli med i gruppen, klikk her:
 
@@ -296,185 +256,119 @@
     %{group_home_link}
 
     Hvis du ikke vil bli medlem i denne gruppen er det bare å se bort fra denne e-posten.
-  group_destroyed_subject: "%{group_type} %{group} har blitt slettet av %{user}!"
-  group_destroyed_email: "%{group_type} %{group} har blitt destruert!"
-  group_wiki: Gruppewiki
+  group_invite_subject: Invitasjon til å bli medlem i gruppen "%{group}"
+  committee_choose_group: 'Velg en gruppe for denne %{group_type}:'
+  committee_description: Komitéer er grupper innad i en organisasjon eller et nettverk. En komité er underlagt organisasjonen eller nettverket den tilhører. En bruker utenfor organisasjonen eller nettverket som legges til en komité, vil bare ha tilgang til komitéen.
+  council_description: Råd er grupper med spesielle administrative rettigheter. Alle organisasjoner eller nettverk kan ha et råd. Hvis man har et råd, så vil folk i rådet ha makt over nettverket eller organisasjonen.
+  council_description_details: I utgangspunktet kan alle medlemmer forandre %{group}. Hvis du vil reservere administrative rettigheter til enkelte brukere, lag et råd og legg brukere til der.
   create_public_group_wiki: Offentlig
   create_private_group_wiki: Privat
-  public_group_wiki: Offentlig
-  private_group_wiki: Privat
-  group_publicly_visible: Gjør %{group} synlig for alle
-  committee_publicly_visible: Gjør komitéer synlige for alle
-  networks_publicly_visible: Gjør nettverk synlig for alle
-  allow_membership_requests: Tillat forespørsler om medlemskap
-  group_successfully_created: Gruppen er opprettet
-  group_publicly_visible_description: "%{group} er synlig i den offentlig tilgjengelige indeksen. <i>profile</i> er synlig for ikke-medlemmer på %{domain}/yourgroupname."
-  committee_publicly_visible_description: Komitéer er synlige for ikke-medlemmer på %{domain}/yourgroupname
-  networks_publicly_visible_description: Nettverk er synlige for ikke-medlemmer på %{domain}/yourgroupname
-  group_members_publicly_visible: Gjør medlemmer synlig for alle
-  group_members_publicly_visible_description: Medlemmer er synlige for ikke-medlemmer på %{domain}/yourgroupname. %{group} kan listes på medlemmers profilside (%{domain}/username)
+  group_creation_info: 'Det er fire typer grupper:'
+  group_description: Organisasjoner er grupper som er uavhengige og har folk som medlemmer.
+  network_committees_may_not_join_networks: Komitéer fra andre nettverk kan ikke bli medlem.
+  network_description: Nettverk er grupper som kan ha organisasjoner som medlemmer. Et nettverk kan brukes som en forening av flere organisasjoner, eller som en plass for to organisasjoner som samarbeider.
+  networks_may_not_join_networks: Nettverk kan ikke bli medlem i andre nettverk.
+  group_membership_count: "%{count} Medlemmer"
+  membership_destroy_confirm_message: Er du sikker på at du vil fjerne %{entity} fra %{group}?
+  membership_exists_error: '%{member} er allerede medlem'
+  membership_requests: Forespørsler om medlemskap
+  public_groups: Offentlige grupper
+  shared_groups: Delte grupper
+  may_request_membership_description: En "bli medlem i %{group}"-lenke vil vises på din %{group}-side. Denne sender en forespørsel om medlemskap som kan godkjennes eller avslås.
+  open_group: Åpen %{group}
+  open_group_description: Brukere blir lagt til %{group} med en gang - ingen forespørsler må godkjennes.
+  group_wiki: Gruppewiki
   members_may_edit_wiki: Alle medlemmer kan redigere wikien
   members_may_edit_wiki_description: Dersom denne ikke er krysset av, så kan bare medlemmer av rådet redigere %{group} sin wiki.
-  rss_feed: RSS feed
-  group_language: Hovedspråket til %{group}.
-  my_networks: Mine nettverk
-  my_groups: Mine grupper
-  basic_settings: Hovedinnstillinger
-  send_invites: Send invitasjoner
-  view_requests: Se forespørsler
+  public_group_wiki: Offentlig
+  private_group_wiki: Privat
   add_members_to_committee: Legg et medlem av gruppa til denne komitéen. For å legge til folk som ikke er i gruppa, send en invitasjon i stedet.
-  join_group_link: Bli medlem i %{group_type}
-  leave_group_link: Forlat %{group_type}
-  leave_group_confirmation: Er du sikker på at du vil forlate %{group_type}?
-  request_join_group_link: Forespørsel om medlemskap i %{group_type}
-  request_exists: Din forespørsel om medlemskap venter på godkjenning.
-  join_group_confirmation: Er du sikker på at du vil bli medlem i %{group_type}?
-  link_name_description: Dette navnet er hvordan gruppa refereres til i lenker og URLer. Det kan bare inneholde bokstaver og tall, mellomrom er ikke tillatt.
+  allow_membership_requests: Tillat forespørsler om medlemskap
+  committee_publicly_visible: Gjør komitéer synlige for alle
+  committee_publicly_visible_description: Komitéer er synlige for ikke-medlemmer på %{domain}/yourgroupname
   descriptive_name_for_display: Et beskrivende navn brukt for visning
-  this_is_committee: Denne komitéen hører til %{parent_group}.
+  group_language: Hovedspråket til %{group}.
+  group_members_publicly_visible: Gjør medlemmer synlig for alle
+  group_members_publicly_visible_description: Medlemmer er synlige for ikke-medlemmer på %{domain}/yourgroupname. %{group} kan listes på medlemmers profilside (%{domain}/username)
+  group_publicly_visible: Gjør %{group} synlig for alle
+  group_publicly_visible_description: "%{group} er synlig i den offentlig tilgjengelige indeksen. <i>profile</i> er synlig for ikke-medlemmer på %{domain}/yourgroupname."
+  group_successfully_created: Gruppen er opprettet
+  join_group_confirmation: Er du sikker på at du vil bli medlem i %{group_type}?
+  join_group_link: Bli medlem i %{group_type}
+  leave_group_confirmation: Er du sikker på at du vil forlate %{group_type}?
+  leave_group_link: Forlat %{group_type}
+  link_name_description: Dette navnet er hvordan gruppa refereres til i lenker og URLer. Det kan bare inneholde bokstaver og tall, mellomrom er ikke tillatt.
   network_initial_member: Velg en organisasjon til å være første medlem av dette nettverket.
+  networks_publicly_visible: Gjør nettverk synlig for alle
+  networks_publicly_visible_description: Nettverk er synlige for ikke-medlemmer på %{domain}/yourgroupname
+  request_exists: Din forespørsel om medlemskap venter på godkjenning.
+  request_join_group_link: Forespørsel om medlemskap i %{group_type}
+  rss_feed: RSS feed
+  send_invites: Send invitasjoner
+  this_is_committee: Denne komitéen hører til %{parent_group}.
+  view_requests: Se forespørsler
   headings:
-    page_search: Søk etter sider
-    recent_pages: Nylige sider
     info:
       page_search: Finn alle sider du har tilgang til direkte eller via dine grupper
       recent_pages: Disse sidene ble opprettet eller oppdatert nylig.
-  my_dashboard: Kontrollpanel
-  uploaded_image_cropped: Bildet vil bli beskjært og strukket til 202 piksler i høyde og bredde.
-  select_image_file: velg bildefil
-  or_image_url: eller bilde-URL
-  upload_image_link: last opp bilde
-  remove_image_link: fjern bilde
-  save_changes: Lagre endringer
-  username: Brukernavn
+    page_search: Søk etter sider
+    recent_pages: Nylige sider
   display_name: Visningsnavn
-  email: E-post
-  language: Språk
-  time_zone: Tidssone
   do_you_want_to_receive_email_notifications: Vil du motta e-postvarsler om endringer på sider du 'følger'?
+  email: E-post
+  fingerprint: Fingeravtrykk
+  language: Språk
+  message_user_wrote_caption: "%{user} skrev:"
+  message_you_wrote_caption: 'Du skrev:'
+  my_dashboard: Min oversikt
   notification_select:
+    digest: 'Ja: Daglig portefølje av endringer'
     none: 'Nei: Ingen e-poster om endringer'
     single: 'Ja: Én e-post per endring'
-    digest: 'Ja: Daglig portefølje av endringer'
+  or_image_url: eller bilde-URL
+  pgp_key: PGP-nøkkel
+  pgp_public_key: Offentlig nøkkel
+  pgp_key_description: 'Eksperimentelt: Last opp din offentlige PGP-nøkkel hvis du ønsker å motta krypterte e-postmerknader (ny funksjon som kommer snart). Du vil bli tilsendt en kryptert bekreftelsese-post.'
+  pgp_key_invalid: Nøkkelen du skrev inn kan ikke importeres. Limte du virkelig inn en offentlig PGP-nøkkel?
+  pgp_key_expired: PGP-nøkkelen du har skrevet inn er utløpt.
+  private_profile: Privat profil
+  remove_image_link: fjern bilde
+  save_changes: Lagre endringer
+  select_image_file: velg bildefil
   send_message_link: Send melding
-  messages_with: Samtale med %{other_user}
-  message_to_self_error: Du kan ikke snakke med deg selv
-  message_you_wrote_caption: 'Du skrev:'
-  message_user_wrote_caption: "%{user} skrev:"
+  time_zone: Tidssone
   unread_private_message: Du har en ulest privat melding fra %{user}
-  home: Hjem
-  menu_me: Meg
-  menu_groups: Grupper
-  menu_chat: Chat
-  menu_people: Folk
-  menu_networks: Nettverk
-  menu_link_logout: Logg ut %{user}
-  menu_admin: Administrator
+  upload_image: Last opp bilde
+  uploaded_image_cropped: Bildet vil bli beskjært og strukket til 202 piksler i høyde og bredde.
+  username: Brukernavn
   account_settings: Kontoinnstillinger
-  back_to_page: Tilbake til siden
   back_to_group: Tilbake til gruppa
-  pages: Sider
-  recent_pages: Nylige sider
-  my_pages: Mine sider
-  properties: Egenskaper
-  popular_pages: Populære sider
-  advanced: Avansert
+  back_to_page: Tilbake til siden
+  home: Hjem
+  menu_admin: Administrator
+  menu_link_logout: Logg ut %{user}
+  profile: Profil
   access: Tilgang
-  active_filters: Aktive filtre
-  all_pages: Alle sider
-  created_by_me: Opprettet
-  created_by_user: Opprettet av %{user}
-  created_by_user_description: Søk etter sider opprettet av en spesifikk person.
-  created_by_dotdotdot: Opprettet av…
-  starred_by_me: Stjernet
-  starred_by_user: Stjernet av %{user}
-  watched_by_me: Følger
-  watched_by_user: Fulgt av %{user}
-  edited_by_me: Redigert
-  edited_by_user: Redigert av %{user}
-  owned_by_me: Egne
-  owned_by_user: Tilhører %{user}
-  most_active: Mest aktive
-  most_stars: Flest stjerner
-  most_viewed: Mest sett
-  filter_user_description: Søk etter sider med tilgang for en spesifikk bruker.
-  filter_group_description: Søk etter sider med tilgang for en spesifikk gruppe.
-  starred: Stjernet
-  viewed: Sett
-  edited: Redigert
-  type: Type
-  all_page_types: alle typer sider
-  edit_title: rediger tittel
-  data_for_page_missing: Data mangler for denne siden.
-  no_change: ingen endring
-  updated: oppdatert
-  created: opprettet
-  unread: ulest
-  read: lest
-  page_name_description: Valgfritt unikt navn (brukt for å lage URL for denne siden)
-  filter_tag_description: Søk etter sider med en spesifikk tag.
-  page_notice: Sidenotis
-  email_notice_subject: Sjekk ut siden "%{title}"
-  email_notice_hello_with_message: 'Hei, %{from} har sendt deg en nettside med følgende melding: %{message}'
-  email_notice_hello: Hei, %{from} har sendt deg en nettside.
-  email_notice_access: 'Du kan se denne siden her:'
+  action: Handling
+  advanced: Avansert
+  my_pages: Mine sider
+  pages: Sider
+  popular_pages: Populære sider
+  properties: Egenskaper
+  recent_pages: Nylige sider
+  current_video_sources: 'Støttet per i dag: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_description: Dette er ikke nettsideadressen.  Det er en kode omsluttet av < and > som videosiden – youtube eller andre – gjør tilgjengelig for deg for å sette inn videoen på andre nettsider.
+  video_embed_code_prompt: Legg inn kode fra ekstern videokilde.
   email_link_expires: Denne lenken vil utløpe om %{days} dager.
+  email_notice_access: 'Du kan se denne siden her:'
+  email_notice_hello: Hei, %{from} har sendt deg en nettside.
+  email_notice_hello_with_message: 'Hei, %{from} har sendt deg en nettside med følgende melding: %{message}'
+  email_notice_subject: Sjekk ut siden "%{title}"
+  page_notice: Sidenotis
   page_notice_title: <user>%{from}</user> sendte deg siden "%{page_title}"
   page_notice_title_with_message: '<user>%{from}</user> sendte deg siden "%{page_title}" med følgende melding:'
-  page_updated: <user>%{from}</user> oppdaterte siden "%{page_title}"
   page_update: Sideoppdatering
-  watch_checkbox: Følg for oppdateringer
-  add_star_link: Legg til stjerne (%{star_count})
-  remove_star_link: Fjern stjerne (%{star_count})
-  public_checkbox: Offentlig
-  public_checkbox_help: Dersom denne er krysset av, så er siden synlig for alle.
-  page_details_link: "%{page_class} Detaljer"
-  delete_page_link: Slett %{page_class}
-  destroy_page_via_shred: Destruer umiddelbart
-  destroy_page_via_shred_info: Dette vil destruere siden permanent. Denne handlingen kan ikke gjøres om.
-  destroy_page_via_trash: Flytt til papirkurv
-  destroy_page_via_trash_info: Dette flytter siden til papirkurven, hvor den senere kan gjenopprettes.
-  undelete_from_trash: Gjør om sletting
-  participation: Deltakelse
-  information: Informasjon
-  remove_access_error: Tilgangen til denne siden kunne ikke fjernes. Du kan ikke fjerne eiers tilgang eller en tilgang som er nødvendig for at du skal kunne administrere siden.
-  edit_tags_link: Rediger
-  edit_attachments_link: Rediger
-  attachments: Vedlegg
-  edit_attachments: Rediger vedlegg
-  current_attachments: Eksisterende vedlegg
-  add_new_attachment: Legg til nytt vedlegg
-  use_radio_buttons_to_select_page_cover: Bruk radioknapper for å velge forside
-  page_access_admin: Full tilgang
-  page_access_edit: Skrivetilgang
-  page_access_none: Ingen tilgang
-  page_access_view: Kun lesetilgang
-  share_page_link: Del %{page_class}
-  share_page_recipients: Del side med
-  notify_page_link: Send varsel
-  notify_contribution: "<b>Tidligere bidrag:</b> varsle folk som har gitt et <b>bidrag</b> til denne siden."
-  notify_current_access: "<b>Nåværende tilgang:</b> varsle folk eller grupper som har tilgang til denne siden per i dag."
-  notification_message: Varselmelding
-  send_only_with_encryption: Bare send dersom kryptert distribusjon er mulig
-  share_send_notification: Send varsel
-  send_email: Send e-post
-  share_include_message: Inkluder en standardmelding
-  shared_page_success: Du har delt denne siden
-  notify_success: Du har sendt varsler
-  share_grant_required_error: "%{name} har ikke tillatelse til å se denne siden. De må få godkjent tilgang først."
-  share_permission_denied_error: Du har ikke tilgang til å endre tilgangstillatelser for denne siden
-  notify_no_access_error: Beklager, "%{name}" har ikke tilgang til denne siden.
-  share_already_exists_error: '"%{name}" har allerede tilgang til denne siden.'
-  share_pester_error: Beklager, du har ikke tilgang til å dele med "%{name}".
-  name_or_email_not_found: '"%{name}" korresponderer ikke med noen brukere eller grupper, og er ikke en gyldig e-postadresse.'
-  contribute_content_link: Opprett side
-  page_create_owner: Sideeier
-  create_page: Opprett side
-  only_me: Meg
-  page_added_to_group: Denne siden vil bli lagt til %{group_type} %{group_name}.
-  additional_page_access: Tilleggstilgang
-  page_owner_error: Sideeier må fylles ut.
-  action: Handling
+  page_updated: <user>%{from}</user> oppdaterte siden "%{page_title}"
   page_history_add_star: "%{user_name} har lagt til en stjerne"
   page_history_added_comment: "%{user_name} la til en kommentar"
   page_history_change_title: "%{user_name} har endret tittelen på siden"
@@ -497,136 +391,233 @@
   page_history_updated_comment: "%{user_name} oppdaterte en kommentar"
   page_history_updated_content: "%{user_name} har oppdatert sideinnhold"
   page_history_user_created_page: "%{user_name} har opprettet siden"
-  wiki_page_description: Opprett et redigerbart tekstdokument i fritt format.
-  wiki_page_display: Wikiside
-  gallery_description: Last opp flere bilder eller organiser eksisterende bilder i et sett.
-  gallery_display: Galleri
+  active_filters: Aktive filtre
+  all_page_types: alle typer sider
+  all_pages: Alle sider
+  created: opprettet
+  created_by_dotdotdot: Opprettet av…
+  created_by_me: Opprettet
+  created_by_user: Opprettet av %{user}
+  created_by_user_description: Søk etter sider opprettet av en spesifikk person.
+  data_for_page_missing: Data mangler for denne siden.
+  edit_title: rediger tittel
+  edited: Redigert
+  edited_by_user: Redigert av %{user}
+  filter_group_description: Søk etter sider med tilgang for en spesifikk gruppe.
+  filter_tag_description: Søk etter sider med en spesifikk tag.
+  filter_user_description: Søk etter sider med tilgang for en spesifikk bruker.
+  most_active: Mest aktive
+  most_stars: Flest stjerner
+  most_viewed: Mest sett
+  no_change: ingen endring
+  owned_by_me: Egne
+  owned_by_user: Tilhører %{user}
+  page_name_description: Valgfritt unikt navn (brukt for å lage URL for denne siden)
+  read: lest
+  starred: Stjernet
+  starred_by_user: Stjernet av %{user}
+  type: Type
+  unread: ulest
+  updated: oppdatert
+  viewed: Sett
+  watched_by_me: Følger
+  watched_by_user: Fulgt av %{user}
+  add_star_link: Legg til stjerne (%{star_count})
+  delete_page_link: Slett %{page_class}
+  destroy_page_via_shred: Destruer umiddelbart
+  destroy_page_via_shred_info: Dette vil destruere siden permanent. Denne handlingen kan ikke gjøres om.
+  destroy_page_via_trash: Flytt til papirkurv
+  destroy_page_via_trash_info: Dette flytter siden til papirkurven, hvor den senere kan gjenopprettes.
+  information: Informasjon
+  page_details_link: "%{page_class} Detaljer"
+  page_is_public: Denne siden er offentlig.
+  participation: Deltakelse
+  public_checkbox_help: Dersom denne er krysset av, så er siden synlig for alle.
+  remove_access_error: Tilgangen til denne siden kunne ikke fjernes. Du kan ikke fjerne eiers tilgang eller en tilgang som er nødvendig for at du skal kunne administrere siden.
+  remove_star_link: Fjern stjerne (%{star_count})
+  undelete_from_trash: Gjør om sletting
+  watch_checkbox: Følg for oppdateringer
+  add_new_attachment: Legg til nytt vedlegg
+  page_access_admin: Full tilgang
+  page_access_edit: Skrivetilgang
+  page_access_none: Ingen tilgang
+  page_access_view: Kun lesetilgang
+  edit_attachments: Rediger vedlegg
+  current_attachments: Eksisterende vedlegg
+  use_radio_buttons_to_select_page_cover: Bruk radioknapper for å velge forside
+  share_already_exists_error: '"%{name}" har allerede tilgang til denne siden.'
+  share_grant_required_error: "%{name} har ikke tillatelse til å se denne siden. De må få godkjent tilgang først."
+  share_include_message: Inkluder en standardmelding
+  share_page_link: Del %{page_class}
+  share_page_recipients: Del side med
+  share_send_notification: Send varsel
+  shared_page_success: Du har delt denne siden
+  share_permission_denied_error: Du har ikke tilgang til å endre tilgangstillatelser for denne siden
+  share_pester_error: Beklager, du har ikke tilgang til å dele med "%{name}".
+  notification_message: Varselmelding
+  notify_contribution: "<b>Tidligere bidrag:</b> varsle folk som har gitt et <b>bidrag</b> til denne siden."
+  notify_current_access: "<b>Nåværende tilgang:</b> varsle folk eller grupper som har tilgang til denne siden per i dag."
+  notify_no_access_error: Beklager, "%{name}" har ikke tilgang til denne siden.
+  notify_page_link: Send varsel
+  notify_success: Du har sendt varsler
+  send_only_with_encryption: Bare send dersom kryptert distribusjon er mulig
+  send_email: Send e-post
+  name_or_email_not_found: '"%{name}" korresponderer ikke med noen brukere eller grupper, og er ikke en gyldig e-postadresse.'
+  additional_page_access: Tilleggstilgang
+  announcement_page_description: En annonsering.
+  announcement_page_display: Annonsering
+  announcements_page_display: Annonseringer
+  article_page_description: Opprett en bloggpost eller nyhetsartikkel.
+  article_page_display: Artikkel
   asset_page_description: Last opp et bilde, dokument, regneark, presentasjon eller en hvilken som helst fil.
   asset_page_display: Fil
-  select_file_to_upload: Velg en fil å laste opp.
+  attachments: Vedlegg
+  collection_class_description: Spesialsider som inneholder andre sider.
+  collection_page_display: Samling
+  create_page: Opprett side
   discussion_page_description: Diskuter et tema med grupper eller andre brukere.
   discussion_page_display: Gruppediskusjon
+  event_page_description: En kalenderhendelse.
+  event_page_display: Hendelse
+  external_video_page_description: Vis en video fra en annen nettside.
+  external_video_page_display: Ekstern video
+  folder_class_description: Opprett ei mappe for å organisere andre sider.
+  folder_display: Mappe
+  gallery_description: Last opp flere bilder eller organiser eksisterende bilder i et sett.
+  gallery_display: Galleri
+  message_page_description: Send en personlig melding til individuelle mottakere.
+  message_page_display: Personlig melding
+  page_added_to_group: Denne siden vil bli lagt til %{group_type} %{group_name}.
+  page_create_owner: Sideeier
+  page_group_event: Hendelse
+  page_owner_error: Sideeier må fylles ut.
   ranked_vote_page_description: Lag en liste med valg som folk kan rangere etter sine preferanser.
   ranked_vote_page_display: Rangert avstemning
-  survey_page_display: Undersøkelse
   rate_many_page_description: Lag en liste med valg som folk kan være enige eller uenige med.
   rate_many_page_display: Meningsmåling
+  select_file_to_upload: Velg en fil å laste opp.
+  survey_page_description: Opprett en serie spørreskjema.
+  survey_page_display: Undersøkelse
   task_list_page_description: Lag en liste med oppgaver og gi oppgavene til deg selv eller andre.
   task_list_page_display: Oppgaveliste
-  page_group_vote: Meningsmålinger og avstemninger
-  page_group_text: Tekst og diskusjoner
-  page_group_media: Multimedia
-  page_group_planning: Planleggingsverktøy
-  pending_tasks: Ventende oppgaver
-  completed_tasks: Fullførte oppgaver
-  no_pending_tasks: Ingen ventende oppgaver
-  no_completed_tasks: Ingen fullførte oppgaver
+  wiki_page_description: Opprett et redigerbart tekstdokument i fritt format.
+  wiki_page_display: Wikiside
   assign_to: Tildel
   completed: Fullført
-  vote:
-    really_remove_this: Vil du virkelig fjerne denne valgmuligheten?
-    you_have_not_ranked: 'Du har ikke rangert enda:'
-    voted_on: Stemt over
-    not_voted_on: Ikke stemt over
-  vote_good: bra
-  vote_ok: greit
-  vote_bad: dårlig
-  vote_none: ingen
-  vote_no: 'nei'
-  ranked_vote_instructions: Dra og slipp elementene på etterfølgende liste til de er i rekkefølge fra mest foretrukket på toppen til minst foretrukket på bunnen.
+  completed_tasks: Fullførte oppgaver
+  no_completed_tasks: Ingen fullførte oppgaver
+  no_pending_tasks: Ingen ventende oppgaver
+  page_group_media: Multimedia
+  page_group_planning: Planleggingsverktøy
+  page_group_text: Tekst og diskusjoner
+  page_group_vote: Meningsmålinger og avstemninger
+  pending_tasks: Ventende oppgaver
   confirm_vote_button: Bekreft min stemme
   edit_my_vote_tab: Rediger min stemme
+  first_choice_of: førstevalg av
+  ranked_vote_instructions: Dra og slipp elementene på etterfølgende liste til de er i rekkefølge fra mest foretrukket på toppen til minst foretrukket på bunnen.
   show_results_tab: Vis resultater
   top_pick: toppvalg
-  first_choice_of: førstevalg av
-  save_survey_button: Lagre undersøkelse
-  survey_may_create_response: Kan lage svar?
-  survey_may_see_responses: Kan se svar?
-  survey_may_rate: Kan rangere svar?
-  survey_may_see_ratings: Kan se rangeringer?
-  survey_question_label: 'Spørsmål:'
-  survey_description_heading: Beskrivelse
-  survey_description_explaination: Denne teksten vises i introduksjonsfanen, og vil være det første de som svarer på undersøkelsen ser.
-  select_many_choices_label: 'Velg flere svarmuligheter:'
-  select_one_choices_label: 'Velg en svarmulighet:'
-  video_embed_code_description: Dette er ikke nettsideadressen.  Det er en kode omsluttet av < and > som videosiden – youtube eller andre – gjør tilgjengelig for deg for å sette inn videoen på andre nettsider.
-  private_question_label: Privat spørsmål
-  their_answer_goes_here_label: Deres svar kommer her…
-  survey_response_by: Svar av %{login}
-  see_whole_response_link: se hele svaret
-  survey_average_rating_heading: 'Gjennomsnittsvurdering:'
-  survey_previous_result: Forrige
-  survey_rated_by_1_person_caption: Vurdert av en person.
-  survey_rated_by_x_people_caption: Vurdert av %{count} personer.
-  survey_respond_button: Svar
-  survey_rate_this_response_heading: Vurder dette svaret
-  survey_select_a_rating_message: Velg en vurdering for å se neste element.
-  survey_skip_next_link: Hopp til neste
-  survey_you_already_rated_response_with_rating_heading: Du har allerede vurdert dette svaret - du ga det %{rating}.
-  survey_you_previousely_rated_message: Du har tidligere vurdert dette svaret med %{rating}.
-  survey_your_rating_heading: 'Din vurdering:'
-  survey_questions: Spørsmål
+  vote:
+    not_voted_on: Ikke stemt over
+    really_remove_this: Vil du virkelig fjerne denne valgmuligheten?
+    voted_on: Stemt over
+    you_have_not_ranked: 'Du har ikke rangert enda:'
+  vote_bad: dårlig
+  vote_good: bra
+  vote_no: 'nei'
+  vote_none: ingen
+  vote_ok: greit
   add_long_text_question_link: Langt svar
   add_select_many_question_link: Velg flere svar
   add_select_one_question_link: Velg ett svar
   add_short_text_question_link: Kort svar
-  upload_image_question_link: Last opp bilde
-  video_link_question_link: Videolink
-  survey_introduction_tab: Introduksjon
-  survey_list_all_tab: List svar
-  survey_my_response_tab: Mitt svar
-  survey_please_check_and_rate_message: Vennligst sjekk dine svar og vurder andres svar.
-  survey_please_check_message: Vennligst sjekk dine svar.
-  survey_thanks_submit_message: Takk for svaret.
   drag_to_move_tip: dra for å flytte
   each_line_is_a_choice_caption: "(hver linje er et mulig valg)"
   no_data_uploaded_label: Ingen data lastet opp
-  current_video_sources: 'Støttet per i dag: youtube, blip.tv, google video, vimeo.'
-  video_embed_code_prompt: Legg inn kode fra ekstern videokilde.
+  private_question_label: Privat spørsmål
+  save_survey_button: Lagre undersøkelse
+  see_whole_response_link: se hele svaret
+  select_many_choices_label: 'Velg flere svarmuligheter:'
+  select_one_choices_label: 'Velg en svarmulighet:'
+  survey_average_rating_heading: 'Gjennomsnittsvurdering:'
+  survey_description_explaination: Denne teksten vises i introduksjonsfanen, og vil være det første de som svarer på undersøkelsen ser.
+  survey_introduction_tab: Introduksjon
+  survey_list_all_tab: List svar
+  survey_may_create_response: Kan lage svar?
+  survey_may_rate: Kan rangere svar?
+  survey_may_see_ratings: Kan se rangeringer?
+  survey_may_see_responses: Kan se svar?
+  survey_my_response_tab: Mitt svar
+  survey_please_check_and_rate_message: Vennligst sjekk dine svar og vurder andres svar.
+  survey_please_check_message: Vennligst sjekk dine svar.
+  survey_previous_result: Forrige
+  survey_question_label: 'Spørsmål:'
+  survey_questions: Spørsmål
+  survey_rate_this_response_heading: Vurder dette svaret
+  survey_rated_by_1_person_caption: Vurdert av en person.
+  survey_rated_by_x_people_caption: Vurdert av %{count} personer.
+  survey_respond_button: Svar
+  survey_response_by: Svar av %{login}
+  survey_select_a_rating_message: Velg en vurdering for å se neste element.
+  survey_skip_next_link: Hopp til neste
+  survey_thanks_submit_message: Takk for svaret.
+  survey_you_already_rated_response_with_rating_heading: Du har allerede vurdert dette svaret. Du ga det en %{rating}.
+  survey_you_previousely_rated_message: Du har tidligere vurdert dette svaret med %{rating}.
+  survey_your_rating_heading: 'Din vurdering:'
+  their_answer_goes_here_label: Deres svar kommer her…
+  video_link_question_link: Videolink
+  friends_description: Dine venner
+  may_pester_description: Tillat folk å sende deg meldinger, sider og invitasjoner.
+  may_pester_label: Del med meg?
+  may_request_contact_description: Tillat folk å be om å bli din kontakt.
+  may_request_contact_label: Be om å bli kontakt?
+  may_see_contacts_description: La folk se hvem dine kontakter er.
+  may_see_contacts_label: Se mine kontakter?
+  may_see_groups_description: La folk se hvilke grupper du er medlem av.
+  may_see_groups_label: Se mine grupper?
+  may_view_description: Dersom denne ikke er krysset av vil din profil være helt skjult.
+  may_view_label: Se min profil?
+  peers_description: Medlemmer i dine grupper
   permissions_key: Nøkkel
   public_description: Alle på internett
-  peers_description: Medlemmer i dine grupper
-  friends_description: Dine venner
-  may_view_label: Se min profil?
-  may_view_description: Dersom denne ikke er krysset av vil din profil være helt skjult.
-  may_see_contacts_label: Se mine kontakter?
-  may_see_contacts_description: La folk se hvem dine kontakter er.
-  may_see_groups_label: Se mine grupper?
-  may_see_groups_description: La folk se hvilke grupper du er medlem av.
-  may_pester_label: Del med meg?
-  may_pester_description: Tillat folk å sende deg meldinger, sider og invitasjoner.
-  may_request_contact_label: Be om å bli kontakt?
-  may_request_contact_description: Tillat folk å be om å bli din kontakt.
   sharing_and_requests: Deling og forespørsler
-  view_profile: Se profil
-  profile_member_since: Medlem siden
   banner: Banner
   banner_info: Optimal størrelse er %{optimal_dimensions} pixler
-  organizational_role: Organisasjonsrolle
-  phone_number: Telefonnummer
-  email_addresses: E-postadresser
-  post_message: Post melding
-  request_friend_link: Legg til mine kontakter
-  remove_friend_link: Fjern fra mine kontakter
   edit_profile_link: Rediger profil
+  organizational_role: Organisasjonsrolle
+  post_message: Post melding
+  profile_member_since: Medlem siden
   profile_saved: Din profil er lagret.
-  requests: Forespørsler
-  request: Forespørsel
-  incoming: Innkommende
-  outgoing: Utgående
-  request_pending: "%{request} venter"
-  not_allowed_to_respond_to_request: "%{user} har ikke tillatelse til å %{command} forespørselen."
-  try_again: Prøv igjen
-  send_request_button: Send forespørsel
-  send_invites_button: Send invitasjoner
+  remove_friend_link: Fjern fra mine kontakter
+  request_friend_link: Legg til mine kontakter
+  view_profile: Se profil
   all_requests: Alle forespørsler
+  incoming: Innkommende
+  not_allowed_to_respond_to_request: "%{user} har ikke tillatelse til å %{command} forespørselen."
+  outgoing: Utgående
+  request: Forespørsel
+  request_pending: "%{request} venter"
+  requests: Forespørsler
+  send_request_button: Send forespørsel
+  try_again: Prøv igjen
+  friend_remove_confirmation: Er du sikker på at du ikke vil være kontakt med %{user}?
+  friend_request_message_label: Fortell %{user} hvorfor du vil ha dem som kontakt.
+  invite_error_already_member: Du er allerede medlem i den gruppen.
+  invite_error_redeemed: Invitasjonen er brukt fra før.
+  invite_info: Legg inn en liste med brukernavn eller e-postadresser til folk du vil invitere til å bli medlem i %{group_type}.
+  network_invite_info: Legg inn navn på grupper du vil invitere til å bli medlem av dette nettverket.
+  recipient_tip: Separer mottakere med komma, mellomrom eller ny linje.
+  request_exists_error: Forespørsel eksisterer allerede for %{recipient}
+  you_are_invited: Du er invitert til å bli medlem.
   activerecord:
     models:
+      request_to_create_council: Forespørsel om å opprette råd
+      request_to_destroy_our_group: Forespørsel om å destruere gruppe
       request_to_friend: Be om å bli kontakter
       request_to_join_our_network:
         one: Invitasjon til å bli medlem
         other: Invitasjoner til å bli medlem
-      request_to_destroy_our_group: Forespørsel om å destruere gruppe
       request_to_join_us:
         one: Invitasjon til å bli medlem
         other: Invitasjoner til å bli medlem
@@ -635,205 +626,189 @@
         other: Invitasjoner til å bli medlem
       request_to_join_you: Forespørsel om å bli medlem
       request_to_join_your_network: Forespørsel om å bli medlem
-      request_to_create_council: Forespørsel om å opprette råd
       request_to_remove_user: Forespørsel om å fjerne medlem
-  request_to_friend: Be om å bli kontakter
-  request_to_friend_short: Skal %{user} bli %{other_user} sin kontakt?
-  request_to_friend_description: Bruker %{user} har bedt om å bli %{other_user} sin kontakt.
-  request_to_join_our_network:
-    one: Invitasjon å ta del i
-    other: Invitasjoner å ta del i
-  request_to_destroy_our_group: Forespørsel om å destruere gruppe
-  request_to_join_our_network_short: Skal %{group} bli medlem av %{network}?
-  request_to_join_our_network_description: Gruppa %{group} ble invitert til å bli medlem i nettverket %{network}.
-  request_to_join_us:
-    one: Invitasjon å ta del i
-    other: Invitasjoner å ta del i
-  request_to_join_us_short: Skal %{user} bli medlem i %{group}?
-  request_to_join_us_description: Bruker %{user} ble invitert til å bli medlem av gruppa %{group}.
+  invitation_to_join:
+    one: Deltagelsesinvitasjon
+    other: Deltagelsesinvitasjoner
   request_to_join_us_via_email:
     one: Invitasjon å ta del i
     other: Invitasjoner å ta del i
-  request_to_join_us_via_email_short: Skal %{email} bli medlem i %{group}?
-  request_to_join_us_via_email_description: E-postadressen %{email} ble invitert til å bli medlem i gruppa %{group}.
-  request_to_join_you: Forespørsel om å bli medlem
-  request_to_join_you_short: Skal %{user} bli medlem i %{group}?
-  request_to_join_you_description: Bruker %{user} har forespurt medlemskap i gruppa %{group}.
-  request_to_join_your_network: Forespørsel om å bli medlem
-  request_to_join_your_network_short: Skal %{group} bli medlem av %{network}?
-  request_to_join_your_network_description: Gruppa %{group} har forespurt medlemskap i nettverket %{network}.
-  request_to_destroy_our_group_short: Skal %{group} destrueres?
-  request_to_destroy_our_group_description: Bruker %{user} har foreslått å destruere %{group_type} %{group}.
   request_to_create_council: Forespørsel om å opprette råd
-  request_to_create_council_short: Skal %{group} ha et råd?
   request_to_create_council_description: Bruker %{user} har foreslått å opprette et råd for %{group_type} %{group}.
+  request_to_create_council_short: Skal %{group} ha et råd?
+  request_to_destroy_our_group: Forespørsel om å destruere gruppe
+  request_to_destroy_our_group_description: Bruker %{user} har foreslått å destruere %{group_type} %{group}.
+  request_to_destroy_our_group_short: Skal %{group} destrueres?
+  request_to_friend: Be om å bli kontakter
+  request_to_friend_description: Bruker %{user} har bedt om å bli %{other_user} sin kontakt.
+  request_to_friend_short: Skal %{user} bli %{other_user} sin kontakt?
+  request_to_join: Deltagelsesforespørsel
+  request_to_join_network_short: Skal %{group} ta del i %{network}?
+  request_to_join_our_network_description: Gruppa %{group} ble invitert til å bli medlem i nettverket %{network}.
+  request_to_join_short: Skal {user} ta del i %{group}?
+  request_to_join_us: Deltagelsesforespørsel
+  request_to_join_us_description: Bruker %{user} ble invitert til å bli medlem av gruppa %{group}.
+  request_to_join_us_via_email_description: E-postadressen %{email} ble invitert til å bli medlem i gruppa %{group}.
+  request_to_join_us_via_email_short: Skal %{email} bli medlem i %{group}?
+  request_to_join_you: Forespørsel om å bli medlem
+  request_to_join_you_description: Bruker %{user} har forespurt medlemskap i gruppa %{group}.
+  request_to_join_your_network_description: Gruppa %{group} har forespurt medlemskap i nettverket %{network}.
   request_to_remove_user: Forespørsel om å fjerne medlem
-  request_to_remove_user_short: Skal %{member} fjernes fra %{group}?
   request_to_remove_user_description: Bruker %{user} har foreslått å fjerne %{member} fra %{group_type} %{group}.
-  invite_info: Legg inn en liste med brukernavn eller e-postadresser til folk du vil invitere til å bli medlem i %{group_type}.
-  invite_error_redeemed: Invitasjonen er brukt fra før.
-  invite_error_already_member: Du er allerede medlem i den gruppen.
-  request_exists_error: Forespørsel eksisterer allerede for %{recipient}
-  network_invite_info: Legg inn navn på grupper du vil invitere til å bli medlem av dette nettverket.
-  recipient_tip: Separer mottakere med komma, mellomrom eller ny linje.
-  you_are_invited: Du er invitert til å bli medlem.
-  friend_request_message_label: Fortell %{user} hvorfor du vil ha dem som kontakt.
-  friend_remove_confirmation: Er du sikker på at du ikke vil være kontakt med %{user}?
-  place: sted
-  icon: Ikon
-  file: Fil
-  files: Filer
-  photo: Foto
-  caption: Bildetekst
-  photo_credit: Bildekreditering
-  video_embed: Bygg inn
-  size: Størrelse
-  illegal_redirect: Uautorisert videresending
-  redirect_to_foreign_domain: Du har blitt forsøkt videresendt til et fremmed domene (%{url}) etter å ha logget inn. Av sikkerhetsgrunner har vi tatt bort denne delen av nettadressen.
-  save_wiki_before_adding_image: Vennligst lagre wikien før du legger til et bilde i den.
-  preview_selected_image: Forhåndsvisning av valgt bilde
-  image_size_info: Velg størrelse på bildet som skal settes inn
-  small: liten
-  medium: medium
-  large: stor
-  full: full
-  image_options_info: Skal bildet i wikien lenke til bildet i full størrelse?
-  include_full_checkbox: inkluder lenke til bildet i full størrelse
-  image_select_info: Velg et bilde å sette inn fra bildene lastet opp til gruppa fra før
-  image_upload_info: Last opp et nytt bilde til gruppa så det kan brukes i wikien
-  a_message_link: en melding
-  a_reply_link: et svar
-  confirm_discarding_text_area: Alle endringer som ikke er lagret vil gå tapt. Klikk %{cancel} for å fortsette å redigere.
+  request_to_remove_user_short: Skal %{member} fjernes fra %{group}?
+  view_label: Se
   activity_contact_created: "%{user} la til %{other_user} som venn"
-  activity_user_left_group: "%{user} har forlatt %{group_type} %{group}"
-  activity_user_joined_group: "%{user} har blitt medlem i %{group_type} %{group}"
-  activity_user_joined_site: "%{user} har blitt medlem i %{group}"
-  activity_user_destroyed: "%{user} har trukket seg"
   activity_group_created: "%{user} opprettet %{group_type} %{group}"
   activity_group_destroyed: "%{group} ble destruert av %{user}"
-  activity_wall_message: "%{author} skrev til %{user}: %{message}"
   activity_message: "%{author} skrev: %{message}"
-  activity_unread: Du har %{count} uleste [private messages]
-  activity_unread_singular: Du har en ulest [private message]
-  activity_user_left_site: "%{user} har forlatt %{group}"
   activity_message_received: 'Du har mottatt %{message_tag} fra %{other_user}: %{title}'
   activity_twinkled: '%{user} har stjernet ditt innlegg "%{post}"'
+  activity_unread: Du har %{count} uleste [private messages]
+  activity_unread_singular: Du har en ulest [private message]
+  activity_user_destroyed: "%{user} har trukket seg"
+  activity_user_joined_group: "%{user} har blitt medlem i %{group_type} %{group}"
+  activity_user_joined_site: "%{user} har blitt medlem i %{group}"
+  activity_user_left_group: "%{user} har forlatt %{group_type} %{group}"
+  activity_user_left_site: "%{user} har forlatt %{group}"
+  activity_wall_message: "%{author} skrev til %{user}: %{message}"
+  asset_version_list_version_heading: versjon
+  created_on: Opprettet
+  delete_version_confirm: Er du sikker på at du vil slette denne versjonen?
+  file_size: Filstørrelse
+  file_version_deleted: filversjon slettet
+  format: Format
+  full: full
+  galleries: Gallerier
+  history: Historie
+  image_options_info: Skal bildet i wikien lenke til bildet i full størrelse?
+  image_select_info: Velg et bilde å sette inn fra bildene lastet opp til gruppa fra før
+  image_size_info: Velg størrelse på bildet som skal settes inn
+  image_upload_info: Last opp et nytt bilde til gruppa så det kan brukes i wikien
+  large: stor
   media_image: Bilde
   media_images: Bilder
-  zip_file: Zipfil
-  history: Historie
+  medium: medium
   other_formats: Andre formater
-  file_version_deleted: filversjon slettet
-  delete_version_confirm: Er du sikker på at du vil slette denne versjonen?
-  galleries: Gallerier
-  created_on: Opprettet
-  file_size: Filstørrelse
-  format: Format
   regenerate: generer miniatyrbilder på nytt
+  small: liten
   version_number: versjon %{version}
-  upload_image: Last opp bilde
-  asset_version_list_version_heading: versjon
-  order_changed: Rekkefølge endret.
-  error_saving_new_order_message: 'Feil under lagring av ny rekkefølge: %{error_message}'
-  successfully_removed_image: Bildet ble fjernet! (%{undo_link})
-  view_slideshow: Se fremvisning
-  edit_gallery: Rediger Galleri
-  back_to_gallery_link: Tilbake til Galleri
-  gallery_changing_cover_message: Endrer forside…
-  download: Last ned
-  download_gallery: Last ned galleri
-  gallery_slideshow_apply_settings_button: bruk
-  gallery_undo_link: gjør om
-  remove_from_gallery: Fjern fra galleri
-  removing_image: Fjerner bilde…
-  move_image_left: Flytt bilde til venstre
-  move_image_right: Flytt bilde til høyre
-  successful_undelete_image: Bildet ble gjenopprettet.
-  saved_new_order: Ny rekkefølge er lagret!
-  error_saving_new_order: Feil under lagring av ny rekkefølge!
-  saving_your_changes: Lagrer dine endringer…
-  activate_js_to_rearrange_photos: Aktiver JavaScript for å bruke Dra og slipp for å rearrangere bilder!
-  drag_and_drop_to_rearrange_photos: Dra og slipp bilder for å rearrangere dem
-  no_images_in_gallery: Ingen bilder i Galleriet
-  add_existing_image: Legg til foto
-  add_photo_to_gallery: Klikk på et Foto for å legge det til
-  cancel_link: avbryt
-  file_must_be_image_error: Fila må være et bilde for å være del av et galleri.
-  add_another_file: Legg til en til fil
-  slideshow_delay_input: Oppdater hvert %{input_field} sekund
-  make_album_cover: gjør dette bildet til album cover
-  album_cover_changed: Album cover endret
-  upload_images_link: Last opp
-  upload_a_zip_file_link: Last opp en zipfil
-  you_are_not_allowed_to_do_that: Du har ikke tillatelse til å gjøre det!
-  view_label: Se
-  sunday: Søndag
-  monday: Mandag
-  tuesday: Tirsdag
-  wednesday: Onsdag
-  thursday: Torsdag
-  friday: Fredag
-  saturday: Lørdag
-  date_today: I dag
-  date_this_week: Denne uka
-  date_this_month: Denne måneden
-  date_this_year: I år
-  date_all_time: All tid
-  alert_not_saved: Kunne ikke lagre endringer
-  alert_field_errors: Det er problemer med følgende felter
-  alert_saved: Endringer lagret
-  alert_permission_denied: Tillatelse avslått
-  csrf_error_message: 'Ditt innloggingsforsøk ser ut som et forsøk på å hacke nettsiden. Slapp av: denne feilen skjer ofte selv for uskyldige forespørsler. Vi er bare ekstra paranoide. Alt du trenger å gjøre er å laste inn siden på nytt før du forsøker å logge inn. Du kan følge denne lenken for å prøve på nytt.'
-  set_status_button: Oppdater status
-  my_contacts: Kontakter
+  zip_file: Zipfil
   anonymous: anonym
   login_required: Innlogging påkrevd
   login_required_description: Du må logge inn for å utføre denne handlingen.
-  permission_denied_description: Du har ikke tilstrekkelige tillatelser for å utføre denne handlingen.
   permission_denied: Tillatelse avslått
-  chat: Chat
-  left_the_chatroom: forlot chatrommet
-  tag: Tag
-  tags: Tagger
-  no_tags: ingen tagger
-  add_one_or_more_tags: Legg til en eller flere tagger, separert med komma
-  separate_tags: Separer tagger med kommaer.
+  permission_denied_description: Du har ikke tilstrekkelige tillatelser for å utføre denne handlingen.
+  date_all_time: All tid
+  date_this_month: Denne måneden
+  date_this_week: Denne uka
+  date_this_year: I år
+  date_today: I dag
+  friday: Fredag
+  monday: Mandag
+  saturday: Lørdag
+  sunday: Søndag
+  thursday: Torsdag
+  tuesday: Tirsdag
+  wednesday: Onsdag
+  alert_field_errors: Det er problemer med følgende felter
+  alert_not_saved: Kunne ikke lagre endringer
+  alert_saved: Endringer lagret
+  csrf_error_message: 'Ditt innloggingsforsøk ser ut som et forsøk på å hacke nettsiden. Slapp av: denne feilen skjer ofte selv for uskyldige forespørsler. Vi er bare ekstra paranoide. Alt du trenger å gjøre er å laste inn siden på nytt før du forsøker å logge inn. Du kan følge denne lenken for å prøve på nytt.'
+  error_saving_new_order_message: 'Feil under lagring av ny rekkefølge: %{error_message}'
+  activate_js_to_rearrange_photos: Skru på JavaScript for å bruke dra og slipp til å omorganisere bilder.
+  add_another_file: Legg til en til fil
+  add_existing_image: Legg til foto
+  add_photo_to_gallery: Klikk på et Foto for å legge det til
+  album_cover_changed: Album cover endret
+  back_to_gallery_link: Tilbake til Galleri
+  cancel_link: avbryt
+  download: Last ned
+  download_gallery: Last ned galleri
+  drag_and_drop_to_rearrange_photos: Dra og slipp bilder for å omorganisere dem
+  edit_gallery: Rediger Galleri
+  error_saving_new_order: Feil under lagring av ny rekkefølge!
+  file_must_be_image_error: Fila må være et bilde for å være del av et galleri.
+  gallery_changing_cover_message: Endrer forside…
+  gallery_slideshow_apply_settings_button: bruk
+  gallery_undo_link: gjør om
+  make_album_cover: gjør dette bildet til album cover
+  move_image_left: Flytt bilde til venstre
+  move_image_right: Flytt bilde til høyre
+  no_images_in_gallery: Ingen bilder i Galleriet
+  order_changed: Rekkefølge endret.
+  remove_from_gallery: Fjern fra galleri
+  removing_image: Fjerner bilde…
+  saved_new_order: Ny rekkefølge er lagret!
+  saving_your_changes: Lagrer dine endringer…
+  slideshow_delay_input: Oppdater hvert %{input_field} sekund
+  successful_undelete_image: Bildet ble gjenopprettet.
+  successfully_removed_image: Bildet ble fjernet! (%{undo_link})
+  upload_images_link: Last opp bilder
+  you_are_not_allowed_to_do_that: Du har ikke tillatelse til å gjøre det!
+  caption: Bildetekst
+  file: Fil
+  files: Filer
+  icon: Ikon
+  photo: Foto
+  photo_credit: Bildekreditering
+  size: Størrelse
+  video_embed: Bygg inn
   add_tags: Legg til tagger
   current_tags: Nåværende tagger
-  welcome_title: Velkommen til %{site_title}
+  no_tags: ingen tagger
+  popular_tags: Populære tagger
+  recent_tags: Nylige tagger
+  separate_tags: Separer tagger med kommaer.
+  tag: Tag
+  tags: Tagger
+  set_status_button: Oppdater status
   welcome_message: Crabgrass gir organisasjoner som vil forandre verden verktøy for å få ting gjort, få spredd budskapet, samarbeide og bygge nettverk.
-  wiki: Wiki
-  public_wiki: Offentlig wiki
-  private_wiki: Privat wiki
-  edit_wiki: Rediger wiki
-  wiki_existed_new_version_created: Denne wikien har allerede blitt opprettet av en annen bruker. Dine endringer er lagret som en ny versjon.
-  wiki_is_locked: Denne wiki-en er for øyeblikket låst av %{user}.
-  wiki_section_is_locked: Seksjonen %{section} er for øyeblikket låst av %{user}.
-  leave_editing_wiki_page_warning: Du vil miste dine endringer hvis du forlater denne siden.
-  cant_edit_section: Kan ikke redigere %{section}.
-  user_locked_section: "%{user} har låst %{section}."
-  can_still_save: Du kan fremdeles lagre.
-  changes_might_be_overwritten: Dine endringer kan bli skrevet over.
-  other_section_locked_error: Du kan bare låse en seksjon av gangen. Du har allerede låst %{section}.
+  welcome_title: Velkommen til %{site_title}
+  a_message_link: en melding
+  a_reply_link: et svar
+  add_one_or_more_tags: Legg til en eller flere tagger, separert med komma
+  chat: Chat
+  confirm_discarding_text_area: Alle endringer som ikke er lagret vil gå tapt. Klikk %{cancel} for å fortsette å redigere.
+  illegal_redirect: Uautorisert videresending
+  include_full_checkbox: inkluder lenke til bildet i full størrelse
+  left_the_chatroom: forlot chatrommet
+  place: sted
+  preview_selected_image: Forhåndsvisning av valgt bilde
+  redirect_to_foreign_domain: Du har blitt forsøkt videresendt til et fremmed domene (%{url}) etter å ha logget inn. Av sikkerhetsgrunner har vi tatt bort denne delen av nettadressen.
+  save_wiki_before_adding_image: Vennligst lagre wikien før du legger til et bilde i den.
+  view_slideshow: Se fremvisning
   break_lock_button: Åpne lås
-  force_save_button: Åpne lås og lagre
-  versions: Versjoner
-  version: Versjon
-  comparing_changes_header: Sammenligner endringer mellom %{old_version} og %{new_version}.
+  can_still_save: Du kan fremdeles lagre.
+  cant_edit_section_html: Kan ikke redigere <b>%{section}</b>.
+  cant_find_wiki_section: Finner ikke wikiseksjon %{section}
   changes_made: Endringer gjort %{when}.
-  prev_change: Forrige endring
-  next_change: Neste endring
+  changes_might_be_overwritten: Dine endringer kan bli skrevet over.
+  comparing_changes_header: Sammenligner endringer mellom %{old_version} og %{new_version}.
+  diff_link: se endringer
+  edit_wiki: Rediger wiki
+  force_save_button: Åpne lås og lagre
   formatting_reference_link: Redigeringshjelp
+  insert_image: Sett inn bilde
+  leave_editing_wiki_page_warning: Du vil miste dine endringer hvis du forlater denne siden.
+  next_change: Neste endring
+  other_section_locked_error_html: Kun én del kan låses av gangen. Du har allerede låst <b>%{section}</b>.
+  prev_change: Forrige endring
+  preview: Forhåndsvisning
+  private_wiki: Privat wiki
+  public_wiki: Offentlig wiki
+  save_or_cancel_edit_lock_wiki_error: Du har låst denne wiki-en. Andre brukere vil ikke kunne redigere den før du klikker på enten %{save_button} eller %{cancel_button} for å slutte å redigere.
+  user_locked_section_html: "<b>%{user}</b> har låst <b>%{section}</b>."
+  version: Versjon
   version_doesnt_exist: Det finnes ingen versjon %{version}
   version_exists_error: Wikien er låst fordi bruker %{user} har lagret nye endringer nylig. Du kan fremdeles lagre dine endringer, men da skriver du over den nye versjonen.
-  you_are_viewing_version: Du ser versjon %{version} av %{user}
-  diff_link: se endringer
   version_link: se versjon
-  wiki_section_edit: Rediger denne seksjonen
+  versions: Versjoner
+  wiki: Wiki
+  wiki_existed_new_version_created: Denne wikien har allerede blitt opprettet av en annen bruker. Dine endringer er lagret som en ny versjon.
+  wiki_is_locked_html: Wiki-en er for tiden låst av <b>%{user}</b>.
   wiki_revert_version: Tilbakestill til versjon %{version}
+  wiki_section_edit: Rediger denne seksjonen
+  wiki_section_is_locked: Seksjonen %{section} er for øyeblikket låst av %{user}.
   wiki_version_creator_heading: person
   wiki_version_revert_link: tilbakestill
-  insert_image: Sett inn bilde
-  preview: Forhåndsvisning
-  save_or_cancel_edit_lock_wiki_error: Du har låst denne wiki-en. Andre brukere vil ikke kunne redigere den før du klikker på enten %{save_button} eller %{cancel_button} for å slutte å redigere.
-  cant_find_wiki_section: Finner ikke wikiseksjon %{section}
+  you_are_viewing_version: Du ser versjon %{version} av %{user}

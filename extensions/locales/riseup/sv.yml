@@ -1,1 +1,4 @@
-sv: {}
+sv:
+  riseup:
+    riseup_black: "Riseup Black"
+    riseup_red: "Riseup Red"
