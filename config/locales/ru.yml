@@ -171,7 +171,7 @@ ru:
   search: Поиск
   go: Перейти
   thing_not_found: "%{thing} не найдена"
-  no_things_found: '%{thing} отсутствует.'
+  no_things_found: "%{things} отсутствует."
   no_search_results: Нет результатов
   not_found: Не найден
   see_all_link: Просмотреть все ссылки
