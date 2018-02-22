@@ -1,40 +1,6 @@
 ca:
-  cookie_disabled_warning: Teniu les cookies inhabilitades. No podreu iniciar sessió fins que activeu les cookies.
-  signup_link: Nou compte
-  signup_email_info: 'Opcional: per si us oblideu de la vostra contrasenya'
-  forgot_password_link: Heu oblidat la contrasenya?
-  login_failure_reason: El nom d'usuari o la contrasenya són incorrectes.
-  signup_success_message: Gràcies per registrar-vos!
-  login_name: Nom d'usuari
-  signup_success: Us heu registrat correctament
-  logout_success: A reveure
-  logout_success_message: Heu tancat la sessió.
-  signup_button: Registreu-vos
-  login_failed: No s'ha pogut iniciar la sessió
-  login_button: Inicia la sessió
-  login: Entra
-  sign_in: Inicia la sessió
-  signup_title: Creeu el vostre compte
-  forgot_password_text: Si heu oblidat la vostra contrasenya podem enviar-vos un enllaç per correu electrònic que us permetrà crear-ne una nova.
-  reset_password_text: Hola %{user}. Si heu oblidat la vostra contrasenya podeu crear-ne una de nova aquí.
-  forgot_password_mail_greeting: "%{user}, per restablir la vostra contrasenya, aneu a"
-  forgot_password_mail_expiry: Aquest enllaç és vàlid durant 24 hores. Si heu de restablir la contrasenya passat aquest temps, haureu de demanar-ne un de nou fent el mateix procés.
-  reset_password_mail_greeting: "%{user}, s'ha restablert la vostra contrasenya tal com heu demanat."
-  reset_password_mail_warning: Si no volíeu canviar la vostra contrasenya, poseu-vos en contacte amb nosaltres.
-  invalid_email_text: La adreça de correu electrònic que has indicat no és vàlida.
-  reset_password: Restableix la contrasenya
-  reset_password_email_sent: Si aquesta adreça de correu està associada amb un nom d'usuari, s'hi ha enviat un missatge amb les instruccions per restablir-ne la contrasenya.
-  invalid_token: Codi No Vàlid
-  invalid_token_text: L'enllaç per restablir la contrasenya no és vàlid. És possible que hagi caducat o que ja s'hagi utilitzat.
-  password_reset: Restabliment de la contrasenya
-  password_reset_ok_text: 'La vostra contrasenya s''ha restablert correctament. Ja podeu iniciar sessió amb la nova contrasenya. '
-  requested_forgot_password: Heu demanat un canvi de contrasenya
-  password_was_reset: S'ha recreat la teva contrasenya
-  forgotten_email_address: Quina adreça de correu electrònic vau donar en crear el vostre compte?
-  new_password: Nova contrasenya
-  confirm_new_password: Confirmeu la nova contrasenya
   congratulations_you_have_signed_up: ¡Enhorabona! t'has registrat a %{site_title}.
-  you_should_receive_instructions_email: Hauríeu de rebre un missatge per correu electrònic amb les instruccions per finalitzar la creació del vostre compte.
+  cookie_disabled_warning: Teniu les cookies inhabilitades. No podreu iniciar sessió fins que activeu les cookies.
   email_verification_body: |-
     Heu sol·licitat l'alta per a %{site_title} (%{host}).
 
@@ -45,436 +11,322 @@ ca:
     %{verify_email_link}
 
     Si no voleu donar-vos d'alta, només cal que ignoreu aquest missatge.
-  change_password: Canvi de contrasenya
-  password: Contrasenya
-  password_confirmation: Confirmació de contrasenya
-  login_password: Contrasenya
-  remove_your_account: Elimina el compte
+  forgotten_email_address: Quina adreça de correu electrònic vau donar en crear el vostre compte?
+  invalid_email_text: La adreça de correu electrònic que has indicat no és vàlida.
+  invalid_token: Codi No Vàlid
+  invalid_token_text: L'enllaç per restablir la contrasenya no és vàlid. És possible que hagi caducat o que ja s'hagi utilitzat.
+  login: Entra
+  login_failed: No s'ha pogut iniciar la sessió
+  login_failure_reason: El nom d'usuari o la contrasenya són incorrectes.
+  logout_success: A reveure
+  logout_success_message: Heu tancat la sessió.
+  sign_in: Inicia la sessió
+  signup_button: Registreu-vos
+  signup_email_info: 'Opcional: per si us oblideu de la vostra contrasenya'
+  signup_link: Nou compte
+  signup_success: Us heu registrat correctament
+  signup_success_message: Gràcies per registrar-vos!
+  signup_title: Creeu el vostre compte
+  you_should_receive_instructions_email: Hauríeu de rebre un missatge per correu electrònic amb les instruccions per finalitzar la creació del vostre compte.
+  account_successfully_removed: El vostre compte s'ha eliminat correctament. Esborrarem el compte i totes les dades associades de la nostra base de dades.
   anonymize_display_name: Fes anònim el nom a mostrar
   anonymize_display_name_info: Substitueix el vostre nom a mostrar per «Anònim» a tot arreu.
+  confirm_account_removal: Esteu segur que voleu eliminar el vostre compte? Aquest pas no es pot desfer i perdreu les vostres dades.
   destroy_comments: Destrueix els comentaris
   destroy_comments_info: S'eliminaran tots els comentaris que hàgiu fet a les pàgines. Això pot fer difícil entendre la resta de comentaris dels altres usuaris.
-  confirm_account_removal: Esteu segur que voleu eliminar el vostre compte? Aquest pas no es pot desfer i perdreu les vostres dades.
-  account_successfully_removed: El vostre compte s'ha eliminat correctament. Esborrarem el compte i totes les dades associades de la nostra base de dades.
+  remove_your_account: Elimina el compte
+  change_password: Canvi de contrasenya
+  confirm_new_password: Confirmeu la nova contrasenya
+  forgot_password_link: Heu oblidat la contrasenya?
+  forgot_password_mail_expiry: Aquest enllaç és vàlid durant 24 hores. Si heu de restablir la contrasenya passat aquest temps, haureu de demanar-ne un de nou fent el mateix procés.
+  forgot_password_mail_greeting: "%{user}, per restablir la vostra contrasenya, aneu a"
+  forgot_password_text: Si heu oblidat la vostra contrasenya podem enviar-vos un enllaç per correu electrònic que us permetrà crear-ne una nova.
+  new_password: Nova contrasenya
+  password: Contrasenya
+  password_confirmation: Confirmació de contrasenya
+  password_reset: Restabliment de la contrasenya
+  password_reset_ok_text: 'La vostra contrasenya s''ha restablert correctament. Ja podeu iniciar sessió amb la nova contrasenya. '
+  password_was_reset: S'ha recreat la teva contrasenya
+  requested_forgot_password: Heu demanat un canvi de contrasenya
+  reset_password: Restableix la contrasenya
+  reset_password_email_sent: Si aquesta adreça de correu està associada amb un nom d'usuari, s'hi ha enviat un missatge amb les instruccions per restablir-ne la contrasenya.
+  reset_password_mail_greeting: "%{user}, s'ha restablert la vostra contrasenya tal com heu demanat."
+  reset_password_mail_warning: Si no volíeu canviar la vostra contrasenya, poseu-vos en contacte amb nosaltres.
+  reset_password_text: Hola %{user}. Si heu oblidat la vostra contrasenya podeu crear-ne una de nova aquí.
   crabgrass:
-    powered_by_html: |
-      Aquest lloc web funciona gràcies a <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-    description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html"> programari lliure AGPL</a> per a l'organització de la xarxa.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html"> programari lliure AGPL</a> per a l''organització de la xarxa.
+
+      '
+    get_involved: Involucreu-vos
+    help_pages: Pàgines d'ajuda de Crabgrass
+    help_translate: Ajudeu a traduir
+    powered_by_html: 'Aquest lloc web funciona gràcies a <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
     report_a_bug: Informeu d'un error
     request_a_feature: Demaneu una funcionalitat
-    help_pages: Pàgines d'ajuda de Crabgrass
-    get_involved: Involucreu-vos
-    help_translate: Ajudeu a traduir
-  destroy_confirmation: Esteu segur que voleu eliminar aquest/a %{thing}?  Aquesta acció no es pot desfer.
-  confirmation: Estàs segur/a?
-  cancel: Cancel·la
-  optional: Opcional
-  required: Obligatori
-  thing_required: "%{thing} Necessari"
-  edit: Edita
-  upload: Penja
-  select_files: Selecciona els fitxers
-  drop_files_here: Arrossegueu els fitxers aquí
-  files_pending: "#{pending} fitxer(s) a l'espera"
-  return_link: Tornar
-  back_button: Enrere
-  send_button: Envia
-  close_button: Tanca
-  share_button: Comparteix
-  save_button: Desa
-  add_button: Afegeix
-  cancel_button: Cancel·la
-  create_button: Crea
-  ok_button: D'Acord
-  done: Fet
-  show_button: Mostra
-  show_thing: Mostra el/la %{thing}
-  confirm: Confirmació
-  alert: Alerta
-  loading_progress: S'està carregant...
-  loadingdotdotdot: S'està carregant...
-  create_a_new_thing: Crea un/a nou/nova %{thing}
-  create_thing: Crea %{thing}
-  created_by: Creat per
-  updated_by: Actualitzat per
-  created_by_user_on: Creat per %{user} a %{when}
-  approve: aprovar
-  reject: rebutjar
-  pending: Pendents
-  rejected: Rebutjades
-  approved: Aprovades
-  saved: Desat
-  destroy: Destrueix
-  thing_destroyed: "%{thing} destruït"
-  destroy_thing: Destrueix %{thing}
-  delete_thing: Elimina %{thing}
-  delete: Elimina
-  delete_button: Elimina
-  deleted: Eliminat
-  remove: Elimina
-  autocomplete:
-    placeholder:
-      enter_name_of_group_or_person: Introduïu el nom d'un grup o persona
-      enter_name_of_group: Introduïu el nom d'un grup
-      enter_name_of_person: Introduïu el nom d'una persona
   actions:
-    task:
-      add: Afegeix una nova tasca
     possible:
       add: Afegeix una nova opció
+    task:
+      add: Afegeix una nova tasca
+  add_button: Afegeix
+  alert: Alerta
+  approve: Aprova
+  approved: Aprovades
+  cancel: Cancel·la
+  close_button: Tanca
+  confirm: Confirmació
+  create_a_new_thing: Crea un/a nou/nova %{thing}
+  create_button: Crea
+  create_thing: Crea %{thing}
+  created_by: Creat per
+  created_by_user_on: Creat per %{user} a %{when}
+  delete: Elimina
+  delete_thing: Elimina %{thing}
+  deleted: Eliminat
+  destroy: Destrueix
+  destroy_confirmation: Esteu segur que voleu eliminar aquest/a %{thing}?  Aquesta acció no es pot desfer.
+  destroy_thing: Destrueix %{thing}
+  drop_files_here: Arrossegueu els fitxers aquí
+  edit: Edita
+  loading_progress: S'està carregant...
+  ok_button: D'Acord
+  optional: Opcional
+  pending: Pendents
+  reject: Rebutja
+  rejected: Rebutjades
+  remove: Elimina
+  required: Obligatori
+  save_button: Desa
+  saved: Desat
+  select_files: Selecciona els fitxers
+  send_button: Envia
+  show_thing: Mostra el/la %{thing}
+  thing_destroyed: "%{thing} destruït"
+  thing_required: "%{thing} necessari"
+  updated_by: Actualitzat per
+  upload: Penja
   mailer:
     hello: Hola %{user_name}
-    page_history:
-      a_page_has_been_modified: "%{site_title} : Una pàgina ha sigut modificada"
-      pages_you_are_watching_have_been_modified:
-        one: Una pàgina que esteu vigilant ha estat modificada des de l'última notificació.
-        other: '%{count} pàgines que esteu vigilant han estat modificades des de l''última notificació.'
-      we_leave_out_details: Hem tret els detalls en aquest missatge per protegir la informació que potser preferiu mantenir en privat.
-      you_can_find_updates_here: 'Trobareu més detalls i una llista de les pàgines recentment canviades aquí:'
-      the_page_you_are_watching_description: La pàgina «%{page_title}» que vigileu ha estat modificada
-      change_your_settings_here: 'Canvieu les opcions de notificació per correu electrònic aquí: %{page_link}'
-      you_can_turn_of_or_configure_notifications: Desactiveu les notificacions per correu electrònic, rebeu un resum dels canvis, o rebeu un missatge de correu electrònic cada vegada que hi hagi canvis a una pàgina
   exception:
-    title:
-      not_found: "%{thing} no s'ha trobat"
-      unauthorized: Autenticació Requerida
-      forbidden: Permís Denegat
-      group:
-        not_found: No s'ha trobat el grup
     description:
-      not_found: No hem pogut trobar el que esteu buscant
-      unauthorized: Inicieu sessió per poder fer això.
       forbidden: No tens els permisos per realitzar aquesta acció.
       group:
         not_found: No podem trobar el grup que esteu buscant.
+      not_found: No hem pogut trobar el que esteu buscant
+      unauthorized: Inicieu sessió per poder fer això.
+    title:
+      forbidden: Permís Denegat
+      group:
+        not_found: No s'ha trobat el grup
+      not_found: "%{thing} no s'ha trobat"
+      unauthorized: Autenticació Requerida
+  add_comment: Afegeix un comentari
+  add_images_to_gallery_link: Afegeix imatges a la galeria
+  close_and_reload_gallery: Tanca i torna a carregar la galeria
+  confirm_image_delete: Esteu segur de voler eliminar aquesta imatge? Aquesta acció no es pot desfer.
+  edit_image: Edita la imatge
+  edit_gallery_explanation: Afegiu noves imatges o arrossegueu les imatges per reordenar-les.
   image_count: Foto %{number} de %{count}
   image_count_total: "%{count} Fotos"
-  show_gallery: Mostra la galeria
-  edit_gallery_explanation: Afegiu noves imatges o arrossegueu les imatges per reordenar-les.
-  edit_image: Edita la imatge
-  show_gallery_explaination: Feu clic a la miniatura per veure-la completa.
-  add_images_or_zips: Afegeix imatges o un arxiu zip
-  add_images_or_zips_explaination: Els arxius zip són extrets automàticament i introduïts a la galeria
-  confirm_image_delete: Esteu segur de voler eliminar aquesta imatge? Aquesta acció no es pot desfer.
-  no_title_given: "(sense títol)"
-  add_images: Afegeix imatges
-  edit_images: Edita imatges
   upload_new_image: Penja una imatge nova
-  type_your_messages_here: Escriu els teus missatges aquí i premi Enter...
-  group_not_allowed_to_view_image_error: 'El grup propietari d''aquesta pàgina no pot veure aquesta imatge. '
-  add_comment: Afegeix un comentari
-  image_title: 'Títol de la imatge: %{title}'
   upload_zip_file_link: Penja un arxiu ZIP
-  add_images_to_gallery_link: Afegeix imatges a la galeria
-  too_tall_image_error: La imatge carregada és massa gran (l'alçada màxima és de {{count}} píxels)
-  too_wide_image_error: La imatge carregada ha de ser exactament de {{count}} píxels d'amplada
-  cant_detect_image_height_error: No es pot detectar l'alçada de la imatge. O la imatge està malmesa o hi ha hagut un error en el servidor
-  edit_image_header: Edita la imatge i l'àudio
-  upload_images_and_zip_files_help: 'Opcional: seleccioneu imatges o arxius zip per carregar.'
-  close_and_reload_gallery: Tanca i torna a carregar la galeria
-  search: Cerca
-  go: Vés
-  thing_not_found: "%{thing} no trobat"
-  no_things_found: No s'han trobat %{things}
-  no_search_results: Sense Resultats
-  not_found: No Trobat
-  see_all_link: Veure-ho tot
-  total: "%{count} en total"
-  all: Tot
-  none: Cap
-  or: o
-  new: nou
-  modified: modificat
-  unknown: Desconegut
-  next: Següent
-  previous: Anterior
-  pagination_next: Següent
-  pagination_previous: Anterior
-  return: Tornar
-  see_more_link: Més
-  see_less_link: Menys
-  list_things: Llista %{things}
-  thing_was_sent:
-    one: "S'ha enviat %{thing} a %{recipient}."
-    other: "S'han enviat %{count} %{thing}."
+  approved_by_entity: Aprovat per %{entity}
+  name: Nom
+  owner: Propietari
+  people: Persones
+  person: Persona
+  recipient: Destinatari
+  recipients: Destinataris
+  rejected_by_entity: Rebutjat per %{entity}
+  user: Usuari
+  users: Usuaris
   thing_was_not_sent:
     one: "No s'ha pogut enviar %{thing} a %{recipient}."
     other: "No s'han pogut enviar %{count} %{thing}."
-  user: Usuari
-  users: Usuaris
-  people: Gent
-  person: Persona
-  name: Nom
-  recipients: Recipients
-  recipient: Destinatari
-  owner: Propietari
-  created_by_entity: Creat per %{entity}
-  approved_by_entity: Aprovat per %{entity}
-  rejected_by_entity: Rebutjat per %{entity}
+  thing_was_sent:
+    one: "S'ha enviat %{thing} a %{recipient}."
+    other: "S'han enviat %{count} %{thing}."
+  all: Tot
+  autocomplete:
+    placeholder:
+      enter_name_of_group: Introduïu el nom d'un grup
+      enter_name_of_person: Introduïu el nom d'una persona
+  go: Vés
+  list_things: Llista %{things}
+  modified: modificat
+  new: nou
+  next: Següent
+  no_search_results: Sense Resultats
+  no_things_found: No s'han trobat %{things}
+  none: Cap
+  or: o
+  previous: Anterior
+  return: Tornar
+  search: Cerca
+  see_all_link: Veure-ho tot
+  see_more_link: Més
+  thing_not_found: "%{thing} no trobat"
+  total: "%{count} en total"
+  unknown: Desconegut
   contacts: Contactes
-  friends: Contactes
   member_groups_of_network: Grups Membres
   peers: Companys
-  me: Jo
-  back: Enrere
-  share: Comparteix
-  contributed: Contribuït
-  profile: Perfil
-  content: Contingut
-  comments: Comentaris
-  statistics: Estadístiques
-  summary: Resum
-  private: Privat
-  public: Públic
-  options: Opcions
-  permissions: Permisos
-  notification: Notificacions
-  notice: Avisos
-  notices: Avisos
-  dismiss: Descarta
-  dismiss_all_notices: Descarta-ho tot
-  dismiss_all_notices_confirmation: Esteu segur que voleu descartar tots els avisos?
   action_cannot_be_undone: Aquesta acció no es pot desfer.
-  locale: Configuració regional
+  administration: Administració
+  back: Enrere
+  comments: Comentaris
+  contributed: Contribuït
   description: Descripció
   details: Detalls
-  invite: Convidar
-  membership: Altes
-  visibility: Visibilitat
-  administration: Administració
-  settings: Configuració
+  dismiss_all_notices: Descarta-ho tot
+  dismiss_all_notices_confirmation: Esteu segur que voleu descartar tots els avisos?
+  display: Visualització
+  hide: Oculta
+  locale: Configuració regional
+  me: Jo
+  message: Missatge
   messages: Missatges
+  notice: Avisos
+  notices: Avisos
+  notification: Notificacions
   page: Pàgina
+  permissions: Permisos
+  print: Impressió
+  private: Privat
+  private_message_notice: Avís de missatge privat
+  public: Públic
+  settings: Configuració
+  share: Comparteix
+  show: Mostra
+  statistics: Estadístiques
+  summary: Resum
   tasks: Tasques
   title: Títol
-  text_message: Missatge de text
-  print: Impressió
-  show: Mostra
-  hide: Oculta
-  display: Visualització
-  message: Missatge
-  private_message_notice: Avís de missatge privat
+  visibility: Visibilitat
   visits: Visites
-  group: Grup
-  groups: Grups
-  organization: organització
-  organizations: Organitzacions
-  network: Xarxa
-  networks: Xarxes
+  basic_settings: Paràmetres bàsics
   committee: Comissió
   committees: Comitès
   council: Consell
   councils: Consells
+  group: Grup
+  groups: Grups
+  my_groups: Grups Meus
   members: Membres
+  membership: Altes
+  network: Xarxa
+  networks: Xarxes
+  organization: organització
+  organizations: Organitzacions
   structure: Estructura
-  group_creation_info: 'Hi ha quatre tipus de grups:'
-  group_description: Les Organitzacions són grups autònoms i tenen persones com a membres.
-  network_description: Les Xarxes són grups que poden tenir organitzacions com a membres. Una xarxa es pot utilitzar com una associació de diverses organitzacions, o un lloc on dos organitzacions col·laborin.
+  group_destroyed_email: "S'ha destruït %{group_type} %{group}!"
+  group_destroyed_subject: "%{user} ha eliminat %{group_type} %{group}!"
+  group_invite_subject: Invitació al grup «%{group}»
   committee_description: Els Comitès són grups dins d'una organització o xarxa. Un comitè està completament subordinat a la seva organització o xarxa mare. Un usuari afegit a un comitè des d'una organització o xarxa externes només tindrà accés al comitè.
   council_description: Els Consells són grups amb poders d'administració especials. Cada organització o xarxa pot tenir un consell. Si el té, les persones del consell tindran poder sobre la xarxa o la organització.
   council_description_details: Per defecte, tots els membres poden modificar el %{group}. Si voleu restringir els poders d'administració a certs usuaris, creeu un consell i afegiu-hi usuaris.
-  committee_choose_group: 'Trieu un grup per aquest comitè:'
+  create_public_group_wiki: Públic
+  create_private_group_wiki: Privat
+  group_creation_info: 'Hi ha quatre tipus de grups:'
+  group_description: Les Organitzacions són grups autònoms i tenen persones com a membres.
   network_committees_may_not_join_networks: Els comitès d'altres xarxes no es poden afegir.
+  network_description: Les Xarxes són grups que poden tenir organitzacions com a membres. Una xarxa es pot utilitzar com una associació de diverses organitzacions, o un lloc on dos organitzacions col·laborin.
   networks_may_not_join_networks: Les xarxes no poden afegir-se a altres xarxes.
+  group_membership_count: "%{count} Membres"
+  membership_destroy_confirm_message: Esteu segur de voler eliminar %{entity} de %{group}?
+  membership_exists_error: L'usuari %{member} ja està donat d'alta
+  membership_requests: Sol·licituds d'alta
+  public_groups: Grups públics
+  shared_groups: Grups compartits
   may_request_membership_description: Apareixerà un enllaç «Uniu-vos a %{group}» a la pàgina del vostre %{group}. Amb això rebreu sol·licituds d'alta d'usuaris que podreu acceptar o rebutjar.
   open_group: '%{group} obert'
   open_group_description: Els usuaris s'afegiran automàticament al %{group} (no caldrà aprovar cap sol·licitud)
-  shared_groups: Grups compartits
-  public_groups: Grups públics
-  membership_requests: Sol·licituds d'alta
-  group_membership_count: "%{count} Membres"
-  membership_exists_error: L'usuari %{member} ja està donat d'alta
-  membership_destroy_confirm_message: Esteu segur de voler eliminar %{entity} de %{group}?
-  group_invite_subject: Invitació al grup «%{group}»
-  group_invite_email: |-
-    %{from_user} us ha convidat a formar part del grup «%{group}». Si us hi voleu unir, feu clic aquí:
-
-    %{accept_invite_link}
-
-    La pàgina inicial d'aquest grup és aquí:
-    %{group_home_link}
-
-    Si no voleu formar part d'aquest grup, simplement ignoreu aquest missatge.
-  group_destroyed_subject: "%{user} ha eliminat %{group_type} %{group}!"
-  group_destroyed_email: "S'ha destruït %{group_type} %{group}!"
   group_wiki: Wiki del grup
-  create_public_group_wiki: Públic
-  create_private_group_wiki: Privat
-  public_group_wiki: Públic
-  private_group_wiki: Privat
-  group_publicly_visible: Fes que %{group} sigui visible públicament
-  committee_publicly_visible: Fes que els comitès siguin visibles públicament
-  networks_publicly_visible: Fes que les xarxes siguin visibles públicament
-  allow_membership_requests: Permet sol·licituds d'alta
-  group_successfully_created: S'ha creat el grup correctament.
-  group_publicly_visible_description: "%{group} apareixerà al directori públic. El <i>perfil</i> serà visible pels qui no són membres a %{domain}/elteugrup."
-  committee_publicly_visible_description: Els comitès seran visibles pels qui no són membres a %{domain}/elteugrup
-  networks_publicly_visible_description: Les xarxes seran visibles pels qui no són membres a %{domain}/yourgroupname
-  group_members_publicly_visible: Fes que els membres siguin visibles públicament
-  group_members_publicly_visible_description: Els membres seran visibles pels qui no són membres a %{domain}/yourgroupname. %{group} també apareixerà a la pàgina de perfil de cada membre (%{domain}/nomusuari)
   members_may_edit_wiki: Tots els membres poden editar la wiki
   members_may_edit_wiki_description: Si ho desmarqueu, només els membres del consell podran editar la wiki de %{group}.
-  rss_feed: RSS
-  group_language: L'idioma principal d'aquest %{group}.
-  my_networks: Les meves xarxes
-  my_groups: Grups Meus
-  basic_settings: Paràmetres bàsics
-  send_invites: Enviament d'invitacions
-  view_requests: Mostra les sol·licituds
+  public_group_wiki: Públic
+  private_group_wiki: Privat
   add_members_to_committee: Afegiu un membre del grup a aquest comitè. Per afegir persones que no es troben al grup pare, envieu-los una invitació.
-  join_group_link: Adherir-se a %{group_type}
-  leave_group_link: Deixar %{group_type}
-  leave_group_confirmation: Esteu segur que voleu deixar aquest %{group_type}?
-  request_join_group_link: Sol·licitud d'alta a %{group_type}
-  request_exists: La vostra sol·licitud d'alta està esperant ser aprovada.
-  join_group_confirmation: Esteu segur que voleu afegir-vos a aquest %{group_type}?
-  link_name_description: 'Aquest serà el nom de referència d''aquest grup als enllaços i adreces web.  Només pot contenir caràcters alfanumèrics sense espais. '
+  allow_membership_requests: Permet sol·licituds d'alta
+  committee_publicly_visible: Fes que els comitès siguin visibles públicament
+  committee_publicly_visible_description: Els comitès seran visibles pels qui no són membres a %{domain}/elteugrup
   descriptive_name_for_display: Un nom descriptiu a mostrar
-  this_is_committee: Aquesta comissió forma part de %{parent_group}.
+  group_language: L'idioma principal d'aquest %{group}.
+  group_members_publicly_visible: Fes que els membres siguin visibles públicament
+  group_members_publicly_visible_description: Els membres seran visibles pels qui no són membres a %{domain}/yourgroupname. %{group} també apareixerà a la pàgina de perfil de cada membre (%{domain}/nomusuari)
+  group_publicly_visible: Fes que %{group} sigui visible públicament
+  group_publicly_visible_description: "%{group} apareixerà al directori públic. El <i>perfil</i> serà visible pels qui no són membres a %{domain}/elteugrup."
+  group_successfully_created: S'ha creat el grup correctament.
+  join_group_confirmation: Esteu segur que voleu afegir-vos a aquest %{group_type}?
+  join_group_link: Adherir-se a %{group_type}
+  leave_group_confirmation: Esteu segur que voleu deixar aquest %{group_type}?
+  leave_group_link: Deixa %{group_type}
+  link_name_description: 'Aquest serà el nom de referència d''aquest grup als enllaços i adreces web.  Només pot contenir caràcters alfanumèrics sense espais. '
   network_initial_member: Trieu la organització que serà un membre inicial d'aquesta xarxa.
+  networks_publicly_visible: Fes que les xarxes siguin visibles públicament
+  networks_publicly_visible_description: Les xarxes seran visibles pels qui no són membres a %{domain}/yourgroupname
+  request_exists: La vostra sol·licitud d'alta està esperant ser aprovada.
+  request_join_group_link: Sol·licitud d'alta a %{group_type}
+  rss_feed: RSS
+  send_invites: Enviament d'invitacions
+  this_is_committee: Aquesta comissió forma part de %{parent_group}.
+  view_requests: Mostra les sol·licituds
   headings:
-    page_search: Cercador de pàgines
-    recent_pages: Pàgines recents
     info:
       page_search: Trobeu totes les pàgines a les que teniu accés directament o a través dels vostres grups
       recent_pages: Aquestes pàgines s'han creat o actualitzat recentment.
-  my_dashboard: La Meva Consola
-  uploaded_image_cropped: La imatge pujada es tallarà i s'estirarà a 96 pixels quadrats.
-  select_image_file: selecciona un fitxer d'imatge
-  or_image_url: o una URL d'imatge
-  upload_image_link: carrega una imatge
-  remove_image_link: Elimina la imatge
-  save_changes: Desa els canvis
-  username: Nom d'usuari
+    page_search: Cercador de pàgines
+    recent_pages: Pàgines recents
   display_name: Nom a mostrar
+  do_you_want_to_receive_email_notifications: Voleu rebre notificacions per correu electrònic sobre els canvis a les pàgines que esteu «vigilant»?
   email: Correu electrònic
   language: Idioma
-  time_zone: Fus horari
-  do_you_want_to_receive_email_notifications: Voleu rebre notificacions per correu electrònic sobre els canvis a les pàgines que esteu «vigilant»?
+  message_user_wrote_caption: "%{user} ha escrit:"
+  message_you_wrote_caption: 'Heu escrit:'
   notification_select:
+    digest: 'Sí: un resum diari dels canvis'
     none: 'No: cap missatge'
     single: 'Sí: un missatge per cada canvi'
-    digest: 'Sí: un resum diari dels canvis'
+  or_image_url: o una URL d'imatge
+  remove_image_link: Elimina la imatge
+  save_changes: Desa els canvis
+  select_image_file: selecciona un fitxer d'imatge
   send_message_link: Envia el miissatge
-  messages_with: Conversa amb %{other_user}
-  message_to_self_error: No es pot parlar amb un mateix
-  message_you_wrote_caption: 'Heu escrit:'
-  message_user_wrote_caption: "%{user} ha escrit:"
+  time_zone: Fus horari
   unread_private_message: Teniu missatges privats de %{user} pendents de llegir
-  home: Inici
-  menu_me: Jo
-  menu_groups: Grups
-  menu_chat: Xat
-  menu_people: Gent
-  menu_networks: Xarxes
-  menu_link_logout: Surt %{user}
-  menu_admin: Admin
+  upload_image: Penja una imatge
+  uploaded_image_cropped: La imatge pujada es tallarà i s'estirarà a 96 pixels quadrats.
+  username: Nom d'usuari
   account_settings: Configuració del compte
-  back_to_page: Torna a la pàgina
   back_to_group: tornar a %{group_name}
-  pages: Pàgines
-  recent_pages: Pàgines recents
-  my_pages: Les vostres pàgines
-  properties: Propietats
-  popular_pages: Pàgines populars
-  advanced: Avançat
+  back_to_page: Torna a la pàgina
+  home: Inici
+  menu_admin: Admin
+  menu_link_logout: Surt %{user}
+  profile: Perfil
   access: Accés
-  active_filters: Filtres actius
-  all_pages: Totes les pàgines
-  created_by_me: Creades
-  created_by_user: Creades per %{user}
-  created_by_user_description: Cerca pàgines creades per una persona en particular.
-  created_by_dotdotdot: Creades per...
-  starred_by_me: Estrellat
-  starred_by_user: Marcades per %{user}
-  watched_by_me: Vigilades
-  watched_by_user: Vigilades per %{user}
-  edited_by_me: Editat
-  edited_by_user: Editades per %{user}
-  owned_by_me: Pròpies
-  owned_by_user: Propietat de %{user}
-  most_active: Més Actiu
-  most_stars: Més marcades
-  most_viewed: Més Vist
-  filter_user_description: Cerca pàgines accessibles per un usuari en particular.
-  filter_group_description: Cerca pàgines accessibles per un grup en particular.
-  starred: Estrellat
-  viewed: Vist
-  edited: Editat
-  type: Tipus
-  all_page_types: tots els tipus de pàgines
-  edit_title: Edita el títol
-  data_for_page_missing: Falten les dades per aquesta aquesta pàgina.
-  no_change: sense canvis
-  updated: actualitzat
-  created: creat
-  unread: no llegit
-  read: llegir
-  page_name_description: Nom únic opcional (s'utilitza per crear la URL d'aquesta pàgina)
-  filter_tag_description: Cerca pàgines amb una etiqueta en particular.
-  page_notice: Avís de pàgina
-  email_notice_subject: Mireu la pàgina «%{title}»
-  email_notice_hello_with_message: 'Hola, %{from} t''ha enviat una pàgina web amb el següent missatge: %{message}'
-  email_notice_hello: Hola, %{from} t'ha enviat una pàgina web.
-  email_notice_access: 'Podeu accedir a aquesta pàgina aquí:'
+  action: acció
+  advanced: Avançat
+  my_pages: Les vostres pàgines
+  pages: Pàgines
+  popular_pages: Pàgines populars
+  properties: Propietats
+  recent_pages: Pàgines recents
+  current_video_sources: 'Actualment suportats: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_description: Això no és l'adreça del lloc web. És un codi envoltat per < i > que el lloc web de vídeos – youtube, etc – posa a la vostra disposició per incloure el vídeo a altres llocs web.
+  video_embed_code_prompt: Codi d'incrustar d'una font externa de vídeo.
   email_link_expires: Aquest enllaç expirarà en %{days} dies.
+  email_notice_access: 'Podeu accedir a aquesta pàgina aquí:'
+  email_notice_hello: Hola, %{from} t'ha enviat una pàgina web.
+  email_notice_hello_with_message: 'Hola, %{from} t''ha enviat una pàgina web amb el següent missatge: %{message}'
+  email_notice_subject: Mireu la pàgina «%{title}»
+  page_notice: Avís de pàgina
   page_notice_title: <user>%{from}</user> us ha enviat la pàgina «%{page_title}»
   page_notice_title_with_message: '<user>%{from}</user> us ha enviat la pàgina «%{page_title}» amb el missatge:'
-  page_updated: <user>%{from}</user> ha actualitzat la pàgina «%{page_title}»
   page_update: Actualització de pàgina
-  watch_checkbox: Vigila els canvis
-  add_star_link: Afegeix una estrella (%{star_count})
-  remove_star_link: Treu l'estrella (%{star_count})
-  public_checkbox: Públic
-  public_checkbox_help: Si està seleccionat, qualsevol por veure aquesta pàgina.
-  page_details_link: "Detalls de %{page_class}"
-  delete_page_link: Elimina %{page_class}
-  destroy_page_via_shred: Destrueix-la immediatament
-  destroy_page_via_shred_info: Es destruirà de forma permanent la pàgina. Aquesta acció no es pot desfer.
-  destroy_page_via_trash: Mou a la paperera
-  destroy_page_via_trash_info: Es mourà la pàgina a la paperera, d'on es pot recuperar més tard.
-  undelete_from_trash: Restaurar
-  participation: Participació
-  information: Informació
-  remove_access_error: No s'ha pogut eliminar l'accés a aquesta pàgina. No podeu eliminar l'accés del propietari o un accés que és necessari per a que pugueu administrar la pàgina.
-  edit_tags_link: Edita
-  edit_attachments_link: Edita
-  attachments: Adjunts
-  edit_attachments: Edita els adjunts
-  current_attachments: Adjunts Actuals
-  add_new_attachment: Afegeix un nou adjunt
-  use_radio_buttons_to_select_page_cover: Utilitzeu els botons d'opció per seleccionar la portada de la pàgina
-  page_access_admin: Accés complet
-  page_access_edit: Permís d'escriptura
-  page_access_none: Sense accés
-  page_access_view: Només lectura
-  share_page_link: Comparteix %{page_class}
-  share_page_recipients: Comparteix la pàgina amb
-  notify_page_link: Envia notificacions
-  notify_contribution: "<b>Contribució Anterior:</b> notifica a la gent que ha  <b>contribuït</b> a aquesta pàgina."
-  notify_current_access: "<b>Accéss Actual:</b> notifica a la gent o als grups que tenen accés a aquesta pàgina."
-  notification_message: Missatge de notificació
-  send_only_with_encryption: Envia només si és possible la distribució xifrada
-  share_send_notification: Envia una notificació
-  send_email: Envia un missatge per correu electrònic
-  share_include_message: Inclou un missatge personalitzat
-  shared_page_success: Heu compartit aquesta pàgina correctament.
-  notify_success: Heu enviat les notificacions correctament.
-  share_grant_required_error: "%{name} no està autoritzat a veure aquesta pàgina. Abans cal donar-li més permisos."
-  share_permission_denied_error: No esteu autoritzat a canviar els permisos d'accés d'aquesta pàgina
-  notify_no_access_error: «%{name}» no té accés a aquesta pàgina.
-  share_already_exists_error: '«%{name}» ja té accés a aquesta pàgina.'
-  share_pester_error: No podeu compartir amb «%{name}».
-  name_or_email_not_found: '«%{name}» no és el nom de cap usuari o grup, ni una adreça de correu electrònic vàlida. '
-  contribute_content_link: Crea una pàgina
-  page_create_owner: Propietari de la pàgina
-  create_page: Crea una pàgina
-  only_me: Jo
-  page_added_to_group: S'afegirà aquesta pàgina a %{group_type} %{group_name}.
-  additional_page_access: Accés Addicional
-  page_owner_error: Ha d'haver-hi un propietari de pàgina.
-  action: acció
+  page_updated: <user>%{from}</user> ha actualitzat la pàgina «%{page_title}»
   page_history_add_star: "%{user_name} ha afegit una estrella"
   page_history_added_comment: "%{user_name} ha afegit un comentari"
   page_history_change_title: "%{user_name} ha modificat el títol de la pàgina"
@@ -497,136 +349,214 @@ ca:
   page_history_updated_comment: "%{user_name} ha actualitzat un comentari"
   page_history_updated_content: "%{user_name} ha actualitzat el contingut de la pàgina"
   page_history_user_created_page: "%{user_name} ha creat la pàgina"
-  wiki_page_description: 'Crea una pàgina lliurement editable sense format. '
-  wiki_page_display: Pàgina Wiki
-  gallery_description: Puja múltiples imatges o organitza algunes imatges existents a un conjunt.
-  gallery_display: Galeria
+  active_filters: Filtres actius
+  all_page_types: tots els tipus de pàgines
+  all_pages: Totes les pàgines
+  created: creat
+  created_by_dotdotdot: Creades per...
+  created_by_me: Creades
+  created_by_user: Creades per %{user}
+  created_by_user_description: Cerca pàgines creades per una persona en particular.
+  data_for_page_missing: Falten les dades per aquesta aquesta pàgina.
+  edit_title: Edita el títol
+  edited: Editat
+  edited_by_user: Editades per %{user}
+  filter_group_description: Cerca pàgines accessibles per un grup en particular.
+  filter_tag_description: Cerca pàgines amb una etiqueta en particular.
+  filter_user_description: Cerca pàgines accessibles per un usuari en particular.
+  most_active: Més Actiu
+  most_stars: Més marcades
+  most_viewed: Més Vist
+  no_change: sense canvis
+  owned_by_me: Pròpies
+  owned_by_user: Propietat de %{user}
+  page_name_description: Nom únic opcional (s'utilitza per crear la URL d'aquesta pàgina)
+  read: llegir
+  starred: Estrellat
+  starred_by_user: Marcades per %{user}
+  type: Tipus
+  unread: no llegit
+  updated: actualitzat
+  viewed: Vist
+  watched_by_me: Vigilades
+  watched_by_user: Vigilades per %{user}
+  add_star_link: Afegeix una estrella (%{star_count})
+  delete_page_link: Elimina %{page_class}
+  destroy_page_via_shred: Destrueix-la immediatament
+  destroy_page_via_shred_info: Es destruirà de forma permanent la pàgina. Aquesta acció no es pot desfer.
+  destroy_page_via_trash: Mou a la paperera
+  destroy_page_via_trash_info: Es mourà la pàgina a la paperera, d'on es pot recuperar més tard.
+  information: Informació
+  page_details_link: "Detalls de %{page_class}"
+  participation: Participació
+  public_checkbox_help: Si està seleccionat, qualsevol por veure aquesta pàgina.
+  remove_access_error: No s'ha pogut eliminar l'accés a aquesta pàgina. No podeu eliminar l'accés del propietari o un accés que és necessari per a que pugueu administrar la pàgina.
+  remove_star_link: Treu l'estrella (%{star_count})
+  undelete_from_trash: Restaurar
+  watch_checkbox: Vigila els canvis
+  add_new_attachment: Afegeix un nou adjunt
+  page_access_admin: Accés complet
+  page_access_edit: Permís d'escriptura
+  page_access_none: Sense accés
+  page_access_view: Només lectura
+  edit_attachments: Edita els adjunts
+  current_attachments: Adjunts Actuals
+  use_radio_buttons_to_select_page_cover: Utilitzeu els botons d'opció per seleccionar la portada de la pàgina
+  share_already_exists_error: '«%{name}» ja té accés a aquesta pàgina.'
+  share_grant_required_error: "%{name} no està autoritzat a veure aquesta pàgina. Abans cal donar-li més permisos."
+  share_include_message: Inclou un missatge personalitzat
+  share_page_link: Comparteix %{page_class}
+  share_page_recipients: Comparteix la pàgina amb
+  share_send_notification: Envia una notificació
+  shared_page_success: Heu compartit aquesta pàgina correctament.
+  share_permission_denied_error: No esteu autoritzat a canviar els permisos d'accés d'aquesta pàgina
+  share_pester_error: No podeu compartir amb «%{name}».
+  notification_message: Missatge de notificació
+  notify_contribution: "<b>Contribució anterior:</b> notifica a les persones que han <b>contribuït</b> a aquesta pàgina."
+  notify_current_access: "<b>Accés actual:</b> notifica a les persones o als grups que tenen accés a aquesta pàgina."
+  notify_no_access_error: «%{name}» no té accés a aquesta pàgina.
+  notify_page_link: Envia notificacions
+  notify_success: Heu enviat les notificacions correctament.
+  send_only_with_encryption: Envia només si és possible la distribució xifrada
+  send_email: Envia un missatge per correu electrònic
+  name_or_email_not_found: '«%{name}» no és el nom de cap usuari o grup, ni una adreça de correu electrònic vàlida. '
+  additional_page_access: Accés Addicional
   asset_page_description: Penja una foto, document, full de càlcul, presentació o qualsevol altre tipus de fitxer.
   asset_page_display: Fitxer
-  select_file_to_upload: Seleccioneu un fitxer per carregar.
+  attachments: Adjunts
+  create_page: Crea una pàgina
   discussion_page_description: Comentar sobre un tema en particular un grups o amb altres usuaris.
   discussion_page_display: Conversa del Grup
+  gallery_description: Puja múltiples imatges o organitza algunes imatges existents a un conjunt.
+  gallery_display: Galeria
+  page_added_to_group: S'afegirà aquesta pàgina a %{group_type} %{group_name}.
+  page_create_owner: Propietari de la pàgina
+  page_owner_error: Ha d'haver-hi un propietari de pàgina.
   ranked_vote_page_description: Crea una llista d'opcions per a que la gent pugui ordenar les seves preferències.
   ranked_vote_page_display: Vot en Preferència
-  survey_page_display: Sondeig
-  rate_many_page_description: Crea una llista d'opcions per a que la gent pugui aprovar o desaprovar d'elles.
+  rate_many_page_description: Crea una llista d'opcions per a que la gent pugui aprovar-les o desaprovar-les.
   rate_many_page_display: 'Sondeig d''Aprovació '
+  select_file_to_upload: Seleccioneu un fitxer per carregar.
+  survey_page_display: Sondeig
   task_list_page_description: Crea una llista de tasques i assigna-les a tu mateix/a o als altres.
   task_list_page_display: Llista de Tasques
-  page_group_vote: Sondejos i Vots
-  page_group_text: Text i Debats
-  page_group_media: Multimèdia
-  page_group_planning: Eines de Planificació
-  pending_tasks: Tasques pendents
-  completed_tasks: Tasques completades
-  no_pending_tasks: No hi ha tasques pendents
-  no_completed_tasks: No hi ha tasques completades
+  wiki_page_description: 'Crea una pàgina lliurement editable sense format. '
+  wiki_page_display: Pàgina Wiki
   assign_to: Assigna-ho a
   completed: Completades
-  vote:
-    really_remove_this: Esteu segur que voleu eliminar aquesta opció?
-    you_have_not_ranked: 'Encara no heu prioritzat:'
-    voted_on: Heu votat a
-    not_voted_on: No heu votat a
-  vote_good: bé
-  vote_ok: d'acord
-  vote_bad: malament
-  vote_none: res
-  vote_no: 'no'
-  ranked_vote_instructions: Arrossegueu i deixeu anar els elements a la llista següent fins que estiguin en ordre, del més preferit a dalt de tot fins al menys preferit a sota de tot.
+  completed_tasks: Tasques completades
+  no_completed_tasks: No hi ha tasques completades
+  no_pending_tasks: No hi ha tasques pendents
+  page_group_media: Multimèdia
+  page_group_planning: Eines de Planificació
+  page_group_text: Text i Debats
+  page_group_vote: Sondejos i Vots
+  pending_tasks: Tasques pendents
   confirm_vote_button: Confirma el vot
   edit_my_vote_tab: Edita el vot
+  first_choice_of: primera opció de
+  ranked_vote_instructions: Arrossegueu i deixeu anar els elements a la llista següent fins que estiguin en ordre, del més preferit a dalt de tot fins al menys preferit a sota de tot.
   show_results_tab: Mostra els resultats
   top_pick: la més triada
-  first_choice_of: primera opció de
-  save_survey_button: Desa l'enquesta
-  survey_may_create_response: Es pot crear una resposta?
-  survey_may_see_responses: Es pot veure les respostes?
-  survey_may_rate: Es pot avaluar respostes?
-  survey_may_see_ratings: Es pot veure avaluacions?
-  survey_question_label: 'Pregunta:'
-  survey_description_heading: Descripció
-  survey_description_explaination: Aquest text es mostrarà en la pestanya d'introducció, i serà la primera cosa que els enquestats veuran.
-  select_many_choices_label: 'Seleccioneu diverses opcions de resposta:'
-  select_one_choices_label: 'Seleccioneu una opció de resposta:'
-  video_embed_code_description: Això no és l'adreça del lloc web. És un codi envoltat per < i > que el lloc web de vídeos – youtube, etc – posa a la vostra disposició per incloure el vídeo a altres llocs web.
-  private_question_label: Pregunta privada
-  their_answer_goes_here_label: La seva resposta va aquí...
-  survey_response_by: Resposta per %{login}
-  see_whole_response_link: mostra la resposta completa
-  survey_average_rating_heading: 'Valoració mitjana:'
-  survey_previous_result: Prèviament
-  survey_rated_by_1_person_caption: Valorat per una persona
-  survey_rated_by_x_people_caption: Valorat per %{count} persones.
-  survey_respond_button: Responeu
-  survey_rate_this_response_heading: Valoreu aquesta resposta
-  survey_select_a_rating_message: Seleccioneu una valoració per veure el següent element.
-  survey_skip_next_link: Salta al següent
-  survey_you_already_rated_response_with_rating_heading: Ja heu valorat aquesta resposta - Li heu donat un %{rating}.
-  survey_you_previousely_rated_message: Heu valorat prèviament aquest element amb un %{rating}.
-  survey_your_rating_heading: 'La vostra valoració:'
-  survey_questions: Preguntes
+  vote:
+    not_voted_on: No heu votat a
+    really_remove_this: Esteu segur que voleu eliminar aquesta opció?
+    voted_on: Heu votat a
+    you_have_not_ranked: 'Encara no heu prioritzat:'
+  vote_bad: malament
+  vote_good: bé
+  vote_no: 'no'
+  vote_none: res
+  vote_ok: d'acord
   add_long_text_question_link: Resposta llarga
   add_select_many_question_link: Seleccioneu diverses respostes
   add_select_one_question_link: Seleccioneu una resposta
   add_short_text_question_link: Resposta curta
-  upload_image_question_link: Penja una imatge
-  video_link_question_link: Enllaç de vídeo
-  survey_introduction_tab: Introducció
-  survey_list_all_tab: Llista de respostes
-  survey_my_response_tab: La vostra resposta
-  survey_please_check_and_rate_message: Comproveu les vostres respostes i valoreu les dels altres.
-  survey_please_check_message: Comproveu les vostres respostes.
-  survey_thanks_submit_message: Gràcies per enviar la vostra resposta.
   drag_to_move_tip: arrossegueu-ho per moure-ho
   each_line_is_a_choice_caption: "(cada línia és una opció possible)"
   no_data_uploaded_label: No s'ha carregat cap dada
-  current_video_sources: 'Actualment suportats: youtube, blip.tv, google video, vimeo.'
-  video_embed_code_prompt: Codi d'incrustar d'una font externa de vídeo.
+  private_question_label: Pregunta privada
+  save_survey_button: Desa l'enquesta
+  see_whole_response_link: mostra la resposta completa
+  select_many_choices_label: 'Seleccioneu diverses opcions de resposta:'
+  select_one_choices_label: 'Seleccioneu una opció de resposta:'
+  survey_average_rating_heading: 'Valoració mitjana:'
+  survey_description_explaination: Aquest text es mostrarà en la pestanya d'introducció, i serà la primera cosa que els enquestats veuran.
+  survey_introduction_tab: Introducció
+  survey_list_all_tab: Llista de respostes
+  survey_may_create_response: Es pot crear una resposta?
+  survey_may_rate: Es pot avaluar respostes?
+  survey_may_see_ratings: Es pot veure avaluacions?
+  survey_may_see_responses: Es pot veure les respostes?
+  survey_my_response_tab: La vostra resposta
+  survey_please_check_and_rate_message: Comproveu les vostres respostes i valoreu les dels altres.
+  survey_please_check_message: Comproveu les vostres respostes.
+  survey_previous_result: Prèviament
+  survey_question_label: 'Pregunta:'
+  survey_questions: Preguntes
+  survey_rate_this_response_heading: Valoreu aquesta resposta
+  survey_rated_by_1_person_caption: Valorat per una persona
+  survey_rated_by_x_people_caption: Valorat per %{count} persones.
+  survey_respond_button: Responeu
+  survey_response_by: Resposta per %{login}
+  survey_select_a_rating_message: Seleccioneu una valoració per veure el següent element.
+  survey_skip_next_link: Salta al següent
+  survey_thanks_submit_message: Gràcies per enviar la vostra resposta.
+  survey_you_previousely_rated_message: Heu valorat prèviament aquest element amb un %{rating}.
+  survey_your_rating_heading: 'La vostra valoració:'
+  their_answer_goes_here_label: La seva resposta va aquí...
+  video_link_question_link: Enllaç de vídeo
+  friends_description: Els vostres contactes
+  may_pester_description: Permeteu que la gent us pugui enviar missatges, pàgines i invitacions.
+  may_pester_label: Compartir-vos coses?
+  may_request_contact_description: Permeteu que els altres us puguin demanar ser un dels vostres contactes.
+  may_request_contact_label: Sol·licitar ser contacte?
+  may_see_contacts_description: Permeteu que els altres puguin veure qui són els vostres contactes.
+  may_see_contacts_label: Veure els vostres contactes?
+  may_see_groups_description: Permeteu que els altres puguin veure els grups dels quals sou membre.
+  may_see_groups_label: Veure els vostres grups?
+  may_view_description: Si ho desmarqueu tot, el vostre perfil s'ocultarà completament.
+  may_view_label: Veure el vostre perfil?
+  peers_description: Membres dels vostres grups
   permissions_key: Clau
   public_description: Tothom a Internet
-  peers_description: Membres dels vostres grups
-  friends_description: Els vostres contactes
-  may_view_label: Veure el vostre perfil?
-  may_view_description: Si ho desmarqueu tot, el vostre perfil s'ocultarà completament.
-  may_see_contacts_label: Veure els vostres contactes?
-  may_see_contacts_description: Permeteu que els altres puguin veure qui són els vostres contactes.
-  may_see_groups_label: Veure els vostres grups?
-  may_see_groups_description: Permeteu que els altres puguin veure els grups dels quals sou membre.
-  may_pester_label: Compartir-vos coses?
-  may_pester_description: Permeteu que la gent us pugui enviar missatges, pàgines i invitacions.
-  may_request_contact_label: Sol·licitar ser contacte?
-  may_request_contact_description: Permeteu que els altres us puguin demanar ser un dels vostres contactes.
   sharing_and_requests: Compartició i sol·licituds
-  view_profile: Mostra el perfil
-  profile_member_since: Membre Des De
   banner: Bàner
   banner_info: La mida òptima és de %{optimal_dimensions} píxels
-  organizational_role: rol organitzatiu
-  phone_number: Número de telèfon
-  email_addresses: Adreces de Correu Electrònic
-  post_message: Publica el missatge
-  request_friend_link: Afegeix-lo als contactes
-  remove_friend_link: Elimina dels contactes
   edit_profile_link: Edita el perfil
+  organizational_role: rol organitzatiu
+  post_message: Publica el missatge
+  profile_member_since: Membre Des De
   profile_saved: S'ha desat el vostre perfil.
-  requests: Sol·licituds
-  request: Sol·licitud
-  incoming: Entrants
-  outgoing: Sortints
-  request_pending: "%{request} està pendent"
-  not_allowed_to_respond_to_request: "%{user} no té permís per %{command} la sol·licitud."
-  try_again: Intenta de Nou
-  send_request_button: Envia la sol·licitud
-  send_invites_button: Envia invitacions
+  remove_friend_link: Elimina dels contactes
+  request_friend_link: Afegeix-lo als contactes
+  view_profile: Mostra el perfil
   all_requests: Totes les sol·licituds
+  incoming: Entrants
+  not_allowed_to_respond_to_request: "%{user} no té permís per %{command} la sol·licitud."
+  outgoing: Sortints
+  request: Sol·licitud
+  request_pending: "%{request} està pendent"
+  requests: Sol·licituds
+  send_request_button: Envia la sol·licitud
+  try_again: Intenta de Nou
+  friend_remove_confirmation: Esteu segur que voleu deixar de ser contacte de %{user}?
+  friend_request_message_label: Expliqueu a %{user} perquè voleu ser el seu contacte.
+  invite_error_already_member: Ja ets membre d'aquest grup.
+  invite_error_redeemed: Ja s'ha reclamat aquesta invitació.
+  invite_info: Indiqueu els noms d'usuari o les adreces de correu electrònic de les persones que voleu convidar a aquest %{group_type}.
+  network_invite_info: Indiqueu els noms dels grups que voleu convidar a formar part d'aquesta xarxa.
+  recipient_tip: Separeu els destinataris amb comes, espais o línies noves.
+  request_exists_error: La sol·licitud ja existeix per %{recipient}
+  you_are_invited: Esteu convidat a unir-vos.
   activerecord:
     models:
+      request_to_create_council: Sol·licitud per crear un Consell
+      request_to_destroy_our_group: Sol·licitud de destrucció del grup
       request_to_friend: Sol·licita ser contacte
       request_to_join_our_network:
         one: Invitació per unir-se
         other: Invitacions per unir-se
-      request_to_destroy_our_group: Sol·licitud de destrucció del grup
       request_to_join_us:
         one: Invitació per unir-se
         other: Invitacions per unir-se
@@ -635,205 +565,171 @@ ca:
         other: Invitacions per unir-se
       request_to_join_you: Sol·licitud per unir-se
       request_to_join_your_network: Sol·licitud per unir-se
-      request_to_create_council: Sol·licitud per crear un Consell
       request_to_remove_user: Sol·licitud per eliminar un membre
-  request_to_friend: Sol·licita ser contacte
-  request_to_friend_short: '%{user} ha de ser un contacte de %{other_user}?'
-  request_to_friend_description: '%{user} vol ser amic/amiga de %{other_user}'
-  request_to_join_our_network:
-    one: Invitació per unir-se
-    other: Invitacions per unir-se
-  request_to_destroy_our_group: Sol·licitud de destrucció del grup
-  request_to_join_our_network_short: '%{group} ha d''unir-se a %{network}?'
-  request_to_join_our_network_description: el grup %{group} ha sigut convidat a formar part de la xarxa %{network}
-  request_to_join_us:
-    one: Invitació per unir-se
-    other: Invitacions per unir-se
-  request_to_join_us_short: '%{user} ha d''unir-se a %{group}?'
-  request_to_join_us_description: '%{user} ha sigut convidat a %{group}'
   request_to_join_us_via_email:
     one: Invitació per unir-se
     other: Invitacions per unir-se
-  request_to_join_us_via_email_short: '%{email} ha d''unir-se a %{group}?'
-  request_to_join_us_via_email_description: '%{email} ha sigut convidat a %{group}'
-  request_to_join_you: Sol·licitud per unir-se
-  request_to_join_you_short: '%{user} ha d''unir-se a %{group}?'
-  request_to_join_you_description: '%{user} vol formar part de %{group}'
-  request_to_join_your_network: Sol·licitud per unir-se
-  request_to_join_your_network_short: '%{group} ha d''unir-se a %{network}?'
-  request_to_join_your_network_description: '%{group} vol formar part de la xarxa %{network}'
-  request_to_destroy_our_group_short: S'ha de destruir %{group}?
-  request_to_destroy_our_group_description: L'usuari %{user} ha proposat destruir %{group_type} %{group}.
   request_to_create_council: Sol·licitud per crear un Consell
-  request_to_create_council_short: '%{group} ha de tenir un Consell?'
   request_to_create_council_description: L'usuari %{user} ha proposat crear un consell per %{group_type} %{group}.
+  request_to_create_council_short: '%{group} ha de tenir un Consell?'
+  request_to_destroy_our_group: Sol·licitud de destrucció del grup
+  request_to_destroy_our_group_description: L'usuari %{user} ha proposat destruir %{group_type} %{group}.
+  request_to_destroy_our_group_short: S'ha de destruir %{group}?
+  request_to_friend: Sol·licita ser contacte
+  request_to_friend_description: '%{user} vol ser amic/amiga de %{other_user}'
+  request_to_friend_short: '%{user} ha de ser un contacte de %{other_user}?'
+  request_to_join_our_network_description: el grup %{group} ha sigut convidat a formar part de la xarxa %{network}
+  request_to_join_us_description: '%{user} ha sigut convidat a %{group}'
+  request_to_join_us_via_email_description: '%{email} ha sigut convidat a %{group}'
+  request_to_join_us_via_email_short: '%{email} ha d''unir-se a %{group}?'
+  request_to_join_you: Sol·licitud per unir-se
+  request_to_join_you_description: '%{user} vol formar part de %{group}'
+  request_to_join_your_network_description: '%{group} vol formar part de la xarxa %{network}'
   request_to_remove_user: Sol·licitud per eliminar un membre
-  request_to_remove_user_short: '%{member} ha de ser eliminat de %{group}?'
   request_to_remove_user_description: L'usuari %{user} ha proposat eliminar %{member} de %{group_type} %{group}.
-  invite_info: Indica els noms d'usuaris o adreces de correu electrònic de la gent que vols convidar a aquest %{group_type}.
-  invite_error_redeemed: Ja s'ha reclamat aquesta invitació.
-  invite_error_already_member: Ja ets membre d'aquest grup.
-  request_exists_error: La sol·licitud ja existeix per %{recipient}
-  network_invite_info: Indica els noms dels grups que vols convidar a formar part d'aquesta xarxa.
-  recipient_tip: Separa els recipients amb comes, espais o línies noves.
-  you_are_invited: Esteu convidat a unir-vos.
-  friend_request_message_label: Expliqueu a %{user} perquè voleu ser el seu contacte.
-  friend_remove_confirmation: Esteu segur que voleu deixar de ser contacte de %{user}?
-  place: lloc
-  icon: Icona
-  file: Fitxer
-  files: Fitxers
-  photo: Foto
-  caption: Cita
-  photo_credit: Crèdit de Foto
-  video_embed: Incrustar
-  size: Mida
-  illegal_redirect: Redirecció il·legal
-  redirect_to_foreign_domain: Esteu intentant redireccionar a un domini extern (%{url}) després d'iniciar sessió. Per raons de seguretat hem tret aquest paràmetre de la URL.
-  save_wiki_before_adding_image: Deseu la wiki abans d'afegir-hi una imatge.
-  preview_selected_image: Previsualització de la imatge seleccionada
-  image_size_info: Seleccioneu la mida de la imatge a inserir
-  small: petit
-  medium: mitjà
-  large: gran
-  full: complet
-  image_options_info: La imatge inclosa a la wiki ha d'enllaçar a la imatge a mida completa?
-  include_full_checkbox: 'incloure l''enllaç a l''orginal '
-  image_select_info: Seleccioneu una imatge per inserir de les imatges prèviament carregades al grup
-  image_upload_info: Carregueu una nova imatge al grup perquè pugui ser utilitzada a la wiki
-  a_message_link: un missatge
-  a_reply_link: una resposta
-  confirm_discarding_text_area: Perdreu tots els canvis no desats. Feu clic a %{cancel} per continuar editant.
+  request_to_remove_user_short: '%{member} ha de ser eliminat de %{group}?'
+  view_label: Mostra
   activity_contact_created: "%{user} ha afegit a %{other_user} com amic"
-  activity_user_left_group: "%{user} ha deixat el grup %{group} (%{group_type})"
-  activity_user_joined_group: "%{user} s'ha afegit al grup %{group} (%{group_type}) "
-  activity_user_joined_site: "%{user} s'ha unit a %{group}"
-  activity_user_destroyed: "%{user} s'ha retirat"
   activity_group_created: "%{user} ha creat el grup %{group} de tipus %{group_type}"
   activity_group_destroyed: "El grup %{group} he sigut destruït per %{user}"
-  activity_wall_message: "%{author} ha escrit a %{user}: %{message}"
   activity_message: "%{author} ha escrit: %{message}"
-  activity_unread: Tens %{count} [missatges privats] no llegits
-  activity_unread_singular: Tens un missatge privat no llegit
-  activity_user_left_site: "%{user} ha marxat de %{group}"
   activity_message_received: 'Heu rebut %{message_tag} de %{other_user}: %{title}'
   activity_twinkled: '%{user} ha marcat la vostra publicació «%{post}»'
+  activity_unread: Tens %{count} [missatges privats] no llegits
+  activity_unread_singular: Tens un missatge privat no llegit
+  activity_user_destroyed: "%{user} s'ha retirat"
+  activity_user_joined_group: "%{user} s'ha afegit al grup %{group} (%{group_type}) "
+  activity_user_joined_site: "%{user} s'ha unit a %{group}"
+  activity_user_left_group: "%{user} ha deixat el grup %{group} (%{group_type})"
+  activity_user_left_site: "%{user} ha marxat de %{group}"
+  activity_wall_message: "%{author} ha escrit a %{user}: %{message}"
+  asset_version_list_version_heading: versió
+  created_on: 'Creat al '
+  delete_version_confirm: Esteu segur que voleu eliminar aquesta versió?
+  file_size: Tamany del fitxer
+  file_version_deleted: versió de fitxer eliminada
+  format: Format
+  full: complet
+  galleries: Galeries
+  history: Historial
+  image_options_info: La imatge inclosa a la wiki ha d'enllaçar a la imatge a mida completa?
+  image_select_info: Seleccioneu una imatge per inserir de les imatges prèviament carregades al grup
+  image_size_info: Seleccioneu la mida de la imatge a inserir
+  image_upload_info: Carregueu una nova imatge al grup perquè pugui ser utilitzada a la wiki
+  large: gran
   media_image: Imatge
   media_images: Imatges
-  zip_file: Fitxer zip
-  history: Historial
+  medium: mitjà
   other_formats: Altres Formats
-  file_version_deleted: versió de fitxer eliminada
-  delete_version_confirm: Esteu segur que voleu eliminar aquesta versió?
-  galleries: Galeries
-  created_on: 'Creat al '
-  file_size: Tamany del fitxer
-  format: Format
   regenerate: regenerar les miniatures
+  small: petit
   version_number: versió %{version}
-  upload_image: Penja una imatge
-  asset_version_list_version_heading: versió
-  order_changed: Ordre canviat.
-  error_saving_new_order_message: 'Hi ha hagut un error en desar el nou ordre: %{error_message}'
-  successfully_removed_image: S'ha mogut la imatge amb èxit %{undo_link}
-  view_slideshow: Veure Projecció de Diapositives
-  edit_gallery: Edita la galeria
-  back_to_gallery_link: Torna a la galeria
-  gallery_changing_cover_message: S'està canviant la portada...
-  download: Descarregar
-  download_gallery: Galeria de Descarregues
-  gallery_slideshow_apply_settings_button: aplica
-  gallery_undo_link: desfés
-  remove_from_gallery: Elimina de la galeria
-  removing_image: S'està eliminant la imatge...
-  move_image_left: Moure la imatge a l'esquerra
-  move_image_right: Moure la imatge a la dreta
-  successful_undelete_image: S'ha recuperat la imatge correctament.
-  saved_new_order: S'ha desat el nou ordre!
-  error_saving_new_order: Hi ha hagut un error en desar el nou ordre!
-  saving_your_changes: S'estan desant els canvis...
-  activate_js_to_rearrange_photos: Activeu JavaScript per poder arrossegar i reordenar les fotos!
-  drag_and_drop_to_rearrange_photos: 'Arrossega i Solta les imatges per reordenar-les  '
-  no_images_in_gallery: No n'hi imatges a la galeria
-  add_existing_image: Afegeix una foto
-  add_photo_to_gallery: Feu clic sobre una foto per afegir-la
-  cancel_link: cancel·la
-  file_must_be_image_error: El fitxer ha de ser una imatge per estar a la galeria.
-  add_another_file: Afegeix un altre fitxer
-  slideshow_delay_input: Actualitza cada %{input_field} segons
-  make_album_cover: 'assigna aquesta imatge a la portada de l''àlbum. '
-  album_cover_changed: S'ha canviat la portada de l'àlbum
-  upload_images_link: Penja
-  upload_a_zip_file_link: Penja un arxiu ZIP
-  you_are_not_allowed_to_do_that: No teniu permís per fer això!
-  view_label: Mostra
-  sunday: Diumenge
-  monday: Dilluns
-  tuesday: Dimarts
-  wednesday: Dimecres
-  thursday: Dijous
-  friday: Divendres
-  saturday: Dissabte
-  date_today: Avui
-  date_this_week: Aquesta setmana
-  date_this_month: Aquest mes
-  date_this_year: Aquest any
-  date_all_time: Per totes les dates
-  alert_not_saved: No s'ha pogut desar els canvis
-  alert_field_errors: Hi ha problemes amb el següents camps
-  alert_saved: S'han desat els canvis
-  alert_permission_denied: Permís Denegat
-  csrf_error_message: 'La vostra sol·licitud d''inici de sessió té pinta de ser un atac contra aquest lloc web. No us preocupeu: això passa sovint, fins i tot en sol·licituds innocents.  Simplement som súper paranoics. Només cal que torneu a carregar la pàgina abans de tornar-ho intentar. Podeu seguir aquest enllaç per provar-ho de nou.'
-  set_status_button: Actualitzar Estatus
-  my_contacts: Contactes
+  zip_file: Fitxer zip
   anonymous: anònim
   login_required: Autenticació Requerida
   login_required_description: Autentica't per poder fer això.
-  permission_denied_description: No tens permisos suficients per complir aquella acció.
   permission_denied: Permís denegat
-  chat: Xat
-  left_the_chatroom: ha deixat el xat
+  permission_denied_description: No tens permisos suficients per complir aquella acció.
+  date_all_time: Per totes les dates
+  date_this_month: Aquest mes
+  date_this_week: Aquesta setmana
+  date_this_year: Aquest any
+  date_today: Avui
+  friday: Divendres
+  monday: Dilluns
+  saturday: Dissabte
+  sunday: Diumenge
+  thursday: Dijous
+  tuesday: Dimarts
+  wednesday: Dimecres
+  alert_field_errors: Hi ha problemes amb el següents camps
+  alert_not_saved: No s'ha pogut desar els canvis
+  alert_saved: S'han desat els canvis
+  csrf_error_message: 'La vostra sol·licitud d''inici de sessió té pinta de ser un atac contra aquest lloc web. No us preocupeu: això passa sovint, fins i tot en sol·licituds innocents.  Simplement som súper paranoics. Només cal que torneu a carregar la pàgina abans de tornar-ho intentar. Podeu seguir aquest enllaç per provar-ho de nou.'
+  error_saving_new_order_message: 'Hi ha hagut un error en desar el nou ordre: %{error_message}'
+  add_another_file: Afegeix un altre fitxer
+  add_existing_image: Afegeix una foto
+  add_photo_to_gallery: Feu clic sobre una foto per afegir-la
+  album_cover_changed: S'ha canviat la portada de l'àlbum
+  back_to_gallery_link: Torna a la galeria
+  cancel_link: cancel·la
+  download: Descarregar
+  download_gallery: Galeria de Descarregues
+  edit_gallery: Edita la galeria
+  error_saving_new_order: Hi ha hagut un error en desar el nou ordre!
+  file_must_be_image_error: El fitxer ha de ser una imatge per estar a la galeria.
+  gallery_changing_cover_message: S'està canviant la portada...
+  gallery_slideshow_apply_settings_button: aplica
+  gallery_undo_link: desfés
+  make_album_cover: 'assigna aquesta imatge a la portada de l''àlbum. '
+  move_image_left: Moure la imatge a l'esquerra
+  move_image_right: Moure la imatge a la dreta
+  no_images_in_gallery: No n'hi imatges a la galeria
+  order_changed: Ordre canviat.
+  remove_from_gallery: Elimina de la galeria
+  removing_image: S'està eliminant la imatge...
+  saved_new_order: S'ha desat el nou ordre!
+  saving_your_changes: S'estan desant els canvis...
+  slideshow_delay_input: Actualitza cada %{input_field} segons
+  successful_undelete_image: S'ha recuperat la imatge correctament.
+  successfully_removed_image: S'ha mogut la imatge amb èxit %{undo_link}
+  you_are_not_allowed_to_do_that: No teniu permís per fer això!
+  caption: Cita
+  file: Fitxer
+  files: Fitxers
+  icon: Icona
+  photo: Foto
+  photo_credit: Crèdit de Foto
+  size: Mida
+  video_embed: Incrustar
+  add_tags: Afegeix etiquetes
+  no_tags: sense etiquetes
+  separate_tags: Separeu les etiquetes amb comes.
   tag: Etiqueta
   tags: Etiquetes
-  no_tags: sense etiquetes
-  add_one_or_more_tags: Afegiu una o més etiquetes, separades per comes
-  separate_tags: Separeu les etiquetes amb comes.
-  add_tags: Afegeix etiquetes
-  current_tags: Etiquetes actuals
-  welcome_title: 'Benvinguts a %{site_title} '
+  set_status_button: Actualitzar Estatus
   welcome_message: Crabgrass ajuda a grups que treballen pel canvi social a treballar, organitzar-se, col·laborar i fer xarxa.
-  wiki: Wiki
-  public_wiki: Wiki pública
-  private_wiki: Wiki privada
-  edit_wiki: Edita la wiki
-  wiki_existed_new_version_created: Aquesta wiki ja ha estat creada per un altre usuari. Els vostres canvis s'han desat com una nova versió.
-  wiki_is_locked: Aquest wiki està bloquejat per %{user}
-  wiki_section_is_locked: La secció %{section} està bloquejada per %{user}.
-  leave_editing_wiki_page_warning: Si abandoneu aquesta pàgina perdreu els canvis que heu fet.
-  cant_edit_section: No es pot editar %{section}.
-  user_locked_section: "%{user} ha bloquejat %{section}."
-  can_still_save: Encara podeu desar.
-  changes_might_be_overwritten: Els vostres canvis poden ser sobreescrits.
-  other_section_locked_error: No podeu bloquejar més d'una secció alhora. Ja teniu bloquejada %{section}.
+  welcome_title: 'Benvinguts a %{site_title} '
+  a_message_link: un missatge
+  a_reply_link: una resposta
+  add_one_or_more_tags: Afegiu una o més etiquetes, separades per comes
+  chat: Xat
+  confirm_discarding_text_area: Perdreu tots els canvis no desats. Feu clic a %{cancel} per continuar editant.
+  illegal_redirect: Redirecció il·legal
+  include_full_checkbox: 'incloure l''enllaç a l''orginal '
+  left_the_chatroom: ha deixat el xat
+  place: lloc
+  preview_selected_image: Previsualització de la imatge seleccionada
+  redirect_to_foreign_domain: Esteu intentant redireccionar a un domini extern (%{url}) després d'iniciar sessió. Per raons de seguretat hem tret aquest paràmetre de la URL.
+  save_wiki_before_adding_image: Deseu la wiki abans d'afegir-hi una imatge.
+  view_slideshow: Veure Projecció de Diapositives
   break_lock_button: Desbloquejar
-  force_save_button: Trenca el bloqueig i desa
-  versions: Versions
-  version: Versió
-  comparing_changes_header: S'estan comparant els canvis entre %{old_version} i %{new_version}.
+  can_still_save: Encara podeu desar.
+  cant_find_wiki_section: No es pot trobar la secció %{section} de la wiki
   changes_made: Canvis fets %{when}.
-  prev_change: Canvi Anterior
-  next_change: Següent Canvi
+  changes_might_be_overwritten: Els vostres canvis poden ser sobreescrits.
+  comparing_changes_header: S'estan comparant els canvis entre %{old_version} i %{new_version}.
+  diff_link: mostra els canvis
+  edit_wiki: Edita la wiki
+  force_save_button: Trenca el bloqueig i desa
   formatting_reference_link: Ajuda d'edició
+  insert_image: Insereix una imatge
+  leave_editing_wiki_page_warning: Si abandoneu aquesta pàgina perdreu els canvis que heu fet.
+  next_change: Següent Canvi
+  prev_change: Canvi Anterior
+  preview: Preveure
+  private_wiki: Wiki privada
+  public_wiki: Wiki pública
+  version: Versió
   version_doesnt_exist: No hi ha una versió %{version}
   version_exists_error: Aquesta wiki està bloquejada perquè l'usuari %{user} ha desat nous canvis recentment. Encara podeu desar els vostres canvis, però sobreescriuran la nova versió.
-  you_are_viewing_version: 'Esteu mirant la versió %{version} de %{user} '
-  diff_link: mostra els canvis
   version_link: mostra la versió
-  wiki_section_edit: Edita Aquesta Secció
+  versions: Versions
+  wiki: Wiki
+  wiki_existed_new_version_created: Aquesta wiki ja ha estat creada per un altre usuari. Els vostres canvis s'han desat com una nova versió.
   wiki_revert_version: Revertir a la Versió %{version}
+  wiki_section_edit: Edita Aquesta Secció
+  wiki_section_is_locked: La secció %{section} està bloquejada per %{user}.
   wiki_version_creator_heading: persona
   wiki_version_revert_link: reverteix
-  insert_image: Insereix una imatge
-  preview: Preveure
-  save_or_cancel_edit_lock_wiki_error: Heu bloquejat aquesta wiki. Els altres usuaris no podran editar-la fins que feu clic a %{save_button} o %{cancel_button} per tancar l'edició.
-  cant_find_wiki_section: No es pot trobar la secció %{section} de la wiki
+  you_are_viewing_version: 'Esteu mirant la versió %{version} de %{user} '

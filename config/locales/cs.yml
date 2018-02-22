@@ -1,40 +1,6 @@
 cs:
-  cookie_disabled_warning: Máte vypnuté cookies. Pro přihlášení je nutné je zapnout.
-  signup_link: Vytvořit nového uživatele
-  signup_email_info: 'Volitelné: použije se v případě, že zapomenete své heslo'
-  forgot_password_link: Zapomněli jste heslo?
-  login_failure_reason: Uživatelské jméne nebo heslo je neplatné.
-  signup_success_message: Děkujeme za registraci!
-  login_name: Uživatelské jméno
-  signup_success: Registrace úspěšná
-  logout_success: Nashledanou
-  logout_success_message: Byli jste odhlášeni.
-  signup_button: Registrovat se
-  login_failed: Nelze se přihlásit
-  login_button: Přihlásit se
-  login: Přihlásit se
-  sign_in: Přihlásit se
-  signup_title: Vytvořte si účet
-  forgot_password_text: Pokud jste zapomněli heslo které používáte k přihlášení, můžeme vám na email poslat odkaz, který vám umožní vygenerovat si nové.
-  reset_password_text: Dobrý den, %{user}. Pokud jste zapomněli heslo, které používáte k přihlášení, zde si můžete nastavit nové.
-  forgot_password_mail_greeting: "%{user}, pro resetování hesla prosím navštivte"
-  forgot_password_mail_expiry: Tento odkaz bude platný následujících 24 hodin. Poté vyprší a budete muset na stránce pro zapomenuté heslo zažádat o nový.
-  reset_password_mail_greeting: "%{user}, vaše heslo bylo resetováno dle požadavku."
-  reset_password_mail_warning: Pokud jste to nebyli vy, kdo o změnu hesla zažádal, prosíme, kontaktujte nás.
-  invalid_email_text: Vámi zadaná emailová adresa je neplatná.
-  reset_password: Resetovat heslo
-  reset_password_email_sent: Pokud je vámi zadaná emailová adresa svázaná s uživatelským účtem, byl na ní odeslán email obsahující instrukce k resetování hesla.
-  invalid_token: Neplatný token
-  invalid_token_text: Vámi zadaný odkaz na resetování hesla je neplatný. Pravděpodobně už byl použit, nebo vyexpiroval (odkaz je platný 24 hodin po odeslání).
-  password_reset: Resetování hesla
-  password_reset_ok_text: Heslo bylo úspěšně resetováno. Nyní se můžete přihlásit s no
-  requested_forgot_password: Požádali jste o změnu hesla
-  password_was_reset: Vaše heslo bylo resetováno
-  forgotten_email_address: Jakou emailovou adresu jste zadali při vytváření účtu?
-  new_password: Nové heslo
-  confirm_new_password: Potvrdit nové heslo
   congratulations_you_have_signed_up: Gratulujeme! Zaregistrovali jste se na %{site_title}
-  you_should_receive_instructions_email: Nyní by jste měli obdržet email s instrukcemi, jak dokončit vytvoření vašeho účtu.
+  cookie_disabled_warning: Máte vypnuté cookies. Pro přihlášení je nutné je zapnout.
   email_verification_body: |-
     Zaregistrovali jste se na %{site_title}(%{host})
 
@@ -44,427 +10,316 @@ cs:
     %{verify_email_link}
 
     Pokud jste neodeslali tuto žádost, tento email můžete ignorovat.
-  change_password: Změnit heslo
-  password: Heslo
-  password_confirmation: Potvrdit heslo
-  login_password: Heslo
-  remove_your_account: Odstranit účet
+  forgotten_email_address: Jakou emailovou adresu jste zadali při vytváření účtu?
+  invalid_email_text: Vámi zadaná emailová adresa je neplatná.
+  invalid_token: Neplatný token
+  invalid_token_text: Vámi zadaný odkaz na resetování hesla je neplatný. Pravděpodobně už byl použit, nebo vyexpiroval (odkaz je platný 24 hodin po odeslání).
+  login: Přihlásit se
+  login_failed: Nelze se přihlásit
+  login_failure_reason: Uživatelské jméne nebo heslo je neplatné.
+  logout_success: Nashledanou
+  logout_success_message: Byli jste odhlášeni.
+  sign_in: Přihlásit se
+  signup_button: Registrovat se
+  signup_email_info: 'Volitelné: použije se v případě, že zapomenete své heslo'
+  signup_link: Vytvořit nového uživatele
+  signup_success: Registrace úspěšná
+  signup_success_message: Děkujeme za registraci!
+  signup_title: Vytvořte si účet
+  you_should_receive_instructions_email: Nyní by jste měli obdržet email s instrukcemi, jak dokončit vytvoření vašeho účtu.
+  account_successfully_removed: Váš účet byl úspěšně odstraněn odstraněn z databáze, včetně všech dat, která s ním souvisí.
   anonymize_display_name: Anonymizovat zobrazované jméno
   anonymize_display_name_info: Nahradí vaše jméno slovem 'Anonymous' ve všech výskytech
+  confirm_account_removal: Jste si jistí, že chcete odstarnit svůj účet? Tento krok nelze vrátit zpět a vaše data budou natrvalo odstraněna.
   destroy_comments: Zničit komentáře
   destroy_comments_info: Tímto odstraníte všechny své komentáře, která jste na stránkách učinili. To může zkomplikovat pochopení komentářů, které učinili ostatní.
-  confirm_account_removal: Jste si jistí, že chcete odstarnit svůj účet? Tento krok nelze vrátit zpět a vaše data budou natrvalo odstraněna.
-  account_successfully_removed: Váš účet byl úspěšně odstraněn odstraněn z databáze, včetně všech dat, která s ním souvisí.
+  remove_your_account: Odstranit účet
+  change_password: Změnit heslo
+  confirm_new_password: Potvrdit nové heslo
+  forgot_password_link: Zapomněli jste heslo?
+  forgot_password_mail_expiry: Tento odkaz bude platný následujících 24 hodin. Poté vyprší a budete muset na stránce pro zapomenuté heslo zažádat o nový.
+  forgot_password_mail_greeting: "%{user}, pro resetování hesla prosím navštivte"
+  forgot_password_text: Pokud jste zapomněli heslo které používáte k přihlášení, můžeme vám na email poslat odkaz, který vám umožní vygenerovat si nové.
+  new_password: Nové heslo
+  password: Heslo
+  password_confirmation: Potvrdit heslo
+  password_reset: Resetování hesla
+  password_reset_ok_text: Heslo bylo úspěšně resetováno. Nyní se můžete přihlásit s no
+  password_was_reset: Vaše heslo bylo resetováno
+  requested_forgot_password: Požádali jste o změnu hesla
+  reset_password: Resetovat heslo
+  reset_password_email_sent: Pokud je vámi zadaná emailová adresa svázaná s uživatelským účtem, byl na ní odeslán email obsahující instrukce k resetování hesla.
+  reset_password_mail_greeting: "%{user}, vaše heslo bylo resetováno dle požadavku."
+  reset_password_mail_warning: Pokud jste to nebyli vy, kdo o změnu hesla zažádal, prosíme, kontaktujte nás.
+  reset_password_text: Dobrý den, %{user}. Pokud jste zapomněli heslo, které používáte k přihlášení, zde si můžete nastavit nové.
   crabgrass:
-    powered_by_html: |
-      Tato stránka funguje na softwaru <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
-    description_html: |
-      , <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL svobodný software</a> pro organizování se.
+    description_html: ', <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL svobodný software</a> pro organizování se.
+
+      '
+    get_involved: Zapojte se
+    help_pages: Nápověda Crabgrass
+    help_translate: Pomozte s překladem
+    powered_by_html: 'Tato stránka funguje na softwaru <a href="https://we.riseup.net/crabgrass">crabgrass</a>%{description}
+
+      '
     report_a_bug: Nahlásit chybu
     request_a_feature: Požádat o vylepšení
-    help_pages: Nápověda Crabgrass
-    get_involved: Zapojte se
-    help_translate: Pomozte s překladem
-  destroy_confirmation: Jste si jístí, že chcete odstranit %{thing}? Tuto akci nelze vrátit.
-  confirmation: Jste si jistí?
-  cancel: Zrušit
-  optional: Volitelné
-  required: Vyžadováno
-  thing_required: "%{thing} vyžadováno"
-  edit: Upravit
-  upload: Nahrát
-  select_files: Vybrat soubory
-  drop_files_here: Sem přetáhněte soubory
-  files_pending: "#{pending} nenahraných souborů"
-  return_link: Vrátit se
-  back_button: Zpět
-  send_button: Poslat
-  close_button: Zavřít
-  share_button: Sdílet
-  save_button: Uložit
-  add_button: Přidat
-  cancel_button: Zrušit
-  create_button: Vytvořit
-  ok_button: OK
-  done: Hotovo
-  show_button: Zobrazit
-  show_thing: Zobrazit %{thing}
-  confirm: Potvrdit
-  alert: Upozornění
-  loading_progress: Načítá se ...
-  loadingdotdotdot: Načítá se ...
-  create_a_new_thing: Vytvořit nové %{thing}
-  create_thing: Vytvořit %{thing}
-  created_by: Vytvořeno uživatelem
-  updated_by: Updatováno uživatelem
-  created_by_user_on: Vytvořeno uživatelem %{user} %{when}
-  approve: Schválit
-  reject: Odmítnout
-  pending: Čekající
-  rejected: Zamítnuté
-  approved: Schválené
-  saved: Uložené
-  destroy: Zničit
-  thing_destroyed: "%{thing} zničeno"
-  destroy_thing: Zničit %{thing}
-  delete_thing: Odstranit %{thing}
-  delete: Odstranit
-  delete_button: Odstranit
-  deleted: Odstraněno
-  remove: Odstranit
-  autocomplete:
-    placeholder:
-      enter_name_of_group_or_person: Zadejte jméno skupiny nebo osoby
-      enter_name_of_group: Zadejte jméno skupiny
-      enter_name_of_person: Zadejte jméno osoby
   actions:
-    task:
-      add: Přidat nový Úkol
     possible:
       add: Přidat novou Možnost
+    task:
+      add: Přidat nový Úkol
+  add_button: Přidat
+  alert: Upozornění
+  approve: Schválit
+  approved: Schválené
+  cancel: Zrušit
+  close_button: Zavřít
+  confirm: Potvrdit
+  create_a_new_thing: Vytvořit nové %{thing}
+  create_button: Vytvořit
+  create_thing: Vytvořit %{thing}
+  created_by: Vytvořeno uživatelem
+  created_by_user_on: Vytvořeno uživatelem %{user} %{when}
+  delete: Odstranit
+  delete_thing: Odstranit %{thing}
+  deleted: Odstraněno
+  destroy: Zničit
+  destroy_confirmation: Jste si jístí, že chcete odstranit %{thing}? Tuto akci nelze vrátit.
+  destroy_thing: Zničit %{thing}
+  drop_files_here: Sem přetáhněte soubory
+  edit: Upravit
+  loading_progress: Načítá se ...
+  ok_button: OK
+  optional: Volitelné
+  pending: Čekající
+  reject: Odmítnout
+  rejected: Zamítnuté
+  remove: Odstranit
+  required: Vyžadováno
+  save_button: Uložit
+  saved: Uložené
+  select_files: Vybrat soubory
+  send_button: Poslat
+  show_thing: Zobrazit %{thing}
+  thing_destroyed: "%{thing} zničeno"
+  thing_required: "%{thing} vyžadováno"
+  updated_by: Updatováno uživatelem
+  upload: Nahrát
   mailer:
     hello: Dobrý den, %{username}
-    page_history:
-      a_page_has_been_modified: "%{site_title} : Stránka byla upravena"
-      we_leave_out_details: Z tohoto emailu vynecháme detaily, které můžete považovat za citlivé.
-      you_can_find_updates_here: 'Více detailů a seznam nedávno upravených stránek naleznete zde:'
-      the_page_you_are_watching_description: Stránka "%{page_title}" kterou sledujete byla upravena
-      change_your_settings_here: 'Svoje nastavení emailových upozornění si upravte zde: %{page_link}'
-      you_can_turn_of_or_configure_notifications: Vypnout upozornění emailem, získávat pravidelný souhrn změn, nebo dostávat email pokaždé, když je stránka aktualizována.
   exception:
-    title:
-      not_found: "%{thing} nenalezeno"
-      unauthorized: Vyžadováno přihlášení
-      forbidden: Přístup odepřen
-      group:
-        not_found: Skupina nenalezena
     description:
-      not_found: Omlouváme se, ale nemůžeme najít to co hledáte.
-      unauthorized: Pro provedení této akce se prosím přihlašte.
       forbidden: Omlouváme se, ale nemáte možnost provést tuto akci.
       group:
         not_found: Omlouváme se, ale nemůžeme najít skupinu kterou hledáte.
+      not_found: Omlouváme se, ale nemůžeme najít to co hledáte.
+      unauthorized: Pro provedení této akce se prosím přihlašte.
+    title:
+      forbidden: Přístup odepřen
+      group:
+        not_found: Skupina nenalezena
+      not_found: "%{thing} nenalezeno"
+      unauthorized: Vyžadováno přihlášení
+  add_comment: Přidat Komentář
+  add_images_to_gallery_link: Přidat Obrázky do galerie
+  close_and_reload_gallery: Zavřít a přenačíst galerii
+  confirm_image_delete: Opravdu chcete odstranit tento obrázek? Tuto akci nelze vrátit zpět.
+  edit_image: Upravit obrázek
+  edit_gallery_explanation: Přidejte nové obrázky nebo je přetáhněte pro změnu pořadí.
   image_count: Obrázek %{number} z %{count}
   image_count_total: "%{count} Fotek"
-  show_gallery: Zobrazit Galerii
-  edit_gallery_explanation: Přidejte nové obrázky nebo je přetáhněte pro změnu pořadí.
-  edit_image: Upravit obrázek
-  show_gallery_explaination: Pro zobrazení celého obrázku klikněte na náhled
-  add_images_or_zips: Přidat Obrázky nebo ZIP-soubor
-  add_images_or_zips_explaination: ZIP-soubor bude automaticky rozbalen a obsah přidán do galerie
-  confirm_image_delete: Opravdu chcete odstranit tento obrázek? Tuto akci nelze vrátit zpět.
-  no_title_given: "(žádný nadpis neuveden)"
-  add_images: Přidat Obrázky
-  edit_images: Upravit Obrázky
   upload_new_image: Nahrát nový Obrázek
-  type_your_messages_here: Napište svou zprávu a stiskněte enter ...
-  group_not_allowed_to_view_image_error: Skupina která vlastní tuto stránku nemá oprávnění k zobrazení tohoto obrázku.
-  add_comment: Přidat Komentář
-  image_title: 'Název obrázku: {{title}}'
   upload_zip_file_link: Nahrát ZIP-soubor
-  add_images_to_gallery_link: Přidat Obrázky do galerie
-  too_tall_image_error: Nahraný obrázek je příliš vysoký (maximální výška je {{count}} pixelů)
-  too_wide_image_error: Nahraný obrázek musí být přesně {{count}} pixelů široký
-  cant_detect_image_height_error: Nelze detekovat výšku obrázku. Soubor je buď poškozený a nebo jde o chybu na straně serveru
-  edit_image_header: Upravit Obrázek a Audio
-  upload_images_and_zip_files_help: 'Volitné: Vyberte obrazové nebo ZIP soubory k nahrání.'
-  close_and_reload_gallery: Zavřít a přenačíst galerii
-  search: Hledat
-  go: Jít
-  thing_not_found: "%{thing} nenalezeno"
-  no_things_found: Žádné %{things} nenalezeno.
-  no_search_results: Žádné výsledky
-  not_found: Nenalezeno
-  see_all_link: Zobrazit vše
-  total: "%{count} celkem"
-  all: Všechno
-  none: Nic
-  or: nebo
-  new: nové
-  modified: upraveno
-  unknown: Neznámé
-  next: Další
-  previous: Předchozí
-  pagination_next: Další
-  pagination_previous: Předchozí
-  return: Zpět
-  see_more_link: Více
-  see_less_link: Méně
-  list_things: Prohlížet %{things}
-  user: Uživatel
-  users: Uživatelé
+  approved_by_entity: Schváleno %{entity}
+  name: Jméno
+  owner: Vlastník
   people: Lidé
   person: Osoba
-  name: Jméno
-  recipients: Příjemci
   recipient: Příjemce
-  owner: Vlastník
-  created_by_entity: Vytvořeno %{entity}
-  approved_by_entity: Schváleno %{entity}
+  recipients: Příjemci
   rejected_by_entity: Odmítnuto %{entity}
+  user: Uživatel
+  users: Uživatelé
+  all: Všechno
+  autocomplete:
+    placeholder:
+      enter_name_of_group: Zadejte jméno skupiny
+      enter_name_of_person: Zadejte jméno osoby
+  go: Jít
+  list_things: Prohlížet %{things}
+  modified: upraveno
+  new: nové
+  next: Další
+  no_search_results: Žádné výsledky
+  no_things_found: Žádné %{things} nenalezeno.
+  none: Nic
+  or: nebo
+  previous: Předchozí
+  return: Zpět
+  search: Hledat
+  see_all_link: Zobrazit vše
+  see_more_link: Více
+  thing_not_found: "%{thing} nenalezeno"
+  total: "%{count} celkem"
+  unknown: Neznámé
   contacts: Kontakty
-  friends: Kontakty
   member_groups_of_network: Členské skupiny
   peers: Soudruzi
-  me: Já
-  back: Zpět
-  share: Sdílet
-  contributed: Přispěno
-  profile: Profil
-  content: Obsah
-  comments: Komentáře
-  statistics: Statistiky
-  summary: Souhrn
-  private: Soukromé
-  public: Veřejné
-  options: Možnosti
-  permissions: Oprávnění
-  notification: Notifikace
-  notice: Oznámení
-  notices: Oznámení
-  dismiss: Zamítnout
-  dismiss_all_notices: Zamítnout vše
-  dismiss_all_notices_confirmation: Jste si jistí, že chcete zamítnout všechna oznámení?
   action_cannot_be_undone: Tuto akci nelze vrátit zpět.
-  locale: Místní
+  administration: Administrace
+  back: Zpět
+  comments: Komentáře
+  contributed: Přispěno
   description: Popis
   details: Detaily
-  invite: Pozvat
-  membership: Členství
-  visibility: Viditelnost
-  administration: Administrace
-  settings: Nastaven
+  dismiss_all_notices: Zamítnout vše
+  dismiss_all_notices_confirmation: Jste si jistí, že chcete zamítnout všechna oznámení?
+  display: Zobrazit
+  hide: Schovat
+  locale: Místní
+  me: Já
+  message: Zpráva
   messages: Zprávy
+  notice: Oznámení
+  notices: Oznámení
+  notification: Notifikace
   page: Stránka
+  permissions: Oprávnění
+  print: Vytisknout
+  private: Soukromé
+  private_message_notice: Upozornění na soukromou zprávu
+  public: Veřejné
+  settings: Nastaven
+  share: Sdílet
+  show: Zobrazit
+  statistics: Statistiky
+  summary: Souhrn
   tasks: Úkoly
   title: Název
-  text_message: Textová zpráva
-  print: Vytisknout
-  show: Zobrazit
-  hide: Schovat
-  display: Zobrazit
-  message: Zpráva
-  private_message_notice: Upozornění na soukromou zprávu
+  visibility: Viditelnost
   visits: Návštěvy
-  group: Skupina
-  groups: Skupiny
-  organization: Organizace
-  organizations: Organizace
-  network: Síť
-  networks: Sítě
+  basic_settings: Základní nastavení
   committee: Výbor
   committees: Výbory
   council: Rada
   councils: Rady
+  group: Skupina
+  groups: Skupiny
+  my_groups: Moje skupiny
   members: Členové
+  membership: Členství
+  network: Síť
+  networks: Sítě
+  organization: Organizace
+  organizations: Organizace
   structure: Struktura
-  group_creation_info: 'Existují čtyři typy skupin:'
-  group_description: Organizace jsou autonomní skupiny a za členy mají uživatele.
-  network_description: Sítě jsou skupiny, které můžou mít za členy Organizace. Síť může být využita například pro spolupráci dvou a více Organizací.
+  group_destroyed_email: "%{group_type}%{group} byla zrušena!"
+  group_destroyed_subject: "%{group_type}%{group} byla zrušena uživatelem %{user}!"
+  group_invite_subject: Pozvánka do skupiny "%{group}"
   committee_description: Výbory jsou skupiny uvnitř Organizace nebo Sítě. Výbor je vždy kompletně podřízený své mateřské Organizaci nebo Síti. Uživatel, který není členem mateřské Organizace nebo Sítě, přidaný do Výboru, bude mít přístup pouze do skupiny Výboru.
   council_description: Rady jsou skupiny se speciálními administrátorskými oprávněními. Každá Organizace nebo Síť může mít Radu. V případě, že se tak stane, uživatelé v Radě budou mít kontrolu na Sítí nebo Organizací.
   council_description_details: V základním nastavení mají všichni uživatelé oprávnění upravovat skupinu %{group}. Pokud chcete administrativní oprávnění omezit na konkrétní uživatele, vytvořte Radu a přidejte je do ní.
-  committee_choose_group: 'Vybrat skupinu pro tento Výbor:'
+  create_public_group_wiki: Veřejné
+  create_private_group_wiki: Soukromé
+  group_creation_info: 'Existují čtyři typy skupin:'
+  group_description: Organizace jsou autonomní skupiny a za členy mají uživatele.
   network_committees_may_not_join_networks: Výbory ostatních Sítí se nemohou přidat.
+  network_description: Sítě jsou skupiny, které můžou mít za členy Organizace. Síť může být využita například pro spolupráci dvou a více Organizací.
   networks_may_not_join_networks: Sítě se nemůžou připojit k ostatním sítím.
+  group_membership_count: "%{count} Členů"
+  membership_destroy_confirm_message: Opravdu chcete %{entity} odebrat ze skupiny %{group}?
+  membership_exists_error: Uživatel %{member} už je členem skupiny.
+  membership_requests: Žádosti o členství
+  public_groups: Veřejné skupiny
+  shared_groups: Sdílené skupiny
   may_request_membership_description: Na stránce skupiny %{group} bude odkaz "Přidat se ke skupině %{group}" - kliknutí na něj odešle žádost o členství, kterou lze přijmout nebo zamítnout.
   open_group: Otevřít %{group}
   open_group_description: Uživatelé budou do skupiny %{group} přidáváni automaticky - nebude potřeba nic schvalovat.
-  shared_groups: Sdílené skupiny
-  public_groups: Veřejné skupiny
-  membership_requests: Žádosti o členství
-  group_membership_count: "%{count} Členů"
-  membership_exists_error: Uživatel %{member} už je členem skupiny.
-  membership_destroy_confirm_message: Opravdu chcete %{entity} odebrat ze skupiny %{group}?
-  group_invite_subject: Pozvánka do skupiny "%{group}"
-  group_invite_email: |-
-    Uživatel %{from_user} vás pozval do skupiny %{group}. Pokud se do skupiny chcete přidat, klikněte zde:
-
-    %{accept_invite_link}
-
-    Domovská stránka této skupiny je k nalezení zde:
-    %{group_home_link}
-
-    Pokud se ke skupině přidat nechcete, ignorujte tento email.
-  group_destroyed_subject: "%{group_type}%{group} byla zrušena uživatelem %{user}!"
-  group_destroyed_email: "%{group_type}%{group} byla zrušena!"
   group_wiki: Skupinová wiki
-  create_public_group_wiki: Veřejné
-  create_private_group_wiki: Soukromé
-  public_group_wiki: Veřejné
-  private_group_wiki: Soukromé
-  group_publicly_visible: Učinit skupinu %{group} viditelnou veřejně
-  committee_publicly_visible: Učinit výbory veřejně viditelnými
-  networks_publicly_visible: Učinit Síť veřejně viditelnou
-  allow_membership_requests: Povolit žádosti o členství
-  group_successfully_created: Skupina byla úspěšně vytvořena.
-  group_publicly_visible_description: "Skupina %{group} se zobrazuje ve veřejném výpisu. Její <i>profil</i> je viditelný i nečleny na adrese %{domain}/nazevskupiny"
-  committee_publicly_visible_description: Výbory jsou viditelné i pro nečleny na %{domain}/nazevskupiny
-  networks_publicly_visible_description: Sítě jsou viditelné i pro nečleny na %{domain}/nazevskupiny
-  group_members_publicly_visible: Učinit Členy veřejně viditelnými
-  group_members_publicly_visible_description: Členové jsou viditelné i pro nečleny na adrese %{domain}/nazevskupiny. %{group} může být naopak viditelná na profilech členů (%{domain}/jmeno)
   members_may_edit_wiki: Všichni členové můžou upravovat wiki.
   members_may_edit_wiki_description: Pokud je nezaškrntuto, pouze členové rady můžou editovat wiki %{group}.
-  rss_feed: RSS feed
-  group_language: Hlavní jazyk skupiny %{group}.
-  my_networks: Moje sítě
-  my_groups: Moje skupiny
-  basic_settings: Základní nastavení
-  send_invites: Poslat pozvánku
-  view_requests: Zobrazit žádosti
+  public_group_wiki: Veřejné
+  private_group_wiki: Soukromé
   add_members_to_committee: Přidejte člena skupiny do tohoto výboru. Pokud nechcete přidat uživatele do mateřské skupiny, použijte pozvánku.
-  join_group_link: Připojit se k %{group_type}
-  leave_group_link: Opustit %{group_type}
-  leave_group_confirmation: Určitě chcete opustit tuto %{group_type}?
-  request_join_group_link: Žádost o přidání se k %{group_type}
-  request_exists: Váš požadavek na přidání se čeká na schválení.
-  join_group_confirmation: Jste si jistí, že se chcete přidat k %{group_type}?
-  link_name_description: Toto jméno odkazuje na název skupiny v odkazech a URL adresách. Může obsahovat pouze čísla a písmena, žádné mezery.
+  allow_membership_requests: Povolit žádosti o členství
+  committee_publicly_visible: Učinit výbory veřejně viditelnými
+  committee_publicly_visible_description: Výbory jsou viditelné i pro nečleny na %{domain}/nazevskupiny
   descriptive_name_for_display: Zobrazovaný popisek
-  this_is_committee: Tento výbor je součástí %{parent_group}.
+  group_language: Hlavní jazyk skupiny %{group}.
+  group_members_publicly_visible: Učinit Členy veřejně viditelnými
+  group_members_publicly_visible_description: Členové jsou viditelné i pro nečleny na adrese %{domain}/nazevskupiny. %{group} může být naopak viditelná na profilech členů (%{domain}/jmeno)
+  group_publicly_visible: Učinit skupinu %{group} viditelnou veřejně
+  group_publicly_visible_description: "Skupina %{group} se zobrazuje ve veřejném výpisu. Její <i>profil</i> je viditelný i nečleny na adrese %{domain}/nazevskupiny"
+  group_successfully_created: Skupina byla úspěšně vytvořena.
+  join_group_confirmation: Jste si jistí, že se chcete přidat k %{group_type}?
+  join_group_link: Připojit se k %{group_type}
+  leave_group_confirmation: Určitě chcete opustit tuto %{group_type}?
+  leave_group_link: Opustit %{group_type}
+  link_name_description: Toto jméno odkazuje na název skupiny v odkazech a URL adresách. Může obsahovat pouze čísla a písmena, žádné mezery.
   network_initial_member: Vybrat organizaci jako úvodního člena této sítě.
+  networks_publicly_visible: Učinit Síť veřejně viditelnou
+  networks_publicly_visible_description: Sítě jsou viditelné i pro nečleny na %{domain}/nazevskupiny
+  request_exists: Váš požadavek na přidání se čeká na schválení.
+  request_join_group_link: Žádost o přidání se k %{group_type}
+  rss_feed: RSS feed
+  send_invites: Poslat pozvánku
+  this_is_committee: Tento výbor je součástí %{parent_group}.
+  view_requests: Zobrazit žádosti
   headings:
-    page_search: Hledat Stránky
-    recent_pages: Nedávné Stránky
     info:
       page_search: Najít všechny stránky, na které máte přístup přímo nebo skrz skupiny
       recent_pages: Tyto stránky byly nedávno vytvořeny nebo upraveny.
-  my_dashboard: Nástěnka
-  uploaded_image_cropped: Nahraný obrázek bude oříznutý a zmenšený na 202 pixelů čtverečních.
-  select_image_file: vyberte obrazový soubor
-  or_image_url: nebo URL obrázku
-  upload_image_link: nahrát obrázek
-  remove_image_link: odstranit obrázek
-  save_changes: Uložit změny
-  username: Uživatelské jméno
+    page_search: Hledat Stránky
+    recent_pages: Nedávné Stránky
   display_name: Zobrazit jméno
+  do_you_want_to_receive_email_notifications: Chcete dostávat emailová upozornění o změnách na stránkách které 'sledujete'?
   email: Email
   language: Jazyk
-  time_zone: Časová zóna
-  do_you_want_to_receive_email_notifications: Chcete dostávat emailová upozornění o změnách na stránkách které 'sledujete'?
+  message_user_wrote_caption: "%{user} napsal/a:"
+  message_you_wrote_caption: 'Napsali jste:'
   notification_select:
+    digest: 'Ano: denní souhrn změn'
     none: 'Ne: žádné emaily o změnách'
     single: 'Ano: email o každé změně'
-    digest: 'Ano: denní souhrn změn'
+  or_image_url: nebo URL obrázku
+  remove_image_link: odstranit obrázek
+  save_changes: Uložit změny
+  select_image_file: vyberte obrazový soubor
   send_message_link: Poslat zprávu
-  messages_with: Konverzace s %{other_user}
-  message_to_self_error: Nelze si povídát se sebou.
-  message_you_wrote_caption: 'Napsali jste:'
-  message_user_wrote_caption: "%{user} napsal/a:"
+  time_zone: Časová zóna
   unread_private_message: Máte nepřečtenou soukromou zprávu od uživatele %{user}
-  home: Domů
-  menu_me: Já
-  menu_groups: Skupiny
-  menu_chat: Chat
-  menu_people: Lidé
-  menu_networks: Sítě
-  menu_link_logout: Odhlásit %{user}
-  menu_admin: Admin
+  upload_image: Nahrát obrázek
+  uploaded_image_cropped: Nahraný obrázek bude oříznutý a zmenšený na 202 pixelů čtverečních.
+  username: Uživatelské jméno
   account_settings: Nastavení účtu
-  back_to_page: Zpět na stránku
   back_to_group: Zpět na skupinu
-  pages: Stránky
-  recent_pages: Nedávné Stránky
-  my_pages: Moje stránky
-  properties: Vlastnosti
-  popular_pages: Populární stránky
-  advanced: Pokročilé
+  back_to_page: Zpět na stránku
+  home: Domů
+  menu_admin: Admin
+  menu_link_logout: Odhlásit %{user}
+  profile: Profil
   access: Přístup
-  active_filters: Aktivní filtry
-  all_pages: Všechny stránky
-  created_by_me: Vytvořeno
-  created_by_user: Vytvořeno %{user}
-  created_by_user_description: Hledat stránky vytvořené konkrétním uživatelem.
-  created_by_dotdotdot: Vytvořeno ...
-  starred_by_me: Oblíbené
-  starred_by_user: Oblíbeno uživatelem %{user}
-  watched_by_me: Sledováno
-  watched_by_user: Sledováno %{user}
-  edited_by_me: Upraveno
-  edited_by_user: Upraveno %{user}
-  owned_by_me: Vlastní
-  owned_by_user: Vlastněno uživatelem %{user}
-  most_active: Nejaktivnější
-  most_stars: Nejvíce hvězdiček
-  most_viewed: Nejvíc navštěvované
-  filter_user_description: Hledat stránky na které má přístup konkrétní uživatel.
-  filter_group_description: Hledat stránky na které má přístup konkrétní skupina.
-  starred: Oblíbené
-  viewed: Navštívené
-  edited: Upraveno
-  type: Typ
-  all_page_types: všechny typy stránek
-  edit_title: Upravit název
-  data_for_page_missing: Data pro tuto stránku chybí.
-  no_change: bez změny
-  updated: updatováno
-  created: vytvořeno
-  unread: nepřečtené
-  read: přečtené
-  page_name_description: Volitelné unikátní jméno (bude použito v URL této stránky)
-  filter_tag_description: Hledat stránky s konkrétním tagem.
-  page_notice: Upozornění na stránku
-  email_notice_subject: Zkontrolovat stránku "%{title}"
-  email_notice_hello_with_message: 'Dobrý den, %{from} vám poslal webovou stránku s touto zprávou: %{message}'
-  email_notice_hello: Dobrý den, %{from} vám poslal webovou stránku.
-  email_notice_access: 'Tuto stránku můžete navštívit zde:'
+  action: Akce
+  advanced: Pokročilé
+  my_pages: Moje stránky
+  pages: Stránky
+  popular_pages: Populární stránky
+  properties: Vlastnosti
+  recent_pages: Nedávné Stránky
+  current_video_sources: 'Aktuálně podporováno: youtube, blip.tv, google video, vimeo.'
+  video_embed_code_description: Toto není webová adresa. Jde o kód, který je uzavřen v závorkách < a > který vám video stránky - např. youtube - vygeneruje pro vložení videa na jiné webové stránky.
+  video_embed_code_prompt: Vložit kód z externího video zdroje.
   email_link_expires: Tento link vyexpiruje za %{days} dní.
+  email_notice_access: 'Tuto stránku můžete navštívit zde:'
+  email_notice_hello: Dobrý den, %{from} vám poslal webovou stránku.
+  email_notice_hello_with_message: 'Dobrý den, %{from} vám poslal webovou stránku s touto zprávou: %{message}'
+  email_notice_subject: Zkontrolovat stránku "%{title}"
+  page_notice: Upozornění na stránku
   page_notice_title: <user>%{from}</user> vám poslal stránku "%{page_title}"
   page_notice_title_with_message: '<user>%{from}</user> vám poslal stránku "%{page_title}" se zprávou:'
-  page_updated: <user>%{from}</user> aktualizoval stránku "%{page_title}"
   page_update: Aktualizování stránky
-  watch_checkbox: Sledovat na updaty.
-  add_star_link: Přidat hvězdičku (%{star_count})
-  remove_star_link: Odebrat hvězdičku (%{star_count})
-  public_checkbox: Veřejné
-  public_checkbox_help: Pokud bude zaškrtnuto, každý bude moct zobrazit tuto stránku.
-  page_details_link: "Detaily %{page_class}"
-  delete_page_link: Odstranit %{page_class}
-  destroy_page_via_shred: Okamžitě zničit
-  destroy_page_via_shred_info: Tato akce navždy zničí tuto stránku. Nelze ji vrátit zpět.
-  destroy_page_via_trash: Přesunout do koše
-  destroy_page_via_trash_info: Tímto stránku přesunete do koše, odkud ji lze později obnovit.
-  undelete_from_trash: Vrátit smazání
-  participation: Účast
-  information: Informace
-  remove_access_error: Přístup k této stránce nelze odebrat. Nemůžete odebrat přístup majitelům stránky nebo přístup, který je pro vás nezbytný k její administraci.
-  edit_tags_link: Upravit
-  edit_attachments_link: Upravit
-  attachments: Přílohy
-  edit_attachments: Upravit přílohy
-  current_attachments: Aktuální přílohy
-  add_new_attachment: Přidat novou přílohu
-  use_radio_buttons_to_select_page_cover: Použijte přepínače k vybrání vzhledu stránky.
-  page_access_admin: Plný přístup
-  page_access_edit: Možnost zápisu
-  page_access_none: Žádný přístup
-  page_access_view: Pouze ke čtení
-  share_page_link: Sdílet %{page_class}
-  share_page_recipients: Sdílet stránku s
-  notify_page_link: Poslat upozornění
-  notify_contribution: "<b>Předchozí příspěvek:</b> upozorňovat lidi, kteří na tuto stránku příspěvek učinili."
-  notify_current_access: "<b>Aktuální přístup:</b> upozorňovat lidi nebo skupiny, které aktuálně mají k této stránce přístup."
-  notification_message: Zpráva s upozorněním
-  send_only_with_encryption: Odeslat pouze v případě, že je možná zašifrované rozeslání.
-  share_send_notification: Odeslat upozornění
-  send_email: Poslat email
-  share_include_message: Zahrnout vlastní zprávu
-  shared_page_success: Úspěšně jste nasdíleli tuto stránku.
-  notify_success: Úspěšně jste rozeslali oznámení.
-  share_grant_required_error: "%{name} nemá oprávnění pro zobrazení této stránky. Nejprve musí být schválena větší přístupová práva."
-  share_permission_denied_error: Nejste oprávněni měnit přístupové nastavení této stránky
-  notify_no_access_error: Omlouváme se, ale "%{name}" nemá přístup k této stránce.
-  share_already_exists_error: '"%{name}" již má přístup k této stránce.'
-  share_pester_error: Omlouváme se, ale sdílet s "%{name}" není dovoleno.
-  name_or_email_not_found: '"%{name}" neodpovídá jménu žádného uživatele ani skupiny a není platnou emailovou adresou.'
-  contribute_content_link: Vytvořit Stránku
-  page_create_owner: Vlastník Stránky
-  create_page: Vytvořit Stránku
-  only_me: Já
-  page_added_to_group: Tato stránka bude přidána do %{group_type} %{group_name}.
-  additional_page_access: Dodatečný přístup
-  page_owner_error: Majitel stránky nemůže být nevyplněný.
-  action: Akce
+  page_updated: <user>%{from}</user> aktualizoval stránku "%{page_title}"
   page_history_add_star: "%{user_name} přidal/a hvězdičku"
   page_history_added_comment: "%{user_name} přidal/a komentář"
   page_history_change_title: "%{user_name} upravil/a nadpis stránky"
@@ -487,325 +342,375 @@ cs:
   page_history_updated_comment: "%{user_name} aktualizoval/a komentář"
   page_history_updated_content: "%{user_name} aktualizoval/a obsah stránky"
   page_history_user_created_page: "%{user_name} vytvořil/a stránku"
-  wiki_page_description: Vytvořit editovatelný textový dokument
-  wiki_page_display: Wiki stránka
-  gallery_description: Nahrát více obrázků, nebo existující obrázky zorganizovat do sbírky.
-  gallery_display: Galerie
+  active_filters: Aktivní filtry
+  all_page_types: všechny typy stránek
+  all_pages: Všechny stránky
+  created: vytvořeno
+  created_by_dotdotdot: Vytvořeno ...
+  created_by_me: Vytvořeno
+  created_by_user: Vytvořeno %{user}
+  created_by_user_description: Hledat stránky vytvořené konkrétním uživatelem.
+  data_for_page_missing: Data pro tuto stránku chybí.
+  edit_title: Upravit název
+  edited: Upraveno
+  edited_by_user: Upraveno %{user}
+  filter_group_description: Hledat stránky na které má přístup konkrétní skupina.
+  filter_tag_description: Hledat stránky s konkrétním tagem.
+  filter_user_description: Hledat stránky na které má přístup konkrétní uživatel.
+  most_active: Nejaktivnější
+  most_stars: Nejvíce hvězdiček
+  most_viewed: Nejvíc navštěvované
+  no_change: bez změny
+  owned_by_me: Vlastní
+  owned_by_user: Vlastněno uživatelem %{user}
+  page_name_description: Volitelné unikátní jméno (bude použito v URL této stránky)
+  read: přečtené
+  starred: Oblíbené
+  starred_by_user: Oblíbeno uživatelem %{user}
+  type: Typ
+  unread: nepřečtené
+  updated: updatováno
+  viewed: Navštívené
+  watched_by_me: Sledováno
+  watched_by_user: Sledováno %{user}
+  add_star_link: Přidat hvězdičku (%{star_count})
+  delete_page_link: Odstranit %{page_class}
+  destroy_page_via_shred: Okamžitě zničit
+  destroy_page_via_shred_info: Tato akce navždy zničí tuto stránku. Nelze ji vrátit zpět.
+  destroy_page_via_trash: Přesunout do koše
+  destroy_page_via_trash_info: Tímto stránku přesunete do koše, odkud ji lze později obnovit.
+  information: Informace
+  page_details_link: "Detaily %{page_class}"
+  participation: Účast
+  public_checkbox_help: Pokud bude zaškrtnuto, každý bude moct zobrazit tuto stránku.
+  remove_access_error: Přístup k této stránce nelze odebrat. Nemůžete odebrat přístup majitelům stránky nebo přístup, který je pro vás nezbytný k její administraci.
+  remove_star_link: Odebrat hvězdičku (%{star_count})
+  undelete_from_trash: Vrátit smazání
+  watch_checkbox: Sledovat na updaty.
+  add_new_attachment: Přidat novou přílohu
+  page_access_admin: Plný přístup
+  page_access_edit: Možnost zápisu
+  page_access_none: Žádný přístup
+  page_access_view: Pouze ke čtení
+  edit_attachments: Upravit přílohy
+  current_attachments: Aktuální přílohy
+  use_radio_buttons_to_select_page_cover: Použijte přepínače k vybrání vzhledu stránky.
+  share_already_exists_error: '"%{name}" již má přístup k této stránce.'
+  share_grant_required_error: "%{name} nemá oprávnění pro zobrazení této stránky. Nejprve musí být schválena větší přístupová práva."
+  share_include_message: Zahrnout vlastní zprávu
+  share_page_link: Sdílet %{page_class}
+  share_page_recipients: Sdílet stránku s
+  share_send_notification: Odeslat upozornění
+  shared_page_success: Úspěšně jste nasdíleli tuto stránku.
+  share_permission_denied_error: Nejste oprávněni měnit přístupové nastavení této stránky
+  share_pester_error: Omlouváme se, ale sdílet s "%{name}" není dovoleno.
+  notification_message: Zpráva s upozorněním
+  notify_contribution: "<b>Předchozí příspěvek:</b> upozorňovat lidi, kteří na tuto stránku příspěvek učinili."
+  notify_current_access: "<b>Aktuální přístup:</b> upozorňovat lidi nebo skupiny, které aktuálně mají k této stránce přístup."
+  notify_no_access_error: Omlouváme se, ale "%{name}" nemá přístup k této stránce.
+  notify_page_link: Poslat upozornění
+  notify_success: Úspěšně jste rozeslali oznámení.
+  send_only_with_encryption: Odeslat pouze v případě, že je možná zašifrované rozeslání.
+  send_email: Poslat email
+  name_or_email_not_found: '"%{name}" neodpovídá jménu žádného uživatele ani skupiny a není platnou emailovou adresou.'
+  additional_page_access: Dodatečný přístup
   asset_page_description: Nahrát obrázek, dokument, tabulku, prezentaci, nebo jakýkoliv soubor.
   asset_page_display: Soubor
-  select_file_to_upload: Vyberte soubor k nahrání.
+  attachments: Přílohy
+  create_page: Vytvořit Stránku
   discussion_page_description: Diskutovat téma s ostatními skupinami nebo uživateli.
   discussion_page_display: Skupinová diskuze.
+  gallery_description: Nahrát více obrázků, nebo existující obrázky zorganizovat do sbírky.
+  gallery_display: Galerie
+  page_added_to_group: Tato stránka bude přidána do %{group_type} %{group_name}.
+  page_create_owner: Vlastník Stránky
+  page_owner_error: Majitel stránky nemůže být nevyplněný.
   ranked_vote_page_description: Vytvořit list s volbami, kde budou moci uživatelé zaškrtávat podle preferencí.
   ranked_vote_page_display: Hodnocené hlasování
-  survey_page_display: Dotazník
   rate_many_page_description: Vytvořit seznam možností, ze kterého lidé budou moci možnosti schvalovat nebo zamítat.
   rate_many_page_display: Schvalovací anketa
+  select_file_to_upload: Vyberte soubor k nahrání.
+  survey_page_display: Dotazník
   task_list_page_description: Vytvořit seznam úkolů k udělání a přiřadit úkoly sobě nebo ostatním.
   task_list_page_display: Seznam úkolů
-  page_group_vote: Ankety a hlasování
-  page_group_text: Text a diskuze
-  page_group_media: Multimédia
-  page_group_planning: Plánovací nástroje
-  pending_tasks: Čekající úkoly
-  completed_tasks: Dokončené úkoly
-  no_pending_tasks: Žádné čekající úkoly
-  no_completed_tasks: Žádné dokončené úkoly
+  wiki_page_description: Vytvořit editovatelný textový dokument
+  wiki_page_display: Wiki stránka
   assign_to: Přiřadit
   completed: Dokončeno
-  vote:
-    really_remove_this: Opravdu chcete odstranit tuto možnost?
-    you_have_not_ranked: 'Ještě jste nehodnotili:'
-    voted_on: Hlasováno u
-    not_voted_on: Nehlasováno u
-  vote_good: dobré
-  vote_ok: ok
-  vote_bad: špatné
-  vote_none: žádné
-  vote_no: 'ne'
-  ranked_vote_instructions: Přetahováním uspořádejte položky následujícího seznamu tak, aby byly seřazeny od nepreferovanější po nejméně preferovanou.
+  completed_tasks: Dokončené úkoly
+  no_completed_tasks: Žádné dokončené úkoly
+  no_pending_tasks: Žádné čekající úkoly
+  page_group_media: Multimédia
+  page_group_planning: Plánovací nástroje
+  page_group_text: Text a diskuze
+  page_group_vote: Ankety a hlasování
+  pending_tasks: Čekající úkoly
   confirm_vote_button: Potvrdit hlas
   edit_my_vote_tab: Upravit můj hlas
+  first_choice_of: první volba
+  ranked_vote_instructions: Přetahováním uspořádejte položky následujícího seznamu tak, aby byly seřazeny od nepreferovanější po nejméně preferovanou.
   show_results_tab: Zobrazit výsledky
   top_pick: nejčastější výběr
-  first_choice_of: první volba
-  save_survey_button: Uložit průzkum
-  survey_may_create_response: Může vytvářet odpovědi?
-  survey_may_see_responses: Může zobrazit odpovědi?
-  survey_may_rate: Může ohodnotit odpovědi?
-  survey_may_see_ratings: Může zobrazit hodnocení?
-  survey_question_label: 'Otázky:'
-  survey_description_heading: Popis
-  survey_description_explaination: Tento text se zobrazí na úvodní stránce, a bude to první, co uživatelé vyplňující průzkum uvidí.
-  select_many_choices_label: 'Vyber některé z možností:'
-  select_one_choices_label: 'Vyber jednu z možností'
-  video_embed_code_description: Toto není webová adresa. Jde o kód, který je uzavřen v závorkách < a > který vám video stránky - např. youtube - vygeneruje pro vložení videa na jiné webové stránky.
-  private_question_label: Soukromá otázka
-  their_answer_goes_here_label: Odpověď přijde sem...
-  survey_response_by: Odpověď od %{login}
-  see_whole_response_link: zobrazit celou odpověď
-  survey_average_rating_heading: 'Průměrné hodnocení:'
-  survey_previous_result: Předtím
-  survey_rated_by_1_person_caption: Ohodnoceno jednou osobou.
-  survey_rated_by_x_people_caption: Ohodnoceno %{count} lidmi.
-  survey_respond_button: Odpovědět
-  survey_rate_this_response_heading: Ohodnotit tuto odpověď
-  survey_select_a_rating_message: Vyberte hodnocení pro zobrazení další položky.
-  survey_skip_next_link: Přeskočit na další
-  survey_you_already_rated_response_with_rating_heading: Tuto odpověď jste již ohodnotili - dali jste jí %{rating}.
-  survey_you_previousely_rated_message: Tuto položku jste již ohodnotili s %{rating}.
-  survey_your_rating_heading: 'Vaše hodnocení'
-  survey_questions: Otázky
+  vote:
+    not_voted_on: Nehlasováno u
+    really_remove_this: Opravdu chcete odstranit tuto možnost?
+    voted_on: Hlasováno u
+    you_have_not_ranked: 'Ještě jste nehodnotili:'
+  vote_bad: špatné
+  vote_good: dobré
+  vote_no: 'ne'
+  vote_none: žádné
+  vote_ok: ok
   add_long_text_question_link: Dlouhá odpověď
   add_select_many_question_link: Vybrat více odpovědí
   add_select_one_question_link: Vybrat jednu odpověď
   add_short_text_question_link: Krátká odpověď
-  upload_image_question_link: Nahrát obrázek
-  video_link_question_link: Odkaz na video
-  survey_introduction_tab: Úvod
-  survey_list_all_tab: Zobrazit odpovědi
-  survey_my_response_tab: Mé odpovědi
-  survey_please_check_and_rate_message: Prosím zkontrolujte své odpovědi a ohodnoťte odpovědi ostatních.
-  survey_please_check_message: Prosím zkontrolujte své odpovědi.
-  survey_thanks_submit_message: Díky za odeslání odpovědi.
   drag_to_move_tip: Popotahováním přesunete.
   each_line_is_a_choice_caption: "(každý řádek je možná odpověď)"
   no_data_uploaded_label: Nenahrána žádná data
-  current_video_sources: 'Aktuálně podporováno: youtube, blip.tv, google video, vimeo.'
-  video_embed_code_prompt: Vložit kód z externího video zdroje.
+  private_question_label: Soukromá otázka
+  save_survey_button: Uložit průzkum
+  see_whole_response_link: zobrazit celou odpověď
+  select_many_choices_label: 'Vyber některé z možností:'
+  select_one_choices_label: 'Vyber jednu z možností'
+  survey_average_rating_heading: 'Průměrné hodnocení:'
+  survey_description_explaination: Tento text se zobrazí na úvodní stránce, a bude to první, co uživatelé vyplňující průzkum uvidí.
+  survey_introduction_tab: Úvod
+  survey_list_all_tab: Zobrazit odpovědi
+  survey_may_create_response: Může vytvářet odpovědi?
+  survey_may_rate: Může ohodnotit odpovědi?
+  survey_may_see_ratings: Může zobrazit hodnocení?
+  survey_may_see_responses: Může zobrazit odpovědi?
+  survey_my_response_tab: Mé odpovědi
+  survey_please_check_and_rate_message: Prosím zkontrolujte své odpovědi a ohodnoťte odpovědi ostatních.
+  survey_please_check_message: Prosím zkontrolujte své odpovědi.
+  survey_previous_result: Předtím
+  survey_question_label: 'Otázky:'
+  survey_questions: Otázky
+  survey_rate_this_response_heading: Ohodnotit tuto odpověď
+  survey_rated_by_1_person_caption: Ohodnoceno jednou osobou.
+  survey_rated_by_x_people_caption: Ohodnoceno %{count} lidmi.
+  survey_respond_button: Odpovědět
+  survey_response_by: Odpověď od %{login}
+  survey_select_a_rating_message: Vyberte hodnocení pro zobrazení další položky.
+  survey_skip_next_link: Přeskočit na další
+  survey_thanks_submit_message: Díky za odeslání odpovědi.
+  survey_you_previousely_rated_message: Tuto položku jste již ohodnotili s %{rating}.
+  survey_your_rating_heading: 'Vaše hodnocení'
+  their_answer_goes_here_label: Odpověď přijde sem...
+  video_link_question_link: Odkaz na video
+  friends_description: Vaši přátelé
+  may_pester_description: Umožnit lidem posílat mi zprávy, stránky a pozvánky.
+  may_pester_label: Sdílet se mnou?
+  may_request_contact_description: Umožnit lidem stát se mým kontaktem.
+  may_request_contact_label: Vyžádat kontakty?
+  may_see_contacts_description: Umožnit ostatním zobrazení mých kontaktů.
+  may_see_contacts_label: Zobrazit moje kontakty?
+  may_see_groups_description: Umožnit ostatním zobrazit si, ve kterých jsem skupinách.
+  may_see_groups_label: Zobrazit moje skupiny?
+  may_view_description: Pokud nezaškrtnuto, váš profil bude kompletně skryt.
+  may_view_label: Zobrazit můj profil
+  peers_description: Členové/ky vašich skupin
   permissions_key: Klíč
   public_description: Každý na Internetu
-  peers_description: Členové/ky vašich skupin
-  friends_description: Vaši přátelé
-  may_view_label: Zobrazit můj profil
-  may_view_description: Pokud nezaškrtnuto, váš profil bude kompletně skryt.
-  may_see_contacts_label: Zobrazit moje kontakty?
-  may_see_contacts_description: Umožnit ostatním zobrazení mých kontaktů.
-  may_see_groups_label: Zobrazit moje skupiny?
-  may_see_groups_description: Umožnit ostatním zobrazit si, ve kterých jsem skupinách.
-  may_pester_label: Sdílet se mnou?
-  may_pester_description: Umožnit lidem posílat mi zprávy, stránky a pozvánky.
-  may_request_contact_label: Vyžádat kontakty?
-  may_request_contact_description: Umožnit lidem stát se mým kontaktem.
   sharing_and_requests: Sdílení a žádosti
-  view_profile: Zobrazit profil
-  profile_member_since: Členem od
   banner: Banner
   banner_info: Optimální rozměry jsou %{optimal_dimensions} pixelů
-  organizational_role: Organizační role
-  phone_number: Telefonní číslo
-  email_addresses: Emailová adresa
-  post_message: Přidat zprávu.
-  request_friend_link: Přidat do mých kontaktů
-  remove_friend_link: Odebrat z mých kontaktů
   edit_profile_link: Upravit profil
+  organizational_role: Organizační role
+  post_message: Přidat zprávu.
+  profile_member_since: Členem od
   profile_saved: Váš profil byl uložen
-  requests: Požadavky
-  request: Požadavek
-  incoming: Příchozí
-  outgoing: Odchozí
-  request_pending: "%{request} čeká na vyřízení."
-  not_allowed_to_respond_to_request: "Uživatel %{user} není oprávněn k %{command}."
-  try_again: Zkusit znovu
-  send_request_button: Poslat požadavek
-  send_invites_button: Poslat pozvánky
+  remove_friend_link: Odebrat z mých kontaktů
+  request_friend_link: Přidat do mých kontaktů
+  view_profile: Zobrazit profil
   all_requests: Všechny požadavky
-  activerecord:
-    models:
-      request_to_friend: Žádosti o stání se kontaktem
-      request_to_destroy_our_group: Žádost o zrušení skupiny
-      request_to_join_you: Žádost o přidání se
-      request_to_join_your_network: Žádost o přidání se
-      request_to_create_council: Žádost o vytvoření rady
-      request_to_remove_user: Žádost o odstranění člena
-  request_to_friend: Žádosti o stání se kontaktem
-  request_to_friend_short: Smí se uživatel %{user} stát kontaktem uživatele %{other_user}?
-  request_to_friend_description: Uživatel %{user} se chce se stát kontakem uživatele %{other_user}
-  request_to_destroy_our_group: Žádost o zrušení skupiny
-  request_to_join_our_network_short: Smí se skupina %{group} přidat do sítě %{network}?
-  request_to_join_our_network_description: Skupina %{group} byla pozvána k přidání se do sítě %{network}.
-  request_to_join_us_short: Smí se uivatel %{user} připojit ke skupině %{group}?
-  request_to_join_us_description: Uživatel %{user} byl pozván k přidání se do skupiny %{group}.
-  request_to_join_us_via_email_short: Smí se %{email} připojit k %{group}?
-  request_to_join_us_via_email_description: Emailová adresa %{email} byla pozvána k přidání se ke skupině %{group}.
-  request_to_join_you: Žádost o přidání se
-  request_to_join_you_short: Smí se uivatel %{user} připojit ke skupině %{group}?
-  request_to_join_you_description: Uživatel %{user} požádal o přidání se ke skupině %{group}.
-  request_to_join_your_network: Žádost o přidání se
-  request_to_join_your_network_short: Smí se skupina %{group} přidat do sítě %{network}?
-  request_to_join_your_network_description: Skupina %{group} požádala o přidáni se k síti %{network}.
-  request_to_destroy_our_group_short: Měla by být skupina %{group} zrušena?
-  request_to_destroy_our_group_description: Uživatel %{user} navrhnul zrušení %{group_type} %{group}.
-  request_to_create_council: Žádost o vytvoření rady
-  request_to_create_council_short: Měla by mít skupina %{group} radu?
-  request_to_create_council_description: Uživatel %{user} navrhuje vytvořit radu pro %{group_type} %{group}.
-  request_to_remove_user: Žádost o odstranění člena
-  request_to_remove_user_short: Měl by být uživatel %{member}odebrán z %{group}?
-  request_to_remove_user_description: Uživatel %{user} navrhnul odebrat uživatele %{member} ze %{group_type} %{group}.
-  invite_info: Zadejte seznam uživatelských jmen nebo emailových adres lidí, které chcete pozvat do této %{group_type}.
-  invite_error_redeemed: Pozvánka již byla využita.
+  incoming: Příchozí
+  not_allowed_to_respond_to_request: "Uživatel %{user} není oprávněn k %{command}."
+  outgoing: Odchozí
+  request: Požadavek
+  request_pending: "%{request} čeká na vyřízení."
+  requests: Požadavky
+  send_request_button: Poslat požadavek
+  try_again: Zkusit znovu
+  friend_remove_confirmation: Jste si jistí, že již nechcete být kontaktem %{user}?
+  friend_request_message_label: Napsat uživateli/ce %{user}, že chcete být její/jeho kontakt.
   invite_error_already_member: Už jste členem této skupiny.
-  request_exists_error: Pro uživatele %{recipient} již žádost existuje
+  invite_error_redeemed: Pozvánka již byla využita.
+  invite_info: Zadejte seznam uživatelských jmen nebo emailových adres lidí, které chcete pozvat do této %{group_type}.
   network_invite_info: Zadejte jména skupin, které chcete pozvat k přidání se do této sítě.
   recipient_tip: Příjemce oddělte čarkami, mezerami, nebo novými řádky.
+  request_exists_error: Pro uživatele %{recipient} již žádost existuje
   you_are_invited: Jste pozváni k přidání se.
-  friend_request_message_label: Napsat uživateli/ce %{user}, že chcete být její/jeho kontakt.
-  friend_remove_confirmation: Jste si jistí, že již nechcete být kontaktem %{user}?
-  place: místo
-  icon: Ikona
-  file: Soubor
-  files: Soubory
-  photo: Fotka
-  caption: Titulek
-  photo_credit: Autorství fotografie
-  video_embed: Vložené
-  size: Velikost
-  illegal_redirect: Neplatné přesměrování
-  redirect_to_foreign_domain: Snažíte se po přihlášení o přesměrování na cizí doménu (%{url}). Z bezpečnostních důvodů jsme tento parametr z URL adresy odebrali.
-  save_wiki_before_adding_image: Prosím uložte wiki před přidáním obrázku.
-  preview_selected_image: Náhled vybraného obrázku
-  image_size_info: Vyberte velikost obrázku k vložení
-  small: malé
-  medium: střední
-  large: velké
-  full: úplné
-  image_options_info: Má obrázek obsažený ve wiki odkazovat na obrázek v plném rozlišení?
-  include_full_checkbox: přiložit odkaz na plné rozlišení
-  image_select_info: Vybrat k vložení obrázek dříve nahraný do skupiny
-  image_upload_info: Nahrajte nový obrázek do skupiny, aby mohl být použit ve wiki
-  a_message_link: zpráva
-  a_reply_link: odpověď
-  confirm_discarding_text_area: Všechna neuložený práce bude ztracena. Stiskněte %{cancel} pro pokračování v editaci.
+  activerecord:
+    models:
+      request_to_create_council: Žádost o vytvoření rady
+      request_to_destroy_our_group: Žádost o zrušení skupiny
+      request_to_friend: Žádosti o stání se kontaktem
+      request_to_join_you: Žádost o přidání se
+      request_to_join_your_network: Žádost o přidání se
+      request_to_remove_user: Žádost o odstranění člena
+  request_to_create_council: Žádost o vytvoření rady
+  request_to_create_council_description: Uživatel %{user} navrhuje vytvořit radu pro %{group_type} %{group}.
+  request_to_create_council_short: Měla by mít skupina %{group} radu?
+  request_to_destroy_our_group: Žádost o zrušení skupiny
+  request_to_destroy_our_group_description: Uživatel %{user} navrhnul zrušení %{group_type} %{group}.
+  request_to_destroy_our_group_short: Měla by být skupina %{group} zrušena?
+  request_to_friend: Žádosti o stání se kontaktem
+  request_to_friend_description: Uživatel %{user} se chce se stát kontakem uživatele %{other_user}
+  request_to_friend_short: Smí se uživatel %{user} stát kontaktem uživatele %{other_user}?
+  request_to_join_our_network_description: Skupina %{group} byla pozvána k přidání se do sítě %{network}.
+  request_to_join_us_description: Uživatel %{user} byl pozván k přidání se do skupiny %{group}.
+  request_to_join_us_via_email_description: Emailová adresa %{email} byla pozvána k přidání se ke skupině %{group}.
+  request_to_join_us_via_email_short: Smí se %{email} připojit k %{group}?
+  request_to_join_you: Žádost o přidání se
+  request_to_join_you_description: Uživatel %{user} požádal o přidání se ke skupině %{group}.
+  request_to_join_your_network_description: Skupina %{group} požádala o přidáni se k síti %{network}.
+  request_to_remove_user: Žádost o odstranění člena
+  request_to_remove_user_description: Uživatel %{user} navrhnul odebrat uživatele %{member} ze %{group_type} %{group}.
+  request_to_remove_user_short: Měl by být uživatel %{member}odebrán z %{group}?
+  view_label: Zobrazit
   activity_contact_created: "Uživatel/ka %{user} přidal/a %{other_user} jako přítele"
-  activity_user_left_group: "Uživatel/ka %{user} opustil/a %{group_type} %{group}"
-  activity_user_joined_group: "Uživatel/ka %{user} se přidal/a k %{group_type} %{group}"
-  activity_user_joined_site: "Uživatel/ka %{user} se přidal/a ke skupině %{group}"
-  activity_user_destroyed: "%{user} je skrytý"
   activity_group_created: "Uživatel/ka %{user} vytvořil/a %{group_type} %{group}"
   activity_group_destroyed: "Skupina %{group} byla uživatelem %{user} zrušena"
-  activity_wall_message: "%{author} napsal do %{user}: %{message}"
   activity_message: "%{author} napsal/a: %{message}"
-  activity_unread: Máte %{count} nepřečtených [soukromých zpráv]
-  activity_unread_singular: Máte nepřečtenou [soukromou zprávu]
-  activity_user_left_site: "Uživatel/ka %{user} opustil/a %{group}"
   activity_message_received: 'Obdrželi jste %{message_tag} od uživatel/ky %{other_user}: %{title}'
   activity_twinkled: 'Uživatel/ka %{user} dal/a hvězdičku vašemu příspěvku "%{post}"'
+  activity_unread: Máte %{count} nepřečtených [soukromých zpráv]
+  activity_unread_singular: Máte nepřečtenou [soukromou zprávu]
+  activity_user_destroyed: "%{user} je skrytý"
+  activity_user_joined_group: "Uživatel/ka %{user} se přidal/a k %{group_type} %{group}"
+  activity_user_joined_site: "Uživatel/ka %{user} se přidal/a ke skupině %{group}"
+  activity_user_left_group: "Uživatel/ka %{user} opustil/a %{group_type} %{group}"
+  activity_user_left_site: "Uživatel/ka %{user} opustil/a %{group}"
+  activity_wall_message: "%{author} napsal do %{user}: %{message}"
+  asset_version_list_version_heading: verze
+  created_on: Vytvořeno
+  delete_version_confirm: Opravdu chcete odstranit tuto verzi?
+  file_size: Velikost souboru
+  file_version_deleted: verze souboru odstraněna
+  format: Formát
+  full: úplné
+  galleries: Galerie
+  history: Historie
+  image_options_info: Má obrázek obsažený ve wiki odkazovat na obrázek v plném rozlišení?
+  image_select_info: Vybrat k vložení obrázek dříve nahraný do skupiny
+  image_size_info: Vyberte velikost obrázku k vložení
+  image_upload_info: Nahrajte nový obrázek do skupiny, aby mohl být použit ve wiki
+  large: velké
   media_image: Obrázek
   media_images: Obrázky
-  zip_file: ZIP-soubor
-  history: Historie
+  medium: střední
   other_formats: Ostatní formáty
-  file_version_deleted: verze souboru odstraněna
-  delete_version_confirm: Opravdu chcete odstranit tuto verzi?
-  galleries: Galerie
-  created_on: Vytvořeno
-  file_size: Velikost souboru
-  format: Formát
   regenerate: Znovu vygenerovat náhledy
+  small: malé
   version_number: verze %{version}
-  upload_image: Nahrát obrázek
-  asset_version_list_version_heading: verze
-  order_changed: Pořadí změněno.
-  error_saving_new_order_message: 'Chyba při ukládání nového pořadí: %{error_message}'
-  successfully_removed_image: Obrázek úspěšně odebrán! (%{undo_link})
-  view_slideshow: Zobrazit prezentaci
-  edit_gallery: Upravit Galerii.
-  back_to_gallery_link: Zpět do Galerie.
-  gallery_changing_cover_message: Měním úvodní obrázek...
-  download: Stáhnout
-  download_gallery: Stáhnout Galerii
-  gallery_slideshow_apply_settings_button: aplikovat
-  gallery_undo_link: vrátit zpět
-  remove_from_gallery: Odstranit z Galerie
-  removing_image: Odstraňuji obrázek ...
-  move_image_left: Posunout obrázek vlevo
-  move_image_right: Posunut obrázek vpravo
-  successful_undelete_image: Obrázek úspěšně odstraněn.
-  saved_new_order: Nové pořadí uloženo!
-  error_saving_new_order: Chyba při ukládání nového pořadí!
-  saving_your_changes: Vaše změny se ukládají ...
-  activate_js_to_rearrange_photos: Přetahování obrázků pro přemisťování fotek je možné pouze se zapnutým JavaScriptem!
-  drag_and_drop_to_rearrange_photos: Obrázky přemisťujte tažením
-  no_images_in_gallery: Žádné obrázky v Galerii
-  add_existing_image: Přidat fotku
-  add_photo_to_gallery: Pro přidání klikněte na fotku
-  cancel_link: zrušit
-  file_must_be_image_error: Soubor musí být obrazový, aby mohl být zařazen do galerie.
-  add_another_file: Přidat další soubor
-  slideshow_delay_input: Updatovat každých %{input_field} sekund
-  make_album_cover: učinit z tohoto obrázku úvodní obrázek alba
-  album_cover_changed: Náhled alba změněn
-  upload_images_link: Nahrát
-  upload_a_zip_file_link: Nahrát ZIP-soubor
-  you_are_not_allowed_to_do_that: K tomuto nemáte oprávnění!
-  view_label: Zobrazit
-  sunday: Neděle
-  monday: Pondělí
-  tuesday: Úterý
-  wednesday: Středa
-  thursday: Čtvrtek
-  friday: Pátek
-  saturday: Sobota
-  date_today: Dnes
-  date_this_week: Tento týden
-  date_this_month: Tento měsíc
-  date_this_year: Tento rok
-  date_all_time: Od počátku
-  alert_not_saved: Změny nelze uložit
-  alert_field_errors: Zaznamenány problémy s následujícími poli
-  alert_saved: Změny uloženy
-  alert_permission_denied: Přístup odepřen
-  csrf_error_message: 'Váš pokus o přihlášení vypadá jako snaha o útok na tuto stránku. Nebojte se: tato chyba se občas zobrazuje i při nevinných požadavcích. Jsme jenom extra ostražití. Všechno co musíte udělat, je před přihlášením přenačíst tuto stránku. Pro další pokus můžete využít tento odkaz.'
-  set_status_button: Status updatu
-  my_contacts: Kontakty
+  zip_file: ZIP-soubor
   anonymous: anonymní
   login_required: Vyžadováno přihlášení
   login_required_description: Pro provedení této akce se prosím přihlašte.
-  permission_denied_description: Nemáte dostatečná oprávnění pro provedení této akce.
   permission_denied: Přístup odepřen
-  chat: Chat
-  left_the_chatroom: opustil chatovací místnost
+  permission_denied_description: Nemáte dostatečná oprávnění pro provedení této akce.
+  date_all_time: Od počátku
+  date_this_month: Tento měsíc
+  date_this_week: Tento týden
+  date_this_year: Tento rok
+  date_today: Dnes
+  friday: Pátek
+  monday: Pondělí
+  saturday: Sobota
+  sunday: Neděle
+  thursday: Čtvrtek
+  tuesday: Úterý
+  wednesday: Středa
+  alert_field_errors: Zaznamenány problémy s následujícími poli
+  alert_not_saved: Změny nelze uložit
+  alert_saved: Změny uloženy
+  csrf_error_message: 'Váš pokus o přihlášení vypadá jako snaha o útok na tuto stránku. Nebojte se: tato chyba se občas zobrazuje i při nevinných požadavcích. Jsme jenom extra ostražití. Všechno co musíte udělat, je před přihlášením přenačíst tuto stránku. Pro další pokus můžete využít tento odkaz.'
+  error_saving_new_order_message: 'Chyba při ukládání nového pořadí: %{error_message}'
+  add_another_file: Přidat další soubor
+  add_existing_image: Přidat fotku
+  add_photo_to_gallery: Pro přidání klikněte na fotku
+  album_cover_changed: Náhled alba změněn
+  back_to_gallery_link: Zpět do Galerie.
+  cancel_link: zrušit
+  download: Stáhnout
+  download_gallery: Stáhnout Galerii
+  edit_gallery: Upravit Galerii.
+  error_saving_new_order: Chyba při ukládání nového pořadí!
+  file_must_be_image_error: Soubor musí být obrazový, aby mohl být zařazen do galerie.
+  gallery_changing_cover_message: Měním úvodní obrázek...
+  gallery_slideshow_apply_settings_button: aplikovat
+  gallery_undo_link: vrátit zpět
+  make_album_cover: učinit z tohoto obrázku úvodní obrázek alba
+  move_image_left: Posunout obrázek vlevo
+  move_image_right: Posunut obrázek vpravo
+  no_images_in_gallery: Žádné obrázky v Galerii
+  order_changed: Pořadí změněno.
+  remove_from_gallery: Odstranit z Galerie
+  removing_image: Odstraňuji obrázek ...
+  saved_new_order: Nové pořadí uloženo!
+  saving_your_changes: Vaše změny se ukládají ...
+  slideshow_delay_input: Updatovat každých %{input_field} sekund
+  successful_undelete_image: Obrázek úspěšně odstraněn.
+  successfully_removed_image: Obrázek úspěšně odebrán! (%{undo_link})
+  you_are_not_allowed_to_do_that: K tomuto nemáte oprávnění!
+  caption: Titulek
+  file: Soubor
+  files: Soubory
+  icon: Ikona
+  photo: Fotka
+  photo_credit: Autorství fotografie
+  size: Velikost
+  video_embed: Vložené
+  add_tags: Přidat tagy
+  no_tags: žádné tagy
+  separate_tags: K oddělení tagů použijte čárky.
   tag: Tag
   tags: Tagy
-  no_tags: žádné tagy
-  add_one_or_more_tags: Přidejte jeden nebo více tagů, oddělených čárkami
-  separate_tags: K oddělení tagů použijte čárky.
-  add_tags: Přidat tagy
-  current_tags: Aktuální tagy
-  welcome_title: Vítejte na %{site_title}
+  set_status_button: Status updatu
   welcome_message: Crabgrass umožňuje skupinám, které usilují o společenskou změnu dotáhnout věci do zdárného konce, šířit svou myšlenku, spolupracovat a organizovat se.
-  wiki: Wiki
-  public_wiki: Veřejná Wiki
-  private_wiki: Soukromá Wiki
-  edit_wiki: Upravit Wiki
-  wiki_existed_new_version_created: Tato wiki byla již vytvořena jiným uživatelem/kou. Vaše změny byly uloženy jako nová verze.
-  wiki_is_locked: Tato wiki je momentálně uzamknuta uživatelem/kou %{user}.
-  wiki_section_is_locked: Sekce %{section} je momentálně uzamknuta uživatelem/kou %{user}.
-  leave_editing_wiki_page_warning: Vaše změny budou ztraceny, pokud zavřete tuto stránku.
-  cant_edit_section: Nelze upravit sekci %{section}.
-  user_locked_section: "Uživatel %{user} uzamknul %{section}."
-  can_still_save: Stále je možné uložit.
-  changes_might_be_overwritten: Vaše změny mohly být přepsány.
-  other_section_locked_error: Naráz je možné uzamknout pouze jednu sekci. V současné chvíli uzamykáte sekci %{section}.
+  welcome_title: Vítejte na %{site_title}
+  a_message_link: zpráva
+  a_reply_link: odpověď
+  add_one_or_more_tags: Přidejte jeden nebo více tagů, oddělených čárkami
+  chat: Chat
+  confirm_discarding_text_area: Všechna neuložený práce bude ztracena. Stiskněte %{cancel} pro pokračování v editaci.
+  illegal_redirect: Neplatné přesměrování
+  include_full_checkbox: přiložit odkaz na plné rozlišení
+  left_the_chatroom: opustil chatovací místnost
+  place: místo
+  preview_selected_image: Náhled vybraného obrázku
+  redirect_to_foreign_domain: Snažíte se po přihlášení o přesměrování na cizí doménu (%{url}). Z bezpečnostních důvodů jsme tento parametr z URL adresy odebrali.
+  save_wiki_before_adding_image: Prosím uložte wiki před přidáním obrázku.
+  view_slideshow: Zobrazit prezentaci
   break_lock_button: Zrušit zámek
-  force_save_button: Zrušit zámek a uložit
-  versions: Verze
-  version: Verze
-  comparing_changes_header: Porovnávám změny mezi %{old_version} a %{new_version}.
+  can_still_save: Stále je možné uložit.
+  cant_find_wiki_section: Nelze nalézt wiki sekci %{section}
   changes_made: Změny učiněné %{when}.
-  prev_change: Předchozí změna
-  next_change: Další změna
+  changes_might_be_overwritten: Vaše změny mohly být přepsány.
+  comparing_changes_header: Porovnávám změny mezi %{old_version} a %{new_version}.
+  diff_link: zobrazit změny
+  edit_wiki: Upravit Wiki
+  force_save_button: Zrušit zámek a uložit
   formatting_reference_link: Nápověda pro upravování
+  insert_image: Vložit Obrázek
+  leave_editing_wiki_page_warning: Vaše změny budou ztraceny, pokud zavřete tuto stránku.
+  next_change: Další změna
+  prev_change: Předchozí změna
+  preview: Náhled
+  private_wiki: Soukromá Wiki
+  public_wiki: Veřejná Wiki
+  version: Verze
   version_doesnt_exist: Neexistuje verze %{version}
   version_exists_error: Tato wiki je uzamčená, protože uživatel/ka %{user} nedávno uložila nové změny. Vaše změny je možné uložit, ale přepíšou poslední uloženou verzi.
-  you_are_viewing_version: Prohlížíte si verzi %{version} od %{user}
-  diff_link: zobrazit změny
   version_link: zobrazit verze
-  wiki_section_edit: Upravit tuto Sekci
+  versions: Verze
+  wiki: Wiki
+  wiki_existed_new_version_created: Tato wiki byla již vytvořena jiným uživatelem/kou. Vaše změny byly uloženy jako nová verze.
   wiki_revert_version: Vrátit zpět verzi %{version}
+  wiki_section_edit: Upravit tuto Sekci
+  wiki_section_is_locked: Sekce %{section} je momentálně uzamknuta uživatelem/kou %{user}.
   wiki_version_creator_heading: osoba
   wiki_version_revert_link: vrátit
-  insert_image: Vložit Obrázek
-  preview: Náhled
-  save_or_cancel_edit_lock_wiki_error: Uzamkli jste tuto wiki. Ostatní uživatelé jí nebudou moci upravovat, dokud nekliknete na tlačítko %{save_button} nebo %{cancel_button} pro ukončení editace.
-  cant_find_wiki_section: Nelze nalézt wiki sekci %{section}
+  you_are_viewing_version: Prohlížíte si verzi %{version} od %{user}

@@ -1,85 +1,72 @@
 he:
-  login_name: שם משתמש\ת
   confirm_new_password: אשר\י ססמה חדשה
-  cancel: ביטול
-  edit: עריכה
-  back_button: חזרה
-  close_button: סגור
   add_button: הוסיפי
-  cancel_button: ביטול
-  create_button: צור\צרי
-  create_a_new_thing: צרי %{thing} חדש
-  created_by: נוצר ע"י
   approve: אשרי
   approved: אושר
-  destroy: השמידי
+  cancel: ביטול
+  close_button: סגור
+  create_a_new_thing: צרי %{thing} חדש
+  create_button: צור\צרי
+  created_by: נוצר ע"י
   delete: מחק\י
-  delete_button: מחק\י
+  destroy: השמידי
+  edit: עריכה
   exception:
     title:
       forbidden: הגישה אסורה
   add_comment: הוסיפי תגובה
   user: משתמש\ת
   contacts: א\נשי קשר
-  friends: א\נשי קשר
   back: חזרה
   description: תיאור
   committee: וועדה
   committees: וועדות
-  committee_publicly_visible: הפכי את הוועדה לשקופה ציבורית
   allow_membership_requests: אשר\י בקשות הצטרפות
+  committee_publicly_visible: הפכי את הוועדה לשקופה ציבורית
   committee_publicly_visible_description: 'ניתן לצפות בוועדות על ידי לא-חברות ב-
 
     %{domain}/yourgroupname'
-  username: שם משתמש\ת
   display_name: שם לתצוגה
   language: שפה
+  username: שם משתמש\ת
+  back_to_group: חזרה אל %{group_name}
   home: בית
   menu_admin: ניהול
-  back_to_group: חזרה אל %{group_name}
   access: גישה
+  action: פעולה
   all_page_types: כל סוגי הדפים
   created: נוצר
   add_star_link: הוסיפי כוכב (%{star_count})
   delete_page_link: מחק\י %{page_class}
-  edit_tags_link: עריכה
-  edit_attachments_link: עריכה
-  attachments: צרופות
-  current_attachments: צרופות נוכחיות
   add_new_attachment: הוסיפי צרופה חדשה
-  contribute_content_link: צרי דף
+  current_attachments: צרופות נוכחיות
+  attachments: צרופות
   create_page: צרי דף
-  action: פעולה
   rate_many_page_description: הצביעי בעד או נגד כל אפשרות.
   rate_many_page_display: הצבעת אישור
-  survey_description_heading: תיאור
   activity_contact_created: "%{user} הוספ\\ה %{other_user} כמשתמש\\ת"
-  activity_user_left_group: "המשתמש\\ת %{user} עזב\\ה את הקבוצה %{group_type} %{group}"
-  activity_user_joined_group: "המשתמש\\ת %{user} הצטרפ\\ה לקבוצה %{group_type} %{group}"
-  activity_user_destroyed: "המשתמש\\ת %{user} פרש\\ה"
   activity_group_created: "%{user} יצר\\ה %{group_type} %{group}"
   activity_group_destroyed: "הקבוצה %{group} נמחקה ע\"י %{user}"
+  activity_user_destroyed: "המשתמש\\ת %{user} פרש\\ה"
+  activity_user_joined_group: "המשתמש\\ת %{user} הצטרפ\\ה לקבוצה %{group_type} %{group}"
+  activity_user_left_group: "המשתמש\\ת %{user} עזב\\ה את הקבוצה %{group_type} %{group}"
   activity_wall_message: "המשתמש\\ת %{author} רשמ\\ה ל%{user}: %{message}"
-  history: הסטוריה
-  delete_version_confirm: האם את\ה בטוח\ה שברצונך למחוק את הגרסה הנ"ל?
   created_on: נוצר בתאריך
-  edit_gallery: ערכי את הגלריה
-  download: הורדה
-  download_gallery: הורדת גלריית תמונות
-  drag_and_drop_to_rearrange_photos: גררי ועזבי תמונות על מנת לסדרן מחדש
+  delete_version_confirm: האם את\ה בטוח\ה שברצונך למחוק את הגרסה הנ"ל?
+  history: הסטוריה
+  permission_denied: הגישה אסורה
+  date_this_week: השבוע החולף
+  date_today: היום
+  alert_field_errors: קיימות בעיות עם השדות הבאים
+  alert_not_saved: השינויים לא יכולים להשמר
+  alert_saved: השינויים נשמרו בהצלחה
+  add_another_file: הוסיפי קובץ נוסף
   add_existing_image: הוסיפי תמונה
   add_photo_to_gallery: לחצי על תמונה על מנת להוסיפה
   cancel_link: ביטול
-  add_another_file: הוסיפי קובץ נוסף
-  date_today: היום
-  date_this_week: השבוע החולף
-  alert_not_saved: השינויים לא יכולים להשמר
-  alert_field_errors: קיימות בעיות עם השדות הבאים
-  alert_saved: השינויים נשמרו בהצלחה
-  alert_permission_denied: הגישה אסורה
-  my_contacts: א\נשי קשר
-  permission_denied: הגישה אסורה
-  add_one_or_more_tags: הוסיפי תווית אחת או יותר, מופרדות באמצעות פסיקים
+  download: הורדה
+  download_gallery: הורדת גלריית תמונות
+  edit_gallery: ערכי את הגלריה
   add_tags: הוסיפי תגיות
-  current_tags: תגיות נוכחיות
+  add_one_or_more_tags: הוסיפי תווית אחת או יותר, מופרדות באמצעות פסיקים
   comparing_changes_header: השוואת שינויים על ידי %{user} ב %{when} מ %{old_version} ל %{new_version}
