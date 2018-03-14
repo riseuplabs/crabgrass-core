@@ -8,9 +8,8 @@
 # Order of profile presidence (user sees the first one that matches):
 #  (1) foe
 #  (2) friend   } the 'private' profile
-#  (3) peer     \  might see 'private' profile
-#  (4) fof      /  or might be see 'public' profile
-#  (5) stranger } the 'public' profile
+#  (3) peer     } might see 'private' profile or the 'public' profile
+#  (4) stranger } the 'public' profile
 #   create_table "profiles", :force => true do |t|
 #     t.integer  "entity_id",              :limit => 11
 #     t.string   "entity_type"
@@ -18,18 +17,13 @@
 #     t.boolean  "peer",                                 :default => false, :null => false
 #     t.boolean  "friend",                               :default => false, :null => false
 #     t.boolean  "foe",                                  :default => false, :null => false
-#     t.string   "name_prefix"
 #     t.string   "first_name"
 #     t.string   "middle_name"
 #     t.string   "last_name"
-#     t.string   "name_suffix"
-#     t.string   "nickname"
 #     t.string   "role"
 #     t.string   "organization"
 #     t.datetime "created_at"
 #     t.datetime "updated_at"
-#     t.string   "birthday",               :limit => 8
-#     t.boolean  "fof",                                  :default => false, :null => false
 #     t.text     "summary"
 #     t.integer  "wiki_id",                :limit => 11
 #     t.integer  "photo_id",               :limit => 11
@@ -83,7 +77,7 @@ class Profile < ActiveRecord::Base
   format_attribute :summary
 
   def full_name
-    [name_prefix, first_name, middle_name, last_name, name_suffix].reject(&:blank?) * ' '
+    [first_name, middle_name, last_name].reject(&:blank?) * ' '
   end
   alias name full_name
 
@@ -97,7 +91,7 @@ class Profile < ActiveRecord::Base
 
   def hidden?
     # a profile is hidden if no relationship fields are set
-    !(friend? || stranger? || fof? || foe? || peer?)
+    !(friend? || stranger? || foe? || peer?)
   end
 
   def type
@@ -188,8 +182,6 @@ class Profile < ActiveRecord::Base
   def to_user_gates
     gates = %i[view see_groups see_contacts pester request_contact]
     gates.select do |gate_name|
-      # all gates correspond to may_* flags in the profile
-      # (except for :view -> may_see)
       profile_flag = (gate_name == :view ? 'may_see' : "may_#{gate_name}")
       send profile_flag
     end
@@ -208,8 +200,6 @@ class Profile < ActiveRecord::Base
       see_networks
     ]
     gates.select do |gate_name|
-      # all gates correspond to may_* flags in the profile
-      # (except for :view -> may_see and :join which replaces the membership_policy)
       if gate_name == :join
         membership_policy_is? :open
       else
