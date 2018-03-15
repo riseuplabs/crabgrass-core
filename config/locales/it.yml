@@ -2,15 +2,15 @@ it:
   congratulations_you_have_signed_up: Congratulazioni! Ti sei iscritto a  %{site_title}.
   cookie_disabled_warning: I tuoi cookie sono disabilitati.  Non potrai accedere fintanto che non abiliti l'uso dei cookie.
   email_verification_body: |-
-    Ti sei registrato a %{site_title} (%{host}).
+      Ti sei registrato a %{site_title} (%{host}).
 
-    Prima che tu possa accedere ed effettuare il login devi verificare che questa sia la tua email.
+      Prima che tu possa accedere ed effettuare il login devi verificare che questa sia la tua email.
 
-    Click sul link qui sotto oppure copialo ed incollalo nel tuo browser:
+      Click sul link qui sotto oppure copialo ed incollalo nel tuo browser:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Se non vuoi completare la registrazione,  ignora semplicemente questa email.
+      Se non vuoi completare la registrazione,  ignora semplicemente questa email.
   forgotten_email_address: Quale indirizzo email hai inserito quando hai creato il tuo account?
   invalid_email_text: L'indirizzo email che hai inserito non è valido.
   invalid_token: Token Non Valido
@@ -77,6 +77,7 @@ it:
   cancel: Annulla
   close_button: Chiudi
   confirm: Conferma
+  create: Crea
   create_a_new_thing: Crea un nuovo %{thing}
   create_button: Crea
   create_thing: Crea %{thing}
@@ -107,8 +108,18 @@ it:
   thing_required: "%{thing} Richiesto"
   updated_by: Aggiornato da
   upload: Carica
+  mailer:
+    hello: Ciao %{user_name}
+    pgp_key:
+      key_uploaded_subject: Notifiche
+    page_histories:
+      daily_digest: "%{site} : Sommario giornaliero delle modifiche"
+      page_update: "%{site} : Una pagina è stata modificata"
+      the_page_you_are_watching_description: La pagina che tieni sotto controllo "%{page_title}"  è stata modificata
+      you_can_turn_off_or_configure_notifications: Puoi decidere di non ricevere avvisi via email, di ricevere dei riassunti delle modifiche avvenute, oppure di ricevere una email per ogni volta che una pagina viene modificata.
   exception:
     description:
+      forbidden: Non hai sufficienti permessi per eseguire questa azione.
       group:
         not_found: Spiacente, non è stato possibile trovare il gruppo ricercato
       not_found: Spiacenti, non riusciamo a trovare ciò che stai cercando.
@@ -148,6 +159,7 @@ it:
   all: Tutto
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: Digita il nome di un gruppo o di una persona
       enter_name_of_group: Digita il nome di un gruppo
       enter_name_of_person: Digita il nome di una persona
   go: Vai
@@ -216,7 +228,20 @@ it:
   structure: Struttura
   group_destroyed_email: "%{group_type} %{group} è stata distrutta!"
   group_destroyed_subject: "%{group_type} %{group} è stata eliminata da %{user}!"
+  group_invite_email: |-
+      %{from_user} ti ha invitato/a a entrare nel gruppo "%{group}".
+
+      Se vuoi entrare a far parte di questo gruppo, fai click qui:
+
+      %{accept_invite_link}
+
+      Ecco il link alla pagina iniziale di questo gruppo:
+
+      %{group_home_link}
+
+      Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
   group_invite_subject: Invito a entrare nel gruppo "%{group}"
+  committee_choose_group: 'Scegli un gruppo per questo %{group_type}:'
   committee_description: I comitati sono gruppi all'interno di una organizzazione o di una rete. Un comitato è completamente subordinato alla organizzazione o rete madre. Un utente esterno alla organizzazione o alla rete, ma aggiunto ad un comitato avrà accesso solamente a quel comitato.
   council_description: I consigli sono gruppi con speciali poteri di amministrazione. Ogni organizzazione ed ogni rete può avere un consiglio. Se ce lo ha, i membri del consiglio hanno poteri amministrativi sulla rete o organizzazione.
   council_description_details: Per impostazione predefinita, tutti i membri possono modificare  %{group}. Se vuoi che sia amministrato solamente a alcuni utenti devi creare un consiglio ed aggiungere ad esso gli utenti che debbono avere un ruolo e potere di amministrazione.
@@ -277,11 +302,13 @@ it:
   language: Lingua
   message_user_wrote_caption: "%{user} ha scritto:"
   message_you_wrote_caption: 'Hai scritto:'
+  my_dashboard: La mia bacheca
   notification_select:
     digest: 'Sì: un sommario giornaliero delle modifiche'
     none: 'No: nessuna email per le modifiche'
     single: 'Sì: una email per modifica'
   or_image_url: o URL dell'immagine
+  private_profile: Profilo Privato
   remove_image_link: rimuovi immagine
   save_changes: Salva Modifiche
   select_image_file: seleziona il file dell'immagine
@@ -567,7 +594,11 @@ it:
   request_to_friend: Richiesta di Diventare Contatti
   request_to_friend_description: '%{user} vorrebbe essere il contatto di %{other_user}'
   request_to_friend_short: '%{user} deve diventare contatto di %{other_user}?'
+  request_to_join: Richiesta di Adesione
+  request_to_join_network_short: '%{group} deve unirsi alla rete %{network}?'
   request_to_join_our_network_description: il gruppo %{group} è stato inviato a entrare nella rete %{network}
+  request_to_join_short: '%{user} deve aderire a %{group}?'
+  request_to_join_us: Richiesta di Adesione
   request_to_join_us_description: '%{user} è stato invitato a entrare nel grupo %{group}'
   request_to_join_us_via_email_description: '%{email} è stato invitato/a a entrare nel gruppo %{group}'
   request_to_join_us_via_email_short: '%{email} deve aderire a %{group}?'
@@ -636,6 +667,7 @@ it:
   alert_saved: Cambiamenti salvati
   csrf_error_message: 'La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si può verificare anche per richieste di accesso perfettamente lecite. E'' solo che siamo molto paranoici. Per risolvere questo problema, è sufficiente ricaricare la pagina prima di tentare nuovamente l''accesso. Puoi seguire questo link per provare nuovamente:'
   error_saving_new_order_message: 'Errore nel salvare nuova sequenza: %{error_message}'
+  activate_js_to_rearrange_photos: Devi attivare JavaScript per poter riordinare le foto con il Drag&Drop!
   add_another_file: Aggiungi un altro file
   add_existing_image: Aggiungi Foto
   add_photo_to_gallery: 'aggiungi foto alla galleria:'
@@ -644,6 +676,7 @@ it:
   cancel_link: annulla
   download: Scarica
   download_gallery: Scarica Galleria
+  drag_and_drop_to_rearrange_photos: Trascina e rilascia le immagini per riordinarle
   edit_gallery: Modifica Galleria
   error_saving_new_order: Errore durante il salvataggio del riordinamento!
   file_must_be_image_error: Il file deve essere un'immagine per essere caricato in una galleria.
@@ -662,6 +695,7 @@ it:
   slideshow_delay_input: Aggiorna ogni %{input_field} secondi
   successful_undelete_image: Imagine recuperata con successo.
   successfully_removed_image: Immagine rimossa con successo! (%{undo_link})
+  upload_images_link: Carica immagini
   you_are_not_allowed_to_do_that: Non hai il permesso per questo!
   caption: Etichetta
   file: File
@@ -673,6 +707,7 @@ it:
   video_embed: Inserito
   add_tags: Aggiungi Etichette
   no_tags: nessun tag
+  popular_tags: Etichette Popolari
   separate_tags: Separa i diversi tag con delle virgole.
   tag: Tag
   tags: Tag
@@ -694,6 +729,7 @@ it:
   view_slideshow: Vedi Presentazione
   break_lock_button: Annulla Blocco
   can_still_save: Tu puoi ancora salvare.
+  cant_edit_section_html: Impossibile modificare  %{section}.
   cant_find_wiki_section: Non trovo la sezione wiki %{section}
   changes_made: Modifiche effettuate %{when}.
   changes_might_be_overwritten: Le tue modifiche potrebbero venire soprascritte.
@@ -705,10 +741,13 @@ it:
   insert_image: Inserisci immagine
   leave_editing_wiki_page_warning: Perdi le tue modifiche se lasci questa pagina.
   next_change: modifica successiva
+  other_section_locked_error_html: Si può bloccare solo una sezione alla volta. Tu hai già bloccato %{section}.
   prev_change: modifica precedente
   preview: Anteprima
   private_wiki: Wiki Privata
   public_wiki: Wiki Pubblica
+  save_or_cancel_edit_lock_wiki_error: Stai bloccando questa wiki. Gli altri utenti non potranno modificarla finché tu non premi o %{save_button} o %{cancel} per smettere il tuo edit.
+  user_locked_section_html: "%{user} ha bloccato %{section}."
   version: Versione
   version_doesnt_exist: Non esiste la versione %{version}
   version_exists_error: La wiki è bloccata perché l'utente %{user} ha da poco effettuato alcune modifiche. Puoi ugualmente salvare le tue modifiche, ma questo scriverà sopra alla nuova versione.
@@ -716,6 +755,7 @@ it:
   versions: versioni
   wiki: Wiki
   wiki_existed_new_version_created: Questa wiki era già stata creata da un altro utente. Le tue modifiche sono state salvate come una nuova versione.
+  wiki_is_locked_html: Questo wiki è bloccato da %{user}
   wiki_revert_version: Ritorna alla Version %{version}
   wiki_section_edit: Modifica Questa Sezione
   wiki_section_is_locked: Questa sezione %{section} è al momento bloccata da %{user}.

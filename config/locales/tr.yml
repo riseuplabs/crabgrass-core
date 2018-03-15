@@ -2,15 +2,15 @@ tr:
   congratulations_you_have_signed_up: Tebrikler! %{site_title} sitesine kayıt oldunuz.
   cookie_disabled_warning: Tarayıcınız çerezlere izin vermiyor. İzin verene kadar giriş yapmanız mümkün değildir.
   email_verification_body: |-
-    %{site_title} (%{host}) için kayıt oldunuz.
+      %{site_title} (%{host}) için kayıt oldunuz.
 
-    Giriş yapabilmek için e-posta adresinizi doğrulamalısınız.
+      Giriş yapabilmek için e-posta adresinizi doğrulamalısınız.
 
-    Aşağıdaki bağlantıya tıklayın veya kopyalayıp tarayıcınıza yapıştırın.
+      Aşağıdaki bağlantıya tıklayın veya kopyalayıp tarayıcınıza yapıştırın.
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Eğer katılmak istemiyorsanız, bu e-postayı dikkate almayın.
+      Eğer katılmak istemiyorsanız, bu e-postayı dikkate almayın.
   forgotten_email_address: Hesabınızı açarken bize hangi e-posta adresinizi vermiştiniz?
   invalid_email_text: Verdiğiniz email adresi geçersiz.
   invalid_token: Geçersiz Token
@@ -77,6 +77,7 @@ tr:
   cancel: Vazgeç
   close_button: Kapat
   confirm: Onayla
+  create: Oluştur
   create_a_new_thing: Yeni bir %{thing} oluştur
   create_button: Oluştur
   create_thing: '%{thing} oluştur'
@@ -109,6 +110,13 @@ tr:
   upload: Yükle
   mailer:
     hello: Merhaba %{user_name}
+    page_histories:
+      change_your_settings_here: 'Buradan e-posta bildirimlerinizi düzenleyebilirsiniz: %{page_link}'
+      page_update: "%{site} : Bir sayfa düzenlendi."
+      the_page_you_are_watching_description: İzlediğiniz "%{page_title}" sayfası düzenlendi
+      we_leave_out_details: Bu e-postada bazı bilgileriniz, gizliliğinizi korumak için gösterilmiyor.
+      you_can_find_updates_here: 'Burada daha çok detay ve yakın zamanda değiştirilmiş sayfaları bulabilirsiniz:'
+      you_can_turn_off_or_configure_notifications: E-posta bildirimlerini kapatın, değişikliklere dair genel bir e-posta alın veya her değiştirilen sayfa için bir e-posta alın
   exception:
     description:
       forbidden: Kusura bakmayın, bu işlemi yapamazsınız.
@@ -145,6 +153,7 @@ tr:
   all: Hepsi
   autocomplete:
     placeholder:
+      enter_name_of_group_or_person: Bir grubun ya da kişinin ismini girin
       enter_name_of_group: Bir grup ismi girin
       enter_name_of_person: Bir kişi ismi girin
   go: Git
@@ -213,6 +222,12 @@ tr:
   network: Ağ
   networks: Ağlar
   organization: organizasyon
+  group_invite_email: |-
+      %{from_user} sizi "%{group}" grubuna katılmaya davet etti.
+
+      Bu gruba katılmak istiyorsanız, buraya tıklayın:
+
+      %{accept_invite_link}
   group_invite_subject: '"%{group}" grubuna katılmak için davet'
   create_public_group_wiki: Herkese açık
   create_private_group_wiki: Gizli
@@ -323,6 +338,7 @@ tr:
   page_group_planning: Araçları Ayarlama
   page_group_text: Metin ve Tartışmalar
   page_group_vote: Anketler ve oylar
+  ranked_vote_instructions: Önünüzdeki listeden öğeleri, en çok tercih edilen en üste, en az tercih edilen en alta gelecek şekilde sürükleyip bırakın.
   save_survey_button: Kaydet Anket
   survey_list_all_tab: Tüm Cevapları Listele
   survey_may_rate: Cevapları oylar mısınız?
@@ -444,6 +460,7 @@ tr:
   preview: Görüntüle
   version_doesnt_exist: '%{version} sürümü mevcut değildir.'
   versions: Sürümler
+  wiki_is_locked_html: Bu viki hâlen %{user} tarafından kilitlenmiş durumda
   wiki_revert_version: '%{version} Sürümüne Geri Dön'
   wiki_section_edit: Bu Bölümü Düzenle
   you_are_viewing_version: '%{user} tarafından hazırlanan %{version} sürümünü görüntülemektesiniz.'

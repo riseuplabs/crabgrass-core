@@ -2,15 +2,15 @@
   congratulations_you_have_signed_up: Gratulerer! Du har registrert deg på %{site_title}.
   cookie_disabled_warning: Du har blokkert informasjonskapsler. Du må tillate informasjonskapsler for å kunne logge inn.
   email_verification_body: |-
-    Du har registrert deg på %{site_title} (%{host}).
+      Du har registrert deg på %{site_title} (%{host}).
 
-    Før du kan logge inn, må du verifisere e-postadressen din.
+      Før du kan logge inn, må du verifisere e-postadressen din.
 
-    Klikk på lenken under eller kopier og lim inn adressen i nettleseren:
+      Klikk på lenken under eller kopier og lim inn adressen i nettleseren:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Hvis du ikke vil registrere deg, kan du se bort fra denne e-posten.
+      Hvis du ikke vil registrere deg, kan du se bort fra denne e-posten.
   forgotten_email_address: Hvilken e-postadresse oppga du når du opprettet din konto?
   invalid_email_text: E-postadressen du oppga er ugyldig.
   invalid_token: Ugyldig symbol
@@ -119,8 +119,8 @@
       daily_digest: "%{site}: Daglig sammendrag av sideendringer"
       page_update: "%{site}: En side har blitt endret"
       pages_you_are_watching_have_been_modified:
-        one: En side du holder oppsyn med har blitt endret siden siste merknad.
-        other: '%{count} sider du holder oppsyn med har blitt endret siden siste merknad.'
+        one: "En side du holder oppsyn med har blitt endret siden siste merknad."
+        other: "%{count} sider du holder oppsyn med har blitt endret siden siste merknad."
       the_page_you_are_watching_description: Siden du holder oppsyn med "%{page_title}", har blitt endret
       upload_your_public_pgp_key: Last opp din offentlige PGP-nøkkel for å motta mer detaljerte oppdateringer i krypterte e-poster.
       we_leave_out_details: Detaljer i denne e-posten har blitt utelatt av hensyn til personvernet.
@@ -248,14 +248,14 @@
   group_destroyed_email: "%{group_type} %{group} har blitt destruert!"
   group_destroyed_subject: "%{group_type} %{group} har blitt slettet av %{user}!"
   group_invite_email: |-
-    %{from_user} har invitert deg til å bli medlem i gruppen %{group}. Hvis du vil bli med i gruppen, klikk her:
+      %{from_user} har invitert deg til å bli medlem i gruppen %{group}. Hvis du vil bli med i gruppen, klikk her:
 
-    %{accept_invite_link}
+      %{accept_invite_link}
 
-    Gruppens hjemmeside finner du her:
-    %{group_home_link}
+      Gruppens hjemmeside finner du her:
+      %{group_home_link}
 
-    Hvis du ikke vil bli medlem i denne gruppen er det bare å se bort fra denne e-posten.
+      Hvis du ikke vil bli medlem i denne gruppen er det bare å se bort fra denne e-posten.
   group_invite_subject: Invitasjon til å bli medlem i gruppen "%{group}"
   committee_choose_group: 'Velg en gruppe for denne %{group_type}:'
   committee_description: Komitéer er grupper innad i en organisasjon eller et nettverk. En komité er underlagt organisasjonen eller nettverket den tilhører. En bruker utenfor organisasjonen eller nettverket som legges til en komité, vil bare ha tilgang til komitéen.

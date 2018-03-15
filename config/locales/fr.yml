@@ -2,15 +2,15 @@ fr:
   congratulations_you_have_signed_up: Félicitations ! Vous êtes inscrit·e sur %{site_title}.
   cookie_disabled_warning: Les cookies sont désactivés sur votre navigateur. Vous ne pourrez pas vous connecter tant que ce sera le cas.
   email_verification_body: |-
-    Vous ou une autre personne avez demandé à vous inscrire sur %{site_title} (%{host}).
+      Vous ou une autre personne avez demandé à vous inscrire sur %{site_title} (%{host}).
 
-    Avant de pouvoir vous connecter, vous devez confirmer que c'est bien votre mail.
+      Avant de pouvoir vous connecter, vous devez confirmer que c'est bien votre mail.
 
-    Cliquez le lien ci-dessous ou copiez-le dans votre navigateur :
+      Cliquez le lien ci-dessous ou copiez-le dans votre navigateur :
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.
+      Si vous ne désirez pas vous inscrire, ignorez simplement ce mail.
   forgotten_email_address: Quelle adresse mail avez-vous donné lors de la création du compte ?
   invalid_email_text: L'adresse mail fournie est invalide.
   invalid_token: Lien invalide
@@ -118,6 +118,10 @@ fr:
       change_your_settings_here: 'Changez la configuration de vos emails de notification ici : %{page_link}'
       daily_digest: "%{site} : Rapport journalier des modifications de pages"
       page_update: "%{site} : Une page à été modifiée"
+      the_page_you_are_watching_description: La page que vous suivez "%{page_title}" a été modifiée
+      we_leave_out_details: Nous n'incluons pas vos données dans ce courriel dans le cas où vous souhaiteriez les garder privées.
+      you_can_find_updates_here: 'Vous trouverez plus d''informations et une liste des pages récemment modifiées ici:'
+      you_can_turn_off_or_configure_notifications: Ne plus recevoir d'alertes courriels, obtenir une liste des modifications ou recevoir un courriel chaque fois que la page est transformée
   exception:
     description:
       forbidden: Désolé. Vous n'avez pas les droits pour faire cette action.
@@ -142,6 +146,7 @@ fr:
   upload_new_image: Téléverser une nouvelle image
   upload_zip_file_link: Téléverser un fichier ZIP
   approved_by_entity: Approuvé·e par %{entity}
+  friends: Mes Ami-e-s
   name: Nom
   owner: Propriétaire
   people: Utilisateurs
@@ -238,6 +243,16 @@ fr:
   structure: Structure
   group_destroyed_email: "%{group_type} %{group} détruit·e !"
   group_destroyed_subject: "%{group_type} %{group} supprimé·e par %{user}!"
+  group_invite_email: |-
+      %{from_user} vous a invité•e à rejoindre le groupe "%{group}". Si vous souhaitez rejoindre ce groupe, cliquez ici:
+
+      %{accept_invite_link}
+
+      La page d'accueil du groupe peut être trouvée ici:
+
+      %{group_home_link}
+
+      Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail.
   group_invite_subject: Invitation à rejoindre le groupe "%{group}"
   committee_choose_group: 'Choisir un groupe pour ce %{group_type}:'
   committee_description: Les commissions sont des structures dans un groupe ou un réseau. Une commission est entièrement subordonnée au groupe ou au réseau dont elle fait partie.
@@ -301,6 +316,7 @@ fr:
   language: Langue
   message_user_wrote_caption: "%{user} a écrit:"
   message_you_wrote_caption: 'Vous avez écrit:'
+  my_dashboard: Mon tableau de bord
   notification_select:
     digest: 'Oui: un résumé quotidien des modifications'
     none: 'Non: pas de mails pour les modifications'
@@ -526,6 +542,7 @@ fr:
   survey_select_a_rating_message: Choisir une note pour voir l'objet suivant.
   survey_skip_next_link: Passer à la suite
   survey_thanks_submit_message: Merci de votre réponse.
+  survey_you_already_rated_response_with_rating_heading: Vous avez déjà évalué cette réponse - vous y avez donné un %{rating}.
   survey_you_previousely_rated_message: Vous avez évalué cet objet à %{rating}.
   survey_your_rating_heading: 'Votre évaluation de cette réponse'
   their_answer_goes_here_label: Leur réponse va ici...
@@ -599,7 +616,9 @@ fr:
   request_to_friend: Demande de Mise en Contact
   request_to_friend_description: '%{user} aimerait être en contact avec %{other_user}'
   request_to_friend_short: Autoriser %{user} à être mis·e en contact avec %{other_user} ?
+  request_to_join_network_short: '%{group} peut-il rejoindre %{network} ?'
   request_to_join_our_network_description: La structure %{group} a été invitée à rejoindre le réseau %{network}.
+  request_to_join_short: '%{user} peut-il ou peut-elle rejoindre %{group} ?'
   request_to_join_us_description: '%{user} a été invité·e à rejoindre %{group}'
   request_to_join_us_via_email_description: L'adresse mail %{email} a été invitée à rejoindre %{group}
   request_to_join_us_via_email_short: Autoriser %{email} à rejoindre %{group} ?
@@ -668,6 +687,7 @@ fr:
   alert_saved: Modifications effectuées
   csrf_error_message: 'Votre demande de connexion ressemble à une tentative de piratage de ce site. Pas d''inquiétude: cette erreur arrive fréquemment même pour des demandes anodines. Nous sommes simplement particulièrement paranoïaques. Tout ce que vous avez à faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:'
   error_saving_new_order_message: 'Erreur en sauvegardant le nouvel ordre: %{error_message}'
+  activate_js_to_rearrange_photos: Activer JavaScript pour pouvoir réarranger les photos !
   add_another_file: Ajouter un autre fichier
   add_existing_image: Ajouter une image existante
   add_photo_to_gallery: Cliquer sur une photo pour l'ajouter
@@ -676,6 +696,7 @@ fr:
   cancel_link: annuler
   download: Téléchargement
   download_gallery: Télécharger la Galerie
+  drag_and_drop_to_rearrange_photos: Attrapez et glissez les images pour les arranger
   edit_gallery: Modifier la galerie
   error_saving_new_order: Erreur lors de la sauvegarde du nouvel arrangement !
   file_must_be_image_error: Le fichier doit être une image pour pouvoir être ajouté à une galerie.
@@ -705,7 +726,10 @@ fr:
   size: Taille
   video_embed: Embed
   add_tags: Ajouter des étiquettes
+  current_tags: Étiquettes actuelles
   no_tags: Aucun tag
+  popular_tags: Étiquettes populaires
+  recent_tags: Étiquettes récentes
   separate_tags: Séparer les étiquettes par une virgule.
   tag: Étiquette
   tags: Étiquettes
@@ -727,6 +751,7 @@ fr:
   view_slideshow: Voir le diaporama
   break_lock_button: Forcer le verrou
   can_still_save: Vous pouvez toujours faire une sauvegarde.
+  cant_edit_section_html: Édition de %{section} impossible.
   cant_find_wiki_section: Ne peut trouver la section wiki %{section}
   changes_made: Modifications effectuées %{when}.
   changes_might_be_overwritten: Vos modifications peuvent être écrasées.
@@ -738,10 +763,13 @@ fr:
   insert_image: Insérer une Image
   leave_editing_wiki_page_warning: Si vous quittez cette page sans sauvegarder le wiki ou sans annuler l'édition; alors les autres verront ce wiki verrouillé et ne pourront l'éditer. De même, si vous ne sauvegardez pas le wiki, vous perdrez vos modifications.
   next_change: Modification suivante
+  other_section_locked_error_html: Vous ne pouvez verrouiller qu'une section simultanément. Vous avez déjà verrouillé '%{section}'.
   prev_change: Modification précédente
   preview: Aperçu
   private_wiki: Wiki privé
   public_wiki: Wiki public
+  save_or_cancel_edit_lock_wiki_error: Vous avez verrouillé ce wiki. Les autres utilisateurs ne pourront l'éditer tant que vous n'aurez pas cliqué sur %{save_button} ou sur  %{cancel}  pour finir l'édition.
+  user_locked_section_html: "%{section} verrouillée par %{user}."
   version: Version
   version_doesnt_exist: Il n'y a pas de version %{version}
   version_exists_error: '%{user} a sauvegardé de nouveaux changements avant. Vous pouvez toujours enregistrer vos modifications comme une nouvelle version.'

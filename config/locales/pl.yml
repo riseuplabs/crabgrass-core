@@ -2,15 +2,15 @@ pl:
   congratulations_you_have_signed_up: Gratulacje! Pomyślnie zarejestrowano na %{site_title}.
   cookie_disabled_warning: You have cookies disabled. You will not be able to login until you enable cookies.
   email_verification_body: |-
-    Zarejestrowano twoje konto na %{site_title} (% {host}).
+      Zarejestrowano twoje konto na %{site_title} (% {host}).
 
-    Zanim się zalogujesz musisz potwierdzić ze to twój adres meblowy.
+      Zanim się zalogujesz musisz potwierdzić ze to twój adres meblowy.
 
-    Kliknij poniższy link albo skopiuj i wklej go do swojej przeglądarki:
+      Kliknij poniższy link albo skopiuj i wklej go do swojej przeglądarki:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Jeśli nie chcesz dołączyć, po prostu zignoruj tego mejla.
+      Jeśli nie chcesz dołączyć, po prostu zignoruj tego mejla.
   forgotten_email_address: Jaki adres e-mail podałeś/podałaś nam kiedy Twoje konto zostało utwożone?
   invalid_email_text: Adres e-mail który zsotał wprowadzony jest błędny.
   invalid_token: Niepoprawna autoryzacja
@@ -79,6 +79,7 @@ pl:
   cancel: Anuluj
   close_button: Zamknij
   confirm: Potwierdź
+  create: Stwórz
   create_a_new_thing: Nowa %{thing}
   create_button: Stwórz
   create_thing: Stwórz %{thing}
@@ -109,6 +110,13 @@ pl:
   thing_required: "%{thing} wymagane"
   updated_by: Zaktualizowane przez
   upload: Załaduj
+  mailer:
+    hello: Cześć %{user_name}
+    page_histories:
+      change_your_settings_here: 'Tutaj możesz zmienić opcje powiadomień e-mail''owych: %{page_link}'
+      page_update: "%{site}: Strona została zmodyfikowana"
+      the_page_you_are_watching_description: Strona którą pzreglądasz "%{page_title}" została zmieniona
+      you_can_turn_off_or_configure_notifications: Możesz wybrać opcję wyłączania powiadomień mejlem, otrzymywać zestawienie zmian, albo otrzymywać mejl za każdym razem gdy strona jest modyfikowana
   exception:
     description:
       unauthorized: Proszę zaloguj się aby wykonać tą czynność.
@@ -216,6 +224,18 @@ pl:
   structure: Struktura
   group_destroyed_email: "Skasowano %{group_type} %{group}!"
   group_destroyed_subject: "%{user} zdecydował/a o osunięciu %{group_type} %{group}!"
+  group_invite_email: |-
+      %{from_user} zaprasza cię do grupy "%{group}".
+
+      Jeśli chcesz do niej dołączyć, kliknij tutaj:
+
+      %{accept_invite_link}
+
+      Strona domowa tej grupy znajduje się tutaj:
+
+      %{group_home_link}
+
+      Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
   group_invite_subject: Zaproszenie do grupy "%{group}"
   committee_description: Komitety to grupy wewnątrz organizacji lub sieci. Komitet jest w pełni podporządkowany nadrzędnej organizacji lub sieci. Osoby dodane do komitetu, nie należące do nadrzędnej organizacji lub sieci, będą miały dostęp wyłącznie do treści opublikowanych w tym komitecie.
   council_description: 'Rady to grupy ze specjalnymi uprawnieniami administracyjnymi. Każda organizacja lub sieć może mieć radę. Jeśli ją ma, osoby z tej rady będą miały kontrolę administracyjną nad siecią lub organizacją. '
@@ -491,6 +511,7 @@ pl:
   survey_select_a_rating_message: Wybierz ocenę żeby zobaczyć kolejną pozycję.
   survey_skip_next_link: Przeskocz do następnych
   survey_thanks_submit_message: Dziękuję za wysłanie odpowiedzi.
+  survey_you_already_rated_response_with_rating_heading: Ta odpowiedź została już przez ciebie oceniona, na %{rating}.
   survey_you_previousely_rated_message: To zostało już przez ciebie ocenione, na %{rating}.
   survey_your_rating_heading: 'Twoja ocena:'
   their_answer_goes_here_label: Tu trafi ich odpowiedź
@@ -570,7 +591,9 @@ pl:
   request_to_friend: Wyślij zaproszenie do kontaktów
   request_to_friend_description: '%{user} chce zostać dodana/y do kontaktów %{other_user}'
   request_to_friend_short: Czy dodać %{user} do kontaktów %{other_user}?
+  request_to_join_network_short: Czy %{group} ma dołączyć do %{network}?
   request_to_join_our_network_description: Grupa %{group} została zaproszona do sieci %{network}
+  request_to_join_short: Czy %{user} ma dołączyć do %{group}?
   request_to_join_us_description: '%{user} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email_description: '%{email} otrzyma zaproszenie do %{group}'
   request_to_join_us_via_email_short: Czy %{email} ma dołączyć do %{group}?
@@ -641,6 +664,7 @@ pl:
 
     '
   error_saving_new_order_message: 'Błąd przy zapisywaniu nowego porządku: %{error_message}'
+  activate_js_to_rearrange_photos: Włącz JavaScript jeśli chcesz móc przeciągać i aranżować układ fotografii!
   add_another_file: Dodaj kolejny pilk
   add_existing_image: Dodaj zdjęcie
   add_photo_to_gallery: Kliknij na zdjęcie żeby je dodać
@@ -649,6 +673,7 @@ pl:
   cancel_link: anuluj
   download: Ściągnij
   download_gallery: Ściągnij galerię
+  drag_and_drop_to_rearrange_photos: Przeciągnij i upuść grafiki żeby je zaaranżować
   edit_gallery: Edytuj galerię
   error_saving_new_order: Błąd przy zapisywaniu nowego porządku!
   file_must_be_image_error: 'Plik musi być grafiką żeby stać się częścią galerii. '
@@ -699,6 +724,7 @@ pl:
   view_slideshow: Obejrzyj Pokaz Slajdów
   break_lock_button: Usuń blokadę
   can_still_save: Możesz jeszcze zapisać
+  cant_edit_section_html: Nie można edytować %{section}.
   cant_find_wiki_section: Nie mogę znaleźć sekcji %{section}
   changes_made: Zmiany dokonano %{when}.
   changes_might_be_overwritten: Nowsza wersja może zastąpić twoje zmiany.
@@ -710,10 +736,13 @@ pl:
   insert_image: Wstaw grafikę
   leave_editing_wiki_page_warning: Jeśli opuścisz tą stronę bez zapisania wiki lub anulowania edytowania, wtedy inni użytkownicy/inne użytkowniczki dostaną komunikat, że ta strona jest zablokowana przez Ciebie i nie będzie można jej edytować. Również, jeśli nie zapiszesz wiki, stracisz zmiany, które zostały przez Ciebie wprowadzone.
   next_change: Następna Zamiana
+  other_section_locked_error_html: Możesz zablokować tylko jedną sekcję na raz. Blokujesz już %{section}.
   prev_change: Wcześniejsza zmiana
   preview: Podgląd
   private_wiki: Prywatne wiki
   public_wiki: Publiczne wiki
+  save_or_cancel_edit_lock_wiki_error: To wiki zostało pzrez Ciebie zablokowane. Inni użytkownicy i użytkowniczki nie będę mogły edytować dopóki nie klikniesz na %{save_button} lub %{cancel}, by zakończyć edytowanie.
+  user_locked_section_html: "%{user} zablokował/a %{section}."
   version: Wersja
   version_doesnt_exist: Nie ma takiej wersji %{version}
   version_exists_error: Wiki jest zablokowane ponieważ dopiero co zapisano nowe zmiany %{user}. Możesz zapisać swoje zmiany mimo tego, ale nadpisze to najnowszą wersję.

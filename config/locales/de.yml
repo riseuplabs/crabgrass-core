@@ -2,15 +2,15 @@ de:
   congratulations_you_have_signed_up: Gratulation! Du hast dich für %{site_title} eingetragen.
   cookie_disabled_warning: Du hast die Verwendung von Cookies deaktiviert. Du kannst dich nicht einloggen, solange du der Verwendung von Cookies nicht zustimmst.
   email_verification_body: |-
-    Du hast dich für %{site_title} (%{host}) eingetragen!
+      Du hast dich für %{site_title} (%{host}) eingetragen!
 
-    Bevor du dich einloggen kannst musst du bestätigen, dass dies hier deine E-Mail-Adresse ist.
+      Bevor du dich einloggen kannst musst du bestätigen, dass dies hier deine E-Mail-Adresse ist.
 
-    Klick auf den Link hier oder füge ihn in die Adresszeile deines Browsers ein.
+      Klick auf den Link hier oder füge ihn in die Adresszeile deines Browsers ein.
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Wenn du dich nicht eintragen willst, ignorier diese Mail einfach.
+      Wenn du dich nicht eintragen willst, ignorier diese Mail einfach.
   forgotten_email_address: Welche E-Mailadresse hast Du bei der Anmeldung angegeben?
   invalid_email_text: Die von dir angegebene E-Mailadresse ist ungültig.
   invalid_token: Ungültiger Token
@@ -117,10 +117,10 @@ de:
     page_histories:
       change_your_settings_here: 'Hier kannst du deine Einstellungen für E-Mail-Benachrichtigungen ändern: %{page_link}'
       daily_digest: "Ja, ich möchte eine tägliche Zusammenfassung aller Änderungen von %{site} bekommen."
-      page_update: "%{site_title} : Die Seite wurde bearbeitet"
+      page_update: "%{site}"
       pages_you_are_watching_have_been_modified:
-        one: Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung bearbeitet.
-        other: '%{count} der Seiten, die du beobachtest, wurden seit der letzten Benachrichtigung verändert.'
+        one: "Eine Seite, die du beobachtest, wurde seit der letzten Benachrichtigung bearbeitet."
+        other: "%{count} der Seiten, die du beobachtest, wurden seit der letzten Benachrichtigung verändert."
       the_page_you_are_watching_description: Die Seite "%{page_title}", die du beobachtest, wurde bearbeitet
       upload_your_public_pgp_key: Um verschlüsselte Emails mit detaillierten Neuigkeiten zu erhalten, lade bitte deinen PGP Schlüssel hoch.
       we_leave_out_details: Wir lassen die Details in dieser E-Mail weg, um die Informationen zu schützen, die du wahrscheinlich für dich behalten möchtest.
@@ -248,17 +248,17 @@ de:
   group_destroyed_email: "%{group_type} %{group} wurde gelöscht!"
   group_destroyed_subject: "%{group_type} %{group} wurde von %{user} gelöscht!"
   group_invite_email: |-
-    %{from_user} hat Dich eingeladen, der Gruppe "%{group}" beizutreten.
+      %{from_user} hat Dich eingeladen, der Gruppe "%{group}" beizutreten.
 
-    Hier kannst Du dieser Einladung folgen:
+      Hier kannst Du dieser Einladung folgen:
 
-    %{accept_invite_link}
+      %{accept_invite_link}
 
-    Die Homepage der Gruppe findest Du hier:
+      Die Homepage der Gruppe findest Du hier:
 
-    %{group_home_link}
+      %{group_home_link}
 
-    Wenn du der Gruppe nicht beitreten möchtest, kannst du diese Mail einfach ignorieren.
+      Wenn du der Gruppe nicht beitreten möchtest, kannst du diese Mail einfach ignorieren.
   group_invite_subject: Einladung, der Gruppe "%{group}" beizutreten
   committee_choose_group: 'Wähle eine Gruppe als %{group_type} aus:'
   committee_description: Arbeitsgruppen sind Gruppen innerhalb einer Organisation oder eines Netzwerkes. Eine Arbeitsgruppe ist dieser Organisation oder diesem Netzwerk vollkommen untergeordnet. Werden Nutzer_innen, die nicht Mitglied der übergeordneten Gruppe sind, der Arbeitsgruppe hinzugefügt, haben sie nur Zugang zu dieser Arbeitsgruppe.

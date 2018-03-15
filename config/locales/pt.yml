@@ -2,15 +2,15 @@ pt:
   congratulations_you_have_signed_up: Parabéns! Você se cadastrou no %{site_title}.
   cookie_disabled_warning: Seus cookies estão desabilitados. Você não será capaz de logar se não habilitar os cookies.
   email_verification_body: |-
-    Você se cadastrou em %{site_title} (%{host}).
+      Você se cadastrou em %{site_title} (%{host}).
 
-    Antes que possa logar você precisa comprovar que este é o seu email.
+      Antes que possa logar você precisa comprovar que este é o seu email.
 
-    Clique no link abaixo ou copie-o e cole-o no seu navegador:
+      Clique no link abaixo ou copie-o e cole-o no seu navegador:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Se você não quis se cadastrar, simplesmente ignore este email.
+      Se você não quis se cadastrar, simplesmente ignore este email.
   forgotten_email_address: Qual foi o endereço de email que você nos forneceu quando criou sua conta?
   invalid_email_text: O endereço de email que você forneceu não é válido.
   invalid_token: Código Inválido
@@ -109,6 +109,11 @@ pt:
   upload: Carregar
   mailer:
     hello: Olá, %{user_name}
+    page_histories:
+      the_page_you_are_watching_description: A página que você está acompanhando "%{page_title}" foi modificada
+      we_leave_out_details: Ocultamos alguns detalhes deste e-mail para proteger a informação que talvez você poderá querer manter privada.
+      you_can_find_updates_here: 'Você encontrará mais detalhes e uma lista de páginas recentemente alteradas aqui:'
+      you_can_turn_off_or_configure_notifications: Desativar as notificações por email, receber um resumo das mudanças, ou receber um e-mail a cada alteração de página
   exception:
     description:
       forbidden: Desculpe! Você não possui permissão para realizar esta ação.
@@ -223,7 +228,20 @@ pt:
   structure: Estrutura
   group_destroyed_email: "%{group_type} %{group} foi eliminado!"
   group_destroyed_subject: "%{group_type} %{group} foi apagado por %{user}!"
+  group_invite_email: |-
+      %{from_user} convidou você para fazer parte do grupo "%{group}".
+
+      Se você quiser fazer parte deste grupo, clique aqui:
+
+      %{accept_invite_link}
+
+      Visite a homepage deste grupo:
+
+      %{group_home_link}
+
+      Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
   group_invite_subject: Convite para fazer parte do grupo "%{group}"
+  committee_choose_group: 'Escolha um grupo para este %{group_type}:'
   committee_description: Comitês são grupos dentro de uma organização ou rede. Um comitê é totalmente subordinado à organização ou rede que pertence. Uma usuária de fora da organização ou da rede que foi adicionada ao comitê só terá acesso ao comitê.
   council_description: Conselhos são grupos com poderes administrativos especiais. Toda organização ou rede pode ter um conselho. Se tiver, as pessoas do conselho terão poder sobre a rede ou a organização.
   council_description_details: Por padrão, todos os membros podem modificar o %{group}. Se você quer restringir os poderes administrativos de certas usuárias, crie um conselho e adicione usuárias a ele.
@@ -502,6 +520,7 @@ pt:
   survey_select_a_rating_message: Escolha uma classificação para ver o próximo item
   survey_skip_next_link: Pular para o próximo
   survey_thanks_submit_message: Obrigada por enviar sua resposta.
+  survey_you_already_rated_response_with_rating_heading: Você já classificou esta resposta - Você deu um %{rating}.
   survey_you_previousely_rated_message: Você classificou previamente este item com %{rating}.
   survey_your_rating_heading: 'Sua Classificação:'
   their_answer_goes_here_label: As respostas vão aqui...
@@ -575,7 +594,9 @@ pt:
   request_to_friend: Pedir para se Tornarem Contatos
   request_to_friend_description: '%{user} gostaria de ser contato de %{other_user}'
   request_to_friend_short: Será que %{user} poderia se tornar contato de %{other_user}?
+  request_to_join_network_short: Será que o %{group} poderia participar da %{network}?
   request_to_join_our_network_description: O grupo %{group} foi convidado para fazer parte da rede %{network}
+  request_to_join_short: Será que %{user} poderia participar do grupo %{group}?
   request_to_join_us_description: '%{user} foi convidada para fazer parte de %{group}'
   request_to_join_us_via_email_description: '%{email} foi convidada para fazer parte do grupo %{group}'
   request_to_join_us_via_email_short: Será que %{email} poderia participar do grupo %{group}?
@@ -644,6 +665,7 @@ pt:
   alert_saved: Alterações salvas
   csrf_error_message: 'Seu pedido de login parece ser uma tentativa de hackear este site. Não se preocupe: esse é um erro frequente, até no caso dos pedidos mais inocentes. Nós estamos apenas sendo excessivamente paranóicos. Você só tem que recarregar a página antes de tentar fazer log in. Você pode usar este link para tentar novamente.'
   error_saving_new_order_message: 'Erro ao salvar a nova ordem: %{error_message}'
+  activate_js_to_rearrange_photos: Ativar Javascript para usar Drag&Drop para reorganizar as fotos!
   add_another_file: Adicionar outro arquivo
   add_existing_image: Adicionar Foto
   add_photo_to_gallery: Clique em uma Foto para adicioná-la
@@ -652,6 +674,7 @@ pt:
   cancel_link: cancelar
   download: Baixar
   download_gallery: Baixar Galeria
+  drag_and_drop_to_rearrange_photos: Arraste e solte as imagens para reorganizá-las
   edit_gallery: Editar Galeria
   error_saving_new_order: Erro ao salvar nova ordem!
   file_must_be_image_error: O arquivo tem que ser uma imagem para ser incluído em uma galeria.
@@ -702,6 +725,7 @@ pt:
   view_slideshow: Ver Slideshow
   break_lock_button: Quebrar Bloqueio
   can_still_save: Você ainda pode salvar.
+  cant_edit_section_html: Não é possível editar %{section}.
   cant_find_wiki_section: Não é possível encontrar a seção %{section} da wiki
   changes_made: Alterações feitas em %{when}.
   changes_might_be_overwritten: Suas alterações podem ser sobrescritas.
@@ -713,10 +737,13 @@ pt:
   insert_image: Inserir Imagem
   leave_editing_wiki_page_warning: Você irá perder suas alterações caso saia desta página.
   next_change: Mudança Seguinta
+  other_section_locked_error_html: Só dá para bloquear uma seção por vez. Você já está bloqueando %{section}.
   prev_change: Mudança Anterior
   preview: Pré-visualizar
   private_wiki: Wiki Privada
   public_wiki: Wiki Pública
+  save_or_cancel_edit_lock_wiki_error: Você trancou esse wiki. Outros usuários não poderão editar até que você clique ou em %{save_button} ou em %{cancel} para parar a edição.
+  user_locked_section_html: "%{user} está bloqueando %{section}."
   version: Versão
   version_doesnt_exist: Não há nenhuma versão %{version}
   version_exists_error: A wiki está bloqueada porque a usuária %{user} salvou novas mudanças recentemente. Você ainda pode salvar suas alterações, mas isso irá sobrescrever a nova versão.
@@ -724,6 +751,7 @@ pt:
   versions: Versões
   wiki: Wiki
   wiki_existed_new_version_created: Esta wiki já foi criada por outra usuária. Suas mudanças foram salvas como uma nova versão.
+  wiki_is_locked_html: Esta wiki está bloqueada agora por %{user}.
   wiki_revert_version: Reverter para versão %{version}
   wiki_section_edit: Editar Esta Sessão
   wiki_section_is_locked: A seção %{section} está bloqueada agora por %{user}.

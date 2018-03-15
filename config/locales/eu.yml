@@ -2,15 +2,15 @@ eu:
   congratulations_you_have_signed_up: Zorionak! %{site_title}-(e)n izena eman duzu.
   cookie_disabled_warning: Cookie-ak desgaituta dituzu. Ezin izango duzu saioa hasi cookie-ak gaitu arte.
   email_verification_body: |-
-    %{site_title}(e)n izena eman duzu (%{host}).
+      %{site_title}(e)n izena eman duzu (%{host}).
 
-    Jarraitu aurretik zure e-posta hau dela frogatu behar duzu.
+      Jarraitu aurretik zure e-posta hau dela frogatu behar duzu.
 
-    Egin klik ondoko estekan edo kopiatu eta itsatsi ezazu zure nabigatzailean:
+      Egin klik ondoko estekan edo kopiatu eta itsatsi ezazu zure nabigatzailean:
 
-    %{verify_email_link}
+      %{verify_email_link}
 
-    Webgune honetan izena eman nahi ez baduzu, ez egin kasurik e-posta honi.
+      Webgune honetan izena eman nahi ez baduzu, ez egin kasurik e-posta honi.
   forgotten_email_address: Zure kontua sortu zenuenean zein e-posta helbide eman zenigun?
   invalid_email_text: Adierazi duzun e-posta helbidea okerra da.
   invalid_token: Token baliogabea

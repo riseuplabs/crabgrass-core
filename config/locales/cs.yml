@@ -2,14 +2,14 @@ cs:
   congratulations_you_have_signed_up: Gratulujeme! Zaregistrovali jste se na %{site_title}
   cookie_disabled_warning: Máte vypnuté cookies. Pro přihlášení je nutné je zapnout.
   email_verification_body: |-
-    Zaregistrovali jste se na %{site_title}(%{host})
+      Zaregistrovali jste se na %{site_title}(%{host})
 
-    Předtím, než se budete moct přihlásit, potvrďte prosím, že je toto skutečně váš email.
+      Předtím, než se budete moct přihlásit, potvrďte prosím, že je toto skutečně váš email.
 
-    Klikněte na odkaz níže, nebo ho zkopírujte do svého prohlížeče:
-    %{verify_email_link}
+      Klikněte na odkaz níže, nebo ho zkopírujte do svého prohlížeče:
+      %{verify_email_link}
 
-    Pokud jste neodeslali tuto žádost, tento email můžete ignorovat.
+      Pokud jste neodeslali tuto žádost, tento email můžete ignorovat.
   forgotten_email_address: Jakou emailovou adresu jste zadali při vytváření účtu?
   invalid_email_text: Vámi zadaná emailová adresa je neplatná.
   invalid_token: Neplatný token
@@ -108,6 +108,13 @@ cs:
   upload: Nahrát
   mailer:
     hello: Dobrý den, %{username}
+    page_histories:
+      change_your_settings_here: 'Svoje nastavení emailových upozornění si upravte zde: %{page_link}'
+      page_update: "%{site} : Stránka byla upravena"
+      the_page_you_are_watching_description: Stránka "%{page_title}" kterou sledujete byla upravena
+      we_leave_out_details: Z tohoto emailu vynecháme detaily, které můžete považovat za citlivé.
+      you_can_find_updates_here: 'Více detailů a seznam nedávno upravených stránek naleznete zde:'
+      you_can_turn_off_or_configure_notifications: Vypnout upozornění emailem, získávat pravidelný souhrn změn, nebo dostávat email pokaždé, když je stránka aktualizována.
   exception:
     description:
       forbidden: Omlouváme se, ale nemáte možnost provést tuto akci.
@@ -216,7 +223,17 @@ cs:
   structure: Struktura
   group_destroyed_email: "%{group_type}%{group} byla zrušena!"
   group_destroyed_subject: "%{group_type}%{group} byla zrušena uživatelem %{user}!"
+  group_invite_email: |-
+      Uživatel %{from_user} vás pozval do skupiny %{group}. Pokud se do skupiny chcete přidat, klikněte zde:
+
+      %{accept_invite_link}
+
+      Domovská stránka této skupiny je k nalezení zde:
+      %{group_home_link}
+
+      Pokud se ke skupině přidat nechcete, ignorujte tento email.
   group_invite_subject: Pozvánka do skupiny "%{group}"
+  committee_choose_group: 'Vybrat skupinu pro tento %{group_type}:'
   committee_description: Výbory jsou skupiny uvnitř Organizace nebo Sítě. Výbor je vždy kompletně podřízený své mateřské Organizaci nebo Síti. Uživatel, který není členem mateřské Organizace nebo Sítě, přidaný do Výboru, bude mít přístup pouze do skupiny Výboru.
   council_description: Rady jsou skupiny se speciálními administrátorskými oprávněními. Každá Organizace nebo Síť může mít Radu. V případě, že se tak stane, uživatelé v Radě budou mít kontrolu na Sítí nebo Organizací.
   council_description_details: V základním nastavení mají všichni uživatelé oprávnění upravovat skupinu %{group}. Pokud chcete administrativní oprávnění omezit na konkrétní uživatele, vytvořte Radu a přidejte je do ní.
@@ -495,6 +512,7 @@ cs:
   survey_select_a_rating_message: Vyberte hodnocení pro zobrazení další položky.
   survey_skip_next_link: Přeskočit na další
   survey_thanks_submit_message: Díky za odeslání odpovědi.
+  survey_you_already_rated_response_with_rating_heading: Tuto odpověď jste již ohodnotili - dali jste jí %{rating}.
   survey_you_previousely_rated_message: Tuto položku jste již ohodnotili s %{rating}.
   survey_your_rating_heading: 'Vaše hodnocení'
   their_answer_goes_here_label: Odpověď přijde sem...
@@ -559,7 +577,9 @@ cs:
   request_to_friend: Žádosti o stání se kontaktem
   request_to_friend_description: Uživatel %{user} se chce se stát kontakem uživatele %{other_user}
   request_to_friend_short: Smí se uživatel %{user} stát kontaktem uživatele %{other_user}?
+  request_to_join_network_short: Smí se skupina %{group} přidat do sítě %{network}?
   request_to_join_our_network_description: Skupina %{group} byla pozvána k přidání se do sítě %{network}.
+  request_to_join_short: Smí se uivatel %{user} připojit ke skupině %{group}?
   request_to_join_us_description: Uživatel %{user} byl pozván k přidání se do skupiny %{group}.
   request_to_join_us_via_email_description: Emailová adresa %{email} byla pozvána k přidání se ke skupině %{group}.
   request_to_join_us_via_email_short: Smí se %{email} připojit k %{group}?
@@ -628,6 +648,7 @@ cs:
   alert_saved: Změny uloženy
   csrf_error_message: 'Váš pokus o přihlášení vypadá jako snaha o útok na tuto stránku. Nebojte se: tato chyba se občas zobrazuje i při nevinných požadavcích. Jsme jenom extra ostražití. Všechno co musíte udělat, je před přihlášením přenačíst tuto stránku. Pro další pokus můžete využít tento odkaz.'
   error_saving_new_order_message: 'Chyba při ukládání nového pořadí: %{error_message}'
+  activate_js_to_rearrange_photos: Přetahování obrázků pro přemisťování fotek je možné pouze se zapnutým JavaScriptem!
   add_another_file: Přidat další soubor
   add_existing_image: Přidat fotku
   add_photo_to_gallery: Pro přidání klikněte na fotku
@@ -636,6 +657,7 @@ cs:
   cancel_link: zrušit
   download: Stáhnout
   download_gallery: Stáhnout Galerii
+  drag_and_drop_to_rearrange_photos: Obrázky přemisťujte tažením
   edit_gallery: Upravit Galerii.
   error_saving_new_order: Chyba při ukládání nového pořadí!
   file_must_be_image_error: Soubor musí být obrazový, aby mohl být zařazen do galerie.
@@ -686,6 +708,7 @@ cs:
   view_slideshow: Zobrazit prezentaci
   break_lock_button: Zrušit zámek
   can_still_save: Stále je možné uložit.
+  cant_edit_section_html: Nelze upravit sekci %{section}.
   cant_find_wiki_section: Nelze nalézt wiki sekci %{section}
   changes_made: Změny učiněné %{when}.
   changes_might_be_overwritten: Vaše změny mohly být přepsány.
@@ -697,10 +720,13 @@ cs:
   insert_image: Vložit Obrázek
   leave_editing_wiki_page_warning: Vaše změny budou ztraceny, pokud zavřete tuto stránku.
   next_change: Další změna
+  other_section_locked_error_html: Naráz je možné uzamknout pouze jednu sekci. V současné chvíli uzamykáte sekci %{section}.
   prev_change: Předchozí změna
   preview: Náhled
   private_wiki: Soukromá Wiki
   public_wiki: Veřejná Wiki
+  save_or_cancel_edit_lock_wiki_error: Uzamkli jste tuto wiki. Ostatní uživatelé jí nebudou moci upravovat, dokud nekliknete na tlačítko %{save_button} nebo %{cancel} pro ukončení editace.
+  user_locked_section_html: "Uživatel %{user} uzamknul %{section}."
   version: Verze
   version_doesnt_exist: Neexistuje verze %{version}
   version_exists_error: Tato wiki je uzamčená, protože uživatel/ka %{user} nedávno uložila nové změny. Vaše změny je možné uložit, ale přepíšou poslední uloženou verzi.
@@ -708,6 +734,7 @@ cs:
   versions: Verze
   wiki: Wiki
   wiki_existed_new_version_created: Tato wiki byla již vytvořena jiným uživatelem/kou. Vaše změny byly uloženy jako nová verze.
+  wiki_is_locked_html: Tato wiki je momentálně uzamknuta uživatelem/kou %{user}.
   wiki_revert_version: Vrátit zpět verzi %{version}
   wiki_section_edit: Upravit tuto Sekci
   wiki_section_is_locked: Sekce %{section} je momentálně uzamknuta uživatelem/kou %{user}.
